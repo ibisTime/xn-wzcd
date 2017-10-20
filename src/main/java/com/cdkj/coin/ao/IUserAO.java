@@ -18,7 +18,5 @@ import com.cdkj.coin.dto.res.XN805041Res;
 public interface IUserAO {
     // 注册前端用户
     public XN805041Res doRegister(String mobile, String loginPwd,
-            String userReferee, String userRefereeKind, String smsCaptcha,
-            String kind, String isRegHx, String province, String city,
-            String area, String address, String companyCode, String systemCode);
+            String userReferee, String userRefereeKind, String smsCaptcha);
 }

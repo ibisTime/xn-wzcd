@@ -17,7 +17,6 @@ import com.cdkj.coin.dto.res.XN001102Res;
 import com.cdkj.coin.dto.res.XN001400Res;
 import com.cdkj.coin.dto.res.XN805041Res;
 import com.cdkj.coin.dto.res.XN805042Res;
-import com.cdkj.coin.enums.ESysUser;
 import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.enums.EUserKind;
 import com.cdkj.coin.exception.BizException;
@@ -111,32 +110,18 @@ public class UserBOImpl implements IUserBO {
     }
 
     @Override
-    public String getSystemUser(String systemCode) {
-        if (ESystemCode.YLQ.getCode().equals(systemCode)) {
-            return ESysUser.SYS_USER_YLQ.getCode();
-        }
-        return null;
-    }
-
-    @Override
-    public XN805041Res doRegister(String mobile, String loginPwd,
-            String userReferee, String userRefereeKind, String smsCaptcha,
-            String kind, String isRegHx, String province, String city,
-            String area, String address, String companyCode, String systemCode) {
+    public XN805041Res doCustomerRegister(String mobile, String loginPwd,
+            String userReferee, String userRefereeKind, String smsCaptcha) {
         XN805041Req req = new XN805041Req();
         req.setMobile(mobile);
         req.setLoginPwd(loginPwd);
         req.setUserReferee(userReferee);
         req.setUserRefereeKind(userRefereeKind);
         req.setSmsCaptcha(smsCaptcha);
-        req.setKind(kind);
-        req.setIsRegHx(isRegHx);
-        req.setProvince(province);
-        req.setCity(city);
-        req.setArea(area);
-        req.setAddress(address);
-        req.setCompanyCode(companyCode);
-        req.setSystemCode(systemCode);
+        req.setKind(EUserKind.Customer.getCode());
+        req.setIsRegHx("0");
+        req.setCompanyCode(ESystemCode.COIN.getCode());
+        req.setSystemCode(ESystemCode.COIN.getCode());
         return BizConnecter.getBizData("805041", JsonUtils.object2Json(req),
             XN805041Res.class);
     }

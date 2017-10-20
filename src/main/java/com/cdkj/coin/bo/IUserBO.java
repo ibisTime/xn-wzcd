@@ -18,16 +18,12 @@ public interface IUserBO {
 
     public String isUserExist(String mobile, EUserKind kind, String systemCode);
 
-    public String getSystemUser(String systemCode);
-
     public void doIdentify(String userId, String idKind, String idNo,
             String realName);
 
     // 前端用户注册
-    public XN805041Res doRegister(String mobile, String loginPwd,
-            String userReferee, String userRefereeKind, String smsCaptcha,
-            String kind, String isRegHx, String province, String city,
-            String area, String address, String companyCode, String systemCode);
+    public XN805041Res doCustomerRegister(String mobile, String loginPwd,
+            String userReferee, String userRefereeKind, String smsCaptcha);
 
     // 将用户拉入黑名单
     public void addBlacklist(String userId, String type, String updater,

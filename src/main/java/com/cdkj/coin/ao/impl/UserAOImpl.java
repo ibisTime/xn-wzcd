@@ -30,14 +30,10 @@ public class UserAOImpl implements IUserAO {
      */
     @Override
     public XN805041Res doRegister(String mobile, String loginPwd,
-            String userReferee, String userRefereeKind, String smsCaptcha,
-            String kind, String isRegHx, String province, String city,
-            String area, String address, String companyCode, String systemCode) {
+            String userReferee, String userRefereeKind, String smsCaptcha) {
         // 注册
-        XN805041Res res = userBO.doRegister(mobile, loginPwd, userReferee,
-            userRefereeKind, smsCaptcha, kind, isRegHx, province, city, area,
-            address, companyCode, systemCode);
-
+        XN805041Res res = userBO.doCustomerRegister(mobile, loginPwd,
+            userReferee, userRefereeKind, smsCaptcha);
         return res;
     }
 

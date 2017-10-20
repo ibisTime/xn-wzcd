@@ -106,8 +106,8 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig> implements
     @Override
     public Double getDoubleValue(String key) {
         Double result = 0.0;
-        SYSConfig config = getSYSConfig(key, ESystemCode.YLQ.getCode(),
-            ESystemCode.YLQ.getCode());
+        SYSConfig config = getSYSConfig(key, ESystemCode.COIN.getCode(),
+            ESystemCode.COIN.getCode());
         try {
             result = Double.valueOf(config.getCvalue());
         } catch (Exception e) {
@@ -120,8 +120,8 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig> implements
     @Override
     public Integer getIntegerValue(String key) {
         Integer result = 0;
-        SYSConfig config = getSYSConfig(key, ESystemCode.YLQ.getCode(),
-            ESystemCode.YLQ.getCode());
+        SYSConfig config = getSYSConfig(key, ESystemCode.COIN.getCode(),
+            ESystemCode.COIN.getCode());
         try {
             result = Integer.valueOf(config.getCvalue());
         } catch (Exception e) {
@@ -133,8 +133,8 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig> implements
 
     @Override
     public String getStringValue(String key) {
-        SYSConfig config = getSYSConfig(key, ESystemCode.YLQ.getCode(),
-            ESystemCode.YLQ.getCode());
+        SYSConfig config = getSYSConfig(key, ESystemCode.COIN.getCode(),
+            ESystemCode.COIN.getCode());
         return config.getCvalue();
     }
 
