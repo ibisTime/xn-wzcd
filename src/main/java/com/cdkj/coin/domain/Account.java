@@ -1,5 +1,6 @@
 package com.cdkj.coin.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Account {
@@ -22,10 +23,10 @@ public class Account {
     private String currency;
 
     // 余额
-    private Long amount;
+    private BigDecimal amount;
 
     // 冻结金额
-    private Long frozenAmount;
+    private BigDecimal frozenAmount;
 
     // 创建时间
     private Date createDatetime;
@@ -35,6 +36,9 @@ public class Account {
 
     // 系统编号
     private String systemCode;
+
+    // 区块链地址
+    private String coinAddress;
 
     public String getAccountNumber() {
         return accountNumber;
@@ -84,19 +88,19 @@ public class Account {
         this.currency = currency;
     }
 
-    public Long getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
-    public Long getFrozenAmount() {
+    public BigDecimal getFrozenAmount() {
         return frozenAmount;
     }
 
-    public void setFrozenAmount(Long frozenAmount) {
+    public void setFrozenAmount(BigDecimal frozenAmount) {
         this.frozenAmount = frozenAmount;
     }
 
@@ -110,6 +114,14 @@ public class Account {
 
     public String getLastOrder() {
         return lastOrder;
+    }
+
+    public String getCoinAddress() {
+        return coinAddress;
+    }
+
+    public void setCoinAddress(String coinAddress) {
+        this.coinAddress = coinAddress;
     }
 
     public void setLastOrder(String lastOrder) {

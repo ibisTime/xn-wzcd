@@ -1,27 +1,21 @@
 package com.cdkj.coin.bo.impl;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.coin.bo.IAccountBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
-import com.cdkj.coin.common.JsonUtil;
-import com.cdkj.coin.common.PropertiesUtil;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.dto.req.XN002050Req;
 import com.cdkj.coin.dto.req.XN002100Req;
-import com.cdkj.coin.dto.req.XN002500Req;
-import com.cdkj.coin.dto.req.XN002501Req;
-import com.cdkj.coin.dto.req.XN002510Req;
+import com.cdkj.coin.dto.req.XN002610Req;
 import com.cdkj.coin.dto.res.XN002050Res;
-import com.cdkj.coin.dto.res.XN002500Res;
-import com.cdkj.coin.dto.res.XN002501Res;
-import com.cdkj.coin.dto.res.XN002510Res;
 import com.cdkj.coin.enums.EBizType;
 import com.cdkj.coin.enums.ECurrency;
 import com.cdkj.coin.exception.BizException;
@@ -71,15 +65,15 @@ public class AccountBOImpl implements IAccountBO {
 
     @Override
     public void doTransferAmountRemote(String fromUserId, String toUserId,
-            ECurrency currency, Long amount, EBizType bizType,
+            ECurrency currency, BigDecimal amount, EBizType bizType,
             String fromBizNote, String toBizNote, String refNo) {
-        if (amount != null && amount != 0) {
+        if (amount != null && amount.compareTo(BigDecimal.ZERO) != 0) {
             XN002100Req req = new XN002100Req();
             req.setFromUserId(fromUserId);
             req.setFromCurrency(currency.getCode());
             req.setToUserId(toUserId);
             req.setToCurrency(currency.getCode());
-            req.setTransAmount(String.valueOf(amount));
+            req.setTransAmount(amount.toString());
             req.setBizType(bizType.getCode());
             req.setFromBizNote(fromBizNote);
             req.setToBizNote(toBizNote);
@@ -111,67 +105,19 @@ public class AccountBOImpl implements IAccountBO {
     }
 
     @Override
-    public XN002500Res doWeiXinPayRemote(String applyUser, String toUser,
-            String payGroup, String refNo, EBizType bizType, String bizNote,
-            Long amount) {
-        // 获取微信APP支付信息
-        XN002500Req req = new XN002500Req();
-        req.setApplyUser(applyUser);
-        req.setToUser(toUser);
+    public void changeAmount(String accountNumber, String channelType,
+            String channelOrder, String payGroup, String refNo, String bizType,
+            String bizNote, BigInteger transAmount) {
+        XN002610Req req = new XN002610Req();
+        req.setAccountNumber(accountNumber);
+        req.setChannelType(channelType);
+        req.setChannelOrder(channelOrder);
         req.setPayGroup(payGroup);
         req.setRefNo(refNo);
-        req.setBizType(bizType.getCode());
+        req.setBizType(bizType);
         req.setBizNote(bizNote);
-        req.setAmount(String.valueOf(amount));
-        req.setBackUrl(PropertiesUtil.Config.PAY_BACK_URL);
-        XN002500Res res = BizConnecter.getBizData("002500",
-            JsonUtil.Object2Json(req), XN002500Res.class);
-        return res;
+        req.setTransAmount(String.valueOf(transAmount));
+        BizConnecter.getBizData("002610", JsonUtils.object2Json(req),
+            Object.class);
     }
-
-    /**
-     * @see com.cdkj.coin.bo.IAccountBO#doWeiXinH5PayRemote(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.cdkj.coin.enums.EBizType, java.lang.String, java.lang.Long, java.lang.String)
-     */
-    @Override
-    public XN002501Res doWeiXinH5PayRemote(String applyUser, String openId,
-            String toUser, String payGroup, String refNo, EBizType bizType,
-            String bizNote, Long amount) {
-        if (StringUtils.isBlank(openId)) {
-            throw new BizException("xn0000", "请先微信登录再支付");
-        }
-        // 获取微信APP支付信息
-        XN002501Req req = new XN002501Req();
-        req.setApplyUser(applyUser);
-        req.setOpenId(openId);
-        req.setToUser(toUser);
-        req.setPayGroup(payGroup);
-        req.setRefNo(refNo);
-        req.setBizType(bizType.getCode());
-        req.setBizNote(bizNote);
-        req.setAmount(String.valueOf(amount));
-        req.setBackUrl(PropertiesUtil.Config.PAY_BACK_URL);
-        XN002501Res res = BizConnecter.getBizData("002501",
-            JsonUtil.Object2Json(req), XN002501Res.class);
-        return res;
-    }
-
-    @Override
-    public XN002510Res doAlipayRemote(String applyUser, String toUser,
-            String payGroup, String refNo, EBizType bizType, String bizNote,
-            Long amount) {
-        // 获取支付宝APP支付信息
-        XN002510Req req = new XN002510Req();
-        req.setApplyUser(applyUser);
-        req.setToUser(toUser);
-        req.setPayGroup(payGroup);
-        req.setRefNo(refNo);
-        req.setBizType(bizType.getCode());
-        req.setBizNote(bizNote);
-        req.setAmount(String.valueOf(amount));
-        req.setBackUrl(PropertiesUtil.Config.PAY_BACK_URL);
-        XN002510Res res = BizConnecter.getBizData("002510",
-            JsonUtil.Object2Json(req), XN002510Res.class);
-        return res;
-    }
-
 }

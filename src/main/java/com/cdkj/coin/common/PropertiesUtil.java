@@ -35,5 +35,10 @@ public class PropertiesUtil {
 
         public static String PAY_BACK_URL = props.getProperty("PAY_BACK_URL");
 
+        public static String ETH_CREATE_URL = props
+            .getProperty("ETH_CREATE_URL");
+
+        public static String ETH_TRADE_URL = props.getProperty("ETH_TRADE_URL");
+
     }
 }

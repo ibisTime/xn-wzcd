@@ -1,9 +1,9 @@
 /**
- * @Title XNlh5014.java 
+ * @Title XNlh5013.java 
  * @Package com.xnjr.moom.api.impl 
  * @Description 
  * @author haiqingzheng  
- * @date 2016年4月17日 下午8:06:49 
+ * @date 2016年4月17日 下午7:40:47 
  * @version V1.0   
  */
 package com.cdkj.coin.api.impl;
@@ -15,22 +15,22 @@ import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.StringValidater;
 import com.cdkj.coin.domain.SYSDict;
-import com.cdkj.coin.dto.req.XN623907Req;
+import com.cdkj.coin.dto.req.XN623905Req;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
 
 /** 
- * 列表查询数据字典
+ * 分页查询数据字典
  * @author: haiqingzheng 
- * @since: 2016年4月17日 下午8:06:49 
+ * @since: 2016年4月17日 下午7:40:47 
  * @history:
  */
-public class XN623907 extends AProcessor {
+public class XN625905 extends AProcessor {
     private ISYSDictAO sysDictAO = SpringContextHolder
         .getBean(ISYSDictAO.class);
 
-    private XN623907Req req = null;
+    private XN623905Req req = null;
 
     /** 
      * @see com.cdkj.coin.api.IProcessor#doBusiness()
@@ -40,16 +40,18 @@ public class XN623907 extends AProcessor {
         SYSDict condition = new SYSDict();
         condition.setCompanyCode(req.getCompanyCode());
         condition.setSystemCode(req.getSystemCode());
-
         condition.setType(req.getType());
         condition.setParentKey(req.getParentKey());
         condition.setDkey(req.getDkey());
+
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = ISYSDictAO.DEFAULT_ORDER_COLUMN;
         }
-        condition.setOrder(orderColumn, "asc");
-        return sysDictAO.querySysDictList(condition);
+        condition.setOrder(orderColumn, req.getOrderDir());
+        int start = StringValidater.toInteger(req.getStart());
+        int limit = StringValidater.toInteger(req.getLimit());
+        return sysDictAO.querySYSDictPage(start, limit, condition);
     }
 
     /** 
@@ -57,8 +59,10 @@ public class XN623907 extends AProcessor {
      */
     @Override
     public void doCheck(String inputparams) throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN623907Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN623905Req.class);
         StringValidater
             .validateBlank(req.getSystemCode(), req.getCompanyCode());
+        StringValidater.validateNumber(req.getStart(), req.getLimit());
     }
+
 }

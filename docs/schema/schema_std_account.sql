@@ -25,9 +25,9 @@ DROP TABLE IF EXISTS `tstd_jour`;
 CREATE TABLE `tstd_jour` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `pay_group` varchar(32) DEFAULT NULL COMMENT '订单分组组号',
-  `ref_no` varchar(32) DEFAULT NULL COMMENT '参考订单号',
+  `ref_no` varchar(255) DEFAULT NULL COMMENT '参考订单号',
   `channel_type` varchar(32) DEFAULT NULL COMMENT '支付渠道类型',
-  `channel_order` varchar(32) DEFAULT NULL COMMENT '支付渠道单号',
+  `channel_order` varchar(255) DEFAULT NULL COMMENT '支付渠道单号',
   
   `account_number` varchar(32) DEFAULT NULL COMMENT '账号',
   `trans_amount` bigint(32) DEFAULT NULL COMMENT '变动金额',
@@ -139,7 +139,7 @@ CREATE TABLE `tstd_withdraw` (
   `channel_order` varchar(32) DEFAULT NULL COMMENT '支付渠道编号',
   `pay_card_info` varchar(255) DEFAULT NULL COMMENT '支付渠道账号信息',
   
-  `pay_card_no` varchar(32) DEFAULT NULL COMMENT '支付渠道账号',
+  `pay_card_no` varchar(255) DEFAULT NULL COMMENT '支付渠道账号',
   `status` varchar(4) NOT NULL COMMENT '状态',
   `apply_user` varchar(32) DEFAULT NULL COMMENT '申请人',
   `apply_note` varchar(255) DEFAULT NULL COMMENT '申请说明',

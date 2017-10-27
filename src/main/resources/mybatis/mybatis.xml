@@ -2,6 +2,7 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
+	    <typeAlias alias="ethAddress" type="com.cdkj.coin.domain.EthAddress" />
 	    
 	    <typeAlias alias="sysDict" type="com.cdkj.coin.domain.SYSDict" />
 	    <typeAlias alias="sysConfig" type="com.cdkj.coin.domain.SYSConfig" />

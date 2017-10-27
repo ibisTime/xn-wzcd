@@ -19,7 +19,7 @@ import com.cdkj.coin.exception.BizException;
  * @history:
  */
 public enum ECurrency {
-    CNY("CNY", "人民币"), YC_CB("CB", "橙券");
+    BTC("BTC", "比特币"), ETH("ETH", "以太币");
 
     public static Map<String, ECurrency> getResultMap() {
         Map<String, ECurrency> map = new HashMap<String, ECurrency>();

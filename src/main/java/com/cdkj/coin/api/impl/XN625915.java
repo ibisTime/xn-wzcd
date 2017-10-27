@@ -18,7 +18,7 @@ import com.cdkj.coin.spring.SpringContextHolder;
  * @since: 2016年4月17日 下午8:30:55 
  * @history:
  */
-public class XN623915 extends AProcessor {
+public class XN625915 extends AProcessor {
     private ISYSConfigAO sysConfigAO = SpringContextHolder
         .getBean(ISYSConfigAO.class);
 

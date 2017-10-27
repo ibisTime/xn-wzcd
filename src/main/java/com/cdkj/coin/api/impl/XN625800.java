@@ -25,7 +25,7 @@ import com.cdkj.coin.spring.SpringContextHolder;
  * @since: 2017年8月21日 下午9:19:46 
  * @history:
  */
-public class XN623800 extends AProcessor {
+public class XN625800 extends AProcessor {
 
     private IUserAO userAO = SpringContextHolder.getBean(IUserAO.class);
 

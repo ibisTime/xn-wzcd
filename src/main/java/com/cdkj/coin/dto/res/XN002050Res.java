@@ -1,5 +1,6 @@
 package com.cdkj.coin.dto.res;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -28,10 +29,10 @@ public class XN002050Res {
     private String currency;
 
     // 余额
-    private Long amount;
+    private BigDecimal amount;
 
     // 冻结金额
-    private Long frozenAmount;
+    private BigDecimal frozenAmount;
 
     // md5
     private String md5;
@@ -120,19 +121,19 @@ public class XN002050Res {
         this.currency = currency;
     }
 
-    public Long getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
-    public Long getFrozenAmount() {
+    public BigDecimal getFrozenAmount() {
         return frozenAmount;
     }
 
-    public void setFrozenAmount(Long frozenAmount) {
+    public void setFrozenAmount(BigDecimal frozenAmount) {
         this.frozenAmount = frozenAmount;
     }
 
