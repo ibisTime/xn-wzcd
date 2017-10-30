@@ -70,7 +70,8 @@ public class EthAddressAOImpl implements IEthAddressAO {
                 .getLongValue(SysConstants.CUR_BLOCK_NUMBER);
             while (true) {
                 blockNumber = blockNumber + 1;
-                System.out.println("*********同步循环开始*******");
+                System.out.println("*********同步循环开始，扫描区块" + blockNumber
+                        + "*******");
                 EthBlock ethBlockResp = web3j.ethGetBlockByNumber(
                     new DefaultBlockParameterNumber(blockNumber), true).send();
                 if (ethBlockResp.getError() != null) {
@@ -124,7 +125,8 @@ public class EthAddressAOImpl implements IEthAddressAO {
                     ESystemCode.COIN.getCode());
                 sysConfigBO.refreshSYSConfig(config.getId(),
                     String.valueOf(blockNumber), "procedure", "当前扫描至哪个区块");
-                System.out.println("*********同步循环结束*******");
+                System.out.println("*********同步循环结束,区块号" + blockNumber
+                        + "*******");
             }
         } catch (IOException e1) {
             logger.error("扫描以太坊区块同步流水发送异常，原因：" + e1.getMessage());
