@@ -8,8 +8,16 @@
  */
 package com.cdkj.coin.eth;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
+
+import org.web3j.protocol.core.DefaultBlockParameterNumber;
+import org.web3j.protocol.core.methods.response.EthBlock;
+import org.web3j.protocol.core.methods.response.EthBlock.TransactionResult;
+import org.web3j.protocol.core.methods.response.Transaction;
+import org.web3j.protocol.http.HttpService;
+import org.web3j.protocol.parity.Parity;
 
 /** 
  * @author: haiqingzheng 
@@ -19,9 +27,25 @@ import java.util.List;
 public class AccountTest {
 
     public static void main(String args[]) {
-        createAccount();
-        // queryAccount();
-        // getBalance();
+        Parity parity = Parity
+            .build(new HttpService("http://116.62.6.195:8545"));
+        try {
+            EthBlock ethBlockResp = parity.ethGetBlockByNumber(
+                new DefaultBlockParameterNumber(44334242423223L), true).send();
+            List<TransactionResult> aa = ethBlockResp.getResult()
+                .getTransactions();
+            for (TransactionResult<Transaction> transactionResult : aa) {
+                Transaction transaction = transactionResult.get();
+                System.out.println(transaction.getTo());
+                if (transaction.getTo().equalsIgnoreCase(
+                    "0x901536393DF4bF66986C12cf98f3D6718C534F20")) {
+                    System.out.println(transaction + "&*&*&*");
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void getBalance() {

@@ -91,5 +91,4 @@
 		<property name="minEvictableIdleTimeMillis" value="600000" />
 	</bean>
 	
-	<bean class="com.cdkj.coin.eth.EthListener"/> 
 </beans>

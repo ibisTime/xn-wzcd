@@ -20,26 +20,17 @@ import com.cdkj.coin.common.PropertiesUtil;
  */
 public class ParityClient {
 
-    private static String createIp = PropertiesUtil.Config.ETH_CREATE_URL;
-
-    private static String tradeIp = PropertiesUtil.Config.ETH_TRADE_URL;
+    private static String ETH_URL = PropertiesUtil.Config.ETH_URL;
 
     private ParityClient() {
     }
 
     private static class ClientHolder {
-        private static final Parity creaateParity = Parity
-            .build(new HttpService(createIp));
-
-        private static final Parity tradeParity = Parity.build(new HttpService(
-            tradeIp));
+        private static final Parity parity = Parity.build(new HttpService(
+            ETH_URL));
     }
 
-    public static final Parity getCreateParity() {
-        return ClientHolder.creaateParity;
-    }
-
-    public static final Parity getTradeParity() {
-        return ClientHolder.tradeParity;
+    public static final Parity getParity() {
+        return ClientHolder.parity;
     }
 }

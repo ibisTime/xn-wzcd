@@ -24,7 +24,7 @@ CREATE TABLE `tstd_account` (
 DROP TABLE IF EXISTS `tstd_jour`;
 CREATE TABLE `tstd_jour` (
   `code` varchar(32) NOT NULL COMMENT '编号',
-  `pay_group` varchar(32) DEFAULT NULL COMMENT '订单分组组号',
+  `pay_group` varchar(255) DEFAULT NULL COMMENT '订单分组组号',
   `ref_no` varchar(255) DEFAULT NULL COMMENT '参考订单号',
   `channel_type` varchar(32) DEFAULT NULL COMMENT '支付渠道类型',
   `channel_order` varchar(255) DEFAULT NULL COMMENT '支付渠道单号',

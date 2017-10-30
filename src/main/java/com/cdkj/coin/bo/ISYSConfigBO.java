@@ -52,4 +52,6 @@ public interface ISYSConfigBO extends IPaginableBO<SYSConfig> {
 
     public Integer getIntegerValue(String key);
 
+    public Long getLongValue(String key);
+
 }

@@ -28,9 +28,7 @@ import org.web3j.protocol.parity.methods.response.PersonalAccountsInfo;
  */
 public class EthAccount {
 
-    private static Parity createParity = ParityClient.getCreateParity();
-
-    private static Parity tradeParity = ParityClient.getTradeParity();
+    private static Parity parity = ParityClient.getParity();
 
     private static Web3j web3j = Web3JClient.getClient();
 
@@ -46,7 +44,7 @@ public class EthAccount {
     public List<String> getAccountlist() {
 
         try {
-            return createParity.personalListAccounts().send().getAccountIds();
+            return parity.personalListAccounts().send().getAccountIds();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,15 +54,15 @@ public class EthAccount {
     public String createAccount(String accountName, String password,
             AccountInfo accountInfo) {
         try {
-            NewAccountIdentifier newAccountIdentifier = createParity
+            NewAccountIdentifier newAccountIdentifier = parity
                 .personalNewAccount(password).send();
             if (newAccountIdentifier != null) {
                 String accountId = newAccountIdentifier.getAccountId();
-                createParity.personalSetAccountName(accountId, accountName);
+                parity.personalSetAccountName(accountId, accountName);
 
                 Map<String, Object> account = new HashMap<String, Object>();
                 account.put(accountId, accountInfo);
-                createParity.personalSetAccountMeta(accountId, account);
+                parity.personalSetAccountMeta(accountId, account);
 
                 return accountId;
             }
@@ -77,7 +75,7 @@ public class EthAccount {
     public PersonalAccountsInfo.AccountsInfo getAccountInfo(String accountId) {
 
         try {
-            PersonalAccountsInfo personalAccountsInfo = createParity
+            PersonalAccountsInfo personalAccountsInfo = parity
                 .personalAccountsInfo().send();
 
             return personalAccountsInfo.getAccountsInfo().get(accountId);

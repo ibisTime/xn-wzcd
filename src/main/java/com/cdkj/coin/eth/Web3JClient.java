@@ -11,6 +11,8 @@ package com.cdkj.coin.eth;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
 
+import com.cdkj.coin.common.PropertiesUtil;
+
 /** 
  * @author: haiqingzheng 
  * @since: 2017年10月18日 下午7:37:41 
@@ -18,7 +20,7 @@ import org.web3j.protocol.http.HttpService;
  */
 public class Web3JClient {
 
-    private static String ip = "http://116.62.6.195:8545/";
+    private static String ETH_URL = PropertiesUtil.Config.ETH_URL;
 
     private Web3JClient() {
     }
@@ -29,7 +31,7 @@ public class Web3JClient {
         if (web3j == null) {
             synchronized (Web3JClient.class) {
                 if (web3j == null) {
-                    web3j = Web3j.build(new HttpService(ip));
+                    web3j = Web3j.build(new HttpService(ETH_URL));
                 }
             }
         }

@@ -14,15 +14,27 @@
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
-	
-  <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
-       <property name="triggers">  
-           <list>
-          </list>  
-       </property>  
-       <property name="autoStartup" value="true"/>  
-    </bean> 
-	
-	
-	
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="ethTransactionSyncTrigger" />
+			</list>
+		</property>
+		<property name="autoStartup" value="true" />
+	</bean>
+
+	<bean id="ethTransactionSyncTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="doEthTransactionSync" />
+		<property name="cronExpression" value="*/5 * * * * ?" /><!-- 每隔5秒执行 -->
+	</bean>
+	<bean id="doEthTransactionSync"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="ethAddressAOImpl" />
+		<property name="targetMethod" value="doEthTransactionSync" />
+		<property name="concurrent" value="false" />   <!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->
+	</bean>
+
+
 </beans>

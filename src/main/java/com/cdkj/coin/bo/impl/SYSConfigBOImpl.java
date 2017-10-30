@@ -138,4 +138,18 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig> implements
         return config.getCvalue();
     }
 
+    @Override
+    public Long getLongValue(String key) {
+        Long result = 0L;
+        SYSConfig config = getSYSConfig(key, ESystemCode.COIN.getCode(),
+            ESystemCode.COIN.getCode());
+        try {
+            result = Long.valueOf(config.getCvalue());
+        } catch (Exception e) {
+            logger.error("参数名为" + key + "的配置转换成Long类型发生错误, 原因："
+                    + e.getMessage());
+        }
+        return result;
+    }
+
 }
