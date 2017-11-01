@@ -20,8 +20,13 @@ import com.cdkj.coin.domain.Account;
  */
 public interface IAccountAO {
 
+    // 根据用户ID获取账户列表信息
     public List<Account> getAccountByUserId(String userId);
 
     // 以太币划转
     public void transfer(String fromUserId, String toAddress, BigDecimal amount);
+
+    // 取现订单支付（广播）
+    public void payOrder(String code, String payUser, String payResult,
+            String payNote);
 }

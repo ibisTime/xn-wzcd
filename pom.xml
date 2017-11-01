@@ -409,11 +409,11 @@
 		<version>3.2</version>
 	</dependency>
 	<!-- Crept deps -->
-	<dependency>
+	<!-- <dependency>
 		<groupId>org.bouncycastle</groupId>
 		<artifactId>bcprov-ext-jdk15on</artifactId>
 		<version>1.47</version>
-	</dependency>
+	</dependency> -->
 	<!-- quartz -->
 	<!-- <dependency>
 		<groupId>opensymphony</groupId>

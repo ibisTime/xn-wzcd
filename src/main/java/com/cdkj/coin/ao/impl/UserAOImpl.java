@@ -18,6 +18,7 @@ import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.common.RandomUtil;
 import com.cdkj.coin.dto.res.XN805041Res;
+import com.cdkj.coin.enums.EEthAddressType;
 import com.cdkj.coin.eth.EthAccount;
 import com.cdkj.coin.exception.BizException;
 
@@ -55,7 +56,8 @@ public class UserAOImpl implements IUserAO {
             userReferee, userRefereeKind, smsCaptcha);
         // 落地用户跟以太坊地址的对应关系
         if (res != null && StringUtils.isNotBlank(res.getUserId())) {
-            ethAddressBO.saveEthAddress(res.getUserId(), accountId, ethPwd);
+            ethAddressBO.saveEthAddress(EEthAddressType.D, res.getUserId(),
+                accountId, ethPwd);
         }
         return res;
     }

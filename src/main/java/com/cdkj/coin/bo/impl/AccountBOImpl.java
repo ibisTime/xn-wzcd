@@ -2,6 +2,7 @@ package com.cdkj.coin.bo.impl;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -12,12 +13,16 @@ import org.springframework.stereotype.Component;
 import com.cdkj.coin.bo.IAccountBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.domain.Account;
+import com.cdkj.coin.domain.Withdraw;
 import com.cdkj.coin.dto.req.XN002050Req;
 import com.cdkj.coin.dto.req.XN002100Req;
 import com.cdkj.coin.dto.req.XN002610Req;
+import com.cdkj.coin.dto.req.XN802753Req;
+import com.cdkj.coin.dto.req.XN802756Req;
 import com.cdkj.coin.dto.res.XN002050Res;
 import com.cdkj.coin.enums.EBizType;
 import com.cdkj.coin.enums.ECurrency;
+import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.http.BizConnecter;
 import com.cdkj.coin.http.JsonUtils;
@@ -119,5 +124,30 @@ public class AccountBOImpl implements IAccountBO {
         req.setTransAmount(String.valueOf(transAmount));
         BizConnecter.getBizData("002610", JsonUtils.object2Json(req),
             Object.class);
+    }
+
+    @Override
+    public void payOrder(String code, String payUser, String payResult,
+            String payNote, String channelOrder) {
+        List<String> codeList = new ArrayList<String>();
+        codeList.add(code);
+        XN802753Req req = new XN802753Req();
+        req.setCodeList(codeList);
+        req.setPayUser(payUser);
+        req.setPayResult(payResult);
+        req.setPayNote(payNote);
+        req.setChannelOrder(channelOrder);
+        req.setSystemCode(ESystemCode.COIN.getCode());
+        BizConnecter.getBizData("802753", JsonUtils.object2Json(req),
+            Object.class);
+    }
+
+    @Override
+    public Withdraw getWithdraw(String code) {
+        XN802756Req req = new XN802756Req();
+        req.setCode(code);
+        req.setSystemCode(ESystemCode.COIN.getCode());
+        return BizConnecter.getBizData("802756", JsonUtils.object2Json(req),
+            Withdraw.class);
     }
 }

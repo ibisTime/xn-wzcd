@@ -17,14 +17,20 @@ public class EthAddress extends ABaseDO {
     // ID主键
     private Long id;
 
-    // 用户编号
-    private String userId;
+    // 地址类型
+    private String type;
 
     // 以太坊地址
     private String address;
 
     // 密码
     private String password;
+
+    // 用户编号
+    private String userId;
+
+    // 状态
+    private String status;
 
     // 创建时间
     private Date createDatetime;
@@ -40,28 +46,44 @@ public class EthAddress extends ABaseDO {
         this.id = id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public String getType() {
+        return type;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Date getCreateDatetime() {

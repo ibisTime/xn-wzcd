@@ -1,5 +1,6 @@
 package com.cdkj.coin.bo;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.web3j.protocol.core.methods.response.EthBlock;
@@ -15,4 +16,6 @@ public interface IEthTransactionBO extends IPaginableBO<EthTransaction> {
 
     public EthTransaction getEthTransaction(String hash);
 
+    public String customTxByWalletFile(String from, String fromPassword,
+            String to, BigInteger amount);
 }

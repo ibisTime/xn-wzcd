@@ -4,9 +4,11 @@
 <mapper namespace="com.cdkj.coin.dao.IEthAddressDAO">
 	<resultMap id="ethAddress_DB_Result" type="ethAddress">
 		<result column="id" property="id" />
-		<result column="user_id" property="userId" />
+		<result column="type" property="type" />
 		<result column="address" property="address" />
 		<result column="password" property="password" />
+		<result column="user_id" property="userId" />
+		<result column="status" property="status" />
 		<result column="create_datetime" property="createDatetime" />
 		<result column="update_datetime" property="updateDatetime" />
 	</resultMap>
@@ -15,19 +17,28 @@
 			<if test="id != null and id != '' ">
 				AND t.id = #{id}
 			</if>
-			<if test="userId != null and userId != '' ">
-				AND t.user_id = #{userId}
+			<if test="type != null and type != '' ">
+				AND t.type = #{type}
 			</if>
 			<if test="address != null and address != '' ">
 				AND t.address = #{address}
+			</if>
+			<if test="userId != null and userId != '' ">
+				AND t.user_id = #{userId}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
 			</if>
 		</trim>
 	</sql>
 	<select id="select_ethAddress" parameterType="ethAddress" resultMap="ethAddress_DB_Result">
 		SELECT
 		t.id
-		,t.user_id
+		,t.type
 		,t.address
+		,t.password
+		,t.user_id
+		,t.status
 		,t.create_datetime
 		,t.update_datetime
 		FROM
@@ -49,16 +60,20 @@
 	<insert id="insert_ethAddress" parameterType="ethAddress">
 		INSERT INTO
 		tcoin_eth_address(
-		user_id
+		type
 		,address
 		,password
+		,user_id
+		,status
 		,create_datetime
 		,update_datetime
 		)
 		VALUES(
-		#{userId}
+		#{type}
 		,#{address}
 		,#{password}
+		,#{userId}
+		,#{status}
 		,#{createDatetime}
 		,#{updateDatetime}
 		)

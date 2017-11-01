@@ -136,7 +136,7 @@ CREATE TABLE `tstd_withdraw` (
   `fee` bigint(20) DEFAULT NULL COMMENT '手续费',
   `channel_type` varchar(32) DEFAULT NULL COMMENT '支付渠道',
   `channel_bank` varchar(32) DEFAULT NULL COMMENT '渠道银行代号',
-  `channel_order` varchar(32) DEFAULT NULL COMMENT '支付渠道编号',
+  `channel_order` varchar(255) DEFAULT NULL COMMENT '支付渠道编号',
   `pay_card_info` varchar(255) DEFAULT NULL COMMENT '支付渠道账号信息',
   
   `pay_card_no` varchar(255) DEFAULT NULL COMMENT '支付渠道账号',

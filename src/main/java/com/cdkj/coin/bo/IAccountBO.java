@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import com.cdkj.coin.domain.Account;
+import com.cdkj.coin.domain.Withdraw;
 import com.cdkj.coin.enums.EBizType;
 import com.cdkj.coin.enums.ECurrency;
 
@@ -38,5 +39,12 @@ public interface IAccountBO {
     public void changeAmount(String accountNumber, String channelType,
             String channelOrder, String payGroup, String refNo, String bizType,
             String bizNote, BigInteger transAmount);
+
+    // 取现订单审批
+    public void payOrder(String code, String payUser, String payResult,
+            String payNote, String channelOrder);
+
+    // 获取取现详情
+    public Withdraw getWithdraw(String code);
 
 }

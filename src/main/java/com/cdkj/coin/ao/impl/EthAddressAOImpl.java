@@ -32,6 +32,7 @@ import com.cdkj.coin.domain.SYSConfig;
 import com.cdkj.coin.enums.EBizType;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECurrency;
+import com.cdkj.coin.enums.EEthAddressType;
 import com.cdkj.coin.enums.ESystemAccount;
 import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.eth.Web3JClient;
@@ -90,7 +91,8 @@ public class EthAddressAOImpl implements IEthAddressAO {
                                 if (StringUtils.isNotBlank(toAddress)) {
                                     // 查询改地址是否在我们系统中存在
                                     EthAddress ethAddress = ethAddressBO
-                                        .getEthAddress(toAddress);
+                                        .getEthAddress(EEthAddressType.D,
+                                            toAddress);
                                     // 存在逻辑
                                     if (ethAddress != null) {
                                         // 落地交易信息
@@ -119,14 +121,17 @@ public class EthAddressAOImpl implements IEthAddressAO {
                                     }
                                 }
                             });
+                } else {
+                    System.out.println("*********同步循环结束,区块号"
+                            + (blockNumber - 1) + "为最后一个区块*******");
+                    break;
                 }
                 SYSConfig config = sysConfigBO.getSYSConfig(
                     SysConstants.CUR_BLOCK_NUMBER, ESystemCode.COIN.getCode(),
                     ESystemCode.COIN.getCode());
                 sysConfigBO.refreshSYSConfig(config.getId(),
                     String.valueOf(blockNumber), "procedure", "当前扫描至哪个区块");
-                System.out.println("*********同步循环结束,区块号" + blockNumber
-                        + "*******");
+
             }
         } catch (IOException e1) {
             logger.error("扫描以太坊区块同步流水发送异常，原因：" + e1.getMessage());

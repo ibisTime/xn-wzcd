@@ -11,6 +11,8 @@ import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.base.PaginableBOImpl;
 import com.cdkj.coin.dao.IEthAddressDAO;
 import com.cdkj.coin.domain.EthAddress;
+import com.cdkj.coin.enums.EEthAddressStatus;
+import com.cdkj.coin.enums.EEthAddressType;
 import com.cdkj.coin.exception.BizException;
 
 @Component
@@ -21,13 +23,16 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
     private IEthAddressDAO ethAddressDAO;
 
     @Override
-    public int saveEthAddress(String userId, String address, String password) {
+    public int saveEthAddress(EEthAddressType type, String userId,
+            String address, String password) {
         int count = 0;
         Date now = new Date();
         EthAddress data = new EthAddress();
-        data.setUserId(userId);
+        data.setType(type.getCode());
         data.setAddress(address);
         data.setPassword(password);
+        data.setUserId(userId);
+        data.setStatus(EEthAddressStatus.NORMAL.getCode());
         data.setCreateDatetime(now);
         data.setUpdateDatetime(now);
         count = ethAddressDAO.insert(data);
@@ -36,6 +41,14 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
 
     @Override
     public List<EthAddress> queryEthAddressList(EthAddress condition) {
+        return ethAddressDAO.selectList(condition);
+    }
+
+    @Override
+    public List<EthAddress> queryMEthAddressList() {
+        EthAddress condition = new EthAddress();
+        condition.setType(EEthAddressType.M.getCode());
+        condition.setStatus(EEthAddressStatus.NORMAL.getCode());
         return ethAddressDAO.selectList(condition);
     }
 
@@ -54,9 +67,10 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
     }
 
     @Override
-    public EthAddress getEthAddress(String address) {
+    public EthAddress getEthAddress(EEthAddressType type, String address) {
         EthAddress data = null;
         EthAddress condition = new EthAddress();
+        condition.setType(type.getCode());
         condition.setAddress(address);
         List<EthAddress> results = ethAddressDAO.selectList(condition);
         if (CollectionUtils.isNotEmpty(results)) {
@@ -76,4 +90,5 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
         }
         return data;
     }
+
 }
