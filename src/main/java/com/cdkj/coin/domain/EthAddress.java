@@ -1,5 +1,6 @@
 package com.cdkj.coin.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.cdkj.coin.dao.base.ABaseDO;
@@ -15,7 +16,7 @@ public class EthAddress extends ABaseDO {
     private static final long serialVersionUID = 1L;
 
     // ID主键
-    private Long id;
+    private String code;
 
     // 地址类型
     private String type;
@@ -29,21 +30,33 @@ public class EthAddress extends ABaseDO {
     // 用户编号
     private String userId;
 
+    // 以太坊真实余额
+    private BigDecimal balance;
+
+    // 可用时间起
+    private Date availableDatetimeStart;
+
+    // 可用时间止
+    private Date availableDatetimeEnd;
+
     // 状态
     private String status;
 
     // 创建时间
     private Date createDatetime;
 
+    // 弃用时间
+    private Date abandonDatetime;
+
     // 更新时间
     private Date updateDatetime;
 
-    public Long getId() {
-        return id;
+    public String getCode() {
+        return code;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getType() {
@@ -78,6 +91,30 @@ public class EthAddress extends ABaseDO {
         this.userId = userId;
     }
 
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public Date getAvailableDatetimeStart() {
+        return availableDatetimeStart;
+    }
+
+    public void setAvailableDatetimeStart(Date availableDatetimeStart) {
+        this.availableDatetimeStart = availableDatetimeStart;
+    }
+
+    public Date getAvailableDatetimeEnd() {
+        return availableDatetimeEnd;
+    }
+
+    public void setAvailableDatetimeEnd(Date availableDatetimeEnd) {
+        this.availableDatetimeEnd = availableDatetimeEnd;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -92,6 +129,14 @@ public class EthAddress extends ABaseDO {
 
     public void setCreateDatetime(Date createDatetime) {
         this.createDatetime = createDatetime;
+    }
+
+    public Date getAbandonDatetime() {
+        return abandonDatetime;
+    }
+
+    public void setAbandonDatetime(Date abandonDatetime) {
+        this.abandonDatetime = abandonDatetime;
     }
 
     public Date getUpdateDatetime() {

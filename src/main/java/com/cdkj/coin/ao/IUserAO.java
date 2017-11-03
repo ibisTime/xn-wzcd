@@ -22,9 +22,9 @@ public interface IUserAO {
             String systemCode);
 
     // 注册前端用户
-    public XN805041Res doRegister(String mobile, String loginPwd,
-            String userReferee, String userRefereeKind, String smsCaptcha,
-            String kind, String isRegHx, String province, String city,
+    public XN805041Res doRegister(String mobile, String nickname,
+            String loginPwd, String userReferee, String userRefereeKind,
+            String smsCaptcha, String kind, String province, String city,
             String area, String address, String companyCode, String systemCode);
 
     // 代注册

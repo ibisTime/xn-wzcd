@@ -3,19 +3,23 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.coin.dao.IEthAddressDAO">
 	<resultMap id="ethAddress_DB_Result" type="ethAddress">
-		<result column="id" property="id" />
+		<result column="code" property="code" />
 		<result column="type" property="type" />
 		<result column="address" property="address" />
 		<result column="password" property="password" />
 		<result column="user_id" property="userId" />
+		<result column="balance" property="balance" />
+		<result column="available_datetime_start" property="availableDatetimeStart" />
+		<result column="available_datetime_end" property="availableDatetimeEnd" />
 		<result column="status" property="status" />
 		<result column="create_datetime" property="createDatetime" />
+		<result column="abandon_datetime" property="abandonDatetime" />
 		<result column="update_datetime" property="updateDatetime" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="id != null and id != '' ">
-				AND t.id = #{id}
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
 			</if>
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
@@ -33,16 +37,19 @@
 	</sql>
 	<select id="select_ethAddress" parameterType="ethAddress" resultMap="ethAddress_DB_Result">
 		SELECT
-		t.id
+		t.code
 		,t.type
 		,t.address
-		,t.password
 		,t.user_id
+		,t.balance
+		,t.available_datetime_start
+		,t.available_datetime_end
 		,t.status
 		,t.create_datetime
+		,t.abandon_datetime
 		,t.update_datetime
 		FROM
-		tcoin_eth_address t
+		teth_address t
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -53,28 +60,38 @@
 
 	<select id="select_ethAddress_count" parameterType="ethAddress"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tcoin_eth_address t
+		SELECT count(1) FROM teth_address t
 		<include refid="where_condition" />
 	</select>
 
 	<insert id="insert_ethAddress" parameterType="ethAddress">
 		INSERT INTO
-		tcoin_eth_address(
-		type
+		teth_address(
+		code
+		,type
 		,address
 		,password
 		,user_id
+		,balance
+		,available_datetime_start
+		,available_datetime_end
 		,status
 		,create_datetime
+		,abandon_datetime
 		,update_datetime
 		)
 		VALUES(
-		#{type}
+		#{code}
+		,#{type}
 		,#{address}
 		,#{password}
 		,#{userId}
+		,#{balance}
+		,#{availableDatetimeStart}
+		,#{availableDatetimeEnd}
 		,#{status}
 		,#{createDatetime}
+		,#{abandonDatetime}
 		,#{updateDatetime}
 		)
 	</insert>

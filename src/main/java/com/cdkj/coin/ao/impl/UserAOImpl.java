@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.coin.ao.IUserAO;
 import com.cdkj.coin.bo.IAccountBO;
+import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IFieldTimesBO;
 import com.cdkj.coin.bo.IIdentifyBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
@@ -71,6 +72,9 @@ public class UserAOImpl implements IUserAO {
     protected IUserBO userBO;
 
     @Autowired
+    protected IEthAddressBO ethAddressBO;
+
+    @Autowired
     protected IAccountBO accountBO;
 
     @Autowired
@@ -102,29 +106,33 @@ public class UserAOImpl implements IUserAO {
 
     @Override
     @Transactional
-    public XN805041Res doRegister(String mobile, String loginPwd,
-            String userReferee, String userRefereeKind, String smsCaptcha,
-            String kind, String isRegHx, String province, String city,
+    public XN805041Res doRegister(String mobile, String nickname,
+            String loginPwd, String userReferee, String userRefereeKind,
+            String smsCaptcha, String kind, String province, String city,
             String area, String address, String companyCode, String systemCode) {
-        // 1、参数校验
         // 验证手机号是否存在
         userBO.isMobileExist(mobile, kind, companyCode, systemCode);
         // 验证推荐人是否存在,并将手机号转化为用户编号
         String userRefereeId = userBO.getUserId(userReferee, userRefereeKind,
             companyCode, systemCode);
         // 验证短信验证码
-        // smsOutBO.checkCaptcha(mobile, smsCaptcha, "805041", companyCode,
-        // systemCode);
-        // 2、注册用户
-        String userId = userBO.doRegister(mobile, loginPwd, userRefereeId,
-            kind, province, city, area, address, companyCode, systemCode);
-        // 3、分配账户
+        // smsOutBO.checkCaptcha(mobile, smsCaptcha,
+        // ECaptchaType.C_REG.getCode(),
+        // companyCode, systemCode);
+        // 注册用户
+        String userId = userBO.doRegister(mobile, nickname, loginPwd,
+            userRefereeId, kind, province, city, area, address, companyCode,
+            systemCode);
+        // 分配账户
         distributeAccount(userId, mobile, kind, companyCode, systemCode);
-        // 4、注册送积分
+        // 生成ETH地址
+        String ethAddress = ethAddressBO.generateXAddress(mobile, userId);
+        // todo通知橙提取
+        // 注册送积分
         Long amount = addRegAmount(userId, mobile, kind, companyCode,
             systemCode);
-        // 5、第三方账号注册
-        thirdRegist(userId, isRegHx, companyCode, systemCode);
+        // // 第三方账号注册
+        // thirdRegist(userId, isRegHx, companyCode, systemCode);
 
         return new XN805041Res(userId, userRefereeId, amount);
     }
@@ -133,7 +141,7 @@ public class UserAOImpl implements IUserAO {
     private void distributeAccount(String userId, String mobile, String kind,
             String companyCode, String systemCode) {
         List<String> currencyList = new ArrayList<String>();
-        currencyList.add(ECurrency.BTC.getCode());
+        // currencyList.add(ECurrency.BTC.getCode());
         currencyList.add(ECurrency.ETH.getCode());
         for (String currency : currencyList) {
             accountBO.distributeAccount(userId, mobile,

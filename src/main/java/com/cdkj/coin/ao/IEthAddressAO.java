@@ -14,6 +14,7 @@ package com.cdkj.coin.ao;
  * @history:
  */
 public interface IEthAddressAO {
+
     // 定时器调用：每隔**同步账户流水
     public void doEthTransactionSync();
 }

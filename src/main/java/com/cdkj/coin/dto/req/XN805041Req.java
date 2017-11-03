@@ -1,44 +1,42 @@
 package com.cdkj.coin.dto.req;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN805041Req {
-    // 手机号(必填)
-    private String mobile;
 
-    // 注册密码(必填)
-    private String loginPwd;
+    @NotBlank
+    private String mobile; // 手机号
 
-    // 推荐人类型(选填)
-    private String userRefereeKind;
+    @Length(min = 3, max = 10)
+    private String nickname; // 昵称
 
-    // 推荐人(选填)
-    private String userReferee;
+    @NotBlank
+    private String loginPwd; // 登录密码
 
-    // 手机验证码(必填)
-    private String smsCaptcha;
+    private String userRefereeKind; // 推荐人类型(选填)
 
-    // 类别(必填)
-    private String kind;
+    private String userReferee; // 推荐人(选填)
 
-    // 省(选填)
-    private String province;
+    @NotBlank
+    private String smsCaptcha; // 手机验证码
 
-    // 市(选填)
-    private String city;
+    @NotBlank
+    private String kind; // 用户类型
 
-    // 区(选填)
-    private String area;
+    private String province; // 省(选填)
 
-    // 详细地址(选填)
-    private String address;
+    private String city; // 市(选填)
 
-    // 是否注册环信(必填)
-    private String isRegHx;
+    private String area; // 区(选填)
 
-    // 公司编号(必填)
-    private String companyCode;
+    private String address; // 详细地址(选填)
 
-    // 系统编号(必填)
-    private String systemCode;
+    @NotBlank
+    private String companyCode; // 公司编号(必填)
+
+    @NotBlank
+    private String systemCode; // 系统编号(必填)
 
     public String getMobile() {
         return mobile;
@@ -46,6 +44,14 @@ public class XN805041Req {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getLoginPwd() {
@@ -118,14 +124,6 @@ public class XN805041Req {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getIsRegHx() {
-        return isRegHx;
-    }
-
-    public void setIsRegHx(String isRegHx) {
-        this.isRegHx = isRegHx;
     }
 
     public String getCompanyCode() {

@@ -43,7 +43,7 @@ public interface IUserBO extends IPaginableBO<User> {
             String appOpenId, String companyCode, String systemCode);
 
     // 前端用户注册
-    public String doRegister(String mobile, String loginPwd,
+    public String doRegister(String mobile, String nickname, String loginPwd,
             String userReferee, String kind, String province, String city,
             String area, String address, String companyCode, String systemCode);
 

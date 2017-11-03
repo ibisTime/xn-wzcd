@@ -11,9 +11,14 @@ public class RandomUtil {
         return String.valueOf(random);
     }
 
+    public static String generate8() {
+        int random = (int) ((Math.random() * 9 + 1) * 10000000);
+        return String.valueOf(random);
+    }
+
     public static void main(String[] args) {
         for (int i = 0; i <= 50; i++) {
-            System.out.println(generate6());
+            System.out.println(generate8());
         }
     }
 }

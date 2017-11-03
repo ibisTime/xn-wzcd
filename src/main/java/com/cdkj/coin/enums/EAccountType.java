@@ -25,7 +25,7 @@ public enum EAccountType {
         Map<String, EAccountType> map = getAccountTypeResultMap();
         EAccountType result = map.get(code);
         if (result == null) {
-            throw new BizException("XN0000", code + "对应的ccountType不存在");
+            throw new BizException("XN0000", code + "对应的accountType不存在");
         }
         return result;
     }

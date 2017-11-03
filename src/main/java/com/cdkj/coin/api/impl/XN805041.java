@@ -4,7 +4,7 @@ import com.cdkj.coin.ao.IUserAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.common.PhoneUtil;
-import com.cdkj.coin.core.StringValidater;
+import com.cdkj.coin.core.ObjValidater;
 import com.cdkj.coin.dto.req.XN805041Req;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
@@ -23,19 +23,20 @@ public class XN805041 extends AProcessor {
 
     @Override
     public synchronized Object doBusiness() throws BizException {
-        return userAO.doRegister(req.getMobile(), req.getLoginPwd(),
-            req.getUserReferee(), req.getUserRefereeKind(),
-            req.getSmsCaptcha(), req.getKind(), req.getIsRegHx(),
-            req.getProvince(), req.getCity(), req.getArea(), req.getAddress(),
+        return userAO.doRegister(req.getMobile(), req.getNickname(),
+            req.getLoginPwd(), req.getUserReferee(), req.getUserRefereeKind(),
+            req.getSmsCaptcha(), req.getKind(), req.getProvince(),
+            req.getCity(), req.getArea(), req.getAddress(),
             req.getCompanyCode(), req.getSystemCode());
     }
 
     @Override
     public void doCheck(String inputparams) throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN805041Req.class);
-        StringValidater.validateBlank(req.getMobile(), req.getLoginPwd(),
-            req.getSmsCaptcha(), req.getKind(), req.getCompanyCode(),
-            req.getSystemCode());
+        // StringValidater.validateBlank(req.getMobile(), req.getNickname(),
+        // req.getLoginPwd(), req.getSmsCaptcha(), req.getKind(),
+        // req.getCompanyCode(), req.getSystemCode());
         PhoneUtil.checkMobile(req.getMobile());// 判断格式
+        ObjValidater.validateReq(req);
     }
 }
