@@ -1,153 +1,340 @@
 package com.cdkj.coin.bo.impl;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.coin.bo.IAccountBO;
-import com.cdkj.coin.bo.ISYSConfigBO;
+import com.cdkj.coin.bo.IExchangeCurrencyBO;
+import com.cdkj.coin.bo.IJourBO;
+import com.cdkj.coin.bo.base.PaginableBOImpl;
+import com.cdkj.coin.common.AmountUtil;
+import com.cdkj.coin.core.AccountUtil;
+import com.cdkj.coin.core.OrderNoGenerater;
+import com.cdkj.coin.dao.IAccountDAO;
 import com.cdkj.coin.domain.Account;
-import com.cdkj.coin.domain.Withdraw;
-import com.cdkj.coin.dto.req.XN002050Req;
-import com.cdkj.coin.dto.req.XN002100Req;
-import com.cdkj.coin.dto.req.XN002610Req;
-import com.cdkj.coin.dto.req.XN802753Req;
-import com.cdkj.coin.dto.req.XN802756Req;
-import com.cdkj.coin.dto.res.XN002050Res;
+import com.cdkj.coin.domain.HLOrder;
+import com.cdkj.coin.enums.EAccountStatus;
+import com.cdkj.coin.enums.EAccountType;
 import com.cdkj.coin.enums.EBizType;
+import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECurrency;
-import com.cdkj.coin.enums.ESystemCode;
+import com.cdkj.coin.enums.EGeneratePrefix;
+import com.cdkj.coin.enums.ESysUser;
 import com.cdkj.coin.exception.BizException;
-import com.cdkj.coin.http.BizConnecter;
-import com.cdkj.coin.http.JsonUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
+/**
+ * @author: xieyj 
+ * @since: 2016年12月23日 下午5:24:53 
+ * @history:
+ */
 @Component
-public class AccountBOImpl implements IAccountBO {
-    static Logger logger = Logger.getLogger(AccountBOImpl.class);
+public class AccountBOImpl extends PaginableBOImpl<Account> implements
+        IAccountBO {
+    @Autowired
+    private IAccountDAO accountDAO;
 
     @Autowired
-    private ISYSConfigBO sysConfigBO;
+    private IJourBO jourBO;
+
+    @Autowired
+    private IExchangeCurrencyBO exchangeCurrencyBO;
 
     @Override
-    public Account getRemoteAccount(String userId, ECurrency currency) {
-        XN002050Req req = new XN002050Req();
-        req.setUserId(userId);
-        req.setCurrency(currency.getCode());
-        String jsonStr = BizConnecter.getBizData("002050",
-            JsonUtils.object2Json(req));
-        Gson gson = new Gson();
-        List<XN002050Res> list = gson.fromJson(jsonStr,
-            new TypeToken<List<XN002050Res>>() {
-            }.getType());
-        if (CollectionUtils.isEmpty(list)) {
-            throw new BizException("xn000000", "用户[" + userId + "]账户不存在");
+    public String distributeAccount(String userId, String realName,
+            EAccountType accountType, String currency, String systemCode,
+            String companyCode) {
+        String accountNumber = null;
+        if (StringUtils.isNotBlank(systemCode)
+                && StringUtils.isNotBlank(companyCode)
+                && StringUtils.isNotBlank(userId)) {
+            accountNumber = OrderNoGenerater.generate(EGeneratePrefix.Account
+                .getCode());
+            Account data = new Account();
+            data.setAccountNumber(accountNumber);
+            data.setUserId(userId);
+            data.setRealName(realName);
+
+            data.setType(accountType.getCode());
+            data.setCurrency(currency);
+            data.setStatus(EAccountStatus.NORMAL.getCode());
+            data.setAmount(BigDecimal.ZERO);
+            data.setFrozenAmount(BigDecimal.ZERO);
+
+            data.setMd5(AccountUtil.md5(data.getAmount()));
+            data.setAddAmount(BigDecimal.ZERO);
+            data.setInAmount(BigDecimal.ZERO);
+            data.setOutAmount(BigDecimal.ZERO);
+            data.setCreateDatetime(new Date());
+
+            data.setSystemCode(systemCode);
+            data.setCompanyCode(companyCode);
+            accountDAO.insert(data);
         }
-        XN002050Res res = list.get(0);
-        Account account = new Account();
-        account.setAccountNumber(res.getAccountNumber());
-        account.setUserId(res.getUserId());
-        account.setRealName(res.getRealName());
-        account.setType(res.getType());
-        account.setStatus(res.getStatus());
-
-        account.setCurrency(res.getCurrency());
-        account.setAmount(res.getAmount());
-        account.setFrozenAmount(res.getFrozenAmount());
-        account.setCreateDatetime(res.getCreateDatetime());
-        account.setLastOrder(res.getLastOrder());
-
-        account.setSystemCode(res.getSystemCode());
-        return account;
+        return accountNumber;
     }
 
     @Override
-    public void doTransferAmountRemote(String fromUserId, String toUserId,
-            ECurrency currency, BigDecimal amount, EBizType bizType,
-            String fromBizNote, String toBizNote, String refNo) {
-        if (amount != null && amount.compareTo(BigDecimal.ZERO) != 0) {
-            XN002100Req req = new XN002100Req();
-            req.setFromUserId(fromUserId);
-            req.setFromCurrency(currency.getCode());
-            req.setToUserId(toUserId);
-            req.setToCurrency(currency.getCode());
-            req.setTransAmount(amount.toString());
-            req.setBizType(bizType.getCode());
-            req.setFromBizNote(fromBizNote);
-            req.setToBizNote(toBizNote);
-            req.setRefNo(refNo);
-            BizConnecter.getBizData("002100", JsonUtils.object2Json(req),
-                Object.class);
+    public void changeAmount(String accountNumber, EChannelType channelType,
+            String channelOrder, String payGroup, String refNo,
+            EBizType bizType, String bizNote, BigDecimal transAmount) {
+        Account dbAccount = this.getAccount(accountNumber);
+        BigDecimal nowAmount = dbAccount.getAmount().add(transAmount);
+        // 特定账户余额可为负
+        if (!dbAccount.getUserId().contains(ESysUser.SYS_USER.getCode())
+                && nowAmount.compareTo(BigDecimal.ZERO) == -1) {
+            System.out.println("error account:" + accountNumber + " dbAmount="
+                    + dbAccount.getAmount() + " transAmount=" + transAmount
+                    + " nowAmount=" + nowAmount);
+            throw new BizException("xn000000", "账户余额不足");
+        }
+        // 记录流水
+        String lastOrder = jourBO.addJour(dbAccount, channelType, channelOrder,
+            payGroup, refNo, bizType, bizNote, transAmount);
+
+        // 更改余额
+        Account data = new Account();
+        data.setAccountNumber(accountNumber);
+        data.setAmount(nowAmount);
+        data.setMd5(AccountUtil.md5(dbAccount.getMd5(), dbAccount.getAmount(),
+            nowAmount));
+        // 统计累计增加金额
+        data.setAddAmount(dbAccount.getAddAmount());
+        if (transAmount.compareTo(BigDecimal.ZERO) == 1) {
+            data.setAddAmount(dbAccount.getAddAmount().add(transAmount));
+        }
+        // 统计累计充值金额
+        data.setInAmount(dbAccount.getInAmount());
+        if (EBizType.AJ_CHARGE.getCode().equals(bizType.getCode())) {
+            data.setInAmount(dbAccount.getInAmount().add(transAmount));
+        }
+        data.setLastOrder(lastOrder);
+        accountDAO.updateAmount(data);
+    }
+
+    @Override
+    public void changeAmountNotJour(String accountNumber,
+            BigDecimal transAmount, String lastOrder) {
+        Account dbAccount = this.getAccount(accountNumber);
+        BigDecimal nowAmount = dbAccount.getAmount().add(transAmount);
+        if (!dbAccount.getUserId().contains(ESysUser.SYS_USER.getCode())
+                && nowAmount.compareTo(BigDecimal.ZERO) == -1) {
+            throw new BizException("xn000000", "账户余额不足");
+        }
+        // 更改余额
+        Account data = new Account();
+        data.setAccountNumber(accountNumber);
+        data.setAmount(nowAmount);
+        data.setMd5(AccountUtil.md5(dbAccount.getMd5(), dbAccount.getAmount(),
+            nowAmount));
+
+        // 更新统计金额
+        data.setAddAmount(dbAccount.getAddAmount());
+        if (transAmount.compareTo(BigDecimal.ZERO) == 1) {
+            data.setAddAmount(dbAccount.getAddAmount().add(transAmount));
+        }
+        data.setInAmount(dbAccount.getInAmount());
+        data.setLastOrder(lastOrder);
+        accountDAO.updateAmount(data);
+    }
+
+    @Override
+    public void changeAmountForHL(HLOrder order) {
+        Account dbAccount = this.getAccount(order.getAccountNumber());
+        BigDecimal nowAmount = dbAccount.getAmount().add(order.getAmount());
+        // 记录流水
+        String lastOrder = jourBO.addJourForHL(dbAccount, order);
+        // 更改余额
+        Account data = new Account();
+        data.setAccountNumber(dbAccount.getAccountNumber());
+        data.setAmount(nowAmount);
+        data.setMd5(AccountUtil.md5(dbAccount.getMd5(), dbAccount.getAmount(),
+            nowAmount));
+        // 更新统计金额
+        data.setAddAmount(dbAccount.getAddAmount());
+        BigDecimal amount = order.getAmount();
+        if (amount.compareTo(BigDecimal.ZERO) == 1) {
+            data.setAddAmount(dbAccount.getAddAmount().add(amount));
+        }
+        data.setInAmount(dbAccount.getInAmount());
+        data.setLastOrder(lastOrder);
+        accountDAO.updateAmount(data);
+    }
+
+    @Override
+    public void frozenAmount(Account dbAccount, BigDecimal freezeAmount,
+            String withdrawCode) {
+        if (freezeAmount.compareTo(BigDecimal.ZERO) == 0
+                || freezeAmount.compareTo(BigDecimal.ZERO) == -1) {
+            throw new BizException("xn000000", "冻结金额需大于0");
+        }
+        BigDecimal nowAmount = dbAccount.getAmount().subtract(freezeAmount);
+        if (nowAmount.compareTo(BigDecimal.ZERO) == -1) {
+            throw new BizException("xn000000", "账户余额不足");
+        }
+        // 记录流水
+        String lastOrder = jourBO.addJour(dbAccount, EChannelType.Offline,
+            null, null, withdrawCode, EBizType.AJ_WITHDRAW, "线下取现",
+            freezeAmount.negate());
+        BigDecimal nowFrozenAmount = dbAccount.getFrozenAmount().add(
+            freezeAmount);
+        Account data = new Account();
+        data.setAccountNumber(dbAccount.getAccountNumber());
+        data.setAmount(nowAmount);
+        data.setFrozenAmount(nowFrozenAmount);
+        data.setMd5(AccountUtil.md5(dbAccount.getMd5(), dbAccount.getAmount(),
+            nowAmount));
+        data.setLastOrder(lastOrder);
+        accountDAO.frozenAmount(data);
+    }
+
+    @Override
+    public void unfrozenAmount(Account dbAccount, BigDecimal freezeAmount,
+            String withdrawCode) {
+        if (freezeAmount.compareTo(BigDecimal.ZERO) == 0
+                || freezeAmount.compareTo(BigDecimal.ZERO) == -1) {
+            throw new BizException("xn000000", "解冻金额需大于0");
+        }
+        BigDecimal nowFrozenAmount = dbAccount.getFrozenAmount().add(
+            freezeAmount);
+        if (nowFrozenAmount.compareTo(BigDecimal.ZERO) == -1) {
+            throw new BizException("xn000000", "本次解冻会使账户冻结金额小于0");
+        }
+
+        // 记录流水
+        String lastOrder = jourBO.addJour(dbAccount, EChannelType.Offline,
+            null, null, withdrawCode, EBizType.AJ_WITHDRAW, "线下取现失败退回",
+            freezeAmount);
+        Account data = new Account();
+        data.setAccountNumber(dbAccount.getAccountNumber());
+        data.setAmount(dbAccount.getAmount().add(freezeAmount));
+        data.setFrozenAmount(nowFrozenAmount);
+        data.setMd5(AccountUtil.md5(dbAccount.getMd5(), dbAccount.getAmount(),
+            dbAccount.getAmount().add(freezeAmount)));
+        data.setLastOrder(lastOrder);
+        accountDAO.unfrozenAmount(data);
+    }
+
+    @Override
+    public void cutFrozenAmount(Account dbAccount, BigDecimal freezeAmount) {
+        if (freezeAmount.compareTo(BigDecimal.ZERO) == 0
+                || freezeAmount.compareTo(BigDecimal.ZERO) == -1) {
+            throw new BizException("xn000000", "解冻金额需大于0");
+        }
+        BigDecimal nowFrozenAmount = dbAccount.getFrozenAmount().subtract(
+            freezeAmount);
+        if (nowFrozenAmount.compareTo(BigDecimal.ZERO) == -1) {
+            throw new BizException("xn000000", "本次扣减会使账户冻结金额小于0");
+        }
+        Account data = new Account();
+        data.setAccountNumber(dbAccount.getAccountNumber());
+        data.setFrozenAmount(nowFrozenAmount);
+        // 统计累计取现金额
+        data.setOutAmount(dbAccount.getOutAmount().add(freezeAmount));
+        accountDAO.cutFrozenAmount(data);
+    }
+
+    @Override
+    public void refreshStatus(String accountNumber, EAccountStatus status) {
+        if (StringUtils.isNotBlank(accountNumber)) {
+            Account data = new Account();
+            data.setAccountNumber(accountNumber);
+            data.setStatus(status.getCode());
+            accountDAO.updateStatus(data);
         }
     }
 
     @Override
-    public void doTransferAmountRemote(String fromUserId,
-            ECurrency fromCurrency, String toUserId, ECurrency toCurrency,
-            Long amount, EBizType bizType, String fromBizNote,
+    public Account getAccount(String accountNumber) {
+        Account data = null;
+        if (StringUtils.isNotBlank(accountNumber)) {
+            Account condition = new Account();
+            condition.setAccountNumber(accountNumber);
+            data = accountDAO.select(condition);
+            if (data == null) {
+                throw new BizException("xn702502", "无对应账户，请检查账号正确性");
+            }
+        }
+        return data;
+    }
+
+    @Override
+    public List<Account> queryAccountList(Account data) {
+        return accountDAO.selectList(data);
+    }
+
+    /** 
+     * @see com.std.account.bo.IAccountBO#getAccountByUser(java.lang.String, java.lang.String, java.lang.String)
+     */
+    @Override
+    public Account getAccountByUser(String userId, String currency) {
+        Account data = null;
+        if (StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(currency)) {
+            Account condition = new Account();
+            condition.setUserId(userId);
+            condition.setCurrency(currency);
+            data = accountDAO.select(condition);
+            if (data == null) {
+                throw new BizException("xn802000", "用户[" + userId + ";"
+                        + currency + "]无此类型账户");
+            }
+        }
+        return data;
+    }
+
+    /** 
+     * @see com.std.account.bo.IAccountBO#refreshAccountName(java.lang.String, java.lang.String)
+     */
+    @Override
+    public void refreshAccountName(String userId, String realName) {
+        Account data = new Account();
+        data.setUserId(userId);
+        data.setRealName(realName);
+        accountDAO.updateRealName(data);
+    }
+
+    /** 
+     * @see com.std.account.bo.IAccountBO#getSysAccount(java.lang.String, java.lang.String)
+     */
+    @Override
+    public Account getSysAccountNumber(String systemCode, String companyCode,
+            ECurrency currency) {
+        Account condition = new Account();
+        // 平台账户只有一类,类型+币种+公司+系统=唯一系统账户
+        condition.setType(EAccountType.Plat.getCode());
+        condition.setSystemCode(systemCode);
+        condition.setCompanyCode(companyCode);
+        condition.setCurrency(currency.getCode());
+        return accountDAO.select(condition);
+    }
+
+    @Override
+    public void transAmountCZB(String fromUserId, String fromCurrency,
+            String toUserId, String toCurrency, BigDecimal transAmount,
+            EBizType bizType, String fromBizNote, String toBizNote, String refNo) {
+        Account fromAccount = this.getAccountByUser(fromUserId, fromCurrency);
+        Account toAccount = this.getAccountByUser(toUserId, toCurrency);
+        transAmountCZB(fromAccount, toAccount, transAmount, bizType,
+            fromBizNote, toBizNote, refNo);
+    }
+
+    private void transAmountCZB(Account fromAccount, Account toAccount,
+            BigDecimal transAmount, EBizType bizType, String fromBizNote,
             String toBizNote, String refNo) {
-        if (amount != null && amount != 0) {
-            XN002100Req req = new XN002100Req();
-            req.setFromUserId(fromUserId);
-            req.setFromCurrency(fromCurrency.getCode());
-            req.setToUserId(toUserId);
-            req.setToCurrency(toCurrency.getCode());
-            req.setTransAmount(String.valueOf(amount));
-            req.setBizType(bizType.getCode());
-            req.setFromBizNote(fromBizNote);
-            req.setToBizNote(toBizNote);
-            req.setRefNo(refNo);
-            BizConnecter.getBizData("002100", JsonUtils.object2Json(req),
-                Object.class);
+        String fromAccountNumber = fromAccount.getAccountNumber();
+        String toAccountNumber = toAccount.getAccountNumber();
+        if (fromAccountNumber.equals(toAccountNumber)) {
+            new BizException("XN0000", "来去双方账号一致，无需内部划转");
         }
-    }
-
-    @Override
-    public void changeAmount(String accountNumber, String channelType,
-            String channelOrder, String payGroup, String refNo, String bizType,
-            String bizNote, BigInteger transAmount) {
-        XN002610Req req = new XN002610Req();
-        req.setAccountNumber(accountNumber);
-        req.setChannelType(channelType);
-        req.setChannelOrder(channelOrder);
-        req.setPayGroup(payGroup);
-        req.setRefNo(refNo);
-        req.setBizType(bizType);
-        req.setBizNote(bizNote);
-        req.setTransAmount(String.valueOf(transAmount));
-        BizConnecter.getBizData("002610", JsonUtils.object2Json(req),
-            Object.class);
-    }
-
-    @Override
-    public void payOrder(String code, String payUser, String payResult,
-            String payNote, String channelOrder) {
-        List<String> codeList = new ArrayList<String>();
-        codeList.add(code);
-        XN802753Req req = new XN802753Req();
-        req.setCodeList(codeList);
-        req.setPayUser(payUser);
-        req.setPayResult(payResult);
-        req.setPayNote(payNote);
-        req.setChannelOrder(channelOrder);
-        req.setSystemCode(ESystemCode.COIN.getCode());
-        BizConnecter.getBizData("802753", JsonUtils.object2Json(req),
-            Object.class);
-    }
-
-    @Override
-    public Withdraw getWithdraw(String code) {
-        XN802756Req req = new XN802756Req();
-        req.setCode(code);
-        req.setSystemCode(ESystemCode.COIN.getCode());
-        return BizConnecter.getBizData("802756", JsonUtils.object2Json(req),
-            Withdraw.class);
+        Double rate = exchangeCurrencyBO.getExchangeRate(
+            fromAccount.getCurrency(), toAccount.getCurrency());
+        this.changeAmount(fromAccountNumber, EChannelType.NBZ, null, null,
+            refNo, bizType, fromBizNote, transAmount.negate());
+        this.changeAmount(toAccountNumber, EChannelType.NBZ, null, null, refNo,
+            bizType, toBizNote, AmountUtil.mul(transAmount, rate));
     }
 }

@@ -10,7 +10,7 @@ package com.cdkj.coin.api.impl;
 
 import org.apache.commons.collections.CollectionUtils;
 
-import com.cdkj.coin.ao.IAccountAO;
+import com.cdkj.coin.ao.IAccountOldAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.StringValidater;
@@ -28,8 +28,8 @@ import com.cdkj.coin.spring.SpringContextHolder;
  */
 public class XN625852 extends AProcessor {
 
-    private IAccountAO accountAO = SpringContextHolder
-        .getBean(IAccountAO.class);
+    private IAccountOldAO accountAO = SpringContextHolder
+        .getBean(IAccountOldAO.class);
 
     private XN623852Req req = null;
 

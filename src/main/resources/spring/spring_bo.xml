@@ -12,7 +12,55 @@
 
 	
 	<!-- 分页BO层注入paginableDao -->
+	<bean id="userBO" class="com.cdkj.coin.bo.impl.UserBOImpl">
+		<property name="paginableDAO" ref="userDAOImpl" />
+	</bean>
 	
+	<bean id="userRelationBO" class="com.cdkj.coin.bo.impl.UserRelationBOImpl">
+		<property name="paginableDAO" ref="userRelationDAOImpl" />
+	</bean>
+	
+	<bean id="sysMenuBO" class="com.cdkj.coin.bo.impl.SYSMenuBOImpl">
+		<property name="paginableDAO" ref="sysMenuDAOImpl"/>
+	</bean>
+	
+	<bean id="sysRoleBO" class="com.cdkj.coin.bo.impl.SYSRoleBOImpl">
+		<property name="paginableDAO" ref="sysRoleDAOImpl"/>
+	</bean>
+	
+	<bean id="sysMenuRoleBO" class="com.cdkj.coin.bo.impl.SYSMenuRoleBOImpl">
+		<property name="paginableDAO" ref="sysMenuRoleDAOImpl"/>
+	</bean>
+
+	<bean id="cNavigateBO" class="com.cdkj.coin.bo.impl.CNavigateBOImpl">
+		<property name="paginableDAO" ref="cNavigateDAOImpl"/>
+	</bean>
+	
+	<bean id="accountBO" class="com.cdkj.coin.bo.impl.AccountBOImpl">
+		<property name="paginableDAO" ref="accountDAOImpl" />
+	</bean>
+	<bean id="jourBO" class="com.cdkj.coin.bo.impl.JourBOImpl">
+		<property name="paginableDAO" ref="jourDAOImpl" />
+	</bean>
+	<bean id="jourHistoryBO" class="com.cdkj.coin.bo.impl.JourHistoryBOImpl">
+		<property name="paginableDAO" ref="jourHistoryDAOImpl" />
+	</bean> 
+	
+	<bean id="exchangeCurrencyBO" class="com.cdkj.coin.bo.impl.ExchangeCurrencyBOImpl">
+		<property name="paginableDAO" ref="exchangeCurrencyDAOImpl"/>
+	</bean>	
+	
+	<bean id="chargeBO" class="com.cdkj.coin.bo.impl.ChargeBOImpl">
+		<property name="paginableDAO" ref="chargeDAOImpl"/>
+	</bean>	
+	
+	<bean id="withdrawBO" class="com.cdkj.coin.bo.impl.WithdrawBOImpl">
+		<property name="paginableDAO" ref="withdrawDAOImpl"/>
+	</bean>	
+	
+	<bean id="hlOrderBO" class="com.cdkj.coin.bo.impl.HLOrderBOImpl">
+		<property name="paginableDAO" ref="hlOrderDAOImpl" />
+	</bean>
 	
 	<bean id="sysDictBO" class="com.cdkj.coin.bo.impl.SYSDictBOImpl">
 		<property name="paginableDAO" ref="sysDictDAOImpl"/>

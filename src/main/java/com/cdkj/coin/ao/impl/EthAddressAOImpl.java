@@ -26,14 +26,9 @@ import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IEthTransactionBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.common.SysConstants;
-import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.domain.SYSConfig;
-import com.cdkj.coin.enums.EBizType;
-import com.cdkj.coin.enums.EChannelType;
-import com.cdkj.coin.enums.ECurrency;
 import com.cdkj.coin.enums.EEthAddressType;
-import com.cdkj.coin.enums.ESystemAccount;
 import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.eth.Web3JClient;
 
@@ -91,33 +86,33 @@ public class EthAddressAOImpl implements IEthAddressAO {
                                 if (StringUtils.isNotBlank(toAddress)) {
                                     // 查询改地址是否在我们系统中存在
                                     EthAddress ethAddress = ethAddressBO
-                                        .getEthAddress(EEthAddressType.D,
+                                        .getEthAddress(EEthAddressType.X,
                                             toAddress);
                                     // 存在逻辑
                                     if (ethAddress != null) {
                                         // 落地交易信息
                                         ethTransactionBO.saveEthTransaction(tx);
                                         // 虚拟账户加钱
-                                        Account account = accountBO
-                                            .getRemoteAccount(
-                                                ethAddress.getUserId(),
-                                                ECurrency.ETH);
+                                        // Account account = accountBO
+                                        // .getRemoteAccount(
+                                        // ethAddress.getUserId(),
+                                        // ECurrency.ETH);
                                         String fromAddress = tx.getFrom();
                                         BigInteger value = tx.getValue();
                                         String hash = tx.getHash();
-                                        accountBO.changeAmount(
-                                            account.getAccountNumber(),
-                                            EChannelType.ETH.getCode(), hash,
-                                            hash, hash,
-                                            EBizType.AJ_CZ.getCode(), "来自地址:"
-                                                    + fromAddress, value);
-                                        accountBO.changeAmount(
-                                            ESystemAccount.SYS_ACOUNT_TG_ETH
-                                                .getCode(), EChannelType.ETH
-                                                .getCode(), hash, hash, hash,
-                                            EBizType.AJ_CZ.getCode(), "发送地址:"
-                                                    + fromAddress + " 接收地址:"
-                                                    + toAddress, value);
+                                        // accountBO.changeAmount(
+                                        // account.getAccountNumber(),
+                                        // EChannelType.ETH.getCode(), hash,
+                                        // hash, hash,
+                                        // EBizType.AJ_CZ.getCode(), "来自地址:"
+                                        // + fromAddress, value);
+                                        // accountBO.changeAmount(
+                                        // ESystemAccount.SYS_ACOUNT_TG_ETH
+                                        // .getCode(), EChannelType.ETH
+                                        // .getCode(), hash, hash, hash,
+                                        // EBizType.AJ_CZ.getCode(), "发送地址:"
+                                        // + fromAddress + " 接收地址:"
+                                        // + toAddress, value);
                                     }
                                 }
                             });

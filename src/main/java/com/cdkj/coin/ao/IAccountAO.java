@@ -1,32 +1,42 @@
-/**
- * @Title IAccountAO.java 
- * @Package com.std.user.ao 
- * @Description 
- * @author leo(haiqing)  
- * @date 2017年10月10日 上午11:08:04 
- * @version V1.0   
- */
 package com.cdkj.coin.ao;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.Account;
 
-/** 
- * @author: haiqingzheng 
- * @since: 2017年10月10日 上午11:08:04 
- * @history:
- */
 public interface IAccountAO {
+    String DEFAULT_ORDER_COLUMN = "account_number";
 
-    // 根据用户ID获取账户列表信息
-    public List<Account> getAccountByUserId(String userId);
+    // 个人创建多账户
+    public void distributeAccount(String userId, String realName,
+            String accountType, List<String> currencyList, String systemCode,
+            String companyCode);
 
-    // 以太币划转
-    public void transfer(String fromUserId, String toAddress, BigDecimal amount);
+    // 更新户名
+    public void editAccountName(String userId, String realName);
 
-    // 取现订单支付（广播）
-    public void payOrder(String code, String payUser, String payResult,
-            String payNote);
+    // 不同用户不同币种间资金划转
+    void transAmountCZB(String fromUserId, String fromCurrency,
+            String toUserId, String toCurrency, BigDecimal transAmount,
+            String bizType, String fromBizNote, String toBizNote, String refNo);
+
+    // 分页查询账户
+    public Paginable<Account> queryAccountPage(int start, int limit,
+            Account condition);
+
+    // 根据accountNumber查询账户
+    public Account getAccount(String accountNumber);
+
+    // 根据用户编号,币种获取账户列表
+    public List<Account> getAccountByUserId(String userId, String currency);
+
+    // 列表查询账户
+    public List<Account> queryAccountList(Account condition);
+
+    public void changeAmount(String accountNumber, String channelType,
+            String channelOrder, String payGroup, String refNo, String bizType,
+            String bizNote, BigDecimal transAmount);
+
 }

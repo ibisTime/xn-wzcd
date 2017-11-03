@@ -1,7 +1,5 @@
 package com.cdkj.coin.core;
 
-import java.util.Random;
-
 import com.cdkj.coin.common.DateUtil;
 
 /** 
@@ -18,9 +16,10 @@ public class OrderNoGenerater {
      * @create: 2015年9月28日 下午5:18:38 xieyj
      * @history:
      */
-    public static String generateM(String prefix) {
-        int random = Math.abs(new Random().nextInt()) % 100000;
+    public static String generate(String prefix) {
+        int random = (int) (Math.random() * (9999 - 1000 + 1)) + 1000;
         String today = DateUtil.getToday(DateUtil.DATA_TIME_PATTERN_5);
         return prefix + today + String.valueOf(random);
     }
+
 }

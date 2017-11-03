@@ -94,7 +94,7 @@ public final class MybatisReadDAO {
      * @param data
      * @return
      */
-    public Long selectTotalCount(String statement, ABaseDO data) {
+    public long selectTotalCount(String statement, ABaseDO data) {
         return readSqlSessionTemplate.<Long> selectOne(statement, data);
     }
 

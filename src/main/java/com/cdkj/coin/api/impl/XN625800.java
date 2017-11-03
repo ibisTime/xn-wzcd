@@ -14,7 +14,6 @@ import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.common.PhoneUtil;
 import com.cdkj.coin.core.StringValidater;
 import com.cdkj.coin.dto.req.XN623800Req;
-import com.cdkj.coin.dto.res.XN805041Res;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
@@ -36,11 +35,11 @@ public class XN625800 extends AProcessor {
      */
     @Override
     public Object doBusiness() throws BizException {
-        XN805041Res res = userAO
-            .doRegister(req.getMobile(), req.getLoginPwd(),
-                req.getUserReferee(), req.getUserRefereeKind(),
-                req.getSmsCaptcha());
-        return res;
+        // XN805041Res res = userAO
+        // .doRegister(req.getMobile(), req.getLoginPwd(),
+        // req.getUserReferee(), req.getUserRefereeKind(),
+        // req.getSmsCaptcha());
+        return null;
     }
 
     /** 

@@ -3,7 +3,18 @@ package com.cdkj.coin.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Account {
+import com.cdkj.coin.dao.base.ABaseDO;
+
+/**
+ * 账户
+ * @author: xieyj 
+ * @since: 2016年12月23日 上午10:41:45 
+ * @history:
+ */
+public class Account extends ABaseDO {
+
+    private static final long serialVersionUID = 8322573358554172531L;
+
     // 账户编号
     private String accountNumber;
 
@@ -28,6 +39,18 @@ public class Account {
     // 冻结金额
     private BigDecimal frozenAmount;
 
+    // md5
+    private String md5;
+
+    // 累计增加金额
+    private BigDecimal addAmount;
+
+    // 入金
+    private BigDecimal inAmount;
+
+    // 出金
+    private BigDecimal outAmount;
+
     // 创建时间
     private Date createDatetime;
 
@@ -37,8 +60,16 @@ public class Account {
     // 系统编号
     private String systemCode;
 
-    // 区块链地址
-    private String coinAddress;
+    // 公司编号
+    private String companyCode;
+
+    // **************************db properties **************************
+
+    // 创建起始时间
+    private Date createDatetimeStart;
+
+    // 创建终止时间
+    private Date createDatetimeEnd;
 
     public String getAccountNumber() {
         return accountNumber;
@@ -104,6 +135,38 @@ public class Account {
         this.frozenAmount = frozenAmount;
     }
 
+    public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
+    }
+
+    public BigDecimal getAddAmount() {
+        return addAmount;
+    }
+
+    public void setAddAmount(BigDecimal addAmount) {
+        this.addAmount = addAmount;
+    }
+
+    public BigDecimal getInAmount() {
+        return inAmount;
+    }
+
+    public void setInAmount(BigDecimal inAmount) {
+        this.inAmount = inAmount;
+    }
+
+    public BigDecimal getOutAmount() {
+        return outAmount;
+    }
+
+    public void setOutAmount(BigDecimal outAmount) {
+        this.outAmount = outAmount;
+    }
+
     public Date getCreateDatetime() {
         return createDatetime;
     }
@@ -114,14 +177,6 @@ public class Account {
 
     public String getLastOrder() {
         return lastOrder;
-    }
-
-    public String getCoinAddress() {
-        return coinAddress;
-    }
-
-    public void setCoinAddress(String coinAddress) {
-        this.coinAddress = coinAddress;
     }
 
     public void setLastOrder(String lastOrder) {
@@ -135,4 +190,29 @@ public class Account {
     public void setSystemCode(String systemCode) {
         this.systemCode = systemCode;
     }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public Date getCreateDatetimeStart() {
+        return createDatetimeStart;
+    }
+
+    public void setCreateDatetimeStart(Date createDatetimeStart) {
+        this.createDatetimeStart = createDatetimeStart;
+    }
+
+    public Date getCreateDatetimeEnd() {
+        return createDatetimeEnd;
+    }
+
+    public void setCreateDatetimeEnd(Date createDatetimeEnd) {
+        this.createDatetimeEnd = createDatetimeEnd;
+    }
+
 }

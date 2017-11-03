@@ -1,41 +1,24 @@
-/**
- * @Title AccountAOImpl.java 
- * @Package com.cdkj.ylq.ao.impl 
- * @Description 
- * @author leo(haiqing)  
- * @date 2017年10月10日 上午11:09:14 
- * @version V1.0   
- */
 package com.cdkj.coin.ao.impl;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.coin.ao.IAccountAO;
 import com.cdkj.coin.bo.IAccountBO;
-import com.cdkj.coin.bo.IEthAddressBO;
-import com.cdkj.coin.bo.IEthTransactionBO;
+import com.cdkj.coin.bo.IJourBO;
+import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.Account;
-import com.cdkj.coin.domain.EthAddress;
-import com.cdkj.coin.domain.Withdraw;
+import com.cdkj.coin.enums.EAccountType;
 import com.cdkj.coin.enums.EBizType;
-import com.cdkj.coin.enums.EBoolean;
-import com.cdkj.coin.enums.ECurrency;
-import com.cdkj.coin.enums.EEthAddressType;
+import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.exception.BizException;
 
-/** 
- * @author: haiqingzheng 
- * @since: 2017年10月10日 上午11:09:14 
- * @history:
- */
 @Service
 public class AccountAOImpl implements IAccountAO {
 
@@ -43,65 +26,79 @@ public class AccountAOImpl implements IAccountAO {
     private IAccountBO accountBO;
 
     @Autowired
-    private IEthAddressBO ethAddressBO;
-
-    @Autowired
-    private IEthTransactionBO ethTransactionBO;
+    private IJourBO jourBO;
 
     @Override
-    public List<Account> getAccountByUserId(String userId) {
-        List<Account> accounts = new ArrayList<Account>();
-        // 以太币账户
-        Account ethAccount = accountBO.getRemoteAccount(userId, ECurrency.ETH);
-        EthAddress ethAddress = ethAddressBO.getEthAddressByUserId(userId);
-        ethAccount.setCoinAddress(ethAddress.getAddress());
-        accounts.add(ethAccount);
-        return accounts;
-    }
-
-    @Override
-    public void transfer(String fromUserId, String toAddress, BigDecimal amount) {
-        Account account = accountBO.getRemoteAccount(fromUserId, ECurrency.ETH);
-        if (account.getAmount().compareTo(amount) == -1) {
-            throw new BizException("xn625000", "以太币余额不足");
-        }
-        EthAddress ethAddress = ethAddressBO.getEthAddress(EEthAddressType.D,
-            toAddress);
-        if (ethAddress == null) {
-            throw new BizException("xn625000", "接受地址不是本平台的用户地址");
-        }
-        accountBO.doTransferAmountRemote(fromUserId, ethAddress.getUserId(),
-            ECurrency.ETH, amount, EBizType.Transfer_CURRENCY,
-            EBizType.Transfer_CURRENCY.getValue(),
-            EBizType.Transfer_CURRENCY.getValue(), "toAddress:" + toAddress);
-    }
-
-    @Override
-    public void payOrder(String code, String payUser, String payResult,
-            String payNote) {
-        String channelOrder = null;
-        // 如果审核通过，先进行广播
-        if (EBoolean.YES.getCode().equals(payResult)) {
-            // 获取散取地址
-            List<EthAddress> mList = ethAddressBO.queryMEthAddressList();
-            if (CollectionUtils.isNotEmpty(mList)) {
-                EthAddress mEthAddress = mList.get(0);
-                Withdraw withdraw = accountBO.getWithdraw(code);
-                // 广播
-                channelOrder = ethTransactionBO.customTxByWalletFile(
-                    mEthAddress.getAddress(), mEthAddress.getPassword(),
-                    withdraw.getPayCardNo(), new BigInteger(withdraw
-                        .getAmount().toString()));
-                if (StringUtils.isBlank(channelOrder)) {
-                    throw new BizException("xn625000", "交易广播失败");
-                }
-            } else {
-                throw new BizException("xn625000", "未找到可用的散取账户");
+    @Transactional
+    public void distributeAccount(String userId, String realName,
+            String accountType, List<String> currencyList, String systemCode,
+            String companyCode) {
+        if (CollectionUtils.isNotEmpty(currencyList)) {
+            Map<String, EAccountType> map = EAccountType
+                .getAccountTypeResultMap();
+            EAccountType eAccountType = map.get(accountType);
+            if (null == eAccountType) {
+                new BizException("XN0000", "账户类型不存在");
             }
-
-        } else {
-            channelOrder = "pay_no";
+            for (String currency : currencyList) {
+                accountBO.distributeAccount(userId, realName, eAccountType,
+                    currency, systemCode, companyCode);
+            }
         }
-        accountBO.payOrder(code, payUser, payResult, payNote, channelOrder);
+    }
+
+    @Override
+    public void editAccountName(String userId, String realName) {
+        // 验证用户名和系统编号
+        Account condition = new Account();
+        condition.setUserId(userId);
+        List<Account> accountList = accountBO.queryAccountList(condition);
+        if (CollectionUtils.isEmpty(accountList)) {
+            new BizException("XN0000", "该用户无对应账号");
+        }
+        accountBO.refreshAccountName(userId, realName);
+    }
+
+    @Override
+    @Transactional
+    public void transAmountCZB(String fromUserId, String fromCurrency,
+            String toUserId, String toCurrency, BigDecimal transAmount,
+            String bizType, String fromBizNote, String toBizNote, String refNo) {
+        EBizType a = EBizType.getBizType(bizType);
+        accountBO.transAmountCZB(fromUserId, fromCurrency, toUserId,
+            toCurrency, transAmount, a, fromBizNote, toBizNote, refNo);
+    }
+
+    @Override
+    public Paginable<Account> queryAccountPage(int start, int limit,
+            Account condition) {
+        return accountBO.getPaginable(start, limit, condition);
+    }
+
+    @Override
+    public Account getAccount(String accountNumber) {
+        return accountBO.getAccount(accountNumber);
+    }
+
+    @Override
+    public List<Account> getAccountByUserId(String userId, String currency) {
+        Account condition = new Account();
+        condition.setUserId(userId);
+        condition.setCurrency(currency);
+        return accountBO.queryAccountList(condition);
+    }
+
+    @Override
+    public List<Account> queryAccountList(Account condition) {
+        return accountBO.queryAccountList(condition);
+    }
+
+    @Override
+    public void changeAmount(String accountNumber, String channelType,
+            String channelOrder, String payGroup, String refNo, String bizType,
+            String bizNote, BigDecimal transAmount) {
+        accountBO.changeAmount(accountNumber,
+            EChannelType.getEChannelType(channelType), channelOrder, payGroup,
+            refNo, EBizType.getBizType(bizType), bizNote, transAmount);
     }
 }
