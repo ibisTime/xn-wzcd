@@ -8,6 +8,10 @@
  */
 package com.cdkj.coin.ao;
 
+import java.util.Date;
+
+import com.cdkj.coin.bo.base.Paginable;
+import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.enums.EEthAddressType;
 
 /** 
@@ -24,5 +28,9 @@ public interface IEthAddressAO {
     public EEthAddressType getType(String address);
 
     // 生成地址（有私钥）
-    public String generateMAddress();
+    public String generateMAddress(Date availableDatetimeStart,
+            Date availableDatetimeEnd);
+
+    public Paginable<EthAddress> queryEthAddressPage(int start, int limit,
+            EthAddress condition);
 }

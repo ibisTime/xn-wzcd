@@ -62,6 +62,10 @@
 		<property name="paginableDAO" ref="hlOrderDAOImpl" />
 	</bean>
 	
+	<bean id="ethAddressBO" class="com.cdkj.coin.bo.impl.EthAddressBOImpl">
+		<property name="paginableDAO" ref="ethAddressDAOImpl" />
+	</bean>
+	
 	<bean id="sysDictBO" class="com.cdkj.coin.bo.impl.SYSDictBOImpl">
 		<property name="paginableDAO" ref="sysDictDAOImpl"/>
 	</bean>	

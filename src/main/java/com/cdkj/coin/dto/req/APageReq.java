@@ -10,6 +10,10 @@ package com.cdkj.coin.dto.req;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 /** 
  * @author: miyb 
  * @since: 2015-5-7 上午10:23:31 
@@ -27,8 +31,12 @@ public abstract class APageReq implements Serializable {
     // 创建终止时间(YYYY-MM-DD)
     private String dateEnd;
 
+    @NotBlank
+    @Min(0)
     private String start;
 
+    @NotBlank
+    @Min(0)
     private String limit;
 
     private String orderColumn;// 分页字段

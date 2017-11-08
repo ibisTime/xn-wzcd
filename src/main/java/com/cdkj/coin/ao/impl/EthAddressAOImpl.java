@@ -10,6 +10,7 @@ package com.cdkj.coin.ao.impl;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -27,6 +28,7 @@ import com.cdkj.coin.bo.IAccountBO;
 import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IEthTransactionBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
+import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.domain.EthAddress;
@@ -35,6 +37,7 @@ import com.cdkj.coin.enums.EEthAddressType;
 import com.cdkj.coin.enums.ESysUser;
 import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.eth.Web3JClient;
+import com.cdkj.coin.exception.BizException;
 
 /** 
  * @author: haiqingzheng 
@@ -151,9 +154,20 @@ public class EthAddressAOImpl implements IEthAddressAO {
     }
 
     @Override
-    public String generateMAddress() {
+    public String generateMAddress(Date availableDatetimeStart,
+            Date availableDatetimeEnd) {
+        if (availableDatetimeEnd.before(availableDatetimeStart)) {
+            throw new BizException("625000", "可使用时间范围有误");
+        }
         String ethAccountName = OrderNoGenerater.generate("M");
         return ethAddressBO.generateAddress(EEthAddressType.M, ethAccountName,
-            ESysUser.SYS_USER.getCode());
+            ESysUser.SYS_USER.getCode(), availableDatetimeStart,
+            availableDatetimeEnd);
+    }
+
+    @Override
+    public Paginable<EthAddress> queryEthAddressPage(int start, int limit,
+            EthAddress condition) {
+        return ethAddressBO.getPaginable(start, limit, condition);
     }
 }

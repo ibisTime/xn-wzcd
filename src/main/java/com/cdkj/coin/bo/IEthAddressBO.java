@@ -11,7 +11,8 @@ import com.cdkj.coin.enums.EEthAddressType;
 public interface IEthAddressBO extends IPaginableBO<EthAddress> {
 
     public String generateAddress(EEthAddressType type, String ethAccountName,
-            String userId);
+            String userId, Date availableDatetimeStart,
+            Date availableDatetimeEnd);
 
     public String saveEthAddress(EEthAddressType type, String userId,
             String address, String password, BigDecimal balance,

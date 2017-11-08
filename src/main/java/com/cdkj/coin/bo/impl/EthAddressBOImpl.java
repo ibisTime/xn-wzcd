@@ -32,7 +32,8 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
 
     @Override
     public String generateAddress(EEthAddressType type, String ethAccountName,
-            String userId) {
+            String userId, Date availableDatetimeStart,
+            Date availableDatetimeEnd) {
         String address = null;
         String password = RandomUtil.generate8();
         EthAccount account = new EthAccount();
@@ -42,7 +43,7 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
             throw new BizException("xn625000", "以太坊账户创建失败，请检查节点是否正常！");
         }
         this.saveEthAddress(type, userId, address, password, BigDecimal.ZERO,
-            null, null);
+            availableDatetimeStart, availableDatetimeEnd);
         return address;
     }
 

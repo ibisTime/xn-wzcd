@@ -8,9 +8,18 @@
  */
 package com.cdkj.coin.api.impl;
 
+import java.util.Date;
+
+import com.cdkj.coin.ao.IEthAddressAO;
 import com.cdkj.coin.api.AProcessor;
+import com.cdkj.coin.common.DateUtil;
+import com.cdkj.coin.common.JsonUtil;
+import com.cdkj.coin.core.ObjValidater;
+import com.cdkj.coin.dto.req.XN625200Req;
+import com.cdkj.coin.dto.res.BooleanRes;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
+import com.cdkj.coin.spring.SpringContextHolder;
 
 /** 
  * 生成散取地址（有私钥）
@@ -20,13 +29,22 @@ import com.cdkj.coin.exception.ParaException;
  */
 public class XN625200 extends AProcessor {
 
+    private IEthAddressAO ethAddressAO = SpringContextHolder
+        .getBean(IEthAddressAO.class);
+
+    private XN625200Req req = null;
+
     /** 
      * @see com.cdkj.coin.api.IProcessor#doBusiness()
      */
     @Override
     public Object doBusiness() throws BizException {
-        // TODO Auto-generated method stub
-        return null;
+        Date start = DateUtil.strToDate(req.getAvailableDatetimeStart(),
+            DateUtil.DATA_TIME_PATTERN_1);
+        Date end = DateUtil.strToDate(req.getAvailableDatetimeEnd(),
+            DateUtil.DATA_TIME_PATTERN_1);
+        ethAddressAO.generateMAddress(start, end);
+        return new BooleanRes(true);
     }
 
     /** 
@@ -34,8 +52,8 @@ public class XN625200 extends AProcessor {
      */
     @Override
     public void doCheck(String inputparams) throws ParaException {
-        // TODO Auto-generated method stub
-
+        req = JsonUtil.json2Bean(inputparams, XN625200Req.class);
+        ObjValidater.validateReq(req);
     }
 
 }
