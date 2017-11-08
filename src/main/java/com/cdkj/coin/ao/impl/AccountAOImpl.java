@@ -11,12 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.coin.ao.IAccountAO;
 import com.cdkj.coin.bo.IAccountBO;
+import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IJourBO;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.Account;
+import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.enums.EAccountType;
 import com.cdkj.coin.enums.EBizType;
 import com.cdkj.coin.enums.EChannelType;
+import com.cdkj.coin.enums.ECurrency;
 import com.cdkj.coin.exception.BizException;
 
 @Service
@@ -27,6 +30,9 @@ public class AccountAOImpl implements IAccountAO {
 
     @Autowired
     private IJourBO jourBO;
+
+    @Autowired
+    private IEthAddressBO ethAddressBO;
 
     @Override
     @Transactional
@@ -85,7 +91,15 @@ public class AccountAOImpl implements IAccountAO {
         Account condition = new Account();
         condition.setUserId(userId);
         condition.setCurrency(currency);
-        return accountBO.queryAccountList(condition);
+        List<Account> accounts = accountBO.queryAccountList(condition);
+        for (Account account : accounts) {
+            if (ECurrency.ETH.getCode().equals(account.getCurrency())) {
+                EthAddress ethAddress = ethAddressBO
+                    .getEthAddressByUserId(userId);
+                account.setCoinAddress(ethAddress.getAddress());
+            }
+        }
+        return accounts;
     }
 
     @Override

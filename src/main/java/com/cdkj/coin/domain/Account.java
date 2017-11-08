@@ -71,6 +71,17 @@ public class Account extends ABaseDO {
     // 创建终止时间
     private Date createDatetimeEnd;
 
+    // 区块链地址
+    private String coinAddress;
+
+    public String getCoinAddress() {
+        return coinAddress;
+    }
+
+    public void setCoinAddress(String coinAddress) {
+        this.coinAddress = coinAddress;
+    }
+
     public String getAccountNumber() {
         return accountNumber;
     }
