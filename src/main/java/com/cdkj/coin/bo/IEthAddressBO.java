@@ -10,7 +10,8 @@ import com.cdkj.coin.enums.EEthAddressType;
 
 public interface IEthAddressBO extends IPaginableBO<EthAddress> {
 
-    public String generateXAddress(String ethAccountName, String userId);
+    public String generateAddress(EEthAddressType type, String ethAccountName,
+            String userId);
 
     public String saveEthAddress(EEthAddressType type, String userId,
             String address, String password, BigDecimal balance,

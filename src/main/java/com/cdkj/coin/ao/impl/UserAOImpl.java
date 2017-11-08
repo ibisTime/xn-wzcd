@@ -130,7 +130,8 @@ public class UserAOImpl implements IUserAO {
         // 分配账户
         distributeAccount(userId, mobile, kind, companyCode, systemCode);
         // 生成ETH地址
-        String ethAddress = ethAddressBO.generateXAddress(mobile, userId);
+        String ethAddress = ethAddressBO.generateAddress(EEthAddressType.X,
+            mobile, userId);
         // 通知橙提取
         ctqBO.uploadAddress(ethAddress, EEthAddressType.X.getCode());
         // 注册送积分

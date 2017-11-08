@@ -13,7 +13,7 @@ package com.cdkj.coin.dto.req;
  * @since: 2016年4月17日 下午6:32:55 
  * @history:
  */
-public class XN623901Req {
+public class XN625901Req {
     // 编号（必填）
     private String id;
 

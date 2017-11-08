@@ -12,7 +12,7 @@ import com.cdkj.coin.ao.ISYSConfigAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.StringValidater;
-import com.cdkj.coin.dto.req.XN623917Req;
+import com.cdkj.coin.dto.req.XN625917Req;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
@@ -27,7 +27,7 @@ public class XN625917 extends AProcessor {
     private ISYSConfigAO sysConfigAO = SpringContextHolder
         .getBean(ISYSConfigAO.class);
 
-    private XN623917Req req = null;
+    private XN625917Req req = null;
 
     /** 
      * @see com.cdkj.coin.api.IProcessor#doBusiness()
@@ -43,7 +43,7 @@ public class XN625917 extends AProcessor {
      */
     @Override
     public void doCheck(String inputparams) throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN623917Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN625917Req.class);
         StringValidater.validateBlank(req.getKey(), req.getCompanyCode(),
             req.getSystemCode());
     }

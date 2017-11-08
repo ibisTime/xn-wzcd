@@ -28,9 +28,11 @@ import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IEthTransactionBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.common.SysConstants;
+import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.domain.SYSConfig;
 import com.cdkj.coin.enums.EEthAddressType;
+import com.cdkj.coin.enums.ESysUser;
 import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.eth.Web3JClient;
 
@@ -146,5 +148,12 @@ public class EthAddressAOImpl implements IEthAddressAO {
             type = EEthAddressType.getEthAddressType(ethAddress.getType());
         }
         return type;
+    }
+
+    @Override
+    public String generateMAddress() {
+        String ethAccountName = OrderNoGenerater.generate("M");
+        return ethAddressBO.generateAddress(EEthAddressType.M, ethAccountName,
+            ESysUser.SYS_USER.getCode());
     }
 }

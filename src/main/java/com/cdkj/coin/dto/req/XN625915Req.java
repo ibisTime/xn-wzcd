@@ -1,6 +1,6 @@
 package com.cdkj.coin.dto.req;
 
-public class XN623915Req extends APageReq {
+public class XN625915Req extends APageReq {
 
     /** 
      * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 

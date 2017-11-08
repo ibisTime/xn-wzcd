@@ -13,7 +13,7 @@ package com.cdkj.coin.dto.req;
  * @since: 2016年4月17日 下午5:00:54 
  * @history:
  */
-public class XN623900Req {
+public class XN625900Req {
 
     // 父key（必填）
     private String parentKey;

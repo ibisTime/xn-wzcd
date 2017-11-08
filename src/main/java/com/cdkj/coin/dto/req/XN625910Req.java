@@ -1,6 +1,6 @@
 package com.cdkj.coin.dto.req;
 
-public class XN623910Req {
+public class XN625910Req {
 
     // 编号（必填）
     private String id;

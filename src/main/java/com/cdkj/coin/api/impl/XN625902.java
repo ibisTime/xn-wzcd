@@ -12,7 +12,7 @@ import com.cdkj.coin.ao.ISYSDictAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.StringValidater;
-import com.cdkj.coin.dto.req.XN623902Req;
+import com.cdkj.coin.dto.req.XN625902Req;
 import com.cdkj.coin.dto.res.BooleanRes;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
@@ -28,7 +28,7 @@ public class XN625902 extends AProcessor {
     private ISYSDictAO sysDictAO = SpringContextHolder
         .getBean(ISYSDictAO.class);
 
-    private XN623902Req req = null;
+    private XN625902Req req = null;
 
     /** 
      * @see com.cdkj.coin.api.IProcessor#doBusiness()
@@ -45,7 +45,7 @@ public class XN625902 extends AProcessor {
      */
     @Override
     public void doCheck(String inputparams) throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN623902Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN625902Req.class);
         StringValidater.validateBlank(req.getId(), req.getDvalue(),
             req.getUpdater());
     }

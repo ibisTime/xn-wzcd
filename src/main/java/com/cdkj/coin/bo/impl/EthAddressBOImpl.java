@@ -31,7 +31,8 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
     private IEthAddressDAO ethAddressDAO;
 
     @Override
-    public String generateXAddress(String ethAccountName, String userId) {
+    public String generateAddress(EEthAddressType type, String ethAccountName,
+            String userId) {
         String address = null;
         String password = RandomUtil.generate8();
         EthAccount account = new EthAccount();
@@ -40,8 +41,8 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
         if (StringUtils.isBlank(address)) {
             throw new BizException("xn625000", "以太坊账户创建失败，请检查节点是否正常！");
         }
-        this.saveEthAddress(EEthAddressType.X, userId, address, password,
-            BigDecimal.ZERO, null, null);
+        this.saveEthAddress(type, userId, address, password, BigDecimal.ZERO,
+            null, null);
         return address;
     }
 
