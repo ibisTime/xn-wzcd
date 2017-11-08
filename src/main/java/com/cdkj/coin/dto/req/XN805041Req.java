@@ -8,6 +8,7 @@ public class XN805041Req {
     @NotBlank
     private String mobile; // 手机号
 
+    @NotBlank
     @Length(min = 3, max = 10)
     private String nickname; // 昵称
 

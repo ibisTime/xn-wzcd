@@ -23,6 +23,7 @@ import com.cdkj.coin.bo.IEthTransactionBO;
 import com.cdkj.coin.bo.base.PaginableBOImpl;
 import com.cdkj.coin.dao.IEthTransactionDAO;
 import com.cdkj.coin.domain.EthTransaction;
+import com.cdkj.coin.eth.CtqEthTransaction;
 import com.cdkj.coin.exception.BizException;
 
 @Component
@@ -56,6 +57,27 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
             transaction.setRaw(tx.getRaw());
             transaction.setR(tx.getR());
             transaction.setS(tx.getS());
+            count = ethTransactionDAO.insert(transaction);
+        }
+        return count;
+    }
+
+    @Override
+    public int saveEthTransaction(CtqEthTransaction ctqEthTransaction) {
+        int count = 0;
+        if (ctqEthTransaction != null) {
+            EthTransaction transaction = new EthTransaction();
+            transaction.setHash(ctqEthTransaction.getHash());
+            transaction.setNonce(ctqEthTransaction.getNonce().toString());
+            transaction.setBlockHash(ctqEthTransaction.getBlockHash());
+            transaction.setBlockNumber(ctqEthTransaction.getBlockNumber());
+            transaction.setTransactionIndex(ctqEthTransaction
+                .getTransactionIndex().toString());
+            transaction.setFrom(ctqEthTransaction.getFrom());
+            transaction.setTo(ctqEthTransaction.getTo());
+            transaction.setValue(ctqEthTransaction.getValue().toString());
+            transaction.setGasPrice(ctqEthTransaction.getGasPrice().toString());
+            transaction.setGas(ctqEthTransaction.getGas().toString());
             count = ethTransactionDAO.insert(transaction);
         }
         return count;
@@ -139,4 +161,5 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
         // success
 
     }
+
 }

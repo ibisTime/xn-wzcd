@@ -36,9 +36,10 @@ public class ChargeAOImpl implements IChargeAO {
 
     @Override
     public String applyOrder(String accountNumber, String jourBizType,
-            Long amount, String payCardInfo, String payCardNo,
+            BigDecimal amount, String payCardInfo, String payCardNo,
             String applyUser, String applyNote) {
-        if (amount <= 0) {
+        if (amount.compareTo(BigDecimal.ZERO) == 0
+                || amount.compareTo(BigDecimal.ZERO) == -1) {
             throw new BizException("xn000000", "充值金额需大于零");
         }
         Account account = accountBO.getAccount(accountNumber);
@@ -71,15 +72,16 @@ public class ChargeAOImpl implements IChargeAO {
     private void payOrderYES(Charge data, String payUser, String payNote) {
         chargeBO.payOrder(data, true, payUser, payNote);
         // 账户加钱
-        accountBO.changeAmount(data.getAccountNumber(), EChannelType.Offline,
-            null, null, data.getCode(), EBizType.AJ_CHARGE, "线下充值",
-            BigDecimal.valueOf(data.getAmount()));
+        accountBO
+            .changeAmount(data.getAccountNumber(), EChannelType.ETH, null,
+                null, data.getCode(), EBizType.AJ_CHARGE, "ETH充值",
+                data.getAmount());
         Account account = accountBO.getAccount(data.getAccountNumber());
         if (ECurrency.CNY.getCode().equals(account.getCurrency())) {
             // 托管账户加钱
-            accountBO.changeAmount(data.getCompanyCode(), EChannelType.Offline,
-                null, null, data.getCode(), EBizType.AJ_CHARGE, "线下充值",
-                BigDecimal.valueOf(data.getAmount()));
+            accountBO.changeAmount(data.getCompanyCode(), EChannelType.ETH,
+                null, null, data.getCode(), EBizType.AJ_CHARGE, "ETH充值",
+                data.getAmount());
         }
     }
 

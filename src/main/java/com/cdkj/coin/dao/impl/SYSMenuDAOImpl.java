@@ -1,4 +1,4 @@
-package com.cdkj.coin.domain;
+package com.cdkj.coin.dao.impl;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cdkj.coin.dao.ISYSMenuDAO;
 import com.cdkj.coin.dao.base.support.AMybatisTemplate;
+import com.cdkj.coin.domain.SYSMenu;
 
 @Repository("sysMenuDAOImpl")
 public class SYSMenuDAOImpl extends AMybatisTemplate implements ISYSMenuDAO {

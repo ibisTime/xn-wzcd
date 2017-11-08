@@ -10,7 +10,9 @@ package com.cdkj.coin.ao.impl;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +41,7 @@ import com.cdkj.coin.eth.Web3JClient;
  */
 @Service
 public class EthAddressAOImpl implements IEthAddressAO {
-    static final Logger logger = LoggerFactory
+    private static final Logger logger = LoggerFactory
         .getLogger(EthAddressAOImpl.class);
 
     private static Web3j web3j = Web3JClient.getClient();
@@ -133,4 +135,16 @@ public class EthAddressAOImpl implements IEthAddressAO {
         }
     }
 
+    @Override
+    public EEthAddressType getType(String address) {
+        EEthAddressType type = EEthAddressType.Y;
+        EthAddress condition = new EthAddress();
+        condition.setAddress(address);
+        List<EthAddress> results = ethAddressBO.queryEthAddressList(condition);
+        if (CollectionUtils.isNotEmpty(results)) {
+            EthAddress ethAddress = results.get(0);
+            type = EEthAddressType.getEthAddressType(ethAddress.getType());
+        }
+        return type;
+    }
 }

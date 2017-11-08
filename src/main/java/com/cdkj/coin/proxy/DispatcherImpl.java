@@ -1,6 +1,7 @@
 package com.cdkj.coin.proxy;
 
 import com.cdkj.coin.api.IProcessor;
+import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 

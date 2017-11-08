@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.coin.ao.IUserAO;
 import com.cdkj.coin.bo.IAccountBO;
+import com.cdkj.coin.bo.ICtqBO;
 import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IFieldTimesBO;
 import com.cdkj.coin.bo.IIdentifyBO;
@@ -39,7 +40,6 @@ import com.cdkj.coin.common.RandomUtil;
 import com.cdkj.coin.core.StringValidater;
 import com.cdkj.coin.domain.SYSRole;
 import com.cdkj.coin.domain.User;
-import com.cdkj.coin.domain.UserRelation;
 import com.cdkj.coin.dto.req.XN805042Req;
 import com.cdkj.coin.dto.req.XN805043Req;
 import com.cdkj.coin.dto.req.XN805095Req;
@@ -48,7 +48,9 @@ import com.cdkj.coin.dto.res.XN798012Res;
 import com.cdkj.coin.dto.res.XN805041Res;
 import com.cdkj.coin.enums.EAccountType;
 import com.cdkj.coin.enums.EBoolean;
+import com.cdkj.coin.enums.ECaptchaType;
 import com.cdkj.coin.enums.ECurrency;
+import com.cdkj.coin.enums.EEthAddressType;
 import com.cdkj.coin.enums.EIDKind;
 import com.cdkj.coin.enums.ELoginType;
 import com.cdkj.coin.enums.EUser;
@@ -70,6 +72,9 @@ public class UserAOImpl implements IUserAO {
 
     @Autowired
     protected IUserBO userBO;
+
+    @Autowired
+    protected ICtqBO ctqBO;
 
     @Autowired
     protected IEthAddressBO ethAddressBO;
@@ -116,9 +121,8 @@ public class UserAOImpl implements IUserAO {
         String userRefereeId = userBO.getUserId(userReferee, userRefereeKind,
             companyCode, systemCode);
         // 验证短信验证码
-        // smsOutBO.checkCaptcha(mobile, smsCaptcha,
-        // ECaptchaType.C_REG.getCode(),
-        // companyCode, systemCode);
+        smsOutBO.checkCaptcha(mobile, smsCaptcha, ECaptchaType.C_REG.getCode(),
+            companyCode, systemCode);
         // 注册用户
         String userId = userBO.doRegister(mobile, nickname, loginPwd,
             userRefereeId, kind, province, city, area, address, companyCode,
@@ -127,7 +131,8 @@ public class UserAOImpl implements IUserAO {
         distributeAccount(userId, mobile, kind, companyCode, systemCode);
         // 生成ETH地址
         String ethAddress = ethAddressBO.generateXAddress(mobile, userId);
-        // todo通知橙提取
+        // 通知橙提取
+        ctqBO.uploadAddress(ethAddress, EEthAddressType.X.getCode());
         // 注册送积分
         Long amount = addRegAmount(userId, mobile, kind, companyCode,
             systemCode);
@@ -865,16 +870,16 @@ public class UserAOImpl implements IUserAO {
             } else {
                 user.setTradepwdFlag(false);
             }
-            // 获取我关注的人
-            UserRelation toCondition = new UserRelation();
-            toCondition.setUserId(userId);
-            toCondition.setStatus(EBoolean.YES.getCode());
-            user.setTotalFollowNum(userRelationBO.getTotalCount(toCondition));
-            // 获取我粉丝的人
-            UserRelation condition = new UserRelation();
-            condition.setToUser(userId);
-            condition.setStatus(EBoolean.YES.getCode());
-            user.setTotalFansNum(userRelationBO.getTotalCount(condition));
+            // // 获取我关注的人
+            // UserRelation toCondition = new UserRelation();
+            // toCondition.setUserId(userId);
+            // toCondition.setStatus(EBoolean.YES.getCode());
+            // user.setTotalFollowNum(userRelationBO.getTotalCount(toCondition));
+            // // 获取我粉丝的人
+            // UserRelation condition = new UserRelation();
+            // condition.setToUser(userId);
+            // condition.setStatus(EBoolean.YES.getCode());
+            // user.setTotalFansNum(userRelationBO.getTotalCount(condition));
 
         }
         return user;

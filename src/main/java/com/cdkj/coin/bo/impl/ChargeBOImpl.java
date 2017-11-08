@@ -1,5 +1,6 @@
 package com.cdkj.coin.bo.impl;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -26,9 +27,9 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
 
     @Override
     public String applyOrderOffline(Account account, EBizType bizType,
-            Long amount, String payCardInfo, String payCardNo,
+            BigDecimal amount, String payCardInfo, String payCardNo,
             String applyUser, String applyNote) {
-        if (amount == 0) {
+        if (amount.compareTo(BigDecimal.ZERO) == 0) {
             throw new BizException("xn000000", "充值金额不能为0");
         }
         String code = OrderNoGenerater.generate(EGeneratePrefix.Charge
@@ -64,9 +65,9 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
 
     @Override
     public String applyOrderOnline(Account account, String payGroup,
-            String refNo, EBizType bizType, String bizNote, Long transAmount,
-            EChannelType channelType, String applyUser) {
-        if (transAmount == 0) {
+            String refNo, EBizType bizType, String bizNote,
+            BigDecimal transAmount, EChannelType channelType, String applyUser) {
+        if (transAmount.compareTo(BigDecimal.ZERO) == 0) {
             throw new BizException("xn000000", "充值金额不能为0");
         }
         String code = OrderNoGenerater.generate(EGeneratePrefix.Charge
@@ -86,7 +87,7 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
         data.setPayCardInfo(null);
         data.setPayCardNo(null);
 
-        data.setStatus(EChargeStatus.toPay.getCode());
+        data.setStatus(EChargeStatus.Pay_YES.getCode());
         data.setApplyUser(applyUser);
         data.setApplyDatetime(new Date());
         data.setChannelType(channelType.getCode());

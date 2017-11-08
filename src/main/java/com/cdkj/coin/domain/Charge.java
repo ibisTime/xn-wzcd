@@ -1,5 +1,6 @@
 package com.cdkj.coin.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.cdkj.coin.dao.base.ABaseDO;
@@ -24,7 +25,7 @@ public class Charge extends ABaseDO {
     private String accountNumber;
 
     // 充值金额---核心字段5
-    private Long amount;
+    private BigDecimal amount;
 
     // 针对户名
     private String accountName;
@@ -122,11 +123,11 @@ public class Charge extends ABaseDO {
         this.accountNumber = accountNumber;
     }
 
-    public Long getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

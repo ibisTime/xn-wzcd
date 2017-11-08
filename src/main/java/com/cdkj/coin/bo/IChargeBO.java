@@ -1,5 +1,6 @@
 package com.cdkj.coin.bo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.cdkj.coin.bo.base.IPaginableBO;
@@ -10,14 +11,14 @@ import com.cdkj.coin.enums.EChannelType;
 
 public interface IChargeBO extends IPaginableBO<Charge> {
     String applyOrderOnline(Account account, String payGroup, String refNo,
-            EBizType bizType, String bizNote, Long transAmount,
+            EBizType bizType, String bizNote, BigDecimal transAmount,
             EChannelType channelType, String applyUser);
 
     void callBackChange(Charge dbCharge, boolean booleanFlag);
 
-    String applyOrderOffline(Account account, EBizType bizType, Long amount,
-            String payCardInfo, String payCardNo, String applyUser,
-            String applyNote);
+    String applyOrderOffline(Account account, EBizType bizType,
+            BigDecimal amount, String payCardInfo, String payCardNo,
+            String applyUser, String applyNote);
 
     void payOrder(Charge data, boolean booleanFlag, String payUser,
             String payNote);
