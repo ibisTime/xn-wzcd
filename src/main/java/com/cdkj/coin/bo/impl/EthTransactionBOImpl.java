@@ -69,19 +69,26 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
     public int saveEthTransaction(CtqEthTransaction ctqEthTransaction) {
         int count = 0;
         if (ctqEthTransaction != null) {
-            EthTransaction transaction = new EthTransaction();
-            transaction.setHash(ctqEthTransaction.getHash());
-            transaction.setNonce(ctqEthTransaction.getNonce().toString());
-            transaction.setBlockHash(ctqEthTransaction.getBlockHash());
-            transaction.setBlockNumber(ctqEthTransaction.getBlockNumber());
-            transaction.setTransactionIndex(ctqEthTransaction
-                .getTransactionIndex().toString());
-            transaction.setFrom(ctqEthTransaction.getFrom());
-            transaction.setTo(ctqEthTransaction.getTo());
-            transaction.setValue(ctqEthTransaction.getValue().toString());
-            transaction.setGasPrice(ctqEthTransaction.getGasPrice().toString());
-            transaction.setGas(ctqEthTransaction.getGas().toString());
-            count = ethTransactionDAO.insert(transaction);
+            EthTransaction condition = new EthTransaction();
+            condition.setHash(ctqEthTransaction.getHash());
+            if (ethTransactionDAO.selectTotalCount(condition) <= 0) {
+                EthTransaction transaction = new EthTransaction();
+                transaction.setHash(ctqEthTransaction.getHash());
+                transaction.setNonce(ctqEthTransaction.getNonce().toString());
+                transaction.setBlockHash(ctqEthTransaction.getBlockHash());
+                transaction.setBlockNumber(ctqEthTransaction.getBlockNumber());
+                transaction.setTransactionIndex(ctqEthTransaction
+                    .getTransactionIndex().toString());
+                transaction.setFrom(ctqEthTransaction.getFrom());
+                transaction.setTo(ctqEthTransaction.getTo());
+                transaction.setValue(ctqEthTransaction.getValue().toString());
+                transaction.setGasPrice(ctqEthTransaction.getGasPrice()
+                    .toString());
+                transaction.setGas(ctqEthTransaction.getGas().toString());
+                transaction.setGasUsed(ctqEthTransaction.getGasUsed()
+                    .toString());
+                count = ethTransactionDAO.insert(transaction);
+            }
         }
         return count;
     }

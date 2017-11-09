@@ -23,8 +23,8 @@
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
+			<if test="hash != null and hash != '' ">
+				AND t.hash = #{hash}
 			</if>
 		</trim>
 	</sql>

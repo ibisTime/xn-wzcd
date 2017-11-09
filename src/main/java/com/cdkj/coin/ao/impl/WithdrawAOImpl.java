@@ -142,7 +142,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
         BigDecimal balance = ethAddressBO.getEthBalance(address);
         logger.info("地址" + mEthAddress + "余额：" + balance.toString());
         if (balance.compareTo(withdraw.getAmount()) < 0) {
-            throw new BizException("xn625000", "散取地址" + mEthAddress + "余额不足！");
+            throw new BizException("xn625000", "散取地址" + address + "余额不足！");
         }
         // 广播
         String txHash = ethTransactionBO.broadcast(address, password,

@@ -114,10 +114,12 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             "ETH取现-外部地址：" + withdraw.getPayCardNo(), new BigDecimal(
                 ctqEthTransaction.getValue()));
         // 平台盈亏账户记入取现手续费
-        accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(),
-            EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
-            withdraw.getCode(), EBizType.AJ_WITHDRAWFEE, "ETH取现-外部地址"
-                    + withdraw.getPayCardNo(), withdraw.getFee());
+        if (withdraw.getFee().compareTo(BigDecimal.ZERO) > 0) {
+            accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(),
+                EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
+                withdraw.getCode(), EBizType.AJ_WITHDRAWFEE, "ETH取现-外部地址"
+                        + withdraw.getPayCardNo(), withdraw.getFee());
+        }
         // 平台盈亏账户记入取现矿工费
         BigDecimal gasPrice = new BigDecimal(ctqEthTransaction.getGasPrice());
         BigDecimal gasUse = new BigDecimal(ctqEthTransaction.getGas()
@@ -127,6 +129,8 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
             withdraw.getCode(), EBizType.AJ_WFEE,
             "ETH取现-外部地址" + withdraw.getPayCardNo(), txFee.negate());
+        // 落地交易记录
+        ethTransactionBO.saveEthTransaction(ctqEthTransaction);
     }
 
     @Override
