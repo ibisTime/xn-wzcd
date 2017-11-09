@@ -2,7 +2,7 @@ package com.cdkj.coin.common;
 
 public class SysConstants {
 
-    public static final String CUR_BLOCK_NUMBER = "curBlockNumber"; // 当前扫描至哪个区块
+    public static final String COLLECTION_LIMIT = "collection_limit"; // 账户余额大于等于该值时，进行归集
 
     // C端用户取现倍数
     public static String CUSERQXBS = "CUSERQXBS";

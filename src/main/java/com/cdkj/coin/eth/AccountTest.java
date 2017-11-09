@@ -9,7 +9,7 @@
 package com.cdkj.coin.eth;
 
 import java.io.IOException;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.web3j.protocol.core.DefaultBlockParameterNumber;
@@ -50,7 +50,7 @@ public class AccountTest {
 
     public static void getBalance() {
         EthAccount account = new EthAccount();
-        BigInteger ba = account
+        BigDecimal ba = account
             .getBalance("0xb1cd852c72141bdac6ccf314d9ea82d2af03f2ac");
         System.out.print(ba);
     }

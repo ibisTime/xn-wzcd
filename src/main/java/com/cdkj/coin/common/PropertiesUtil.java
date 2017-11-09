@@ -33,7 +33,9 @@ public class PropertiesUtil {
 
         public static String CERTI_URL = props.getProperty("CERTI_URL");
 
-        public static String ETH_URL = props.getProperty("ETH_URL");
+        public static String ETH_URL_SELF = props.getProperty("ETH_URL_SELF");
+
+        public static String ETH_URL_OTHER = props.getProperty("ETH_URL_OTHER");
 
     }
 }

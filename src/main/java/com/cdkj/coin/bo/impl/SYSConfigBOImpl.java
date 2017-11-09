@@ -1,5 +1,6 @@
 package com.cdkj.coin.bo.impl;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -147,6 +148,20 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig> implements
             result = Long.valueOf(config.getCvalue());
         } catch (Exception e) {
             logger.error("参数名为" + key + "的配置转换成Long类型发生错误, 原因："
+                    + e.getMessage());
+        }
+        return result;
+    }
+
+    @Override
+    public BigDecimal getBigDecimalValue(String key) {
+        BigDecimal result = BigDecimal.ZERO;
+        SYSConfig config = getSYSConfig(key, ESystemCode.COIN.getCode(),
+            ESystemCode.COIN.getCode());
+        try {
+            result = new BigDecimal(config.getCvalue());
+        } catch (Exception e) {
+            logger.error("参数名为" + key + "的配置转换成BigDecimal类型发生错误, 原因："
                     + e.getMessage());
         }
         return result;

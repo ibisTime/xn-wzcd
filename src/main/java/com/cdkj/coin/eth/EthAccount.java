@@ -8,18 +8,20 @@
  */
 package com.cdkj.coin.eth;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameter;
-import org.web3j.protocol.core.DefaultBlockParameterNumber;
+import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.EthGetBalance;
 import org.web3j.protocol.parity.Parity;
 import org.web3j.protocol.parity.methods.response.NewAccountIdentifier;
 import org.web3j.protocol.parity.methods.response.PersonalAccountsInfo;
+
+import com.cdkj.coin.exception.BizException;
 
 /** 
  * @author: haiqingzheng 
@@ -85,20 +87,19 @@ public class EthAccount {
         return null;
     }
 
-    public BigInteger getBalance(String accountId) {
+    public BigDecimal getBalance(String accountId) {
         try {
 
-            DefaultBlockParameter defaultBlockParameter = new DefaultBlockParameterNumber(
-                58);
+            DefaultBlockParameter defaultBlockParameter = DefaultBlockParameterName.LATEST;
             // EthGetBalance ethGetBalance = parity.ethGetBalance(accountId,
             // defaultBlockParameter).send();
             EthGetBalance ethGetBalance = web3j.ethGetBalance(accountId,
                 defaultBlockParameter).send();
-            if (ethGetBalance != null) {
-                return ethGetBalance.getBalance();
+            if (ethGetBalance != null && ethGetBalance.getBalance() != null) {
+                return new BigDecimal(ethGetBalance.getBalance().toString());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new BizException("xn625000", "以太坊余额查询异常，原因：" + e.getMessage());
         }
         return null;
     }

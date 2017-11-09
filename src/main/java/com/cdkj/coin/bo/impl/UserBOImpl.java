@@ -492,10 +492,13 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     public void checkTradePwd(String userId, String tradePwd) {
         if (StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(tradePwd)) {
             User user = this.getUser(userId);
-            if (StringUtils.isBlank(user.getTradePwd())) {
+            if (StringUtils.isBlank(user.getTradePwdStrength())) {
                 throw new BizException("jd00001", "请您先设置资金密码！");
             }
-            if (!MD5Util.md5(tradePwd).equals(user.getTradePwd())) {
+            User condition = new User();
+            condition.setUserId(userId);
+            condition.setTradePwd(MD5Util.md5(tradePwd));
+            if (this.getTotalCount(condition) != 1) {
                 throw new BizException("jd00001", "资金密码错误");
             }
         } else {

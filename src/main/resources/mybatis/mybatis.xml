@@ -7,8 +7,8 @@
 		<typeAlias alias="cNavigate" type="com.cdkj.coin.domain.CNavigate" />
 		<typeAlias alias="fieldTimes" type="com.cdkj.coin.domain.FieldTimes" />
 		<typeAlias alias="sysMenu" type="com.cdkj.coin.domain.SYSMenu" />
-	    <typeAlias alias="sysRole" type="com.cdkj.coin.domain.SYSRole" />
- 	    <typeAlias alias="sysMenuRole" type="com.cdkj.coin.domain.SYSMenuRole" />
+		<typeAlias alias="sysRole" type="com.cdkj.coin.domain.SYSRole" />
+		<typeAlias alias="sysMenuRole" type="com.cdkj.coin.domain.SYSMenuRole" />
 
 		<typeAlias alias="account" type="com.cdkj.coin.domain.Account" />
 		<typeAlias alias="jour" type="com.cdkj.coin.domain.Jour" />
@@ -19,7 +19,7 @@
 
 		<typeAlias alias="ethAddress" type="com.cdkj.coin.domain.EthAddress" />
 		<typeAlias alias="ethTransaction" type="com.cdkj.coin.domain.EthTransaction" />
-
+		<typeAlias alias="ethCollection" type="com.cdkj.coin.domain.EthCollection" />
 		<typeAlias alias="sysDict" type="com.cdkj.coin.domain.SYSDict" />
 		<typeAlias alias="sysConfig" type="com.cdkj.coin.domain.SYSConfig" />
 	</typeAliases>

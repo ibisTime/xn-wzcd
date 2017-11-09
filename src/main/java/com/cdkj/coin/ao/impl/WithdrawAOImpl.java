@@ -6,12 +6,15 @@ import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.coin.ao.IWithdrawAO;
 import com.cdkj.coin.bo.IAccountBO;
+import com.cdkj.coin.bo.IEthAddressBO;
+import com.cdkj.coin.bo.IEthTransactionBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.IWithdrawBO;
@@ -19,6 +22,7 @@ import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.common.AmountUtil;
 import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.domain.Account;
+import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.domain.User;
 import com.cdkj.coin.domain.Withdraw;
 import com.cdkj.coin.enums.EAccountType;
@@ -26,11 +30,15 @@ import com.cdkj.coin.enums.EBizType;
 import com.cdkj.coin.enums.EBoolean;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECurrency;
+import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.enums.EWithdrawStatus;
 import com.cdkj.coin.exception.BizException;
 
 @Service
 public class WithdrawAOImpl implements IWithdrawAO {
+
+    private static Logger logger = Logger.getLogger(WithdrawAOImpl.class);
+
     @Autowired
     private IAccountBO accountBO;
 
@@ -39,6 +47,12 @@ public class WithdrawAOImpl implements IWithdrawAO {
 
     @Autowired
     private IUserBO userBO;
+
+    @Autowired
+    private IEthAddressBO ethAddressBO;
+
+    @Autowired
+    private IEthTransactionBO ethTransactionBO;
 
     @Autowired
     private ISYSConfigBO sysConfigBO;
@@ -111,6 +125,29 @@ public class WithdrawAOImpl implements IWithdrawAO {
             approveOrderYES(data, approveUser, approveNote);
         } else {
             approveOrderNO(data, approveUser, approveNote);
+        }
+    }
+
+    @Override
+    public void broadcastOrder(String code, String approveUser) {
+        // 获取今日散取地址
+        EthAddress mEthAddress = ethAddressBO.getMEthAddressToday();
+        String address = mEthAddress.getAddress();
+        String password = mEthAddress.getPassword();
+        // 获取取现订单详情
+        Withdraw withdraw = withdrawBO.getWithdraw(code,
+            ESystemCode.COIN.getCode());
+        // 查询散取地址余额
+        BigDecimal balance = ethAddressBO.getEthBalance(address);
+        logger.info("地址" + mEthAddress + "余额：" + balance.toString());
+        if (balance.compareTo(withdraw.getAmount()) < 0) {
+            throw new BizException("xn625000", "散取地址" + mEthAddress + "余额不足！");
+        }
+        // 广播
+        String channelOrder = ethTransactionBO.broadcast(address, password,
+            withdraw.getPayCardNo(), withdraw.getAmount());
+        if (StringUtils.isBlank(channelOrder)) {
+            throw new BizException("xn625000", "交易广播失败");
         }
     }
 
@@ -241,4 +278,5 @@ public class WithdrawAOImpl implements IWithdrawAO {
         }
         return AmountUtil.mul(amount, feeRate);
     }
+
 }

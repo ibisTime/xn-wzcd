@@ -8,6 +8,7 @@
  */
 package com.cdkj.coin.bo;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 import com.cdkj.coin.bo.base.IPaginableBO;
@@ -41,5 +42,7 @@ public interface ISYSConfigBO extends IPaginableBO<SYSConfig> {
     public Integer getIntegerValue(String key);
 
     public Long getLongValue(String key);
+
+    public BigDecimal getBigDecimalValue(String key);
 
 }

@@ -20,7 +20,7 @@ import com.cdkj.coin.common.PropertiesUtil;
  */
 public class ParityClient {
 
-    private static String ETH_URL = PropertiesUtil.Config.ETH_URL;
+    private static String ETH_URL = PropertiesUtil.Config.ETH_URL_SELF;
 
     private ParityClient() {
     }

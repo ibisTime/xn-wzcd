@@ -1,6 +1,8 @@
 package com.cdkj.coin.bo.impl;
 
 import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -21,6 +23,7 @@ import org.web3j.utils.Numeric;
 
 import com.cdkj.coin.bo.IEthTransactionBO;
 import com.cdkj.coin.bo.base.PaginableBOImpl;
+import com.cdkj.coin.common.PropertiesUtil;
 import com.cdkj.coin.dao.IEthTransactionDAO;
 import com.cdkj.coin.domain.EthTransaction;
 import com.cdkj.coin.eth.CtqEthTransaction;
@@ -31,7 +34,7 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
         implements IEthTransactionBO {
 
     private static Web3j web3j = Web3j.build(new HttpService(
-        "https://mainnet.infura.io/ZJR3JJlmLyf5mg4A9UxA"));;
+        PropertiesUtil.Config.ETH_URL_OTHER));
 
     @Autowired
     private IEthTransactionDAO ethTransactionDAO;
@@ -103,8 +106,20 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
     }
 
     @Override
-    public String customTxByWalletFile(String from, String fromPassword,
-            String to, BigInteger amount) {
+    public BigDecimal getGasPrice() {
+        BigDecimal price = null;
+        try {
+            price = new BigDecimal(web3j.ethGasPrice().send().getGasPrice()
+                .toString());
+        } catch (IOException e) {
+            throw new BizException("xn0000", "以太坊gas价格获取异常");
+        }
+        return price;
+    }
+
+    @Override
+    public String broadcast(String from, String fromPassword, String to,
+            BigDecimal value) {
         String txHash = null;
         try {
             String fileDirPath = "/Users/haiqingzheng/Desktop/ethereum/beikeying/data/keystore";
@@ -121,11 +136,9 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
                     }
                 }
             }
-
             if (keystoreFile == null) {
-                throw new Exception("未找到文件");
+                throw new BizException("xn6250000", "未找到keystore文件");
             }
-
             //
             Credentials credentials = WalletUtils.loadCredentials(fromPassword,
                 keystoreFile);
@@ -135,13 +148,15 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
                 .sendAsync().get();
             //
             BigInteger nonce = ethGetTransactionCount.getTransactionCount();
+
             // TODO 动态获取
             BigInteger gasLimit = BigInteger.valueOf(30000);
             BigInteger gasPrice = web3j.ethGasPrice().send().getGasPrice();
 
             // 本地签名的
             RawTransaction rawTransaction = RawTransaction.createTransaction(
-                nonce, gasPrice, gasLimit, to, amount, "121312");
+                nonce, gasPrice, gasLimit, to,
+                new BigInteger(value.toString()), "");
 
             // 签名
             byte[] signedMessage = TransactionEncoder.signMessage(
@@ -161,5 +176,4 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
         // success
 
     }
-
 }

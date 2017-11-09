@@ -9,6 +9,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameter;
+import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.response.EthGetBalance;
 
 import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.base.PaginableBOImpl;
@@ -19,6 +23,7 @@ import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.enums.EEthAddressStatus;
 import com.cdkj.coin.enums.EEthAddressType;
 import com.cdkj.coin.eth.EthAccount;
+import com.cdkj.coin.eth.Web3JClient;
 import com.cdkj.coin.exception.BizException;
 
 @Component
@@ -26,6 +31,8 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
         IEthAddressBO {
 
     private static Logger logger = Logger.getLogger(EthAddressBOImpl.class);
+
+    private static Web3j web3j = Web3JClient.getClient();
 
     @Autowired
     private IEthAddressDAO ethAddressDAO;
@@ -75,11 +82,27 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
     }
 
     @Override
-    public List<EthAddress> queryMEthAddressList() {
+    public EthAddress getMEthAddressToday() {
         EthAddress condition = new EthAddress();
         condition.setType(EEthAddressType.M.getCode());
         condition.setStatus(EEthAddressStatus.NORMAL.getCode());
-        return ethAddressDAO.selectList(condition);
+        List<EthAddress> mList = ethAddressDAO.selectList(condition);
+        if (CollectionUtils.isEmpty(mList)) {
+            throw new BizException("xn625000", "未找到今日可用的散取地址");
+        }
+        return mList.get(0);
+    }
+
+    @Override
+    public EthAddress getWEthAddressToday() {
+        EthAddress condition = new EthAddress();
+        condition.setType(EEthAddressType.W.getCode());
+        condition.setStatus(EEthAddressStatus.NORMAL.getCode());
+        List<EthAddress> wList = ethAddressDAO.selectList(condition);
+        if (CollectionUtils.isEmpty(wList)) {
+            throw new BizException("xn625000", "未找到今日可用的归集地址");
+        }
+        return wList.get(0);
     }
 
     @Override
@@ -119,6 +142,22 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
             data = results.get(0);
         }
         return data;
+    }
+
+    @Override
+    public BigDecimal getEthBalance(String address) {
+        try {
+            DefaultBlockParameter defaultBlockParameter = DefaultBlockParameterName.LATEST;
+            EthGetBalance ethGetBalance = web3j.ethGetBalance(address,
+                defaultBlockParameter).send();
+            if (ethGetBalance != null) {
+                return new BigDecimal(ethGetBalance.getBalance().toString());
+            } else {
+                throw new BizException("xn625000", "以太坊余额查询失败");
+            }
+        } catch (Exception e) {
+            throw new BizException("xn625000", "以太坊余额查询异常，原因：" + e.getMessage());
+        }
     }
 
 }

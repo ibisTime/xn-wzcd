@@ -41,7 +41,7 @@ public class CallbackConroller {
 
     // 交易通知
     @RequestMapping("/eth/tx/notice")
-    public synchronized void doCallbackWechatAPP(HttpServletRequest request,
+    public synchronized void doCallback(HttpServletRequest request,
             HttpServletResponse response) {
         List<String> hashList = new ArrayList<String>();
         try {
@@ -60,22 +60,22 @@ public class CallbackConroller {
                 EEthAddressType toType = ethAddressAO.getType(toAddress);
 
                 if (EEthAddressType.M == fromType) { // fromAddress=M 提现
-
-                }
-
-                if (EEthAddressType.X == toType) { // toAddress=X 充值
-                    ethTransactionAO.charge(ctqEthTransaction);
+                    if (EEthAddressType.X == toType) { // toAddress=X 充值
+                        ethTransactionAO.chargeNotice(ctqEthTransaction);
+                    }
                     hashList.add(ctqEthTransaction.getHash());
-                }
-                if (EEthAddressType.X == fromType
-                        && EEthAddressType.W == toType) { // fromAddress=X
-                                                          // toAddress=W 归集
+                } else if (EEthAddressType.X == toType) { // toAddress=X 充值
+                    ethTransactionAO.chargeNotice(ctqEthTransaction);
+                    hashList.add(ctqEthTransaction.getHash());
+                } else if (EEthAddressType.X == fromType
+                        && EEthAddressType.W == toType) {
+                    // fromAddress=X toAddress=W 归集
+                    ethTransactionAO.collectionNotice(ctqEthTransaction);
+                    hashList.add(ctqEthTransaction.getHash());
+                } else if (EEthAddressType.M == toType) { // toAddress=M 每日定存
 
-                }
-                if (EEthAddressType.M == toType) { // toAddress=M 每日定存
-
-                }
-                if (EEthAddressType.W == fromType) { // fromAddress=W 每日转移
+                } else if (EEthAddressType.W == fromType) {
+                    // fromAddress=W 每日转移
 
                 }
 

@@ -18,5 +18,11 @@ import com.cdkj.coin.eth.CtqEthTransaction;
 public interface IEthTransactionAO {
 
     // 充值
-    public void charge(CtqEthTransaction ctqEthTransaction);
+    public void chargeNotice(CtqEthTransaction ctqEthTransaction);
+
+    // 归集
+    public void collection(String address);
+
+    // 归集交易通知处理
+    public void collectionNotice(CtqEthTransaction ctqEthTransaction);
 }

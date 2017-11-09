@@ -27,8 +27,12 @@ public interface IEthAddressAO {
     // 根据地址获取地址类型
     public EEthAddressType getType(String address);
 
-    // 生成地址（有私钥）
+    // 生成散取️地址（有私钥）
     public String generateMAddress(Date availableDatetimeStart,
+            Date availableDatetimeEnd);
+
+    // 导入估计地址（无私钥）
+    public String importWAddress(String address, Date availableDatetimeStart,
             Date availableDatetimeEnd);
 
     public Paginable<EthAddress> queryEthAddressPage(int start, int limit,

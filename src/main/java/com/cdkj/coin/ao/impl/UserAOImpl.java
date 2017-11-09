@@ -48,7 +48,6 @@ import com.cdkj.coin.dto.res.XN798012Res;
 import com.cdkj.coin.dto.res.XN805041Res;
 import com.cdkj.coin.enums.EAccountType;
 import com.cdkj.coin.enums.EBoolean;
-import com.cdkj.coin.enums.ECaptchaType;
 import com.cdkj.coin.enums.ECurrency;
 import com.cdkj.coin.enums.EEthAddressType;
 import com.cdkj.coin.enums.EIDKind;
@@ -121,8 +120,9 @@ public class UserAOImpl implements IUserAO {
         String userRefereeId = userBO.getUserId(userReferee, userRefereeKind,
             companyCode, systemCode);
         // 验证短信验证码
-        smsOutBO.checkCaptcha(mobile, smsCaptcha, ECaptchaType.C_REG.getCode(),
-            companyCode, systemCode);
+        // smsOutBO.checkCaptcha(mobile, smsCaptcha,
+        // ECaptchaType.C_REG.getCode(),
+        // companyCode, systemCode);
         // 注册用户
         String userId = userBO.doRegister(mobile, nickname, loginPwd,
             userRefereeId, kind, province, city, area, address, companyCode,
