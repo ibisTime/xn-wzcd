@@ -24,4 +24,5 @@ public class EthCollectionAOImpl implements IEthCollectionAO {
     public EthCollection getEthCollection(String code) {
         return ethCollectionBO.getEthCollection(code);
     }
+
 }

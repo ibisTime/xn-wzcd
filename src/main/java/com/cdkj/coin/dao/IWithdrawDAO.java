@@ -10,4 +10,6 @@ public interface IWithdrawDAO extends IBaseDAO<Withdraw> {
 
     void payOrder(Withdraw data);
 
+    void broadcastOrder(Withdraw data);
+
 }

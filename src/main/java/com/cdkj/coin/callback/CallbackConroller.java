@@ -60,13 +60,16 @@ public class CallbackConroller {
                 EEthAddressType toType = ethAddressAO.getType(toAddress);
 
                 if (EEthAddressType.M == fromType) { // fromAddress=M 提现
+                    ethTransactionAO.withdrawNotice(ctqEthTransaction);
                     if (EEthAddressType.X == toType) { // toAddress=X 充值
                         ethTransactionAO.chargeNotice(ctqEthTransaction);
+                        ethTransactionAO.collection(ctqEthTransaction.getTo());
                     }
                     hashList.add(ctqEthTransaction.getHash());
                 } else if (EEthAddressType.X == toType) { // toAddress=X 充值
                     ethTransactionAO.chargeNotice(ctqEthTransaction);
                     hashList.add(ctqEthTransaction.getHash());
+                    ethTransactionAO.collection(ctqEthTransaction.getTo());
                 } else if (EEthAddressType.X == fromType
                         && EEthAddressType.W == toType) {
                     // fromAddress=X toAddress=W 归集

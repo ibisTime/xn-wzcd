@@ -22,7 +22,11 @@ public interface IWithdrawBO extends IPaginableBO<Withdraw> {
     void payOrder(Withdraw data, EWithdrawStatus status, String payUser,
             String payNote, String channelOrder);
 
+    void broadcastOrder(Withdraw data, String txHash);
+
     List<Withdraw> queryWithdrawList(Withdraw condition);
 
     Withdraw getWithdraw(String code, String systemCode);
+
+    public Withdraw getWithdraw(String hash);
 }

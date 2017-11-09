@@ -40,6 +40,7 @@
 		t.code
 		,t.type
 		,t.address
+		,t.password
 		,t.user_id
 		,t.balance
 		,t.available_datetime_start

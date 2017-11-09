@@ -80,6 +80,7 @@ public class EthCollectionBOImpl extends PaginableBOImpl<EthCollection>
         data.setStatus(EEthCollectionStatus.Broadcast_YES.getCode());
         data.setEthDatetime(ethDatetime);
         data.setUpdateDatetime(new Date());
+        ethCollectionDAO.updateNotice(data);
         return count;
     }
 }

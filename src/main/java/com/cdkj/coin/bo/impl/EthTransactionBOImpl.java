@@ -34,7 +34,7 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
         implements IEthTransactionBO {
 
     private static Web3j web3j = Web3j.build(new HttpService(
-        PropertiesUtil.Config.ETH_URL_OTHER));
+        PropertiesUtil.Config.ETH_URL_SELF));
 
     @Autowired
     private IEthTransactionDAO ethTransactionDAO;
@@ -122,7 +122,7 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
             BigDecimal value) {
         String txHash = null;
         try {
-            String fileDirPath = "/Users/haiqingzheng/Desktop/ethereum/beikeying/data/keystore";
+            String fileDirPath = PropertiesUtil.Config.KEY_STORE_PATH;
             File keyStoreFileDir = new File(fileDirPath);
             File[] subFiles = keyStoreFileDir.listFiles();
             File keystoreFile = null;
@@ -150,7 +150,7 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
             BigInteger nonce = ethGetTransactionCount.getTransactionCount();
 
             // TODO 动态获取
-            BigInteger gasLimit = BigInteger.valueOf(30000);
+            BigInteger gasLimit = BigInteger.valueOf(21000);
             BigInteger gasPrice = web3j.ethGasPrice().send().getGasPrice();
 
             // 本地签名的
@@ -168,6 +168,7 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
             if (ethSendTransaction.getError() != null) {
                 // failure
             }
+            txHash = ethSendTransaction.getTransactionHash();
 
         } catch (Exception e) {
             throw new BizException("xn625000", "交易广播异常" + e.getMessage());

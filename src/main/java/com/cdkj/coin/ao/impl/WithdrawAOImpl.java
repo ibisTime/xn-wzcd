@@ -129,7 +129,8 @@ public class WithdrawAOImpl implements IWithdrawAO {
     }
 
     @Override
-    public void broadcastOrder(String code, String approveUser) {
+    @Transactional
+    public void broadcast(String code, String approveUser) {
         // 获取今日散取地址
         EthAddress mEthAddress = ethAddressBO.getMEthAddressToday();
         String address = mEthAddress.getAddress();
@@ -144,11 +145,12 @@ public class WithdrawAOImpl implements IWithdrawAO {
             throw new BizException("xn625000", "散取地址" + mEthAddress + "余额不足！");
         }
         // 广播
-        String channelOrder = ethTransactionBO.broadcast(address, password,
+        String txHash = ethTransactionBO.broadcast(address, password,
             withdraw.getPayCardNo(), withdraw.getAmount());
-        if (StringUtils.isBlank(channelOrder)) {
+        if (StringUtils.isBlank(txHash)) {
             throw new BizException("xn625000", "交易广播失败");
         }
+        withdrawBO.broadcastOrder(withdraw, txHash);
     }
 
     @Override

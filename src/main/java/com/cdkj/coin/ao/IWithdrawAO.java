@@ -26,7 +26,7 @@ public interface IWithdrawAO {
             String approveResult, String approveNote, String systemCode);
 
     // 取现广播
-    public void broadcastOrder(String code, String approveUser);
+    public void broadcast(String code, String approveUser);
 
     public void payOrder(String code, String payUser, String payResult,
             String payNote, String channelOrder, String systemCode);

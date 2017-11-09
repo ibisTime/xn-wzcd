@@ -42,8 +42,11 @@ public class CtqEthTransaction extends ABaseDO {
     // gas价格
     private String gasPrice;
 
-    // 消耗gas
+    // gaslimit
     private BigInteger gas;
+
+    // 消耗gas
+    private BigInteger gasUsed;
 
     // 区块生成时间
     private Date blockCreateDatetime;
@@ -190,6 +193,14 @@ public class CtqEthTransaction extends ABaseDO {
 
     public String getGasPrice() {
         return gasPrice;
+    }
+
+    public BigInteger getGasUsed() {
+        return gasUsed;
+    }
+
+    public void setGasUsed(BigInteger gasUsed) {
+        this.gasUsed = gasUsed;
     }
 
     public BigInteger getGas() {

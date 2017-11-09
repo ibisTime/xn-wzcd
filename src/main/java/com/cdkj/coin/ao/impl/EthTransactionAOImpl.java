@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cdkj.coin.ao.IChargeAO;
 import com.cdkj.coin.ao.IEthTransactionAO;
 import com.cdkj.coin.bo.IAccountBO;
 import com.cdkj.coin.bo.IChargeBO;
@@ -23,18 +22,21 @@ import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IEthCollectionBO;
 import com.cdkj.coin.bo.IEthTransactionBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
+import com.cdkj.coin.bo.IWithdrawBO;
 import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.Charge;
 import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.domain.EthCollection;
+import com.cdkj.coin.domain.Withdraw;
 import com.cdkj.coin.enums.EBizType;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECurrency;
 import com.cdkj.coin.enums.EEthAddressType;
 import com.cdkj.coin.enums.EEthCollectionStatus;
 import com.cdkj.coin.enums.ESystemAccount;
+import com.cdkj.coin.enums.EWithdrawStatus;
 import com.cdkj.coin.eth.CtqEthTransaction;
 import com.cdkj.coin.exception.BizException;
 
@@ -50,7 +52,7 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
     private IChargeBO chargeBO;
 
     @Autowired
-    private IChargeAO chargeAO;
+    private IWithdrawBO withdrawBO;
 
     @Autowired
     private IAccountBO accountBO;
@@ -99,33 +101,71 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
 
     @Override
     @Transactional
-    public void collection(String fromAddress) {
+    public void withdrawNotice(CtqEthTransaction ctqEthTransaction) {
+        // 根据交易hash查询取现订单
+        Withdraw withdraw = withdrawBO.getWithdraw(ctqEthTransaction.getHash());
+        // 取现订单更新
+        withdrawBO.payOrder(withdraw, EWithdrawStatus.Pay_YES, "ETH", "广播成功",
+            ctqEthTransaction.getHash());
+        // 平台冷钱包减钱
+        accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_TG_ETH.getCode(),
+            EChannelType.ETH, ctqEthTransaction.getHash(), "ETH", withdraw
+                .getCode(), EBizType.AJ_WITHDRAW,
+            "ETH取现-外部地址：" + withdraw.getPayCardNo(), new BigDecimal(
+                ctqEthTransaction.getValue()));
+        // 平台盈亏账户记入取现手续费
+        accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(),
+            EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
+            withdraw.getCode(), EBizType.AJ_WITHDRAWFEE, "ETH取现-外部地址"
+                    + withdraw.getPayCardNo(), withdraw.getFee());
+        // 平台盈亏账户记入取现矿工费
+        BigDecimal gasPrice = new BigDecimal(ctqEthTransaction.getGasPrice());
+        BigDecimal gasUse = new BigDecimal(ctqEthTransaction.getGas()
+            .toString());
+        BigDecimal txFee = gasPrice.multiply(gasUse);
+        accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(),
+            EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
+            withdraw.getCode(), EBizType.AJ_WFEE,
+            "ETH取现-外部地址" + withdraw.getPayCardNo(), txFee.negate());
+    }
+
+    @Override
+    @Transactional
+    public void collection(String address) {
+        // 获取地址信息
+        EthAddress xEthAddress = ethAddressBO.getEthAddress(EEthAddressType.X,
+            address);
+        if (xEthAddress == null) {
+            throw new BizException("xn625000", "该地址不能归集");
+        }
         BigDecimal limit = sysConfigBO
             .getBigDecimalValue(SysConstants.COLLECTION_LIMIT);
-        BigDecimal balance = ethAddressBO.getEthBalance(fromAddress);
+        BigDecimal balance = ethAddressBO.getEthBalance(address);
         // 余额大于配置值时，进行归集
-        if (balance.compareTo(limit) > 0 || balance.compareTo(limit) == 0) {
-            // 获取地址信息
-            EthAddress xEthAddress = ethAddressBO.getEthAddress(
-                EEthAddressType.X, fromAddress);
-            // 获取今日归集地址
-            EthAddress wEthAddress = ethAddressBO.getWEthAddressToday();
-            String toAddress = wEthAddress.getAddress();
-            // 预估矿工费用
-            BigDecimal gasPrice = ethTransactionBO.getGasPrice();
-            BigDecimal gasUse = new BigDecimal(21000);
-            BigDecimal txFee = gasPrice.multiply(gasUse);
-            BigDecimal value = balance.subtract(txFee);
-            // 归集广播
-            String txHash = ethTransactionBO.broadcast(fromAddress,
-                xEthAddress.getPassword(), toAddress, value);
-            if (StringUtils.isBlank(txHash)) {
-                throw new BizException("xn625000", "归集—交易广播失败");
-            }
-            // 归集记录落地
-            ethCollectionBO.saveEthCollection(fromAddress, toAddress, value,
-                txHash);
+        if (balance.compareTo(limit) < 0) {
+            throw new BizException("xn625000", "余额太少，无需归集");
         }
+        // 获取今日归集地址
+        EthAddress wEthAddress = ethAddressBO.getWEthAddressToday();
+        String toAddress = wEthAddress.getAddress();
+        // 预估矿工费用
+        BigDecimal gasPrice = ethTransactionBO.getGasPrice();
+        BigDecimal gasUse = new BigDecimal(21000);
+        BigDecimal txFee = gasPrice.multiply(gasUse);
+        BigDecimal value = balance.subtract(txFee);
+        if (value.compareTo(BigDecimal.ZERO) < 0
+                || value.compareTo(BigDecimal.ZERO) == 0) {
+            throw new BizException("xn625000", "余额不足以支付矿工费，不能归集");
+        }
+        // 归集广播
+        String txHash = ethTransactionBO.broadcast(address,
+            xEthAddress.getPassword(), toAddress, value);
+        if (StringUtils.isBlank(txHash)) {
+            throw new BizException("xn625000", "归集—交易广播失败");
+        }
+        // 归集记录落地
+        ethCollectionBO.saveEthCollection(address, toAddress, value, txHash);
+
     }
 
     @Override
@@ -147,16 +187,17 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             ctqEthTransaction.getBlockCreateDatetime());
         // 平台冷钱包加钱
         accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_TG_ETH.getCode(),
-            EChannelType.ETH, ctqEthTransaction.getHash(), "", collection
+            EChannelType.ETH, ctqEthTransaction.getHash(), "ETH", collection
                 .getCode(), EBizType.AJ_COLLECTION,
             "归集-来自地址：" + collection.getFromAddress(), new BigDecimal(
                 ctqEthTransaction.getValue()));
         // 平台盈亏账户记入矿工费
         accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(),
-            EChannelType.ETH, ctqEthTransaction.getHash(), "",
+            EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
             collection.getCode(), EBizType.AJ_MFEE,
             "归集地址：" + collection.getFromAddress(), txFee.negate());
         // 落地交易记录
         ethTransactionBO.saveEthTransaction(ctqEthTransaction);
     }
+
 }

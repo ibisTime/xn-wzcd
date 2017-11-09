@@ -56,4 +56,9 @@ public class WithdrawDAOImpl extends AMybatisTemplate implements IWithdrawDAO {
         super.update(NAMESPACE.concat("pay_order"), data);
     }
 
+    @Override
+    public void broadcastOrder(Withdraw data) {
+        super.update(NAMESPACE.concat("broadcast_order"), data);
+    }
+
 }

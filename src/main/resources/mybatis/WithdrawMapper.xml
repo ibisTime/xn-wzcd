@@ -220,4 +220,13 @@
 		,pay_datetime = #{payDatetime}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="broadcast_order" parameterType="withdraw">
+		UPDATE tstd_withdraw
+		SET
+		status = #{status}
+		,channel_order = #{channelOrder}
+		WHERE code = #{code}
+	</update>
+	
 </mapper>

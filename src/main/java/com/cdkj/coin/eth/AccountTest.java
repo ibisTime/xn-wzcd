@@ -8,16 +8,23 @@
  */
 package com.cdkj.coin.eth;
 
-import java.io.IOException;
+import java.io.File;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
-import org.web3j.protocol.core.DefaultBlockParameterNumber;
-import org.web3j.protocol.core.methods.response.EthBlock;
-import org.web3j.protocol.core.methods.response.EthBlock.TransactionResult;
-import org.web3j.protocol.core.methods.response.Transaction;
+import org.web3j.crypto.Credentials;
+import org.web3j.crypto.TransactionEncoder;
+import org.web3j.crypto.WalletUtils;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.request.RawTransaction;
+import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
+import org.web3j.protocol.core.methods.response.EthSendTransaction;
 import org.web3j.protocol.http.HttpService;
-import org.web3j.protocol.parity.Parity;
+import org.web3j.utils.Numeric;
+
+import com.cdkj.coin.exception.BizException;
 
 /** 
  * @author: haiqingzheng 
@@ -27,25 +34,10 @@ import org.web3j.protocol.parity.Parity;
 public class AccountTest {
 
     public static void main(String args[]) {
-        Parity parity = Parity
-            .build(new HttpService("http://116.62.6.195:8545"));
-        try {
-            EthBlock ethBlockResp = parity.ethGetBlockByNumber(
-                new DefaultBlockParameterNumber(44334242423223L), true).send();
-            List<TransactionResult> aa = ethBlockResp.getResult()
-                .getTransactions();
-            for (TransactionResult<Transaction> transactionResult : aa) {
-                Transaction transaction = transactionResult.get();
-                System.out.println(transaction.getTo());
-                if (transaction.getTo().equalsIgnoreCase(
-                    "0x901536393DF4bF66986C12cf98f3D6718C534F20")) {
-                    System.out.println(transaction + "&*&*&*");
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String hash = broadcast("0x901536393df4bf66986c12cf98f3d6718c534f20",
+            "533109", "0x18dd05535fd90db14112c3ba3e8801267cf48737",
+            BigDecimal.valueOf(300000000000000L));
+        System.out.println("交易提交成功：hash=" + hash);
     }
 
     public static void getBalance() {
@@ -77,4 +69,65 @@ public class AccountTest {
         // account.getAccountInfo("0xad7bbca86e02e503076b06931e05938e51e49fb9");
         // System.out.println(accountsInfo.toString());
     }
+
+    public static String broadcast(String from, String fromPassword, String to,
+            BigDecimal value) {
+        Web3j web3j = Web3j.build(new HttpService("http://116.62.6.195:8545"));
+        String txHash = null;
+        try {
+            String fileDirPath = "/Users/haiqingzheng/Desktop/ethereum/beikeying/data/keystore";
+            File keyStoreFileDir = new File(fileDirPath);
+            File[] subFiles = keyStoreFileDir.listFiles();
+            File keystoreFile = null;
+            for (File file : subFiles) {
+                if (file.isDirectory() != true) {
+                    // from: 0x244eb6078add0d58b2490ae53976d80f54a404ae
+                    if (file.getName().endsWith(from.substring(2))) {
+                        // 找到了该文件
+                        keystoreFile = file;
+                        break;
+                    }
+                }
+            }
+            if (keystoreFile == null) {
+                throw new BizException("xn6250000", "未找到keystore文件");
+            }
+            //
+            Credentials credentials = WalletUtils.loadCredentials(fromPassword,
+                keystoreFile);
+            //
+            EthGetTransactionCount ethGetTransactionCount = web3j
+                .ethGetTransactionCount(from, DefaultBlockParameterName.LATEST)
+                .sendAsync().get();
+            //
+            BigInteger nonce = ethGetTransactionCount.getTransactionCount();
+
+            // TODO 动态获取
+            BigInteger gasLimit = BigInteger.valueOf(30000);
+            BigInteger gasPrice = web3j.ethGasPrice().send().getGasPrice();
+
+            // 本地签名的
+            RawTransaction rawTransaction = RawTransaction.createTransaction(
+                nonce, gasPrice, gasLimit, to,
+                new BigInteger(value.toString()), "");
+
+            // 签名
+            byte[] signedMessage = TransactionEncoder.signMessage(
+                rawTransaction, credentials);
+            txHash = Numeric.toHexString(signedMessage);
+            EthSendTransaction ethSendTransaction = web3j
+                .ethSendRawTransaction(txHash).sendAsync().get();
+
+            if (ethSendTransaction.getError() != null) {
+                // failure
+            }
+
+        } catch (Exception e) {
+            throw new BizException("xn625000", "交易广播异常" + e.getMessage());
+        }
+        return txHash;
+        // success
+
+    }
+
 }

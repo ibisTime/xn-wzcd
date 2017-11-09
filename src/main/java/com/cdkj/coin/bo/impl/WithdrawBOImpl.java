@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -89,6 +90,13 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw> implements
     }
 
     @Override
+    public void broadcastOrder(Withdraw data, String txHash) {
+        data.setStatus(EWithdrawStatus.Broadcast.getCode());
+        data.setChannelOrder(txHash);
+        withdrawDAO.broadcastOrder(data);
+    }
+
+    @Override
     public List<Withdraw> queryWithdrawList(Withdraw condition) {
         return withdrawDAO.selectList(condition);
     }
@@ -136,4 +144,16 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw> implements
             throw new BizException("xn000000", "上笔取现申请还未处理成功，不能再次申请");
         }
     }
+
+    @Override
+    public Withdraw getWithdraw(String hash) {
+        Withdraw condition = new Withdraw();
+        condition.setChannelOrder(hash);
+        List<Withdraw> results = withdrawDAO.selectList(condition);
+        if (CollectionUtils.isEmpty(results)) {
+            throw new BizException("xn0000", "取现记录不存在");
+        }
+        return results.get(0);
+    }
+
 }

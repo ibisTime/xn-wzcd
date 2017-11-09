@@ -13,10 +13,10 @@ import com.cdkj.coin.exception.BizException;
 public enum EBizType {
     AJ_CHARGE("charge", "ETH充值"), AJ_COLLECTION("collection", "归集"), AJ_WITHDRAW(
             "withdraw", "ETH取现"), AJ_BUY("buy", "平台转入"), AJ_SELL("sell", "平台转出"), AJ_TFEE(
-            "tfee", "交易手续费"), AJ_WFEE("wfee", "提现手续费"), AJ_MFEE("wfee", "归集手续费"), AJ_INVITE(
-            "invite", "邀请好友送"), AJ_HCLB("HL", "红冲蓝补"), Transfer_CURRENCY("201",
-            "同币种的划转"), EXCHANGE_CURRENCY("200", "币种兑换"), Transfer_CURRENCY_C2C(
-            "206", "C端用户间转账");
+            "tfee", "交易手续费"), AJ_WITHDRAWFEE("withdrawfee", "提现手续费"), AJ_WFEE(
+            "wfee", "提现矿工费"), AJ_MFEE("wfee", "归集矿工费"), AJ_INVITE("invite",
+            "邀请好友送"), AJ_HCLB("HL", "红冲蓝补"), Transfer_CURRENCY("201", "同币种的划转"), EXCHANGE_CURRENCY(
+            "200", "币种兑换"), Transfer_CURRENCY_C2C("206", "C端用户间转账");
 
     public static EBizType getBizType(String code) {
         Map<String, EBizType> map = getBizTypeMap();

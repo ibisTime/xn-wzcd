@@ -37,5 +37,8 @@ public class PropertiesUtil {
 
         public static String ETH_URL_OTHER = props.getProperty("ETH_URL_OTHER");
 
+        public static String KEY_STORE_PATH = props
+            .getProperty("KEY_STORE_PATH");
+
     }
 }
