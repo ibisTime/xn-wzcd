@@ -22,6 +22,15 @@
 			<if test="txHash != null and txHash != '' ">
 				AND t.tx_hash = #{txHash}
 			</if>
+			<if test="fromAddress != null and fromAddress != '' ">
+				AND t.from_address = #{fromAddress}
+			</if>
+			<if test="toAddress != null and toAddress != '' ">
+				AND t.to_address = #{toAddress}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_ethCollection" parameterType="ethCollection" resultMap="ethCollection_DB_Result">

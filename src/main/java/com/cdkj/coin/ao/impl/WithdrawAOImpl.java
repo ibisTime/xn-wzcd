@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.web3j.crypto.WalletUtils;
 
 import com.cdkj.coin.ao.IWithdrawAO;
 import com.cdkj.coin.bo.IAccountBO;
@@ -65,6 +66,9 @@ public class WithdrawAOImpl implements IWithdrawAO {
         if (amount.compareTo(BigDecimal.ZERO) == 0
                 || amount.compareTo(BigDecimal.ZERO) == -1) {
             throw new BizException("xn000000", "提现金额需大于零");
+        }
+        if (!WalletUtils.isValidAddress(payCardInfo)) {
+            throw new BizException("xn000000", "提现地址不符合以太坊规则，请仔细核对");
         }
         Account dbAccount = accountBO.getAccount(accountNumber);
         // 判断本月是否次数已满，且现在只能有一笔取现未支付记录
@@ -145,12 +149,16 @@ public class WithdrawAOImpl implements IWithdrawAO {
             throw new BizException("xn625000", "散取地址" + address + "余额不足！");
         }
         // 广播
+        if (!WalletUtils.isValidAddress(withdraw.getPayCardInfo())) {
+            throw new BizException("xn625000", "无效的取现地址："
+                    + withdraw.getPayCardInfo());
+        }
         String txHash = ethTransactionBO.broadcast(address, password,
             withdraw.getPayCardNo(), withdraw.getAmount());
         if (StringUtils.isBlank(txHash)) {
             throw new BizException("xn625000", "交易广播失败");
         }
-        withdrawBO.broadcastOrder(withdraw, txHash);
+        withdrawBO.broadcastOrder(withdraw, txHash, approveUser);
     }
 
     @Override

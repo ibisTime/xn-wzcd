@@ -27,7 +27,7 @@ public class XN802754 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         for (String code : req.getCodeList()) {
-            withdrawAO.broadcast(code, req.getUpdater());
+            withdrawAO.broadcast(code, req.getApproveUser());
         }
         return new BooleanRes(true);
     }

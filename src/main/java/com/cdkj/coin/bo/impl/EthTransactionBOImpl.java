@@ -34,7 +34,7 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
         implements IEthTransactionBO {
 
     private static Web3j web3j = Web3j.build(new HttpService(
-        PropertiesUtil.Config.ETH_URL_SELF));
+        PropertiesUtil.Config.ETH_URL_OTHER));
 
     @Autowired
     private IEthTransactionDAO ethTransactionDAO;

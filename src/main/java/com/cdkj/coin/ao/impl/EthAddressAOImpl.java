@@ -24,6 +24,7 @@ import com.cdkj.coin.bo.IAccountBO;
 import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IEthTransactionBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
+import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.domain.EthAddress;
@@ -52,6 +53,9 @@ public class EthAddressAOImpl implements IEthAddressAO {
 
     @Autowired
     private IAccountBO accountBO;
+
+    @Autowired
+    private IUserBO userBO;
 
     @Autowired
     private ISYSConfigBO sysConfigBO;
@@ -169,7 +173,12 @@ public class EthAddressAOImpl implements IEthAddressAO {
     @Override
     public Paginable<EthAddress> queryEthAddressPage(int start, int limit,
             EthAddress condition) {
-        return ethAddressBO.getPaginable(start, limit, condition);
+        Paginable<EthAddress> results = ethAddressBO.getPaginable(start, limit,
+            condition);
+        for (EthAddress ethAddress : results.getList()) {
+            ethAddress.setUser(userBO.getUser(ethAddress.getUserId()));
+        }
+        return results;
     }
 
 }

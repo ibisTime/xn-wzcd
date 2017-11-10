@@ -19,7 +19,7 @@ public class XN802754Req {
 
     // 操作人(必填)
     @NotBlank
-    private String updater;
+    private String approveUser;
 
     public List<String> getCodeList() {
         return codeList;
@@ -29,12 +29,12 @@ public class XN802754Req {
         this.codeList = codeList;
     }
 
-    public String getUpdater() {
-        return updater;
+    public String getApproveUser() {
+        return approveUser;
     }
 
-    public void setUpdater(String updater) {
-        this.updater = updater;
+    public void setApproveUser(String approveUser) {
+        this.approveUser = approveUser;
     }
 
 }

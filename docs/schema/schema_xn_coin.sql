@@ -84,7 +84,6 @@ DROP TABLE IF EXISTS `tcoin_eth_collection`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tcoin_eth_collection` (
   `code` varchar(32) NOT NULL COMMENT '编号',
-  `type` varchar(32) DEFAULT NULL COMMENT '广播类型（提现、归集）',
   `from_address` varchar(255) DEFAULT NULL COMMENT '被归集地址',
   `to_address` varchar(255) DEFAULT NULL COMMENT '归集地址',
   `amount` decimal(64,0) DEFAULT NULL COMMENT '归集数量',
@@ -94,7 +93,6 @@ CREATE TABLE `tcoin_eth_collection` (
   `create_datetime` datetime DEFAULT NULL COMMENT '发起时间',
   `eth_datetime` datetime DEFAULT NULL COMMENT '网络记账时间',
   `update_datetime` datetime DEFAULT NULL COMMENT '完成时间',
-  `ref_no` varchar(32) DEFAULT NULL COMMENT '关联订单号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -126,6 +124,35 @@ CREATE TABLE `tcoin_eth_order` (
   `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
   `update_datatime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tcoin_eth_transaction`
+--
+
+DROP TABLE IF EXISTS `tcoin_eth_transaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tcoin_eth_transaction` (
+  `hash` varchar(255) NOT NULL,
+  `nonce` text,
+  `blockHash` text,
+  `blockNumber` text,
+  `transactionIndex` text,
+  `fromAddress` text,
+  `toAddress` text,
+  `value` text,
+  `gasPrice` text,
+  `gas` text,
+  `gasUsed` text,
+  `input` text,
+  `creates` text,
+  `publicKey` text,
+  `raw` text,
+  `r` text,
+  `s` text,
+  PRIMARY KEY (`hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -167,9 +194,9 @@ DROP TABLE IF EXISTS `tstd_charge`;
 CREATE TABLE `tstd_charge` (
   `code` varchar(32) NOT NULL COMMENT '针对编号',
   `pay_group` varchar(32) DEFAULT NULL COMMENT '支付组号',
-  `ref_no` varchar(32) DEFAULT NULL COMMENT '流水分组组号',
+  `ref_no` varchar(255) DEFAULT NULL COMMENT '流水分组组号',
   `account_number` varchar(32) DEFAULT NULL COMMENT '针对账号',
-  `amount` bigint(20) DEFAULT NULL COMMENT '充值金额',
+  `amount` decimal(64,0) DEFAULT NULL COMMENT '充值金额',
   `account_name` varchar(32) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '针对户名',
   `type` varchar(4) DEFAULT NULL COMMENT '账户类型',
   `currency` varchar(8) DEFAULT NULL COMMENT '币种',
@@ -500,7 +527,7 @@ CREATE TABLE `tsys_config` (
   `company_code` varchar(32) DEFAULT NULL COMMENT '公司编号',
   `system_code` varchar(32) DEFAULT NULL COMMENT '系统编号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -522,7 +549,7 @@ CREATE TABLE `tsys_dict` (
   `company_code` varchar(32) DEFAULT NULL COMMENT '公司编号',
   `system_code` varchar(32) DEFAULT NULL COMMENT '系统编号',
   PRIMARY KEY (`id`) COMMENT '数据字典'
-) ENGINE=InnoDB AUTO_INCREMENT=253 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -563,7 +590,7 @@ CREATE TABLE `tsys_menu_role` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `system_code` varchar(32) DEFAULT NULL COMMENT '系统编号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=366 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2607 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

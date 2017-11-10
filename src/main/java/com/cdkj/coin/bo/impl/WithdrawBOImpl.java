@@ -90,7 +90,7 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw> implements
     }
 
     @Override
-    public void broadcastOrder(Withdraw data, String txHash) {
+    public void broadcastOrder(Withdraw data, String txHash, String updater) {
         data.setStatus(EWithdrawStatus.Broadcast.getCode());
         data.setChannelOrder(txHash);
         withdrawDAO.broadcastOrder(data);

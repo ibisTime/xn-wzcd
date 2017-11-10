@@ -51,6 +51,17 @@ public class EthAddress extends ABaseDO {
     // 更新时间
     private Date updateDatetime;
 
+    // 所属用户信息
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getCode() {
         return code;
     }
