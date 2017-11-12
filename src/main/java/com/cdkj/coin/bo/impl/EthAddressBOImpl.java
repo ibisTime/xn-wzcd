@@ -1,5 +1,6 @@
 package com.cdkj.coin.bo.impl;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -9,7 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.web3j.protocol.Web3j;
+import org.web3j.protocol.admin.Admin;
+import org.web3j.protocol.admin.methods.response.NewAccountIdentifier;
 import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.EthGetBalance;
@@ -22,8 +24,7 @@ import com.cdkj.coin.dao.IEthAddressDAO;
 import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.enums.EEthAddressStatus;
 import com.cdkj.coin.enums.EEthAddressType;
-import com.cdkj.coin.eth.EthAccount;
-import com.cdkj.coin.eth.Web3JClient;
+import com.cdkj.coin.eth.AdminClient;
 import com.cdkj.coin.exception.BizException;
 
 @Component
@@ -32,7 +33,9 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
 
     private static Logger logger = Logger.getLogger(EthAddressBOImpl.class);
 
-    private static Web3j web3j = Web3JClient.getClient();
+    private static Admin selfAdmin = AdminClient.getSelfClient();
+
+    private static Admin thirdAdmin = AdminClient.getThirdClient();
 
     @Autowired
     private IEthAddressDAO ethAddressDAO;
@@ -43,12 +46,20 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
             Date availableDatetimeEnd) {
         String address = null;
         String password = RandomUtil.generate8();
-        EthAccount account = new EthAccount();
-        address = account.createAccount(ethAccountName, password, null);
-        logger.info("以太坊账户创建成功:" + address);
+        try {
+            NewAccountIdentifier newAccountIdentifier = selfAdmin
+                .personalNewAccount(password).send();
+            if (newAccountIdentifier != null) {
+                address = newAccountIdentifier.getAccountId();
+            }
+        } catch (IOException e) {
+            throw new BizException("xn625000", "以太坊账户创建失败，请检查节点是否正常！原因："
+                    + e.getMessage());
+        }
         if (StringUtils.isBlank(address)) {
             throw new BizException("xn625000", "以太坊账户创建失败，请检查节点是否正常！");
         }
+        logger.info("以太坊账户创建成功:" + address);
         this.saveEthAddress(type, userId, address, password, BigDecimal.ZERO,
             availableDatetimeStart, availableDatetimeEnd);
         return address;
@@ -148,7 +159,7 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
     public BigDecimal getEthBalance(String address) {
         try {
             DefaultBlockParameter defaultBlockParameter = DefaultBlockParameterName.LATEST;
-            EthGetBalance ethGetBalance = web3j.ethGetBalance(address,
+            EthGetBalance ethGetBalance = thirdAdmin.ethGetBalance(address,
                 defaultBlockParameter).send();
             if (ethGetBalance != null) {
                 return new BigDecimal(ethGetBalance.getBalance().toString());

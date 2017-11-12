@@ -1,0 +1,53 @@
+package com.cdkj.coin.enums;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.cdkj.coin.exception.BizException;
+
+/**
+ * @author: xieyj 
+ * @since: 2016年11月11日 上午10:09:32 
+ * @history:
+ */
+public enum EJourBizTypeUser {
+    AJ_CHARGE("charge", "充值"), AJ_WITHDRAW("withdraw", "取现"), AJ_BUY("buy",
+            "交易买入"), AJ_SELL("sell", "交易卖出"), AJ_TRADEFEE("tradefee", "交易手续费"), AJ_WITHDRAWFEE(
+            "withdrawfee", "提现手续费"), AJ_INVITE("invite", "邀请好友收入"), AJ_HC("hc",
+            "红冲"), AJ_LB("lb", "蓝补");
+
+    public static EJourBizTypeUser getBizType(String code) {
+        Map<String, EJourBizTypeUser> map = getBizTypeMap();
+        EJourBizTypeUser result = map.get(code);
+        if (result == null) {
+            throw new BizException("XN0000", code + "对应的jourBizType不存在");
+        }
+        return result;
+    }
+
+    public static Map<String, EJourBizTypeUser> getBizTypeMap() {
+        Map<String, EJourBizTypeUser> map = new HashMap<String, EJourBizTypeUser>();
+        for (EJourBizTypeUser bizType : EJourBizTypeUser.values()) {
+            map.put(bizType.getCode(), bizType);
+        }
+        return map;
+    }
+
+    EJourBizTypeUser(String code, String value) {
+        this.code = code;
+        this.value = value;
+    }
+
+    private String code;
+
+    private String value;
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+}

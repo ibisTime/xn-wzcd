@@ -17,7 +17,7 @@ import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.enums.EAccountType;
-import com.cdkj.coin.enums.EBizType;
+import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECurrency;
 import com.cdkj.coin.exception.BizException;
@@ -70,7 +70,7 @@ public class AccountAOImpl implements IAccountAO {
     public void transAmountCZB(String fromUserId, String fromCurrency,
             String toUserId, String toCurrency, BigDecimal transAmount,
             String bizType, String fromBizNote, String toBizNote, String refNo) {
-        EBizType a = EBizType.getBizType(bizType);
+        EJourBizType a = EJourBizType.getBizType(bizType);
         accountBO.transAmountCZB(fromUserId, fromCurrency, toUserId,
             toCurrency, transAmount, a, fromBizNote, toBizNote, refNo);
     }
@@ -113,6 +113,6 @@ public class AccountAOImpl implements IAccountAO {
             String bizNote, BigDecimal transAmount) {
         accountBO.changeAmount(accountNumber,
             EChannelType.getEChannelType(channelType), channelOrder, payGroup,
-            refNo, EBizType.getBizType(bizType), bizNote, transAmount);
+            refNo, EJourBizType.getBizType(bizType), bizNote, transAmount);
     }
 }

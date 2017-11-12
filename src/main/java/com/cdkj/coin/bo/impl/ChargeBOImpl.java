@@ -14,7 +14,7 @@ import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.dao.IChargeDAO;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.Charge;
-import com.cdkj.coin.enums.EBizType;
+import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.EChargeStatus;
 import com.cdkj.coin.enums.EGeneratePrefix;
@@ -26,7 +26,7 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
     private IChargeDAO chargeDAO;
 
     @Override
-    public String applyOrderOffline(Account account, EBizType bizType,
+    public String applyOrderOffline(Account account, EJourBizType bizType,
             BigDecimal amount, String payCardInfo, String payCardNo,
             String applyUser, String applyNote) {
         if (amount.compareTo(BigDecimal.ZERO) == 0) {
@@ -65,7 +65,7 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
 
     @Override
     public String applyOrderOnline(Account account, String payGroup,
-            String refNo, EBizType bizType, String bizNote,
+            String refNo, EJourBizType bizType, String bizNote,
             BigDecimal transAmount, EChannelType channelType, String applyUser) {
         if (transAmount.compareTo(BigDecimal.ZERO) == 0) {
             throw new BizException("xn000000", "充值金额不能为0");

@@ -27,7 +27,7 @@ import com.cdkj.coin.exception.BizException;
  */
 public class EthAccount {
 
-    private static Admin admin = AdminClient.getClient();
+    private static Admin admin = AdminClient.getSelfClient();
 
     private static Web3j web3j = Web3JClient.getClient();
 

@@ -16,7 +16,7 @@ import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.Charge;
 import com.cdkj.coin.domain.User;
-import com.cdkj.coin.enums.EBizType;
+import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.enums.EBoolean;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.EChargeStatus;
@@ -45,7 +45,7 @@ public class ChargeAOImpl implements IChargeAO {
         Account account = accountBO.getAccount(accountNumber);
         // 生成充值订单
         String code = chargeBO.applyOrderOffline(account,
-            EBizType.getBizType(jourBizType), amount, payCardInfo, payCardNo,
+            EJourBizType.getBizType(jourBizType), amount, payCardInfo, payCardNo,
             applyUser, applyNote);
         return code;
     }
@@ -74,13 +74,13 @@ public class ChargeAOImpl implements IChargeAO {
         // 账户加钱
         accountBO
             .changeAmount(data.getAccountNumber(), EChannelType.ETH, null,
-                null, data.getCode(), EBizType.AJ_CHARGE, "ETH充值",
+                null, data.getCode(), EJourBizType.AJ_CHARGE, "ETH充值",
                 data.getAmount());
         Account account = accountBO.getAccount(data.getAccountNumber());
         if (ECurrency.CNY.getCode().equals(account.getCurrency())) {
             // 托管账户加钱
             accountBO.changeAmount(data.getCompanyCode(), EChannelType.ETH,
-                null, null, data.getCode(), EBizType.AJ_CHARGE, "ETH充值",
+                null, null, data.getCode(), EJourBizType.AJ_CHARGE, "ETH充值",
                 data.getAmount());
         }
     }

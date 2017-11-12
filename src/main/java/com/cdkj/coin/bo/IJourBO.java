@@ -7,7 +7,7 @@ import com.cdkj.coin.bo.base.IPaginableBO;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.HLOrder;
 import com.cdkj.coin.domain.Jour;
-import com.cdkj.coin.enums.EBizType;
+import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.enums.EBoolean;
 import com.cdkj.coin.enums.EChannelType;
 
@@ -23,7 +23,7 @@ public interface IJourBO extends IPaginableBO<Jour> {
     // 正常新增
     public String addJour(Account dbAccount, EChannelType channelType,
             String channelOrder, String payGroup, String refNo,
-            EBizType bizType, String bizNote, BigDecimal transAmount);
+            EJourBizType bizType, String bizNote, BigDecimal transAmount);
 
     // 对账结果录入
     public void doCheckJour(Jour jour, EBoolean checkResult,

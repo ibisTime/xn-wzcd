@@ -20,17 +20,26 @@ import com.cdkj.coin.common.PropertiesUtil;
  */
 public class AdminClient {
 
-    private static String ETH_URL = PropertiesUtil.Config.ETH_URL_SELF;
+    private static String ETH_URL_SELF = PropertiesUtil.Config.ETH_URL_SELF;
+
+    private static String ETH_URL_OTHER = PropertiesUtil.Config.ETH_URL_OTHER;
 
     private AdminClient() {
     }
 
     private static class ClientHolder {
-        private static final Admin admin = Admin
-            .build(new HttpService(ETH_URL));
+        private static final Admin selfAdmin = Admin.build(new HttpService(
+            ETH_URL_SELF));
+
+        private static final Admin otherAdmin = Admin.build(new HttpService(
+            ETH_URL_OTHER));
     }
 
-    public static final Admin getClient() {
-        return ClientHolder.admin;
+    public static final Admin getSelfClient() {
+        return ClientHolder.selfAdmin;
+    }
+
+    public static final Admin getThirdClient() {
+        return ClientHolder.otherAdmin;
     }
 }
