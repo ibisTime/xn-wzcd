@@ -61,11 +61,12 @@ public class CallbackConroller {
 
                 if (EEthAddressType.M == fromType) { // fromAddress=M 提现
                     ethTransactionAO.withdrawNotice(ctqEthTransaction);
+                    hashList.add(ctqEthTransaction.getHash());
                     if (EEthAddressType.X == toType) { // toAddress=X 充值
                         ethTransactionAO.chargeNotice(ctqEthTransaction);
                         ethTransactionAO.collection(ctqEthTransaction.getTo());
                     }
-                    hashList.add(ctqEthTransaction.getHash());
+                    // hashList.add(ctqEthTransaction.getHash());
                 } else if (EEthAddressType.X == toType) { // toAddress=X 充值
                     ethTransactionAO.chargeNotice(ctqEthTransaction);
                     hashList.add(ctqEthTransaction.getHash());
@@ -76,7 +77,7 @@ public class CallbackConroller {
                     ethTransactionAO.collectionNotice(ctqEthTransaction);
                     hashList.add(ctqEthTransaction.getHash());
                 } else if (EEthAddressType.M == toType) { // toAddress=M 每日定存
-
+                    hashList.add(ctqEthTransaction.getHash());
                 } else if (EEthAddressType.W == fromType) {
                     // fromAddress=W 每日转移
 

@@ -50,7 +50,7 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw> implements
         data.setAmount(amount);
         data.setFee(fee);
 
-        data.setChannelType(EChannelType.Offline.getCode());
+        data.setChannelType(EChannelType.ETH.getCode());
         data.setPayCardInfo(payCardInfo);
         // 取现户名，应该和银行卡户名一致
         data.setAccountName(account.getRealName());
@@ -147,13 +147,14 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw> implements
 
     @Override
     public Withdraw getWithdraw(String hash) {
+        Withdraw withdraw = null;
         Withdraw condition = new Withdraw();
         condition.setChannelOrder(hash);
         List<Withdraw> results = withdrawDAO.selectList(condition);
-        if (CollectionUtils.isEmpty(results)) {
-            throw new BizException("xn0000", "取现记录不存在");
+        if (CollectionUtils.isNotEmpty(results)) {
+            withdraw = results.get(0);
         }
-        return results.get(0);
+        return withdraw;
     }
 
 }

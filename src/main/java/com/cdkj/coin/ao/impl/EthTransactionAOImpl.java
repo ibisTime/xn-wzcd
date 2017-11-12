@@ -11,9 +11,13 @@ package com.cdkj.coin.ao.impl;
 import java.math.BigDecimal;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.web3j.utils.Convert;
+import org.web3j.utils.Convert.Unit;
 
 import com.cdkj.coin.ao.IEthTransactionAO;
 import com.cdkj.coin.bo.IAccountBO;
@@ -47,6 +51,9 @@ import com.cdkj.coin.exception.BizException;
  */
 @Service
 public class EthTransactionAOImpl implements IEthTransactionAO {
+
+    private static final Logger logger = LoggerFactory
+        .getLogger(EthTransactionAOImpl.class);
 
     @Autowired
     private IChargeBO chargeBO;
@@ -104,6 +111,9 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
     public void withdrawNotice(CtqEthTransaction ctqEthTransaction) {
         // 根据交易hash查询取现订单
         Withdraw withdraw = withdrawBO.getWithdraw(ctqEthTransaction.getHash());
+        if (withdraw == null) {
+            return;
+        }
         // 取现订单更新
         withdrawBO.payOrder(withdraw, EWithdrawStatus.Pay_YES, "ETH", "广播成功",
             ctqEthTransaction.getHash());
@@ -146,7 +156,7 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             .getBigDecimalValue(SysConstants.COLLECTION_LIMIT);
         BigDecimal balance = ethAddressBO.getEthBalance(address);
         // 余额大于配置值时，进行归集
-        if (balance.compareTo(limit) < 0) {
+        if (balance.compareTo(Convert.toWei(limit, Unit.ETHER)) < 0) {
             throw new BizException("xn625000", "余额太少，无需归集");
         }
         // 获取今日归集地址
@@ -157,6 +167,8 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         BigDecimal gasUse = new BigDecimal(21000);
         BigDecimal txFee = gasPrice.multiply(gasUse);
         BigDecimal value = balance.subtract(txFee);
+        logger.info("地址余额=" + balance + "，以太坊平均价格=" + gasPrice + "，预计矿工费="
+                + txFee + "，预计到账金额=" + value);
         if (value.compareTo(BigDecimal.ZERO) < 0
                 || value.compareTo(BigDecimal.ZERO) == 0) {
             throw new BizException("xn625000", "余额不足以支付矿工费，不能归集");

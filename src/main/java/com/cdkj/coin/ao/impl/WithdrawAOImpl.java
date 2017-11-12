@@ -67,7 +67,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
                 || amount.compareTo(BigDecimal.ZERO) == -1) {
             throw new BizException("xn000000", "提现金额需大于零");
         }
-        if (!WalletUtils.isValidAddress(payCardInfo)) {
+        if (!WalletUtils.isValidAddress(payCardNo)) {
             throw new BizException("xn000000", "提现地址不符合以太坊规则，请仔细核对");
         }
         Account dbAccount = accountBO.getAccount(accountNumber);
@@ -144,12 +144,12 @@ public class WithdrawAOImpl implements IWithdrawAO {
             ESystemCode.COIN.getCode());
         // 查询散取地址余额
         BigDecimal balance = ethAddressBO.getEthBalance(address);
-        logger.info("地址" + mEthAddress + "余额：" + balance.toString());
+        logger.info("地址" + address + "余额：" + balance.toString());
         if (balance.compareTo(withdraw.getAmount()) < 0) {
             throw new BizException("xn625000", "散取地址" + address + "余额不足！");
         }
         // 广播
-        if (!WalletUtils.isValidAddress(withdraw.getPayCardInfo())) {
+        if (!WalletUtils.isValidAddress(withdraw.getPayCardNo())) {
             throw new BizException("xn625000", "无效的取现地址："
                     + withdraw.getPayCardInfo());
         }
@@ -158,6 +158,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
         if (StringUtils.isBlank(txHash)) {
             throw new BizException("xn625000", "交易广播失败");
         }
+        logger.info("广播成功：交易hash=" + txHash);
         withdrawBO.broadcastOrder(withdraw, txHash, approveUser);
     }
 

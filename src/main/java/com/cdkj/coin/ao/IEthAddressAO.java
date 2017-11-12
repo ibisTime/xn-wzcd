@@ -37,4 +37,6 @@ public interface IEthAddressAO {
 
     public Paginable<EthAddress> queryEthAddressPage(int start, int limit,
             EthAddress condition);
+
+    public EthAddress getEthAddress(String code);
 }

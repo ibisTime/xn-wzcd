@@ -8,8 +8,8 @@
  */
 package com.cdkj.coin.eth;
 
+import org.web3j.protocol.admin.Admin;
 import org.web3j.protocol.http.HttpService;
-import org.web3j.protocol.parity.Parity;
 
 import com.cdkj.coin.common.PropertiesUtil;
 
@@ -18,19 +18,19 @@ import com.cdkj.coin.common.PropertiesUtil;
  * @since: 2017年10月18日 下午7:42:57 
  * @history:
  */
-public class ParityClient {
+public class AdminClient {
 
     private static String ETH_URL = PropertiesUtil.Config.ETH_URL_SELF;
 
-    private ParityClient() {
+    private AdminClient() {
     }
 
     private static class ClientHolder {
-        private static final Parity parity = Parity.build(new HttpService(
-            ETH_URL));
+        private static final Admin admin = Admin
+            .build(new HttpService(ETH_URL));
     }
 
-    public static final Parity getParity() {
-        return ClientHolder.parity;
+    public static final Admin getClient() {
+        return ClientHolder.admin;
     }
 }

@@ -20,7 +20,7 @@ import com.cdkj.coin.common.PropertiesUtil;
  */
 public class Web3JClient {
 
-    private static String ETH_URL = PropertiesUtil.Config.ETH_URL_SELF;
+    private static String ETH_URL = PropertiesUtil.Config.ETH_URL_OTHER;
 
     private Web3JClient() {
     }

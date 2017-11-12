@@ -14,11 +14,11 @@ import java.math.BigInteger;
 import java.util.List;
 
 import org.web3j.crypto.Credentials;
+import org.web3j.crypto.RawTransaction;
 import org.web3j.crypto.TransactionEncoder;
 import org.web3j.crypto.WalletUtils;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
-import org.web3j.protocol.core.methods.request.RawTransaction;
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
 import org.web3j.protocol.core.methods.response.EthSendTransaction;
 import org.web3j.protocol.http.HttpService;
@@ -34,10 +34,15 @@ import com.cdkj.coin.exception.BizException;
 public class AccountTest {
 
     public static void main(String args[]) {
-        // String hash = broadcast("0x901536393df4bf66986c12cf98f3d6718c534f20",
-        // "533109", "0x18dd05535fd90db14112c3ba3e8801267cf48737",
-        // BigDecimal.valueOf(300000000000000L));
-        // System.out.println("交易提交成功：hash=" + hash);
+        String hash = broadcast("0x901536393df4bf66986c12cf98f3d6718c534f20",
+            "533109", "0xcafc029bdcd073a29c3837249f928308f65fc119",
+            BigDecimal.valueOf(600000000000000L));
+        System.out.println("交易提交成功：hash=" + hash);
+
+        // BigDecimal balance = new BigDecimal("10000000000000000");
+        // if (balance.compareTo(Convert.toWei("0.01", Unit.ETHER)) < 0) {
+        // throw new BizException("xn625000", "余额太少，无需归集");
+        // }
     }
 
     public static void getBalance() {
@@ -72,7 +77,8 @@ public class AccountTest {
 
     public static String broadcast(String from, String fromPassword, String to,
             BigDecimal value) {
-        Web3j web3j = Web3j.build(new HttpService("http://116.62.6.195:8545"));
+        Web3j web3j = Web3j.build(new HttpService(
+            "https://mainnet.infura.io/ZJR3JJlmLyf5mg4A9UxA"));
         String txHash = null;
         try {
             String fileDirPath = "/Users/haiqingzheng/Desktop/ethereum/beikeying/data/keystore";

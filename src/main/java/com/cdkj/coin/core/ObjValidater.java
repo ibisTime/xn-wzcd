@@ -1,31 +1,33 @@
 package com.cdkj.coin.core;
 
-import com.cdkj.coin.exception.BizException;
-import org.hibernate.validator.internal.engine.path.PathImpl;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.util.Iterator;
-import java.util.Set;
+
+import org.hibernate.validator.internal.engine.path.PathImpl;
+
+import com.cdkj.coin.exception.BizException;
 
 /**
  * Created by tianlei on 2017/十一月/01.
  */
 public class ObjValidater {
 
-
-    static private  Validator validator;
+    static private Validator validator;
     static {
 
         //
-        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-         validator = validatorFactory.getValidator();
+        ValidatorFactory validatorFactory = Validation
+            .buildDefaultValidatorFactory();
+        validator = validatorFactory.getValidator();
 
     }
 
-//    jsr 验证
+    // jsr 验证
     static public <T> void validateReq(T req) {
 
         if (req == null) {
@@ -38,7 +40,7 @@ public class ObjValidater {
         StringBuilder stringBuilder = new StringBuilder("");
         //
         if (set.size() <= 0) {
-            return ;
+            return;
         }
 
         // 有异常信息
@@ -46,23 +48,23 @@ public class ObjValidater {
         while (iterator.hasNext()) {
             ConstraintViolation<T> constraintViolation = iterator.next();
 
-            //获取属性名称
+            // 获取属性名称
             PathImpl path = (PathImpl) constraintViolation.getPropertyPath();
             String propertyName = path.getLeafNode().getName();
             if (propertyName != null) {
 
-                stringBuilder.append(propertyName);
-                stringBuilder.append(":");
+                stringBuilder.append("[" + propertyName + "]");
+                // stringBuilder.append(":");
 
             }
 
-            //获取异常信息
-            //注释的信息
+            // 获取异常信息
+            // 注释的信息
             String msg = constraintViolation.getMessage();
             if (msg != null) {
                 stringBuilder.append(msg);
-//                stringBuilder.append("-");
-                stringBuilder.append("\n");
+                // stringBuilder.append("-");
+                stringBuilder.append(";");
             }
 
         }
@@ -70,7 +72,7 @@ public class ObjValidater {
         if (stringBuilder.toString().isEmpty() == false) {
             throw new BizException("xn702000", stringBuilder.toString());
         }
-        //TODO：emjio
+        // TODO：emjio
     }
 
 }

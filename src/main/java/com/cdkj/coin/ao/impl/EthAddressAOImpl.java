@@ -17,10 +17,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.web3j.protocol.Web3j;
 
 import com.cdkj.coin.ao.IEthAddressAO;
 import com.cdkj.coin.bo.IAccountBO;
+import com.cdkj.coin.bo.ICtqBO;
 import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IEthTransactionBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
@@ -30,7 +30,6 @@ import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.enums.EEthAddressType;
 import com.cdkj.coin.enums.ESysUser;
-import com.cdkj.coin.eth.Web3JClient;
 import com.cdkj.coin.exception.BizException;
 
 /** 
@@ -43,8 +42,6 @@ public class EthAddressAOImpl implements IEthAddressAO {
     private static final Logger logger = LoggerFactory
         .getLogger(EthAddressAOImpl.class);
 
-    private static Web3j web3j = Web3JClient.getClient();
-
     @Autowired
     private IEthAddressBO ethAddressBO;
 
@@ -56,6 +53,9 @@ public class EthAddressAOImpl implements IEthAddressAO {
 
     @Autowired
     private IUserBO userBO;
+
+    @Autowired
+    private ICtqBO ctqBO;
 
     @Autowired
     private ISYSConfigBO sysConfigBO;
@@ -157,9 +157,12 @@ public class EthAddressAOImpl implements IEthAddressAO {
             throw new BizException("625000", "可使用时间范围有误");
         }
         String ethAccountName = OrderNoGenerater.generate("M");
-        return ethAddressBO.generateAddress(EEthAddressType.M, ethAccountName,
-            ESysUser.SYS_USER.getCode(), availableDatetimeStart,
-            availableDatetimeEnd);
+        String address = ethAddressBO.generateAddress(EEthAddressType.M,
+            ethAccountName, ESysUser.SYS_USER.getCode(),
+            availableDatetimeStart, availableDatetimeEnd);
+        // 通知橙提取
+        ctqBO.uploadAddress(address, EEthAddressType.M.getCode());
+        return address;
     }
 
     @Override
@@ -179,6 +182,11 @@ public class EthAddressAOImpl implements IEthAddressAO {
             ethAddress.setUser(userBO.getUser(ethAddress.getUserId()));
         }
         return results;
+    }
+
+    @Override
+    public EthAddress getEthAddress(String code) {
+        return ethAddressBO.getEthAddress(code);
     }
 
 }

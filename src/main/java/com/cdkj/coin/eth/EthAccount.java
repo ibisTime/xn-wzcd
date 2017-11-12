@@ -9,17 +9,14 @@
 package com.cdkj.coin.eth;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.admin.Admin;
+import org.web3j.protocol.admin.methods.response.NewAccountIdentifier;
 import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.EthGetBalance;
-import org.web3j.protocol.parity.Parity;
-import org.web3j.protocol.parity.methods.response.NewAccountIdentifier;
-import org.web3j.protocol.parity.methods.response.PersonalAccountsInfo;
 
 import com.cdkj.coin.exception.BizException;
 
@@ -30,7 +27,7 @@ import com.cdkj.coin.exception.BizException;
  */
 public class EthAccount {
 
-    private static Parity parity = ParityClient.getParity();
+    private static Admin admin = AdminClient.getClient();
 
     private static Web3j web3j = Web3JClient.getClient();
 
@@ -46,7 +43,7 @@ public class EthAccount {
     public List<String> getAccountlist() {
 
         try {
-            return parity.personalListAccounts().send().getAccountIds();
+            return admin.personalListAccounts().send().getAccountIds();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,31 +53,12 @@ public class EthAccount {
     public String createAccount(String accountName, String password,
             AccountInfo accountInfo) {
         try {
-            NewAccountIdentifier newAccountIdentifier = parity
+            NewAccountIdentifier newAccountIdentifier = admin
                 .personalNewAccount(password).send();
             if (newAccountIdentifier != null) {
                 String accountId = newAccountIdentifier.getAccountId();
-                parity.personalSetAccountName(accountId, accountName);
-
-                Map<String, Object> account = new HashMap<String, Object>();
-                account.put(accountId, accountInfo);
-                parity.personalSetAccountMeta(accountId, account);
-
                 return accountId;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public PersonalAccountsInfo.AccountsInfo getAccountInfo(String accountId) {
-
-        try {
-            PersonalAccountsInfo personalAccountsInfo = parity
-                .personalAccountsInfo().send();
-
-            return personalAccountsInfo.getAccountsInfo().get(accountId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -91,7 +69,7 @@ public class EthAccount {
         try {
 
             DefaultBlockParameter defaultBlockParameter = DefaultBlockParameterName.LATEST;
-            // EthGetBalance ethGetBalance = parity.ethGetBalance(accountId,
+            // EthGetBalance ethGetBalance = admin.ethGetBalance(accountId,
             // defaultBlockParameter).send();
             EthGetBalance ethGetBalance = web3j.ethGetBalance(accountId,
                 defaultBlockParameter).send();
