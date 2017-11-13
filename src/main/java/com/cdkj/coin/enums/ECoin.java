@@ -18,27 +18,27 @@ import com.cdkj.coin.exception.BizException;
  * @since: 2016年12月24日 下午1:51:38 
  * @history:
  */
-public enum ECurrency {
-    CNY("CNY", "人民币");
+public enum ECoin {
+    ETH("ETH", "以太币"), BTC("BTC", "比特币");
 
-    public static Map<String, ECurrency> getCurrencyMap() {
-        Map<String, ECurrency> map = new HashMap<String, ECurrency>();
-        for (ECurrency currency : ECurrency.values()) {
+    public static Map<String, ECoin> getCurrencyMap() {
+        Map<String, ECoin> map = new HashMap<String, ECoin>();
+        for (ECoin currency : ECoin.values()) {
             map.put(currency.getCode(), currency);
         }
         return map;
     }
 
-    public static ECurrency getCurrency(String code) {
-        Map<String, ECurrency> map = getCurrencyMap();
-        ECurrency result = map.get(code);
+    public static ECoin getCurrency(String code) {
+        Map<String, ECoin> map = getCurrencyMap();
+        ECoin result = map.get(code);
         if (result == null) {
-            throw new BizException("XN0000", code + "对应的currency不存在");
+            throw new BizException("XN0000", code + "对应的coin不存在");
         }
         return result;
     }
 
-    ECurrency(String code, String value) {
+    ECoin(String code, String value) {
         this.code = code;
         this.value = value;
     }

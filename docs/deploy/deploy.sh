@@ -3,9 +3,9 @@
 
 set tomcat_path "/mnt/www/coin/tomcat_xn_coin"
 set war_name "xn-coin"
+set host_ip "47.90.102.163"
 
-
-spawn ssh root@47.52.77.214
+spawn ssh root@${host_ip}
 expect "*password:"
 send "Bei123coin\r"
 #关闭tomcat
@@ -22,7 +22,7 @@ expect "*#"
 send "exit\r"
 
 #2.传输文件
-spawn scp /Users/haiqingzheng/Desktop/${war_name}.war root@47.52.77.214:${tomcat_path}/webapps
+spawn scp /Users/haiqingzheng/Desktop/${war_name}.war root@${host_ip}:${tomcat_path}/webapps
 expect "*password:"
 send "Bei123coin\r"
 set timeout 300
@@ -30,7 +30,7 @@ send "exit\r"
 expect eof
 
 #3.重启tomcat
-spawn ssh root@47.52.77.214
+spawn ssh root@${host_ip}
 expect "*password:"
 send "Bei123coin\r"
 expect "*#"

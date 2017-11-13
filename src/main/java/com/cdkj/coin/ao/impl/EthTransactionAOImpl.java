@@ -34,11 +34,11 @@ import com.cdkj.coin.domain.Charge;
 import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.domain.EthCollection;
 import com.cdkj.coin.domain.Withdraw;
-import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.enums.EChannelType;
-import com.cdkj.coin.enums.ECurrency;
+import com.cdkj.coin.enums.ECoin;
 import com.cdkj.coin.enums.EEthAddressType;
 import com.cdkj.coin.enums.EEthCollectionStatus;
+import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.enums.ESystemAccount;
 import com.cdkj.coin.enums.EWithdrawStatus;
 import com.cdkj.coin.eth.CtqEthTransaction;
@@ -90,7 +90,7 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             return;
         }
         Account account = accountBO.getAccountByUser(ethAddress.getUserId(),
-            ECurrency.ETH.getCode());
+            ECoin.ETH.getCode());
         String payGroup = OrderNoGenerater.generate("PG");
         BigDecimal amount = new BigDecimal(ctqEthTransaction.getValue());
         // 充值订单落地
@@ -100,7 +100,8 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             "程序");
         // 账户加钱
         accountBO.changeAmount(account.getAccountNumber(), EChannelType.ETH,
-            ctqEthTransaction.getHash(), payGroup, code, EJourBizType.AJ_CHARGE,
+            ctqEthTransaction.getHash(), payGroup, code,
+            EJourBizType.AJ_CHARGE,
             "ETH充值-来自地址：" + ctqEthTransaction.getFrom(), amount);
         // 落地交易记录
         ethTransactionBO.saveEthTransaction(ctqEthTransaction);
@@ -119,10 +120,10 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             ctqEthTransaction.getHash());
         // 平台冷钱包减钱
         accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_TG_ETH.getCode(),
-            EChannelType.ETH, ctqEthTransaction.getHash(), "ETH", withdraw
-                .getCode(), EJourBizType.AJ_WITHDRAW,
-            "ETH取现-外部地址：" + withdraw.getPayCardNo(), new BigDecimal(
-                ctqEthTransaction.getValue()));
+            EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
+            withdraw.getCode(), EJourBizType.AJ_WITHDRAW, "ETH取现-外部地址："
+                    + withdraw.getPayCardNo(),
+            new BigDecimal(ctqEthTransaction.getValue()));
         // 平台盈亏账户记入取现手续费
         if (withdraw.getFee().compareTo(BigDecimal.ZERO) > 0) {
             accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(),

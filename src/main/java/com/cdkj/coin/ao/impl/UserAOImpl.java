@@ -48,7 +48,7 @@ import com.cdkj.coin.dto.res.XN798012Res;
 import com.cdkj.coin.dto.res.XN805041Res;
 import com.cdkj.coin.enums.EAccountType;
 import com.cdkj.coin.enums.EBoolean;
-import com.cdkj.coin.enums.ECurrency;
+import com.cdkj.coin.enums.ECoin;
 import com.cdkj.coin.enums.EEthAddressType;
 import com.cdkj.coin.enums.EIDKind;
 import com.cdkj.coin.enums.ELoginType;
@@ -148,7 +148,7 @@ public class UserAOImpl implements IUserAO {
             String companyCode, String systemCode) {
         List<String> currencyList = new ArrayList<String>();
         // currencyList.add(ECurrency.BTC.getCode());
-        currencyList.add(ECurrency.ETH.getCode());
+        currencyList.add(ECoin.ETH.getCode());
         for (String currency : currencyList) {
             accountBO.distributeAccount(userId, mobile,
                 EAccountType.getAccountType(kind), currency, systemCode,

@@ -17,9 +17,9 @@ import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.enums.EAccountType;
-import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.enums.EChannelType;
-import com.cdkj.coin.enums.ECurrency;
+import com.cdkj.coin.enums.ECoin;
+import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.exception.BizException;
 
 @Service
@@ -93,7 +93,7 @@ public class AccountAOImpl implements IAccountAO {
         condition.setCurrency(currency);
         List<Account> accounts = accountBO.queryAccountList(condition);
         for (Account account : accounts) {
-            if (ECurrency.ETH.getCode().equals(account.getCurrency())) {
+            if (ECoin.ETH.getCode().equals(account.getCurrency())) {
                 EthAddress ethAddress = ethAddressBO
                     .getEthAddressByUserId(userId);
                 account.setCoinAddress(ethAddress.getAddress());
