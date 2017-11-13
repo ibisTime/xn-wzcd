@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.coin.dao.CurrencyRateMapper">
+  <resultMap id="BaseResultMap" type="com.cdkj.coin.domain.CurrencyRate">
+    <id column="currency" jdbcType="VARCHAR" property="currency" />
+    <result column="refer_currency" jdbcType="VARCHAR" property="referCurrency" />
+    <result column="origin" jdbcType="VARCHAR" property="origin" />
+    <result column="rate" jdbcType="DECIMAL" property="rate" />
+    <result column="update_datetime" jdbcType="TIMESTAMP" property="updateDatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    currency, refer_currency, origin, rate, update_datetime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tcoin_currency_rate
+    where currency = #{currency,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tcoin_currency_rate
+    where currency = #{currency,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cdkj.coin.domain.CurrencyRate">
+    insert into tcoin_currency_rate (currency, refer_currency, origin, 
+      rate, update_datetime)
+    values (#{currency,jdbcType=VARCHAR}, #{referCurrency,jdbcType=VARCHAR}, #{origin,jdbcType=VARCHAR}, 
+      #{rate,jdbcType=DECIMAL}, #{updateDatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cdkj.coin.domain.CurrencyRate">
+    insert into tcoin_currency_rate
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="currency != null">
+        currency,
+      </if>
+      <if test="referCurrency != null">
+        refer_currency,
+      </if>
+      <if test="origin != null">
+        origin,
+      </if>
+      <if test="rate != null">
+        rate,
+      </if>
+      <if test="updateDatetime != null">
+        update_datetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="currency != null">
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="referCurrency != null">
+        #{referCurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="origin != null">
+        #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null">
+        #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="updateDatetime != null">
+        #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cdkj.coin.domain.CurrencyRate">
+    update tcoin_currency_rate
+    <set>
+      <if test="referCurrency != null">
+        refer_currency = #{referCurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="origin != null">
+        origin = #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null">
+        rate = #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="updateDatetime != null">
+        update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where currency = #{currency,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cdkj.coin.domain.CurrencyRate">
+    update tcoin_currency_rate
+    set refer_currency = #{referCurrency,jdbcType=VARCHAR},
+      origin = #{origin,jdbcType=VARCHAR},
+      rate = #{rate,jdbcType=DECIMAL},
+      update_datetime = #{updateDatetime,jdbcType=TIMESTAMP}
+    where currency = #{currency,jdbcType=VARCHAR}
+  </update>
+</mapper>
