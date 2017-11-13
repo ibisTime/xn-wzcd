@@ -19,7 +19,10 @@ import com.cdkj.coin.exception.BizException;
  * @history:
  */
 public enum ECurrency {
-    CNY("CNY", "人民币");
+    CNY("CNY", "人民币"),
+    USD("USD", "美元"),
+    HKD("HKD", "港币");
+
 
     public static Map<String, ECurrency> getCurrencyMap() {
         Map<String, ECurrency> map = new HashMap<String, ECurrency>();

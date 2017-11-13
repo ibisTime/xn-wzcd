@@ -1,10 +1,12 @@
 package com.cdkj.coin.domain;
 
+import com.cdkj.coin.dao.base.ABaseDO;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class CurrencyRate implements Serializable {
+public class CurrencyRate extends ABaseDO implements Serializable {
     private String currency;
 
     private String referCurrency;
