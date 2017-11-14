@@ -8,13 +8,13 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN625290Req {
 
     @NotBlank
-    private String coinType;
+    private String coin;
 
-    public String getCoinType() {
-        return coinType;
+    public String getCoin() {
+        return coin;
     }
 
-    public void setCoinType(String coinType) {
-        this.coinType = coinType;
+    public void setCoin(String coin) {
+        this.coin = coin;
     }
 }

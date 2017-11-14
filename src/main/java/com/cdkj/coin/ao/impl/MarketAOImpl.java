@@ -45,7 +45,7 @@ public class MarketAOImpl implements IMarketAO {
     @Override
     public Market marketByCoinType(String coinType) {
 
-      return  this.marketBO.marketByCoinTypeAndOrigin(coinType,EMarketOrigin.BITFINEX.getCode());
+        return this.marketBO.marketByCoinTypeAndOrigin(coinType, EMarketOrigin.BITFINEX.getCode());
 
     }
 
@@ -98,20 +98,20 @@ public class MarketAOImpl implements IMarketAO {
             market.setReferCurrency(ECurrency.CNY.getCode());
             market.setCoin(ECoin.ETH.getCode());
             market.setUpdateDatetime(new Date());
-            market.setLastPrice(this.convertPriceToRMB((String)tickerMap.get("last")));
-            market.setVolume((String)tickerMap.get("vol"));
+            market.setLastPrice(this.convertPriceToRMB((String) tickerMap.get("last")));
+            market.setVolume((String) tickerMap.get("vol"));
 
-            BigDecimal bid =  this.convertPriceToRMB((String)tickerMap.get("buy"));
-            BigDecimal ask =  this.convertPriceToRMB((String)tickerMap.get("sell"));
+            BigDecimal bid = this.convertPriceToRMB((String) tickerMap.get("buy"));
+            BigDecimal ask = this.convertPriceToRMB((String) tickerMap.get("sell"));
             market.setAsk(ask);
             market.setBid(bid);
             market.setMid(bid.add(ask).divide(new BigDecimal(2)));
-            market.setLow(this.convertPriceToRMB((String)tickerMap.get("low")));
-            market.setHigh(this.convertPriceToRMB((String)tickerMap.get("high")));
+            market.setLow(this.convertPriceToRMB((String) tickerMap.get("low")));
+            market.setHigh(this.convertPriceToRMB((String) tickerMap.get("high")));
 
             //确定mid
             //保存
-            this.marketBO.updateMarket(EMarketOrigin.OKEX.getCode(),ECoin.ETH.getCode(),market);
+            this.marketBO.updateMarket(EMarketOrigin.OKEX.getCode(), ECoin.ETH.getCode(), market);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -120,9 +120,54 @@ public class MarketAOImpl implements IMarketAO {
     }
 
     private void obtainBitfinexMarket() {
-        //2.
-        // 获取usd 的行情
-        String requestStr = "https://api.bitfinex.com/v1/pubticker/ethusd";
+
+        //
+        this.obtainBitfinexMarketByUrlAndCoin("https://api.bitfinex.com/v1/pubticker/ethusd", ECoin.ETH.getCode());
+
+        //
+        this.obtainBitfinexMarketByUrlAndCoin("https://api.bitfinex.com/v1/pubticker/btcusd", ECoin.BTC.getCode());
+
+//        // 获取usd 的行情
+//        String requestStr = "https://api.bitfinex.com/v1/pubticker/ethusd";
+//        OkHttpClient okHttpClient = new OkHttpClient();
+//
+//        Request request = new Request.Builder().get().url(requestStr).build();
+//        Call call = okHttpClient.newCall(request);
+//        try {
+//
+//            Response response = call.execute();
+//            String jsonStr = response.body().string();
+//
+//            Map map = (Map) JSON.parseObject(jsonStr, HashMap.class);
+//
+//            Market market = new Market();
+//            market.setReferCurrency(ECurrency.CNY.getCode());
+//            market.setCoin(ECoin.ETH.getCode());
+//            market.setUpdateDatetime(new Date());
+//            market.setLastPrice(this.convertPriceToRMB((String)map.get("last_price")));
+//            market.setVolume((String)map.get("volume"));
+//
+//            market.setMid(this.convertPriceToRMB((String)map.get("mid")));
+//            market.setAsk(this.convertPriceToRMB((String)map.get("ask")));
+//            market.setBid(this.convertPriceToRMB((String)map.get("bid")));
+//
+//            market.setLow(this.convertPriceToRMB((String)map.get("low")));
+//            market.setHigh(this.convertPriceToRMB((String)map.get("high")));
+//
+//            //保存
+//            this.marketBO.updateMarket(EMarketOrigin.BITFINEX.getCode(),ECoin.ETH.getCode(),market);
+//
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+    }
+
+
+    private void obtainBitfinexMarketByUrlAndCoin(String url, String coin) {
+
+        String requestStr = url;
         OkHttpClient okHttpClient = new OkHttpClient();
 
         Request request = new Request.Builder().get().url(requestStr).build();
@@ -138,32 +183,35 @@ public class MarketAOImpl implements IMarketAO {
             market.setReferCurrency(ECurrency.CNY.getCode());
             market.setCoin(ECoin.ETH.getCode());
             market.setUpdateDatetime(new Date());
-            market.setLastPrice(this.convertPriceToRMB((String)map.get("last_price")));
-            market.setVolume((String)map.get("volume"));
+            market.setLastPrice(this.convertPriceToRMB((String) map.get("last_price")));
+            market.setVolume((String) map.get("volume"));
 
-            market.setMid(this.convertPriceToRMB((String)map.get("mid")));
-            market.setAsk(this.convertPriceToRMB((String)map.get("ask")));
-            market.setBid(this.convertPriceToRMB((String)map.get("bid")));
+            market.setMid(this.convertPriceToRMB((String) map.get("mid")));
+            market.setAsk(this.convertPriceToRMB((String) map.get("ask")));
+            market.setBid(this.convertPriceToRMB((String) map.get("bid")));
 
-            market.setLow(this.convertPriceToRMB((String)map.get("low")));
-            market.setHigh(this.convertPriceToRMB((String)map.get("high")));
+            market.setLow(this.convertPriceToRMB((String) map.get("low")));
+            market.setHigh(this.convertPriceToRMB((String) map.get("high")));
 
             //保存
-            this.marketBO.updateMarket(EMarketOrigin.BITFINEX.getCode(),ECoin.ETH.getCode(),market);
+            this.marketBO.updateMarket(EMarketOrigin.BITFINEX.getCode(), coin, market);
 
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
+
+    //    private void
     private BigDecimal convertPriceToRMB(String value) {
 
         // 获取美元的汇率
         CurrencyRate usdCurrencyRate = this.currencyRateBO.currencyRateByCurrency(ECurrency.USD.getCode());
         // 转换为人民币
         BigDecimal rmbValue = new BigDecimal(value).multiply(usdCurrencyRate.getRate());
-        rmbValue.setScale(4,BigDecimal.ROUND_HALF_UP);
+        rmbValue.setScale(4, BigDecimal.ROUND_HALF_UP);
         return rmbValue;
     }
 
