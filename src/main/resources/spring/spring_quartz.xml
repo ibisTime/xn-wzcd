@@ -18,9 +18,9 @@
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<!-- <ref bean="ethTransactionSyncTrigger" /> -->
-				<ref bean="currencyRateTrigger"/>
-				<ref bean="marketTrigger"/>
+
+				<!--<ref bean="currencyRateTrigger"/>-->
+				<!--<ref bean="marketTrigger"/>-->
 
 			</list>
 		</property>

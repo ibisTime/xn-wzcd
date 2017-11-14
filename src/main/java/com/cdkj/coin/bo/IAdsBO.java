@@ -1,5 +1,6 @@
 package com.cdkj.coin.bo;
 
+import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.AdsSell;
 
 /**
@@ -8,4 +9,11 @@ import com.cdkj.coin.domain.AdsSell;
 public interface IAdsBO {
 
     void insertAdsSell(AdsSell adsSell);
+
+    public AdsSell adsSellDetail(String adsCode);
+
+    public Paginable<AdsSell> frontSellPage(Integer start, Integer limit, String coin);
+
+    public Paginable<AdsSell> ossSellPage(Integer start, Integer limit, String coin);
+
 }
