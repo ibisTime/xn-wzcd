@@ -56,10 +56,10 @@ CREATE TABLE `tcoin_eth_advertise` (
 -- Table structure for table `tcoin_eth_arbitrate`
 --
 
-DROP TABLE IF EXISTS `tcoin_eth_arbitrate`;
+DROP TABLE IF EXISTS `tcoin_arbitrate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tcoin_eth_arbitrate` (
+CREATE TABLE `tcoin_arbitrate` (
   `code` varchar(32) NOT NULL COMMENT '工单编号',
   `order_code` varchar(32) DEFAULT NULL COMMENT '订单编号',
   `yuangao` varchar(32) DEFAULT NULL COMMENT '原告',
@@ -70,7 +70,8 @@ CREATE TABLE `tcoin_eth_arbitrate` (
   `create_datetime` datetime DEFAULT NULL COMMENT '申请时间',
   `updater` varchar(45) DEFAULT NULL COMMENT '处理人',
   `update_datetime` datetime DEFAULT NULL COMMENT '处理时间',
-  `remark` text COMMENT '处理结果',
+  `result` text COMMENT '处理结果',
+  `remark` text COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

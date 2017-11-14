@@ -1,21 +1,21 @@
+
 #广告
-CREATE TABLE `tcoin_advertise` (
+CREATE TABLE `tcoin_ads_sell` (
   `code` varchar(32) NOT NULL COMMENT '编号',
-  `type` varchar(32) NOT NULL COMMENT '类型 0 = 买币、1=卖币',
+#   `type` varchar(32) NOT NULL COMMENT '类型 0 = 买币、1=卖币',
   `user_id` varchar(32) NOT NULL COMMENT '发布用户编号',
   `trade_currency` varchar(8) NOT  NULL COMMENT '交易币种',
   `trade_coin` varchar(8) NOT  NULL COMMENT '数字货币类型',
   `only_trust` VARCHAR(2) NOT NULL  COMMENT '是否只有信任的人可以交易',
   `premium_rate` decimal(4,2) NOT NULL COMMENT '溢价率',
 
-  `total_amount` DECIMAL(25,0) NOT NULL COMMENT '广告的交易总额',
-  `surplus_amount` DECIMAL(25,0) NOT NULL COMMENT '剩余可交易',
+  `total_amount` DECIMAL(64,0) NOT NULL COMMENT '广告的交易总额',
+  `left_amount` DECIMAL(64,0) NOT NULL COMMENT '剩余可交易',
 
-  `market_price` bigint(32) NOT NULL COMMENT '行情价格',
-  `protect_price` bigint(32) DEFAULT NULL COMMENT '保护单价',
-
-  `min_trade` bigint(32) DEFAULT NULL COMMENT '单笔最小交易额',
-  `max_trade` bigint(32) DEFAULT NULL COMMENT '单笔最大交易额',
+  `market_price` DECIMAL(32,3) NOT NULL COMMENT '行情价格',
+  `protect_price` DECIMAL(32,3) NOT NULL COMMENT '保护单价',
+  `min_trade` DECIMAL(32,3) DEFAULT NULL COMMENT '单笔最小交易额',
+  `max_trade` DECIMAL(32,3) DEFAULT NULL COMMENT '单笔最大交易额',
 
   `pay_type` varchar(32) NOT NULL COMMENT '付款方式',
   `pay_limit` int(11) DEFAULT NULL COMMENT '付款超时时间（分钟）',
@@ -38,10 +38,10 @@ CREATE TABLE `tcoin_ads_display_time` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #订单
-CREATE TABLE `tcoin_eth_order` (
+CREATE TABLE `tcoin_trade_order` (
   `code` varchar(32) NOT NULL COMMENT '订单编号',
   `type` varchar(32) DEFAULT NULL COMMENT '订单类型',
-  `advertise_code` varchar(32) DEFAULT NULL COMMENT '广告编号',
+  `ads_code` varchar(32) DEFAULT NULL COMMENT '广告编号',
   `buy_user` varchar(32) NOT  NULL COMMENT '买方',
   `sell_user` varchar(32) NOT NULL COMMENT '卖方',
   `leave_message` text COMMENT '广告留言',
@@ -54,7 +54,6 @@ CREATE TABLE `tcoin_eth_order` (
   `status` varchar(4) NOT NULL COMMENT '订单状态',
   `sb_comment` varchar(32) DEFAULT NULL COMMENT '卖方对买方的评价',
   `bs_comment` varchar(32) DEFAULT NULL COMMENT '买方对卖方的评价',
-  `arbitrate_status` varchar(32) DEFAULT NULL COMMENT '仲裁状态',
   `create_datetime` datetime NOT NULL COMMENT '创建时间',
   `update_datatime` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`code`)
