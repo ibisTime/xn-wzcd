@@ -13,6 +13,7 @@ import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.ObjValidater;
 import com.cdkj.coin.dto.req.XN625260Req;
+import com.cdkj.coin.dto.res.BooleanRes;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
@@ -35,8 +36,9 @@ public class XN625260 extends AProcessor {
      */
     @Override
     public Object doBusiness() throws BizException {
-        // TODO Auto-generated method stub
-        return null;
+        arbitrateAO.handle(req.getCode(), req.getResult(), req.getUpdater(),
+            req.getRemark());
+        return new BooleanRes(true);
     }
 
     /** 

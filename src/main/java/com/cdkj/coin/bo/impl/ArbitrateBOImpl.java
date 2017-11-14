@@ -1,5 +1,6 @@
 package com.cdkj.coin.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,6 +12,7 @@ import com.cdkj.coin.bo.base.PaginableBOImpl;
 import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.dao.IArbitrateDAO;
 import com.cdkj.coin.domain.Arbitrate;
+import com.cdkj.coin.enums.EArbitrateStatus;
 import com.cdkj.coin.enums.EGeneratePrefix;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.EBizErrorCode;
@@ -23,15 +25,37 @@ public class ArbitrateBOImpl extends PaginableBOImpl<Arbitrate> implements
     private IArbitrateDAO arbitrateDAO;
 
     @Override
-    public String saveArbitrate(Arbitrate data) {
-        String code = null;
-        if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.ARBITRATE
-                .getCode());
-            data.setCode(code);
-            arbitrateDAO.insert(data);
-        }
+    public String submit(String tradeOrderCode, String yuangao, String beigao,
+            String reason, String attach) {
+        String code = OrderNoGenerater.generate(EGeneratePrefix.ARBITRATE
+            .getCode());
+        Arbitrate data = new Arbitrate();
+
+        data.setCode(code);
+        data.setTradeOrderCode(tradeOrderCode);
+        data.setYuangao(yuangao);
+        data.setBeigao(beigao);
+        data.setReason(reason);
+        data.setAttach(attach);
+        data.setStatus(EArbitrateStatus.TO_HANDLE.getCode());
+        data.setCreateDatetime(new Date());
+        arbitrateDAO.insert(data);
+
         return code;
+    }
+
+    @Override
+    public int handle(Arbitrate arbitrate, String result, String updater,
+            String remark) {
+        int count = 0;
+        if (arbitrate != null) {
+            arbitrate.setResult(result);
+            arbitrate.setUpdater(updater);
+            arbitrate.setUpdateDatetime(new Date());
+            arbitrate.setRemark(remark);
+            count = arbitrateDAO.updateHandle(arbitrate);
+        }
+        return count;
     }
 
     @Override
@@ -54,4 +78,5 @@ public class ArbitrateBOImpl extends PaginableBOImpl<Arbitrate> implements
         }
         return data;
     }
+
 }

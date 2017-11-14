@@ -84,17 +84,21 @@
 		,#{remark}
 		)
 	</insert>
-
-	<update id="update_arbitrate" parameterType="arbitrate">
+	
+	<update id="update_cancel" parameterType="arbitrate">
 		UPDATE tcoin_arbitrate
 		SET
-		trade_order_code = #{tradeOrderCode}
-		,yuangao = #{yuangao}
-		,beigao = #{beigao}
-		,reason = #{reason}
-		,attach = #{attach}
-		,status = #{status}
-		,create_datetime = #{createDatetime}
+		status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_handle" parameterType="arbitrate">
+		UPDATE tcoin_arbitrate
+		SET
+		status = #{status}
 		,result = #{result}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}

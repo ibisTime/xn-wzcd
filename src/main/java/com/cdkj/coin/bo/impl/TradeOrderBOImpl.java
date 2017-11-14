@@ -1,5 +1,7 @@
 package com.cdkj.coin.bo.impl;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -8,10 +10,14 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.coin.bo.ITradeOrderBO;
 import com.cdkj.coin.bo.base.PaginableBOImpl;
+import com.cdkj.coin.common.DateUtil;
 import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.dao.ITradeOrderDAO;
+import com.cdkj.coin.domain.AdsSell;
 import com.cdkj.coin.domain.TradeOrder;
 import com.cdkj.coin.enums.EGeneratePrefix;
+import com.cdkj.coin.enums.ETradeOrderStatus;
+import com.cdkj.coin.enums.ETradeOrderType;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.EBizErrorCode;
 
@@ -23,15 +29,149 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
     private ITradeOrderDAO tradeOrderDAO;
 
     @Override
-    public String saveTradeOrder(TradeOrder data) {
-        String code = null;
-        if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.TRADE_ORDER
-                .getCode());
-            data.setCode(code);
-            tradeOrderDAO.insert(data);
-        }
+    public String buySubmit(AdsSell adsSell, String buyUser,
+            BigDecimal tradePrice, BigDecimal count, BigDecimal tradeAmount,
+            BigDecimal fee) {
+
+        TradeOrder data = new TradeOrder();
+
+        String code = OrderNoGenerater.generate(EGeneratePrefix.TRADE_ORDER
+            .getCode());
+        Date now = new Date();
+
+        data.setCode(code);
+        data.setType(ETradeOrderType.BUY.getCode());
+        data.setAdsCode(adsSell.getCode());
+        data.setBuyUser(buyUser);
+        data.setSellUser(adsSell.getUserId());
+
+        data.setLeaveMessage(adsSell.getLeaveMessage());
+        data.setTradeCurrency(adsSell.getTradeCurrency());
+        data.setTradeCoin(adsSell.getTradeCoin());
+        data.setTradePrice(tradePrice);
+        data.setTradeAmount(tradeAmount);
+
+        data.setFee(fee);
+        data.setCount(count);
+        data.setPayType(adsSell.getPayType());
+        data.setInvalidDatetime(DateUtil.getRelativeDateOfMinute(now,
+            adsSell.getPayLimit()));
+        data.setStatus(ETradeOrderStatus.TO_PAY.getCode());
+
+        data.setCreateDatetime(now);
+        data.setUpdater(buyUser);
+        data.setUpdateDatatime(now);
+        data.setRemark("新订单，等待支付");
+
+        tradeOrderDAO.insert(data);
+
         return code;
+    }
+
+    @Override
+    public int cancel(TradeOrder tradeOrder, String updater, String remark) {
+        int count = 0;
+        if (tradeOrder != null) {
+            tradeOrder.setStatus(ETradeOrderStatus.CANCEL.getCode());
+            tradeOrder.setUpdater(updater);
+            tradeOrder.setUpdateDatatime(new Date());
+            tradeOrder.setRemark(StringUtils.isNotBlank(remark) ? remark
+                    : "订单已被取消");
+            count = tradeOrderDAO.updateCancel(tradeOrder);
+        }
+        return count;
+    }
+
+    @Override
+    public int markPay(TradeOrder tradeOrder, String updater, String remark) {
+        int count = 0;
+        if (tradeOrder != null) {
+            Date now = new Date();
+            tradeOrder.setStatus(ETradeOrderStatus.PAYED.getCode());
+            tradeOrder.setMarkDatetime(now);
+            tradeOrder.setUpdater(updater);
+            tradeOrder.setUpdateDatatime(now);
+            tradeOrder.setRemark(StringUtils.isNotBlank(remark) ? remark
+                    : "已标记付款，待释放");
+            count = tradeOrderDAO.updateMarkPay(tradeOrder);
+        }
+        return count;
+    }
+
+    @Override
+    public int release(TradeOrder tradeOrder, String updater, String remark) {
+        int count = 0;
+        if (tradeOrder != null) {
+            Date now = new Date();
+            tradeOrder.setStatus(ETradeOrderStatus.RELEASED.getCode());
+            tradeOrder.setReleaseDatetime(now);
+            tradeOrder.setUpdater(updater);
+            tradeOrder.setUpdateDatatime(now);
+            tradeOrder.setRemark(StringUtils.isNotBlank(remark) ? remark
+                    : "已释放，待评价");
+            count = tradeOrderDAO.updateRelease(tradeOrder);
+        }
+        return count;
+    }
+
+    @Override
+    public int doBsComment(TradeOrder tradeOrder, String userId,
+            String comment, String status, String remark) {
+        int count = 0;
+        if (tradeOrder != null) {
+            Date now = new Date();
+            tradeOrder.setStatus(status);
+            tradeOrder.setBsComment(comment);
+            tradeOrder.setUpdater(userId);
+            tradeOrder.setUpdateDatatime(now);
+            tradeOrder.setRemark(remark);
+            count = tradeOrderDAO.updateBsComment(tradeOrder);
+        }
+        return count;
+    }
+
+    @Override
+    public int doSbComment(TradeOrder tradeOrder, String userId,
+            String comment, String status, String remark) {
+        int count = 0;
+        if (tradeOrder != null) {
+            Date now = new Date();
+            tradeOrder.setStatus(status);
+            tradeOrder.setBsComment(comment);
+            tradeOrder.setUpdater(userId);
+            tradeOrder.setUpdateDatatime(now);
+            tradeOrder.setRemark(remark);
+            count = tradeOrderDAO.updateSbComment(tradeOrder);
+        }
+        return count;
+    }
+
+    @Override
+    public int applyArbitrate(TradeOrder tradeOrder, String applyUser) {
+        int count = 0;
+        if (tradeOrder != null) {
+            Date now = new Date();
+            tradeOrder.setStatus(ETradeOrderStatus.ARBITRATE.getCode());
+            tradeOrder.setUpdater(applyUser);
+            tradeOrder.setUpdateDatatime(now);
+            tradeOrder.setRemark("申请仲裁，待处理");
+            count = tradeOrderDAO.updateArbitrate(tradeOrder);
+        }
+        return count;
+    }
+
+    @Override
+    public int revokePay(TradeOrder tradeOrder, String updater, String remark) {
+        int count = 0;
+        if (tradeOrder != null) {
+            Date now = new Date();
+            tradeOrder.setStatus(ETradeOrderStatus.TO_PAY.getCode());
+            tradeOrder.setUpdater(updater);
+            tradeOrder.setUpdateDatatime(now);
+            tradeOrder.setRemark(remark);
+            count = tradeOrderDAO.updateRevokePay(tradeOrder);
+        }
+        return count;
     }
 
     @Override
@@ -54,4 +194,5 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         }
         return data;
     }
+
 }

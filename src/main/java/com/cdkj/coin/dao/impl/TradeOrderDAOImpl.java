@@ -47,4 +47,39 @@ public class TradeOrderDAOImpl extends AMybatisTemplate implements
             count, condition, TradeOrder.class);
     }
 
+    @Override
+    public int updateCancel(TradeOrder tradeOrder) {
+        return super.update(NAMESPACE.concat("update_cancel"), tradeOrder);
+    }
+
+    @Override
+    public int updateMarkPay(TradeOrder tradeOrder) {
+        return super.update(NAMESPACE.concat("update_markPay"), tradeOrder);
+    }
+
+    @Override
+    public int updateRelease(TradeOrder tradeOrder) {
+        return super.update(NAMESPACE.concat("update_release"), tradeOrder);
+    }
+
+    @Override
+    public int updateBsComment(TradeOrder tradeOrder) {
+        return super.update(NAMESPACE.concat("update_bsComment"), tradeOrder);
+    }
+
+    @Override
+    public int updateSbComment(TradeOrder tradeOrder) {
+        return super.update(NAMESPACE.concat("update_sbComment"), tradeOrder);
+    }
+
+    @Override
+    public int updateArbitrate(TradeOrder tradeOrder) {
+        return super.update(NAMESPACE.concat("update_arbitrate"), tradeOrder);
+    }
+
+    @Override
+    public int updateRevokePay(TradeOrder tradeOrder) {
+        return super.update(NAMESPACE.concat("update_revokePay"), tradeOrder);
+    }
+
 }

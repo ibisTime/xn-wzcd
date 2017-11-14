@@ -10,6 +10,7 @@
 		<result column="sell_user" property="sellUser" />
 		<result column="leave_message" property="leaveMessage" />
 		<result column="trade_currency" property="tradeCurrency" />
+		<result column="trade_coin" property="tradeCoin" />
 		<result column="trade_price" property="tradePrice" />
 		<result column="trade_amount" property="tradeAmount" />
 		<result column="fee" property="fee" />
@@ -42,6 +43,7 @@
 		,t.sell_user
 		,t.leave_message
 		,t.trade_currency
+		,t.trade_coin
 		,t.trade_price
 		,t.trade_amount
 		,t.fee
@@ -81,19 +83,19 @@
 		,ads_code
 		,buy_user
 		,sell_user
+		
 		,leave_message
 		,trade_currency
+		,trade_coin
 		,trade_price
 		,trade_amount
+		
 		,fee
 		,count
 		,pay_type
 		,invalid_datetime
 		,status
-		,sb_comment
-		,bs_comment
-		,mark_datetime
-		,release_datetime
+		
 		,create_datetime
 		,updater
 		,update_datatime
@@ -105,51 +107,98 @@
 		,#{adsCode}
 		,#{buyUser}
 		,#{sellUser}
+		
 		,#{leaveMessage}
 		,#{tradeCurrency}
+		,#{tradeCoin}
 		,#{tradePrice}
 		,#{tradeAmount}
+		
 		,#{fee}
 		,#{count}
 		,#{payType}
 		,#{invalidDatetime}
 		,#{status}
-		,#{sbComment}
-		,#{bsComment}
-		,#{markDatetime}
-		,#{releaseDatetime}
+		
 		,#{createDatetime}
 		,#{updater}
 		,#{updateDatatime}
 		,#{remark}
 		)
 	</insert>
-
-	<update id="update_tradeOrder" parameterType="tradeOrder">
+	
+	<update id="update_cancel" parameterType="tradeOrder">
 		UPDATE tcoin_trade_order
 		SET
-		type = #{type}
-		,ads_code = #{adsCode}
-		,buy_user = #{buyUser}
-		,sell_user = #{sellUser}
-		,leave_message = #{leaveMessage}
-		,trade_currency = #{tradeCurrency}
-		,trade_amount = #{tradeAmount}
-		,fee = #{fee}
-		,count = #{count}
-		,pay_type = #{payType}
-		,invalid_datetime = #{invalidDatetime}
-		,status = #{status}
-		,sb_comment = #{sbComment}
-		,bs_comment = #{bsComment}
+		status = #{status}
+		,updater = #{updater}
+		,update_datatime = #{updateDatatime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_markPay" parameterType="tradeOrder">
+		UPDATE tcoin_trade_order
+		SET
+		status = #{status}
 		,mark_datetime = #{markDatetime}
+		,updater = #{updater}
+		,update_datatime = #{updateDatatime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_release" parameterType="tradeOrder">
+		UPDATE tcoin_trade_order
+		SET
+		status = #{status}
 		,release_datetime = #{releaseDatetime}
-		,create_datetime = #{createDatetime}
 		,updater = #{updater}
 		,update_datatime = #{updateDatatime}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 
+	<update id="update_bsComment" parameterType="tradeOrder">
+		UPDATE tcoin_trade_order
+		SET
+		status = #{status}
+		,bs_comment = #{bsComment}
+		,updater = #{updater}
+		,update_datatime = #{updateDatatime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_sbComment" parameterType="tradeOrder">
+		UPDATE tcoin_trade_order
+		SET
+		status = #{status}
+		,sb_comment = #{sbComment}
+		,updater = #{updater}
+		,update_datatime = #{updateDatatime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+    <update id="update_arbitrate" parameterType="tradeOrder">
+		UPDATE tcoin_trade_order
+		SET
+		status = #{status}
+		,updater = #{updater}
+		,update_datatime = #{updateDatatime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+    <update id="update_revokePay" parameterType="tradeOrder">
+		UPDATE tcoin_trade_order
+		SET
+		status = #{status}
+		,updater = #{updater}
+		,update_datatime = #{updateDatatime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
 
 </mapper>

@@ -24,10 +24,10 @@ import com.cdkj.coin.dao.IJourDAO;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.HLOrder;
 import com.cdkj.coin.domain.Jour;
-import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.enums.EBoolean;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.EGeneratePrefix;
+import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.enums.EJourStatus;
 import com.cdkj.coin.exception.BizException;
 
@@ -43,8 +43,8 @@ public class JourBOImpl extends PaginableBOImpl<Jour> implements IJourBO {
 
     @Override
     public String addJour(Account dbAccount, EChannelType channelType,
-            String channelOrder, String payGroup, String refNo,
-            EJourBizType bizType, String bizNote, BigDecimal transAmount) {
+            String channelOrder, String payGroup, String refNo, String bizType,
+            String bizNote, BigDecimal transAmount) {
         if (!EChannelType.Offline.getCode().equals(channelType.getCode())
                 && !EChannelType.NBZ.getCode().equals(channelType.getCode())) {// 线下和内部帐可为空，线上必须有
             if (StringUtils.isBlank(payGroup)) {// 必须要有的判断。每一次流水新增，必有有对应业务分组
@@ -73,7 +73,7 @@ public class JourBOImpl extends PaginableBOImpl<Jour> implements IJourBO {
         data.setRealName(dbAccount.getRealName());
         data.setType(dbAccount.getType());
         data.setCurrency(dbAccount.getCurrency());
-        data.setBizType(bizType.getCode());
+        data.setBizType(bizType);
 
         data.setBizNote(bizNote);
         data.setPreAmount(dbAccount.getAmount());

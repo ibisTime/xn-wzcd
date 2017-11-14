@@ -12,6 +12,8 @@ import com.cdkj.coin.ao.ITradeOrderAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.ObjValidater;
+import com.cdkj.coin.core.StringValidater;
+import com.cdkj.coin.domain.TradeOrder;
 import com.cdkj.coin.dto.req.XN625250Req;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
@@ -35,8 +37,18 @@ public class XN625250 extends AProcessor {
      */
     @Override
     public Object doBusiness() throws BizException {
-        // TODO Auto-generated method stub
-        return null;
+        TradeOrder condition = new TradeOrder();
+        condition.setCode(req.getCode());
+        condition.setType(req.getType());
+        condition.setAdsCode(req.getAdsCode());
+        condition.setBuyUser(req.getBuyUser());
+        condition.setSellUser(req.getSellUser());
+        condition.setTradeCurrency(req.getTradeCurrency());
+        condition.setPayType(req.getPayType());
+        condition.setStatus(req.getStatus());
+        int start = StringValidater.toInteger(req.getStart());
+        int limit = StringValidater.toInteger(req.getLimit());
+        return tradeOrderAO.queryTradeOrderPage(start, limit, condition);
     }
 
     /** 

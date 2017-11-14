@@ -8,11 +8,15 @@
  */
 package com.cdkj.coin.api.impl;
 
+import java.math.BigDecimal;
+
 import com.cdkj.coin.ao.ITradeOrderAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.ObjValidater;
+import com.cdkj.coin.core.StringValidater;
 import com.cdkj.coin.dto.req.XN625240Req;
+import com.cdkj.coin.dto.res.PKCodeRes;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
@@ -35,8 +39,14 @@ public class XN625240 extends AProcessor {
      */
     @Override
     public Object doBusiness() throws BizException {
-        // TODO Auto-generated method stub
-        return null;
+        BigDecimal tradePrice = StringValidater.toBigDecimal(req
+            .getTradePrice());
+        BigDecimal count = StringValidater.toBigDecimal(req.getCount());
+        BigDecimal tradeAmount = StringValidater.toBigDecimal(req
+            .getTradeAmount());
+        String code = tradeOrderAO.buy(req.getAdsCode(), req.getBuyUser(),
+            tradePrice, count, tradeAmount);
+        return new PKCodeRes(code);
     }
 
     /** 

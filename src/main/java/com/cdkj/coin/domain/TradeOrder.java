@@ -36,6 +36,9 @@ public class TradeOrder extends ABaseDO {
     // 交易币种
     private String tradeCurrency;
 
+    // 交易数字货币类型
+    private String tradeCoin;
+
     // 交易单价
     private BigDecimal tradePrice;
 
@@ -135,6 +138,14 @@ public class TradeOrder extends ABaseDO {
 
     public void setTradeCurrency(String tradeCurrency) {
         this.tradeCurrency = tradeCurrency;
+    }
+
+    public String getTradeCoin() {
+        return tradeCoin;
+    }
+
+    public void setTradeCoin(String tradeCoin) {
+        this.tradeCoin = tradeCoin;
     }
 
     public BigDecimal getTradePrice() {

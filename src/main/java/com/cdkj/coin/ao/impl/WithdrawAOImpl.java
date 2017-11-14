@@ -27,10 +27,10 @@ import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.domain.User;
 import com.cdkj.coin.domain.Withdraw;
 import com.cdkj.coin.enums.EAccountType;
-import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.enums.EBoolean;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECurrency;
+import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.enums.EWithdrawStatus;
 import com.cdkj.coin.exception.BizException;
@@ -212,8 +212,8 @@ public class WithdrawAOImpl implements IWithdrawAO {
         if (ECurrency.CNY.getCode().equals(account.getCurrency())) {
             // 托管账户减钱
             accountBO.changeAmount(data.getCompanyCode(), EChannelType.Offline,
-                null, null, data.getCode(), EJourBizType.AJ_WITHDRAW, "线下取现", data
-                    .getAmount().negate());
+                null, null, data.getCode(), EJourBizType.AJ_WITHDRAW.getCode(),
+                "线下取现", data.getAmount().negate());
         }
     }
 

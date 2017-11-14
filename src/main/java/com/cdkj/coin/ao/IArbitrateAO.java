@@ -9,6 +9,9 @@ public interface IArbitrateAO {
 
     static final String DEFAULT_ORDER_COLUMN = "code";
 
+    // 仲裁工单处理
+    public void handle(String code, String result, String updater, String remark);
+
     public Paginable<Arbitrate> queryArbitratePage(int start, int limit,
             Arbitrate condition);
 

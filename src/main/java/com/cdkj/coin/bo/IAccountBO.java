@@ -8,7 +8,6 @@ import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.HLOrder;
 import com.cdkj.coin.enums.EAccountStatus;
 import com.cdkj.coin.enums.EAccountType;
-import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECurrency;
 
@@ -26,8 +25,8 @@ public interface IAccountBO extends IPaginableBO<Account> {
 
     // 变更账户余额：流水落地
     public void changeAmount(String accountNumber, EChannelType channelType,
-            String channelOrder, String payGroup, String refNo,
-            EJourBizType bizType, String bizNote, BigDecimal transAmount);
+            String channelOrder, String payGroup, String refNo, String bizType,
+            String bizNote, BigDecimal transAmount);
 
     // 仅变更账户余额：流水不落地
     public void changeAmountNotJour(String accountNumber,
@@ -50,7 +49,8 @@ public interface IAccountBO extends IPaginableBO<Account> {
     // 内部转账
     public void transAmountCZB(String fromUserId, String fromCurrency,
             String toUserId, String toCurrency, BigDecimal transAmount,
-            EJourBizType bizType, String fromBizNote, String toBizNote, String refNo);
+            String fromBizType, String toBizType, String fromBizNote,
+            String toBizNote, String refNo);
 
     // 更新户名
     public void refreshAccountName(String userId, String realName);

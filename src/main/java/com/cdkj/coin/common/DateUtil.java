@@ -41,11 +41,22 @@ public class DateUtil {
         return repayDatetime;
     }
 
-    public static Date getRelativeDate(Date startDate, int second) {
+    public static Date getRelativeDateOfSecond(Date startDate, int second) {
         Calendar calendar = Calendar.getInstance();
         try {
             calendar.setTime(startDate);
             calendar.add(Calendar.SECOND, second);
+            return calendar.getTime();
+        } catch (Exception e) {
+            return startDate;
+        }
+    }
+
+    public static Date getRelativeDateOfMinute(Date startDate, int minute) {
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(startDate);
+            calendar.add(Calendar.MINUTE, minute);
             return calendar.getTime();
         } catch (Exception e) {
             return startDate;
@@ -118,7 +129,7 @@ public class DateUtil {
      */
     public static Date getTomorrowStart(Date today) {
         String str = dateToStr(today, FRONT_DATE_FORMAT_STRING);
-        Date tommrow = getRelativeDate(
+        Date tommrow = getRelativeDateOfSecond(
             strToDate(str, FRONT_DATE_FORMAT_STRING), 24 * 3600);
         return tommrow;
     }

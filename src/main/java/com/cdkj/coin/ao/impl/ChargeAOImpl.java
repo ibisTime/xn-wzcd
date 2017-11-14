@@ -16,11 +16,11 @@ import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.Charge;
 import com.cdkj.coin.domain.User;
-import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.enums.EBoolean;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.EChargeStatus;
 import com.cdkj.coin.enums.ECurrency;
+import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.exception.BizException;
 
 @Service
@@ -45,8 +45,8 @@ public class ChargeAOImpl implements IChargeAO {
         Account account = accountBO.getAccount(accountNumber);
         // 生成充值订单
         String code = chargeBO.applyOrderOffline(account,
-            EJourBizType.getBizType(jourBizType), amount, payCardInfo, payCardNo,
-            applyUser, applyNote);
+            EJourBizType.getBizType(jourBizType), amount, payCardInfo,
+            payCardNo, applyUser, applyNote);
         return code;
     }
 
@@ -72,16 +72,15 @@ public class ChargeAOImpl implements IChargeAO {
     private void payOrderYES(Charge data, String payUser, String payNote) {
         chargeBO.payOrder(data, true, payUser, payNote);
         // 账户加钱
-        accountBO
-            .changeAmount(data.getAccountNumber(), EChannelType.ETH, null,
-                null, data.getCode(), EJourBizType.AJ_CHARGE, "ETH充值",
-                data.getAmount());
+        accountBO.changeAmount(data.getAccountNumber(), EChannelType.ETH, null,
+            null, data.getCode(), EJourBizType.AJ_CHARGE.getCode(), "ETH充值",
+            data.getAmount());
         Account account = accountBO.getAccount(data.getAccountNumber());
         if (ECurrency.CNY.getCode().equals(account.getCurrency())) {
             // 托管账户加钱
             accountBO.changeAmount(data.getCompanyCode(), EChannelType.ETH,
-                null, null, data.getCode(), EJourBizType.AJ_CHARGE, "ETH充值",
-                data.getAmount());
+                null, null, data.getCode(), EJourBizType.AJ_CHARGE.getCode(),
+                "ETH充值", data.getAmount());
         }
     }
 

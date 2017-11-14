@@ -12,6 +12,8 @@ import com.cdkj.coin.ao.IArbitrateAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.ObjValidater;
+import com.cdkj.coin.core.StringValidater;
+import com.cdkj.coin.domain.Arbitrate;
 import com.cdkj.coin.dto.req.XN625265Req;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
@@ -35,8 +37,15 @@ public class XN625265 extends AProcessor {
      */
     @Override
     public Object doBusiness() throws BizException {
-        // TODO Auto-generated method stub
-        return null;
+        Arbitrate condition = new Arbitrate();
+        condition.setCode(req.getCode());
+        condition.setTradeOrderCode(req.getTradeOrderCode());
+        condition.setYuangao(req.getYuangao());
+        condition.setBeigao(req.getBeigao());
+        condition.setUpdater(req.getUpdater());
+        int start = StringValidater.toInteger(req.getStart());
+        int limit = StringValidater.toInteger(req.getLimit());
+        return arbitrateAO.queryArbitratePage(start, limit, condition);
     }
 
     /** 
