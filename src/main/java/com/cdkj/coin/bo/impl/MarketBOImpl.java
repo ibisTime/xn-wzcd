@@ -9,6 +9,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Created by tianlei on 2017/十一月/13.
  */
@@ -34,8 +36,17 @@ public class MarketBOImpl implements IMarketBO {
 
     @Override
     public int updateMarket(String origin, String coinType, Market market) {
+
         market.setOrigin(origin);
         market.setCoin(coinType);
         return this.marketDAO.update(market);
+
+    }
+
+    @Override
+    public List<Market> marketListByCondation(Market condation) {
+
+        return this.marketDAO.selectList(condation);
+
     }
 }

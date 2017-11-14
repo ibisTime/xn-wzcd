@@ -49,7 +49,9 @@ public class MarketDAOImpl extends AMybatisTemplate implements IMarketDAO {
 
     @Override
     public List<Market> selectList(Market condition) {
-        return null;
+
+        return super.selectList(NAMESPACE.concat("selectList"),condition,Market.class);
+
     }
 }
 

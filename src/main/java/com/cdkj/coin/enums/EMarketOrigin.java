@@ -5,7 +5,9 @@ package com.cdkj.coin.enums;
  */
 public enum EMarketOrigin {
 
-    BITFINEX("bitfinex","B站");
+    BITFINEX("bitfinex","B站"),
+    OKEX("okex","okex");
+
 
 
     EMarketOrigin(String code, String value) {
