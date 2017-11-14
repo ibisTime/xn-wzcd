@@ -1,12 +1,15 @@
 package com.cdkj.coin.dto.req;
 
+import com.cdkj.coin.domain.AdsDisplayTime;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by tianlei on 2017/十一月/14.
@@ -21,6 +24,7 @@ public class XN625220Req {
     private String publishType;
 
     // 交易 数字货币类型
+    @NotBlank
     private String tradeCurrency;
 
     @NotBlank
@@ -30,26 +34,26 @@ public class XN625220Req {
     private String onlyTrust;
 
     //溢价率
-    @NotBlank
+    @NotNull
     @DecimalMin("-0.9999")
     @DecimalMax("0.9999")
-    private String premiumRate;
+    private BigDecimal premiumRate;
 
     // 交易总量
-    @NotBlank
-    private String totalAmount;
+    @NotNull
+    private BigDecimal totalAmount;
 
     // 保护价格
-    @NotBlank
-    private String protectPrice;
+    @NotNull
+    private BigDecimal protectPrice;
 
     //单笔最小
-    @NotBlank
-    private String minTrade;
+    @NotNull
+    private BigDecimal minTrade;
 
     //单笔最大
-    @NotBlank
-    private String maxTrade;
+    @NotNull
+    private BigDecimal maxTrade;
 
     //支付类型
     @NotBlank
@@ -61,6 +65,9 @@ public class XN625220Req {
     //留言
     @NotBlank
     private String leaveMessage;
+
+    List<AdsDisplayTime> displayTime;
+
 
     public String getUserId() {
         return userId;
@@ -102,43 +109,43 @@ public class XN625220Req {
         this.onlyTrust = onlyTrust;
     }
 
-    public String getPremiumRate() {
+    public BigDecimal getPremiumRate() {
         return premiumRate;
     }
 
-    public void setPremiumRate(String premiumRate) {
+    public void setPremiumRate(BigDecimal premiumRate) {
         this.premiumRate = premiumRate;
     }
 
-    public String getTotalAmount() {
+    public BigDecimal getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(String totalAmount) {
+    public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public String getProtectPrice() {
+    public BigDecimal getProtectPrice() {
         return protectPrice;
     }
 
-    public void setProtectPrice(String protectPrice) {
+    public void setProtectPrice(BigDecimal protectPrice) {
         this.protectPrice = protectPrice;
     }
 
-    public String getMinTrade() {
+    public BigDecimal getMinTrade() {
         return minTrade;
     }
 
-    public void setMinTrade(String minTrade) {
+    public void setMinTrade(BigDecimal minTrade) {
         this.minTrade = minTrade;
     }
 
-    public String getMaxTrade() {
+    public BigDecimal getMaxTrade() {
         return maxTrade;
     }
 
-    public void setMaxTrade(String maxTrade) {
+    public void setMaxTrade(BigDecimal maxTrade) {
         this.maxTrade = maxTrade;
     }
 
@@ -164,5 +171,13 @@ public class XN625220Req {
 
     public void setLeaveMessage(String leaveMessage) {
         this.leaveMessage = leaveMessage;
+    }
+
+    public List<AdsDisplayTime> getDisplayTime() {
+        return displayTime;
+    }
+
+    public void setDisplayTime(List<AdsDisplayTime> displayTime) {
+        this.displayTime = displayTime;
     }
 }

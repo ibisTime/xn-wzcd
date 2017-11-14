@@ -5,6 +5,7 @@ import com.cdkj.coin.dao.base.ABaseDO;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class AdsSell extends ABaseDO implements Serializable {
     private String code;
@@ -67,6 +68,36 @@ public class AdsSell extends ABaseDO implements Serializable {
     private Date updateDatetime;
 
     private String leaveMessage;
+
+    private List<AdsDisplayTime> displayTime;
+
+    //   以下字段为查询添加  //
+    private Integer currentWeek;
+    private Integer currentTime;
+
+    public Integer getCurrentWeek() {
+        return currentWeek;
+    }
+
+    public void setCurrentWeek(Integer currentWeek) {
+        this.currentWeek = currentWeek;
+    }
+
+    public Integer getCurrentTime() {
+        return currentTime;
+    }
+
+    public void setCurrentTime(Integer currentTime) {
+        this.currentTime = currentTime;
+    }
+
+    public List<AdsDisplayTime> getDisplayTime() {
+        return displayTime;
+    }
+
+    public void setDisplayTime(List<AdsDisplayTime> displayTime) {
+        this.displayTime = displayTime;
+    }
 
     private static final long serialVersionUID = 1L;
 

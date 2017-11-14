@@ -1,18 +1,19 @@
 package com.cdkj.coin.domain;
 
-import java.io.Serializable;
-import java.util.Date;
+import com.cdkj.coin.dao.base.ABaseDO;
 
-public class AdsDisplayTime implements Serializable {
+import java.io.Serializable;
+
+public class AdsDisplayTime extends ABaseDO implements Serializable {
     private Integer id;
 
     private String adscode;
 
     private String week;
 
-    private Date startTime;
+    private Integer startTime;
 
-    private Date endTime;
+    private Integer endTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -40,19 +41,19 @@ public class AdsDisplayTime implements Serializable {
         this.week = week == null ? null : week.trim();
     }
 
-    public Date getStartTime() {
+    public Integer getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Integer startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public Integer getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(Integer endTime) {
         this.endTime = endTime;
     }
 }

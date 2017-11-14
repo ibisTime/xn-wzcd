@@ -2,6 +2,7 @@ package com.cdkj.coin.common;
 
 import com.cdkj.coin.exception.ParaException;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class JsonUtil {
 
@@ -12,7 +13,7 @@ public class JsonUtil {
         }
         T t = null;
         try {
-            Gson gson = new Gson();
+            Gson gson = new  GsonBuilder().setDateFormat("HH:mm:ss").create();
             t = (T) gson.fromJson(json, clazz);
         } catch (Exception e) {
             throw new ParaException("830xxx", "json2Bean不正确:" + e.getMessage());
