@@ -74,6 +74,14 @@
 		<property name="paginableDAO" ref="ethCollectionDAOImpl" />
 	</bean>
 	
+	<bean id="tradeOrderBO" class="com.cdkj.coin.bo.impl.TradeOrderBOImpl">
+		<property name="paginableDAO" ref="tradeOrderDAOImpl" />
+	</bean>
+	
+	<bean id="arbitrateBO" class="com.cdkj.coin.bo.impl.ArbitrateBOImpl">
+		<property name="paginableDAO" ref="arbitrateDAOImpl" />
+	</bean>
+	
 	<bean id="sysDictBO" class="com.cdkj.coin.bo.impl.SYSDictBOImpl">
 		<property name="paginableDAO" ref="sysDictDAOImpl"/>
 	</bean>	

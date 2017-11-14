@@ -10,14 +10,12 @@ import java.util.Map;
  */
 public enum EGeneratePrefix {
 
-    ADVERTISE("AD", "广告"), DH("DH", "导航")
+    ADVERTISE("AD", "广告"), DH("DH", "导航"), TRADE_ORDER("JY", "交易订单"), ARBITRATE(
+            "ZC", "仲裁工单")
 
-    , Account("A", "账户"), AJour("AJ", "账户流水"), CompanyChannel("CC", "公司渠道"), ChannelBank(
-            "CB", "渠道银行"), BankCard("CT", "银行卡"), CMB_BIZ_NO("CBN",
-            "招商银企直联业务参考号"), EXCHANGE_CURRENCY("EC", "币种兑换"), HLORDER("HL",
-            "红蓝订单"), Charge("CZ", "充值订单"), Withdraw("QX", "取现订单"), Collection(
-            "CO", "归集订单"), BAOFOO_PAY_ORDER("BFDF", "宝付代付订单");
-    ;
+    , Account("A", "账户"), AJour("AJ", "账户流水"), EXCHANGE_CURRENCY("EC", "币种兑换"), HLORDER(
+            "HL", "红蓝订单"), Charge("CZ", "充值订单"), Withdraw("QX", "取现订单"), Collection(
+            "CO", "归集订单");
 
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();

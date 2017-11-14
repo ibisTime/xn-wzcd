@@ -68,12 +68,13 @@ CREATE TABLE `tcoin_arbitrate` (
   `attach` text COMMENT '附件',
   `status` varchar(32) DEFAULT NULL COMMENT '状态',
   `create_datetime` datetime DEFAULT NULL COMMENT '申请时间',
+  `result` text COMMENT '处理结果',
   `updater` varchar(45) DEFAULT NULL COMMENT '处理人',
   `update_datetime` datetime DEFAULT NULL COMMENT '处理时间',
-  `result` text COMMENT '处理结果',
   `remark` text COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

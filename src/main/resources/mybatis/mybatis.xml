@@ -20,6 +20,9 @@
 		<typeAlias alias="ethAddress" type="com.cdkj.coin.domain.EthAddress" />
 		<typeAlias alias="ethTransaction" type="com.cdkj.coin.domain.EthTransaction" />
 		<typeAlias alias="ethCollection" type="com.cdkj.coin.domain.EthCollection" />
+		<typeAlias alias="tradeOrder" type="com.cdkj.coin.domain.TradeOrder" />
+		<typeAlias alias="arbitrate" type="com.cdkj.coin.domain.Arbitrate" />
+		
 		<typeAlias alias="sysDict" type="com.cdkj.coin.domain.SYSDict" />
 		<typeAlias alias="sysConfig" type="com.cdkj.coin.domain.SYSConfig" />
 	</typeAliases>

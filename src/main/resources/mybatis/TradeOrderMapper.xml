@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.coin.dao.ITradeOrderDAO">
+	<resultMap id="tradeOrder_DB_Result" type="tradeOrder">
+		<result column="code" property="code" />
+		<result column="type" property="type" />
+		<result column="ads_code" property="adsCode" />
+		<result column="buy_user" property="buyUser" />
+		<result column="sell_user" property="sellUser" />
+		<result column="leave_message" property="leaveMessage" />
+		<result column="trade_currency" property="tradeCurrency" />
+		<result column="trade_price" property="tradePrice" />
+		<result column="trade_amount" property="tradeAmount" />
+		<result column="fee" property="fee" />
+		<result column="count" property="count" />
+		<result column="pay_type" property="payType" />
+		<result column="invalid_datetime" property="invalidDatetime" />
+		<result column="status" property="status" />
+		<result column="sb_comment" property="sbComment" />
+		<result column="bs_comment" property="bsComment" />
+		<result column="mark_datetime" property="markDatetime" />
+		<result column="release_datetime" property="releaseDatetime" />
+		<result column="create_datetime" property="createDatetime" />
+		<result column="updater" property="updater" />
+		<result column="update_datatime" property="updateDatatime" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_tradeOrder" parameterType="tradeOrder" resultMap="tradeOrder_DB_Result">
+		SELECT
+		t.code
+		,t.type
+		,t.ads_code
+		,t.buy_user
+		,t.sell_user
+		,t.leave_message
+		,t.trade_currency
+		,t.trade_price
+		,t.trade_amount
+		,t.fee
+		,t.count
+		,t.pay_type
+		,t.invalid_datetime
+		,t.status
+		,t.sb_comment
+		,t.bs_comment
+		,t.mark_datetime
+		,t.release_datetime
+		,t.create_datetime
+		,t.updater
+		,t.update_datatime
+		,t.remark
+		FROM
+		tcoin_trade_order t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_tradeOrder_count" parameterType="tradeOrder"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tcoin_trade_order t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_tradeOrder" parameterType="tradeOrder">
+		INSERT INTO
+		tcoin_trade_order(
+		code
+		,type
+		,ads_code
+		,buy_user
+		,sell_user
+		,leave_message
+		,trade_currency
+		,trade_price
+		,trade_amount
+		,fee
+		,count
+		,pay_type
+		,invalid_datetime
+		,status
+		,sb_comment
+		,bs_comment
+		,mark_datetime
+		,release_datetime
+		,create_datetime
+		,updater
+		,update_datatime
+		,remark
+		)
+		VALUES(
+		#{code}
+		,#{type}
+		,#{adsCode}
+		,#{buyUser}
+		,#{sellUser}
+		,#{leaveMessage}
+		,#{tradeCurrency}
+		,#{tradePrice}
+		,#{tradeAmount}
+		,#{fee}
+		,#{count}
+		,#{payType}
+		,#{invalidDatetime}
+		,#{status}
+		,#{sbComment}
+		,#{bsComment}
+		,#{markDatetime}
+		,#{releaseDatetime}
+		,#{createDatetime}
+		,#{updater}
+		,#{updateDatatime}
+		,#{remark}
+		)
+	</insert>
+
+	<update id="update_tradeOrder" parameterType="tradeOrder">
+		UPDATE tcoin_trade_order
+		SET
+		type = #{type}
+		,ads_code = #{adsCode}
+		,buy_user = #{buyUser}
+		,sell_user = #{sellUser}
+		,leave_message = #{leaveMessage}
+		,trade_currency = #{tradeCurrency}
+		,trade_amount = #{tradeAmount}
+		,fee = #{fee}
+		,count = #{count}
+		,pay_type = #{payType}
+		,invalid_datetime = #{invalidDatetime}
+		,status = #{status}
+		,sb_comment = #{sbComment}
+		,bs_comment = #{bsComment}
+		,mark_datetime = #{markDatetime}
+		,release_datetime = #{releaseDatetime}
+		,create_datetime = #{createDatetime}
+		,updater = #{updater}
+		,update_datatime = #{updateDatatime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>
