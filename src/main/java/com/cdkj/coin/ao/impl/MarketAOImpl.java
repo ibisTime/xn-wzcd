@@ -59,7 +59,7 @@ public class MarketAOImpl implements IMarketAO {
         this.obtainBitfinexMarket();
 
         // 2.从okex 获取行情
-        this.obtainOkexMarket();
+//        this.obtainOkexMarket();
 
     }
 
