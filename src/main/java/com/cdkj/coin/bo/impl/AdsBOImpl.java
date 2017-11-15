@@ -64,9 +64,22 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     }
 
     @Override
-    public void changeLeftAmount(String adsCode, BigDecimal value, String tradeType) {
+    public void checkXiaJia(String adsCode, ETradeType type) {
 
-        if (tradeType.equals(ETradeType.SELL.getCode())) {
+        if (type == ETradeType.BUY) {
+
+
+        } else if (type == ETradeType.SELL) {
+
+        } else {
+
+        }
+    }
+
+    @Override
+    public void changeLeftAmount(String adsCode, BigDecimal value, ETradeType tradeType) {
+
+        if (tradeType.equals(ETradeType.SELL)) {
 
             AdsSell condition = new AdsSell();
             condition.setCode(adsCode);
@@ -83,7 +96,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
                 throw new BizException("xn", "更新失败");
             }
 
-        } else if (tradeType.equals(ETradeType.SELL.getCode())) {
+        } else if (tradeType.equals(ETradeType.SELL)) {
 
         } else {
 
@@ -94,16 +107,16 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     }
 
     @Override
-    public boolean checkAdsBelongUser(String adsCode, String userId, String tradeType) {
+    public boolean checkAdsBelongUser(String adsCode, String userId, ETradeType tradeType) {
 
-        if (tradeType.equals(ETradeType.SELL.getCode())) {
+        if (tradeType.equals(ETradeType.SELL)) {
 
             AdsSell condition = new AdsSell();
             condition.setCode(adsCode);
             condition.setUserId(userId);
             return this.adsSellDAO.selectTotalCount(condition) == 1;
 
-        } else if (tradeType.equals(ETradeType.BUY.getCode())) {
+        } else if (tradeType.equals(ETradeType.BUY)) {
 
             return false;
         } else {
@@ -115,9 +128,9 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     }
 
     @Override
-    public void xiaJiaAds(String adsCode, String tradeType) {
+    public void xiaJiaAds(String adsCode, ETradeType tradeType) {
 
-        if (tradeType.equals(ETradeType.SELL.getCode())) {
+        if (tradeType.equals(ETradeType.SELL)) {
 
             AdsSell condition = new AdsSell();
             condition.setCode(adsCode);
@@ -128,7 +141,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
             }
 
 
-        } else if (tradeType.equals(ETradeType.SELL.getCode())) {
+        } else if (tradeType.equals(ETradeType.SELL)) {
 
         } else {
 
@@ -138,9 +151,9 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     }
 
     @Override
-    public void shangJiaAds(String adsCode, String tradeType) {
+    public void shangJiaAds(String adsCode, ETradeType tradeType) {
 
-        if (tradeType.equals(ETradeType.SELL.getCode())) {
+        if (tradeType.equals(ETradeType.SELL)) {
 
             AdsSell condition = new AdsSell();
             condition.setCode(adsCode);
@@ -150,7 +163,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
                 throw new BizException("xn000000", "下架失败");
             }
 
-        } else if (tradeType.equals(ETradeType.SELL.getCode())) {
+        } else if (tradeType.equals(ETradeType.SELL)) {
 
         } else {
 
