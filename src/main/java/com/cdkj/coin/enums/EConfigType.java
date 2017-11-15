@@ -6,8 +6,8 @@ package com.cdkj.coin.enums;
  * @history:
  */
 public enum EConfigType {
-    HX("HX", "环信"), QINIU("QINIU", "七牛"), WEIXIN_H5("WX_H5", "微信h5"), WEIXIN_APP(
-            "WX_APP", "微信APP");
+
+    QINIU("qiniu", "七牛");
 
     EConfigType(String code, String value) {
         this.code = code;
@@ -25,4 +25,5 @@ public enum EConfigType {
     public String getValue() {
         return value;
     }
+
 }

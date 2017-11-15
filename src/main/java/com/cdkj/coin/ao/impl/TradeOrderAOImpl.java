@@ -3,7 +3,7 @@ package com.cdkj.coin.ao.impl;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +18,7 @@ import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.domain.AdsSell;
 import com.cdkj.coin.domain.TradeOrder;
+import com.cdkj.coin.enums.EAdsStatus;
 import com.cdkj.coin.enums.EJourBizTypePlat;
 import com.cdkj.coin.enums.EJourBizTypeUser;
 import com.cdkj.coin.enums.ESystemAccount;
@@ -51,6 +52,10 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         String code = null;
         // 获取广告详情
         AdsSell adsSell = adsBO.adsSellDetail(adsCode);
+        if (!EAdsStatus.SHANG_JIA.getCode().equals(adsSell.getStatus())) {
+            throw new BizException(
+                EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "广告未上架，不能进行交易");
+        }
         // 交易金额校验
         doAmountCheck(adsSell, tradePrice, count, tradeAmount);
         // 计算交易手续费
