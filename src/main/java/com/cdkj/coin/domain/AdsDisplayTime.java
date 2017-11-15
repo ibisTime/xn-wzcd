@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class AdsDisplayTime extends ABaseDO implements Serializable {
     private Integer id;
 
-    private String adscode;
+    private String adsCode;
 
     private String week;
 
@@ -25,12 +25,16 @@ public class AdsDisplayTime extends ABaseDO implements Serializable {
         this.id = id;
     }
 
-    public String getAdscode() {
-        return adscode;
+    public String getAdsCode() {
+        return adsCode;
     }
 
-    public void setAdscode(String adscode) {
-        this.adscode = adscode == null ? null : adscode.trim();
+    public void setAdsCode(String adsCode) {
+        this.adsCode = adsCode;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public String getWeek() {

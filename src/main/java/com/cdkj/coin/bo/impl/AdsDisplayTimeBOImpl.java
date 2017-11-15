@@ -30,8 +30,15 @@ public class AdsDisplayTimeBOImpl implements IAdsDisplayTimeBO {
     public void check(AdsDisplayTime adsDisplayTime) {
 
         if (adsDisplayTime.getEndTime().compareTo(adsDisplayTime.getStartTime()) <= 0) {
-            throw new BizException("xn000","结束时间需要大于开始时间");
+            throw new BizException("xn000", "结束时间需要大于开始时间");
         }
+
+    }
+
+    @Override
+    public void deleteAdsDisplayTimeByAdsCode(String adsCode) {
+
+        this.displayTimeDAO.deleteByAdsCode(adsCode);
 
     }
 

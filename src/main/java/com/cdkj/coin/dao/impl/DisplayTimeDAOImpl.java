@@ -15,9 +15,18 @@ public class DisplayTimeDAOImpl extends AMybatisTemplate implements IDisplayTime
 
     @Override
     public int delete(AdsDisplayTime data) {
+
         return 0;
     }
 
+    @Override
+    public void deleteByAdsCode(String adsCode) {
+
+        AdsDisplayTime condition = new AdsDisplayTime();
+        condition.setAdsCode(adsCode);
+        super.delete(NAMESPACE.concat("deleteByAdsCode"), condition);
+
+    }
 
     @Override
     public int insert(AdsDisplayTime data) {

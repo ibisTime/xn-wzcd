@@ -11,13 +11,16 @@ import java.math.BigDecimal;
  */
 public interface IAdsBO {
 
-
-
-    // 买卖共用方法
+    //买卖共用方法
     public boolean checkAdsBelongUser(String adsCode, String userId, ETradeType type);
+
     public void changeLeftAmount(String adsCode, BigDecimal value, ETradeType type);
-    public void checkXiaJia(String adsCode, ETradeType type);
+
+    // true 需要下架，false 不需要下架
+    public boolean checkXiaJia(String adsCode, ETradeType type);
+
     public void xiaJiaAds(String adsCode, ETradeType type);
+
     public void shangJiaAds(String adsCode, ETradeType type);
 
     // *****************  卖币广告方法 ************************ //

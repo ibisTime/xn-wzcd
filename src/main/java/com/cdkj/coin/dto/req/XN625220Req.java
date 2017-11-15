@@ -64,7 +64,7 @@ public class XN625220Req {
     private String payType;
 
     //付款超时时间
-    @NotBlank
+    @NotNull
     private Integer payLimit;
 
     //留言

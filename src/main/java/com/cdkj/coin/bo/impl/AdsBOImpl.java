@@ -30,12 +30,9 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     @Autowired
     IAdsSellDAO adsSellDAO;
 
-
-
     @Override
     @Transactional
     public void insertAdsSell(AdsSell adsSell) {
-
 
         int count = this.adsSellDAO.insert(adsSell);
         if (count != 1) {
@@ -55,16 +52,27 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     }
 
     @Override
-    public void checkXiaJia(String adsCode, ETradeType type) {
+    public boolean checkXiaJia(String adsCode, ETradeType type) {
 
-        if (type == ETradeType.BUY) {
+        if (type == ETradeType.SELL) {
 
+            AdsSell condition = new AdsSell();
+            condition.setCode(adsCode);
+            AdsSell resultAds = this.adsSellDAO.select(condition);
+            //剩余金额小于 单笔最小交易金额就下架
+            return resultAds.getLeftAmount().compareTo(resultAds.getMinTrade()) < 0;
 
-        } else if (type == ETradeType.SELL) {
+        } else if (type == ETradeType.BUY) {
+
+            return false;
 
         } else {
 
+            return false;
+
         }
+
+
     }
 
     @Override
@@ -81,7 +89,6 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
             }
             adsSell.setLeftAmount(adsSell.getLeftAmount().add(value));
             //校验余额，
-
             int count = this.adsSellDAO.updateByPrimaryKeySelective(adsSell);
             if (count != 1) {
                 throw new BizException("xn", "更新失败");
@@ -110,6 +117,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         } else if (tradeType.equals(ETradeType.BUY)) {
 
             return false;
+
         } else {
 
             return false;
@@ -130,7 +138,6 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
             if (count != 1) {
                 throw new BizException("xn000000", "下架失败");
             }
-
 
         } else if (tradeType.equals(ETradeType.SELL)) {
 
@@ -193,11 +200,8 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
 
     @Override
-    @Transactional
     public void sellDraftPublish(AdsSell adsSell) {
 
-        //1. 删除原来的展示时间
-        //2. 插入现在的展示时间
         this.adsSellDAO.updateByPrimaryKey(adsSell);
 
     }
@@ -222,7 +226,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         //传入现在是几点
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int minute = cal.get(Calendar.MINUTE);
-        condition.setCurrentTime(1.0*hour + minute*1.0/60);
+        condition.setCurrentTime(1.0 * hour + minute * 1.0 / 60);
 
         //
         long totalCount = adsSellDAO.selectFrontTotalCount(condition);

@@ -12,5 +12,6 @@ public interface IDisplayTimeDAO extends IBaseDAO<AdsDisplayTime> {
 
     String NAMESPACE = IDisplayTimeDAO.class.getName().concat(".");
 
+    void deleteByAdsCode(String adsCode);
 
 }

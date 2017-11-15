@@ -7,7 +7,7 @@ CREATE TABLE `tcoin_ads_sell` (
   `trade_currency` varchar(8) NOT  NULL COMMENT '交易币种',
   `trade_coin` varchar(8) NOT  NULL COMMENT '数字货币类型',
   `only_trust` VARCHAR(2) NOT NULL  COMMENT '是否只有信任的人可以交易',
-  `premium_rate` decimal(4,2) NOT NULL COMMENT '溢价率',
+  `premium_rate` decimal(6,4) NOT NULL COMMENT '溢价率',
 
   `total_amount` DECIMAL(64,0) NOT NULL COMMENT '广告的交易总额',
   `left_amount` DECIMAL(64,0) NOT NULL COMMENT '剩余可交易',

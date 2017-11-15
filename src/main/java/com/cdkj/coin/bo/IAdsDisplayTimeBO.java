@@ -9,4 +9,5 @@ public interface IAdsDisplayTimeBO {
 
     void insertDisplayTime(AdsDisplayTime adsDisplayTime);
     void check(AdsDisplayTime adsDisplayTime);
+    void deleteAdsDisplayTimeByAdsCode(String adsCode);
 }
