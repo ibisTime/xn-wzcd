@@ -30,21 +30,12 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     @Autowired
     IAdsSellDAO adsSellDAO;
 
-    @Autowired
-    IDisplayTimeDAO displayTimeDAO;
+
 
     @Override
     @Transactional
     public void insertAdsSell(AdsSell adsSell) {
 
-        if (!adsSell.getDisplayTime().isEmpty()) {
-            //有展示时间限制、先掺入展示时间
-            for (AdsDisplayTime displayTime : adsSell.getDisplayTime()) {
-                displayTime.setAdscode(adsSell.getCode());
-                this.displayTimeDAO.insert(displayTime);
-            }
-
-        }
 
         int count = this.adsSellDAO.insert(adsSell);
         if (count != 1) {
@@ -200,6 +191,18 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 //
 //    }
 
+
+    @Override
+    @Transactional
+    public void sellDraftPublish(AdsSell adsSell) {
+
+        //1. 删除原来的展示时间
+        //2. 插入现在的展示时间
+        this.adsSellDAO.updateByPrimaryKey(adsSell);
+
+    }
+
+
     //前端分页
     @Override
     public Paginable<AdsSell> frontSellPage(Integer start, Integer limit, String coin) {
@@ -217,7 +220,9 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         condition.setCurrentWeek(w);
 
         //传入现在是几点
-        condition.setCurrentTime(cal.get(Calendar.HOUR_OF_DAY));
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int minute = cal.get(Calendar.MINUTE);
+        condition.setCurrentTime(1.0*hour + minute*1.0/60);
 
         //
         long totalCount = adsSellDAO.selectFrontTotalCount(condition);

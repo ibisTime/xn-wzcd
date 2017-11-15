@@ -19,18 +19,17 @@
         <result column="status" jdbcType="VARCHAR" property="status"/>
         <result column="create_datetime" jdbcType="TIMESTAMP" property="createDatetime"/>
         <result column="update_datetime" jdbcType="TIMESTAMP" property="updateDatetime"/>
-    </resultMap>
-    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cdkj.coin.domain.AdsSell">
         <result column="leave_message" jdbcType="LONGVARCHAR" property="leaveMessage"/>
+
     </resultMap>
+
     <sql id="Base_Column_List">
         code, user_id, trade_currency, trade_coin, only_trust, premium_rate, total_amount,
         left_amount, market_price, protect_price, min_trade, max_trade, pay_type, pay_limit,
-        status, create_datetime, update_datetime
+        status, create_datetime, update_datetime,  leave_message
+
     </sql>
-    <sql id="Blob_Column_List">
-        leave_message
-    </sql>
+
 
     <insert id="insert" parameterType="com.cdkj.coin.domain.AdsSell">
         INSERT INTO tcoin_ads_sell (code, user_id, trade_currency,
@@ -63,7 +62,7 @@
         (
         tcoin_ads_display_time.adsCode IS NULL OR (
         #{currentTime} >= tcoin_ads_display_time.start_time
-        <![CDATA[ and #{currentTime} <= tcoin_ads_display_time.end_time ]]>
+        <![CDATA[ and #{currentTime} < tcoin_ads_display_time.end_time ]]>
         )
         )
         <if test="tradeCoin != null and tradeCoin != ''">
@@ -179,27 +178,7 @@
         where code = #{code,jdbcType=VARCHAR}
     </update>
 
-    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cdkj.coin.domain.AdsSell">
-        UPDATE tcoin_ads_sell
-        SET user_id         = #{userId,jdbcType=VARCHAR},
-            trade_currency  = #{tradeCurrency,jdbcType=VARCHAR},
-            trade_coin      = #{tradeCoin,jdbcType=VARCHAR},
-            only_trust      = #{onlyTrust,jdbcType=VARCHAR},
-            premium_rate    = #{premiumRate,jdbcType=DECIMAL},
-            total_amount    = #{totalAmount,jdbcType=DECIMAL},
-            left_amount     = #{leftAmount,jdbcType=DECIMAL},
-            market_price    = #{marketPrice,jdbcType=DECIMAL},
-            protect_price   = #{protectPrice,jdbcType=DECIMAL},
-            min_trade       = #{minTrade,jdbcType=DECIMAL},
-            max_trade       = #{maxTrade,jdbcType=DECIMAL},
-            pay_type        = #{payType,jdbcType=VARCHAR},
-            pay_limit       = #{payLimit,jdbcType=INTEGER},
-            status          = #{status,jdbcType=VARCHAR},
-            create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
-            update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
-            leave_message   = #{leaveMessage,jdbcType=LONGVARCHAR}
-        WHERE code = #{code,jdbcType=VARCHAR}
-    </update>
+
 
     <update id="updateByPrimaryKey" parameterType="com.cdkj.coin.domain.AdsSell">
         UPDATE tcoin_ads_sell
@@ -218,7 +197,8 @@
             pay_limit       = #{payLimit,jdbcType=INTEGER},
             status          = #{status,jdbcType=VARCHAR},
             create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
-            update_datetime = #{updateDatetime,jdbcType=TIMESTAMP}
+            update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
+            leave_message   = #{leaveMessage,jdbcType=LONGVARCHAR}
         WHERE code = #{code,jdbcType=VARCHAR}
     </update>
 

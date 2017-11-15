@@ -18,8 +18,7 @@ public interface IAdsSellDAO extends IBaseDAO<AdsSell> {
     public List<AdsSell> selectFrontList(AdsSell condition, int start, int count);
 
     public int updateByPrimaryKeySelective(AdsSell condition);
-
-
+    public int updateByPrimaryKey(AdsSell condition);
 
 
 }

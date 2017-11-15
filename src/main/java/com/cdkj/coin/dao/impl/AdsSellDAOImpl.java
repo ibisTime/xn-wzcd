@@ -62,6 +62,12 @@ public class AdsSellDAOImpl extends AMybatisTemplate implements IAdsSellDAO {
 
     }
 
+    @Override
+    public int updateByPrimaryKey(AdsSell condition) {
+        return super.update(NAMESPACE.concat("updateByPrimaryKey"),condition);
+
+    }
+
     //  前端
     @Override
     public AdsSell selectFront(AdsSell condition) {
