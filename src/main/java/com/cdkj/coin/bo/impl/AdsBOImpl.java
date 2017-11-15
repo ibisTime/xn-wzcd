@@ -8,11 +8,15 @@ import com.cdkj.coin.dao.IAdsSellDAO;
 import com.cdkj.coin.dao.IDisplayTimeDAO;
 import com.cdkj.coin.domain.AdsDisplayTime;
 import com.cdkj.coin.domain.AdsSell;
+import com.cdkj.coin.enums.EAdsStatus;
+import com.cdkj.coin.enums.ETradeType;
 import com.cdkj.coin.exception.BizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -59,7 +63,131 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
     }
 
-    //    public AdsSell front
+    @Override
+    public void changeLeftAmount(String adsCode, BigDecimal value, String tradeType) {
+
+        if (tradeType.equals(ETradeType.SELL.getCode())) {
+
+            AdsSell condition = new AdsSell();
+            condition.setCode(adsCode);
+            AdsSell adsSell = this.adsSellDAO.select(condition);
+
+            if (adsSell == null) {
+                throw new BizException("xn", "广告不存在");
+            }
+            adsSell.setLeftAmount(adsSell.getLeftAmount().add(value));
+            //校验余额，
+
+            int count = this.adsSellDAO.updateByPrimaryKeySelective(adsSell);
+            if (count != 1) {
+                throw new BizException("xn", "更新失败");
+            }
+
+        } else if (tradeType.equals(ETradeType.SELL.getCode())) {
+
+        } else {
+
+            throw new BizException("xn000000", "不支持的交易类型");
+
+        }
+
+    }
+
+    @Override
+    public boolean checkAdsBelongUser(String adsCode, String userId, String tradeType) {
+
+        if (tradeType.equals(ETradeType.SELL.getCode())) {
+
+            AdsSell condition = new AdsSell();
+            condition.setCode(adsCode);
+            condition.setUserId(userId);
+            return this.adsSellDAO.selectTotalCount(condition) == 1;
+
+        } else if (tradeType.equals(ETradeType.BUY.getCode())) {
+
+            return false;
+        } else {
+
+            return false;
+
+        }
+
+    }
+
+    @Override
+    public void xiaJiaAds(String adsCode, String tradeType) {
+
+        if (tradeType.equals(ETradeType.SELL.getCode())) {
+
+            AdsSell condition = new AdsSell();
+            condition.setCode(adsCode);
+            condition.setStatus(EAdsStatus.XIA_JIA.getCode());
+            int count = this.adsSellDAO.updateByPrimaryKeySelective(condition);
+            if (count != 1) {
+                throw new BizException("xn000000", "下架失败");
+            }
+
+
+        } else if (tradeType.equals(ETradeType.SELL.getCode())) {
+
+        } else {
+
+            throw new BizException("xn000000", "不支持的交易类型");
+
+        }
+    }
+
+    @Override
+    public void shangJiaAds(String adsCode, String tradeType) {
+
+        if (tradeType.equals(ETradeType.SELL.getCode())) {
+
+            AdsSell condition = new AdsSell();
+            condition.setCode(adsCode);
+            condition.setStatus(EAdsStatus.SHANG_JIA.getCode());
+            int count = this.adsSellDAO.updateByPrimaryKeySelective(condition);
+            if (count != 1) {
+                throw new BizException("xn000000", "下架失败");
+            }
+
+        } else if (tradeType.equals(ETradeType.SELL.getCode())) {
+
+        } else {
+
+            throw new BizException("xn000000", "不支持的交易类型");
+
+        }
+    }
+
+//    //下架广告
+//    @Override
+//    public void xiaJiaSellAds(String adsCode) {
+//
+//        AdsSell condition = new AdsSell();
+//        condition.setCode(adsCode);
+//        condition.setStatus(EAdsStatus.XIA_JIA.getCode());
+//        int count = this.adsSellDAO.updateByPrimaryKeySelective(condition);
+//        if (count != 1) {
+//            throw new BizException("xn000000", "下架失败");
+//        }
+//
+//    }
+//
+//    //上架广告
+//    @Override
+//    public void shangJiaSellAds(String adsCode) {
+//
+//        AdsSell condition = new AdsSell();
+//        condition.setCode(adsCode);
+//        condition.setStatus(EAdsStatus.SHANG_JIA.getCode());
+//        int count = this.adsSellDAO.updateByPrimaryKeySelective(condition);
+//        if (count != 1) {
+//            throw new BizException("xn000000", "下架失败");
+//        }
+//
+//    }
+
+    //前端分页
     @Override
     public Paginable<AdsSell> frontSellPage(Integer start, Integer limit, String coin) {
 
@@ -87,6 +215,8 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
     }
 
+    //oss分页
+    @Override
     public Paginable<AdsSell> ossSellPage(Integer start, Integer limit, String coin) {
 
         AdsSell condition = new AdsSell();

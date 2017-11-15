@@ -23,10 +23,11 @@ public class XN625220Req {
     @NotBlank
     private String publishType;
 
-    // 交易 数字货币类型
+    // 交易
     @NotBlank
     private String tradeCurrency;
 
+    //数字货币
     @NotBlank
     private String tradeCoin;
 

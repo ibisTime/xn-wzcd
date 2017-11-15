@@ -90,6 +90,9 @@
             <if test="code != null and code != '' ">
                 AND `code` = #{code}
             </if>
+            <if test="userId != null and userId != '' ">
+                AND `user_id` = #{code}
+            </if>
         </trim>
     </sql>
 
@@ -121,128 +124,9 @@
     <!--where code = #{code,jdbcType=VARCHAR}-->
     <!--</delete>-->
 
-    <insert id="insertSelective" parameterType="com.cdkj.coin.domain.AdsSell">
-        insert into tcoin_ads_sell
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="code != null">
-                code,
-            </if>
-            <if test="userId != null">
-                user_id,
-            </if>
-            <if test="tradeCurrency != null">
-                trade_currency,
-            </if>
-            <if test="tradeCoin != null">
-                trade_coin,
-            </if>
-            <if test="onlyTrust != null">
-                only_trust,
-            </if>
-            <if test="premiumRate != null">
-                premium_rate,
-            </if>
-            <if test="totalAmount != null">
-                total_amount,
-            </if>
-            <if test="leftAmount != null">
-                left_amount,
-            </if>
-            <if test="marketPrice != null">
-                market_price,
-            </if>
-            <if test="protectPrice != null">
-                protect_price,
-            </if>
-            <if test="minTrade != null">
-                min_trade,
-            </if>
-            <if test="maxTrade != null">
-                max_trade,
-            </if>
-            <if test="payType != null">
-                pay_type,
-            </if>
-            <if test="payLimit != null">
-                pay_limit,
-            </if>
-            <if test="status != null">
-                status,
-            </if>
-            <if test="createDatetime != null">
-                create_datetime,
-            </if>
-            <if test="updateDatetime != null">
-                update_datetime,
-            </if>
-            <if test="leaveMessage != null">
-                leave_message,
-            </if>
-        </trim>
-
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="code != null">
-                #{code,jdbcType=VARCHAR},
-            </if>
-            <if test="userId != null">
-                #{userId,jdbcType=VARCHAR},
-            </if>
-            <if test="tradeCurrency != null">
-                #{tradeCurrency,jdbcType=VARCHAR},
-            </if>
-            <if test="tradeCoin != null">
-                #{tradeCoin,jdbcType=VARCHAR},
-            </if>
-            <if test="onlyTrust != null">
-                #{onlyTrust,jdbcType=VARCHAR},
-            </if>
-            <if test="premiumRate != null">
-                #{premiumRate,jdbcType=DECIMAL},
-            </if>
-            <if test="totalAmount != null">
-                #{totalAmount,jdbcType=DECIMAL},
-            </if>
-            <if test="leftAmount != null">
-                #{leftAmount,jdbcType=DECIMAL},
-            </if>
-            <if test="marketPrice != null">
-                #{marketPrice,jdbcType=DECIMAL},
-            </if>
-            <if test="protectPrice != null">
-                #{protectPrice,jdbcType=DECIMAL},
-            </if>
-            <if test="minTrade != null">
-                #{minTrade,jdbcType=DECIMAL},
-            </if>
-            <if test="maxTrade != null">
-                #{maxTrade,jdbcType=DECIMAL},
-            </if>
-            <if test="payType != null">
-                #{payType,jdbcType=VARCHAR},
-            </if>
-            <if test="payLimit != null">
-                #{payLimit,jdbcType=INTEGER},
-            </if>
-            <if test="status != null">
-                #{status,jdbcType=VARCHAR},
-            </if>
-            <if test="createDatetime != null">
-                #{createDatetime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updateDatetime != null">
-                #{updateDatetime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="leaveMessage != null">
-                #{leaveMessage,jdbcType=LONGVARCHAR},
-            </if>
-        </trim>
-    </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.cdkj.coin.domain.AdsSell">
         update tcoin_ads_sell
         <set>
-            <if test="userId != null">
-                user_id = #{userId,jdbcType=VARCHAR},
-            </if>
             <if test="tradeCurrency != null">
                 trade_currency = #{tradeCurrency,jdbcType=VARCHAR},
             </if>
@@ -294,6 +178,7 @@
         </set>
         where code = #{code,jdbcType=VARCHAR}
     </update>
+
     <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cdkj.coin.domain.AdsSell">
         UPDATE tcoin_ads_sell
         SET user_id         = #{userId,jdbcType=VARCHAR},
@@ -315,6 +200,7 @@
             leave_message   = #{leaveMessage,jdbcType=LONGVARCHAR}
         WHERE code = #{code,jdbcType=VARCHAR}
     </update>
+
     <update id="updateByPrimaryKey" parameterType="com.cdkj.coin.domain.AdsSell">
         UPDATE tcoin_ads_sell
         SET user_id         = #{userId,jdbcType=VARCHAR},
@@ -335,4 +221,5 @@
             update_datetime = #{updateDatetime,jdbcType=TIMESTAMP}
         WHERE code = #{code,jdbcType=VARCHAR}
     </update>
+
 </mapper>

@@ -17,7 +17,7 @@ public class AdsSellDAOImpl extends AMybatisTemplate implements IAdsSellDAO {
     @Override
     public int insert(AdsSell data) {
 
-      return super.insert(NAMESPACE.concat("insert"),data);
+        return super.insert(NAMESPACE.concat("insert"), data);
 
     }
 
@@ -32,52 +32,62 @@ public class AdsSellDAOImpl extends AMybatisTemplate implements IAdsSellDAO {
     public long selectTotalCount(AdsSell condition) {
         return 0;
     }
+
     //
     @Override
     public AdsSell select(AdsSell condition) {
-        return super.select(NAMESPACE.concat("select"),condition,AdsSell.class);
+        return super.select(NAMESPACE.concat("select"), condition, AdsSell.class);
     }
+
     //
     @Override
     public List<AdsSell> selectList(AdsSell condition) {
 
-        return super.selectList(NAMESPACE.concat("select"),condition,AdsSell.class);
+        return super.selectList(NAMESPACE.concat("select"), condition, AdsSell.class);
 
     }
+
     //
     @Override
     public List<AdsSell> selectList(AdsSell condition, int start, int limit) {
 
-        return super.selectList(NAMESPACE.concat("select"),start,limit,condition,AdsSell.class);
+        return super.selectList(NAMESPACE.concat("select"), start, limit, condition, AdsSell.class);
 
     }
 
-//  前端
+    @Override
+    public int updateByPrimaryKeySelective(AdsSell condition) {
+
+        return super.update(NAMESPACE.concat("updateByPrimaryKeySelective"),condition);
+
+    }
+
+    //  前端
     @Override
     public AdsSell selectFront(AdsSell condition) {
 
-        return super.select(NAMESPACE.concat("selectFront"),condition,AdsSell.class);
+        return super.select(NAMESPACE.concat("selectFront"), condition, AdsSell.class);
 
     }
 
     @Override
     public long selectFrontTotalCount(AdsSell condition) {
 
-        return super.selectTotalCount(NAMESPACE.concat("selectFrontTotalCount"),condition);
+        return super.selectTotalCount(NAMESPACE.concat("selectFrontTotalCount"), condition);
 
     }
 
     @Override
     public List<AdsSell> selectFrontList(AdsSell condition) {
 
-        return super.selectList(NAMESPACE.concat("selectFront"),condition,AdsSell.class);
+        return super.selectList(NAMESPACE.concat("selectFront"), condition, AdsSell.class);
 
     }
 
     @Override
     public List<AdsSell> selectFrontList(AdsSell condition, int start, int limit) {
 
-        return super.selectList(NAMESPACE.concat("selectFront"),start,limit,condition,AdsSell.class);
+        return super.selectList(NAMESPACE.concat("selectFront"), start, limit, condition, AdsSell.class);
 
     }
 }

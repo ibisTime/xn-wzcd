@@ -13,10 +13,13 @@ public interface IAdsSellDAO extends IBaseDAO<AdsSell> {
     String NAMESPACE = IAdsSellDAO.class.getName().concat(".");
 
     public long selectFrontTotalCount(AdsSell condition);
-
     public AdsSell selectFront(AdsSell condition);
     public List<AdsSell> selectFrontList(AdsSell condition);
     public List<AdsSell> selectFrontList(AdsSell condition, int start, int count);
+
+    public int updateByPrimaryKeySelective(AdsSell condition);
+
+
 
 
 }
