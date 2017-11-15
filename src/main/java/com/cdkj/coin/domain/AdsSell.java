@@ -73,7 +73,7 @@ public class AdsSell extends ABaseDO implements Serializable {
 
     //   以下字段为查询添加  //
     private Integer currentWeek;
-    private Integer currentTime;
+    private Double currentTime;
 
     public Integer getCurrentWeek() {
         return currentWeek;
@@ -83,11 +83,11 @@ public class AdsSell extends ABaseDO implements Serializable {
         this.currentWeek = currentWeek;
     }
 
-    public Integer getCurrentTime() {
+    public Double getCurrentTime() {
         return currentTime;
     }
 
-    public void setCurrentTime(Integer currentTime) {
+    public void setCurrentTime(Double currentTime) {
         this.currentTime = currentTime;
     }
 

@@ -16,6 +16,9 @@ import java.util.List;
  */
 public class XN625220Req {
 
+    //草稿发布时使用
+    private String adsCode;
+
     @NotBlank
     private String userId;
 
@@ -61,14 +64,33 @@ public class XN625220Req {
     private String payType;
 
     //付款超时时间
-    private String payLimit;
+    @NotBlank
+    private Integer payLimit;
 
     //留言
     @NotBlank
     private String leaveMessage;
 
+    @NotBlank
+    private String tradeType;
+
     List<AdsDisplayTime> displayTime;
 
+    public String getAdsCode() {
+        return adsCode;
+    }
+
+    public String getTradeType() {
+        return tradeType;
+    }
+
+    public void setTradeType(String tradeType) {
+        this.tradeType = tradeType;
+    }
+
+    public void setAdsCode(String adsCode) {
+        this.adsCode = adsCode;
+    }
 
     public String getUserId() {
         return userId;
@@ -158,11 +180,11 @@ public class XN625220Req {
         this.payType = payType;
     }
 
-    public String getPayLimit() {
+    public Integer getPayLimit() {
         return payLimit;
     }
 
-    public void setPayLimit(String payLimit) {
+    public void setPayLimit(Integer payLimit) {
         this.payLimit = payLimit;
     }
 

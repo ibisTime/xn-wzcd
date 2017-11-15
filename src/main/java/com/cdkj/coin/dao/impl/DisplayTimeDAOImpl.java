@@ -22,11 +22,9 @@ public class DisplayTimeDAOImpl extends AMybatisTemplate implements IDisplayTime
     @Override
     public int insert(AdsDisplayTime data) {
 
-      return  super.insert(NAMESPACE.concat("insert"),data);
+        return super.insert(NAMESPACE.concat("insert"), data);
 
     }
-
-
 
     @Override
     public AdsDisplayTime select(AdsDisplayTime condition) {
