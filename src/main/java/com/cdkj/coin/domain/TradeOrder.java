@@ -85,6 +85,14 @@ public class TradeOrder extends ABaseDO {
     // 备注
     private String remark;
 
+    // ******辅助字段******
+
+    // 买家信息
+    private User buyUserInfo;
+
+    // 卖家信息
+    private User sellUserInfo;
+
     // 状态列表
     private List<String> statusList;
 
@@ -278,6 +286,22 @@ public class TradeOrder extends ABaseDO {
 
     public void setStatusList(List<String> statusList) {
         this.statusList = statusList;
+    }
+
+    public User getBuyUserInfo() {
+        return buyUserInfo;
+    }
+
+    public void setBuyUserInfo(User buyUserInfo) {
+        this.buyUserInfo = buyUserInfo;
+    }
+
+    public User getSellUserInfo() {
+        return sellUserInfo;
+    }
+
+    public void setSellUserInfo(User sellUserInfo) {
+        this.sellUserInfo = sellUserInfo;
     }
 
 }

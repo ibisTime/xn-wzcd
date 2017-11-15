@@ -14,6 +14,7 @@ import com.cdkj.coin.bo.IAdsBO;
 import com.cdkj.coin.bo.IArbitrateBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.ITradeOrderBO;
+import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.domain.AdsSell;
@@ -38,6 +39,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
     @Autowired
     private IArbitrateBO arbitrateBO;
+
+    @Autowired
+    private IUserBO userBO;
 
     @Autowired
     private IAccountBO accountBO;
@@ -267,7 +271,14 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     @Override
     public Paginable<TradeOrder> queryTradeOrderPage(int start, int limit,
             TradeOrder condition) {
-        return tradeOrderBO.getPaginable(start, limit, condition);
+        Paginable<TradeOrder> results = tradeOrderBO.getPaginable(start, limit,
+            condition);
+        for (TradeOrder tradeOrder : results.getList()) {
+            tradeOrder.setBuyUserInfo(userBO.getUser(tradeOrder.getBuyUser()));
+            tradeOrder
+                .setSellUserInfo(userBO.getUser(tradeOrder.getSellUser()));
+        }
+        return results;
     }
 
     @Override
@@ -277,7 +288,10 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
     @Override
     public TradeOrder getTradeOrder(String code) {
-        return tradeOrderBO.getTradeOrder(code);
+        TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(code);
+        tradeOrder.setBuyUserInfo(userBO.getUser(tradeOrder.getBuyUser()));
+        tradeOrder.setSellUserInfo(userBO.getUser(tradeOrder.getSellUser()));
+        return tradeOrder;
     }
 
 }
