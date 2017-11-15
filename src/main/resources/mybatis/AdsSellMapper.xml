@@ -52,48 +52,71 @@
         )
     </insert>
 
-    <!--          前端            -->
-    <sql id="frontFromWhereCondition">
-        FROM tcoin_ads_sell
-        LEFT JOIN tcoin_ads_display_time ON tcoin_ads_sell.code = tcoin_ads_display_time.adsCode
-        AND tcoin_ads_display_time.week = #{currentWeek}
-
-        WHERE
-        (
-        tcoin_ads_display_time.adsCode IS NULL OR (
-        #{currentTime} >= tcoin_ads_display_time.start_time
-        <![CDATA[ and #{currentTime} < tcoin_ads_display_time.end_time ]]>
-        )
-        )
-        <if test="tradeCoin != null and tradeCoin != ''">
-            And `trade_coin` = #{tradeCoin}
-        </if>
-
-    </sql>
-
-
-    <select id="selectFrontTotalCount" parameterType="sysDict" resultType="java.lang.Long">
-        SELECT count(1)
-        <include refid="frontFromWhereCondition"/>
-    </select>
-
-    <select id="selectFront" resultMap="BaseResultMap" parameterType="com.cdkj.coin.domain.AdsSell">
-        SELECT
-        <include refid="Base_Column_List"/>
-        <include refid="frontFromWhereCondition"/>
-    </select>
-
-    <!-- #########################  管理端  ################################-->
     <sql id="whereCondition">
         <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="currentTime != null and currentTime != '' and currentWeek != null and currentWeek != ''">
+                AND   (
+                tcoin_ads_display_time.adsCode IS NULL OR (
+                #{currentTime} >= tcoin_ads_display_time.start_time
+                <![CDATA[ and #{currentTime} < tcoin_ads_display_time.end_time ]]>
+                )
+                )
+            </if>
             <if test="code != null and code != '' ">
                 AND `code` = #{code}
             </if>
             <if test="userId != null and userId != '' ">
                 AND `user_id` = #{code}
             </if>
+            <if test="tradeCoin != null and tradeCoin != ''">
+                And `trade_coin` = #{tradeCoin}
+            </if>
+            <if test="status != null and status != ''">
+                And `status` = #{status}
+            </if>
         </trim>
     </sql>
+
+    <!--          前端            -->
+    <sql id="frontFromWhereCondition">
+        <!--WHERE-->
+        <!--(-->
+        <!--tcoin_ads_display_time.adsCode IS NULL OR (-->
+        <!--#{currentTime} >= tcoin_ads_display_time.start_time-->
+        <!--<![CDATA[ and #{currentTime} < tcoin_ads_display_time.end_time ]]>-->
+        <!--)-->
+        <!--)-->
+        <!--<if test="tradeCoin != null and tradeCoin != ''">-->
+            <!--And `trade_coin` = #{tradeCoin}-->
+        <!--</if>-->
+
+        <!--<if test="status != null and status != ''">-->
+            <!--And `status` = #{status}-->
+        <!--</if>-->
+
+    </sql>
+
+
+    <select id="selectFrontTotalCount" parameterType="sysDict" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM tcoin_ads_sell
+        LEFT JOIN tcoin_ads_display_time ON tcoin_ads_sell.code = tcoin_ads_display_time.adsCode
+        AND tcoin_ads_display_time.week = #{currentWeek}
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="selectFront" resultMap="BaseResultMap" parameterType="com.cdkj.coin.domain.AdsSell">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tcoin_ads_sell
+        LEFT JOIN tcoin_ads_display_time ON tcoin_ads_sell.code = tcoin_ads_display_time.adsCode
+        AND tcoin_ads_display_time.week = #{currentWeek}
+        <include refid="whereCondition"/>
+
+    </select>
+
+    <!-- #########################  管理端  ################################-->
+
 
     <select id="selectTotalCount" parameterType="sysDict" resultType="java.lang.Long">
         SELECT count(1)
@@ -106,22 +129,6 @@
         FROM tcoin_ads_sell
              <include refid="whereCondition"/>
     </select>
-
-
-
-
-    <!--<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">-->
-    <!--select -->
-    <!--<include refid="Base_Column_List" />-->
-    <!--,-->
-    <!--<include refid="Blob_Column_List" />-->
-    <!--from tcoin_ads_sell-->
-    <!--where code = #{code,jdbcType=VARCHAR}-->
-    <!--</select>-->
-    <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.String">-->
-    <!--delete from tcoin_ads_sell-->
-    <!--where code = #{code,jdbcType=VARCHAR}-->
-    <!--</delete>-->
 
     <update id="updateByPrimaryKeySelective" parameterType="com.cdkj.coin.domain.AdsSell">
         update tcoin_ads_sell
@@ -177,7 +184,6 @@
         </set>
         where code = #{code,jdbcType=VARCHAR}
     </update>
-
 
 
     <update id="updateByPrimaryKey" parameterType="com.cdkj.coin.domain.AdsSell">

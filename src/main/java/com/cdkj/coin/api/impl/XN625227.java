@@ -1,11 +1,12 @@
 package com.cdkj.coin.api.impl;
 
-import com.cdkj.coin.ao.IAdsAO;
+import com.cdkj.coin.ao.IAdsSellAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.ObjValidater;
+import com.cdkj.coin.domain.AdsSell;
 import com.cdkj.coin.dto.req.XN625227Req;
-import com.cdkj.coin.dto.req.XN625228Req;
+import com.cdkj.coin.enums.ETradeType;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
@@ -15,15 +16,29 @@ import com.cdkj.coin.spring.SpringContextHolder;
  */
 public class XN625227 extends AProcessor {
 
-    private IAdsAO adsAO = SpringContextHolder
-            .getBean(IAdsAO.class);
+    private IAdsSellAO adsAO = SpringContextHolder
+            .getBean(IAdsSellAO.class);
 
     XN625227Req req;
 
     @Override
     public Object doBusiness() throws BizException {
 
-        return this.adsAO.ossPage(req.getStart(),req.getLimit(),req.getCoin(),req.getTradeType());
+        if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
+
+            AdsSell condition = new AdsSell();
+            condition.setTradeCoin(req.getCoin());
+            return this.adsAO.ossSellPage(req.getStart(), req.getLimit(), condition);
+
+        } else if (req.getTradeType().equals(ETradeType.BUY.getCode())) {
+
+            return null;
+
+        } else {
+
+            return null;
+
+        }
 
     }
 

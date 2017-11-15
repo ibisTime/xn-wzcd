@@ -12,7 +12,7 @@ import com.cdkj.coin.exception.BizException;
  */
 public enum EJourBizTypeUser {
     AJ_CHARGE("charge", "充值"), AJ_WITHDRAW("withdraw", "取现"), AJ_BUY("buy",
-            "交易买入"), AJ_SELL("sell", "交易卖出"), AJ_TRADEFEE("tradefee", "交易手续费"), AJ_WITHDRAWFEE(
+            "交易买入"), AJ_SELL("sell", "交易卖出"), AJ_ADS_FROZEN("frozen", "发布广告冻结"), AJ_ADS_UNFROZEN("unfrozen", "发布广告解冻"), AJ_TRADEFEE("tradefee", "交易手续费"), AJ_WITHDRAWFEE(
             "withdrawfee", "提现手续费"), AJ_INVITE("invite", "邀请好友收入"), AJ_HC("hc",
             "红冲"), AJ_LB("lb", "蓝补");
 

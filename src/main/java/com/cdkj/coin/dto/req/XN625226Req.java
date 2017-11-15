@@ -10,8 +10,7 @@ public class XN625226Req {
     @NotBlank
     private String adsCode;
 
-    @NotBlank
-    private String tradeType;
+
 
     public String getAdsCode() {
         return adsCode;
@@ -21,11 +20,4 @@ public class XN625226Req {
         this.adsCode = adsCode;
     }
 
-    public String getTradeType() {
-        return tradeType;
-    }
-
-    public void setTradeType(String tradeType) {
-        this.tradeType = tradeType;
-    }
 }

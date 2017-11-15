@@ -1,33 +1,36 @@
 package com.cdkj.coin.ao.impl;
 
-import com.cdkj.coin.ao.IAdsAO;
+import com.cdkj.coin.ao.IAdsSellAO;
 import com.cdkj.coin.ao.IMarketAO;
 import com.cdkj.coin.bo.*;
+import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.core.OrderNoGenerater;
-import com.cdkj.coin.dao.IDisplayTimeDAO;
 import com.cdkj.coin.domain.*;
 import com.cdkj.coin.dto.req.XN625220Req;
-import com.cdkj.coin.dto.res.BooleanRes;
 import com.cdkj.coin.enums.*;
 import com.cdkj.coin.exception.BizException;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.cdkj.coin.exception.EBizErrorCode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by tianlei on 2017/十一月/14.
  */
 @Service
-public class AdsAOImpl implements IAdsAO {
+public class AdsSellAOImpl implements IAdsSellAO {
 
     @Autowired
     IMarketBO marketBO;
+
+    @Autowired
+    ISYSConfigBO sysConfigBO;
 
     @Autowired
     IMarketAO marketAO;
@@ -36,7 +39,10 @@ public class AdsAOImpl implements IAdsAO {
     IAccountBO accountBO;
 
     @Autowired
-    IAdsBO iAdsBO;
+    IAdsSellBO iAdsSellBO;
+
+    @Autowired
+    ITradeOrderBO tradeOrderBO;
 
     @Autowired
     IUserBO userBO;
@@ -44,25 +50,18 @@ public class AdsAOImpl implements IAdsAO {
     @Autowired
     IAdsDisplayTimeBO displayTimeBO;
 
-    public Object frontPage(Integer start, Integer limit, String coin, String tradeType) {
+    @Override
+    public Object frontSellPage(Integer start, Integer limit, AdsSell condition) {
 
-        if (tradeType.equals(ETradeType.SELL.getCode())) {
-            //卖币
-            return this.iAdsBO.frontSellPage(start, limit, coin);
-        }
-
-        return null;
+        return this.iAdsSellBO.frontSellPage(start, limit, condition);
 
     }
 
-    public Object ossPage(Integer start, Integer limit, String coin, String tradeType) {
+    @Override
+    public Object ossSellPage(Integer start, Integer limit, AdsSell condition) {
 
-        if (tradeType.equals(ETradeType.SELL.getCode())) {
-            //卖币
-            return this.iAdsBO.ossSellPage(start, limit, coin);
-        }
+        return this.iAdsSellBO.ossSellPage(start, limit, condition);
 
-        return null;
     }
 
 
@@ -75,16 +74,7 @@ public class AdsAOImpl implements IAdsAO {
             throw new BizException("xn00000", "用户不存在");
         }
 
-        if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
-            //卖币
-            this.insertSellAds(req);
-
-        } else if (req.getTradeType().equals(ETradeType.BUY.getCode())) {
-            //买币
-
-        } else {
-
-        }
+        this.insertSellAds(req);
 
     }
 
@@ -137,7 +127,6 @@ public class AdsAOImpl implements IAdsAO {
         //构造,并校验
         AdsSell ads = this.buildAdsSell(req, OrderNoGenerater.generate("ADSS"));
 
-        //
         if (req.getPublishType().equals(EAdsPublishType.DRAFT.getCode())) {
 
             //草稿
@@ -168,7 +157,7 @@ public class AdsAOImpl implements IAdsAO {
 
         }
 
-        this.iAdsBO.insertAdsSell(ads);
+        this.iAdsSellBO.insertAdsSell(ads);
 
     }
 
@@ -206,7 +195,7 @@ public class AdsAOImpl implements IAdsAO {
         }
 
         //
-        this.iAdsBO.sellDraftPublish(ads);
+        this.iAdsSellBO.sellDraftPublish(ads);
 
     }
 
@@ -214,50 +203,49 @@ public class AdsAOImpl implements IAdsAO {
 
         Account account = this.accountBO.getAccountByUser(ads.getUserId(), ads.getTradeCoin());
 
-        // todo 此处应该考虑手续费
+        // 手续费+发布总额
+        Double feeRate = sysConfigBO.getDoubleValue(SysConstants.TRADE_FEE_RATE);
+        BigDecimal fee = ads.getTotalAmount().multiply(new BigDecimal(feeRate));
+        BigDecimal frezonAmount = ads.getTotalAmount().add(fee);
+
         // 校验账户余额
-        if (account.getAmount().compareTo(ads.getTotalAmount()) < 0) {
+        if (account.getAmount().compareTo(frezonAmount) < 0) {
             throw new BizException("xn000", "账户余额不足");
         }
 
         //冻结账户金额
-        account.setFrozenAmount(ads.getTotalAmount());
+        this.accountBO.frozenAmount(account, ads.getTotalAmount(), EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),EJourBizTypeUser.AJ_ADS_FROZEN.getValue(),ads.getCode());
 
     }
 
     @Override
-    public Object adsDetail(String adsCode, String tradeType) {
+    public Object adsDetail(String adsCode) {
 
-        if (tradeType.equals(ETradeType.SELL.getCode())) {
 
-            return this.iAdsBO.adsSellDetail(adsCode);
+        return this.iAdsSellBO.adsSellDetail(adsCode);
 
-        } else if (tradeType.equals(ETradeType.BUY.getCode())) {
-
-            return null;
-
-        } else {
-
-            return null;
-
-        }
     }
 
     @Override
-    public void xiaJiaAds(String adsCode, String tradeType, String userId) {
-
-        if (tradeType.equals(ETradeType.SELL.getCode())) {
-
-            this.iAdsBO.checkAdsBelongUser(adsCode, userId, ETradeType.SELL);
-            // todo 检查该广告是否有未完成的订单
-            // 如果有 则不能下架
-            this.iAdsBO.xiaJiaAds(adsCode, ETradeType.SELL);
-
-        } else if (tradeType.equals(ETradeType.BUY.getCode())) {
-
-        } else {
-
+    public void xiaJiaAds(String adsCode, String userId) {
+        AdsSell adsSell = iAdsSellBO.adsSellDetail(adsCode);
+        if (!EAdsStatus.SHANG_JIA.getCode().equals(adsSell.getStatus())){
+            throw new BizException(EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(),"当前状态无法下架！");
         }
+        this.iAdsSellBO.checkAdsBelongUser(adsCode, userId);
+        // 检查该广告是否有未完成的订单
+        List<String> statusList = new ArrayList<String>();
+        statusList.add(ETradeOrderStatus.TO_PAY.getCode());
+        statusList.add(ETradeOrderStatus.PAYED.getCode());
+        statusList.add(ETradeOrderStatus.ARBITRATE.getCode());
+        TradeOrder condition = new TradeOrder();
+        condition.setAdsCode(adsCode);
+        condition.setStatusList(statusList);
+        if(tradeOrderBO.getTotalCount(condition)>0){
+            throw new BizException(EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(),"您的广告有正在进行的交易订单，暂时无法下架！");
+        }
+        // 如果有 则不能下架
+        this.iAdsSellBO.xiaJiaAds(adsCode);
 
     }
 

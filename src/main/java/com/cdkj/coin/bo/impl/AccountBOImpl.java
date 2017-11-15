@@ -166,7 +166,7 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
 
     @Override
     public void frozenAmount(Account dbAccount, BigDecimal freezeAmount,
-            String withdrawCode) {
+            String bizType, String bizNote, String refNo) {
         if (freezeAmount.compareTo(BigDecimal.ZERO) == 0
                 || freezeAmount.compareTo(BigDecimal.ZERO) == -1) {
             throw new BizException("xn000000", "冻结金额需大于0");
@@ -177,8 +177,8 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
         }
         // 记录流水
         String lastOrder = jourBO.addJour(dbAccount, EChannelType.Offline,
-            null, null, withdrawCode, EJourBizType.AJ_WITHDRAW.getCode(),
-            "线下取现", freezeAmount.negate());
+            null, null, refNo, bizType,
+            bizNote, freezeAmount.negate());
         BigDecimal nowFrozenAmount = dbAccount.getFrozenAmount().add(
             freezeAmount);
         Account data = new Account();

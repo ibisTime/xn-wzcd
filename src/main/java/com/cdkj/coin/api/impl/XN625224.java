@@ -1,10 +1,9 @@
 package com.cdkj.coin.api.impl;
 
-import com.cdkj.coin.ao.IAdsAO;
+import com.cdkj.coin.ao.IAdsSellAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.ObjValidater;
-import com.cdkj.coin.dto.req.XN625220Req;
 import com.cdkj.coin.dto.req.XN625224Req;
 import com.cdkj.coin.dto.res.BooleanRes;
 import com.cdkj.coin.exception.BizException;
@@ -16,15 +15,15 @@ import com.cdkj.coin.spring.SpringContextHolder;
  */
 public class XN625224 extends AProcessor {
 
-    private IAdsAO adsAO = SpringContextHolder
-            .getBean(IAdsAO.class);
+    private IAdsSellAO adsAO = SpringContextHolder
+            .getBean(IAdsSellAO.class);
 
     XN625224Req req;
 
     @Override
     public Object doBusiness() throws BizException {
 
-        this.adsAO.xiaJiaAds(req.getAdsCode(), req.getUserId(), req.getTradeType());
+        this.adsAO.xiaJiaAds(req.getAdsCode(),req.getUserId());
         return new BooleanRes(true);
 
     }

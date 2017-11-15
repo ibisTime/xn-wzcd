@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.coin.ao.ITradeOrderAO;
 import com.cdkj.coin.bo.IAccountBO;
-import com.cdkj.coin.bo.IAdsBO;
+import com.cdkj.coin.bo.IAdsSellBO;
 import com.cdkj.coin.bo.IArbitrateBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.ITradeOrderBO;
@@ -35,7 +35,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     private ITradeOrderBO tradeOrderBO;
 
     @Autowired
-    private IAdsBO adsBO;
+    private IAdsSellBO adsSellBO;
 
     @Autowired
     private IArbitrateBO arbitrateBO;
@@ -55,7 +55,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             BigDecimal count, BigDecimal tradeAmount) {
         String code = null;
         // 获取广告详情
-        AdsSell adsSell = adsBO.adsSellDetail(adsCode);
+        AdsSell adsSell = adsSellBO.adsSellDetail(adsCode);
         if (!EAdsStatus.SHANG_JIA.getCode().equals(adsSell.getStatus())) {
             throw new BizException(
                 EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "广告未上架，不能进行交易");
@@ -70,7 +70,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 计算交易手续费
         Double rate = sysConfigBO.getDoubleValue(SysConstants.TRADE_FEE_RATE);
         BigDecimal fee = count.multiply(BigDecimal.valueOf(rate));
-        // todo 变更广告信息（状态，剩余可售金额等）
+        // 变更广告剩余可售金额
+        adsSellBO.changeLeftAmount(adsSell.getCode(),count.negate());
         // 提交交易订单
         code = tradeOrderBO.buySubmit(adsSell, buyUser, tradePrice, count,
             tradeAmount, fee);

@@ -22,8 +22,7 @@ public class XN625228Req {
     @NotBlank
     private String coin;
 
-    @NotBlank
-    private String tradeType;
+
 
 
     public String getCoin() {
@@ -34,13 +33,6 @@ public class XN625228Req {
         this.coin = coin;
     }
 
-    public String getTradeType() {
-        return tradeType;
-    }
-
-    public void setTradeType(String tradeType) {
-        this.tradeType = tradeType;
-    }
 
     public Integer getStart() {
         return start;

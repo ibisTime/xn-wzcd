@@ -45,18 +45,22 @@ public class XN625220Req {
 
     // 交易总量
     @NotNull
+    @DecimalMin("0")
     private BigDecimal totalAmount;
 
     // 保护价格
     @NotNull
+    @DecimalMin("0")
     private BigDecimal protectPrice;
 
     //单笔最小
     @NotNull
+    @DecimalMin("0")
     private BigDecimal minTrade;
 
     //单笔最大
     @NotNull
+    @DecimalMin("0")
     private BigDecimal maxTrade;
 
     //支付类型
@@ -71,21 +75,12 @@ public class XN625220Req {
     @NotBlank
     private String leaveMessage;
 
-    @NotBlank
-    private String tradeType;
+
 
     List<AdsDisplayTime> displayTime;
 
     public String getAdsCode() {
         return adsCode;
-    }
-
-    public String getTradeType() {
-        return tradeType;
-    }
-
-    public void setTradeType(String tradeType) {
-        this.tradeType = tradeType;
     }
 
     public void setAdsCode(String adsCode) {
