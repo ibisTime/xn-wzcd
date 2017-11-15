@@ -1,5 +1,14 @@
 package com.cdkj.coin.bo.impl;
 
+import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.cdkj.coin.bo.IAdsSellBO;
 import com.cdkj.coin.bo.base.Page;
 import com.cdkj.coin.bo.base.Paginable;
@@ -7,16 +16,7 @@ import com.cdkj.coin.bo.base.PaginableBOImpl;
 import com.cdkj.coin.dao.IAdsSellDAO;
 import com.cdkj.coin.domain.AdsSell;
 import com.cdkj.coin.enums.EAdsStatus;
-import com.cdkj.coin.enums.ETradeType;
 import com.cdkj.coin.exception.BizException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by tianlei on 2017/十一月/14.
@@ -49,15 +49,6 @@ public class AdsSellBOImpl extends PaginableBOImpl implements IAdsSellBO {
     }
 
     @Override
-    public boolean checkXiaJia(String adsCode) {
-
-
-
-
-    }
-
-
-    @Override
     public void changeLeftAmount(String adsCode, BigDecimal value) {
 
         AdsSell condition = new AdsSell();
@@ -68,7 +59,7 @@ public class AdsSellBOImpl extends PaginableBOImpl implements IAdsSellBO {
             throw new BizException("xn", "广告不存在");
         }
         adsSell.setLeftAmount(adsSell.getLeftAmount().add(value));
-        //校验余额，
+        // 校验余额，
         int count = this.adsSellDAO.updateByPrimaryKeySelective(adsSell);
         if (count != 1) {
             throw new BizException("xn", "更新失败");
@@ -77,32 +68,14 @@ public class AdsSellBOImpl extends PaginableBOImpl implements IAdsSellBO {
     }
 
     @Override
-    public boolean checkAdsBelongUser(String adsCode, String userId) {
+    public void xiaJiaAds(AdsSell adsSell) {
 
-
-        AdsSell condition = new AdsSell();
-        condition.setCode(adsCode);
-        condition.setUserId(userId);
-        return this.adsSellDAO.selectTotalCount(condition) == 1;
-
-    }
-
-    @Override
-    public void xiaJiaAds(String adsCode) {
-
-        AdsSell condition = new AdsSell();
-        condition.setCode(adsCode);
-        AdsSell resultAds = this.adsSellDAO.select(condition);
-        //剩余金额小于 单笔最小交易金额就下架
-        boolean condition1 = resultAds.getLeftAmount().compareTo(new BigDecimal(0)) == 0;
-        boolean condition2 = resultAds.getLeftAmount().compareTo(resultAds.getMinTrade()) < 0;
-
-
-        condition.setStatus(EAdsStatus.XIA_JIA.getCode());
-        int count = this.adsSellDAO.updateByPrimaryKeySelective(condition);
+        adsSell.setStatus(EAdsStatus.XIA_JIA.getCode());
+        int count = this.adsSellDAO.updateByPrimaryKeySelective(adsSell);
         if (count != 1) {
             throw new BizException("xn000000", "下架失败");
         }
+
     }
 
     @Override
@@ -116,9 +89,7 @@ public class AdsSellBOImpl extends PaginableBOImpl implements IAdsSellBO {
             throw new BizException("xn000000", "下架失败");
         }
 
-
     }
-
 
     @Override
     public void sellDraftPublish(AdsSell adsSell) {
@@ -127,14 +98,14 @@ public class AdsSellBOImpl extends PaginableBOImpl implements IAdsSellBO {
 
     }
 
-
-    //前端分页
+    // 前端分页
     @Override
-    public Paginable<AdsSell> frontSellPage(Integer start, Integer limit, AdsSell condition) {
+    public Paginable<AdsSell> frontSellPage(Integer start, Integer limit,
+            AdsSell condition) {
 
-        //只查正在上架中的
+        // 只查正在上架中的
         condition.setStatus(EAdsStatus.SHANG_JIA.getCode());
-        //传现在是 周几 java 周日 = 1，
+        // 传现在是 周几 java 周日 = 1，
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
@@ -143,7 +114,7 @@ public class AdsSellBOImpl extends PaginableBOImpl implements IAdsSellBO {
         }
         condition.setCurrentWeek(w);
 
-        //传入现在是几点
+        // 传入现在是几点
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int minute = cal.get(Calendar.MINUTE);
         condition.setCurrentTime(1.0 * hour + minute * 1.0 / 60);
@@ -151,20 +122,23 @@ public class AdsSellBOImpl extends PaginableBOImpl implements IAdsSellBO {
         //
         long totalCount = adsSellDAO.selectFrontTotalCount(condition);
         Paginable<AdsSell> page = new Page<AdsSell>(start, limit, totalCount);
-        List<AdsSell> dataList = adsSellDAO.selectFrontList(condition, page.getStart(), page.getPageSize());
+        List<AdsSell> dataList = adsSellDAO.selectFrontList(condition,
+            page.getStart(), page.getPageSize());
         page.setList(dataList);
         return page;
 
     }
 
-    //oss分页
+    // oss分页
     @Override
-    public Paginable<AdsSell> ossSellPage(Integer start, Integer limit, AdsSell condition) {
+    public Paginable<AdsSell> ossSellPage(Integer start, Integer limit,
+            AdsSell condition) {
 
         //
         long totalCount = adsSellDAO.selectTotalCount(condition);
         Paginable<AdsSell> page = new Page<AdsSell>(start, limit, totalCount);
-        List<AdsSell> dataList = adsSellDAO.selectList(condition, page.getStart(), page.getPageSize());
+        List<AdsSell> dataList = adsSellDAO.selectList(condition,
+            page.getStart(), page.getPageSize());
         page.setList(dataList);
         return page;
 

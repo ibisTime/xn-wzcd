@@ -33,4 +33,6 @@ public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
 
     public int revokePay(TradeOrder tradeOrder, String updater, String string);
 
+    public void checkXiajia(String adsCode);
+
 }

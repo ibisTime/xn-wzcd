@@ -24,7 +24,7 @@ public interface ITradeOrderAO {
     public void markPay(String code, String updater, String remark);
 
     // 卖家释放
-    public void release(String code, String updater, String remark);
+    public TradeOrder release(String code, String updater, String remark);
 
     // 评论
     public void comment(String code, String userId, String comment);

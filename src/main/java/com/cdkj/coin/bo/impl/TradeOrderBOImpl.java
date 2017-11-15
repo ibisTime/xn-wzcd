@@ -1,6 +1,7 @@
 package com.cdkj.coin.bo.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -193,6 +194,23 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
             }
         }
         return data;
+    }
+
+    @Override
+    public void checkXiajia(String adsCode) {
+        // 检查该广告是否有未完成的订单
+        List<String> statusList = new ArrayList<String>();
+        statusList.add(ETradeOrderStatus.TO_PAY.getCode());
+        statusList.add(ETradeOrderStatus.PAYED.getCode());
+        statusList.add(ETradeOrderStatus.ARBITRATE.getCode());
+        TradeOrder condition = new TradeOrder();
+        condition.setAdsCode(adsCode);
+        condition.setStatusList(statusList);
+        if (this.getTotalCount(condition) > 0) {
+            throw new BizException(
+                EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(),
+                "您的广告有正在进行的交易订单，暂时无法下架！");
+        }
     }
 
 }

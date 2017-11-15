@@ -8,12 +8,15 @@
  */
 package com.cdkj.coin.api.impl;
 
+import com.cdkj.coin.ao.IAdsSellAO;
 import com.cdkj.coin.ao.ITradeOrderAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.ObjValidater;
+import com.cdkj.coin.domain.TradeOrder;
 import com.cdkj.coin.dto.req.XN625244Req;
 import com.cdkj.coin.dto.res.BooleanRes;
+import com.cdkj.coin.enums.ETradeOrderType;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
@@ -29,6 +32,9 @@ public class XN625244 extends AProcessor {
     private ITradeOrderAO tradeOrderAO = SpringContextHolder
         .getBean(ITradeOrderAO.class);
 
+    private IAdsSellAO adsSellAO = SpringContextHolder
+        .getBean(IAdsSellAO.class);
+
     private XN625244Req req;
 
     /** 
@@ -36,7 +42,11 @@ public class XN625244 extends AProcessor {
      */
     @Override
     public Object doBusiness() throws BizException {
-        tradeOrderAO.release(req.getCode(), req.getUpdater(), req.getRemark());
+        TradeOrder tradeOrder = tradeOrderAO.release(req.getCode(),
+            req.getUpdater(), req.getRemark());
+        if (ETradeOrderType.BUY.getCode().equals(tradeOrder.getType())) {
+            adsSellAO.checkXiajia(tradeOrder.getAdsCode());
+        }
         return new BooleanRes(true);
     }
 

@@ -71,7 +71,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         Double rate = sysConfigBO.getDoubleValue(SysConstants.TRADE_FEE_RATE);
         BigDecimal fee = count.multiply(BigDecimal.valueOf(rate));
         // 变更广告剩余可售金额
-        adsSellBO.changeLeftAmount(adsSell.getCode(),count.negate());
+        adsSellBO.changeLeftAmount(adsSell.getCode(), count.negate());
         // 提交交易订单
         code = tradeOrderBO.buySubmit(adsSell, buyUser, tradePrice, count,
             tradeAmount, fee);
@@ -113,7 +113,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
     @Override
     @Transactional
-    public void release(String code, String updater, String remark) {
+    public TradeOrder release(String code, String updater, String remark) {
         TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(code);
         if (!ETradeOrderStatus.PAYED.getCode().equals(tradeOrder.getStatus())) {
             throw new BizException(
@@ -129,6 +129,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         }
         // 变更交易订单信息
         tradeOrderBO.release(tradeOrder, updater, remark);
+        return tradeOrder;
     }
 
     @Override
