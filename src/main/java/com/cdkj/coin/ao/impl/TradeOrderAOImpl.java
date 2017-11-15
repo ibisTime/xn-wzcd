@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.coin.ao.ITradeOrderAO;
 import com.cdkj.coin.bo.IAccountBO;
+import com.cdkj.coin.bo.IAdsBO;
 import com.cdkj.coin.bo.IArbitrateBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.ITradeOrderBO;
@@ -32,6 +33,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     private ITradeOrderBO tradeOrderBO;
 
     @Autowired
+    private IAdsBO adsBO;
+
+    @Autowired
     private IArbitrateBO arbitrateBO;
 
     @Autowired
@@ -45,8 +49,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     public String buy(String adsCode, String buyUser, BigDecimal tradePrice,
             BigDecimal count, BigDecimal tradeAmount) {
         String code = null;
-        // todo 获取广告详情
-        AdsSell adsSell = new AdsSell();
+        // 获取广告详情
+        AdsSell adsSell = adsBO.adsSellDetail(adsCode);
         // 交易金额校验
         doAmountCheck(adsSell, tradePrice, count, tradeAmount);
         // 计算交易手续费
@@ -114,9 +118,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
                 EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "当前状态下不能评价");
         }
         if (userId.equals(tradeOrder.getBuyUser())) {
-            doBsComment(tradeOrder, userId, comment);
+            doBsComment(tradeOrder, userId, comment); // 买家对卖家进行评论
         } else if (userId.equals(tradeOrder.getSellUser())) {
-            doSbComment(tradeOrder, userId, comment);
+            doSbComment(tradeOrder, userId, comment); // 卖家对买家进行评论
         } else {
             throw new BizException(
                 EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "您无权评价该交易订单");
@@ -132,8 +136,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             throw new BizException(
                 EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "当前状态下不能申请仲裁");
         }
-        String yuangao = applyUser;
-        String beigao = null;
+        String yuangao = applyUser; // 原告
+        String beigao = null; // 被告
         if (applyUser.equals(tradeOrder.getBuyUser())) {
             beigao = tradeOrder.getSellUser();
         } else if (applyUser.equals(tradeOrder.getSellUser())) {
@@ -157,6 +161,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             throw new BizException(
                 EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "您已经完成评价");
         }
+        // 如果卖家已经评价过，订单完成
         if (StringUtils.isNotBlank(tradeOrder.getSbComment())) {
             status = ETradeOrderStatus.COMPLETE.getCode();
             remark = "订单已完成";
@@ -172,6 +177,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             throw new BizException(
                 EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "您已经完成评价");
         }
+        // 如果买家已经评价过，订单完成
         if (StringUtils.isNotBlank(tradeOrder.getBsComment())) {
             status = ETradeOrderStatus.COMPLETE.getCode();
             remark = "订单已完成";
