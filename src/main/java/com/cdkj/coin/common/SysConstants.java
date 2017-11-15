@@ -6,6 +6,15 @@ public class SysConstants {
 
     public static final String TRADE_FEE_RATE = "trade_fee_rate"; // 交易手续费
 
+    // 七牛云图片配置
+    public static String QINIU_ACCESS_KEY = "qiniu_access_key";
+
+    public static String QINIU_SECRET_KEY = "qiniu_secret_key";
+
+    public static String QINIU_BUCKET = "qiniu_bucket";
+
+    public static String QINIU_DOMAIN = "qiniu_domain";
+
     // C端用户取现倍数
     public static String CUSERQXBS = "CUSERQXBS";
 

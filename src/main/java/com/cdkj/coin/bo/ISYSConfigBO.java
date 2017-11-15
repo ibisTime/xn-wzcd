@@ -35,6 +35,9 @@ public interface ISYSConfigBO extends IPaginableBO<SYSConfig> {
     public Map<String, String> getConfigsMap(String systemCode,
             String companyCode);
 
+    public Map<String, String> getConfigsMap(String type, String companyCode,
+            String systemCode);
+
     public String getStringValue(String key);
 
     public Double getDoubleValue(String key);
