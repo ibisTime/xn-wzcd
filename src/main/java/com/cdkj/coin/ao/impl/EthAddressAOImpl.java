@@ -158,7 +158,7 @@ public class EthAddressAOImpl implements IEthAddressAO {
         }
         String ethAccountName = OrderNoGenerater.generate("M");
         String address = ethAddressBO.generateAddress(EEthAddressType.M,
-            ethAccountName, ESysUser.SYS_USER.getCode(),
+            ethAccountName, ESysUser.SYS_USER_ETH.getCode(),
             availableDatetimeStart, availableDatetimeEnd);
         // 通知橙提取
         ctqBO.uploadAddress(address, EEthAddressType.M.getCode());
@@ -169,7 +169,7 @@ public class EthAddressAOImpl implements IEthAddressAO {
     public String importWAddress(String address, Date availableDatetimeStart,
             Date availableDatetimeEnd) {
         return ethAddressBO.saveEthAddress(EEthAddressType.W,
-            ESysUser.SYS_USER.getCode(), address, null, BigDecimal.ZERO,
+            ESysUser.SYS_USER_ETH.getCode(), address, null, BigDecimal.ZERO,
             availableDatetimeStart, availableDatetimeEnd);
     }
 

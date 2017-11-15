@@ -18,7 +18,8 @@ import java.util.Map;
  */
 public enum ESysUser {
 
-    SYS_USER("SYS_USER", "系统用户编号");
+    SYS_USER_ETH("SYS_USER_ETH", "ETH系统用户编号"), SYS_USER_ETH_TG(
+            "SYS_USER_ETH_TH", "ETH系统托管用户编号");
     public static Map<String, ESysUser> getDirectionMap() {
         Map<String, ESysUser> map = new HashMap<String, ESysUser>();
         for (ESysUser direction : ESysUser.values()) {

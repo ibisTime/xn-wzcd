@@ -34,10 +34,14 @@ import com.cdkj.coin.exception.BizException;
 public class AccountTest {
 
     public static void main(String args[]) {
-        String hash = broadcast("0x901536393df4bf66986c12cf98f3d6718c534f20",
-            "533109", "0x2d0bf210ca417480e6158926888fa6a83dce2533",
-            BigDecimal.valueOf(600000000000000L));
-        System.out.println("交易提交成功：hash=" + hash);
+        // String hash = broadcast("0x901536393df4bf66986c12cf98f3d6718c534f20",
+        // "533109", "0x2d0bf210ca417480e6158926888fa6a83dce2533",
+        // BigDecimal.valueOf(600000000000000L));
+        // System.out.println("交易提交成功：hash=" + hash);
+
+        BigDecimal a = new BigDecimal("10000000000000000000");
+        BigDecimal b = new BigDecimal("9999999999999999999");
+        System.out.println(a + " " + b);
 
         // BigDecimal balance = new BigDecimal("10000000000000000");
         // if (balance.compareTo(Convert.toWei("0.01", Unit.ETHER)) < 0) {

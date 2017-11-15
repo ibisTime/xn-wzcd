@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public enum ESystemAccount {
     SYS_ACOUNT_ETH("SYS_ACOUNT_ETH", "平台以太币账户"), SYS_ACOUNT_TG_ETH(
-            "SYS_ACOUNT_TG_ETH", "平台以太币托管账户");
+            "SYS_ACOUNT_ETH_TG", "平台以太币托管账户");
     public static Map<String, ESystemAccount> getMap() {
         Map<String, ESystemAccount> map = new HashMap<String, ESystemAccount>();
         for (ESystemAccount direction : ESystemAccount.values()) {

@@ -18,8 +18,8 @@
 		
         <result column="biz_type" property="bizType" />
 		<result column="biz_note" property="bizNote" />
-		<result column="pre_amount" property="preAmount" />
-		<result column="post_amount" property="postAmount" />
+		<result column="pre_amount" jdbcType="DECIMAL" property="preAmount" />
+		<result column="post_amount" jdbcType="DECIMAL" property="postAmount" />
 		<result column="status" property="status" />
 		
 		<result column="remark" property="remark" />

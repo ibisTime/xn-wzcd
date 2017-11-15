@@ -24,7 +24,6 @@ import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECurrency;
 import com.cdkj.coin.enums.EGeneratePrefix;
 import com.cdkj.coin.enums.EJourBizType;
-import com.cdkj.coin.enums.ESysUser;
 import com.cdkj.coin.exception.BizException;
 
 /**
@@ -85,7 +84,7 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
         Account dbAccount = this.getAccount(accountNumber);
         BigDecimal nowAmount = dbAccount.getAmount().add(transAmount);
         // 特定账户余额可为负
-        if (!dbAccount.getUserId().contains(ESysUser.SYS_USER.getCode())
+        if (!dbAccount.getUserId().startsWith("SYS_USER")
                 && nowAmount.compareTo(BigDecimal.ZERO) == -1) {
             System.out.println("error account:" + accountNumber + " dbAmount="
                     + dbAccount.getAmount() + " transAmount=" + transAmount
@@ -121,7 +120,7 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
             BigDecimal transAmount, String lastOrder) {
         Account dbAccount = this.getAccount(accountNumber);
         BigDecimal nowAmount = dbAccount.getAmount().add(transAmount);
-        if (!dbAccount.getUserId().contains(ESysUser.SYS_USER.getCode())
+        if (!dbAccount.getUserId().startsWith("SYS_USER")
                 && nowAmount.compareTo(BigDecimal.ZERO) == -1) {
             throw new BizException("xn000000", "账户余额不足");
         }

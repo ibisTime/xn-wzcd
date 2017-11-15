@@ -137,7 +137,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         if (tradeOrder != null) {
             Date now = new Date();
             tradeOrder.setStatus(status);
-            tradeOrder.setBsComment(comment);
+            tradeOrder.setSbComment(comment);
             tradeOrder.setUpdater(userId);
             tradeOrder.setUpdateDatatime(now);
             tradeOrder.setRemark(remark);

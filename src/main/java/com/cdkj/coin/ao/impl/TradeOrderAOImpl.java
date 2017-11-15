@@ -21,7 +21,7 @@ import com.cdkj.coin.domain.TradeOrder;
 import com.cdkj.coin.enums.EAdsStatus;
 import com.cdkj.coin.enums.EJourBizTypePlat;
 import com.cdkj.coin.enums.EJourBizTypeUser;
-import com.cdkj.coin.enums.ESystemAccount;
+import com.cdkj.coin.enums.ESysUser;
 import com.cdkj.coin.enums.ETradeOrderStatus;
 import com.cdkj.coin.enums.ETradeOrderType;
 import com.cdkj.coin.exception.BizException;
@@ -56,6 +56,11 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             throw new BizException(
                 EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "广告未上架，不能进行交易");
         }
+        if (buyUser.equals(adsSell.getUserId())) {
+            throw new BizException(
+                EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(),
+                "您是广告发布者，不能进行购买操作");
+        }
         // 交易金额校验
         doAmountCheck(adsSell, tradePrice, count, tradeAmount);
         // 计算交易手续费
@@ -65,6 +70,14 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 提交交易订单
         code = tradeOrderBO.buySubmit(adsSell, buyUser, tradePrice, count,
             tradeAmount, fee);
+        return code;
+    }
+
+    @Override
+    public String sell(String adsCode, String sellUser, BigDecimal tradePrice,
+            BigDecimal count, BigDecimal tradeAmount) {
+        String code = null;
+        // to 卖出逻辑
         return code;
     }
 
@@ -161,10 +174,11 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     private void doBsComment(TradeOrder tradeOrder, String userId,
             String comment) {
         String status = tradeOrder.getStatus();
-        String remark = "买已评价，等待卖家评价";
+        String remark = "买家已评价，等待卖家评价";
         if (StringUtils.isNotBlank(tradeOrder.getBsComment())) {
             throw new BizException(
-                EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "您已经完成评价");
+                EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(),
+                "您已经完成评价，请勿重复评价");
         }
         // 如果卖家已经评价过，订单完成
         if (StringUtils.isNotBlank(tradeOrder.getSbComment())) {
@@ -180,7 +194,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         String remark = "卖家已评价，等待买家评价";
         if (StringUtils.isNotBlank(tradeOrder.getSbComment())) {
             throw new BizException(
-                EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "您已经完成评价");
+                EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(),
+                "您已经完成评价，请勿重复评价");
         }
         // 如果买家已经评价过，订单完成
         if (StringUtils.isNotBlank(tradeOrder.getBsComment())) {
@@ -201,7 +216,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             EJourBizTypeUser.AJ_BUY.getValue(), tradeOrder.getCode());
         // 2、向买家收手续费
         accountBO.transAmountCZB(tradeOrder.getBuyUser(),
-            tradeOrder.getTradeCoin(), ESystemAccount.SYS_ACOUNT_ETH.getCode(),
+            tradeOrder.getTradeCoin(), ESysUser.SYS_USER_ETH.getCode(),
             tradeOrder.getTradeCoin(), tradeOrder.getFee(),
             EJourBizTypeUser.AJ_TRADEFEE.getCode(),
             EJourBizTypePlat.AJ_TRADEFEE.getCode(),
@@ -220,7 +235,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             EJourBizTypeUser.AJ_BUY.getValue(), tradeOrder.getCode());
         // 2、向卖家收手续费
         accountBO.transAmountCZB(tradeOrder.getSellUser(),
-            tradeOrder.getTradeCoin(), ESystemAccount.SYS_ACOUNT_ETH.getCode(),
+            tradeOrder.getTradeCoin(), ESysUser.SYS_USER_ETH.getCode(),
             tradeOrder.getTradeCoin(), tradeOrder.getFee(),
             EJourBizTypeUser.AJ_TRADEFEE.getCode(),
             EJourBizTypePlat.AJ_TRADEFEE.getCode(),
@@ -243,9 +258,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             throw new BizException(
                 EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "交易金额超过最高限额");
         }
-        if (adsSell.getLeftAmount().compareTo(tradeAmount) < 0) {
+        if (adsSell.getLeftAmount().compareTo(count) < 0) {
             throw new BizException(
-                EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "交易金额超过剩余可售金额");
+                EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "交易数量超过剩余可售数量");
         }
     }
 
