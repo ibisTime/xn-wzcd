@@ -8,6 +8,8 @@
  */
 package com.cdkj.coin.dto.req;
 
+import java.util.List;
+
 /** 
  * @author: haiqingzheng 
  * @since: 2017年11月14日 下午1:42:48 
@@ -38,8 +40,8 @@ public class XN625250Req extends APageReq {
     // 付款方式
     private String payType;
 
-    // 订单状态
-    private String status;
+    // 状态列表
+    private List<String> statusList;
 
     public String getCode() {
         return code;
@@ -97,12 +99,12 @@ public class XN625250Req extends APageReq {
         this.payType = payType;
     }
 
-    public String getStatus() {
-        return status;
+    public List<String> getStatusList() {
+        return statusList;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
     }
 
 }

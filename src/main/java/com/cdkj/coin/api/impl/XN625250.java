@@ -45,7 +45,7 @@ public class XN625250 extends AProcessor {
         condition.setSellUser(req.getSellUser());
         condition.setTradeCurrency(req.getTradeCurrency());
         condition.setPayType(req.getPayType());
-        condition.setStatus(req.getStatus());
+        condition.setStatusList(req.getStatusList());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
         return tradeOrderAO.queryTradeOrderPage(start, limit, condition);

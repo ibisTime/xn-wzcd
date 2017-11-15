@@ -32,6 +32,27 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="type != null and type != '' ">
+				AND t.type = #{type}
+			</if>
+			<if test="adsCode != null and adsCode != '' ">
+				AND t.ads_code = #{adsCode}
+			</if>
+			<if test="buyUser != null and buyUser != '' ">
+				AND t.buy_user = #{buyUser}
+			</if>
+			<if test="sellUser != null and sellUser != '' ">
+				AND t.sell_user = #{sellUser}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="statusList != null and statusList != '' ">
+				AND t.status in 
+                <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
+	            	#{item}
+                </foreach> 
+			</if>
 		</trim>
 	</sql>
 	<select id="select_tradeOrder" parameterType="tradeOrder" resultMap="tradeOrder_DB_Result">

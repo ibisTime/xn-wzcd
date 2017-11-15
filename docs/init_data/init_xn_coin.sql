@@ -63,8 +63,13 @@ INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_d
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','banner_location','market','行情首页','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
 
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'currency','货币','admin',now(),'','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','currency','BTC','比特币','admin',now(),'','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','currency','ETH','以太币','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','currency','CNY','人民币','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','currency','USD','美元','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','currency','HKD','港币','admin',now(),'','CD-COIN000017','CD-COIN000017');
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'coin','货币','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','coin','BTC','比特币','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','coin','ETH','以太币','admin',now(),'','CD-COIN000017','CD-COIN000017');
 
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'account_type','账户类型','admin',now(),'','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','account_type','C','C端用户','admin',now(),'','CD-COIN000017','CD-COIN000017');
@@ -119,6 +124,29 @@ INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_d
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','collection_status','1','广播中','admin',now(),'','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','collection_status','2','广播失败','admin',now(),'','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','collection_status','3','广播成功','admin',now(),'','CD-COIN000017','CD-COIN000017');
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'pay_type','支付方式','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','pay_type','1','微信支付','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','pay_type','2','支付宝支付','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','pay_type','3','银联转账','admin',now(),'','CD-COIN000017','CD-COIN000017');
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'trade_order_status','交易订单状态','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','trade_order_status','0','待支付','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','trade_order_status','1','已支付待释放','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','trade_order_status','2','已释放待评价','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','trade_order_status','3','已完成','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','trade_order_status','4','已取消','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','trade_order_status','5','仲裁中','admin',now(),'','CD-COIN000017','CD-COIN000017');
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'trade_order_type','交易订单类型','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','trade_order_type','buy','购买订单','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','trade_order_type','sell','出售订单','admin',now(),'','CD-COIN000017','CD-COIN000017');
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'ads_status','交易订单类型','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','ads_status','0','草稿','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','ads_status','1','已上架','admin',now(),'','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','ads_status','2','已下架','admin',now(),'','CD-COIN000017','CD-COIN000017');
+
 
 /*
 -- Query: SELECT code,name,type,url,order_no,'admin' updater, now() as update_datetime,remark,parent_code,system_code FROM tsys_menu

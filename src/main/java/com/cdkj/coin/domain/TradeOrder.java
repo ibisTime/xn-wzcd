@@ -2,6 +2,7 @@ package com.cdkj.coin.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.coin.dao.base.ABaseDO;
 
@@ -83,6 +84,9 @@ public class TradeOrder extends ABaseDO {
 
     // 备注
     private String remark;
+
+    // 状态列表
+    private List<String> statusList;
 
     public String getCode() {
         return code;
@@ -266,6 +270,14 @@ public class TradeOrder extends ABaseDO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public List<String> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
     }
 
 }
