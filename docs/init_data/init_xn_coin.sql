@@ -310,10 +310,10 @@ INSERT INTO `tstd_account` (`account_number`,`user_id`,`real_name`,`type`,`statu
 -- Query: select `type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code` from tsys_config
 -- Date: 2017-08-23 10:21
 */
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('qiniu','qiniu_access_key','cU832V2Gh5LoUWyNBLQ2kS9_0I-KnEF7jERyRDdh','admin',now(),'七牛云key1','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('qiniu','qiniu_secret_key','ed5q5pSqKZZDN80gjGSkX93TmdDMTeZPVNd5bxgA','admin',now(),'七牛云key1','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('qiniu','qiniu_bucket','hyds','admin',now(),'存储空间','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('qiniu','qiniu_domain','ov30dsi08.bkt.clouddn.com','admin',now(),'访问域名','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('qiniu','qiniu_access_key','OugFobOQxavLzefKuIHCjGT6Gpsv0SCszdWrlQ39','admin',now(),'七牛云key1','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('qiniu','qiniu_secret_key','J4RqFulrTWdRs79lM_HFde_K4gtb3FwWEYn8xHic','admin',now(),'七牛云key1','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('qiniu','qiniu_bucket','beicoin','admin',now(),'存储空间','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('qiniu','qiniu_domain','ozfszueqz.bkt.clouddn.com','admin',now(),'访问域名','CD-COIN000017','CD-COIN000017');
 
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','about_us','关于我们','admin',now(),'关于我们','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','reg_protocol','注册协议','admin',now(),'注册协议','CD-COIN000017','CD-COIN000017');
