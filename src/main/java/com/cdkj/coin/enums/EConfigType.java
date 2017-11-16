@@ -7,7 +7,7 @@ package com.cdkj.coin.enums;
  */
 public enum EConfigType {
 
-    QINIU("qiniu", "七牛");
+    QINIU("qiniu", "七牛"), TENCENT_IM("tencent_im", "腾讯IM");
 
     EConfigType(String code, String value) {
         this.code = code;

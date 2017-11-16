@@ -6,7 +6,8 @@ package com.cdkj.coin.enums;
  * @history:
  */
 public enum EUserPwd {
-    InitPwd("888888", "初始化密码1"), InitPwd16("123456", "初始化密码2");
+    InitPwd("888888", "初始化密码1"), InitPwd16("123456", "初始化密码2"), Beicoin(
+            "bei123coin", "初始化密码3");
 
     EUserPwd(String code, String value) {
         this.code = code;

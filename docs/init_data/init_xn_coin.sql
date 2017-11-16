@@ -15,6 +15,12 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('qiniu','qiniu_bucket','beicoin','admin',now(),'存储空间','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('qiniu','qiniu_domain','ozfszueqz.bkt.clouddn.com','admin',now(),'访问域名','CD-COIN000017','CD-COIN000017');
 
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_app_code','1400048154','admin',now(),'应用编号','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_app_admin','admin','admin',now(),'七牛云key1','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_access_key','-----BEGIN PUBLIC KEY----- MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAECZNbJPLcrf9MQqx7Rxs5nA+tZjmK 6Iz89srogL79N8YOgCfprfC/yR8X+FAPOXma3nTbBB+/sPKNfVu4BFMlJA== -----END PUBLIC KEY-----','admin',now(),'公钥','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_secret_key','tx_secret_key','admin',now(),'私钥','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_account_type','19270','admin',now(),'账号类型','CD-COIN000017','CD-COIN000017');
+
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','about_us','关于我们','admin',now(),'关于我们','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','reg_protocol','注册协议','admin',now(),'注册协议','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','help_center','帮助中心','admin',now(),'帮助中心','CD-COIN000017','CD-COIN000017');
