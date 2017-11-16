@@ -8,7 +8,7 @@ import com.cdkj.coin.domain.AdsSell;
 /**
  * Created by tianlei on 2017/十一月/14.
  */
-public interface IAdsSellBO {
+public interface IAdsBO {
 
     public void changeLeftAmount(String adsCode, BigDecimal value);
 

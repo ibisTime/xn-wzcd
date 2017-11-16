@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.coin.ao.ITradeOrderAO;
 import com.cdkj.coin.bo.IAccountBO;
-import com.cdkj.coin.bo.IAdsSellBO;
+import com.cdkj.coin.bo.IAdsBO;
 import com.cdkj.coin.bo.IArbitrateBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.ITradeOrderBO;
@@ -35,7 +35,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     private ITradeOrderBO tradeOrderBO;
 
     @Autowired
-    private IAdsSellBO adsSellBO;
+    private IAdsBO adsSellBO;
 
     @Autowired
     private IArbitrateBO arbitrateBO;

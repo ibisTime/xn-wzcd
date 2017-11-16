@@ -1,6 +1,6 @@
 package com.cdkj.coin.api.impl;
 
-import com.cdkj.coin.ao.IAdsSellAO;
+import com.cdkj.coin.ao.IAdsAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.ObjValidater;
@@ -16,8 +16,8 @@ import com.cdkj.coin.spring.SpringContextHolder;
  */
 public class XN625227 extends AProcessor {
 
-    private IAdsSellAO adsAO = SpringContextHolder
-            .getBean(IAdsSellAO.class);
+    private IAdsAO adsAO = SpringContextHolder
+            .getBean(IAdsAO.class);
 
     XN625227Req req;
 
@@ -28,6 +28,7 @@ public class XN625227 extends AProcessor {
 
             AdsSell condition = new AdsSell();
             condition.setTradeCoin(req.getCoin());
+            condition.setUserId(req.getUserId());
             return this.adsAO.ossSellPage(req.getStart(), req.getLimit(), condition);
 
         } else if (req.getTradeType().equals(ETradeType.BUY.getCode())) {

@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cdkj.coin.ao.IAdsSellAO;
+import com.cdkj.coin.ao.IAdsAO;
 import com.cdkj.coin.ao.IMarketAO;
 import com.cdkj.coin.bo.IAccountBO;
 import com.cdkj.coin.bo.IAdsDisplayTimeBO;
-import com.cdkj.coin.bo.IAdsSellBO;
+import com.cdkj.coin.bo.IAdsBO;
 import com.cdkj.coin.bo.IMarketBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.ITradeOrderBO;
@@ -36,7 +36,7 @@ import com.cdkj.coin.exception.EBizErrorCode;
  * Created by tianlei on 2017/十一月/14.
  */
 @Service
-public class AdsSellAOImpl implements IAdsSellAO {
+public class AdsAOImpl implements IAdsAO {
 
     @Autowired
     IMarketBO marketBO;
@@ -51,7 +51,7 @@ public class AdsSellAOImpl implements IAdsSellAO {
     IAccountBO accountBO;
 
     @Autowired
-    IAdsSellBO iAdsSellBO;
+    IAdsBO iAdsBO;
 
     @Autowired
     ITradeOrderBO tradeOrderBO;
@@ -65,14 +65,14 @@ public class AdsSellAOImpl implements IAdsSellAO {
     @Override
     public Object frontSellPage(Integer start, Integer limit, AdsSell condition) {
 
-        return this.iAdsSellBO.frontSellPage(start, limit, condition);
+        return this.iAdsBO.frontSellPage(start, limit, condition);
 
     }
 
     @Override
     public Object ossSellPage(Integer start, Integer limit, AdsSell condition) {
 
-        return this.iAdsSellBO.ossSellPage(start, limit, condition);
+        return this.iAdsBO.ossSellPage(start, limit, condition);
 
     }
 
@@ -168,7 +168,7 @@ public class AdsSellAOImpl implements IAdsSellAO {
 
         }
 
-        this.iAdsSellBO.insertAdsSell(ads);
+        this.iAdsBO.insertAdsSell(ads);
 
     }
 
@@ -191,7 +191,7 @@ public class AdsSellAOImpl implements IAdsSellAO {
         this.displayTimeBO.deleteAdsDisplayTimeByAdsCode(ads.getCode());
 
         // 插入新的展示时间
-        if (!ads.getDisplayTime().isEmpty()) {
+        if (ads != null && !ads.getDisplayTime().isEmpty()) {
             // 有展示时间限制、先插入展示时间
             for (AdsDisplayTime displayTime : ads.getDisplayTime()) {
 
@@ -206,74 +206,83 @@ public class AdsSellAOImpl implements IAdsSellAO {
         }
 
         //
-        this.iAdsSellBO.sellDraftPublish(ads);
+        this.iAdsBO.sellDraftPublish(ads);
 
     }
 
     public void checkAccountAndHandAccount(AdsSell ads) {
 
         Account account = this.accountBO.getAccountByUser(ads.getUserId(),
-            ads.getTradeCoin());
+                ads.getTradeCoin());
 
         // 手续费+发布总额
         Double feeRate = sysConfigBO
-            .getDoubleValue(SysConstants.TRADE_FEE_RATE);
+                .getDoubleValue(SysConstants.TRADE_FEE_RATE);
         BigDecimal fee = ads.getTotalAmount().multiply(new BigDecimal(feeRate));
         BigDecimal frezonAmount = ads.getTotalAmount().add(fee);
 
         // 校验账户余额
         if (account.getAmount().compareTo(frezonAmount) < 0) {
-            throw new BizException("xn000", "账户余额不足");
+            throw new BizException("xn000", "需要冻结相应的手续费，账户余额不足");
         }
 
         // 冻结账户金额
         this.accountBO.frozenAmount(account, ads.getTotalAmount(),
-            EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
-            EJourBizTypeUser.AJ_ADS_FROZEN.getValue(), ads.getCode());
+                EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
+                EJourBizTypeUser.AJ_ADS_FROZEN.getValue(), ads.getCode());
 
     }
 
     @Override
     public Object adsDetail(String adsCode) {
 
-        return this.iAdsSellBO.adsSellDetail(adsCode);
+        return this.iAdsBO.adsSellDetail(adsCode);
 
     }
 
+    @Transactional
     @Override
     public void xiaJiaAds(String adsCode, String userId) {
-        AdsSell adsSell = iAdsSellBO.adsSellDetail(adsCode);
+        AdsSell adsSell = iAdsBO.adsSellDetail(adsCode);
         if (!EAdsStatus.SHANG_JIA.getCode().equals(adsSell.getStatus())) {
             throw new BizException(
-                EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "当前状态无法下架！");
+                    EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "当前状态无法下架！");
         }
         // 校验操作者是否是本人
         if (!adsSell.getUserId().equals(userId)) {
-            throw new BizException("xn", "您无权下架该广告");
+            throw new BizException(EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "您无权下架该广告");
         }
         // 检查是否有正在进行中的交易
         tradeOrderBO.checkXiajia(adsCode);
 
-        // 如果有 则不能下架
-        this.iAdsSellBO.xiaJiaAds(adsSell);
+        // 进行下架操作
+        this.iAdsBO.xiaJiaAds(adsSell);
+
+        // 下架成功 把冻结金额返还
+        if (adsSell.getLeftAmount().compareTo(BigDecimal.ZERO) > 0) {
+
+            Account account = this.accountBO.getAccountByUser(userId, ECoin.ETH.getCode());
+            this.accountBO.unfrozenAmount(account, adsSell.getLeftAmount(), "");
+
+        }
 
     }
 
     @Override
     public void checkXiajia(String adsCode) {
-        AdsSell adsSell = iAdsSellBO.adsSellDetail(adsCode);
+        AdsSell adsSell = iAdsBO.adsSellDetail(adsCode);
         if (!EAdsStatus.SHANG_JIA.getCode().equals(adsSell.getStatus())) {
             throw new BizException(
-                EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "当前状态无法下架！");
+                    EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "当前状态无法下架！");
         }
         // 剩余金额小于 单笔最小交易金额就下架
         boolean condition1 = adsSell.getLeftAmount().compareTo(
-            new BigDecimal(0)) == 0;
+                new BigDecimal(0)) == 0;
 
         boolean condition2 = adsSell.getLeftAmount().compareTo(
-            adsSell.getMinTrade()) < 0;
+                adsSell.getMinTrade()) < 0;
         if (condition1 || condition2) {
-            iAdsSellBO.xiaJiaAds(adsSell);
+            iAdsBO.xiaJiaAds(adsSell);
         }
     }
 

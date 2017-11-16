@@ -6,7 +6,7 @@ import com.cdkj.coin.dto.req.XN625220Req;
 /**
  * Created by tianlei on 2017/十一月/14.
  */
-public interface IAdsSellAO {
+public interface IAdsAO {
 
     public void insertAds(XN625220Req req);
 

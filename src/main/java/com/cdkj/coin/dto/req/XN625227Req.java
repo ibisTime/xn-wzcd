@@ -17,8 +17,18 @@ public class XN625227Req {
     @DecimalMin(value = "1")
     private Integer limit;
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     @NotBlank
     private String coin;
+
+    private String userId;
 
     @NotBlank
     private String tradeType;

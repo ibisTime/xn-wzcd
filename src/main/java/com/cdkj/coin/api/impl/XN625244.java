@@ -8,7 +8,7 @@
  */
 package com.cdkj.coin.api.impl;
 
-import com.cdkj.coin.ao.IAdsSellAO;
+import com.cdkj.coin.ao.IAdsAO;
 import com.cdkj.coin.ao.ITradeOrderAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
@@ -32,8 +32,8 @@ public class XN625244 extends AProcessor {
     private ITradeOrderAO tradeOrderAO = SpringContextHolder
         .getBean(ITradeOrderAO.class);
 
-    private IAdsSellAO adsSellAO = SpringContextHolder
-        .getBean(IAdsSellAO.class);
+    private IAdsAO adsSellAO = SpringContextHolder
+        .getBean(IAdsAO.class);
 
     private XN625244Req req;
 

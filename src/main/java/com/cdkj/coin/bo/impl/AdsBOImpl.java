@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cdkj.coin.bo.IAdsSellBO;
+import com.cdkj.coin.bo.IAdsBO;
 import com.cdkj.coin.bo.base.Page;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.bo.base.PaginableBOImpl;
@@ -22,7 +22,7 @@ import com.cdkj.coin.exception.BizException;
  * Created by tianlei on 2017/十一月/14.
  */
 @Component
-public class AdsSellBOImpl extends PaginableBOImpl implements IAdsSellBO {
+public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
     @Autowired
     IAdsSellDAO adsSellDAO;
@@ -71,6 +71,7 @@ public class AdsSellBOImpl extends PaginableBOImpl implements IAdsSellBO {
     public void xiaJiaAds(AdsSell adsSell) {
 
         adsSell.setStatus(EAdsStatus.XIA_JIA.getCode());
+        //todo 释放剩余冻结金额
         int count = this.adsSellDAO.updateByPrimaryKeySelective(adsSell);
         if (count != 1) {
             throw new BizException("xn000000", "下架失败");

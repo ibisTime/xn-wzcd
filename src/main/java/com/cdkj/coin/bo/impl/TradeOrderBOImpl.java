@@ -31,13 +31,13 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
     @Override
     public String buySubmit(AdsSell adsSell, String buyUser,
-            BigDecimal tradePrice, BigDecimal count, BigDecimal tradeAmount,
-            BigDecimal fee) {
+                            BigDecimal tradePrice, BigDecimal count, BigDecimal tradeAmount,
+                            BigDecimal fee) {
 
         TradeOrder data = new TradeOrder();
 
         String code = OrderNoGenerater.generate(EGeneratePrefix.TRADE_ORDER
-            .getCode());
+                .getCode());
         Date now = new Date();
 
         data.setCode(code);
@@ -56,7 +56,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         data.setCount(count);
         data.setPayType(adsSell.getPayType());
         data.setInvalidDatetime(DateUtil.getRelativeDateOfMinute(now,
-            adsSell.getPayLimit()));
+                adsSell.getPayLimit()));
         data.setStatus(ETradeOrderStatus.TO_PAY.getCode());
 
         data.setCreateDatetime(now);
@@ -117,7 +117,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
     @Override
     public int doBsComment(TradeOrder tradeOrder, String userId,
-            String comment, String status, String remark) {
+                           String comment, String status, String remark) {
         int count = 0;
         if (tradeOrder != null) {
             Date now = new Date();
@@ -133,7 +133,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
     @Override
     public int doSbComment(TradeOrder tradeOrder, String userId,
-            String comment, String status, String remark) {
+                           String comment, String status, String remark) {
         int count = 0;
         if (tradeOrder != null) {
             Date now = new Date();
@@ -189,8 +189,8 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
             data = tradeOrderDAO.select(condition);
             if (data == null) {
                 throw new BizException(
-                    EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "编号为"
-                            + code + "的交易订单不存在");
+                        EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "编号为"
+                        + code + "的交易订单不存在");
             }
         }
         return data;
@@ -208,8 +208,8 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         condition.setStatusList(statusList);
         if (this.getTotalCount(condition) > 0) {
             throw new BizException(
-                EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(),
-                "您的广告有正在进行的交易订单，暂时无法下架！");
+                    EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(),
+                    "您的广告有正在进行的交易订单，暂时无法下架！");
         }
     }
 

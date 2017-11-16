@@ -32,7 +32,7 @@
 
 
     <insert id="insert" parameterType="com.cdkj.coin.domain.AdsSell">
-        INSERT INTO tcoin_ads_sell (code, user_id, trade_currency,
+        INSERT INTO tcoin_ads (code, user_id, trade_currency,
                                     trade_coin, only_trust, premium_rate,
                                     total_amount, left_amount, market_price,
                                     protect_price, min_trade, max_trade,
@@ -99,8 +99,8 @@
 
     <select id="selectFrontTotalCount" parameterType="sysDict" resultType="java.lang.Long">
         SELECT count(1)
-        FROM tcoin_ads_sell
-        LEFT JOIN tcoin_ads_display_time ON tcoin_ads_sell.code = tcoin_ads_display_time.adsCode
+        FROM tcoin_ads
+        LEFT JOIN tcoin_ads_display_time ON tcoin_ads.code = tcoin_ads_display_time.adsCode
         AND tcoin_ads_display_time.week = #{currentWeek}
         <include refid="whereCondition"/>
     </select>
@@ -108,8 +108,8 @@
     <select id="selectFront" resultMap="BaseResultMap" parameterType="com.cdkj.coin.domain.AdsSell">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM tcoin_ads_sell
-        LEFT JOIN tcoin_ads_display_time ON tcoin_ads_sell.code = tcoin_ads_display_time.adsCode
+        FROM tcoin_ads
+        LEFT JOIN tcoin_ads_display_time ON tcoin_ads.code = tcoin_ads_display_time.adsCode
         AND tcoin_ads_display_time.week = #{currentWeek}
         <include refid="whereCondition"/>
 
@@ -126,12 +126,12 @@
     <select id="select" resultMap="BaseResultMap" parameterType="com.cdkj.coin.domain.AdsSell">
         SELECT
             <include refid="Base_Column_List"/>
-        FROM tcoin_ads_sell
+        FROM tcoin_ads
              <include refid="whereCondition"/>
     </select>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.cdkj.coin.domain.AdsSell">
-        update tcoin_ads_sell
+        update tcoin_ads
         <set>
             <if test="tradeCurrency != null">
                 trade_currency = #{tradeCurrency,jdbcType=VARCHAR},
@@ -187,7 +187,7 @@
 
 
     <update id="updateByPrimaryKey" parameterType="com.cdkj.coin.domain.AdsSell">
-        UPDATE tcoin_ads_sell
+        UPDATE tcoin_ads
         SET user_id         = #{userId,jdbcType=VARCHAR},
             trade_currency  = #{tradeCurrency,jdbcType=VARCHAR},
             trade_coin      = #{tradeCoin,jdbcType=VARCHAR},

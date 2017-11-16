@@ -1,6 +1,6 @@
 package com.cdkj.coin.api.impl;
 
-import com.cdkj.coin.ao.IAdsSellAO;
+import com.cdkj.coin.ao.IAdsAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.ObjValidater;
@@ -16,8 +16,8 @@ import com.cdkj.coin.spring.SpringContextHolder;
 public class XN625221 extends AProcessor {
 
     //草稿发布为广告
-    private IAdsSellAO adsAO = SpringContextHolder
-            .getBean(IAdsSellAO.class);
+    private IAdsAO adsAO = SpringContextHolder
+            .getBean(IAdsAO.class);
     XN625220Req req;
 
     @Override
