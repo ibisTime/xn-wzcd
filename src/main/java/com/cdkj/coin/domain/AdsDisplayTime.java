@@ -1,18 +1,23 @@
 package com.cdkj.coin.domain;
 
 import com.cdkj.coin.dao.base.ABaseDO;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 
 public class AdsDisplayTime extends ABaseDO implements Serializable {
     private Integer id;
 
+    @NotBlank
     private String adsCode;
 
+    @NotBlank
     private String week;
 
+    @NotBlank
     private Integer startTime;
 
+    @NotBlank
     private Integer endTime;
 
     private static final long serialVersionUID = 1L;

@@ -28,6 +28,7 @@ public class XN625228Req {
     private String payType;
 
     private BigDecimal maxPrice;
+
     private BigDecimal minPrice;
 
     public String getPayType() {

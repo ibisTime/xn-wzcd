@@ -161,7 +161,7 @@ public class AdsAOImpl implements IAdsAO {
     public void insertSellAds(XN625220Req req) {
 
         // 构造,并校验
-        Ads ads = this.buildAdsSell(req, OrderNoGenerater.generate("ADSS"));
+        Ads ads = this.buildAdsSell(req, OrderNoGenerater.generate("ADS"));
 
         if (req.getPublishType().equals(EAdsPublishType.DRAFT.getCode())) {
 
@@ -184,8 +184,6 @@ public class AdsAOImpl implements IAdsAO {
             for (AdsDisplayTime displayTime : ads.getDisplayTime()) {
 
                 displayTime.setAdsCode(ads.getCode());
-                // 校验
-                this.displayTimeBO.check(displayTime);
                 // 插入
                 this.displayTimeBO.insertDisplayTime(displayTime);
 
@@ -197,6 +195,7 @@ public class AdsAOImpl implements IAdsAO {
 
     }
 
+    @Transactional
     public void insertBuyAds(XN625220Req req) {
 
         // 构造,并校验
@@ -219,8 +218,6 @@ public class AdsAOImpl implements IAdsAO {
             for (AdsDisplayTime displayTime : ads.getDisplayTime()) {
 
                 displayTime.setAdsCode(ads.getCode());
-                // 校验
-                this.displayTimeBO.check(displayTime);
                 // 插入
                 this.displayTimeBO.insertDisplayTime(displayTime);
 
@@ -244,8 +241,13 @@ public class AdsAOImpl implements IAdsAO {
         Ads ads = this.buildAdsSell(req, req.getAdsCode());
         ads.setStatus(EAdsStatus.SHANG_JIA.getCode());
 
-        // 判断账户并处理
-        this.checkAccountAndHandAccount(ads);
+        //如果为卖币,就有对账户进行处理
+        if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
+
+            // 判断账户并处理
+            this.checkAccountAndHandAccount(ads);
+
+        }
 
         // 删除原来的展示时间
         this.displayTimeBO.deleteAdsDisplayTimeByAdsCode(ads.getCode());
@@ -256,8 +258,6 @@ public class AdsAOImpl implements IAdsAO {
             for (AdsDisplayTime displayTime : ads.getDisplayTime()) {
 
                 displayTime.setAdsCode(ads.getCode());
-                // 校验
-                this.displayTimeBO.check(displayTime);
                 // 插入
                 this.displayTimeBO.insertDisplayTime(displayTime);
 
@@ -283,7 +283,7 @@ public class AdsAOImpl implements IAdsAO {
         //检查 是否处于下架状态
         Ads trueAds = this.iAdsBO.adsSellDetail(ads.getCode());
         if (trueAds.getStatus().equals(EAdsStatus.XIA_JIA.getCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(),"当前广告不是下架状态，不能进行该操作");
+            throw new BizException(EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "当前广告不是下架状态，不能进行该操作");
         }
 
         //  判断账户并处理
@@ -298,8 +298,6 @@ public class AdsAOImpl implements IAdsAO {
             for (AdsDisplayTime displayTime : ads.getDisplayTime()) {
 
                 displayTime.setAdsCode(ads.getCode());
-                // 校验
-                this.displayTimeBO.check(displayTime);
                 // 插入
                 this.displayTimeBO.insertDisplayTime(displayTime);
 

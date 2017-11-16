@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.cdkj.coin.domain.Market;
+import com.cdkj.coin.exception.EBizErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -115,6 +116,12 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     @Override
     public Paginable<Ads> frontSellPage(Integer start, Integer limit,
                                         Ads condition) {
+
+        if (condition.getMaxPrice() != null && condition.getMinPrice() != null) {
+            if (condition.getMaxPrice().compareTo(condition.getMinPrice()) <= 0) {
+                throw new  BizException(EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(),"最大金额需大于等于最小金额");
+            }
+        }
 
         // 只查正在上架中的
         condition.setStatus(EAdsStatus.SHANG_JIA.getCode());

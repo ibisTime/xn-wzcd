@@ -63,14 +63,7 @@
 
     <sql id="whereCondition">
         <trim prefix="WHERE" prefixOverrides="AND | OR">
-            <if test="currentTime != null and currentTime != '' and currentWeek != null and currentWeek != ''">
-                AND   (
-                tcoin_ads_display_time.adsCode IS NULL OR (
-                #{currentTime} >= tcoin_ads_display_time.start_time
-                <![CDATA[ and #{currentTime} < tcoin_ads_display_time.end_time ]]>
-                )
-                )
-            </if>
+
             <if test="code != null and code != '' ">
                 AND `code` = #{code}
             </if>
@@ -86,6 +79,29 @@
             <if test="tradeType != null and tradeType != ''">
                 And `trade_type` = #{tradeType}
             </if>
+            <if test="statusList != null and statusList != ''">
+                    AND `status` in
+                    <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+            </if>
+
+            <if test="currentTime != null and currentTime != '' and currentWeek != null and currentWeek != ''">
+                AND   (
+                tcoin_ads_display_time.adsCode IS NULL OR (
+                #{currentTime} >= tcoin_ads_display_time.start_time
+                <![CDATA[ and #{currentTime} < tcoin_ads_display_time.end_time ]]>
+                )
+                )
+            </if>
+
+            <if test="maxPrice != null and maxPrice != ''">
+                <![CDATA[ and `market_price`*(1 + `premium_rate`) <= #{maxPrice} ]]>
+            </if>
+            <if test="minPrice != null and minPrice != ''">
+                <![CDATA[ and `market_price`*(1 + `premium_rate`) >= #{minPrice} ]]>
+            </if>
+
         </trim>
     </sql>
 

@@ -10,9 +10,6 @@ public interface IAdsDisplayTimeBO {
     //插入展示时间
     void insertDisplayTime(AdsDisplayTime adsDisplayTime);
 
-    //检查展示时间
-    void check(AdsDisplayTime adsDisplayTime);
-
     //删除广告的展示时间
     void deleteAdsDisplayTimeByAdsCode(String adsCode);
 }

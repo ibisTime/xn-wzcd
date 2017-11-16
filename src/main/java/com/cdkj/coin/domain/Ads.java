@@ -89,10 +89,24 @@ public class Ads extends ABaseDO implements Serializable {
 
     //   以下字段为查询添加  //
     private Integer currentWeek;
+
     private Double currentTime;
 
     private BigDecimal maxPrice;
+
     private BigDecimal minPrice;
+
+    private List<String> statusList;
+
+
+
+    public List<String> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
+    }
 
     public BigDecimal getMaxPrice() {
         return maxPrice;

@@ -31,8 +31,8 @@ public class XN625227 extends AProcessor {
         condition.setTradeType(req.getTradeType());
         condition.setTradeCoin(req.getCoin());
         condition.setStatus(req.getStatus());
+        condition.setStatusList(req.getStatusList());
         return this.adsAO.ossSellPage(req.getStart(), req.getLimit(), condition);
-
 
     }
 

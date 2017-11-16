@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by tianlei on 2017/十一月/14.
@@ -33,6 +34,16 @@ public class XN625227Req {
     private String tradeType;
 
     private String status;
+
+    private List<String> statusList;
+
+    public List<String> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
+    }
 
     public String getStatus() {
         return status;
