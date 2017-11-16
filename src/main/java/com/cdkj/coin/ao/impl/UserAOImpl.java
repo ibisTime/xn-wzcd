@@ -30,6 +30,7 @@ import com.cdkj.coin.bo.IIdentifyBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.ISYSRoleBO;
 import com.cdkj.coin.bo.ISmsOutBO;
+import com.cdkj.coin.bo.ITencentBO;
 import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.IUserRelationBO;
 import com.cdkj.coin.bo.base.Paginable;
@@ -99,6 +100,9 @@ public class UserAOImpl implements IUserAO {
     @Autowired
     protected ISYSConfigBO sysConfigBO;
 
+    @Autowired
+    ITencentBO tencentBO;
+
     /** 
      * @see com.std.user.ao.IUserAO#doCheckMobile(java.lang.String, java.lang.String, java.lang.String)
      */
@@ -134,6 +138,8 @@ public class UserAOImpl implements IUserAO {
             mobile, userId, null, null);
         // 通知橙提取
         ctqBO.uploadAddress(ethAddress, EEthAddressType.X.getCode());
+        // 注册腾讯云
+        // tencentBO.register(userId, companyCode, systemCode);
         // 注册送积分
         Long amount = addRegAmount(userId, mobile, kind, companyCode,
             systemCode);

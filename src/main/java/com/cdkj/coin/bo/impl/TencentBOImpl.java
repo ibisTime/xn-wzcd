@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.ITencentBO;
@@ -36,6 +37,7 @@ import com.google.gson.JsonObject;
  * @since: 2017年11月16日 下午5:05:31 
  * @history:
  */
+@Component
 public class TencentBOImpl implements ITencentBO {
 
     public static final String TENXUN_CHAT_TUOGUAN_URL = "https://console.tim.qq.com/v4/registration_service/register_account_v1";
@@ -44,11 +46,6 @@ public class TencentBOImpl implements ITencentBO {
 
     @Autowired
     private ISYSConfigBO sysConfigBO;
-
-    public static void main(String[] args) {
-        System.out.println(Thread.currentThread().getContextClassLoader()
-            .getResource("config.properties"));
-    }
 
     /** 
      * @see com.cdkj.coin.bo.ITencentBO#register(java.lang.String, java.lang.String, java.lang.String)
@@ -79,9 +76,11 @@ public class TencentBOImpl implements ITencentBO {
             throw new BizException("xn0000", "账号类型不能为空");
         }
         tls_sigcheck demo = new tls_sigcheck();
+        String pathString = Thread.currentThread().getContextClassLoader()
+            .getResource("jnisigcheck.so").getPath();
         // 使用前请修改动态库的加载路径
         // demo.loadJniLib("C:\\Users\\asus\\Desktop\\ww\\jnisigcheck.dll");
-        demo.loadJniLib("/mnt/www/coin/jnisigcheck.so");
+        demo.loadJniLib("/Users/haiqingzheng/Desktop/jnisigcheck.so");
         int ret = demo.tls_gen_signature_ex2(txAppCode, txAppAdmin, secretKey);
         if (0 != ret) {
             throw new BizException("xn0000", "发送失败");
@@ -133,7 +132,8 @@ public class TencentBOImpl implements ITencentBO {
         tls_sigcheck demo = new tls_sigcheck();
         // 使用前请修改动态库的加载路径
         // demo.loadJniLib("C:\\Users\\asus\\Desktop\\ww\\jnisigcheck.dll");
-        demo.loadJniLib("/mnt/www/coin/jnisigcheck.so");
+        demo.loadJniLib(Class.class.getClass().getResource("/").getPath()
+                + "jnisigcheck.so");
         int ret = demo.tls_gen_signature_ex2(txAppCode, userId, secretKey);
         if (0 != ret) {
             throw new BizException("xn0000", "发送失败");
