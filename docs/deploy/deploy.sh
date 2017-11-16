@@ -13,7 +13,7 @@ expect "*#"
 send "${tomcat_path}/bin/shutdown.sh\r"
 
 expect "*#"
-send "ps -ef | grep ${tomcat_path} | grep -v grep | awk '{print $2}' | xargs kill -9\r"
+send "ps -efww|grep -w ${tomcat_path}|grep -v grep|cut -c 9-15|xargs kill -9\r"
 
 expect "*#"
 send "rm -rf ${tomcat_path}/webapps/${war_name}\r"
