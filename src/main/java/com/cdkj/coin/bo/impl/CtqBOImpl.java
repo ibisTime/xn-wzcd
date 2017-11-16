@@ -34,13 +34,13 @@ public class CtqBOImpl implements ICtqBO {
         XN616000Req req = new XN616000Req();
         req.setAddress(address);
         req.setType(type);
-        BizConnecter.getBizData("616000", JsonUtil.Object2Json(req));
+        BizConnecter.getBizData("626000", JsonUtil.Object2Json(req));
     }
 
     @Override
     public void confirm(List<String> hashList) {
         XN616020Req req = new XN616020Req();
         req.setHashList(hashList);
-        BizConnecter.getBizData("616020", JsonUtil.Object2Json(req));
+        BizConnecter.getBizData("626020", JsonUtil.Object2Json(req));
     }
 }

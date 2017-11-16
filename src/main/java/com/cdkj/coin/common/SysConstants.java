@@ -15,6 +15,17 @@ public class SysConstants {
 
     public static String QINIU_DOMAIN = "qiniu_domain";
 
+    // 腾讯云配置
+    public static String TX_APP_CODE = "tx_app_code";// 应用编号
+
+    public static String TX_APP_ADMIN = "tx_app_admin";// 应用编号
+
+    public static String TX_ACCESS_KEY = "tx_access_key";// 公钥
+
+    public static String TX_SECRET_KEY = "tx_secret_key";// 私钥
+
+    public static String TX_ACCOUNT_TYPE = "tx_account_type";// 账号类型
+
     // C端用户取现倍数
     public static String CUSERQXBS = "CUSERQXBS";
 
