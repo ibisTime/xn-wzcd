@@ -10,9 +10,11 @@ public interface IAdsAO {
 
     public void insertAds(XN625220Req req);
 
+    public Object adsDetail(String adsCode);
+
     public void draftPublish(XN625220Req req);
 
-    public Object adsDetail(String adsCode);
+    public void shangJia(XN625220Req req);
 
     public void xiaJiaAds(String adsCode, String userId);
 

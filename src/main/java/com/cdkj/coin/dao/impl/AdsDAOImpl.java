@@ -1,17 +1,18 @@
 package com.cdkj.coin.dao.impl;
 
-import com.cdkj.coin.dao.IAdsSellDAO;
+import com.cdkj.coin.dao.IAdsDAO;
 import com.cdkj.coin.dao.base.support.AMybatisTemplate;
 import com.cdkj.coin.domain.Ads;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
  * Created by tianlei on 2017/十一月/14.
  */
 @Repository("adsSellDAOImpl")
-public class AdsSellDAOImpl extends AMybatisTemplate implements IAdsSellDAO {
+public class AdsDAOImpl extends AMybatisTemplate implements IAdsDAO {
 
     @Override
     public int insert(Ads data) {
@@ -67,6 +68,15 @@ public class AdsSellDAOImpl extends AMybatisTemplate implements IAdsSellDAO {
 
     }
 
+    @Override
+    public void updateAllMarketPrice(BigDecimal marketPrice) {
+
+        Ads condition = new Ads();
+        condition.setMarketPrice(marketPrice);
+        super.update(NAMESPACE.concat("updateMarketPrice"),condition);
+
+    }
+
     //  前端
     @Override
     public Ads selectFront(Ads condition) {
@@ -95,4 +105,6 @@ public class AdsSellDAOImpl extends AMybatisTemplate implements IAdsSellDAO {
         return super.selectList(NAMESPACE.concat("selectFront"), start, limit, condition, Ads.class);
 
     }
+
+
 }

@@ -21,6 +21,7 @@
 
 				<!--<ref bean="currencyRateTrigger"/>-->
 				<!--<ref bean="marketTrigger"/>-->
+				<ref bean="adsMarketRefreshTrigger"/>
 
 			</list>
 		</property>
@@ -67,21 +68,18 @@
 		<!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->
 	</bean>
 
-	<!-- 定时获取行情 -->
-	<!--<bean id="marketTrigger"-->
-		  <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
-		<!--<property name="jobDetail" ref="market" />-->
-		<!--<property name="cronExpression" value="0/30 * * * * ?" />-->
-	<!--</bean>-->
-	<!--<bean id="market"-->
-		  <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
-		<!--<property name="targetObject" ref="marketAOImpl" />-->
-		<!--<property name="targetMethod" value="obtainMarket" />-->
-		<!--<property name="concurrent" value="false" />-->
-		<!--&lt;!&ndash; 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 &ndash;&gt;-->
-	<!--</bean>-->
-
-
+	<!-- 定时刷新行情 -->
+	<bean id="adsMarketRefreshTrigger"
+		  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="adsMarket" />
+		<property name="cronExpression" value="0 0/1 * * * ?" />
+	</bean>
+	<bean id="adsMarket"
+		  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="adsAOImpl" />
+		<property name="targetMethod" value="refreshMarketPrice" />
+		<property name="concurrent" value="false" />
+	</bean>
 
 
 </beans>

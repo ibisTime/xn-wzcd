@@ -5,15 +5,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.cdkj.coin.domain.Market;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.coin.bo.IAdsBO;
 import com.cdkj.coin.bo.base.Page;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.bo.base.PaginableBOImpl;
-import com.cdkj.coin.dao.IAdsSellDAO;
+import com.cdkj.coin.dao.IAdsDAO;
 import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.enums.EAdsStatus;
 import com.cdkj.coin.exception.BizException;
@@ -25,13 +25,12 @@ import com.cdkj.coin.exception.BizException;
 public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
     @Autowired
-    IAdsSellDAO adsSellDAO;
+    IAdsDAO adsDAO;
 
     @Override
-    @Transactional
     public void insertAdsSell(Ads adsSell) {
 
-        int count = this.adsSellDAO.insert(adsSell);
+        int count = this.adsDAO.insert(adsSell);
         if (count != 1) {
 
             throw new BizException("xn0000", "发布失败");
@@ -44,7 +43,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
         Ads condition = new Ads();
         condition.setCode(adsCode);
-        return this.adsSellDAO.select(condition);
+        return this.adsDAO.select(condition);
 
     }
 
@@ -53,14 +52,14 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
         Ads condition = new Ads();
         condition.setCode(adsCode);
-        Ads ads = this.adsSellDAO.select(condition);
+        Ads ads = this.adsDAO.select(condition);
 
         if (ads == null) {
             throw new BizException("xn", "广告不存在");
         }
         ads.setLeftAmount(ads.getLeftAmount().add(value));
         // 校验余额，
-        int count = this.adsSellDAO.updateByPrimaryKeySelective(ads);
+        int count = this.adsDAO.updateByPrimaryKeySelective(ads);
         if (count != 1) {
             throw new BizException("xn", "更新失败");
         }
@@ -72,7 +71,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
         adsSell.setStatus(EAdsStatus.XIA_JIA.getCode());
         //todo 释放剩余冻结金额
-        int count = this.adsSellDAO.updateByPrimaryKeySelective(adsSell);
+        int count = this.adsDAO.updateByPrimaryKeySelective(adsSell);
         if (count != 1) {
             throw new BizException("xn000000", "下架失败");
         }
@@ -85,9 +84,9 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         Ads condition = new Ads();
         condition.setCode(adsCode);
         condition.setStatus(EAdsStatus.SHANG_JIA.getCode());
-        int count = this.adsSellDAO.updateByPrimaryKeySelective(condition);
+        int count = this.adsDAO.updateByPrimaryKeySelective(condition);
         if (count != 1) {
-            throw new BizException("xn000000", "下架失败");
+            throw new BizException("xn000000", "上架失败");
         }
 
     }
@@ -95,7 +94,20 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     @Override
     public void sellDraftPublish(Ads adsSell) {
 
-        this.adsSellDAO.updateByPrimaryKey(adsSell);
+        this.adsDAO.updateByPrimaryKey(adsSell);
+
+    }
+
+    @Override
+    public void refreshAllAdsMarketPrice(Market market) {
+
+        if (market == null || market.getMid() == null) {
+
+            return;
+
+        }
+
+        this.adsDAO.updateAllMarketPrice(market.getMid());
 
     }
 
@@ -121,10 +133,10 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         condition.setCurrentTime(1.0 * hour + minute * 1.0 / 60);
 
         //
-        long totalCount = adsSellDAO.selectFrontTotalCount(condition);
+        long totalCount = adsDAO.selectFrontTotalCount(condition);
         Paginable<Ads> page = new Page<Ads>(start, limit, totalCount);
-        List<Ads> dataList = adsSellDAO.selectFrontList(condition,
-            page.getStart(), page.getPageSize());
+        List<Ads> dataList = adsDAO.selectFrontList(condition,
+                page.getStart(), page.getPageSize());
         page.setList(dataList);
         return page;
 
@@ -136,10 +148,10 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
                                       Ads condition) {
 
         //
-        long totalCount = adsSellDAO.selectTotalCount(condition);
+        long totalCount = adsDAO.selectTotalCount(condition);
         Paginable<Ads> page = new Page<Ads>(start, limit, totalCount);
-        List<Ads> dataList = adsSellDAO.selectList(condition,
-            page.getStart(), page.getPageSize());
+        List<Ads> dataList = adsDAO.selectList(condition,
+                page.getStart(), page.getPageSize());
         page.setList(dataList);
         return page;
 

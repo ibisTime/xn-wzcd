@@ -270,6 +270,49 @@ public class AdsAOImpl implements IAdsAO {
 
     }
 
+    @Transactional
+    public void shangJia(XN625220Req req) {
+
+        if (StringUtils.isBlank(req.getAdsCode())) {
+            throw new BizException("xn000", "请传入广告编号");
+        }
+
+        // 构造 并校验
+        Ads ads = this.buildAdsSell(req, req.getAdsCode());
+
+        //检查 是否处于下架状态
+        Ads trueAds = this.iAdsBO.adsSellDetail(ads.getCode());
+        if (trueAds.getStatus().equals(EAdsStatus.XIA_JIA.getCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(),"当前广告不是下架状态，不能进行该操作");
+        }
+
+        //  判断账户并处理
+        this.checkAccountAndHandAccount(ads);
+
+        //  删除原来的展示时间
+        this.displayTimeBO.deleteAdsDisplayTimeByAdsCode(ads.getCode());
+
+        // 插入新的展示时间
+        if (ads != null && !ads.getDisplayTime().isEmpty()) {
+            // 有展示时间限制、先插入展示时间
+            for (AdsDisplayTime displayTime : ads.getDisplayTime()) {
+
+                displayTime.setAdsCode(ads.getCode());
+                // 校验
+                this.displayTimeBO.check(displayTime);
+                // 插入
+                this.displayTimeBO.insertDisplayTime(displayTime);
+
+            }
+
+        }
+
+        //
+        this.iAdsBO.shangJiaAds(ads.getCode());
+
+    }
+
+
     public void checkAccountAndHandAccount(Ads ads) {
 
         Account account = this.accountBO.getAccountByUser(ads.getUserId(),
@@ -345,5 +388,14 @@ public class AdsAOImpl implements IAdsAO {
             iAdsBO.xiaJiaAds(ads);
         }
     }
+
+    //定时刷新行情价格
+    public void refreshMarketPrice() {
+
+        Market market = this.marketBO.marketByCoinTypeAndOrigin(ECoin.ETH.getCode(), EMarketOrigin.BITFINEX.getCode());
+        this.iAdsBO.refreshAllAdsMarketPrice(market);
+
+    }
+
 
 }

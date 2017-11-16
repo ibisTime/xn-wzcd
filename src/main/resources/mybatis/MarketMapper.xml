@@ -28,7 +28,7 @@
         AND origin = #{origin}
       </if>
       <if test="coin != null and coin != ''">
-        AND origin = #{coin}
+        AND coin = #{coin}
       </if>
     </trim>
   </sql>
@@ -48,11 +48,11 @@
     where coin = #{coin} and origin = #{origin}
   </update>
 
-  <select id="selectedByCoinTypeAndOrigin" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectedByCoinTypeAndOrigin" parameterType="com.cdkj.coin.domain.Market" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
     from tcoin_market
-    where coin = #{coin,jdbcType=VARCHAR} and origin = #{origin}
+    <include refid="whereCondation"/>
   </select>
 
   <select id="selectList" parameterType="java.lang.String" resultMap="BaseResultMap">

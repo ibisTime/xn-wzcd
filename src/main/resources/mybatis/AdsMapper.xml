@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cdkj.coin.dao.IAdsSellDAO">
+<mapper namespace="com.cdkj.coin.dao.IAdsDAO">
     <resultMap id="BaseResultMap" type="com.cdkj.coin.domain.Ads">
         <id column="code" jdbcType="VARCHAR" property="code"/>
         <result column="trade_type" jdbcType="VARCHAR" property="tradeType"/>
@@ -109,7 +109,7 @@
     </sql>
 
 
-    <select id="selectFrontTotalCount" parameterType="sysDict" resultType="java.lang.Long">
+    <select id="selectFrontTotalCount" parameterType="com.cdkj.coin.domain.Ads" resultType="java.lang.Long">
         SELECT count(1)
         FROM tcoin_ads
         LEFT JOIN tcoin_ads_display_time ON tcoin_ads.code = tcoin_ads_display_time.adsCode
@@ -129,9 +129,7 @@
     </select>
 
     <!-- #########################  管理端  ################################-->
-
-
-    <select id="selectTotalCount" parameterType="sysDict" resultType="java.lang.Long">
+    <select id="selectTotalCount" parameterType="com.cdkj.coin.domain.Ads" resultType="java.lang.Long">
         SELECT count(1)
         <include refid="whereCondition"/>
     </select>
@@ -142,6 +140,10 @@
         FROM tcoin_ads
              <include refid="whereCondition"/>
     </select>
+
+    <update id="updateMarketPrice" parameterType="com.cdkj.coin.domain.Ads">
+        UPDATE tcoin_ads SET market_price = #{marketPrice}
+    </update>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.cdkj.coin.domain.Ads">
         update tcoin_ads

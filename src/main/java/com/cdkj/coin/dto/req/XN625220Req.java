@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class XN625220Req {
 
-    //草稿发布时使用
+    //草稿发布时使用, 或者下架的广告重新上架
     private String adsCode;
 
     @NotBlank

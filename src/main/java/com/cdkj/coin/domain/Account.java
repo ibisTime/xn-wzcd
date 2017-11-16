@@ -14,7 +14,7 @@ import com.cdkj.coin.dao.base.ABaseDO;
 public class Account extends ABaseDO {
 
     private static final long serialVersionUID = 8322573358554172531L;
-
+   
     // 账户编号
     private String accountNumber;
 

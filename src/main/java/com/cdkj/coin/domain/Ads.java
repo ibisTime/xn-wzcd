@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Ads extends ABaseDO implements Serializable {
+
     private String code;
 
     private String userId;

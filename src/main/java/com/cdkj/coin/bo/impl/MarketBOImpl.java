@@ -27,10 +27,10 @@ public class MarketBOImpl implements IMarketBO {
             return null;
         }
 
-        Market condation = new Market();
-        condation.setOrigin(origin);
-        condation.setCoin(coinType);
-       return this.marketDAO.select(condation);
+        Market condition = new Market();
+        condition.setOrigin(origin);
+        condition.setCoin(coinType);
+        return this.marketDAO.select(condition);
 
     }
 
