@@ -21,7 +21,7 @@ import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.AdsDisplayTime;
-import com.cdkj.coin.domain.AdsSell;
+import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.domain.Market;
 import com.cdkj.coin.domain.User;
 import com.cdkj.coin.dto.req.XN625220Req;
@@ -44,6 +44,7 @@ public class AdsAOImpl implements IAdsAO {
     @Autowired
     ISYSConfigBO sysConfigBO;
 
+
     @Autowired
     IMarketAO marketAO;
 
@@ -63,14 +64,14 @@ public class AdsAOImpl implements IAdsAO {
     IAdsDisplayTimeBO displayTimeBO;
 
     @Override
-    public Object frontSellPage(Integer start, Integer limit, AdsSell condition) {
+    public Object frontSellPage(Integer start, Integer limit, Ads condition) {
 
         return this.iAdsBO.frontSellPage(start, limit, condition);
 
     }
 
     @Override
-    public Object ossSellPage(Integer start, Integer limit, AdsSell condition) {
+    public Object ossSellPage(Integer start, Integer limit, Ads condition) {
 
         return this.iAdsBO.ossSellPage(start, limit, condition);
 
@@ -91,9 +92,9 @@ public class AdsAOImpl implements IAdsAO {
 
     // 草稿code传入已存在的
     // 第一次插入传生成的
-    AdsSell buildAdsSell(XN625220Req req, String adsCode) {
+    Ads buildAdsSell(XN625220Req req, String adsCode) {
 
-        AdsSell ads = new AdsSell();
+        Ads ads = new Ads();
         ads.setTradeCoin(ECoin.ETH.getCode());
         ads.setCode(adsCode);
         ads.setUserId(req.getUserId());
@@ -136,7 +137,7 @@ public class AdsAOImpl implements IAdsAO {
     public void insertSellAds(XN625220Req req) {
 
         // 构造,并校验
-        AdsSell ads = this.buildAdsSell(req, OrderNoGenerater.generate("ADSS"));
+        Ads ads = this.buildAdsSell(req, OrderNoGenerater.generate("ADSS"));
 
         if (req.getPublishType().equals(EAdsPublishType.DRAFT.getCode())) {
 
@@ -181,7 +182,7 @@ public class AdsAOImpl implements IAdsAO {
         }
 
         // 构造 并校验
-        AdsSell ads = this.buildAdsSell(req, req.getAdsCode());
+        Ads ads = this.buildAdsSell(req, req.getAdsCode());
         ads.setStatus(EAdsStatus.SHANG_JIA.getCode());
 
         // 判断账户并处理
@@ -210,7 +211,7 @@ public class AdsAOImpl implements IAdsAO {
 
     }
 
-    public void checkAccountAndHandAccount(AdsSell ads) {
+    public void checkAccountAndHandAccount(Ads ads) {
 
         Account account = this.accountBO.getAccountByUser(ads.getUserId(),
                 ads.getTradeCoin());
@@ -243,26 +244,26 @@ public class AdsAOImpl implements IAdsAO {
     @Transactional
     @Override
     public void xiaJiaAds(String adsCode, String userId) {
-        AdsSell adsSell = iAdsBO.adsSellDetail(adsCode);
-        if (!EAdsStatus.SHANG_JIA.getCode().equals(adsSell.getStatus())) {
+        Ads ads = iAdsBO.adsSellDetail(adsCode);
+        if (!EAdsStatus.SHANG_JIA.getCode().equals(ads.getStatus())) {
             throw new BizException(
                     EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "当前状态无法下架！");
         }
         // 校验操作者是否是本人
-        if (!adsSell.getUserId().equals(userId)) {
+        if (!ads.getUserId().equals(userId)) {
             throw new BizException(EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "您无权下架该广告");
         }
         // 检查是否有正在进行中的交易
         tradeOrderBO.checkXiajia(adsCode);
 
         // 进行下架操作
-        this.iAdsBO.xiaJiaAds(adsSell);
+        this.iAdsBO.xiaJiaAds(ads);
 
         // 下架成功 把冻结金额返还
-        if (adsSell.getLeftAmount().compareTo(BigDecimal.ZERO) > 0) {
+        if (ads.getLeftAmount().compareTo(BigDecimal.ZERO) > 0) {
 
             Account account = this.accountBO.getAccountByUser(userId, ECoin.ETH.getCode());
-            this.accountBO.unfrozenAmount(account, adsSell.getLeftAmount(), "");
+            this.accountBO.unfrozenAmount(account, ads.getLeftAmount(), "");
 
         }
 
@@ -270,19 +271,19 @@ public class AdsAOImpl implements IAdsAO {
 
     @Override
     public void checkXiajia(String adsCode) {
-        AdsSell adsSell = iAdsBO.adsSellDetail(adsCode);
-        if (!EAdsStatus.SHANG_JIA.getCode().equals(adsSell.getStatus())) {
+        Ads ads = iAdsBO.adsSellDetail(adsCode);
+        if (!EAdsStatus.SHANG_JIA.getCode().equals(ads.getStatus())) {
             throw new BizException(
                     EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "当前状态无法下架！");
         }
         // 剩余金额小于 单笔最小交易金额就下架
-        boolean condition1 = adsSell.getLeftAmount().compareTo(
+        boolean condition1 = ads.getLeftAmount().compareTo(
                 new BigDecimal(0)) == 0;
 
-        boolean condition2 = adsSell.getLeftAmount().compareTo(
-                adsSell.getMinTrade()) < 0;
+        boolean condition2 = ads.getLeftAmount().compareTo(
+                ads.getMinTrade()) < 0;
         if (condition1 || condition2) {
-            iAdsBO.xiaJiaAds(adsSell);
+            iAdsBO.xiaJiaAds(ads);
         }
     }
 

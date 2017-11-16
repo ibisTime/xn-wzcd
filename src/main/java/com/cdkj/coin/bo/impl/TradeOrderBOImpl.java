@@ -14,7 +14,7 @@ import com.cdkj.coin.bo.base.PaginableBOImpl;
 import com.cdkj.coin.common.DateUtil;
 import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.dao.ITradeOrderDAO;
-import com.cdkj.coin.domain.AdsSell;
+import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.domain.TradeOrder;
 import com.cdkj.coin.enums.EGeneratePrefix;
 import com.cdkj.coin.enums.ETradeOrderStatus;
@@ -30,7 +30,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
     private ITradeOrderDAO tradeOrderDAO;
 
     @Override
-    public String buySubmit(AdsSell adsSell, String buyUser,
+    public String buySubmit(Ads ads, String buyUser,
                             BigDecimal tradePrice, BigDecimal count, BigDecimal tradeAmount,
                             BigDecimal fee) {
 
@@ -42,21 +42,21 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
         data.setCode(code);
         data.setType(ETradeOrderType.BUY.getCode());
-        data.setAdsCode(adsSell.getCode());
+        data.setAdsCode(ads.getCode());
         data.setBuyUser(buyUser);
-        data.setSellUser(adsSell.getUserId());
+        data.setSellUser(ads.getUserId());
 
-        data.setLeaveMessage(adsSell.getLeaveMessage());
-        data.setTradeCurrency(adsSell.getTradeCurrency());
-        data.setTradeCoin(adsSell.getTradeCoin());
+        data.setLeaveMessage(ads.getLeaveMessage());
+        data.setTradeCurrency(ads.getTradeCurrency());
+        data.setTradeCoin(ads.getTradeCoin());
         data.setTradePrice(tradePrice);
         data.setTradeAmount(tradeAmount);
 
         data.setFee(fee);
         data.setCount(count);
-        data.setPayType(adsSell.getPayType());
+        data.setPayType(ads.getPayType());
         data.setInvalidDatetime(DateUtil.getRelativeDateOfMinute(now,
-                adsSell.getPayLimit()));
+                ads.getPayLimit()));
         data.setStatus(ETradeOrderStatus.TO_PAY.getCode());
 
         data.setCreateDatetime(now);

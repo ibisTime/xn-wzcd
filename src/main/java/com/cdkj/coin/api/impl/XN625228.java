@@ -4,7 +4,7 @@ import com.cdkj.coin.ao.IAdsAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.ObjValidater;
-import com.cdkj.coin.domain.AdsSell;
+import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.dto.req.XN625228Req;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
@@ -23,7 +23,7 @@ public class XN625228 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
 
-        AdsSell condition = new AdsSell();
+        Ads condition = new Ads();
 
         return this.adsAO.frontSellPage(req.getStart(),req.getLimit(),condition);
     }

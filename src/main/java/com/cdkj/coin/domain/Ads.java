@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-public class AdsSell extends ABaseDO implements Serializable {
+public class Ads extends ABaseDO implements Serializable {
     private String code;
 
     private String userId;
@@ -22,11 +22,11 @@ public class AdsSell extends ABaseDO implements Serializable {
 
     private BigDecimal totalAmount;
 
-    public AdsSell() {
+    public Ads() {
 
     };
 
-    public AdsSell(String code, String userId, String tradeCurrency, String tradeCoin, String onlyTrust, BigDecimal premiumRate, BigDecimal totalAmount, BigDecimal leftAmount, BigDecimal marketPrice, BigDecimal protectPrice, BigDecimal minTrade, BigDecimal maxTrade, String payType, Integer payLimit, String status, Date createDatetime, Date updateDatetime, String leaveMessage) {
+    public Ads(String code, String userId, String tradeCurrency, String tradeCoin, String onlyTrust, BigDecimal premiumRate, BigDecimal totalAmount, BigDecimal leftAmount, BigDecimal marketPrice, BigDecimal protectPrice, BigDecimal minTrade, BigDecimal maxTrade, String payType, Integer payLimit, String status, Date createDatetime, Date updateDatetime, String leaveMessage) {
         this.code = code;
         this.userId = userId;
         this.tradeCurrency = tradeCurrency;

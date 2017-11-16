@@ -2,7 +2,7 @@
 #广告
 CREATE TABLE `tcoin_ads` (
   `code` varchar(32) NOT NULL COMMENT '编号',
-  `type` varchar(32) NOT NULL COMMENT '类型 0 = 买币、1=卖币',
+  `trade_type` varchar(32) NOT NULL COMMENT '类型 0 = 买币、1=卖币',
   `user_id` varchar(32) NOT NULL COMMENT '发布用户编号',
   `trade_currency` varchar(8) NOT  NULL COMMENT '交易币种',
   `trade_coin` varchar(8) NOT  NULL COMMENT '数字货币类型',

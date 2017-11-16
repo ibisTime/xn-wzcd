@@ -17,7 +17,7 @@ import com.cdkj.coin.bo.ITradeOrderBO;
 import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.common.SysConstants;
-import com.cdkj.coin.domain.AdsSell;
+import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.domain.TradeOrder;
 import com.cdkj.coin.enums.EAdsStatus;
 import com.cdkj.coin.enums.EJourBizTypePlat;
@@ -55,25 +55,25 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             BigDecimal count, BigDecimal tradeAmount) {
         String code = null;
         // 获取广告详情
-        AdsSell adsSell = adsSellBO.adsSellDetail(adsCode);
-        if (!EAdsStatus.SHANG_JIA.getCode().equals(adsSell.getStatus())) {
+        Ads ads = adsSellBO.adsSellDetail(adsCode);
+        if (!EAdsStatus.SHANG_JIA.getCode().equals(ads.getStatus())) {
             throw new BizException(
                 EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "广告未上架，不能进行交易");
         }
-        if (buyUser.equals(adsSell.getUserId())) {
+        if (buyUser.equals(ads.getUserId())) {
             throw new BizException(
                 EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(),
                 "您是广告发布者，不能进行购买操作");
         }
         // 交易金额校验
-        doAmountCheck(adsSell, tradePrice, count, tradeAmount);
+        doAmountCheck(ads, tradePrice, count, tradeAmount);
         // 计算交易手续费
         Double rate = sysConfigBO.getDoubleValue(SysConstants.TRADE_FEE_RATE);
         BigDecimal fee = count.multiply(BigDecimal.valueOf(rate));
         // 变更广告剩余可售金额
-        adsSellBO.changeLeftAmount(adsSell.getCode(), count.negate());
+        adsSellBO.changeLeftAmount(ads.getCode(), count.negate());
         // 提交交易订单
-        code = tradeOrderBO.buySubmit(adsSell, buyUser, tradePrice, count,
+        code = tradeOrderBO.buySubmit(ads, buyUser, tradePrice, count,
             tradeAmount, fee);
         return code;
     }
@@ -249,8 +249,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             EJourBizTypePlat.AJ_TRADEFEE.getValue(), tradeOrder.getCode());
     }
 
-    private void doAmountCheck(AdsSell adsSell, BigDecimal tradePrice,
-            BigDecimal count, BigDecimal tradeAmount) {
+    private void doAmountCheck(Ads adsSell, BigDecimal tradePrice,
+                               BigDecimal count, BigDecimal tradeAmount) {
         if (tradePrice.multiply(count).subtract(tradeAmount).abs()
             .compareTo(BigDecimal.ONE) > 0) {
             throw new BizException(

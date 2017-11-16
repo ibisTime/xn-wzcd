@@ -1,6 +1,6 @@
 package com.cdkj.coin.ao;
 
-import com.cdkj.coin.domain.AdsSell;
+import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.dto.req.XN625220Req;
 
 /**
@@ -18,8 +18,8 @@ public interface IAdsAO {
 
     public void checkXiajia(String adsCode);
 
-    public Object frontSellPage(Integer start, Integer limit, AdsSell condition);
+    public Object frontSellPage(Integer start, Integer limit, Ads condition);
 
-    public Object ossSellPage(Integer start, Integer limit, AdsSell condition);
+    public Object ossSellPage(Integer start, Integer limit, Ads condition);
 
 }

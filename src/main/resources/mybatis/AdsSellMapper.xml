@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.coin.dao.IAdsSellDAO">
-    <resultMap id="BaseResultMap" type="com.cdkj.coin.domain.AdsSell">
+    <resultMap id="BaseResultMap" type="com.cdkj.coin.domain.Ads">
         <id column="code" jdbcType="VARCHAR" property="code"/>
         <result column="user_id" jdbcType="VARCHAR" property="userId"/>
         <result column="trade_currency" jdbcType="VARCHAR" property="tradeCurrency"/>
@@ -31,7 +31,7 @@
     </sql>
 
 
-    <insert id="insert" parameterType="com.cdkj.coin.domain.AdsSell">
+    <insert id="insert" parameterType="com.cdkj.coin.domain.Ads">
         INSERT INTO tcoin_ads (code, user_id, trade_currency,
                                     trade_coin, only_trust, premium_rate,
                                     total_amount, left_amount, market_price,
@@ -105,7 +105,7 @@
         <include refid="whereCondition"/>
     </select>
 
-    <select id="selectFront" resultMap="BaseResultMap" parameterType="com.cdkj.coin.domain.AdsSell">
+    <select id="selectFront" resultMap="BaseResultMap" parameterType="com.cdkj.coin.domain.Ads">
         SELECT
         <include refid="Base_Column_List"/>
         FROM tcoin_ads
@@ -123,14 +123,14 @@
         <include refid="whereCondition"/>
     </select>
 
-    <select id="select" resultMap="BaseResultMap" parameterType="com.cdkj.coin.domain.AdsSell">
+    <select id="select" resultMap="BaseResultMap" parameterType="com.cdkj.coin.domain.Ads">
         SELECT
             <include refid="Base_Column_List"/>
         FROM tcoin_ads
              <include refid="whereCondition"/>
     </select>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.cdkj.coin.domain.AdsSell">
+    <update id="updateByPrimaryKeySelective" parameterType="com.cdkj.coin.domain.Ads">
         update tcoin_ads
         <set>
             <if test="tradeCurrency != null">
@@ -186,7 +186,7 @@
     </update>
 
 
-    <update id="updateByPrimaryKey" parameterType="com.cdkj.coin.domain.AdsSell">
+    <update id="updateByPrimaryKey" parameterType="com.cdkj.coin.domain.Ads">
         UPDATE tcoin_ads
         SET user_id         = #{userId,jdbcType=VARCHAR},
             trade_currency  = #{tradeCurrency,jdbcType=VARCHAR},

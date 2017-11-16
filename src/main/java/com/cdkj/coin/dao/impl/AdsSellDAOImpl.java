@@ -2,8 +2,7 @@ package com.cdkj.coin.dao.impl;
 
 import com.cdkj.coin.dao.IAdsSellDAO;
 import com.cdkj.coin.dao.base.support.AMybatisTemplate;
-import com.cdkj.coin.domain.AdsSell;
-import com.sun.org.apache.xalan.internal.utils.XMLSecurityManager;
+import com.cdkj.coin.domain.Ads;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.List;
 public class AdsSellDAOImpl extends AMybatisTemplate implements IAdsSellDAO {
 
     @Override
-    public int insert(AdsSell data) {
+    public int insert(Ads data) {
 
         return super.insert(NAMESPACE.concat("insert"), data);
 
@@ -23,77 +22,77 @@ public class AdsSellDAOImpl extends AMybatisTemplate implements IAdsSellDAO {
 
     //
     @Override
-    public int delete(AdsSell data) {
+    public int delete(Ads data) {
         return 0;
     }
 
     //
     @Override
-    public long selectTotalCount(AdsSell condition) {
+    public long selectTotalCount(Ads condition) {
         return 0;
     }
 
     //
     @Override
-    public AdsSell select(AdsSell condition) {
-        return super.select(NAMESPACE.concat("select"), condition, AdsSell.class);
+    public Ads select(Ads condition) {
+        return super.select(NAMESPACE.concat("select"), condition, Ads.class);
     }
 
     //
     @Override
-    public List<AdsSell> selectList(AdsSell condition) {
+    public List<Ads> selectList(Ads condition) {
 
-        return super.selectList(NAMESPACE.concat("select"), condition, AdsSell.class);
+        return super.selectList(NAMESPACE.concat("select"), condition, Ads.class);
 
     }
 
     //
     @Override
-    public List<AdsSell> selectList(AdsSell condition, int start, int limit) {
+    public List<Ads> selectList(Ads condition, int start, int limit) {
 
-        return super.selectList(NAMESPACE.concat("select"), start, limit, condition, AdsSell.class);
+        return super.selectList(NAMESPACE.concat("select"), start, limit, condition, Ads.class);
 
     }
 
     @Override
-    public int updateByPrimaryKeySelective(AdsSell condition) {
+    public int updateByPrimaryKeySelective(Ads condition) {
 
         return super.update(NAMESPACE.concat("updateByPrimaryKeySelective"),condition);
 
     }
 
     @Override
-    public int updateByPrimaryKey(AdsSell condition) {
+    public int updateByPrimaryKey(Ads condition) {
         return super.update(NAMESPACE.concat("updateByPrimaryKey"),condition);
 
     }
 
     //  前端
     @Override
-    public AdsSell selectFront(AdsSell condition) {
+    public Ads selectFront(Ads condition) {
 
-        return super.select(NAMESPACE.concat("selectFront"), condition, AdsSell.class);
+        return super.select(NAMESPACE.concat("selectFront"), condition, Ads.class);
 
     }
 
     @Override
-    public long selectFrontTotalCount(AdsSell condition) {
+    public long selectFrontTotalCount(Ads condition) {
 
         return super.selectTotalCount(NAMESPACE.concat("selectFrontTotalCount"), condition);
 
     }
 
     @Override
-    public List<AdsSell> selectFrontList(AdsSell condition) {
+    public List<Ads> selectFrontList(Ads condition) {
 
-        return super.selectList(NAMESPACE.concat("selectFront"), condition, AdsSell.class);
+        return super.selectList(NAMESPACE.concat("selectFront"), condition, Ads.class);
 
     }
 
     @Override
-    public List<AdsSell> selectFrontList(AdsSell condition, int start, int limit) {
+    public List<Ads> selectFrontList(Ads condition, int start, int limit) {
 
-        return super.selectList(NAMESPACE.concat("selectFront"), start, limit, condition, AdsSell.class);
+        return super.selectList(NAMESPACE.concat("selectFront"), start, limit, condition, Ads.class);
 
     }
 }

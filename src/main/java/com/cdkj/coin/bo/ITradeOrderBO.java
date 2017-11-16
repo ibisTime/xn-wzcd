@@ -4,14 +4,14 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.cdkj.coin.bo.base.IPaginableBO;
-import com.cdkj.coin.domain.AdsSell;
+import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.domain.TradeOrder;
 
 public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
 
-    public String buySubmit(AdsSell adsSell, String buyUser,
-            BigDecimal tradePrice, BigDecimal count, BigDecimal tradeAmount,
-            BigDecimal fee);
+    public String buySubmit(Ads adsSell, String buyUser,
+                            BigDecimal tradePrice, BigDecimal count, BigDecimal tradeAmount,
+                            BigDecimal fee);
 
     public List<TradeOrder> queryTradeOrderList(TradeOrder condition);
 

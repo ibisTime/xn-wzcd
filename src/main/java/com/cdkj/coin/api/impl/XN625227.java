@@ -4,7 +4,7 @@ import com.cdkj.coin.ao.IAdsAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.ObjValidater;
-import com.cdkj.coin.domain.AdsSell;
+import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.dto.req.XN625227Req;
 import com.cdkj.coin.enums.ETradeType;
 import com.cdkj.coin.exception.BizException;
@@ -26,7 +26,7 @@ public class XN625227 extends AProcessor {
 
         if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
 
-            AdsSell condition = new AdsSell();
+            Ads condition = new Ads();
             condition.setTradeCoin(req.getCoin());
             condition.setUserId(req.getUserId());
             return this.adsAO.ossSellPage(req.getStart(), req.getLimit(), condition);
