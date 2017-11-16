@@ -3,6 +3,7 @@
 <mapper namespace="com.cdkj.coin.dao.IAdsSellDAO">
     <resultMap id="BaseResultMap" type="com.cdkj.coin.domain.Ads">
         <id column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="trade_type" jdbcType="VARCHAR" property="tradeType"/>
         <result column="user_id" jdbcType="VARCHAR" property="userId"/>
         <result column="trade_currency" jdbcType="VARCHAR" property="tradeCurrency"/>
         <result column="trade_coin" jdbcType="VARCHAR" property="tradeCoin"/>
@@ -26,8 +27,7 @@
     <sql id="Base_Column_List">
         code, user_id, trade_currency, trade_coin, only_trust, premium_rate, total_amount,
         left_amount, market_price, protect_price, min_trade, max_trade, pay_type, pay_limit,
-        status, create_datetime, update_datetime,  leave_message
-
+        status, create_datetime, update_datetime, leave_message, trade_type
     </sql>
 
 
@@ -36,19 +36,28 @@
                                     trade_coin, only_trust, premium_rate,
                                     total_amount, left_amount, market_price,
                                     protect_price, min_trade, max_trade,
-                                    pay_type, pay_limit, status,
+                                    pay_type, pay_limit, status,trade_type,
                                     create_datetime, update_datetime, leave_message
         )
-        VALUES (#{code,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{tradeCurrency,jdbcType=VARCHAR},
-                                          #{tradeCoin,jdbcType=VARCHAR}, #{onlyTrust,jdbcType=VARCHAR},
-                                          #{premiumRate,jdbcType=DECIMAL},
-                                          #{totalAmount,jdbcType=DECIMAL}, #{leftAmount,jdbcType=DECIMAL},
-                                          #{marketPrice,jdbcType=DECIMAL},
-                                          #{protectPrice,jdbcType=DECIMAL}, #{minTrade,jdbcType=DECIMAL},
-                #{maxTrade,jdbcType=DECIMAL},
-                #{payType,jdbcType=VARCHAR}, #{payLimit,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR},
-                #{createDatetime,jdbcType=TIMESTAMP}, #{updateDatetime,jdbcType=TIMESTAMP},
-                #{leaveMessage,jdbcType=LONGVARCHAR}
+        VALUES (#{code,jdbcType=VARCHAR},
+            #{userId,jdbcType=VARCHAR},
+            #{tradeCurrency,jdbcType=VARCHAR},
+            #{tradeCoin,jdbcType=VARCHAR},
+            #{onlyTrust,jdbcType=VARCHAR},
+            #{premiumRate,jdbcType=DECIMAL},
+            #{totalAmount,jdbcType=DECIMAL},
+            #{leftAmount,jdbcType=DECIMAL},
+            #{marketPrice,jdbcType=DECIMAL},
+            #{protectPrice,jdbcType=DECIMAL},
+            #{minTrade,jdbcType=DECIMAL},
+            #{maxTrade,jdbcType=DECIMAL},
+            #{payType,jdbcType=VARCHAR},
+            #{payLimit,jdbcType=INTEGER},
+            #{status,jdbcType=VARCHAR},
+            #{tradeType},
+            #{createDatetime,jdbcType=TIMESTAMP},
+            #{updateDatetime,jdbcType=TIMESTAMP},
+            #{leaveMessage,jdbcType=LONGVARCHAR}
         )
     </insert>
 
@@ -66,13 +75,16 @@
                 AND `code` = #{code}
             </if>
             <if test="userId != null and userId != '' ">
-                AND `user_id` = #{code}
+                AND `user_id` = #{userId}
             </if>
             <if test="tradeCoin != null and tradeCoin != ''">
                 And `trade_coin` = #{tradeCoin}
             </if>
             <if test="status != null and status != ''">
                 And `status` = #{status}
+            </if>
+            <if test="tradeType != null and tradeType != ''">
+                And `trade_type` = #{tradeType}
             </if>
         </trim>
     </sql>
@@ -112,6 +124,7 @@
         LEFT JOIN tcoin_ads_display_time ON tcoin_ads.code = tcoin_ads_display_time.adsCode
         AND tcoin_ads_display_time.week = #{currentWeek}
         <include refid="whereCondition"/>
+        order by `premium_rate` asc
 
     </select>
 

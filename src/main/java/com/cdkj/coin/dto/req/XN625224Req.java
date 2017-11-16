@@ -13,8 +13,6 @@ public class XN625224Req {
     @NotBlank
     private String userId;
 
-    @NotBlank
-    private String tradeType;
 
     public String getAdsCode() {
         return adsCode;
@@ -32,11 +30,5 @@ public class XN625224Req {
         this.userId = userId;
     }
 
-    public String getTradeType() {
-        return tradeType;
-    }
 
-    public void setTradeType(String tradeType) {
-        this.tradeType = tradeType;
-    }
 }

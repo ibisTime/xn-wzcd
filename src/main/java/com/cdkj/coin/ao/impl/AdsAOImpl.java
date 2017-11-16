@@ -2,7 +2,10 @@ package com.cdkj.coin.ao.impl;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import com.cdkj.coin.bo.base.Paginable;
+import com.cdkj.coin.enums.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,10 +28,6 @@ import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.domain.Market;
 import com.cdkj.coin.domain.User;
 import com.cdkj.coin.dto.req.XN625220Req;
-import com.cdkj.coin.enums.EAdsPublishType;
-import com.cdkj.coin.enums.EAdsStatus;
-import com.cdkj.coin.enums.ECoin;
-import com.cdkj.coin.enums.EJourBizTypeUser;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.EBizErrorCode;
 
@@ -57,23 +56,39 @@ public class AdsAOImpl implements IAdsAO {
     @Autowired
     ITradeOrderBO tradeOrderBO;
 
-    @Autowired
-    IUserBO userBO;
 
     @Autowired
     IAdsDisplayTimeBO displayTimeBO;
 
+    @Autowired
+    IUserBO userBO;
+
     @Override
     public Object frontSellPage(Integer start, Integer limit, Ads condition) {
 
-        return this.iAdsBO.frontSellPage(start, limit, condition);
+
+        Paginable<Ads> paginable = this.iAdsBO.frontSellPage(start, limit, condition);
+
+        List<Ads> adsList = paginable.getList();
+        for (Ads ads : adsList) {
+            User user = this.userBO.getUser(ads.getUserId());
+            ads.setUser(user);
+        }
+        return paginable;
 
     }
 
     @Override
     public Object ossSellPage(Integer start, Integer limit, Ads condition) {
 
-        return this.iAdsBO.ossSellPage(start, limit, condition);
+        Paginable<Ads> paginable = this.iAdsBO.ossSellPage(start, limit, condition);
+
+        List<Ads> adsList = paginable.getList();
+        for (Ads ads : adsList) {
+            User user = this.userBO.getUser(ads.getUserId());
+            ads.setUser(user);
+        }
+        return paginable;
 
     }
 
@@ -86,7 +101,15 @@ public class AdsAOImpl implements IAdsAO {
             throw new BizException("xn00000", "用户不存在");
         }
 
-        this.insertSellAds(req);
+        if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
+
+            this.insertSellAds(req);
+
+        } else if (req.getTradeType().equals(ETradeType.BUY.getCode())) {
+
+            this.insertBuyAds(req);
+
+        }
 
     }
 
@@ -104,6 +127,7 @@ public class AdsAOImpl implements IAdsAO {
         ads.setPremiumRate(req.getPremiumRate());
         ads.setTotalAmount(req.getTotalAmount());
         ads.setLeftAmount(req.getTotalAmount());
+        ads.setTradeType(req.getTradeType());
 
         // 获取市场价格
         Market market = this.marketAO.marketByCoinType(ECoin.ETH.getCode());
@@ -151,6 +175,41 @@ public class AdsAOImpl implements IAdsAO {
 
             // 判断账户并处理
             this.checkAccountAndHandAccount(ads);
+
+        }
+
+        if (ads.getDisplayTime() != null && !ads.getDisplayTime().isEmpty()) {
+
+            // 有展示时间限制、先插入展示时间
+            for (AdsDisplayTime displayTime : ads.getDisplayTime()) {
+
+                displayTime.setAdsCode(ads.getCode());
+                // 校验
+                this.displayTimeBO.check(displayTime);
+                // 插入
+                this.displayTimeBO.insertDisplayTime(displayTime);
+
+            }
+
+        }
+
+        this.iAdsBO.insertAdsSell(ads);
+
+    }
+
+    public void insertBuyAds(XN625220Req req) {
+
+        // 构造,并校验
+        Ads ads = this.buildAdsSell(req, OrderNoGenerater.generate("ADS"));
+        if (req.getPublishType().equals(EAdsPublishType.DRAFT.getCode())) {
+
+            // 草稿
+            ads.setStatus(EAdsStatus.DRAFT.getCode());
+
+        } else {
+
+            // 直接发布
+            ads.setStatus(EAdsStatus.SHANG_JIA.getCode());
 
         }
 
@@ -259,11 +318,11 @@ public class AdsAOImpl implements IAdsAO {
         // 进行下架操作
         this.iAdsBO.xiaJiaAds(ads);
 
-        // 下架成功 把冻结金额返还
+        //todo 下架成功 把冻结金额返还
         if (ads.getLeftAmount().compareTo(BigDecimal.ZERO) > 0) {
 
             Account account = this.accountBO.getAccountByUser(userId, ECoin.ETH.getCode());
-            this.accountBO.unfrozenAmount(account, ads.getLeftAmount(), "");
+//            this.accountBO.unfrozenAmount(account, ads.getLeftAmount(), "");
 
         }
 

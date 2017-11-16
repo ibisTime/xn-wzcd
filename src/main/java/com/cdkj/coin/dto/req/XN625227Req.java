@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
  * Created by tianlei on 2017/十一月/14.
  */
 public class XN625227Req {
+
     @NotNull
     @DecimalMin(value = "1")
     private Integer start;
@@ -25,13 +26,21 @@ public class XN625227Req {
         this.userId = userId;
     }
 
-    @NotBlank
     private String coin;
 
     private String userId;
 
-    @NotBlank
     private String tradeType;
+
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Integer getStart() {
         return start;

@@ -12,11 +12,15 @@ public class Ads extends ABaseDO implements Serializable {
 
     private String userId;
 
+    private User user;
+
     private String tradeCurrency;
 
     private String tradeCoin;
 
     private String onlyTrust;
+
+    private String tradeType;
 
     private BigDecimal premiumRate;
 
@@ -24,7 +28,17 @@ public class Ads extends ABaseDO implements Serializable {
 
     public Ads() {
 
-    };
+    }
+
+    ;
+
+    public String getTradeType() {
+        return tradeType;
+    }
+
+    public void setTradeType(String tradeType) {
+        this.tradeType = tradeType;
+    }
 
     public Ads(String code, String userId, String tradeCurrency, String tradeCoin, String onlyTrust, BigDecimal premiumRate, BigDecimal totalAmount, BigDecimal leftAmount, BigDecimal marketPrice, BigDecimal protectPrice, BigDecimal minTrade, BigDecimal maxTrade, String payType, Integer payLimit, String status, Date createDatetime, Date updateDatetime, String leaveMessage) {
         this.code = code;
@@ -46,6 +60,7 @@ public class Ads extends ABaseDO implements Serializable {
         this.updateDatetime = updateDatetime;
         this.leaveMessage = leaveMessage;
     }
+
 
     private BigDecimal leftAmount;
 
@@ -74,6 +89,33 @@ public class Ads extends ABaseDO implements Serializable {
     //   以下字段为查询添加  //
     private Integer currentWeek;
     private Double currentTime;
+
+    private BigDecimal maxPrice;
+    private BigDecimal minPrice;
+
+    public BigDecimal getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(BigDecimal maxPrice) {
+        this.maxPrice = maxPrice;
+    }
+
+    public BigDecimal getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(BigDecimal minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Integer getCurrentWeek() {
         return currentWeek;

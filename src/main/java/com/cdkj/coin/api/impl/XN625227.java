@@ -24,22 +24,15 @@ public class XN625227 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
 
-        if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
 
-            Ads condition = new Ads();
-            condition.setTradeCoin(req.getCoin());
-            condition.setUserId(req.getUserId());
-            return this.adsAO.ossSellPage(req.getStart(), req.getLimit(), condition);
+        Ads condition = new Ads();
+        condition.setTradeCoin(req.getCoin());
+        condition.setUserId(req.getUserId());
+        condition.setTradeType(req.getTradeType());
+        condition.setTradeCoin(req.getCoin());
+        condition.setStatus(req.getStatus());
+        return this.adsAO.ossSellPage(req.getStart(), req.getLimit(), condition);
 
-        } else if (req.getTradeType().equals(ETradeType.BUY.getCode())) {
-
-            return null;
-
-        } else {
-
-            return null;
-
-        }
 
     }
 

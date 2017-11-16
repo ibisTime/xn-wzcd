@@ -29,14 +29,6 @@ public class XN625220Req {
     @NotBlank
     private String tradeType;
 
-    public String getTradeType() {
-        return tradeType;
-    }
-
-    public void setTradeType(String tradeType) {
-        this.tradeType = tradeType;
-    }
-
     // 交易
     @NotBlank
     private String tradeCurrency;
@@ -86,9 +78,17 @@ public class XN625220Req {
     @NotBlank
     private String leaveMessage;
 
-
-
     List<AdsDisplayTime> displayTime;
+
+
+
+    public String getTradeType() {
+        return tradeType;
+    }
+
+    public void setTradeType(String tradeType) {
+        this.tradeType = tradeType;
+    }
 
     public String getAdsCode() {
         return adsCode;

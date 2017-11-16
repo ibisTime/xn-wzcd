@@ -24,7 +24,11 @@ public class XN625228 extends AProcessor {
     public Object doBusiness() throws BizException {
 
         Ads condition = new Ads();
-
+        condition.setTradeCoin(req.getCoin());
+        condition.setTradeType(req.getTradeType());
+        condition.setPayType(req.getPayType());
+        condition.setMaxPrice(req.getMaxPrice());
+        condition.setMinPrice(req.getMinPrice());
         return this.adsAO.frontSellPage(req.getStart(),req.getLimit(),condition);
     }
 
