@@ -21,9 +21,9 @@ public class XN625000Res {
 
     private String accountType;
 
-    private String accessKey;
+    private transient String accessKey;
 
-    private String secretKey;
+    private transient String secretKey;
 
     private String sign;
 

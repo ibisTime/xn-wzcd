@@ -71,9 +71,8 @@ public class ArbitrateBOImpl extends PaginableBOImpl<Arbitrate> implements
             condition.setCode(code);
             data = arbitrateDAO.select(condition);
             if (data == null) {
-                throw new BizException(
-                    EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "编号为"
-                            + code + "的仲裁工单不存在");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "编号为"
+                        + code + "的仲裁工单不存在");
             }
         }
         return data;

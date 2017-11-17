@@ -44,6 +44,7 @@ import com.cdkj.coin.domain.User;
 import com.cdkj.coin.dto.req.XN805042Req;
 import com.cdkj.coin.dto.req.XN805043Req;
 import com.cdkj.coin.dto.req.XN805095Req;
+import com.cdkj.coin.dto.res.XN625000Res;
 import com.cdkj.coin.dto.res.XN798011Res;
 import com.cdkj.coin.dto.res.XN798012Res;
 import com.cdkj.coin.dto.res.XN805041Res;
@@ -53,6 +54,7 @@ import com.cdkj.coin.enums.ECoin;
 import com.cdkj.coin.enums.EEthAddressType;
 import com.cdkj.coin.enums.EIDKind;
 import com.cdkj.coin.enums.ELoginType;
+import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.enums.EUser;
 import com.cdkj.coin.enums.EUserKind;
 import com.cdkj.coin.enums.EUserStatus;
@@ -139,7 +141,9 @@ public class UserAOImpl implements IUserAO {
         // 通知橙提取
         ctqBO.uploadAddress(ethAddress, EEthAddressType.X.getCode());
         // 注册腾讯云
-        // tencentBO.register(userId, companyCode, systemCode);
+
+        tencentBO.register(userId, companyCode, systemCode);
+
         // 注册送积分
         Long amount = addRegAmount(userId, mobile, kind, companyCode,
             systemCode);
@@ -956,6 +960,12 @@ public class UserAOImpl implements IUserAO {
         data.setUserId(userId);
         data.setLevel(level);
         userBO.refreshLevel(data);
+    }
+
+    @Override
+    public XN625000Res getTencentSign(String userId) {
+        return tencentBO.getSign(userId, ESystemCode.COIN.getCode(),
+            ESystemCode.COIN.getCode());
     }
 
 }
