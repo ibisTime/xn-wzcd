@@ -1,6 +1,7 @@
 package com.cdkj.coin.bo.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -70,7 +71,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     @Override
     public void xiaJiaAds(Ads adsSell) {
 
-        adsSell.setStatus(EAdsStatus.XIA_JIA.getCode());
+        adsSell.setStatus(EAdsStatus.XIAJIA.getCode());
         int count = this.adsDAO.updateByPrimaryKeySelective(adsSell);
         if (count != 1) {
             throw new BizException("xn000000", "下架失败");
@@ -83,7 +84,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
         Ads condition = new Ads();
         condition.setCode(adsCode);
-        condition.setStatus(EAdsStatus.SHANG_JIA.getCode());
+        condition.setStatus(EAdsStatus.DAIJIAOYI.getCode());
         int count = this.adsDAO.updateByPrimaryKeySelective(condition);
         if (count != 1) {
             throw new BizException("xn000000", "上架失败");
@@ -125,7 +126,10 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         }
 
         // 只查正在上架中的
-        condition.setStatus(EAdsStatus.SHANG_JIA.getCode());
+        List<String> statusList = new ArrayList<String>();
+        statusList.add(EAdsStatus.DAIJIAOYI.getCode());
+        statusList.add(EAdsStatus.JIAOYIZHONG.getCode());
+        condition.setStatusList(statusList);
         // 传现在是 周几 java 周日 = 1，
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
@@ -162,6 +166,12 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
             page.getPageSize());
         page.setList(dataList);
         return page;
+
+    }
+
+    @Override
+    public void refreshStatus(boolean existOningOrder) {
+        // TODO Auto-generated method stub
 
     }
 

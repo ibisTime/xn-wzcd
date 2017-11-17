@@ -11,31 +11,33 @@ import com.cdkj.coin.domain.Market;
  */
 public interface IAdsBO {
 
-    //改变剩余金额
+    // 改变剩余金额
     public void changeLeftAmount(String adsCode, BigDecimal value);
 
-    //下架广告
+    // 下架广告
     public void xiaJiaAds(Ads adsSell);
 
-    //上架广告
+    // 上架广告
     public void shangJiaAds(String adsCode);
 
-    //插入广告
+    // 插入广告
     public void insertAdsSell(Ads adsSell);
 
-    //草稿发布
+    // 草稿发布
     public void draftPublish(Ads adsSell);
 
-    //广告详情
+    // 广告详情
     public Ads adsSellDetail(String adsCode);
 
-    //更新广告的市场价格
+    // 更新广告的市场价格
     public void refreshAllAdsMarketPrice(Market market);
 
     public Paginable<Ads> frontSellPage(Integer start, Integer limit,
-                                        Ads condition);
+            Ads condition);
 
     public Paginable<Ads> ossSellPage(Integer start, Integer limit,
-                                      Ads condition);
+            Ads condition);
+
+    public void refreshStatus(boolean existOningOrder);
 
 }

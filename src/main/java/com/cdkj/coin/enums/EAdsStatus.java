@@ -1,18 +1,12 @@
 package com.cdkj.coin.enums;
 
-import com.cdkj.coin.exception.BizException;
-
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by tianlei on 2017/十一月/14.
  */
 public enum EAdsStatus {
 
-    DRAFT("0", "草稿"),
-    SHANG_JIA("1", "上架"),
-    XIA_JIA("2", "下架");
+    DRAFT("0", "草稿"), DAIJIAOYI("1", "待交易"), JIAOYIZHONG("2", "交易中"), XIAJIA(
+            "3", "已下架");
 
     EAdsStatus(String code, String value) {
         this.code = code;

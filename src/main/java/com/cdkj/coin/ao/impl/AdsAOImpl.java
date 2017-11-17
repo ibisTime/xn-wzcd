@@ -175,7 +175,7 @@ public class AdsAOImpl implements IAdsAO {
         } else {
 
             // 直接发布
-            ads.setStatus(EAdsStatus.SHANG_JIA.getCode());
+            ads.setStatus(EAdsStatus.DAIJIAOYI.getCode());
 
             // 判断账户并处理
             this.checkAccountAndHandAccount(ads);
@@ -212,7 +212,7 @@ public class AdsAOImpl implements IAdsAO {
         } else {
 
             // 直接发布
-            ads.setStatus(EAdsStatus.SHANG_JIA.getCode());
+            ads.setStatus(EAdsStatus.DAIJIAOYI.getCode());
 
         }
 
@@ -243,7 +243,7 @@ public class AdsAOImpl implements IAdsAO {
 
         // 构造 并校验
         Ads ads = this.buildAdsSell(req, req.getAdsCode());
-        ads.setStatus(EAdsStatus.SHANG_JIA.getCode());
+        ads.setStatus(EAdsStatus.DAIJIAOYI.getCode());
 
         // 如果为卖币,就有对账户进行处理
         if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
@@ -286,7 +286,7 @@ public class AdsAOImpl implements IAdsAO {
 
         // 检查 是否处于下架状态
         Ads trueAds = this.iAdsBO.adsSellDetail(ads.getCode());
-        if (trueAds.getStatus().equals(EAdsStatus.XIA_JIA.getCode())) {
+        if (trueAds.getStatus().equals(EAdsStatus.XIAJIA.getCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前广告不是下架状态，不能进行该操作");
         }
@@ -349,15 +349,13 @@ public class AdsAOImpl implements IAdsAO {
     @Override
     public void xiaJiaAds(String adsCode, String userId) {
         Ads ads = iAdsBO.adsSellDetail(adsCode);
-        if (!EAdsStatus.SHANG_JIA.getCode().equals(ads.getStatus())) {
+        if (!EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前状态无法下架！");
         }
         // 校验操作者是否是本人
         if (!ads.getUserId().equals(userId)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "您无权下架该广告");
         }
-        // 检查是否有正在进行中的交易
-        tradeOrderBO.checkXiajia(adsCode);
 
         // 进行下架操作
         this.iAdsBO.xiaJiaAds(ads);
@@ -376,15 +374,16 @@ public class AdsAOImpl implements IAdsAO {
     @Override
     public void checkXiajia(String adsCode) {
         Ads ads = iAdsBO.adsSellDetail(adsCode);
-        if (!EAdsStatus.SHANG_JIA.getCode().equals(ads.getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前状态无法下架！");
-        }
-        // 剩余金额小于 单笔最小交易金额就下架
-        boolean condition1 = ads.getLeftAmount().compareTo(new BigDecimal(0)) == 0;
+        if (EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())) {
+            // 剩余金额小于 单笔最小交易金额就下架
+            boolean condition1 = ads.getLeftAmount().compareTo(
+                new BigDecimal(0)) == 0;
 
-        boolean condition2 = ads.getLeftAmount().compareTo(ads.getMinTrade()) < 0;
-        if (condition1 || condition2) {
-            iAdsBO.xiaJiaAds(ads);
+            boolean condition2 = ads.getLeftAmount().compareTo(
+                ads.getMinTrade()) < 0;
+            if (condition1 || condition2) {
+                iAdsBO.xiaJiaAds(ads);
+            }
         }
     }
 

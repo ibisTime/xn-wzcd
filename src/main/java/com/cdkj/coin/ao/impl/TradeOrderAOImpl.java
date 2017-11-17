@@ -35,7 +35,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     private ITradeOrderBO tradeOrderBO;
 
     @Autowired
-    private IAdsBO adsSellBO;
+    private IAdsBO adsBO;
 
     @Autowired
     private IArbitrateBO arbitrateBO;
@@ -55,8 +55,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             BigDecimal count, BigDecimal tradeAmount) {
         String code = null;
         // 获取广告详情
-        Ads ads = adsSellBO.adsSellDetail(adsCode);
-        if (!EAdsStatus.SHANG_JIA.getCode().equals(ads.getStatus())) {
+        Ads ads = adsBO.adsSellDetail(adsCode);
+        if (!EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())
+                && !EAdsStatus.JIAOYIZHONG.getCode().equals(ads.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "广告未上架，不能进行交易");
         }
@@ -70,7 +71,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         Double rate = sysConfigBO.getDoubleValue(SysConstants.TRADE_FEE_RATE);
         BigDecimal fee = count.multiply(BigDecimal.valueOf(rate));
         // 变更广告剩余可售金额
-        adsSellBO.changeLeftAmount(ads.getCode(), count.negate());
+        adsBO.changeLeftAmount(ads.getCode(), count.negate());
         // 提交交易订单
         code = tradeOrderBO.buySubmit(ads, buyUser, tradePrice, count,
             tradeAmount, fee);
@@ -126,6 +127,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         }
         // 变更交易订单信息
         tradeOrderBO.release(tradeOrder, updater, remark);
+        // 检查广告是否还有交易中的状态，维护状态字段
+        adsBO.refreshStatus(tradeOrderBO.isExistOningOrder(tradeOrder
+            .getAdsCode()));
         return tradeOrder;
     }
 

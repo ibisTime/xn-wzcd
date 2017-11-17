@@ -9,9 +9,8 @@ import com.cdkj.coin.domain.TradeOrder;
 
 public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
 
-    public String buySubmit(Ads adsSell, String buyUser,
-                            BigDecimal tradePrice, BigDecimal count, BigDecimal tradeAmount,
-                            BigDecimal fee);
+    public String buySubmit(Ads adsSell, String buyUser, BigDecimal tradePrice,
+            BigDecimal count, BigDecimal tradeAmount, BigDecimal fee);
 
     public List<TradeOrder> queryTradeOrderList(TradeOrder condition);
 
@@ -33,6 +32,6 @@ public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
 
     public int revokePay(TradeOrder tradeOrder, String updater, String string);
 
-    public void checkXiajia(String adsCode);
+    public boolean isExistOningOrder(String adsCode);
 
 }
