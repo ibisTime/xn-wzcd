@@ -24,7 +24,7 @@ public interface IAdsBO {
     public void insertAdsSell(Ads adsSell);
 
     //草稿发布
-    public void sellDraftPublish(Ads adsSell);
+    public void draftPublish(Ads adsSell);
 
     //广告详情
     public Ads adsSellDetail(String adsCode);

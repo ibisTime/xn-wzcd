@@ -88,7 +88,7 @@
 
             <if test="currentTime != null and currentTime != '' and currentWeek != null and currentWeek != ''">
                 AND   (
-                tcoin_ads_display_time.adsCode IS NULL OR (
+                tcoin_ads_display_time.ads_code IS NULL OR (
                 #{currentTime} >= tcoin_ads_display_time.start_time
                 <![CDATA[ and #{currentTime} < tcoin_ads_display_time.end_time ]]>
                 )
@@ -128,7 +128,7 @@
     <select id="selectFrontTotalCount" parameterType="com.cdkj.coin.domain.Ads" resultType="java.lang.Long">
         SELECT count(1)
         FROM tcoin_ads
-        LEFT JOIN tcoin_ads_display_time ON tcoin_ads.code = tcoin_ads_display_time.adsCode
+        LEFT JOIN tcoin_ads_display_time ON tcoin_ads.code = tcoin_ads_display_time.ads_code
         AND tcoin_ads_display_time.week = #{currentWeek}
         <include refid="whereCondition"/>
     </select>
@@ -137,7 +137,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM tcoin_ads
-        LEFT JOIN tcoin_ads_display_time ON tcoin_ads.code = tcoin_ads_display_time.adsCode
+        LEFT JOIN tcoin_ads_display_time ON tcoin_ads.code = tcoin_ads_display_time.ads_code
         AND tcoin_ads_display_time.week = #{currentWeek}
         <include refid="whereCondition"/>
         order by `premium_rate` asc

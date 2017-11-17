@@ -29,12 +29,12 @@ CREATE TABLE `tcoin_ads` (
 #广告可见时间
 CREATE TABLE `tcoin_ads_display_time` (
   `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `adsCode` varchar(32) NOT NULL COMMENT '编号',
+  `ads_code` varchar(32) NOT NULL COMMENT '编号',
   `week` CHAR(1) NOT NULL COMMENT '周几',
   `start_time` INTEGER NOT NULL COMMENT '开始时间',
   `end_time` INTEGER NOT NULL COMMENT '结束时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY ads_week(`adsCode`,`week`)  USING BTREE
+  UNIQUE KEY ads_week(`ads_code`,`week`)  USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #订单

@@ -3,13 +3,13 @@
 <mapper namespace="com.cdkj.coin.dao.IDisplayTimeDAO">
   <resultMap id="BaseResultMap" type="com.cdkj.coin.domain.AdsDisplayTime">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="adsCode" jdbcType="VARCHAR" property="adscode" />
+    <result column="ads_code" jdbcType="VARCHAR" property="adsCode" />
     <result column="week" jdbcType="CHAR" property="week" />
     <result column="start_time" jdbcType="INTEGER" property="startTime" />
     <result column="end_time" jdbcType="INTEGER" property="endTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, adsCode, week, start_time, end_time
+    id, ads_code, week, start_time, end_time
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -21,13 +21,13 @@
 
   <delete id="deleteByAdsCode" parameterType="java.lang.Integer">
     delete from tcoin_ads_display_time
-    where adsCode = #{adsCode}
+    where ads_code = #{adsCode}
   </delete>
 
   <insert id="insert" parameterType="com.cdkj.coin.domain.AdsDisplayTime">
-    insert into tcoin_ads_display_time (id, adsCode, week,
+    insert into tcoin_ads_display_time (id, ads_code, week,
     start_time, end_time)
-    values (#{id,jdbcType=INTEGER}, #{adscode,jdbcType=VARCHAR}, #{week,jdbcType=CHAR},
+    values (#{id,jdbcType=INTEGER}, #{adsCode,jdbcType=VARCHAR}, #{week,jdbcType=CHAR},
     #{startTime,jdbcType=INTEGER}, #{endTime,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.cdkj.coin.domain.AdsDisplayTime">
@@ -36,8 +36,8 @@
       <if test="id != null">
         id,
       </if>
-      <if test="adscode != null">
-        adsCode,
+      <if test="adsCode != null">
+        ads_code,
       </if>
       <if test="week != null">
         week,
@@ -53,8 +53,8 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="adscode != null">
-        #{adscode,jdbcType=VARCHAR},
+      <if test="adsCode != null">
+        #{adsCode,jdbcType=VARCHAR},
       </if>
       <if test="week != null">
         #{week,jdbcType=CHAR},
@@ -70,8 +70,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.cdkj.coin.domain.AdsDisplayTime">
     update tcoin_ads_display_time
     <set>
-      <if test="adscode != null">
-        adsCode = #{adscode,jdbcType=VARCHAR},
+      <if test="adsCode != null">
+        ads_code = #{adsCode,jdbcType=VARCHAR},
       </if>
       <if test="week != null">
         week = #{week,jdbcType=CHAR},
@@ -87,7 +87,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cdkj.coin.domain.AdsDisplayTime">
     update tcoin_ads_display_time
-    set adsCode = #{adscode,jdbcType=VARCHAR},
+    set ads_code = #{adsCode,jdbcType=VARCHAR},
     week = #{week,jdbcType=CHAR},
     start_time = #{startTime,jdbcType=INTEGER},
     end_time = #{endTime,jdbcType=INTEGER}
