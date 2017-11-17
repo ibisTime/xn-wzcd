@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-import com.cdkj.coin.enums.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -27,6 +26,14 @@ import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.domain.User;
 import com.cdkj.coin.domain.Withdraw;
+import com.cdkj.coin.enums.EAccountType;
+import com.cdkj.coin.enums.EBoolean;
+import com.cdkj.coin.enums.EChannelType;
+import com.cdkj.coin.enums.ECurrency;
+import com.cdkj.coin.enums.EJourBizType;
+import com.cdkj.coin.enums.EJourBizTypeUser;
+import com.cdkj.coin.enums.ESystemCode;
+import com.cdkj.coin.enums.EWithdrawStatus;
 import com.cdkj.coin.exception.BizException;
 
 @Service
@@ -80,7 +87,9 @@ public class WithdrawAOImpl implements IWithdrawAO {
         String withdrawCode = withdrawBO.applyOrder(dbAccount, amount, fee,
             payCardInfo, payCardNo, applyUser, applyNote);
         // 冻结取现金额
-        accountBO.frozenAmount(dbAccount, amount, EJourBizTypeUser.AJ_WITHDRAW.getCode(), EJourBizTypeUser.AJ_WITHDRAW.getValue(), withdrawCode);
+        accountBO.frozenAmount(dbAccount, amount,
+            EJourBizTypeUser.AJ_WITHDRAW.getCode(),
+            EJourBizTypeUser.AJ_WITHDRAW.getValue(), withdrawCode);
         return withdrawCode;
     }
 
@@ -107,7 +116,9 @@ public class WithdrawAOImpl implements IWithdrawAO {
         String withdrawCode = withdrawBO.applyOrder(dbAccount, amount, fee,
             payCardInfo, payCardNo, applyUser, applyNote);
         // 冻结取现金额
-        accountBO.frozenAmount(dbAccount, amount, EJourBizTypeUser.AJ_WITHDRAW.getCode(), EJourBizTypeUser.AJ_WITHDRAW.getValue(), withdrawCode);
+        accountBO.frozenAmount(dbAccount, amount,
+            EJourBizTypeUser.AJ_WITHDRAW.getCode(),
+            EJourBizTypeUser.AJ_WITHDRAW.getValue(), withdrawCode);
         return withdrawCode;
     }
 
@@ -183,7 +194,8 @@ public class WithdrawAOImpl implements IWithdrawAO {
             approveNote);
         Account dbAccount = accountBO.getAccount(data.getAccountNumber());
         // 释放冻结流水
-        accountBO.unfrozenAmount(dbAccount, data.getAmount(), data.getCode());
+        accountBO.unfrozenAmount(dbAccount, data.getAmount(),
+            EJourBizTypeUser.AJ_WITHDRAW.getCode(), "取现失败退回", data.getCode());
     }
 
     private void payOrderNO(Withdraw data, String payUser, String payNote,
@@ -192,7 +204,8 @@ public class WithdrawAOImpl implements IWithdrawAO {
             payCode);
         Account dbAccount = accountBO.getAccount(data.getAccountNumber());
         // 释放冻结流水
-        accountBO.unfrozenAmount(dbAccount, data.getAmount(), data.getCode());
+        accountBO.unfrozenAmount(dbAccount, data.getAmount(),
+            EJourBizTypeUser.AJ_WITHDRAW.getCode(), "取现失败退回", data.getCode());
     }
 
     private void payOrderYES(Withdraw data, String payUser, String payNote,
