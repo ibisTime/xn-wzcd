@@ -19,9 +19,9 @@
 		<property name="triggers">
 			<list>
 
-				<!--<ref bean="currencyRateTrigger"/>-->
-				<!--<ref bean="marketTrigger"/>-->
-				<!--<ref bean="adsMarketRefreshTrigger"/>-->
+				<ref bean="currencyRateTrigger"/>
+				<ref bean="marketTrigger"/>
+				<ref bean="adsMarketRefreshTrigger"/>
 
 			</list>
 		</property>

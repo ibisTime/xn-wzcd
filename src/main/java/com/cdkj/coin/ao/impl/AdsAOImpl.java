@@ -115,7 +115,7 @@ public class AdsAOImpl implements IAdsAO {
 
     // 草稿code传入已存在的
     // 第一次插入传生成的
-    Ads buildAdsSell(XN625220Req req, String adsCode) {
+    Ads buildAds(XN625220Req req, String adsCode) {
 
         Ads ads = new Ads();
         ads.setTradeCoin(ECoin.ETH.getCode());
@@ -126,7 +126,10 @@ public class AdsAOImpl implements IAdsAO {
         ads.setUpdateDatetime(new Date());
         ads.setPremiumRate(req.getPremiumRate());
         ads.setTotalAmount(req.getTotalAmount());
+
+        //构造等于重新发布，把可交易金额设为和总额相等
         ads.setLeftAmount(req.getTotalAmount());
+
         ads.setTradeType(req.getTradeType());
 
         // 获取市场价格
@@ -161,7 +164,7 @@ public class AdsAOImpl implements IAdsAO {
     public void insertSellAds(XN625220Req req) {
 
         // 构造,并校验
-        Ads ads = this.buildAdsSell(req, OrderNoGenerater.generate("ADS"));
+        Ads ads = this.buildAds(req, OrderNoGenerater.generate("ADS"));
 
         if (req.getPublishType().equals(EAdsPublishType.DRAFT.getCode())) {
 
@@ -199,7 +202,7 @@ public class AdsAOImpl implements IAdsAO {
     public void insertBuyAds(XN625220Req req) {
 
         // 构造,并校验
-        Ads ads = this.buildAdsSell(req, OrderNoGenerater.generate("ADS"));
+        Ads ads = this.buildAds(req, OrderNoGenerater.generate("ADS"));
         if (req.getPublishType().equals(EAdsPublishType.DRAFT.getCode())) {
 
             // 草稿
@@ -237,13 +240,12 @@ public class AdsAOImpl implements IAdsAO {
             throw new BizException("xn000", "请传入广告编号");
         }
 
-        // 构造 并校验
-        Ads ads = this.buildAdsSell(req, req.getAdsCode());
+        //构造并校验
+        Ads ads = this.buildAds(req, req.getAdsCode());
         ads.setStatus(EAdsStatus.SHANG_JIA.getCode());
 
         //如果为卖币,就有对账户进行处理
         if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
-
             // 判断账户并处理
             this.checkAccountAndHandAccount(ads);
 
@@ -266,7 +268,7 @@ public class AdsAOImpl implements IAdsAO {
         }
 
         //
-        this.iAdsBO.sellDraftPublish(ads);
+        this.iAdsBO.draftPublish(ads);
 
     }
 
@@ -278,16 +280,22 @@ public class AdsAOImpl implements IAdsAO {
         }
 
         // 构造 并校验
-        Ads ads = this.buildAdsSell(req, req.getAdsCode());
+        Ads ads = this.buildAds(req, req.getAdsCode());
 
         //检查 是否处于下架状态
+        // 拉出真实的广告
         Ads trueAds = this.iAdsBO.adsSellDetail(ads.getCode());
         if (trueAds.getStatus().equals(EAdsStatus.XIA_JIA.getCode())) {
             throw new BizException(EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "当前广告不是下架状态，不能进行该操作");
         }
 
-        //  判断账户并处理
-        this.checkAccountAndHandAccount(ads);
+        if (trueAds.getTradeType().equals(ETradeType.SELL)) {
+
+            //  判断账户并处理
+            this.checkAccountAndHandAccount(ads);
+
+        }
+
 
         //  删除原来的展示时间
         this.displayTimeBO.deleteAdsDisplayTimeByAdsCode(ads.getCode());
@@ -298,7 +306,6 @@ public class AdsAOImpl implements IAdsAO {
             for (AdsDisplayTime displayTime : ads.getDisplayTime()) {
 
                 displayTime.setAdsCode(ads.getCode());
-                // 插入
                 this.displayTimeBO.insertDisplayTime(displayTime);
 
             }
@@ -311,6 +318,8 @@ public class AdsAOImpl implements IAdsAO {
     }
 
 
+    //出售广告需要调用次方法
+    //购买广告暂时不需要
     public void checkAccountAndHandAccount(Ads ads) {
 
         Account account = this.accountBO.getAccountByUser(ads.getUserId(),
@@ -324,7 +333,7 @@ public class AdsAOImpl implements IAdsAO {
 
         // 校验账户余额
         if (account.getAmount().compareTo(frezonAmount) < 0) {
-            throw new BizException("xn000", "需要冻结相应的手续费，账户余额不足");
+            throw new BizException("xn000", "需要冻结相应的手续费 + 出售总额，账户余额不足");
         }
 
         // 冻结账户金额
@@ -341,6 +350,7 @@ public class AdsAOImpl implements IAdsAO {
 
     }
 
+    //主动下架，只要没有未完成的订单，都可以下架
     @Transactional
     @Override
     public void xiaJiaAds(String adsCode, String userId) {
@@ -349,29 +359,38 @@ public class AdsAOImpl implements IAdsAO {
             throw new BizException(
                     EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "当前状态无法下架！");
         }
+
         // 校验操作者是否是本人
         if (!ads.getUserId().equals(userId)) {
             throw new BizException(EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "您无权下架该广告");
         }
+
         // 检查是否有正在进行中的交易
         tradeOrderBO.checkXiajia(adsCode);
 
         // 进行下架操作
         this.iAdsBO.xiaJiaAds(ads);
 
-        //todo 下架成功 把冻结金额返还
-        if (ads.getLeftAmount().compareTo(BigDecimal.ZERO) > 0) {
+        if (ads.getTradeType().equals(ETradeType.SELL.getCode()))  {
+            //卖币
+            //todo 下架成功 把冻结金额返还
+            if (ads.getLeftAmount().compareTo(BigDecimal.ZERO) > 0) {
 
-            Account account = this.accountBO.getAccountByUser(userId, ECoin.ETH.getCode());
+                Account account = this.accountBO.getAccountByUser(userId, ECoin.ETH.getCode());
 //            this.accountBO.unfrozenAmount(account, ads.getLeftAmount(), "");
+
+            }
 
         }
 
+
     }
 
+    //被动下架，满足下列条件即可下架
     @Override
     public void checkXiajia(String adsCode) {
         Ads ads = iAdsBO.adsSellDetail(adsCode);
+
         if (!EAdsStatus.SHANG_JIA.getCode().equals(ads.getStatus())) {
             throw new BizException(
                     EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "当前状态无法下架！");
