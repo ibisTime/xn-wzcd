@@ -39,16 +39,12 @@ public class AdsDisplayTime extends ABaseDO implements Serializable {
         this.adsCode = adsCode;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
     public String getWeek() {
         return week;
     }
 
     public void setWeek(String week) {
-        this.week = week == null ? null : week.trim();
+        this.week = week;
     }
 
     public Integer getStartTime() {

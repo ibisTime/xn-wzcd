@@ -270,7 +270,7 @@ public class AdsAOImpl implements IAdsAO {
         }
 
         //
-        this.iAdsBO.sellDraftPublish(ads);
+        this.iAdsBO.draftPublish(ads);
 
     }
 

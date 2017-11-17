@@ -71,10 +71,6 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     public void xiaJiaAds(Ads adsSell) {
 
         adsSell.setStatus(EAdsStatus.XIA_JIA.getCode());
-<<<<<<< HEAD
-=======
-        // todo 释放剩余冻结金额
->>>>>>> e85fc0890e988b6f3adbd2e4469726f2ac635535
         int count = this.adsDAO.updateByPrimaryKeySelective(adsSell);
         if (count != 1) {
             throw new BizException("xn000000", "下架失败");
@@ -122,12 +118,9 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
         if (condition.getMaxPrice() != null && condition.getMinPrice() != null) {
             if (condition.getMaxPrice().compareTo(condition.getMinPrice()) <= 0) {
-<<<<<<< HEAD
-                throw new BizException(EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "最大金额需大于等于最小金额");
-=======
+
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "最大金额需大于等于最小金额");
->>>>>>> e85fc0890e988b6f3adbd2e4469726f2ac635535
             }
         }
 
