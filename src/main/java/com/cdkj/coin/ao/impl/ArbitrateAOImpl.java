@@ -29,8 +29,8 @@ public class ArbitrateAOImpl implements IArbitrateAO {
     public void handle(String code, String result, String updater, String remark) {
         Arbitrate arbitrate = arbitrateBO.getArbitrate(code);
         if (!EArbitrateStatus.TO_HANDLE.getCode().equals(arbitrate.getStatus())) {
-            throw new BizException(
-                EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "仲裁工单不处于待处理状态");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "仲裁工单不处于待处理状态");
         }
         TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(arbitrate
             .getTradeOrderCode());

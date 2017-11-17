@@ -7,31 +7,31 @@ package com.cdkj.coin.exception;
  */
 public enum EBizErrorCode {
 
-    DEFAULT_ERROR_CODE("xn625000", "业务异常");
+    DEFAULT("xn625000", "业务异常");
     // PUSH_STATUS_UPDATE_FAILURE("eth000001","地址状态更新失败");
 
-    private String errorCode;
+    private String code;
 
-    private String errorInfo;
+    private String info;
 
-    public String getErrorCode() {
-        return errorCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getErrorInfo() {
-        return errorInfo;
+    public String getInfo() {
+        return info;
     }
 
-    public void setErrorInfo(String errorInfo) {
-        this.errorInfo = errorInfo;
+    public void setInfo(String info) {
+        this.info = info;
     }
 
-    EBizErrorCode(String errorCode, String errorInfo) {
-        this.errorCode = errorCode;
-        this.errorInfo = errorInfo;
+    EBizErrorCode(String code, String info) {
+        this.code = code;
+        this.info = info;
     }
 }

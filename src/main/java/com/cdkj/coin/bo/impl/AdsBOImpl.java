@@ -5,8 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.cdkj.coin.domain.Market;
-import com.cdkj.coin.exception.EBizErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +14,10 @@ import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.bo.base.PaginableBOImpl;
 import com.cdkj.coin.dao.IAdsDAO;
 import com.cdkj.coin.domain.Ads;
+import com.cdkj.coin.domain.Market;
 import com.cdkj.coin.enums.EAdsStatus;
 import com.cdkj.coin.exception.BizException;
+import com.cdkj.coin.exception.EBizErrorCode;
 
 /**
  * Created by tianlei on 2017/十一月/14.
@@ -71,6 +71,10 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     public void xiaJiaAds(Ads adsSell) {
 
         adsSell.setStatus(EAdsStatus.XIA_JIA.getCode());
+<<<<<<< HEAD
+=======
+        // todo 释放剩余冻结金额
+>>>>>>> e85fc0890e988b6f3adbd2e4469726f2ac635535
         int count = this.adsDAO.updateByPrimaryKeySelective(adsSell);
         if (count != 1) {
             throw new BizException("xn000000", "下架失败");
@@ -114,11 +118,16 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     // 前端分页
     @Override
     public Paginable<Ads> frontSellPage(Integer start, Integer limit,
-                                        Ads condition) {
+            Ads condition) {
 
         if (condition.getMaxPrice() != null && condition.getMinPrice() != null) {
             if (condition.getMaxPrice().compareTo(condition.getMinPrice()) <= 0) {
+<<<<<<< HEAD
                 throw new BizException(EBizErrorCode.DEFAULT_ERROR_CODE.getErrorCode(), "最大金额需大于等于最小金额");
+=======
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "最大金额需大于等于最小金额");
+>>>>>>> e85fc0890e988b6f3adbd2e4469726f2ac635535
             }
         }
 
@@ -141,8 +150,8 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         //
         long totalCount = adsDAO.selectFrontTotalCount(condition);
         Paginable<Ads> page = new Page<Ads>(start, limit, totalCount);
-        List<Ads> dataList = adsDAO.selectFrontList(condition,
-                page.getStart(), page.getPageSize());
+        List<Ads> dataList = adsDAO.selectFrontList(condition, page.getStart(),
+            page.getPageSize());
         page.setList(dataList);
         return page;
 
@@ -151,13 +160,13 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     // oss分页
     @Override
     public Paginable<Ads> ossSellPage(Integer start, Integer limit,
-                                      Ads condition) {
+            Ads condition) {
 
         //
         long totalCount = adsDAO.selectTotalCount(condition);
         Paginable<Ads> page = new Page<Ads>(start, limit, totalCount);
-        List<Ads> dataList = adsDAO.selectList(condition,
-                page.getStart(), page.getPageSize());
+        List<Ads> dataList = adsDAO.selectList(condition, page.getStart(),
+            page.getPageSize());
         page.setList(dataList);
         return page;
 

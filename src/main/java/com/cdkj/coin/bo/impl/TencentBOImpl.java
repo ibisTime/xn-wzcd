@@ -19,9 +19,12 @@ import java.net.URLEncoder;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.ITencentBO;
 import com.cdkj.coin.common.SysConstants;
@@ -29,8 +32,9 @@ import com.cdkj.coin.dto.res.XN625000Res;
 import com.cdkj.coin.enums.EConfigType;
 import com.cdkj.coin.enums.EUserPwd;
 import com.cdkj.coin.exception.BizException;
-import com.cdkj.coin.tencent.tls_sigcheck;
+import com.cdkj.coin.exception.EBizErrorCode;
 import com.google.gson.JsonObject;
+import com.tls.sigcheck.tls_sigcheck;
 
 /** 
  * @author: haiqingzheng 
@@ -39,6 +43,9 @@ import com.google.gson.JsonObject;
  */
 @Component
 public class TencentBOImpl implements ITencentBO {
+
+    private static final Logger logger = LoggerFactory
+        .getLogger(TencentBOImpl.class);
 
     public static final String TENXUN_CHAT_TUOGUAN_URL = "https://console.tim.qq.com/v4/registration_service/register_account_v1";
 
@@ -61,42 +68,48 @@ public class TencentBOImpl implements ITencentBO {
         String accountType = sysConfigMap.get(SysConstants.TX_ACCOUNT_TYPE);
 
         if (StringUtils.isBlank(txAppCode)) {
-            throw new BizException("xn0000", "应用编号不能为空");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "应用编号不能为空");
         }
         if (StringUtils.isBlank(txAppAdmin)) {
-            throw new BizException("xn0000", "管理员不能为空");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "管理员不能为空");
         }
         if (StringUtils.isBlank(accessKey)) {
-            throw new BizException("xn0000", "公钥不能为空");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "公钥不能为空");
         }
         if (StringUtils.isBlank(secretKey)) {
-            throw new BizException("xn0000", "密钥不能为空");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "私钥不能为空");
         }
         if (StringUtils.isBlank(accountType)) {
-            throw new BizException("xn0000", "账号类型不能为空");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "账号类型不能为空");
         }
-        tls_sigcheck demo = new tls_sigcheck();
-        String pathString = Thread.currentThread().getContextClassLoader()
-            .getResource("jnisigcheck.so").getPath();
-        // 使用前请修改动态库的加载路径
-        // demo.loadJniLib("C:\\Users\\asus\\Desktop\\ww\\jnisigcheck.dll");
-        demo.loadJniLib("/Users/haiqingzheng/Desktop/jnisigcheck.so");
-        int ret = demo.tls_gen_signature_ex2(txAppCode, txAppAdmin, secretKey);
-        if (0 != ret) {
-            throw new BizException("xn0000", "发送失败");
-        }
-        ret = demo.tls_check_signature_ex2(demo.getSig(), accessKey, txAppCode,
-            txAppAdmin);
-        if (14 == ret) {
-            throw new BizException("xn0000", "应用编号不符合");
-        }
-
         try {
-            sendChildSms(TENXUN_CHAT_TUOGUAN_URL + "?usersig=" + demo.getSig()
-                    + "&apn=1&identifier=" + txAppAdmin + "&sdkappid="
-                    + txAppCode + "&contenttype=json", userId);
+            tls_sigcheck demo = new tls_sigcheck();
+            demo.loadJniLib(Thread.currentThread().getContextClassLoader()
+                .getResource("jnisigcheck.so").getPath());
+
+            int ret = demo.tls_gen_signature_ex2(txAppCode, txAppAdmin,
+                secretKey);
+            ret = demo.tls_check_signature_ex2(demo.getSig(), accessKey,
+                txAppCode, txAppAdmin);
+            if (14 == ret) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "腾讯云IM签名失败");
+            }
+            String urlString = TENXUN_CHAT_TUOGUAN_URL + "?usersig="
+                    + demo.getSig() + "&apn=1&identifier=" + txAppAdmin
+                    + "&sdkappid=" + txAppCode + "&contenttype=json";
+            String result = sendChildSms(urlString, userId);
+            String errorCode = JSONObject.parseObject(result).getString(
+                "ErrorCode");
+            String errorInfo = JSONObject.parseObject(result).getString(
+                "ErrorInfo");
+            if (!errorCode.equals("0")) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "腾讯云注册异常,错误编号：" + errorCode + "，原因：" + errorInfo);
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "腾讯云IM注册异常，原因" + e.getMessage());
         }
     }
 
@@ -124,19 +137,19 @@ public class TencentBOImpl implements ITencentBO {
             throw new BizException("xn0000", "公钥不能为空");
         }
         if (StringUtils.isBlank(secretKey)) {
-            throw new BizException("xn0000", "密钥不能为空");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "私钥不能为空");
         }
         if (StringUtils.isBlank(accountType)) {
             throw new BizException("xn0000", "账号类型不能为空");
         }
         tls_sigcheck demo = new tls_sigcheck();
-        // 使用前请修改动态库的加载路径
-        // demo.loadJniLib("C:\\Users\\asus\\Desktop\\ww\\jnisigcheck.dll");
-        demo.loadJniLib(Class.class.getClass().getResource("/").getPath()
-                + "jnisigcheck.so");
-        int ret = demo.tls_gen_signature_ex2(txAppCode, userId, secretKey);
-        if (0 != ret) {
-            throw new BizException("xn0000", "发送失败");
+        demo.loadJniLib(Thread.currentThread().getContextClassLoader()
+            .getResource("jnisigcheck.so").getPath());
+        int ret = demo.tls_gen_signature_ex2(txAppCode, txAppAdmin, secretKey);
+        ret = demo.tls_check_signature_ex2(demo.getSig(), accessKey, txAppCode,
+            txAppAdmin);
+        if (14 == ret) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "腾讯云IM签名失败");
         }
         XN625000Res res = new XN625000Res();
         res.setTxAppCode(txAppCode);

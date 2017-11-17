@@ -7,6 +7,7 @@ import com.cdkj.coin.domain.User;
 import com.cdkj.coin.dto.req.XN805042Req;
 import com.cdkj.coin.dto.req.XN805043Req;
 import com.cdkj.coin.dto.req.XN805095Req;
+import com.cdkj.coin.dto.res.XN625000Res;
 import com.cdkj.coin.dto.res.XN805041Res;
 
 /**
@@ -148,4 +149,6 @@ public interface IUserAO {
 
     // 校验支付密码
     public void doCheckTradePwd(String userId, String tradePwd);
+
+    public XN625000Res getTencentSign(String userId);
 }
