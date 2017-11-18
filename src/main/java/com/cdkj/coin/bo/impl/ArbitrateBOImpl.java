@@ -50,6 +50,7 @@ public class ArbitrateBOImpl extends PaginableBOImpl<Arbitrate> implements
         int count = 0;
         if (arbitrate != null) {
             arbitrate.setResult(result);
+            arbitrate.setStatus(EArbitrateStatus.COMPLETE.getCode());
             arbitrate.setUpdater(updater);
             arbitrate.setUpdateDatetime(new Date());
             arbitrate.setRemark(remark);
