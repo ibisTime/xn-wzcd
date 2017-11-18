@@ -72,19 +72,22 @@ public class StringValidater {
      * @history: 
      */
     public static void validateAmount(String... amountStrs) {
-        for (String amountS : amountStrs) {
-            if (StringUtils.isNotBlank(amountS)) {
-                if (amountS.length() > 16) {
-                    // 给前端提示，减去3位
-                    throw new BizException("xn702000", "金额长度不能超过13位");
-                }
-            }
-            try {
-                Long.valueOf(amountS);
-            } catch (Exception e) {
-                throw new BizException("xn702000", "金额，请按要求填写数字");
-            }
-        }
+
+        return;
+
+//        for (String amountS : amountStrs) {
+//            if (StringUtils.isNotBlank(amountS)) {
+//                if (amountS.length() > 16) {
+//                    // 给前端提示，减去3位
+//                    throw new BizException("xn702000", "金额长度不能超过13位");
+//                }
+//            }
+//            try {
+//                Long.valueOf(amountS);
+//            } catch (Exception e) {
+//                throw new BizException("xn702000", "金额，请按要求填写数字");
+//            }
+//        }
     }
 
     public static void validateNumber(String... params) {
