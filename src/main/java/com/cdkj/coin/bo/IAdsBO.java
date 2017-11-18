@@ -38,6 +38,6 @@ public interface IAdsBO {
     public Paginable<Ads> ossSellPage(Integer start, Integer limit,
             Ads condition);
 
-    public void refreshStatus(boolean existOningOrder);
+    public void refreshStatus(String adsCode,boolean existOningOrder);
 
 }

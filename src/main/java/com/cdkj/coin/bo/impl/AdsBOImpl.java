@@ -6,6 +6,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.cdkj.coin.common.StringUtil;
+import com.cdkj.coin.proxy.EErrorCode;
+import okhttp3.internal.http2.ErrorCode;
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +24,7 @@ import com.cdkj.coin.domain.Market;
 import com.cdkj.coin.enums.EAdsStatus;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.EBizErrorCode;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Created by tianlei on 2017/十一月/14.
@@ -170,8 +176,29 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     }
 
     @Override
-    public void refreshStatus(boolean existOningOrder) {
+    public void refreshStatus(String adsCode, boolean existOningOrder) {
         // TODO Auto-generated method stub
+
+        if (StringUtils.isBlank(adsCode)) {
+
+            throw new BizException("xn000","传入正确的广告编号");
+
+        }
+
+        Ads condotion = new Ads();
+        condotion.setCode(adsCode);
+        Ads ads = this.adsDAO.select(condotion);
+        if(ads == null) {
+            throw new BizException("xn000","当前状态不支持状态刷新");
+
+        }
+        if (ads.getStatus() != EAdsStatus.DAIJIAOYI.getCode() &&  ads.getStatus() != EAdsStatus.JIAOYIZHONG.getCode()) {
+            throw new BizException("xn000","当前状态不支持状态刷新");
+        }
+        //设置转台
+        condotion.setStatus(existOningOrder == true ? EAdsStatus.JIAOYIZHONG.getCode() : EAdsStatus.DAIJIAOYI.getCode());
+        //更新状态
+        this.adsDAO.updateByPrimaryKeySelective(condotion);
 
     }
 
