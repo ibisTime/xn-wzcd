@@ -134,7 +134,8 @@ public class AdsAOImpl implements IAdsAO {
         ads.setTradeType(req.getTradeType());
 
         // 获取市场价格
-        Market market = this.marketBO.marketByCoinTypeAndOrigin(ECoin.ETH.getCode(),EMarketOrigin.BITFINEX.getCode());
+        Market market = this.marketBO.marketByCoinTypeAndOrigin(
+            ECoin.ETH.getCode(), EMarketOrigin.BITFINEX.getCode());
         if (market == null) {
             throw new BizException("xn000", "发布失败");
         }
@@ -341,7 +342,10 @@ public class AdsAOImpl implements IAdsAO {
     @Override
     public Object adsDetail(String adsCode) {
 
-        return this.iAdsBO.adsSellDetail(adsCode);
+        Ads ads = this.iAdsBO.adsSellDetail(adsCode);
+        ads.setUser(userBO.getUser(ads.getUserId()));
+
+        return ads;
 
     }
 

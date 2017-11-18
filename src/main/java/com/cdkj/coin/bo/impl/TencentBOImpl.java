@@ -91,7 +91,7 @@ public class TencentBOImpl implements ITencentBO {
                 secretKey);
             ret = demo.tls_check_signature_ex2(demo.getSig(), accessKey,
                 txAppCode, txAppAdmin);
-            if (14 == ret) {
+            if (0 != ret) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "腾讯云IM签名失败");
             }
@@ -145,10 +145,8 @@ public class TencentBOImpl implements ITencentBO {
         tls_sigcheck demo = new tls_sigcheck();
         demo.loadJniLib(Thread.currentThread().getContextClassLoader()
             .getResource("jnisigcheck.so").getPath());
-        int ret = demo.tls_gen_signature_ex2(txAppCode, txAppAdmin, secretKey);
-        ret = demo.tls_check_signature_ex2(demo.getSig(), accessKey, txAppCode,
-            txAppAdmin);
-        if (14 == ret) {
+        int ret = demo.tls_gen_signature_ex2(txAppCode, userId, secretKey);
+        if (0 != ret) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "腾讯云IM签名失败");
         }
         XN625000Res res = new XN625000Res();
