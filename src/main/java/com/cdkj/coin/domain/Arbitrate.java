@@ -50,6 +50,12 @@ public class Arbitrate extends ABaseDO {
     // 备注
     private String remark;
 
+    // 原告
+    private User yuangaoInfo;
+
+    // 被告
+    private User beigaoInfo;
+
     public String getCode() {
         return code;
     }
@@ -144,6 +150,22 @@ public class Arbitrate extends ABaseDO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public User getYuangaoInfo() {
+        return yuangaoInfo;
+    }
+
+    public void setYuangaoInfo(User yuangaoInfo) {
+        this.yuangaoInfo = yuangaoInfo;
+    }
+
+    public User getBeigaoInfo() {
+        return beigaoInfo;
+    }
+
+    public void setBeigaoInfo(User beigaoInfo) {
+        this.beigaoInfo = beigaoInfo;
     }
 
 }

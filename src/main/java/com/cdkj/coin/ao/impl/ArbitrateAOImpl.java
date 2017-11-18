@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cdkj.coin.ao.IArbitrateAO;
 import com.cdkj.coin.bo.IArbitrateBO;
 import com.cdkj.coin.bo.ITradeOrderBO;
+import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.Arbitrate;
 import com.cdkj.coin.domain.TradeOrder;
@@ -24,6 +25,9 @@ public class ArbitrateAOImpl implements IArbitrateAO {
 
     @Autowired
     private ITradeOrderBO tradeOrderBO;
+
+    @Autowired
+    private IUserBO userBO;
 
     @Override
     public void handle(String code, String result, String updater, String remark) {
@@ -48,7 +52,13 @@ public class ArbitrateAOImpl implements IArbitrateAO {
     @Override
     public Paginable<Arbitrate> queryArbitratePage(int start, int limit,
             Arbitrate condition) {
-        return arbitrateBO.getPaginable(start, limit, condition);
+        Paginable<Arbitrate> results = arbitrateBO.getPaginable(start, limit,
+            condition);
+        for (Arbitrate arbitrate : results.getList()) {
+            arbitrate.setYuangaoInfo(userBO.getUser(arbitrate.getYuangao()));
+            arbitrate.setBeigaoInfo(userBO.getUser(arbitrate.getBeigao()));
+        }
+        return results;
     }
 
     @Override
@@ -58,7 +68,10 @@ public class ArbitrateAOImpl implements IArbitrateAO {
 
     @Override
     public Arbitrate getArbitrate(String code) {
-        return arbitrateBO.getArbitrate(code);
+        Arbitrate arbitrate = arbitrateBO.getArbitrate(code);
+        arbitrate.setYuangaoInfo(userBO.getUser(arbitrate.getYuangao()));
+        arbitrate.setBeigaoInfo(userBO.getUser(arbitrate.getBeigao()));
+        return arbitrate;
     }
 
 }
