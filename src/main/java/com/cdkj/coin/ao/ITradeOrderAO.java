@@ -40,4 +40,7 @@ public interface ITradeOrderAO {
 
     public TradeOrder getTradeOrder(String code);
 
+    // 定时器调用：扫描支付超时订单
+    public void doCheckUnpayOrder();
+
 }

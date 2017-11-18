@@ -1,12 +1,15 @@
 package com.cdkj.coin.ao.impl;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.web3j.utils.Convert;
+import org.web3j.utils.Convert.Unit;
 
 import com.cdkj.coin.ao.ITradeOrderAO;
 import com.cdkj.coin.bo.IAccountBO;
@@ -94,7 +97,10 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前状态下不能取消订单");
         }
-        // todo 变更广告信息（状态，剩余可售金额等）
+        // 变更广告信息（状态，剩余可售金额）
+        adsBO.changeLeftAmount(tradeOrder.getAdsCode(), tradeOrder.getCount());
+        adsBO.refreshStatus(tradeOrderBO.isExistOningOrder(tradeOrder
+            .getAdsCode()));
         // 变更交易订单信息
         tradeOrderBO.cancel(tradeOrder, updater, remark);
     }
@@ -248,8 +254,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
     private void doAmountCheck(Ads adsSell, BigDecimal tradePrice,
             BigDecimal count, BigDecimal tradeAmount) {
-        if (tradePrice.multiply(count).subtract(tradeAmount).abs()
-            .compareTo(BigDecimal.ONE) > 0) {
+        if (tradePrice.multiply(Convert.fromWei(count, Unit.ETHER))
+            .subtract(tradeAmount).abs().compareTo(BigDecimal.ONE) > 0) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "交易总额计算有误");
         }
         if (adsSell.getMinTrade().compareTo(tradeAmount) > 0) {
@@ -290,6 +296,18 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         tradeOrder.setBuyUserInfo(userBO.getUser(tradeOrder.getBuyUser()));
         tradeOrder.setSellUserInfo(userBO.getUser(tradeOrder.getSellUser()));
         return tradeOrder;
+    }
+
+    @Override
+    public void doCheckUnpayOrder() {
+        TradeOrder condition = new TradeOrder();
+        condition.setStatus(ETradeOrderStatus.TO_PAY.getCode());
+        condition.setInvalidDatetime(new Date());
+        List<TradeOrder> resultList = tradeOrderBO
+            .queryTradeOrderList(condition);
+        for (TradeOrder tradeOrder : resultList) {
+            this.cancel(tradeOrder.getCode(), "系统", "订单支付超时，系统自动取消");
+        }
     }
 
 }

@@ -47,6 +47,12 @@
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
+			<if test="belongUser != null and belongUser != '' ">
+				AND t.buy_user = #{belongUser} or t.sell_user = #{belongUser}
+			</if>
+			<if test="invalidDatetime != null and invalidDatetime != '' ">
+				<![CDATA[AND t.invalid_datetime <= #{invalidDatetime}]]>
+			</if>
 			<if test="statusList != null and statusList != '' ">
 				AND t.status in 
                 <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">

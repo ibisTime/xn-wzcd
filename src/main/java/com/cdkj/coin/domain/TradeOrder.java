@@ -93,6 +93,9 @@ public class TradeOrder extends ABaseDO {
     // 卖家信息
     private User sellUserInfo;
 
+    // 所属用户
+    private String belongUser;
+
     // 状态列表
     private List<String> statusList;
 
@@ -302,6 +305,14 @@ public class TradeOrder extends ABaseDO {
 
     public void setSellUserInfo(User sellUserInfo) {
         this.sellUserInfo = sellUserInfo;
+    }
+
+    public String getBelongUser() {
+        return belongUser;
+    }
+
+    public void setBelongUser(String belongUser) {
+        this.belongUser = belongUser;
     }
 
 }

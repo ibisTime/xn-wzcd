@@ -43,6 +43,9 @@ public class XN625250Req extends APageReq {
     // 状态列表
     private List<String> statusList;
 
+    // 所属用户
+    private String belongUser;
+
     public String getCode() {
         return code;
     }
@@ -105,6 +108,14 @@ public class XN625250Req extends APageReq {
 
     public void setStatusList(List<String> statusList) {
         this.statusList = statusList;
+    }
+
+    public String getBelongUser() {
+        return belongUser;
+    }
+
+    public void setBelongUser(String belongUser) {
+        this.belongUser = belongUser;
     }
 
 }
