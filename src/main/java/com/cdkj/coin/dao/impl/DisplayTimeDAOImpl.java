@@ -47,7 +47,8 @@ public class DisplayTimeDAOImpl extends AMybatisTemplate implements IDisplayTime
 
     @Override
     public List<AdsDisplayTime> selectList(AdsDisplayTime condition) {
-        return null;
+
+        return super.selectList(NAMESPACE.concat("select"),condition,AdsDisplayTime.class);
     }
 
     @Override

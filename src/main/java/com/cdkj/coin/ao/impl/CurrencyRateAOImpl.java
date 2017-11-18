@@ -81,6 +81,8 @@ public class CurrencyRateAOImpl implements ICurrencyRateAO {
             if (usdDecimal == null || hkdDecimal == null) {
                 return;
             }
+
+            //改为刷新数据库
             //跟新数据库
             this.currencyRateBO.changeRate(ECurrency.USD.getCode(), usdDecimal, "juhe");
             this.currencyRateBO.changeRate(ECurrency.HKD.getCode(), hkdDecimal, "juhe");

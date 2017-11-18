@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.cdkj.coin.enums.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,12 +28,6 @@ import com.cdkj.coin.domain.AdsDisplayTime;
 import com.cdkj.coin.domain.Market;
 import com.cdkj.coin.domain.User;
 import com.cdkj.coin.dto.req.XN625220Req;
-import com.cdkj.coin.enums.EAdsPublishType;
-import com.cdkj.coin.enums.EAdsStatus;
-import com.cdkj.coin.enums.ECoin;
-import com.cdkj.coin.enums.EJourBizTypeUser;
-import com.cdkj.coin.enums.EMarketOrigin;
-import com.cdkj.coin.enums.ETradeType;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.EBizErrorCode;
 
@@ -70,7 +65,7 @@ public class AdsAOImpl implements IAdsAO {
     public Object frontSellPage(Integer start, Integer limit, Ads condition) {
 
         Paginable<Ads> paginable = this.iAdsBO.frontSellPage(start, limit,
-            condition);
+                condition);
 
         List<Ads> adsList = paginable.getList();
         for (Ads ads : adsList) {
@@ -85,7 +80,7 @@ public class AdsAOImpl implements IAdsAO {
     public Object ossSellPage(Integer start, Integer limit, Ads condition) {
 
         Paginable<Ads> paginable = this.iAdsBO.ossSellPage(start, limit,
-            condition);
+                condition);
 
         List<Ads> adsList = paginable.getList();
         for (Ads ads : adsList) {
@@ -134,7 +129,7 @@ public class AdsAOImpl implements IAdsAO {
         ads.setTradeType(req.getTradeType());
 
         // 获取市场价格
-        Market market = this.marketBO.marketByCoinTypeAndOrigin(ECoin.ETH.getCode(),EMarketOrigin.BITFINEX.getCode());
+        Market market = this.marketBO.marketByCoinTypeAndOrigin(ECoin.ETH.getCode(), EMarketOrigin.BITFINEX.getCode());
         if (market == null) {
             throw new BizException("xn000", "发布失败");
         }
@@ -274,55 +269,56 @@ public class AdsAOImpl implements IAdsAO {
 
     }
 
-    @Transactional
-    public void shangJia(XN625220Req req) {
-
-        if (StringUtils.isBlank(req.getAdsCode())) {
-            throw new BizException("xn000", "请传入广告编号");
-        }
-
-        // 构造 并校验
-        Ads ads = this.buildAdsSell(req, req.getAdsCode());
-
-        // 检查 是否处于下架状态
-        Ads trueAds = this.iAdsBO.adsSellDetail(ads.getCode());
-        if (trueAds.getStatus().equals(EAdsStatus.XIAJIA.getCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前广告不是下架状态，不能进行该操作");
-        }
-
-        // 判断账户并处理
-        this.checkAccountAndHandAccount(ads);
-
-        // 删除原来的展示时间
-        this.displayTimeBO.deleteAdsDisplayTimeByAdsCode(ads.getCode());
-
-        // 插入新的展示时间
-        if (ads != null && !ads.getDisplayTime().isEmpty()) {
-            // 有展示时间限制、先插入展示时间
-            for (AdsDisplayTime displayTime : ads.getDisplayTime()) {
-
-                displayTime.setAdsCode(ads.getCode());
-                // 插入
-                this.displayTimeBO.insertDisplayTime(displayTime);
-
-            }
-
-        }
-
-        //
-        this.iAdsBO.shangJiaAds(ads.getCode());
-
-    }
+    // 暂时弃用
+//    @Transactional
+//    public void shangJia(XN625220Req req) {
+//
+//        if (StringUtils.isBlank(req.getAdsCode())) {
+//            throw new BizException("xn000", "请传入广告编号");
+//        }
+//
+//        // 构造 并校验
+//        Ads ads = this.buildAdsSell(req, req.getAdsCode());
+//
+//        // 检查 是否处于下架状态
+//        Ads trueAds = this.iAdsBO.adsSellDetail(ads.getCode());
+//        if (trueAds.getStatus().equals(EAdsStatus.XIAJIA.getCode())) {
+//            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+//                "当前广告不是下架状态，不能进行该操作");
+//        }
+//
+//        // 判断账户并处理
+//        this.checkAccountAndHandAccount(ads);
+//
+//        // 删除原来的展示时间
+//        this.displayTimeBO.deleteAdsDisplayTimeByAdsCode(ads.getCode());
+//
+//        // 插入新的展示时间
+//        if (ads != null && !ads.getDisplayTime().isEmpty()) {
+//            // 有展示时间限制、先插入展示时间
+//            for (AdsDisplayTime displayTime : ads.getDisplayTime()) {
+//
+//                displayTime.setAdsCode(ads.getCode());
+//                // 插入
+//                this.displayTimeBO.insertDisplayTime(displayTime);
+//
+//            }
+//
+//        }
+//
+//        //
+//        this.iAdsBO.shangJiaAds(ads.getCode());
+//
+//    }
 
     public void checkAccountAndHandAccount(Ads ads) {
 
         Account account = this.accountBO.getAccountByUser(ads.getUserId(),
-            ads.getTradeCoin());
+                ads.getTradeCoin());
 
         // 手续费+发布总额
         Double feeRate = sysConfigBO
-            .getDoubleValue(SysConstants.TRADE_FEE_RATE);
+                .getDoubleValue(SysConstants.TRADE_FEE_RATE);
         BigDecimal fee = ads.getTotalAmount().multiply(new BigDecimal(feeRate));
         BigDecimal frezonAmount = ads.getTotalAmount().add(fee);
 
@@ -333,15 +329,17 @@ public class AdsAOImpl implements IAdsAO {
 
         // 冻结账户金额
         this.accountBO.frozenAmount(account, ads.getTotalAmount(),
-            EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
-            EJourBizTypeUser.AJ_ADS_FROZEN.getValue(), ads.getCode());
+                EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
+                EJourBizTypeUser.AJ_ADS_FROZEN.getValue(), ads.getCode());
 
     }
 
     @Override
     public Object adsDetail(String adsCode) {
 
-        return this.iAdsBO.adsSellDetail(adsCode);
+        Ads ads = this.iAdsBO.adsSellDetail(adsCode);
+        ads.setDisplayTime(this.displayTimeBO.queryList(adsCode));
+        return ads;
 
     }
 
@@ -364,8 +362,8 @@ public class AdsAOImpl implements IAdsAO {
         if (ads.getLeftAmount().compareTo(BigDecimal.ZERO) > 0) {
 
             Account account = this.accountBO.getAccountByUser(userId,
-                ECoin.ETH.getCode());
-            // this.accountBO.unfrozenAmount(account, ads.getLeftAmount(), "");
+                    ECoin.ETH.getCode());
+            this.accountBO.unfrozenAmount(account, ads.getLeftAmount(), "", "", ads.getCode());
 
         }
 
@@ -377,10 +375,10 @@ public class AdsAOImpl implements IAdsAO {
         if (EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())) {
             // 剩余金额小于 单笔最小交易金额就下架
             boolean condition1 = ads.getLeftAmount().compareTo(
-                new BigDecimal(0)) == 0;
+                    new BigDecimal(0)) == 0;
 
             boolean condition2 = ads.getLeftAmount().compareTo(
-                ads.getMinTrade()) < 0;
+                    ads.getMinTrade()) < 0;
             if (condition1 || condition2) {
                 iAdsBO.xiaJiaAds(ads);
             }
@@ -391,7 +389,7 @@ public class AdsAOImpl implements IAdsAO {
     public void refreshMarketPrice() {
 
         Market market = this.marketBO.marketByCoinTypeAndOrigin(
-            ECoin.ETH.getCode(), EMarketOrigin.BITFINEX.getCode());
+                ECoin.ETH.getCode(), EMarketOrigin.BITFINEX.getCode());
         this.iAdsBO.refreshAllAdsMarketPrice(market);
 
     }
