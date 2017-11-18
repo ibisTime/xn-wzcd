@@ -10,8 +10,10 @@ import com.cdkj.coin.dto.req.XN625291Req;
  */
 public interface IMarketAO {
 
-    Market marketByCoinType(String coinType);
+    //获取价格计算标准的行情
+    List<Market> marketByCoin(List<String> coinList);
 
+    //获取列表行情
     List<Market> marketListByReq(XN625291Req req);
 
 }

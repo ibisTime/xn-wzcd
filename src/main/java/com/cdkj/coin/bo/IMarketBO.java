@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface IMarketBO {
 
-     public Market marketByCoinTypeAndOrigin(String coinType, String origin);
+    public Market marketByCoinTypeAndOrigin(String coinType, String origin);
 
     int updateMarket(String origin,String cointType,Market market);
 

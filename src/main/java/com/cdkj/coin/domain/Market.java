@@ -5,6 +5,7 @@ import com.cdkj.coin.dao.base.ABaseDO;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class Market extends ABaseDO implements Serializable {
     private Long id;
@@ -38,6 +39,16 @@ public class Market extends ABaseDO implements Serializable {
     private String volume;
 
     private Date updateDatetime;
+
+    private List<String> coinList;
+
+    public List<String> getCoinList() {
+        return coinList;
+    }
+
+    public void setCoinList(List<String> coinList) {
+        this.coinList = coinList;
+    }
 
     private static final long serialVersionUID = 1L;
 

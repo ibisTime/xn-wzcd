@@ -134,7 +134,7 @@ public class AdsAOImpl implements IAdsAO {
         ads.setTradeType(req.getTradeType());
 
         // 获取市场价格
-        Market market = this.marketAO.marketByCoinType(ECoin.ETH.getCode());
+        Market market = this.marketBO.marketByCoinTypeAndOrigin(ECoin.ETH.getCode(),EMarketOrigin.BITFINEX.getCode());
         if (market == null) {
             throw new BizException("xn000", "发布失败");
         }
