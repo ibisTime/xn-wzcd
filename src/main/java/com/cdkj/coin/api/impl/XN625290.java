@@ -27,7 +27,7 @@ public class XN625290 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
 
-        return  this.marketAO.marketByCoinType(req.getCoin());
+        return  this.marketAO.marketByCoin(req.getCoinList());
 
     }
 

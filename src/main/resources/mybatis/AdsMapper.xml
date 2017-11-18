@@ -79,6 +79,7 @@
             <if test="tradeType != null and tradeType != ''">
                 And `trade_type` = #{tradeType}
             </if>
+
             <if test="statusList != null and statusList != ''">
                     AND `status` in
                     <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
@@ -98,6 +99,7 @@
             <if test="maxPrice != null and maxPrice != ''">
                 <![CDATA[ and `market_price`*(1 + `premium_rate`) <= #{maxPrice} ]]>
             </if>
+
             <if test="minPrice != null and minPrice != ''">
                 <![CDATA[ and `market_price`*(1 + `premium_rate`) >= #{minPrice} ]]>
             </if>

@@ -30,6 +30,12 @@
       <if test="coin != null and coin != ''">
         AND coin = #{coin}
       </if>
+      <if test="coinList != null">
+        AND coin in
+        <foreach collection="coinList" item="coin" open="(" close=")" separator=",">
+          #{coin}
+        </foreach>
+      </if>
     </trim>
   </sql>
 

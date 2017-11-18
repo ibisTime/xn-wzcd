@@ -5,4 +5,14 @@ package com.cdkj.coin.dto.req;
  */
 public class XN625291Req {
 
+    private String coin;
+
+    public String getCoin() {
+        return coin;
+    }
+
+    public void setCoin(String coin) {
+        this.coin = coin;
+    }
+
 }

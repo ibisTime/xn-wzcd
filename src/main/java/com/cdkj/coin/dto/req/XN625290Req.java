@@ -1,20 +1,21 @@
 package com.cdkj.coin.dto.req;
 
-import org.hibernate.validator.constraints.NotBlank;
+
+import java.util.List;
 
 /**
  * Created by tianlei on 2017/十一月/13.
  */
 public class XN625290Req {
 
-    @NotBlank
-    private String coin;
 
-    public String getCoin() {
-        return coin;
+    private List<String> coinList;
+
+    public List<String> getCoinList() {
+        return coinList;
     }
 
-    public void setCoin(String coin) {
-        this.coin = coin;
+    public void setCoinList(List<String> coinList) {
+        this.coinList = coinList;
     }
 }
