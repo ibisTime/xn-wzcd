@@ -24,8 +24,8 @@ public class XN625225 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
 
-         this.adsAO.shangJia(req);
-         return new BooleanRes(true);
+//         this.adsAO.shangJia(req);
+         return new BooleanRes(false);
 
     }
 

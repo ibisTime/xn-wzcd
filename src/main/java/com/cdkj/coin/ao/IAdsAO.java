@@ -14,7 +14,7 @@ public interface IAdsAO {
 
     public void draftPublish(XN625220Req req);
 
-    public void shangJia(XN625220Req req);
+//    public void shangJia(XN625220Req req);
 
     public void xiaJiaAds(String adsCode, String userId);
 

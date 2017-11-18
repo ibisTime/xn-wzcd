@@ -51,7 +51,14 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
         Ads condition = new Ads();
         condition.setCode(adsCode);
-        return this.adsDAO.select(condition);
+
+        Ads resultAds =  this.adsDAO.select(condition);
+
+        if (resultAds == null) {
+            throw new BizException("xn000","广告不存在");
+        }
+
+        return resultAds;
 
     }
 

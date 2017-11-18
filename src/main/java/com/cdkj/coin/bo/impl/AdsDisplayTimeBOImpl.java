@@ -4,11 +4,14 @@ import com.cdkj.coin.bo.IAdsDisplayTimeBO;
 import com.cdkj.coin.core.ObjValidater;
 import com.cdkj.coin.dao.IDisplayTimeDAO;
 import com.cdkj.coin.dao.base.IBaseDAO;
+import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.domain.AdsDisplayTime;
 import com.cdkj.coin.exception.BizException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * Created by tianlei on 2017/十一月/15.
@@ -41,5 +44,14 @@ public class AdsDisplayTimeBOImpl implements IAdsDisplayTimeBO {
         this.displayTimeDAO.deleteByAdsCode(adsCode);
 
     }
+
+
+    public List<AdsDisplayTime> queryList(String adsCode) {
+        AdsDisplayTime condition = new AdsDisplayTime();
+        condition.setAdsCode(adsCode);
+
+        return  this.displayTimeDAO.selectList(condition);
+    }
+
 
 }
