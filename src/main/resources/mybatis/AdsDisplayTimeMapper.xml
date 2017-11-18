@@ -27,7 +27,7 @@
         from tcoin_ads_display_time
         where id = #{id,jdbcType=INTEGER}
     </select>
-    
+
     <select id="select" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -84,6 +84,7 @@
             </if>
         </trim>
     </insert>
+
     <update id="updateByPrimaryKeySelective" parameterType="com.cdkj.coin.domain.AdsDisplayTime">
         update tcoin_ads_display_time
         <set>
@@ -102,6 +103,7 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+
     <update id="updateByPrimaryKey" parameterType="com.cdkj.coin.domain.AdsDisplayTime">
         UPDATE tcoin_ads_display_time
         SET ads_code   = #{adsCode,jdbcType=VARCHAR},

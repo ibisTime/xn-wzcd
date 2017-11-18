@@ -196,10 +196,10 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         condotion.setCode(adsCode);
         Ads ads = this.adsDAO.select(condotion);
         if(ads == null) {
-            throw new BizException("xn000","当前状态不支持状态刷新");
+            throw new BizException("xn000","广告编号不存在");
 
         }
-        if (ads.getStatus() != EAdsStatus.DAIJIAOYI.getCode() &&  ads.getStatus() != EAdsStatus.JIAOYIZHONG.getCode()) {
+        if (!ads.getStatus().equals(EAdsStatus.DAIJIAOYI.getCode()) &&  !ads.getStatus().equals(EAdsStatus.JIAOYIZHONG.getCode())) {
             throw new BizException("xn000","当前状态不支持状态刷新");
         }
         //设置转台

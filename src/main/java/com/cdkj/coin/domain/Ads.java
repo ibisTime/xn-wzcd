@@ -1,6 +1,8 @@
 package com.cdkj.coin.domain;
 
 import com.cdkj.coin.dao.base.ABaseDO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -25,13 +27,32 @@ public class Ads extends ABaseDO implements Serializable {
 
     private BigDecimal premiumRate;
 
-    private BigDecimal totalAmount;
+    @Expose
+    private transient BigDecimal totalAmount;
+    private String totalAmountString;
+
+    public String getTotalAmountString() {
+
+//        return this.totalAmount.toString();
+        return totalAmountString;
+    }
+
+    public void setTotalAmountString(String totalAmountString) {
+        this.totalAmountString = totalAmountString;
+    }
+
+    public String getLeftAmountString() {
+//        return this.leftAmount.toString();
+        return leftAmountString;
+    }
+
+    public void setLeftAmountString(String leftAmountString) {
+        this.leftAmountString = leftAmountString;
+    }
 
     public Ads() {
 
-    }
-
-    ;
+    };
 
     public String getTradeType() {
         return tradeType;
@@ -41,29 +62,12 @@ public class Ads extends ABaseDO implements Serializable {
         this.tradeType = tradeType;
     }
 
-    public Ads(String code, String userId, String tradeCurrency, String tradeCoin, String onlyTrust, BigDecimal premiumRate, BigDecimal totalAmount, BigDecimal leftAmount, BigDecimal marketPrice, BigDecimal protectPrice, BigDecimal minTrade, BigDecimal maxTrade, String payType, Integer payLimit, String status, Date createDatetime, Date updateDatetime, String leaveMessage) {
-        this.code = code;
-        this.userId = userId;
-        this.tradeCurrency = tradeCurrency;
-        this.tradeCoin = tradeCoin;
-        this.onlyTrust = onlyTrust;
-        this.premiumRate = premiumRate;
-        this.totalAmount = totalAmount;
-        this.leftAmount = leftAmount;
-        this.marketPrice = marketPrice;
-        this.protectPrice = protectPrice;
-        this.minTrade = minTrade;
-        this.maxTrade = maxTrade;
-        this.payType = payType;
-        this.payLimit = payLimit;
-        this.status = status;
-        this.createDatetime = createDatetime;
-        this.updateDatetime = updateDatetime;
-        this.leaveMessage = leaveMessage;
-    }
 
 
-    private BigDecimal leftAmount;
+    private transient BigDecimal leftAmount;
+    private String leftAmountString;
+
+
 
     private BigDecimal marketPrice;
 
@@ -99,6 +103,26 @@ public class Ads extends ABaseDO implements Serializable {
     private List<String> statusList;
 
 
+    public Ads(String code, String userId, String tradeCurrency, String tradeCoin, String onlyTrust, BigDecimal premiumRate, BigDecimal totalAmount, BigDecimal leftAmount, BigDecimal marketPrice, BigDecimal protectPrice, BigDecimal minTrade, BigDecimal maxTrade, String payType, Integer payLimit, String status, Date createDatetime, Date updateDatetime, String leaveMessage) {
+        this.code = code;
+        this.userId = userId;
+        this.tradeCurrency = tradeCurrency;
+        this.tradeCoin = tradeCoin;
+        this.onlyTrust = onlyTrust;
+        this.premiumRate = premiumRate;
+        this.totalAmount = totalAmount;
+        this.leftAmount = leftAmount;
+        this.marketPrice = marketPrice;
+        this.protectPrice = protectPrice;
+        this.minTrade = minTrade;
+        this.maxTrade = maxTrade;
+        this.payType = payType;
+        this.payLimit = payLimit;
+        this.status = status;
+        this.createDatetime = createDatetime;
+        this.updateDatetime = updateDatetime;
+        this.leaveMessage = leaveMessage;
+    }
 
     public List<String> getStatusList() {
         return statusList;
@@ -212,6 +236,7 @@ public class Ads extends ABaseDO implements Serializable {
 
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
+        this.totalAmountString = totalAmount.toString();
     }
 
     public BigDecimal getLeftAmount() {
@@ -220,6 +245,7 @@ public class Ads extends ABaseDO implements Serializable {
 
     public void setLeftAmount(BigDecimal leftAmount) {
         this.leftAmount = leftAmount;
+        this.leftAmountString = this.leftAmount.toString();
     }
 
     public BigDecimal getMarketPrice() {
