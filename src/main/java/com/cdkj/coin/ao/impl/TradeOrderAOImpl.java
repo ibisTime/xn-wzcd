@@ -99,8 +99,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         }
         // 变更广告信息（状态，剩余可售金额）
         adsBO.changeLeftAmount(tradeOrder.getAdsCode(), tradeOrder.getCount());
-        adsBO.refreshStatus(tradeOrderBO.isExistOningOrder(tradeOrder
-            .getAdsCode()));
+        adsBO.refreshStatus(tradeOrder.getAdsCode(),
+            tradeOrderBO.isExistOningOrder(tradeOrder.getAdsCode()));
         // 变更交易订单信息
         tradeOrderBO.cancel(tradeOrder, updater, remark);
     }
@@ -134,8 +134,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 变更交易订单信息
         tradeOrderBO.release(tradeOrder, updater, remark);
         // 检查广告是否还有交易中的状态，维护状态字段
-        adsBO.refreshStatus(tradeOrderBO.isExistOningOrder(tradeOrder
-            .getAdsCode()));
+        adsBO.refreshStatus(tradeOrder.getAdsCode(),
+            tradeOrderBO.isExistOningOrder(tradeOrder.getAdsCode()));
         return tradeOrder;
     }
 
