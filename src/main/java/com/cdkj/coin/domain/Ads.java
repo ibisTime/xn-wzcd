@@ -12,68 +12,34 @@ import java.util.List;
 public class Ads extends ABaseDO implements Serializable {
 
     private String code;
-
     private String userId;
-
     private User user;
-
     private String tradeCurrency;
-
     private String tradeCoin;
-
     private String onlyTrust;
-
     private String tradeType;
-
     private BigDecimal premiumRate;
 
-    @Expose
-    private transient BigDecimal totalAmount;
-    private String totalAmountString;
-
-    public String getTotalAmountString() {
-
-//        return this.totalAmount.toString();
-        return totalAmountString;
-    }
-
-    public void setTotalAmountString(String totalAmountString) {
-        this.totalAmountString = totalAmountString;
-    }
-
-    public String getLeftAmountString() {
-//        return this.leftAmount.toString();
-        return leftAmountString;
-    }
-
-    public void setLeftAmountString(String leftAmountString) {
-        this.leftAmountString = leftAmountString;
-    }
-
-    public Ads() {
-
-    };
-
-    public String getTradeType() {
-        return tradeType;
-    }
-
-    public void setTradeType(String tradeType) {
-        this.tradeType = tradeType;
-    }
-
-
-
-    private transient BigDecimal leftAmount;
-    private String leftAmountString;
-
-
+    //数字货币
+    private transient BigDecimal totalCount;
+    private String totalCountString;
+    private transient BigDecimal leftCount;
+    private String leftCountString;
 
     private BigDecimal marketPrice;
+    private BigDecimal truePrice;
 
     private BigDecimal protectPrice;
 
     private BigDecimal minTrade;
+
+    public BigDecimal getTruePrice() {
+        return truePrice;
+    }
+
+    public void setTruePrice(BigDecimal truePrice) {
+        this.truePrice = truePrice;
+    }
 
     private BigDecimal maxTrade;
 
@@ -92,6 +58,7 @@ public class Ads extends ABaseDO implements Serializable {
     private List<AdsDisplayTime> displayTime;
 
     //   以下字段为查询添加  //
+
     private Integer currentWeek;
 
     private Double currentTime;
@@ -102,6 +69,9 @@ public class Ads extends ABaseDO implements Serializable {
 
     private List<String> statusList;
 
+    public Ads() {
+
+    };
 
     public Ads(String code, String userId, String tradeCurrency, String tradeCoin, String onlyTrust, BigDecimal premiumRate, BigDecimal totalAmount, BigDecimal leftAmount, BigDecimal marketPrice, BigDecimal protectPrice, BigDecimal minTrade, BigDecimal maxTrade, String payType, Integer payLimit, String status, Date createDatetime, Date updateDatetime, String leaveMessage) {
         this.code = code;
@@ -110,8 +80,8 @@ public class Ads extends ABaseDO implements Serializable {
         this.tradeCoin = tradeCoin;
         this.onlyTrust = onlyTrust;
         this.premiumRate = premiumRate;
-        this.totalAmount = totalAmount;
-        this.leftAmount = leftAmount;
+        this.totalCount = totalAmount;
+        this.leftCount = leftAmount;
         this.marketPrice = marketPrice;
         this.protectPrice = protectPrice;
         this.minTrade = minTrade;
@@ -122,6 +92,51 @@ public class Ads extends ABaseDO implements Serializable {
         this.createDatetime = createDatetime;
         this.updateDatetime = updateDatetime;
         this.leaveMessage = leaveMessage;
+    }
+
+
+    public BigDecimal getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(BigDecimal totalCount) {
+        this.totalCount = totalCount;
+        this.totalCountString = totalCount.toString();
+    }
+
+    public String getTotalCountString() {
+        return totalCountString;
+    }
+
+    public void setTotalCountString(String totalCountString) {
+        this.totalCountString = totalCountString;
+    }
+
+    public BigDecimal getLeftCount() {
+        return leftCount;
+    }
+
+    public void setLeftCount(BigDecimal leftCount) {
+        this.leftCount = leftCount;
+        this.leftCountString = this.leftCount.toString();
+    }
+
+
+
+    public String getLeftCountString() {
+        return leftCountString;
+    }
+
+    public void setLeftCountString(String leftCountString) {
+        this.leftCountString = leftCountString;
+    }
+
+    public String getTradeType() {
+        return tradeType;
+    }
+
+    public void setTradeType(String tradeType) {
+        this.tradeType = tradeType;
     }
 
     public List<String> getStatusList() {
@@ -230,23 +245,9 @@ public class Ads extends ABaseDO implements Serializable {
         this.premiumRate = premiumRate;
     }
 
-    public BigDecimal getTotalAmount() {
-        return totalAmount;
-    }
 
-    public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
-        this.totalAmountString = totalAmount.toString();
-    }
 
-    public BigDecimal getLeftAmount() {
-        return leftAmount;
-    }
 
-    public void setLeftAmount(BigDecimal leftAmount) {
-        this.leftAmount = leftAmount;
-        this.leftAmountString = this.leftAmount.toString();
-    }
 
     public BigDecimal getMarketPrice() {
         return marketPrice;

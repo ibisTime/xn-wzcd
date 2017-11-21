@@ -9,10 +9,11 @@
         <result column="trade_coin" jdbcType="VARCHAR" property="tradeCoin"/>
         <result column="only_trust" jdbcType="VARCHAR" property="onlyTrust"/>
         <result column="premium_rate" jdbcType="DECIMAL" property="premiumRate"/>
-        <result column="total_amount" jdbcType="DECIMAL" property="totalAmount"/>
-        <result column="left_amount" jdbcType="DECIMAL" property="leftAmount"/>
+        <result column="total_count" jdbcType="DECIMAL" property="totalCount"/>
+        <result column="left_count" jdbcType="DECIMAL" property="leftCount"/>
         <result column="market_price" jdbcType="DECIMAL" property="marketPrice"/>
         <result column="protect_price" jdbcType="DECIMAL" property="protectPrice"/>
+        <result column="true_price" jdbcType="DECIMAL" property="truePrice"/>
         <result column="min_trade" jdbcType="DECIMAL" property="minTrade"/>
         <result column="max_trade" jdbcType="DECIMAL" property="maxTrade"/>
         <result column="pay_type" jdbcType="VARCHAR" property="payType"/>
@@ -25,8 +26,8 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        code, user_id, trade_currency, trade_coin, only_trust, premium_rate, total_amount,
-        left_amount, market_price, protect_price, min_trade, max_trade, pay_type, pay_limit,
+        code, user_id, trade_currency, trade_coin, only_trust, premium_rate, total_count,
+        left_count, market_price, protect_price,true_price, min_trade, max_trade, pay_type, pay_limit,
         status, create_datetime, update_datetime, leave_message, trade_type
     </sql>
 
@@ -34,8 +35,8 @@
     <insert id="insert" parameterType="com.cdkj.coin.domain.Ads">
         INSERT INTO tcoin_ads (code, user_id, trade_currency,
                                     trade_coin, only_trust, premium_rate,
-                                    total_amount, left_amount, market_price,
-                                    protect_price, min_trade, max_trade,
+                                    total_count, left_count, market_price,
+                                    protect_price,true_price, min_trade, max_trade,
                                     pay_type, pay_limit, status,trade_type,
                                     create_datetime, update_datetime, leave_message
         )
@@ -45,10 +46,11 @@
             #{tradeCoin,jdbcType=VARCHAR},
             #{onlyTrust,jdbcType=VARCHAR},
             #{premiumRate,jdbcType=DECIMAL},
-            #{totalAmount,jdbcType=DECIMAL},
-            #{leftAmount,jdbcType=DECIMAL},
+            #{totalCount,jdbcType=DECIMAL},
+            #{leftCount,jdbcType=DECIMAL},
             #{marketPrice,jdbcType=DECIMAL},
             #{protectPrice,jdbcType=DECIMAL},
+            #{truePrice},
             #{minTrade,jdbcType=DECIMAL},
             #{maxTrade,jdbcType=DECIMAL},
             #{payType,jdbcType=VARCHAR},
@@ -107,24 +109,7 @@
         </trim>
     </sql>
 
-    <!--          前端            -->
-    <sql id="frontFromWhereCondition">
-        <!--WHERE-->
-        <!--(-->
-        <!--tcoin_ads_display_time.adsCode IS NULL OR (-->
-        <!--#{currentTime} >= tcoin_ads_display_time.start_time-->
-        <!--<![CDATA[ and #{currentTime} < tcoin_ads_display_time.end_time ]]>-->
-        <!--)-->
-        <!--)-->
-        <!--<if test="tradeCoin != null and tradeCoin != ''">-->
-            <!--And `trade_coin` = #{tradeCoin}-->
-        <!--</if>-->
 
-        <!--<if test="status != null and status != ''">-->
-            <!--And `status` = #{status}-->
-        <!--</if>-->
-
-    </sql>
 
 
     <select id="selectFrontTotalCount" parameterType="com.cdkj.coin.domain.Ads" resultType="java.lang.Long">
@@ -142,9 +127,14 @@
         LEFT JOIN tcoin_ads_display_time ON tcoin_ads.code = tcoin_ads_display_time.ads_code
         AND tcoin_ads_display_time.week = #{currentWeek}
         <include refid="whereCondition"/>
-        order by `premium_rate` asc
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != ''">
+                ${order}
+            </if>
+        </trim>
 
     </select>
+
 
     <!-- #########################  管理端  ################################-->
     <select id="selectTotalCount" parameterType="com.cdkj.coin.domain.Ads" resultType="java.lang.Long">
@@ -178,17 +168,20 @@
             <if test="premiumRate != null">
                 premium_rate = #{premiumRate,jdbcType=DECIMAL},
             </if>
-            <if test="totalAmount != null">
-                total_amount = #{totalAmount,jdbcType=DECIMAL},
+            <if test="totalCount != null">
+                total_count = #{totalCount,jdbcType=DECIMAL},
             </if>
-            <if test="leftAmount != null">
-                left_amount = #{leftAmount,jdbcType=DECIMAL},
+            <if test="leftCount != null">
+                left_count = #{leftCount,jdbcType=DECIMAL},
             </if>
             <if test="marketPrice != null">
                 market_price = #{marketPrice,jdbcType=DECIMAL},
             </if>
             <if test="protectPrice != null">
                 protect_price = #{protectPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="truePrice != null">
+                true_price = #{truePrice,jdbcType=DECIMAL},
             </if>
             <if test="minTrade != null">
                 min_trade = #{minTrade,jdbcType=DECIMAL},
@@ -226,8 +219,8 @@
             trade_coin      = #{tradeCoin,jdbcType=VARCHAR},
             only_trust      = #{onlyTrust,jdbcType=VARCHAR},
             premium_rate    = #{premiumRate,jdbcType=DECIMAL},
-            total_amount    = #{totalAmount,jdbcType=DECIMAL},
-            left_amount     = #{leftAmount,jdbcType=DECIMAL},
+            total_count    = #{totalCount,jdbcType=DECIMAL},
+            left_count     = #{leftCount,jdbcType=DECIMAL},
             market_price    = #{marketPrice,jdbcType=DECIMAL},
             protect_price   = #{protectPrice,jdbcType=DECIMAL},
             min_trade       = #{minTrade,jdbcType=DECIMAL},

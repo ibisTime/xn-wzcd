@@ -29,7 +29,7 @@ public class XN625228 extends AProcessor {
         condition.setPayType(req.getPayType());
         condition.setMaxPrice(req.getMaxPrice());
         condition.setMinPrice(req.getMinPrice());
-        return this.adsAO.frontSellPage(req.getStart(),req.getLimit(),condition);
+        return this.adsAO.frontPage(req.getStart(),req.getLimit(),condition);
     }
 
     @Override

@@ -69,6 +69,42 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
     }
 
     @Override
+    public String sellSubmit(Ads ads, String sellUser, BigDecimal tradePrice,
+                             BigDecimal count, BigDecimal tradeAmount, BigDecimal fee) {
+
+        TradeOrder data = new TradeOrder();
+        String code = OrderNoGenerater.generate(EGeneratePrefix.TRADE_ORDER
+                .getCode());
+        Date now = new Date();
+        data.setCode(code);
+        data.setType(ETradeOrderType.SELL.getCode());
+        data.setAdsCode(ads.getCode());
+        data.setBuyUser(ads.getUserId());
+        data.setSellUser(sellUser);
+
+        data.setLeaveMessage(ads.getLeaveMessage());
+        data.setTradeCurrency(ads.getTradeCurrency());
+        data.setTradeCoin(ads.getTradeCoin());
+        data.setTradePrice(tradePrice);
+        data.setTradeAmount(tradeAmount);
+
+        data.setFee(fee);
+        data.setCount(count);
+        data.setPayType(ads.getPayType());
+        data.setInvalidDatetime(DateUtil.getRelativeDateOfMinute(now,
+                ads.getPayLimit()));
+        data.setStatus(ETradeOrderStatus.TO_PAY.getCode());
+
+        data.setCreateDatetime(now);
+        data.setUpdater(sellUser);
+        data.setUpdateDatatime(now);
+        data.setRemark("新订单，等待支付");
+        tradeOrderDAO.insert(data);
+
+        return code;
+    }
+
+    @Override
     public int cancel(TradeOrder tradeOrder, String updater, String remark) {
         int count = 0;
         if (tradeOrder != null) {

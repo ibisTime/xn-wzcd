@@ -20,8 +20,8 @@ public interface IAdsAO {
 
     public void checkXiajia(String adsCode);
 
-    public Object frontSellPage(Integer start, Integer limit, Ads condition);
+    public Object frontPage(Integer start, Integer limit, Ads condition);
 
-    public Object ossSellPage(Integer start, Integer limit, Ads condition);
+    public Object ossPage(Integer start, Integer limit, Ads condition);
 
 }

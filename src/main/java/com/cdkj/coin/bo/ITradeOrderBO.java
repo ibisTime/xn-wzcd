@@ -12,6 +12,9 @@ public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
     public String buySubmit(Ads adsSell, String buyUser, BigDecimal tradePrice,
             BigDecimal count, BigDecimal tradeAmount, BigDecimal fee);
 
+    public String sellSubmit(Ads ads, String sellUser, BigDecimal tradePrice,
+                            BigDecimal count, BigDecimal tradeAmount, BigDecimal fee);
+
     public List<TradeOrder> queryTradeOrderList(TradeOrder condition);
 
     public TradeOrder getTradeOrder(String code);

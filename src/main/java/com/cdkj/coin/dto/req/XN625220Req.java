@@ -49,7 +49,7 @@ public class XN625220Req {
     // 交易总量
     @NotNull
     @DecimalMin("0")
-    private BigDecimal totalAmount;
+    private BigDecimal totalCount;
 
     // 保护价格
     @NotNull
@@ -146,12 +146,12 @@ public class XN625220Req {
         this.premiumRate = premiumRate;
     }
 
-    public BigDecimal getTotalAmount() {
-        return totalAmount;
+    public BigDecimal getTotalCount() {
+        return totalCount;
     }
 
-    public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
+    public void setTotalCount(BigDecimal totalCount) {
+        this.totalCount = totalCount;
     }
 
     public BigDecimal getProtectPrice() {

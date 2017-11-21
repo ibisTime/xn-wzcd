@@ -32,7 +32,7 @@ public class XN625227 extends AProcessor {
         condition.setTradeCoin(req.getCoin());
         condition.setStatus(req.getStatus());
         condition.setStatusList(req.getStatusList());
-        return this.adsAO.ossSellPage(req.getStart(), req.getLimit(), condition);
+        return this.adsAO.ossPage(req.getStart(), req.getLimit(), condition);
 
     }
 
