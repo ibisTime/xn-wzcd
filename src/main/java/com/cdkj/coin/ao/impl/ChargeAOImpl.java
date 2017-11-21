@@ -20,7 +20,8 @@ import com.cdkj.coin.enums.EBoolean;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.EChargeStatus;
 import com.cdkj.coin.enums.ECurrency;
-import com.cdkj.coin.enums.EJourBizType;
+import com.cdkj.coin.enums.EJourBizTypeUser;
+import com.cdkj.coin.enums.ESystemAccount;
 import com.cdkj.coin.exception.BizException;
 
 @Service
@@ -44,9 +45,8 @@ public class ChargeAOImpl implements IChargeAO {
         }
         Account account = accountBO.getAccount(accountNumber);
         // 生成充值订单
-        String code = chargeBO.applyOrderOffline(account,
-            EJourBizType.getBizType(jourBizType), amount, payCardInfo,
-            payCardNo, applyUser, applyNote);
+        String code = chargeBO.applyOrderOffline(account, jourBizType, amount,
+            payCardInfo, payCardNo, applyUser, applyNote);
         return code;
     }
 
@@ -71,16 +71,17 @@ public class ChargeAOImpl implements IChargeAO {
 
     private void payOrderYES(Charge data, String payUser, String payNote) {
         chargeBO.payOrder(data, true, payUser, payNote);
-        // 账户加钱
+        // 用户账户加钱
         accountBO.changeAmount(data.getAccountNumber(), EChannelType.ETH, null,
-            null, data.getCode(), EJourBizType.AJ_CHARGE.getCode(), "ETH充值",
-            data.getAmount());
+            null, data.getCode(), EJourBizTypeUser.AJ_CHARGE.getCode(),
+            "ETH线下充值", data.getAmount());
         Account account = accountBO.getAccount(data.getAccountNumber());
         if (ECurrency.CNY.getCode().equals(account.getCurrency())) {
-            // 托管账户加钱
-            accountBO.changeAmount(data.getCompanyCode(), EChannelType.ETH,
-                null, null, data.getCode(), EJourBizType.AJ_CHARGE.getCode(),
-                "ETH充值", data.getAmount());
+            // 冷钱包加钱
+            accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode(),
+                EChannelType.Offline, null, null, data.getCode(),
+                EJourBizTypeUser.AJ_CHARGE.getCode(), "ETH线下充值",
+                data.getAmount());
         }
     }
 

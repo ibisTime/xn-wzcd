@@ -57,6 +57,16 @@ public class EthAddress extends ABaseDO {
     // 所属用户信息
     private User user;
 
+    private Date today;
+
+    public Date getToday() {
+        return today;
+    }
+
+    public void setToday(Date today) {
+        this.today = today;
+    }
+
     public User getUser() {
         return user;
     }

@@ -23,7 +23,7 @@ import com.cdkj.coin.enums.EAccountType;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECurrency;
 import com.cdkj.coin.enums.EGeneratePrefix;
-import com.cdkj.coin.enums.EJourBizType;
+import com.cdkj.coin.enums.EJourBizTypeUser;
 import com.cdkj.coin.exception.BizException;
 
 /**
@@ -108,7 +108,7 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
         }
         // 统计累计充值金额
         data.setInAmount(dbAccount.getInAmount());
-        if (EJourBizType.AJ_CHARGE.getCode().equals(bizType)) {
+        if (EJourBizTypeUser.AJ_CHARGE.getCode().equals(bizType)) {
             data.setInAmount(dbAccount.getInAmount().add(transAmount));
         }
         data.setLastOrder(lastOrder);
@@ -146,7 +146,7 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
         Account dbAccount = this.getAccount(order.getAccountNumber());
         BigDecimal nowAmount = dbAccount.getAmount().add(order.getAmount());
         // 记录流水
-        String lastOrder = jourBO.addJourForHL(dbAccount, order);
+        String lastOrder = jourBO.addJourForHL(dbAccount, order, "");
         // 更改余额
         Account data = new Account();
         data.setAccountNumber(dbAccount.getAccountNumber());

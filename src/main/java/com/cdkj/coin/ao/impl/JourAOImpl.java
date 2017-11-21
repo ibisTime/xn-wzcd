@@ -20,7 +20,7 @@ import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.Jour;
 import com.cdkj.coin.dto.res.XN802901Res;
 import com.cdkj.coin.enums.EBoolean;
-import com.cdkj.coin.enums.EJourBizType;
+import com.cdkj.coin.enums.EJourBizTypeUser;
 import com.cdkj.coin.enums.EJourStatus;
 import com.cdkj.coin.exception.BizException;
 
@@ -156,11 +156,12 @@ public class JourAOImpl implements IJourAO {
         for (Jour jour : jourList) {
             BigDecimal transAmount = jour.getTransAmount();
             if (transAmount.compareTo(BigDecimal.ZERO) == 1
-                    && !EJourBizType.AJ_WITHDRAW.getCode().equals(
+                    && !EJourBizTypeUser.AJ_WITHDRAW.getCode().equals(
                         jour.getBizType())) {// 取现解冻排除
                 incomeAmount = incomeAmount.add(transAmount);
             }
-            if (EJourBizType.AJ_WITHDRAW.getCode().equals(jour.getBizType())) {
+            if (EJourBizTypeUser.AJ_WITHDRAW.getCode()
+                .equals(jour.getBizType())) {
                 withdrawAmount = withdrawAmount.add(transAmount);
             }
         }

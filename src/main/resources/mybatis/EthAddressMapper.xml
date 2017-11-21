@@ -34,6 +34,9 @@
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
+			<if test="today != null and today != '' ">
+				<![CDATA[AND t.available_datetime_start <= #{today} AND t.available_datetime_end >= #{today}]]>
+			</if>
 		</trim>
 	</sql>
 	<select id="select_ethAddress" parameterType="ethAddress" resultMap="ethAddress_DB_Result">

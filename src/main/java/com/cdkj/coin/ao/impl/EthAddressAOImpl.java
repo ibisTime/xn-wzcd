@@ -29,6 +29,7 @@ import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.ISmsOutBO;
 import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.base.Paginable;
+import com.cdkj.coin.common.DateUtil;
 import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.domain.User;
@@ -137,6 +138,12 @@ public class EthAddressAOImpl implements IEthAddressAO {
     @Override
     public String generateMAddress(Date availableDatetimeStart,
             Date availableDatetimeEnd) {
+        // 想使用的日期 2017-09-01 至 2017-09-03
+        // 数据库存储为 2017-09-01 00:00:00 至 2017-09-03 23:59:59
+        availableDatetimeStart = DateUtil.getStartDatetime(DateUtil.dateToStr(
+            availableDatetimeStart, DateUtil.FRONT_DATE_FORMAT_STRING));
+        availableDatetimeEnd = DateUtil.getEndDatetime(DateUtil.dateToStr(
+            availableDatetimeEnd, DateUtil.FRONT_DATE_FORMAT_STRING));
         if (availableDatetimeEnd.before(availableDatetimeStart)) {
             throw new BizException("625000", "可使用时间范围有误");
         }
@@ -152,6 +159,12 @@ public class EthAddressAOImpl implements IEthAddressAO {
     @Override
     public String importWAddress(String address, Date availableDatetimeStart,
             Date availableDatetimeEnd) {
+        // 想使用的日期 2017-09-01 至 2017-09-03
+        // 数据库存储为 2017-09-01 00:00:00 至 2017-09-03 23:59:59
+        availableDatetimeStart = DateUtil.getStartDatetime(DateUtil.dateToStr(
+            availableDatetimeStart, DateUtil.FRONT_DATE_FORMAT_STRING));
+        availableDatetimeEnd = DateUtil.getEndDatetime(DateUtil.dateToStr(
+            availableDatetimeEnd, DateUtil.FRONT_DATE_FORMAT_STRING));
         return ethAddressBO.saveEthAddress(EEthAddressType.W,
             ESysUser.SYS_USER_ETH.getCode(), address,
             EEthAddressType.W.getValue(), null, BigDecimal.ZERO,

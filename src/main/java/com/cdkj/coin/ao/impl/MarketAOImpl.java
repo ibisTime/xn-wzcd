@@ -12,6 +12,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,9 @@ import com.cdkj.coin.enums.EMarketOrigin;
 @Service
 public class MarketAOImpl implements IMarketAO {
 
+    private static final Logger logger = LoggerFactory
+        .getLogger(MarketAOImpl.class);
+
     @Autowired
     IMarketBO marketBO;
 
@@ -48,8 +53,8 @@ public class MarketAOImpl implements IMarketAO {
         condition.setOrigin(EMarketOrigin.BITFINEX.getCode());
         return this.marketBO.marketListByCondation(condition);
 
-//       return this.marketBO.marketByCoinTypeAndOrigin(coinType,
-//            EMarketOrigin.BITFINEX.getCode());
+        // return this.marketBO.marketByCoinTypeAndOrigin(coinType,
+        // EMarketOrigin.BITFINEX.getCode());
 
     }
 
@@ -74,9 +79,13 @@ public class MarketAOImpl implements IMarketAO {
 
     private void obtainOkexMarket() {
 
-        this.obtainOkexMarketByUrlAndCoin("https://www.okex.com/api/v1/ticker.do?symbol=eth_usdt", ECoin.ETH.getCode());
+        this.obtainOkexMarketByUrlAndCoin(
+            "https://www.okex.com/api/v1/ticker.do?symbol=eth_usdt",
+            ECoin.ETH.getCode());
 
-        this.obtainOkexMarketByUrlAndCoin("https://www.okex.com/api/v1/ticker.do?symbol=btc_usdt", ECoin.BTC.getCode());
+        this.obtainOkexMarketByUrlAndCoin(
+            "https://www.okex.com/api/v1/ticker.do?symbol=btc_usdt",
+            ECoin.BTC.getCode());
 
         // 获取usd 的行情
         // {
@@ -90,47 +99,49 @@ public class MarketAOImpl implements IMarketAO {
         // sell: "313.75"
         // }
         // }
-//        String requestStr = "https://www.okex.com/api/v1/ticker.do?symbol=eth_usdt";
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//
-//        Request request = new Request.Builder().get().url(requestStr).build();
-//        Call call = okHttpClient.newCall(request);
-//        try {
-//
-//            Response response = call.execute();
-//            String jsonStr = response.body().string();
-//
-//            Map map = (Map) JSON.parseObject(jsonStr, HashMap.class);
-//            Map tickerMap = (Map) map.get("ticker");
-//
-//            Market market = new Market();
-//            market.setReferCurrency(ECurrency.CNY.getCode());
-//            market.setCoin(ECoin.ETH.getCode());
-//            market.setUpdateDatetime(new Date());
-//            market.setLastPrice(this.convertPriceToRMB((String) tickerMap
-//                .get("last")));
-//            market.setVolume((String) tickerMap.get("vol"));
-//
-//            BigDecimal bid = this.convertPriceToRMB((String) tickerMap
-//                .get("buy"));
-//            BigDecimal ask = this.convertPriceToRMB((String) tickerMap
-//                .get("sell"));
-//            market.setAsk(ask);
-//            market.setBid(bid);
-//            market.setMid(bid.add(ask).divide(new BigDecimal(2)));
-//            market
-//                .setLow(this.convertPriceToRMB((String) tickerMap.get("low")));
-//            market.setHigh(this.convertPriceToRMB((String) tickerMap
-//                .get("high")));
-//
-//            // 确定mid
-//            // 保存
-//            this.marketBO.updateMarket(EMarketOrigin.OKEX.getCode(),
-//                ECoin.ETH.getCode(), market);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        // String requestStr =
+        // "https://www.okex.com/api/v1/ticker.do?symbol=eth_usdt";
+        // OkHttpClient okHttpClient = new OkHttpClient();
+        //
+        // Request request = new
+        // Request.Builder().get().url(requestStr).build();
+        // Call call = okHttpClient.newCall(request);
+        // try {
+        //
+        // Response response = call.execute();
+        // String jsonStr = response.body().string();
+        //
+        // Map map = (Map) JSON.parseObject(jsonStr, HashMap.class);
+        // Map tickerMap = (Map) map.get("ticker");
+        //
+        // Market market = new Market();
+        // market.setReferCurrency(ECurrency.CNY.getCode());
+        // market.setCoin(ECoin.ETH.getCode());
+        // market.setUpdateDatetime(new Date());
+        // market.setLastPrice(this.convertPriceToRMB((String) tickerMap
+        // .get("last")));
+        // market.setVolume((String) tickerMap.get("vol"));
+        //
+        // BigDecimal bid = this.convertPriceToRMB((String) tickerMap
+        // .get("buy"));
+        // BigDecimal ask = this.convertPriceToRMB((String) tickerMap
+        // .get("sell"));
+        // market.setAsk(ask);
+        // market.setBid(bid);
+        // market.setMid(bid.add(ask).divide(new BigDecimal(2)));
+        // market
+        // .setLow(this.convertPriceToRMB((String) tickerMap.get("low")));
+        // market.setHigh(this.convertPriceToRMB((String) tickerMap
+        // .get("high")));
+        //
+        // // 确定mid
+        // // 保存
+        // this.marketBO.updateMarket(EMarketOrigin.OKEX.getCode(),
+        // ECoin.ETH.getCode(), market);
+        //
+        // } catch (IOException e) {
+        // e.printStackTrace();
+        // }
 
     }
 
@@ -138,11 +149,11 @@ public class MarketAOImpl implements IMarketAO {
 
         //
         this.obtainBitfinexMarketByUrlAndCoin(
-                "https://api.bitfinex.com/v1/pubticker/ethusd", ECoin.ETH.getCode());
+            "https://api.bitfinex.com/v1/pubticker/ethusd", ECoin.ETH.getCode());
 
         //
         this.obtainBitfinexMarketByUrlAndCoin(
-                "https://api.bitfinex.com/v1/pubticker/btcusd", ECoin.BTC.getCode());
+            "https://api.bitfinex.com/v1/pubticker/btcusd", ECoin.BTC.getCode());
 
         // // 获取usd 的行情
         // String requestStr = "https://api.bitfinex.com/v1/pubticker/ethusd";
@@ -201,7 +212,7 @@ public class MarketAOImpl implements IMarketAO {
             market.setCoin(ECoin.ETH.getCode());
             market.setUpdateDatetime(new Date());
             market.setLastPrice(this.convertPriceToRMB((String) map
-                    .get("last_price")));
+                .get("last_price")));
             market.setVolume((String) map.get("volume"));
 
             market.setMid(this.convertPriceToRMB((String) map.get("mid")));
@@ -213,7 +224,7 @@ public class MarketAOImpl implements IMarketAO {
 
             // 保存
             this.marketBO.updateMarket(EMarketOrigin.BITFINEX.getCode(), coin,
-                    market);
+                market);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -241,28 +252,28 @@ public class MarketAOImpl implements IMarketAO {
             market.setCoin(ECoin.ETH.getCode());
             market.setUpdateDatetime(new Date());
             market.setLastPrice(this.convertPriceToRMB((String) tickerMap
-                    .get("last")));
+                .get("last")));
             market.setVolume((String) tickerMap.get("vol"));
 
             BigDecimal bid = this.convertPriceToRMB((String) tickerMap
-                    .get("buy"));
+                .get("buy"));
             BigDecimal ask = this.convertPriceToRMB((String) tickerMap
-                    .get("sell"));
+                .get("sell"));
             market.setAsk(ask);
             market.setBid(bid);
             market.setMid(bid.add(ask).divide(new BigDecimal(2)));
             market
-                    .setLow(this.convertPriceToRMB((String) tickerMap.get("low")));
+                .setLow(this.convertPriceToRMB((String) tickerMap.get("low")));
             market.setHigh(this.convertPriceToRMB((String) tickerMap
-                    .get("high")));
+                .get("high")));
 
             // 确定mid
             // 保存
-            this.marketBO.updateMarket(EMarketOrigin.OKEX.getCode(),
-                    coin, market);
+            this.marketBO.updateMarket(EMarketOrigin.OKEX.getCode(), coin,
+                market);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("行情数据拉取异常，原因：" + e.getMessage());
         }
 
     }
@@ -272,10 +283,10 @@ public class MarketAOImpl implements IMarketAO {
 
         // 获取美元的汇率
         CurrencyRate usdCurrencyRate = this.currencyRateBO
-                .currencyRateByCurrency(ECurrency.USD.getCode());
+            .currencyRateByCurrency(ECurrency.USD.getCode());
         // 转换为人民币
         BigDecimal rmbValue = new BigDecimal(value).multiply(usdCurrencyRate
-                .getRate());
+            .getRate());
         rmbValue.setScale(4, BigDecimal.ROUND_HALF_UP);
         return rmbValue;
     }

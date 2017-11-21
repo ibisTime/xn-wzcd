@@ -5,7 +5,7 @@ INSERT INTO `tstd_user` (`user_id`,`login_name`,`login_pwd`,`login_pwd_strength`
 -- Date: 2016-12-29 15:08
 */
 INSERT INTO `tstd_account` (`account_number`,`user_id`,`real_name`,`type`,`status`,`currency`,`amount`,`frozen_amount`,`md5`,`create_datetime`,`last_order`,`company_code`,`system_code`) VALUES ('SYS_ACOUNT_ETH','SYS_USER_ETH','平台ETH盈亏账户','P','0','ETH',0,0,'b99e0407fedc3d160f73fec8d1fa9a0c',now(),NULL,'CD-COIN000017','CD-COIN000017');
-INSERT INTO `tstd_account` (`account_number`,`user_id`,`real_name`,`type`,`status`,`currency`,`amount`,`frozen_amount`,`md5`,`create_datetime`,`last_order`,`company_code`,`system_code`) VALUES ('SYS_ACOUNT_ETH_TG','SYS_USER_ETH_TG','平台ETH冷钱包','P','0','ETH',0,0,'b99e0407fedc3d160f73fec8d1fa9a0c',now(),NULL,'CD-COIN000017','CD-COIN000017');
+INSERT INTO `tstd_account` (`account_number`,`user_id`,`real_name`,`type`,`status`,`currency`,`amount`,`frozen_amount`,`md5`,`create_datetime`,`last_order`,`company_code`,`system_code`) VALUES ('SYS_ACOUNT_ETH_COLD','SYS_USER_ETH_COLD','平台ETH冷钱包','P','0','ETH',0,0,'b99e0407fedc3d160f73fec8d1fa9a0c',now(),NULL,'CD-COIN000017','CD-COIN000017');
 
 /*
 -- Query: SELECT * FROM coin_xn_coin_dev.tcoin_market
@@ -46,9 +46,8 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','reg_url','http://hy.hichengdai.com','admin',now(),'注册链接','CD-COIN000017','CD-COIN000017');
 
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('collection_rule','collection_limit','1','admin',now(),'当账户达到该数量时进行自动归集','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('fee_rule','trade_fee','0.01','admin',now(),'交易手续费','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('withdraw_rule','fee','0.01','admin',now(),'取现手续费','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('config','trade_fee_rate','0.01','admin',now(),'交易手续费率','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('withdraw_rule','withdraw_fee','0.01','admin',now(),'取现手续费','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('trade_rule','trade_fee_rate','0.01','admin',now(),'交易手续费率','CD-COIN000017','CD-COIN000017');
 
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'user_status','用户状态','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','user_status','0','正常','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');

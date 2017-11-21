@@ -27,7 +27,6 @@ import com.cdkj.coin.domain.Jour;
 import com.cdkj.coin.enums.EBoolean;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.EGeneratePrefix;
-import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.enums.EJourStatus;
 import com.cdkj.coin.exception.BizException;
 
@@ -92,7 +91,7 @@ public class JourBOImpl extends PaginableBOImpl<Jour> implements IJourBO {
     }
 
     @Override
-    public String addJourForHL(Account dbAccount, HLOrder order) {
+    public String addJourForHL(Account dbAccount, HLOrder order, String bizType) {
         String code = OrderNoGenerater
             .generate(EGeneratePrefix.AJour.getCode());
 
@@ -106,7 +105,7 @@ public class JourBOImpl extends PaginableBOImpl<Jour> implements IJourBO {
         data.setChannelType(EChannelType.NBZ.getCode());
 
         data.setRefNo(order.getCode());
-        data.setBizType(EJourBizType.AJ_HCLB.getCode());
+        data.setBizType(bizType);
         data.setBizNote("根据红蓝订单《" + order.getCode() + "》变动资金");
         data.setTransAmount(order.getAmount());
         data.setPreAmount(dbAccount.getAmount());

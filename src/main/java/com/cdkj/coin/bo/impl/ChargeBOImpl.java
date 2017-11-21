@@ -14,7 +14,6 @@ import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.dao.IChargeDAO;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.Charge;
-import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.EChargeStatus;
 import com.cdkj.coin.enums.EGeneratePrefix;
@@ -26,7 +25,7 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
     private IChargeDAO chargeDAO;
 
     @Override
-    public String applyOrderOffline(Account account, EJourBizType bizType,
+    public String applyOrderOffline(Account account, String bizType,
             BigDecimal amount, String payCardInfo, String payCardNo,
             String applyUser, String applyNote) {
         if (amount.compareTo(BigDecimal.ZERO) == 0) {
@@ -44,12 +43,8 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
         data.setAccountName(account.getRealName());
         data.setType(account.getType());
         data.setCurrency(account.getCurrency());
-        data.setBizType(bizType.getCode());
-        if (StringUtils.isBlank(applyNote)) {
-            data.setBizNote(bizType.getValue());
-        } else {
-            data.setBizNote(applyNote);
-        }
+        data.setBizType(bizType);
+        data.setBizNote(applyNote);
         data.setPayCardInfo(payCardInfo);
         data.setPayCardNo(payCardNo);
 
@@ -65,7 +60,7 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
 
     @Override
     public String applyOrderOnline(Account account, String payGroup,
-            String refNo, EJourBizType bizType, String bizNote,
+            String refNo, String bizType, String bizNote,
             BigDecimal transAmount, EChannelType channelType, String applyUser) {
         if (transAmount.compareTo(BigDecimal.ZERO) == 0) {
             throw new BizException("xn000000", "充值金额不能为0");
@@ -82,7 +77,7 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
         data.setAccountName(account.getRealName());
         data.setType(account.getType());
         data.setCurrency(account.getCurrency());
-        data.setBizType(bizType.getCode());
+        data.setBizType(bizType);
         data.setBizNote(bizNote);
         data.setPayCardInfo(null);
         data.setPayCardNo(null);

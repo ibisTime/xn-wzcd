@@ -76,11 +76,12 @@ public class CallbackConroller {
                     // fromAddress=X toAddress=W 归集
                     ethTransactionAO.collectionNotice(ctqEthTransaction);
                     hashList.add(ctqEthTransaction.getHash());
-                } else if (EEthAddressType.M == toType) { // toAddress=M 每日定存
+                } else if (EEthAddressType.M == toType) {
+                    // toAddress=M 每日定存
                     hashList.add(ctqEthTransaction.getHash());
                 } else if (EEthAddressType.W == fromType) {
                     // fromAddress=W 每日转移
-
+                    hashList.add(ctqEthTransaction.getHash());
                 }
 
                 logger.info("处理交易：" + ctqEthTransaction.getHash());

@@ -6,17 +6,16 @@ import java.util.List;
 import com.cdkj.coin.bo.base.IPaginableBO;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.Charge;
-import com.cdkj.coin.enums.EJourBizType;
 import com.cdkj.coin.enums.EChannelType;
 
 public interface IChargeBO extends IPaginableBO<Charge> {
     String applyOrderOnline(Account account, String payGroup, String refNo,
-            EJourBizType bizType, String bizNote, BigDecimal transAmount,
+            String bizType, String bizNote, BigDecimal transAmount,
             EChannelType channelType, String applyUser);
 
     void callBackChange(Charge dbCharge, boolean booleanFlag);
 
-    String applyOrderOffline(Account account, EJourBizType bizType,
+    String applyOrderOffline(Account account, String bizType,
             BigDecimal amount, String payCardInfo, String payCardNo,
             String applyUser, String applyNote);
 

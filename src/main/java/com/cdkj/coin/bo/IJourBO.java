@@ -17,7 +17,7 @@ import com.cdkj.coin.enums.EChannelType;
  */
 public interface IJourBO extends IPaginableBO<Jour> {
     // 不需要对账的新增
-    public String addJourForHL(Account dbAccount, HLOrder order);
+    public String addJourForHL(Account dbAccount, HLOrder order, String bizType);
 
     // 正常新增
     public String addJour(Account dbAccount, EChannelType channelType,

@@ -38,7 +38,9 @@ import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECoin;
 import com.cdkj.coin.enums.EEthAddressType;
 import com.cdkj.coin.enums.EEthCollectionStatus;
-import com.cdkj.coin.enums.EJourBizType;
+import com.cdkj.coin.enums.EJourBizTypeCold;
+import com.cdkj.coin.enums.EJourBizTypePlat;
+import com.cdkj.coin.enums.EJourBizTypeUser;
 import com.cdkj.coin.enums.ESystemAccount;
 import com.cdkj.coin.enums.EWithdrawStatus;
 import com.cdkj.coin.eth.CtqEthTransaction;
@@ -95,14 +97,14 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         BigDecimal amount = new BigDecimal(ctqEthTransaction.getValue());
         // 充值订单落地
         String code = chargeBO.applyOrderOnline(account, payGroup,
-            ctqEthTransaction.getHash(), EJourBizType.AJ_CHARGE, "ETH充值-来自地址："
-                    + ctqEthTransaction.getFrom(), amount, EChannelType.ETH,
-            "程序");
+            ctqEthTransaction.getHash(), EJourBizTypeUser.AJ_CHARGE.getCode(),
+            "ETH充值-来自地址：" + ctqEthTransaction.getFrom(), amount,
+            EChannelType.ETH, "程序");
         // 账户加钱
         accountBO.changeAmount(account.getAccountNumber(), EChannelType.ETH,
             ctqEthTransaction.getHash(), payGroup, code,
-            EJourBizType.AJ_CHARGE.getCode(),
-            "ETH充值-来自地址：" + ctqEthTransaction.getFrom(), amount);
+            EJourBizTypeUser.AJ_CHARGE.getCode(), "ETH充值-来自地址："
+                    + ctqEthTransaction.getFrom(), amount);
         // 落地交易记录
         ethTransactionBO.saveEthTransaction(ctqEthTransaction);
     }
@@ -119,16 +121,16 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         withdrawBO.payOrder(withdraw, EWithdrawStatus.Pay_YES, "ETH", "广播成功",
             ctqEthTransaction.getHash());
         // 平台冷钱包减钱
-        accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_TG_ETH.getCode(),
+        accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode(),
             EChannelType.ETH, ctqEthTransaction.getHash(), "ETH", withdraw
-                .getCode(), EJourBizType.AJ_WITHDRAW.getCode(), "ETH取现-外部地址："
+                .getCode(), EJourBizTypeCold.AJ_PAY.getCode(), "ETH取现-外部地址："
                     + withdraw.getPayCardNo(),
             new BigDecimal(ctqEthTransaction.getValue()));
         // 平台盈亏账户记入取现手续费
         if (withdraw.getFee().compareTo(BigDecimal.ZERO) > 0) {
             accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(),
                 EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
-                withdraw.getCode(), EJourBizType.AJ_WITHDRAWFEE.getCode(),
+                withdraw.getCode(), EJourBizTypePlat.AJ_WITHDRAWFEE.getCode(),
                 "ETH取现-外部地址" + withdraw.getPayCardNo(), withdraw.getFee());
         }
         // 平台盈亏账户记入取现矿工费
@@ -138,8 +140,8 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         BigDecimal txFee = gasPrice.multiply(gasUse);
         accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(),
             EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
-            withdraw.getCode(), EJourBizType.AJ_WFEE.getCode(), "ETH取现-外部地址"
-                    + withdraw.getPayCardNo(), txFee.negate());
+            withdraw.getCode(), EJourBizTypePlat.AJ_WFEE.getCode(),
+            "ETH取现-外部地址" + withdraw.getPayCardNo(), txFee.negate());
         // 落地交易记录
         ethTransactionBO.saveEthTransaction(ctqEthTransaction);
     }
@@ -203,15 +205,15 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         ethCollectionBO.colectionNotice(collection, txFee,
             ctqEthTransaction.getBlockCreateDatetime());
         // 平台冷钱包加钱
-        accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_TG_ETH.getCode(),
+        accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode(),
             EChannelType.ETH, ctqEthTransaction.getHash(), "ETH", collection
-                .getCode(), EJourBizType.AJ_COLLECTION.getCode(), "归集-来自地址："
+                .getCode(), EJourBizTypeCold.AJ_INCOME.getCode(), "归集-来自地址："
                     + collection.getFromAddress(), new BigDecimal(
                 ctqEthTransaction.getValue()));
         // 平台盈亏账户记入矿工费
         accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(),
             EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
-            collection.getCode(), EJourBizType.AJ_MFEE.getCode(), "归集地址："
+            collection.getCode(), EJourBizTypePlat.AJ_MFEE.getCode(), "归集地址："
                     + collection.getFromAddress(), txFee.negate());
         // 落地交易记录
         ethTransactionBO.saveEthTransaction(ctqEthTransaction);

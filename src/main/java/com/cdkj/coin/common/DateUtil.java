@@ -278,6 +278,7 @@ public class DateUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(getRelativeDateOfDays(getTodayStart(), 7));
+        System.out.println(getEndDatetime(dateToStr(new Date(),
+            FRONT_DATE_FORMAT_STRING)));
     }
 }

@@ -25,7 +25,9 @@ public class Charge extends ABaseDO {
     private String accountNumber;
 
     // 充值金额---核心字段5
-    private BigDecimal amount;
+    private transient BigDecimal amount;
+
+    private String amountString;
 
     // 针对户名
     private String accountName;
@@ -129,6 +131,15 @@ public class Charge extends ABaseDO {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+        this.amountString = amountString.toString();
+    }
+
+    public String getAmountString() {
+        return amountString;
+    }
+
+    public void setAmountString(String amountString) {
+        this.amountString = amountString;
     }
 
     public String getAccountName() {

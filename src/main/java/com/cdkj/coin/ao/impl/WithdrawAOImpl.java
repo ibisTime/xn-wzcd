@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.web3j.crypto.WalletUtils;
+import org.web3j.utils.Convert;
+import org.web3j.utils.Convert.Unit;
 
 import com.cdkj.coin.ao.IWithdrawAO;
 import com.cdkj.coin.bo.IAccountBO;
@@ -30,8 +32,9 @@ import com.cdkj.coin.enums.EAccountType;
 import com.cdkj.coin.enums.EBoolean;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECurrency;
-import com.cdkj.coin.enums.EJourBizType;
+import com.cdkj.coin.enums.EJourBizTypeCold;
 import com.cdkj.coin.enums.EJourBizTypeUser;
+import com.cdkj.coin.enums.ESystemAccount;
 import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.enums.EWithdrawStatus;
 import com.cdkj.coin.exception.BizException;
@@ -80,8 +83,11 @@ public class WithdrawAOImpl implements IWithdrawAO {
             throw new BizException("xn000000", "余额不足");
         }
         // 生成取现订单
-        BigDecimal fee = doGetFee(dbAccount.getType(), amount,
-            dbAccount.getSystemCode(), dbAccount.getCompanyCode());
+        // BigDecimal fee = doGetFee(dbAccount.getType(), amount,
+        // dbAccount.getSystemCode(), dbAccount.getCompanyCode());
+        BigDecimal fee = sysConfigBO
+            .getBigDecimalValue(SysConstants.WITHDRAW_FEE);
+        fee = Convert.toWei(fee, Unit.ETHER);
         // 取现总金额
         amount = amount.add(fee);
         String withdrawCode = withdrawBO.applyOrder(dbAccount, amount, fee,
@@ -217,10 +223,12 @@ public class WithdrawAOImpl implements IWithdrawAO {
         accountBO.cutFrozenAmount(dbAccount, data.getAmount());
         Account account = accountBO.getAccount(data.getAccountNumber());
         if (ECurrency.CNY.getCode().equals(account.getCurrency())) {
-            // 托管账户减钱
-            accountBO.changeAmount(data.getCompanyCode(), EChannelType.Offline,
-                null, null, data.getCode(), EJourBizType.AJ_WITHDRAW.getCode(),
-                "线下取现", data.getAmount().negate());
+            // 冷钱包减钱
+            accountBO.changeAmount(
+                ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode(),
+                EChannelType.Offline, null, null, data.getCode(),
+                EJourBizTypeCold.AJ_PAY.getCode(), "ETH取现", data.getAmount()
+                    .negate());
         }
     }
 

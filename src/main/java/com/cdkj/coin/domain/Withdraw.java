@@ -25,10 +25,14 @@ public class Withdraw extends ABaseDO {
     private String type;
 
     // 取现金额
-    private BigDecimal amount;
+    private transient BigDecimal amount;
+
+    private String amountString;
 
     // 取现手续费
     private BigDecimal fee;
+
+    private String feeString;
 
     // 支付渠道
     private String channelType;
@@ -200,6 +204,15 @@ public class Withdraw extends ABaseDO {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+        this.amountString = amount.toString();
+    }
+
+    public String getAmountString() {
+        return amountString;
+    }
+
+    public void setAmountString(String amountString) {
+        this.amountString = amountString;
     }
 
     public BigDecimal getFee() {
@@ -208,6 +221,15 @@ public class Withdraw extends ABaseDO {
 
     public void setFee(BigDecimal fee) {
         this.fee = fee;
+        this.feeString = fee.toString();
+    }
+
+    public String getFeeString() {
+        return feeString;
+    }
+
+    public void setFeeString(String feeString) {
+        this.feeString = feeString;
     }
 
     public String getChannelType() {
