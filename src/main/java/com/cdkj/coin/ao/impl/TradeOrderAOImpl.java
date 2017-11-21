@@ -58,6 +58,13 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
         String code = null;
 
+        //检查购买用户，是否有未完成的订单, 有未完成的交易则不能在进行交易
+        if (this.tradeOrderBO.checkUserHasUnFinishOrder(buyUser,ETradeOrderType.BUY)) {
+
+            throw new  BizException(EBizErrorCode.DEFAULT.getCode(),"您有尚未完成的购买订单");
+
+        }
+
         // 获取广告详情
         Ads ads = adsBO.adsDetail(adsCode);
 
@@ -79,6 +86,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
                 tradeAmount, fee);
 
         return code;
+
     }
 
     //我要卖币
@@ -86,6 +94,13 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     @Transactional
     public String sell(String adsCode, String sellUser, BigDecimal tradePrice,
                        BigDecimal tradeCount, BigDecimal tradeAmount) {
+
+        //
+        if (this.tradeOrderBO.checkUserHasUnFinishOrder(sellUser,ETradeOrderType.SELL)) {
+
+            throw new  BizException(EBizErrorCode.DEFAULT.getCode(),"您有尚未完成的出售订单");
+
+        }
 
         //获取广告详情
         Ads ads = this.adsBO.adsDetail(adsCode);

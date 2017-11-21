@@ -6,6 +6,7 @@ import java.util.List;
 import com.cdkj.coin.bo.base.IPaginableBO;
 import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.domain.TradeOrder;
+import com.cdkj.coin.enums.ETradeOrderType;
 
 public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
 
@@ -36,5 +37,7 @@ public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
     public int revokePay(TradeOrder tradeOrder, String updater, String string);
 
     public boolean isExistOningOrder(String adsCode);
+
+    public boolean checkUserHasUnFinishOrder(String userId, ETradeOrderType tradeOrderType);
 
 }

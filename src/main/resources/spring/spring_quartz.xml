@@ -61,7 +61,7 @@
 	<bean id="adsMarketRefreshTrigger"
 		  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="adsMarket" />
-		<property name="cronExpression" value="0 0/1 * * * ?" />
+		<property name="cronExpression" value="0 */10 * * * ?" />
 	</bean>
 	<bean id="adsMarket"
 		  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
