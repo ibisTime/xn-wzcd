@@ -13,7 +13,10 @@ public class Ads extends ABaseDO implements Serializable {
 
     private String code;
     private String userId;
+
+    //根据uerId得到的值
     private User user;
+
     private String tradeCurrency;
     private String tradeCoin;
     private String onlyTrust;

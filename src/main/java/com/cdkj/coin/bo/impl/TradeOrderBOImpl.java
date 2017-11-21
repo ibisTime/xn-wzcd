@@ -247,4 +247,29 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         return flag;
     }
 
+    //释放后都算已完成
+    @Override
+    public boolean checkUserHasUnFinishOrder(String userId, ETradeOrderType tradeOrderType) {
+
+        TradeOrder condition = new TradeOrder();
+
+        if (tradeOrderType.equals(ETradeOrderType.BUY)) {
+            condition.setType(ETradeOrderType.BUY.getCode());
+            condition.setBuyUser(userId);
+        } else {
+
+            condition.setType(ETradeOrderType.SELL.getCode());
+            condition.setSellUser(userId);
+
+        }
+
+        List<String> statusList = new ArrayList<>();
+        statusList.add(ETradeOrderStatus.TO_PAY.getCode());
+        statusList.add(ETradeOrderStatus.PAYED.getCode());
+        condition.setStatusList(statusList);
+
+        long count = this.tradeOrderDAO.selectTotalCount(condition);
+
+        return count <= 0;
+    }
 }
