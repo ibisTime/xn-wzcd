@@ -60,27 +60,30 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
             throw new BizException("xn625000", "以太坊账户创建失败，请检查节点是否正常！");
         }
         logger.info("以太坊账户创建成功:" + address);
-        this.saveEthAddress(type, userId, address, password, BigDecimal.ZERO,
-            availableDatetimeStart, availableDatetimeEnd);
+        this.saveEthAddress(type, userId, address, type.getValue(), password,
+            BigDecimal.ZERO, availableDatetimeStart, availableDatetimeEnd,
+            EEthAddressStatus.NORMAL);
         return address;
     }
 
     @Override
     public String saveEthAddress(EEthAddressType type, String userId,
-            String address, String password, BigDecimal balance,
-            Date availableDatetimeStart, Date availableDatetimeEnd) {
+            String address, String label, String password, BigDecimal balance,
+            Date availableDatetimeStart, Date availableDatetimeEnd,
+            EEthAddressStatus status) {
         String code = OrderNoGenerater.generate("ETH");
         Date now = new Date();
         EthAddress data = new EthAddress();
         data.setCode(code);
         data.setType(type.getCode());
         data.setAddress(address);
+        data.setLabel(label);
         data.setPassword(password);
         data.setUserId(userId);
         data.setBalance(balance);
         data.setAvailableDatetimeStart(availableDatetimeStart);
         data.setAvailableDatetimeEnd(availableDatetimeEnd);
-        data.setStatus(EEthAddressStatus.NORMAL.getCode());
+        data.setStatus(status.getCode());
         data.setCreateDatetime(now);
         data.setUpdateDatetime(now);
         ethAddressDAO.insert(data);
@@ -169,6 +172,19 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
         } catch (Exception e) {
             throw new BizException("xn625000", "以太坊余额查询异常，原因：" + e.getMessage());
         }
+    }
+
+    @Override
+    public int abandonAddress(EthAddress ethAddress) {
+        int count = 0;
+        if (ethAddress != null) {
+            Date now = new Date();
+            ethAddress.setStatus(EEthAddressStatus.INVALID.getCode());
+            ethAddress.setAbandonDatetime(now);
+            ethAddress.setUpdateDatetime(now);
+            ethAddressDAO.updateAbandon(ethAddress);
+        }
+        return count;
     }
 
 }

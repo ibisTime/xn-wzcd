@@ -11,7 +11,7 @@ import com.cdkj.coin.exception.BizException;
  * @history:
  */
 public enum ECaptchaType {
-    C_REG("805041", "C端会员注册");
+    C_REG("805041", "C端会员注册"), ADDRESS_ADD("625203", "地址新增");
 
     public static ECaptchaType getBizType(String code) {
         Map<String, ECaptchaType> map = getBizTypeMap();

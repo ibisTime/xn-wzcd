@@ -16,12 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.coin.bo.IUserRelationBO;
-import com.cdkj.coin.bo.base.Page;
-import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.bo.base.PaginableBOImpl;
 import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.dao.IUserRelationDAO;
-import com.cdkj.coin.domain.User;
 import com.cdkj.coin.domain.UserRelation;
 import com.cdkj.coin.enums.EBoolean;
 
@@ -102,28 +99,6 @@ public class UserRelationBOImpl extends PaginableBOImpl<UserRelation> implements
             count = userRelationDAO.delete(data);
         }
         return count;
-    }
-
-    /** 
-     * @see com.std.user.bo.IUserRelationBO#queryUserList(com.std.user.domain.UserRelation)
-     */
-    @Override
-    public List<User> queryUserList(UserRelation condition) {
-        return userRelationDAO.selectUserList(condition);
-    }
-
-    /** 
-     * @see com.std.user.bo.IUserRelationBO#queryUserPage(int, int, com.std.user.domain.UserRelation)
-     */
-    @Override
-    public Paginable<User> queryUserPage(int start, int pageSize,
-            UserRelation condition) {
-        long totalCount = userRelationDAO.selectUserTotalCount(condition);
-        Paginable<User> page = new Page<User>(start, pageSize, totalCount);
-        List<User> dataList = userRelationDAO.selectUserList(condition,
-            page.getStart(), page.getPageSize());
-        page.setList(dataList);
-        return page;
     }
 
     @Override

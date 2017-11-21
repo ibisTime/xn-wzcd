@@ -24,6 +24,9 @@ public class EthAddress extends ABaseDO {
     // 以太坊地址
     private String address;
 
+    // 标签
+    private String label;
+
     // 密码
     private String password;
 
@@ -84,6 +87,14 @@ public class EthAddress extends ABaseDO {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public String getPassword() {

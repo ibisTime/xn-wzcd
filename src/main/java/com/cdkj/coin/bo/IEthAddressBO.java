@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.cdkj.coin.bo.base.IPaginableBO;
 import com.cdkj.coin.domain.EthAddress;
+import com.cdkj.coin.enums.EEthAddressStatus;
 import com.cdkj.coin.enums.EEthAddressType;
 
 public interface IEthAddressBO extends IPaginableBO<EthAddress> {
@@ -17,8 +18,9 @@ public interface IEthAddressBO extends IPaginableBO<EthAddress> {
 
     // 导入（保存）地址
     public String saveEthAddress(EEthAddressType type, String userId,
-            String address, String password, BigDecimal balance,
-            Date availableDatetimeStart, Date availableDatetimeEnd);
+            String address, String label, String password, BigDecimal balance,
+            Date availableDatetimeStart, Date availableDatetimeEnd,
+            EEthAddressStatus status);
 
     // 获取今日散取地址
     public EthAddress getMEthAddressToday();
@@ -36,5 +38,7 @@ public interface IEthAddressBO extends IPaginableBO<EthAddress> {
     public List<EthAddress> queryEthAddressList(EthAddress condition);
 
     public EthAddress getEthAddress(String code);
+
+    public int abandonAddress(EthAddress ethAddress);
 
 }

@@ -8,10 +8,7 @@
  */
 package com.cdkj.coin.dao;
 
-import java.util.List;
-
 import com.cdkj.coin.dao.base.IBaseDAO;
-import com.cdkj.coin.domain.User;
 import com.cdkj.coin.domain.UserRelation;
 
 /** 
@@ -25,10 +22,4 @@ public interface IUserRelationDAO extends IBaseDAO<UserRelation> {
     // 更新关系表状态
     public int updateStatus(UserRelation data);
 
-    public long selectUserTotalCount(UserRelation condition);
-
-    public List<User> selectUserList(UserRelation condition);
-
-    public List<User> selectUserList(UserRelation condition, int start,
-            int count);
 }

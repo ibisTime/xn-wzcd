@@ -29,18 +29,6 @@
 		<property name="autoStartup" value="true" />
 	</bean>
 
-	<!--<bean id="ethTransactionSyncTrigger"-->
-		<!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
-		<!--<property name="jobDetail" ref="doEthTransactionSync" />-->
-		<!--<property name="cronExpression" value="0 */1 * * * ?" />&lt;!&ndash; 每隔5秒执行 &ndash;&gt;-->
-	<!--</bean>-->
-	<!--<bean id="doEthTransactionSync"-->
-		<!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
-		<!--<property name="targetObject" ref="ethAddressAOImpl" />-->
-		<!--<property name="targetMethod" value="doEthTransactionSync" />-->
-		<!--<property name="concurrent" value="false" />   &lt;!&ndash; 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 &ndash;&gt;-->
-	<!--</bean>-->
-
 	<!-- 定时获取汇率 -->
 	<bean id="currencyRateTrigger"
 		  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">

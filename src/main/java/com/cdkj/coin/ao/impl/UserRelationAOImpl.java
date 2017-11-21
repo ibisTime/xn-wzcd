@@ -37,25 +37,19 @@ public class UserRelationAOImpl implements IUserRelationAO {
     IUserBO userBO;
 
     /** 
-     * @see com.std.user.ao.IUserRelationAO#queryUserPage(int, int, com.std.user.domain.UserRelation)
+     * @see com.std.user.ao.IUserRelationAO#queryUserRelationPage(int, int, com.std.user.domain.UserRelation)
      */
     @Override
-    public Paginable<User> queryUserPage(int start, int limit,
+    public Paginable<UserRelation> queryUserRelationPage(int start, int limit,
             UserRelation condition) {
-        Paginable<User> page = userRelationBO.queryUserPage(start, limit,
-            condition);
-        // List<User> list = page.getList();
-        // for (User user : list) {
-        // if (EBoolean.YES.getCode().equals(condition.getIsGetAmount())) {
-        // XN802013Res res = accountBO.getAccountDetail(user.getUserId(),
-        // ECurrency.XNB.getCode());
-        // if (res != null) {
-        // user.setAmount(res.getAmount());
-        // } else {
-        // user.setAmount(0L);
-        // }
-        // }
-        // }
+        Paginable<UserRelation> page = userRelationBO.getPaginable(start,
+            limit, condition);
+        for (UserRelation userRelation : page.getList()) {
+            userRelation.setFromUserInfo(userBO.getUser(userRelation
+                .getUserId()));
+            userRelation
+                .setToUserInfo(userBO.getUser(userRelation.getToUser()));
+        }
         return page;
     }
 

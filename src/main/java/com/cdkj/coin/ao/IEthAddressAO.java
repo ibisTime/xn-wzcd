@@ -21,8 +21,12 @@ import com.cdkj.coin.enums.EEthAddressType;
  */
 public interface IEthAddressAO {
 
-    // 定时器调用：每隔**同步账户流水
-    public void doEthTransactionSync();
+    // 新增用户地址
+    public void addEthAddress(String address, String label, String userId,
+            String smsCaptcha, String isCerti, String tradePwd);
+
+    // 弃用地址
+    public void abandonAddress(String code);
 
     // 根据地址获取地址类型
     public EEthAddressType getType(String address);

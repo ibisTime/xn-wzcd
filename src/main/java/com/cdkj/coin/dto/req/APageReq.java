@@ -31,11 +31,11 @@ public abstract class APageReq implements Serializable {
     // 创建终止时间(YYYY-MM-DD)
     private String dateEnd;
 
-    @NotBlank
+    @NotBlank(message = "第几页start参数不能为空")
     @Min(0)
     private String start;
 
-    @NotBlank
+    @NotBlank(message = "每页记录数limit参数不能为空")
     @Min(0)
     private String limit;
 

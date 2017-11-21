@@ -47,4 +47,9 @@ public class EthAddressDAOImpl extends AMybatisTemplate implements
             count, condition, EthAddress.class);
     }
 
+    @Override
+    public int updateAbandon(EthAddress data) {
+        return super.update(NAMESPACE.concat("update_abandon"), data);
+    }
+
 }

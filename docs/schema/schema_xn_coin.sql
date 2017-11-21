@@ -100,6 +100,7 @@ CREATE TABLE `tcoin_eth_address` (
   `code` varchar(32) NOT NULL DEFAULT '' COMMENT '编号',
   `type` varchar(32) DEFAULT NULL COMMENT '地址类型',
   `address` varchar(255) DEFAULT NULL COMMENT '以太坊地址',
+  `label` varchar(32) DEFAULT NULL COMMENT '标签',
   `password` varchar(255) DEFAULT NULL COMMENT '密码',
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
   `balance` decimal(64,0) DEFAULT NULL COMMENT '余额',
@@ -111,6 +112,7 @@ CREATE TABLE `tcoin_eth_address` (
   `update_datetime` datetime DEFAULT NULL COMMENT '最后一次更新时间',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

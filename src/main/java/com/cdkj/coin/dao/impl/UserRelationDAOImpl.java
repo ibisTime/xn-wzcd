@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import com.cdkj.coin.dao.IUserRelationDAO;
 import com.cdkj.coin.dao.base.support.AMybatisTemplate;
-import com.cdkj.coin.domain.User;
 import com.cdkj.coin.domain.UserRelation;
 
 /** 
@@ -88,31 +87,4 @@ public class UserRelationDAOImpl extends AMybatisTemplate implements
             count, condition, UserRelation.class);
     }
 
-    /** 
-     * @see com.std.user.dao.base.IBaseDAO#selectTotalCount(java.lang.Object)
-     */
-    @Override
-    public long selectUserTotalCount(UserRelation condition) {
-        return super.selectTotalCount(NAMESPACE.concat("select_user_count"),
-            condition);
-    }
-
-    /** 
-     * @see com.std.user.dao.base.IBaseDAO#selectList(java.lang.Object, int, int)
-     */
-    @Override
-    public List<User> selectUserList(UserRelation condition, int start,
-            int count) {
-        return super.selectList(NAMESPACE.concat("select_user"), start, count,
-            condition, User.class);
-    }
-
-    /** 
-     * @see com.std.user.dao.IUserRelationDAO#selectUserList(com.std.user.domain.UserRelation)
-     */
-    @Override
-    public List<User> selectUserList(UserRelation condition) {
-        return super.selectList(NAMESPACE.concat("select_user"), condition,
-            User.class);
-    }
 }

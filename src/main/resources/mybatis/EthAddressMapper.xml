@@ -6,6 +6,7 @@
 		<result column="code" property="code" />
 		<result column="type" property="type" />
 		<result column="address" property="address" />
+		<result column="label" property="label" />
 		<result column="password" property="password" />
 		<result column="user_id" property="userId" />
 		<result column="balance" property="balance" />
@@ -40,6 +41,7 @@
 		t.code
 		,t.type
 		,t.address
+		,t.label
 		,t.password
 		,t.user_id
 		,t.balance
@@ -71,6 +73,7 @@
 		code
 		,type
 		,address
+		,label
 		,password
 		,user_id
 		,balance
@@ -85,6 +88,7 @@
 		#{code}
 		,#{type}
 		,#{address}
+		,#{label}
 		,#{password}
 		,#{userId}
 		,#{balance}
@@ -97,6 +101,13 @@
 		)
 	</insert>
 
-
+    <update id="update_abandon" parameterType="tradeOrder">
+		UPDATE tcoin_eth_address
+		SET
+		status = #{status}
+		,abandon_datetime = #{abandonDatetime}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
 
 </mapper>

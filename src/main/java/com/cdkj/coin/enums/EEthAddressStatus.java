@@ -1,7 +1,7 @@
 package com.cdkj.coin.enums;
 
 public enum EEthAddressStatus {
-    NORMAL("0", "正常"), INVALID("1", "弃用");
+    NORMAL("0", "正常"), CERTI("1", "已认证"), INVALID("2", "已弃用");
 
     EEthAddressStatus(String code, String value) {
         this.code = code;

@@ -39,36 +39,16 @@ public class UserRelation extends ABaseDO {
     private Date updateDatetime;
 
     // 系统编号
+    private String companyCode;
+
+    // 系统编号
     private String systemCode;
 
-    // ***************** db properties *****************
-    // 手机号
-    private String mobileForLikeQuery;
+    // 用户
+    private User fromUserInfo;
 
-    // 手机号
-    private String mobile;
-
-    // 是否查询金额 1 是
-    private String isGetAmount;
-
-    // 昵称
-    private String nickname;
-
-    public String getSystemCode() {
-        return systemCode;
-    }
-
-    public void setSystemCode(String systemCode) {
-        this.systemCode = systemCode;
-    }
-
-    public String getIsGetAmount() {
-        return isGetAmount;
-    }
-
-    public void setIsGetAmount(String isGetAmount) {
-        this.isGetAmount = isGetAmount;
-    }
+    // 用户
+    private User toUserInfo;
 
     public String getCode() {
         return code;
@@ -110,27 +90,36 @@ public class UserRelation extends ABaseDO {
         this.updateDatetime = updateDatetime;
     }
 
-    public String getMobileForLikeQuery() {
-        return mobileForLikeQuery;
+    public String getCompanyCode() {
+        return companyCode;
     }
 
-    public void setMobileForLikeQuery(String mobileForLikeQuery) {
-        this.mobileForLikeQuery = mobileForLikeQuery;
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getSystemCode() {
+        return systemCode;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setSystemCode(String systemCode) {
+        this.systemCode = systemCode;
     }
 
-    public String getNickname() {
-        return nickname;
+    public User getFromUserInfo() {
+        return fromUserInfo;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setFromUserInfo(User fromUserInfo) {
+        this.fromUserInfo = fromUserInfo;
     }
+
+    public User getToUserInfo() {
+        return toUserInfo;
+    }
+
+    public void setToUserInfo(User toUserInfo) {
+        this.toUserInfo = toUserInfo;
+    }
+
 }

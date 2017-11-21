@@ -12,31 +12,33 @@ import com.cdkj.coin.ao.IEthAddressAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.ObjValidater;
-import com.cdkj.coin.dto.req.XN625202Req;
+import com.cdkj.coin.dto.req.XN625203Req;
 import com.cdkj.coin.dto.res.BooleanRes;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
 
 /** 
- * 弃用
+ * 新增用户ETH地址
  * @author: haiqingzheng 
  * @since: 2017年11月8日 下午3:12:21 
  * @history:
  */
-public class XN625202 extends AProcessor {
+public class XN625203 extends AProcessor {
 
     private IEthAddressAO ethAddressAO = SpringContextHolder
         .getBean(IEthAddressAO.class);
 
-    private XN625202Req req = null;
+    private XN625203Req req = null;
 
     /** 
      * @see com.cdkj.coin.api.IProcessor#doBusiness()
      */
     @Override
     public Object doBusiness() throws BizException {
-        ethAddressAO.abandonAddress(req.getCode());
+        ethAddressAO.addEthAddress(req.getAddress(), req.getLabel(),
+            req.getUserId(), req.getSmsCaptcha(), req.getIsCerti(),
+            req.getTradePwd());
         return new BooleanRes(true);
     }
 
@@ -45,7 +47,7 @@ public class XN625202 extends AProcessor {
      */
     @Override
     public void doCheck(String inputparams) throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN625202Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN625203Req.class);
         ObjValidater.validateReq(req);
     }
 

@@ -9,7 +9,6 @@
 package com.cdkj.coin.ao;
 
 import com.cdkj.coin.bo.base.Paginable;
-import com.cdkj.coin.domain.User;
 import com.cdkj.coin.domain.UserRelation;
 
 /** 
@@ -19,7 +18,7 @@ import com.cdkj.coin.domain.UserRelation;
  */
 public interface IUserRelationAO {
 
-    public Paginable<User> queryUserPage(int start, int limit,
+    public Paginable<UserRelation> queryUserRelationPage(int start, int limit,
             UserRelation condition);
 
     /**

@@ -11,8 +11,6 @@ package com.cdkj.coin.bo;
 import java.util.List;
 
 import com.cdkj.coin.bo.base.IPaginableBO;
-import com.cdkj.coin.bo.base.Paginable;
-import com.cdkj.coin.domain.User;
 import com.cdkj.coin.domain.UserRelation;
 
 /** 
@@ -30,11 +28,6 @@ public interface IUserRelationBO extends IPaginableBO<UserRelation> {
     public int refreshUserRelation(String userId, String toUser);
 
     public int removeUserRelation(String userId, String toUser);
-
-    public List<User> queryUserList(UserRelation condition);
-
-    public Paginable<User> queryUserPage(int start, int pageSize,
-            UserRelation condition);
 
     public List<UserRelation> queryUserRelationList(String userId, String toUser);
 }

@@ -13,10 +13,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.web3j.crypto.WalletUtils;
 
 import com.cdkj.coin.ao.IEthAddressAO;
 import com.cdkj.coin.bo.IAccountBO;
@@ -24,13 +26,20 @@ import com.cdkj.coin.bo.ICtqBO;
 import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IEthTransactionBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
+import com.cdkj.coin.bo.ISmsOutBO;
 import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.domain.EthAddress;
+import com.cdkj.coin.domain.User;
+import com.cdkj.coin.enums.EBoolean;
+import com.cdkj.coin.enums.ECaptchaType;
+import com.cdkj.coin.enums.EEthAddressStatus;
 import com.cdkj.coin.enums.EEthAddressType;
 import com.cdkj.coin.enums.ESysUser;
+import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.exception.BizException;
+import com.cdkj.coin.exception.EBizErrorCode;
 
 /** 
  * @author: haiqingzheng 
@@ -60,81 +69,56 @@ public class EthAddressAOImpl implements IEthAddressAO {
     @Autowired
     private ISYSConfigBO sysConfigBO;
 
-    /** 
-     * @see com.cdkj.coin.ao.IEthAddressAO#doSynchronizeEthJour()
-     */
+    @Autowired
+    ISmsOutBO smsOutBO;
+
     @Override
-    public void doEthTransactionSync() {
-        // try {
-        // Long blockNumber = sysConfigBO
-        // .getLongValue(SysConstants.CUR_BLOCK_NUMBER);
-        // while (true) {
-        // blockNumber = blockNumber + 1;
-        // System.out.println("*********同步循环开始，扫描区块" + blockNumber
-        // + "*******");
-        // EthBlock ethBlockResp = web3j.ethGetBlockByNumber(
-        // new DefaultBlockParameterNumber(blockNumber), true).send();
-        // if (ethBlockResp.getError() != null) {
-        // logger.error("扫描以太坊区块同步流水发送异常，原因："
-        // + ethBlockResp.getError());
-        // }
-        // EthBlock.Block block = ethBlockResp.getResult();
-        // // 如果取到区块信息
-        // if (block != null) {
-        // block
-        // .getTransactions()
-        // .forEach(
-        // txObj -> {
-        // EthBlock.TransactionObject tx = (EthBlock.TransactionObject) txObj;
-        // String toAddress = tx.getTo();
-        // if (StringUtils.isNotBlank(toAddress)) {
-        // // 查询改地址是否在我们系统中存在
-        // EthAddress ethAddress = ethAddressBO
-        // .getEthAddress(EEthAddressType.X,
-        // toAddress);
-        // // 存在逻辑
-        // if (ethAddress != null) {
-        // // 落地交易信息
-        // ethTransactionBO.saveEthTransaction(tx);
-        // // 虚拟账户加钱
-        // // Account account = accountBO
-        // // .getRemoteAccount(
-        // // ethAddress.getUserId(),
-        // // ECurrency.ETH);
-        // String fromAddress = tx.getFrom();
-        // BigInteger value = tx.getValue();
-        // String hash = tx.getHash();
-        // // accountBO.changeAmount(
-        // // account.getAccountNumber(),
-        // // EChannelType.ETH.getCode(), hash,
-        // // hash, hash,
-        // // EBizType.AJ_CZ.getCode(), "来自地址:"
-        // // + fromAddress, value);
-        // // accountBO.changeAmount(
-        // // ESystemAccount.SYS_ACOUNT_TG_ETH
-        // // .getCode(), EChannelType.ETH
-        // // .getCode(), hash, hash, hash,
-        // // EBizType.AJ_CZ.getCode(), "发送地址:"
-        // // + fromAddress + " 接收地址:"
-        // // + toAddress, value);
-        // }
-        // }
-        // });
-        // } else {
-        // System.out.println("*********同步循环结束,区块号"
-        // + (blockNumber - 1) + "为最后一个区块*******");
-        // break;
-        // }
-        // SYSConfig config = sysConfigBO.getSYSConfig(
-        // SysConstants.CUR_BLOCK_NUMBER, ESystemCode.COIN.getCode(),
-        // ESystemCode.COIN.getCode());
-        // sysConfigBO.refreshSYSConfig(config.getId(),
-        // String.valueOf(blockNumber), "procedure", "当前扫描至哪个区块");
-        //
-        // }
-        // } catch (IOException e1) {
-        // logger.error("扫描以太坊区块同步流水发送异常，原因：" + e1.getMessage());
-        // }
+    public void addEthAddress(String address, String label, String userId,
+            String smsCaptcha, String isCerti, String tradePwd) {
+
+        // 地址有效性校验
+        if (!WalletUtils.isValidAddress(address)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "地址不符合以太坊规则，请仔细核对");
+        }
+
+        // 用户ID校验
+        User user = userBO.getUser(userId);
+        if (user == null) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "编号为"
+                    + userId + "的用户不存在");
+        }
+
+        // 验证码校验
+        smsOutBO.checkCaptcha(user.getMobile(), smsCaptcha,
+            ECaptchaType.ADDRESS_ADD.getCode(), ESystemCode.COIN.getCode(),
+            ESystemCode.COIN.getCode());
+        EEthAddressStatus status = EEthAddressStatus.NORMAL;
+
+        // 是否设置为认证账户
+        if (EBoolean.YES.getCode().equals(isCerti)) {
+            if (StringUtils.isBlank(tradePwd)) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "资金密码不能为空");
+            }
+            // 验证资金密码
+            userBO.checkTradePwd(userId, tradePwd);
+            status = EEthAddressStatus.CERTI;
+        }
+
+        ethAddressBO.saveEthAddress(EEthAddressType.Y, userId, address, label,
+            null, BigDecimal.ZERO, null, null, status);
+
+    }
+
+    @Override
+    public void abandonAddress(String code) {
+        EthAddress ethAddress = ethAddressBO.getEthAddress(code);
+        if (EEthAddressStatus.INVALID.getCode().equals(ethAddress.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "地址已失效，无需重复弃用");
+        }
+        ethAddressBO.abandonAddress(ethAddress);
     }
 
     @Override
@@ -169,8 +153,10 @@ public class EthAddressAOImpl implements IEthAddressAO {
     public String importWAddress(String address, Date availableDatetimeStart,
             Date availableDatetimeEnd) {
         return ethAddressBO.saveEthAddress(EEthAddressType.W,
-            ESysUser.SYS_USER_ETH.getCode(), address, null, BigDecimal.ZERO,
-            availableDatetimeStart, availableDatetimeEnd);
+            ESysUser.SYS_USER_ETH.getCode(), address,
+            EEthAddressType.W.getValue(), null, BigDecimal.ZERO,
+            availableDatetimeStart, availableDatetimeEnd,
+            EEthAddressStatus.NORMAL);
     }
 
     @Override
