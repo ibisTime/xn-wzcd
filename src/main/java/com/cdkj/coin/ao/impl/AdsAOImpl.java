@@ -380,16 +380,19 @@ public class AdsAOImpl implements IAdsAO {
         BigDecimal willFrezonAmount = ads.getTotalCount().add(fee);
 
         // 校验账户余额
-        if (account.getAmount().compareTo(willFrezonAmount) < 0) {
+        if (account.getAmount().subtract(account.getFrozenAmount()).compareTo(willFrezonAmount) < 0) {
             throw new BizException("xn000", "需要冻结相应的手续费，账户余额不足");
         }
 
-        // 冻结账户金额
+        // 冻结 交易金额
         this.accountBO.frozenAmount(account, ads.getTotalCount(),
                 EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
                 EJourBizTypeUser.AJ_ADS_FROZEN.getValue(), ads.getCode());
-        //todo 正常账户，插入减少流水
-        //todo 冻结账户增加，增加流水
+
+        //冻结 对应的手续费
+        this.accountBO.frozenAmount(account, fee,
+                EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
+                EJourBizTypeUser.AJ_ADS_FROZEN.getValue() + "交易手续费冻结", ads.getCode());
 
     }
 
