@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 import com.cdkj.coin.dao.base.support.AMybatisTemplate;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -28,9 +29,20 @@ public class CurrencyRateDAOImpl extends AMybatisTemplate implements ICurrencyRa
 
     }
 
+//    @Override
+//    public BigDecimal selectRateAVG(String currency) {
+//
+//        CurrencyRate condition = new CurrencyRate();
+//        condition.setCurrency();
+//        return super.select(NAMESPACE.concat("selectRateAVG"),condition,);
+//    }
+
+
     @Override
     public long selectTotalCount(CurrencyRate condition) {
-        return 0;
+
+        return super.selectTotalCount(NAMESPACE.concat("selectTotalCount"),condition);
+
     }
 
     @Override
@@ -48,13 +60,15 @@ public class CurrencyRateDAOImpl extends AMybatisTemplate implements ICurrencyRa
     @Override
     public List<CurrencyRate> selectList(CurrencyRate condition) {
 
-        return super.selectList(NAMESPACE.concat("selectList"), condition, CurrencyRate.class);
+        return super.selectList(NAMESPACE.concat("select"), condition, CurrencyRate.class);
 
     }
 
     @Override
     public List<CurrencyRate> selectList(CurrencyRate condition, int start, int count) {
-        return null;
+
+        return  super.selectList(NAMESPACE.concat("select"),start,count,condition,CurrencyRate.class);
+
     }
 
 }

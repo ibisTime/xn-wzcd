@@ -99,50 +99,6 @@ public class MarketAOImpl implements IMarketAO {
         // sell: "313.75"
         // }
         // }
-        // String requestStr =
-        // "https://www.okex.com/api/v1/ticker.do?symbol=eth_usdt";
-        // OkHttpClient okHttpClient = new OkHttpClient();
-        //
-        // Request request = new
-        // Request.Builder().get().url(requestStr).build();
-        // Call call = okHttpClient.newCall(request);
-        // try {
-        //
-        // Response response = call.execute();
-        // String jsonStr = response.body().string();
-        //
-        // Map map = (Map) JSON.parseObject(jsonStr, HashMap.class);
-        // Map tickerMap = (Map) map.get("ticker");
-        //
-        // Market market = new Market();
-        // market.setReferCurrency(ECurrency.CNY.getCode());
-        // market.setCoin(ECoin.ETH.getCode());
-        // market.setUpdateDatetime(new Date());
-        // market.setLastPrice(this.convertPriceToRMB((String) tickerMap
-        // .get("last")));
-        // market.setVolume((String) tickerMap.get("vol"));
-        //
-        // BigDecimal bid = this.convertPriceToRMB((String) tickerMap
-        // .get("buy"));
-        // BigDecimal ask = this.convertPriceToRMB((String) tickerMap
-        // .get("sell"));
-        // market.setAsk(ask);
-        // market.setBid(bid);
-        // market.setMid(bid.add(ask).divide(new BigDecimal(2)));
-        // market
-        // .setLow(this.convertPriceToRMB((String) tickerMap.get("low")));
-        // market.setHigh(this.convertPriceToRMB((String) tickerMap
-        // .get("high")));
-        //
-        // // 确定mid
-        // // 保存
-        // this.marketBO.updateMarket(EMarketOrigin.OKEX.getCode(),
-        // ECoin.ETH.getCode(), market);
-        //
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // }
-
     }
 
     private void obtainBitfinexMarket() {
@@ -155,41 +111,6 @@ public class MarketAOImpl implements IMarketAO {
         this.obtainBitfinexMarketByUrlAndCoin(
             "https://api.bitfinex.com/v1/pubticker/btcusd", ECoin.BTC.getCode());
 
-        // // 获取usd 的行情
-        // String requestStr = "https://api.bitfinex.com/v1/pubticker/ethusd";
-        // OkHttpClient okHttpClient = new OkHttpClient();
-        //
-        // Request request = new
-        // Request.Builder().get().url(requestStr).build();
-        // Call call = okHttpClient.newCall(request);
-        // try {
-        //
-        // Response response = call.execute();
-        // String jsonStr = response.body().string();
-        //
-        // Map map = (Map) JSON.parseObject(jsonStr, HashMap.class);
-        //
-        // Market market = new Market();
-        // market.setReferCurrency(ECurrency.CNY.getCode());
-        // market.setCoin(ECoin.ETH.getCode());
-        // market.setUpdateDatetime(new Date());
-        // market.setLastPrice(this.convertPriceToRMB((String)map.get("last_price")));
-        // market.setVolume((String)map.get("volume"));
-        //
-        // market.setMid(this.convertPriceToRMB((String)map.get("mid")));
-        // market.setAsk(this.convertPriceToRMB((String)map.get("ask")));
-        // market.setBid(this.convertPriceToRMB((String)map.get("bid")));
-        //
-        // market.setLow(this.convertPriceToRMB((String)map.get("low")));
-        // market.setHigh(this.convertPriceToRMB((String)map.get("high")));
-        //
-        // //保存
-        // this.marketBO.updateMarket(EMarketOrigin.BITFINEX.getCode(),ECoin.ETH.getCode(),market);
-        //
-        //
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // }
 
     }
 
@@ -278,7 +199,7 @@ public class MarketAOImpl implements IMarketAO {
 
     }
 
-    // private void
+    // private void 美元字符串转换为，人民币
     private BigDecimal convertPriceToRMB(String value) {
 
         // 获取美元的汇率
@@ -289,6 +210,7 @@ public class MarketAOImpl implements IMarketAO {
             .getRate());
         rmbValue.setScale(4, BigDecimal.ROUND_HALF_UP);
         return rmbValue;
+
     }
 
 }

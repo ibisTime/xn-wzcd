@@ -7,6 +7,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class CurrencyRate extends ABaseDO implements Serializable {
+
+    private Integer id;
+
+
     private String currency;
 
     private String referCurrency;
@@ -57,5 +61,13 @@ public class CurrencyRate extends ABaseDO implements Serializable {
 
     public void setUpdateDatetime(Date updateDatetime) {
         this.updateDatetime = updateDatetime;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

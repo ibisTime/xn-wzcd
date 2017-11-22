@@ -134,10 +134,10 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
         //校验出售者余额
         Account sellUserAccount = this.accountBO.getAccountByUser(sellUser, ECoin.ETH.getCode());
-        if (sellUserAccount.getAmount().compareTo(tradeCount) < 0) {
+        if (sellUserAccount.getAmount().subtract(sellUserAccount.getFrozenAmount()).compareTo(tradeCount) < 0) {
 
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "您的" + ECoin.ETH.getCode() + "余额不足");
+                    "您的" + ECoin.ETH.getCode() + "可用余额不足");
 
         }
 
@@ -208,7 +208,6 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 变更交易订单信息
         tradeOrderBO.cancel(tradeOrder, updater, remark);
     }
-
 
     //标价打款
     @Override
@@ -378,10 +377,12 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
         //1.3卖家 扣除交易金额
         this.accountBO.changeAmount(sellUserAccount.getAccountNumber(),EChannelType.NBZ,null,null,tradeOrder.getCode(),EJourBizTypeUser.AJ_SELL.getCode(),EJourBizTypeUser.AJ_SELL.getValue(),tradeOrder.getCount().negate());
+
         //1.4卖家 扣除交易手续费
         this.accountBO.changeAmount(sellUserAccount.getAccountNumber(),EChannelType.NBZ,null,null,tradeOrder.getCode(),EJourBizTypeUser.AJ_TRADEFEE.getCode(),EJourBizTypeUser.AJ_TRADEFEE.getValue() ,tradeOrder.getFee().negate());
 
         Account buyUserAccount = this.accountBO.getAccountByUser(tradeOrder.getBuyUser(),tradeOrder.getTradeCoin());
+
         //2.买家 账户余额增加
         this.accountBO.changeAmount(buyUserAccount.getAccountNumber(),EChannelType.NBZ,null,null,tradeOrder.getCode(),EJourBizTypeUser.AJ_BUY.getCode(),EJourBizTypeUser.AJ_BUY.getValue() ,tradeOrder.getCount());
 
