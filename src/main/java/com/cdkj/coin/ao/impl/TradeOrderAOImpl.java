@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.cdkj.coin.bo.*;
 import com.cdkj.coin.dao.base.Order;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.UserStatistics;
@@ -16,18 +17,13 @@ import org.web3j.utils.Convert;
 import org.web3j.utils.Convert.Unit;
 
 import com.cdkj.coin.ao.ITradeOrderAO;
-import com.cdkj.coin.bo.IAccountBO;
-import com.cdkj.coin.bo.IAdsBO;
-import com.cdkj.coin.bo.IArbitrateBO;
-import com.cdkj.coin.bo.ISYSConfigBO;
-import com.cdkj.coin.bo.ITradeOrderBO;
-import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.domain.TradeOrder;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.EBizErrorCode;
+import sun.management.snmp.AdaptorBootstrap;
 import sun.management.snmp.jvminstr.JvmThreadInstanceEntryImpl;
 
 @Service
@@ -50,6 +46,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
     @Autowired
     private ISYSConfigBO sysConfigBO;
+
+    @Autowired
+    private IUserRelationBO userRelationBO;
 
     //我要买币
     @Override
@@ -161,6 +160,17 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     //校验广告交易状态，主人不能 购买 或者 出售
     private void checkAdsStatusAndMasterCannotBuy(Ads ads, String applyUser) {
 
+        if (ads.getOnlyTrust().equals("1")) {
+
+            if (!this.userRelationBO.checkReleation(ads.getUserId(), applyUser)) {
+
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "您未被广告发布者信任，不能与之进行交易");
+
+            }
+
+        }
+
         if (!EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())
                 && !EAdsStatus.JIAOYIZHONG.getCode().equals(ads.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -197,7 +207,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             Account sellUserAccount = this.accountBO.getAccountByUser(tradeOrder.getSellUser(), ECoin.ETH.getCode());
 
             //对卖家冻结金额进行解冻
-            this.accountBO.unfrozenAmount(sellUserAccount, tradeOrder.getCount(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-取消卖出订单" , tradeOrder.getCode());
+            this.accountBO.unfrozenAmount(sellUserAccount, tradeOrder.getCount(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-取消卖出订单", tradeOrder.getCode());
 
         } else if (tradeOrder.getType().equals(ETradeOrderType.BUY)) {
             //购买订单
@@ -342,24 +352,24 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         //1.卖家 冻结金额减少
         Account sellUserAccount = this.accountBO.getAccountByUser(tradeOrder.getSellUser(), tradeOrder.getTradeCoin());
         //1.1 解冻卖家 冻结金额
-        this.accountBO.unfrozenAmount(sellUserAccount,tradeOrder.getCount(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-订单释放解冻",tradeOrder.getCode());
+        this.accountBO.unfrozenAmount(sellUserAccount, tradeOrder.getCount(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-订单释放解冻", tradeOrder.getCode());
         //1.2扣除卖家账户金额
-        this.accountBO.changeAmount(sellUserAccount.getAccountNumber(),EChannelType.NBZ,null,null,tradeOrder.getCode(),EJourBizTypeUser.AJ_SELL.getCode(),EJourBizTypeUser.AJ_SELL.getValue(),tradeOrder.getCount().negate());
+        this.accountBO.changeAmount(sellUserAccount.getAccountNumber(), EChannelType.NBZ, null, null, tradeOrder.getCode(), EJourBizTypeUser.AJ_SELL.getCode(), EJourBizTypeUser.AJ_SELL.getValue(), tradeOrder.getCount().negate());
 
 
         //2.0 获取买家账户
-        Account buyUserAccount = this.accountBO.getAccountByUser(tradeOrder.getBuyUser(),tradeOrder.getTradeCoin());
+        Account buyUserAccount = this.accountBO.getAccountByUser(tradeOrder.getBuyUser(), tradeOrder.getTradeCoin());
         //2.1买家 账户余额增加
-        this.accountBO.changeAmount(buyUserAccount.getAccountNumber(),EChannelType.NBZ,null,null,tradeOrder.getCode(),EJourBizTypeUser.AJ_BUY.getCode(),EJourBizTypeUser.AJ_BUY.getValue(),tradeOrder.getCount()
-                );
+        this.accountBO.changeAmount(buyUserAccount.getAccountNumber(), EChannelType.NBZ, null, null, tradeOrder.getCode(), EJourBizTypeUser.AJ_BUY.getCode(), EJourBizTypeUser.AJ_BUY.getValue(), tradeOrder.getCount()
+        );
         //2.2买家 扣除交易手续费
         this.accountBO.changeAmount(buyUserAccount.getAccountNumber(),
-                EChannelType.NBZ,null,null,tradeOrder.getCode(),EJourBizTypeUser.AJ_TRADEFEE.getCode(),EJourBizTypeUser.AJ_TRADEFEE.getValue(),tradeOrder
-                .getFee().negate()
+                EChannelType.NBZ, null, null, tradeOrder.getCode(), EJourBizTypeUser.AJ_TRADEFEE.getCode(), EJourBizTypeUser.AJ_TRADEFEE.getValue(), tradeOrder
+                        .getFee().negate()
         );
 
         //3.1平台 盈亏账户加钱
-        this.accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(), EChannelType.NBZ,null,null,tradeOrder.getCode(),EJourBizTypePlat.AJ_TRADEFEE.getCode(),EJourBizTypePlat.AJ_TRADEFEE.getValue(),tradeOrder
+        this.accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(), EChannelType.NBZ, null, null, tradeOrder.getCode(), EJourBizTypePlat.AJ_TRADEFEE.getCode(), EJourBizTypePlat.AJ_TRADEFEE.getValue(), tradeOrder
                 .getFee()
         );
     }
@@ -370,24 +380,24 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         Account sellUserAccount = this.accountBO.getAccountByUser(tradeOrder.getSellUser(), tradeOrder.getTradeCoin());
 
         //1.1卖家  交易冻结 金额解冻
-        this.accountBO.unfrozenAmount(sellUserAccount,tradeOrder.getCount(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue(),tradeOrder.getCode());
+        this.accountBO.unfrozenAmount(sellUserAccount, tradeOrder.getCount(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue(), tradeOrder.getCode());
 
         //1.2卖家 交易所需手续费 解冻
-        this.accountBO.unfrozenAmount(sellUserAccount,tradeOrder.getFee(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-手续费解冻",tradeOrder.getCode());
+        this.accountBO.unfrozenAmount(sellUserAccount, tradeOrder.getFee(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-手续费解冻", tradeOrder.getCode());
 
         //1.3卖家 扣除交易金额
-        this.accountBO.changeAmount(sellUserAccount.getAccountNumber(),EChannelType.NBZ,null,null,tradeOrder.getCode(),EJourBizTypeUser.AJ_SELL.getCode(),EJourBizTypeUser.AJ_SELL.getValue(),tradeOrder.getCount().negate());
+        this.accountBO.changeAmount(sellUserAccount.getAccountNumber(), EChannelType.NBZ, null, null, tradeOrder.getCode(), EJourBizTypeUser.AJ_SELL.getCode(), EJourBizTypeUser.AJ_SELL.getValue(), tradeOrder.getCount().negate());
 
         //1.4卖家 扣除交易手续费
-        this.accountBO.changeAmount(sellUserAccount.getAccountNumber(),EChannelType.NBZ,null,null,tradeOrder.getCode(),EJourBizTypeUser.AJ_TRADEFEE.getCode(),EJourBizTypeUser.AJ_TRADEFEE.getValue() ,tradeOrder.getFee().negate());
+        this.accountBO.changeAmount(sellUserAccount.getAccountNumber(), EChannelType.NBZ, null, null, tradeOrder.getCode(), EJourBizTypeUser.AJ_TRADEFEE.getCode(), EJourBizTypeUser.AJ_TRADEFEE.getValue(), tradeOrder.getFee().negate());
 
-        Account buyUserAccount = this.accountBO.getAccountByUser(tradeOrder.getBuyUser(),tradeOrder.getTradeCoin());
+        Account buyUserAccount = this.accountBO.getAccountByUser(tradeOrder.getBuyUser(), tradeOrder.getTradeCoin());
 
         //2.买家 账户余额增加
-        this.accountBO.changeAmount(buyUserAccount.getAccountNumber(),EChannelType.NBZ,null,null,tradeOrder.getCode(),EJourBizTypeUser.AJ_BUY.getCode(),EJourBizTypeUser.AJ_BUY.getValue() ,tradeOrder.getCount());
+        this.accountBO.changeAmount(buyUserAccount.getAccountNumber(), EChannelType.NBZ, null, null, tradeOrder.getCode(), EJourBizTypeUser.AJ_BUY.getCode(), EJourBizTypeUser.AJ_BUY.getValue(), tradeOrder.getCount());
 
         //3.平台盈亏账户余额增加
-        this.accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(),EChannelType.NBZ,null,null,tradeOrder.getCode(),EJourBizTypePlat.AJ_TRADEFEE.getCode(),EJourBizTypePlat.AJ_TRADEFEE.getValue(),tradeOrder.getFee());
+        this.accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(), EChannelType.NBZ, null, null, tradeOrder.getCode(), EJourBizTypePlat.AJ_TRADEFEE.getCode(), EJourBizTypePlat.AJ_TRADEFEE.getValue(), tradeOrder.getFee());
 
     }
 
