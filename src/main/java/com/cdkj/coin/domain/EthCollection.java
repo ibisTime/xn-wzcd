@@ -33,7 +33,9 @@ public class EthCollection extends ABaseDO {
     private String txHash;
 
     // 矿工费
-    private BigDecimal txFee;
+    private transient BigDecimal txFee;
+
+    private String txFeeString;
 
     // 状态
     private String status;
@@ -49,6 +51,14 @@ public class EthCollection extends ABaseDO {
 
     // 关联订单号
     private String refNo;
+
+    public String getTxFeeString() {
+        return txFeeString;
+    }
+
+    public void setTxFeeString(String txFeeString) {
+        this.txFeeString = txFeeString;
+    }
 
     public String getCode() {
         return code;
@@ -97,6 +107,7 @@ public class EthCollection extends ABaseDO {
 
     public void setTxFee(BigDecimal txFee) {
         this.txFee = txFee;
+        this.txFeeString = txFee.toString();
     }
 
     public String getStatus() {
