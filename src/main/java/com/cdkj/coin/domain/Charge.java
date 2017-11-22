@@ -131,7 +131,7 @@ public class Charge extends ABaseDO {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
-        this.amountString = amountString.toString();
+        this.amountString = amount.toString();
     }
 
     public String getAmountString() {
