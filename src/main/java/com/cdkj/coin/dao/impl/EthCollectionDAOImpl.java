@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cdkj.coin.dao.IEthCollectionDAO;
 import com.cdkj.coin.dao.base.support.AMybatisTemplate;
+import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.domain.EthCollection;
 
 @Repository("ethCollectionDAOImpl")
@@ -50,6 +51,12 @@ public class EthCollectionDAOImpl extends AMybatisTemplate implements
     @Override
     public int updateNotice(EthCollection data) {
         return super.update(NAMESPACE.concat("update_notice"), data);
+    }
+
+    @Override
+    public EthAddress selectAddressUseInfo(EthCollection data) {
+        return super.select(NAMESPACE.concat("select_addressUseInfo"), data,
+            EthAddress.class);
     }
 
 }

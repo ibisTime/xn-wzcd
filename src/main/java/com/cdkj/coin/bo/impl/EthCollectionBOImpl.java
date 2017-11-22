@@ -13,6 +13,7 @@ import com.cdkj.coin.bo.IEthCollectionBO;
 import com.cdkj.coin.bo.base.PaginableBOImpl;
 import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.dao.IEthCollectionDAO;
+import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.domain.EthCollection;
 import com.cdkj.coin.enums.EEthCollectionStatus;
 import com.cdkj.coin.enums.EGeneratePrefix;
@@ -83,5 +84,12 @@ public class EthCollectionBOImpl extends PaginableBOImpl<EthCollection>
         data.setUpdateDatetime(new Date());
         ethCollectionDAO.updateNotice(data);
         return count;
+    }
+
+    @Override
+    public EthAddress getAddressUseInfo(String toAddress) {
+        EthCollection data = new EthCollection();
+        data.setToAddress(toAddress);
+        return ethCollectionDAO.selectAddressUseInfo(data);
     }
 }

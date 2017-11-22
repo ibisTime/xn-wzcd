@@ -24,6 +24,7 @@ import com.cdkj.coin.ao.IEthAddressAO;
 import com.cdkj.coin.bo.IAccountBO;
 import com.cdkj.coin.bo.ICtqBO;
 import com.cdkj.coin.bo.IEthAddressBO;
+import com.cdkj.coin.bo.IEthCollectionBO;
 import com.cdkj.coin.bo.IEthTransactionBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.ISmsOutBO;
@@ -54,6 +55,9 @@ public class EthAddressAOImpl implements IEthAddressAO {
 
     @Autowired
     private IEthAddressBO ethAddressBO;
+
+    @Autowired
+    private IEthCollectionBO ethCollectionBO;
 
     @Autowired
     private IEthTransactionBO ethTransactionBO;
@@ -179,6 +183,13 @@ public class EthAddressAOImpl implements IEthAddressAO {
             condition);
         for (EthAddress ethAddress : results.getList()) {
             ethAddress.setUser(userBO.getUser(ethAddress.getUserId()));
+            if (EEthAddressType.W.getCode().equals(ethAddress.getType())) {
+                EthAddress xAddress = ethCollectionBO
+                    .getAddressUseInfo(ethAddress.getAddress());
+                ethAddress.setUseCount(xAddress.getUseCount());
+                ethAddress.setCollectTotalAmount(xAddress
+                    .getCollectTotalAmount());
+            }
         }
         return results;
     }

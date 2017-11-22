@@ -79,6 +79,7 @@ public class CallbackConroller {
                         ethTransactionAO.collection(ctqEthTransaction.getTo(),
                             code);
                     }
+                    hashList.add(ctqEthTransaction.getHash());
                 } else if (EEthAddressType.X == fromType
                         && EEthAddressType.W == toType) {
                     // fromAddress=X toAddress=W 归集

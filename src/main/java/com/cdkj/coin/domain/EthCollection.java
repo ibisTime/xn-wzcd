@@ -25,7 +25,9 @@ public class EthCollection extends ABaseDO {
     private String toAddress;
 
     // 归集数量
-    private BigDecimal amount;
+    private transient BigDecimal amount;
+
+    private String amountString;
 
     // 交易hash
     private String txHash;
@@ -78,6 +80,7 @@ public class EthCollection extends ABaseDO {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+        this.amountString = amount.toString();
     }
 
     public String getTxHash() {
@@ -134,6 +137,14 @@ public class EthCollection extends ABaseDO {
 
     public void setRefNo(String refNo) {
         this.refNo = refNo;
+    }
+
+    public String getAmountString() {
+        return amountString;
+    }
+
+    public void setAmountString(String amountString) {
+        this.amountString = amountString;
     }
 
 }

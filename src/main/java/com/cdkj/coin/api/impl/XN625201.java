@@ -42,9 +42,9 @@ public class XN625201 extends AProcessor {
 
         for (XN625201Req req : req.getwAddressList()) {
             Date start = DateUtil.strToDate(req.getAvailableDatetimeStart(),
-                DateUtil.DATA_TIME_PATTERN_1);
+                DateUtil.FRONT_DATE_FORMAT_STRING);
             Date end = DateUtil.strToDate(req.getAvailableDatetimeEnd(),
-                DateUtil.DATA_TIME_PATTERN_1);
+                DateUtil.FRONT_DATE_FORMAT_STRING);
             ethAddressAO.importWAddress(req.getAddress(), start, end);
         }
 

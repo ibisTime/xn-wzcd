@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.cdkj.coin.bo.base.IPaginableBO;
+import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.domain.EthCollection;
 
 public interface IEthCollectionBO extends IPaginableBO<EthCollection> {
@@ -20,5 +21,8 @@ public interface IEthCollectionBO extends IPaginableBO<EthCollection> {
 
     public int colectionNotice(EthCollection data, BigDecimal txfee,
             Date ethDatetime);
+
+    // 归集地址使用次数及归集总额查询
+    public EthAddress getAddressUseInfo(String toAddress);
 
 }

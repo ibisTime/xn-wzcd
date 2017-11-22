@@ -15,6 +15,12 @@
 		<result column="update_datetime" property="updateDatetime" />
 		<result column="ref_no" property="refNo" />
 	</resultMap>
+	
+	<resultMap id="addressUseInfo_DB_Result" type="ethAddress">
+		<result column="use_count" property="useCount" />
+		<result column="collect_total_amount" property="collectTotalAmount" />
+	</resultMap>
+	
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
@@ -97,7 +103,8 @@
 	</insert>
 
 	<update id="update_notice" parameterType="ethCollection">
-		UPDATE tcoin_eth_collection
+		UPDATE
+		tcoin_eth_collection
 		SET
 		tx_fee = #{txFee}
 		,status = #{status}
@@ -106,5 +113,13 @@
 		WHERE code = #{code}
 	</update>
 
+	<select id="select_addressUseInfo" parameterType="ethCollection"
+		resultMap="addressUseInfo_DB_Result">
+		SELECT 
+		COUNT(*) as use_count, 
+		COALESCE(SUM(amount),0) as collect_total_amount
+		FROM tcoin_eth_collection t
+		<include refid="where_condition" />
+	</select>
 
 </mapper>

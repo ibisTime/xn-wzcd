@@ -36,6 +36,8 @@ public class EthAddress extends ABaseDO {
     // 以太坊真实余额
     private BigDecimal balance;
 
+    private String balanceString;
+
     // 可用时间起
     private Date availableDatetimeStart;
 
@@ -58,6 +60,37 @@ public class EthAddress extends ABaseDO {
     private User user;
 
     private Date today;
+
+    private Long useCount;
+
+    private transient BigDecimal collectTotalAmount;
+
+    private String collectTotalAmountString;
+
+    public String getCollectTotalAmountString() {
+        return collectTotalAmountString;
+    }
+
+    public void setCollectTotalAmountString(String collectTotalAmountString) {
+        this.collectTotalAmountString = collectTotalAmountString;
+    }
+
+    public Long getUseCount() {
+        return useCount;
+    }
+
+    public void setUseCount(Long useCount) {
+        this.useCount = useCount;
+    }
+
+    public BigDecimal getCollectTotalAmount() {
+        return collectTotalAmount;
+    }
+
+    public void setCollectTotalAmount(BigDecimal collectTotalAmount) {
+        this.collectTotalAmount = collectTotalAmount;
+        this.collectTotalAmountString = collectTotalAmount.toString();
+    }
 
     public Date getToday() {
         return today;
@@ -129,6 +162,7 @@ public class EthAddress extends ABaseDO {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+        this.balanceString = balance.toString();
     }
 
     public Date getAvailableDatetimeStart() {

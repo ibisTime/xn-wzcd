@@ -36,17 +36,18 @@ public class ChargeAOImpl implements IChargeAO {
     private IUserBO userBO;
 
     @Override
-    public String applyOrder(String accountNumber, String jourBizType,
-            BigDecimal amount, String payCardInfo, String payCardNo,
-            String applyUser, String applyNote) {
+    public String applyOrder(String accountNumber, BigDecimal amount,
+            String payCardInfo, String payCardNo, String applyUser,
+            String applyNote) {
         if (amount.compareTo(BigDecimal.ZERO) == 0
                 || amount.compareTo(BigDecimal.ZERO) == -1) {
             throw new BizException("xn000000", "充值金额需大于零");
         }
         Account account = accountBO.getAccount(accountNumber);
         // 生成充值订单
-        String code = chargeBO.applyOrderOffline(account, jourBizType, amount,
-            payCardInfo, payCardNo, applyUser, applyNote);
+        String code = chargeBO.applyOrderOffline(account,
+            EJourBizTypeUser.AJ_CHARGE.getCode(), amount, payCardInfo,
+            payCardNo, applyUser, applyNote);
         return code;
     }
 
@@ -72,13 +73,14 @@ public class ChargeAOImpl implements IChargeAO {
     private void payOrderYES(Charge data, String payUser, String payNote) {
         chargeBO.payOrder(data, true, payUser, payNote);
         // 用户账户加钱
-        accountBO.changeAmount(data.getAccountNumber(), EChannelType.ETH, null,
-            null, data.getCode(), EJourBizTypeUser.AJ_CHARGE.getCode(),
+        accountBO.changeAmount(data.getAccountNumber(), EChannelType.Offline,
+            null, null, data.getCode(), EJourBizTypeUser.AJ_CHARGE.getCode(),
             "ETH线下充值", data.getAmount());
         Account account = accountBO.getAccount(data.getAccountNumber());
         if (ECurrency.CNY.getCode().equals(account.getCurrency())) {
             // 冷钱包加钱
-            accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode(),
+            accountBO.changeAmount(
+                ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode(),
                 EChannelType.Offline, null, null, data.getCode(),
                 EJourBizTypeUser.AJ_CHARGE.getCode(), "ETH线下充值",
                 data.getAmount());
