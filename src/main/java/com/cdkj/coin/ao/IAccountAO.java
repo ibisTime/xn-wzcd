@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.Account;
+import com.cdkj.coin.dto.res.XN802503Res;
 
 public interface IAccountAO {
     String DEFAULT_ORDER_COLUMN = "account_number";
@@ -31,7 +32,7 @@ public interface IAccountAO {
     public Account getAccount(String accountNumber);
 
     // 根据用户编号,币种获取账户列表
-    public List<Account> getAccountByUserId(String userId, String currency);
+    public XN802503Res getAccountByUserId(String userId, String currency);
 
     // 列表查询账户
     public List<Account> queryAccountList(Account condition);

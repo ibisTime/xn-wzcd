@@ -1,6 +1,7 @@
 package com.cdkj.coin.ao.impl;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 
@@ -8,17 +9,26 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.web3j.utils.Convert;
+import org.web3j.utils.Convert.Unit;
 
 import com.cdkj.coin.ao.IAccountAO;
 import com.cdkj.coin.bo.IAccountBO;
+import com.cdkj.coin.bo.ICurrencyRateBO;
 import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IJourBO;
+import com.cdkj.coin.bo.IMarketBO;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.Account;
+import com.cdkj.coin.domain.CurrencyRate;
 import com.cdkj.coin.domain.EthAddress;
+import com.cdkj.coin.domain.Market;
+import com.cdkj.coin.dto.res.XN802503Res;
 import com.cdkj.coin.enums.EAccountType;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECoin;
+import com.cdkj.coin.enums.ECurrency;
+import com.cdkj.coin.enums.EMarketOrigin;
 import com.cdkj.coin.exception.BizException;
 
 @Service
@@ -32,6 +42,12 @@ public class AccountAOImpl implements IAccountAO {
 
     @Autowired
     private IEthAddressBO ethAddressBO;
+
+    @Autowired
+    private IMarketBO marketBO;
+
+    @Autowired
+    private ICurrencyRateBO currencyRateBO;
 
     @Override
     @Transactional
@@ -87,19 +103,52 @@ public class AccountAOImpl implements IAccountAO {
     }
 
     @Override
-    public List<Account> getAccountByUserId(String userId, String currency) {
+    public XN802503Res getAccountByUserId(String userId, String currency) {
+        XN802503Res res = new XN802503Res();
+
+        // 总资产
+        BigDecimal totalAmountCNY = BigDecimal.ZERO;
+        BigDecimal totalAmountUSD = BigDecimal.ZERO;
+        BigDecimal totalAmountHKD = BigDecimal.ZERO;
+
         Account condition = new Account();
         condition.setUserId(userId);
         condition.setCurrency(currency);
-        List<Account> accounts = accountBO.queryAccountList(condition);
-        for (Account account : accounts) {
+        List<Account> accountList = accountBO.queryAccountList(condition);
+        for (Account account : accountList) {
+            // 以太坊账户逻辑
             if (ECoin.ETH.getCode().equals(account.getCurrency())) {
+                // 以太坊B站行情
+                Market market = marketBO.marketByCoinTypeAndOrigin(
+                    ECoin.ETH.getCode(), EMarketOrigin.BITFINEX.getCode());
+                // 人民币总资产折算
+                totalAmountCNY = totalAmountCNY.add(market.getMid().multiply(
+                    Convert.fromWei(account.getAmount(), Unit.ETHER)));
+                // 美元总资产折算
+                CurrencyRate usdRate = currencyRateBO
+                    .currencyRateByCurrency(ECurrency.USD.getCode());
+                totalAmountUSD = totalAmountUSD.add(totalAmountCNY.divide(
+                    usdRate.getRate(), 2, RoundingMode.DOWN));
+                // 港币总资产折算
+                CurrencyRate hkdRate = currencyRateBO
+                    .currencyRateByCurrency(ECurrency.HKD.getCode());
+                totalAmountHKD = totalAmountHKD.add(totalAmountCNY.divide(
+                    hkdRate.getRate(), 2, RoundingMode.DOWN));
+
+                // X地址获取
                 EthAddress ethAddress = ethAddressBO
                     .getEthAddressByUserId(userId);
                 account.setCoinAddress(ethAddress.getAddress());
             }
+            // todo 其他币账户逻辑
         }
-        return accounts;
+
+        res.setAccountList(accountList);
+        res.setTotalAmountCNY(totalAmountCNY.toString());
+        res.setTotalAmountUSD(totalAmountUSD.toString());
+        res.setTotalAmountHKD(totalAmountHKD.toString());
+
+        return res;
     }
 
     @Override

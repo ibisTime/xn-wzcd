@@ -227,7 +227,7 @@ public class MarketAOImpl implements IMarketAO {
                 market);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("行情数据拉取异常，原因：" + e.getMessage());
         }
 
     }

@@ -1,7 +1,5 @@
 package com.cdkj.coin.api.impl;
 
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.coin.ao.IAccountAO;
@@ -10,10 +8,8 @@ import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.DateUtil;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.StringValidater;
-import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.Withdraw;
 import com.cdkj.coin.dto.req.XN802755Req;
-import com.cdkj.coin.enums.ECurrency;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
@@ -36,17 +32,6 @@ public class XN802755 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         Withdraw condition = new Withdraw();
-        if (StringUtils.isNotBlank(req.getUserId())) {
-            try {
-                List<Account> accounts = accountAO.getAccountByUserId(
-                    req.getUserId(), ECurrency.CNY.getCode());
-                if (accounts.size() > 0) {
-                    condition.setAccountNumber(accounts.get(0)
-                        .getAccountNumber());
-                }
-            } catch (Exception e) {
-            }
-        }
         if (StringUtils.isNotBlank(req.getAccountNumber())) {
             condition.setAccountNumber(req.getAccountNumber());
         }
