@@ -1,6 +1,7 @@
 package com.cdkj.coin.ao.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -75,6 +76,7 @@ public class AdsAOImpl implements IAdsAO {
     @Autowired
     IUserBO userBO;
 
+
     @Override
     public Object frontPage(Integer start, Integer limit, Ads condition) {
 
@@ -109,6 +111,36 @@ public class AdsAOImpl implements IAdsAO {
         }
 
     }
+
+
+    @Override
+    public List<Ads> frontSearchAdsByNickName(String nickName) {
+
+        //先搜索出 复合的nick
+        User userCondition = new User();
+        userCondition.setNickname(nickName);
+
+        List<User> userList = this.userBO.queryUserList(userCondition);
+        if (userList.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        //
+        List<Ads> adsList = new ArrayList<>();
+        for (User user : userList) {
+
+            Ads condition = new Ads();
+            condition.setUserId(user.getUserId());
+            Paginable<Ads> adsPaginable = (Paginable)this.frontPage(0,10,condition);
+            //
+            adsList.addAll(adsPaginable.getList());
+
+        }
+
+        return adsList;
+
+    }
+
 
     @Override
     public void insertAds(XN625220Req req) {

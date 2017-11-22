@@ -3,6 +3,8 @@ package com.cdkj.coin.ao;
 import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.dto.req.XN625220Req;
 
+import java.util.List;
+
 /**
  * Created by tianlei on 2017/十一月/14.
  */
@@ -23,5 +25,7 @@ public interface IAdsAO {
     public Object frontPage(Integer start, Integer limit, Ads condition);
 
     public Object ossPage(Integer start, Integer limit, Ads condition);
+
+    public List<Ads> frontSearchAdsByNickName(String nickName);
 
 }
