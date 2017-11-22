@@ -82,6 +82,10 @@
                 And `trade_type` = #{tradeType}
             </if>
 
+            <if test="payType != null and payType != ''">
+                And `pay_type` = "%"#{payType}"%"
+            </if>
+
             <if test="statusList != null and statusList != ''">
                     AND `status` in
                     <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
