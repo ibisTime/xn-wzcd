@@ -102,6 +102,16 @@
 		<include refid="where_condition" />
 	</select>
 
+
+
+	<resultMap id="UserStatisticsMap" type="com.cdkj.coin.domain.UserStatistics">
+		<result column="jiaoYiCount" property="jiaoYiCount" />
+		<result column="beiPingJiaCount" property="beiPingJiaCount" />
+		<result column="beiHaoPingCount" property="beiHaoPingCount" />
+	</resultMap>
+	<!-- 计算交易次数，被评论次数， 和-->
+
+
 	<insert id="insert_tradeOrder" parameterType="tradeOrder">
 		INSERT INTO
 		tcoin_trade_order(

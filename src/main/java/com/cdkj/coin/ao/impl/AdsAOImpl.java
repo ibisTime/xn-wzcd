@@ -39,6 +39,14 @@ import com.cdkj.coin.exception.EBizErrorCode;
 
 /**
  * Created by tianlei on 2017/十一月/14.
+ * 1.发布： a.卖币广告是发布广告的时候就把出售金额 和 手续费冻结了
+ * b.买币广告没有冻结
+ * 2.购买： a. 卖币广告，改变广告的可售余额即可
+ * b.买币广告，冻结卖家金额，同时改变广告可购买金额
+ * 3.取消:  a. 卖币广告，改变广告的可售金额即可
+ * b.买币广告，需要把 卖家冻结的金额返还
+ * 4.释放   a. 卖币广告，卖家冻结金额减少,买家账户余额增加
+ * b. 买币广告，卖家冻结金额减少，买家账户余额增加(扣除手续费之后)
  */
 @Service
 public class AdsAOImpl implements IAdsAO {
@@ -97,6 +105,7 @@ public class AdsAOImpl implements IAdsAO {
         for (Ads ads : adsList) {
             User user = this.userBO.getUser(ads.getUserId());
             ads.setUser(user);
+            ads.setUserStatistics(this.tradeOrderBO.obtainUserStatistics(ads.getUserId()));
         }
 
     }
@@ -360,6 +369,8 @@ public class AdsAOImpl implements IAdsAO {
         ads.setUser(userBO.getUser(ads.getUserId()));
         //获取展示时间
         ads.setDisplayTime(this.displayTimeBO.queryList(adsCode));
+
+        ads.setUserStatistics(this.tradeOrderBO.obtainUserStatistics(ads.getUserId()));
         return ads;
 
     }
@@ -444,6 +455,9 @@ public class AdsAOImpl implements IAdsAO {
 
                 truePrice = truePrice.compareTo(protectPrice) < 0 ? truePrice : protectPrice;
 
+            } else {
+
+                continue;
             }
             ads.setTruePrice(truePrice);
             //只更新行情 和 真实价格

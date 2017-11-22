@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.cdkj.coin.dao.base.Order;
 import com.cdkj.coin.domain.Account;
+import com.cdkj.coin.domain.UserStatistics;
 import com.cdkj.coin.enums.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,9 +60,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         String code = null;
 
         //检查购买用户，是否有未完成的订单, 有未完成的交易则不能在进行交易
-        if (this.tradeOrderBO.checkUserHasUnFinishOrder(buyUser,ETradeOrderType.BUY)) {
+        if (this.tradeOrderBO.checkUserHasUnFinishOrder(buyUser, ETradeOrderType.BUY)) {
 
-            throw new  BizException(EBizErrorCode.DEFAULT.getCode(),"您有尚未完成的购买订单");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "您有尚未完成的购买订单");
 
         }
 
@@ -96,9 +97,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
                        BigDecimal tradeCount, BigDecimal tradeAmount) {
 
         //
-        if (this.tradeOrderBO.checkUserHasUnFinishOrder(sellUser,ETradeOrderType.SELL)) {
+        if (this.tradeOrderBO.checkUserHasUnFinishOrder(sellUser, ETradeOrderType.SELL)) {
 
-            throw new  BizException(EBizErrorCode.DEFAULT.getCode(),"您有尚未完成的出售订单");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "您有尚未完成的出售订单");
 
         }
 
@@ -463,5 +464,20 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             this.cancel(tradeOrder.getCode(), "系统", "订单支付超时，系统自动取消");
         }
     }
+
+    @Override
+    public UserStatistics userStatisticsInfo(String userId) {
+
+        return this.tradeOrderBO.obtainUserStatistics(userId);
+
+    }
+
+    @Override
+    public BigDecimal getUserTotalTradeCount(String userId) {
+
+        return  this.tradeOrderBO.getUserTotalTradeCount(userId);
+
+    }
+
 
 }

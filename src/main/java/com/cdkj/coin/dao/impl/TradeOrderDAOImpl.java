@@ -2,6 +2,7 @@ package com.cdkj.coin.dao.impl;
 
 import java.util.List;
 
+import com.cdkj.coin.domain.UserStatistics;
 import org.springframework.stereotype.Repository;
 
 import com.cdkj.coin.dao.ITradeOrderDAO;
@@ -81,5 +82,6 @@ public class TradeOrderDAOImpl extends AMybatisTemplate implements
     public int updateRevokePay(TradeOrder tradeOrder) {
         return super.update(NAMESPACE.concat("update_revokePay"), tradeOrder);
     }
+
 
 }

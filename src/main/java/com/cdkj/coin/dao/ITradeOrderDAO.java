@@ -2,6 +2,7 @@ package com.cdkj.coin.dao;
 
 import com.cdkj.coin.dao.base.IBaseDAO;
 import com.cdkj.coin.domain.TradeOrder;
+import com.cdkj.coin.domain.UserStatistics;
 
 public interface ITradeOrderDAO extends IBaseDAO<TradeOrder> {
     String NAMESPACE = ITradeOrderDAO.class.getName().concat(".");
@@ -19,4 +20,6 @@ public interface ITradeOrderDAO extends IBaseDAO<TradeOrder> {
     public int updateArbitrate(TradeOrder tradeOrder);
 
     public int updateRevokePay(TradeOrder tradeOrder);
+
+
 }
