@@ -24,6 +24,7 @@ import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECurrency;
 import com.cdkj.coin.enums.EGeneratePrefix;
 import com.cdkj.coin.enums.EJourBizTypeUser;
+import com.cdkj.coin.enums.EJourKind;
 import com.cdkj.coin.exception.BizException;
 
 /**
@@ -82,18 +83,19 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
             String channelOrder, String payGroup, String refNo, String bizType,
             String bizNote, BigDecimal transAmount) {
         Account dbAccount = this.getAccount(accountNumber);
-        BigDecimal nowAmount = dbAccount.getAmount().add(transAmount);
-        // 特定账户余额可为负
+        // 金额变动之后可用余额
+        BigDecimal avaliableAmount = dbAccount.getAmount()
+            .subtract(dbAccount.getFrozenAmount()).add(transAmount);
         if (!dbAccount.getUserId().startsWith("SYS_USER")
-                && nowAmount.compareTo(BigDecimal.ZERO) == -1) {
-            System.out.println("error account:" + accountNumber + " dbAmount="
-                    + dbAccount.getAmount() + " transAmount=" + transAmount
-                    + " nowAmount=" + nowAmount);
-            throw new BizException("xn000000", "账户余额不足");
+                && avaliableAmount.compareTo(BigDecimal.ZERO) == -1) {// 特定账户余额可为负
+            throw new BizException("xn000000", "账户可用余额不足");
         }
+        BigDecimal nowAmount = dbAccount.getAmount().add(transAmount);
+
         // 记录流水
-        String lastOrder = jourBO.addJour(dbAccount, channelType, channelOrder,
-            payGroup, refNo, bizType, bizNote, transAmount);
+        String lastOrder = jourBO.addJour(EJourKind.BALANCE, dbAccount,
+            channelType, channelOrder, payGroup, refNo, bizType, bizNote,
+            transAmount);
 
         // 更改余额
         Account data = new Account();
@@ -171,21 +173,20 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
                 || freezeAmount.compareTo(BigDecimal.ZERO) == -1) {
             throw new BizException("xn000000", "冻结金额需大于0");
         }
-        BigDecimal nowAmount = dbAccount.getAmount().subtract(freezeAmount);
-        if (nowAmount.compareTo(BigDecimal.ZERO) == -1) {
+        BigDecimal avaliableAmount = dbAccount.getAmount()
+            .subtract(dbAccount.getFrozenAmount()).subtract(freezeAmount);
+        if (avaliableAmount.compareTo(BigDecimal.ZERO) == -1) {
             throw new BizException("xn000000", "账户余额不足");
         }
-        // 记录流水
-        String lastOrder = jourBO.addJour(dbAccount, EChannelType.Offline,
-            null, null, refNo, bizType, bizNote, freezeAmount.negate());
+        // 记录冻结流水
+        String lastOrder = jourBO.addJour(EJourKind.FROZEN, dbAccount,
+            EChannelType.Offline, null, null, refNo, bizType, bizNote,
+            freezeAmount);
         BigDecimal nowFrozenAmount = dbAccount.getFrozenAmount().add(
             freezeAmount);
         Account data = new Account();
         data.setAccountNumber(dbAccount.getAccountNumber());
-        data.setAmount(nowAmount);
         data.setFrozenAmount(nowFrozenAmount);
-        data.setMd5(AccountUtil.md5(dbAccount.getMd5(), dbAccount.getAmount(),
-            nowAmount));
         data.setLastOrder(lastOrder);
         accountDAO.frozenAmount(data);
     }
@@ -197,42 +198,21 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
                 || freezeAmount.compareTo(BigDecimal.ZERO) == -1) {
             throw new BizException("xn000000", "解冻金额需大于0");
         }
-        BigDecimal nowFrozenAmount = dbAccount.getFrozenAmount().add(
+        BigDecimal nowFrozenAmount = dbAccount.getFrozenAmount().subtract(
             freezeAmount);
         if (nowFrozenAmount.compareTo(BigDecimal.ZERO) == -1) {
             throw new BizException("xn000000", "本次解冻会使账户冻结金额小于0");
         }
 
         // 记录流水
-        String lastOrder = jourBO.addJour(dbAccount, EChannelType.Offline,
-            null, null, refNo, bizType, bizNote, freezeAmount);
+        String lastOrder = jourBO.addJour(EJourKind.FROZEN, dbAccount,
+            EChannelType.Offline, null, null, refNo, bizType, bizNote,
+            freezeAmount.negate());
         Account data = new Account();
         data.setAccountNumber(dbAccount.getAccountNumber());
-        data.setAmount(dbAccount.getAmount().add(freezeAmount));
         data.setFrozenAmount(nowFrozenAmount);
-        data.setMd5(AccountUtil.md5(dbAccount.getMd5(), dbAccount.getAmount(),
-            dbAccount.getAmount().add(freezeAmount)));
         data.setLastOrder(lastOrder);
         accountDAO.unfrozenAmount(data);
-    }
-
-    @Override
-    public void cutFrozenAmount(Account dbAccount, BigDecimal freezeAmount) {
-        if (freezeAmount.compareTo(BigDecimal.ZERO) == 0
-                || freezeAmount.compareTo(BigDecimal.ZERO) == -1) {
-            throw new BizException("xn000000", "解冻金额需大于0");
-        }
-        BigDecimal nowFrozenAmount = dbAccount.getFrozenAmount().subtract(
-            freezeAmount);
-        if (nowFrozenAmount.compareTo(BigDecimal.ZERO) == -1) {
-            throw new BizException("xn000000", "本次扣减会使账户冻结金额小于0");
-        }
-        Account data = new Account();
-        data.setAccountNumber(dbAccount.getAccountNumber());
-        data.setFrozenAmount(nowFrozenAmount);
-        // 统计累计取现金额
-        data.setOutAmount(dbAccount.getOutAmount().add(freezeAmount));
-        accountDAO.cutFrozenAmount(data);
     }
 
     @Override

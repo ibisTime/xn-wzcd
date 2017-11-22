@@ -219,8 +219,14 @@ public class WithdrawAOImpl implements IWithdrawAO {
         withdrawBO.payOrder(data, EWithdrawStatus.Pay_YES, payUser, payNote,
             payCode);
         Account dbAccount = accountBO.getAccount(data.getAccountNumber());
-        // 扣减冻结流水
-        accountBO.cutFrozenAmount(dbAccount, data.getAmount());
+        // 先解冻，然后扣减余额
+        accountBO.unfrozenAmount(dbAccount, data.getAmount(),
+            EJourBizTypeUser.AJ_WITHDRAW.getCode(),
+            EJourBizTypeUser.AJ_WITHDRAW.getValue(), data.getCode());
+        accountBO.changeAmount(dbAccount.getAccountNumber(),
+            EChannelType.Offline, null, null, data.getCode(),
+            EJourBizTypeUser.AJ_WITHDRAW.getCode(),
+            EJourBizTypeUser.AJ_WITHDRAW.getValue(), data.getAmount());
         Account account = accountBO.getAccount(data.getAccountNumber());
         if (ECurrency.CNY.getCode().equals(account.getCurrency())) {
             // 冷钱包减钱

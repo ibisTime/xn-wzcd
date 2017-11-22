@@ -176,9 +176,7 @@
 	<update id="update_frozenAmount" parameterType="account">
 		UPDATE tstd_account
 		SET
-		amount= #{amount}
-		,frozen_amount = #{frozenAmount}
-		,md5 = #{md5}
+		frozen_amount = #{frozenAmount}
 		,last_order = #{lastOrder}
 		WHERE
 		account_number = #{accountNumber}
@@ -187,20 +185,10 @@
 	<update id="update_unfrozenAmount" parameterType="account">
 		UPDATE tstd_account
 		SET
-		amount= #{amount}
-		,frozen_amount = #{frozenAmount}
-		,md5 = #{md5}
+		frozen_amount = #{frozenAmount}
 		,last_order = #{lastOrder}
 		WHERE
 		account_number = #{accountNumber}
 	</update>
 	
-	<update id="update_cutFrozenAmount" parameterType="account">
-		UPDATE tstd_account
-		SET
-		frozen_amount = #{frozenAmount}
-		,out_amount = #{outAmount}
-		WHERE
-		account_number = #{accountNumber}
-    </update>
 </mapper>

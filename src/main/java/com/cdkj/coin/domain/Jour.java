@@ -21,6 +21,9 @@ public class Jour extends ABaseDO {
     // 流水编号
     private String code;
 
+    // 流水类型（余额流水、冻结流水）
+    private String kind;
+
     // 订单分组组号（信息代表）---核心字段1
     private String payGroup;
 
@@ -124,6 +127,14 @@ public class Jour extends ABaseDO {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
     }
 
     public String getPayGroup() {

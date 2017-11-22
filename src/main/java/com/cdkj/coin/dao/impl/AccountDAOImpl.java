@@ -110,8 +110,4 @@ public class AccountDAOImpl extends AMybatisTemplate implements IAccountDAO {
         return super.update(NAMESPACE.concat("update_unfrozenAmount"), data);
     }
 
-    @Override
-    public int cutFrozenAmount(Account data) {
-        return super.update(NAMESPACE.concat("update_cutFrozenAmount"), data);
-    }
 }

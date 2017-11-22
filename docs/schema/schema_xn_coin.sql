@@ -400,6 +400,7 @@ DROP TABLE IF EXISTS `tstd_jour`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tstd_jour` (
   `code` varchar(32) NOT NULL COMMENT '编号',
+  `kind` varchar(32) NOT NULL COMMENT '流水类型（余额流水、冻结流水）',
   `pay_group` varchar(255) DEFAULT NULL COMMENT '订单分组组号',
   `ref_no` varchar(255) DEFAULT NULL COMMENT '参考订单号',
   `channel_type` varchar(32) DEFAULT NULL COMMENT '支付渠道类型',

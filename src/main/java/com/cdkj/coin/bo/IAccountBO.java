@@ -43,9 +43,6 @@ public interface IAccountBO extends IPaginableBO<Account> {
     public void unfrozenAmount(Account dbAccount, BigDecimal freezeAmount,
             String bizType, String bizNote, String refNo);
 
-    // 扣减冻结金额
-    public void cutFrozenAmount(Account dbAccount, BigDecimal amount);
-
     // 内部转账
     public void transAmountCZB(String fromUserId, String fromCurrency,
             String toUserId, String toCurrency, BigDecimal transAmount,

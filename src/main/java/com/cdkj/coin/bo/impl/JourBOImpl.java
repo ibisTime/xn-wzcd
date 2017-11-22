@@ -27,6 +27,7 @@ import com.cdkj.coin.domain.Jour;
 import com.cdkj.coin.enums.EBoolean;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.EGeneratePrefix;
+import com.cdkj.coin.enums.EJourKind;
 import com.cdkj.coin.enums.EJourStatus;
 import com.cdkj.coin.exception.BizException;
 
@@ -41,9 +42,9 @@ public class JourBOImpl extends PaginableBOImpl<Jour> implements IJourBO {
     private IJourDAO jourDAO;
 
     @Override
-    public String addJour(Account dbAccount, EChannelType channelType,
-            String channelOrder, String payGroup, String refNo, String bizType,
-            String bizNote, BigDecimal transAmount) {
+    public String addJour(EJourKind kind, Account dbAccount,
+            EChannelType channelType, String channelOrder, String payGroup,
+            String refNo, String bizType, String bizNote, BigDecimal transAmount) {
         if (!EChannelType.Offline.getCode().equals(channelType.getCode())
                 && !EChannelType.NBZ.getCode().equals(channelType.getCode())) {// 线下和内部帐可为空，线上必须有
             if (StringUtils.isBlank(payGroup)) {// 必须要有的判断。每一次流水新增，必有有对应业务分组
@@ -61,7 +62,7 @@ public class JourBOImpl extends PaginableBOImpl<Jour> implements IJourBO {
 
         Jour data = new Jour();
         data.setCode(code);
-
+        data.setKind(kind.getCode());
         data.setPayGroup(payGroup);
         data.setRefNo(refNo);
         data.setChannelOrder(channelOrder);// 内部转账时为空，外部转账时必定有
