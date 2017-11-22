@@ -45,6 +45,9 @@ public class EthCollection extends ABaseDO {
     // 完成时间
     private Date updateDatetime;
 
+    // 关联订单号
+    private String refNo;
+
     public String getCode() {
         return code;
     }
@@ -123,6 +126,14 @@ public class EthCollection extends ABaseDO {
 
     public void setUpdateDatetime(Date updateDatetime) {
         this.updateDatetime = updateDatetime;
+    }
+
+    public String getRefNo() {
+        return refNo;
+    }
+
+    public void setRefNo(String refNo) {
+        this.refNo = refNo;
     }
 
 }

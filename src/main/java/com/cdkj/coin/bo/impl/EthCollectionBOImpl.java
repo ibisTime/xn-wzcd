@@ -27,7 +27,7 @@ public class EthCollectionBOImpl extends PaginableBOImpl<EthCollection>
 
     @Override
     public String saveEthCollection(String from, String to, BigDecimal value,
-            String txHash) {
+            String txHash, String refNo) {
         String code = null;
         EthCollection data = new EthCollection();
         code = OrderNoGenerater.generate(EGeneratePrefix.Collection.getCode());
@@ -38,6 +38,7 @@ public class EthCollectionBOImpl extends PaginableBOImpl<EthCollection>
         data.setTxHash(txHash);
         data.setStatus(EEthCollectionStatus.Broadcast.getCode());
         data.setCreateDatetime(new Date());
+        data.setRefNo(refNo);
         ethCollectionDAO.insert(data);
         return code;
     }

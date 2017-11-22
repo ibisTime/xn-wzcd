@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,14 +64,21 @@ public class CallbackConroller {
                     ethTransactionAO.withdrawNotice(ctqEthTransaction);
                     hashList.add(ctqEthTransaction.getHash());
                     if (EEthAddressType.X == toType) { // toAddress=X 充值
-                        ethTransactionAO.chargeNotice(ctqEthTransaction);
-                        ethTransactionAO.collection(ctqEthTransaction.getTo());
+                        String code = ethTransactionAO
+                            .chargeNotice(ctqEthTransaction);
+                        if (StringUtils.isNotBlank(code)) {
+                            ethTransactionAO.collection(
+                                ctqEthTransaction.getTo(), code);
+                        }
                     }
                     // hashList.add(ctqEthTransaction.getHash());
                 } else if (EEthAddressType.X == toType) { // toAddress=X 充值
-                    ethTransactionAO.chargeNotice(ctqEthTransaction);
-                    hashList.add(ctqEthTransaction.getHash());
-                    ethTransactionAO.collection(ctqEthTransaction.getTo());
+                    String code = ethTransactionAO
+                        .chargeNotice(ctqEthTransaction);
+                    if (StringUtils.isNotBlank(code)) {
+                        ethTransactionAO.collection(ctqEthTransaction.getTo(),
+                            code);
+                    }
                 } else if (EEthAddressType.X == fromType
                         && EEthAddressType.W == toType) {
                     // fromAddress=X toAddress=W 归集

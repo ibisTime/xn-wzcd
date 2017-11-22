@@ -10,7 +10,7 @@ import com.cdkj.coin.domain.EthCollection;
 public interface IEthCollectionBO extends IPaginableBO<EthCollection> {
 
     public String saveEthCollection(String from, String to, BigDecimal value,
-            String txHash);
+            String txHash, String refNo);
 
     public List<EthCollection> queryEthCollectionList(EthCollection condition);
 

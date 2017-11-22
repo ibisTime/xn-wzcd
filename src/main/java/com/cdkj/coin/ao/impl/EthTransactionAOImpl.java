@@ -80,7 +80,7 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
 
     @Override
     @Transactional
-    public void chargeNotice(CtqEthTransaction ctqEthTransaction) {
+    public String chargeNotice(CtqEthTransaction ctqEthTransaction) {
         EthAddress ethAddress = ethAddressBO.getEthAddress(EEthAddressType.X,
             ctqEthTransaction.getTo());
         if (ethAddress == null) {
@@ -89,7 +89,7 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         Charge condition = new Charge();
         condition.setRefNo(ctqEthTransaction.getHash());
         if (chargeBO.getTotalCount(condition) > 0) {
-            return;
+            return "";
         }
         Account account = accountBO.getAccountByUser(ethAddress.getUserId(),
             ECoin.ETH.getCode());
@@ -107,6 +107,7 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
                     + ctqEthTransaction.getFrom(), amount);
         // 落地交易记录
         ethTransactionBO.saveEthTransaction(ctqEthTransaction);
+        return code;
     }
 
     @Override
@@ -148,7 +149,7 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
 
     @Override
     @Transactional
-    public void collection(String address) {
+    public void collection(String address, String chargeCode) {
         // 获取地址信息
         EthAddress xEthAddress = ethAddressBO.getEthAddress(EEthAddressType.X,
             address);
@@ -183,7 +184,8 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             throw new BizException("xn625000", "归集—交易广播失败");
         }
         // 归集记录落地
-        ethCollectionBO.saveEthCollection(address, toAddress, value, txHash);
+        ethCollectionBO.saveEthCollection(address, toAddress, value, txHash,
+            chargeCode);
 
     }
 

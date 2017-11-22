@@ -13,6 +13,7 @@
 		<result column="create_datetime" property="createDatetime" />
 		<result column="eth_datetime" property="ethDatetime" />
 		<result column="update_datetime" property="updateDatetime" />
+		<result column="ref_no" property="refNo" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -31,6 +32,9 @@
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
+			<if test="refNo != null and refNo != '' ">
+				AND t.ref_no = #{refNo}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_ethCollection" parameterType="ethCollection" resultMap="ethCollection_DB_Result">
@@ -45,6 +49,7 @@
 		,t.create_datetime
 		,t.eth_datetime
 		,t.update_datetime
+		,t.ref_no
 		FROM
 		tcoin_eth_collection t
 		<include refid="where_condition" />
@@ -74,6 +79,7 @@
 		,create_datetime
 		,eth_datetime
 		,update_datetime
+		,ref_no
 		)
 		VALUES(
 		#{code}
@@ -86,6 +92,7 @@
 		,#{createDatetime}
 		,#{ethDatetime}
 		,#{updateDatetime}
+		,#{refNo}
 		)
 	</insert>
 

@@ -18,13 +18,13 @@ import com.cdkj.coin.eth.CtqEthTransaction;
 public interface IEthTransactionAO {
 
     // 充值
-    public void chargeNotice(CtqEthTransaction ctqEthTransaction);
+    public String chargeNotice(CtqEthTransaction ctqEthTransaction);
 
     // 提现
     public void withdrawNotice(CtqEthTransaction ctqEthTransaction);
 
     // 归集
-    public void collection(String address);
+    public void collection(String address, String chargeCode);
 
     // 归集交易通知处理
     public void collectionNotice(CtqEthTransaction ctqEthTransaction);

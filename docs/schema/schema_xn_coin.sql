@@ -133,6 +133,7 @@ CREATE TABLE `tcoin_eth_collection` (
   `create_datetime` datetime DEFAULT NULL COMMENT '发起时间',
   `eth_datetime` datetime DEFAULT NULL COMMENT '网络记账时间',
   `update_datetime` datetime DEFAULT NULL COMMENT '完成时间',
+  `ref_no` varchar(32) NOT NULL COMMENT '关联订单号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

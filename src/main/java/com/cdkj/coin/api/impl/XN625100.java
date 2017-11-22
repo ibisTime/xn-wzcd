@@ -36,7 +36,7 @@ public class XN625100 extends AProcessor {
      */
     @Override
     public Object doBusiness() throws BizException {
-        ethTransactionAO.collection(req.getAddress());
+        // ethTransactionAO.collection(req.getAddress());
         return new BooleanRes(true);
     }
 
