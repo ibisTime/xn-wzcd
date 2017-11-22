@@ -108,4 +108,11 @@ public class UserRelationBOImpl extends PaginableBOImpl<UserRelation> implements
         condition.setToUser(toUser);
         return userRelationDAO.selectList(condition);
     }
+
+    @Override
+    public long getRelationCount(String toUser) {
+        UserRelation condition = new UserRelation();
+        condition.setToUser(toUser);
+        return getTotalCount(condition);
+    }
 }

@@ -30,4 +30,7 @@ public interface IUserRelationBO extends IPaginableBO<UserRelation> {
     public int removeUserRelation(String userId, String toUser);
 
     public List<UserRelation> queryUserRelationList(String userId, String toUser);
+
+    // 有多少人信任我
+    public long getRelationCount(String toUser);
 }
