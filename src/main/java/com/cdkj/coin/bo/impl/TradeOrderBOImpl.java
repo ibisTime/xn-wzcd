@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.cdkj.coin.domain.UserStatistics;
+import com.cdkj.coin.enums.ECommentLevel;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -272,4 +274,86 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
         return count <= 0;
     }
+
+
+
+    private List<String> finishReleaseStatusList() {
+
+        List statusList = new ArrayList();
+        statusList.add(ETradeOrderStatus.RELEASED.getCode());
+        statusList.add(ETradeOrderStatus.COMPLETE.getCode());
+        statusList.add(ETradeOrderStatus.ARBITRATE.getCode());
+        return statusList;
+    }
+
+    @Override
+    public UserStatistics obtainUserStatistics(String userId) {
+
+        //
+        int finishReleaseTradeCount = 0;
+
+        //被评价次数
+        int beiPingJiaCount = 0;
+
+        //好评次数
+        int beiHaoPingCount = 0;
+
+        TradeOrder condition = new TradeOrder();
+        //userId 为卖家或者买家
+        condition.setBelongUser(userId);
+        //已释放都算 "完成"
+        condition.setStatusList(this.finishReleaseStatusList());
+
+        List<TradeOrder> orders = this.tradeOrderDAO.selectList(condition);
+
+        finishReleaseTradeCount = orders.size();
+        for (TradeOrder order : orders) {
+
+            if (order.getSellUser().equals(userId) && order.getBsComment() != null) {
+                beiPingJiaCount ++ ;
+                if (order.getBsComment().equals(ECommentLevel.HAO_PING.getCode())) {
+                    beiHaoPingCount ++;
+                }
+            }
+
+            if (order.getBuyUser().equals(userId) && order.getSbComment() != null) {
+                beiPingJiaCount ++ ;
+
+                if (order.getSbComment().equals(ECommentLevel.HAO_PING.getCode())) {
+                    beiHaoPingCount ++;
+                }
+
+            }
+
+        }
+
+        UserStatistics userStatistics = new UserStatistics();
+        userStatistics.setJiaoYiCount(finishReleaseTradeCount);
+        userStatistics.setBeiPingJiaCount(beiPingJiaCount);
+        userStatistics.setBeiHaoPingCount(beiHaoPingCount);
+
+        return userStatistics;
+
+    }
+
+    public BigDecimal getUserTotalTradeCount(String userId) {
+
+        BigDecimal totalTradeCount = BigDecimal.ZERO;
+
+        TradeOrder condition = new TradeOrder();
+        //userId 为卖家或者买家
+        condition.setBelongUser(userId);
+        //已释放都算 "完成"
+        condition.setStatusList(this.finishReleaseStatusList());
+        List<TradeOrder> orders = this.tradeOrderDAO.selectList(condition);
+        for (TradeOrder order : orders) {
+
+            totalTradeCount = totalTradeCount.add(order.getCount());
+
+        }
+
+        return totalTradeCount;
+    }
+
+
 }

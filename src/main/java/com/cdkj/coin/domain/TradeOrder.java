@@ -99,6 +99,17 @@ public class TradeOrder extends ABaseDO {
     // 状态列表
     private List<String> statusList;
 
+    //查询统计信息时使用
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getCode() {
         return code;
     }

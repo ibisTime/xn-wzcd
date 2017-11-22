@@ -99,11 +99,11 @@
             </if>
 
             <if test="maxPrice != null and maxPrice != ''">
-                <![CDATA[ and `market_price`*(1 + `premium_rate`) <= #{maxPrice} ]]>
+                <![CDATA[ and `true_price` <= #{maxPrice} ]]>
             </if>
 
             <if test="minPrice != null and minPrice != ''">
-                <![CDATA[ and `market_price`*(1 + `premium_rate`) >= #{minPrice} ]]>
+                <![CDATA[ and `true_price` >= #{minPrice} ]]>
             </if>
 
         </trim>

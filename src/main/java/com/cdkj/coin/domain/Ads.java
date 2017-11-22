@@ -16,7 +16,6 @@ public class Ads extends ABaseDO implements Serializable {
 
     //根据uerId得到的值
     private User user;
-
     private String tradeCurrency;
     private String tradeCoin;
     private String onlyTrust;
@@ -61,6 +60,7 @@ public class Ads extends ABaseDO implements Serializable {
     private List<AdsDisplayTime> displayTime;
 
     //   以下字段为查询添加  //
+    private UserStatistics userStatistics;
 
     private Integer currentWeek;
 
@@ -107,6 +107,14 @@ public class Ads extends ABaseDO implements Serializable {
         this.totalCountString = totalCount.toString();
     }
 
+    public UserStatistics getUserStatistics() {
+        return userStatistics;
+    }
+
+    public void setUserStatistics(UserStatistics userStatistics) {
+        this.userStatistics = userStatistics;
+    }
+
     public String getTotalCountString() {
         return totalCountString;
     }
@@ -123,8 +131,6 @@ public class Ads extends ABaseDO implements Serializable {
         this.leftCount = leftCount;
         this.leftCountString = this.leftCount.toString();
     }
-
-
 
     public String getLeftCountString() {
         return leftCountString;
@@ -247,9 +253,6 @@ public class Ads extends ABaseDO implements Serializable {
     public void setPremiumRate(BigDecimal premiumRate) {
         this.premiumRate = premiumRate;
     }
-
-
-
 
 
     public BigDecimal getMarketPrice() {

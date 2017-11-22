@@ -6,6 +6,7 @@ import java.util.List;
 import com.cdkj.coin.bo.base.IPaginableBO;
 import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.domain.TradeOrder;
+import com.cdkj.coin.domain.UserStatistics;
 import com.cdkj.coin.enums.ETradeOrderType;
 
 public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
@@ -39,5 +40,10 @@ public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
     public boolean isExistOningOrder(String adsCode);
 
     public boolean checkUserHasUnFinishOrder(String userId, ETradeOrderType tradeOrderType);
+
+    public UserStatistics obtainUserStatistics(String userId);
+
+    //获取用户交易量
+    public BigDecimal getUserTotalTradeCount(String userId);
 
 }
