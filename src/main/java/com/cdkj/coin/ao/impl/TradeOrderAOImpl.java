@@ -575,7 +575,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
         UserStatistics userStatistics = this.tradeOrderBO
             .obtainUserStatistics(userId);
-        //
+        //获取被信任次数
         userStatistics.setBeiXinRenCount(this.userRelationBO
             .getRelationCount(userId));
         //

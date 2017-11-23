@@ -53,10 +53,10 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         Ads condition = new Ads();
         condition.setCode(adsCode);
 
-        Ads resultAds =  this.adsDAO.select(condition);
+        Ads resultAds = this.adsDAO.select(condition);
 
         if (resultAds == null) {
-            throw new BizException("xn000","广告不存在");
+            throw new BizException("xn000", "广告不存在");
         }
 
         return resultAds;
@@ -89,7 +89,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     public void cutLeftCount(String adsCode, BigDecimal value) {
 
         if (value.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new  BizException("xn000","改变金额需大于0");
+            throw new BizException("xn000", "改变金额需大于0");
         }
 
         Ads condition = new Ads();
@@ -138,29 +138,16 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
     }
 
-//    @Override
-//    public void refreshAllAdsMarketPrice(Market market) {
-//
-//        if (market == null || market.getMid() == null) {
-//
-//            return;
-//
-//        }
-//
-//        this.adsDAO.updateAllMarketPrice(market.getMid());
-//
-//    }
-
     // 前端分页
     @Override
     public Paginable<Ads> frontPage(Integer start, Integer limit,
-            Ads condition) {
+                                    Ads condition) {
 
         if (condition.getMaxPrice() != null && condition.getMinPrice() != null) {
             if (condition.getMaxPrice().compareTo(condition.getMinPrice()) <= 0) {
 
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "最大金额需大于等于最小金额");
+                        "最大金额需大于等于最小金额");
             }
         }
 
@@ -187,7 +174,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         long totalCount = adsDAO.selectFrontTotalCount(condition);
         Paginable<Ads> page = new Page<Ads>(start, limit, totalCount);
         List<Ads> dataList = adsDAO.selectFrontList(condition, page.getStart(),
-            page.getPageSize());
+                page.getPageSize());
         page.setList(dataList);
         return page;
 
@@ -196,13 +183,13 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     // oss分页
     @Override
     public Paginable<Ads> ossPage(Integer start, Integer limit,
-            Ads condition) {
+                                  Ads condition) {
 
         //
         long totalCount = adsDAO.selectTotalCount(condition);
         Paginable<Ads> page = new Page<Ads>(start, limit, totalCount);
         List<Ads> dataList = adsDAO.selectList(condition, page.getStart(),
-            page.getPageSize());
+                page.getPageSize());
         page.setList(dataList);
         return page;
 
@@ -226,7 +213,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     }
 
     @Override
-    public long totalCountOfShangJiaAds(String userId,String tradeType) {
+    public long totalCountOfShangJiaAds(String userId, String tradeType) {
         Ads condition = new Ads();
         condition.setTradeType(tradeType);
         condition.setUserId(userId);
@@ -234,29 +221,30 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         return this.adsDAO.selectTotalCount(condition);
     }
 
-
     @Override
     public void refreshStatus(String adsCode, boolean existOningOrder) {
         // TODO Auto-generated method stub
 
         if (StringUtils.isBlank(adsCode)) {
 
-            throw new BizException("xn000","传入正确的广告编号");
+            throw new BizException("xn000", "传入正确的广告编号");
 
         }
 
         Ads condotion = new Ads();
         condotion.setCode(adsCode);
         Ads ads = this.adsDAO.select(condotion);
-        if(ads == null) {
-            throw new BizException("xn000","广告编号不存在");
+        if (ads == null) {
+            throw new BizException("xn000", "广告编号不存在");
 
         }
-        if (!ads.getStatus().equals(EAdsStatus.DAIJIAOYI.getCode()) &&  !ads.getStatus().equals(EAdsStatus.JIAOYIZHONG.getCode())) {
-            throw new BizException("xn000","当前状态不支持状态刷新");
+        if (!ads.getStatus().equals(EAdsStatus.DAIJIAOYI.getCode()) && !ads.getStatus().equals(EAdsStatus.JIAOYIZHONG.getCode())) {
+            throw new BizException("xn000", "当前状态不支持状态刷新");
         }
+
         //设置状态
-        condotion.setStatus(existOningOrder == true ? EAdsStatus.JIAOYIZHONG.getCode() : EAdsStatus.DAIJIAOYI.getCode());
+        condotion.setStatus(existOningOrder ? EAdsStatus.JIAOYIZHONG.getCode() : EAdsStatus.DAIJIAOYI.getCode());
+
         //更新状态
         this.adsDAO.updateByPrimaryKeySelective(condotion);
 
@@ -264,7 +252,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
     @Override
     public long updateAdsPriceByPrimaryKey(Ads ads) {
-      return  this.adsDAO.updateByPrimaryKeySelective(ads);
+        return this.adsDAO.updateByPrimaryKeySelective(ads);
     }
 
 }

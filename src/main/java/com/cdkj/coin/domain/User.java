@@ -192,6 +192,16 @@ public class User extends ABaseDO {
 
     private Integer refeereLevel;
 
+    private UserStatistics userStatistics;
+
+    public UserStatistics getUserStatistics() {
+        return userStatistics;
+    }
+
+    public void setUserStatistics(UserStatistics userStatistics) {
+        this.userStatistics = userStatistics;
+    }
+
     public Integer getRefeereLevel() {
         return refeereLevel;
     }

@@ -112,6 +112,7 @@ public class AdsAOImpl implements IAdsAO {
         ads.setUser(user);
         UserStatistics userStatistics = this.tradeOrderBO
                 .obtainUserStatistics(ads.getUserId());
+
         // 获取信任数量
         userStatistics.setBeiXinRenCount(this.userRelationBO
                 .getRelationCount(ads.getUserId()));
@@ -157,7 +158,7 @@ public class AdsAOImpl implements IAdsAO {
             throw new BizException("xn00000", "用户不存在");
         }
 
-        // todo 校验是否已经存在，正在上架的次类型的交易
+        //校验是否已经存在，正在上架的类型的交易
         long count = this.iAdsBO.totalCountOfShangJiaAds(req.getUserId(),
                 req.getTradeType());
         if (count > 0) {
@@ -216,7 +217,7 @@ public class AdsAOImpl implements IAdsAO {
         ads.setOnlyTrust(req.getOnlyTrust());
         ads.setDisplayTime(req.getDisplayTime());
 
-        if (ads.getMaxTrade().compareTo(ads.getMinTrade()) <= 0) {
+        if (ads.getMaxTrade().compareTo(ads.getMinTrade()) < 0) {
             throw new BizException("xn000000", "单笔最大交易额需大于等于单笔最小交易额");
         }
 
@@ -320,7 +321,7 @@ public class AdsAOImpl implements IAdsAO {
         this.displayTimeBO.deleteAdsDisplayTimeByAdsCode(ads.getCode());
 
         // 插入新的展示时间
-        if (ads != null && !ads.getDisplayTime().isEmpty()) {
+        if (ads.getDisplayTime() != null && !ads.getDisplayTime().isEmpty()) {
             // 有展示时间限制、先插入展示时间
             for (AdsDisplayTime displayTime : ads.getDisplayTime()) {
 
@@ -526,10 +527,8 @@ public class AdsAOImpl implements IAdsAO {
 
         Market market = this.marketBO.marketByCoinTypeAndOrigin(
                 ECoin.ETH.getCode(), EMarketOrigin.BITFINEX.getCode());
-
         // 1.只刷新上架状态的
         List<Ads> shangJiaAdsList = this.iAdsBO.queryShangJiaAdsList();
-
         for (Ads ads : shangJiaAdsList) {
 
             ads.setMarketPrice(market.getMid());
@@ -556,6 +555,7 @@ public class AdsAOImpl implements IAdsAO {
             } else {
 
                 continue;
+
             }
             ads.setTruePrice(truePrice);
             // 只更新行情 和 真实价格

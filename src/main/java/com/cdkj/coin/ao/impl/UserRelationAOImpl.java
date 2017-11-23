@@ -10,7 +10,10 @@ package com.cdkj.coin.ao.impl;
 
 import java.util.List;
 
+import com.cdkj.coin.bo.ITradeOrderBO;
+import com.cdkj.coin.domain.UserStatistics;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +39,9 @@ public class UserRelationAOImpl implements IUserRelationAO {
     @Autowired
     IUserBO userBO;
 
+    @Autowired
+    ITradeOrderBO tradeOrderBO;
+
     /** 
      * @see com.std.user.ao.IUserRelationAO#queryUserRelationPage(int, int, com.std.user.domain.UserRelation)
      */
@@ -45,12 +51,36 @@ public class UserRelationAOImpl implements IUserRelationAO {
         Paginable<UserRelation> page = userRelationBO.getPaginable(start,
             limit, condition);
         for (UserRelation userRelation : page.getList()) {
-            userRelation.setFromUserInfo(userBO.getUser(userRelation
-                .getUserId()));
-            userRelation
-                .setToUserInfo(userBO.getUser(userRelation.getToUser()));
+
+            User lookUser = null;
+            if (StringUtils.isNotBlank(condition.getUserId())) {
+                //查询——我信任的
+                User toUser = userBO.getUser(userRelation.getToUser());
+                lookUser = toUser;
+                //
+                userRelation.setToUserInfo(toUser);
+
+            } else  {
+                //查询——信任我的
+                User fromUser = userBO.getUser(userRelation
+                        .getUserId());
+                lookUser = fromUser;
+                userRelation.setFromUserInfo(fromUser);
+            }
+
+            //查询统计信息
+            if (lookUser != null) {
+
+                UserStatistics userStatistics = new UserStatistics();
+                userStatistics = this.tradeOrderBO.obtainUserStatistics(lookUser.getUserId());
+                userStatistics.setBeiXinRenCount(this.userRelationBO.getRelationCount(lookUser.getUserId()));
+                lookUser.setUserStatistics(userStatistics);
+            }
+
         }
+
         return page;
+
     }
 
     /** 

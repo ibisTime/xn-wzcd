@@ -35,7 +35,7 @@
         <include refid="whereCondition"/>
     </select>
 
-    <delete id="deleteByAdsCode" parameterType="java.lang.Integer">
+    <delete id="deleteByAdsCode" parameterType="String">
         DELETE FROM tcoin_ads_display_time
         WHERE ads_code = #{adsCode}
     </delete>
