@@ -156,8 +156,7 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode(),
             EChannelType.ETH, ctqEthTransaction.getHash(), "ETH", withdraw
                 .getCode(), EJourBizTypeCold.AJ_PAY.getCode(), "ETH取现-外部地址："
-                    + withdraw.getPayCardNo(),
-            new BigDecimal(ctqEthTransaction.getValue()));
+                    + withdraw.getPayCardNo(), withdraw.getAmount().negate());
         // 平台盈亏账户记入取现手续费
         if (withdraw.getFee().compareTo(BigDecimal.ZERO) > 0) {
             accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(),

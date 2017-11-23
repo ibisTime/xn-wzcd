@@ -19,7 +19,6 @@ import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.dao.IWithdrawDAO;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.EthAddress;
-import com.cdkj.coin.domain.EthCollection;
 import com.cdkj.coin.domain.Withdraw;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.EGeneratePrefix;
@@ -163,9 +162,10 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw> implements
     }
 
     @Override
-    public EthAddress getAddressUseInfo(String toAddress) {
-        EthCollection data = new EthCollection();
-        data.setToAddress(toAddress);
+    public EthAddress getAddressUseInfo(String fromAddress) {
+        Withdraw data = new Withdraw();
+        data.setPayUser(fromAddress);
+        data.setStatus(EWithdrawStatus.Pay_YES.getCode());
         return withdrawDAO.selectAddressUseInfo(data);
     }
 
