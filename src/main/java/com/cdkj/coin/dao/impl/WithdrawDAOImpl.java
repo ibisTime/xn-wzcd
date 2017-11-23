@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import com.cdkj.coin.dao.IWithdrawDAO;
 import com.cdkj.coin.dao.base.support.AMybatisTemplate;
+import com.cdkj.coin.domain.EthAddress;
+import com.cdkj.coin.domain.EthCollection;
 import com.cdkj.coin.domain.Withdraw;
 
 @Repository("withdrawDAOImpl")
@@ -59,6 +61,12 @@ public class WithdrawDAOImpl extends AMybatisTemplate implements IWithdrawDAO {
     @Override
     public void broadcastOrder(Withdraw data) {
         super.update(NAMESPACE.concat("broadcast_order"), data);
+    }
+
+    @Override
+    public EthAddress selectAddressUseInfo(EthCollection data) {
+        return super.select(NAMESPACE.concat("select_addressUseInfo"), data,
+            EthAddress.class);
     }
 
 }

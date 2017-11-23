@@ -6,6 +6,8 @@ public class XN802524Req extends APageReq {
      */
     private static final long serialVersionUID = 1L;
 
+    private String kind;
+
     // 流水所属账号(必填)
     private String accountNumber;
 
@@ -17,6 +19,14 @@ public class XN802524Req extends APageReq {
 
     // 状态(选填)
     private String status;
+
+    public String getKind() {
+        return kind;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
+    }
 
     public String getStatus() {
         return status;

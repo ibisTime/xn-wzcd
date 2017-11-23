@@ -79,23 +79,24 @@ public class WithdrawAOImpl implements IWithdrawAO {
         withdrawBO.doCheckTimes(dbAccount);
         // 验证交易密码
         userBO.checkTradePwd(dbAccount.getUserId(), tradePwd);
-        if (dbAccount.getAmount().compareTo(amount) == -1) {
-            throw new BizException("xn000000", "余额不足");
-        }
-        // 生成取现订单
-        // BigDecimal fee = doGetFee(dbAccount.getType(), amount,
-        // dbAccount.getSystemCode(), dbAccount.getCompanyCode());
+        // 取现手续费
         BigDecimal fee = sysConfigBO
             .getBigDecimalValue(SysConstants.WITHDRAW_FEE);
         fee = Convert.toWei(fee, Unit.ETHER);
-        // 取现总金额
-        amount = amount.add(fee);
+        if (dbAccount.getAmount().compareTo(amount.add(fee)) == -1) {
+            throw new BizException("xn000000", "余额不足");
+        }
+        // 生成取现订单
         String withdrawCode = withdrawBO.applyOrder(dbAccount, amount, fee,
             payCardInfo, payCardNo, applyUser, applyNote);
         // 冻结取现金额
         accountBO.frozenAmount(dbAccount, amount,
             EJourBizTypeUser.AJ_WITHDRAW.getCode(),
             EJourBizTypeUser.AJ_WITHDRAW.getValue(), withdrawCode);
+        // 冻结取现手续费
+        accountBO.frozenAmount(dbAccount, fee,
+            EJourBizTypeUser.AJ_WITHDRAWFEE.getCode(),
+            EJourBizTypeUser.AJ_WITHDRAWFEE.getValue(), withdrawCode);
         return withdrawCode;
     }
 
@@ -207,7 +208,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
     private void payOrderNO(Withdraw data, String payUser, String payNote,
             String payCode) {
         withdrawBO.payOrder(data, EWithdrawStatus.Pay_NO, payUser, payNote,
-            payCode);
+            payCode, payCode, BigDecimal.ZERO);
         Account dbAccount = accountBO.getAccount(data.getAccountNumber());
         // 释放冻结流水
         accountBO.unfrozenAmount(dbAccount, data.getAmount(),
@@ -217,7 +218,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
     private void payOrderYES(Withdraw data, String payUser, String payNote,
             String payCode) {
         withdrawBO.payOrder(data, EWithdrawStatus.Pay_YES, payUser, payNote,
-            payCode);
+            payCode, payCode, BigDecimal.ZERO);
         Account dbAccount = accountBO.getAccount(data.getAccountNumber());
         // 先解冻，然后扣减余额
         accountBO.unfrozenAmount(dbAccount, data.getAmount(),

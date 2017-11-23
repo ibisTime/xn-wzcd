@@ -6,6 +6,8 @@ public class XN802520Req extends APageReq {
      */
     private static final long serialVersionUID = 1L;
 
+    private String kind;
+
     // 订单分组组号（信息代表）---核心字段1
     private String payGroup;
 
@@ -59,6 +61,14 @@ public class XN802520Req extends APageReq {
 
     // 公司编号
     private String companyCode;
+
+    public String getKind() {
+        return kind;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
+    }
 
     public String getCompanyCode() {
         return companyCode;

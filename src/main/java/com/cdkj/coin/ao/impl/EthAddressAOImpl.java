@@ -29,6 +29,7 @@ import com.cdkj.coin.bo.IEthTransactionBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.ISmsOutBO;
 import com.cdkj.coin.bo.IUserBO;
+import com.cdkj.coin.bo.IWithdrawBO;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.common.DateUtil;
 import com.cdkj.coin.core.OrderNoGenerater;
@@ -58,6 +59,9 @@ public class EthAddressAOImpl implements IEthAddressAO {
 
     @Autowired
     private IEthCollectionBO ethCollectionBO;
+
+    @Autowired
+    private IWithdrawBO withdrawBO;
 
     @Autowired
     private IEthTransactionBO ethTransactionBO;
@@ -187,8 +191,15 @@ public class EthAddressAOImpl implements IEthAddressAO {
                 EthAddress xAddress = ethCollectionBO
                     .getAddressUseInfo(ethAddress.getAddress());
                 ethAddress.setUseCount(xAddress.getUseCount());
-                ethAddress.setCollectTotalAmount(xAddress
-                    .getCollectTotalAmount());
+                ethAddress.setUseAmount(xAddress.getUseAmount());
+            }
+            if (EEthAddressType.M.getCode().equals(ethAddress.getType())) {
+                EthAddress xAddress = withdrawBO.getAddressUseInfo(ethAddress
+                    .getAddress());
+                ethAddress.setUseCount(xAddress.getUseCount());
+                ethAddress.setUseAmount(xAddress.getUseAmount());
+                ethAddress.setBalance(ethAddressBO.getEthBalance(ethAddress
+                    .getAddress()));
             }
         }
         return results;

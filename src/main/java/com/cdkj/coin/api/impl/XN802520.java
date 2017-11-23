@@ -27,6 +27,7 @@ public class XN802520 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         Jour condition = new Jour();
+        condition.setKind(req.getKind());
         condition.setPayGroup(req.getPayGroup());
         condition.setRefNo(req.getRefNo());
         condition.setChannelType(req.getChannelType());

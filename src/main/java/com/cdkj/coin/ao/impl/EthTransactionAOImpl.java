@@ -118,9 +118,40 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         if (withdraw == null) {
             return;
         }
+        // 计算矿工费
+        BigDecimal gasPrice = new BigDecimal(ctqEthTransaction.getGasPrice());
+        BigDecimal gasUse = new BigDecimal(ctqEthTransaction.getGas()
+            .toString());
+        BigDecimal txFee = gasPrice.multiply(gasUse);
         // 取现订单更新
-        withdrawBO.payOrder(withdraw, EWithdrawStatus.Pay_YES, "ETH", "广播成功",
-            ctqEthTransaction.getHash());
+        withdrawBO.payOrder(withdraw, EWithdrawStatus.Pay_YES,
+            ctqEthTransaction.getFrom(), "广播成功", ctqEthTransaction.getHash(),
+            ctqEthTransaction.getHash(), txFee);
+        Account userAccount = accountBO.getAccount(withdraw.getAccountNumber());
+        // 取现金额解冻
+        accountBO.unfrozenAmount(userAccount, withdraw.getAmount(),
+            EJourBizTypeUser.AJ_WITHDRAW.getCode(),
+            EJourBizTypeUser.AJ_WITHDRAW.getValue(), withdraw.getCode());
+        if (withdraw.getFee().compareTo(BigDecimal.ZERO) > 0) {
+            // 取现手续费解冻
+            accountBO.unfrozenAmount(userAccount, withdraw.getFee(),
+                EJourBizTypeUser.AJ_WITHDRAWFEE.getCode(),
+                EJourBizTypeUser.AJ_WITHDRAWFEE.getValue(), withdraw.getCode());
+        }
+        // 取现金额扣减
+        accountBO.changeAmount(withdraw.getAccountNumber(), EChannelType.ETH,
+            ctqEthTransaction.getHash(), "ETH", withdraw.getCode(),
+            EJourBizTypeUser.AJ_WITHDRAW.getCode(),
+            EJourBizTypeUser.AJ_WITHDRAW.getValue(), withdraw.getAmount()
+                .negate());
+        if (withdraw.getFee().compareTo(BigDecimal.ZERO) > 0) {
+            // 取现手续费扣减
+            accountBO.changeAmount(withdraw.getAccountNumber(),
+                EChannelType.ETH, ctqEthTransaction.getHash(), "ETH", withdraw
+                    .getCode(), EJourBizTypeUser.AJ_WITHDRAWFEE.getCode(),
+                EJourBizTypeUser.AJ_WITHDRAWFEE.getValue(), withdraw.getFee()
+                    .negate());
+        }
         // 平台冷钱包减钱
         accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode(),
             EChannelType.ETH, ctqEthTransaction.getHash(), "ETH", withdraw
@@ -135,10 +166,6 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
                 "ETH取现-外部地址" + withdraw.getPayCardNo(), withdraw.getFee());
         }
         // 平台盈亏账户记入取现矿工费
-        BigDecimal gasPrice = new BigDecimal(ctqEthTransaction.getGasPrice());
-        BigDecimal gasUse = new BigDecimal(ctqEthTransaction.getGas()
-            .toString());
-        BigDecimal txFee = gasPrice.multiply(gasUse);
         accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(),
             EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
             withdraw.getCode(), EJourBizTypePlat.AJ_WFEE.getCode(),

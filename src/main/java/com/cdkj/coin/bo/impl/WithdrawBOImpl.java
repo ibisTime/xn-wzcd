@@ -18,6 +18,8 @@ import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.dao.IWithdrawDAO;
 import com.cdkj.coin.domain.Account;
+import com.cdkj.coin.domain.EthAddress;
+import com.cdkj.coin.domain.EthCollection;
 import com.cdkj.coin.domain.Withdraw;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.EGeneratePrefix;
@@ -79,11 +81,14 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw> implements
 
     @Override
     public void payOrder(Withdraw data, EWithdrawStatus status, String payUser,
-            String payNote, String channelOrder) {
+            String payNote, String channelOrder, String payCode,
+            BigDecimal payFee) {
         data.setStatus(status.getCode());
         data.setPayUser(payUser);
         data.setPayNote(payNote);
         data.setPayGroup(null);
+        data.setPayCode(payCode);
+        data.setPayFee(payFee);
         data.setChannelOrder(channelOrder);
         data.setPayDatetime(new Date());
         withdrawDAO.payOrder(data);
@@ -155,6 +160,13 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw> implements
             withdraw = results.get(0);
         }
         return withdraw;
+    }
+
+    @Override
+    public EthAddress getAddressUseInfo(String toAddress) {
+        EthCollection data = new EthCollection();
+        data.setToAddress(toAddress);
+        return withdrawDAO.selectAddressUseInfo(data);
     }
 
 }
