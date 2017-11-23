@@ -122,8 +122,10 @@ public class AccountAOImpl implements IAccountAO {
                 Market market = marketBO.marketByCoinTypeAndOrigin(
                     ECoin.ETH.getCode(), EMarketOrigin.BITFINEX.getCode());
                 // 人民币总资产折算
-                totalAmountCNY = totalAmountCNY.add(market.getMid().multiply(
-                    Convert.fromWei(account.getAmount(), Unit.ETHER)));
+                totalAmountCNY = totalAmountCNY.add(
+                    market.getMid().multiply(
+                        Convert.fromWei(account.getAmount(), Unit.ETHER)))
+                    .setScale(2, RoundingMode.DOWN);
                 // 美元总资产折算
                 CurrencyRate usdRate = currencyRateBO
                     .currencyRateByCurrency(ECurrency.USD.getCode());
