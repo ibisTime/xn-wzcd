@@ -33,7 +33,7 @@ public interface IJourAO {
 
     public Jour getJour(String code, String systemCode);
 
-    public Long getTotalAmount(String bizType, String channelType,
+    public BigDecimal getTotalAmount(String bizType, String channelType,
             String accountNumber, String dateStart, String dateEnd);
 
     /**

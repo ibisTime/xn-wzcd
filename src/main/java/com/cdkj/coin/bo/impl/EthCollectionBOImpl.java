@@ -75,6 +75,18 @@ public class EthCollectionBOImpl extends PaginableBOImpl<EthCollection>
     }
 
     @Override
+    public EthCollection getEthCollectionByRefNo(String refNo) {
+        EthCollection ethCollection = null;
+        EthCollection condition = new EthCollection();
+        condition.setRefNo(refNo);
+        List<EthCollection> results = ethCollectionDAO.selectList(condition);
+        if (CollectionUtils.isNotEmpty(results)) {
+            ethCollection = results.get(0);
+        }
+        return ethCollection;
+    }
+
+    @Override
     public int colectionNotice(EthCollection data, BigDecimal txfee,
             Date ethDatetime) {
         int count = 0;
@@ -93,4 +105,5 @@ public class EthCollectionBOImpl extends PaginableBOImpl<EthCollection>
         data.setStatus(EEthCollectionStatus.Broadcast_YES.getCode());
         return ethCollectionDAO.selectAddressUseInfo(data);
     }
+
 }

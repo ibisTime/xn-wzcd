@@ -19,6 +19,8 @@ public interface IEthCollectionBO extends IPaginableBO<EthCollection> {
 
     public EthCollection getEthCollectionByTxHash(String txHash);
 
+    public EthCollection getEthCollectionByRefNo(String refNo);
+
     public int colectionNotice(EthCollection data, BigDecimal txfee,
             Date ethDatetime);
 

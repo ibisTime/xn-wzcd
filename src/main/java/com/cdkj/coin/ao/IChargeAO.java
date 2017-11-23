@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.Charge;
+import com.cdkj.coin.dto.res.XN802707Res;
 
 public interface IChargeAO {
 
@@ -23,5 +24,8 @@ public interface IChargeAO {
     public List<Charge> queryChargeList(Charge condition);
 
     public Charge getCharge(String code, String systemCode);
+
+    // 充币对账详情
+    public XN802707Res getChargeCheckInfo(String code);
 
 }

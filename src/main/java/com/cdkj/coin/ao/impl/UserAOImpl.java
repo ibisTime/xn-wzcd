@@ -8,6 +8,8 @@
  */
 package com.cdkj.coin.ao.impl;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,6 +22,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.web3j.utils.Convert;
+import org.web3j.utils.Convert.Unit;
 
 import com.cdkj.coin.ao.IUserAO;
 import com.cdkj.coin.bo.IAccountBO;
@@ -27,6 +31,7 @@ import com.cdkj.coin.bo.ICtqBO;
 import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IFieldTimesBO;
 import com.cdkj.coin.bo.IIdentifyBO;
+import com.cdkj.coin.bo.IJourBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.ISYSRoleBO;
 import com.cdkj.coin.bo.ISmsOutBO;
@@ -39,6 +44,7 @@ import com.cdkj.coin.common.MD5Util;
 import com.cdkj.coin.common.PhoneUtil;
 import com.cdkj.coin.common.RandomUtil;
 import com.cdkj.coin.core.StringValidater;
+import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.SYSRole;
 import com.cdkj.coin.domain.User;
 import com.cdkj.coin.dto.req.XN805042Req;
@@ -48,12 +54,15 @@ import com.cdkj.coin.dto.res.XN625000Res;
 import com.cdkj.coin.dto.res.XN798011Res;
 import com.cdkj.coin.dto.res.XN798012Res;
 import com.cdkj.coin.dto.res.XN805041Res;
+import com.cdkj.coin.dto.res.XN805123Res;
 import com.cdkj.coin.enums.EAccountType;
 import com.cdkj.coin.enums.EBoolean;
 import com.cdkj.coin.enums.ECaptchaType;
+import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECoin;
 import com.cdkj.coin.enums.EEthAddressType;
 import com.cdkj.coin.enums.EIDKind;
+import com.cdkj.coin.enums.EJourBizTypeUser;
 import com.cdkj.coin.enums.ELoginType;
 import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.enums.EUser;
@@ -62,6 +71,7 @@ import com.cdkj.coin.enums.EUserStatus;
 import com.cdkj.coin.exception.BizException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+google.gson.reflect.TypeToken;
 
 /** 
  * @author: miyb 
@@ -84,6 +94,9 @@ public class UserAOImpl implements IUserAO {
 
     @Autowired
     protected IAccountBO accountBO;
+
+    @Autowired
+    protected IJourBO jourBO;
 
     @Autowired
     protected IUserRelationBO userRelationBO;
@@ -968,4 +981,22 @@ public class UserAOImpl implements IUserAO {
             ESystemCode.COIN.getCode());
     }
 
+    @Override
+    public XN805123Res getInviteInfo(String userId) {
+        XN805123Res res = new XN805123Res();
+
+        User condition = new User();
+        condition.setUserReferee(userId);
+        res.setInviteCount(userBO.getTotalCount(condition));
+
+        Account account = accountBO.getAccountByUser(userId,
+            ECoin.ETH.getCode());
+        BigDecimal totalAmount = jourBO.getTotalAmount(
+            EJourBizTypeUser.AJ_INVITE.getCode(), EChannelType.NBZ.getCode(),
+            account.getAccountNumber(), null, null);
+        res.setInviteProfit(Convert.fromWei(totalAmount, Unit.ETHER).setScale(
+            2, RoundingMode.DOWN).toString());
+
+        return res;
+    }
 }

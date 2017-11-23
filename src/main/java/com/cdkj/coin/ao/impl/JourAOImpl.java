@@ -135,7 +135,7 @@ public class JourAOImpl implements IJourAO {
     }
 
     @Override
-    public Long getTotalAmount(String bizType, String channelType,
+    public BigDecimal getTotalAmount(String bizType, String channelType,
             String accountNumber, String dateStart, String dateEnd) {
         return jourBO.getTotalAmount(bizType, channelType, accountNumber,
             dateStart, dateEnd);

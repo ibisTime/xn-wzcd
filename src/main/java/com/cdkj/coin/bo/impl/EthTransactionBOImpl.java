@@ -15,7 +15,6 @@ import org.web3j.crypto.TransactionEncoder;
 import org.web3j.crypto.WalletUtils;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
-import org.web3j.protocol.core.methods.response.EthBlock;
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
 import org.web3j.protocol.core.methods.response.EthSendTransaction;
 import org.web3j.protocol.http.HttpService;
@@ -40,33 +39,8 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
     private IEthTransactionDAO ethTransactionDAO;
 
     @Override
-    public int saveEthTransaction(EthBlock.TransactionObject tx) {
-        int count = 0;
-        if (tx != null) {
-            EthTransaction transaction = new EthTransaction();
-            transaction.setHash(tx.getHash());
-            transaction.setNonce(tx.getNonce().toString());
-            transaction.setBlockHash(tx.getBlockHash());
-            transaction.setBlockNumber(tx.getBlockNumber().toString());
-            transaction
-                .setTransactionIndex(tx.getTransactionIndex().toString());
-            transaction.setFrom(tx.getFrom());
-            transaction.setTo(tx.getTo());
-            transaction.setValue(tx.getValue().toString());
-            transaction.setGasPrice(tx.getGasPrice().toString());
-            transaction.setGas(tx.getGas().toString());
-            transaction.setInput(tx.getInput());
-            transaction.setPublicKey(tx.getPublicKey());
-            transaction.setRaw(tx.getRaw());
-            transaction.setR(tx.getR());
-            transaction.setS(tx.getS());
-            count = ethTransactionDAO.insert(transaction);
-        }
-        return count;
-    }
-
-    @Override
-    public int saveEthTransaction(CtqEthTransaction ctqEthTransaction) {
+    public int saveEthTransaction(CtqEthTransaction ctqEthTransaction,
+            String refNo) {
         int count = 0;
         if (ctqEthTransaction != null) {
             EthTransaction condition = new EthTransaction();
@@ -87,6 +61,7 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
                 transaction.setGas(ctqEthTransaction.getGas().toString());
                 transaction.setGasUsed(ctqEthTransaction.getGasUsed()
                     .toString());
+                transaction.setRefNo(refNo);
                 count = ethTransactionDAO.insert(transaction);
             }
         }

@@ -103,7 +103,7 @@
 		SELECT count(1) FROM tstd_account t 
 		<include refid="where_condition"/>
 	</select>
-
+	
 	<insert id="insert_account" parameterType="account">
 		INSERT INTO tstd_account(
 		account_number

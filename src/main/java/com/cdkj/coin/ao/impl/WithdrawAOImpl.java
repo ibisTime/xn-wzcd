@@ -311,4 +311,10 @@ public class WithdrawAOImpl implements IWithdrawAO {
         return AmountUtil.mul(amount, feeRate);
     }
 
+    @Override
+    public Object getWithdrawCheckInfo(String code) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

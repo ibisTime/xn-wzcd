@@ -20,11 +20,15 @@
 		<result column="raw" property="raw" />
 		<result column="r" property="r" />
 		<result column="s" property="s" />
+		<result column="ref_no" property="refNo" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="hash != null and hash != '' ">
 				AND t.hash = #{hash}
+			</if>
+			<if test="refNo != null and refNo != '' ">
+				AND t.ref_no = #{refNo}
 			</if>
 		</trim>
 	</sql>
@@ -47,6 +51,7 @@
 		,t.raw
 		,t.r
 		,t.s
+		,t.ref_no
 		FROM
 		tcoin_eth_transaction t
 		<include refid="where_condition" />
@@ -83,6 +88,7 @@
 		,raw
 		,r
 		,s
+		,ref_no
 		)
 		VALUES(
 		#{hash}
@@ -102,6 +108,7 @@
 		,#{raw}
 		,#{r}
 		,#{s}
+		,#{refNo}
 		)
 	</insert>
 

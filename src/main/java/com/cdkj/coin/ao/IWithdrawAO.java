@@ -37,4 +37,6 @@ public interface IWithdrawAO {
     public List<Withdraw> queryWithdrawList(Withdraw condition);
 
     public Withdraw getWithdraw(String code, String systemCode);
+
+    public Object getWithdrawCheckInfo(String code);
 }

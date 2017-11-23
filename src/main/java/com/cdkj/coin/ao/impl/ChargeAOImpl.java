@@ -11,11 +11,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.coin.ao.IChargeAO;
 import com.cdkj.coin.bo.IAccountBO;
 import com.cdkj.coin.bo.IChargeBO;
+import com.cdkj.coin.bo.IEthCollectionBO;
+import com.cdkj.coin.bo.IEthTransactionBO;
+import com.cdkj.coin.bo.IJourBO;
 import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.Charge;
+import com.cdkj.coin.domain.EthCollection;
+import com.cdkj.coin.domain.EthTransaction;
+import com.cdkj.coin.domain.Jour;
 import com.cdkj.coin.domain.User;
+import com.cdkj.coin.dto.res.XN802707Res;
 import com.cdkj.coin.enums.EBoolean;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.EChargeStatus;
@@ -23,6 +30,7 @@ import com.cdkj.coin.enums.ECoin;
 import com.cdkj.coin.enums.EJourBizTypeCold;
 import com.cdkj.coin.enums.EJourBizTypeUser;
 import com.cdkj.coin.enums.ESystemAccount;
+import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.exception.BizException;
 
 @Service
@@ -34,7 +42,16 @@ public class ChargeAOImpl implements IChargeAO {
     private IChargeBO chargeBO;
 
     @Autowired
+    private IJourBO jourBO;
+
+    @Autowired
     private IUserBO userBO;
+
+    @Autowired
+    private IEthTransactionBO ethTransactionBO;
+
+    @Autowired
+    private IEthCollectionBO ethCollectionBO;
 
     @Override
     public String applyOrder(String accountNumber, BigDecimal amount,
@@ -123,4 +140,34 @@ public class ChargeAOImpl implements IChargeAO {
         return charge;
     }
 
+    @Override
+    public XN802707Res getChargeCheckInfo(String code) {
+        XN802707Res res = new XN802707Res();
+
+        Charge charge = chargeBO.getCharge(code, ESystemCode.COIN.getCode());
+
+        Jour condition1 = new Jour();
+        condition1.setRefNo(charge.getCode());
+        List<Jour> jourList = jourBO.queryJourList(condition1);
+
+        EthTransaction condition2 = new EthTransaction();
+        condition2.setRefNo(charge.getCode());
+        List<EthTransaction> resultList1 = ethTransactionBO
+            .queryEthTransactionList(condition2);
+
+        EthCollection ethCollection = ethCollectionBO
+            .getEthCollectionByRefNo(charge.getCode());
+        if (ethCollection != null) {
+            condition2.setRefNo(ethCollection.getCode());
+            List<EthTransaction> resultList2 = ethTransactionBO
+                .queryEthTransactionList(condition2);
+            resultList1.addAll(resultList2);
+        }
+
+        res.setCharge(charge);
+        res.setJourList(jourList);
+        res.setTransList(resultList1);
+
+        return res;
+    }
 }

@@ -164,6 +164,7 @@ CREATE TABLE `tcoin_eth_transaction` (
   `raw` text,
   `r` text,
   `s` text,
+  `ref_no` varchar(32) NOT NULL COMMENT '关联订单号',
   PRIMARY KEY (`hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

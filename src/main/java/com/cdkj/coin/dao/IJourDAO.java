@@ -1,5 +1,7 @@
 package com.cdkj.coin.dao;
 
+import java.math.BigDecimal;
+
 import com.cdkj.coin.dao.base.IBaseDAO;
 import com.cdkj.coin.domain.Jour;
 
@@ -29,5 +31,5 @@ public interface IJourDAO extends IBaseDAO<Jour> {
      */
     public int adjustJour(Jour data);
 
-    public long selectTotalAmount(Jour data);
+    public BigDecimal selectTotalAmount(Jour data);
 }

@@ -106,7 +106,7 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             EJourBizTypeUser.AJ_CHARGE.getCode(), "ETH充值-来自地址："
                     + ctqEthTransaction.getFrom());
         // 落地交易记录
-        ethTransactionBO.saveEthTransaction(ctqEthTransaction);
+        ethTransactionBO.saveEthTransaction(ctqEthTransaction, code);
         return code;
     }
 
@@ -179,7 +179,8 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             EJourBizTypePlat.AJ_WFEE.getValue() + "-外部地址："
                     + withdraw.getPayCardNo());
         // 落地交易记录
-        ethTransactionBO.saveEthTransaction(ctqEthTransaction);
+        ethTransactionBO.saveEthTransaction(ctqEthTransaction,
+            withdraw.getCode());
     }
 
     @Override
@@ -257,7 +258,8 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             EJourBizTypePlat.AJ_MFEE.getCode(),
             "归集地址：" + collection.getFromAddress());
         // 落地交易记录
-        ethTransactionBO.saveEthTransaction(ctqEthTransaction);
+        ethTransactionBO.saveEthTransaction(ctqEthTransaction,
+            collection.getCode());
     }
 
 }

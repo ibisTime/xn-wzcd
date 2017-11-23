@@ -63,6 +63,16 @@ public class EthTransaction extends ABaseDO {
     // s
     private String s;
 
+    private String refNo;
+
+    public String getRefNo() {
+        return refNo;
+    }
+
+    public void setRefNo(String refNo) {
+        this.refNo = refNo;
+    }
+
     public void setHash(String hash) {
         this.hash = hash;
     }
