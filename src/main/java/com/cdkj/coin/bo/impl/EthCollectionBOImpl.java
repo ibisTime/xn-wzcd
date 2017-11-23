@@ -90,6 +90,7 @@ public class EthCollectionBOImpl extends PaginableBOImpl<EthCollection>
     public EthAddress getAddressUseInfo(String toAddress) {
         EthCollection data = new EthCollection();
         data.setToAddress(toAddress);
+        data.setStatus(EEthCollectionStatus.Broadcast_YES.getCode());
         return ethCollectionDAO.selectAddressUseInfo(data);
     }
 }

@@ -80,6 +80,7 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
         data.setLabel(label);
         data.setPassword(password);
         data.setUserId(userId);
+        data.setInitialBalance(getEthBalance(address));
         data.setBalance(balance);
         data.setAvailableDatetimeStart(availableDatetimeStart);
         data.setAvailableDatetimeEnd(availableDatetimeEnd);

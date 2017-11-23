@@ -18,7 +18,7 @@
 	
 	<resultMap id="addressUseInfo_DB_Result" type="ethAddress">
 		<result column="use_count" property="useCount" />
-		<result column="collect_total_amount" property="collectTotalAmount" />
+		<result column="use_amount" property="useAmount" />
 	</resultMap>
 	
 	<sql id="where_condition">
@@ -117,7 +117,7 @@
 		resultMap="addressUseInfo_DB_Result">
 		SELECT 
 		COUNT(*) as use_count, 
-		COALESCE(SUM(amount),0) as collect_total_amount
+		COALESCE(SUM(amount),0) as use_amount
 		FROM tcoin_eth_collection t
 		<include refid="where_condition" />
 	</select>

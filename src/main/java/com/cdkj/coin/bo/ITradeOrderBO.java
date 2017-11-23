@@ -41,8 +41,10 @@ public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
 
     public boolean checkUserHasUnFinishOrder(String userId, ETradeOrderType tradeOrderType);
 
-    //获取已释放的交易次数
-    //
+    //获取 已释放的交易次数
+    //被评价的次数
+    //获取好评数
+    //未获取信任次数
     public UserStatistics obtainUserStatistics(String userId);
 
     //获取用户交易量

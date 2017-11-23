@@ -9,6 +9,7 @@
 		<result column="label" property="label" />
 		<result column="password" property="password" />
 		<result column="user_id" property="userId" />
+		<result column="initial_balance" property="initialBalance" />
 		<result column="balance" property="balance" />
 		<result column="available_datetime_start" property="availableDatetimeStart" />
 		<result column="available_datetime_end" property="availableDatetimeEnd" />
@@ -47,6 +48,7 @@
 		,t.label
 		,t.password
 		,t.user_id
+		,t.initial_balance
 		,t.balance
 		,t.available_datetime_start
 		,t.available_datetime_end
@@ -79,6 +81,7 @@
 		,label
 		,password
 		,user_id
+		,initial_balance
 		,balance
 		,available_datetime_start
 		,available_datetime_end
@@ -94,6 +97,7 @@
 		,#{label}
 		,#{password}
 		,#{userId}
+		,#{initialBalance}
 		,#{balance}
 		,#{availableDatetimeStart}
 		,#{availableDatetimeEnd}

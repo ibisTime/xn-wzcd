@@ -160,8 +160,9 @@ public class AccountAOImpl implements IAccountAO {
     public void changeAmount(String accountNumber, String channelType,
             String channelOrder, String payGroup, String refNo, String bizType,
             String bizNote, BigDecimal transAmount) {
-        accountBO.changeAmount(accountNumber,
+        Account account = accountBO.getAccount(accountNumber);
+        accountBO.changeAmount(account, transAmount,
             EChannelType.getEChannelType(channelType), channelOrder, payGroup,
-            refNo, bizType, bizNote, transAmount);
+            refNo, bizType, bizNote);
     }
 }

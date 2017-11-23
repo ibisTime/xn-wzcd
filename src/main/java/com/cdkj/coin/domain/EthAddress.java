@@ -33,8 +33,13 @@ public class EthAddress extends ABaseDO {
     // 用户编号
     private String userId;
 
+    // 初始金额
+    private transient BigDecimal initialBalance;
+
+    private String initialBalanceString;
+
     // 以太坊真实余额
-    private BigDecimal balance;
+    private transient BigDecimal balance;
 
     private String balanceString;
 
@@ -63,17 +68,9 @@ public class EthAddress extends ABaseDO {
 
     private Long useCount;
 
-    private transient BigDecimal collectTotalAmount;
+    private transient BigDecimal useAmount;
 
-    private String collectTotalAmountString;
-
-    public String getCollectTotalAmountString() {
-        return collectTotalAmountString;
-    }
-
-    public void setCollectTotalAmountString(String collectTotalAmountString) {
-        this.collectTotalAmountString = collectTotalAmountString;
-    }
+    private String useAmountString;
 
     public Long getUseCount() {
         return useCount;
@@ -81,15 +78,6 @@ public class EthAddress extends ABaseDO {
 
     public void setUseCount(Long useCount) {
         this.useCount = useCount;
-    }
-
-    public BigDecimal getCollectTotalAmount() {
-        return collectTotalAmount;
-    }
-
-    public void setCollectTotalAmount(BigDecimal collectTotalAmount) {
-        this.collectTotalAmount = collectTotalAmount;
-        this.collectTotalAmountString = collectTotalAmount.toString();
     }
 
     public Date getToday() {
@@ -211,6 +199,48 @@ public class EthAddress extends ABaseDO {
 
     public void setUpdateDatetime(Date updateDatetime) {
         this.updateDatetime = updateDatetime;
+    }
+
+    public String getBalanceString() {
+        return balanceString;
+    }
+
+    public void setBalanceString(String balanceString) {
+        this.balanceString = balanceString;
+    }
+
+    public BigDecimal getUseAmount() {
+        return useAmount;
+    }
+
+    public void setUseAmount(BigDecimal useAmount) {
+        this.useAmount = useAmount;
+        this.useAmountString = useAmount.toString();
+    }
+
+    public String getUseAmountString() {
+        return useAmountString;
+    }
+
+    public void setUseAmountString(String useAmountString) {
+        this.useAmountString = useAmountString;
+    }
+
+    public BigDecimal getInitialBalance() {
+        return initialBalance;
+    }
+
+    public void setInitialBalance(BigDecimal initialBalance) {
+        this.initialBalance = initialBalance;
+        this.initialBalanceString = initialBalance.toString();
+    }
+
+    public String getInitialBalanceString() {
+        return initialBalanceString;
+    }
+
+    public void setInitialBalanceString(String initialBalanceString) {
+        this.initialBalanceString = initialBalanceString;
     }
 
 }

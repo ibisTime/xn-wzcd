@@ -19,7 +19,8 @@ import com.cdkj.coin.domain.User;
 import com.cdkj.coin.enums.EBoolean;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.EChargeStatus;
-import com.cdkj.coin.enums.ECurrency;
+import com.cdkj.coin.enums.ECoin;
+import com.cdkj.coin.enums.EJourBizTypeCold;
 import com.cdkj.coin.enums.EJourBizTypeUser;
 import com.cdkj.coin.enums.ESystemAccount;
 import com.cdkj.coin.exception.BizException;
@@ -73,17 +74,18 @@ public class ChargeAOImpl implements IChargeAO {
     private void payOrderYES(Charge data, String payUser, String payNote) {
         chargeBO.payOrder(data, true, payUser, payNote);
         // 用户账户加钱
-        accountBO.changeAmount(data.getAccountNumber(), EChannelType.Offline,
-            null, null, data.getCode(), EJourBizTypeUser.AJ_CHARGE.getCode(),
-            "ETH线下充值", data.getAmount());
-        Account account = accountBO.getAccount(data.getAccountNumber());
-        if (ECurrency.CNY.getCode().equals(account.getCurrency())) {
+        Account userAccount = accountBO.getAccount(data.getAccountNumber());
+        userAccount = accountBO.changeAmount(userAccount, data.getAmount(),
+            EChannelType.Offline, null, null, data.getCode(),
+            EJourBizTypeUser.AJ_CHARGE.getCode(), "ETH线下充值");
+
+        if (ECoin.ETH.getCode().equals(userAccount.getCurrency())) {
+            Account coldAccount = accountBO
+                .getAccount(ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode());
             // 冷钱包加钱
-            accountBO.changeAmount(
-                ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode(),
+            accountBO.changeAmount(coldAccount, data.getAmount(),
                 EChannelType.Offline, null, null, data.getCode(),
-                EJourBizTypeUser.AJ_CHARGE.getCode(), "ETH线下充值",
-                data.getAmount());
+                EJourBizTypeCold.AJ_INCOME.getCode(), "ETH线下充值");
         }
     }
 

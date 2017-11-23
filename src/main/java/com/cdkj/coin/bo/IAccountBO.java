@@ -24,9 +24,9 @@ public interface IAccountBO extends IPaginableBO<Account> {
             String companyCode);
 
     // 变更账户余额：流水落地
-    public void changeAmount(String accountNumber, EChannelType channelType,
-            String channelOrder, String payGroup, String refNo, String bizType,
-            String bizNote, BigDecimal transAmount);
+    public Account changeAmount(Account dbAccount, BigDecimal transAmount,
+            EChannelType channelType, String channelOrder, String payGroup,
+            String refNo, String bizType, String bizNote);
 
     // 仅变更账户余额：流水不落地
     public void changeAmountNotJour(String accountNumber,
@@ -36,11 +36,11 @@ public interface IAccountBO extends IPaginableBO<Account> {
     public void changeAmountForHL(HLOrder order);
 
     // 冻结金额（余额变动）
-    public void frozenAmount(Account dbAccount, BigDecimal freezeAmount,
+    public Account frozenAmount(Account dbAccount, BigDecimal freezeAmount,
             String bizType, String bizNote, String refNo);
 
     // 解冻账户(冻结金额原路返回)
-    public void unfrozenAmount(Account dbAccount, BigDecimal freezeAmount,
+    public Account unfrozenAmount(Account dbAccount, BigDecimal freezeAmount,
             String bizType, String bizNote, String refNo);
 
     // 内部转账

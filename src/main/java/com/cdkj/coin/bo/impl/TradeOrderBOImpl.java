@@ -33,12 +33,12 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
     @Override
     public String buySubmit(Ads ads, String buyUser, BigDecimal tradePrice,
-            BigDecimal count, BigDecimal tradeAmount, BigDecimal fee) {
+                            BigDecimal count, BigDecimal tradeAmount, BigDecimal fee) {
 
         TradeOrder data = new TradeOrder();
 
         String code = OrderNoGenerater.generate(EGeneratePrefix.TRADE_ORDER
-            .getCode());
+                .getCode());
         Date now = new Date();
 
         data.setCode(code);
@@ -57,7 +57,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         data.setCount(count);
         data.setPayType(ads.getPayType());
         data.setInvalidDatetime(DateUtil.getRelativeDateOfMinute(now,
-            ads.getPayLimit()));
+                ads.getPayLimit()));
         data.setStatus(ETradeOrderStatus.TO_PAY.getCode());
 
         data.setCreateDatetime(now);
@@ -154,7 +154,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
     @Override
     public int doBsComment(TradeOrder tradeOrder, String userId,
-            String comment, String status, String remark) {
+                           String comment, String status, String remark) {
         int count = 0;
         if (tradeOrder != null) {
             Date now = new Date();
@@ -170,7 +170,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
     @Override
     public int doSbComment(TradeOrder tradeOrder, String userId,
-            String comment, String status, String remark) {
+                           String comment, String status, String remark) {
         int count = 0;
         if (tradeOrder != null) {
             Date now = new Date();
@@ -275,8 +275,6 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         return count <= 0;
     }
 
-
-
     private List<String> finishReleaseStatusList() {
 
         List statusList = new ArrayList();
@@ -310,17 +308,17 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         for (TradeOrder order : orders) {
 
             if (order.getSellUser().equals(userId) && order.getBsComment() != null) {
-                beiPingJiaCount ++ ;
+                beiPingJiaCount++;
                 if (order.getBsComment().equals(ECommentLevel.HAO_PING.getCode())) {
-                    beiHaoPingCount ++;
+                    beiHaoPingCount++;
                 }
             }
 
             if (order.getBuyUser().equals(userId) && order.getSbComment() != null) {
-                beiPingJiaCount ++ ;
+                beiPingJiaCount++;
 
                 if (order.getSbComment().equals(ECommentLevel.HAO_PING.getCode())) {
-                    beiHaoPingCount ++;
+                    beiHaoPingCount++;
                 }
 
             }
@@ -354,6 +352,5 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
         return totalTradeCount;
     }
-
 
 }
