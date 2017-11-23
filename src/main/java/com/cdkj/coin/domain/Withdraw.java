@@ -30,7 +30,7 @@ public class Withdraw extends ABaseDO {
     private String amountString;
 
     // 取现手续费
-    private BigDecimal fee;
+    private transient BigDecimal fee;
 
     private String feeString;
 
@@ -82,7 +82,7 @@ public class Withdraw extends ABaseDO {
     private String payCode;
 
     // 支付手续费
-    private BigDecimal payFee;
+    private transient BigDecimal payFee;
 
     private String payFeeString;
 
