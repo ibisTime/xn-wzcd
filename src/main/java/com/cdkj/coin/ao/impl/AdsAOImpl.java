@@ -201,7 +201,8 @@ public class AdsAOImpl implements IAdsAO {
         ads.setMarketPrice(market.getMid());
 
         // 获取手续费率
-        ads.setFeeRate(new BigDecimal(SysConstants.TRADE_FEE_RATE));
+        Double fee = sysConfigBO.getDoubleValue(SysConstants.TRADE_FEE_RATE);
+        ads.setFeeRate(BigDecimal.valueOf(fee));
         BigDecimal truePrice = market.getMid().multiply(
                 BigDecimal.ONE.add(req.getPremiumRate()));
         ads.setTruePrice(truePrice);
