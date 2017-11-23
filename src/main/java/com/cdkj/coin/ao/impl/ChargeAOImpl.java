@@ -176,6 +176,7 @@ public class ChargeAOImpl implements IChargeAO {
         }
 
         res.setCharge(charge);
+        res.setEthCollection(ethCollection);
         res.setJourList(jourList1);
         res.setTransList(resultList1);
 

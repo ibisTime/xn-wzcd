@@ -11,6 +11,7 @@ package com.cdkj.coin.dto.res;
 import java.util.List;
 
 import com.cdkj.coin.domain.Charge;
+import com.cdkj.coin.domain.EthCollection;
 import com.cdkj.coin.domain.EthTransaction;
 import com.cdkj.coin.domain.Jour;
 
@@ -24,11 +25,22 @@ public class XN802707Res {
     // 充值订单详情
     private Charge charge;
 
+    // 充值关联归集订单详情
+    private EthCollection ethCollection;
+
     // 充值订单相关流水
     private List<Jour> jourList;
 
     // 充值相关广播记录
     private List<EthTransaction> transList;
+
+    public EthCollection getEthCollection() {
+        return ethCollection;
+    }
+
+    public void setEthCollection(EthCollection ethCollection) {
+        this.ethCollection = ethCollection;
+    }
 
     public Charge getCharge() {
         return charge;
