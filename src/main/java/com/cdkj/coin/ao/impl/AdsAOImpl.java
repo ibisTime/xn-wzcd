@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.cdkj.coin.bo.*;
+import com.cdkj.coin.domain.*;
+import com.cdkj.coin.enums.*;
+import org.apache.commons.collections.functors.TruePredicate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,12 +34,6 @@ import com.cdkj.coin.domain.Market;
 import com.cdkj.coin.domain.User;
 import com.cdkj.coin.domain.UserStatistics;
 import com.cdkj.coin.dto.req.XN625220Req;
-import com.cdkj.coin.enums.EAdsPublishType;
-import com.cdkj.coin.enums.EAdsStatus;
-import com.cdkj.coin.enums.ECoin;
-import com.cdkj.coin.enums.EJourBizTypeUser;
-import com.cdkj.coin.enums.EMarketOrigin;
-import com.cdkj.coin.enums.ETradeType;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.EBizErrorCode;
 
@@ -411,7 +409,7 @@ public class AdsAOImpl implements IAdsAO {
     }
 
     @Override
-    public Object adsDetail(String adsCode) {
+    public Object adsDetail(String adsCode,String searchUserUserId) {
 
         Ads ads = this.iAdsBO.adsDetail(adsCode);
 
@@ -420,6 +418,21 @@ public class AdsAOImpl implements IAdsAO {
 
         // 处理用户相关信息
         this.getAdsMasterAndSetMaster(ads);
+
+        //查询信任关系
+        if (StringUtils.isNotBlank(searchUserUserId)) {
+            int isTrust = 0;
+            if (ads.getUserId().equals(searchUserUserId)) {
+
+                isTrust = 1;
+
+            } else  {
+                isTrust = this.userRelationBO.checkReleation(searchUserUserId,ads.getUserId()) ? 1 : 0;
+            }
+
+            ads.setIsTrust(isTrust);
+
+        }
 
         return ads;
 
@@ -443,32 +456,49 @@ public class AdsAOImpl implements IAdsAO {
         // 进行下架操作
         this.iAdsBO.xiaJiaAds(ads);
 
+        //买币广告，不需要返还
         // 买币广告 不需要对账户进行处理
         if (ads.getTradeType().equals(ETradeType.BUY.getCode())) {
             return;
         }
 
-        // 卖币广告 把冻结金额返还
-        if (ads.getLeftCount().compareTo(BigDecimal.ZERO) > 0) {
+        //卖币广告 把冻结金额返还
+        // 大于最小返还金额，把金额返还
+        BigDecimal minBack =  new BigDecimal(Double.toString(Math.pow(10,10)));
+        if (ads.getLeftCount().compareTo(minBack) > 0) {
 
-            Account account = this.accountBO.getAccountByUser(userId,
-                ECoin.ETH.getCode());
+            Account sellUserAccount = this.accountBO.getAccountByUser(userId,
+                    ECoin.ETH.getCode());
 
-            // 计算需要返还的手续费
+            //解冻 未卖出金额
+            this.accountBO.unfrozenAmount(sellUserAccount,ads.getLeftCount(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告未卖出部分解冻",ads.getCode());
 
-            // BigDecimal totalCount = ads.getTotalCount();
-            // BigDecimal
+            //返还 未卖出金额
+            this.accountBO.changeAmount(sellUserAccount,ads.getLeftCount(), EChannelType.NBZ,null,null,ads
+            .getCode(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue());
 
-            // todo __ feeRate
-            // 解冻 账户余额
-            // 解冻 手续费
+            //todo
+            //计算需要返还的手续费
+            BigDecimal totalCount = ads.getTotalCount();
+            BigDecimal leftAmount = ads.getLeftCount();
 
-            // todo
-            // 返还手续费
-            // 返还冻结金额
+            //算出出售比例
+            BigDecimal rate = leftAmount.divide(totalCount,BigDecimal.ROUND_DOWN);
+            //算出应该退还的手续费
+            BigDecimal backFee = totalCount.multiply(ads.getFeeRate()).multiply(BigDecimal.ONE.subtract(rate));
 
-            this.accountBO.unfrozenAmount(account, ads.getLeftCount(), "", "",
-                ads.getCode());
+            //大于最小返还金额
+            if (backFee.compareTo(minBack) > 0) {
+
+                //手续费-解冻 未卖出金额
+                this.accountBO.unfrozenAmount(sellUserAccount,backFee,EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告手续费解冻",ads.getCode());
+
+                //返还 未卖出金额
+                this.accountBO.changeAmount(sellUserAccount,backFee, EChannelType.NBZ,null,null,ads
+                        .getCode(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告手续费解冻");
+
+            }
+
 
         }
 

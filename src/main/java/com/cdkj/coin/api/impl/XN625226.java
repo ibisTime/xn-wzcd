@@ -21,7 +21,7 @@ public class XN625226 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return this.adsAO.adsDetail(req.getAdsCode());
+        return this.adsAO.adsDetail(req.getAdsCode(),req.getUserId());
     }
 
     @Override

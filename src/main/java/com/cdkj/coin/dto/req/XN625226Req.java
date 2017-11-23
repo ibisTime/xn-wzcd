@@ -10,7 +10,7 @@ public class XN625226Req {
     @NotBlank
     private String adsCode;
 
-
+    private String userId;
 
     public String getAdsCode() {
         return adsCode;
@@ -20,4 +20,11 @@ public class XN625226Req {
         this.adsCode = adsCode;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }
