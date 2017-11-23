@@ -23,15 +23,14 @@ import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.IUserRelationBO;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.common.SysConstants;
-<<<<<<< Updated upstream
+
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.domain.Jour;
 import com.cdkj.coin.domain.TradeOrder;
 import com.cdkj.coin.domain.UserStatistics;
 import com.cdkj.coin.dto.res.XN625252Res;
-=======
->>>>>>> Stashed changes
+
 import com.cdkj.coin.enums.EAdsStatus;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECoin;
