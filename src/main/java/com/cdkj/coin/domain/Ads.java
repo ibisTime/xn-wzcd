@@ -73,6 +73,9 @@ public class Ads extends ABaseDO implements Serializable {
 
     private List<String> statusList;
 
+    //0 不信任，1 信任
+    private int isTrust;
+
     public Ads() {
 
     };
@@ -96,6 +99,14 @@ public class Ads extends ABaseDO implements Serializable {
         this.createDatetime = createDatetime;
         this.updateDatetime = updateDatetime;
         this.leaveMessage = leaveMessage;
+    }
+
+    public int getIsTrust() {
+        return isTrust;
+    }
+
+    public void setIsTrust(int isTrust) {
+        this.isTrust = isTrust;
     }
 
     public BigDecimal getFeeRate() {

@@ -20,10 +20,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by tianlei on 2017/十一月/13.
@@ -66,8 +63,11 @@ public class CurrencyRateAOImpl implements ICurrencyRateAO {
     public void obtainCurrencyRate() {
 
 
+        //真实环境
         String requestStr = "http://web.juhe.cn:8080/finance/exchange/rmbquot?key=04448ab31ce7199b12b7ce8dfe9a5dd3";
 
+        //测试
+//        String requestStr = "http://web.juhe.cn:8080/finance/exchange/rmbquot?key=49dee19f1425e5b9dbeba986f7c17f39";
         OkHttpClient okHttpClient = new OkHttpClient();
 
         Request request = new Request.Builder().get().url(requestStr).build();
@@ -105,14 +105,18 @@ public class CurrencyRateAOImpl implements ICurrencyRateAO {
             //跟新数据库
             CurrencyRate USDCurrencyRate = new CurrencyRate();
             USDCurrencyRate.setOrigin("juhe");
-            USDCurrencyRate.setReferCurrency(ECurrency.USD.getCode());
+            USDCurrencyRate.setCurrency(ECurrency.USD.getCode());
+            USDCurrencyRate.setReferCurrency(ECurrency.CNY.getCode());
             USDCurrencyRate.setRate(usdDecimal);
+            USDCurrencyRate.setUpdateDatetime(new Date());
             this.currencyRateBO.insert(USDCurrencyRate);
 
             CurrencyRate HKDCurrencyRate = new CurrencyRate();
             HKDCurrencyRate.setOrigin("juhe");
-            HKDCurrencyRate.setReferCurrency(ECurrency.HKD.getCode());
+            HKDCurrencyRate.setCurrency(ECurrency.HKD.getCode());
+            HKDCurrencyRate.setReferCurrency(ECurrency.CNY.getCode());
             HKDCurrencyRate.setRate(hkdDecimal);
+            HKDCurrencyRate.setUpdateDatetime(new Date());
             this.currencyRateBO.insert(HKDCurrencyRate);
             //
 

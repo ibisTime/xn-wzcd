@@ -33,7 +33,9 @@
 	<bean id="currencyRateTrigger"
 		  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="currencyRate" />
-		<property name="cronExpression" value="* 0/10 * * * ?" />
+
+		<!--每天 0:0:0 获取一次-->
+		<property name="cronExpression" value="0 0 0 * * ?" />
 	</bean>
 	<bean id="currencyRate"
 		  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -47,7 +49,7 @@
 	<bean id="marketTrigger"
 		  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="market" />
-		<property name="cronExpression" value="0/30 * * * * ?" />
+		<property name="cronExpression" value="*/30 * * * * ?" />
 	</bean>
 	<bean id="market"
 		  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -61,6 +63,9 @@
 	<bean id="adsMarketRefreshTrigger"
 		  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="adsMarket" />
+		<!--延迟10秒启动-->
+		<property name="startDelay" value="10000"/>
+		<!--每10分钟查询-->
 		<property name="cronExpression" value="0 */10 * * * ?" />
 	</bean>
 	<bean id="adsMarket"
