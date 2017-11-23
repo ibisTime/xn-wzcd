@@ -8,6 +8,7 @@
  */
 package com.cdkj.coin.dto.req;
 
+import java.util.List;
 
 /** 
  * @author: haiqingzheng 
@@ -35,6 +36,17 @@ public class XN625205Req extends APageReq {
 
     // 状态
     private String status;
+
+    // 状态列表
+    private List<String> statusList;
+
+    public List<String> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
+    }
 
     public String getType() {
         return type;
