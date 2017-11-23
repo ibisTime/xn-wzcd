@@ -16,27 +16,17 @@ import com.cdkj.coin.ao.ITradeOrderAO;
 import com.cdkj.coin.bo.IAccountBO;
 import com.cdkj.coin.bo.IAdsBO;
 import com.cdkj.coin.bo.IArbitrateBO;
-import com.cdkj.coin.bo.IJourBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.ITradeOrderBO;
 import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.IUserRelationBO;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.common.SysConstants;
-
-import com.cdkj.coin.domain.Account;
-import com.cdkj.coin.domain.Ads;
-import com.cdkj.coin.domain.Jour;
-import com.cdkj.coin.domain.TradeOrder;
-import com.cdkj.coin.domain.UserStatistics;
-import com.cdkj.coin.dto.res.XN625252Res;
-
 import com.cdkj.coin.enums.EAdsStatus;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECoin;
 import com.cdkj.coin.enums.EJourBizTypePlat;
 import com.cdkj.coin.enums.EJourBizTypeUser;
-import com.cdkj.coin.enums.EJourKind;
 import com.cdkj.coin.enums.ESystemAccount;
 import com.cdkj.coin.enums.ETradeOrderStatus;
 import com.cdkj.coin.enums.ETradeOrderType;
@@ -58,9 +48,6 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
     @Autowired
     private IUserBO userBO;
-
-    @Autowired
-    private IJourBO jourBO;
 
     @Autowired
     private IAccountBO accountBO;
@@ -553,27 +540,6 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         tradeOrder.setBuyUserInfo(userBO.getUser(tradeOrder.getBuyUser()));
         tradeOrder.setSellUserInfo(userBO.getUser(tradeOrder.getSellUser()));
         return tradeOrder;
-    }
-
-    @Override
-    public XN625252Res getTradeOrderCheckInfo(String code) {
-        XN625252Res res = new XN625252Res();
-
-        // 交易订单详情
-        TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(code);
-        tradeOrder.setBuyUserInfo(userBO.getUser(tradeOrder.getBuyUser()));
-        tradeOrder.setSellUserInfo(userBO.getUser(tradeOrder.getSellUser()));
-
-        // 充值对应流水记录
-        Jour jour = new Jour();
-        jour.setRefNo(tradeOrder.getCode());
-        jour.setKind(EJourKind.BALANCE.getCode());
-        List<Jour> jourList = jourBO.queryJourList(jour);
-
-        res.setTradeOrder(tradeOrder);
-        res.setJourList(jourList);
-
-        return res;
     }
 
     // 定时检验 待支付订单的超时时间
