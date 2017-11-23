@@ -47,10 +47,14 @@ public class TradeOrder extends ABaseDO {
     private BigDecimal tradeAmount;
 
     // 手续费
-    private BigDecimal fee;
+    private transient BigDecimal fee;
+
+    private String feeString;
 
     // 交易数字货币数量
     private BigDecimal count;
+
+    private String countString;
 
     // 付款方式
     private String payType;
@@ -99,7 +103,7 @@ public class TradeOrder extends ABaseDO {
     // 状态列表
     private List<String> statusList;
 
-    //查询统计信息时使用
+    // 查询统计信息时使用
     private String userId;
 
     public String getUserId() {
@@ -196,6 +200,7 @@ public class TradeOrder extends ABaseDO {
 
     public void setFee(BigDecimal fee) {
         this.fee = fee;
+        this.feeString = fee.toString();
     }
 
     public BigDecimal getCount() {
@@ -204,6 +209,7 @@ public class TradeOrder extends ABaseDO {
 
     public void setCount(BigDecimal count) {
         this.count = count;
+        this.countString = count.toString();
     }
 
     public String getPayType() {
@@ -324,6 +330,22 @@ public class TradeOrder extends ABaseDO {
 
     public void setBelongUser(String belongUser) {
         this.belongUser = belongUser;
+    }
+
+    public String getFeeString() {
+        return feeString;
+    }
+
+    public void setFeeString(String feeString) {
+        this.feeString = feeString;
+    }
+
+    public String getCountString() {
+        return countString;
+    }
+
+    public void setCountString(String countString) {
+        this.countString = countString;
     }
 
 }
