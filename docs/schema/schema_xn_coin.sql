@@ -14,10 +14,11 @@ CREATE TABLE `tcoin_ads` (
   `trade_coin` varchar(8) NOT NULL COMMENT '数字货币类型',
   `only_trust` varchar(2) NOT NULL COMMENT '是否只有信任的人可以交易',
   `premium_rate` decimal(6,4) NOT NULL COMMENT '溢价率',
-  `total_amount` decimal(64,0) NOT NULL COMMENT '广告的交易总额',
-  `left_amount` decimal(64,0) NOT NULL COMMENT '剩余可交易',
+  `total_count` decimal(64,0) NOT NULL COMMENT '广告的交易总额',
+  `left_count` decimal(64,0) NOT NULL COMMENT '剩余可交易',
   `market_price` decimal(32,3) NOT NULL COMMENT '行情价格',
   `protect_price` decimal(32,3) NOT NULL COMMENT '保护单价',
+  `true_price` decimal(32,3) NOT NULL COMMENT '溢价率换算后的真实价格',
   `min_trade` decimal(32,3) DEFAULT NULL COMMENT '单笔最小交易额',
   `max_trade` decimal(32,3) DEFAULT NULL COMMENT '单笔最大交易额',
   `pay_type` varchar(32) NOT NULL COMMENT '付款方式',
@@ -26,6 +27,7 @@ CREATE TABLE `tcoin_ads` (
   `leave_message` text NOT NULL COMMENT '广告留言',
   `create_datetime` datetime NOT NULL COMMENT '创建时间',
   `update_datetime` datetime NOT NULL COMMENT '更新时间',
+  `fee_rate` decimal(8,4) DEFAULT NULL,
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -45,7 +47,7 @@ CREATE TABLE `tcoin_ads_display_time` (
   `end_time` int(11) NOT NULL COMMENT '结束时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `ads_week` (`ads_code`,`week`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -80,13 +82,14 @@ DROP TABLE IF EXISTS `tcoin_currency_rate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tcoin_currency_rate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `currency` varchar(10) NOT NULL COMMENT '币种',
   `refer_currency` varchar(10) NOT NULL COMMENT '参照币种 为CNY',
   `origin` varchar(32) NOT NULL COMMENT '汇率来源',
   `rate` decimal(8,4) NOT NULL COMMENT '汇率',
   `update_datetime` datetime NOT NULL COMMENT '更新时间',
-  PRIMARY KEY (`currency`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -113,7 +116,6 @@ CREATE TABLE `tcoin_eth_address` (
   `update_datetime` datetime DEFAULT NULL COMMENT '最后一次更新时间',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,7 +136,7 @@ CREATE TABLE `tcoin_eth_collection` (
   `create_datetime` datetime DEFAULT NULL COMMENT '发起时间',
   `eth_datetime` datetime DEFAULT NULL COMMENT '网络记账时间',
   `update_datetime` datetime DEFAULT NULL COMMENT '完成时间',
-  `ref_no` varchar(32) NOT NULL COMMENT '关联订单号',
+  `ref_no` varchar(32) DEFAULT NULL COMMENT '关联订单号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -164,7 +166,7 @@ CREATE TABLE `tcoin_eth_transaction` (
   `raw` text,
   `r` text,
   `s` text,
-  `ref_no` varchar(32) NOT NULL COMMENT '关联订单号',
+  `ref_no` varchar(32) DEFAULT NULL COMMENT '关联订单号',
   PRIMARY KEY (`hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -403,7 +405,7 @@ DROP TABLE IF EXISTS `tstd_jour`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tstd_jour` (
   `code` varchar(32) NOT NULL COMMENT '编号',
-  `kind` varchar(32) NOT NULL COMMENT '流水类型（余额流水、冻结流水）',
+  `kind` varchar(32) DEFAULT NULL COMMENT '流水类型（余额流水、冻结流水）',
   `pay_group` varchar(255) DEFAULT NULL COMMENT '订单分组组号',
   `ref_no` varchar(255) DEFAULT NULL COMMENT '参考订单号',
   `channel_type` varchar(32) DEFAULT NULL COMMENT '支付渠道类型',
@@ -572,8 +574,8 @@ CREATE TABLE `tstd_withdraw` (
   `approve_note` varchar(255) DEFAULT NULL COMMENT '审批说明',
   `approve_datetime` varchar(32) DEFAULT NULL COMMENT '审批时间',
   `pay_user` varchar(255) DEFAULT NULL COMMENT '支付回录人',
-  `pay_note` varchar(255) DEFAULT NULL COMMENT '支付回录说明',
-  `pay_group` varchar(255) DEFAULT NULL COMMENT '支付组号',
+  `pay_note` varchar(32) DEFAULT NULL COMMENT '支付回录说明',
+  `pay_group` varchar(32) DEFAULT NULL COMMENT '支付组号',
   `pay_code` varchar(255) DEFAULT NULL COMMENT '支付渠道订单编号',
   `pay_fee` decimal(64,0) DEFAULT NULL COMMENT '支付渠道手续费（矿工费）',
   `pay_datetime` datetime DEFAULT NULL COMMENT '支付回录时间',
@@ -601,7 +603,7 @@ CREATE TABLE `tsys_config` (
   `company_code` varchar(32) DEFAULT NULL COMMENT '公司编号',
   `system_code` varchar(32) DEFAULT NULL COMMENT '系统编号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -623,7 +625,7 @@ CREATE TABLE `tsys_dict` (
   `company_code` varchar(32) DEFAULT NULL COMMENT '公司编号',
   `system_code` varchar(32) DEFAULT NULL COMMENT '系统编号',
   PRIMARY KEY (`id`) COMMENT '数据字典'
-) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -664,7 +666,7 @@ CREATE TABLE `tsys_menu_role` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `system_code` varchar(32) DEFAULT NULL COMMENT '系统编号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=949 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=857 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

@@ -2,6 +2,7 @@ package com.cdkj.coin.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.coin.dao.base.ABaseDO;
 
@@ -71,6 +72,17 @@ public class EthAddress extends ABaseDO {
     private transient BigDecimal useAmount;
 
     private String useAmountString;
+
+    // 状态列表
+    private List<String> statusList;
+
+    public List<String> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
+    }
 
     public Long getUseCount() {
         return useCount;
