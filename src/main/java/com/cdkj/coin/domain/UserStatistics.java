@@ -19,6 +19,7 @@ public class UserStatistics {
     //被信任次数
     long beiXinRenCount;
 
+
     public int getJiaoYiCount() {
         return jiaoYiCount;
     }

@@ -39,6 +39,7 @@ public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
 
     public boolean isExistOningOrder(String adsCode);
 
+    //true 通过，false 不通过
     public boolean checkUserHasUnFinishOrder(String userId, ETradeOrderType tradeOrderType);
 
     //获取 已释放的交易次数

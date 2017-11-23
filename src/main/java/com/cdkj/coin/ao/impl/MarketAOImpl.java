@@ -101,7 +101,6 @@ public class MarketAOImpl implements IMarketAO {
     }
 
     private void obtainBitfinexMarket() {
-
         //
         this.obtainBitfinexMarketByUrlAndCoin(
             "https://api.bitfinex.com/v1/pubticker/ethusd", ECoin.ETH.getCode());
@@ -109,7 +108,6 @@ public class MarketAOImpl implements IMarketAO {
         //
         this.obtainBitfinexMarketByUrlAndCoin(
             "https://api.bitfinex.com/v1/pubticker/btcusd", ECoin.BTC.getCode());
-
 
     }
 

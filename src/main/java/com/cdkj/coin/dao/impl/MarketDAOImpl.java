@@ -27,7 +27,7 @@ public class MarketDAOImpl extends AMybatisTemplate implements IMarketDAO {
 
     @Override
     public long selectTotalCount(Market condition) {
-        return 0;
+        return super.selectTotalCount(NAMESPACE.concat("selectTotalCount"), condition);
     }
 
     @Override
@@ -39,18 +39,18 @@ public class MarketDAOImpl extends AMybatisTemplate implements IMarketDAO {
 
     @Override
     public int update(Market market) {
-        return super.update(NAMESPACE.concat("update"),market);
+        return super.update(NAMESPACE.concat("update"), market);
     }
 
     @Override
     public List<Market> selectList(Market condition, int start, int count) {
-        return null;
+        return super.selectList(NAMESPACE.concat("select"), start, count, condition, Market.class);
     }
 
     @Override
     public List<Market> selectList(Market condition) {
 
-        return super.selectList(NAMESPACE.concat("selectList"),condition,Market.class);
+        return super.selectList(NAMESPACE.concat("select"), condition, Market.class);
 
     }
 }

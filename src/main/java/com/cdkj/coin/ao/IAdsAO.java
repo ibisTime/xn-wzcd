@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface IAdsAO {
 
-    public void insertAds(XN625220Req req);
+    public void publishAds(XN625220Req req);
 
     //谁查的详情就是谁的 userId
     public Object adsDetail(String adsCode,String searchUserUserId);

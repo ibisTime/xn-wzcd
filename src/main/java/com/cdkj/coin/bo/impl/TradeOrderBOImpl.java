@@ -269,9 +269,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         statusList.add(ETradeOrderStatus.TO_PAY.getCode());
         statusList.add(ETradeOrderStatus.PAYED.getCode());
         condition.setStatusList(statusList);
-
         long count = this.tradeOrderDAO.selectTotalCount(condition);
-
         return count <= 0;
     }
 
@@ -337,7 +335,6 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
     public BigDecimal getUserTotalTradeCount(String userId) {
 
         BigDecimal totalTradeCount = BigDecimal.ZERO;
-
         TradeOrder condition = new TradeOrder();
         //userId 为卖家或者买家
         condition.setBelongUser(userId);
@@ -351,6 +348,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         }
 
         return totalTradeCount;
+
     }
 
 }

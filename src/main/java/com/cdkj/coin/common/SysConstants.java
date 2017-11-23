@@ -8,6 +8,8 @@ public class SysConstants {
 
     public static final String WITHDRAW_FEE = "withdraw_fee"; // 提现手续费
 
+    public static final String FEN_CHENG_FEE = "fen_cheng_fee"; //分成手续费
+
     // 七牛云图片配置
     public static String QINIU_ACCESS_KEY = "qiniu_access_key";
 

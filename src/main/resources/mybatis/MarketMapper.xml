@@ -61,11 +61,24 @@
     <include refid="whereCondation"/>
   </select>
 
-  <select id="selectList" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectTotalCount" parameterType="com.cdkj.coin.domain.Market"
+          resultType="java.lang.Long">
+    SELECT count(1) FROM tcoin_arbitrate t
+    <include refid="whereCondation" />
+  </select>
+
+  <select id="select" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from tcoin_market
     <include refid="whereCondation"/>
   </select>
+
+  <!--<select id="selectList" parameterType="java.lang.String" resultMap="BaseResultMap">-->
+    <!--select-->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from tcoin_market-->
+    <!--<include refid="whereCondation"/>-->
+  <!--</select>-->
 
 </mapper>

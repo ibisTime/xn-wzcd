@@ -82,7 +82,7 @@ public class AdsAOImpl implements IAdsAO {
     public Object frontPage(Integer start, Integer limit, Ads condition) {
 
         Paginable<Ads> paginable = this.iAdsBO.frontPage(start, limit,
-            condition);
+                condition);
         List<Ads> adsList = paginable.getList();
         for (Ads ads : adsList) {
             this.getAdsMasterAndSetMaster(ads);
@@ -111,10 +111,10 @@ public class AdsAOImpl implements IAdsAO {
         User user = this.userBO.getUser(ads.getUserId());
         ads.setUser(user);
         UserStatistics userStatistics = this.tradeOrderBO
-            .obtainUserStatistics(ads.getUserId());
+                .obtainUserStatistics(ads.getUserId());
         // 获取信任数量
         userStatistics.setBeiXinRenCount(this.userRelationBO
-            .getRelationCount(ads.getUserId()));
+                .getRelationCount(ads.getUserId()));
         ads.setUserStatistics(userStatistics);
 
     }
@@ -138,7 +138,7 @@ public class AdsAOImpl implements IAdsAO {
             Ads condition = new Ads();
             condition.setUserId(user.getUserId());
             Paginable<Ads> adsPaginable = (Paginable) this.frontPage(0, 10,
-                condition);
+                    condition);
             //
             adsList.addAll(adsPaginable.getList());
 
@@ -149,7 +149,7 @@ public class AdsAOImpl implements IAdsAO {
     }
 
     @Override
-    public void insertAds(XN625220Req req) {
+    public void publishAds(XN625220Req req) {
 
         // 校验用户是否存在
         User user = this.userBO.getUser(req.getUserId());
@@ -159,7 +159,7 @@ public class AdsAOImpl implements IAdsAO {
 
         // todo 校验是否已经存在，正在上架的次类型的交易
         long count = this.iAdsBO.totalCountOfShangJiaAds(req.getUserId(),
-            req.getTradeType());
+                req.getTradeType());
         if (count > 0) {
             throw new BizException("xn000", "同类型的广告只能存在一个");
         }
@@ -194,7 +194,7 @@ public class AdsAOImpl implements IAdsAO {
 
         // 获取市场价格
         Market market = this.marketBO.marketByCoinTypeAndOrigin(
-            ECoin.ETH.getCode(), EMarketOrigin.BITFINEX.getCode());
+                ECoin.ETH.getCode(), EMarketOrigin.BITFINEX.getCode());
         if (market == null) {
             throw new BizException("xn000", "发布失败");
         }
@@ -203,7 +203,7 @@ public class AdsAOImpl implements IAdsAO {
         // 获取手续费率
         ads.setFeeRate(new BigDecimal(SysConstants.TRADE_FEE_RATE));
         BigDecimal truePrice = market.getMid().multiply(
-            BigDecimal.ONE.add(req.getPremiumRate()));
+                BigDecimal.ONE.add(req.getPremiumRate()));
         ads.setTruePrice(truePrice);
         // 设置保护价
         ads.setProtectPrice(req.getProtectPrice());
@@ -381,35 +381,35 @@ public class AdsAOImpl implements IAdsAO {
     public void checkAccountAndHandAccount(Ads ads) {
 
         Account account = this.accountBO.getAccountByUser(ads.getUserId(),
-            ads.getTradeCoin());
+                ads.getTradeCoin());
 
         // 手续费+发布总额
         Double feeRate = sysConfigBO
-            .getDoubleValue(SysConstants.TRADE_FEE_RATE);
+                .getDoubleValue(SysConstants.TRADE_FEE_RATE);
         BigDecimal fee = ads.getTotalCount().multiply(new BigDecimal(feeRate));
         BigDecimal willFrezonAmount = ads.getTotalCount().add(fee);
 
         // 校验账户余额
         if (account.getAmount().subtract(account.getFrozenAmount())
-            .compareTo(willFrezonAmount) < 0) {
+                .compareTo(willFrezonAmount) < 0) {
             throw new BizException("xn000", "需要冻结相应的手续费，账户余额不足");
         }
 
         // 冻结 交易金额
         account = this.accountBO.frozenAmount(account, ads.getTotalCount(),
-            EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
-            EJourBizTypeUser.AJ_ADS_FROZEN.getValue(), ads.getCode());
+                EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
+                EJourBizTypeUser.AJ_ADS_FROZEN.getValue(), ads.getCode());
 
         // 冻结 对应的手续费
         account = this.accountBO.frozenAmount(account, fee,
-            EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
-            EJourBizTypeUser.AJ_ADS_FROZEN.getValue() + "交易手续费冻结",
-            ads.getCode());
+                EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
+                EJourBizTypeUser.AJ_ADS_FROZEN.getValue() + "交易手续费冻结",
+                ads.getCode());
 
     }
 
     @Override
-    public Object adsDetail(String adsCode,String searchUserUserId) {
+    public Object adsDetail(String adsCode, String searchUserUserId) {
 
         Ads ads = this.iAdsBO.adsDetail(adsCode);
 
@@ -426,8 +426,10 @@ public class AdsAOImpl implements IAdsAO {
 
                 isTrust = 1;
 
-            } else  {
-                isTrust = this.userRelationBO.checkReleation(searchUserUserId,ads.getUserId()) ? 1 : 0;
+            } else {
+
+                isTrust = this.userRelationBO.checkReleation(searchUserUserId, ads.getUserId()) ? 1 : 0;
+
             }
 
             ads.setIsTrust(isTrust);
@@ -464,18 +466,18 @@ public class AdsAOImpl implements IAdsAO {
 
         //卖币广告 把冻结金额返还
         // 大于最小返还金额，把金额返还
-        BigDecimal minBack =  new BigDecimal(Double.toString(Math.pow(10,10)));
+        BigDecimal minBack = new BigDecimal(Double.toString(Math.pow(10, 10) - 1));
         if (ads.getLeftCount().compareTo(minBack) > 0) {
 
             Account sellUserAccount = this.accountBO.getAccountByUser(userId,
                     ECoin.ETH.getCode());
 
             //解冻 未卖出金额
-            this.accountBO.unfrozenAmount(sellUserAccount,ads.getLeftCount(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告未卖出部分解冻",ads.getCode());
+            this.accountBO.unfrozenAmount(sellUserAccount, ads.getLeftCount(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告未卖出部分解冻", ads.getCode());
 
             //返还 未卖出金额
-            this.accountBO.changeAmount(sellUserAccount,ads.getLeftCount(), EChannelType.NBZ,null,null,ads
-            .getCode(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue());
+            this.accountBO.changeAmount(sellUserAccount, ads.getLeftCount(), EChannelType.NBZ, null, null, ads
+                    .getCode(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue());
 
             //todo
             //计算需要返还的手续费
@@ -483,7 +485,7 @@ public class AdsAOImpl implements IAdsAO {
             BigDecimal leftAmount = ads.getLeftCount();
 
             //算出出售比例
-            BigDecimal rate = leftAmount.divide(totalCount,BigDecimal.ROUND_DOWN);
+            BigDecimal rate = leftAmount.divide(totalCount, BigDecimal.ROUND_UP);
             //算出应该退还的手续费
             BigDecimal backFee = totalCount.multiply(ads.getFeeRate()).multiply(BigDecimal.ONE.subtract(rate));
 
@@ -491,14 +493,13 @@ public class AdsAOImpl implements IAdsAO {
             if (backFee.compareTo(minBack) > 0) {
 
                 //手续费-解冻 未卖出金额
-                this.accountBO.unfrozenAmount(sellUserAccount,backFee,EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告手续费解冻",ads.getCode());
+                this.accountBO.unfrozenAmount(sellUserAccount, backFee, EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告手续费解冻", ads.getCode());
 
                 //返还 未卖出金额
-                this.accountBO.changeAmount(sellUserAccount,backFee, EChannelType.NBZ,null,null,ads
-                        .getCode(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告手续费解冻");
+                this.accountBO.changeAmount(sellUserAccount, backFee, EChannelType.NBZ, null, null, ads
+                        .getCode(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告手续费解冻");
 
             }
-
 
         }
 
@@ -512,7 +513,7 @@ public class AdsAOImpl implements IAdsAO {
             boolean condition1 = ads.getLeftCount().compareTo(BigDecimal.ZERO) == 0;
 
             boolean condition2 = ads.getLeftCount()
-                .compareTo(ads.getMinTrade()) < 0;
+                    .compareTo(ads.getMinTrade()) < 0;
             if (condition1 || condition2) {
                 iAdsBO.xiaJiaAds(ads);
             }
@@ -523,7 +524,7 @@ public class AdsAOImpl implements IAdsAO {
     public void refreshMarketPrice() {
 
         Market market = this.marketBO.marketByCoinTypeAndOrigin(
-            ECoin.ETH.getCode(), EMarketOrigin.BITFINEX.getCode());
+                ECoin.ETH.getCode(), EMarketOrigin.BITFINEX.getCode());
 
         // 1.只刷新上架状态的
         List<Ads> shangJiaAdsList = this.iAdsBO.queryShangJiaAdsList();
@@ -538,7 +539,7 @@ public class AdsAOImpl implements IAdsAO {
 
             // 算出 溢价之后的价格
             BigDecimal truePrice = market.getMid().multiply(
-                BigDecimal.ONE.add(premiumRate));
+                    BigDecimal.ONE.add(premiumRate));
             BigDecimal protectPrice = ads.getProtectPrice();
 
             if (ads.getTradeType().equals(ETradeType.SELL)) {
