@@ -52,7 +52,7 @@ public class TradeOrder extends ABaseDO {
     private String feeString;
 
     // 交易数字货币数量
-    private BigDecimal count;
+    private transient BigDecimal count;
 
     private String countString;
 
