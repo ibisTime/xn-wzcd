@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.cdkj.coin.domain.UserStatistics;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -893,6 +894,7 @@ public class UserAOImpl implements IUserAO {
             } else {
                 user.setTradepwdFlag(false);
             }
+
             // // 获取我关注的人
             // UserRelation toCondition = new UserRelation();
             // toCondition.setUserId(userId);

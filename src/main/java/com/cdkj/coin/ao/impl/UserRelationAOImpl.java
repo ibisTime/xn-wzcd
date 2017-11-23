@@ -53,7 +53,9 @@ public class UserRelationAOImpl implements IUserRelationAO {
         for (UserRelation userRelation : page.getList()) {
 
             User lookUser = null;
+
             if (StringUtils.isNotBlank(condition.getUserId())) {
+
                 //查询——我信任的
                 User toUser = userBO.getUser(userRelation.getToUser());
                 lookUser = toUser;
@@ -61,14 +63,17 @@ public class UserRelationAOImpl implements IUserRelationAO {
                 userRelation.setToUserInfo(toUser);
 
             } else  {
+
                 //查询——信任我的
                 User fromUser = userBO.getUser(userRelation
                         .getUserId());
                 lookUser = fromUser;
                 userRelation.setFromUserInfo(fromUser);
+
             }
 
             //查询统计信息
+            //查询对方的 统计信息
             if (lookUser != null) {
 
                 UserStatistics userStatistics = new UserStatistics();
@@ -78,6 +83,9 @@ public class UserRelationAOImpl implements IUserRelationAO {
             }
 
         }
+
+
+
 
         return page;
 
@@ -95,6 +103,9 @@ public class UserRelationAOImpl implements IUserRelationAO {
         User toUser = userBO.getUser(toUserId);
         if (toUser == null) {
             throw new BizException("xn702001", "关注用户不存在");
+        }
+        if (userId.equals(toUserId)) {
+            throw new BizException("xn702001", "用户不能和自己建立关系");
         }
         // 判断两者关系是否存在
         if (userRelationBO.isExistUserRelation(userId, toUserId)) {
