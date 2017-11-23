@@ -11,6 +11,9 @@ public class XN802500Req extends APageReq {
      */
     private static final long serialVersionUID = 1L;
 
+    // 用户编号
+    private String userId;
+
     // 户名
     private String realName;
 
@@ -31,6 +34,14 @@ public class XN802500Req extends APageReq {
 
     // 公司编号(必填)
     private String companyCode;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getRealName() {
         return realName;

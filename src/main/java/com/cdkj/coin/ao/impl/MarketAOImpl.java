@@ -1,6 +1,5 @@
 package com.cdkj.coin.ao.impl;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
@@ -226,7 +225,7 @@ public class MarketAOImpl implements IMarketAO {
             this.marketBO.updateMarket(EMarketOrigin.BITFINEX.getCode(), coin,
                 market);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error("行情数据拉取异常，原因：" + e.getMessage());
         }
 
@@ -272,7 +271,7 @@ public class MarketAOImpl implements IMarketAO {
             this.marketBO.updateMarket(EMarketOrigin.OKEX.getCode(), coin,
                 market);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error("行情数据拉取异常，原因：" + e.getMessage());
         }
 
