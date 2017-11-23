@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.cdkj.coin.bo.*;
+import com.cdkj.coin.domain.*;
 import org.apache.commons.collections.functors.TruePredicate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,21 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.coin.ao.IAdsAO;
 import com.cdkj.coin.ao.IMarketAO;
-import com.cdkj.coin.bo.IAccountBO;
-import com.cdkj.coin.bo.IAdsBO;
-import com.cdkj.coin.bo.IAdsDisplayTimeBO;
-import com.cdkj.coin.bo.IMarketBO;
-import com.cdkj.coin.bo.ISYSConfigBO;
-import com.cdkj.coin.bo.ITradeOrderBO;
-import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.core.OrderNoGenerater;
-import com.cdkj.coin.domain.Account;
-import com.cdkj.coin.domain.Ads;
-import com.cdkj.coin.domain.AdsDisplayTime;
-import com.cdkj.coin.domain.Market;
-import com.cdkj.coin.domain.User;
 import com.cdkj.coin.dto.req.XN625220Req;
 import com.cdkj.coin.enums.EAdsPublishType;
 import com.cdkj.coin.enums.EAdsStatus;
@@ -76,6 +66,8 @@ public class AdsAOImpl implements IAdsAO {
     @Autowired
     IUserBO userBO;
 
+    @Autowired
+    IUserRelationBO userRelationBO;
 
     @Override
     public Object frontPage(Integer start, Integer limit, Ads condition) {
@@ -83,7 +75,9 @@ public class AdsAOImpl implements IAdsAO {
         Paginable<Ads> paginable = this.iAdsBO.frontPage(start, limit,
                 condition);
         List<Ads> adsList = paginable.getList();
-        this.getAdsMasterAndSetMaster(adsList);
+        for (Ads ads : adsList) {
+            this.getAdsMasterAndSetMaster(ads);
+        }
         return paginable;
 
     }
@@ -94,21 +88,26 @@ public class AdsAOImpl implements IAdsAO {
         Paginable<Ads> paginable = this.iAdsBO.ossPage(start, limit,
                 condition);
         List<Ads> adsList = paginable.getList();
-        this.getAdsMasterAndSetMaster(adsList);
+
+        for (Ads ads : adsList) {
+
+            this.getAdsMasterAndSetMaster(ads);
+
+        }
         return paginable;
 
     }
 
-    private void getAdsMasterAndSetMaster(List<Ads> adsList) {
+    private void getAdsMasterAndSetMaster(Ads ads) {
 
-        if (adsList == null || adsList.isEmpty()) {
-            return;
-        }
-        for (Ads ads : adsList) {
-            User user = this.userBO.getUser(ads.getUserId());
-            ads.setUser(user);
-            ads.setUserStatistics(this.tradeOrderBO.obtainUserStatistics(ads.getUserId()));
-        }
+
+        User user = this.userBO.getUser(ads.getUserId());
+        ads.setUser(user);
+        UserStatistics userStatistics = this.tradeOrderBO.obtainUserStatistics(ads.getUserId());
+        // 获取信任数量
+        userStatistics.setBeiXinRenCount(this.userRelationBO.getRelationCount(ads.getUserId()));
+        ads.setUserStatistics(userStatistics);
+
 
     }
 
@@ -131,7 +130,7 @@ public class AdsAOImpl implements IAdsAO {
 
             Ads condition = new Ads();
             condition.setUserId(user.getUserId());
-            Paginable<Ads> adsPaginable = (Paginable)this.frontPage(0,10,condition);
+            Paginable<Ads> adsPaginable = (Paginable) this.frontPage(0, 10, condition);
             //
             adsList.addAll(adsPaginable.getList());
 
@@ -193,6 +192,8 @@ public class AdsAOImpl implements IAdsAO {
         }
         ads.setMarketPrice(market.getMid());
 
+        //获取手续费率
+        ads.setFeeRate(new BigDecimal(SysConstants.TRADE_FEE_RATE));
         BigDecimal truePrice = market.getMid().multiply(BigDecimal.ONE.add(req.getPremiumRate()));
         ads.setTruePrice(truePrice);
         // 设置保护价
@@ -400,12 +401,13 @@ public class AdsAOImpl implements IAdsAO {
     public Object adsDetail(String adsCode) {
 
         Ads ads = this.iAdsBO.adsDetail(adsCode);
-        //获取广告所属用户
-        ads.setUser(userBO.getUser(ads.getUserId()));
+
         //获取展示时间
         ads.setDisplayTime(this.displayTimeBO.queryList(adsCode));
 
-        ads.setUserStatistics(this.tradeOrderBO.obtainUserStatistics(ads.getUserId()));
+        //处理用户相关信息
+        this.getAdsMasterAndSetMaster(ads);
+
         return ads;
 
     }
@@ -438,6 +440,22 @@ public class AdsAOImpl implements IAdsAO {
 
             Account account = this.accountBO.getAccountByUser(userId,
                     ECoin.ETH.getCode());
+
+            //计算需要返还的手续费
+
+//            BigDecimal totalCount = ads.getTotalCount();
+//            BigDecimal
+
+
+            //todo __ feeRate
+            //解冻 账户余额
+            //解冻 手续费
+
+            //todo
+            //返还手续费
+            //返还冻结金额
+
+
             this.accountBO.unfrozenAmount(account, ads.getLeftCount(), "", "",
                     ads.getCode());
 

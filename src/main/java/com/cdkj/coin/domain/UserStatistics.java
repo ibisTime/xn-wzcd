@@ -17,7 +17,7 @@ public class UserStatistics {
     int beiHaoPingCount;
 
     //被信任次数
-    int beiXinRenCount;
+    long beiXinRenCount;
 
     public int getJiaoYiCount() {
         return jiaoYiCount;
@@ -43,11 +43,11 @@ public class UserStatistics {
         this.beiHaoPingCount = beiHaoPingCount;
     }
 
-    public int getBeiXinRenCount() {
+    public long getBeiXinRenCount() {
         return beiXinRenCount;
     }
 
-    public void setBeiXinRenCount(int beiXinRenCount) {
+    public void setBeiXinRenCount(long beiXinRenCount) {
         this.beiXinRenCount = beiXinRenCount;
     }
 

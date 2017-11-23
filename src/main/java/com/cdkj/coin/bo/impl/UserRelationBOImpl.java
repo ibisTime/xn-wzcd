@@ -115,4 +115,13 @@ public class UserRelationBOImpl extends PaginableBOImpl<UserRelation> implements
         condition.setToUser(toUser);
         return getTotalCount(condition);
     }
+
+    @Override
+    public boolean checkReleation(String userId, String toUser) {
+
+        UserRelation condition = new UserRelation();
+        condition.setUserId(userId);
+        condition.setToUser(toUser);
+        return this.userRelationDAO.selectTotalCount(condition) >= 1;
+    }
 }

@@ -48,7 +48,11 @@
 	
 	<bean id="exchangeCurrencyBO" class="com.cdkj.coin.bo.impl.ExchangeCurrencyBOImpl">
 		<property name="paginableDAO" ref="exchangeCurrencyDAOImpl"/>
-	</bean>	
+	</bean>
+
+	<bean id="currencyRateBO" class="com.cdkj.coin.bo.impl.CurrencyRateBOImpl">
+		<property name="paginableDAO" ref="currencyRateDAOImpl"/>
+	</bean>
 	
 	<bean id="chargeBO" class="com.cdkj.coin.bo.impl.ChargeBOImpl">
 		<property name="paginableDAO" ref="chargeDAOImpl"/>

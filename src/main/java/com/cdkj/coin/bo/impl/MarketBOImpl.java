@@ -4,6 +4,8 @@ import com.cdkj.coin.bo.IMarketBO;
 import com.cdkj.coin.common.StringUtil;
 import com.cdkj.coin.dao.IMarketDAO;
 import com.cdkj.coin.domain.Market;
+import com.cdkj.coin.enums.ECoin;
+import com.cdkj.coin.enums.ECurrency;
 import com.cdkj.coin.enums.EMarketOrigin;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,12 @@ public class MarketBOImpl implements IMarketBO {
 
     @Autowired
     IMarketDAO marketDAO;
+
+    @Override
+    public Market standardMarket(ECoin coin) {
+
+        return this.marketByCoinTypeAndOrigin(coin.getCode(), EMarketOrigin.BITFINEX.getCode());
+    }
 
     @Override
     public Market marketByCoinTypeAndOrigin(String coinType, String origin) {

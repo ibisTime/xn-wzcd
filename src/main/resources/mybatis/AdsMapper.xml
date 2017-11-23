@@ -14,6 +14,8 @@
         <result column="market_price" jdbcType="DECIMAL" property="marketPrice"/>
         <result column="protect_price" jdbcType="DECIMAL" property="protectPrice"/>
         <result column="true_price" jdbcType="DECIMAL" property="truePrice"/>
+        <result column="fee_rate" jdbcType="DECIMAL" property="feeRate"/>
+
         <result column="min_trade" jdbcType="DECIMAL" property="minTrade"/>
         <result column="max_trade" jdbcType="DECIMAL" property="maxTrade"/>
         <result column="pay_type" jdbcType="VARCHAR" property="payType"/>
@@ -27,7 +29,7 @@
 
     <sql id="Base_Column_List">
         code, user_id, trade_currency, trade_coin, only_trust, premium_rate, total_count,
-        left_count, market_price, protect_price,true_price, min_trade, max_trade, pay_type, pay_limit,
+        left_count, market_price, protect_price,true_price, min_trade, max_trade, pay_type, pay_limit,fee_rate,
         status, create_datetime, update_datetime, leave_message, trade_type
     </sql>
 
@@ -36,7 +38,7 @@
         INSERT INTO tcoin_ads (code, user_id, trade_currency,
                                     trade_coin, only_trust, premium_rate,
                                     total_count, left_count, market_price,
-                                    protect_price,true_price, min_trade, max_trade,
+                                    protect_price,true_price,fee_rate,min_trade, max_trade,
                                     pay_type, pay_limit, status,trade_type,
                                     create_datetime, update_datetime, leave_message
         )
@@ -51,6 +53,7 @@
             #{marketPrice,jdbcType=DECIMAL},
             #{protectPrice,jdbcType=DECIMAL},
             #{truePrice},
+            #{feeRate},
             #{minTrade,jdbcType=DECIMAL},
             #{maxTrade,jdbcType=DECIMAL},
             #{payType,jdbcType=VARCHAR},
@@ -186,6 +189,9 @@
             </if>
             <if test="truePrice != null">
                 true_price = #{truePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="feeRate != null">
+                fee_rate = #{feeRate,jdbcType=DECIMAL},
             </if>
             <if test="minTrade != null">
                 min_trade = #{minTrade,jdbcType=DECIMAL},

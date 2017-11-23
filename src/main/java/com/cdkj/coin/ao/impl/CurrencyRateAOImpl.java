@@ -3,10 +3,12 @@ package com.cdkj.coin.ao.impl;
 import com.alibaba.fastjson.JSON;
 import com.cdkj.coin.ao.ICurrencyRateAO;
 import com.cdkj.coin.bo.ICurrencyRateBO;
+import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.domain.CurrencyRate;
 import com.cdkj.coin.enums.ECurrency;
 import com.cdkj.coin.http.JsonUtils;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -18,6 +20,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,10 +41,26 @@ public class CurrencyRateAOImpl implements ICurrencyRateAO {
 
     }
 
+    //获取价格计算的汇率
     @Override
     public List<CurrencyRate> allCurrencyRate() {
 
-        return this.currencyRateBO.allCurrencyRate();
+        List<CurrencyRate> list = new ArrayList<>();
+
+        CurrencyRate uskCurrencyRate = this.currencyRateByCurrency(ECurrency.USD.getCode());
+        list.add(uskCurrencyRate);
+
+        CurrencyRate udkCurrencyRate = this.currencyRateByCurrency(ECurrency.HKD.getCode());
+        list.add(udkCurrencyRate);
+
+        return list;
+    }
+
+    @Override
+    public Paginable<CurrencyRate> queryPage(int start, int limit, CurrencyRate condition) {
+
+        return this.currencyRateBO.getPaginable(start, limit, condition);
+
     }
 
     public void obtainCurrencyRate() {
@@ -84,8 +103,18 @@ public class CurrencyRateAOImpl implements ICurrencyRateAO {
 
             //改为刷新数据库
             //跟新数据库
-            this.currencyRateBO.changeRate(ECurrency.USD.getCode(), usdDecimal, "juhe");
-            this.currencyRateBO.changeRate(ECurrency.HKD.getCode(), hkdDecimal, "juhe");
+            CurrencyRate USDCurrencyRate = new CurrencyRate();
+            USDCurrencyRate.setOrigin("juhe");
+            USDCurrencyRate.setReferCurrency(ECurrency.USD.getCode());
+            USDCurrencyRate.setRate(usdDecimal);
+            this.currencyRateBO.insert(USDCurrencyRate);
+
+            CurrencyRate HKDCurrencyRate = new CurrencyRate();
+            HKDCurrencyRate.setOrigin("juhe");
+            HKDCurrencyRate.setReferCurrency(ECurrency.HKD.getCode());
+            HKDCurrencyRate.setRate(hkdDecimal);
+            this.currencyRateBO.insert(HKDCurrencyRate);
+            //
 
         } catch (IOException e) {
             e.printStackTrace();

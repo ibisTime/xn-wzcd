@@ -22,6 +22,7 @@ public class Ads extends ABaseDO implements Serializable {
     private String tradeType;
     private BigDecimal premiumRate;
 
+    private BigDecimal feeRate;
     //数字货币
     private transient BigDecimal totalCount;
     private String totalCountString;
@@ -97,6 +98,13 @@ public class Ads extends ABaseDO implements Serializable {
         this.leaveMessage = leaveMessage;
     }
 
+    public BigDecimal getFeeRate() {
+        return feeRate;
+    }
+
+    public void setFeeRate(BigDecimal feeRate) {
+        this.feeRate = feeRate;
+    }
 
     public BigDecimal getTotalCount() {
         return totalCount;

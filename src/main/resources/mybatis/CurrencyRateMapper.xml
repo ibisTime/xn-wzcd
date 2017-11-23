@@ -3,7 +3,9 @@
 <mapper namespace="com.cdkj.coin.dao.ICurrencyRateDAO">
 
     <resultMap id="BaseResultMap" type="com.cdkj.coin.domain.CurrencyRate">
-        <id column="currency" jdbcType="VARCHAR" property="currency"/>
+
+        <result column="id" property="id" />
+        <result column="currency" jdbcType="VARCHAR" property="currency"/>
         <result column="refer_currency" jdbcType="VARCHAR" property="referCurrency"/>
         <result column="origin" jdbcType="VARCHAR" property="origin"/>
         <result column="rate" jdbcType="DECIMAL" property="rate"/>
@@ -11,7 +13,15 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        currency, refer_currency, origin, rate, update_datetime
+       id, currency, refer_currency, origin, rate, update_datetime
+    </sql>
+
+    <sql id="whereCondition">
+        <trim prefix="WHERE" prefixOverrides="AND || OR">
+            <if test="currency != null and currency != ''">
+                and `currency` = #{currency}
+            </if>
+        </trim>
     </sql>
 
     <insert id="insert" parameterType="com.cdkj.coin.domain.CurrencyRate">
@@ -29,20 +39,36 @@
             update_datetime = #{updateDatetime,jdbcType=TIMESTAMP}
         WHERE currency = #{currency,jdbcType=VARCHAR}
     </update>
+    
+    <select id="selectTotalCount" parameterType="com.cdkj.coin.domain.CurrencyRate" resultType="long">
+        SELECT
+            count(1)
+        FROM tcoin_currency_rate
+        <include refid="whereCondition"/>
+    </select>
 
-    <select id="select" parameterType="com.cdkj.coin.domain.CurrencyRate" resultMap="BaseResultMap">
+    <select id="select" parameterType="com.cdkj.coin.domain.CurrencyRate" resultType="com.cdkj.coin.domain.CurrencyRate">
         SELECT
         <include refid="Base_Column_List"/>
         FROM tcoin_currency_rate
-        WHERE currency = #{currency}
+       <include refid="whereCondition"/>
+        ORDER BY `id` DESC
     </select>
 
-    <select id="selectList" parameterType="com.cdkj.coin.domain.CurrencyRate" resultMap="BaseResultMap">
+    <!--<select id="selectList" parameterType="com.cdkj.coin.domain.CurrencyRate" resultMap="BaseResultMap">-->
 
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM tcoin_currency_rate
+        <!--SELECT-->
+        <!--<include refid="Base_Column_List"/>-->
+        <!--FROM tcoin_currency_rate-->
 
-    </select>
+    <!--</select>-->
+
+    <!--<select id="selectRateAVG" resultType="Decimal">-->
+        <!--SELECT avg(`rate`) FROM tcoin_currency_rate-->
+            <!--<include refid="whereCondition"/>-->
+        <!--ORDER BY `id` DESC LIMIT 14;-->
+    <!--</select>-->
+
+    <!--select *  from components order by id desc LIMIT 25-->
 
 </mapper>

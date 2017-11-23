@@ -13,6 +13,8 @@ import java.util.List;
 import com.cdkj.coin.bo.base.IPaginableBO;
 import com.cdkj.coin.domain.UserRelation;
 
+import javax.crypto.interfaces.PBEKey;
+
 /** 
  * 用户关系表
  * @author: xieyj 
@@ -33,4 +35,7 @@ public interface IUserRelationBO extends IPaginableBO<UserRelation> {
 
     // 有多少人信任我
     public long getRelationCount(String toUser);
+
+    //userId 信任 toUser
+    public boolean checkReleation(String userId,String toUser);
 }

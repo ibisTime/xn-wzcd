@@ -53,5 +53,4 @@ public interface IAdsBO {
     public long updateAdsPriceByPrimaryKey(Ads ads);
 
 
-
 }
