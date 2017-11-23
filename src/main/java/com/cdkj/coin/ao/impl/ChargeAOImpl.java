@@ -158,6 +158,10 @@ public class ChargeAOImpl implements IChargeAO {
         EthCollection ethCollection = ethCollectionBO
             .getEthCollectionByRefNo(charge.getCode());
         if (ethCollection != null) {
+            condition1.setRefNo(ethCollection.getCode());
+            List<Jour> jourList2 = jourBO.queryJourList(condition1);
+            jourList.addAll(jourList2);
+
             condition2.setRefNo(ethCollection.getCode());
             List<EthTransaction> resultList2 = ethTransactionBO
                 .queryEthTransactionList(condition2);
