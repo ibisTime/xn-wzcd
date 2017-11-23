@@ -79,10 +79,9 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
     }
 
     @Override
-    public void changeAmount(String accountNumber, EChannelType channelType,
-            String channelOrder, String payGroup, String refNo, String bizType,
-            String bizNote, BigDecimal transAmount) {
-        Account dbAccount = this.getAccount(accountNumber);
+    public Account changeAmount(Account dbAccount, BigDecimal transAmount,
+            EChannelType channelType, String channelOrder, String payGroup,
+            String refNo, String bizType, String bizNote) {
         // 金额变动之后可用余额
         BigDecimal avaliableAmount = dbAccount.getAmount()
             .subtract(dbAccount.getFrozenAmount()).add(transAmount);
@@ -98,23 +97,22 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
             transAmount);
 
         // 更改余额
-        Account data = new Account();
-        data.setAccountNumber(accountNumber);
-        data.setAmount(nowAmount);
-        data.setMd5(AccountUtil.md5(dbAccount.getMd5(), dbAccount.getAmount(),
-            nowAmount));
+        dbAccount.setAmount(nowAmount);
+        dbAccount.setMd5(AccountUtil.md5(dbAccount.getMd5(),
+            dbAccount.getAmount(), nowAmount));
         // 统计累计增加金额
-        data.setAddAmount(dbAccount.getAddAmount());
+        dbAccount.setAddAmount(dbAccount.getAddAmount());
         if (transAmount.compareTo(BigDecimal.ZERO) == 1) {
-            data.setAddAmount(dbAccount.getAddAmount().add(transAmount));
+            dbAccount.setAddAmount(dbAccount.getAddAmount().add(transAmount));
         }
         // 统计累计充值金额
-        data.setInAmount(dbAccount.getInAmount());
+        dbAccount.setInAmount(dbAccount.getInAmount());
         if (EJourBizTypeUser.AJ_CHARGE.getCode().equals(bizType)) {
-            data.setInAmount(dbAccount.getInAmount().add(transAmount));
+            dbAccount.setInAmount(dbAccount.getInAmount().add(transAmount));
         }
-        data.setLastOrder(lastOrder);
-        accountDAO.updateAmount(data);
+        dbAccount.setLastOrder(lastOrder);
+        accountDAO.updateAmount(dbAccount);
+        return dbAccount;
     }
 
     @Override
@@ -167,7 +165,7 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
     }
 
     @Override
-    public void frozenAmount(Account dbAccount, BigDecimal freezeAmount,
+    public Account frozenAmount(Account dbAccount, BigDecimal freezeAmount,
             String bizType, String bizNote, String refNo) {
         if (freezeAmount.compareTo(BigDecimal.ZERO) == 0
                 || freezeAmount.compareTo(BigDecimal.ZERO) == -1) {
@@ -184,15 +182,15 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
             freezeAmount);
         BigDecimal nowFrozenAmount = dbAccount.getFrozenAmount().add(
             freezeAmount);
-        Account data = new Account();
-        data.setAccountNumber(dbAccount.getAccountNumber());
-        data.setFrozenAmount(nowFrozenAmount);
-        data.setLastOrder(lastOrder);
-        accountDAO.frozenAmount(data);
+        dbAccount.setAccountNumber(dbAccount.getAccountNumber());
+        dbAccount.setFrozenAmount(nowFrozenAmount);
+        dbAccount.setLastOrder(lastOrder);
+        accountDAO.frozenAmount(dbAccount);
+        return dbAccount;
     }
 
     @Override
-    public void unfrozenAmount(Account dbAccount, BigDecimal freezeAmount,
+    public Account unfrozenAmount(Account dbAccount, BigDecimal freezeAmount,
             String bizType, String bizNote, String refNo) {
         if (freezeAmount.compareTo(BigDecimal.ZERO) == 0
                 || freezeAmount.compareTo(BigDecimal.ZERO) == -1) {
@@ -208,11 +206,10 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
         String lastOrder = jourBO.addJour(EJourKind.FROZEN, dbAccount,
             EChannelType.Offline, null, null, refNo, bizType, bizNote,
             freezeAmount.negate());
-        Account data = new Account();
-        data.setAccountNumber(dbAccount.getAccountNumber());
-        data.setFrozenAmount(nowFrozenAmount);
-        data.setLastOrder(lastOrder);
-        accountDAO.unfrozenAmount(data);
+        dbAccount.setFrozenAmount(nowFrozenAmount);
+        dbAccount.setLastOrder(lastOrder);
+        accountDAO.unfrozenAmount(dbAccount);
+        return dbAccount;
     }
 
     @Override
@@ -310,9 +307,9 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
         }
         Double rate = exchangeCurrencyBO.getExchangeRate(
             fromAccount.getCurrency(), toAccount.getCurrency());
-        this.changeAmount(fromAccountNumber, EChannelType.NBZ, null, null,
-            refNo, fromBizType, fromBizNote, transAmount.negate());
-        this.changeAmount(toAccountNumber, EChannelType.NBZ, null, null, refNo,
-            toBizType, toBizNote, AmountUtil.mul(transAmount, rate));
+        this.changeAmount(fromAccount, transAmount.negate(), EChannelType.NBZ,
+            null, null, refNo, fromBizType, fromBizNote);
+        this.changeAmount(toAccount, AmountUtil.mul(transAmount, rate),
+            EChannelType.NBZ, null, null, refNo, toBizType, toBizNote);
     }
 }

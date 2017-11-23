@@ -101,10 +101,10 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             "ETH充值-来自地址：" + ctqEthTransaction.getFrom(), amount,
             EChannelType.ETH, "程序");
         // 账户加钱
-        accountBO.changeAmount(account.getAccountNumber(), EChannelType.ETH,
+        accountBO.changeAmount(account, amount, EChannelType.ETH,
             ctqEthTransaction.getHash(), payGroup, code,
             EJourBizTypeUser.AJ_CHARGE.getCode(), "ETH充值-来自地址："
-                    + ctqEthTransaction.getFrom(), amount);
+                    + ctqEthTransaction.getFrom());
         // 落地交易记录
         ethTransactionBO.saveEthTransaction(ctqEthTransaction);
         return code;
@@ -129,46 +129,55 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             ctqEthTransaction.getHash(), txFee);
         Account userAccount = accountBO.getAccount(withdraw.getAccountNumber());
         // 取现金额解冻
-        accountBO.unfrozenAmount(userAccount, withdraw.getAmount(),
-            EJourBizTypeUser.AJ_WITHDRAW.getCode(),
+        userAccount = accountBO.unfrozenAmount(userAccount,
+            withdraw.getAmount(), EJourBizTypeUser.AJ_WITHDRAW.getCode(),
             EJourBizTypeUser.AJ_WITHDRAW.getValue(), withdraw.getCode());
         if (withdraw.getFee().compareTo(BigDecimal.ZERO) > 0) {
             // 取现手续费解冻
-            accountBO.unfrozenAmount(userAccount, withdraw.getFee(),
-                EJourBizTypeUser.AJ_WITHDRAWFEE.getCode(),
+            userAccount = accountBO.unfrozenAmount(userAccount,
+                withdraw.getFee(), EJourBizTypeUser.AJ_WITHDRAWFEE.getCode(),
                 EJourBizTypeUser.AJ_WITHDRAWFEE.getValue(), withdraw.getCode());
         }
         // 取现金额扣减
-        accountBO.changeAmount(withdraw.getAccountNumber(), EChannelType.ETH,
-            ctqEthTransaction.getHash(), "ETH", withdraw.getCode(),
-            EJourBizTypeUser.AJ_WITHDRAW.getCode(),
-            EJourBizTypeUser.AJ_WITHDRAW.getValue(), withdraw.getAmount()
-                .negate());
+        userAccount = accountBO.changeAmount(userAccount, withdraw.getAmount()
+            .negate(), EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
+            withdraw.getCode(), EJourBizTypeUser.AJ_WITHDRAW.getCode(),
+            EJourBizTypeUser.AJ_WITHDRAW.getValue());
         if (withdraw.getFee().compareTo(BigDecimal.ZERO) > 0) {
             // 取现手续费扣减
-            accountBO.changeAmount(withdraw.getAccountNumber(),
-                EChannelType.ETH, ctqEthTransaction.getHash(), "ETH", withdraw
-                    .getCode(), EJourBizTypeUser.AJ_WITHDRAWFEE.getCode(),
-                EJourBizTypeUser.AJ_WITHDRAWFEE.getValue(), withdraw.getFee()
-                    .negate());
+            userAccount = accountBO.changeAmount(userAccount, withdraw.getFee()
+                .negate(), EChannelType.ETH, ctqEthTransaction.getHash(),
+                "ETH", withdraw.getCode(), EJourBizTypeUser.AJ_WITHDRAWFEE
+                    .getCode(), EJourBizTypeUser.AJ_WITHDRAWFEE.getValue());
         }
         // 平台冷钱包减钱
-        accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode(),
-            EChannelType.ETH, ctqEthTransaction.getHash(), "ETH", withdraw
-                .getCode(), EJourBizTypeCold.AJ_PAY.getCode(), "ETH取现-外部地址："
-                    + withdraw.getPayCardNo(), withdraw.getAmount().negate());
+        Account coldAccount = accountBO
+            .getAccount(ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode());
+        coldAccount = accountBO.changeAmount(coldAccount, withdraw.getAmount()
+            .negate(), EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
+            withdraw.getCode(), EJourBizTypeCold.AJ_PAY.getCode(),
+            "ETH取现-外部地址：" + withdraw.getPayCardNo());
         // 平台盈亏账户记入取现手续费
+        Account sysAccount = accountBO.getAccount(ESystemAccount.SYS_ACOUNT_ETH
+            .getCode());
         if (withdraw.getFee().compareTo(BigDecimal.ZERO) > 0) {
-            accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(),
+            sysAccount = accountBO.changeAmount(sysAccount, withdraw.getFee(),
                 EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
                 withdraw.getCode(), EJourBizTypePlat.AJ_WITHDRAWFEE.getCode(),
-                "ETH取现-外部地址" + withdraw.getPayCardNo(), withdraw.getFee());
+                EJourBizTypePlat.AJ_WITHDRAWFEE.getValue() + "-外部地址："
+                        + withdraw.getPayCardNo());
         }
         // 平台盈亏账户记入取现矿工费
-        accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(),
-            EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
-            withdraw.getCode(), EJourBizTypePlat.AJ_WFEE.getCode(),
-            "ETH取现-外部地址" + withdraw.getPayCardNo(), txFee.negate());
+        sysAccount = accountBO.changeAmount(
+            sysAccount,
+            txFee.negate(),
+            EChannelType.ETH,
+            ctqEthTransaction.getHash(),
+            "ETH",
+            withdraw.getCode(),
+            EJourBizTypePlat.AJ_WFEE.getCode(),
+            EJourBizTypePlat.AJ_WFEE.getValue() + "-外部地址："
+                    + withdraw.getPayCardNo());
         // 落地交易记录
         ethTransactionBO.saveEthTransaction(ctqEthTransaction);
     }
@@ -233,16 +242,20 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         ethCollectionBO.colectionNotice(collection, txFee,
             ctqEthTransaction.getBlockCreateDatetime());
         // 平台冷钱包加钱
-        accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode(),
-            EChannelType.ETH, ctqEthTransaction.getHash(), "ETH", collection
-                .getCode(), EJourBizTypeCold.AJ_INCOME.getCode(), "归集-来自地址："
-                    + collection.getFromAddress(), new BigDecimal(
-                ctqEthTransaction.getValue()));
+        Account coldAccount = accountBO
+            .getAccount(ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode());
+        accountBO.changeAmount(coldAccount,
+            new BigDecimal(ctqEthTransaction.getValue()), EChannelType.ETH,
+            ctqEthTransaction.getHash(), "ETH", collection.getCode(),
+            EJourBizTypeCold.AJ_INCOME.getCode(),
+            "归集-来自地址：" + collection.getFromAddress());
         // 平台盈亏账户记入矿工费
-        accountBO.changeAmount(ESystemAccount.SYS_ACOUNT_ETH.getCode(),
-            EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
-            collection.getCode(), EJourBizTypePlat.AJ_MFEE.getCode(), "归集地址："
-                    + collection.getFromAddress(), txFee.negate());
+        Account sysAccount = accountBO.getAccount(ESystemAccount.SYS_ACOUNT_ETH
+            .getCode());
+        accountBO.changeAmount(sysAccount, txFee.negate(), EChannelType.ETH,
+            ctqEthTransaction.getHash(), "ETH", collection.getCode(),
+            EJourBizTypePlat.AJ_MFEE.getCode(),
+            "归集地址：" + collection.getFromAddress());
         // 落地交易记录
         ethTransactionBO.saveEthTransaction(ctqEthTransaction);
     }

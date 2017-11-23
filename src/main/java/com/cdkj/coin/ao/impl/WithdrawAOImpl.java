@@ -30,11 +30,7 @@ import com.cdkj.coin.domain.User;
 import com.cdkj.coin.domain.Withdraw;
 import com.cdkj.coin.enums.EAccountType;
 import com.cdkj.coin.enums.EBoolean;
-import com.cdkj.coin.enums.EChannelType;
-import com.cdkj.coin.enums.ECurrency;
-import com.cdkj.coin.enums.EJourBizTypeCold;
 import com.cdkj.coin.enums.EJourBizTypeUser;
-import com.cdkj.coin.enums.ESystemAccount;
 import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.enums.EWithdrawStatus;
 import com.cdkj.coin.exception.BizException;
@@ -90,13 +86,16 @@ public class WithdrawAOImpl implements IWithdrawAO {
         String withdrawCode = withdrawBO.applyOrder(dbAccount, amount, fee,
             payCardInfo, payCardNo, applyUser, applyNote);
         // 冻结取现金额
-        accountBO.frozenAmount(dbAccount, amount,
+        dbAccount = accountBO.frozenAmount(dbAccount, amount,
             EJourBizTypeUser.AJ_WITHDRAW.getCode(),
             EJourBizTypeUser.AJ_WITHDRAW.getValue(), withdrawCode);
-        // 冻结取现手续费
-        accountBO.frozenAmount(dbAccount, fee,
-            EJourBizTypeUser.AJ_WITHDRAWFEE.getCode(),
-            EJourBizTypeUser.AJ_WITHDRAWFEE.getValue(), withdrawCode);
+        if (fee.compareTo(BigDecimal.ZERO) > 0) {
+            // 冻结取现手续费
+            accountBO.frozenAmount(dbAccount, fee,
+                EJourBizTypeUser.AJ_WITHDRAWFEE.getCode(),
+                EJourBizTypeUser.AJ_WITHDRAWFEE.getValue(), withdrawCode);
+        }
+
         return withdrawCode;
     }
 
@@ -217,26 +216,26 @@ public class WithdrawAOImpl implements IWithdrawAO {
 
     private void payOrderYES(Withdraw data, String payUser, String payNote,
             String payCode) {
-        withdrawBO.payOrder(data, EWithdrawStatus.Pay_YES, payUser, payNote,
-            payCode, payCode, BigDecimal.ZERO);
-        Account dbAccount = accountBO.getAccount(data.getAccountNumber());
-        // 先解冻，然后扣减余额
-        accountBO.unfrozenAmount(dbAccount, data.getAmount(),
-            EJourBizTypeUser.AJ_WITHDRAW.getCode(),
-            EJourBizTypeUser.AJ_WITHDRAW.getValue(), data.getCode());
-        accountBO.changeAmount(dbAccount.getAccountNumber(),
-            EChannelType.Offline, null, null, data.getCode(),
-            EJourBizTypeUser.AJ_WITHDRAW.getCode(),
-            EJourBizTypeUser.AJ_WITHDRAW.getValue(), data.getAmount());
-        Account account = accountBO.getAccount(data.getAccountNumber());
-        if (ECurrency.CNY.getCode().equals(account.getCurrency())) {
-            // 冷钱包减钱
-            accountBO.changeAmount(
-                ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode(),
-                EChannelType.Offline, null, null, data.getCode(),
-                EJourBizTypeCold.AJ_PAY.getCode(), "ETH取现", data.getAmount()
-                    .negate());
-        }
+        // withdrawBO.payOrder(data, EWithdrawStatus.Pay_YES, payUser, payNote,
+        // payCode, payCode, BigDecimal.ZERO);
+        // Account dbAccount = accountBO.getAccount(data.getAccountNumber());
+        // // 先解冻，然后扣减余额
+        // accountBO.unfrozenAmount(dbAccount, data.getAmount(),
+        // EJourBizTypeUser.AJ_WITHDRAW.getCode(),
+        // EJourBizTypeUser.AJ_WITHDRAW.getValue(), data.getCode());
+        // accountBO.changeAmount(dbAccount.getAccountNumber(),
+        // EChannelType.Offline, null, null, data.getCode(),
+        // EJourBizTypeUser.AJ_WITHDRAW.getCode(),
+        // EJourBizTypeUser.AJ_WITHDRAW.getValue(), data.getAmount());
+        // Account account = accountBO.getAccount(data.getAccountNumber());
+        // if (ECurrency.CNY.getCode().equals(account.getCurrency())) {
+        // // 冷钱包减钱
+        // accountBO.changeAmount(
+        // ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode(),
+        // EChannelType.Offline, null, null, data.getCode(),
+        // EJourBizTypeCold.AJ_PAY.getCode(), "ETH取现", data.getAmount()
+        // .negate());
+        // }
     }
 
     @Override
