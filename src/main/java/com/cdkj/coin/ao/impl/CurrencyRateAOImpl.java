@@ -1,35 +1,37 @@
 package com.cdkj.coin.ao.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.cdkj.coin.ao.ICurrencyRateAO;
-import com.cdkj.coin.bo.ICurrencyRateBO;
-import com.cdkj.coin.bo.base.Paginable;
-import com.cdkj.coin.common.JsonUtil;
-import com.cdkj.coin.domain.CurrencyRate;
-import com.cdkj.coin.enums.ECurrency;
-import com.cdkj.coin.http.JsonUtils;
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import okhttp3.Call;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.test.web.servlet.RequestBuilder;
-
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.alibaba.fastjson.JSON;
+import com.cdkj.coin.ao.ICurrencyRateAO;
+import com.cdkj.coin.bo.ICurrencyRateBO;
+import com.cdkj.coin.bo.base.Paginable;
+import com.cdkj.coin.domain.CurrencyRate;
+import com.cdkj.coin.enums.ECurrency;
+
 /**
  * Created by tianlei on 2017/十一月/13.
  */
 @Service
 public class CurrencyRateAOImpl implements ICurrencyRateAO {
+
+    private static final Logger logger = LoggerFactory
+        .getLogger(CurrencyRateAOImpl.class);
 
     @Autowired
     ICurrencyRateBO currencyRateBO;
@@ -41,30 +43,32 @@ public class CurrencyRateAOImpl implements ICurrencyRateAO {
 
     }
 
-    //获取价格计算的汇率
+    // 获取价格计算的汇率
     @Override
     public List<CurrencyRate> allCurrencyRate() {
 
         List<CurrencyRate> list = new ArrayList<>();
 
-        CurrencyRate uskCurrencyRate = this.currencyRateByCurrency(ECurrency.USD.getCode());
+        CurrencyRate uskCurrencyRate = this
+            .currencyRateByCurrency(ECurrency.USD.getCode());
         list.add(uskCurrencyRate);
 
-        CurrencyRate udkCurrencyRate = this.currencyRateByCurrency(ECurrency.HKD.getCode());
+        CurrencyRate udkCurrencyRate = this
+            .currencyRateByCurrency(ECurrency.HKD.getCode());
         list.add(udkCurrencyRate);
 
         return list;
     }
 
     @Override
-    public Paginable<CurrencyRate> queryPage(int start, int limit, CurrencyRate condition) {
+    public Paginable<CurrencyRate> queryPage(int start, int limit,
+            CurrencyRate condition) {
 
         return this.currencyRateBO.getPaginable(start, limit, condition);
 
     }
 
     public void obtainCurrencyRate() {
-
 
         String requestStr = "http://web.juhe.cn:8080/finance/exchange/rmbquot?key=04448ab31ce7199b12b7ce8dfe9a5dd3";
 
@@ -85,24 +89,26 @@ public class CurrencyRateAOImpl implements ICurrencyRateAO {
             List resultList = (List) map.get("result");
             Map dataMap = (Map) resultList.get(0);
 
-//            {
-//                "bankConversionPri":"773.3300",
-//                    "date":"2017-11-13",
-//                    "fBuyPri":"771.7200",
-//                    "fSellPri":"777.1400",
-//                    "mBuyPri":"747.6800",
-//                    "mSellPri":"777.1400",
-//                    "name":"欧元",
-//                    "time":"14:45:05"
-//            }
-            BigDecimal usdDecimal = this.calculateRate((Map) dataMap.get("data1"));
-            BigDecimal hkdDecimal = this.calculateRate((Map) dataMap.get("data3"));
+            // {
+            // "bankConversionPri":"773.3300",
+            // "date":"2017-11-13",
+            // "fBuyPri":"771.7200",
+            // "fSellPri":"777.1400",
+            // "mBuyPri":"747.6800",
+            // "mSellPri":"777.1400",
+            // "name":"欧元",
+            // "time":"14:45:05"
+            // }
+            BigDecimal usdDecimal = this.calculateRate((Map) dataMap
+                .get("data1"));
+            BigDecimal hkdDecimal = this.calculateRate((Map) dataMap
+                .get("data3"));
             if (usdDecimal == null || hkdDecimal == null) {
                 return;
             }
 
-            //改为刷新数据库
-            //跟新数据库
+            // 改为刷新数据库
+            // 跟新数据库
             CurrencyRate USDCurrencyRate = new CurrencyRate();
             USDCurrencyRate.setOrigin("juhe");
             USDCurrencyRate.setReferCurrency(ECurrency.USD.getCode());
@@ -116,17 +122,15 @@ public class CurrencyRateAOImpl implements ICurrencyRateAO {
             this.currencyRateBO.insert(HKDCurrencyRate);
             //
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            logger.error("汇率数据拉取异常，原因：" + e.getMessage());
         }
-
 
     }
 
-
     private BigDecimal calculateRate(Map rateMap) {
 
-        //100美元兑 100 人民币
+        // 100美元兑 100 人民币
         String rate100Str = (String) rateMap.get("bankConversionPri");
         if (StringUtils.isBlank(rate100Str)) {
             return null;
