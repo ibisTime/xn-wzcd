@@ -9,7 +9,7 @@ public class XN805041Req {
     private String mobile; // 手机号
 
     @NotBlank
-    @Length(min = 3, max = 10)
+    @Length(min = 2, max = 10, message = "昵称长度必须在2-10之间")
     private String nickname; // 昵称
 
     @NotBlank
