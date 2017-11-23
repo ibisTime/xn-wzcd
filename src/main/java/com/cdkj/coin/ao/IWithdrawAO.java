@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.Withdraw;
+import com.cdkj.coin.dto.res.XN802758Res;
 import com.cdkj.coin.spring.ServiceModule;
 
 @ServiceModule
@@ -38,5 +39,5 @@ public interface IWithdrawAO {
 
     public Withdraw getWithdraw(String code, String systemCode);
 
-    public Object getWithdrawCheckInfo(String code);
+    public XN802758Res getWithdrawCheckInfo(String code);
 }

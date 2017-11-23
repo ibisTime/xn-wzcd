@@ -29,6 +29,7 @@ import com.cdkj.coin.enums.EChargeStatus;
 import com.cdkj.coin.enums.ECoin;
 import com.cdkj.coin.enums.EJourBizTypeCold;
 import com.cdkj.coin.enums.EJourBizTypeUser;
+import com.cdkj.coin.enums.EJourKind;
 import com.cdkj.coin.enums.ESystemAccount;
 import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.exception.BizException;
@@ -144,32 +145,38 @@ public class ChargeAOImpl implements IChargeAO {
     public XN802707Res getChargeCheckInfo(String code) {
         XN802707Res res = new XN802707Res();
 
+        // 充值订单详情
         Charge charge = chargeBO.getCharge(code, ESystemCode.COIN.getCode());
 
-        Jour condition1 = new Jour();
-        condition1.setRefNo(charge.getCode());
-        List<Jour> jourList = jourBO.queryJourList(condition1);
+        // 充值对应流水记录
+        Jour jour = new Jour();
+        jour.setRefNo(charge.getCode());
+        jour.setKind(EJourKind.BALANCE.getCode());
+        List<Jour> jourList1 = jourBO.queryJourList(jour);
 
-        EthTransaction condition2 = new EthTransaction();
-        condition2.setRefNo(charge.getCode());
+        // 充值对应广播记录
+        EthTransaction ethTransaction = new EthTransaction();
+        ethTransaction.setRefNo(charge.getCode());
         List<EthTransaction> resultList1 = ethTransactionBO
-            .queryEthTransactionList(condition2);
+            .queryEthTransactionList(ethTransaction);
 
         EthCollection ethCollection = ethCollectionBO
             .getEthCollectionByRefNo(charge.getCode());
+        // 如果有归集
         if (ethCollection != null) {
-            condition1.setRefNo(ethCollection.getCode());
-            List<Jour> jourList2 = jourBO.queryJourList(condition1);
-            jourList.addAll(jourList2);
-
-            condition2.setRefNo(ethCollection.getCode());
+            // 归集对应流水
+            jour.setRefNo(ethCollection.getCode());
+            List<Jour> jourList2 = jourBO.queryJourList(jour);
+            jourList1.addAll(jourList2);
+            // 归集对应广播记录
+            ethTransaction.setRefNo(ethCollection.getCode());
             List<EthTransaction> resultList2 = ethTransactionBO
-                .queryEthTransactionList(condition2);
+                .queryEthTransactionList(ethTransaction);
             resultList1.addAll(resultList2);
         }
 
         res.setCharge(charge);
-        res.setJourList(jourList);
+        res.setJourList(jourList1);
         res.setTransList(resultList1);
 
         return res;

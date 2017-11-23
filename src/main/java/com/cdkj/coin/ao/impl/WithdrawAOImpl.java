@@ -18,6 +18,7 @@ import com.cdkj.coin.ao.IWithdrawAO;
 import com.cdkj.coin.bo.IAccountBO;
 import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IEthTransactionBO;
+import com.cdkj.coin.bo.IJourBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.IWithdrawBO;
@@ -26,11 +27,15 @@ import com.cdkj.coin.common.AmountUtil;
 import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.EthAddress;
+import com.cdkj.coin.domain.EthTransaction;
+import com.cdkj.coin.domain.Jour;
 import com.cdkj.coin.domain.User;
 import com.cdkj.coin.domain.Withdraw;
+import com.cdkj.coin.dto.res.XN802758Res;
 import com.cdkj.coin.enums.EAccountType;
 import com.cdkj.coin.enums.EBoolean;
 import com.cdkj.coin.enums.EJourBizTypeUser;
+import com.cdkj.coin.enums.EJourKind;
 import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.enums.EWithdrawStatus;
 import com.cdkj.coin.exception.BizException;
@@ -45,6 +50,9 @@ public class WithdrawAOImpl implements IWithdrawAO {
 
     @Autowired
     private IWithdrawBO withdrawBO;
+
+    @Autowired
+    private IJourBO jourBO;
 
     @Autowired
     private IUserBO userBO;
@@ -312,9 +320,31 @@ public class WithdrawAOImpl implements IWithdrawAO {
     }
 
     @Override
-    public Object getWithdrawCheckInfo(String code) {
-        // TODO Auto-generated method stub
-        return null;
+    public XN802758Res getWithdrawCheckInfo(String code) {
+
+        XN802758Res res = new XN802758Res();
+
+        // 取现订单详情
+        Withdraw withdraw = withdrawBO.getWithdraw(code,
+            ESystemCode.COIN.getCode());
+
+        // 取现对应流水记录
+        Jour jour = new Jour();
+        jour.setRefNo(withdraw.getCode());
+        jour.setKind(EJourKind.BALANCE.getCode());
+        List<Jour> jourList = jourBO.queryJourList(jour);
+
+        // 取现对应广播记录
+        EthTransaction ethTransaction = new EthTransaction();
+        ethTransaction.setRefNo(withdraw.getCode());
+        List<EthTransaction> resultList = ethTransactionBO
+            .queryEthTransactionList(ethTransaction);
+
+        res.setWithdraw(withdraw);
+        res.setJourList(jourList);
+        res.setTransList(resultList);
+
+        return res;
     }
 
 }
