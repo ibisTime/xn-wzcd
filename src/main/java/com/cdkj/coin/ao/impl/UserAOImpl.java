@@ -71,7 +71,6 @@ import com.cdkj.coin.enums.EUserStatus;
 import com.cdkj.coin.exception.BizException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-google.gson.reflect.TypeToken;
 
 /** 
  * @author: miyb 
@@ -994,8 +993,8 @@ public class UserAOImpl implements IUserAO {
         BigDecimal totalAmount = jourBO.getTotalAmount(
             EJourBizTypeUser.AJ_INVITE.getCode(), EChannelType.NBZ.getCode(),
             account.getAccountNumber(), null, null);
-        res.setInviteProfit(Convert.fromWei(totalAmount, Unit.ETHER).setScale(
-            2, RoundingMode.DOWN).toString());
+        res.setInviteProfit(Convert.fromWei(totalAmount, Unit.ETHER)
+            .setScale(2, RoundingMode.DOWN).toString());
 
         return res;
     }
