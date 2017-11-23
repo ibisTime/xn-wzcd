@@ -29,7 +29,6 @@ import com.cdkj.coin.domain.Jour;
 import com.cdkj.coin.domain.TradeOrder;
 import com.cdkj.coin.domain.UserStatistics;
 import com.cdkj.coin.dto.res.XN625252Res;
-
 import com.cdkj.coin.enums.EAdsStatus;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECoin;
