@@ -135,4 +135,6 @@ public interface IUserBO extends IPaginableBO<User> {
     public int refreshDivRate(String userId, Double divRate);
 
     public Long totalUser(User condition);
+
+    public void refreshEmail(String userId, String email);
 }

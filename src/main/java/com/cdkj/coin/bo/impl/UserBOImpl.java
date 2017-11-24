@@ -733,4 +733,14 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
             throw new BizException("xn702002", "微信编号已存在");
         }
     }
+
+    @Override
+    public void refreshEmail(String userId, String email) {
+        if (StringUtils.isNotBlank(userId)) {
+            User data = new User();
+            data.setUserId(userId);
+            data.setEmail(email);
+            userDAO.updateEmail(data);
+        }
+    }
 }

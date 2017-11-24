@@ -73,4 +73,6 @@ public interface IUserDAO extends IBaseDAO<User> {
     public int approveUser(User data);
 
     public int updateDivRate(User data);
+
+    public int updateEmail(User data);
 }

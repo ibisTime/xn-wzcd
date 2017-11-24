@@ -355,6 +355,15 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
+    public void doBindEmail(String userId, String email) {
+        User user = userBO.getUser(userId);
+        if (user == null) {
+            throw new BizException("xn000000", "用户不存在");
+        }
+        userBO.refreshEmail(userId, email);
+    }
+
+    @Override
     @Transactional
     public void doChangeMoblie(String userId, String newMobile,
             String smsCaptcha) {
@@ -968,4 +977,5 @@ public class UserAOImpl implements IUserAO {
 
         return res;
     }
+
 }

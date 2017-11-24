@@ -511,6 +511,14 @@
 		user_id = #{userId}		
 	</update>
 	
+	<update id="update_email" parameterType="user">
+		UPDATE tstd_user
+		SET
+		email = #{email}
+		WHERE
+		user_id = #{userId}		
+	</update>
+	
 	<update id="approve_user" parameterType="user">
 		UPDATE tstd_user
 		SET

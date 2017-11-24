@@ -50,6 +50,9 @@ public interface IUserAO {
     public void doBindMoblie(String userId, String mobile, String smsCaptcha,
             String isSendSms);
 
+    // 绑定邮箱
+    public void doBindEmail(String userId, String email);
+
     // 更换手机号
     public void doChangeMoblie(String userId, String newMobile,
             String smsCaptcha);
