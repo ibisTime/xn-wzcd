@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.cdkj.coin.domain.UserStatistics;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -251,10 +250,7 @@ public class UserAOImpl implements IUserAO {
     @Transactional
     public String doAddUser(XN805042Req req) {
         String userId = null;
-        // if (ESystemCode.YLQ.getCode().equals(req.getSystemCode())) {
-        // userId = doAddUserYLQ(req);
-        // } else {
-        // }
+        userId = doAddUser(req);
         return userId;
     }
 
