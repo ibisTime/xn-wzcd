@@ -14,6 +14,8 @@ package com.cdkj.coin.dto.req;
  * @history:
  */
 public class XN625105Req extends APageReq {
+    // 订单编号模糊查询
+    private String code;
 
     // 被归集地址
     private String fromAddress;
@@ -26,6 +28,14 @@ public class XN625105Req extends APageReq {
 
     // 状态
     private String status;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getFromAddress() {
         return fromAddress;

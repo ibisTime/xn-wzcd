@@ -38,6 +38,7 @@ public class XN625105 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         EthCollection condition = new EthCollection();
+        condition.setCodeForQuery(req.getCode());
         condition.setFromAddress(req.getFromAddress());
         condition.setToAddress(req.getToAddress());
         condition.setStatus(req.getStatus());

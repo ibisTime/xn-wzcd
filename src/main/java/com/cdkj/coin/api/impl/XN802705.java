@@ -27,6 +27,7 @@ public class XN802705 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         Charge condition = new Charge();
+        condition.setCodeForQuery(req.getCode());
         condition.setPayGroup(req.getPayGroup());
         condition.setRefNo(req.getRefNo());
         condition.setAccountNumber(req.getAccountNumber());

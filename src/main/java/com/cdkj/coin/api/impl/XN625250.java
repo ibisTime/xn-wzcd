@@ -38,7 +38,7 @@ public class XN625250 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         TradeOrder condition = new TradeOrder();
-        condition.setCode(req.getCode());
+        condition.setCodeForQuery(req.getCode());
         condition.setType(req.getType());
         condition.setAdsCode(req.getAdsCode());
         condition.setBuyUser(req.getBuyUser());

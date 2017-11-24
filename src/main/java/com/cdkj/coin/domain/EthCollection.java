@@ -52,6 +52,9 @@ public class EthCollection extends ABaseDO {
     // 关联订单号
     private String refNo;
 
+    // 订单编号模糊查询
+    private String codeForQuery;
+
     public String getTxFeeString() {
         return txFeeString;
     }
@@ -156,6 +159,14 @@ public class EthCollection extends ABaseDO {
 
     public void setAmountString(String amountString) {
         this.amountString = amountString;
+    }
+
+    public String getCodeForQuery() {
+        return codeForQuery;
+    }
+
+    public void setCodeForQuery(String codeForQuery) {
+        this.codeForQuery = codeForQuery;
     }
 
 }

@@ -40,9 +40,9 @@ public class XN625200 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         Date start = DateUtil.strToDate(req.getAvailableDatetimeStart(),
-            DateUtil.DATA_TIME_PATTERN_1);
+            DateUtil.FRONT_DATE_FORMAT_STRING);
         Date end = DateUtil.strToDate(req.getAvailableDatetimeEnd(),
-            DateUtil.DATA_TIME_PATTERN_1);
+            DateUtil.FRONT_DATE_FORMAT_STRING);
         ethAddressAO.generateMAddress(start, end);
         return new BooleanRes(true);
     }

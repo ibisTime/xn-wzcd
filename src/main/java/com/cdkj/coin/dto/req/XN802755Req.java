@@ -13,6 +13,9 @@ public class XN802755Req extends APageReq {
      */
     private static final long serialVersionUID = -2015437210978527476L;
 
+    // 订单编号模糊查询
+    private String code;
+
     // 针对账号
     private String accountNumber;
 
@@ -222,5 +225,13 @@ public class XN802755Req extends APageReq {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

@@ -2,7 +2,6 @@ package com.cdkj.coin.api.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.cdkj.coin.ao.IAccountAO;
 import com.cdkj.coin.ao.IWithdrawAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.DateUtil;
@@ -24,9 +23,6 @@ public class XN802755 extends AProcessor {
     private IWithdrawAO withdrawAO = SpringContextHolder
         .getBean(IWithdrawAO.class);
 
-    private IAccountAO accountAO = SpringContextHolder
-        .getBean(IAccountAO.class);
-
     private XN802755Req req = null;
 
     @Override
@@ -35,6 +31,7 @@ public class XN802755 extends AProcessor {
         if (StringUtils.isNotBlank(req.getAccountNumber())) {
             condition.setAccountNumber(req.getAccountNumber());
         }
+        condition.setCodeForQuery(req.getCode());
         condition.setAccountName(req.getAccountName());
         condition.setType(req.getType());
         condition.setChannelType(req.getChannelType());

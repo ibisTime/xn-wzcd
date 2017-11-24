@@ -91,6 +91,9 @@ public class TradeOrder extends ABaseDO {
 
     // ******辅助字段******
 
+    // 订单编号模糊查询
+    private String codeForQuery;
+
     // 买家信息
     private User buyUserInfo;
 
@@ -346,6 +349,14 @@ public class TradeOrder extends ABaseDO {
 
     public void setCountString(String countString) {
         this.countString = countString;
+    }
+
+    public String getCodeForQuery() {
+        return codeForQuery;
+    }
+
+    public void setCodeForQuery(String codeForQuery) {
+        this.codeForQuery = codeForQuery;
     }
 
 }

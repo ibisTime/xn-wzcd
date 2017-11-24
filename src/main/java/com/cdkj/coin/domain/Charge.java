@@ -78,6 +78,10 @@ public class Charge extends ABaseDO {
     private String companyCode;
 
     // *******************************
+
+    // 订单编号模糊查询
+    private String codeForQuery;
+
     // 申请时间起
     private Date applyDatetimeStart;
 
@@ -308,5 +312,13 @@ public class Charge extends ABaseDO {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getCodeForQuery() {
+        return codeForQuery;
+    }
+
+    public void setCodeForQuery(String codeForQuery) {
+        this.codeForQuery = codeForQuery;
     }
 }

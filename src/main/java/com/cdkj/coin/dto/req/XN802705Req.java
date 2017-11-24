@@ -13,6 +13,9 @@ public class XN802705Req extends APageReq {
      */
     private static final long serialVersionUID = -8656333710276407945L;
 
+    // 订单编号模糊查询
+    private String code;
+
     // 支付组号（信息流代表）
     private String payGroup;
 
@@ -66,6 +69,14 @@ public class XN802705Req extends APageReq {
 
     // 公司编号
     private String companyCode;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getPayGroup() {
         return payGroup;

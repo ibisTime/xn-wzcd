@@ -18,7 +18,7 @@ import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
 
 /** 
- * 分页查询地址
+ * 详情查询地址
  * @author: haiqingzheng 
  * @since: 2017年11月8日 下午3:16:17 
  * @history:
