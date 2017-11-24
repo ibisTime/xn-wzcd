@@ -165,6 +165,7 @@ public class AdsAOImpl implements IAdsAO {
         long count = this.iAdsBO.totalCountOfShangJiaAds(req.getUserId(),
                 req.getTradeType());
         if (count > 0) {
+
             if (req.getTradeType().equals(ETradeOrderType.BUY)) {
 
                 throw new BizException("xn000", "您已经有一个已上架的购买广告");

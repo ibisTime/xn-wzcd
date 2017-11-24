@@ -23,6 +23,7 @@ public class XN625280 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
+        System.out.print("121");
         return this.ethAddressAO.currencyRateByCurrency(req.getCurrency());
     }
 
