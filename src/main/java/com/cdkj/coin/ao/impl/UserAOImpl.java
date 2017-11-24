@@ -250,51 +250,23 @@ public class UserAOImpl implements IUserAO {
     @Transactional
     public String doAddUser(XN805042Req req) {
         String userId = null;
-        userId = doAddUser(req);
+        userId = doAddUserCOIN(req);
         return userId;
     }
 
-    // private String doAddUserYLQ(XN805042Req req) {
-    // String userId = null;
-    // if (EUserKind.Customer.getCode().equals(req.getKind())) {
-    // // 验证手机号
-    // userBO.isMobileExist(req.getMobile(), req.getKind(),
-    // req.getCompanyCode(), req.getSystemCode());
-    // // 判断登录密码是否为空
-    // if (StringUtils.isBlank(req.getLoginPwd())) {
-    // req.setLoginPwd(RandomUtil.generate6());
-    // }
-    // userId = userBO.doAddUser(req);
-    //
-    // // 分配账户
-    // // List<String> currencyList = new ArrayList<String>();
-    // // currencyList.add(ECurrency.CNY.getCode());
-    // // currencyList.add(ECurrency.JF.getCode());
-    // // accountBO.distributeAccountList(userId, req.getMobile(),
-    // // req.getKind(), currencyList, req.getCompanyCode(),
-    // // req.getSystemCode());
-    // // 发送短信
-    // smsOutBO
-    // .sendSmsOut(
-    // req.getMobile(),
-    // "尊敬的"
-    // + PhoneUtil.hideMobile(req.getMobile())
-    // + "用户，您已成功注册。初始化登录密码为"
-    // + req.getLoginPwd()
-    // +
-    // "，请及时登录网站更改密码。APP下载地址：http://m.yiliangqian.com/share/share-qrcord.html",
-    // "805042", req.getCompanyCode(), req.getSystemCode());
-    // } else if (EUserKind.Plat.getCode().equals(req.getKind())) {
-    // // 验证登录名
-    // userBO.isLoginNameExist(req.getLoginName(), req.getKind(),
-    // req.getCompanyCode(), req.getSystemCode());
-    //
-    // userId = userBO.doAddUser(req);
-    // } else {
-    // throw new BizException("xn805042", "用户类型" + req.getKind() + "未能识别");
-    // }
-    // return userId;
-    // }
+    private String doAddUserCOIN(XN805042Req req) {
+        String userId = null;
+        if (EUserKind.Plat.getCode().equals(req.getKind())) {
+            // 验证登录名
+            userBO.isLoginNameExist(req.getLoginName(), req.getKind(),
+                req.getCompanyCode(), req.getSystemCode());
+
+            userId = userBO.doAddUser(req);
+        } else {
+            throw new BizException("xn805042", "用户类型" + req.getKind() + "未能识别");
+        }
+        return userId;
+    }
 
     @Override
     @Transactional
