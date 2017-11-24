@@ -278,7 +278,6 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         List statusList = new ArrayList();
         statusList.add(ETradeOrderStatus.RELEASED.getCode());
         statusList.add(ETradeOrderStatus.COMPLETE.getCode());
-        statusList.add(ETradeOrderStatus.ARBITRATE.getCode());
         return statusList;
     }
 
