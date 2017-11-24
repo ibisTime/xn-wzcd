@@ -145,7 +145,6 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
         if (condition.getMaxPrice() != null && condition.getMinPrice() != null) {
             if (condition.getMaxPrice().compareTo(condition.getMinPrice()) <= 0) {
-
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "最大金额需大于等于最小金额");
             }
@@ -169,7 +168,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int minute = cal.get(Calendar.MINUTE);
         condition.setCurrentTime(1.0 * hour + minute * 1.0 / 60);
-        condition.setOrder("true_price", ETradeType.SELL.equals(condition.getTradeType()));
+        condition.setOrder("true_price", ETradeType.SELL.getCode().equals(condition.getTradeType()));
         //
         long totalCount = adsDAO.selectFrontTotalCount(condition);
         Paginable<Ads> page = new Page<Ads>(start, limit, totalCount);

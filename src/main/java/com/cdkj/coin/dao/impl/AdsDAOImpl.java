@@ -30,7 +30,9 @@ public class AdsDAOImpl extends AMybatisTemplate implements IAdsDAO {
     //
     @Override
     public long selectTotalCount(Ads condition) {
-        return 0;
+
+        return super.selectTotalCount(NAMESPACE.concat("selectTotalCount"),condition);
+
     }
 
     //

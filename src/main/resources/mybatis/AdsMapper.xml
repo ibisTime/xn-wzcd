@@ -86,7 +86,10 @@
             </if>
 
             <if test="payType != null and payType != ''">
-                And `pay_type` = "%"#{payType}"%"
+                And `pay_type` = #{payType}
+            </if>
+            <if test="onlyTrust != null and onlyTrust != ''">
+                And `only_trust` = #{onlyTrust}
             </if>
 
             <if test="statusList != null and statusList != ''">
@@ -116,9 +119,6 @@
         </trim>
     </sql>
 
-
-
-
     <select id="selectFrontTotalCount" parameterType="com.cdkj.coin.domain.Ads" resultType="java.lang.Long">
         SELECT count(1)
         FROM tcoin_ads
@@ -139,13 +139,13 @@
                 ${order}
             </if>
         </trim>
-
     </select>
 
 
     <!-- #########################  管理端  ################################-->
     <select id="selectTotalCount" parameterType="com.cdkj.coin.domain.Ads" resultType="java.lang.Long">
         SELECT count(1)
+        FROM tcoin_ads
         <include refid="whereCondition"/>
     </select>
 

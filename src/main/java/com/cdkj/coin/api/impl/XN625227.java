@@ -29,8 +29,10 @@ public class XN625227 extends AProcessor {
         condition.setTradeCoin(req.getCoin());
         condition.setUserId(req.getUserId());
         condition.setTradeType(req.getTradeType());
+        condition.setPayType(req.getPayType());
         condition.setTradeCoin(req.getCoin());
         condition.setStatus(req.getStatus());
+        condition.setOnlyTrust(req.getOnlyTrust());
         condition.setStatusList(req.getStatusList());
         return this.adsAO.ossPage(req.getStart(), req.getLimit(), condition);
 
