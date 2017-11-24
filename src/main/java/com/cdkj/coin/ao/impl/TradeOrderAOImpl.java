@@ -265,7 +265,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     @Override
     @Transactional
     public TradeOrder release(String code, String updater, String remark) {
+
         TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(code);
+
         if (!ETradeOrderStatus.PAYED.getCode().equals(tradeOrder.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前状态下不能释放");
         }

@@ -36,6 +36,9 @@ import com.cdkj.coin.domain.UserStatistics;
 import com.cdkj.coin.dto.req.XN625220Req;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.EBizErrorCode;
+import org.web3j.utils.Convert;
+
+import javax.rmi.CORBA.Util;
 
 /**
  * Created by tianlei on 2017/十一月/14.
@@ -158,11 +161,20 @@ public class AdsAOImpl implements IAdsAO {
             throw new BizException("xn00000", "用户不存在");
         }
 
-        //校验是否已经存在，正在上架的类型的交易
+        //检查是否存在已上架的——同类型的广告
         long count = this.iAdsBO.totalCountOfShangJiaAds(req.getUserId(),
                 req.getTradeType());
         if (count > 0) {
-            throw new BizException("xn000", "同类型的广告只能存在一个");
+            if (req.getTradeType().equals(ETradeOrderType.BUY)) {
+
+                throw new BizException("xn000", "您已经有一个已上架的购买广告");
+
+            } else {
+
+                throw new BizException("xn000", "您已经有一个已上架的出售广告");
+
+            }
+
         }
 
         if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
@@ -388,13 +400,16 @@ public class AdsAOImpl implements IAdsAO {
         // 手续费+发布总额
         Double feeRate = sysConfigBO
                 .getDoubleValue(SysConstants.TRADE_FEE_RATE);
-        BigDecimal fee = ads.getTotalCount().multiply(new BigDecimal(feeRate));
+        BigDecimal fee = ads.getTotalCount().multiply(BigDecimal.valueOf(feeRate));
         BigDecimal willFrezonAmount = ads.getTotalCount().add(fee);
 
         // 校验账户余额
         if (account.getAmount().subtract(account.getFrozenAmount())
                 .compareTo(willFrezonAmount) < 0) {
-            throw new BizException("xn000", "需要冻结相应的手续费，账户余额不足");
+
+            BigDecimal maxSell = account.getAmount().subtract(account.getFrozenAmount()).subtract(fee);
+            BigDecimal maxSellEther = Convert.fromWei(maxSell, Convert.Unit.ETHER);
+            throw new BizException("xn000", "由于要冻结相应手续费，您最多可以出售" + maxSellEther.toString());
         }
 
         // 冻结 交易金额
@@ -405,7 +420,7 @@ public class AdsAOImpl implements IAdsAO {
         // 冻结 对应的手续费
         account = this.accountBO.frozenAmount(account, fee,
                 EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
-                EJourBizTypeUser.AJ_ADS_FROZEN.getValue() + "交易手续费冻结",
+                EJourBizTypeUser.AJ_ADS_FROZEN.getValue() + "-交易手续费冻结",
                 ads.getCode());
 
     }
@@ -468,7 +483,7 @@ public class AdsAOImpl implements IAdsAO {
 
         //卖币广告 把冻结金额返还
         // 大于最小返还金额，把金额返还
-        BigDecimal minBack = new BigDecimal(Double.toString(Math.pow(10, 10) - 1));
+        BigDecimal minBack = BigDecimal.valueOf(Math.pow(10, 10) - 1);
         if (ads.getLeftCount().compareTo(minBack) > 0) {
 
             Account sellUserAccount = this.accountBO.getAccountByUser(userId,
@@ -513,7 +528,6 @@ public class AdsAOImpl implements IAdsAO {
         if (EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())) {
             // 剩余金额小于 单笔最小交易金额就下架
             boolean condition1 = ads.getLeftCount().compareTo(BigDecimal.ZERO) == 0;
-
             boolean condition2 = ads.getLeftCount()
                     .compareTo(ads.getMinTrade()) < 0;
             if (condition1 || condition2) {

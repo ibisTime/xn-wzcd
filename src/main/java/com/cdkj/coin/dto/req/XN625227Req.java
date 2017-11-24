@@ -19,14 +19,6 @@ public class XN625227Req {
     @DecimalMin(value = "1")
     private Integer limit;
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     private String coin;
 
     private String userId;
@@ -35,7 +27,36 @@ public class XN625227Req {
 
     private String status;
 
+    private String payType;
+
+    private String onlyTrust;
+
     private List<String> statusList;
+
+
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType;
+    }
+
+    public String getOnlyTrust() {
+        return onlyTrust;
+    }
+
+    public void setOnlyTrust(String onlyTrust) {
+        this.onlyTrust = onlyTrust;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public List<String> getStatusList() {
         return statusList;
