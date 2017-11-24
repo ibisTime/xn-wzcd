@@ -35,6 +35,12 @@
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
+			<if test="availableDatetimeStart != null and availableDatetimeStart != '' ">
+				<![CDATA[AND t.available_datetime_start >= #{availableDatetimeStart}]]>
+			</if>
+			<if test="availableDatetimeEnd != null and availableDatetimeEnd != '' ">
+				<![CDATA[AND t.available_datetime_end <= #{availableDatetimeEnd}]]>
+			</if>
 			<if test="statusList != null and statusList != '' ">
 				AND t.status in 
                 <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">

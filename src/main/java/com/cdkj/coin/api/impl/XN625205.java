@@ -8,6 +8,8 @@
  */
 package com.cdkj.coin.api.impl;
 
+import java.util.Date;
+
 import com.cdkj.coin.ao.IEthAddressAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.DateUtil;
@@ -39,14 +41,15 @@ public class XN625205 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         EthAddress condition = new EthAddress();
+        Date startDate = DateUtil.getStartDatetime(req
+            .getAvailableDatetimeStart());
+        Date endDate = DateUtil.getEndDatetime(req.getAvailableDatetimeEnd());
         condition.setStatusList(req.getStatusList());
         condition.setType(req.getType());
         condition.setAddress(req.getAddress());
         condition.setUserId(req.getUserId());
-        condition.setAvailableDatetimeStart(DateUtil.strToDate(
-            req.getAvailableDatetimeStart(), DateUtil.DATA_TIME_PATTERN_1));
-        condition.setAvailableDatetimeEnd(DateUtil.strToDate(
-            req.getAvailableDatetimeEnd(), DateUtil.DATA_TIME_PATTERN_1));
+        condition.setAvailableDatetimeStart(startDate);
+        condition.setAvailableDatetimeEnd(endDate);
         condition.setStatus(req.getStatus());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());

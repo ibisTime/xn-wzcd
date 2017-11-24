@@ -139,10 +139,16 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
                 EJourBizTypeUser.AJ_WITHDRAWFEE.getValue(), withdraw.getCode());
         }
         // 取现金额扣减
-        userAccount = accountBO.changeAmount(userAccount, withdraw.getAmount()
-            .negate(), EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
-            withdraw.getCode(), EJourBizTypeUser.AJ_WITHDRAW.getCode(),
-            EJourBizTypeUser.AJ_WITHDRAW.getValue());
+        userAccount = accountBO.changeAmount(
+            userAccount,
+            withdraw.getAmount().negate(),
+            EChannelType.ETH,
+            ctqEthTransaction.getHash(),
+            "ETH",
+            withdraw.getCode(),
+            EJourBizTypeUser.AJ_WITHDRAW.getCode(),
+            EJourBizTypeUser.AJ_WITHDRAW.getValue() + "-外部地址："
+                    + withdraw.getPayCardNo());
         if (withdraw.getFee().compareTo(BigDecimal.ZERO) > 0) {
             // 取现手续费扣减
             userAccount = accountBO.changeAmount(userAccount, withdraw.getFee()

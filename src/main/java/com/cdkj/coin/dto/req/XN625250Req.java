@@ -40,6 +40,9 @@ public class XN625250Req extends APageReq {
     // 付款方式
     private String payType;
 
+    // 状态
+    private String status;
+
     // 状态列表
     private List<String> statusList;
 
@@ -116,6 +119,14 @@ public class XN625250Req extends APageReq {
 
     public void setBelongUser(String belongUser) {
         this.belongUser = belongUser;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

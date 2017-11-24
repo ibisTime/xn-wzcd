@@ -39,10 +39,10 @@ public class XN625200 extends AProcessor {
      */
     @Override
     public Object doBusiness() throws BizException {
-        Date start = DateUtil.strToDate(req.getAvailableDatetimeStart(),
-            DateUtil.FRONT_DATE_FORMAT_STRING);
-        Date end = DateUtil.strToDate(req.getAvailableDatetimeEnd(),
-            DateUtil.FRONT_DATE_FORMAT_STRING);
+        // 想使用的日期 2017-09-01 至 2017-09-03
+        // 数据库存储为 2017-09-01 00:00:00 至 2017-09-03 23:59:59
+        Date start = DateUtil.getStartDatetime(req.getAvailableDatetimeStart());
+        Date end = DateUtil.getEndDatetime(req.getAvailableDatetimeEnd());
         ethAddressAO.generateMAddress(start, end);
         return new BooleanRes(true);
     }

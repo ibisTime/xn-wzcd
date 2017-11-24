@@ -46,6 +46,7 @@ public class XN625250 extends AProcessor {
         condition.setTradeCurrency(req.getTradeCurrency());
         condition.setPayType(req.getPayType());
         condition.setStatusList(req.getStatusList());
+        condition.setStatus(req.getStatus());
         condition.setBelongUser(req.getBelongUser());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
