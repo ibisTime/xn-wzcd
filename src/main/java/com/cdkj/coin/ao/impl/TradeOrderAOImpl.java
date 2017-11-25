@@ -531,8 +531,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 4.1平台盈亏账户，减少
         this.accountBO.changeAmount(sysAccount, shouldPayFenCheng.negate(),
             EChannelType.NBZ, null, null, tradeOrder.getCode(),
-            EJourBizTypePlat.AJ_TUIJIAN_FENCHENG.getCode(),
-            EJourBizTypePlat.AJ_TUIJIAN_FENCHENG.getValue());
+            EJourBizTypePlat.AJ_INVITE.getCode(),
+            EJourBizTypePlat.AJ_INVITE.getValue());
 
         // 推荐人加钱
         this.accountBO.changeAmount(refereeUserAccount, shouldPayFenCheng,
