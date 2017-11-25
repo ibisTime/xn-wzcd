@@ -444,11 +444,13 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 1.卖家 冻结金额减少
         Account sellUserAccount = this.accountBO.getAccountByUser(
             tradeOrder.getSellUser(), tradeOrder.getTradeCoin());
+
         // 1.1 解冻卖家 冻结金额
         sellUserAccount = this.accountBO.unfrozenAmount(sellUserAccount,
             tradeOrder.getCount(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
             EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-订单释放解冻",
             tradeOrder.getCode());
+
         // 1.2扣除卖家账户金额
         sellUserAccount = this.accountBO.changeAmount(sellUserAccount,
             tradeOrder.getCount().negate(), EChannelType.NBZ, null, null,
@@ -654,6 +656,11 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     @Override
     public Paginable<TradeOrder> queryTradeOrderPage(int start, int limit,
             TradeOrder condition) {
+        //按时间倒叙
+
+        condition.setOrder("update_datetime","DESC");
+
+        //
         Paginable<TradeOrder> results = tradeOrderBO.getPaginable(start, limit,
             condition);
         for (TradeOrder tradeOrder : results.getList()) {

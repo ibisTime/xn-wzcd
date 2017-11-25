@@ -225,7 +225,7 @@ CREATE TABLE `tcoin_trade_order` (
   `release_datetime` datetime DEFAULT NULL COMMENT '币释放时间',
   `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
   `updater` varchar(32) DEFAULT NULL COMMENT '最后更新人',
-  `update_datatime` datetime DEFAULT NULL COMMENT '最后更新时间',
+  `update_datetime` datetime DEFAULT NULL COMMENT '最后更新时间',
   `remark` text COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

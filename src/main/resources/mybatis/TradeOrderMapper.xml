@@ -24,7 +24,7 @@
 		<result column="release_datetime" property="releaseDatetime" />
 		<result column="create_datetime" property="createDatetime" />
 		<result column="updater" property="updater" />
-		<result column="update_datatime" property="updateDatatime" />
+		<result column="update_datetime" property="updateDatetime" />
 		<result column="remark" property="remark" />
 	</resultMap>
 	<sql id="where_condition">
@@ -51,7 +51,7 @@
 				AND t.status = #{status}
 			</if>
 			<if test="belongUser != null and belongUser != '' ">
-				AND t.buy_user = #{belongUser} or t.sell_user = #{belongUser}
+				AND (t.buy_user = #{belongUser} or t.sell_user = #{belongUser})
 			</if>
 			<if test="invalidDatetime != null and invalidDatetime != '' ">
 				<![CDATA[AND t.invalid_datetime <= #{invalidDatetime}]]>
@@ -87,14 +87,14 @@
 		,t.release_datetime
 		,t.create_datetime
 		,t.updater
-		,t.update_datatime
+		,t.update_datetime
 		,t.remark
 		FROM
 		tcoin_trade_order t
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
-				t.${order}
+				${order}
 			</if>
 		</trim>
 	</select>
@@ -138,7 +138,7 @@
 		
 		,create_datetime
 		,updater
-		,update_datatime
+		,update_datetime
 		,remark
 		)
 		VALUES(
@@ -162,7 +162,7 @@
 		
 		,#{createDatetime}
 		,#{updater}
-		,#{updateDatatime}
+		,#{updateDatetime}
 		,#{remark}
 		)
 	</insert>
@@ -184,7 +184,7 @@
 		,status = #{status}
 		
 		,updater = #{updater}
-		,update_datatime = #{updateDatatime}
+		,update_dat3time = #{updateDat3time}
 		,remark = #{remark}
 		
 		WHERE code = #{code}
@@ -195,7 +195,7 @@
 		SET
 		status = #{status}
 		,updater = #{updater}
-		,update_datatime = #{updateDatatime}
+		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
@@ -206,7 +206,7 @@
 		status = #{status}
 		,mark_datetime = #{markDatetime}
 		,updater = #{updater}
-		,update_datatime = #{updateDatatime}
+		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
@@ -217,7 +217,7 @@
 		status = #{status}
 		,release_datetime = #{releaseDatetime}
 		,updater = #{updater}
-		,update_datatime = #{updateDatatime}
+		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
@@ -228,7 +228,7 @@
 		status = #{status}
 		,bs_comment = #{bsComment}
 		,updater = #{updater}
-		,update_datatime = #{updateDatatime}
+		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
@@ -239,7 +239,7 @@
 		status = #{status}
 		,sb_comment = #{sbComment}
 		,updater = #{updater}
-		,update_datatime = #{updateDatatime}
+		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
@@ -249,7 +249,7 @@
 		SET
 		status = #{status}
 		,updater = #{updater}
-		,update_datatime = #{updateDatatime}
+		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
@@ -259,7 +259,7 @@
 		SET
 		status = #{status}
 		,updater = #{updater}
-		,update_datatime = #{updateDatatime}
+		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>

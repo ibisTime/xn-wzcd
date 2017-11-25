@@ -84,7 +84,7 @@ public class TradeOrder extends ABaseDO {
     private String updater;
 
     // 更新时间
-    private Date updateDatatime;
+    private Date updateDatetime;
 
     // 备注
     private String remark;
@@ -287,12 +287,12 @@ public class TradeOrder extends ABaseDO {
         this.updater = updater;
     }
 
-    public Date getUpdateDatatime() {
-        return updateDatatime;
+    public Date getUpdateDatetime() {
+        return updateDatetime;
     }
 
-    public void setUpdateDatatime(Date updateDatatime) {
-        this.updateDatatime = updateDatatime;
+    public void setUpdateDatetime(Date updateDatetime) {
+        this.updateDatetime = updateDatetime;
     }
 
     public String getRemark() {

@@ -1,5 +1,8 @@
 package com.cdkj.coin.api.impl;
 
+import com.cdkj.coin.ao.ITradeOrderAO;
+import com.cdkj.coin.bo.base.Paginable;
+import com.cdkj.coin.domain.UserStatistics;
 import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.coin.ao.IUserAO;
@@ -13,6 +16,8 @@ import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
 
+import java.util.List;
+
 /**
  * 分页查询用户列表
  * @author: xieyj 
@@ -21,6 +26,7 @@ import com.cdkj.coin.spring.SpringContextHolder;
  */
 public class XN805120 extends AProcessor {
     private IUserAO userAO = SpringContextHolder.getBean(IUserAO.class);
+    private ITradeOrderAO tradeOrderAO = SpringContextHolder.getBean(ITradeOrderAO.class);
 
     private XN805120Req req = null;
 
@@ -72,7 +78,14 @@ public class XN805120 extends AProcessor {
         condition.setOrder(column, req.getOrderDir());
         int start = Integer.valueOf(req.getStart());
         int limit = Integer.valueOf(req.getLimit());
-        return userAO.queryUserPage(start, limit, condition);
+        Paginable<User> paginable = userAO.queryUserPage(start, limit, condition);
+        List<User> userList = paginable.getList();
+        for (User user : userList) {
+            UserStatistics userStatistics = this.tradeOrderAO.userStatisticsInfo(user.getUserId());
+            user.setUserStatistics(userStatistics);
+
+        }
+        return paginable;
     }
 
     @Override

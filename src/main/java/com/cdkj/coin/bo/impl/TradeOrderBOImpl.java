@@ -61,7 +61,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         data.setStatus(ETradeOrderStatus.TO_SUBMIT.getCode());
         data.setCreateDatetime(now);
         data.setUpdater(buyUser);
-        data.setUpdateDatatime(now);
+        data.setUpdateDatetime(now);
         data.setRemark("开始聊天，等待下单");
 
         tradeOrderDAO.insert(data);
@@ -95,7 +95,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         data.setStatus(ETradeOrderStatus.TO_SUBMIT.getCode());
         data.setCreateDatetime(now);
         data.setUpdater(sellUser);
-        data.setUpdateDatatime(now);
+        data.setUpdateDatetime(now);
         data.setRemark("开始聊天，等待下单");
         tradeOrderDAO.insert(data);
 
@@ -133,7 +133,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
         data.setCreateDatetime(now);
         data.setUpdater(buyUser);
-        data.setUpdateDatatime(now);
+        data.setUpdateDatetime(now);
         data.setRemark("直接订单，等待支付");
 
         tradeOrderDAO.insert(data);
@@ -170,7 +170,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
         data.setCreateDatetime(now);
         data.setUpdater(sellUser);
-        data.setUpdateDatatime(now);
+        data.setUpdateDatetime(now);
         data.setRemark("直接订单，等待支付");
         tradeOrderDAO.insert(data);
 
@@ -197,7 +197,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         data.setStatus(ETradeOrderStatus.TO_PAY.getCode());
 
         data.setUpdater(data.getBuyUser());
-        data.setUpdateDatatime(now);
+        data.setUpdateDatetime(now);
         data.setRemark("聊天后下单，等待支付");
 
         tradeOrderDAO.updateSubmit(data);
@@ -223,7 +223,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         data.setStatus(ETradeOrderStatus.TO_PAY.getCode());
 
         data.setUpdater(data.getSellUser());
-        data.setUpdateDatatime(now);
+        data.setUpdateDatetime(now);
         data.setRemark("聊天后下单，等待支付");
 
         tradeOrderDAO.updateSubmit(data);
@@ -235,7 +235,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         if (tradeOrder != null) {
             tradeOrder.setStatus(ETradeOrderStatus.CANCEL.getCode());
             tradeOrder.setUpdater(updater);
-            tradeOrder.setUpdateDatatime(new Date());
+            tradeOrder.setUpdateDatetime(new Date());
             tradeOrder.setRemark(StringUtils.isNotBlank(remark) ? remark
                     : "订单已被取消");
             count = tradeOrderDAO.updateCancel(tradeOrder);
@@ -251,7 +251,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
             tradeOrder.setStatus(ETradeOrderStatus.PAYED.getCode());
             tradeOrder.setMarkDatetime(now);
             tradeOrder.setUpdater(updater);
-            tradeOrder.setUpdateDatatime(now);
+            tradeOrder.setUpdateDatetime(now);
             tradeOrder.setRemark(StringUtils.isNotBlank(remark) ? remark
                     : "已标记付款，待释放");
             count = tradeOrderDAO.updateMarkPay(tradeOrder);
@@ -267,7 +267,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
             tradeOrder.setStatus(ETradeOrderStatus.RELEASED.getCode());
             tradeOrder.setReleaseDatetime(now);
             tradeOrder.setUpdater(updater);
-            tradeOrder.setUpdateDatatime(now);
+            tradeOrder.setUpdateDatetime(now);
             tradeOrder.setRemark(StringUtils.isNotBlank(remark) ? remark
                     : "已释放，待评价");
             count = tradeOrderDAO.updateRelease(tradeOrder);
@@ -284,7 +284,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
             tradeOrder.setStatus(status);
             tradeOrder.setBsComment(comment);
             tradeOrder.setUpdater(userId);
-            tradeOrder.setUpdateDatatime(now);
+            tradeOrder.setUpdateDatetime(now);
             tradeOrder.setRemark(remark);
             count = tradeOrderDAO.updateBsComment(tradeOrder);
         }
@@ -300,7 +300,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
             tradeOrder.setStatus(status);
             tradeOrder.setSbComment(comment);
             tradeOrder.setUpdater(userId);
-            tradeOrder.setUpdateDatatime(now);
+            tradeOrder.setUpdateDatetime(now);
             tradeOrder.setRemark(remark);
             count = tradeOrderDAO.updateSbComment(tradeOrder);
         }
@@ -314,7 +314,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
             Date now = new Date();
             tradeOrder.setStatus(ETradeOrderStatus.ARBITRATE.getCode());
             tradeOrder.setUpdater(applyUser);
-            tradeOrder.setUpdateDatatime(now);
+            tradeOrder.setUpdateDatetime(now);
             tradeOrder.setRemark("申请仲裁，待处理");
             count = tradeOrderDAO.updateArbitrate(tradeOrder);
         }
@@ -328,7 +328,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
             Date now = new Date();
             tradeOrder.setStatus(ETradeOrderStatus.TO_PAY.getCode());
             tradeOrder.setUpdater(updater);
-            tradeOrder.setUpdateDatatime(now);
+            tradeOrder.setUpdateDatetime(now);
             tradeOrder.setRemark(remark);
             count = tradeOrderDAO.updateRevokePay(tradeOrder);
         }
