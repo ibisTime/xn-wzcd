@@ -264,5 +264,10 @@
 		WHERE code = #{code}
 	</update>
 
+    <delete id="delete_tradeOrder" parameterType="tradeOrder">
+		DELETE FROM tcoin_trade_order
+		WHERE
+		code = #{code}			
+	</delete>
 
 </mapper>

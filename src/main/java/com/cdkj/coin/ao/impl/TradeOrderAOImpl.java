@@ -731,4 +731,19 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         return res;
     }
 
+    @Override
+    public void dropTradeOrder(String code) {
+        // 交易订单详情
+        TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(code);
+        if (!ETradeOrderStatus.TO_SUBMIT.getCode().equals(
+            tradeOrder.getStatus())
+                && !ETradeOrderStatus.CANCEL.getCode().equals(
+                    tradeOrder.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "只有待下单和已取消的订单可以删除");
+        }
+        tradeOrderBO.removeTradeOrder(tradeOrder);
+
+    }
+
 }

@@ -58,4 +58,7 @@ public interface ITradeOrderAO {
     // 获取用户的交易总量
     public BigDecimal getUserTotalTradeCount(String userId);
 
+    // 删除订单，代下单和已取消的交易可删除
+    public void dropTradeOrder(String code);
+
 }

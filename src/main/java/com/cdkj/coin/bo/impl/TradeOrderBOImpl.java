@@ -494,4 +494,9 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
     }
 
+    @Override
+    public int removeTradeOrder(TradeOrder data) {
+        return tradeOrderDAO.delete(data);
+    }
+
 }

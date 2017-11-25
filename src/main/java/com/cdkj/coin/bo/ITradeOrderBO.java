@@ -66,4 +66,6 @@ public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
     // 获取用户交易量
     public BigDecimal getUserTotalTradeCount(String userId);
 
+    public int removeTradeOrder(TradeOrder data);
+
 }
