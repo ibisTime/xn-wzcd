@@ -3,13 +3,12 @@
 <mapper namespace="com.cdkj.coin.dao.ICurrencyRateDAO">
 
     <resultMap id="BaseResultMap" type="com.cdkj.coin.domain.CurrencyRate">
-
         <result column="id" property="id" />
         <result column="currency" jdbcType="VARCHAR" property="currency"/>
-        <result column="refer_currency" jdbcType="VARCHAR" property="referCurrency"/>
+        <result column="refer_currency"  property="referCurrency"/>
         <result column="origin" jdbcType="VARCHAR" property="origin"/>
         <result column="rate" jdbcType="DECIMAL" property="rate"/>
-        <result column="update_datetime" jdbcType="TIMESTAMP" property="updateDatetime"/>
+        <result column="update_datetime"  property="updateDatetime"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -47,7 +46,7 @@
         <include refid="whereCondition"/>
     </select>
 
-    <select id="select" parameterType="com.cdkj.coin.domain.CurrencyRate" resultType="com.cdkj.coin.domain.CurrencyRate">
+    <select id="select" parameterType="com.cdkj.coin.domain.CurrencyRate" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM tcoin_currency_rate

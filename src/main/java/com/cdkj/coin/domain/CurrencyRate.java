@@ -10,7 +10,6 @@ public class CurrencyRate extends ABaseDO implements Serializable {
 
     private Integer id;
 
-
     private String currency;
 
     private String referCurrency;
