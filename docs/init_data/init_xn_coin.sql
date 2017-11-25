@@ -44,6 +44,7 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','questions','常见问题','admin',now(),'常见问题','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','service','联系客服','admin',now(),'联系客服','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','reg_protocol','注册协议','admin',now(),'注册协议','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','trade_remind','交易提醒','admin',now(),'交易提醒','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','reg_url','http://mdev.bcoin.im','admin',now(),'注册链接','CD-COIN000017','CD-COIN000017');
 
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('collection_rule','collection_limit','1','admin',now(),'当账户达到该数量时进行自动归集','CD-COIN000017','CD-COIN000017');
