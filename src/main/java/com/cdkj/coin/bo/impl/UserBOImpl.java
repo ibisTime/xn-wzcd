@@ -743,4 +743,14 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
             userDAO.updateEmail(data);
         }
     }
+
+    @Override
+    public void refreshRemark(String userId, String remark) {
+        if (StringUtils.isNotBlank(userId)) {
+            User data = new User();
+            data.setUserId(userId);
+            data.setRemark(remark);
+            userDAO.updateRemark(data);
+        }
+    }
 }

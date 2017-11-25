@@ -364,6 +364,15 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
+    public void doAddRemark(String userId, String remark) {
+        User user = userBO.getUser(userId);
+        if (user == null) {
+            throw new BizException("xn000000", "用户不存在");
+        }
+        userBO.refreshRemark(userId, remark);
+    }
+
+    @Override
     @Transactional
     public void doChangeMoblie(String userId, String newMobile,
             String smsCaptcha) {

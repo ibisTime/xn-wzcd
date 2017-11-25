@@ -1,16 +1,13 @@
 package com.cdkj.coin.dto.req;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
  * Created by tianlei on 2017/十一月/22.
  */
-public class XN625282Req   {
+public class XN625282Req {
 
-    @NotBlank
     private String currency;
 
     @NotNull

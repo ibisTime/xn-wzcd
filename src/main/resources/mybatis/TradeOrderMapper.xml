@@ -167,6 +167,29 @@
 		)
 	</insert>
 	
+	<update id="update_submit" parameterType="tradeOrder">
+		UPDATE tcoin_trade_order
+		SET
+		
+		leave_message = #{leaveMessage}
+		,trade_currency = #{tradeCurrency}
+		,trade_coin = #{tradeCoin}
+		,trade_price = #{tradePrice}
+		,trade_amount = #{tradeAmount}
+		
+		,fee = #{fee}
+		,count = #{count}
+		,pay_type = #{payType}
+		,invalid_datetime = #{invalidDatetime}
+		,status = #{status}
+		
+		,updater = #{updater}
+		,update_datatime = #{updateDatatime}
+		,remark = #{remark}
+		
+		WHERE code = #{code}
+	</update>
+	
 	<update id="update_cancel" parameterType="tradeOrder">
 		UPDATE tcoin_trade_order
 		SET

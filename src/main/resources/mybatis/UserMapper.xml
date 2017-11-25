@@ -519,6 +519,14 @@
 		user_id = #{userId}		
 	</update>
 	
+	<update id="update_remark" parameterType="user">
+		UPDATE tstd_user
+		SET
+		remark = #{remark}
+		WHERE
+		user_id = #{userId}		
+	</update>
+	
 	<update id="approve_user" parameterType="user">
 		UPDATE tstd_user
 		SET

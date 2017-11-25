@@ -53,6 +53,9 @@ public interface IUserAO {
     // 绑定邮箱
     public void doBindEmail(String userId, String email);
 
+    // 添加备注
+    public void doAddRemark(String userId, String remark);
+
     // 更换手机号
     public void doChangeMoblie(String userId, String newMobile,
             String smsCaptcha);

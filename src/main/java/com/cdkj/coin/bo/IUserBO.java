@@ -137,4 +137,6 @@ public interface IUserBO extends IPaginableBO<User> {
     public Long totalUser(User condition);
 
     public void refreshEmail(String userId, String email);
+
+    public void refreshRemark(String userId, String remark);
 }

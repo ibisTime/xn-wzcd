@@ -11,6 +11,12 @@ import com.cdkj.coin.dto.res.XN625252Res;
 public interface ITradeOrderAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
+    // 我要购买开始聊天，创建代下单的订单
+    public String contactBuy(String adsCode, String buyUser);
+
+    // 我要出售开始聊天，创建代下单的订单
+    public String contactSell(String adsCode, String sellUser);
+
     // 我要购买
     public String buy(String adsCode, String buyUser, BigDecimal tradePrice,
             BigDecimal count, BigDecimal tradeAmount);
