@@ -2,6 +2,8 @@ package com.cdkj.coin.common;
 
 public class SysConstants {
 
+    public static final String admin = "admin";
+
     public static final String COLLECTION_LIMIT = "collection_limit"; // 账户余额大于等于该值时，进行归集
 
     public static final String TRADE_FEE_RATE = "trade_fee_rate"; // 交易手续费

@@ -37,7 +37,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         TradeOrder data = new TradeOrder();
 
         String code = OrderNoGenerater.generate(EGeneratePrefix.TRADE_ORDER
-            .getCode());
+                .getCode());
         Date now = new Date();
 
         data.setCode(code);
@@ -73,7 +73,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
     public String contactSellSubmit(Ads ads, String sellUser) {
         TradeOrder data = new TradeOrder();
         String code = OrderNoGenerater.generate(EGeneratePrefix.TRADE_ORDER
-            .getCode());
+                .getCode());
         Date now = new Date();
         data.setCode(code);
         data.setType(ETradeOrderType.SELL.getCode());
@@ -104,12 +104,12 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
     @Override
     public String buySubmit(Ads ads, String buyUser, BigDecimal tradePrice,
-            BigDecimal count, BigDecimal tradeAmount, BigDecimal fee) {
+                            BigDecimal count, BigDecimal tradeAmount, BigDecimal fee) {
 
         TradeOrder data = new TradeOrder();
 
         String code = OrderNoGenerater.generate(EGeneratePrefix.TRADE_ORDER
-            .getCode());
+                .getCode());
         Date now = new Date();
 
         data.setCode(code);
@@ -128,7 +128,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         data.setCount(count);
         data.setPayType(ads.getPayType());
         data.setInvalidDatetime(DateUtil.getRelativeDateOfMinute(now,
-            ads.getPayLimit()));
+                ads.getPayLimit()));
         data.setStatus(ETradeOrderStatus.TO_PAY.getCode());
 
         data.setCreateDatetime(now);
@@ -143,11 +143,11 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
     @Override
     public String sellSubmit(Ads ads, String sellUser, BigDecimal tradePrice,
-            BigDecimal count, BigDecimal tradeAmount, BigDecimal fee) {
+                             BigDecimal count, BigDecimal tradeAmount, BigDecimal fee) {
 
         TradeOrder data = new TradeOrder();
         String code = OrderNoGenerater.generate(EGeneratePrefix.TRADE_ORDER
-            .getCode());
+                .getCode());
         Date now = new Date();
         data.setCode(code);
         data.setType(ETradeOrderType.SELL.getCode());
@@ -165,7 +165,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         data.setCount(count);
         data.setPayType(ads.getPayType());
         data.setInvalidDatetime(DateUtil.getRelativeDateOfMinute(now,
-            ads.getPayLimit()));
+                ads.getPayLimit()));
         data.setStatus(ETradeOrderStatus.TO_PAY.getCode());
 
         data.setCreateDatetime(now);
@@ -179,7 +179,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
     @Override
     public void buyRefresh(TradeOrder data, Ads ads, BigDecimal tradePrice,
-            BigDecimal count, BigDecimal tradeAmount, BigDecimal fee) {
+                           BigDecimal count, BigDecimal tradeAmount, BigDecimal fee) {
 
         Date now = new Date();
 
@@ -193,7 +193,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         data.setCount(count);
         data.setPayType(ads.getPayType());
         data.setInvalidDatetime(DateUtil.getRelativeDateOfMinute(now,
-            ads.getPayLimit()));
+                ads.getPayLimit()));
         data.setStatus(ETradeOrderStatus.TO_PAY.getCode());
 
         data.setUpdater(data.getBuyUser());
@@ -205,7 +205,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
     @Override
     public void sellRefresh(TradeOrder data, Ads ads, BigDecimal tradePrice,
-            BigDecimal count, BigDecimal tradeAmount, BigDecimal fee) {
+                            BigDecimal count, BigDecimal tradeAmount, BigDecimal fee) {
 
         Date now = new Date();
 
@@ -219,7 +219,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         data.setCount(count);
         data.setPayType(ads.getPayType());
         data.setInvalidDatetime(DateUtil.getRelativeDateOfMinute(now,
-            ads.getPayLimit()));
+                ads.getPayLimit()));
         data.setStatus(ETradeOrderStatus.TO_PAY.getCode());
 
         data.setUpdater(data.getSellUser());
@@ -242,6 +242,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         }
         return count;
     }
+
 
     @Override
     public int markPay(TradeOrder tradeOrder, String updater, String remark) {
@@ -277,7 +278,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
     @Override
     public int doBsComment(TradeOrder tradeOrder, String userId,
-            String comment, String status, String remark) {
+                           String comment, String status, String remark) {
         int count = 0;
         if (tradeOrder != null) {
             Date now = new Date();
@@ -293,7 +294,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
     @Override
     public int doSbComment(TradeOrder tradeOrder, String userId,
-            String comment, String status, String remark) {
+                           String comment, String status, String remark) {
         int count = 0;
         if (tradeOrder != null) {
             Date now = new Date();
@@ -336,6 +337,16 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
     }
 
     @Override
+    public int arbitrateUnPass(String tradeOrderCode) {
+
+        TradeOrder tradeOrder = new TradeOrder();
+        tradeOrder.setCode(tradeOrderCode);
+        tradeOrder.setStatus(ETradeOrderStatus.RELEASED.getCode());
+        return this.tradeOrderDAO.updateArbitrate(tradeOrder);
+
+    }
+
+    @Override
     public List<TradeOrder> queryTradeOrderList(TradeOrder condition) {
         return tradeOrderDAO.selectList(condition);
     }
@@ -357,7 +368,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
     @Override
     public TradeOrder getToSubmitTradeOrder(String buyUser, String sellUser,
-            String adsCode) {
+                                            String adsCode) {
         TradeOrder tradeOrder = null;
         TradeOrder condition = new TradeOrder();
         condition.setBuyUser(buyUser);
@@ -391,7 +402,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
     // 释放后都算已完成
     @Override
     public boolean checkUserHasUnFinishOrder(String userId,
-            ETradeOrderType tradeOrderType) {
+                                             ETradeOrderType tradeOrderType) {
 
         TradeOrder condition = new TradeOrder();
 
@@ -448,7 +459,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
                     && order.getBsComment() != null) {
                 beiPingJiaCount++;
                 if (order.getBsComment().equals(
-                    ECommentLevel.HAO_PING.getCode())) {
+                        ECommentLevel.HAO_PING.getCode())) {
                     beiHaoPingCount++;
                 }
             }
@@ -458,7 +469,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
                 beiPingJiaCount++;
 
                 if (order.getSbComment().equals(
-                    ECommentLevel.HAO_PING.getCode())) {
+                        ECommentLevel.HAO_PING.getCode())) {
                     beiHaoPingCount++;
                 }
 
@@ -499,4 +510,12 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         return tradeOrderDAO.delete(data);
     }
 
+    @Override
+    public void removeDaiXiaDanOrders(String adsCode) {
+
+        TradeOrder condition = new TradeOrder();
+        condition.setStatus(ETradeOrderStatus.TO_SUBMIT.getCode());
+        condition.setAdsCode(adsCode);
+        this.tradeOrderDAO.deleteByAdsCodeAndStatus(condition);
+    }
 }

@@ -335,9 +335,21 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
         TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(code);
 
-        if (!ETradeOrderStatus.PAYED.getCode().equals(tradeOrder.getStatus())) {
+        //已支付 和 仲裁中的订单才能释放
+        if (!(ETradeOrderStatus.PAYED.getCode().equals(tradeOrder.getStatus()) ||
+                ETradeOrderStatus.ARBITRATE.getCode().equals(tradeOrder.getStatus())
+        )) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前状态下不能释放");
         }
+
+        //操作权限判断
+        // 只有 admin 和 买家能释放订单
+        if (!(updater.equals(tradeOrder.getSellUser()) || updater.equals(SysConstants.admin))) {
+
+            throw new BizException("xn000","您不能释放该订单");
+
+        }
+
         if (ETradeOrderType.BUY.getCode().equals(tradeOrder.getType())) {
 
             // 卖币广告
@@ -357,10 +369,13 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         }
         // 变更交易订单信息
         tradeOrderBO.release(tradeOrder, updater, remark);
-        // 检查广告是否还有交易中的状态，维护状态字段
+
+        // 维护广告 待交易和交易中状态
         adsBO.refreshStatus(tradeOrder.getAdsCode(),
             tradeOrderBO.isExistOningOrder(tradeOrder.getAdsCode()));
+
         return tradeOrder;
+
     }
 
     @Override
@@ -492,27 +507,6 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         }
 
         handleReferenceFenCheng(refereeUser.getUserId(), sysAccount, tradeOrder);
-
-        // Double fenChengFee = this.sysConfigBO
-        // .getDoubleValue(SysConstants.FEN_CHENG_FEE);
-        // BigDecimal shouldPayFenCheng = tradeOrder.getFee().multiply(
-        // BigDecimal.valueOf(fenChengFee));
-        //
-        // // 获取推荐人账户
-        // Account refereeUserAccount = this.accountBO.getAccountByUser(
-        // refereeUser.getUserId(), ECoin.ETH.getCode());
-        //
-        // // 4.1平台盈亏账户，减少
-        // this.accountBO.changeAmount(sysAccount, shouldPayFenCheng.negate(),
-        // EChannelType.NBZ, null, null, tradeOrder.getCode(),
-        // EJourBizTypePlat.AJ_TUIJIAN_FENCHENG.getCode(),
-        // EJourBizTypePlat.AJ_TUIJIAN_FENCHENG.getValue());
-        //
-        // // 推荐人加钱
-        // this.accountBO.changeAmount(refereeUserAccount, shouldPayFenCheng,
-        // EChannelType.NBZ, null, null, tradeOrder.getCode(),
-        // EJourBizTypeUser.AJ_INVITE.getCode(),
-        // EJourBizTypeUser.AJ_INVITE.getValue() + "-推荐的用户完成交易获得分成");
 
     }
 

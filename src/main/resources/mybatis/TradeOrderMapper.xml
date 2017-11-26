@@ -270,4 +270,10 @@
 		code = #{code}			
 	</delete>
 
+	<delete id="deleteByAdsCodeAndStatus" parameterType="tradeOrder">
+		DELETE FROM tcoin_trade_order
+		WHERE
+		ads_code = #{adsCode} and status = #{status}
+	</delete>
+
 </mapper>

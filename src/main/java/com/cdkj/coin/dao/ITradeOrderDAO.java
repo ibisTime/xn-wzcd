@@ -23,4 +23,6 @@ public interface ITradeOrderDAO extends IBaseDAO<TradeOrder> {
 
     public int updateSubmit(TradeOrder data);
 
+    public void deleteByAdsCodeAndStatus(TradeOrder data);
+
 }

@@ -185,6 +185,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
                                   Ads condition) {
 
         //
+        condition.setOrder("update_datetime", "DESC");
         long totalCount = adsDAO.selectTotalCount(condition);
         Paginable<Ads> page = new Page<Ads>(start, limit, totalCount);
         List<Ads> dataList = adsDAO.selectList(condition, page.getStart(),

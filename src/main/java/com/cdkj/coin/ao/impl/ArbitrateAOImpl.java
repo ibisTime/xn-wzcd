@@ -2,6 +2,7 @@ package com.cdkj.coin.ao.impl;
 
 import java.util.List;
 
+import com.cdkj.coin.ao.ITradeOrderAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,21 +30,35 @@ public class ArbitrateAOImpl implements IArbitrateAO {
     @Autowired
     private IUserBO userBO;
 
+    @Autowired
+    private ITradeOrderAO tradeOrderAO;
+
     @Override
     public void handle(String code, String result, String updater, String remark) {
         Arbitrate arbitrate = arbitrateBO.getArbitrate(code);
         if (!EArbitrateStatus.TO_HANDLE.getCode().equals(arbitrate.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "仲裁工单不处于待处理状态");
+                    "仲裁工单不处于待处理状态");
         }
         TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(arbitrate
-            .getTradeOrderCode());
+                .getTradeOrderCode());
         if (EBoolean.YES.getCode().equals(result)) {
             if (arbitrate.getYuangao().equals(tradeOrder.getBuyUser())) {
-                tradeOrderBO.release(tradeOrder, updater, "仲裁后释放");
+
+                //todo 直接调用AO 感觉不对
+                // ao 中有对 账户的处理，和订单的处理
+                this.tradeOrderAO.release(tradeOrder.getCode(), updater, "仲裁后释放");
+//                tradeOrderBO.release(tradeOrder, updater, "仲裁后释放");
+
             } else {
+                //原告为卖家
                 tradeOrderBO.revokePay(tradeOrder, updater, "仲裁后撤回打款");
             }
+
+        } else {
+            //仲裁不通过，订单回归到 待释放的状态
+            this.tradeOrderBO.arbitrateUnPass(tradeOrder.getCode());
+
         }
         // 更新仲裁工单信息
         arbitrateBO.handle(arbitrate, result, updater, remark);
@@ -51,9 +66,9 @@ public class ArbitrateAOImpl implements IArbitrateAO {
 
     @Override
     public Paginable<Arbitrate> queryArbitratePage(int start, int limit,
-            Arbitrate condition) {
+                                                   Arbitrate condition) {
         Paginable<Arbitrate> results = arbitrateBO.getPaginable(start, limit,
-            condition);
+                condition);
         for (Arbitrate arbitrate : results.getList()) {
             arbitrate.setYuangaoInfo(userBO.getUser(arbitrate.getYuangao()));
             arbitrate.setBeigaoInfo(userBO.getUser(arbitrate.getBeigao()));

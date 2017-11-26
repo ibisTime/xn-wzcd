@@ -214,12 +214,24 @@ public class AdsAOImpl implements IAdsAO {
         }
         ads.setMarketPrice(market.getMid());
 
+        BigDecimal truePrice = market.getMid().multiply(
+                BigDecimal.ONE.add(req.getPremiumRate()));
+        if (req.getTradeType().endsWith(ETradeType.SELL.getCode())) {
+            //
+            truePrice = truePrice.compareTo(req.getProtectPrice()) > 0 ? truePrice : req.getProtectPrice();
+
+        } else {
+
+            truePrice = truePrice.compareTo(req.getProtectPrice()) < 0 ? truePrice : req.getProtectPrice();
+
+        }
+        ads.setTruePrice(truePrice);
+
+
         // 获取手续费率
         Double fee = sysConfigBO.getDoubleValue(SysConstants.TRADE_FEE_RATE);
         ads.setFeeRate(BigDecimal.valueOf(fee));
-        BigDecimal truePrice = market.getMid().multiply(
-                BigDecimal.ONE.add(req.getPremiumRate()));
-        ads.setTruePrice(truePrice);
+
         // 设置保护价
         ads.setProtectPrice(req.getProtectPrice());
         ads.setMaxTrade(req.getMaxTrade());
@@ -397,6 +409,9 @@ public class AdsAOImpl implements IAdsAO {
 
         Account account = this.accountBO.getAccountByUser(ads.getUserId(),
                 ads.getTradeCoin());
+        if (account.getAmount().subtract(account.getFrozenAmount()).compareTo(BigDecimal.ZERO) <= 0) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "账户可用余额不足");
+        }
 
         // 手续费+发布总额
         Double feeRate = sysConfigBO
@@ -476,6 +491,9 @@ public class AdsAOImpl implements IAdsAO {
         // 进行下架操作
         this.iAdsBO.xiaJiaAds(ads);
 
+        //删除该广告所有的待下单 订单
+        this.tradeOrderBO.removeDaiXiaDanOrders(ads.getCode());
+
         // 买币广告 不需要对账户进行处理,不需要返还
         if (ads.getTradeType().equals(ETradeType.BUY.getCode())) {
             return;
@@ -501,15 +519,15 @@ public class AdsAOImpl implements IAdsAO {
         BigDecimal totalCount = ads.getTotalCount();
         BigDecimal leftCount = ads.getLeftCount();
 
-        //算出出售比例
-        BigDecimal rate = leftCount.divide(totalCount);
+        //算出剩余 比例
+        BigDecimal rate = leftCount.divide(totalCount,10,BigDecimal.ROUND_DOWN);
         //算出应该退还的手续费
-        BigDecimal backFee = totalCount.multiply(ads.getFeeRate()).multiply(BigDecimal.ONE.subtract(rate));
+        BigDecimal backFee = totalCount.multiply(ads.getFeeRate()).multiply(rate);
 
-        //小于最小返还金额，不进行返还
-//        if (backFee.compareTo(minBack) <= 0) {
-//            return;
-//        }
+
+        if (backFee.compareTo(BigDecimal.ZERO) <= 0) {
+            return;
+        }
 
         //解冻手续费
         sellUserAccount = this.accountBO.unfrozenAmount(sellUserAccount, backFee, EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告手续费解冻", ads.getCode());
@@ -518,7 +536,9 @@ public class AdsAOImpl implements IAdsAO {
 
     @Override
     public void checkXiajia(String adsCode) {
+
         Ads ads = iAdsBO.adsDetail(adsCode);
+        //只有待交易的 广告才可以下架。
         if (EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())) {
             // 剩余金额小于 单笔最小交易金额就下架
             boolean condition1 = ads.getLeftCount().compareTo(BigDecimal.ZERO) == 0;
@@ -528,13 +548,13 @@ public class AdsAOImpl implements IAdsAO {
                 iAdsBO.xiaJiaAds(ads);
             }
         }
+
     }
 
     // 定时刷新行情价格
     public void refreshMarketPrice() {
 
-        Market market = this.marketBO.marketByCoinTypeAndOrigin(
-                ECoin.ETH.getCode(), EMarketOrigin.BITFINEX.getCode());
+        Market market = this.marketBO.standardMarket(ECoin.ETH);
         // 1.只刷新上架状态的
         List<Ads> shangJiaAdsList = this.iAdsBO.queryShangJiaAdsList();
         for (Ads ads : shangJiaAdsList) {
@@ -550,12 +570,12 @@ public class AdsAOImpl implements IAdsAO {
                     BigDecimal.ONE.add(premiumRate));
             BigDecimal protectPrice = ads.getProtectPrice();
 
-            if (ads.getTradeType().equals(ETradeType.SELL)) {
+            if (ads.getTradeType().equals(ETradeType.SELL.getCode())) {
 
                 truePrice = truePrice.compareTo(protectPrice) > 0 ? truePrice
                         : protectPrice;
 
-            } else if (ads.getTradeType().equals(ETradeType.BUY)) {
+            } else if (ads.getTradeType().equals(ETradeType.BUY.getCode())) {
 
                 truePrice = truePrice.compareTo(protectPrice) < 0 ? truePrice
                         : protectPrice;

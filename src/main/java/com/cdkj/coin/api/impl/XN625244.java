@@ -1,10 +1,10 @@
 /**
- * @Title XN625240.java 
- * @Package com.cdkj.coin.api.impl 
- * @Description 
- * @author leo(haiqing)  
- * @date 2017年11月14日 下午12:40:28 
- * @version V1.0   
+ * @Title XN625240.java
+ * @Package com.cdkj.coin.api.impl
+ * @Description
+ * @author leo(haiqing)
+ * @date 2017年11月14日 下午12:40:28
+ * @version V1.0
  */
 package com.cdkj.coin.api.impl;
 
@@ -21,36 +21,37 @@ import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
 
-/** 
+/**
  * 卖家释放
- * @author: haiqingzheng 
+ * @author: haiqingzheng
  * @since: 2017年11月14日 下午12:40:28 
  * @history:
  */
 public class XN625244 extends AProcessor {
 
     private ITradeOrderAO tradeOrderAO = SpringContextHolder
-        .getBean(ITradeOrderAO.class);
+            .getBean(ITradeOrderAO.class);
 
     private IAdsAO adsSellAO = SpringContextHolder
-        .getBean(IAdsAO.class);
+            .getBean(IAdsAO.class);
 
     private XN625244Req req;
 
-    /** 
+    /**
      * @see com.cdkj.coin.api.IProcessor#doBusiness()
      */
     @Override
     public Object doBusiness() throws BizException {
+
         TradeOrder tradeOrder = tradeOrderAO.release(req.getCode(),
-            req.getUpdater(), req.getRemark());
-        if (ETradeOrderType.BUY.getCode().equals(tradeOrder.getType())) {
-            adsSellAO.checkXiajia(tradeOrder.getAdsCode());
-        }
+                req.getUpdater(), req.getRemark());
+        //检查 是否可以下架
+        adsSellAO.checkXiajia(tradeOrder.getAdsCode());
         return new BooleanRes(true);
+
     }
 
-    /** 
+    /**
      * @see com.cdkj.coin.api.IProcessor#doCheck(java.lang.String)
      */
     @Override

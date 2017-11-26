@@ -37,6 +37,7 @@ public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
 
     public int cancel(TradeOrder tradeOrder, String updater, String remark);
 
+
     public int markPay(TradeOrder tradeOrder, String updater, String remark);
 
     public int release(TradeOrder tradeOrder, String updater, String remark);
@@ -49,11 +50,14 @@ public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
 
     public int applyArbitrate(TradeOrder tradeOrder, String applyUser);
 
+    //仲裁不通过, 更新状态为待释放
+    public int arbitrateUnPass(String tradeOrderCode);
+
     public int revokePay(TradeOrder tradeOrder, String updater, String string);
 
     public boolean isExistOningOrder(String adsCode);
 
-    // true 通过，false 不通过
+    //检查广告是否有未完成的订单 true 通过，false 不通过
     public boolean checkUserHasUnFinishOrder(String userId,
             ETradeOrderType tradeOrderType);
 
@@ -68,4 +72,6 @@ public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
 
     public int removeTradeOrder(TradeOrder data);
 
+    // 删除和该广告有关的代下单订单
+    public void removeDaiXiaDanOrders(String adsCode);
 }

@@ -87,4 +87,10 @@ public class TradeOrderDAOImpl extends AMybatisTemplate implements
         return super.update(NAMESPACE.concat("update_submit"), data);
     }
 
+    @Override
+    public void deleteByAdsCodeAndStatus(TradeOrder data) {
+
+        super.delete(NAMESPACE.concat("deleteByAdsCodeAndStatus"),data);
+
+    }
 }
