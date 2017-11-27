@@ -14,7 +14,7 @@ public enum EJourBizTypeUser {
     AJ_CHARGE("charge", "充值"), AJ_WITHDRAW("withdraw", "取现"), AJ_BUY("buy",
             "交易买入"), AJ_SELL("sell", "交易卖出"), AJ_ADS_FROZEN("frozen", "交易冻结"), AJ_ADS_UNFROZEN(
             "unfrozen", "交易解冻"), AJ_TRADEFEE("tradefee", "交易手续费"), AJ_WITHDRAWFEE(
-            "withdrawfee", "取现手续费"), AJ_INVITE("invite", "邀请好友收入"), AJ_HC("hc",
+            "withdrawfee", "取现手续费"), AJ_INVITE("invite", "推荐好友分成"), AJ_HC("hc",
             "红冲"), AJ_LB("lb", "蓝补");
 
     public static EJourBizTypeUser getBizType(String code) {
