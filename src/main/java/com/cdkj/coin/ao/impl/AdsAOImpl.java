@@ -166,7 +166,7 @@ public class AdsAOImpl implements IAdsAO {
                 req.getTradeType());
         if (count > 0) {
 
-            if (req.getTradeType().equals(ETradeOrderType.BUY)) {
+            if (req.getTradeType().equals(ETradeOrderType.BUY.getCode())) {
 
                 throw new BizException("xn000", "您已经有一个已上架的购买广告");
 
@@ -592,5 +592,16 @@ public class AdsAOImpl implements IAdsAO {
         }
 
     }
+
+//    public static void main(String[] args) {
+//
+//        BigDecimal bigDecimal1 = BigDecimal.valueOf(10.0);
+//        BigDecimal bigDecimal2 = BigDecimal.valueOf(3.0);
+//
+//        BigDecimal rate = bigDecimal1.divide(bigDecimal2,10,BigDecimal.ROUND_DOWN);
+//
+//        int a = 10;
+//
+//    }
 
 }
