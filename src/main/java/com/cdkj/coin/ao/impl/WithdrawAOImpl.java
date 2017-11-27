@@ -232,7 +232,8 @@ public class WithdrawAOImpl implements IWithdrawAO {
             approveNote);
         Account dbAccount = accountBO.getAccount(data.getAccountNumber());
         // 释放冻结流水
-        accountBO.unfrozenAmount(dbAccount, data.getAmount(),
+        accountBO.unfrozenAmount(dbAccount,
+            data.getAmount().add(data.getFee()),
             EJourBizTypeUser.AJ_WITHDRAW.getCode(), "取现失败退回", data.getCode());
     }
 

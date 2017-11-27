@@ -7,6 +7,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.web3j.crypto.WalletUtils;
 
 import com.cdkj.coin.ao.IChargeAO;
 import com.cdkj.coin.bo.IAccountBO;
@@ -61,6 +62,9 @@ public class ChargeAOImpl implements IChargeAO {
         if (amount.compareTo(BigDecimal.ZERO) == 0
                 || amount.compareTo(BigDecimal.ZERO) == -1) {
             throw new BizException("xn000000", "充值金额需大于零");
+        }
+        if (!WalletUtils.isValidAddress(payCardNo)) {
+            throw new BizException("xn000000", "打币地址不符合以太坊规则，请仔细核对");
         }
         Account account = accountBO.getAccount(accountNumber);
         // 生成充值订单
