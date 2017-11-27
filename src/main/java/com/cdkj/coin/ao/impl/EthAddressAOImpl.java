@@ -97,10 +97,6 @@ public class EthAddressAOImpl implements IEthAddressAO {
                     + userId + "的用户不存在");
         }
 
-        // 验证码校验
-        smsOutBO.checkCaptcha(user.getMobile(), smsCaptcha,
-            ECaptchaType.ADDRESS_ADD.getCode(), ESystemCode.COIN.getCode(),
-            ESystemCode.COIN.getCode());
         EEthAddressStatus status = EEthAddressStatus.NORMAL;
 
         // 是否设置为认证账户
@@ -113,6 +109,11 @@ public class EthAddressAOImpl implements IEthAddressAO {
             userBO.checkTradePwd(userId, tradePwd);
             status = EEthAddressStatus.CERTI;
         }
+
+        // 验证码校验
+        smsOutBO.checkCaptcha(user.getMobile(), smsCaptcha,
+            ECaptchaType.ADDRESS_ADD.getCode(), ESystemCode.COIN.getCode(),
+            ESystemCode.COIN.getCode());
 
         ethAddressBO.saveEthAddress(EEthAddressType.Y, userId, address, label,
             null, BigDecimal.ZERO, null, null, status);

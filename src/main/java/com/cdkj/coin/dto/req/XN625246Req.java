@@ -26,7 +26,7 @@ public class XN625246Req {
     private String applyUser;
 
     // 申请理由
-    @NotBlank
+    @NotBlank(message = "申请理由不能为空")
     private String reason;
 
     // 附件
