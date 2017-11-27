@@ -156,6 +156,11 @@
             <include refid="Base_Column_List"/>
         FROM tcoin_ads
              <include refid="whereCondition"/>
+        <trim prefix="ORDER BY ">
+            <if test="order != null and order != ''">
+                ${order}
+            </if>
+        </trim>
     </select>
 
     <update id="updateMarketPrice" parameterType="com.cdkj.coin.domain.Ads">

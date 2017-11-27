@@ -1,5 +1,6 @@
 package com.cdkj.coin.base;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.junit.Test;
@@ -47,5 +48,6 @@ public class ISysDictDAOTest extends ADAOTest {
         Long count = sysDictDAO.selectTotalCount(condition);
         logger.info("selectList : {}", count);
     }
+
 
 }

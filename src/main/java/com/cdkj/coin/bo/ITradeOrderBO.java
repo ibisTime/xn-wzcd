@@ -51,7 +51,7 @@ public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
     public int applyArbitrate(TradeOrder tradeOrder, String applyUser);
 
     //仲裁不通过, 更新状态为待释放
-    public int arbitrateUnPass(String tradeOrderCode);
+    public int arbitrateUnPass(TradeOrder tradeOrder);
 
     public int revokePay(TradeOrder tradeOrder, String updater, String string);
 

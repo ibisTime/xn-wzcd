@@ -57,7 +57,7 @@ public class ArbitrateAOImpl implements IArbitrateAO {
 
         } else {
             //仲裁不通过，订单回归到 待释放的状态
-            this.tradeOrderBO.arbitrateUnPass(tradeOrder.getCode());
+            this.tradeOrderBO.arbitrateUnPass(tradeOrder);
 
         }
         // 更新仲裁工单信息
