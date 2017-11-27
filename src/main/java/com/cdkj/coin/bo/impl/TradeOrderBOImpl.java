@@ -337,11 +337,9 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
     }
 
     @Override
-    public int arbitrateUnPass(String tradeOrderCode) {
+    public int arbitrateUnPass(TradeOrder tradeOrder) {
 
-        TradeOrder tradeOrder = new TradeOrder();
-        tradeOrder.setCode(tradeOrderCode);
-        tradeOrder.setStatus(ETradeOrderStatus.RELEASED.getCode());
+        tradeOrder.setStatus(ETradeOrderStatus.PAYED.getCode());
         return this.tradeOrderDAO.updateArbitrate(tradeOrder);
 
     }

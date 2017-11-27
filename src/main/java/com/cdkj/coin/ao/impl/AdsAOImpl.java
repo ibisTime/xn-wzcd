@@ -480,7 +480,7 @@ public class AdsAOImpl implements IAdsAO {
 
         // 检验状态是否满足下架操作
         if (!EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前状态无法下架！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "广告有未完成的订单，不能下架");
         }
 
         // 校验操作者是否是本人
@@ -564,7 +564,6 @@ public class AdsAOImpl implements IAdsAO {
             // 真实价格
             // 取出溢价率
             BigDecimal premiumRate = ads.getPremiumRate();
-
             // 算出 溢价之后的价格
             BigDecimal truePrice = market.getMid().multiply(
                     BigDecimal.ONE.add(premiumRate));
