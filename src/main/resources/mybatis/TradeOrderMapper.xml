@@ -184,7 +184,7 @@
 		,status = #{status}
 		
 		,updater = #{updater}
-		,update_dat3time = #{updateDat3time}
+		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
 		
 		WHERE code = #{code}

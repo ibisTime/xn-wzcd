@@ -14,6 +14,9 @@ package com.cdkj.coin.dto.req;
  * @history:
  */
 public class XN625105Req extends APageReq {
+
+    private static final long serialVersionUID = -542370069342373487L;
+
     // 订单编号模糊查询
     private String code;
 

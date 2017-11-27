@@ -27,12 +27,14 @@ import com.cdkj.coin.bo.IEthCollectionBO;
 import com.cdkj.coin.bo.IEthTransactionBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.IWithdrawBO;
+import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.Charge;
 import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.domain.EthCollection;
+import com.cdkj.coin.domain.EthTransaction;
 import com.cdkj.coin.domain.Withdraw;
 import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECoin;
@@ -266,6 +268,12 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         // 落地交易记录
         ethTransactionBO.saveEthTransaction(ctqEthTransaction,
             collection.getCode());
+    }
+
+    @Override
+    public Paginable<EthTransaction> queryEthTransactionPage(int start,
+            int limit, EthTransaction condition) {
+        return ethTransactionBO.getPaginable(start, limit, condition);
     }
 
 }

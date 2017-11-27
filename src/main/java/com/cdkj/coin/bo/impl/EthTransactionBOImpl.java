@@ -22,6 +22,7 @@ import org.web3j.utils.Numeric;
 
 import com.cdkj.coin.bo.IEthTransactionBO;
 import com.cdkj.coin.bo.base.PaginableBOImpl;
+import com.cdkj.coin.common.DateUtil;
 import com.cdkj.coin.common.PropertiesUtil;
 import com.cdkj.coin.dao.IEthTransactionDAO;
 import com.cdkj.coin.domain.EthTransaction;
@@ -61,6 +62,9 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
                 transaction.setGas(ctqEthTransaction.getGas().toString());
                 transaction.setGasUsed(ctqEthTransaction.getGasUsed()
                     .toString());
+                transaction.setCreates(DateUtil.dateToStr(
+                    ctqEthTransaction.getBlockCreateDatetime(),
+                    DateUtil.DATA_TIME_PATTERN_1));
                 transaction.setRefNo(refNo);
                 count = ethTransactionDAO.insert(transaction);
             }

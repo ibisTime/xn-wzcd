@@ -10,7 +10,7 @@ public class ReflectUtil {
                 result = cls.newInstance();// 被代理对象
             }
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return result;
     }

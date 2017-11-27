@@ -10,10 +10,10 @@ public class DispatcherImpl implements IDispatcher {
     @Override
     public String doDispatcher(String transcode, String inputParams) {
         String result = null;
+        // 加载配置文件,proxy实例化
+        String classname = "com.cdkj.coin.api.impl.XNOther";
         ReturnMessage rm = new ReturnMessage();
         try {
-            // 加载配置文件,proxy实例化
-            String classname = "com.cdkj.coin.api.impl.XNOther";
             // ConfigDescribe configDescribe = ConfigLoader.loadConfig();
             /*
              * if (StringUtils.isNotBlank(transcode) && configDescribe != null)
@@ -43,7 +43,7 @@ public class DispatcherImpl implements IDispatcher {
                 rm.setData("");
             } else if (e instanceof NullPointerException) {
                 rm.setErrorCode(EErrorCode.OTHER_ERR.getCode());
-                rm.setErrorInfo("NPE");
+                rm.setErrorInfo("找不到类" + classname);
                 rm.setData("");
             } else {
                 rm.setErrorCode(EErrorCode.OTHER_ERR.getCode());

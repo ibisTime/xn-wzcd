@@ -27,8 +27,29 @@
 			<if test="hash != null and hash != '' ">
 				AND t.hash = #{hash}
 			</if>
+			<if test="blockHash != null and blockHash != '' ">
+				AND t.blockHash = #{blockHash}
+			</if>
+			<if test="blockNumber != null and blockNumber != '' ">
+				AND t.blockNumber = #{blockNumber}
+			</if>
+			<if test="from != null and from != '' ">
+				AND t.fromAddress = #{from}
+			</if>
+			<if test="to != null and to != '' ">
+				AND t.toAddress = #{to}
+			</if>
+			<if test="createsStart != null and createsStart != '' ">
+				<![CDATA[AND t.creates >= #{createsStart}]]>
+			</if>
+			<if test="createsEnd != null and createsEnd != '' ">
+				<![CDATA[AND t.creates <= #{createsEnd}]]>
+			</if>
 			<if test="refNo != null and refNo != '' ">
 				AND t.ref_no = #{refNo}
+			</if>
+			<if test="address != null and address != '' ">
+				AND t.fromAddress = #{address} or t.toAddress = #{address}
 			</if>
 		</trim>
 	</sql>
