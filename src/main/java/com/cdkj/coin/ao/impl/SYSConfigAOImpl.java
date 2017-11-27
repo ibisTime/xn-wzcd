@@ -1,5 +1,7 @@
 package com.cdkj.coin.ao.impl;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +41,11 @@ public class SYSConfigAOImpl implements ISYSConfigAO {
     public SYSConfig getSYSConfig(String key, String companyCode,
             String systemCode) {
         return sysConfigBO.getSYSConfig(key, companyCode, systemCode);
+    }
+
+    @Override
+    public Map<String, String> getSYSConfigMap(String type, String companyCode,
+            String systemCode) {
+        return sysConfigBO.getConfigsMap(type, companyCode, systemCode);
     }
 }
