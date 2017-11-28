@@ -109,8 +109,8 @@ public class WithdrawAOImpl implements IWithdrawAO {
             payCardInfo, payCardNo, applyUser, applyNote);
         // 冻结取现金额
         dbAccount = accountBO.frozenAmount(dbAccount, amount,
-            EJourBizTypeUser.AJ_WITHDRAW.getCode(),
-            EJourBizTypeUser.AJ_WITHDRAW.getValue(), withdrawCode);
+            EJourBizTypeUser.AJ_WITHDRAW_FROZEN.getCode(),
+            EJourBizTypeUser.AJ_WITHDRAW_FROZEN.getValue(), withdrawCode);
         return withdrawCode;
     }
 
