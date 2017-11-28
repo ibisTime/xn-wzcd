@@ -137,7 +137,7 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         // 取现金额扣减
         userAccount = accountBO.changeAmount(
             userAccount,
-            withdraw.getAmount().negate(),
+            withdraw.getAmount().subtract(withdraw.getFee()).negate(),
             EChannelType.ETH,
             ctqEthTransaction.getHash(),
             "ETH",
@@ -156,8 +156,9 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         Account coldAccount = accountBO
             .getAccount(ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode());
         coldAccount = accountBO.changeAmount(coldAccount, withdraw.getAmount()
-            .negate(), EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
-            withdraw.getCode(), EJourBizTypeCold.AJ_PAY.getCode(),
+            .subtract(withdraw.getFee()).negate(), EChannelType.ETH,
+            ctqEthTransaction.getHash(), "ETH", withdraw.getCode(),
+            EJourBizTypeCold.AJ_PAY.getCode(),
             "ETH取现-外部地址：" + withdraw.getPayCardNo());
         // 平台盈亏账户记入取现手续费
         Account sysAccount = accountBO.getAccount(ESystemAccount.SYS_ACOUNT_ETH

@@ -94,8 +94,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
         if (ethAddressBO.getTotalCount(condition) > 0) {
             // 符合条件无需验证交易密码
         } else {
-            // 验证交易密码
-            userBO.checkTradePwd(dbAccount.getUserId(), tradePwd);
+            // 验证dePwd(dbAccount.getUserId(), tradePwd);
         }
         // 取现手续费
         BigDecimal fee = sysConfigBO
@@ -105,9 +104,8 @@ public class WithdrawAOImpl implements IWithdrawAO {
             throw new BizException("xn000000", "余额不足");
         }
         // 生成取现订单
-        String withdrawCode = withdrawBO.applyOrder(dbAccount,
-            amount.subtract(fee), fee, payCardInfo, payCardNo, applyUser,
-            applyNote);
+        String withdrawCode = withdrawBO.applyOrder(dbAccount, amount, fee,
+            payCardInfo, payCardNo, applyUser, applyNote);
         // 冻结取现金额
         dbAccount = accountBO.frozenAmount(dbAccount, amount,
             EJourBizTypeUser.AJ_WITHDRAW.getCode(),
@@ -179,10 +177,13 @@ public class WithdrawAOImpl implements IWithdrawAO {
         // 获取取现订单详情
         Withdraw withdraw = withdrawBO.getWithdraw(code,
             ESystemCode.COIN.getCode());
+        // 实际到账金额=取现金额-取现手续费
+        BigDecimal realAmount = withdraw.getAmount()
+            .subtract(withdraw.getFee());
         // 查询散取地址余额
         BigDecimal balance = ethAddressBO.getEthBalance(address);
         logger.info("地址" + address + "余额：" + balance.toString());
-        if (balance.compareTo(withdraw.getAmount()) < 0) {
+        if (balance.compareTo(realAmount) < 0) {
             throw new BizException("xn625000", "散取地址" + address + "余额不足！");
         }
         // 广播
@@ -191,7 +192,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
                     + withdraw.getPayCardInfo());
         }
         String txHash = ethTransactionBO.broadcast(address, password,
-            withdraw.getPayCardNo(), withdraw.getAmount());
+            withdraw.getPayCardNo(), realAmount);
         if (StringUtils.isBlank(txHash)) {
             throw new BizException("xn625000", "交易广播失败");
         }
