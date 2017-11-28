@@ -7,4 +7,6 @@ public interface IEthAddressDAO extends IBaseDAO<EthAddress> {
     String NAMESPACE = IEthAddressDAO.class.getName().concat(".");
 
     public int updateAbandon(EthAddress data);
+
+    public int updateBalance(EthAddress data);
 }

@@ -31,6 +31,9 @@ public interface IEthAddressBO extends IPaginableBO<EthAddress> {
     // 查询以太坊地址余额
     public BigDecimal getEthBalance(String address);
 
+    // 更新余额
+    public int refreshBalance(EthAddress address, BigDecimal balance);
+
     public EthAddress getEthAddress(EEthAddressType type, String address);
 
     public EthAddress getEthAddressByUserId(String userId);

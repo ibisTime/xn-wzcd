@@ -189,4 +189,15 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
         return count;
     }
 
+    @Override
+    public int refreshBalance(EthAddress address, BigDecimal balance) {
+        int count = 0;
+        if (address != null) {
+            address.setBalance(balance);
+            address.setUpdateDatetime(new Date());
+            ethAddressDAO.updateAbandon(address);
+        }
+        return count;
+    }
+
 }

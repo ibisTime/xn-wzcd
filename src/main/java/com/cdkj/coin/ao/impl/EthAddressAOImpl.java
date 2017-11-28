@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.web3j.crypto.WalletUtils;
 
 import com.cdkj.coin.ao.IEthAddressAO;
@@ -169,18 +170,25 @@ public class EthAddressAOImpl implements IEthAddressAO {
     }
 
     @Override
+    @Transactional
     public Paginable<EthAddress> queryEthAddressPage(int start, int limit,
             EthAddress condition) {
         Paginable<EthAddress> results = ethAddressBO.getPaginable(start, limit,
             condition);
         for (EthAddress ethAddress : results.getList()) {
+            // 获取以太坊余额
+            BigDecimal balance = ethAddressBO.getEthBalance(ethAddress
+                .getAddress());
+            // 地址拥有者信息
             ethAddress.setUser(userBO.getUser(ethAddress.getUserId()));
+            // 归集地址统计
             if (EEthAddressType.W.getCode().equals(ethAddress.getType())) {
                 EthAddress xAddress = ethCollectionBO
                     .getAddressUseInfo(ethAddress.getAddress());
                 ethAddress.setUseCount(xAddress.getUseCount());
                 ethAddress.setUseAmount(xAddress.getUseAmount());
             }
+            // 散取地址统计
             if (EEthAddressType.M.getCode().equals(ethAddress.getType())) {
                 EthAddress xAddress = withdrawBO.getAddressUseInfo(ethAddress
                     .getAddress());
@@ -189,6 +197,8 @@ public class EthAddressAOImpl implements IEthAddressAO {
                 ethAddress.setBalance(ethAddressBO.getEthBalance(ethAddress
                     .getAddress()));
             }
+            // 更新以太坊余额
+            ethAddressBO.refreshBalance(ethAddress, balance);
         }
         return results;
     }

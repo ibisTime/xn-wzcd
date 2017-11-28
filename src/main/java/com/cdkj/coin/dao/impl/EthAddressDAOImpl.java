@@ -52,4 +52,9 @@ public class EthAddressDAOImpl extends AMybatisTemplate implements
         return super.update(NAMESPACE.concat("update_abandon"), data);
     }
 
+    @Override
+    public int updateBalance(EthAddress data) {
+        return super.update(NAMESPACE.concat("update_balance"), data);
+    }
+
 }

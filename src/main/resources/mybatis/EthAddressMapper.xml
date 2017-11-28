@@ -128,5 +128,13 @@
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_balance" parameterType="tradeOrder">
+		UPDATE tcoin_eth_address
+		SET
+		balance = #{balance}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
 
 </mapper>
