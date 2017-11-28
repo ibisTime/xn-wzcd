@@ -86,12 +86,12 @@ public class WithdrawAOImpl implements IWithdrawAO {
         withdrawBO.doCheckTimes(dbAccount);
 
         // 检查是否是已认证的地址
-        EthAddress yAddress = ethAddressBO.getEthAddress(EEthAddressType.Y,
-            payCardNo);
-        if (yAddress != null
-                && EEthAddressStatus.CERTI.getCode().equals(
-                    yAddress.getStatus())
-                && dbAccount.getUserId().equals(yAddress.getUserId())) {
+        EthAddress condition = new EthAddress();
+        condition.setType(EEthAddressType.Y.getCode());
+        condition.setUserId(dbAccount.getUserId());
+        condition.setStatus(EEthAddressStatus.CERTI.getCode());
+        condition.setAddress(payCardNo);
+        if (ethAddressBO.getTotalCount(condition) > 0) {
             // 符合条件无需验证交易密码
         } else {
             // 验证交易密码
@@ -101,23 +101,17 @@ public class WithdrawAOImpl implements IWithdrawAO {
         BigDecimal fee = sysConfigBO
             .getBigDecimalValue(SysConstants.WITHDRAW_FEE);
         fee = Convert.toWei(fee, Unit.ETHER);
-        if (dbAccount.getAmount().compareTo(amount.add(fee)) == -1) {
+        if (dbAccount.getAmount().compareTo(amount) == -1) {
             throw new BizException("xn000000", "余额不足");
         }
         // 生成取现订单
-        String withdrawCode = withdrawBO.applyOrder(dbAccount, amount, fee,
-            payCardInfo, payCardNo, applyUser, applyNote);
+        String withdrawCode = withdrawBO.applyOrder(dbAccount,
+            amount.subtract(fee), fee, payCardInfo, payCardNo, applyUser,
+            applyNote);
         // 冻结取现金额
         dbAccount = accountBO.frozenAmount(dbAccount, amount,
             EJourBizTypeUser.AJ_WITHDRAW.getCode(),
             EJourBizTypeUser.AJ_WITHDRAW.getValue(), withdrawCode);
-        if (fee.compareTo(BigDecimal.ZERO) > 0) {
-            // 冻结取现手续费
-            accountBO.frozenAmount(dbAccount, fee,
-                EJourBizTypeUser.AJ_WITHDRAWFEE.getCode(),
-                EJourBizTypeUser.AJ_WITHDRAWFEE.getValue(), withdrawCode);
-        }
-
         return withdrawCode;
     }
 

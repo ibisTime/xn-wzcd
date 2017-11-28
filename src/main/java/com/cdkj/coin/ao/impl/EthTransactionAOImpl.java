@@ -134,12 +134,6 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         userAccount = accountBO.unfrozenAmount(userAccount,
             withdraw.getAmount(), EJourBizTypeUser.AJ_WITHDRAW.getCode(),
             EJourBizTypeUser.AJ_WITHDRAW.getValue(), withdraw.getCode());
-        if (withdraw.getFee().compareTo(BigDecimal.ZERO) > 0) {
-            // 取现手续费解冻
-            userAccount = accountBO.unfrozenAmount(userAccount,
-                withdraw.getFee(), EJourBizTypeUser.AJ_WITHDRAWFEE.getCode(),
-                EJourBizTypeUser.AJ_WITHDRAWFEE.getValue(), withdraw.getCode());
-        }
         // 取现金额扣减
         userAccount = accountBO.changeAmount(
             userAccount,
