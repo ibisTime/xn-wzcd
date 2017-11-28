@@ -73,14 +73,21 @@ public class WithdrawAOImpl implements IWithdrawAO {
     public String applyOrderTradePwd(String accountNumber, BigDecimal amount,
             String payCardInfo, String payCardNo, String applyUser,
             String applyNote, String tradePwd) {
-        if (amount.compareTo(BigDecimal.ZERO) == 0
-                || amount.compareTo(BigDecimal.ZERO) == -1) {
-            throw new BizException("xn000000", "提现金额需大于零");
+        // 取现手续费
+        BigDecimal fee = sysConfigBO
+            .getBigDecimalValue(SysConstants.WITHDRAW_FEE);
+        fee = Convert.toWei(fee, Unit.ETHER);
+        if (amount.compareTo(fee) == 0 || amount.compareTo(fee) == -1) {
+            throw new BizException("xn000000", "提现金额需大于手续费");
         }
         if (!WalletUtils.isValidAddress(payCardNo)) {
             throw new BizException("xn000000", "提现地址不符合以太坊规则，请仔细核对");
         }
         Account dbAccount = accountBO.getAccount(accountNumber);
+        if (dbAccount.getAmount().subtract(dbAccount.getFrozenAmount())
+            .compareTo(amount) == -1) {
+            throw new BizException("xn000000", "可用余额不足");
+        }
 
         // 判断本月是否次数已满，且现在只能有一笔取现未支付记录
         withdrawBO.doCheckTimes(dbAccount);
@@ -96,13 +103,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
         } else {
             // 验证dePwd(dbAccount.getUserId(), tradePwd);
         }
-        // 取现手续费
-        BigDecimal fee = sysConfigBO
-            .getBigDecimalValue(SysConstants.WITHDRAW_FEE);
-        fee = Convert.toWei(fee, Unit.ETHER);
-        if (dbAccount.getAmount().compareTo(amount) == -1) {
-            throw new BizException("xn000000", "余额不足");
-        }
+
         // 生成取现订单
         String withdrawCode = withdrawBO.applyOrder(dbAccount, amount, fee,
             payCardInfo, payCardNo, applyUser, applyNote);
