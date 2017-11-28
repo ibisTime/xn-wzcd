@@ -340,6 +340,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
     public int arbitrateUnPass(TradeOrder tradeOrder) {
 
         tradeOrder.setStatus(ETradeOrderStatus.PAYED.getCode());
+//      tradeOrder.setRemark("仲裁不通过");
         return this.tradeOrderDAO.updateArbitrate(tradeOrder);
 
     }

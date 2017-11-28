@@ -592,7 +592,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
                 EJourBizTypePlat.AJ_TRADEFEE.getCode(),
                 EJourBizTypePlat.AJ_TRADEFEE.getValue());
 
-        // todo 4.推荐人有分成
+        //  4.推荐人有分成
         String sellUserId = tradeOrder.getSellUser();
         User sellUser = this.userBO.getUser(sellUserId);
 

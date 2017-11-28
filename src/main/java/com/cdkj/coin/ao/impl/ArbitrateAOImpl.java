@@ -48,7 +48,6 @@ public class ArbitrateAOImpl implements IArbitrateAO {
                 //todo 直接调用AO 感觉不对
                 // ao 中有对 账户的处理，和订单的处理
                 this.tradeOrderAO.release(tradeOrder.getCode(), updater, "仲裁后释放");
-//                tradeOrderBO.release(tradeOrder, updater, "仲裁后释放");
 
             } else {
                 //原告为卖家
@@ -60,6 +59,7 @@ public class ArbitrateAOImpl implements IArbitrateAO {
             this.tradeOrderBO.arbitrateUnPass(tradeOrder);
 
         }
+
         // 更新仲裁工单信息
         arbitrateBO.handle(arbitrate, result, updater, remark);
     }
