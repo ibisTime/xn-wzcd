@@ -107,7 +107,8 @@ public class ChargeAOImpl implements IChargeAO {
             // 冷钱包加钱
             accountBO.changeAmount(coldAccount, data.getAmount(),
                 EChannelType.Offline, null, null, data.getCode(),
-                EJourBizTypeCold.AJ_INCOME.getCode(), "ETH线下充值");
+                EJourBizTypeCold.AJ_INCOME.getCode(), "ETH线下充值，充值账户："
+                        + userAccount.getRealName());
         }
     }
 
