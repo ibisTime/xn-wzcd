@@ -501,7 +501,7 @@ public class UserAOImpl implements IUserAO {
         // 发送短信
         String mobile = user.getMobile();
         smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                + "用户，您的支付密码设置成功。请妥善保管您的账户相关信息。", "805066",
+                + "用户，您的资金密码设置成功。请妥善保管您的账户相关信息。", "805066",
             user.getCompanyCode(), user.getSystemCode());
     }
 
@@ -519,7 +519,7 @@ public class UserAOImpl implements IUserAO {
         userBO.refreshTradePwd(userId, newTradePwd);
         // 发送短信
         smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                + "用户，您的支付密码重置成功。请妥善保管您的账户相关信息。", "805067",
+                + "用户，您的资金密码重置成功。请妥善保管您的账户相关信息。", "805067",
             user.getCompanyCode(), user.getSystemCode());
     }
 
@@ -546,7 +546,7 @@ public class UserAOImpl implements IUserAO {
         userBO.refreshTradePwd(userId, newTradePwd);
         // 发送短信
         smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                + "用户，您的支付密码重置成功。请妥善保管您的账户相关信息。", "805068",
+                + "用户，您的资金密码重置成功。请妥善保管您的账户相关信息。", "805068",
             user.getCompanyCode(), user.getSystemCode());
     }
 
@@ -555,7 +555,7 @@ public class UserAOImpl implements IUserAO {
     public void doModifyTradePwd(String userId, String oldTradePwd,
             String newTradePwd) {
         if (oldTradePwd.equals(newTradePwd)) {
-            throw new BizException("li01008", "新支付密码与原有支付密码重复");
+            throw new BizException("li01008", "新资金密码与原有资金密码重复");
         }
         User conditon = new User();
         conditon.setUserId(userId);
@@ -565,12 +565,12 @@ public class UserAOImpl implements IUserAO {
         if (CollectionUtils.isNotEmpty(list)) {
             user = list.get(0);
         } else {
-            throw new BizException("li01008", "旧支付密码不正确");
+            throw new BizException("li01008", "旧资金密码不正确");
         }
         userBO.refreshTradePwd(userId, newTradePwd);
         String mobile = user.getMobile();
         smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                + "用户，您的支付密码修改成功。请妥善保管您的账户相关信息。", "805069",
+                + "用户，您的资金密码修改成功。请妥善保管您的账户相关信息。", "805069",
             user.getCompanyCode(), user.getSystemCode());
     }
 
