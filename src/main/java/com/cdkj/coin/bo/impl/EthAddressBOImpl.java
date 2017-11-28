@@ -101,6 +101,7 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
         EthAddress condition = new EthAddress();
         condition.setType(EEthAddressType.M.getCode());
         condition.setStatus(EEthAddressStatus.NORMAL.getCode());
+        condition.setToday(new Date());
         List<EthAddress> mList = ethAddressDAO.selectList(condition);
         if (CollectionUtils.isEmpty(mList)) {
             throw new BizException("xn625000", "未找到今日可用的散取地址");
@@ -195,7 +196,7 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
         if (address != null) {
             address.setBalance(balance);
             address.setUpdateDatetime(new Date());
-            ethAddressDAO.updateAbandon(address);
+            ethAddressDAO.updateBalance(address);
         }
         return count;
     }

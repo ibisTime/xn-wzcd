@@ -179,6 +179,7 @@ public class EthAddressAOImpl implements IEthAddressAO {
             // 获取以太坊余额
             BigDecimal balance = ethAddressBO.getEthBalance(ethAddress
                 .getAddress());
+            ethAddress.setBalance(balance);
             // 地址拥有者信息
             ethAddress.setUser(userBO.getUser(ethAddress.getUserId()));
             // 归集地址统计
@@ -194,8 +195,6 @@ public class EthAddressAOImpl implements IEthAddressAO {
                     .getAddress());
                 ethAddress.setUseCount(xAddress.getUseCount());
                 ethAddress.setUseAmount(xAddress.getUseAmount());
-                ethAddress.setBalance(ethAddressBO.getEthBalance(ethAddress
-                    .getAddress()));
             }
             // 更新以太坊余额
             ethAddressBO.refreshBalance(ethAddress, balance);
