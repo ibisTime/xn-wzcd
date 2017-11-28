@@ -36,8 +36,8 @@ import com.cdkj.coin.exception.BizException;
 public class AccountTest {
 
     public static void main(String args[]) {
-        String hash = broadcast("0x901536393df4bf66986c12cf98f3d6718c534f20",
-            "533109", "0x2c54258388e2c4d97c0e31171c5852b2a52145e0",
+        String hash = broadcast("0xf9c5856b1ac7f3b3838db245b4608f58eadd5979",
+            "995192", "0x2c54258388e2c4d97c0e31171c5852b2a52145e0",
             new BigDecimal("3000000000000000"));
         System.out.println("广播完成，交易hash=" + hash + "，交易金额="
                 + Convert.fromWei("3000000000000000", Unit.ETHER));
