@@ -161,22 +161,28 @@ public class AdsAOImpl implements IAdsAO {
             throw new BizException("xn00000", "用户不存在");
         }
 
-        //检查是否存在已上架的——同类型的广告
-        long count = this.iAdsBO.totalCountOfShangJiaAds(req.getUserId(),
-                req.getTradeType());
-        if (count > 0) {
+        //直接发布校验是否有，正在上架的同类型的广告
+        if (req.getPublishType().equals(EAdsPublishType.PUBLISH.getCode())) {
 
-            if (req.getTradeType().equals(ETradeOrderType.BUY.getCode())) {
+            //检查是否存在已上架的——同类型的广告
+            long count = this.iAdsBO.totalCountOfShangJiaAds(req.getUserId(),
+                    req.getTradeType());
 
-                throw new BizException("xn000", "您已经有一个已上架的购买广告");
+            if (count > 0) {
 
-            } else {
+                if (req.getTradeType().equals(ETradeOrderType.BUY.getCode())) {
 
-                throw new BizException("xn000", "您已经有一个已上架的出售广告");
+                    throw new BizException("xn000", "您已经有一个已上架的购买广告");
+
+                } else {
+
+                    throw new BizException("xn000", "您已经有一个已上架的出售广告");
+
+                }
 
             }
-
         }
+
 
         if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
 

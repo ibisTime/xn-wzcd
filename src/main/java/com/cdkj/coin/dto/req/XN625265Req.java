@@ -23,13 +23,13 @@ public class XN625265Req extends APageReq {
     // 交易订单编号
     private String tradeOrderCode;
 
-    // 原告
+    //_原告
     private String yuangao;
 
-    // 被告
+    //_被告
     private String beigao;
 
-    // 状态
+    //_状态
     private String status;
 
     // 处理人
@@ -82,5 +82,6 @@ public class XN625265Req extends APageReq {
     public void setUpdater(String updater) {
         this.updater = updater;
     }
+
 
 }
