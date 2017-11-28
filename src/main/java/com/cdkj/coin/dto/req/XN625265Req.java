@@ -35,6 +35,16 @@ public class XN625265Req extends APageReq {
     // 处理人
     private String updater;
 
+    private String result;
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
     public String getCode() {
         return code;
     }
