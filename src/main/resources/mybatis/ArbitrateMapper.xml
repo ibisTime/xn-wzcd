@@ -17,10 +17,33 @@
 		<result column="remark" property="remark" />
 	</resultMap>
 	<sql id="where_condition">
+
+
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+
+			<if test="yuangao != null and yuangao != '' ">
+				AND t.yuangao = #{yuangao}
+			</if>
+
+			<if test="beigao != null and beigao != '' ">
+				AND t.beigao = #{beigao}
+			</if>
+
+			<if test="tradeOrderCode != null and tradeOrderCode != '' ">
+				AND t.trade_order_code = #{tradeOrderCode}
+			</if>
+
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+
+			<if test="result != null and result != '' ">
+				AND t.result = #{result}
+			</if>
+
 		</trim>
 	</sql>
 	<select id="select_arbitrate" parameterType="arbitrate" resultMap="arbitrate_DB_Result">
