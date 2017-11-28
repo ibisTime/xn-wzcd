@@ -119,6 +119,13 @@ public class WithdrawAOImpl implements IWithdrawAO {
     public String applyOrder(String accountNumber, BigDecimal amount,
             String payCardInfo, String payCardNo, String applyUser,
             String applyNote) {
+        User user = userBO.getUser(applyUser);
+        if (StringUtils.isBlank(user.getRealName())) {
+            throw new BizException("xn000000", "请先进行实名认证");
+        }
+        if (StringUtils.isBlank(user.getTradePwdStrength())) {
+            throw new BizException("xn000000", "请先设置资金密码");
+        }
         if (amount.compareTo(BigDecimal.ZERO) == 0
                 || amount.compareTo(BigDecimal.ZERO) == -1) {
             throw new BizException("xn000000", "提现金额需大于零");
