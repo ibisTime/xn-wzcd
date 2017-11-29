@@ -170,19 +170,22 @@ public class AdsAOImpl implements IAdsAO {
 
             if (count > 0) {
 
-                if (req.getTradeType().equals(ETradeOrderType.BUY.getCode())) {
+                if (req.getTradeType().equals(ETradeType.BUY.getCode())) {
 
                     throw new BizException("xn000", "您已经有一个已上架的购买广告");
 
-                } else {
+                } else if(req.getTradeType().equals(ETradeType.SELL.getCode())) {
 
                     throw new BizException("xn000", "您已经有一个已上架的出售广告");
+
+                } else  {
+
+                    throw new BizException("xn000", "不支持的交易类型");
 
                 }
 
             }
         }
-
 
         if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
 
@@ -231,8 +234,8 @@ public class AdsAOImpl implements IAdsAO {
             truePrice = truePrice.compareTo(req.getProtectPrice()) < 0 ? truePrice : req.getProtectPrice();
 
         }
-        ads.setTruePrice(truePrice);
 
+        ads.setTruePrice(truePrice);
 
         // 获取手续费率
         Double fee = sysConfigBO.getDoubleValue(SysConstants.TRADE_FEE_RATE);
@@ -334,6 +337,23 @@ public class AdsAOImpl implements IAdsAO {
 
         if (StringUtils.isBlank(req.getAdsCode())) {
             throw new BizException("xn000", "请传入广告编号");
+        }
+
+        long count = this.iAdsBO.totalCountOfShangJiaAds(req.getUserId(),
+                req.getTradeType());
+
+        if (count > 0) {
+
+            if (req.getTradeType().equals(ETradeOrderType.BUY.getCode())) {
+
+                throw new BizException("xn000", "您已经有一个已上架的购买广告");
+
+            } else {
+
+                throw new BizException("xn000", "您已经有一个已上架的出售广告");
+
+            }
+
         }
 
         // 构造 并校验
@@ -482,7 +502,16 @@ public class AdsAOImpl implements IAdsAO {
     @Transactional
     @Override
     public void xiaJiaAds(String adsCode, String userId) {
+
+        //
         Ads ads = iAdsBO.adsDetail(adsCode);
+
+        //只有待交易的可以下架
+        if (ads.getStatus().equals(EAdsStatus.DRAFT.getCode()) || ads.getStatus().equals(EAdsStatus.XIAJIA.getCode())) {
+
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前状态不支持下架操作");
+
+        }
 
         // 检验状态是否满足下架操作
         if (!EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())) {
@@ -526,7 +555,7 @@ public class AdsAOImpl implements IAdsAO {
         BigDecimal leftCount = ads.getLeftCount();
 
         //算出剩余 比例
-        BigDecimal rate = leftCount.divide(totalCount,10,BigDecimal.ROUND_DOWN);
+        BigDecimal rate = leftCount.divide(totalCount, 10, BigDecimal.ROUND_DOWN);
         //算出应该退还的手续费
         BigDecimal backFee = totalCount.multiply(ads.getFeeRate()).multiply(rate);
 
