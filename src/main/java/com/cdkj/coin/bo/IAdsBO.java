@@ -10,6 +10,7 @@ import com.cdkj.coin.domain.Market;
 /**
  * Created by tianlei on 2017/十一月/14.
  */
+
 public interface IAdsBO {
 
     //增加可交易金额
