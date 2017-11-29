@@ -63,7 +63,7 @@ CREATE TABLE `tcoin_arbitrate` (
   `yuangao` varchar(32) DEFAULT NULL COMMENT '原告',
   `beigao` varchar(32) DEFAULT NULL COMMENT '被告',
   `reason` varchar(45) DEFAULT NULL COMMENT '仲裁理由',
-  `attach` text COMMENT '附件',
+  `attach` text CHARACTER SET utf8mb4 COMMENT '附件',
   `status` varchar(32) DEFAULT NULL COMMENT '状态',
   `create_datetime` datetime DEFAULT NULL COMMENT '申请时间',
   `result` text COMMENT '处理结果',

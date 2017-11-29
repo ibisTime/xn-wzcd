@@ -31,6 +31,10 @@ public interface IUserBO extends IPaginableBO<User> {
     public void isMobileExist(String mobile, String kind, String companyCode,
             String systemCode);
 
+    // 判断昵称是否存在
+    public void isNicknameExist(String nickname, String kind,
+            String companyCode, String systemCode);
+
     // 判断登录名是否存在
     public void isLoginNameExist(String loginName, String kind,
             String companyCode, String systemCode);

@@ -82,6 +82,23 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         }
     }
 
+    @Override
+    public void isNicknameExist(String nickname, String kind,
+            String companyCode, String systemCode) {
+        if (StringUtils.isNotBlank(nickname)) {
+            // 判断格式
+            User condition = new User();
+            condition.setNickname(nickname);
+            condition.setKind(kind);
+            condition.setCompanyCode(companyCode);
+            condition.setSystemCode(systemCode);
+            long count = getTotalCount(condition);
+            if (count > 0) {
+                throw new BizException("li01003", "昵称已经被使用");
+            }
+        }
+    }
+
     // @Override
     // public User getUserByMobile(String mobile, String kind, String
     // companyCode,

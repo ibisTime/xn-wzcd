@@ -143,6 +143,9 @@ public class User extends ABaseDO {
     // 登录名模糊查询
     private String loginNameForQuery;
 
+    // 昵称模糊查询
+    private String nicknameForQuery;
+
     // 手机号模糊查询
     private String mobileForQuery;
 
@@ -664,6 +667,14 @@ public class User extends ABaseDO {
 
     public void setBankcardFlag(String bankcardFlag) {
         this.bankcardFlag = bankcardFlag;
+    }
+
+    public String getNicknameForQuery() {
+        return nicknameForQuery;
+    }
+
+    public void setNicknameForQuery(String nicknameForQuery) {
+        this.nicknameForQuery = nicknameForQuery;
     }
 
 }

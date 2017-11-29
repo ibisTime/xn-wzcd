@@ -135,6 +135,8 @@ public class UserAOImpl implements IUserAO {
             String area, String address, String companyCode, String systemCode) {
         // 验证手机号是否存在
         userBO.isMobileExist(mobile, kind, companyCode, systemCode);
+        // 检查昵称是否已经被使用
+        userBO.isNicknameExist(nickname, kind, companyCode, systemCode);
         // 验证推荐人是否存在,并将手机号转化为用户编号
         String userRefereeId = userBO.getUserId(userReferee, userRefereeKind,
             companyCode, systemCode);
@@ -982,7 +984,7 @@ public class UserAOImpl implements IUserAO {
             EJourBizTypeUser.AJ_INVITE.getCode(), EChannelType.NBZ.getCode(),
             account.getAccountNumber(), null, null);
         res.setInviteProfit(Convert.fromWei(totalAmount, Unit.ETHER)
-            .setScale(2, RoundingMode.DOWN).toString());
+            .setScale(8, RoundingMode.DOWN).toString());
 
         return res;
     }
