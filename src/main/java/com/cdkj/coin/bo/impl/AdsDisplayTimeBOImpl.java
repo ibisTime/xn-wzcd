@@ -47,10 +47,11 @@ public class AdsDisplayTimeBOImpl implements IAdsDisplayTimeBO {
 
 
     public List<AdsDisplayTime> queryList(String adsCode) {
+
         AdsDisplayTime condition = new AdsDisplayTime();
         condition.setAdsCode(adsCode);
-
         return  this.displayTimeDAO.selectList(condition);
+
     }
 
 

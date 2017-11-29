@@ -2,6 +2,7 @@ package com.cdkj.coin.bo.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -487,20 +488,26 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
     public BigDecimal getUserTotalTradeCount(String userId) {
 
-        BigDecimal totalTradeCount = BigDecimal.ZERO;
-        TradeOrder condition = new TradeOrder();
-        // userId 为卖家或者买家
-        condition.setBelongUser(userId);
-        // 已释放都算 "完成"
-        condition.setStatusList(this.finishReleaseStatusList());
-        List<TradeOrder> orders = this.tradeOrderDAO.selectList(condition);
-        for (TradeOrder order : orders) {
+        TradeOrder tradeOrder = new TradeOrder();
+        tradeOrder.setUserId(userId);
+        //只查询 释放的 和 已完成的
+        tradeOrder.setStatusList(Arrays.asList(ETradeOrderStatus.RELEASED.getCode(),ETradeOrderStatus.COMPLETE.getCode()));
+        return this.tradeOrderDAO.selectedTotalTradeCount(tradeOrder);
 
-            totalTradeCount = totalTradeCount.add(order.getCount());
-
-        }
-
-        return totalTradeCount;
+//        BigDecimal totalTradeCount = BigDecimal.ZERO;
+//        TradeOrder condition = new TradeOrder();
+//        // userId 为卖家或者买家
+//        condition.setBelongUser(userId);
+//        // 已释放都算 "完成"
+//        condition.setStatusList(this.finishReleaseStatusList());
+//        List<TradeOrder> orders = this.tradeOrderDAO.selectList(condition);
+//        for (TradeOrder order : orders) {
+//
+//            totalTradeCount = totalTradeCount.add(order.getCount());
+//
+//        }
+//
+//        return totalTradeCount;
 
     }
 

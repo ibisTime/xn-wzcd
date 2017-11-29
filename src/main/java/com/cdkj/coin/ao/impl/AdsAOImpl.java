@@ -164,27 +164,8 @@ public class AdsAOImpl implements IAdsAO {
         //直接发布校验是否有，正在上架的同类型的广告
         if (req.getPublishType().equals(EAdsPublishType.PUBLISH.getCode())) {
 
-            //检查是否存在已上架的——同类型的广告
-            long count = this.iAdsBO.totalCountOfShangJiaAds(req.getUserId(),
-                    req.getTradeType());
+            this.checkHaveSameTypeShangJiaAds(req.getUserId(), req.getTradeType());
 
-            if (count > 0) {
-
-                if (req.getTradeType().equals(ETradeType.BUY.getCode())) {
-
-                    throw new BizException("xn000", "您已经有一个已上架的购买广告");
-
-                } else if(req.getTradeType().equals(ETradeType.SELL.getCode())) {
-
-                    throw new BizException("xn000", "您已经有一个已上架的出售广告");
-
-                } else  {
-
-                    throw new BizException("xn000", "不支持的交易类型");
-
-                }
-
-            }
         }
 
         if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
@@ -194,6 +175,32 @@ public class AdsAOImpl implements IAdsAO {
         } else if (req.getTradeType().equals(ETradeType.BUY.getCode())) {
 
             this.insertBuyAds(req);
+
+        }
+
+    }
+
+    private void checkHaveSameTypeShangJiaAds(String userId, String tradeType) {
+
+        //检查是否存在已上架的——同类型的广告
+        long count = this.iAdsBO.totalCountOfShangJiaAds(userId,
+                tradeType);
+
+        if (count > 0) {
+
+            if (tradeType.equals(ETradeType.BUY.getCode())) {
+
+                throw new BizException("xn000", "您已经有一个已上架的购买广告");
+
+            } else if (tradeType.equals(ETradeType.SELL.getCode())) {
+
+                throw new BizException("xn000", "您已经有一个已上架的出售广告");
+
+            } else {
+
+                throw new BizException("xn000", "不支持的交易类型");
+
+            }
 
         }
 
@@ -339,24 +346,10 @@ public class AdsAOImpl implements IAdsAO {
             throw new BizException("xn000", "请传入广告编号");
         }
 
-        long count = this.iAdsBO.totalCountOfShangJiaAds(req.getUserId(),
-                req.getTradeType());
+        //检查是否有同类型的 上架 广告
+        this.checkHaveSameTypeShangJiaAds(req.getUserId(),req.getTradeType());
 
-        if (count > 0) {
-
-            if (req.getTradeType().equals(ETradeOrderType.BUY.getCode())) {
-
-                throw new BizException("xn000", "您已经有一个已上架的购买广告");
-
-            } else {
-
-                throw new BizException("xn000", "您已经有一个已上架的出售广告");
-
-            }
-
-        }
-
-        // 构造 并校验
+        // 构造并校验
         Ads ads = this.buildAdsSell(req, req.getAdsCode());
         ads.setStatus(EAdsStatus.DAIJIAOYI.getCode());
 
@@ -548,7 +541,6 @@ public class AdsAOImpl implements IAdsAO {
         //解冻 未卖出金额
         sellUserAccount = this.accountBO.unfrozenAmount(sellUserAccount, ads.getLeftCount(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告未卖出部分解冻", ads.getCode());
 
-
         //todo
         //计算需要返还的手续费
         BigDecimal totalCount = ads.getTotalCount();
@@ -558,7 +550,6 @@ public class AdsAOImpl implements IAdsAO {
         BigDecimal rate = leftCount.divide(totalCount, 10, BigDecimal.ROUND_DOWN);
         //算出应该退还的手续费
         BigDecimal backFee = totalCount.multiply(ads.getFeeRate()).multiply(rate);
-
 
         if (backFee.compareTo(BigDecimal.ZERO) <= 0) {
             return;
@@ -576,8 +567,9 @@ public class AdsAOImpl implements IAdsAO {
         //只有待交易的 广告才可以下架。
         if (EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())) {
             // 剩余金额小于 单笔最小交易金额就下架
-            boolean condition1 = ads.getLeftCount().compareTo(BigDecimal.ZERO) == 0;
-            boolean condition2 = ads.getLeftCount()
+            boolean condition1 = ads.getLeftCount().compareTo(BigDecimal.ZERO) <= 0;
+            BigDecimal leftCountETHER = Convert.fromWei(ads.getLeftCount(), Convert.Unit.ETHER);
+            boolean condition2 = leftCountETHER.multiply(ads.getTruePrice())
                     .compareTo(ads.getMinTrade()) < 0;
             if (condition1 || condition2) {
                 iAdsBO.xiaJiaAds(ads);
