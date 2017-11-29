@@ -24,7 +24,6 @@ import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECurrency;
 import com.cdkj.coin.enums.EGeneratePrefix;
 import com.cdkj.coin.enums.EJourBizTypeUser;
-import com.cdkj.coin.enums.EJourKind;
 import com.cdkj.coin.exception.BizException;
 
 /**
@@ -92,9 +91,8 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
         BigDecimal nowAmount = dbAccount.getAmount().add(transAmount);
 
         // 记录流水
-        String lastOrder = jourBO.addJour(EJourKind.BALANCE, dbAccount,
-            channelType, channelOrder, payGroup, refNo, bizType, bizNote,
-            transAmount);
+        String lastOrder = jourBO.addJour(dbAccount, channelType, channelOrder,
+            payGroup, refNo, bizType, bizNote, transAmount);
 
         // 更改余额
         dbAccount.setAmount(nowAmount);
@@ -177,7 +175,7 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
             throw new BizException("xn000000", "账户余额不足");
         }
         // 记录冻结流水
-        String lastOrder = jourBO.addJour(EJourKind.FROZEN, dbAccount,
+        String lastOrder = jourBO.addFrozenJour(dbAccount,
             EChannelType.Offline, null, null, refNo, bizType, bizNote,
             freezeAmount);
         BigDecimal nowFrozenAmount = dbAccount.getFrozenAmount().add(
@@ -203,7 +201,7 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
         }
 
         // 记录流水
-        String lastOrder = jourBO.addJour(EJourKind.FROZEN, dbAccount,
+        String lastOrder = jourBO.addFrozenJour(dbAccount,
             EChannelType.Offline, null, null, refNo, bizType, bizNote,
             freezeAmount.negate());
         dbAccount.setFrozenAmount(nowFrozenAmount);
