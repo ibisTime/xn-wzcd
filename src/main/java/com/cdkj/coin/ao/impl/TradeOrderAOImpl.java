@@ -89,7 +89,6 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             code = tradeOrderBO.contactBuySubmit(ads, buyUser);
         }
 
-
         return code;
     }
 
@@ -163,7 +162,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         }
 
         //刷新广告状态
-        adsBO.refreshStatus(ads.getCode(),true);
+        adsBO.refreshStatus(ads.getCode(), true);
 
         return code;
 
@@ -231,7 +230,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         }
 
         //刷新广告状态，从待交易变为，交易中
-        adsBO.refreshStatus(ads.getCode(),true);
+        adsBO.refreshStatus(ads.getCode(), true);
 
         // 改变广告可交易量
         this.adsBO.cutLeftCount(ads.getCode(), tradeCount);
@@ -284,12 +283,10 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             throw new BizException("xn000000", "无效的订单编号");
         }
 
-        // 变更广告信息（状态，剩余可售金额）
+        // 变更广告信息 剩余可交易金额
         adsBO.addLeftCount(tradeOrder.getAdsCode(), tradeOrder.getCount());
-        adsBO.refreshStatus(tradeOrder.getAdsCode(),
-                tradeOrderBO.isExistOningOrder(tradeOrder.getAdsCode()));
 
-        if (tradeOrder.getType().equals(ETradeOrderType.SELL)) {
+        if (tradeOrder.getType().equals(ETradeOrderType.SELL.getCode())) {
             // 由于出售时冻结了，卖家的余额这里需要解冻
             Account sellUserAccount = this.accountBO.getAccountByUser(
                     tradeOrder.getSellUser(), ECoin.ETH.getCode());
@@ -301,15 +298,19 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
                     EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-取消卖出订单",
                     tradeOrder.getCode());
 
-        } else if (tradeOrder.getType().equals(ETradeOrderType.BUY)) {
+        } else if (tradeOrder.getType().equals(ETradeOrderType.BUY.getCode())) {
             // 购买订单
             // 由于出售广告，出售时就冻结了 所有的 交易金额 + 手续费，
             // 所以 购买订单取消，也不需要解冻
-
         }
 
+        // !!!!!!!!!!!!!!!!!  必须先取消订单，然后在去检查变更广告状态
         // 变更交易订单信息
         tradeOrderBO.cancel(tradeOrder, updater, remark);
+
+        //检查广告状态是否进行变更
+        adsBO.refreshStatus(tradeOrder.getAdsCode(),
+                tradeOrderBO.isExistOningOrder(tradeOrder.getAdsCode()));
 
     }
 
@@ -546,7 +547,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
     }
 
-    // 出售广告处理，我要购买
+    // 出售广告处理，购买 释放处理
     private void doTransferBuy(TradeOrder tradeOrder) {
 
         Account sellUserAccount = this.accountBO.getAccountByUser(
@@ -675,9 +676,13 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         List<TradeOrder> resultList = tradeOrderBO
                 .queryTradeOrderList(condition);
         for (TradeOrder tradeOrder : resultList) {
+
             this.cancel(tradeOrder.getCode(), "系统", "订单支付超时，系统自动取消");
+
         }
+
     }
+
 
     @Override
     public UserStatistics userStatisticsInfo(String userId) {

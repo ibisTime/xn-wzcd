@@ -1,7 +1,10 @@
 package com.cdkj.coin.dao.impl;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
+import com.cdkj.coin.enums.ETradeOrderStatus;
 import org.springframework.stereotype.Repository;
 
 import com.cdkj.coin.dao.ITradeOrderDAO;
@@ -25,26 +28,26 @@ public class TradeOrderDAOImpl extends AMybatisTemplate implements
     @Override
     public TradeOrder select(TradeOrder condition) {
         return super.select(NAMESPACE.concat("select_tradeOrder"), condition,
-            TradeOrder.class);
+                TradeOrder.class);
     }
 
     @Override
     public long selectTotalCount(TradeOrder condition) {
         return super.selectTotalCount(
-            NAMESPACE.concat("select_tradeOrder_count"), condition);
+                NAMESPACE.concat("select_tradeOrder_count"), condition);
     }
 
     @Override
     public List<TradeOrder> selectList(TradeOrder condition) {
         return super.selectList(NAMESPACE.concat("select_tradeOrder"),
-            condition, TradeOrder.class);
+                condition, TradeOrder.class);
     }
 
     @Override
     public List<TradeOrder> selectList(TradeOrder condition, int start,
-            int count) {
+                                       int count) {
         return super.selectList(NAMESPACE.concat("select_tradeOrder"), start,
-            count, condition, TradeOrder.class);
+                count, condition, TradeOrder.class);
     }
 
     @Override
@@ -90,7 +93,14 @@ public class TradeOrderDAOImpl extends AMybatisTemplate implements
     @Override
     public void deleteByAdsCodeAndStatus(TradeOrder data) {
 
-        super.delete(NAMESPACE.concat("deleteByAdsCodeAndStatus"),data);
+        super.delete(NAMESPACE.concat("deleteByAdsCodeAndStatus"), data);
+
+    }
+
+    @Override
+    public BigDecimal selectedTotalTradeCount(TradeOrder data) {
+
+        return super.select(NAMESPACE.concat("selectedTotalTradeCount"), data, BigDecimal.class);
 
     }
 }
