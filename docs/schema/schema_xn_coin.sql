@@ -114,6 +114,8 @@ CREATE TABLE `tcoin_eth_address` (
   `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
   `abandon_datetime` datetime DEFAULT NULL COMMENT '弃用时间',
   `update_datetime` datetime DEFAULT NULL COMMENT '最后一次更新时间',
+  `keystore_name` text DEFAULT NULL COMMENT 'keystore文件名',
+  `keystore_content` text DEFAULT NULL COMMENT 'keystore文件内容',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

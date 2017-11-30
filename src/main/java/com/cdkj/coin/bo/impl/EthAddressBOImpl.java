@@ -1,6 +1,7 @@
 package com.cdkj.coin.bo.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -62,9 +63,9 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
             throw new BizException("xn625000", "以太坊账户创建失败，请检查节点是否正常！");
         }
         logger.info("以太坊账户创建成功:" + address);
-        // 获取keystore文件
-        File keystoreFile = null;
         try {
+            // 获取keystore文件
+            File keystoreFile = null;
             String fileDirPath = PropertiesUtil.Config.KEY_STORE_PATH;
             File keyStoreFileDir = new File(fileDirPath);
             File[] subFiles = keyStoreFileDir.listFiles();
@@ -79,16 +80,31 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
                     }
                 }
             }
+
             if (keystoreFile == null) {
-                throw new BizException("xn6250000", "未找到keystore文件");
+                throw new BizException("xn6250000", "未找到keystore文件，请仔细检查本地节点配置");
             }
+
+            FileInputStream fis = new FileInputStream(keystoreFile);
+            byte[] buf = new byte[1024];
+            StringBuffer sb = new StringBuffer();
+            while ((fis.read(buf)) != -1) {
+                sb.append(new String(buf));
+                buf = new byte[1024];// 重新生成，避免和上次读取的数据重复
+            }
+            String keystoreContent = new String(sb.toString().getBytes(),
+                "utf-8");
+            fis.close();
+            // 落地地址信息
+            this.saveEthAddress(type, userId, address, type.getValue(),
+                password, BigDecimal.ZERO, availableDatetimeStart,
+                availableDatetimeEnd, EEthAddressStatus.NORMAL,
+                keystoreFile.getName(), keystoreContent);
         } catch (Exception e) {
             throw new BizException("xn6250000", "获取keystore文件异常，原因："
                     + e.getMessage());
         }
-        this.saveEthAddress(type, userId, address, type.getValue(), password,
-            BigDecimal.ZERO, availableDatetimeStart, availableDatetimeEnd,
-            EEthAddressStatus.NORMAL, null);
+
         return address;
     }
 
@@ -96,7 +112,8 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
     public String saveEthAddress(EEthAddressType type, String userId,
             String address, String label, String password, BigDecimal balance,
             Date availableDatetimeStart, Date availableDatetimeEnd,
-            EEthAddressStatus status, String keystore) {
+            EEthAddressStatus status, String keystoreName,
+            String keystoreContent) {
         String code = OrderNoGenerater.generate("ETH");
         Date now = new Date();
         EthAddress data = new EthAddress();
@@ -113,7 +130,8 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
         data.setStatus(status.getCode());
         data.setCreateDatetime(now);
         data.setUpdateDatetime(now);
-        data.setKeystore(keystore);
+        data.setKeystoreName(keystoreName);
+        data.setKeystoreContent(keystoreContent);
         ethAddressDAO.insert(data);
         return code;
     }
@@ -156,6 +174,20 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
             EthAddress condition = new EthAddress();
             condition.setCode(code);
             data = ethAddressDAO.select(condition);
+            if (data == null) {
+                throw new BizException("xn0000", "以太坊地址不存在");
+            }
+        }
+        return data;
+    }
+
+    @Override
+    public EthAddress getEthAddressSecret(String code) {
+        EthAddress data = null;
+        if (StringUtils.isNotBlank(code)) {
+            EthAddress condition = new EthAddress();
+            condition.setCode(code);
+            data = ethAddressDAO.selectSecret(condition);
             if (data == null) {
                 throw new BizException("xn0000", "以太坊地址不存在");
             }

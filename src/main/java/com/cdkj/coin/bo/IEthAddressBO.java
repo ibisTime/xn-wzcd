@@ -20,7 +20,8 @@ public interface IEthAddressBO extends IPaginableBO<EthAddress> {
     public String saveEthAddress(EEthAddressType type, String userId,
             String address, String label, String password, BigDecimal balance,
             Date availableDatetimeStart, Date availableDatetimeEnd,
-            EEthAddressStatus status, String keystore);
+            EEthAddressStatus status, String keystoreName,
+            String keystoreContent);
 
     // 获取今日散取地址
     public EthAddress getMEthAddressToday();
@@ -37,6 +38,8 @@ public interface IEthAddressBO extends IPaginableBO<EthAddress> {
     public EthAddress getEthAddress(EEthAddressType type, String address);
 
     public EthAddress getEthAddressByUserId(String userId);
+
+    public EthAddress getEthAddressSecret(String code);
 
     public List<EthAddress> queryEthAddressList(EthAddress condition);
 

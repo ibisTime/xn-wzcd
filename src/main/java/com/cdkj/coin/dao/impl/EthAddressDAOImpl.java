@@ -57,4 +57,10 @@ public class EthAddressDAOImpl extends AMybatisTemplate implements
         return super.update(NAMESPACE.concat("update_balance"), data);
     }
 
+    @Override
+    public EthAddress selectSecret(EthAddress condition) {
+        return super.select(NAMESPACE.concat("select_ethAddress_secret"),
+            condition, EthAddress.class);
+    }
+
 }

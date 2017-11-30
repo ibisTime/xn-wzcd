@@ -25,6 +25,7 @@ import com.cdkj.coin.bo.base.PaginableBOImpl;
 import com.cdkj.coin.common.DateUtil;
 import com.cdkj.coin.common.PropertiesUtil;
 import com.cdkj.coin.dao.IEthTransactionDAO;
+import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.domain.EthTransaction;
 import com.cdkj.coin.eth.CtqEthTransaction;
 import com.cdkj.coin.exception.BizException;
@@ -104,7 +105,7 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
     }
 
     @Override
-    public String broadcast(String from, String fromPassword, String to,
+    public String broadcast(String from, EthAddress fromSecret, String to,
             BigDecimal value) {
         String txHash = null;
         try {
@@ -126,7 +127,7 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
                 throw new BizException("xn6250000", "未找到keystore文件");
             }
             //
-            Credentials credentials = WalletUtils.loadCredentials(fromPassword,
+            Credentials credentials = WalletUtils.loadCredentials(fromSecret.getPassword(),
                 keystoreFile);
             //
             EthGetTransactionCount ethGetTransactionCount = web3j

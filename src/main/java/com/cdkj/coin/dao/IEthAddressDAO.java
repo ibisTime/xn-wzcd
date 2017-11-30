@@ -9,4 +9,6 @@ public interface IEthAddressDAO extends IBaseDAO<EthAddress> {
     public int updateAbandon(EthAddress data);
 
     public int updateBalance(EthAddress data);
+
+    public EthAddress selectSecret(EthAddress condition);
 }

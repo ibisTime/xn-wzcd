@@ -9,7 +9,6 @@
 package com.cdkj.coin.ao.impl;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,8 +21,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.web3j.utils.Convert;
-import org.web3j.utils.Convert.Unit;
 
 import com.cdkj.coin.ao.IUserAO;
 import com.cdkj.coin.bo.IAccountBO;
@@ -983,8 +980,7 @@ public class UserAOImpl implements IUserAO {
         BigDecimal totalAmount = jourBO.getTotalAmount(
             EJourBizTypeUser.AJ_INVITE.getCode(), EChannelType.NBZ.getCode(),
             account.getAccountNumber(), null, null);
-        res.setInviteProfit(Convert.fromWei(totalAmount, Unit.ETHER)
-            .setScale(8, RoundingMode.DOWN).toString());
+        res.setInviteProfit(totalAmount.toString());
 
         return res;
     }

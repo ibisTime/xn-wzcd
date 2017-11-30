@@ -219,8 +219,10 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             throw new BizException("xn625000", "余额不足以支付矿工费，不能归集");
         }
         // 归集广播
-        String txHash = ethTransactionBO.broadcast(address,
-            xEthAddress.getPassword(), toAddress, value);
+        EthAddress secret = ethAddressBO.getEthAddressSecret(xEthAddress
+            .getCode());
+        String txHash = ethTransactionBO.broadcast(address, secret, toAddress,
+            value);
         if (StringUtils.isBlank(txHash)) {
             throw new BizException("xn625000", "归集—交易广播失败");
         }

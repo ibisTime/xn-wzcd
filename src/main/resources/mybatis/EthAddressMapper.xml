@@ -18,6 +18,13 @@
 		<result column="abandon_datetime" property="abandonDatetime" />
 		<result column="update_datetime" property="updateDatetime" />
 	</resultMap>
+	<resultMap id="secret_DB_Result" type="ethAddress">
+		<result column="code" property="code" />
+		<result column="address" property="address" />
+		<result column="password" property="password" />
+		<result column="keystore_name" property="keystoreName" />
+		<result column="keystore_content" property="keystoreContent" />
+	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
@@ -58,7 +65,6 @@
 		,t.type
 		,t.address
 		,t.label
-		,t.password
 		,t.user_id
 		,t.initial_balance
 		,t.balance
@@ -76,6 +82,18 @@
 				t.${order}
 			</if>
 		</trim>
+	</select>
+	
+	<select id="select_ethAddress_secret" parameterType="ethAddress" resultMap="secret_DB_Result">
+		SELECT
+		t.code
+		,t.address
+		,t.password
+		,t.keystore_name
+		,t.keystore_content
+		FROM
+		tcoin_eth_address t
+		<include refid="where_condition" />
 	</select>
 
 	<select id="select_ethAddress_count" parameterType="ethAddress"
@@ -101,7 +119,8 @@
 		,create_datetime
 		,abandon_datetime
 		,update_datetime
-		,keystore
+		,keystore_name
+		,keystore_content
 		)
 		VALUES(
 		#{code}
@@ -118,7 +137,8 @@
 		,#{createDatetime}
 		,#{abandonDatetime}
 		,#{updateDatetime}
-		,#{keystore}
+		,#{keystoreName}
+		,#{keystoreContent}
 		)
 	</insert>
 

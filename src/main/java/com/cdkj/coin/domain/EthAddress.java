@@ -62,8 +62,11 @@ public class EthAddress extends ABaseDO {
     // 更新时间
     private Date updateDatetime;
 
-    // keystore文件
-    private String keystore;
+    // keystore文件名
+    private String keystoreName;
+
+    // keystore文件内容
+    private String keystoreContent;
 
     // 所属用户信息
     private User user;
@@ -78,38 +81,6 @@ public class EthAddress extends ABaseDO {
 
     // 状态列表
     private List<String> statusList;
-
-    public List<String> getStatusList() {
-        return statusList;
-    }
-
-    public void setStatusList(List<String> statusList) {
-        this.statusList = statusList;
-    }
-
-    public Long getUseCount() {
-        return useCount;
-    }
-
-    public void setUseCount(Long useCount) {
-        this.useCount = useCount;
-    }
-
-    public Date getToday() {
-        return today;
-    }
-
-    public void setToday(Date today) {
-        this.today = today;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public String getCode() {
         return code;
@@ -159,13 +130,36 @@ public class EthAddress extends ABaseDO {
         this.userId = userId;
     }
 
+    public BigDecimal getInitialBalance() {
+        return initialBalance;
+    }
+
+    public void setInitialBalance(BigDecimal initialBalance) {
+        this.initialBalance = initialBalance;
+    }
+
+    public String getInitialBalanceString() {
+        return initialBalanceString;
+    }
+
+    public void setInitialBalanceString(String initialBalanceString) {
+        this.initialBalanceString = initialBalanceString;
+    }
+
     public BigDecimal getBalance() {
         return balance;
     }
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
-        this.balanceString = balance.toString();
+    }
+
+    public String getBalanceString() {
+        return balanceString;
+    }
+
+    public void setBalanceString(String balanceString) {
+        this.balanceString = balanceString;
     }
 
     public Date getAvailableDatetimeStart() {
@@ -216,12 +210,44 @@ public class EthAddress extends ABaseDO {
         this.updateDatetime = updateDatetime;
     }
 
-    public String getBalanceString() {
-        return balanceString;
+    public String getKeystoreName() {
+        return keystoreName;
     }
 
-    public void setBalanceString(String balanceString) {
-        this.balanceString = balanceString;
+    public void setKeystoreName(String keystoreName) {
+        this.keystoreName = keystoreName;
+    }
+
+    public String getKeystoreContent() {
+        return keystoreContent;
+    }
+
+    public void setKeystoreContent(String keystoreContent) {
+        this.keystoreContent = keystoreContent;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Date getToday() {
+        return today;
+    }
+
+    public void setToday(Date today) {
+        this.today = today;
+    }
+
+    public Long getUseCount() {
+        return useCount;
+    }
+
+    public void setUseCount(Long useCount) {
+        this.useCount = useCount;
     }
 
     public BigDecimal getUseAmount() {
@@ -230,7 +256,6 @@ public class EthAddress extends ABaseDO {
 
     public void setUseAmount(BigDecimal useAmount) {
         this.useAmount = useAmount;
-        this.useAmountString = useAmount.toString();
     }
 
     public String getUseAmountString() {
@@ -241,29 +266,12 @@ public class EthAddress extends ABaseDO {
         this.useAmountString = useAmountString;
     }
 
-    public BigDecimal getInitialBalance() {
-        return initialBalance;
+    public List<String> getStatusList() {
+        return statusList;
     }
 
-    public void setInitialBalance(BigDecimal initialBalance) {
-        this.initialBalance = initialBalance;
-        this.initialBalanceString = initialBalance.toString();
-    }
-
-    public String getInitialBalanceString() {
-        return initialBalanceString;
-    }
-
-    public void setInitialBalanceString(String initialBalanceString) {
-        this.initialBalanceString = initialBalanceString;
-    }
-
-    public String getKeystore() {
-        return keystore;
-    }
-
-    public void setKeystore(String keystore) {
-        this.keystore = keystore;
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
     }
 
 }

@@ -181,7 +181,8 @@ public class WithdrawAOImpl implements IWithdrawAO {
         // 获取今日散取地址
         EthAddress mEthAddress = ethAddressBO.getMEthAddressToday();
         String address = mEthAddress.getAddress();
-        String password = mEthAddress.getPassword();
+        EthAddress secret = ethAddressBO.getEthAddressSecret(mEthAddress
+            .getCode());
         // 获取取现订单详情
         Withdraw withdraw = withdrawBO.getWithdraw(code,
             ESystemCode.COIN.getCode());
@@ -199,7 +200,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
             throw new BizException("xn625000", "无效的取现地址："
                     + withdraw.getPayCardInfo());
         }
-        String txHash = ethTransactionBO.broadcast(address, password,
+        String txHash = ethTransactionBO.broadcast(address, secret,
             withdraw.getPayCardNo(), realAmount);
         if (StringUtils.isBlank(txHash)) {
             throw new BizException("xn625000", "交易广播失败");
