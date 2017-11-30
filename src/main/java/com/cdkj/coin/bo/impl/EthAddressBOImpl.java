@@ -260,4 +260,17 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
         return count;
     }
 
+    @Override
+    public boolean isEthAddressExist(String address) {
+        boolean flag = false;
+        if (StringUtils.isNotBlank(address)) {
+            EthAddress condition = new EthAddress();
+            condition.setAddress(address);
+            if (ethAddressDAO.selectTotalCount(condition) > 0) {
+                flag = true;
+            }
+        }
+        return flag;
+    }
+
 }
