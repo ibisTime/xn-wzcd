@@ -28,7 +28,7 @@ public class AdsDisplayTimeBOImpl implements IAdsDisplayTimeBO {
         //校验参数不能为 空
         ObjValidater.validateReq(adsDisplayTime);
 
-        if (adsDisplayTime.getEndTime().compareTo(adsDisplayTime.getStartTime()) <= 0) {
+        if (adsDisplayTime.getEndTime().compareTo(adsDisplayTime.getStartTime()) < 0) {
 
             throw new BizException("xn000", "结束时间需要大于开始时间");
 
