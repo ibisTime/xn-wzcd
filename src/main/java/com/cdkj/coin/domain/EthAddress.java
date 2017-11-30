@@ -136,6 +136,7 @@ public class EthAddress extends ABaseDO {
 
     public void setInitialBalance(BigDecimal initialBalance) {
         this.initialBalance = initialBalance;
+        this.initialBalanceString = initialBalance.toString();
     }
 
     public String getInitialBalanceString() {
@@ -152,6 +153,7 @@ public class EthAddress extends ABaseDO {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+        this.setBalanceString(balance.toString());
     }
 
     public String getBalanceString() {
@@ -256,6 +258,7 @@ public class EthAddress extends ABaseDO {
 
     public void setUseAmount(BigDecimal useAmount) {
         this.useAmount = useAmount;
+        this.useAmountString = useAmount.toString();
     }
 
     public String getUseAmountString() {
