@@ -29,18 +29,18 @@
 
     <sql id="Base_Column_List">
         code, user_id, trade_currency, trade_coin, only_trust, premium_rate, total_count,
-        left_count, market_price, protect_price,true_price, min_trade, max_trade, pay_type, pay_limit,fee_rate,
+        left_count, market_price, protect_price, true_price, min_trade, max_trade, pay_type, pay_limit, fee_rate,
         status, create_datetime, update_datetime, leave_message, trade_type
     </sql>
 
 
     <insert id="insert" parameterType="com.cdkj.coin.domain.Ads">
         INSERT INTO tcoin_ads (code, user_id, trade_currency,
-                                    trade_coin, only_trust, premium_rate,
-                                    total_count, left_count, market_price,
-                                    protect_price,true_price,fee_rate,min_trade, max_trade,
-                                    pay_type, pay_limit, status,trade_type,
-                                    create_datetime, update_datetime, leave_message
+                               trade_coin, only_trust, premium_rate,
+                               total_count, left_count, market_price,
+                               protect_price, true_price, fee_rate, min_trade, max_trade,
+                               pay_type, pay_limit, status, trade_type,
+                               create_datetime, update_datetime, leave_message
         )
         VALUES (#{code,jdbcType=VARCHAR},
             #{userId,jdbcType=VARCHAR},
@@ -93,21 +93,24 @@
             </if>
 
             <if test="statusList != null and statusList != ''">
-                    AND `status` in
-                    <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
-                        #{item}
-                    </foreach>
+                AND `status` in
+                <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
 
-#           前端查询 时的条件
+            # 前端查询 时的条件
             <if test="currentTime != null and currentTime != '' and currentWeek != null and currentWeek != ''">
-                AND   (
-                tcoin_ads_display_time.ads_code IS NULL OR (
-                #{currentTime} >= tcoin_ads_display_time.start_time
-                <![CDATA[ and #{currentTime} < tcoin_ads_display_time.end_time ]]>
+                AND
+                 left_count > 0
+                AND (
+                 tcoin_ads_display_time.ads_code IS NULL OR (
+                 #{currentTime} >= tcoin_ads_display_time.start_time
+                 AND
+                 <![CDATA[ #{currentTime} < tcoin_ads_display_time.end_time ]]>
                 )
                 )
-                And left_count > 0
+
             </if>
 
             <if test="maxPrice != null and maxPrice != ''">
@@ -153,9 +156,9 @@
 
     <select id="select" resultMap="BaseResultMap" parameterType="com.cdkj.coin.domain.Ads">
         SELECT
-            <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List"/>
         FROM tcoin_ads
-             <include refid="whereCondition"/>
+        <include refid="whereCondition"/>
         <trim prefix="ORDER BY ">
             <if test="order != null and order != ''">
                 ${order}
@@ -164,7 +167,8 @@
     </select>
 
     <update id="updateMarketPrice" parameterType="com.cdkj.coin.domain.Ads">
-        UPDATE tcoin_ads SET market_price = #{marketPrice}
+        UPDATE tcoin_ads
+        SET market_price = #{marketPrice}
     </update>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.cdkj.coin.domain.Ads">
@@ -236,8 +240,8 @@
             trade_coin      = #{tradeCoin,jdbcType=VARCHAR},
             only_trust      = #{onlyTrust,jdbcType=VARCHAR},
             premium_rate    = #{premiumRate,jdbcType=DECIMAL},
-            total_count    = #{totalCount,jdbcType=DECIMAL},
-            left_count     = #{leftCount,jdbcType=DECIMAL},
+            total_count     = #{totalCount,jdbcType=DECIMAL},
+            left_count      = #{leftCount,jdbcType=DECIMAL},
             market_price    = #{marketPrice,jdbcType=DECIMAL},
             protect_price   = #{protectPrice,jdbcType=DECIMAL},
             min_trade       = #{minTrade,jdbcType=DECIMAL},
