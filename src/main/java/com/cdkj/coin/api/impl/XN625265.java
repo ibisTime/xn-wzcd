@@ -45,6 +45,7 @@ public class XN625265 extends AProcessor {
         condition.setUpdater(req.getUpdater());
         condition.setOrder("create_datetime", "desc");
         condition.setResult(req.getResult());
+        condition.setStatus(req.getStatus());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
         return arbitrateAO.queryArbitratePage(start, limit, condition);
