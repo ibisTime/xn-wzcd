@@ -62,6 +62,9 @@ public class EthAddress extends ABaseDO {
     // 更新时间
     private Date updateDatetime;
 
+    // keystore文件
+    private String keystore;
+
     // 所属用户信息
     private User user;
 
@@ -253,6 +256,14 @@ public class EthAddress extends ABaseDO {
 
     public void setInitialBalanceString(String initialBalanceString) {
         this.initialBalanceString = initialBalanceString;
+    }
+
+    public String getKeystore() {
+        return keystore;
+    }
+
+    public void setKeystore(String keystore) {
+        this.keystore = keystore;
     }
 
 }

@@ -101,6 +101,7 @@
 		,create_datetime
 		,abandon_datetime
 		,update_datetime
+		,keystore
 		)
 		VALUES(
 		#{code}
@@ -117,6 +118,7 @@
 		,#{createDatetime}
 		,#{abandonDatetime}
 		,#{updateDatetime}
+		,#{keystore}
 		)
 	</insert>
 

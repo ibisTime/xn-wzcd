@@ -20,7 +20,7 @@ public interface IEthAddressBO extends IPaginableBO<EthAddress> {
     public String saveEthAddress(EEthAddressType type, String userId,
             String address, String label, String password, BigDecimal balance,
             Date availableDatetimeStart, Date availableDatetimeEnd,
-            EEthAddressStatus status);
+            EEthAddressStatus status, String keystore);
 
     // 获取今日散取地址
     public EthAddress getMEthAddressToday();

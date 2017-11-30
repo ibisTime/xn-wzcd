@@ -117,7 +117,7 @@ public class EthAddressAOImpl implements IEthAddressAO {
             ESystemCode.COIN.getCode());
 
         ethAddressBO.saveEthAddress(EEthAddressType.Y, userId, address, label,
-            null, BigDecimal.ZERO, null, null, status);
+            null, BigDecimal.ZERO, null, null, status, null);
 
     }
 
@@ -166,7 +166,7 @@ public class EthAddressAOImpl implements IEthAddressAO {
             ESysUser.SYS_USER_ETH.getCode(), address,
             EEthAddressType.W.getValue(), null, BigDecimal.ZERO,
             availableDatetimeStart, availableDatetimeEnd,
-            EEthAddressStatus.NORMAL);
+            EEthAddressStatus.NORMAL, null);
     }
 
     @Override
