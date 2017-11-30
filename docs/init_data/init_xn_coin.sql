@@ -1,10 +1,11 @@
 
 /*
 -- Query: SELECT * FROM coin_xn_coin.tstd_cnavigate
--- Date: 2017-11-28 14:29
+-- Date: 2017-11-30 17:00
 */
 INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201711271342486662078','banner','2','','交易bannner2@3x_1511771627392.png','1','trade',1,'1','0','','1','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201711271344255452496','banner2','2','','c@3x_1511772301720.png','1','market',2,'1','0','','1','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201711301033386606987','邀请好友','2','','邀请好友图片_1512009213139.png','1','activity',1,'1','0','','1','CD-COIN000017','CD-COIN000017');
 
 
 
@@ -41,11 +42,11 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('qiniu','qiniu_bucket','beicoin','admin',now(),'存储空间','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('qiniu','qiniu_domain','ozfszueqz.bkt.clouddn.com','admin',now(),'访问域名','CD-COIN000017','CD-COIN000017');
 
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_app_code','1400050575','admin','2017-11-16 19:40:03','应用编号','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_app_admin','admin','admin','2017-11-16 19:40:03','账号管理员','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_access_key','-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAETVy+sF6PGdpX7iQ+fY6uheR7O02p\nVMUnX+/GDN5Bk3GGZA1wASLOhd/XyRb+FSnjMSafJSKD6FVzDtPdfy8h7w==\n-----END PUBLIC KEY-----','admin','2017-11-16 19:40:03','公钥','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_secret_key','-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgft/yZF5jXWYcXNbI\noHE9ftdVfC1f8SQ0mWrs6EdjW8ChRANCAARNXL6wXo8Z2lfuJD59jq6F5Hs7TalU\nxSdf78YM3kGTcYZkDXABIs6F39fJFv4VKeMxJp8lIoPoVXMO091/LyHv\n-----END PRIVATE KEY-----','admin','2017-11-16 19:40:03','私钥','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_account_type','19287','admin','2017-11-16 19:40:03','账号类型','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_app_code','1400050575','admin',now(),'应用编号','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_app_admin','admin','admin',now(),'账号管理员','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_access_key','-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAETVy+sF6PGdpX7iQ+fY6uheR7O02p\nVMUnX+/GDN5Bk3GGZA1wASLOhd/XyRb+FSnjMSafJSKD6FVzDtPdfy8h7w==\n-----END PUBLIC KEY-----','admin',now(),'公钥','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_secret_key','-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgft/yZF5jXWYcXNbI\noHE9ftdVfC1f8SQ0mWrs6EdjW8ChRANCAARNXL6wXo8Z2lfuJD59jq6F5Hs7TalU\nxSdf78YM3kGTcYZkDXABIs6F39fJFv4VKeMxJp8lIoPoVXMO091/LyHv\n-----END PRIVATE KEY-----','admin',now(),'私钥','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('tencent_im','tx_account_type','19287','admin',now(),'账号类型','CD-COIN000017','CD-COIN000017');
 
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','about_us','关于我们','admin',now(),'关于我们','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','telephone','0571-89000000','admin',now(),'服务热线','CD-COIN000017','CD-COIN000017');
@@ -53,8 +54,8 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','questions','常见问题','admin',now(),'常见问题','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','service','联系客服','admin',now(),'联系客服','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','reg_protocol','注册协议','admin',now(),'注册协议','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','trade_remind','交易提醒','admin',now(),'交易提醒','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','activity_rule','活动规则','admin',now(),'活动规则','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','trade_remind','1.交易前请详细了解卖家的交易信息\r\n2.请通过平台进行沟通约定，并保存好相关聊天记录\r\n3.如遇到交易纠纷，请通过平台“帮助”解决问题\r\n','admin',now(),'交易提醒','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','activity_rule','1.分享好友，并通过链接注册成功；\r\n2.注册之后每一笔成功交易，您都将获得一笔提成，金额为交易额的0.1%\r\n3.贝可盈保留对活动的解释权。\r\n','admin',now(),'活动规则','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','reg_url','http://m.bcoin.im','admin',now(),'注册链接','CD-COIN000017','CD-COIN000017');
 
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('collection_rule','collection_limit','1','admin',now(),'当账户达到该数量时进行自动归集','CD-COIN000017','CD-COIN000017');
@@ -88,11 +89,11 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('android-c','version','1.0.0','admin',now(),'最新版本号','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('android-c','forceUpdate','0','admin',now(),'是否强制更新','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('android-c','note','v100版本更新说明','admin',now(),'更新说明','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('android-c','downloadUrl','http://m.bcoin.im/v100/5ve/app-debug.apk','admin',now(),'Android下载地址','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('android-c','downloadUrl','http://m.bcoin.im/v100/7th/app-debug_214.apk','admin',now(),'Android下载地址','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('ios-c','version','1.0.0','admin',now(),'最新版本号','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('ios-c','forceUpdate','0','admin',now(),'是否强制更新','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('ios-c','note','v100版本更新说明','admin',now(),'更新说明','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('ios-c','downloadUrl','http://m.bcoin.im/v100/5ve/app-debug.apk','admin',now(),'iOS下载地址','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('ios-c','downloadUrl','http://m.bcoin.im/v100/7th/app-debug_214.apk','admin',now(),'iOS下载地址','CD-COIN000017','CD-COIN000017');
 
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'user_status','用户状态','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','user_status','0','正常','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
