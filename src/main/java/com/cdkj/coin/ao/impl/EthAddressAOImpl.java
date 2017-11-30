@@ -98,6 +98,11 @@ public class EthAddressAOImpl implements IEthAddressAO {
                     + userId + "的用户不存在");
         }
 
+        if (ethAddressBO.isEthAddressExist(address)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "地址"
+                    + address + "已经在平台内被使用，请仔细核对");
+        }
+
         EEthAddressStatus status = EEthAddressStatus.NORMAL;
 
         // 是否设置为认证账户
@@ -162,6 +167,10 @@ public class EthAddressAOImpl implements IEthAddressAO {
     @Override
     public String importWAddress(String address, Date availableDatetimeStart,
             Date availableDatetimeEnd) {
+        if (ethAddressBO.isEthAddressExist(address)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "地址"
+                    + address + "已经在平台内被使用，请仔细核对");
+        }
         return ethAddressBO.saveEthAddress(EEthAddressType.W,
             ESysUser.SYS_USER_ETH.getCode(), address,
             EEthAddressType.W.getValue(), null, BigDecimal.ZERO,

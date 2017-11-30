@@ -39,6 +39,8 @@ public interface IEthAddressBO extends IPaginableBO<EthAddress> {
 
     public EthAddress getEthAddressByUserId(String userId);
 
+    public boolean isEthAddressExist(String address);
+
     public EthAddress getEthAddressSecret(String code);
 
     public List<EthAddress> queryEthAddressList(EthAddress condition);
