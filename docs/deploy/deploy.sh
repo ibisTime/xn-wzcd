@@ -4,6 +4,7 @@
 set tomcat_path "/mnt/www/coin/tomcat_xn_coin"
 set war_name "xn-coin"
 set host_ip "47.90.102.163"
+#set host_ip "47.52.77.214"
 
 spawn ssh root@${host_ip}
 expect "*password:"
