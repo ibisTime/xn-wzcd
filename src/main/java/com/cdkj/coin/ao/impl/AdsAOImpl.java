@@ -1,44 +1,26 @@
 package com.cdkj.coin.ao.impl;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import com.cdkj.coin.ao.IAdsAO;
+import com.cdkj.coin.ao.IMarketAO;
 import com.cdkj.coin.bo.*;
+import com.cdkj.coin.bo.base.Paginable;
+import com.cdkj.coin.common.SysConstants;
+import com.cdkj.coin.core.OrderNoGenerater;
 import com.cdkj.coin.domain.*;
+import com.cdkj.coin.dto.req.XN625220Req;
 import com.cdkj.coin.enums.*;
-import org.apache.commons.collections.functors.TruePredicate;
+import com.cdkj.coin.exception.BizException;
+import com.cdkj.coin.exception.EBizErrorCode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.cdkj.coin.ao.IAdsAO;
-import com.cdkj.coin.ao.IMarketAO;
-import com.cdkj.coin.bo.IAccountBO;
-import com.cdkj.coin.bo.IAdsBO;
-import com.cdkj.coin.bo.IAdsDisplayTimeBO;
-import com.cdkj.coin.bo.IMarketBO;
-import com.cdkj.coin.bo.ISYSConfigBO;
-import com.cdkj.coin.bo.ITradeOrderBO;
-import com.cdkj.coin.bo.IUserBO;
-import com.cdkj.coin.bo.IUserRelationBO;
-import com.cdkj.coin.bo.base.Paginable;
-import com.cdkj.coin.common.SysConstants;
-import com.cdkj.coin.core.OrderNoGenerater;
-import com.cdkj.coin.domain.Account;
-import com.cdkj.coin.domain.Ads;
-import com.cdkj.coin.domain.AdsDisplayTime;
-import com.cdkj.coin.domain.Market;
-import com.cdkj.coin.domain.User;
-import com.cdkj.coin.domain.UserStatistics;
-import com.cdkj.coin.dto.req.XN625220Req;
-import com.cdkj.coin.exception.BizException;
-import com.cdkj.coin.exception.EBizErrorCode;
 import org.web3j.utils.Convert;
 
-import javax.rmi.CORBA.Util;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by tianlei on 2017/十一月/14.
@@ -287,18 +269,7 @@ public class AdsAOImpl implements IAdsAO {
 
         }
 
-        if (ads.getDisplayTime() != null && !ads.getDisplayTime().isEmpty()) {
-
-            // 有展示时间限制、先插入展示时间
-            for (AdsDisplayTime displayTime : ads.getDisplayTime()) {
-
-                displayTime.setAdsCode(ads.getCode());
-                // 插入
-                this.displayTimeBO.insertDisplayTime(displayTime);
-
-            }
-
-        }
+        this.handleTime(ads);
 
         this.iAdsBO.insertAdsSell(ads);
 
@@ -321,18 +292,7 @@ public class AdsAOImpl implements IAdsAO {
 
         }
 
-        if (ads.getDisplayTime() != null && !ads.getDisplayTime().isEmpty()) {
-
-            // 有展示时间限制、先插入展示时间
-            for (AdsDisplayTime displayTime : ads.getDisplayTime()) {
-
-                displayTime.setAdsCode(ads.getCode());
-                // 插入
-                this.displayTimeBO.insertDisplayTime(displayTime);
-
-            }
-
-        }
+        this.handleTime(ads);
 
         this.iAdsBO.insertAdsSell(ads);
 
@@ -347,7 +307,7 @@ public class AdsAOImpl implements IAdsAO {
         }
 
         //检查是否有同类型的 上架 广告
-        this.checkHaveSameTypeShangJiaAds(req.getUserId(),req.getTradeType());
+        this.checkHaveSameTypeShangJiaAds(req.getUserId(), req.getTradeType());
 
         // 构造并校验
         Ads ads = this.buildAdsSell(req, req.getAdsCode());
@@ -360,6 +320,15 @@ public class AdsAOImpl implements IAdsAO {
             this.checkAccountAndHandAccount(ads);
 
         }
+
+        this.handleTime(ads);
+
+        //
+        this.iAdsBO.draftPublish(ads);
+
+    }
+
+    private void handleTime(Ads ads) {
 
         // 删除原来的展示时间
         this.displayTimeBO.deleteAdsDisplayTimeByAdsCode(ads.getCode());
@@ -376,9 +345,6 @@ public class AdsAOImpl implements IAdsAO {
             }
 
         }
-
-        //
-        this.iAdsBO.draftPublish(ads);
 
     }
 
@@ -506,7 +472,7 @@ public class AdsAOImpl implements IAdsAO {
 
         }
 
-        // 检验状态是否满足下架操作
+        // 检验状态是否满足下架操作, 待交易的不能下架
         if (!EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "广告有未完成的订单，不能下架");
         }

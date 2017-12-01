@@ -155,7 +155,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         statusList.add(EAdsStatus.DAIJIAOYI.getCode());
         statusList.add(EAdsStatus.JIAOYIZHONG.getCode());
         condition.setStatusList(statusList);
-        // 传现在是 周几 java 周日 = 1，
+        // 传现在是 周几 java 周日 = 1
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
@@ -246,7 +246,10 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         condotion.setStatus(existOningOrder ? EAdsStatus.JIAOYIZHONG.getCode() : EAdsStatus.DAIJIAOYI.getCode());
 
         //更新状态
-        this.adsDAO.updateByPrimaryKeySelective(condotion);
+       int count = this.adsDAO.updateByPrimaryKeySelective(condotion);
+       if (count != 1) {
+           throw  new  BizException("xn000","刷新状态失败");
+       }
 
     }
 

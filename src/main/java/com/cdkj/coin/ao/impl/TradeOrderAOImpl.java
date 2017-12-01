@@ -1,9 +1,14 @@
 package com.cdkj.coin.ao.impl;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-
+import com.cdkj.coin.ao.ITradeOrderAO;
+import com.cdkj.coin.bo.*;
+import com.cdkj.coin.bo.base.Paginable;
+import com.cdkj.coin.common.SysConstants;
+import com.cdkj.coin.domain.*;
+import com.cdkj.coin.dto.res.XN625252Res;
+import com.cdkj.coin.enums.*;
+import com.cdkj.coin.exception.BizException;
+import com.cdkj.coin.exception.EBizErrorCode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,36 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.web3j.utils.Convert;
 import org.web3j.utils.Convert.Unit;
 
-import com.cdkj.coin.ao.ITradeOrderAO;
-import com.cdkj.coin.bo.IAccountBO;
-import com.cdkj.coin.bo.IAdsBO;
-import com.cdkj.coin.bo.IArbitrateBO;
-import com.cdkj.coin.bo.IJourBO;
-import com.cdkj.coin.bo.ISYSConfigBO;
-import com.cdkj.coin.bo.ITradeOrderBO;
-import com.cdkj.coin.bo.IUserBO;
-import com.cdkj.coin.bo.IUserRelationBO;
-import com.cdkj.coin.bo.base.Paginable;
-import com.cdkj.coin.common.SysConstants;
-import com.cdkj.coin.domain.Account;
-import com.cdkj.coin.domain.Ads;
-import com.cdkj.coin.domain.Jour;
-import com.cdkj.coin.domain.TradeOrder;
-import com.cdkj.coin.domain.User;
-import com.cdkj.coin.domain.UserStatistics;
-import com.cdkj.coin.dto.res.XN625252Res;
-import com.cdkj.coin.enums.EAdsStatus;
-import com.cdkj.coin.enums.EChannelType;
-import com.cdkj.coin.enums.ECoin;
-import com.cdkj.coin.enums.EJourBizTypePlat;
-import com.cdkj.coin.enums.EJourBizTypeUser;
-import com.cdkj.coin.enums.EJourKind;
-import com.cdkj.coin.enums.ESystemAccount;
-import com.cdkj.coin.enums.ETradeOrderStatus;
-import com.cdkj.coin.enums.ETradeOrderType;
-import com.cdkj.coin.enums.ETradeType;
-import com.cdkj.coin.exception.BizException;
-import com.cdkj.coin.exception.EBizErrorCode;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class TradeOrderAOImpl implements ITradeOrderAO {
@@ -189,7 +167,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "广告不存在");
         }
 
-        // 必须为买币广告购买广告
+        // 必须为买币广告
         if (!ads.getTradeType().equals(ETradeType.BUY.getCode())) {
 
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "该广告不是购买广告");
@@ -198,7 +176,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 校验广告
         this.checkAdsStatusAndMasterCannotBuy(ads, sellUser);
 
-        doAmountCheck(ads, tradePrice, tradeCount, tradeAmount, "交易额大于剩余收购金额");
+        doAmountCheck(ads, tradePrice, tradeCount, tradeAmount, "交易数量大于剩余收购数量");
 
         // 校验出售者余额
         Account sellUserAccount = this.accountBO.getAccountByUser(sellUser,
@@ -212,8 +190,6 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
         // 计算交易手续费
         BigDecimal fee = tradeCount.multiply(ads.getFeeRate());
-
-        // 提交订单
 
         // 检查是否有正在聊天订单
         TradeOrder tradeOrder = tradeOrderBO.getToSubmitTradeOrder(
@@ -230,8 +206,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         }
 
         //刷新广告状态，从待交易变为，交易中
-        adsBO.refreshStatus(ads.getCode(), true);
-
+        this.adsBO.refreshStatus(ads.getCode(), true);
+        int a = 10;
         // 改变广告可交易量
         this.adsBO.cutLeftCount(ads.getCode(), tradeCount);
 
