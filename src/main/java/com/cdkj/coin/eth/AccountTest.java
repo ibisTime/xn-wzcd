@@ -37,10 +37,10 @@ public class AccountTest {
 
     public static void main(String args[]) {
         String hash = broadcast("0x901536393df4bf66986c12cf98f3d6718c534f20",
-            "533109", "0x1681c7153cb760d978f41651aafd8e4c74ddda81",
-            new BigDecimal("2000000000000000"));
+            "533109", "0xb5b65134878ff514aecc989c0720674f3dd6aab2",
+            new BigDecimal("1000000000000000"));
         System.out.println("广播完成，交易hash=" + hash + "，交易金额="
-                + Convert.fromWei("2000000000000000", Unit.ETHER));
+                + Convert.fromWei("1000000000000000", Unit.ETHER));
 
         // BigDecimal a = new BigDecimal("10000000000000000000");
         // BigDecimal b = new BigDecimal("9999999999999999999");

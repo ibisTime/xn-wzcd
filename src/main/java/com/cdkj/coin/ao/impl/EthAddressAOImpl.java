@@ -87,8 +87,8 @@ public class EthAddressAOImpl implements IEthAddressAO {
 
         // 地址有效性校验
         if (!WalletUtils.isValidAddress(address)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "地址不符合以太坊规则，请仔细核对");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "地址"
+                    + address + "不符合以太坊规则，请仔细核对");
         }
 
         // 用户ID校验
@@ -170,6 +170,11 @@ public class EthAddressAOImpl implements IEthAddressAO {
         if (ethAddressBO.isEthAddressExist(address)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "地址"
                     + address + "已经在平台内被使用，请仔细核对");
+        }
+        // 地址有效性校验
+        if (!WalletUtils.isValidAddress(address)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "地址"
+                    + address + "不符合以太坊规则，请仔细核对");
         }
         return ethAddressBO.saveEthAddress(EEthAddressType.W,
             ESysUser.SYS_USER_ETH.getCode(), address,
