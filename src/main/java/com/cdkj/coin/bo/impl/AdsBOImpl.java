@@ -94,17 +94,19 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
         Ads condition = new Ads();
         condition.setCode(adsCode);
-        Ads ads = this.adsDAO.select(condition);
 
+        Ads ads = this.adsDAO.select(condition);
         if (ads == null) {
             throw new BizException("xn", "广告不存在");
         }
-        ads.setLeftCount(ads.getLeftCount().subtract(value));
-        // 校验余额，
-        int count = this.adsDAO.updateByPrimaryKeySelective(ads);
+
+        condition.setLeftCount(ads.getLeftCount().subtract(value));
+        // 校验余额
+        int count = this.adsDAO.updateByPrimaryKeySelective(condition);
         if (count != 1) {
             throw new BizException("xn", "更新失败");
         }
+
     }
 
     @Override
@@ -233,9 +235,11 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
         Ads condotion = new Ads();
         condotion.setCode(adsCode);
+
         Ads ads = this.adsDAO.select(condotion);
         if (ads == null) {
-            throw new BizException("xn000", "广告编号不存在");
+
+            throw new BizException("xn000", "广告不存在");
 
         }
         if (!ads.getStatus().equals(EAdsStatus.DAIJIAOYI.getCode()) && !ads.getStatus().equals(EAdsStatus.JIAOYIZHONG.getCode())) {
@@ -246,10 +250,10 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         condotion.setStatus(existOningOrder ? EAdsStatus.JIAOYIZHONG.getCode() : EAdsStatus.DAIJIAOYI.getCode());
 
         //更新状态
-       int count = this.adsDAO.updateByPrimaryKeySelective(condotion);
-       if (count != 1) {
-           throw  new  BizException("xn000","刷新状态失败");
-       }
+        int count = this.adsDAO.updateByPrimaryKeySelective(condotion);
+        if (count != 1) {
+            throw new BizException("xn000", "刷新状态失败");
+        }
 
     }
 
