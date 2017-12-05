@@ -74,6 +74,12 @@
     <include refid="whereCondation"/>
   </select>
 
+  <select id="selectMarketAvg" resultType="Decimal" parameterType="com.cdkj.coin.domain.Market">
+    SELECT avg(mid)
+    FROM tcoin_market
+    WHERE coin = #{coin}
+  </select>
+
   <!--<select id="selectList" parameterType="java.lang.String" resultMap="BaseResultMap">-->
     <!--select-->
     <!--<include refid="Base_Column_List" />-->

@@ -1,9 +1,9 @@
 package com.cdkj.coin.ao;
 
-import java.util.List;
-
 import com.cdkj.coin.domain.Market;
 import com.cdkj.coin.dto.req.XN625291Req;
+
+import java.util.List;
 
 /**
  * Created by tianlei on 2017/十一月/13.
@@ -15,5 +15,8 @@ public interface IMarketAO {
 
     //获取列表行情
     List<Market> marketListByReq(XN625291Req req);
+
+    //获取平台干预后的，货币价格
+    Market coinPriceByPlatform(String coin);
 
 }

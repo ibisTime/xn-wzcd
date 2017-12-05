@@ -6,9 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +14,7 @@ import java.util.List;
  */
 public class XN625220Req {
 
-    //草稿发布时使用, 或者下架的广告重新上架
+    //草稿发布时使用
     private String adsCode;
 
     @NotBlank

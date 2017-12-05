@@ -37,11 +37,10 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     IAdsDAO adsDAO;
 
     @Override
-    public void insertAdsSell(Ads adsSell) {
+    public void insertAds(Ads ads) {
 
-        int count = this.adsDAO.insert(adsSell);
+        int count = this.adsDAO.insert(ads);
         if (count != 1) {
-
             throw new BizException("xn0000", "发布失败");
         }
 
@@ -225,7 +224,6 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
     @Override
     public void refreshStatus(String adsCode, boolean existOningOrder) {
-        // TODO Auto-generated method stub
 
         if (StringUtils.isBlank(adsCode)) {
 
@@ -233,10 +231,10 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
         }
 
-        Ads condotion = new Ads();
-        condotion.setCode(adsCode);
+        Ads updateCondotion = new Ads();
+        updateCondotion.setCode(adsCode);
 
-        Ads ads = this.adsDAO.select(condotion);
+        Ads ads = this.adsDAO.select(updateCondotion);
         if (ads == null) {
 
             throw new BizException("xn000", "广告不存在");
@@ -247,10 +245,10 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         }
 
         //设置状态
-        condotion.setStatus(existOningOrder ? EAdsStatus.JIAOYIZHONG.getCode() : EAdsStatus.DAIJIAOYI.getCode());
+        updateCondotion.setStatus(existOningOrder ? EAdsStatus.JIAOYIZHONG.getCode() : EAdsStatus.DAIJIAOYI.getCode());
 
         //更新状态
-        int count = this.adsDAO.updateByPrimaryKeySelective(condotion);
+        int count = this.adsDAO.updateByPrimaryKeySelective(updateCondotion);
         if (count != 1) {
             throw new BizException("xn000", "刷新状态失败");
         }

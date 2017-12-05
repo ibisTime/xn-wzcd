@@ -1,16 +1,18 @@
 package com.cdkj.coin.bo.impl;
 
 import com.cdkj.coin.bo.IMarketBO;
-import com.cdkj.coin.common.StringUtil;
 import com.cdkj.coin.dao.IMarketDAO;
+import com.cdkj.coin.dao.ISYSConfigDAO;
 import com.cdkj.coin.domain.Market;
+import com.cdkj.coin.domain.SYSConfig;
 import com.cdkj.coin.enums.ECoin;
-import com.cdkj.coin.enums.ECurrency;
-import com.cdkj.coin.enums.EMarketOrigin;
+import com.cdkj.coin.enums.ESystemCode;
+import com.cdkj.coin.exception.BizException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -22,10 +24,29 @@ public class MarketBOImpl implements IMarketBO {
     @Autowired
     IMarketDAO marketDAO;
 
+    @Autowired
+    ISYSConfigDAO sysConfigDAO;
+
     @Override
     public Market standardMarket(ECoin coin) {
 
-        return this.marketByCoinTypeAndOrigin(coin.getCode(), EMarketOrigin.BITFINEX.getCode());
+        Market avgCondition = new Market();
+        avgCondition.setCoin(coin.getCode());
+        BigDecimal avg = this.marketDAO.selectMarketAvg(avgCondition);
+
+        if (avg == null) {
+            throw new BizException("xn000", "行情加权值获取异常");
+        }
+
+        Market market = new Market();
+        market.setMid(avg);
+        market.setAsk(avg);
+        market.setBid(avg);
+        market.setLastPrice(avg);
+        market.setLow(avg);
+        market.setHigh(avg);
+
+        return market;
     }
 
     @Override
@@ -57,4 +78,6 @@ public class MarketBOImpl implements IMarketBO {
         return this.marketDAO.selectList(condation);
 
     }
+
+
 }

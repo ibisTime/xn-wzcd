@@ -33,7 +33,6 @@
         status, create_datetime, update_datetime, leave_message, trade_type
     </sql>
 
-
     <insert id="insert" parameterType="com.cdkj.coin.domain.Ads">
         INSERT INTO tcoin_ads (code, user_id, trade_currency,
                                trade_coin, only_trust, premium_rate,
@@ -103,6 +102,8 @@
             <if test="currentTime != null and currentTime != '' and currentWeek != null and currentWeek != ''">
                 AND
                  left_count > 0
+                AND
+                 left_cout*market_price >= min_trade
                 AND (
                  tcoin_ads_display_time.ads_code IS NULL OR (
                  #{currentTime} >= tcoin_ads_display_time.start_time

@@ -1,21 +1,5 @@
 package com.cdkj.coin.ao.impl;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import okhttp3.Call;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.alibaba.fastjson.JSON;
 import com.cdkj.coin.ao.IMarketAO;
 import com.cdkj.coin.bo.ICurrencyRateBO;
@@ -26,6 +10,21 @@ import com.cdkj.coin.dto.req.XN625291Req;
 import com.cdkj.coin.enums.ECoin;
 import com.cdkj.coin.enums.ECurrency;
 import com.cdkj.coin.enums.EMarketOrigin;
+import com.cdkj.coin.exception.BizException;
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tianlei on 2017/十一月/13.
@@ -64,6 +63,21 @@ public class MarketAOImpl implements IMarketAO {
         condition.setCoin(req.getCoin());
         return this.marketBO.marketListByCondation(condition);
 
+    }
+
+    @Override
+    public Market coinPriceByPlatform(String coin) {
+
+        ECoin eCoin = null;
+        if (coin.equals(ECoin.ETH.getCode())) {
+            eCoin = ECoin.ETH;
+        }
+
+        if (eCoin == null) {
+            throw new BizException("xn000",coin + "不支持的货币类型");
+        }
+
+        return this.marketBO.standardMarket(eCoin);
     }
 
     public void obtainMarket() {
