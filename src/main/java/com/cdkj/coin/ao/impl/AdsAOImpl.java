@@ -368,7 +368,6 @@ public class AdsAOImpl implements IAdsAO {
 
     }
 
-
     private void handleTime(Ads ads) {
 
         // 删除原来的展示时间
@@ -599,9 +598,11 @@ public class AdsAOImpl implements IAdsAO {
         Market market = this.marketBO.standardMarket(ECoin.ETH);
         // 1.只刷新上架状态的
         List<Ads> shangJiaAdsList = this.iAdsBO.queryShangJiaAdsList();
+
+        BigDecimal marketPrice =  this.getPrice(market);
         for (Ads ads : shangJiaAdsList) {
 
-            ads.setMarketPrice(this.getPrice(market));
+            ads.setMarketPrice(marketPrice);
             // 行情价格
             // 真实价格
             // 取出溢价率

@@ -67,7 +67,7 @@
 		<property name="startDelay" value="10000"/>
 		<!--每10分钟查询-->
 		<property name="cronExpression" value="0 */10 * * * ?" />
-		<!--<property name="cronExpression" value="0 */1 * * * ?" />-->
+		<!--<property name="cronExpression" value="0 * * * * ?" />-->
 	</bean>
 	<bean id="adsMarket"
 		  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -75,6 +75,8 @@
 		<property name="targetMethod" value="refreshMarketPrice" />
 		<property name="concurrent" value="false" />
 	</bean>
+
+
 	
 	<!-- 定时扫描未支付订单 -->
 	<bean id="doCheckUnpayOrderTrigger"

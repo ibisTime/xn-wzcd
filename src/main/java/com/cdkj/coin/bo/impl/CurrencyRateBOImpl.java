@@ -35,7 +35,16 @@ public class CurrencyRateBOImpl extends PaginableBOImpl<CurrencyRate> implements
 
         CurrencyRate condation = new CurrencyRate();
         condation.setCurrency(currency);
-        return this.currencyRateDAO.selectList(condation,0,1).get(0);
+        List<CurrencyRate> currencyRateList = this.currencyRateDAO.selectList(condation,0,1);
+
+
+        if (currencyRateList.isEmpty()) {
+
+            throw new BizException("xn000000", "汇率获取异常");
+
+        }
+
+        return currencyRateList.get(0);
 
     }
 
