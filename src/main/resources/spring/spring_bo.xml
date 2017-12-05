@@ -16,6 +16,10 @@
 		<property name="paginableDAO" ref="userDAOImpl" />
 	</bean>
 	
+	<bean id="blacklistBO" class="com.cdkj.coin.bo.impl.BlacklistBOImpl">
+		<property name="paginableDAO" ref="blacklistDAOImpl"/>
+	</bean>
+	
 	<bean id="userRelationBO" class="com.cdkj.coin.bo.impl.UserRelationBOImpl">
 		<property name="paginableDAO" ref="userRelationDAOImpl" />
 	</bean>

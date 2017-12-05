@@ -3,6 +3,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="user" type="com.cdkj.coin.domain.User" />
+		<typeAlias alias="blacklist" type="com.cdkj.coin.domain.Blacklist" />
 		<typeAlias alias="userRelation" type="com.cdkj.coin.domain.UserRelation" />
 		<typeAlias alias="cNavigate" type="com.cdkj.coin.domain.CNavigate" />
 		<typeAlias alias="fieldTimes" type="com.cdkj.coin.domain.FieldTimes" />
