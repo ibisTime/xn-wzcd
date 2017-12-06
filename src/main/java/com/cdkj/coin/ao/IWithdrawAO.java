@@ -15,7 +15,7 @@ public interface IWithdrawAO {
     // 提现申请
     public String applyOrderTradePwd(String accountNumber, BigDecimal amount,
             String payCardInfo, String payCardNo, String applyUser,
-            String applyNote, String tradePwd);
+            String applyNote, String tradePwd, String googleCaptcha);
 
     // 待申请
     public String applyOrder(String accountNumber, BigDecimal amount,

@@ -18,6 +18,7 @@ import com.cdkj.coin.ao.IWithdrawAO;
 import com.cdkj.coin.bo.IAccountBO;
 import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IEthTransactionBO;
+import com.cdkj.coin.bo.IGoogleAuthBO;
 import com.cdkj.coin.bo.IJourBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.IUserBO;
@@ -68,11 +69,14 @@ public class WithdrawAOImpl implements IWithdrawAO {
     @Autowired
     private ISYSConfigBO sysConfigBO;
 
+    @Autowired
+    private IGoogleAuthBO googleAuthBO;
+
     @Override
     @Transactional
     public String applyOrderTradePwd(String accountNumber, BigDecimal amount,
             String payCardInfo, String payCardNo, String applyUser,
-            String applyNote, String tradePwd) {
+            String applyNote, String tradePwd, String googleCaptcha) {
         // 取现手续费
         BigDecimal fee = sysConfigBO
             .getBigDecimalValue(SysConstants.WITHDRAW_FEE);
@@ -101,7 +105,18 @@ public class WithdrawAOImpl implements IWithdrawAO {
         if (ethAddressBO.getTotalCount(condition) > 0) {
             // 符合条件无需验证交易密码
         } else {
-            // 验证dePwd(dbAccount.getUserId(), tradePwd);
+            // 验证交易密码
+            userBO.checkTradePwd(dbAccount.getUserId(), tradePwd);
+            // 假如开启了谷歌认证，校验谷歌验证码
+            User user = userBO.getUser(applyUser);
+            if (StringUtils.isNotBlank(user.getGoogleSecret())) {
+                if (StringUtils.isBlank(googleCaptcha)) {
+                    throw new BizException("xn000000", "您已开启谷歌认证，请输入谷歌验证码！");
+                } else {
+                    googleAuthBO.checkCode(user.getGoogleSecret(),
+                        googleCaptcha, System.currentTimeMillis());
+                }
+            }
         }
 
         // 生成取现订单

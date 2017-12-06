@@ -27,6 +27,7 @@ import com.cdkj.coin.bo.IAccountBO;
 import com.cdkj.coin.bo.ICtqBO;
 import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IFieldTimesBO;
+import com.cdkj.coin.bo.IGoogleAuthBO;
 import com.cdkj.coin.bo.IIdentifyBO;
 import com.cdkj.coin.bo.IJourBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
@@ -116,6 +117,9 @@ public class UserAOImpl implements IUserAO {
 
     @Autowired
     ITencentBO tencentBO;
+
+    @Autowired
+    IGoogleAuthBO googleAuthBO;
 
     /** 
      * @see com.std.user.ao.IUserAO#doCheckMobile(java.lang.String, java.lang.String, java.lang.String)
@@ -510,7 +514,7 @@ public class UserAOImpl implements IUserAO {
 
     @Override
     public void doResetTradePwd(String userId, String newTradePwd,
-            String smsCaptcha) {
+            String smsCaptcha, String googleCaptcha) {
         User user = userBO.getUser(userId);
         if (user == null) {
             throw new BizException("li010004", "用户名不存在");
@@ -519,6 +523,15 @@ public class UserAOImpl implements IUserAO {
         String mobile = user.getMobile();
         smsOutBO.checkCaptcha(mobile, smsCaptcha, "805067",
             user.getCompanyCode(), user.getSystemCode());
+        // 校验谷歌验证码
+        if (StringUtils.isNotBlank(user.getGoogleSecret())) {
+            if (StringUtils.isBlank(googleCaptcha)) {
+                throw new BizException("xn000000", "您已开启谷歌认证，请输入谷歌验证码！");
+            } else {
+                googleAuthBO.checkCode(user.getGoogleSecret(), googleCaptcha,
+                    System.currentTimeMillis());
+            }
+        }
         userBO.refreshTradePwd(userId, newTradePwd);
         // 发送短信
         smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
@@ -919,17 +932,12 @@ public class UserAOImpl implements IUserAO {
             } else {
                 user.setTradepwdFlag(false);
             }
-
-            // // 获取我关注的人
-            // UserRelation toCondition = new UserRelation();
-            // toCondition.setUserId(userId);
-            // toCondition.setStatus(EBoolean.YES.getCode());
-            // user.setTotalFollowNum(userRelationBO.getTotalCount(toCondition));
-            // // 获取我粉丝的人
-            // UserRelation condition = new UserRelation();
-            // condition.setToUser(userId);
-            // condition.setStatus(EBoolean.YES.getCode());
-            // user.setTotalFansNum(userRelationBO.getTotalCount(condition));
+            // 是否开始谷歌认证
+            if (StringUtils.isNotBlank(user.getGoogleSecret())) {
+                user.setGoogleAuthFlag(true);
+            } else {
+                user.setGoogleAuthFlag(false);
+            }
 
         }
         return user;
@@ -1028,6 +1036,34 @@ public class UserAOImpl implements IUserAO {
     @Override
     public void lastLogin(String userId) {
         userBO.refreshLastLogin(userId);
+    }
+
+    @Override
+    public void openGoogleAuth(String userId, String secret, String smsCaptcha,
+            String googleCaptcha) {
+        User user = this.doGetUser(userId);
+        // 短信验证码是否正确
+        smsOutBO.checkCaptcha(user.getMobile(), smsCaptcha, "805071",
+            user.getCompanyCode(), user.getSystemCode());
+        // 校验谷歌验证码
+        googleAuthBO.checkCode(secret, googleCaptcha,
+            System.currentTimeMillis());
+        // 修改谷歌验证秘钥
+        userBO.refreshGoogleSecret(userId, secret);
+    }
+
+    @Override
+    public void closeGoogleAuth(String userId, String smsCaptcha,
+            String googleCaptcha) {
+        User user = this.doGetUser(userId);
+        // 短信验证码是否正确
+        smsOutBO.checkCaptcha(user.getMobile(), smsCaptcha, "805072",
+            user.getCompanyCode(), user.getSystemCode());
+        // 校验谷歌验证码
+        googleAuthBO.checkCode(user.getGoogleSecret(), googleCaptcha,
+            System.currentTimeMillis());
+        // 重置谷歌验证秘钥
+        userBO.refreshGoogleSecret(userId, null);
     }
 
 }

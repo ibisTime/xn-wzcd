@@ -23,7 +23,8 @@ public interface IEthAddressAO {
 
     // 新增用户地址
     public void addEthAddress(String address, String label, String userId,
-            String smsCaptcha, String isCerti, String tradePwd);
+            String smsCaptcha, String isCerti, String tradePwd,
+            String googleCaptcha);
 
     // 弃用地址
     public void abandonAddress(String code);

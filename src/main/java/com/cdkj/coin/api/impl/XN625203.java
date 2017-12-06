@@ -38,7 +38,7 @@ public class XN625203 extends AProcessor {
     public Object doBusiness() throws BizException {
         ethAddressAO.addEthAddress(req.getAddress(), req.getLabel(),
             req.getUserId(), req.getSmsCaptcha(), req.getIsCerti(),
-            req.getTradePwd());
+            req.getTradePwd(), req.getGoogleCaptcha());
         return new BooleanRes(true);
     }
 

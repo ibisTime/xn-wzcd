@@ -34,6 +34,16 @@ public class XN625203Req {
 
     private String tradePwd; // 资金密码，isCerti为true时必填
 
+    private String googleCaptcha; // isCerti为true，开启谷歌认证时必填
+
+    public String getGoogleCaptcha() {
+        return googleCaptcha;
+    }
+
+    public void setGoogleCaptcha(String googleCaptcha) {
+        this.googleCaptcha = googleCaptcha;
+    }
+
     public String getAddress() {
         return address;
     }

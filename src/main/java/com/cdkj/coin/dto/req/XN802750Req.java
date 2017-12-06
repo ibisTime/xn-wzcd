@@ -29,6 +29,17 @@ public class XN802750Req {
     // 交易密码（必填）
     private String tradePwd;
 
+    // 谷歌验证码（开启认证时必填）
+    private String googleCaptcha;
+
+    public String getGoogleCaptcha() {
+        return googleCaptcha;
+    }
+
+    public void setGoogleCaptcha(String googleCaptcha) {
+        this.googleCaptcha = googleCaptcha;
+    }
+
     public String getTradePwd() {
         return tradePwd;
     }

@@ -82,7 +82,7 @@ public interface IUserAO {
 
     // 重置支付密码
     public void doResetTradePwd(String userId, String newTradePwd,
-            String smsCaptcha);
+            String smsCaptcha, String googleCaptcha);
 
     // 重置支付密码(需实名认证)
     public void doResetTradePwd(String userId, String newTradePwd,
@@ -171,4 +171,13 @@ public interface IUserAO {
 
     // 更新最后一次登录时间
     public void lastLogin(String userId);
+
+    // 开启/修改谷歌认证
+    public void openGoogleAuth(String userId, String secret, String smsCaptcha,
+            String googleCaptcha);
+
+    // 关闭认证
+    public void closeGoogleAuth(String userId, String smsCaptcha,
+            String googleCaptcha);
+
 }

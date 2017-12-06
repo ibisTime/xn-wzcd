@@ -19,6 +19,7 @@
 		<result column="id_no" property="idNo" />
 		<result column="real_name" property="realName" />
 		<result column="trade_pwd_strength" property="tradePwdStrength" />
+		<result column="google_secret" property="googleSecret" />
 		<result column="role_code" property="roleCode" />
 		<result column="div_rate" property="divRate" />
 		
@@ -184,6 +185,7 @@
 		,t.id_no
 		,t.real_name
 		,t.trade_pwd_strength
+		,t.google_secret
 		,t.role_code
 		,t.div_rate
 		
@@ -531,6 +533,14 @@
 		UPDATE tstd_user
 		SET
 		email = #{email}
+		WHERE
+		user_id = #{userId}		
+	</update>
+	
+	<update id="update_googleSecret" parameterType="user">
+		UPDATE tstd_user
+		SET
+		google_secret = #{googleSecret}
 		WHERE
 		user_id = #{userId}		
 	</update>

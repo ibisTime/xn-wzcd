@@ -452,6 +452,12 @@
 			<version>[7.2.0, 7.2.99]</version>
 		</dependency>
 
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.8</version>
+		</dependency>
+
 	</dependencies>
 	<!-- 解决每次更新maven自动更改jdk1.5办法 -->
 	<build>

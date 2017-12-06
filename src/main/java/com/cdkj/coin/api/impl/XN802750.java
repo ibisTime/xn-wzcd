@@ -30,7 +30,8 @@ public class XN802750 extends AProcessor {
         BigDecimal amount = StringValidater.toBigDecimal(req.getAmount());
         String code = withdrawAO.applyOrderTradePwd(req.getAccountNumber(),
             amount, req.getPayCardInfo(), req.getPayCardNo(),
-            req.getApplyUser(), req.getApplyNote(), req.getTradePwd());
+            req.getApplyUser(), req.getApplyNote(), req.getTradePwd(),
+            req.getGoogleCaptcha());
         return new PKCodeRes(code);
     }
 

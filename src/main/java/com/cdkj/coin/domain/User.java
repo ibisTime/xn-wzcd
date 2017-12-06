@@ -64,6 +64,9 @@ public class User extends ABaseDO {
     // 支付密码强度
     private String tradePwdStrength;
 
+    // 谷歌验证秘钥
+    private transient String googleSecret;
+
     // 角色编号
     private String roleCode;
 
@@ -177,6 +180,9 @@ public class User extends ABaseDO {
 
     // 是否设置交易密码
     private boolean tradepwdFlag;
+
+    // 是否设置交易密码
+    private boolean googleAuthFlag;
 
     // ossUserId
     private String ossUserId;
@@ -697,6 +703,22 @@ public class User extends ABaseDO {
 
     public void setLastLogin(Date lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public String getGoogleSecret() {
+        return googleSecret;
+    }
+
+    public void setGoogleSecret(String googleSecret) {
+        this.googleSecret = googleSecret;
+    }
+
+    public boolean isGoogleAuthFlag() {
+        return googleAuthFlag;
+    }
+
+    public void setGoogleAuthFlag(boolean googleAuthFlag) {
+        this.googleAuthFlag = googleAuthFlag;
     }
 
 }

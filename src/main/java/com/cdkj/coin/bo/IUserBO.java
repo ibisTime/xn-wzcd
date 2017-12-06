@@ -148,4 +148,6 @@ public interface IUserBO extends IPaginableBO<User> {
     public void refreshRemark(String userId, String remark);
 
     public void refreshLastLogin(String userId);
+
+    public void refreshGoogleSecret(String userId, String secret);
 }

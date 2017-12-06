@@ -27,6 +27,7 @@ import com.cdkj.coin.bo.ICtqBO;
 import com.cdkj.coin.bo.IEthAddressBO;
 import com.cdkj.coin.bo.IEthCollectionBO;
 import com.cdkj.coin.bo.IEthTransactionBO;
+import com.cdkj.coin.bo.IGoogleAuthBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
 import com.cdkj.coin.bo.ISmsOutBO;
 import com.cdkj.coin.bo.IUserBO;
@@ -81,9 +82,13 @@ public class EthAddressAOImpl implements IEthAddressAO {
     @Autowired
     ISmsOutBO smsOutBO;
 
+    @Autowired
+    IGoogleAuthBO googleAuthBO;
+
     @Override
     public void addEthAddress(String address, String label, String userId,
-            String smsCaptcha, String isCerti, String tradePwd) {
+            String smsCaptcha, String isCerti, String tradePwd,
+            String googleCaptcha) {
 
         // 地址有效性校验
         if (!WalletUtils.isValidAddress(address)) {
@@ -113,6 +118,15 @@ public class EthAddressAOImpl implements IEthAddressAO {
             }
             // 验证资金密码
             userBO.checkTradePwd(userId, tradePwd);
+            // 假如开启了谷歌认证，校验谷歌验证码
+            if (StringUtils.isNotBlank(user.getGoogleSecret())) {
+                if (StringUtils.isBlank(googleCaptcha)) {
+                    throw new BizException("xn000000", "您已开启谷歌认证，请输入谷歌验证码！");
+                } else {
+                    googleAuthBO.checkCode(user.getGoogleSecret(),
+                        googleCaptcha, System.currentTimeMillis());
+                }
+            }
             status = EEthAddressStatus.CERTI;
         }
 

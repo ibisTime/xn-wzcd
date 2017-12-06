@@ -800,4 +800,14 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
             userDAO.updateLastLogin(data);
         }
     }
+
+    @Override
+    public void refreshGoogleSecret(String userId, String secret) {
+        if (StringUtils.isNotBlank(userId)) {
+            User data = new User();
+            data.setUserId(userId);
+            data.setGoogleSecret(secret);
+            userDAO.updateGoogleSecret(data);
+        }
+    }
 }
