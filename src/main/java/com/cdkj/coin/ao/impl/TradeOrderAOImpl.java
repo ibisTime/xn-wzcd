@@ -50,6 +50,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     @Autowired
     private IUserSettingsBO userSettingsBO;
 
+    @Autowired
+    private IBlacklistBO blacklistBO;
 
     @Override
     public String contactBuy(String adsCode, String buyUser) {
@@ -103,7 +105,11 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     public String buy(String adsCode, String buyUser, BigDecimal tradePrice,
                       BigDecimal count, BigDecimal tradeAmount) {
 
+
         String code = null;
+
+        //检查黑名单
+        this.checkPlatformBlackList(buyUser);
 
         // 检查购买用户，是否有未完成的订单, 有未完成的交易则不能在进行交易
         if (!this.tradeOrderBO.checkUserHasUnFinishOrder(buyUser,
@@ -156,6 +162,10 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     public String sell(String adsCode, String sellUser, BigDecimal tradePrice,
                        BigDecimal tradeCount, BigDecimal tradeAmount) {
         String code = null;
+
+        //检查黑名单
+        this.checkPlatformBlackList(sellUser);
+
         //
         if (!this.tradeOrderBO.checkUserHasUnFinishOrder(sellUser,
                 ETradeOrderType.SELL)) {
@@ -229,7 +239,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
         if (ads.getOnlyTrust().equals("1")) {
 
-            if (!this.userRelationBO.checkReleation(ads.getUserId(), applyUser,EUserReleationType.TRUST.getCode())) {
+            if (!this.userRelationBO.checkReleation(ads.getUserId(), applyUser, EUserReleationType.TRUST.getCode())) {
 
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "您未被广告发布者信任，不能与之进行交易");
@@ -247,6 +257,15 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "您是广告发布者，不能进行该操作");
         }
+    }
+
+    private void checkPlatformBlackList(String userId) {
+
+        String flag = this.blacklistBO.isAddBlacklist(userId);
+        if (flag.equals(EBoolean.YES.getCode())) {
+            throw new BizException("xn000", "您已被平台加入黑名单，不能进行该项操作。如有疑问请联系客服。");
+        }
+
     }
 
     @Override
@@ -364,32 +383,15 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
                 tradeOrderBO.isExistOningOrder(tradeOrder.getAdsCode()));
 
         //end__ 校验卖家的设置
-        this.handleUserAutoSetting(tradeOrder.getCode(),tradeOrder.getSellUser(),tradeOrder.getBuyUser());
+        this.handleUserAutoSetting(tradeOrder.getCode(), tradeOrder.getSellUser(), tradeOrder.getBuyUser());
 
         //end__ 校验买家设置
-        this.handleUserAutoSetting(tradeOrder.getCode(),tradeOrder.getBuyUser(),tradeOrder.getSellUser());
+        this.handleUserAutoSetting(tradeOrder.getCode(), tradeOrder.getBuyUser(), tradeOrder.getSellUser());
 
         return tradeOrder;
 
     }
 
-    private void handleUserAutoSetting(String tradeOrderCode,String userId,String toUserId) {
-
-        //自动好评
-        long count =  this.userSettingsBO.checkUserSetting(userId,EUserSettingsType.AUTO_HAOPING.getCode());
-        if (count > 0) {
-            //自动设置了好评
-            this.comment(tradeOrderCode,userId,ECommentLevel.HAO_PING.getCode());
-        }
-
-        //自动信任
-        long trustCount =  this.userSettingsBO.checkUserSetting(userId,EUserSettingsType.AUTO_TRUST.getCode());
-        if (trustCount > 0) {
-
-            this.userRelationBO.saveUserRelation(userId,toUserId,EUserReleationType.TRUST.getCode(),ESystemCode.COIN.getCode());
-
-        }
-    }
 
     @Override
     @Transactional
@@ -432,6 +434,110 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 提交仲裁工单
         arbitrateBO.submit(tradeOrder.getCode(), yuangao, beigao, reason,
                 attach);
+    }
+
+
+    @Override
+    public Paginable<TradeOrder> queryTradeOrderPage(int start, int limit,
+                                                     TradeOrder condition) {
+        //按时间倒叙
+
+        condition.setOrder("update_datetime", "DESC");
+
+        //
+        Paginable<TradeOrder> results = tradeOrderBO.getPaginable(start, limit,
+                condition);
+        for (TradeOrder tradeOrder : results.getList()) {
+            tradeOrder.setBuyUserInfo(userBO.getUser(tradeOrder.getBuyUser()));
+            tradeOrder
+                    .setSellUserInfo(userBO.getUser(tradeOrder.getSellUser()));
+        }
+        return results;
+    }
+
+    @Override
+    public List<TradeOrder> queryTradeOrderList(TradeOrder condition) {
+        return tradeOrderBO.queryTradeOrderList(condition);
+    }
+
+    @Override
+    public TradeOrder getTradeOrder(String code) {
+        TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(code);
+        tradeOrder.setBuyUserInfo(userBO.getUser(tradeOrder.getBuyUser()));
+        tradeOrder.setSellUserInfo(userBO.getUser(tradeOrder.getSellUser()));
+        return tradeOrder;
+    }
+
+    // 定时检验 待支付订单的超时时间
+    @Override
+    public void doCheckUnpayOrder() {
+        TradeOrder condition = new TradeOrder();
+        condition.setStatus(ETradeOrderStatus.TO_PAY.getCode());
+        condition.setInvalidDatetime(new Date());
+        List<TradeOrder> resultList = tradeOrderBO
+                .queryTradeOrderList(condition);
+        for (TradeOrder tradeOrder : resultList) {
+
+            this.cancel(tradeOrder.getCode(), "系统", "订单支付超时，系统自动取消");
+
+        }
+
+    }
+
+    @Override
+    public UserStatistics userStatisticsInfo(String userId) {
+
+        UserStatistics userStatistics = this.tradeOrderBO
+                .obtainUserStatistics(userId);
+        // 获取被信任次数
+        userStatistics.setBeiXinRenCount(this.userRelationBO
+                .getRelationCount(userId, EUserReleationType.TRUST.getCode()));
+        //
+        return userStatistics;
+
+    }
+
+    @Override
+    public BigDecimal getUserTotalTradeCount(String userId) {
+
+        return this.tradeOrderBO.getUserTotalTradeCount(userId);
+
+    }
+
+    @Override
+    public XN625252Res getTradeOrderCheckInfo(String code) {
+        XN625252Res res = new XN625252Res();
+
+        // 交易订单详情
+        TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(code);
+        tradeOrder.setBuyUserInfo(userBO.getUser(tradeOrder.getBuyUser()));
+        tradeOrder.setSellUserInfo(userBO.getUser(tradeOrder.getSellUser()));
+
+        // 充值对应流水记录
+        Jour jour = new Jour();
+        jour.setRefNo(tradeOrder.getCode());
+        jour.setKind(EJourKind.BALANCE.getCode());
+        List<Jour> jourList = jourBO.queryJourList(jour);
+
+        res.setTradeOrder(tradeOrder);
+        res.setJourList(jourList);
+
+        return res;
+    }
+
+    @Override
+    public void dropTradeOrder(String code) {
+        // 交易订单详情
+        TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(code);
+        if (!ETradeOrderStatus.TO_SUBMIT.getCode().equals(
+                tradeOrder.getStatus())
+                && !ETradeOrderStatus.CANCEL.getCode().equals(
+                tradeOrder.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "只有待下单和已取消的订单可以删除");
+        }
+        tradeOrderBO.removeTradeOrder(tradeOrder);
+
     }
 
     private void doBsComment(TradeOrder tradeOrder, String userId,
@@ -519,17 +625,28 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             return;
         }
 
-        handleReferenceFenCheng(refereeUser.getUserId(), sysAccount, tradeOrder);
+        handleReferenceFenCheng(refereeUser.getUserId(),buyUser.getUserRefereeLevel(), sysAccount, tradeOrder);
 
     }
 
     // ！！！！！！！！注意！！！！！！
     // 卖出广告 和 买入广告，共用此方法
-    private void handleReferenceFenCheng(String refereeUserId,
+    private void handleReferenceFenCheng(String refereeUserId,String thenRefereeUserLevel,
                                          Account sysAccount, TradeOrder tradeOrder) {
 
-        Double fenChengFee = this.sysConfigBO
-                .getDoubleValue(SysConstants.FEN_CHENG_FEE);
+        Double fenChengFee = null;
+
+        if (thenRefereeUserLevel.equals(EUserLevel.ONE.getCode())) {
+            // 推荐人为普通
+            fenChengFee = this.sysConfigBO
+                    .getDoubleValue(SysConstants.FEN_CHENG_FEE);
+        } else {
+            // 推荐人代理人
+            fenChengFee = this.sysConfigBO
+                    .getDoubleValue(SysConstants.AGENT_FEN_CHENG_FEE);
+        }
+
+
         BigDecimal shouldPayFenCheng = tradeOrder.getFee().multiply(
                 BigDecimal.valueOf(fenChengFee));
 
@@ -612,8 +729,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         if (sellUserRefereeUser == null) {
             return;
         }
-
-        handleReferenceFenCheng(sellUserRefereeUser.getUserId(), sysAccount,
+//sellUser.getRefeereLevel()
+        handleReferenceFenCheng(sellUserRefereeUser.getUserId(),sellUser.getUserRefereeLevel() ,sysAccount,
                 tradeOrder);
 
 
@@ -640,108 +757,21 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         }
     }
 
-    @Override
-    public Paginable<TradeOrder> queryTradeOrderPage(int start, int limit,
-                                                     TradeOrder condition) {
-        //按时间倒叙
+    private void handleUserAutoSetting(String tradeOrderCode, String userId, String toUserId) {
 
-        condition.setOrder("update_datetime", "DESC");
-
-        //
-        Paginable<TradeOrder> results = tradeOrderBO.getPaginable(start, limit,
-                condition);
-        for (TradeOrder tradeOrder : results.getList()) {
-            tradeOrder.setBuyUserInfo(userBO.getUser(tradeOrder.getBuyUser()));
-            tradeOrder
-                    .setSellUserInfo(userBO.getUser(tradeOrder.getSellUser()));
-        }
-        return results;
-    }
-
-    @Override
-    public List<TradeOrder> queryTradeOrderList(TradeOrder condition) {
-        return tradeOrderBO.queryTradeOrderList(condition);
-    }
-
-    @Override
-    public TradeOrder getTradeOrder(String code) {
-        TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(code);
-        tradeOrder.setBuyUserInfo(userBO.getUser(tradeOrder.getBuyUser()));
-        tradeOrder.setSellUserInfo(userBO.getUser(tradeOrder.getSellUser()));
-        return tradeOrder;
-    }
-
-    // 定时检验 待支付订单的超时时间
-    @Override
-    public void doCheckUnpayOrder() {
-        TradeOrder condition = new TradeOrder();
-        condition.setStatus(ETradeOrderStatus.TO_PAY.getCode());
-        condition.setInvalidDatetime(new Date());
-        List<TradeOrder> resultList = tradeOrderBO
-                .queryTradeOrderList(condition);
-        for (TradeOrder tradeOrder : resultList) {
-
-            this.cancel(tradeOrder.getCode(), "系统", "订单支付超时，系统自动取消");
-
+        //自动好评
+        long count = this.userSettingsBO.checkUserSetting(userId, EUserSettingsType.AUTO_HAOPING.getCode());
+        if (count > 0) {
+            //自动设置了好评
+            this.comment(tradeOrderCode, userId, ECommentLevel.HAO_PING.getCode());
         }
 
-    }
+        //自动信任
+        long trustCount = this.userSettingsBO.checkUserSetting(userId, EUserSettingsType.AUTO_TRUST.getCode());
+        if (trustCount > 0) {
 
+            this.userRelationBO.saveUserRelation(userId, toUserId, EUserReleationType.TRUST.getCode(), ESystemCode.COIN.getCode());
 
-    @Override
-    public UserStatistics userStatisticsInfo(String userId) {
-
-        UserStatistics userStatistics = this.tradeOrderBO
-                .obtainUserStatistics(userId);
-        // 获取被信任次数
-        userStatistics.setBeiXinRenCount(this.userRelationBO
-                .getRelationCount(userId,EUserReleationType.TRUST.getCode()));
-        //
-        return userStatistics;
-
-    }
-
-    @Override
-    public BigDecimal getUserTotalTradeCount(String userId) {
-
-        return this.tradeOrderBO.getUserTotalTradeCount(userId);
-
-    }
-
-    @Override
-    public XN625252Res getTradeOrderCheckInfo(String code) {
-        XN625252Res res = new XN625252Res();
-
-        // 交易订单详情
-        TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(code);
-        tradeOrder.setBuyUserInfo(userBO.getUser(tradeOrder.getBuyUser()));
-        tradeOrder.setSellUserInfo(userBO.getUser(tradeOrder.getSellUser()));
-
-        // 充值对应流水记录
-        Jour jour = new Jour();
-        jour.setRefNo(tradeOrder.getCode());
-        jour.setKind(EJourKind.BALANCE.getCode());
-        List<Jour> jourList = jourBO.queryJourList(jour);
-
-        res.setTradeOrder(tradeOrder);
-        res.setJourList(jourList);
-
-        return res;
-    }
-
-    @Override
-    public void dropTradeOrder(String code) {
-        // 交易订单详情
-        TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(code);
-        if (!ETradeOrderStatus.TO_SUBMIT.getCode().equals(
-                tradeOrder.getStatus())
-                && !ETradeOrderStatus.CANCEL.getCode().equals(
-                tradeOrder.getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "只有待下单和已取消的订单可以删除");
         }
-        tradeOrderBO.removeTradeOrder(tradeOrder);
-
     }
-
 }

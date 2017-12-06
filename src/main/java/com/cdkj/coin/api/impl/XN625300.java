@@ -26,16 +26,15 @@ public class XN625300 extends AProcessor {
 
         if (req.getOpType().equals("0")) {
             //设置
-
-            this.userSettingsAO.addUserSettings(req.getUserId(),req.getType());
+            this.userSettingsAO.addUserSettings(req.getUserId(), req.getType());
 
         } else if (req.getOpType().equals("1")) {
             //删除设置
-            this.userSettingsAO.dropUserSettings(req.getUserId(),req.getType());
+            this.userSettingsAO.dropUserSettings(req.getUserId(), req.getType());
 
         } else {
 
-            throw new  BizException("xn000","不支持的操作类型");
+            throw new BizException("xn000", "不支持的操作类型");
 
         }
 

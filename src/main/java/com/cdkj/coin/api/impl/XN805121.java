@@ -12,6 +12,8 @@ import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
 
+import java.math.BigDecimal;
+
 /**
  * 根据userId获取用户信息
  *
@@ -30,7 +32,12 @@ public class XN805121 extends AProcessor {
     public Object doBusiness() throws BizException {
 
         User user = userAO.doGetUser(req.getUserId());
-        user.setUserStatistics(tradeOrderAO.userStatisticsInfo(user.getUserId()));
+        UserStatistics userStatistics = tradeOrderAO.userStatisticsInfo(user.getUserId());
+        BigDecimal totalTradeCount =  this.tradeOrderAO.getUserTotalTradeCount(user.getUserId());
+
+        //获取用户交易量
+        userStatistics.setTotalTradeCount(totalTradeCount.toString());
+        user.setUserStatistics(userStatistics);
         return user;
 
     }

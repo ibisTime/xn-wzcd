@@ -21,7 +21,7 @@ public class UserSettingsDAOImpl extends AMybatisTemplate implements IUserSettin
 
 	@Override
 	public int delete(UserSettings data) {
-		return super.delete(NAMESPACE.concat("delete_UserSettings"), data);
+		return super.delete(NAMESPACE.concat("delete"), data);
 	}
 
 

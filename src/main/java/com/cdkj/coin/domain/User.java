@@ -1,8 +1,8 @@
 package com.cdkj.coin.domain;
 
-import java.util.Date;
-
 import com.cdkj.coin.dao.base.ABaseDO;
+
+import java.util.Date;
 
 /**
  * @author: xieyj 

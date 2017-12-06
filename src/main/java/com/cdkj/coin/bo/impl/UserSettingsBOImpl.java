@@ -74,7 +74,6 @@ public class UserSettingsBOImpl extends PaginableBOImpl<UserSettings> implements
         UserSettings userSettings = new UserSettings();
         userSettings.setUserId(userId);
         userSettings.setType(type);
-
         long count = this.UserSettingsDAO.selectTotalCount(userSettings);
 
         return count;

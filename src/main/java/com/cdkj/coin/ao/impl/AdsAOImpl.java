@@ -63,6 +63,10 @@ public class AdsAOImpl implements IAdsAO {
     @Autowired
     IUserRelationBO userRelationBO;
 
+
+    @Autowired
+    private IBlacklistBO blacklistBO;
+
     @Override
     public Object frontPage(Integer start, Integer limit, Ads condition) {
 
@@ -90,7 +94,6 @@ public class AdsAOImpl implements IAdsAO {
         return paginable;
 
     }
-
 
     @Override
     public List<Ads> frontSearchAdsByNickName(String nickName) {
@@ -130,6 +133,10 @@ public class AdsAOImpl implements IAdsAO {
         if (user == null) {
             throw new BizException("xn00000", "用户不存在");
         }
+
+        // 检查黑名单
+        this.checkPlatformBlackList(user.getUserId());
+
 
         String publishType = req.getPublishType();
 
@@ -233,6 +240,15 @@ public class AdsAOImpl implements IAdsAO {
 
     }
 
+    private void checkPlatformBlackList(String userId) {
+
+        String flag = this.blacklistBO.isAddBlacklist(userId);
+        if (flag.equals(EBoolean.YES.getCode())) {
+            throw new BizException("xn000","您已被平台加入黑名单，不能进行该项操作。如有疑问请联系客服。");
+        }
+
+    }
+
     private void checkHaveSameTypeShangJiaAds(String userId, String tradeType) {
 
         //检查是否存在已上架的——同类型的广告
@@ -268,7 +284,12 @@ public class AdsAOImpl implements IAdsAO {
 
         // 获取信任数量
         userStatistics.setBeiXinRenCount(this.userRelationBO
-                .getRelationCount(ads.getUserId(),EUserReleationType.TRUST.getCode()));
+                .getRelationCount(ads.getUserId(), EUserReleationType.TRUST.getCode()));
+
+        //获取用户交易量
+        BigDecimal totalTradeCount = this.tradeOrderBO.getUserTotalTradeCount(user.getUserId());
+        userStatistics.setTotalTradeCount(totalTradeCount.toString());
+        user.setUserStatistics(userStatistics);
         ads.setUserStatistics(userStatistics);
 
     }
@@ -396,48 +417,6 @@ public class AdsAOImpl implements IAdsAO {
 
     }
 
-    // 暂时弃用
-    // @Transactional
-    // public void shangJia(XN625220Req req) {
-    //
-    // if (StringUtils.isBlank(req.getAdsCode())) {
-    // throw new BizException("xn000", "请传入广告编号");
-    // }
-    //
-    // // 构造 并校验
-    // Ads ads = this.buildAdsSell(req, req.getAdsCode());
-    //
-    // // 检查 是否处于下架状态
-    // Ads trueAds = this.iAdsBO.adsSellDetail(ads.getCode());
-    // if (trueAds.getStatus().equals(EAdsStatus.XIAJIA.getCode())) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前广告不是下架状态，不能进行该操作");
-    // }
-    //
-    // // 判断账户并处理
-    // this.checkAccountAndHandAccount(ads);
-    //
-    // // 删除原来的展示时间
-    // this.displayTimeBO.deleteAdsDisplayTimeByAdsCode(ads.getCode());
-    //
-    // // 插入新的展示时间
-    // if (ads != null && !ads.getDisplayTime().isEmpty()) {
-    // // 有展示时间限制、先插入展示时间
-    // for (AdsDisplayTime displayTime : ads.getDisplayTime()) {
-    //
-    // displayTime.setAdsCode(ads.getCode());
-    // // 插入
-    // this.displayTimeBO.insertDisplayTime(displayTime);
-    //
-    // }
-    //
-    // }
-    //
-    // //
-    // this.iAdsBO.shangJiaAds(ads.getCode());
-    //
-    // }
-
     public void checkAccountAndHandAccount(Ads ads) {
 
         Account account = this.accountBO.getAccountByUser(ads.getUserId(),
@@ -494,7 +473,7 @@ public class AdsAOImpl implements IAdsAO {
 
             } else {
 
-                isTrust = this.userRelationBO.checkReleation(searchUserUserId, ads.getUserId(),EUserReleationType.TRUST.getCode()) ? 1 : 0;
+                isTrust = this.userRelationBO.checkReleation(searchUserUserId, ads.getUserId(), EUserReleationType.TRUST.getCode()) ? 1 : 0;
 
             }
 
@@ -599,7 +578,7 @@ public class AdsAOImpl implements IAdsAO {
         // 1.只刷新上架状态的
         List<Ads> shangJiaAdsList = this.iAdsBO.queryShangJiaAdsList();
 
-        BigDecimal marketPrice =  this.getPrice(market);
+        BigDecimal marketPrice = this.getPrice(market);
         for (Ads ads : shangJiaAdsList) {
 
             ads.setMarketPrice(marketPrice);

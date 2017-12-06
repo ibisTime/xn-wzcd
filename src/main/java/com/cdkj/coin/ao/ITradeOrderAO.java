@@ -1,12 +1,12 @@
 package com.cdkj.coin.ao;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.TradeOrder;
 import com.cdkj.coin.domain.UserStatistics;
 import com.cdkj.coin.dto.res.XN625252Res;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 public interface ITradeOrderAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
@@ -53,6 +53,7 @@ public interface ITradeOrderAO {
     // 定时器调用：扫描支付超时订单
     public void doCheckUnpayOrder();
 
+    //不包含 用户交易量的 统计
     public UserStatistics userStatisticsInfo(String userId);
 
     // 获取用户的交易总量
