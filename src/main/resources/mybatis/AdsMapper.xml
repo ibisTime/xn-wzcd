@@ -103,7 +103,7 @@
                 AND
                  left_count > 0
                 AND
-                 left_cout*market_price >= min_trade
+                left_count*market_price >= min_trade
                 AND (
                  tcoin_ads_display_time.ads_code IS NULL OR (
                  #{currentTime} >= tcoin_ads_display_time.start_time

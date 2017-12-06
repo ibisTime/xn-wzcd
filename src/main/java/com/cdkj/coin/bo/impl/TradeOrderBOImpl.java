@@ -244,6 +244,10 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         return count;
     }
 
+    @Override
+    public int removeTradeOrder(TradeOrder data) {
+        return tradeOrderDAO.delete(data);
+    }
 
     @Override
     public int markPay(TradeOrder tradeOrder, String updater, String remark) {
@@ -491,7 +495,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         TradeOrder tradeOrder = new TradeOrder();
         tradeOrder.setUserId(userId);
         //只查询 释放的 和 已完成的
-        tradeOrder.setStatusList(Arrays.asList(ETradeOrderStatus.RELEASED.getCode(),ETradeOrderStatus.COMPLETE.getCode()));
+        tradeOrder.setStatusList(Arrays.asList(ETradeOrderStatus.RELEASED.getCode(), ETradeOrderStatus.COMPLETE.getCode()));
         return this.tradeOrderDAO.selectedTotalTradeCount(tradeOrder);
 
 //        BigDecimal totalTradeCount = BigDecimal.ZERO;
@@ -512,8 +516,21 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
     }
 
     @Override
-    public int removeTradeOrder(TradeOrder data) {
-        return tradeOrderDAO.delete(data);
+    public long getTradeTimesBetweenUser(String user1, String user2) {
+
+        TradeOrder con1 = new TradeOrder();
+        con1.setSellUser(user1);
+        con1.setBuyUser(user2);
+        long count1 = this.tradeOrderDAO.selectTotalCount(con1);
+
+        //
+        TradeOrder con2 = new TradeOrder();
+        con2.setSellUser(user2);
+        con2.setBuyUser(user1);
+        long count2 = this.tradeOrderDAO.selectTotalCount(con2);
+
+        return count1 + count2;
+
     }
 
     @Override

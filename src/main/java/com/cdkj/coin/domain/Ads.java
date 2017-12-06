@@ -1,8 +1,6 @@
 package com.cdkj.coin.domain;
 
 import com.cdkj.coin.dao.base.ABaseDO;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -75,6 +73,9 @@ public class Ads extends ABaseDO implements Serializable {
 
     //0 不信任，1 信任
     private int isTrust;
+
+    private int isBlackList;
+
 
     public Ads() {
 

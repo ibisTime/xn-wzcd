@@ -1,9 +1,5 @@
 package com.cdkj.coin.api.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.cdkj.coin.ao.ITradeOrderAO;
 import com.cdkj.coin.ao.IUserAO;
 import com.cdkj.coin.api.AProcessor;
@@ -17,6 +13,9 @@ import com.cdkj.coin.dto.req.XN805120Req;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 /**
  * 分页查询用户列表
@@ -85,7 +84,7 @@ public class XN805120 extends AProcessor {
         List<User> userList = paginable.getList();
         for (User user : userList) {
             UserStatistics userStatistics = this.tradeOrderAO
-                .userStatisticsInfo(user.getUserId());
+                .userStatisticsInfoNotContainTradeCount(user.getUserId());
             user.setUserStatistics(userStatistics);
 
         }

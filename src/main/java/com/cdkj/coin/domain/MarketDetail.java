@@ -14,7 +14,8 @@ public class MarketDetail extends ABaseDO {
     private String price_usd;
     private String price_cny;
     private String price_btc;
-//    private String 24h_volume_usd;
+    private String one_day_volume_usd;
+    private String one_day_volume_cny;
     private String market_cap_usd;
     private String available_supply;
     private String total_supply;
@@ -134,5 +135,21 @@ public class MarketDetail extends ABaseDO {
 
     public void setLast_updated(String last_updated) {
         this.last_updated = last_updated;
+    }
+
+    public String getOne_day_volume_usd() {
+        return one_day_volume_usd;
+    }
+
+    public void setOne_day_volume_usd(String one_day_volume_usd) {
+        this.one_day_volume_usd = one_day_volume_usd;
+    }
+
+    public String getOne_day_volume_cny() {
+        return one_day_volume_cny;
+    }
+
+    public void setOne_day_volume_cny(String one_day_volume_cny) {
+        this.one_day_volume_cny = one_day_volume_cny;
     }
 }

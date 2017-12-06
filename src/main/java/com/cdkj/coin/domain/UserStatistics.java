@@ -1,7 +1,5 @@
 package com.cdkj.coin.domain;
 
-import java.math.BigDecimal;
-
 /**
  * Created by tianlei on 2017/十一月/22.
  */
@@ -19,6 +17,26 @@ public class UserStatistics {
     //被信任次数
     long beiXinRenCount;
 
+    //交易量
+    private String totalTradeCount;
+
+    //********* 以下在用户详情页使用  *******//
+    //是否信任
+    private String isTrust;
+
+    //是否加入到黑名单
+    private String isAddBlackList;
+
+    //访客和主人之间的交易次数
+    private String betweenTradeTimes;
+
+    public String getTotalTradeCount() {
+        return totalTradeCount;
+    }
+
+    public void setTotalTradeCount(String totalTradeCount) {
+        this.totalTradeCount = totalTradeCount;
+    }
 
     public int getJiaoYiCount() {
         return jiaoYiCount;
@@ -52,7 +70,27 @@ public class UserStatistics {
         this.beiXinRenCount = beiXinRenCount;
     }
 
-    //交易量
-//    BigDecimal totalTradeCount;
+    public String getIsTrust() {
+        return isTrust;
+    }
 
+    public void setIsTrust(String isTrust) {
+        this.isTrust = isTrust;
+    }
+
+    public String getIsAddBlackList() {
+        return isAddBlackList;
+    }
+
+    public void setIsAddBlackList(String isAddBlackList) {
+        this.isAddBlackList = isAddBlackList;
+    }
+
+    public String getBetweenTradeTimes() {
+        return betweenTradeTimes;
+    }
+
+    public void setBetweenTradeTimes(String betweenTradeTimes) {
+        this.betweenTradeTimes = betweenTradeTimes;
+    }
 }

@@ -8,13 +8,23 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN625256Req {
 
     @NotBlank
-    private String userId;
+    private String master;
 
-    public String getUserId() {
-        return userId;
+    private String visitor;
+
+    public String getMaster() {
+        return master;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setMaster(String master) {
+        this.master = master;
+    }
+
+    public String getVisitor() {
+        return visitor;
+    }
+
+    public void setVisitor(String visitor) {
+        this.visitor = visitor;
     }
 }

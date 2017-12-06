@@ -1,16 +1,14 @@
 package com.cdkj.coin.enums;
 
 /**
- * 用户等级
- *
- * @author: xieyj
- * @since: 2016年5月24日 上午9:11:47
- * @history:
+ * Created by tianlei on 2017/十二月/06.
  */
-public enum EUserLevel {
-    ONE("1", "普通交易者"), TWO("2", "代理人");
+public enum EUserReleationType {
 
-    EUserLevel(String code, String value) {
+    BLACKLIST("0", "拉黑"),
+    TRUST("1", "信任");
+
+    EUserReleationType(String code, String value) {
         this.code = code;
         this.value = value;
     }

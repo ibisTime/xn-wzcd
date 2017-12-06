@@ -15,12 +15,9 @@ public interface IUserSettingsAO {
 
 	public void dropUserSettings(String userId, String type);
 
-//	public int editUserSettings(UserSettings data);
-
 	public Paginable<UserSettings> queryUserSettingsPage(int start, int limit, UserSettings condition);
 
 	public List<UserSettings> queryUserSettingsList(UserSettings condition);
 
-//	public UserSettings getUserSettings(String code);
 
 }

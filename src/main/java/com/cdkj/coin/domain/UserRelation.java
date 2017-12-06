@@ -8,9 +8,9 @@
  */
 package com.cdkj.coin.domain;
 
-import java.util.Date;
-
 import com.cdkj.coin.dao.base.ABaseDO;
+
+import java.util.Date;
 
 /** 
  * @author: xieyj 
@@ -34,6 +34,9 @@ public class UserRelation extends ABaseDO {
 
     // 状态(1 正常 0 假删除定时器删除 预留)
     private String status;
+
+    // @see EUserReleationType
+    private String type;
 
     // 更新时间
     private Date updateDatetime;
@@ -122,4 +125,11 @@ public class UserRelation extends ABaseDO {
         this.toUserInfo = toUserInfo;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

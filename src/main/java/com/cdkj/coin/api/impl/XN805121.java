@@ -30,7 +30,8 @@ public class XN805121 extends AProcessor {
     public Object doBusiness() throws BizException {
 
         User user = userAO.doGetUser(req.getUserId());
-        user.setUserStatistics(tradeOrderAO.userStatisticsInfo(user.getUserId()));
+        UserStatistics userStatistics = tradeOrderAO.userStatisticsInfoContainTradeCount(user.getUserId());
+        user.setUserStatistics(userStatistics);
         return user;
 
     }
