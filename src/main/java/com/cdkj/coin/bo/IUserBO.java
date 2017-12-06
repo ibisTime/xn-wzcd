@@ -42,13 +42,16 @@ public interface IUserBO extends IPaginableBO<User> {
     public String getUserId(String mobile, String kind, String companyCode,
             String systemCode);
 
+    public User getUser(String mobile, String kind, String companyCode,
+            String systemCode);
+
     // 查询openId
     public void doCheckOpenId(String unionId, String h5OpenId,
             String appOpenId, String companyCode, String systemCode);
 
     // 前端用户注册
     public String doRegister(String mobile, String nickname, String loginPwd,
-            String userReferee, String kind, String province, String city,
+            User refereeUser, String kind, String province, String city,
             String area, String address, String companyCode, String systemCode);
 
     public String doRegister(String unionId, String h5OpenId, String appOpenId,
@@ -143,4 +146,6 @@ public interface IUserBO extends IPaginableBO<User> {
     public void refreshEmail(String userId, String email);
 
     public void refreshRemark(String userId, String remark);
+
+    public void refreshLastLogin(String userId);
 }

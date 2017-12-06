@@ -13,6 +13,7 @@
 		<result column="kind" property="kind" />
 		<result column="level" property="level" />		
 		<result column="user_referee" property="userReferee" />
+		<result column="user_referee_level" property="userRefereeLevel" />
 		<result column="id_kind" property="idKind" />
 		
 		<result column="id_no" property="idNo" />
@@ -49,6 +50,7 @@
 		<result column="remark" property="remark" />
 		<result column="company_code" property="companyCode" />
 		<result column="system_code" property="systemCode" />
+		<result column="last_login" property="lastLogin" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">			
@@ -176,6 +178,7 @@
 		,t.kind	
 		,t.level
 		,t.user_referee
+		,t.user_referee_level
 		,t.id_kind
 		
 		,t.id_no
@@ -240,6 +243,7 @@
 		,kind
 		,level
 		,user_referee
+		,user_referee_level
 		
 		,id_kind
 		,id_no
@@ -291,6 +295,7 @@
 		,#{kind}
 		,#{level}
 		,#{userReferee}
+		,#{userRefereeLevel}
 		
 		,#{idKind}
 		,#{idNo}
@@ -493,6 +498,14 @@
 		UPDATE tstd_user
 		SET
 		level = #{level}
+		WHERE
+		user_id = #{userId}		
+	</update>
+	
+	<update id="update_lastLogin" parameterType="user">
+		UPDATE tstd_user
+		SET
+		last_login = #{lastLogin}
 		WHERE
 		user_id = #{userId}		
 	</update>

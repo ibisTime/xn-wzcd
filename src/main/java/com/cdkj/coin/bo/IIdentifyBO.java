@@ -2,6 +2,8 @@ package com.cdkj.coin.bo;
 
 import com.cdkj.coin.dto.res.XN798011Res;
 import com.cdkj.coin.dto.res.XN798012Res;
+import com.cdkj.coin.dto.res.XN798013Res;
+import com.cdkj.coin.dto.res.XN798014Res;
 
 public interface IIdentifyBO {
     /**
@@ -31,10 +33,22 @@ public interface IIdentifyBO {
     public void doFourIdentify(String userId, String realName, String idKind,
             String idNo, String cardNo, String bindMobile);
 
-    public XN798011Res doZhimaVerify(String systemCode, String companyCode,
-            String userId, String idKind, String idNo, String realName);
+    // 支付宝芝麻认证
+    public XN798011Res doAlipayZhimaVerify(String systemCode,
+            String companyCode, String userId, String idKind, String idNo,
+            String realName);
 
-    public XN798012Res doZhimaQuery(String systemCode, String companyCode,
+    // 支付宝芝麻认证
+    public XN798012Res doAlipayZhimaQuery(String systemCode,
+            String companyCode, String bizNo);
+
+    // 芝麻信用芝麻认证第一步，返回bizNo
+    public XN798013Res doZhimaVerify(String systemCode, String companyCode,
+            String userId, String idKind, String idNo, String realName,
+            String returnUrl, String localCheck, String remark);
+
+    // 芝麻信用芝麻认证查询
+    public XN798014Res doZhimaQuery(String systemCode, String companyCode,
             String bizNo);
 
 }

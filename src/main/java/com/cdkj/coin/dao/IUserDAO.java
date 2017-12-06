@@ -77,4 +77,6 @@ public interface IUserDAO extends IBaseDAO<User> {
     public int updateEmail(User data);
 
     public int updateRemark(User data);
+
+    public int updateLastLogin(User data);
 }

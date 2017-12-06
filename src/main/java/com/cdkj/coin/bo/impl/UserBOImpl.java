@@ -142,8 +142,27 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     }
 
     @Override
+    public User getUser(String mobile, String kind, String companyCode,
+            String systemCode) {
+        User user = null;
+        if (StringUtils.isNotBlank(mobile) && StringUtils.isNotBlank(kind)) {
+            User condition = new User();
+            condition.setMobile(mobile);
+            condition.setKind(kind);
+            condition.setCompanyCode(companyCode);
+            condition.setSystemCode(systemCode);
+            List<User> list = userDAO.selectList(condition);
+            if (CollectionUtils.isNotEmpty(list)) {
+                user = list.get(0);
+            } else
+                throw new BizException("xn702002", "手机号[" + mobile + "]用户不存在");
+        }
+        return user;
+    }
+
+    @Override
     public String doRegister(String mobile, String nickname, String loginPwd,
-            String userReferee, String kind, String province, String city,
+            User refereeUser, String kind, String province, String city,
             String area, String address, String companyCode, String systemCode) {
         String userId = OrderNoGenerater.generate("U");
         User user = new User();
@@ -155,7 +174,8 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         user.setLoginPwd(MD5Util.md5(loginPwd));
         user.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
         user.setNickname(nickname);
-        user.setUserReferee(userReferee);
+        user.setUserReferee(refereeUser.getUserId());
+        user.setUserRefereeLevel(refereeUser.getLevel());
         user.setLevel(EUserLevel.ONE.getCode());
         user.setStatus(EUserStatus.NORMAL.getCode());
         user.setProvince(province);
@@ -768,6 +788,16 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
             data.setUserId(userId);
             data.setRemark(remark);
             userDAO.updateRemark(data);
+        }
+    }
+
+    @Override
+    public void refreshLastLogin(String userId) {
+        if (StringUtils.isNotBlank(userId)) {
+            User data = new User();
+            data.setUserId(userId);
+            data.setLastLogin(new Date());
+            userDAO.updateLastLogin(data);
         }
     }
 }

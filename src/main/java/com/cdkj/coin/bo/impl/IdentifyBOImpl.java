@@ -9,10 +9,14 @@ import com.cdkj.coin.dto.req.XN798001Req;
 import com.cdkj.coin.dto.req.XN798006Req;
 import com.cdkj.coin.dto.req.XN798011Req;
 import com.cdkj.coin.dto.req.XN798012Req;
+import com.cdkj.coin.dto.req.XN798013Req;
+import com.cdkj.coin.dto.req.XN798014Req;
 import com.cdkj.coin.dto.res.XN798001Res;
 import com.cdkj.coin.dto.res.XN798006Res;
 import com.cdkj.coin.dto.res.XN798011Res;
 import com.cdkj.coin.dto.res.XN798012Res;
+import com.cdkj.coin.dto.res.XN798013Res;
+import com.cdkj.coin.dto.res.XN798014Res;
 import com.cdkj.coin.http.BizConnecter;
 import com.cdkj.coin.http.JsonUtils;
 
@@ -68,8 +72,9 @@ public class IdentifyBOImpl implements IIdentifyBO {
     }
 
     @Override
-    public XN798011Res doZhimaVerify(String systemCode, String companyCode,
-            String userId, String idKind, String idNo, String realName) {
+    public XN798011Res doAlipayZhimaVerify(String systemCode,
+            String companyCode, String userId, String idKind, String idNo,
+            String realName) {
         XN798011Req req = new XN798011Req();
         req.setSystemCode(systemCode);
         req.setCompanyCode(companyCode);
@@ -83,13 +88,42 @@ public class IdentifyBOImpl implements IIdentifyBO {
     }
 
     @Override
-    public XN798012Res doZhimaQuery(String systemCode, String companyCode,
-            String bizNo) {
+    public XN798012Res doAlipayZhimaQuery(String systemCode,
+            String companyCode, String bizNo) {
         XN798012Req req = new XN798012Req();
         req.setSystemCode(systemCode);
         req.setCompanyCode(companyCode);
         req.setBizNo(bizNo);
         return BizConnecter.getBizData("798012", JsonUtils.object2Json(req),
             XN798012Res.class);
+    }
+
+    @Override
+    public XN798013Res doZhimaVerify(String systemCode, String companyCode,
+            String userId, String idKind, String idNo, String realName,
+            String returnUrl, String localCheck, String remark) {
+        XN798013Req req = new XN798013Req();
+        req.setSystemCode(systemCode);
+        req.setCompanyCode(companyCode);
+        req.setUserId(userId);
+        req.setIdKind(idKind);
+        req.setIdNo(idNo);
+        req.setRealName(realName);
+        req.setReturnUrl(returnUrl);
+        req.setLocalCheck(localCheck);
+        req.setRemark(remark);
+        return BizConnecter.getBizData("798013", JsonUtils.object2Json(req),
+            XN798013Res.class);
+    }
+
+    @Override
+    public XN798014Res doZhimaQuery(String systemCode, String companyCode,
+            String bizNo) {
+        XN798014Req req = new XN798014Req();
+        req.setSystemCode(systemCode);
+        req.setCompanyCode(companyCode);
+        req.setBizNo(bizNo);
+        return BizConnecter.getBizData("798014", JsonUtils.object2Json(req),
+            XN798014Res.class);
     }
 }

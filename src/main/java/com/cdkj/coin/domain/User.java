@@ -46,6 +46,9 @@ public class User extends ABaseDO {
     // 推荐人
     private String userReferee;
 
+    // 推荐人等级
+    private String userRefereeLevel;
+
     // 证件类型
     private String idKind;
 
@@ -138,6 +141,9 @@ public class User extends ABaseDO {
 
     // 系统编号
     private String systemCode;
+
+    // 最后一次登录时间
+    private Date lastLogin;
 
     /***** 模糊查询使用字段 ******/
     // 登录名模糊查询
@@ -675,6 +681,22 @@ public class User extends ABaseDO {
 
     public void setNicknameForQuery(String nicknameForQuery) {
         this.nicknameForQuery = nicknameForQuery;
+    }
+
+    public String getUserRefereeLevel() {
+        return userRefereeLevel;
+    }
+
+    public void setUserRefereeLevel(String userRefereeLevel) {
+        this.userRefereeLevel = userRefereeLevel;
+    }
+
+    public Date getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
 }

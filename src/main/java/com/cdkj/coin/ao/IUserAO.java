@@ -135,11 +135,18 @@ public interface IUserAO {
     public void doFourIdentify(String userId, String idKind, String idNo,
             String realName, String cardNo, String bindMobile);
 
-    // 芝麻认证
-    public Object doZhimaIdentify(String userId, String idKind, String idNo,
-            String realName);
+    // 芝麻认证（支付宝渠道）
+    public Object doAlipayZhimaIdentify(String userId, String idKind,
+            String idNo, String realName);
 
-    // 芝麻认证查询
+    // 芝麻认证查询（支付宝渠道）
+    public Object doAlipayZhimaQuery(String userId, String bizNo);
+
+    // 芝麻认证（芝麻信用渠道）
+    public Object doZhimaIdentify(String userId, String idKind, String idNo,
+            String realName, String returnUrl, String localCheck);
+
+    // 芝麻认证查询（芝麻信用渠道）
     public Object doZhimaQuery(String userId, String bizNo);
 
     public Paginable<User> queryUserPage(int start, int limit, User condition);
@@ -161,4 +168,7 @@ public interface IUserAO {
 
     // 查询推荐信息
     public XN805123Res getInviteInfo(String userId);
+
+    // 更新最后一次登录时间
+    public void lastLogin(String userId);
 }

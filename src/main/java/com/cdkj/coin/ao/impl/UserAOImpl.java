@@ -50,6 +50,8 @@ import com.cdkj.coin.dto.req.XN805095Req;
 import com.cdkj.coin.dto.res.XN625000Res;
 import com.cdkj.coin.dto.res.XN798011Res;
 import com.cdkj.coin.dto.res.XN798012Res;
+import com.cdkj.coin.dto.res.XN798013Res;
+import com.cdkj.coin.dto.res.XN798014Res;
 import com.cdkj.coin.dto.res.XN805041Res;
 import com.cdkj.coin.dto.res.XN805123Res;
 import com.cdkj.coin.enums.EAccountType;
@@ -135,14 +137,14 @@ public class UserAOImpl implements IUserAO {
         // 检查昵称是否已经被使用
         userBO.isNicknameExist(nickname, kind, companyCode, systemCode);
         // 验证推荐人是否存在,并将手机号转化为用户编号
-        String userRefereeId = userBO.getUserId(userReferee, userRefereeKind,
+        User refereeUser = userBO.getUser(userReferee, userRefereeKind,
             companyCode, systemCode);
         // 验证短信验证码
         smsOutBO.checkCaptcha(mobile, smsCaptcha, ECaptchaType.C_REG.getCode(),
             companyCode, systemCode);
         // 注册用户
         String userId = userBO.doRegister(mobile, nickname, loginPwd,
-            userRefereeId, kind, province, city, area, address, companyCode,
+            refereeUser, kind, province, city, area, address, companyCode,
             systemCode);
         // 分配账户
         distributeAccount(userId, mobile, kind, companyCode, systemCode);
@@ -161,7 +163,7 @@ public class UserAOImpl implements IUserAO {
         // // 第三方账号注册
         // thirdRegist(userId, isRegHx, companyCode, systemCode);
 
-        return new XN805041Res(userId, userRefereeId, amount);
+        return new XN805041Res(userId, refereeUser.getUserId(), amount);
     }
 
     // 分配账号
@@ -275,6 +277,7 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
+    @Transactional
     public String doLogin(String loginName, String loginPwd, String kind,
             String companyCode, String systemCode) {
         User condition = new User();
@@ -304,6 +307,7 @@ public class UserAOImpl implements IUserAO {
                     + "，请联系工作人员");
         }
         addLoginAmount(user);
+        userBO.refreshLastLogin(user.getUserId());
         return user.getUserId();
     }
 
@@ -717,14 +721,50 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
-    public Object doZhimaIdentify(String userId, String idKind, String idNo,
-            String realName) {
+    public Object doAlipayZhimaIdentify(String userId, String idKind,
+            String idNo, String realName) {
         User user = userBO.getUser(userId);
         // 判断库中是否有该记录
         userBO.checkIdentify(user.getKind(), idKind, idNo, realName);
         // 芝麻认证 有两种结果：如果本地有记录，返回成功；如果本地无记录，返货芝麻认证所需信息
-        XN798011Res res = dentifyBO.doZhimaVerify(user.getSystemCode(),
+        XN798011Res res = dentifyBO.doAlipayZhimaVerify(user.getSystemCode(),
             user.getSystemCode(), userId, idKind, idNo, realName);
+        // 如果直接返回成功
+        if (res.isSuccess()) {
+            // 更新用户表
+            userBO.refreshIdentity(userId, realName, EIDKind.IDCard.getCode(),
+                idNo);
+            // 回写Account表realName;
+            accountBO.refreshAccountName(user.getUserId(), realName);
+        }
+        return res;
+    }
+
+    @Override
+    public Object doAlipayZhimaQuery(String userId, String bizNo) {
+        User user = userBO.getUser(userId);
+        XN798012Res res = dentifyBO.doAlipayZhimaQuery(user.getSystemCode(),
+            user.getSystemCode(), bizNo);
+        if (res.isSuccess()) {
+            // 更新用户表
+            userBO.refreshIdentity(userId, res.getRealName(), res.getIdKind(),
+                res.getIdNo());
+            // 回写Account表realName;
+            accountBO.refreshAccountName(user.getUserId(), res.getRealName());
+        }
+        return res;
+    }
+
+    @Override
+    public Object doZhimaIdentify(String userId, String idKind, String idNo,
+            String realName, String returnUrl, String localCheck) {
+        User user = userBO.getUser(userId);
+        // 判断库中是否有该记录
+        userBO.checkIdentify(user.getKind(), idKind, idNo, realName);
+        // 芝麻认证 有两种结果：如果本地有记录，返回成功；如果本地无记录，返货芝麻认证所需信息
+        XN798013Res res = dentifyBO.doZhimaVerify(user.getSystemCode(),
+            user.getSystemCode(), userId, idKind, idNo, realName, returnUrl,
+            localCheck, "倍可盈-芝麻认证");
         // 如果直接返回成功
         if (res.isSuccess()) {
             // 更新用户表
@@ -739,7 +779,7 @@ public class UserAOImpl implements IUserAO {
     @Override
     public Object doZhimaQuery(String userId, String bizNo) {
         User user = userBO.getUser(userId);
-        XN798012Res res = dentifyBO.doZhimaQuery(user.getSystemCode(),
+        XN798014Res res = dentifyBO.doZhimaQuery(user.getSystemCode(),
             user.getSystemCode(), bizNo);
         if (res.isSuccess()) {
             // 更新用户表
@@ -983,6 +1023,11 @@ public class UserAOImpl implements IUserAO {
         res.setInviteProfit(totalAmount.toString());
 
         return res;
+    }
+
+    @Override
+    public void lastLogin(String userId) {
+        userBO.refreshLastLogin(userId);
     }
 
 }

@@ -690,17 +690,5 @@ CREATE TABLE `tsys_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE `tstd_blacklist` (
-  `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT 'ID主键',
-  `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
-  `type` varchar(32) DEFAULT NULL COMMENT '拉黑类型',
-  `status` varchar(4) DEFAULT NULL COMMENT '状态 0-已删除 1-已生效',
-  `create_datetime` datetime DEFAULT NULL COMMENT '拉黑时间',
-  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
-  `update_datetime` varchar(45) DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  `company_code` varchar(32) DEFAULT NULL COMMENT '公司编号',
-  `system_code` varchar(32) DEFAULT NULL COMMENT '系统编号',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
