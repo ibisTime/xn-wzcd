@@ -1,12 +1,11 @@
 package com.cdkj.coin.dao.impl;
 
 import com.cdkj.coin.dao.IMarketDAO;
-import com.cdkj.coin.dao.base.ABaseDO;
 import com.cdkj.coin.dao.base.support.AMybatisTemplate;
 import com.cdkj.coin.domain.Market;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.stream.events.Namespace;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -36,6 +35,15 @@ public class MarketDAOImpl extends AMybatisTemplate implements IMarketDAO {
         return super.select(NAMESPACE.concat("selectedByCoinTypeAndOrigin"), condition, Market.class);
 
     }
+
+    @Override
+    public BigDecimal selectMarketAvg(Market condition) {
+
+        return super.select(NAMESPACE.concat("selectMarketAvg"), condition, BigDecimal.class);
+
+    }
+
+
 
     @Override
     public int update(Market market) {

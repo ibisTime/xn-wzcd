@@ -6,7 +6,9 @@ package com.cdkj.coin.enums;
 public enum EAdsPublishType {
 
     DRAFT("0", "存草稿"),
-    PUBLISH("1", "直接发布");
+    PUBLISH("1", "直接发布"),
+    PUBLISH_DRAFT("2", "草稿发布"),
+    PUBLISH_REEDIT("3", "编辑发布，原广告下架");
 
     EAdsPublishType(String code, String value) {
         this.code = code;

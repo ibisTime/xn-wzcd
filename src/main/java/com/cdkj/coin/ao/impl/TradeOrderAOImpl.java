@@ -47,6 +47,10 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     @Autowired
     private IUserRelationBO userRelationBO;
 
+    @Autowired
+    private IUserSettingsBO userSettingsBO;
+
+
     @Override
     public String contactBuy(String adsCode, String buyUser) {
         String code = null;
@@ -211,7 +215,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 改变广告可交易量
         this.adsBO.cutLeftCount(ads.getCode(), tradeCount);
 
-        // 冻结卖家 数字货币
+//        // 冻结卖家 数字货币
         this.accountBO.frozenAmount(sellUserAccount, tradeCount,
                 EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
                 EJourBizTypeUser.AJ_ADS_FROZEN.getValue() + "-提交卖出订单", code);
@@ -359,8 +363,32 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         adsBO.refreshStatus(tradeOrder.getAdsCode(),
                 tradeOrderBO.isExistOningOrder(tradeOrder.getAdsCode()));
 
+        //end__ 校验卖家的设置
+        this.handleUserAutoSetting(tradeOrder.getCode(),tradeOrder.getSellUser(),tradeOrder.getBuyUser());
+
+        //end__ 校验买家设置
+        this.handleUserAutoSetting(tradeOrder.getCode(),tradeOrder.getBuyUser(),tradeOrder.getSellUser());
+
         return tradeOrder;
 
+    }
+
+    private void handleUserAutoSetting(String tradeOrderCode,String userId,String toUserId) {
+
+        //自动好评
+        long count =  this.userSettingsBO.checkUserSetting(userId,EUserSettingsType.AUTO_HAOPING.getCode());
+        if (count > 0) {
+            //自动设置了好评
+            this.comment(tradeOrderCode,userId,ECommentLevel.HAO_PING.getCode());
+        }
+
+        //自动信任
+        long trustCount =  this.userSettingsBO.checkUserSetting(userId,EUserSettingsType.AUTO_TRUST.getCode());
+        if (trustCount > 0) {
+
+            this.userRelationBO.saveUserRelation(userId,toUserId,ESystemCode.COIN.getCode());
+
+        }
     }
 
     @Override

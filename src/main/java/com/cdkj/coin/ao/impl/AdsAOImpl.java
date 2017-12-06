@@ -91,19 +91,6 @@ public class AdsAOImpl implements IAdsAO {
 
     }
 
-    private void getAdsMasterAndSetMaster(Ads ads) {
-
-        User user = this.userBO.getUser(ads.getUserId());
-        ads.setUser(user);
-        UserStatistics userStatistics = this.tradeOrderBO
-                .obtainUserStatistics(ads.getUserId());
-
-        // 获取信任数量
-        userStatistics.setBeiXinRenCount(this.userRelationBO
-                .getRelationCount(ads.getUserId()));
-        ads.setUserStatistics(userStatistics);
-
-    }
 
     @Override
     public List<Ads> frontSearchAdsByNickName(String nickName) {
@@ -135,6 +122,7 @@ public class AdsAOImpl implements IAdsAO {
     }
 
     @Override
+    @Transactional
     public void publishAds(XN625220Req req) {
 
         // 校验用户是否存在
@@ -143,22 +131,105 @@ public class AdsAOImpl implements IAdsAO {
             throw new BizException("xn00000", "用户不存在");
         }
 
-        //直接发布校验是否有，正在上架的同类型的广告
-        if (req.getPublishType().equals(EAdsPublishType.PUBLISH.getCode())) {
+        String publishType = req.getPublishType();
 
+        //0.存草稿
+        if (publishType.equals(EAdsPublishType.DRAFT.getCode())) {
+
+            this.saveDraft(req);
+            return;
+
+        }
+
+        //1. 草稿发布
+        if (publishType.equals(EAdsPublishType.PUBLISH_DRAFT.getCode())) {
+            this.draftPublish(req);
+            return;
+        }
+
+        //2. 重新编辑发布
+        if (publishType.equals(EAdsPublishType.PUBLISH_REEDIT.getCode())) {
+            String lastAdsCdoe = req.getAdsCode();
+
+            if (StringUtils.isBlank(lastAdsCdoe)) {
+                throw new BizException("xn000", "请传入原广告编号");
+            }
+
+            Ads lastAds = this.iAdsBO.adsDetail(lastAdsCdoe);
+            if (lastAds == null) {
+                throw new BizException("xn000", "原广告不存在");
+            }
+
+            if (!lastAds.getStatus().equals(EAdsStatus.DAIJIAOYI.getCode())) {
+
+                throw new BizException("xn000", "待交易的广告才可以重新编辑上架");
+
+            }
+
+            //把原广告下架
+            this.xiaJiaAds(lastAdsCdoe, req.getUserId());
+
+            //新广告上架
+            if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
+
+                this.insertSellAds(req);
+
+            } else if (req.getTradeType().equals(ETradeType.BUY.getCode())) {
+
+                this.insertBuyAds(req);
+
+            }
+
+            return;
+        }
+
+        //3.直接发布，
+        if (publishType.equals(EAdsPublishType.PUBLISH.getCode())) {
+
+            //直接发布校验是否有，正在上架的同类型的广告
             this.checkHaveSameTypeShangJiaAds(req.getUserId(), req.getTradeType());
 
+            //
+            if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
+
+                this.insertSellAds(req);
+
+            } else if (req.getTradeType().equals(ETradeType.BUY.getCode())) {
+
+                this.insertBuyAds(req);
+
+            }
+            return;
         }
 
+
+    }
+
+    @Transactional
+    @Override
+    public void draftPublish(XN625220Req req) {
+
+        if (StringUtils.isBlank(req.getAdsCode())) {
+            throw new BizException("xn000", "请传入广告编号");
+        }
+
+        //检查是否有同类型的 上架 广告
+        this.checkHaveSameTypeShangJiaAds(req.getUserId(), req.getTradeType());
+
+        // 构造并校验
+        Ads ads = this.buildAds(req, req.getAdsCode());
+        ads.setStatus(EAdsStatus.DAIJIAOYI.getCode());
+
+        // 如果为卖币,就有对账户进行处理
         if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
 
-            this.insertSellAds(req);
-
-        } else if (req.getTradeType().equals(ETradeType.BUY.getCode())) {
-
-            this.insertBuyAds(req);
+            // 判断账户并处理
+            this.checkAccountAndHandAccount(ads);
 
         }
+
+        this.handleTime(ads);
+        this.iAdsBO.draftPublish(ads);
 
     }
 
@@ -188,9 +259,23 @@ public class AdsAOImpl implements IAdsAO {
 
     }
 
+    private void getAdsMasterAndSetMaster(Ads ads) {
+
+        User user = this.userBO.getUser(ads.getUserId());
+        ads.setUser(user);
+        UserStatistics userStatistics = this.tradeOrderBO
+                .obtainUserStatistics(ads.getUserId());
+
+        // 获取信任数量
+        userStatistics.setBeiXinRenCount(this.userRelationBO
+                .getRelationCount(ads.getUserId()));
+        ads.setUserStatistics(userStatistics);
+
+    }
+
     // 草稿code传入已存在的
     // 第一次插入传生成的
-    Ads buildAdsSell(XN625220Req req, String adsCode) {
+    Ads buildAds(XN625220Req req, String adsCode) {
 
         Ads ads = new Ads();
         ads.setTradeCoin(ECoin.ETH.getCode());
@@ -205,17 +290,16 @@ public class AdsAOImpl implements IAdsAO {
         ads.setTradeType(req.getTradeType());
 
         // 获取市场价格
-        Market market = this.marketBO.marketByCoinTypeAndOrigin(
-                ECoin.ETH.getCode(), EMarketOrigin.BITFINEX.getCode());
+        Market market = this.marketBO.standardMarket(ECoin.ETH);
         if (market == null) {
-            throw new BizException("xn000", "发布失败");
+            throw new BizException("xn000", "发布失败,行情价格获取异常");
         }
-        ads.setMarketPrice(market.getMid());
-
+        //
+        ads.setMarketPrice(this.getPrice(market));
         BigDecimal truePrice = market.getMid().multiply(
                 BigDecimal.ONE.add(req.getPremiumRate()));
         if (req.getTradeType().endsWith(ETradeType.SELL.getCode())) {
-            //
+
             truePrice = truePrice.compareTo(req.getProtectPrice()) > 0 ? truePrice : req.getProtectPrice();
 
         } else {
@@ -249,82 +333,38 @@ public class AdsAOImpl implements IAdsAO {
 
     // 插入卖币广告
     @Transactional
-    public void insertSellAds(XN625220Req req) {
+    private void insertSellAds(XN625220Req req) {
 
         // 构造,并校验
-        Ads ads = this.buildAdsSell(req, OrderNoGenerater.generate("ADS"));
-
-        if (req.getPublishType().equals(EAdsPublishType.DRAFT.getCode())) {
-
-            // 草稿
-            ads.setStatus(EAdsStatus.DRAFT.getCode());
-
-        } else {
-
-            // 直接发布
-            ads.setStatus(EAdsStatus.DAIJIAOYI.getCode());
-
-            // 判断账户并处理
-            this.checkAccountAndHandAccount(ads);
-
-        }
-
-        this.handleTime(ads);
-
-        this.iAdsBO.insertAdsSell(ads);
-
-    }
-
-    @Transactional
-    public void insertBuyAds(XN625220Req req) {
-
-        // 构造,并校验
-        Ads ads = this.buildAdsSell(req, OrderNoGenerater.generate("ADS"));
-        if (req.getPublishType().equals(EAdsPublishType.DRAFT.getCode())) {
-
-            // 草稿
-            ads.setStatus(EAdsStatus.DRAFT.getCode());
-
-        } else {
-
-            // 直接发布
-            ads.setStatus(EAdsStatus.DAIJIAOYI.getCode());
-
-        }
-
-        this.handleTime(ads);
-
-        this.iAdsBO.insertAdsSell(ads);
-
-    }
-
-    @Transactional
-    @Override
-    public void draftPublish(XN625220Req req) {
-
-        if (StringUtils.isBlank(req.getAdsCode())) {
-            throw new BizException("xn000", "请传入广告编号");
-        }
-
-        //检查是否有同类型的 上架 广告
-        this.checkHaveSameTypeShangJiaAds(req.getUserId(), req.getTradeType());
-
-        // 构造并校验
-        Ads ads = this.buildAdsSell(req, req.getAdsCode());
+        Ads ads = this.buildAds(req, OrderNoGenerater.generate("ADS"));
+        // 直接发布
         ads.setStatus(EAdsStatus.DAIJIAOYI.getCode());
 
-        // 如果为卖币,就有对账户进行处理
-        if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
-
-            // 判断账户并处理
-            this.checkAccountAndHandAccount(ads);
-
-        }
-
+        // 判断账户并处理
+        this.checkAccountAndHandAccount(ads);
         this.handleTime(ads);
+        this.iAdsBO.insertAds(ads);
 
-        //
-        this.iAdsBO.draftPublish(ads);
+    }
+
+    @Transactional
+    private void insertBuyAds(XN625220Req req) {
+
+        // 构造,并校验
+        Ads ads = this.buildAds(req, OrderNoGenerater.generate("ADS"));
+        // 直接发布
+        ads.setStatus(EAdsStatus.DAIJIAOYI.getCode());
+        this.handleTime(ads);
+        this.iAdsBO.insertAds(ads);
+
+    }
+
+    private void saveDraft(XN625220Req req) {
+
+        Ads ads = this.buildAds(req, OrderNoGenerater.generate("ADS"));
+        ads.setStatus(EAdsStatus.DRAFT.getCode());
+        this.handleTime(ads);
+        this.iAdsBO.insertAds(ads);
 
     }
 
@@ -345,6 +385,14 @@ public class AdsAOImpl implements IAdsAO {
             }
 
         }
+
+    }
+
+    // 由市场加权价格 和 配置参数，获取 最终的价格
+    private BigDecimal getPrice(Market market) {
+
+        Double x = this.sysConfigBO.getDoubleValue(SysConstants.ETH_COIN_PRICE_X);
+        return market.getMid().add(BigDecimal.valueOf(x));
 
     }
 
@@ -550,15 +598,17 @@ public class AdsAOImpl implements IAdsAO {
         Market market = this.marketBO.standardMarket(ECoin.ETH);
         // 1.只刷新上架状态的
         List<Ads> shangJiaAdsList = this.iAdsBO.queryShangJiaAdsList();
+
+        BigDecimal marketPrice =  this.getPrice(market);
         for (Ads ads : shangJiaAdsList) {
 
-            ads.setMarketPrice(market.getMid());
+            ads.setMarketPrice(marketPrice);
             // 行情价格
             // 真实价格
             // 取出溢价率
             BigDecimal premiumRate = ads.getPremiumRate();
             // 算出 溢价之后的价格
-            BigDecimal truePrice = market.getMid().multiply(
+            BigDecimal truePrice = ads.getMarketPrice().multiply(
                     BigDecimal.ONE.add(premiumRate));
             BigDecimal protectPrice = ads.getProtectPrice();
 
