@@ -1,13 +1,13 @@
 package com.cdkj.coin.bo;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 import com.cdkj.coin.bo.base.IPaginableBO;
 import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.domain.TradeOrder;
 import com.cdkj.coin.domain.UserStatistics;
 import com.cdkj.coin.enums.ETradeOrderType;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
 
@@ -50,6 +50,8 @@ public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
 
     public int applyArbitrate(TradeOrder tradeOrder, String applyUser);
 
+    public int removeTradeOrder(TradeOrder data);
+
     //仲裁不通过, 更新状态为待释放
     public int arbitrateUnPass(TradeOrder tradeOrder);
 
@@ -70,7 +72,8 @@ public interface ITradeOrderBO extends IPaginableBO<TradeOrder> {
     // 获取用户交易量
     public BigDecimal getUserTotalTradeCount(String userId);
 
-    public int removeTradeOrder(TradeOrder data);
+    //获取两个用户之间的交易次数
+    public long getTradeTimesBetweenUser(String user1, String user2);
 
     // 删除和该广告有关的代下单订单
     public void removeDaiXiaDanOrders(String adsCode);

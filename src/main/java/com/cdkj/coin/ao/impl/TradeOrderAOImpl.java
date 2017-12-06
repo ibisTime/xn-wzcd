@@ -485,22 +485,40 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     }
 
     @Override
-    public UserStatistics userStatisticsInfo(String userId) {
+    public UserStatistics userStatisticsInfoNotContainTradeCount(String userId) {
 
         UserStatistics userStatistics = this.tradeOrderBO
                 .obtainUserStatistics(userId);
         // 获取被信任次数
         userStatistics.setBeiXinRenCount(this.userRelationBO
                 .getRelationCount(userId, EUserReleationType.TRUST.getCode()));
-        //
         return userStatistics;
 
+    }
+
+    @Override
+    public UserStatistics userStatisticsInfoContainTradeCount(String userId) {
+
+
+        UserStatistics userStatistics = this.userStatisticsInfoNotContainTradeCount(userId);
+
+        //获取交易量
+        String totalTradeCountString = this.tradeOrderBO.getUserTotalTradeCount(userId).toString();
+        userStatistics.setTotalTradeCount(totalTradeCountString);
+        return userStatistics;
     }
 
     @Override
     public BigDecimal getUserTotalTradeCount(String userId) {
 
         return this.tradeOrderBO.getUserTotalTradeCount(userId);
+
+    }
+
+    @Override
+    public long getTradeTimesBetweenUser(String user1, String user2) {
+
+        return this.tradeOrderBO.getTradeTimesBetweenUser(user1, user2);
 
     }
 
@@ -625,13 +643,13 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             return;
         }
 
-        handleReferenceFenCheng(refereeUser.getUserId(),buyUser.getUserRefereeLevel(), sysAccount, tradeOrder);
+        handleReferenceFenCheng(refereeUser.getUserId(), buyUser.getUserRefereeLevel(), sysAccount, tradeOrder);
 
     }
 
     // ！！！！！！！！注意！！！！！！
     // 卖出广告 和 买入广告，共用此方法
-    private void handleReferenceFenCheng(String refereeUserId,String thenRefereeUserLevel,
+    private void handleReferenceFenCheng(String refereeUserId, String thenRefereeUserLevel,
                                          Account sysAccount, TradeOrder tradeOrder) {
 
         Double fenChengFee = null;
@@ -730,7 +748,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             return;
         }
 //sellUser.getRefeereLevel()
-        handleReferenceFenCheng(sellUserRefereeUser.getUserId(),sellUser.getUserRefereeLevel() ,sysAccount,
+        handleReferenceFenCheng(sellUserRefereeUser.getUserId(), sellUser.getUserRefereeLevel(), sysAccount,
                 tradeOrder);
 
 

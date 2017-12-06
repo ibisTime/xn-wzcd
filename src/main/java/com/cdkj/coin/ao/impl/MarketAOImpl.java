@@ -27,7 +27,11 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by tianlei on 2017/十一月/13.
@@ -117,7 +121,7 @@ public class MarketAOImpl implements IMarketAO {
     public void obtainMarketDetailList() {
 
         //去拉取行情列表
-        String requestStr = "https://api.coinmarketcap.com/v1/ticker/?limit=20";
+        String requestStr = "https://api.coinmarketcap.com/v1/ticker/?limit=25";
         OkHttpClient okHttpClient = new OkHttpClient();
 
         Request request = new Request.Builder().get().url(requestStr).build();
@@ -127,30 +131,45 @@ public class MarketAOImpl implements IMarketAO {
             Response response = call.execute();
             String jsonStr = response.body().string();
 
+            //先转化为map
+            List<Map> marketDetailMapList = JSONArray.parseArray(jsonStr, Map.class);
+
+            //
             List<MarketDetail> marketDetailList = JSONArray.parseArray(jsonStr, MarketDetail.class);
-            if (marketDetailList != null) {
+
+            if (marketDetailMapList != null) {
 
                 BigDecimal currencyRate = this.currencyRateBO.currencyRateByCurrency(ECurrency.USD.getCode()).getRate();
+                for (int i = 0; i < marketDetailList.size(); i++) {
 
-                for (MarketDetail marketDetail : marketDetailList) {
+                    MarketDetail marketDetail = marketDetailList.get(i);
+                    Map marketDetailMap = marketDetailMapList.get(i);
 
                     BigDecimal priceCNY = new BigDecimal(marketDetail.getPrice_usd()).multiply(currencyRate);
                     String priceCNYString = priceCNY.setScale(2, RoundingMode.HALF_EVEN).toString();
                     marketDetail.setPrice_cny(priceCNYString);
+
+                    marketDetail.setOne_day_volume_usd((String) marketDetailMap.get("24h_volume_usd"));
+
+                    // 获取人民币转化
+                    BigDecimal one_day_volume_cny = new BigDecimal(marketDetail.getOne_day_volume_usd()).multiply(currencyRate);
+                    String one_day_volume_cny_String = one_day_volume_cny.setScale(2, RoundingMode.HALF_EVEN).toString();
+                    marketDetail.setOne_day_volume_cny(one_day_volume_cny_String);
                 }
+
 
                 MarketAOImpl.marketDetailList = marketDetailList;
 
             } else {
 
-                logger.error(requestStr + "行情详情数据拉取异常");
+                logger.error(requestStr + "行情详情数据拉取异常" + Thread.currentThread().getStackTrace()[1].getMethodName());
 
             }
 
 
         } catch (Exception e) {
 
-            logger.error("行情详情数据拉取异常，原因：" + e.getMessage());
+            logger.error("行情详情数据拉取异常，原因：" + e.getMessage() + Thread.currentThread().getStackTrace()[1].getMethodName());
 
         }
 
@@ -204,7 +223,10 @@ public class MarketAOImpl implements IMarketAO {
     private void obtainBitfinexMarketByUrlAndCoin(String url, String coin) {
 
         String requestStr = url;
-        OkHttpClient okHttpClient = new OkHttpClient();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .build();
+        ;
 
         Request request = new Request.Builder().get().url(requestStr).build();
         Call call = okHttpClient.newCall(request);
@@ -235,7 +257,7 @@ public class MarketAOImpl implements IMarketAO {
                     market);
 
         } catch (Exception e) {
-            logger.error("行情数据拉取异常，原因：" + e.getMessage());
+            logger.error("行情数据拉取异常，原因：" + e.getMessage() + "-" + Thread.currentThread().getStackTrace()[1].getMethodName());
         }
 
     }

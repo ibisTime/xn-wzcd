@@ -19,11 +19,11 @@ public interface ITradeOrderAO {
 
     // 我要购买
     public String buy(String adsCode, String buyUser, BigDecimal tradePrice,
-            BigDecimal count, BigDecimal tradeAmount);
+                      BigDecimal count, BigDecimal tradeAmount);
 
     // 我要出售
     public String sell(String adsCode, String sellUser, BigDecimal tradePrice,
-            BigDecimal count, BigDecimal tradeAmount);
+                       BigDecimal count, BigDecimal tradeAmount);
 
     // 取消交易订单
     public void cancel(String code, String updater, String remark);
@@ -39,10 +39,13 @@ public interface ITradeOrderAO {
 
     // 申请仲裁
     public void applyArbitrate(String code, String applyUser, String reason,
-            String attach);
+                               String attach);
+
+    // 删除订单，代下单和已取消的交易可删除
+    public void dropTradeOrder(String code);
 
     public Paginable<TradeOrder> queryTradeOrderPage(int start, int limit,
-            TradeOrder condition);
+                                                     TradeOrder condition);
 
     public List<TradeOrder> queryTradeOrderList(TradeOrder condition);
 
@@ -54,12 +57,14 @@ public interface ITradeOrderAO {
     public void doCheckUnpayOrder();
 
     //不包含 用户交易量的 统计
-    public UserStatistics userStatisticsInfo(String userId);
+    public UserStatistics userStatisticsInfoNotContainTradeCount(String userId);
+
+    //包含 用户交易量的 统计
+    public UserStatistics userStatisticsInfoContainTradeCount(String userId);
 
     // 获取用户的交易总量
     public BigDecimal getUserTotalTradeCount(String userId);
 
-    // 删除订单，代下单和已取消的交易可删除
-    public void dropTradeOrder(String code);
+    public long getTradeTimesBetweenUser(String user1, String user2);
 
 }

@@ -2,8 +2,9 @@ package com.cdkj.coin.enums;
 
 /**
  * 用户等级
- * @author: xieyj 
- * @since: 2016年5月24日 上午9:11:47 
+ *
+ * @author: xieyj
+ * @since: 2016年5月24日 上午9:11:47
  * @history:
  */
 public enum EUserLevel {
