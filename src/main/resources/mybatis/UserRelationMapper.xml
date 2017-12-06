@@ -8,6 +8,7 @@
 		<result column="user_id" property="userId" />
 		<result column="to_user" property="toUser" />
 		<result column="status" property="status" />
+		<result column="type" property="type" />
 		<result column="update_datetime" property="updateDatetime" />
 	</resultMap>
 	
@@ -18,6 +19,9 @@
 			</if>
 			<if test="toUser != null and toUser != '' ">
 				AND t.to_user = #{toUser}
+			</if>
+			<if test="type != null and type != '' ">
+				AND t.type = #{type}
 			</if>
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
@@ -37,6 +41,7 @@
 		,t.user_id
 		,t.to_user
 		,t.status
+		,t.type
 		,t.update_datetime
 		,t.company_code
 		,t.system_code
@@ -59,6 +64,7 @@
 		code
 		,user_id
 		,to_user
+	    ,type
 		,status
 		,update_datetime
 		,system_code
@@ -67,6 +73,7 @@
 		#{code}
 		,#{userId}
 		,#{toUser}
+		,#{type}
 		,#{status}
 		,#{updateDatetime}
 		,#{systemCode}
@@ -76,7 +83,7 @@
 	<delete id="delete_userRelation" parameterType="userRelation">
 		DELETE FROM
 		tstd_user_relation
-		WHERE user_id = #{userId} AND to_user = #{toUser}
+		WHERE user_id = #{userId} AND to_user = #{toUser} AND type = #{type}
 	</delete>
 	
 	<update id="update_userRelationStatus" parameterType="userRelation">
@@ -84,7 +91,7 @@
 		SET
 		status= #{status}
 		,update_datetime= #{updateDatetime}
-		WHERE user_id = #{userId} AND to_user = #{toUser}
+		WHERE user_id = #{userId} AND to_user = #{toUser} AND type = #{type}
 	</update>
 	
 </mapper>

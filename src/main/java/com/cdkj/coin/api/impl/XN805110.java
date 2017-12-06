@@ -6,9 +6,11 @@ import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.StringValidater;
 import com.cdkj.coin.dto.req.XN805110Req;
 import com.cdkj.coin.dto.res.BooleanRes;
+import com.cdkj.coin.enums.EUserReleationType;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 建立关注关系
@@ -24,7 +26,12 @@ public class XN805110 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        userRelationAO.followUser(req.getUserId(), req.getToUser());
+
+        String type = req.getType();
+        if (StringUtils.isBlank(type)) {
+            type = EUserReleationType.TRUST.getCode();
+        }
+        userRelationAO.followUser(req.getUserId(), req.getToUser(),type);
         return new BooleanRes(true);
     }
 

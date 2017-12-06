@@ -14,8 +14,8 @@
 
     <sql id="where_condition">
         <trim prefix="WHERE" prefixOverrides="AND | OR">
-            <if test="code != null and code != '' ">
-                AND t.code = #{code}
+            <if test="id != null and id != '' ">
+                AND t.id = #{id}
             </if>
             <if test="userId != null and userId != '' ">
                 AND t.user_id = #{userId}
@@ -79,7 +79,7 @@
             , value           = #{value}
             , create_datetime = #{createDatetime}
             , update_datetime = #{updateDatetime}
-        WHERE code = #{code}
+        WHERE id = #{id}
     </update>
 
     <delete id="delete" parameterType="com.cdkj.coin.domain.UserSettings">

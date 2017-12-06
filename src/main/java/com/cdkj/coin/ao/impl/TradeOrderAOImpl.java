@@ -229,7 +229,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
         if (ads.getOnlyTrust().equals("1")) {
 
-            if (!this.userRelationBO.checkReleation(ads.getUserId(), applyUser)) {
+            if (!this.userRelationBO.checkReleation(ads.getUserId(), applyUser,EUserReleationType.TRUST.getCode())) {
 
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "您未被广告发布者信任，不能与之进行交易");
@@ -386,7 +386,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         long trustCount =  this.userSettingsBO.checkUserSetting(userId,EUserSettingsType.AUTO_TRUST.getCode());
         if (trustCount > 0) {
 
-            this.userRelationBO.saveUserRelation(userId,toUserId,ESystemCode.COIN.getCode());
+            this.userRelationBO.saveUserRelation(userId,toUserId,EUserReleationType.TRUST.getCode(),ESystemCode.COIN.getCode());
 
         }
     }
@@ -695,7 +695,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
                 .obtainUserStatistics(userId);
         // 获取被信任次数
         userStatistics.setBeiXinRenCount(this.userRelationBO
-                .getRelationCount(userId));
+                .getRelationCount(userId,EUserReleationType.TRUST.getCode()));
         //
         return userStatistics;
 

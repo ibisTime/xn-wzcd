@@ -1,10 +1,10 @@
 /**
- * @Title UserRelationAOImpl.java 
- * @Package com.std.user.ao.impl 
- * @Description 
- * @author xieyj  
- * @date 2016年8月31日 上午11:48:23 
- * @version V1.0   
+ * @Title UserRelationAOImpl.java
+ * @Package com.std.user.ao.impl
+ * @Description
+ * @author xieyj
+ * @date 2016年8月31日 上午11:48:23
+ * @version V1.0
  */
 package com.cdkj.coin.ao.impl;
 
@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.cdkj.coin.bo.ITradeOrderBO;
 import com.cdkj.coin.domain.UserStatistics;
+import com.cdkj.coin.enums.EUserReleationType;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,8 @@ import com.cdkj.coin.domain.User;
 import com.cdkj.coin.domain.UserRelation;
 import com.cdkj.coin.exception.BizException;
 
-/** 
- * @author: xieyj 
+/**
+ * @author: xieyj
  * @since: 2016年8月31日 上午11:48:23 
  * @history:
  */
@@ -42,14 +43,14 @@ public class UserRelationAOImpl implements IUserRelationAO {
     @Autowired
     ITradeOrderBO tradeOrderBO;
 
-    /** 
+    /**
      * @see com.std.user.ao.IUserRelationAO#queryUserRelationPage(int, int, com.std.user.domain.UserRelation)
      */
     @Override
     public Paginable<UserRelation> queryUserRelationPage(int start, int limit,
-            UserRelation condition) {
+                                                         UserRelation condition) {
         Paginable<UserRelation> page = userRelationBO.getPaginable(start,
-            limit, condition);
+                limit, condition);
         for (UserRelation userRelation : page.getList()) {
 
             User lookUser = null;
@@ -62,7 +63,7 @@ public class UserRelationAOImpl implements IUserRelationAO {
                 //
                 userRelation.setToUserInfo(toUser);
 
-            } else  {
+            } else {
 
                 //查询——信任我的
                 User fromUser = userBO.getUser(userRelation
@@ -78,24 +79,22 @@ public class UserRelationAOImpl implements IUserRelationAO {
 
                 UserStatistics userStatistics = new UserStatistics();
                 userStatistics = this.tradeOrderBO.obtainUserStatistics(lookUser.getUserId());
-                userStatistics.setBeiXinRenCount(this.userRelationBO.getRelationCount(lookUser.getUserId()));
+                userStatistics.setBeiXinRenCount(this.userRelationBO.getRelationCount(lookUser.getUserId(), EUserReleationType.TRUST.getCode()));
                 lookUser.setUserStatistics(userStatistics);
             }
 
         }
 
 
-
-
         return page;
 
     }
 
-    /** 
+    /**
      * @see com.std.user.ao.IUserRelationAO#followUser(java.lang.String, java.lang.String)
      */
     @Override
-    public void followUser(String userId, String toUserId) {
+    public void followUser(String userId, String toUserId, String type) {
         User user = userBO.getUser(userId);
         if (user == null) {
             throw new BizException("xn702001", "用户不存在");
@@ -108,17 +107,17 @@ public class UserRelationAOImpl implements IUserRelationAO {
             throw new BizException("xn702001", "用户不能和自己建立关系");
         }
         // 判断两者关系是否存在
-        if (userRelationBO.isExistUserRelation(userId, toUserId)) {
+        if (userRelationBO.isExistUserRelation(userId, toUserId, type)) {
             throw new BizException("xn702001", "用户关系已建立");
         }
-        userRelationBO.saveUserRelation(userId, toUserId, user.getSystemCode());
+        userRelationBO.saveUserRelation(userId, toUserId, type, user.getSystemCode());
     }
 
-    /** 
+    /**
      * @see com.std.user.ao.IUserRelationAO#unfollowUser(java.lang.String, java.lang.String)
      */
     @Override
-    public void unfollowUser(String userId, String toUserId) {
+    public void unfollowUser(String userId, String toUserId,String type) {
         User user = userBO.getUser(userId);
         if (user == null) {
             throw new BizException("xn702001", "用户不存在");
@@ -128,16 +127,16 @@ public class UserRelationAOImpl implements IUserRelationAO {
             throw new BizException("xn702001", "取消关注用户不存在");
         }
         // 判断两者关系是否存在
-        if (!userRelationBO.isExistUserRelation(userId, toUserId)) {
+        if (!userRelationBO.isExistUserRelation(userId, toUserId,type)) {
             throw new BizException("xn702001", "用户关系未建立，无法解除");
         }
-        userRelationBO.removeUserRelation(userId, toUserId);
+        userRelationBO.removeUserRelation(userId, toUserId,type);
     }
 
     @Override
-    public boolean isExistUserRelation(String userId, String toUser) {
+    public boolean isExistUserRelation(String userId, String toUser, String type) {
         List<UserRelation> userRelationList = userRelationBO
-            .queryUserRelationList(userId, toUser);
+                .queryUserRelationList(userId, toUser,type);
         boolean flag = false;
         if (CollectionUtils.isNotEmpty(userRelationList)) {
             flag = true;

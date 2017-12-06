@@ -8,12 +8,10 @@
  */
 package com.cdkj.coin.bo;
 
-import java.util.List;
-
 import com.cdkj.coin.bo.base.IPaginableBO;
 import com.cdkj.coin.domain.UserRelation;
 
-import javax.crypto.interfaces.PBEKey;
+import java.util.List;
 
 /** 
  * 用户关系表
@@ -22,20 +20,20 @@ import javax.crypto.interfaces.PBEKey;
  * @history:
  */
 public interface IUserRelationBO extends IPaginableBO<UserRelation> {
-    public boolean isExistUserRelation(String userId, String toUser);
+    public boolean isExistUserRelation(String userId, String toUser,String type);
 
-    public String saveUserRelation(String userId, String toUser,
+    public String saveUserRelation(String userId, String toUser,String type,
             String systemCode);
 
-    public int refreshUserRelation(String userId, String toUser);
+    public int refreshUserRelation(String userId, String toUser,String type);
 
-    public int removeUserRelation(String userId, String toUser);
+    public int removeUserRelation(String userId, String toUser,String type);
 
-    public List<UserRelation> queryUserRelationList(String userId, String toUser);
+    public List<UserRelation> queryUserRelationList(String userId, String toUser,String type);
 
     // 有多少人信任我
-    public long getRelationCount(String toUser);
+    public long getRelationCount(String toUser,String type);
 
     //userId 信任 toUser
-    public boolean checkReleation(String userId,String toUser);
+    public boolean checkReleation(String userId, String toUser, String type);
 }

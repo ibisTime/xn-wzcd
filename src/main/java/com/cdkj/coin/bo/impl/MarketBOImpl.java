@@ -33,18 +33,18 @@ public class MarketBOImpl implements IMarketBO {
         Market avgCondition = new Market();
         avgCondition.setCoin(coin.getCode());
         BigDecimal avg = this.marketDAO.selectMarketAvg(avgCondition);
-
+        avg = avg.setScale(2, BigDecimal.ROUND_HALF_EVEN);
         if (avg == null) {
             throw new BizException("xn000", "行情加权值获取异常");
         }
 
         Market market = new Market();
         market.setMid(avg);
-        market.setAsk(avg);
-        market.setBid(avg);
-        market.setLastPrice(avg);
-        market.setLow(avg);
-        market.setHigh(avg);
+//        market.setAsk(avg);
+//        market.setBid(avg);
+//        market.setLastPrice(avg);
+//        market.setLow(avg);
+//        market.setHigh(avg);
 
         return market;
     }

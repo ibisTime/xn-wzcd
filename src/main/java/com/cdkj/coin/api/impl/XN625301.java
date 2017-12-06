@@ -25,7 +25,7 @@ public class XN625301 extends AProcessor {
 
         UserSettings conditoin = new UserSettings();
         conditoin.setUserId(req.getUserId());
-        conditoin.setType(req.getUserId());
+        conditoin.setType(req.getType());
         return  this.userSettingsAO.queryUserSettingsList(conditoin);
 
     }

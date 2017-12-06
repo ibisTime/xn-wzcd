@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.cdkj.coin.ao.IMarketAO;
 import com.cdkj.coin.bo.ICurrencyRateBO;
 import com.cdkj.coin.bo.IMarketBO;
+import com.cdkj.coin.bo.ISYSConfigBO;
+import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.domain.CurrencyRate;
 import com.cdkj.coin.domain.Market;
 import com.cdkj.coin.domain.MarketDetail;
@@ -42,6 +44,9 @@ public class MarketAOImpl implements IMarketAO {
 
     @Autowired
     ICurrencyRateBO currencyRateBO;
+
+    @Autowired
+    ISYSConfigBO sysConfigBO;
 
     @Override
     public List<Market> marketByCoin(List<String> coinList) {
@@ -82,9 +87,14 @@ public class MarketAOImpl implements IMarketAO {
         Market market = this.marketBO.standardMarket(eCoin);
 
         //获取平台调控值
+        BigDecimal x = this.sysConfigBO.getBigDecimalValue(SysConstants.ETH_COIN_PRICE_X);
+
+        //计算平台调控过的值
+        market.setMid(market.getMid().add(x));
 
         //
         return this.marketBO.standardMarket(eCoin);
+
     }
 
     @Override

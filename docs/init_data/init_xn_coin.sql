@@ -64,7 +64,7 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('fen_cheng_rule','fen_cheng_fee','0.001','admin',now(),'推荐分成比例','CD-COIN000017','CD-COIN000017');
 
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('coin_price_x','eth_coin_price_x','10','admin',now(),'eth价格计算x','CD-COIN000017','CD-COIN000017');
+
 
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('buy_ads_hint','premiumRate','基于市场价的溢出比例，市场价是根据部分大型交易所实时价格得出的，确保您的报价趋于一个相对合理的范围，比如当前价格为8000，溢价比例为10%，那么价格为8800。','admin',now(),'买币溢价率说明','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('buy_ads_hint','price','基于比例得出的报价，每10分钟更新一次。','admin',now(),'买币价格说明','CD-COIN000017','CD-COIN000017');

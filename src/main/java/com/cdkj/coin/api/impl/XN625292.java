@@ -22,7 +22,7 @@ public class XN625292 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
 
-        return this.marketAO.marketDetailList();
+        return this.marketAO.coinPriceByPlatform(req.getCoin());
 
     }
 

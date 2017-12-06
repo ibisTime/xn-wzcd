@@ -268,7 +268,7 @@ public class AdsAOImpl implements IAdsAO {
 
         // 获取信任数量
         userStatistics.setBeiXinRenCount(this.userRelationBO
-                .getRelationCount(ads.getUserId()));
+                .getRelationCount(ads.getUserId(),EUserReleationType.TRUST.getCode()));
         ads.setUserStatistics(userStatistics);
 
     }
@@ -494,7 +494,7 @@ public class AdsAOImpl implements IAdsAO {
 
             } else {
 
-                isTrust = this.userRelationBO.checkReleation(searchUserUserId, ads.getUserId()) ? 1 : 0;
+                isTrust = this.userRelationBO.checkReleation(searchUserUserId, ads.getUserId(),EUserReleationType.TRUST.getCode()) ? 1 : 0;
 
             }
 

@@ -1,16 +1,16 @@
 /**
- * @Title XN805090Req.java 
- * @Package com.std.user.dto.req 
- * @Description 
- * @author xieyj  
- * @date 2016年8月31日 下午12:04:08 
- * @version V1.0   
+ * @Title XN805090Req.java
+ * @Package com.std.user.dto.req
+ * @Description
+ * @author xieyj
+ * @date 2016年8月31日 下午12:04:08
+ * @version V1.0
  */
 package com.cdkj.coin.dto.req;
 
-/** 
- * @author: xieyj 
- * @since: 2016年8月31日 下午12:04:08 
+/**
+ * @author: xieyj
+ * @since: 2016年8月31日 下午12:04:08
  * @history:
  */
 public class XN805115Req extends APageReq {
@@ -22,6 +22,8 @@ public class XN805115Req extends APageReq {
 
     // 关系人编号(选填)
     private String toUser;
+
+    private String type;
 
     public String getUserId() {
         return userId;
@@ -37,6 +39,14 @@ public class XN805115Req extends APageReq {
 
     public void setToUser(String toUser) {
         this.toUser = toUser;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
 }

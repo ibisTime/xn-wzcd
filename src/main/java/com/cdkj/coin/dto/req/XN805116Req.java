@@ -13,6 +13,17 @@ public class XN805116Req {
     // 关系人编号(必填)
     private String toUser;
 
+    //关系类型
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getUserId() {
         return userId;
     }

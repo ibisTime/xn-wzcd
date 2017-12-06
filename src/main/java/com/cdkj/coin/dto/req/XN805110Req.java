@@ -20,6 +20,9 @@ public class XN805110Req {
     // 关注用户编号(必填)
     private String toUser;
 
+    // 关系类型
+    private String type;
+
     public String getUserId() {
         return userId;
     }
@@ -34,5 +37,13 @@ public class XN805110Req {
 
     public void setToUser(String toUser) {
         this.toUser = toUser;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
