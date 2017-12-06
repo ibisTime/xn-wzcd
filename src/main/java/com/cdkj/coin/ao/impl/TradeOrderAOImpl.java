@@ -248,6 +248,13 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
         }
 
+        //
+        boolean isBlack = this.userRelationBO.isExistUserRelation(ads.getUserId(),applyUser,EUserReleationType.BLACKLIST.getCode());
+        if (isBlack) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "您已被该用户拉黑，不能与之发生交易");
+        }
+
         if (!EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())
                 && !EAdsStatus.JIAOYIZHONG.getCode().equals(ads.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),

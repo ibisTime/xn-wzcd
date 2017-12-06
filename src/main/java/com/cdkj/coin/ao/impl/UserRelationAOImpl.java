@@ -25,10 +25,11 @@ import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.User;
 import com.cdkj.coin.domain.UserRelation;
 import com.cdkj.coin.exception.BizException;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author: xieyj
- * @since: 2016年8月31日 上午11:48:23 
+ * @since: 2016年8月31日 上午11:48:23
  * @history:
  */
 @Service
@@ -93,6 +94,7 @@ public class UserRelationAOImpl implements IUserRelationAO {
     /**
      * @see com.std.user.ao.IUserRelationAO#followUser(java.lang.String, java.lang.String)
      */
+    @Transactional
     @Override
     public void followUser(String userId, String toUserId, String type) {
         User user = userBO.getUser(userId);
@@ -110,14 +112,41 @@ public class UserRelationAOImpl implements IUserRelationAO {
         if (userRelationBO.isExistUserRelation(userId, toUserId, type)) {
             throw new BizException("xn702001", "用户关系已建立");
         }
+
+        if (type.equals(EUserReleationType.BLACKLIST.getCode())) {
+
+            //1.如果是拉黑操作，先取消信任
+            this.checkIsExitOppositionReleationThenRemove(userId, toUserId, EUserReleationType.TRUST.getCode());
+
+        } else if (type.equals(EUserReleationType.TRUST.getCode())) {
+
+            //2.如果是信任操作，先取消拉黑
+            this.checkIsExitOppositionReleationThenRemove(userId, toUserId, EUserReleationType.BLACKLIST.getCode());
+
+        }
+
         userRelationBO.saveUserRelation(userId, toUserId, type, user.getSystemCode());
+
+    }
+
+    // 判断是否存在 "对立" 关系，并解除
+    private void checkIsExitOppositionReleationThenRemove(String userId, String toUserId, String type) {
+
+        if (userRelationBO.checkReleation(userId, toUserId, type)) {
+
+            int count = userRelationBO.removeUserRelation(userId, toUserId, type);
+            if (count <= 0) {
+                throw new BizException("xn000", "解除原关系失败");
+            }
+
+        }
     }
 
     /**
      * @see com.std.user.ao.IUserRelationAO#unfollowUser(java.lang.String, java.lang.String)
      */
     @Override
-    public void unfollowUser(String userId, String toUserId,String type) {
+    public void unfollowUser(String userId, String toUserId, String type) {
         User user = userBO.getUser(userId);
         if (user == null) {
             throw new BizException("xn702001", "用户不存在");
@@ -127,16 +156,16 @@ public class UserRelationAOImpl implements IUserRelationAO {
             throw new BizException("xn702001", "取消关注用户不存在");
         }
         // 判断两者关系是否存在
-        if (!userRelationBO.isExistUserRelation(userId, toUserId,type)) {
+        if (!userRelationBO.isExistUserRelation(userId, toUserId, type)) {
             throw new BizException("xn702001", "用户关系未建立，无法解除");
         }
-        userRelationBO.removeUserRelation(userId, toUserId,type);
+        userRelationBO.removeUserRelation(userId, toUserId, type);
     }
 
     @Override
     public boolean isExistUserRelation(String userId, String toUser, String type) {
         List<UserRelation> userRelationList = userRelationBO
-                .queryUserRelationList(userId, toUser,type);
+                .queryUserRelationList(userId, toUser, type);
         boolean flag = false;
         if (CollectionUtils.isNotEmpty(userRelationList)) {
             flag = true;
