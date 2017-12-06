@@ -33,7 +33,7 @@ public interface IEthAddressBO extends IPaginableBO<EthAddress> {
     public BigDecimal getEthBalance(String address);
 
     // 更新余额
-    public int refreshBalance(EthAddress address, BigDecimal balance);
+    public int refreshBalance(EthAddress address);
 
     public EthAddress getEthAddress(EEthAddressType type, String address);
 

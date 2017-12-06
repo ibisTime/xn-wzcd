@@ -109,6 +109,8 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
                     + ctqEthTransaction.getFrom());
         // 落地交易记录
         ethTransactionBO.saveEthTransaction(ctqEthTransaction, code);
+        // 更新地址余额
+        ethAddressBO.refreshBalance(ethAddress);
         return code;
     }
 
@@ -186,6 +188,14 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         // 落地交易记录
         ethTransactionBO.saveEthTransaction(ctqEthTransaction,
             withdraw.getCode());
+
+        // 更新地址余额
+        EthAddress from = ethAddressBO.getEthAddress(EEthAddressType.M,
+            ctqEthTransaction.getFrom());
+        EthAddress to = ethAddressBO.getEthAddress(EEthAddressType.W,
+            ctqEthTransaction.getTo());
+        ethAddressBO.refreshBalance(from);
+        ethAddressBO.refreshBalance(to);
     }
 
     @Override
@@ -267,6 +277,13 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         // 落地交易记录
         ethTransactionBO.saveEthTransaction(ctqEthTransaction,
             collection.getCode());
+        // 更新地址余额
+        EthAddress from = ethAddressBO.getEthAddress(EEthAddressType.X,
+            collection.getFromAddress());
+        EthAddress to = ethAddressBO.getEthAddress(EEthAddressType.W,
+            collection.getToAddress());
+        ethAddressBO.refreshBalance(from);
+        ethAddressBO.refreshBalance(to);
     }
 
     @Override

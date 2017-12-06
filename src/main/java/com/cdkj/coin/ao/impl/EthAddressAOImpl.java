@@ -190,10 +190,6 @@ public class EthAddressAOImpl implements IEthAddressAO {
         Paginable<EthAddress> results = ethAddressBO.getPaginable(start, limit,
             condition);
         for (EthAddress ethAddress : results.getList()) {
-            // 获取以太坊余额
-            BigDecimal balance = ethAddressBO.getEthBalance(ethAddress
-                .getAddress());
-            ethAddress.setBalance(balance);
             // 地址拥有者信息
             ethAddress.setUser(userBO.getUser(ethAddress.getUserId()));
             // 归集地址统计
@@ -210,8 +206,6 @@ public class EthAddressAOImpl implements IEthAddressAO {
                 ethAddress.setUseCount(xAddress.getUseCount());
                 ethAddress.setUseAmount(xAddress.getUseAmount());
             }
-            // 更新以太坊余额
-            ethAddressBO.refreshBalance(ethAddress, balance);
         }
         return results;
     }

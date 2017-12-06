@@ -250,10 +250,10 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
     }
 
     @Override
-    public int refreshBalance(EthAddress address, BigDecimal balance) {
+    public int refreshBalance(EthAddress address) {
         int count = 0;
         if (address != null) {
-            address.setBalance(balance);
+            address.setBalance(getEthBalance(address.getAddress()));
             address.setUpdateDatetime(new Date());
             ethAddressDAO.updateBalance(address);
         }
