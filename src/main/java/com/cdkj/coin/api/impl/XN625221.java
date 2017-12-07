@@ -5,7 +5,6 @@ import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.ObjValidater;
 import com.cdkj.coin.dto.req.XN625220Req;
-import com.cdkj.coin.dto.res.BooleanRes;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
@@ -23,15 +22,16 @@ public class XN625221 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
 
-        this.adsAO.draftPublish(req);
-        return new BooleanRes(true);
+        throw new BizException("xn000", "请调用625220");
+//        this.adsAO.draftPublish(req);
+//        return new BooleanRes(true);
 
     }
 
     @Override
     public void doCheck(String inputparams) throws ParaException {
 
-        req = JsonUtil.json2Bean(inputparams,XN625220Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN625220Req.class);
         ObjValidater.validateReq(req);
 
     }
