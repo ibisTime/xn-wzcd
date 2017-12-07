@@ -1,5 +1,7 @@
 package com.cdkj.coin.ao.impl;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,11 @@ public class EthCollectionAOImpl implements IEthCollectionAO {
     @Override
     public EthCollection getEthCollection(String code) {
         return ethCollectionBO.getEthCollection(code);
+    }
+
+    @Override
+    public BigDecimal getTotalCollect() {
+        return ethCollectionBO.getTotalCollect();
     }
 
 }

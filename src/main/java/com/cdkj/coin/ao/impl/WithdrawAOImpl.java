@@ -391,4 +391,9 @@ public class WithdrawAOImpl implements IWithdrawAO {
         return res;
     }
 
+    @Override
+    public BigDecimal getTotalWithdraw() {
+        return withdrawBO.getTotalWithdraw();
+    }
+
 }

@@ -27,4 +27,6 @@ public interface IEthCollectionBO extends IPaginableBO<EthCollection> {
     // 归集地址使用次数及归集总额查询
     public EthAddress getAddressUseInfo(String toAddress);
 
+    public BigDecimal getTotalCollect();
+
 }

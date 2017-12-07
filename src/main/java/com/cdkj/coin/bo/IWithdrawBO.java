@@ -33,4 +33,6 @@ public interface IWithdrawBO extends IPaginableBO<Withdraw> {
     public Withdraw getWithdraw(String hash);
 
     public EthAddress getAddressUseInfo(String fromAddress);
+
+    public BigDecimal getTotalWithdraw();
 }

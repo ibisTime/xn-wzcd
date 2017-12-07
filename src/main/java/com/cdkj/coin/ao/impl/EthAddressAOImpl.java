@@ -229,4 +229,9 @@ public class EthAddressAOImpl implements IEthAddressAO {
         return ethAddressBO.getEthAddress(code);
     }
 
+    @Override
+    public BigDecimal getTotalBalance(EEthAddressType type) {
+        return ethAddressBO.getTotalBalance(type);
+    }
+
 }

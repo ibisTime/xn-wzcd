@@ -273,4 +273,11 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
         return flag;
     }
 
+    @Override
+    public BigDecimal getTotalBalance(EEthAddressType type) {
+        EthAddress condition = new EthAddress();
+        condition.setType(type.getCode());
+        return ethAddressDAO.selectTotalBalance(condition);
+    }
+
 }

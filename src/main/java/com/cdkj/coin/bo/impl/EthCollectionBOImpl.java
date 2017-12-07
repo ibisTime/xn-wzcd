@@ -106,4 +106,9 @@ public class EthCollectionBOImpl extends PaginableBOImpl<EthCollection>
         return ethCollectionDAO.selectAddressUseInfo(data);
     }
 
+    @Override
+    public BigDecimal getTotalCollect() {
+        return ethCollectionDAO.selectTotalCollect();
+    }
+
 }

@@ -251,4 +251,9 @@
 		<include refid="where_condition" />
 	</select>
 	
+	<select id="select_totalWithdraw" parameterType="withdraw"
+		resultType="java.math.BigDecimal">
+		SELECT sum(amount)-sum(fee) FROM tstd_withdraw t where status = '6'
+	</select>
+	
 </mapper>

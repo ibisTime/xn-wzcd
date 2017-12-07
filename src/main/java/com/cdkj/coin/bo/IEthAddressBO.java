@@ -49,4 +49,6 @@ public interface IEthAddressBO extends IPaginableBO<EthAddress> {
 
     public int abandonAddress(EthAddress ethAddress);
 
+    public BigDecimal getTotalBalance(EEthAddressType type);
+
 }

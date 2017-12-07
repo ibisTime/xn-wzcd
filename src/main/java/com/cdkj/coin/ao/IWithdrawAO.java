@@ -40,4 +40,6 @@ public interface IWithdrawAO {
     public Withdraw getWithdraw(String code, String systemCode);
 
     public XN802758Res getWithdrawCheckInfo(String code);
+
+    public BigDecimal getTotalWithdraw();
 }

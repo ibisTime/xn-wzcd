@@ -1,5 +1,6 @@
 package com.cdkj.coin.dao.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -61,6 +62,12 @@ public class EthAddressDAOImpl extends AMybatisTemplate implements
     public EthAddress selectSecret(EthAddress condition) {
         return super.select(NAMESPACE.concat("select_ethAddress_secret"),
             condition, EthAddress.class);
+    }
+
+    @Override
+    public BigDecimal selectTotalBalance(EthAddress condition) {
+        return super.select(NAMESPACE.concat("select_totalBalance"), condition,
+            BigDecimal.class);
     }
 
 }

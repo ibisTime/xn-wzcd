@@ -8,6 +8,7 @@
  */
 package com.cdkj.coin.ao;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.cdkj.coin.bo.base.Paginable;
@@ -44,4 +45,6 @@ public interface IEthAddressAO {
             EthAddress condition);
 
     public EthAddress getEthAddress(String code);
+
+    public BigDecimal getTotalBalance(EEthAddressType type);
 }

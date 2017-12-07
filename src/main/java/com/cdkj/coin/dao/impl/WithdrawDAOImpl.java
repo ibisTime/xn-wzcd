@@ -1,5 +1,6 @@
 package com.cdkj.coin.dao.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -66,6 +67,12 @@ public class WithdrawDAOImpl extends AMybatisTemplate implements IWithdrawDAO {
     public EthAddress selectAddressUseInfo(Withdraw data) {
         return super.select(NAMESPACE.concat("select_addressUseInfo"), data,
             EthAddress.class);
+    }
+
+    @Override
+    public BigDecimal selectTotalWithdraw() {
+        return super.select(NAMESPACE.concat("select_totalWithdraw"), null,
+            BigDecimal.class);
     }
 
 }

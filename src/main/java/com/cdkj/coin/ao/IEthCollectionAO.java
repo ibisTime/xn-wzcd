@@ -1,5 +1,7 @@
 package com.cdkj.coin.ao;
 
+import java.math.BigDecimal;
+
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.EthCollection;
 
@@ -11,5 +13,7 @@ public interface IEthCollectionAO {
             int limit, EthCollection condition);
 
     public EthCollection getEthCollection(String code);
+
+    public BigDecimal getTotalCollect();
 
 }

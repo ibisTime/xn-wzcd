@@ -169,4 +169,9 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw> implements
         return withdrawDAO.selectAddressUseInfo(data);
     }
 
+    @Override
+    public BigDecimal getTotalWithdraw() {
+        return withdrawDAO.selectTotalWithdraw();
+    }
+
 }

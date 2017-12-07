@@ -124,5 +124,10 @@
 		FROM tcoin_eth_collection t
 		<include refid="where_condition" />
 	</select>
+	
+	<select id="select_totalCollect" parameterType="ethCollection"
+		resultType="java.math.BigDecimal">
+		SELECT sum(amount) FROM tcoin_eth_collection t where status = '1'
+	</select>
 
 </mapper>

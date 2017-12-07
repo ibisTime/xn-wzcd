@@ -101,6 +101,12 @@
 		SELECT count(1) FROM tcoin_eth_address t
 		<include refid="where_condition" />
 	</select>
+	
+	<select id="select_totalBalance" parameterType="ethAddress"
+		resultType="java.math.BigDecimal">
+		SELECT sum(balance) FROM tcoin_eth_address t
+		<include refid="where_condition" />
+	</select>
 
 	<insert id="insert_ethAddress" parameterType="ethAddress">
 		INSERT INTO
