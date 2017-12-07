@@ -25,3 +25,8 @@ INSERT INTO `tstd_cpassword` (`code`,`system_code`,`company_code`,`type`,`accoun
 INSERT INTO `tstd_cpassword` (`code`,`system_code`,`company_code`,`type`,`account`,`password`,`remark`) VALUES ('COIN000017003','CD-COIN000017','CD-COIN000017','2','app_id','1004013','应用ID');
 INSERT INTO `tstd_cpassword` (`code`,`system_code`,`company_code`,`type`,`account`,`password`,`remark`) VALUES ('COIN000017004','CD-COIN000017','CD-COIN000017','2','zhima_public_key','MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCC9FLi1VuB60MNtuqvYlSzVsrpz/vac3APuqrQEpmzR1AjhHlMiq6mPX2ZCi5ujCkCoQ4Rf6shw/mBJj74POVY38N0KasSsRgOU2Sf2dYzv9TUqGbIgQbIfW4QY8XtcnK8y1ldisWuDHOsOwR4LIMlerA3uydw7Redr+svmIzzMwIDAQAB','芝麻公钥');
 INSERT INTO `tstd_cpassword` (`code`,`system_code`,`company_code`,`type`,`account`,`password`,`remark`) VALUES ('COIN000017005','CD-COIN000017','CD-COIN000017','2','merchant_id','268821000000049622222','商户ID');
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'user_level','用户等级','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','user_level','1','普通交易者','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','user_level','2','代理人','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
+

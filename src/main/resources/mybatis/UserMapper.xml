@@ -217,6 +217,7 @@
 		,t.remark
 		,t.company_code
 		,t.system_code
+		,t.last_login
 		FROM
 		tstd_user t
 		<include refid="where_condition"/>
