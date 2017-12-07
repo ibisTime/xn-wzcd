@@ -24,7 +24,7 @@ public class XN805066 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         userAO.doSetTradePwd(req.getUserId(), req.getTradePwd(),
-            req.getSmsCaptcha());
+            req.getSmsCaptcha(), req.getGoogleCaptcha());
         return new BooleanRes(true);
     }
 

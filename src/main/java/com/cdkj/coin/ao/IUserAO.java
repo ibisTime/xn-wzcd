@@ -66,8 +66,8 @@ public interface IUserAO {
 
     // 重置登录密码
     public void doResetLoginPwd(String mobile, String smsCaptcha,
-            String newLoginPwd, String kind, String companyCode,
-            String systemCode);
+            String googleCaptcha, String newLoginPwd, String kind,
+            String companyCode, String systemCode);
 
     // 修改登录密码
     public void doModifyLoginPwd(String userId, String oldLoginPwd,
@@ -78,7 +78,8 @@ public interface IUserAO {
             String adminUserId, String adminPwd);
 
     // 设置支付密码
-    public void doSetTradePwd(String userId, String tradePwd, String smsCaptcha);
+    public void doSetTradePwd(String userId, String tradePwd,
+            String smsCaptcha, String googleCaptcha);
 
     // 重置支付密码
     public void doResetTradePwd(String userId, String newTradePwd,

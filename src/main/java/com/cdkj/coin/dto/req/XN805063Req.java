@@ -7,6 +7,9 @@ public class XN805063Req {
     // 手机验证码(必填)
     private String smsCaptcha;
 
+    // 谷歌验证码(选填)
+    private String googleCaptcha;
+
     // 新登录密码(必填)
     private String newLoginPwd;
 
@@ -33,6 +36,14 @@ public class XN805063Req {
 
     public void setSmsCaptcha(String smsCaptcha) {
         this.smsCaptcha = smsCaptcha;
+    }
+
+    public String getGoogleCaptcha() {
+        return googleCaptcha;
+    }
+
+    public void setGoogleCaptcha(String googleCaptcha) {
+        this.googleCaptcha = googleCaptcha;
     }
 
     public String getNewLoginPwd() {

@@ -449,15 +449,25 @@ public class UserAOImpl implements IUserAO {
     @Override
     @Transactional
     public void doResetLoginPwd(String mobile, String smsCaptcha,
-            String newLoginPwd, String kind, String companyCode,
-            String systemCode) {
+            String googleCaptcha, String newLoginPwd, String kind,
+            String companyCode, String systemCode) {
         String userId = userBO.getUserId(mobile, kind, companyCode, systemCode);
         if (StringUtils.isBlank(userId)) {
             throw new BizException("li01004", "用户不存在,请先注册");
         }
+        User user = userBO.getUser(userId);
         // 短信验证码是否正确
         smsOutBO.checkCaptcha(mobile, smsCaptcha, "805063", companyCode,
             systemCode);
+        // 校验谷歌验证码
+        if (StringUtils.isNotBlank(user.getGoogleSecret())) {
+            if (StringUtils.isBlank(googleCaptcha)) {
+                throw new BizException("xn000000", "您已开启谷歌认证，请输入谷歌验证码！");
+            } else {
+                googleAuthBO.checkCode(user.getGoogleSecret(), googleCaptcha,
+                    System.currentTimeMillis());
+            }
+        }
         userBO.refreshLoginPwd(userId, newLoginPwd);
         // 发送短信
         smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
@@ -498,11 +508,21 @@ public class UserAOImpl implements IUserAO {
 
     @Override
     @Transactional
-    public void doSetTradePwd(String userId, String tradePwd, String smsCaptcha) {
+    public void doSetTradePwd(String userId, String tradePwd,
+            String smsCaptcha, String googleCaptcha) {
         User user = this.doGetUser(userId);
         // 短信验证码是否正确
         smsOutBO.checkCaptcha(user.getMobile(), smsCaptcha, "805066",
             user.getCompanyCode(), user.getSystemCode());
+        // 校验谷歌验证码
+        if (StringUtils.isNotBlank(user.getGoogleSecret())) {
+            if (StringUtils.isBlank(googleCaptcha)) {
+                throw new BizException("xn000000", "您已开启谷歌认证，请输入谷歌验证码！");
+            } else {
+                googleAuthBO.checkCode(user.getGoogleSecret(), googleCaptcha,
+                    System.currentTimeMillis());
+            }
+        }
         // 修改支付密码
         userBO.refreshTradePwd(userId, tradePwd);
         // 发送短信

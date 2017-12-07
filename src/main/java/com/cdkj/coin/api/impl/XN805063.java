@@ -24,8 +24,8 @@ public class XN805063 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         userAO.doResetLoginPwd(req.getMobile(), req.getSmsCaptcha(),
-            req.getNewLoginPwd(), req.getKind(), req.getCompanyCode(),
-            req.getSystemCode());
+            req.getGoogleCaptcha(), req.getNewLoginPwd(), req.getKind(),
+            req.getCompanyCode(), req.getSystemCode());
         return new BooleanRes(true);
     }
 
