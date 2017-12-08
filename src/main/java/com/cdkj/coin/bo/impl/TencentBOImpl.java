@@ -34,6 +34,7 @@ import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.enums.EUserPwd;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.EBizErrorCode;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.tls.sigcheck.tls_sigcheck;
 
@@ -54,16 +55,16 @@ public class TencentBOImpl implements ITencentBO {
 
     public static final String TENXUN_CREATE_GROUP = "https://console.tim.qq.com/v4/group_open_http_svc/create_group";
 
+    public static final String TENXUN_SEND_GROUP_SYSTEM_NOTIFICATION = "https://console.tim.qq.com/v4/group_open_http_svc/send_group_system_notification";
+
     @Autowired
     private ISYSConfigBO sysConfigBO;
 
-    /** 
-     * @see com.cdkj.coin.bo.ITencentBO#register(java.lang.String, java.lang.String, java.lang.String)
-     */
-    @Override
-    public void register(String userId, String companyCode, String systemCode) {
+    private String getUrl(String baseUrl) {
+        String urlString = null;
         Map<String, String> sysConfigMap = sysConfigBO.getConfigsMap(
-            EConfigType.TENCENT_IM.getCode(), companyCode, systemCode);
+            EConfigType.TENCENT_IM.getCode(), ESystemCode.COIN.getCode(),
+            ESystemCode.COIN.getCode());
         String txAppCode = sysConfigMap.get(SysConstants.TX_APP_CODE);
         String txAppAdmin = sysConfigMap.get(SysConstants.TX_APP_ADMIN);
         String accessKey = sysConfigMap.get(SysConstants.TX_ACCESS_KEY);
@@ -98,9 +99,23 @@ public class TencentBOImpl implements ITencentBO {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "腾讯云IM签名失败");
             }
-            String urlString = TENXUN_CHAT_TUOGUAN_URL + "?usersig="
-                    + demo.getSig() + "&apn=1&identifier=" + txAppAdmin
-                    + "&sdkappid=" + txAppCode + "&contenttype=json";
+            urlString = baseUrl + "?usersig=" + demo.getSig()
+                    + "&apn=1&identifier=" + txAppAdmin + "&sdkappid="
+                    + txAppCode + "&contenttype=json";
+        } catch (Exception e) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "腾讯云IM签名异常，原因" + e.getMessage());
+        }
+        return urlString;
+    }
+
+    /** 
+     * @see com.cdkj.coin.bo.ITencentBO#register(java.lang.String, java.lang.String, java.lang.String)
+     */
+    @Override
+    public void register(String userId, String companyCode, String systemCode) {
+        try {
+            String urlString = getUrl(TENXUN_CHAT_TUOGUAN_URL);
             String result = sendChildSms(urlString, userId);
             String errorCode = JSONObject.parseObject(result).getString(
                 "ErrorCode");
@@ -182,59 +197,36 @@ public class TencentBOImpl implements ITencentBO {
 
     @Override
     public void createGroup(String groupId, String buyUser, String sellUser) {
-        Map<String, String> sysConfigMap = sysConfigBO.getConfigsMap(
-            EConfigType.TENCENT_IM.getCode(), ESystemCode.COIN.getCode(),
-            ESystemCode.COIN.getCode());
-        String txAppCode = sysConfigMap.get(SysConstants.TX_APP_CODE);
-        String txAppAdmin = sysConfigMap.get(SysConstants.TX_APP_ADMIN);
-        String accessKey = sysConfigMap.get(SysConstants.TX_ACCESS_KEY);
-        String secretKey = sysConfigMap.get(SysConstants.TX_SECRET_KEY);
-        String accountType = sysConfigMap.get(SysConstants.TX_ACCOUNT_TYPE);
-
-        if (StringUtils.isBlank(txAppCode)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "应用编号不能为空");
-        }
-        if (StringUtils.isBlank(txAppAdmin)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "管理员不能为空");
-        }
-        if (StringUtils.isBlank(accessKey)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "公钥不能为空");
-        }
-        if (StringUtils.isBlank(secretKey)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "私钥不能为空");
-        }
-        if (StringUtils.isBlank(accountType)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "账号类型不能为空");
-        }
         try {
-            tls_sigcheck demo = new tls_sigcheck();
-            demo.loadJniLib(Thread.currentThread().getContextClassLoader()
-                .getResource("jnisigcheck.so").getPath());
-
-            int ret = demo.tls_gen_signature_ex2(txAppCode, txAppAdmin,
-                secretKey);
-            ret = demo.tls_check_signature_ex2(demo.getSig(), accessKey,
-                txAppCode, txAppAdmin);
-            if (0 != ret) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "腾讯云IM签名失败");
-            }
-            String urlString = TENXUN_CREATE_GROUP + "?usersig="
-                    + demo.getSig() + "&apn=1&identifier=" + txAppAdmin
-                    + "&sdkappid=" + txAppCode + "&contenttype=json";
-
+            String urlString = getUrl(TENXUN_CREATE_GROUP);
             String codingType = "UTF-8";
             String backEncodType = "UTF-8";
             JsonObject smsParams = new JsonObject();
             smsParams.addProperty("Type",
                 URLEncoder.encode("ChatRoom", codingType));
+            smsParams.addProperty("Name",
+                URLEncoder.encode(groupId + "-Group", codingType));
             smsParams.addProperty("GroupId",
                 URLEncoder.encode(groupId, codingType));
-            smsParams.addProperty("MemberList", URLEncoder.encode(
-                "[{\"Member_Account\":\"" + buyUser
-                        + "\"},{\"Member_Account\":\"" + sellUser + "\"}]",
-                codingType));
+
+            JsonArray members = new JsonArray();
+
+            JsonObject aaa = new JsonObject();
+            aaa.addProperty("Member_Account",
+                URLEncoder.encode(buyUser, codingType));
+
+            JsonObject bbb = new JsonObject();
+            bbb.addProperty("Member_Account",
+                URLEncoder.encode(sellUser, codingType));
+
+            members.add(aaa);
+            members.add(bbb);
+
+            smsParams.add("MemberList", members);
+
             String sendSms = smsParams.toString();
+
+            logger.info("*&*&* URL=" + sendSms);
 
             String result = doAccessHTTPPostJson(urlString, sendSms,
                 backEncodType);
@@ -312,6 +304,37 @@ public class TencentBOImpl implements ITencentBO {
         }
         System.out.println(receive);
         return receive.toString();
+    }
+
+    @Override
+    public void sendMessage(String groupId, String content) {
+        try {
+            String urlString = getUrl(TENXUN_SEND_GROUP_SYSTEM_NOTIFICATION);
+            String codingType = "UTF-8";
+            String backEncodType = "UTF-8";
+            JsonObject params = new JsonObject();
+            params.addProperty("GroupId",
+                URLEncoder.encode(groupId, codingType));
+            params.addProperty("Content",
+                URLEncoder.encode(content, codingType));
+
+            String paramsString = params.toString();
+
+            String result = doAccessHTTPPostJson(urlString, paramsString,
+                backEncodType);
+            String errorCode = JSONObject.parseObject(result).getString(
+                "ErrorCode");
+            String errorInfo = JSONObject.parseObject(result).getString(
+                "ErrorInfo");
+            if (!errorCode.equals("0")) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "腾讯云发送系统消息异常,错误编号：" + errorCode + "，原因：" + errorInfo);
+            }
+
+        } catch (Exception e) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "腾讯云发送系统消息异常，原因" + e.getMessage());
+        }
     }
 
 }

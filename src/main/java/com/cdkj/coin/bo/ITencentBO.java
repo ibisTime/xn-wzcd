@@ -27,4 +27,7 @@ public interface ITencentBO {
     // 创建群组
     public void createGroup(String groupId, String buyUser, String sellUser);
 
+    // 向群组中发送系统消息
+    public void sendMessage(String groupId, String content);
+
 }

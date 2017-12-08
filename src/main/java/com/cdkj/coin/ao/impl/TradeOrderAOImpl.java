@@ -88,6 +88,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     private ITencentBO tencentBO;
 
     @Override
+    @Transactional
     public String contactBuy(String adsCode, String buyUser) {
         String code = null;
 
@@ -113,6 +114,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     }
 
     @Override
+    @Transactional
     public String contactSell(String adsCode, String sellUser) {
         String code = null;
 
@@ -123,13 +125,15 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         this.checkAdsStatusAndMasterCannotBuy(ads, sellUser);
 
         // 检查是否有正在聊天订单
-        TradeOrder tradeOrder = tradeOrderBO.getToSubmitTradeOrder(sellUser,
-            ads.getUserId(), adsCode);
+        TradeOrder tradeOrder = tradeOrderBO.getToSubmitTradeOrder(
+            ads.getUserId(), sellUser, adsCode);
         if (tradeOrder != null) {
             code = tradeOrder.getCode();
         } else {
             // 提交待下单的订单
             code = tradeOrderBO.contactSellSubmit(ads, sellUser);
+            // 创建聊天群组
+            tencentBO.createGroup(code, ads.getUserId(), sellUser);
         }
 
         return code;
@@ -183,6 +187,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             // 提交交易订单
             code = tradeOrderBO.buySubmit(ads, buyUser, tradePrice, count,
                 tradeAmount, fee);
+            // 创建聊天群组
+            tencentBO.createGroup(code, buyUser, ads.getUserId());
         }
 
         // 刷新广告状态
@@ -253,6 +259,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             // 提交交易订单
             code = tradeOrderBO.sellSubmit(ads, sellUser, tradePrice,
                 tradeCount, tradeAmount, fee);
+            // 创建聊天群组
+            tencentBO.createGroup(code, ads.getUserId(), sellUser);
         }
 
         // 刷新广告状态，从待交易变为，交易中
@@ -380,6 +388,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
         // 变更交易订单信息
         tradeOrderBO.markPay(tradeOrder, updater, remark);
+
+        // 发送系统消息
+        tencentBO.sendMessage(code, "买家已标记打款");
     }
 
     @Override
@@ -435,6 +446,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         this.handleUserAutoSetting(tradeOrder.getCode(),
             tradeOrder.getBuyUser(), tradeOrder.getSellUser());
 
+        // 发送系统消息
+        tencentBO.sendMessage(code, "卖家已释放");
+
         return tradeOrder;
 
     }
@@ -480,6 +494,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 提交仲裁工单
         arbitrateBO.submit(tradeOrder.getCode(), yuangao, beigao, reason,
             attach);
+        // 发送系统消息
+        tencentBO.sendMessage(code, "订单已申请仲裁");
     }
 
     @Override
