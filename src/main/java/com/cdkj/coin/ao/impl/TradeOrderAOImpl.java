@@ -390,7 +390,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         tradeOrderBO.markPay(tradeOrder, updater, remark);
 
         // 发送系统消息
-        tencentBO.sendMessage(code, "买家已标记打款");
+        tencentBO.sendNormalMessage(code, "系统消息：买家已标记打款");
     }
 
     @Override
@@ -447,7 +447,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             tradeOrder.getBuyUser(), tradeOrder.getSellUser());
 
         // 发送系统消息
-        tencentBO.sendMessage(code, "卖家已释放");
+        tencentBO.sendNormalMessage(code, "系统消息：卖家已释放");
 
         return tradeOrder;
 
@@ -495,7 +495,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         arbitrateBO.submit(tradeOrder.getCode(), yuangao, beigao, reason,
             attach);
         // 发送系统消息
-        tencentBO.sendMessage(code, "订单已申请仲裁");
+        tencentBO.sendNormalMessage(code, "系统消息：订单已申请仲裁");
     }
 
     @Override
@@ -634,6 +634,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             remark = "订单已完成";
         }
         tradeOrderBO.doBsComment(tradeOrder, userId, comment, status, remark);
+        // 发送系统消息
+        tencentBO.sendNormalMessage(tradeOrder.getCode(), "系统消息：买家已评价");
     }
 
     private void doSbComment(TradeOrder tradeOrder, String userId,
@@ -650,6 +652,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             remark = "订单已完成";
         }
         tradeOrderBO.doSbComment(tradeOrder, userId, comment, status, remark);
+        // 发送系统消息
+        tencentBO.sendNormalMessage(tradeOrder.getCode(), "系统消息：卖家已评价");
     }
 
     // 购买广告， 我要出售

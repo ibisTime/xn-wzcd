@@ -18,6 +18,8 @@ ADD COLUMN `user_referee_level` VARCHAR(4) NULL COMMENT '推荐人等级' AFTER 
 ADD COLUMN `last_login` DATETIME NULL COMMENT '最后一次登录时间' AFTER `system_code`;
 ADD COLUMN `google_secret` VARCHAR(64) NULL COMMENT '谷歌验证秘钥' AFTER `trade_pwd_strength`;
 
+UPDATE `tstd_user` SET user_referee_level = '1' where user_referee is not null
+
 
 
 INSERT INTO `tstd_cpassword` (`code`,`system_code`,`company_code`,`type`,`account`,`password`,`remark`) VALUES ('COIN000017001','CD-COIN000017','CD-COIN000017','2','app_private_key','MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAK43D3dC8N12nNhOtJZ9T4hk0mrr4LrmSUCXhvdQ6glLepXPc3ACJe/kR5DUtyd4F4DS3HrGXAN9X2IwM0+LT1Xl0oW1DaVTh6l0f0nvCEuZN7aLic7gr1COiMHNvQBA31Pj5prf6hoIScTEvPAcUgQlii8WldBu8eYsQl6QtiPlAgMBAAECgYEAqR/ercKYngY2AW92tNl1yk1GUHIouogw+LmhVpqAeQGDQcggos4TEi2kpB88pt5YwsDxNWc3kFO3s1Rjm4b8PidM3uZxvloyPEDedxfbUDndkoBrBxFYMLAE31qT7ZTBkyafaCrGAW8LWLVrIinK27nI0FnT+Hnl+M7R9qnMgckCQQDViMgA/A1QjPpEXTJfchqlOmHY9GYghIH9nGoiu2Y46sp9sYmNe/00c1gZa/5UI4RBK5JPQgSvNelyAu33ICS7AkEA0NyAxz5PizrH9kCf4HBHasOOX9ERTf/4Qm/6etQdzHBnmUx/t6CLr6Ds7XvOqrcsOCRnce8GA3wUNQByI1Kf3wJBAMWgrXLz1KLbh3kkRE2//lczvIGeWLL50JFXZYe1p3tAGp7QZL10prkXk88beyyGHo5udCA0ur8qh1+ExJc2wacCQFXcsFw4c37rVVUY0CD2R4XOivM9AX4tYqP9YN2p4e4vr4dH+aFFsOcsovomUZnA377cyGIAP1qjYbNAUavPxcUCQG0V3oZdBBKGlZwawR3DSIdJYRXdVPyg6pIbfaLDKzlSaK7BCkTh1wP7nleat4Qp9JcN/ed8zp4FaUqAQcpYG8w=','应用私钥');

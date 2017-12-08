@@ -30,4 +30,7 @@ public interface ITencentBO {
     // 向群组中发送系统消息
     public void sendMessage(String groupId, String content);
 
+    // 向群组中发送普通消息
+    public void sendNormalMessage(String groupId, String content);
+
 }

@@ -57,6 +57,8 @@ public class TencentBOImpl implements ITencentBO {
 
     public static final String TENXUN_SEND_GROUP_SYSTEM_NOTIFICATION = "https://console.tim.qq.com/v4/group_open_http_svc/send_group_system_notification";
 
+    public static final String TENXUN_SEND_GROUP_MSG = "https://console.tim.qq.com/v4/group_open_http_svc/send_group_msg";
+
     @Autowired
     private ISYSConfigBO sysConfigBO;
 
@@ -334,6 +336,53 @@ public class TencentBOImpl implements ITencentBO {
         } catch (Exception e) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "腾讯云发送系统消息异常，原因" + e.getMessage());
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(System.currentTimeMillis());
+    }
+
+    @Override
+    public void sendNormalMessage(String groupId, String content) {
+        try {
+            String urlString = getUrl(TENXUN_SEND_GROUP_MSG);
+            String codingType = "UTF-8";
+            String backEncodType = "UTF-8";
+            int random = (int) (Math.random() * (9999 - 1000 + 1)) + 10000000;
+            JsonObject params = new JsonObject();
+            params.addProperty("GroupId",
+                URLEncoder.encode(groupId, codingType));
+            params.addProperty("Random", random);
+
+            JsonObject text = new JsonObject();
+            text.addProperty("Text", URLEncoder.encode(content, codingType));
+
+            JsonObject MsgBody = new JsonObject();
+            MsgBody.addProperty("MsgType", "TIMTextElem");
+            MsgBody.add("MsgContent", text);
+
+            JsonArray msgBodyArray = new JsonArray();
+            msgBodyArray.add(MsgBody);
+
+            params.add("MsgBody", msgBodyArray);
+
+            String paramsString = params.toString();
+
+            String result = doAccessHTTPPostJson(urlString, paramsString,
+                backEncodType);
+            String errorCode = JSONObject.parseObject(result).getString(
+                "ErrorCode");
+            String errorInfo = JSONObject.parseObject(result).getString(
+                "ErrorInfo");
+            if (!errorCode.equals("0")) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "腾讯云发送普通消息异常,错误编号：" + errorCode + "，原因：" + errorInfo);
+            }
+
+        } catch (Exception e) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "腾讯云发送普通消息异常，原因" + e.getMessage());
         }
     }
 
