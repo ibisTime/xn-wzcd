@@ -24,4 +24,7 @@ public interface ITencentBO {
     public XN625000Res getSign(String userId, String companyCode,
             String systemCode);
 
+    // 创建群组
+    public void createGroup(String groupId, String buyUser, String sellUser);
+
 }

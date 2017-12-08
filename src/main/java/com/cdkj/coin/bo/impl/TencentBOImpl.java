@@ -30,6 +30,7 @@ import com.cdkj.coin.bo.ITencentBO;
 import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.dto.res.XN625000Res;
 import com.cdkj.coin.enums.EConfigType;
+import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.enums.EUserPwd;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.EBizErrorCode;
@@ -50,6 +51,8 @@ public class TencentBOImpl implements ITencentBO {
     public static final String TENXUN_CHAT_TUOGUAN_URL = "https://console.tim.qq.com/v4/registration_service/register_account_v1";
 
     public static final String TENXUN_CHAT_DULI_URL = "https://console.tim.qq.com/v4/im_open_login_svc/account_import";
+
+    public static final String TENXUN_CREATE_GROUP = "https://console.tim.qq.com/v4/group_open_http_svc/create_group";
 
     @Autowired
     private ISYSConfigBO sysConfigBO;
@@ -174,6 +177,79 @@ public class TencentBOImpl implements ITencentBO {
         } catch (Exception e) {
             e.printStackTrace();
             return "未发送，编码异常";
+        }
+    }
+
+    @Override
+    public void createGroup(String groupId, String buyUser, String sellUser) {
+        Map<String, String> sysConfigMap = sysConfigBO.getConfigsMap(
+            EConfigType.TENCENT_IM.getCode(), ESystemCode.COIN.getCode(),
+            ESystemCode.COIN.getCode());
+        String txAppCode = sysConfigMap.get(SysConstants.TX_APP_CODE);
+        String txAppAdmin = sysConfigMap.get(SysConstants.TX_APP_ADMIN);
+        String accessKey = sysConfigMap.get(SysConstants.TX_ACCESS_KEY);
+        String secretKey = sysConfigMap.get(SysConstants.TX_SECRET_KEY);
+        String accountType = sysConfigMap.get(SysConstants.TX_ACCOUNT_TYPE);
+
+        if (StringUtils.isBlank(txAppCode)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "应用编号不能为空");
+        }
+        if (StringUtils.isBlank(txAppAdmin)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "管理员不能为空");
+        }
+        if (StringUtils.isBlank(accessKey)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "公钥不能为空");
+        }
+        if (StringUtils.isBlank(secretKey)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "私钥不能为空");
+        }
+        if (StringUtils.isBlank(accountType)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "账号类型不能为空");
+        }
+        try {
+            tls_sigcheck demo = new tls_sigcheck();
+            demo.loadJniLib(Thread.currentThread().getContextClassLoader()
+                .getResource("jnisigcheck.so").getPath());
+
+            int ret = demo.tls_gen_signature_ex2(txAppCode, txAppAdmin,
+                secretKey);
+            ret = demo.tls_check_signature_ex2(demo.getSig(), accessKey,
+                txAppCode, txAppAdmin);
+            if (0 != ret) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "腾讯云IM签名失败");
+            }
+            String urlString = TENXUN_CREATE_GROUP + "?usersig="
+                    + demo.getSig() + "&apn=1&identifier=" + txAppAdmin
+                    + "&sdkappid=" + txAppCode + "&contenttype=json";
+
+            String codingType = "UTF-8";
+            String backEncodType = "UTF-8";
+            JsonObject smsParams = new JsonObject();
+            smsParams.addProperty("Type",
+                URLEncoder.encode("ChatRoom", codingType));
+            smsParams.addProperty("GroupId",
+                URLEncoder.encode(groupId, codingType));
+            smsParams.addProperty("MemberList", URLEncoder.encode(
+                "[{\"Member_Account\":\"" + buyUser
+                        + "\"},{\"Member_Account\":\"" + sellUser + "\"}]",
+                codingType));
+            String sendSms = smsParams.toString();
+
+            String result = doAccessHTTPPostJson(urlString, sendSms,
+                backEncodType);
+            String errorCode = JSONObject.parseObject(result).getString(
+                "ErrorCode");
+            String errorInfo = JSONObject.parseObject(result).getString(
+                "ErrorInfo");
+            if (!errorCode.equals("0")) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "腾讯云创建群组异常,错误编号：" + errorCode + "，原因：" + errorInfo);
+            }
+
+        } catch (Exception e) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "腾讯云创建群组异常，原因" + e.getMessage());
         }
     }
 
