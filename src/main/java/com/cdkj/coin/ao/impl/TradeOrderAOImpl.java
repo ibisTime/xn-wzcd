@@ -165,7 +165,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         doAmountCheck(ads, tradePrice, count, tradeAmount, "交易额大于剩余可出售金额");
 
         // 计算交易手续费
-        BigDecimal fee = count.multiply(ads.getFeeRate());
+        BigDecimal fee = count.multiply(ads.getFeeRate()).setScale(0,
+            BigDecimal.ROUND_DOWN);
 
         // 变更广告剩余 可售数量
         adsBO.cutLeftCount(ads.getCode(), count);
@@ -289,7 +290,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             ads.getUserId(), applyUser, EUserReleationType.BLACKLIST.getCode());
         if (isBlack) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "您已被该用户拉黑，不能与之发生交易");
+                "您已被该用户拉黑，不能与他进行交易");
         }
 
         if (!EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())
@@ -835,11 +836,17 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 自动信任
         long trustCount = this.userSettingsBO.checkUserSetting(userId,
             EUserSettingsType.AUTO_TRUST.getCode());
-        if (trustCount > 0) {
-
-            this.userRelationBO.saveUserRelation(userId, toUserId,
-                EUserReleationType.TRUST.getCode(), ESystemCode.COIN.getCode());
-
+        if (trustCount <= 0) {
+            return;
         }
+
+        if (this.userRelationBO.isExistUserRelation(userId, toUserId,
+            EUserReleationType.TRUST.getCode())) {
+            return;
+        }
+
+        this.userRelationBO.saveUserRelation(userId, toUserId,
+            EUserReleationType.TRUST.getCode(), ESystemCode.COIN.getCode());
+
     }
 }

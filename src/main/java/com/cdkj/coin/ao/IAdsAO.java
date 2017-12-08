@@ -13,11 +13,9 @@ public interface IAdsAO {
     public void publishAds(XN625220Req req);
 
     //谁查的详情就是谁的 userId
-    public Object adsDetail(String adsCode,String searchUserUserId);
+    public Object adsDetail(String adsCode, String searchUserUserId);
 
-    public void draftPublish(XN625220Req req);
-
-//    public void shangJia(XN625220Req req);
+//    public void draftPublish(XN625220Req req);
 
     public void xiaJiaAds(String adsCode, String userId);
 

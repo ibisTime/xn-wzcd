@@ -21,36 +21,31 @@ public interface IAdsBO {
     // 下架广告
     public void xiaJiaAds(Ads adsSell);
 
-//    // 上架广告
-//    public void shangJiaAds(String adsCode);
-
     // 插入广告
-    public void insertAds(Ads ads);
+    public int insertAds(Ads ads);
 
     // 草稿发布
-    public void draftPublish(Ads adsSell);
+    public int draftPublish(Ads adsSell);
 
     // 广告详情
     public Ads adsDetail(String adsCode);
 
-    // 更新广告的市场价格
-//    public void refreshAllAdsMarketPriceAndTruePrice(Market market);
 
     public Paginable<Ads> frontPage(Integer start, Integer limit,
-            Ads condition);
+                                    Ads condition);
 
     public Paginable<Ads> ossPage(Integer start, Integer limit,
-            Ads condition);
+                                  Ads condition);
 
     public List<Ads> queryShangJiaAdsList();
 
     //刷新广告状态
-    public void refreshStatus(String adsCode,boolean existOningOrder);
+    public void refreshStatus(String adsCode, boolean existOningOrder);
 
     //获取
-    public long totalCountOfShangJiaAds(String userId,String tradeType);
+    public long totalCountOfShangJiaAds(String userId, String tradeType);
 
-    public long updateAdsPriceByPrimaryKey(Ads ads);
+    public long updateAdsPriceByPrimaryKey(String adsCode, BigDecimal marketPrice, BigDecimal truePrice);
 
 
 }

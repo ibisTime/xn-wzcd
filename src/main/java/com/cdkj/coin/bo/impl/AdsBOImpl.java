@@ -37,12 +37,10 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     IAdsDAO adsDAO;
 
     @Override
-    public void insertAds(Ads ads) {
+    public int insertAds(Ads ads) {
 
         int count = this.adsDAO.insert(ads);
-        if (count != 1) {
-            throw new BizException("xn0000", "发布失败");
-        }
+        return count;
 
     }
 
@@ -72,13 +70,14 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         Ads condition = new Ads();
         condition.setCode(adsCode);
         Ads ads = this.adsDAO.select(condition);
-
         if (ads == null) {
             throw new BizException("xn", "广告不存在");
         }
-        ads.setLeftCount(ads.getLeftCount().add(value));
-        // 校验余额，
-        int count = this.adsDAO.updateByPrimaryKeySelective(ads);
+
+        Ads updateCcondition = new Ads();
+        updateCcondition.setCode(ads.getCode());
+        updateCcondition.setLeftCount(ads.getLeftCount().add(value));
+        int count = this.adsDAO.updateByPrimaryKeySelective(updateCcondition);
         if (count != 1) {
             throw new BizException("xn", "更新失败");
         }
@@ -93,17 +92,19 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
         Ads condition = new Ads();
         condition.setCode(adsCode);
-
         Ads ads = this.adsDAO.select(condition);
+
         if (ads == null) {
             throw new BizException("xn", "广告不存在");
         }
 
-        condition.setLeftCount(ads.getLeftCount().subtract(value));
+        Ads updateCcondition = new Ads();
+        updateCcondition.setCode(ads.getCode());
+        updateCcondition.setLeftCount(ads.getLeftCount().subtract(value));
         // 校验余额
-        int count = this.adsDAO.updateByPrimaryKeySelective(condition);
+        int count = this.adsDAO.updateByPrimaryKeySelective(updateCcondition);
         if (count != 1) {
-            throw new BizException("xn", "更新失败");
+            throw new BizException("xn", "更新失败可售余额失败");
         }
 
     }
@@ -119,23 +120,10 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
     }
 
-//    @Override
-//    public void shangJiaAds(String adsCode) {
-//
-//        Ads condition = new Ads();
-//        condition.setCode(adsCode);
-//        condition.setStatus(EAdsStatus.DAIJIAOYI.getCode());
-//        int count = this.adsDAO.updateByPrimaryKeySelective(condition);
-//        if (count != 1) {
-//            throw new BizException("xn000000", "上架失败");
-//        }
-//
-//    }
-
     @Override
-    public void draftPublish(Ads adsSell) {
+    public int draftPublish(Ads adsSell) {
 
-        this.adsDAO.updateByPrimaryKey(adsSell);
+        return this.adsDAO.updateByPrimaryKey(adsSell);
 
     }
 
@@ -256,8 +244,12 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     }
 
     @Override
-    public long updateAdsPriceByPrimaryKey(Ads ads) {
-        return this.adsDAO.updateByPrimaryKeySelective(ads);
+    public long updateAdsPriceByPrimaryKey(String adsCode, BigDecimal marketPrice, BigDecimal truePrice) {
+        Ads updateCondition = new Ads();
+        updateCondition.setCode(adsCode);
+        updateCondition.setMarketPrice(marketPrice);
+        updateCondition.setTruePrice(truePrice);
+        return this.adsDAO.updateByPrimaryKeySelective(updateCondition);
     }
 
 }
