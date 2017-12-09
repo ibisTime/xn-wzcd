@@ -63,7 +63,7 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','reg_protocol','注册协议','admin',now(),'注册协议','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','trade_remind','1.交易前请详细了解卖家的交易信息\r\n2.请通过平台进行沟通约定，并保存好相关聊天记录\r\n3.如遇到交易纠纷，请通过平台“帮助”解决问题\r\n','admin',now(),'交易提醒','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','activity_rule','1.分享好友，并通过链接注册成功；\r\n2.注册之后每一笔成功交易，您都将获得一笔提成，金额为交易手续费的0.1%\r\n3.贝可盈保留对活动的解释权。\r\n','admin',now(),'活动规则','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','reg_url','http://m.bcoin.im','admin',now(),'注册链接','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','reg_url','http://bcoin.hichengdai.com','admin',now(),'注册链接','CD-COIN000017','CD-COIN000017');
 
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('collection_rule','collection_limit','1','admin',now(),'当账户达到该数量时进行自动归集','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('withdraw_rule','withdraw_fee','0.01','admin',now(),'取现手续费','CD-COIN000017','CD-COIN000017');
