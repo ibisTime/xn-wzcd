@@ -4,6 +4,7 @@ import com.cdkj.coin.ao.IUserSettingsAO;
 import com.cdkj.coin.bo.IUserSettingsBO;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.UserSettings;
+import com.cdkj.coin.enums.EUserSettingsType;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.EBizErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,15 @@ public class UserSettingsAOImpl implements IUserSettingsAO {
 
     @Override
     public void addUserSettings(String userId, String type) {
+
+        if (!type.equals(EUserSettingsType.AUTO_HAOPING.getCode())
+                &&
+            !type.equals(EUserSettingsType.AUTO_TRUST.getCode())
+                ) {
+            //
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),"不支持的设置类型");
+            //
+        }
 
         //检查用户是否已经进行过该设置
         long count = this.userSettingsBO.checkUserSetting(userId, type);
