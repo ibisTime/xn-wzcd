@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.coin.ao.IArbitrateAO;
 import com.cdkj.coin.ao.ITradeOrderAO;
@@ -38,6 +39,7 @@ public class ArbitrateAOImpl implements IArbitrateAO {
     private ITencentBO tencentBO;
 
     @Override
+    @Transactional
     public void handle(String code, String result, String updater, String remark) {
         Arbitrate arbitrate = arbitrateBO.getArbitrate(code);
         if (!EArbitrateStatus.TO_HANDLE.getCode().equals(arbitrate.getStatus())) {
@@ -69,7 +71,8 @@ public class ArbitrateAOImpl implements IArbitrateAO {
         arbitrateBO.handle(arbitrate, result, updater, remark);
 
         // 发送系统消息
-        tencentBO.sendNormalMessage(code, "系统消息：仲裁申请已处理完成");
+        tencentBO.sendNormalMessage(arbitrate.getTradeOrderCode(),
+            "系统消息：仲裁申请已处理完成");
     }
 
     @Override
