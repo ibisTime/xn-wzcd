@@ -364,6 +364,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         adsBO.refreshStatus(tradeOrder.getAdsCode(),
             tradeOrderBO.isExistOningOrder(tradeOrder.getAdsCode()));
 
+        // 发送系统消息
+        tencentBO.sendNormalMessage(code, "系统消息：买家取消订单");
+
     }
 
     // 标价打款
