@@ -1,6 +1,8 @@
 package com.cdkj.coin.bo.impl;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -110,25 +112,42 @@ public class EthTransactionBOImpl extends PaginableBOImpl<EthTransaction>
         String txHash = null;
         try {
             String fileDirPath = PropertiesUtil.Config.KEY_STORE_PATH;
-            File keyStoreFileDir = new File(fileDirPath);
-            File[] subFiles = keyStoreFileDir.listFiles();
-            File keystoreFile = null;
-            for (File file : subFiles) {
-                if (file.isDirectory() != true) {
-                    // from: 0x244eb6078add0d58b2490ae53976d80f54a404ae
-                    if (file.getName().endsWith(from.substring(2))) {
-                        // 找到了该文件
-                        keystoreFile = file;
-                        break;
-                    }
+            File keystoreFile = new File(fileDirPath + "/"
+                    + fromSecret.getKeystoreName());
+            if (!keystoreFile.exists()) {
+                keystoreFile.createNewFile();
+                FileWriter fw = null;
+                BufferedWriter bw = null;
+                try {
+                    fw = new FileWriter(keystoreFile.getAbsoluteFile(), true); // true表示可以追加新内容
+                    // fw=new FileWriter(f.getAbsoluteFile()); //表示不追加
+                    bw = new BufferedWriter(fw);
+                    bw.write(fromSecret.getKeystoreContent());
+                    bw.close();
+                } catch (Exception e) {
+                    throw new BizException("xn625000", "keystore文件写入异常，原因"
+                            + e.getMessage());
                 }
             }
-            if (keystoreFile == null) {
-                throw new BizException("xn6250000", "未找到keystore文件");
-            }
+            // File keyStoreFileDir = new File(fileDirPath);
+            // File[] subFiles = keyStoreFileDir.listFiles();
+            // File keystoreFile = null;
+            // for (File file : subFiles) {
+            // if (file.isDirectory() != true) {
+            // // from: 0x244eb6078add0d58b2490ae53976d80f54a404ae
+            // if (file.getName().endsWith(from.substring(2))) {
+            // // 找到了该文件
+            // keystoreFile = file;
+            // break;
+            // }
+            // }
+            // }
+            // if (keystoreFile == null) {
+            // throw new BizException("xn6250000", "未找到keystore文件");
+            // }
             //
-            Credentials credentials = WalletUtils.loadCredentials(fromSecret.getPassword(),
-                keystoreFile);
+            Credentials credentials = WalletUtils.loadCredentials(
+                fromSecret.getPassword(), keystoreFile);
             //
             EthGetTransactionCount ethGetTransactionCount = web3j
                 .ethGetTransactionCount(from, DefaultBlockParameterName.LATEST)
