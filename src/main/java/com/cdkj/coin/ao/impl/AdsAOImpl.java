@@ -450,21 +450,21 @@ public class AdsAOImpl implements IAdsAO {
         this.getAdsMasterAndSetMaster(ads);
 
         //查询信任关系
-        if (StringUtils.isNotBlank(searchUserUserId)) {
-            int isTrust = 0;
-            if (ads.getUserId().equals(searchUserUserId)) {
-
-                isTrust = 1;
-
-            } else {
-
-                isTrust = this.userRelationBO.checkReleation(searchUserUserId, ads.getUserId(), EUserReleationType.TRUST.getCode()) ? 1 : 0;
-
-            }
-
-            ads.setIsTrust(isTrust);
-
-        }
+//        if (StringUtils.isNotBlank(searchUserUserId)) {
+//            int isTrust = 0;
+//            if (ads.getUserId().equals(searchUserUserId)) {
+//
+//                isTrust = 1;
+//
+//            } else {
+//
+//                isTrust = this.userRelationBO.checkReleation(searchUserUserId, ads.getUserId(), EUserReleationType.TRUST.getCode()) ? 1 : 0;
+//
+//            }
+//
+//            ads.setIsTrust(isTrust);
+//
+//        }
 
         return ads;
 

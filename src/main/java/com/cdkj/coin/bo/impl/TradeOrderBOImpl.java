@@ -518,15 +518,20 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
     @Override
     public long getTradeTimesBetweenUser(String user1, String user2) {
 
+        List<String> statusList = new ArrayList();
+
+        //
         TradeOrder con1 = new TradeOrder();
         con1.setSellUser(user1);
         con1.setBuyUser(user2);
+        con1.setStatusList(statusList);
         long count1 = this.tradeOrderDAO.selectTotalCount(con1);
 
         //
         TradeOrder con2 = new TradeOrder();
         con2.setSellUser(user2);
         con2.setBuyUser(user1);
+        con1.setStatusList(statusList);
         long count2 = this.tradeOrderDAO.selectTotalCount(con2);
 
         return count1 + count2;

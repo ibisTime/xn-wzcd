@@ -72,7 +72,7 @@ public class Ads extends ABaseDO implements Serializable {
     private List<String> statusList;
 
     //0 不信任，1 信任
-    private int isTrust;
+//    private int isTrust;
 
     private int isBlackList;
 
@@ -102,13 +102,13 @@ public class Ads extends ABaseDO implements Serializable {
         this.leaveMessage = leaveMessage;
     }
 
-    public int getIsTrust() {
-        return isTrust;
-    }
-
-    public void setIsTrust(int isTrust) {
-        this.isTrust = isTrust;
-    }
+//    public int getIsTrust() {
+//        return isTrust;
+//    }
+//
+//    public void setIsTrust(int isTrust) {
+//        this.isTrust = isTrust;
+//    }
 
     public BigDecimal getFeeRate() {
         return feeRate;
