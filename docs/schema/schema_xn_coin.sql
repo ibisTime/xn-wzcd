@@ -495,11 +495,13 @@ CREATE TABLE `tstd_user` (
   `kind` varchar(4) DEFAULT NULL COMMENT '用户类型',
   `level` varchar(4) DEFAULT NULL COMMENT '用户等级',
   `user_referee` varchar(32) DEFAULT NULL COMMENT '推荐人',
+  `user_referee_level` varchar(4) DEFAULT NULL COMMENT '推荐人等级',
   `id_kind` char(1) DEFAULT NULL COMMENT '证件类型',
   `id_no` varchar(32) DEFAULT NULL COMMENT '证件号码',
   `real_name` varchar(16) DEFAULT NULL COMMENT '真实姓名',
   `trade_pwd` varchar(32) DEFAULT NULL COMMENT '安全密码',
   `trade_pwd_strength` char(1) DEFAULT NULL COMMENT '安全密码强度',
+  `google_secret` varchar(64) DEFAULT NULL COMMENT '谷歌验证秘钥',
   `role_code` varchar(32) DEFAULT NULL COMMENT '角色编号',
   `div_rate` decimal(18,8) DEFAULT NULL COMMENT '分成比例',
   `status` varchar(2) DEFAULT NULL COMMENT '状态',
@@ -526,8 +528,10 @@ CREATE TABLE `tstd_user` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `company_code` varchar(32) DEFAULT NULL COMMENT '公司编号',
   `system_code` varchar(32) DEFAULT NULL COMMENT '系统编号',
+  `last_login` datetime DEFAULT NULL COMMENT '最后一次登录时间',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -541,12 +545,14 @@ CREATE TABLE `tstd_user_relation` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
   `to_user` varchar(32) DEFAULT NULL COMMENT '关系人编号',
+  `type` varchar(4) DEFAULT NULL COMMENT '关系类型',
   `status` varchar(4) DEFAULT NULL COMMENT '状态',
   `update_datetime` datetime DEFAULT NULL COMMENT '创建时间',
   `company_code` varchar(32) DEFAULT NULL COMMENT '公司编号',
   `system_code` varchar(32) DEFAULT NULL COMMENT '系统编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -690,5 +696,28 @@ CREATE TABLE `tsys_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+CREATE TABLE `tstd_blacklist` (
+  `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT 'ID主键',
+  `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
+  `type` varchar(32) DEFAULT NULL COMMENT '拉黑类型',
+  `status` varchar(4) DEFAULT NULL COMMENT '状态 0-已删除 1-已生效',
+  `create_datetime` datetime DEFAULT NULL COMMENT '拉黑时间',
+  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `update_datetime` varchar(45) DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `company_code` varchar(32) DEFAULT NULL COMMENT '公司编号',
+  `system_code` varchar(32) DEFAULT NULL COMMENT '系统编号',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `tstd_user_settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(45) NOT NULL,
+  `type` varchar(4) NOT NULL COMMENT '设置类型',
+  `value` varchar(10) NOT NULL COMMENT '预留值',
+  `create_datetime` datetime NOT NULL,
+  `update_datetime` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_type` (`user_id`,`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
