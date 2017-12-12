@@ -92,6 +92,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     public String contactBuy(String adsCode, String buyUser) {
         String code = null;
 
+        // 检查黑名单
+        this.checkPlatformBlackList(buyUser);
+
         // 获取广告详情
         Ads ads = adsBO.adsDetail(adsCode);
 
@@ -118,6 +121,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     public String contactSell(String adsCode, String sellUser) {
         String code = null;
 
+        // 检查黑名单
+        this.checkPlatformBlackList(sellUser);
         // 获取广告详情
         Ads ads = adsBO.adsDetail(adsCode);
 
@@ -193,6 +198,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
         // 刷新广告状态
         adsBO.refreshStatus(ads.getCode(), true);
+
+        // 发送系统消息
+        tencentBO.sendNormalMessage(code, "系统消息：交易已下单，等待买家标记打款");
 
         return code;
 
@@ -273,6 +281,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         this.accountBO.frozenAmount(sellUserAccount, tradeCount,
             EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
             EJourBizTypeUser.AJ_ADS_FROZEN.getValue() + "-提交卖出订单", code);
+
+        // 发送系统消息
+        tencentBO.sendNormalMessage(code, "系统消息：交易已下单，等待买家标记打款");
 
         return code;
 
@@ -441,6 +452,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         adsBO.refreshStatus(tradeOrder.getAdsCode(),
             tradeOrderBO.isExistOningOrder(tradeOrder.getAdsCode()));
 
+        // 发送系统消息
+        tencentBO.sendNormalMessage(code, "系统消息：卖家已释放");
+
         // end__ 校验卖家的设置
         this.handleUserAutoSetting(tradeOrder.getCode(),
             tradeOrder.getSellUser(), tradeOrder.getBuyUser());
@@ -449,11 +463,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         this.handleUserAutoSetting(tradeOrder.getCode(),
             tradeOrder.getBuyUser(), tradeOrder.getSellUser());
 
-        // 发送系统消息
-        tencentBO.sendNormalMessage(code, "系统消息：卖家已释放");
-
         return tradeOrder;
-
     }
 
     @Override

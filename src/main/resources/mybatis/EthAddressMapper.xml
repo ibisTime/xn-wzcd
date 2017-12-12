@@ -104,7 +104,7 @@
 	
 	<select id="select_totalBalance" parameterType="ethAddress"
 		resultType="java.math.BigDecimal">
-		SELECT sum(balance) FROM tcoin_eth_address t
+		SELECT COALESCE(SUM(balance),0) FROM tcoin_eth_address t
 		<include refid="where_condition" />
 	</select>
 

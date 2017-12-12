@@ -66,12 +66,12 @@ public interface IUserAO {
 
     // 重置登录密码
     public void doResetLoginPwd(String mobile, String smsCaptcha,
-            String googleCaptcha, String newLoginPwd, String kind,
-            String companyCode, String systemCode);
+            String newLoginPwd, String kind, String companyCode,
+            String systemCode);
 
     // 修改登录密码
     public void doModifyLoginPwd(String userId, String oldLoginPwd,
-            String newLoginPwd);
+            String newLoginPwd, String googleCaptcha);
 
     // 管理员重置用户密码
     public void doResetLoginPwdByOss(String userId, String loginPwd,

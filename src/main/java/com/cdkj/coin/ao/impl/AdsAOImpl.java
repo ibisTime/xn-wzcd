@@ -1,26 +1,46 @@
 package com.cdkj.coin.ao.impl;
 
-import com.cdkj.coin.ao.IAdsAO;
-import com.cdkj.coin.ao.IMarketAO;
-import com.cdkj.coin.bo.*;
-import com.cdkj.coin.bo.base.Paginable;
-import com.cdkj.coin.common.SysConstants;
-import com.cdkj.coin.core.OrderNoGenerater;
-import com.cdkj.coin.domain.*;
-import com.cdkj.coin.dto.req.XN625220Req;
-import com.cdkj.coin.enums.*;
-import com.cdkj.coin.exception.BizException;
-import com.cdkj.coin.exception.EBizErrorCode;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.web3j.utils.Convert;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.cdkj.coin.ao.IAdsAO;
+import com.cdkj.coin.ao.IMarketAO;
+import com.cdkj.coin.bo.IAccountBO;
+import com.cdkj.coin.bo.IAdsBO;
+import com.cdkj.coin.bo.IAdsDisplayTimeBO;
+import com.cdkj.coin.bo.IBlacklistBO;
+import com.cdkj.coin.bo.IMarketBO;
+import com.cdkj.coin.bo.ISYSConfigBO;
+import com.cdkj.coin.bo.ITradeOrderBO;
+import com.cdkj.coin.bo.IUserBO;
+import com.cdkj.coin.bo.IUserRelationBO;
+import com.cdkj.coin.bo.base.Paginable;
+import com.cdkj.coin.common.SysConstants;
+import com.cdkj.coin.core.OrderNoGenerater;
+import com.cdkj.coin.domain.Account;
+import com.cdkj.coin.domain.Ads;
+import com.cdkj.coin.domain.AdsDisplayTime;
+import com.cdkj.coin.domain.Market;
+import com.cdkj.coin.domain.User;
+import com.cdkj.coin.domain.UserStatistics;
+import com.cdkj.coin.dto.req.XN625220Req;
+import com.cdkj.coin.enums.EAdsPublishType;
+import com.cdkj.coin.enums.EAdsStatus;
+import com.cdkj.coin.enums.EBoolean;
+import com.cdkj.coin.enums.ECoin;
+import com.cdkj.coin.enums.EJourBizTypeUser;
+import com.cdkj.coin.enums.ETradeType;
+import com.cdkj.coin.enums.EUserReleationType;
+import com.cdkj.coin.exception.BizException;
+import com.cdkj.coin.exception.EBizErrorCode;
 
 /**
  * Created by tianlei on 2017/十一月/14.
@@ -63,7 +83,6 @@ public class AdsAOImpl implements IAdsAO {
     @Autowired
     IUserRelationBO userRelationBO;
 
-
     @Autowired
     private IBlacklistBO blacklistBO;
 
@@ -71,7 +90,7 @@ public class AdsAOImpl implements IAdsAO {
     public Object frontPage(Integer start, Integer limit, Ads condition) {
 
         Paginable<Ads> paginable = this.iAdsBO.frontPage(start, limit,
-                condition);
+            condition);
         List<Ads> adsList = paginable.getList();
         for (Ads ads : adsList) {
             this.getAdsMasterAndSetMaster(ads);
@@ -114,7 +133,7 @@ public class AdsAOImpl implements IAdsAO {
             Ads condition = new Ads();
             condition.setUserId(user.getUserId());
             Paginable<Ads> adsPaginable = (Paginable) this.frontPage(0, 10,
-                    condition);
+                condition);
             //
             adsList.addAll(adsPaginable.getList());
 
@@ -139,7 +158,7 @@ public class AdsAOImpl implements IAdsAO {
 
         String publishType = req.getPublishType();
 
-        //0.存草稿
+        // 0.存草稿
         if (publishType.equals(EAdsPublishType.DRAFT.getCode())) {
 
             this.saveDraft(req);
@@ -147,13 +166,13 @@ public class AdsAOImpl implements IAdsAO {
 
         }
 
-        //1. 草稿发布
+        // 1. 草稿发布
         if (publishType.equals(EAdsPublishType.PUBLISH_DRAFT.getCode())) {
             this.draftPublish(req);
             return;
         }
 
-        //2. 重新编辑发布
+        // 2. 重新编辑发布
         if (publishType.equals(EAdsPublishType.PUBLISH_REEDIT.getCode())) {
             String lastAdsCdoe = req.getAdsCode();
 
@@ -172,10 +191,10 @@ public class AdsAOImpl implements IAdsAO {
 
             }
 
-            //把原广告下架
+            // 把原广告下架
             this.xiaJiaAds(lastAdsCdoe, req.getUserId());
 
-            //新广告上架
+            // 新广告上架
             this.saveAdsToDB(req);
 
             return;
@@ -184,19 +203,19 @@ public class AdsAOImpl implements IAdsAO {
         // 并发问题
         synchronized (this) {
 
-            //3.直接发布
+            // 3.直接发布
             if (publishType.equals(EAdsPublishType.PUBLISH.getCode())) {
 
-                //直接发布校验是否有，正在上架的同类型的广告
-                this.checkHaveSameTypeShangJiaAds(req.getUserId(), req.getTradeType());
+                // 直接发布校验是否有，正在上架的同类型的广告
+                this.checkHaveSameTypeShangJiaAds(req.getUserId(),
+                    req.getTradeType());
 
-                //新广告上架
+                // 新广告上架
                 this.saveAdsToDB(req);
                 return;
             }
 
         }
-
 
     }
 
@@ -207,7 +226,7 @@ public class AdsAOImpl implements IAdsAO {
             throw new BizException("xn000", "请传入广告编号");
         }
 
-        //检查是否有同类型的 上架 广告
+        // 检查是否有同类型的 上架 广告
         this.checkHaveSameTypeShangJiaAds(req.getUserId(), req.getTradeType());
 
         // 构造并校验
@@ -241,9 +260,8 @@ public class AdsAOImpl implements IAdsAO {
 
     private void checkHaveSameTypeShangJiaAds(String userId, String tradeType) {
 
-        //检查是否存在已上架的——同类型的广告
-        long count = this.iAdsBO.totalCountOfShangJiaAds(userId,
-                tradeType);
+        // 检查是否存在已上架的——同类型的广告
+        long count = this.iAdsBO.totalCountOfShangJiaAds(userId, tradeType);
 
         if (count > 0) {
 
@@ -270,14 +288,15 @@ public class AdsAOImpl implements IAdsAO {
         User user = this.userBO.getUser(ads.getUserId());
         ads.setUser(user);
         UserStatistics userStatistics = this.tradeOrderBO
-                .obtainUserStatistics(ads.getUserId());
+            .obtainUserStatistics(ads.getUserId());
 
         // 获取信任数量
-        userStatistics.setBeiXinRenCount(this.userRelationBO
-                .getRelationCount(ads.getUserId(), EUserReleationType.TRUST.getCode()));
+        userStatistics.setBeiXinRenCount(this.userRelationBO.getRelationCount(
+            ads.getUserId(), EUserReleationType.TRUST.getCode()));
 
-        //获取用户交易量
-        BigDecimal totalTradeCount = this.tradeOrderBO.getUserTotalTradeCount(user.getUserId());
+        // 获取用户交易量
+        BigDecimal totalTradeCount = this.tradeOrderBO
+            .getUserTotalTradeCount(user.getUserId());
         userStatistics.setTotalTradeCount(totalTradeCount.toString());
         user.setUserStatistics(userStatistics);
         ads.setUserStatistics(userStatistics);
@@ -308,14 +327,16 @@ public class AdsAOImpl implements IAdsAO {
         //
         ads.setMarketPrice(this.getPlatformPrice(market));
         BigDecimal truePrice = market.getMid().multiply(
-                BigDecimal.ONE.add(req.getPremiumRate()));
+            BigDecimal.ONE.add(req.getPremiumRate()));
         if (req.getTradeType().endsWith(ETradeType.SELL.getCode())) {
 
-            truePrice = truePrice.compareTo(req.getProtectPrice()) > 0 ? truePrice : req.getProtectPrice();
+            truePrice = truePrice.compareTo(req.getProtectPrice()) > 0 ? truePrice
+                    : req.getProtectPrice();
 
         } else {
 
-            truePrice = truePrice.compareTo(req.getProtectPrice()) < 0 ? truePrice : req.getProtectPrice();
+            truePrice = truePrice.compareTo(req.getProtectPrice()) < 0 ? truePrice
+                    : req.getProtectPrice();
 
         }
 
@@ -334,6 +355,11 @@ public class AdsAOImpl implements IAdsAO {
         ads.setLeaveMessage(req.getLeaveMessage());
         ads.setOnlyTrust(req.getOnlyTrust());
         ads.setDisplayTime(req.getDisplayTime());
+
+        if (ads.getTotalCount().multiply(ads.getProtectPrice())
+            .compareTo(ads.getMinTrade()) < 0) {
+            throw new BizException("xn000000", "出售总量价值需大于等于单笔最小交易额");
+        }
 
         if (ads.getMaxTrade().compareTo(ads.getMinTrade()) < 0) {
             throw new BizException("xn000000", "单笔最大交易额需大于等于单笔最小交易额");
@@ -359,7 +385,6 @@ public class AdsAOImpl implements IAdsAO {
         if (this.iAdsBO.insertAds(ads) != 1) {
             throw new BizException("xn000", "发布广告失败");
         }
-
 
     }
 
@@ -397,7 +422,8 @@ public class AdsAOImpl implements IAdsAO {
     // 由市场加权价格 和 配置参数，获取 最终的价格
     private BigDecimal getPlatformPrice(Market market) {
 
-        Double x = this.sysConfigBO.getDoubleValue(SysConstants.ETH_COIN_PRICE_X);
+        Double x = this.sysConfigBO
+            .getDoubleValue(SysConstants.ETH_COIN_PRICE_X);
         return market.getMid().add(BigDecimal.valueOf(x));
 
     }
@@ -405,36 +431,41 @@ public class AdsAOImpl implements IAdsAO {
     public void checkAccountAndHandAccount(Ads ads) {
 
         Account account = this.accountBO.getAccountByUser(ads.getUserId(),
-                ads.getTradeCoin());
-        if (account.getAmount().subtract(account.getFrozenAmount()).compareTo(BigDecimal.ZERO) <= 0) {
+            ads.getTradeCoin());
+        if (account.getAmount().subtract(account.getFrozenAmount())
+            .compareTo(BigDecimal.ZERO) <= 0) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "账户可用余额不足");
         }
 
         // 手续费+发布总额
         Double feeRate = sysConfigBO
-                .getDoubleValue(SysConstants.TRADE_FEE_RATE);
-        BigDecimal fee = ads.getTotalCount().multiply(BigDecimal.valueOf(feeRate));
+            .getDoubleValue(SysConstants.TRADE_FEE_RATE);
+        BigDecimal fee = ads.getTotalCount().multiply(
+            BigDecimal.valueOf(feeRate));
         BigDecimal willFrezonAmount = ads.getTotalCount().add(fee);
 
         // 校验账户余额
         if (account.getAmount().subtract(account.getFrozenAmount())
-                .compareTo(willFrezonAmount) < 0) {
+            .compareTo(willFrezonAmount) < 0) {
 
-            BigDecimal maxSell = account.getAmount().subtract(account.getFrozenAmount()).subtract(fee);
-            BigDecimal maxSellEther = Convert.fromWei(maxSell, Convert.Unit.ETHER);
-            throw new BizException("xn000", "由于要冻结相应手续费，您最多可以出售" + maxSellEther.toString());
+            BigDecimal maxSell = account.getAmount()
+                .subtract(account.getFrozenAmount()).subtract(fee);
+            BigDecimal maxSellEther = Convert.fromWei(maxSell,
+                Convert.Unit.ETHER);
+            throw new BizException("xn000", "由于要冻结相应手续费，您最多可以出售"
+                    + maxSellEther.toString());
         }
 
         // 冻结 交易金额
         account = this.accountBO.frozenAmount(account, ads.getTotalCount(),
-                EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
-                EJourBizTypeUser.AJ_ADS_FROZEN.getValue(), ads.getCode());
+            EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
+            EJourBizTypeUser.AJ_ADS_FROZEN.getValue(), ads.getCode());
 
         // 冻结 对应的手续费
         account = this.accountBO.frozenAmount(account, fee,
-                EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
-                EJourBizTypeUser.AJ_ADS_FROZEN.getValue() + "-交易手续费冻结",
-                ads.getCode());
+            EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
+            EJourBizTypeUser.AJ_ADS_FROZEN.getValue() + "-交易手续费冻结",
+            ads.getCode());
 
     }
 
@@ -449,22 +480,23 @@ public class AdsAOImpl implements IAdsAO {
         // 处理用户相关信息
         this.getAdsMasterAndSetMaster(ads);
 
-        //查询信任关系
-//        if (StringUtils.isNotBlank(searchUserUserId)) {
-//            int isTrust = 0;
-//            if (ads.getUserId().equals(searchUserUserId)) {
-//
-//                isTrust = 1;
-//
-//            } else {
-//
-//                isTrust = this.userRelationBO.checkReleation(searchUserUserId, ads.getUserId(), EUserReleationType.TRUST.getCode()) ? 1 : 0;
-//
-//            }
-//
-//            ads.setIsTrust(isTrust);
-//
-//        }
+        // 查询信任关系
+        // if (StringUtils.isNotBlank(searchUserUserId)) {
+        // int isTrust = 0;
+        // if (ads.getUserId().equals(searchUserUserId)) {
+        //
+        // isTrust = 1;
+        //
+        // } else {
+        //
+        // isTrust = this.userRelationBO.checkReleation(searchUserUserId,
+        // ads.getUserId(), EUserReleationType.TRUST.getCode()) ? 1 : 0;
+        //
+        // }
+        //
+        // ads.setIsTrust(isTrust);
+        //
+        // }
 
         return ads;
 
@@ -476,16 +508,19 @@ public class AdsAOImpl implements IAdsAO {
 
         Ads ads = iAdsBO.adsDetail(adsCode);
 
-        //只有待交易的可以下架
-        if (ads.getStatus().equals(EAdsStatus.DRAFT.getCode()) || ads.getStatus().equals(EAdsStatus.XIAJIA.getCode())) {
+        // 只有待交易的可以下架
+        if (ads.getStatus().equals(EAdsStatus.DRAFT.getCode())
+                || ads.getStatus().equals(EAdsStatus.XIAJIA.getCode())) {
 
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前状态不支持下架操作");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前状态不支持下架操作");
 
         }
 
         // 检验状态是否满足下架操作, 待交易的不能下架
         if (!EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "广告有未完成的订单，不能下架");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "广告有未完成的订单，不能下架");
         }
 
         // 校验操作者是否是本人
@@ -496,7 +531,7 @@ public class AdsAOImpl implements IAdsAO {
         // 进行下架操作
         this.iAdsBO.xiaJiaAds(ads);
 
-        //删除该广告所有的待下单 订单
+        // 删除该广告所有的待下单 订单
         this.tradeOrderBO.removeDaiXiaDanOrders(ads.getCode());
 
         // 买币广告 不需要对账户进行处理,不需要返还
@@ -505,43 +540,52 @@ public class AdsAOImpl implements IAdsAO {
         }
 
         if (ads.getLeftCount().compareTo(BigDecimal.ZERO) <= 0) {
-            //无金额返还
+            // 无金额返还
             return;
         }
 
-        //卖币广告 把冻结金额返还
+        // 卖币广告 把冻结金额返还
         // 大于最小返还金额，把金额返还
-//        BigDecimal minBack = BigDecimal.valueOf(Math.pow(10, 10) - 1);
-//        if (ads.getLeftCount().compareTo(minBack) > 0) {
-//            //如果金额太小就不进行返还，否则流水中的金额，进可能展示位0
-//            return;
-//        }
+        // BigDecimal minBack = BigDecimal.valueOf(Math.pow(10, 10) - 1);
+        // if (ads.getLeftCount().compareTo(minBack) > 0) {
+        // //如果金额太小就不进行返还，否则流水中的金额，进可能展示位0
+        // return;
+        // }
 
         Account sellUserAccount = this.accountBO.getAccountByUser(userId,
-                ECoin.ETH.getCode());
+            ECoin.ETH.getCode());
 
-
-        //计算需要返还的手续费
+        // 计算需要返还的手续费
         BigDecimal totalCount = ads.getTotalCount();
         BigDecimal leftCount = ads.getLeftCount();
 
-        //算出剩余 比例
-        BigDecimal rate = leftCount.divide(totalCount, 10, BigDecimal.ROUND_DOWN);
-        //算出应该退还的手续费
-        BigDecimal backFee = totalCount.multiply(ads.getFeeRate()).multiply(rate);
+        // 算出剩余 比例
+        BigDecimal rate = leftCount.divide(totalCount, 10,
+            BigDecimal.ROUND_DOWN);
+        // 算出应该退还的手续费
+        BigDecimal backFee = totalCount.multiply(ads.getFeeRate()).multiply(
+            rate);
 
-        //解冻 未卖出金额
-        sellUserAccount = this.accountBO.unfrozenAmount(sellUserAccount, ads.getLeftCount(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告未卖出部分解冻", ads.getCode());
+        // 解冻 未卖出金额
+        sellUserAccount = this.accountBO.unfrozenAmount(sellUserAccount,
+            ads.getLeftCount(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
+            EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告未卖出部分解冻",
+            ads.getCode());
 
         if (backFee.compareTo(BigDecimal.ZERO) <= 0) {
             return;
         }
 
-        //如果退还手续费 大于 冻结金额，只把冻结金额返还
-        BigDecimal shouldBackFee = backFee.compareTo(sellUserAccount.getFrozenAmount()) > 0 ? sellUserAccount.getFrozenAmount() : backFee;
+        // 如果退还手续费 大于 冻结金额，只把冻结金额返还
+        BigDecimal shouldBackFee = backFee.compareTo(sellUserAccount
+            .getFrozenAmount()) > 0 ? sellUserAccount.getFrozenAmount()
+                : backFee;
 
-        //解冻手续费
-        sellUserAccount = this.accountBO.unfrozenAmount(sellUserAccount, shouldBackFee, EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告手续费解冻", ads.getCode());
+        // 解冻手续费
+        sellUserAccount = this.accountBO.unfrozenAmount(sellUserAccount,
+            shouldBackFee, EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
+            EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告手续费解冻",
+            ads.getCode());
 
     }
 
@@ -549,13 +593,14 @@ public class AdsAOImpl implements IAdsAO {
     public void checkXiajia(String adsCode) {
 
         Ads ads = iAdsBO.adsDetail(adsCode);
-        //只有待交易的 广告才可以下架。
+        // 只有待交易的 广告才可以下架。
         if (EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())) {
             // 剩余金额小于 单笔最小交易金额就下架
             boolean condition1 = ads.getLeftCount().compareTo(BigDecimal.ZERO) <= 0;
-            BigDecimal leftCountETHER = Convert.fromWei(ads.getLeftCount(), Convert.Unit.ETHER);
+            BigDecimal leftCountETHER = Convert.fromWei(ads.getLeftCount(),
+                Convert.Unit.ETHER);
             boolean condition2 = leftCountETHER.multiply(ads.getTruePrice())
-                    .compareTo(ads.getMinTrade()) < 0;
+                .compareTo(ads.getMinTrade()) < 0;
             if (condition1 || condition2) {
                 iAdsBO.xiaJiaAds(ads);
             }
@@ -580,7 +625,7 @@ public class AdsAOImpl implements IAdsAO {
             BigDecimal premiumRate = ads.getPremiumRate();
             // 算出 溢价之后的价格
             BigDecimal truePrice = ads.getMarketPrice().multiply(
-                    BigDecimal.ONE.add(premiumRate));
+                BigDecimal.ONE.add(premiumRate));
             BigDecimal protectPrice = ads.getProtectPrice();
 
             if (ads.getTradeType().equals(ETradeType.SELL.getCode())) {
@@ -601,11 +646,11 @@ public class AdsAOImpl implements IAdsAO {
             ads.setTruePrice(truePrice);
 
             // 只更新行情 和 真实价格
-            this.iAdsBO.updateAdsPriceByPrimaryKey(ads.getCode(), ads.getMarketPrice(), ads.getTruePrice());
+            this.iAdsBO.updateAdsPriceByPrimaryKey(ads.getCode(),
+                ads.getMarketPrice(), ads.getTruePrice());
 
         }
 
     }
-
 
 }

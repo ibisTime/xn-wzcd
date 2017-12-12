@@ -174,8 +174,10 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         user.setLoginPwd(MD5Util.md5(loginPwd));
         user.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
         user.setNickname(nickname);
-        user.setUserReferee(refereeUser.getUserId());
-        user.setUserRefereeLevel(refereeUser.getLevel());
+        if (refereeUser != null) {
+            user.setUserReferee(refereeUser.getUserId());
+            user.setUserRefereeLevel(refereeUser.getLevel());
+        }
         user.setLevel(EUserLevel.ONE.getCode());
         user.setStatus(EUserStatus.NORMAL.getCode());
         user.setProvince(province);

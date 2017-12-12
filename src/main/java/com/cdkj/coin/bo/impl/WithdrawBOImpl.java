@@ -143,7 +143,7 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw> implements
         // 判断是否还有未处理的取现记录
         Withdraw condition = new Withdraw();
         condition.setAccountNumber(account.getAccountNumber());
-        condition.setStatus("13");// 待申请，审核成功待支付
+        condition.setStatus("134");// 待申请，审核成功待支付
         if (withdrawDAO.selectTotalCount(condition) > 0) {
             throw new BizException("xn000000", "上笔取现申请还未处理成功，不能再次申请");
         }
