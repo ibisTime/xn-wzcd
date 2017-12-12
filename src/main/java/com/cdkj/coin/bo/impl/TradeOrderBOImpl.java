@@ -430,7 +430,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
     private List<String> finishReleaseStatusList() {
 
-        List statusList = new ArrayList();
+        List<String> statusList = new ArrayList<String>();
         statusList.add(ETradeOrderStatus.RELEASED.getCode());
         statusList.add(ETradeOrderStatus.COMPLETE.getCode());
         return statusList;
@@ -520,9 +520,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
     @Override
     public long getTradeTimesBetweenUser(String user1, String user2) {
 
-        List<String> statusList = new ArrayList<String>();
-        statusList.add(ETradeOrderStatus.COMPLETE.getCode());
-        statusList.add(ETradeOrderStatus.RELEASED.getCode());
+        List<String> statusList = this.finishReleaseStatusList();
 
         //
         TradeOrder con1 = new TradeOrder();
