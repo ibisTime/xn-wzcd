@@ -161,9 +161,12 @@ public class UserAOImpl implements IUserAO {
             mobile, userId, null, null);
         // 通知橙提取
         ctqBO.uploadAddress(ethAddress, EEthAddressType.X.getCode());
-        // 注册腾讯云
 
+        // 注册腾讯云
         tencentBO.register(userId, companyCode, systemCode);
+
+        // 腾讯云设置昵称
+        // tencentBO.setNickname(userId, nickname);
 
         // 注册送积分
         Long amount = addRegAmount(userId, mobile, kind, companyCode,
@@ -316,6 +319,7 @@ public class UserAOImpl implements IUserAO {
         }
         addLoginAmount(user);
         userBO.refreshLastLogin(user.getUserId());
+        tencentBO.setNickname(user.getUserId(), user.getNickname());
         return user.getUserId();
     }
 

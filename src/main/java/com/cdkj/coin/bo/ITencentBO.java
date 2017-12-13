@@ -33,4 +33,7 @@ public interface ITencentBO {
     // 向群组中发送普通消息
     public void sendNormalMessage(String groupId, String content);
 
+    // 设置用户昵称
+    public void setNickname(String userId, String nickname);
+
 }

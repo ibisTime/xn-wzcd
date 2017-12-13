@@ -59,6 +59,8 @@ public class TencentBOImpl implements ITencentBO {
 
     public static final String TENXUN_SEND_GROUP_MSG = "https://console.tim.qq.com/v4/group_open_http_svc/send_group_msg";
 
+    public static final String TENXUN_PORTRAIT_SET = "https://console.tim.qq.com/v4/profile/portrait_set";
+
     @Autowired
     private ISYSConfigBO sysConfigBO;
 
@@ -386,4 +388,43 @@ public class TencentBOImpl implements ITencentBO {
         }
     }
 
+    @Override
+    public void setNickname(String userId, String nickname) {
+        try {
+            String urlString = getUrl(TENXUN_PORTRAIT_SET);
+            String codingType = "UTF-8";
+            String backEncodType = "UTF-8";
+
+            JsonObject params = new JsonObject();
+            params.addProperty("From_Account",
+                URLEncoder.encode(userId, codingType));
+
+            JsonObject profileItem = new JsonObject();
+            profileItem.addProperty("Tag", "Tag_Profile_IM_Nick");
+            profileItem.addProperty("Value",
+                URLEncoder.encode(nickname, codingType));
+
+            JsonArray profileItemArray = new JsonArray();
+            profileItemArray.add(profileItem);
+
+            params.add("ProfileItem", profileItemArray);
+
+            String paramsString = params.toString();
+
+            String result = doAccessHTTPPostJson(urlString, paramsString,
+                backEncodType);
+            String errorCode = JSONObject.parseObject(result).getString(
+                "ErrorCode");
+            String errorInfo = JSONObject.parseObject(result).getString(
+                "ErrorInfo");
+            if (!errorCode.equals("0")) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "腾讯云设置昵称异常,错误编号：" + errorCode + "，原因：" + errorInfo);
+            }
+
+        } catch (Exception e) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "腾讯云设置昵称异常，原因" + e.getMessage());
+        }
+    }
 }
