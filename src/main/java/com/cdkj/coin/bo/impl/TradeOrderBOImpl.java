@@ -533,7 +533,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         TradeOrder con2 = new TradeOrder();
         con2.setSellUser(user2);
         con2.setBuyUser(user1);
-        con1.setStatusList(statusList);
+        con2.setStatusList(statusList);
         long count2 = this.tradeOrderDAO.selectTotalCount(con2);
 
         return count1 + count2;
