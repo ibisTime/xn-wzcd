@@ -1,5 +1,7 @@
 package com.cdkj.coin.api.impl;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.cdkj.coin.ao.IUserAO;
 import com.cdkj.coin.ao.IUserRelationAO;
 import com.cdkj.coin.api.AProcessor;
@@ -11,7 +13,6 @@ import com.cdkj.coin.enums.EUserReleationType;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * 分页查询关注人
@@ -22,7 +23,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class XN805115 extends AProcessor {
     private IUserRelationAO userRelationAO = SpringContextHolder
-            .getBean(IUserRelationAO.class);
+        .getBean(IUserRelationAO.class);
 
     private XN805115Req req = null;
 
@@ -44,6 +45,7 @@ public class XN805115 extends AProcessor {
             column = IUserAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(column, req.getOrderDir());
+        condition.setType(type);
         int start = Integer.valueOf(req.getStart());
         int limit = Integer.valueOf(req.getLimit());
         return userRelationAO.queryUserRelationPage(start, limit, condition);
