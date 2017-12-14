@@ -61,7 +61,8 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
     @Override
     public String applyOrderOnline(Account account, String payGroup,
             String refNo, String bizType, String bizNote,
-            BigDecimal transAmount, EChannelType channelType, String applyUser) {
+            BigDecimal transAmount, EChannelType channelType, String applyUser,
+            String fromAddress) {
         if (transAmount.compareTo(BigDecimal.ZERO) == 0) {
             throw new BizException("xn000000", "充值金额不能为0");
         }
@@ -79,8 +80,8 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
         data.setCurrency(account.getCurrency());
         data.setBizType(bizType);
         data.setBizNote(bizNote);
-        data.setPayCardInfo(null);
-        data.setPayCardNo(null);
+        data.setPayCardInfo("ETH");
+        data.setPayCardNo(fromAddress);
 
         data.setStatus(EChargeStatus.Pay_YES.getCode());
         data.setApplyUser(applyUser);

@@ -11,7 +11,7 @@ import com.cdkj.coin.enums.EChannelType;
 public interface IChargeBO extends IPaginableBO<Charge> {
     String applyOrderOnline(Account account, String payGroup, String refNo,
             String bizType, String bizNote, BigDecimal transAmount,
-            EChannelType channelType, String applyUser);
+            EChannelType channelType, String applyUser, String fromAddress);
 
     void callBackChange(Charge dbCharge, boolean booleanFlag);
 
