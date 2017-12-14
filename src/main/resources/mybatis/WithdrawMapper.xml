@@ -246,7 +246,7 @@
 		resultMap="addressUseInfo_DB_Result">
 		SELECT 
 		COUNT(*) as use_count, 
-		COALESCE(SUM(amount),0) as use_amount
+		COALESCE(SUM(amount)-SUM(fee),0) as use_amount
 		FROM tstd_withdraw t
 		<include refid="where_condition" />
 	</select>
