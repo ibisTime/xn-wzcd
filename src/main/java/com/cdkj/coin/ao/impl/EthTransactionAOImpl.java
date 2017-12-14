@@ -101,7 +101,7 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         String code = chargeBO.applyOrderOnline(account, payGroup,
             ctqEthTransaction.getHash(), EJourBizTypeUser.AJ_CHARGE.getCode(),
             "ETH充值-来自地址：" + ctqEthTransaction.getFrom(), amount,
-            EChannelType.ETH, "系统", ctqEthTransaction.getFrom());
+            EChannelType.ETH, account.getUserId(), ctqEthTransaction.getFrom());
         // 账户加钱
         accountBO.changeAmount(account, amount, EChannelType.ETH,
             ctqEthTransaction.getHash(), payGroup, code,

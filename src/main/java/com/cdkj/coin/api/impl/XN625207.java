@@ -47,6 +47,7 @@ public class XN625207 extends AProcessor {
         condition.setCreatesStart(req.getDateStart());
         condition.setCreatesEnd(req.getDateEnd());
         condition.setAddress(req.getAddress());
+        condition.setOrder("creates", "desc");
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
         return ethTransactionAO
