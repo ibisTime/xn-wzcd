@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +55,8 @@ import com.cdkj.coin.exception.EBizErrorCode;
 
 @Service
 public class TradeOrderAOImpl implements ITradeOrderAO {
+
+    private static Logger logger = Logger.getLogger(TradeOrderAOImpl.class);
 
     @Autowired
     private ITradeOrderBO tradeOrderBO;
@@ -881,5 +885,30 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         this.userRelationBO.saveUserRelation(userId, toUserId,
             EUserReleationType.TRUST.getCode(), ESystemCode.COIN.getCode());
 
+    }
+
+    @Override
+    public void createGroupIfNotExist() {
+        int start = 0;
+        int limit = 10;
+        TradeOrder condition = new TradeOrder();
+        while (true) {
+            Paginable<TradeOrder> results = tradeOrderBO.getPaginable(start,
+                limit, condition);
+            if (CollectionUtils.isEmpty(results.getList())) {
+                break;
+            } else {
+                for (TradeOrder tradeOrder : results.getList()) {
+                    try {
+                        tencentBO.createGroup(tradeOrder.getCode(),
+                            tradeOrder.getBuyUser(), tradeOrder.getSellUser());
+                        logger.info("群组创建成功:ID=" + tradeOrder.getCode());
+                    } catch (Exception e) {
+                        // logger.error("群组已存在或者创建异常");
+                    }
+                }
+            }
+            start++;
+        }
     }
 }

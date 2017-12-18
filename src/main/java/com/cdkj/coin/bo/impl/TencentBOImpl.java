@@ -230,7 +230,7 @@ public class TencentBOImpl implements ITencentBO {
 
             String sendSms = smsParams.toString();
 
-            logger.info("*&*&* URL=" + sendSms);
+            // logger.info("*&*&* URL=" + sendSms);
 
             String result = doAccessHTTPPostJson(urlString, sendSms,
                 backEncodType);
@@ -411,6 +411,8 @@ public class TencentBOImpl implements ITencentBO {
 
             String paramsString = params.toString();
 
+            logger.info("设置请求URL：" + urlString + "设置请求参数：" + paramsString);
+
             String result = doAccessHTTPPostJson(urlString, paramsString,
                 backEncodType);
             String errorCode = JSONObject.parseObject(result).getString(
@@ -419,12 +421,12 @@ public class TencentBOImpl implements ITencentBO {
                 "ErrorInfo");
             if (!errorCode.equals("0")) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "腾讯云设置昵称异常,错误编号：" + errorCode + "，原因：" + errorInfo);
+                    "设置昵称失败,错误编号：" + errorCode + "，原因：" + errorInfo);
             }
 
         } catch (Exception e) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "腾讯云设置昵称异常，原因" + e.getMessage());
+                "腾讯云设置昵称异常，原因:" + e.getMessage());
         }
     }
 }

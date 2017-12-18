@@ -320,7 +320,8 @@ public class UserAOImpl implements IUserAO {
         addLoginAmount(user);
         userBO.refreshLastLogin(user.getUserId());
         if (EUserKind.Customer.getCode().equals(kind)) {
-            tencentBO.setNickname(user.getUserId(), user.getNickname());
+            tencentBO.setNickname(user.getUserId().toLowerCase(),
+                user.getNickname());
         }
         return user.getUserId();
     }
