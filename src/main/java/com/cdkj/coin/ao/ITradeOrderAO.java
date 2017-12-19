@@ -18,12 +18,12 @@ public interface ITradeOrderAO {
     public String contactSell(String adsCode, String sellUser);
 
     // 我要购买
-    public String buy(String adsCode, String buyUser, BigDecimal tradePrice,
-            BigDecimal count, BigDecimal tradeAmount);
+    public TradeOrder buy(String adsCode, String buyUser,
+            BigDecimal tradePrice, BigDecimal count, BigDecimal tradeAmount);
 
     // 我要出售
-    public String sell(String adsCode, String sellUser, BigDecimal tradePrice,
-            BigDecimal count, BigDecimal tradeAmount);
+    public TradeOrder sell(String adsCode, String sellUser,
+            BigDecimal tradePrice, BigDecimal count, BigDecimal tradeAmount);
 
     // 取消交易订单
     public void cancel(String code, String updater, String remark);

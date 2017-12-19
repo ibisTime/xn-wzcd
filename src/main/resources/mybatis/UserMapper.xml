@@ -14,41 +14,43 @@
 		<result column="level" property="level" />		
 		<result column="user_referee" property="userReferee" />
 		<result column="user_referee_level" property="userRefereeLevel" />
-		<result column="id_kind" property="idKind" />
 		
+		<result column="id_kind" property="idKind" />
 		<result column="id_no" property="idNo" />
 		<result column="real_name" property="realName" />
 		<result column="trade_pwd_strength" property="tradePwdStrength" />
 		<result column="google_secret" property="googleSecret" />
-		<result column="role_code" property="roleCode" />
-		<result column="div_rate" property="divRate" />
 		
+		<result column="role_code" property="roleCode" />
+		<result column="div_rate1" property="divRate1" />
+		<result column="div_rate2" property="divRate2" />
 		<result column="status" property="status" />
 		<result column="union_id" property="unionId" />
+		
 		<result column="h5_open_id" property="h5OpenId" />
 		<result column="app_open_id" property="appOpenId" />
 		<result column="gender" property="gender" />
-		
 		<result column="introduce" property="introduce" />
 		<result column="birthday" property="birthday" />
+		
 		<result column="email" property="email" />
 		<result column="diploma" property="diploma" />
 		<result column="occupation" property="occupation" />
-		
 		<result column="work_time" property="workTime" />
 		<result column="pdf" property="pdf" />
+		
 		<result column="province" property="province" />
 		<result column="city" property="city" />
 		<result column="area" property="area" />
-		
 		<result column="address" property="address" />
 		<result column="longitude" property="longitude" />
+		
 		<result column="latitude" property="latitude" />
 		<result column="create_datetime" property="createDatetime" />
 		<result column="updater" property="updater" />
-		
 		<result column="update_datetime" property="updateDatetime" />
 		<result column="remark" property="remark" />
+		
 		<result column="company_code" property="companyCode" />
 		<result column="system_code" property="systemCode" />
 		<result column="last_login" property="lastLogin" />
@@ -180,41 +182,43 @@
 		,t.level
 		,t.user_referee
 		,t.user_referee_level
-		,t.id_kind
 		
+		,t.id_kind
 		,t.id_no
 		,t.real_name
 		,t.trade_pwd_strength
 		,t.google_secret
-		,t.role_code
-		,t.div_rate
 		
+		,t.role_code
+		,t.div_rate1
+		,t.div_rate2
 		,t.status
 		,t.union_id
+		
 		,t.h5_open_id
 		,t.app_open_id
 		,t.gender
-		
 		,t.introduce
 		,t.birthday
+		
 		,t.email
 		,t.diploma
 		,t.occupation
-		
 		,t.work_time
 		,t.pdf
+		
 		,t.province
 		,t.city
 		,t.area
-		
 		,t.address
 		,t.longitude
+		
 		,t.latitude
 		,t.create_datetime
 		,t.updater
-		
 		,t.update_datetime
 		,t.remark
+		
 		,t.company_code
 		,t.system_code
 		,t.last_login
@@ -246,44 +250,45 @@
 		,kind
 		,level
 		,user_referee
-		,user_referee_level
 		
+		,user_referee_level
 		,id_kind
 		,id_no
 		,real_name
 		,trade_pwd
-		,trade_pwd_strength
 		
+		,trade_pwd_strength
 		,role_code
-		,div_rate
+		,div_rate1
+		,div_rate2
 		,status
+		
 		,union_id
 		,h5_open_id
-		
 		,app_open_id
 		,gender
 		,introduce
+		
 		,birthday
 		,email
-		
 		,diploma
 		,occupation
 		,work_time
+		
 		,pdf
 		,province
-		
 		,city
 		,area
 		,address
+		
 		,longitude
 		,latitude
-		
 		,create_datetime
 		,updater
 		,update_datetime
+		
 		,remark
 		,company_code
-		
 		,system_code
 		)
 		VALUES(
@@ -298,44 +303,45 @@
 		,#{kind}
 		,#{level}
 		,#{userReferee}
-		,#{userRefereeLevel}
 		
+		,#{userRefereeLevel}
 		,#{idKind}
 		,#{idNo}
 		,#{realName}
 		,#{tradePwd}
-		,#{tradePwdStrength}
 		
+		,#{tradePwdStrength}
 		,#{roleCode}
-		,#{divRate}
+		,#{divRate1}
+		,#{divRate2}
 		,#{status}
+		
 		,#{unionId}
 		,#{h5OpenId}
-		
 		,#{appOpenId}
 		,#{gender}
 		,#{introduce}
+		
 		,#{birthday}
 		,#{email}
-		
 		,#{diploma}
 		,#{occupation}
 		,#{workTime}
+		
 		,#{pdf}
 		,#{province}
-		
 		,#{city}
 		,#{area}
 		,#{address}
+		
 		,#{longitude}
 		,#{latitude}
-		
 		,#{createDatetime}
 		,#{updater}
 		,#{updateDatetime}
+		
 		,#{remark}
 		,#{companyCode}
-		
 		,#{systemCode}
 		)
 	</insert>
@@ -361,7 +367,8 @@
 	<update id="update_div_rate" parameterType="user">
 		UPDATE tstd_user
 		SET
-		div_rate= #{divRate}
+		div_rate1= #{divRate1},
+		div_rate2= #{divRate2}
 		WHERE
 		user_id = #{userId}
 	</update>

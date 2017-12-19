@@ -185,11 +185,12 @@ public class AdsAOImpl implements IAdsAO {
                 throw new BizException("xn000", "原广告不存在");
             }
 
-            if (!lastAds.getStatus().equals(EAdsStatus.DAIJIAOYI.getCode())) {
-
-                throw new BizException("xn000", "待交易的广告才可以重新编辑上架");
-
-            }
+            // if (!lastAds.getStatus().equals(EAdsStatus.DAIJIAOYI.getCode()))
+            // {
+            //
+            // throw new BizException("xn000", "待交易的广告才可以重新编辑上架");
+            //
+            // }
 
             // 把原广告下架
             this.xiaJiaAds(lastAdsCdoe, req.getUserId());
@@ -231,7 +232,7 @@ public class AdsAOImpl implements IAdsAO {
 
         // 构造并校验
         Ads ads = this.buildAds(req, req.getAdsCode());
-        ads.setStatus(EAdsStatus.DAIJIAOYI.getCode());
+        ads.setStatus(EAdsStatus.SHANGJIA.getCode());
 
         // 如果为卖币,就有对账户进行处理
         if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
@@ -374,7 +375,7 @@ public class AdsAOImpl implements IAdsAO {
         // 构造,并校验
         Ads ads = this.buildAds(req, OrderNoGenerater.generate("ADS"));
         // 直接发布
-        ads.setStatus(EAdsStatus.DAIJIAOYI.getCode());
+        ads.setStatus(EAdsStatus.SHANGJIA.getCode());
 
         if (req.getTradeType().equals(ETradeType.SELL.getCode())) {
             // 判断账户并处理
@@ -517,12 +518,6 @@ public class AdsAOImpl implements IAdsAO {
 
         }
 
-        // 检验状态是否满足下架操作, 待交易的不能下架
-        if (!EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "广告有未完成的订单，不能下架");
-        }
-
         // 校验操作者是否是本人
         if (!ads.getUserId().equals(userId)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "您无权下架该广告");
@@ -593,8 +588,8 @@ public class AdsAOImpl implements IAdsAO {
     public void checkXiajia(String adsCode) {
 
         Ads ads = iAdsBO.adsDetail(adsCode);
-        // 只有待交易的 广告才可以下架。
-        if (EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())) {
+        // 只有上架的 广告才可以下架。
+        if (EAdsStatus.SHANGJIA.getCode().equals(ads.getStatus())) {
             // 剩余金额小于 单笔最小交易金额就下架
             boolean condition1 = ads.getLeftCount().compareTo(BigDecimal.ZERO) <= 0;
             BigDecimal leftCountETHER = Convert.fromWei(ads.getLeftCount(),

@@ -151,8 +151,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     // 我要买币
     @Override
     @Transactional
-    public String buy(String adsCode, String buyUser, BigDecimal tradePrice,
-            BigDecimal count, BigDecimal tradeAmount) {
+    public TradeOrder buy(String adsCode, String buyUser,
+            BigDecimal tradePrice, BigDecimal count, BigDecimal tradeAmount) {
 
         String code = null;
 
@@ -201,20 +201,20 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         }
 
         // 刷新广告状态
-        adsBO.refreshStatus(ads.getCode(), true);
+        // adsBO.refreshStatus(ads.getCode(), true);
 
         // 发送系统消息
         tencentBO.sendNormalMessage(code, "系统消息：交易已下单，等待买家标记打款");
 
-        return code;
+        return tradeOrder;
 
     }
 
     // 我要卖币
     @Override
     @Transactional
-    public String sell(String adsCode, String sellUser, BigDecimal tradePrice,
-            BigDecimal tradeCount, BigDecimal tradeAmount) {
+    public TradeOrder sell(String adsCode, String sellUser,
+            BigDecimal tradePrice, BigDecimal tradeCount, BigDecimal tradeAmount) {
         String code = null;
 
         // 检查黑名单
@@ -276,7 +276,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         }
 
         // 刷新广告状态，从待交易变为，交易中
-        this.adsBO.refreshStatus(ads.getCode(), true);
+        // this.adsBO.refreshStatus(ads.getCode(), true);
         int a = 10;
         // 改变广告可交易量
         this.adsBO.cutLeftCount(ads.getCode(), tradeCount);
@@ -289,7 +289,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 发送系统消息
         tencentBO.sendNormalMessage(code, "系统消息：交易已下单，等待买家标记打款");
 
-        return code;
+        return tradeOrder;
 
     }
 
@@ -316,8 +316,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
                 "您已被该用户拉黑，不能与他进行交易");
         }
 
-        if (!EAdsStatus.DAIJIAOYI.getCode().equals(ads.getStatus())
-                && !EAdsStatus.JIAOYIZHONG.getCode().equals(ads.getStatus())) {
+        if (!EAdsStatus.SHANGJIA.getCode().equals(ads.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "广告未上架，不能进行交易");
         }
@@ -366,6 +365,25 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
                 tradeOrder.getCode());
 
         } else if (tradeOrder.getType().equals(ETradeOrderType.BUY.getCode())) {
+            Ads ads = adsBO.adsDetail(tradeOrder.getAdsCode());
+            if (EAdsStatus.XIAJIA.getCode().equals(ads.getStatus())) {
+                // 如果广告已下架，解冻卖家订单金额
+                Account sellUserAccount = this.accountBO.getAccountByUser(
+                    tradeOrder.getSellUser(), ECoin.ETH.getCode());
+
+                // 对卖家订单冻结金额进行解冻
+                this.accountBO.unfrozenAmount(sellUserAccount,
+                    tradeOrder.getCount(),
+                    EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
+                    EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue()
+                            + "-交易订单取消，解冻订单金额", tradeOrder.getCode());
+                // 对卖家订单冻结手续费进行解冻
+                this.accountBO.unfrozenAmount(sellUserAccount,
+                    tradeOrder.getFee(),
+                    EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
+                    EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue()
+                            + "-交易订单取消，解冻订单手续费", tradeOrder.getCode());
+            }
             // 购买订单
             // 由于出售广告，出售时就冻结了 所有的 交易金额 + 手续费，
             // 所以 购买订单取消，也不需要解冻
@@ -376,8 +394,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         tradeOrderBO.cancel(tradeOrder, updater, remark);
 
         // 检查广告状态是否进行变更
-        adsBO.refreshStatus(tradeOrder.getAdsCode(),
-            tradeOrderBO.isExistOningOrder(tradeOrder.getAdsCode()));
+        // adsBO.refreshStatus(tradeOrder.getAdsCode(),
+        // tradeOrderBO.isExistOningOrder(tradeOrder.getAdsCode()));
 
         // 发送系统消息
         tencentBO.sendNormalMessage(code, "系统消息：买家取消订单");
@@ -453,8 +471,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         tradeOrderBO.release(tradeOrder, updater, remark);
 
         // 维护广告 待交易和交易中状态
-        adsBO.refreshStatus(tradeOrder.getAdsCode(),
-            tradeOrderBO.isExistOningOrder(tradeOrder.getAdsCode()));
+        // adsBO.refreshStatus(tradeOrder.getAdsCode(),
+        // tradeOrderBO.isExistOningOrder(tradeOrder.getAdsCode()));
 
         // 发送系统消息
         tencentBO.sendNormalMessage(code, "系统消息：卖家已释放");
@@ -726,14 +744,14 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             return;
         }
 
-        handleReferenceFenCheng(refereeUser.getUserId(),
-            buyUser.getUserRefereeLevel(), sysAccount, tradeOrder);
+        handleReferenceFenCheng(refereeUser, buyUser.getUserRefereeLevel(),
+            sysAccount, tradeOrder);
 
     }
 
     // ！！！！！！！！注意！！！！！！
     // 卖出广告 和 买入广告，共用此方法
-    private void handleReferenceFenCheng(String refereeUserId,
+    private void handleReferenceFenCheng(User refereeUser,
             String thenRefereeUserLevel, Account sysAccount,
             TradeOrder tradeOrder) {
 
@@ -741,12 +759,10 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
         if (thenRefereeUserLevel.equals(EUserLevel.ONE.getCode())) {
             // 推荐人为普通
-            fenChengFee = this.sysConfigBO
-                .getDoubleValue(SysConstants.FEN_CHENG_FEE);
+            fenChengFee = refereeUser.getDivRate1();
         } else {
             // 推荐人代理人
-            fenChengFee = this.sysConfigBO
-                .getDoubleValue(SysConstants.AGENT_FEN_CHENG_FEE);
+            fenChengFee = refereeUser.getDivRate2();
         }
 
         BigDecimal shouldPayFenCheng = tradeOrder.getFee().multiply(
@@ -754,7 +770,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
         // 获取推荐人账户
         Account refereeUserAccount = this.accountBO.getAccountByUser(
-            refereeUserId, ECoin.ETH.getCode());
+            refereeUser.getUserId(), ECoin.ETH.getCode());
 
         // 4.1平台盈亏账户，减少
         this.accountBO.changeAmount(sysAccount, shouldPayFenCheng.negate(),
@@ -832,7 +848,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             return;
         }
         // sellUser.getRefeereLevel()
-        handleReferenceFenCheng(sellUserRefereeUser.getUserId(),
+        handleReferenceFenCheng(sellUserRefereeUser,
             sellUser.getUserRefereeLevel(), sysAccount, tradeOrder);
 
     }

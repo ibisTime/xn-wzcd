@@ -115,8 +115,8 @@ public interface IUserAO {
             String remark);
 
     // 修改分成比例
-    public void doModifyDivRate(String userId, Double divRate, String updater,
-            String remark);
+    public void doModifyDivRate(String userId, Double divRate1,
+            Double divRate2, String updater, String remark);
 
     // 修改用户等级
     public void doUpLevel(String userId, String level);

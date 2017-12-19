@@ -163,7 +163,8 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     @Override
     public String doRegister(String mobile, String nickname, String loginPwd,
             User refereeUser, String kind, String province, String city,
-            String area, String address, String companyCode, String systemCode) {
+            String area, String address, Double divRate1, Double divRate2,
+            String companyCode, String systemCode) {
         String userId = OrderNoGenerater.generate("U");
         User user = new User();
         user.setUserId(userId);
@@ -184,6 +185,8 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         user.setCity(city);
         user.setArea(area);
         user.setAddress(address);
+        user.setDivRate1(divRate1);
+        user.setDivRate2(divRate2);
         Date date = new Date();
         user.setCreateDatetime(date);
 
@@ -254,7 +257,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         if (StringUtils.isBlank(req.getDivRate())) {
             req.setDivRate("0");
         }
-        user.setDivRate(Double.valueOf(req.getDivRate()));
+        user.setDivRate1(Double.valueOf(req.getDivRate()));
         user.setStatus(EUserStatus.NORMAL.getCode());
         user.setPdf(req.getPdf());
 
@@ -298,7 +301,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
 
         user.setRoleCode(roleCode);
 
-        user.setDivRate(Double.valueOf(req.getDivRate()));
+        user.setDivRate1(Double.valueOf(req.getDivRate()));
         user.setStatus(EUserStatus.TO_APPROVE.getCode());
         user.setPdf(req.getPdf());
 
@@ -368,10 +371,11 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     }
 
     @Override
-    public int refreshDivRate(String userId, Double divRate) {
+    public int refreshDivRate(String userId, Double divRate1, Double divRate2) {
         User data = new User();
         data.setUserId(userId);
-        data.setDivRate(divRate);
+        data.setDivRate1(divRate1);
+        data.setDivRate2(divRate2);
         int count = 0;
         if (data != null && StringUtils.isNotBlank(data.getUserId())) {
             count = userDAO.updateDivRate(data);
@@ -743,7 +747,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
             Double divRate, String remark) {
         User user = new User();
         user.setUserId(userId);
-        user.setDivRate(divRate);
+        user.setDivRate1(divRate);
         user.setStatus(status);
         user.setUpdater(approver);
         user.setUpdateDatetime(new Date());

@@ -1,8 +1,8 @@
 package com.cdkj.coin.domain;
 
-import com.cdkj.coin.dao.base.ABaseDO;
-
 import java.util.Date;
+
+import com.cdkj.coin.dao.base.ABaseDO;
 
 /**
  * @author: xieyj 
@@ -70,8 +70,11 @@ public class User extends ABaseDO {
     // 角色编号
     private String roleCode;
 
-    // 分成比例
-    private Double divRate;
+    // 分成比例1
+    private Double divRate1;
+
+    // 分成比例2
+    private Double divRate2;
 
     // 状态
     private String status;
@@ -353,12 +356,20 @@ public class User extends ABaseDO {
         this.roleCode = roleCode;
     }
 
-    public Double getDivRate() {
-        return divRate;
+    public Double getDivRate1() {
+        return divRate1;
     }
 
-    public void setDivRate(Double divRate) {
-        this.divRate = divRate;
+    public void setDivRate1(Double divRate1) {
+        this.divRate1 = divRate1;
+    }
+
+    public Double getDivRate2() {
+        return divRate2;
+    }
+
+    public void setDivRate2(Double divRate2) {
+        this.divRate2 = divRate2;
     }
 
     public String getStatus() {

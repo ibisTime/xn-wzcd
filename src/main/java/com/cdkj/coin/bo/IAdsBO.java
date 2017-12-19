@@ -1,10 +1,10 @@
 package com.cdkj.coin.bo;
 
-import com.cdkj.coin.bo.base.Paginable;
-import com.cdkj.coin.domain.Ads;
-
 import java.math.BigDecimal;
 import java.util.List;
+
+import com.cdkj.coin.bo.base.Paginable;
+import com.cdkj.coin.domain.Ads;
 
 /**
  * Created by tianlei on 2017/十一月/14.
@@ -12,10 +12,10 @@ import java.util.List;
 
 public interface IAdsBO {
 
-    //增加可交易金额
+    // 增加可交易金额
     public void addLeftCount(String adsCode, BigDecimal value);
 
-    //减小可交易金额
+    // 减小可交易金额
     public void cutLeftCount(String adsCode, BigDecimal value);
 
     // 下架广告
@@ -30,22 +30,19 @@ public interface IAdsBO {
     // 广告详情
     public Ads adsDetail(String adsCode);
 
+    public Paginable<Ads> frontPage(Integer start, Integer limit, Ads condition);
 
-    public Paginable<Ads> frontPage(Integer start, Integer limit,
-                                    Ads condition);
-
-    public Paginable<Ads> ossPage(Integer start, Integer limit,
-                                  Ads condition);
+    public Paginable<Ads> ossPage(Integer start, Integer limit, Ads condition);
 
     public List<Ads> queryShangJiaAdsList();
 
-    //刷新广告状态
-    public void refreshStatus(String adsCode, boolean existOningOrder);
+    // 刷新广告状态
+    // public void refreshStatus(String adsCode, boolean existOningOrder);
 
-    //获取
+    // 获取
     public long totalCountOfShangJiaAds(String userId, String tradeType);
 
-    public long updateAdsPriceByPrimaryKey(String adsCode, BigDecimal marketPrice, BigDecimal truePrice);
-
+    public long updateAdsPriceByPrimaryKey(String adsCode,
+            BigDecimal marketPrice, BigDecimal truePrice);
 
 }

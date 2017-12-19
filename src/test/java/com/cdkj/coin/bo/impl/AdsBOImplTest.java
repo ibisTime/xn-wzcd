@@ -1,18 +1,19 @@
 package com.cdkj.coin.bo.impl;
 
-import com.cdkj.coin.bo.IAdsBO;
-import com.cdkj.coin.domain.Ads;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.cdkj.coin.bo.IAdsBO;
+import com.cdkj.coin.domain.Ads;
+
 /**
  * Created by tianlei on 2017/十二月/01.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:spring/applicationContext.xml"})
+@ContextConfiguration(locations = { "classpath*:spring/applicationContext.xml" })
 public class AdsBOImplTest {
 
     @Autowired
@@ -62,7 +63,7 @@ public class AdsBOImplTest {
     public void refreshStatus() throws Exception {
 
         String adsCode = "ADS201712011532328739009";
-        this.adsBO.refreshStatus(adsCode,true);
+        // this.adsBO.refreshStatus(adsCode,true);
         Ads ads = this.adsBO.adsDetail(adsCode);
 
     }

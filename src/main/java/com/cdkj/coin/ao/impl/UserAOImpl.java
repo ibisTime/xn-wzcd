@@ -41,6 +41,7 @@ import com.cdkj.coin.common.DateUtil;
 import com.cdkj.coin.common.MD5Util;
 import com.cdkj.coin.common.PhoneUtil;
 import com.cdkj.coin.common.RandomUtil;
+import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.core.StringValidater;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.SYSRole;
@@ -150,10 +151,15 @@ public class UserAOImpl implements IUserAO {
         // 验证短信验证码
         smsOutBO.checkCaptcha(mobile, smsCaptcha, ECaptchaType.C_REG.getCode(),
             companyCode, systemCode);
+        // 获取默认分成比例
+        Double divRate1 = sysConfigBO
+            .getDoubleValue(SysConstants.FEN_CHENG_FEE);
+        Double divRate2 = sysConfigBO
+            .getDoubleValue(SysConstants.AGENT_FEN_CHENG_FEE);
         // 注册用户
         String userId = userBO.doRegister(mobile, nickname, loginPwd,
-            refereeUser, kind, province, city, area, address, companyCode,
-            systemCode);
+            refereeUser, kind, province, city, area, address, divRate1,
+            divRate2, companyCode, systemCode);
         // 分配账户
         distributeAccount(userId, mobile, kind, companyCode, systemCode);
         // 生成ETH地址
@@ -714,13 +720,13 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
-    public void doModifyDivRate(String userId, Double divRate, String updater,
-            String remark) {
+    public void doModifyDivRate(String userId, Double divRate1,
+            Double divRate2, String updater, String remark) {
         User user = userBO.getUser(userId);
         if (user == null) {
             throw new BizException("xn000000", "用户不存在");
         }
-        userBO.refreshDivRate(userId, divRate);
+        userBO.refreshDivRate(userId, divRate1, divRate2);
     }
 
     @Override
@@ -852,7 +858,7 @@ public class UserAOImpl implements IUserAO {
         data.setIdNo(req.getIdNo());
 
         data.setRealName(req.getRealName());
-        data.setDivRate(StringValidater.toDouble(req.getDivRate()));
+        data.setDivRate1(StringValidater.toDouble(req.getDivRate()));
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());

@@ -10,11 +10,13 @@ package com.cdkj.coin.api.impl;
 
 import java.math.BigDecimal;
 
+import com.cdkj.coin.ao.IAdsAO;
 import com.cdkj.coin.ao.ITradeOrderAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.ObjValidater;
 import com.cdkj.coin.core.StringValidater;
+import com.cdkj.coin.domain.TradeOrder;
 import com.cdkj.coin.dto.req.XN625240Req;
 import com.cdkj.coin.dto.res.PKCodeRes;
 import com.cdkj.coin.exception.BizException;
@@ -32,6 +34,8 @@ public class XN625240 extends AProcessor {
     private ITradeOrderAO tradeOrderAO = SpringContextHolder
         .getBean(ITradeOrderAO.class);
 
+    private IAdsAO adsAO = SpringContextHolder.getBean(IAdsAO.class);
+
     private XN625240Req req;
 
     /** 
@@ -44,9 +48,11 @@ public class XN625240 extends AProcessor {
         BigDecimal count = StringValidater.toBigDecimal(req.getCount());
         BigDecimal tradeAmount = StringValidater.toBigDecimal(req
             .getTradeAmount());
-        String code = tradeOrderAO.buy(req.getAdsCode(), req.getBuyUser(),
-            tradePrice, count, tradeAmount);
-        return new PKCodeRes(code);
+        TradeOrder tradeOrder = tradeOrderAO.buy(req.getAdsCode(),
+            req.getBuyUser(), tradePrice, count, tradeAmount);
+        // 检查 是否可以下架
+        adsAO.checkXiajia(tradeOrder.getAdsCode());
+        return new PKCodeRes(tradeOrder.getCode());
     }
 
     /** 

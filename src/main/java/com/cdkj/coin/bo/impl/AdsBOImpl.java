@@ -6,12 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.cdkj.coin.common.StringUtil;
-import com.cdkj.coin.enums.ETradeType;
-import com.cdkj.coin.proxy.EErrorCode;
-import okhttp3.internal.http2.ErrorCode;
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,11 +15,10 @@ import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.bo.base.PaginableBOImpl;
 import com.cdkj.coin.dao.IAdsDAO;
 import com.cdkj.coin.domain.Ads;
-import com.cdkj.coin.domain.Market;
 import com.cdkj.coin.enums.EAdsStatus;
+import com.cdkj.coin.enums.ETradeType;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.EBizErrorCode;
-import org.springframework.validation.annotation.Validated;
 
 /**
  * Created by tianlei on 2017/十一月/14.
@@ -129,20 +122,18 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
     // 前端分页
     @Override
-    public Paginable<Ads> frontPage(Integer start, Integer limit,
-                                    Ads condition) {
+    public Paginable<Ads> frontPage(Integer start, Integer limit, Ads condition) {
 
         if (condition.getMaxPrice() != null && condition.getMinPrice() != null) {
             if (condition.getMaxPrice().compareTo(condition.getMinPrice()) <= 0) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                        "最大金额需大于等于最小金额");
+                    "最大金额需大于等于最小金额");
             }
         }
 
         // 只查正在上架中的
         List<String> statusList = new ArrayList<String>();
-        statusList.add(EAdsStatus.DAIJIAOYI.getCode());
-        statusList.add(EAdsStatus.JIAOYIZHONG.getCode());
+        statusList.add(EAdsStatus.SHANGJIA.getCode());
         condition.setStatusList(statusList);
         // 传现在是 周几 java 周日 = 1
         Calendar cal = Calendar.getInstance();
@@ -157,12 +148,13 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int minute = cal.get(Calendar.MINUTE);
         condition.setCurrentTime(1.0 * hour + minute * 1.0 / 60);
-        condition.setOrder("true_price", ETradeType.SELL.getCode().equals(condition.getTradeType()));
+        condition.setOrder("true_price",
+            ETradeType.SELL.getCode().equals(condition.getTradeType()));
         //
         long totalCount = adsDAO.selectFrontTotalCount(condition);
         Paginable<Ads> page = new Page<Ads>(start, limit, totalCount);
         List<Ads> dataList = adsDAO.selectFrontList(condition, page.getStart(),
-                page.getPageSize());
+            page.getPageSize());
         page.setList(dataList);
         return page;
 
@@ -170,15 +162,14 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
 
     // oss分页
     @Override
-    public Paginable<Ads> ossPage(Integer start, Integer limit,
-                                  Ads condition) {
+    public Paginable<Ads> ossPage(Integer start, Integer limit, Ads condition) {
 
         //
         condition.setOrder("update_datetime", "DESC");
         long totalCount = adsDAO.selectTotalCount(condition);
         Paginable<Ads> page = new Page<Ads>(start, limit, totalCount);
         List<Ads> dataList = adsDAO.selectList(condition, page.getStart(),
-                page.getPageSize());
+            page.getPageSize());
         page.setList(dataList);
         return page;
 
@@ -196,8 +187,7 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
     private List<String> shangJiaStatusList() {
 
         List<String> statusList = new ArrayList<>();
-        statusList.add(EAdsStatus.DAIJIAOYI.getCode());
-        statusList.add(EAdsStatus.JIAOYIZHONG.getCode());
+        statusList.add(EAdsStatus.SHANGJIA.getCode());
         return statusList;
     }
 
@@ -210,41 +200,44 @@ public class AdsBOImpl extends PaginableBOImpl implements IAdsBO {
         return this.adsDAO.selectTotalCount(condition);
     }
 
+    // @Override
+    // public void refreshStatus(String adsCode, boolean existOningOrder) {
+    //
+    // if (StringUtils.isBlank(adsCode)) {
+    //
+    // throw new BizException("xn000", "传入正确的广告编号");
+    //
+    // }
+    //
+    // Ads updateCondotion = new Ads();
+    // updateCondotion.setCode(adsCode);
+    //
+    // Ads ads = this.adsDAO.select(updateCondotion);
+    // if (ads == null) {
+    //
+    // throw new BizException("xn000", "广告不存在");
+    //
+    // }
+    // if (!ads.getStatus().equals(EAdsStatus.DAIJIAOYI.getCode()) &&
+    // !ads.getStatus().equals(EAdsStatus.JIAOYIZHONG.getCode())) {
+    // throw new BizException("xn000", "当前状态不支持状态刷新");
+    // }
+    //
+    // //设置状态
+    // updateCondotion.setStatus(existOningOrder ?
+    // EAdsStatus.JIAOYIZHONG.getCode() : EAdsStatus.DAIJIAOYI.getCode());
+    //
+    // //更新状态
+    // int count = this.adsDAO.updateByPrimaryKeySelective(updateCondotion);
+    // if (count != 1) {
+    // throw new BizException("xn000", "刷新状态失败");
+    // }
+    //
+    // }
+
     @Override
-    public void refreshStatus(String adsCode, boolean existOningOrder) {
-
-        if (StringUtils.isBlank(adsCode)) {
-
-            throw new BizException("xn000", "传入正确的广告编号");
-
-        }
-
-        Ads updateCondotion = new Ads();
-        updateCondotion.setCode(adsCode);
-
-        Ads ads = this.adsDAO.select(updateCondotion);
-        if (ads == null) {
-
-            throw new BizException("xn000", "广告不存在");
-
-        }
-        if (!ads.getStatus().equals(EAdsStatus.DAIJIAOYI.getCode()) && !ads.getStatus().equals(EAdsStatus.JIAOYIZHONG.getCode())) {
-            throw new BizException("xn000", "当前状态不支持状态刷新");
-        }
-
-        //设置状态
-        updateCondotion.setStatus(existOningOrder ? EAdsStatus.JIAOYIZHONG.getCode() : EAdsStatus.DAIJIAOYI.getCode());
-
-        //更新状态
-        int count = this.adsDAO.updateByPrimaryKeySelective(updateCondotion);
-        if (count != 1) {
-            throw new BizException("xn000", "刷新状态失败");
-        }
-
-    }
-
-    @Override
-    public long updateAdsPriceByPrimaryKey(String adsCode, BigDecimal marketPrice, BigDecimal truePrice) {
+    public long updateAdsPriceByPrimaryKey(String adsCode,
+            BigDecimal marketPrice, BigDecimal truePrice) {
         Ads updateCondition = new Ads();
         updateCondition.setCode(adsCode);
         updateCondition.setMarketPrice(marketPrice);

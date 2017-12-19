@@ -16,7 +16,6 @@ import com.cdkj.coin.core.ObjValidater;
 import com.cdkj.coin.domain.TradeOrder;
 import com.cdkj.coin.dto.req.XN625244Req;
 import com.cdkj.coin.dto.res.BooleanRes;
-import com.cdkj.coin.enums.ETradeOrderType;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
@@ -30,10 +29,9 @@ import com.cdkj.coin.spring.SpringContextHolder;
 public class XN625244 extends AProcessor {
 
     private ITradeOrderAO tradeOrderAO = SpringContextHolder
-            .getBean(ITradeOrderAO.class);
+        .getBean(ITradeOrderAO.class);
 
-    private IAdsAO adsSellAO = SpringContextHolder
-            .getBean(IAdsAO.class);
+    private IAdsAO adsSellAO = SpringContextHolder.getBean(IAdsAO.class);
 
     private XN625244Req req;
 
@@ -44,9 +42,7 @@ public class XN625244 extends AProcessor {
     public Object doBusiness() throws BizException {
 
         TradeOrder tradeOrder = tradeOrderAO.release(req.getCode(),
-                req.getUpdater(), req.getRemark());
-        //检查 是否可以下架
-        adsSellAO.checkXiajia(tradeOrder.getAdsCode());
+            req.getUpdater(), req.getRemark());
         return new BooleanRes(true);
 
     }

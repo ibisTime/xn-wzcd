@@ -52,7 +52,8 @@ public interface IUserBO extends IPaginableBO<User> {
     // 前端用户注册
     public String doRegister(String mobile, String nickname, String loginPwd,
             User refereeUser, String kind, String province, String city,
-            String area, String address, String companyCode, String systemCode);
+            String area, String address, Double divRate1, Double divRate2,
+            String companyCode, String systemCode);
 
     public String doRegister(String unionId, String h5OpenId, String appOpenId,
             String mobile, String kind, String loginPwd, String nickname,
@@ -139,7 +140,7 @@ public interface IUserBO extends IPaginableBO<User> {
     public void approveUser(String userId, String approver, String status,
             Double divRate, String remark);
 
-    public int refreshDivRate(String userId, Double divRate);
+    public int refreshDivRate(String userId, Double divRate1, Double divRate2);
 
     public Long totalUser(User condition);
 
