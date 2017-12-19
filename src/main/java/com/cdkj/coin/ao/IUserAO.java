@@ -51,7 +51,7 @@ public interface IUserAO {
             String isSendSms);
 
     // 绑定邮箱
-    public void doBindEmail(String userId, String email);
+    public void doBindEmail(String userId, String email, String captcha);
 
     // 添加备注
     public void doAddRemark(String userId, String remark);

@@ -24,13 +24,14 @@ public class XN805081 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        userAO.doBindEmail(req.getUserId(), req.getEmail());
+        userAO.doBindEmail(req.getUserId(), req.getEmail(), req.getCaptcha());
         return new BooleanRes(true);
     }
 
     @Override
     public void doCheck(String inputparams) throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN805081Req.class);
-        StringValidater.validateBlank(req.getUserId(), req.getEmail());
+        StringValidater.validateBlank(req.getUserId(), req.getEmail(),
+            req.getCaptcha());
     }
 }

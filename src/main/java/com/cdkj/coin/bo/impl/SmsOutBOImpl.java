@@ -7,6 +7,7 @@ import com.cdkj.coin.bo.ISmsOutBO;
 import com.cdkj.coin.dto.req.XN804080Req;
 import com.cdkj.coin.dto.req.XN804081Req;
 import com.cdkj.coin.dto.req.XN804082Req;
+import com.cdkj.coin.dto.req.XN804083Req;
 import com.cdkj.coin.dto.res.BooleanRes;
 import com.cdkj.coin.dto.res.PKCodeRes;
 import com.cdkj.coin.http.BizConnecter;
@@ -22,8 +23,8 @@ public class SmsOutBOImpl implements ISmsOutBO {
     static Logger logger = Logger.getLogger(SmsOutBOImpl.class);
 
     @Override
-    public void sendCaptcha(String mobile, String bizType, String companyCode,
-            String systemCode) {
+    public void sendSmsCaptcha(String mobile, String bizType,
+            String companyCode, String systemCode) {
         try {
             XN804081Req req = new XN804081Req();
             req.setMobile(mobile);
@@ -34,6 +35,22 @@ public class SmsOutBOImpl implements ISmsOutBO {
                 PKCodeRes.class);
         } catch (Exception e) {
             logger.error("调用短信发送服务异常");
+        }
+    }
+
+    @Override
+    public void sendEmailCaptcha(String email, String bizType,
+            String companyCode, String systemCode) {
+        try {
+            XN804083Req req = new XN804083Req();
+            req.setEmail(email);
+            req.setBizType(bizType);
+            req.setCompanyCode(companyCode);
+            req.setSystemCode(systemCode);
+            BizConnecter.getBizData("804083", JsonUtils.object2Json(req),
+                PKCodeRes.class);
+        } catch (Exception e) {
+            logger.error("调用邮件发送验证码异常");
         }
     }
 

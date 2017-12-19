@@ -22,13 +22,19 @@ public class SmsOutAOImpl implements ISmsOutAO {
     IUserBO userBO;
 
     @Override
-    public void sendCaptcha(String mobile, String bizType, String companyCode,
-            String systemCode) {
+    public void sendSmsCaptcha(String mobile, String bizType,
+            String companyCode, String systemCode) {
         if (ECaptchaType.C_REG.getCode().equals(bizType)) {
             userBO.isMobileExist(mobile, EUserKind.Customer.getCode(),
                 companyCode, systemCode);
         }
-        smsOutBO.sendCaptcha(mobile, bizType, companyCode, systemCode);
+        smsOutBO.sendSmsCaptcha(mobile, bizType, companyCode, systemCode);
+    }
+
+    @Override
+    public void sendEmailCaptcha(String email, String bizType,
+            String companyCode, String systemCode) {
+        smsOutBO.sendEmailCaptcha(email, bizType, companyCode, systemCode);
     }
 
     @Override

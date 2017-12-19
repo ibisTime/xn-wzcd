@@ -8,6 +8,9 @@ public class XN805081Req {
     // 邮箱（必填）
     private String email;
 
+    // 验证码（必填）
+    private String captcha;
+
     public String getUserId() {
         return userId;
     }
@@ -22,6 +25,14 @@ public class XN805081Req {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCaptcha() {
+        return captcha;
+    }
+
+    public void setCaptcha(String captcha) {
+        this.captcha = captcha;
     }
 
 }

@@ -378,11 +378,14 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
-    public void doBindEmail(String userId, String email) {
+    public void doBindEmail(String userId, String email, String captcha) {
         User user = userBO.getUser(userId);
         if (user == null) {
             throw new BizException("xn000000", "用户不存在");
         }
+        // 验证邮箱验证码
+        smsOutBO.checkCaptcha(email, captcha, "805081", user.getCompanyCode(),
+            user.getSystemCode());
         userBO.refreshEmail(userId, email);
     }
 
