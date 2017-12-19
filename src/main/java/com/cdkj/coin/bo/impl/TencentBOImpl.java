@@ -217,11 +217,11 @@ public class TencentBOImpl implements ITencentBO {
 
             JsonObject aaa = new JsonObject();
             aaa.addProperty("Member_Account",
-                URLEncoder.encode(buyUser.toLowerCase(), codingType));
+                URLEncoder.encode(buyUser, codingType));
 
             JsonObject bbb = new JsonObject();
             bbb.addProperty("Member_Account",
-                URLEncoder.encode(sellUser.toLowerCase(), codingType));
+                URLEncoder.encode(sellUser, codingType));
 
             members.add(aaa);
             members.add(bbb);

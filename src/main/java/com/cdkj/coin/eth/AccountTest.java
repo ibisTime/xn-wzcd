@@ -9,6 +9,7 @@
 package com.cdkj.coin.eth;
 
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
@@ -18,12 +19,12 @@ import org.web3j.crypto.RawTransaction;
 import org.web3j.crypto.TransactionEncoder;
 import org.web3j.crypto.WalletUtils;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.admin.Admin;
+import org.web3j.protocol.admin.methods.response.NewAccountIdentifier;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
 import org.web3j.protocol.core.methods.response.EthSendTransaction;
 import org.web3j.protocol.http.HttpService;
-import org.web3j.utils.Convert;
-import org.web3j.utils.Convert.Unit;
 import org.web3j.utils.Numeric;
 
 import com.cdkj.coin.exception.BizException;
@@ -36,11 +37,11 @@ import com.cdkj.coin.exception.BizException;
 public class AccountTest {
 
     public static void main(String args[]) {
-        String hash = broadcast("0x3a7b569f809cbe7e63ebfb02c313bc9a34d5e5c8",
-            "12345678", "0x1bb4fd555fdcdbf365c5fc3d549f5647a631adae",
-            new BigDecimal("1000000000000000"));
-        System.out.println("广播完成，交易hash=" + hash + "，交易金额="
-                + Convert.fromWei("1000000000000000", Unit.ETHER));
+        // String hash = broadcast("0x3a7b569f809cbe7e63ebfb02c313bc9a34d5e5c8",
+        // "12345678", "0x1bb4fd555fdcdbf365c5fc3d549f5647a631adae",
+        // new BigDecimal("1000000000000000"));
+        // System.out.println("广播完成，交易hash=" + hash + "，交易金额="
+        // + Convert.fromWei("1000000000000000", Unit.ETHER));
 
         // BigDecimal a = new BigDecimal("10000000000000000000");
         // BigDecimal b = new BigDecimal("9999999999999999999");
@@ -50,6 +51,8 @@ public class AccountTest {
         // if (balance.compareTo(Convert.toWei("0.01", Unit.ETHER)) < 0) {
         // throw new BizException("xn625000", "余额太少，无需归集");
         // }
+
+        createAccount();
     }
 
     public static void getBalance() {
@@ -69,17 +72,21 @@ public class AccountTest {
     }
 
     public static void createAccount() {
-        EthAccount account = new EthAccount();
-        AccountInfo accountInfo = new AccountInfo();
-        accountInfo.setPhone("229787499");
-        accountInfo.setAddress("世宁大厦");
-        accountInfo.setSchool("buaa");
-        accountInfo.setUserName("lzh");
-        String accountId = account.createAccount("lzh", "123456", accountInfo);
-        System.out.println("注册账户成功:" + accountId);
-        // PersonalAccountsInfo.AccountsInfo accountsInfo =
-        // account.getAccountInfo("0xad7bbca86e02e503076b06931e05938e51e49fb9");
-        // System.out.println(accountsInfo.toString());
+
+        Admin selfAdmin = Admin.build(new HttpService(
+            "http://47.96.161.183:8545"));
+        NewAccountIdentifier newAccountIdentifier;
+        try {
+            newAccountIdentifier = selfAdmin.personalNewAccount("123456")
+                .send();
+            if (newAccountIdentifier != null) {
+                String address = newAccountIdentifier.getAccountId();
+                System.out.println(address);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static String broadcast(String from, String fromPassword, String to,
