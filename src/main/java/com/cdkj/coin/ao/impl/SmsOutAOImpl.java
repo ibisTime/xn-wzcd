@@ -34,6 +34,13 @@ public class SmsOutAOImpl implements ISmsOutAO {
     @Override
     public void sendEmailCaptcha(String email, String bizType,
             String companyCode, String systemCode) {
+        if ("805081".equals(bizType)) {
+            User condition = new User();
+            condition.setEmail(email);
+            if (userBO.getTotalCount(condition) > 0) {
+                throw new BizException("xn000000", "邮箱已经被使用");
+            }
+        }
         smsOutBO.sendEmailCaptcha(email, bizType, companyCode, systemCode);
     }
 
