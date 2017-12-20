@@ -104,7 +104,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
     }
 
     @Override
-    public String buySubmit(Ads ads, String buyUser, BigDecimal tradePrice,
+    public TradeOrder buySubmit(Ads ads, String buyUser, BigDecimal tradePrice,
             BigDecimal count, BigDecimal tradeAmount, BigDecimal fee) {
 
         TradeOrder data = new TradeOrder();
@@ -139,12 +139,13 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
 
         tradeOrderDAO.insert(data);
 
-        return code;
+        return data;
     }
 
     @Override
-    public String sellSubmit(Ads ads, String sellUser, BigDecimal tradePrice,
-            BigDecimal count, BigDecimal tradeAmount, BigDecimal fee) {
+    public TradeOrder sellSubmit(Ads ads, String sellUser,
+            BigDecimal tradePrice, BigDecimal count, BigDecimal tradeAmount,
+            BigDecimal fee) {
 
         TradeOrder data = new TradeOrder();
         String code = OrderNoGenerater.generate(EGeneratePrefix.TRADE_ORDER
@@ -175,7 +176,7 @@ public class TradeOrderBOImpl extends PaginableBOImpl<TradeOrder> implements
         data.setRemark("直接订单，等待支付");
         tradeOrderDAO.insert(data);
 
-        return code;
+        return data;
     }
 
     @Override

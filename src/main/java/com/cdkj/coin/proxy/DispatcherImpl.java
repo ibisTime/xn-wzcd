@@ -43,7 +43,7 @@ public class DispatcherImpl implements IDispatcher {
                 rm.setData("");
             } else if (e instanceof NullPointerException) {
                 rm.setErrorCode(EErrorCode.OTHER_ERR.getCode());
-                rm.setErrorInfo("找不到类" + classname);
+                rm.setErrorInfo(((NullPointerException) e).getMessage());
                 rm.setData("");
             } else {
                 rm.setErrorCode(EErrorCode.OTHER_ERR.getCode());

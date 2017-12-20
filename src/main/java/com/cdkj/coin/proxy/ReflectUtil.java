@@ -1,5 +1,8 @@
 package com.cdkj.coin.proxy;
 
+import com.cdkj.coin.exception.BizException;
+import com.cdkj.coin.exception.EBizErrorCode;
+
 public class ReflectUtil {
 
     public static Object getInstance(String classname) {
@@ -10,7 +13,8 @@ public class ReflectUtil {
                 result = cls.newInstance();// 被代理对象
             }
         } catch (Exception e) {
-
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "找不到类"
+                    + classname);
         }
         return result;
     }

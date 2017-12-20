@@ -154,7 +154,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     public TradeOrder buy(String adsCode, String buyUser,
             BigDecimal tradePrice, BigDecimal count, BigDecimal tradeAmount) {
 
-        String code = null;
+        TradeOrder tradeOrder = null;
 
         // 检查黑名单
         this.checkPlatformBlackList(buyUser);
@@ -185,26 +185,28 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         adsBO.cutLeftCount(ads.getCode(), count);
 
         // 检查是否有正在聊天订单
-        TradeOrder tradeOrder = tradeOrderBO.getToSubmitTradeOrder(buyUser,
+        tradeOrder = tradeOrderBO.getToSubmitTradeOrder(buyUser,
             ads.getUserId(), adsCode);
         if (tradeOrder != null) {
-            code = tradeOrder.getCode();
+            tradeOrder.getCode();
             // 更新交易订单
             tradeOrderBO.buyRefresh(tradeOrder, ads, tradePrice, count,
                 tradeAmount, fee);
         } else {
             // 提交交易订单
-            code = tradeOrderBO.buySubmit(ads, buyUser, tradePrice, count,
-                tradeAmount, fee);
+            tradeOrder = tradeOrderBO.buySubmit(ads, buyUser, tradePrice,
+                count, tradeAmount, fee);
             // 创建聊天群组
-            tencentBO.createGroup(code, buyUser, ads.getUserId());
+            tencentBO.createGroup(tradeOrder.getCode(), buyUser,
+                ads.getUserId());
         }
 
         // 刷新广告状态
         // adsBO.refreshStatus(ads.getCode(), true);
 
         // 发送系统消息
-        tencentBO.sendNormalMessage(code, "系统消息：交易已下单，等待买家标记打款");
+        tencentBO
+            .sendNormalMessage(tradeOrder.getCode(), "系统消息：交易已下单，等待买家标记打款");
 
         return tradeOrder;
 
@@ -215,7 +217,8 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     @Transactional
     public TradeOrder sell(String adsCode, String sellUser,
             BigDecimal tradePrice, BigDecimal tradeCount, BigDecimal tradeAmount) {
-        String code = null;
+
+        TradeOrder tradeOrder = null;
 
         // 检查黑名单
         this.checkPlatformBlackList(sellUser);
@@ -260,19 +263,19 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         BigDecimal fee = tradeCount.multiply(ads.getFeeRate());
 
         // 检查是否有正在聊天订单
-        TradeOrder tradeOrder = tradeOrderBO.getToSubmitTradeOrder(
-            ads.getUserId(), sellUser, adsCode);
+        tradeOrder = tradeOrderBO.getToSubmitTradeOrder(ads.getUserId(),
+            sellUser, adsCode);
         if (tradeOrder != null) {
-            code = tradeOrder.getCode();
             // 更新交易订单
             tradeOrderBO.sellRefresh(tradeOrder, ads, tradePrice, tradeCount,
                 tradeAmount, fee);
         } else {
             // 提交交易订单
-            code = tradeOrderBO.sellSubmit(ads, sellUser, tradePrice,
+            tradeOrder = tradeOrderBO.sellSubmit(ads, sellUser, tradePrice,
                 tradeCount, tradeAmount, fee);
             // 创建聊天群组
-            tencentBO.createGroup(code, ads.getUserId(), sellUser);
+            tencentBO.createGroup(tradeOrder.getCode(), ads.getUserId(),
+                sellUser);
         }
 
         // 刷新广告状态，从待交易变为，交易中
@@ -284,10 +287,12 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // // 冻结卖家 数字货币
         this.accountBO.frozenAmount(sellUserAccount, tradeCount,
             EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
-            EJourBizTypeUser.AJ_ADS_FROZEN.getValue() + "-提交卖出订单", code);
+            EJourBizTypeUser.AJ_ADS_FROZEN.getValue() + "-提交卖出订单",
+            tradeOrder.getCode());
 
         // 发送系统消息
-        tencentBO.sendNormalMessage(code, "系统消息：交易已下单，等待买家标记打款");
+        tencentBO
+            .sendNormalMessage(tradeOrder.getCode(), "系统消息：交易已下单，等待买家标记打款");
 
         return tradeOrder;
 
