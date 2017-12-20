@@ -14,5 +14,15 @@ UPDATE `tsys_dict` SET `dvalue`='已上架' WHERE `parent_key`='ads_status' AND 
 UPDATE `tsys_dict` SET `dvalue`='已下架' WHERE `parent_key`='ads_status' AND `dkey`='2';
 DELETE FROM `tsys_dict` WHERE `parent_key`='ads_status' AND `dkey`='3';
 
+/*添加banner位置*/
+DELETE FROM `tsys_dict` WHERE `type`='1' AND `parent_key`='banner_location';
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','banner_location','trade','APP交易首页','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','banner_location','market','APP行情首页','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','banner_location','activity','APP邀请好友','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','banner_location','web_banner','WEB首页广告','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','banner_location','web_download','WEB下载二维码','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','banner_location','web_qq','WEBQQ二维码','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','banner_location','web_weibo','WEB微博二维码','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','banner_location','web_wechat','WEB微信二维码','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
 
 

@@ -18,7 +18,8 @@ import com.cdkj.coin.dto.res.XN625000Res;
 public interface ITencentBO {
 
     // 腾讯云注册
-    public void register(String userId, String companyCode, String systemCode);
+    public void register(String userId, String nickname, String companyCode,
+            String systemCode);
 
     // 获取签名信息
     public XN625000Res getSign(String userId, String companyCode,

@@ -169,7 +169,7 @@ public class UserAOImpl implements IUserAO {
         ctqBO.uploadAddress(ethAddress, EEthAddressType.X.getCode());
 
         // 注册腾讯云
-        tencentBO.register(userId, companyCode, systemCode);
+        tencentBO.register(userId, nickname, companyCode, systemCode);
 
         // 腾讯云设置昵称
         // tencentBO.setNickname(userId, nickname);
@@ -325,9 +325,6 @@ public class UserAOImpl implements IUserAO {
         }
         addLoginAmount(user);
         userBO.refreshLastLogin(user.getUserId());
-        if (EUserKind.Customer.getCode().equals(kind)) {
-            tencentBO.setNickname(user.getUserId(), user.getNickname());
-        }
         return user.getUserId();
     }
 

@@ -31,7 +31,6 @@ import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.dto.res.XN625000Res;
 import com.cdkj.coin.enums.EConfigType;
 import com.cdkj.coin.enums.ESystemCode;
-import com.cdkj.coin.enums.EUserPwd;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.EBizErrorCode;
 import com.google.gson.JsonArray;
@@ -49,7 +48,8 @@ public class TencentBOImpl implements ITencentBO {
     private static final Logger logger = LoggerFactory
         .getLogger(TencentBOImpl.class);
 
-    public static final String TENXUN_CHAT_TUOGUAN_URL = "https://console.tim.qq.com/v4/registration_service/register_account_v1";
+    // public static final String TENXUN_CHAT_TUOGUAN_URL =
+    // "https://console.tim.qq.com/v4/registration_service/register_account_v1";
 
     public static final String TENXUN_CHAT_DULI_URL = "https://console.tim.qq.com/v4/im_open_login_svc/account_import";
 
@@ -117,10 +117,11 @@ public class TencentBOImpl implements ITencentBO {
      * @see com.cdkj.coin.bo.ITencentBO#register(java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
-    public void register(String userId, String companyCode, String systemCode) {
+    public void register(String userId, String nickname, String companyCode,
+            String systemCode) {
         try {
-            String urlString = getUrl(TENXUN_CHAT_TUOGUAN_URL);
-            String result = sendChildSms(urlString, userId);
+            String urlString = getUrl(TENXUN_CHAT_DULI_URL);
+            String result = sendChildSms(urlString, userId, nickname);
             String errorCode = JSONObject.parseObject(result).getString(
                 "ErrorCode");
             String errorInfo = JSONObject.parseObject(result).getString(
@@ -181,16 +182,16 @@ public class TencentBOImpl implements ITencentBO {
         return res;
     }
 
-    private static String sendChildSms(String url, String account) {
+    private static String sendChildSms(String url, String userId,
+            String nickname) {
         String codingType = "UTF-8";
         String backEncodType = "UTF-8";
         try {
             JsonObject smsParams = new JsonObject();
             smsParams.addProperty("Identifier",
-                URLEncoder.encode(account, codingType));
-            smsParams.addProperty("Password",
-                URLEncoder.encode(EUserPwd.Beicoin.getCode(), codingType));
-            smsParams.addProperty("IdentifierType", 3);
+                URLEncoder.encode(userId, codingType));
+            smsParams.addProperty("Nick",
+                URLEncoder.encode(nickname, codingType));
             String sendSms = smsParams.toString();
             return doAccessHTTPPostJson(url, sendSms, backEncodType);
         } catch (Exception e) {

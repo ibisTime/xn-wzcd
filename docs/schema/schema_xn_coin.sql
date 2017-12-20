@@ -503,7 +503,8 @@ CREATE TABLE `tstd_user` (
   `trade_pwd_strength` char(1) DEFAULT NULL COMMENT '安全密码强度',
   `google_secret` varchar(64) DEFAULT NULL COMMENT '谷歌验证秘钥',
   `role_code` varchar(32) DEFAULT NULL COMMENT '角色编号',
-  `div_rate` decimal(18,8) DEFAULT NULL COMMENT '分成比例',
+  `div_rate1` decimal(18,8) DEFAULT NULL COMMENT '分成比例1',
+  `div_rate2` decimal(18,8) DEFAULT NULL COMMENT '分成比例2',
   `status` varchar(2) DEFAULT NULL COMMENT '状态',
   `union_id` varchar(255) DEFAULT NULL COMMENT '联合编号',
   `h5_open_id` varchar(255) DEFAULT NULL COMMENT '公众号开放编号',
@@ -531,6 +532,7 @@ CREATE TABLE `tstd_user` (
   `last_login` datetime DEFAULT NULL COMMENT '最后一次登录时间',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
