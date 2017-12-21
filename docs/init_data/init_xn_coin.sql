@@ -6,6 +6,12 @@
 INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201711271342486662078','banner','2','','交易bannner2@3x_1511771627392.png','1','trade',1,'1','0','','1','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201711271344255452496','banner2','2','','c@3x_1511772301720.png','1','market',2,'1','0','','1','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201711301033386606987','邀请好友','2','','邀请好友图片_1512009213139.png','1','activity',1,'1','0','','1','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201712201626529747378','web首页banner1','2','','banner_1513758369977.png','1','web_banner',1,'1','0','','1','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201712201627130809572','web首页banner2','2','','banner2_1513758431226.png','1','web_banner',2,'1','0','','1','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201712201634317823259','web下载二维码','2','','qrcode_1513758868430.png','1','web_download',1,'1','0','','1','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201712201635035413821','webqq二维码','2','','qrcode_1513758900219.png','1','web_qq',1,'1','0','','1','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201712201635218014246','web微博二维码','2','','qrcode_1513758919110.png','1','web_weibo',1,'1','0','','1','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201712201635404165992','web微信二维码','2','','qrcode_1513758937804.png','1','web_wechat',1,'1','0','','1','CD-COIN000017','CD-COIN000017');
 
 INSERT INTO `tstd_user` (`user_id`,`login_name`,`login_pwd`,`login_pwd_strength`,`kind`,`level`,`role_code`,`status`,`create_datetime`,`remark`,`company_code`,`system_code`) VALUES ('UCOIN201700000000000001','admin','21218cca77804d2ba1922c33e0151105','1','P','0','COINSR201700000000000000','0',now(),'管理端系统方','CD-COIN000017','CD-COIN000017');
 /*
@@ -436,6 +442,7 @@ INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`,`system_code`) VALUES ('SM201712072027384195776','取消代理人','2','/cancelPartner','62','admin','2017-12-13 12:10:01','','SM201711071721131644746','CD-COIN000017');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`,`system_code`) VALUES ('SM201712121458129277867','行情x值配置','1','/rules/quotationXRule.htm','5','admin','2017-12-13 12:10:01','','SM201711091711390371362','CD-COIN000017');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`,`system_code`) VALUES ('SM201712121458250729729','修改','2','/edit','1','admin','2017-12-13 12:10:01','','SM201712121458129277867','CD-COIN000017');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`,`system_code`) VALUES ('SM201712211119209061370','设置分成比例','2','/setDivRate','7','admin','2017-12-21 03:29:25','','SM201711071721131644746','CD-COIN000017');
 
 /*
 -- Query: SELECT `code`,`name`,`level`,'admin' as `updater`,now() as 'update_datetime',`remark`,`system_code` FROM tsys_role where system_code = 'CD-COIN000017'
@@ -593,7 +600,7 @@ INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`,`system_code`) VALUES ('COINSR201700000000000000','SM201711151745572859074','admin','2017-12-13 12:11:07',NULL,'CD-COIN000017');
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`,`system_code`) VALUES ('COINSR201700000000000000','SM201711151747477561668','admin','2017-12-13 12:11:07',NULL,'CD-COIN000017');
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`,`system_code`) VALUES ('COINSR201700000000000000','SM201711181155445002845','admin','2017-12-13 12:11:07',NULL,'CD-COIN000017');
-
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`,`system_code`) VALUES ('COINSR201700000000000000','SM201712211119209061370','admin','2017-12-21 03:33:59',NULL,'CD-COIN000017');
 
 
 

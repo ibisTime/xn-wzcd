@@ -25,4 +25,16 @@ INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_d
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','banner_location','web_weibo','WEB微博二维码','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','banner_location','web_wechat','WEB微信二维码','admin',now(),NULL,'CD-COIN000017','CD-COIN000017');
 
+/*添加banner初始化图片*/
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201712201626529747378','web首页banner1','2','','banner_1513758369977.png','1','web_banner',1,'1','0','','1','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201712201627130809572','web首页banner2','2','','banner2_1513758431226.png','1','web_banner',2,'1','0','','1','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201712201634317823259','web下载二维码','2','','qrcode_1513758868430.png','1','web_download',1,'1','0','','1','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201712201635035413821','webqq二维码','2','','qrcode_1513758900219.png','1','web_qq',1,'1','0','','1','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201712201635218014246','web微博二维码','2','','qrcode_1513758919110.png','1','web_weibo',1,'1','0','','1','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201712201635404165992','web微信二维码','2','','qrcode_1513758937804.png','1','web_wechat',1,'1','0','','1','CD-COIN000017','CD-COIN000017');
+
+/*添加修改分成比例按钮*/
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`,`system_code`) VALUES ('SM201712211119209061370','设置分成比例','2','/setDivRate','7','admin',now(),'','SM201711071721131644746','CD-COIN000017');
+/*分配按钮给admin*/
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`,`system_code`) VALUES ('COINSR201700000000000000','SM201712211119209061370','admin',now(),NULL,'CD-COIN000017');
 
