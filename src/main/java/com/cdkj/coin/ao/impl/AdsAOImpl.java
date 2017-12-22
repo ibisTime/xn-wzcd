@@ -551,15 +551,19 @@ public class AdsAOImpl implements IAdsAO {
             ECoin.ETH.getCode());
 
         // 计算需要返还的手续费
-        BigDecimal totalCount = ads.getTotalCount();
+        // BigDecimal totalCount = ads.getTotalCount();
         BigDecimal leftCount = ads.getLeftCount();
 
         // 算出剩余 比例
-        BigDecimal rate = leftCount.divide(totalCount, 10,
-            BigDecimal.ROUND_DOWN);
+        // BigDecimal rate = leftCount.divide(totalCount, 10,
+        // BigDecimal.ROUND_DOWN);
         // 算出应该退还的手续费
-        BigDecimal backFee = totalCount.multiply(ads.getFeeRate()).multiply(
-            rate);
+        // BigDecimal backFee = totalCount.multiply(ads.getFeeRate()).multiply(
+        // rate);
+
+        // 算出应该退还的手续费
+        BigDecimal backFee = leftCount.multiply(ads.getFeeRate()).setScale(0,
+            BigDecimal.ROUND_DOWN);
 
         // 解冻 未卖出金额
         sellUserAccount = this.accountBO.unfrozenAmount(sellUserAccount,
