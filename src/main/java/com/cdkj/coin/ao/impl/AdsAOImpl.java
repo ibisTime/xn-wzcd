@@ -601,7 +601,7 @@ public class AdsAOImpl implements IAdsAO {
             boolean condition2 = leftCountETHER.multiply(ads.getTruePrice())
                 .compareTo(ads.getMinTrade()) < 0;
             if (condition1 || condition2) {
-                iAdsBO.xiaJiaAds(ads);
+                this.xiaJiaAds(adsCode, ads.getUserId());
             }
         }
 
