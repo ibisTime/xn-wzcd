@@ -156,10 +156,12 @@ public class UserAOImpl implements IUserAO {
             .getDoubleValue(SysConstants.FEN_CHENG_FEE);
         Double divRate2 = sysConfigBO
             .getDoubleValue(SysConstants.AGENT_FEN_CHENG_FEE);
+        Double tradeRate = sysConfigBO
+            .getDoubleValue(SysConstants.TRADE_FEE_RATE);
         // 注册用户
         String userId = userBO.doRegister(mobile, nickname, loginPwd,
             refereeUser, kind, province, city, area, address, divRate1,
-            divRate2, companyCode, systemCode);
+            divRate2, tradeRate, companyCode, systemCode);
         // 分配账户
         distributeAccount(userId, mobile, kind, companyCode, systemCode);
         // 生成ETH地址
@@ -727,6 +729,16 @@ public class UserAOImpl implements IUserAO {
             throw new BizException("xn000000", "用户不存在");
         }
         userBO.refreshDivRate(userId, divRate1, divRate2);
+    }
+
+    @Override
+    public void doModifyTradeRate(String userId, Double tradeRate,
+            String updater, String remark) {
+        User user = userBO.getUser(userId);
+        if (user == null) {
+            throw new BizException("xn000000", "用户不存在");
+        }
+        userBO.refreshTradeRate(userId, tradeRate);
     }
 
     @Override

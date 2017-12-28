@@ -343,8 +343,17 @@ public class AdsAOImpl implements IAdsAO {
 
         ads.setTruePrice(truePrice);
 
-        // 获取手续费率
-        Double fee = sysConfigBO.getDoubleValue(SysConstants.TRADE_FEE_RATE);
+        // 获取用户交易手续费率
+        User user = userBO.getUser(req.getUserId());
+        Double fee = user.getTradeRate();
+
+        // 如果活动期间的费率大于等于0，表示活动开启，优先去优惠费率
+        Double activityTradeRate = sysConfigBO
+            .getDoubleValue(SysConstants.ACTIVITY_TRADE_FEE_RATE);
+        if (activityTradeRate >= 0) {
+            fee = activityTradeRate;
+        }
+
         ads.setFeeRate(BigDecimal.valueOf(fee));
 
         // 设置保护价
@@ -439,10 +448,8 @@ public class AdsAOImpl implements IAdsAO {
         }
 
         // 手续费+发布总额
-        Double feeRate = sysConfigBO
-            .getDoubleValue(SysConstants.TRADE_FEE_RATE);
-        BigDecimal fee = ads.getTotalCount().multiply(
-            BigDecimal.valueOf(feeRate));
+        BigDecimal feeRate = ads.getFeeRate();
+        BigDecimal fee = ads.getTotalCount().multiply(feeRate);
         BigDecimal willFrezonAmount = ads.getTotalCount().add(fee);
 
         // 校验账户余额

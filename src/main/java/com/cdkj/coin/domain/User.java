@@ -76,6 +76,9 @@ public class User extends ABaseDO {
     // 分成比例2
     private Double divRate2;
 
+    // 交易手续费率
+    private Double tradeRate;
+
     // 状态
     private String status;
 
@@ -370,6 +373,14 @@ public class User extends ABaseDO {
 
     public void setDivRate2(Double divRate2) {
         this.divRate2 = divRate2;
+    }
+
+    public Double getTradeRate() {
+        return tradeRate;
+    }
+
+    public void setTradeRate(Double tradeRate) {
+        this.tradeRate = tradeRate;
     }
 
     public String getStatus() {

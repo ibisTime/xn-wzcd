@@ -26,8 +26,8 @@ public interface IProcessor {
      * @create: 2015-5-6 上午9:05:41 miyb
      * @history:
      */
-    public Object doProcessor(String inputparams) throws BizException,
-            ParaException;
+    public Object doProcessor(String inputparams, String operator)
+            throws BizException, ParaException;
 
     /**
      * 统一业务处理
@@ -46,6 +46,7 @@ public interface IProcessor {
      * @create: 2015-5-6 上午9:05:26 miyb
      * @history:
      */
-    public void doCheck(String inputparams) throws ParaException;
+    public void doCheck(String inputparams, String operator)
+            throws ParaException;
 
 }

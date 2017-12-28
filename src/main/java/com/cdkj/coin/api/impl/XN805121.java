@@ -4,7 +4,7 @@ import com.cdkj.coin.ao.ITradeOrderAO;
 import com.cdkj.coin.ao.IUserAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
-import com.cdkj.coin.core.StringValidater;
+import com.cdkj.coin.core.ObjValidater;
 import com.cdkj.coin.domain.User;
 import com.cdkj.coin.domain.UserStatistics;
 import com.cdkj.coin.dto.req.XN805121Req;
@@ -22,7 +22,8 @@ import com.cdkj.coin.spring.SpringContextHolder;
 public class XN805121 extends AProcessor {
     private IUserAO userAO = SpringContextHolder.getBean(IUserAO.class);
 
-    private ITradeOrderAO tradeOrderAO = SpringContextHolder.getBean(ITradeOrderAO.class);
+    private ITradeOrderAO tradeOrderAO = SpringContextHolder
+        .getBean(ITradeOrderAO.class);
 
     private XN805121Req req = null;
 
@@ -30,16 +31,19 @@ public class XN805121 extends AProcessor {
     public Object doBusiness() throws BizException {
 
         User user = userAO.doGetUser(req.getUserId());
-        UserStatistics userStatistics = tradeOrderAO.userStatisticsInfoContainTradeCount(user.getUserId());
+        UserStatistics userStatistics = tradeOrderAO
+            .userStatisticsInfoContainTradeCount(user.getUserId());
         user.setUserStatistics(userStatistics);
         return user;
 
     }
 
     @Override
-    public void doCheck(String inputparams) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN805121Req.class);
-        StringValidater.validateBlank(req.getUserId());
+        req.setUserId(operator);
+        ObjValidater.validateReq(req);
     }
 
 }

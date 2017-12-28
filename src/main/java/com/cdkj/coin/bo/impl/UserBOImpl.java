@@ -164,7 +164,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     public String doRegister(String mobile, String nickname, String loginPwd,
             User refereeUser, String kind, String province, String city,
             String area, String address, Double divRate1, Double divRate2,
-            String companyCode, String systemCode) {
+            Double tradeRate, String companyCode, String systemCode) {
         String userId = OrderNoGenerater.generate("U");
         User user = new User();
         user.setUserId(userId);
@@ -187,6 +187,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         user.setAddress(address);
         user.setDivRate1(divRate1);
         user.setDivRate2(divRate2);
+        user.setTradeRate(tradeRate);
         Date date = new Date();
         user.setCreateDatetime(date);
 
@@ -379,6 +380,18 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         int count = 0;
         if (data != null && StringUtils.isNotBlank(data.getUserId())) {
             count = userDAO.updateDivRate(data);
+        }
+        return count;
+    }
+
+    @Override
+    public int refreshTradeRate(String userId, Double tradeRate) {
+        User data = new User();
+        data.setUserId(userId);
+        data.setTradeRate(tradeRate);
+        int count = 0;
+        if (data != null && StringUtils.isNotBlank(data.getUserId())) {
+            count = userDAO.updateTradeRate(data);
         }
         return count;
     }
@@ -816,4 +829,5 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
             userDAO.updateGoogleSecret(data);
         }
     }
+
 }

@@ -8,7 +8,8 @@ import com.cdkj.coin.exception.ParaException;
 public class DispatcherImpl implements IDispatcher {
 
     @Override
-    public String doDispatcher(String transcode, String inputParams) {
+    public String doDispatcher(String transcode, String inputParams,
+            String operator) {
         String result = null;
         // 加载配置文件,proxy实例化
         String classname = "com.cdkj.coin.api.impl.XNOther";
@@ -25,7 +26,7 @@ public class DispatcherImpl implements IDispatcher {
             IProcessor processor = (IProcessor) ReflectUtil
                 .getInstance(classname);
             // 接口调用
-            Object data = processor.doProcessor(inputParams);
+            Object data = processor.doProcessor(inputParams, operator);
             rm.setErrorCode(EErrorCode.SUCCESS.getCode());
             rm.setErrorInfo(EErrorCode.SUCCESS.getValue());
             if (data == null) {

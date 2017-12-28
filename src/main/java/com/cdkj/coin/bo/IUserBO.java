@@ -53,7 +53,7 @@ public interface IUserBO extends IPaginableBO<User> {
     public String doRegister(String mobile, String nickname, String loginPwd,
             User refereeUser, String kind, String province, String city,
             String area, String address, Double divRate1, Double divRate2,
-            String companyCode, String systemCode);
+            Double tradeRate, String companyCode, String systemCode);
 
     public String doRegister(String unionId, String h5OpenId, String appOpenId,
             String mobile, String kind, String loginPwd, String nickname,
@@ -141,6 +141,8 @@ public interface IUserBO extends IPaginableBO<User> {
             Double divRate, String remark);
 
     public int refreshDivRate(String userId, Double divRate1, Double divRate2);
+
+    public int refreshTradeRate(String userId, Double tradeRate);
 
     public Long totalUser(User condition);
 

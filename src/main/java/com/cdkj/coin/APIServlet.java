@@ -52,9 +52,10 @@ public class APIServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         String code = request.getParameter("code");
+        String operator = request.getParameter("operator");
         String json = request.getParameter("json");
         IDispatcher dispatcher = new DispatcherImpl();
-        String result = dispatcher.doDispatcher(code, json);
+        String result = dispatcher.doDispatcher(code, json, operator);
         PrintWriter writer = response.getWriter();
         writer.append(result);
         writer.flush();

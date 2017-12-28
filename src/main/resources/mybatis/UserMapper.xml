@@ -24,33 +24,34 @@
 		<result column="role_code" property="roleCode" />
 		<result column="div_rate1" property="divRate1" />
 		<result column="div_rate2" property="divRate2" />
+		<result column="trade_rate" property="tradeRate" />
 		<result column="status" property="status" />
-		<result column="union_id" property="unionId" />
 		
+		<result column="union_id" property="unionId" />
 		<result column="h5_open_id" property="h5OpenId" />
 		<result column="app_open_id" property="appOpenId" />
 		<result column="gender" property="gender" />
 		<result column="introduce" property="introduce" />
-		<result column="birthday" property="birthday" />
 		
+		<result column="birthday" property="birthday" />
 		<result column="email" property="email" />
 		<result column="diploma" property="diploma" />
 		<result column="occupation" property="occupation" />
 		<result column="work_time" property="workTime" />
-		<result column="pdf" property="pdf" />
 		
+		<result column="pdf" property="pdf" />
 		<result column="province" property="province" />
 		<result column="city" property="city" />
 		<result column="area" property="area" />
 		<result column="address" property="address" />
-		<result column="longitude" property="longitude" />
 		
+		<result column="longitude" property="longitude" />
 		<result column="latitude" property="latitude" />
 		<result column="create_datetime" property="createDatetime" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
-		<result column="remark" property="remark" />
 		
+		<result column="remark" property="remark" />
 		<result column="company_code" property="companyCode" />
 		<result column="system_code" property="systemCode" />
 		<result column="last_login" property="lastLogin" />
@@ -195,33 +196,34 @@
 		,t.role_code
 		,t.div_rate1
 		,t.div_rate2
+		,t.trade_rate
 		,t.status
-		,t.union_id
 		
+		,t.union_id
 		,t.h5_open_id
 		,t.app_open_id
 		,t.gender
 		,t.introduce
-		,t.birthday
 		
+		,t.birthday
 		,t.email
 		,t.diploma
 		,t.occupation
 		,t.work_time
-		,t.pdf
 		
+		,t.pdf
 		,t.province
 		,t.city
 		,t.area
 		,t.address
-		,t.longitude
 		
+		,t.longitude
 		,t.latitude
 		,t.create_datetime
 		,t.updater
 		,t.update_datetime
-		,t.remark
 		
+		,t.remark
 		,t.company_code
 		,t.system_code
 		,t.last_login
@@ -264,32 +266,33 @@
 		,role_code
 		,div_rate1
 		,div_rate2
-		,status
+		,trade_rate
 		
+		,status
 		,union_id
 		,h5_open_id
 		,app_open_id
 		,gender
-		,introduce
 		
+		,introduce
 		,birthday
 		,email
 		,diploma
 		,occupation
-		,work_time
 		
+		,work_time
 		,pdf
 		,province
 		,city
 		,area
-		,address
 		
+		,address
 		,longitude
 		,latitude
 		,create_datetime
 		,updater
-		,update_datetime
 		
+		,update_datetime
 		,remark
 		,company_code
 		,system_code
@@ -317,32 +320,33 @@
 		,#{roleCode}
 		,#{divRate1}
 		,#{divRate2}
-		,#{status}
+		,#{tradeRate}
 		
+		,#{status}
 		,#{unionId}
 		,#{h5OpenId}
 		,#{appOpenId}
 		,#{gender}
-		,#{introduce}
 		
+		,#{introduce}
 		,#{birthday}
 		,#{email}
 		,#{diploma}
 		,#{occupation}
-		,#{workTime}
 		
+		,#{workTime}
 		,#{pdf}
 		,#{province}
 		,#{city}
 		,#{area}
-		,#{address}
 		
+		,#{address}
 		,#{longitude}
 		,#{latitude}
 		,#{createDatetime}
 		,#{updater}
-		,#{updateDatetime}
 		
+		,#{updateDatetime}
 		,#{remark}
 		,#{companyCode}
 		,#{systemCode}
@@ -372,6 +376,14 @@
 		SET
 		div_rate1= #{divRate1},
 		div_rate2= #{divRate2}
+		WHERE
+		user_id = #{userId}
+	</update>
+	
+	<update id="update_trade_rate" parameterType="user">
+		UPDATE tstd_user
+		SET
+		trade_rate= #{tradeRate}
 		WHERE
 		user_id = #{userId}
 	</update>
