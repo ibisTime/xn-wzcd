@@ -25,7 +25,7 @@ public class XN805070 extends AProcessor {
     }
 
     @Override
-    public void doCheck(String inputparams) throws ParaException {
+    public void doCheck(String inputparams, String operator) throws ParaException {
     }
 
 }

@@ -15,23 +15,24 @@ import com.cdkj.coin.spring.SpringContextHolder;
  */
 public class XN625224 extends AProcessor {
 
-    private IAdsAO adsAO = SpringContextHolder
-            .getBean(IAdsAO.class);
+    private IAdsAO adsAO = SpringContextHolder.getBean(IAdsAO.class);
 
     XN625224Req req;
 
     @Override
     public Object doBusiness() throws BizException {
 
-        this.adsAO.xiaJiaAds(req.getAdsCode(),req.getUserId());
+        this.adsAO.xiaJiaAds(req.getAdsCode(), req.getUserId());
         return new BooleanRes(true);
 
     }
 
     @Override
-    public void doCheck(String inputparams) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
 
         req = JsonUtil.json2Bean(inputparams, XN625224Req.class);
+        req.setUserId(operator);
         ObjValidater.validateReq(req);
     }
 }

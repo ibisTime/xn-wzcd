@@ -39,7 +39,7 @@ public class XN802701 extends AProcessor {
     * @see com.xnjr.base.api.IProcessor#doCheck(java.lang.String)
     */
     @Override
-    public void doCheck(String inputparams) throws ParaException {
+    public void doCheck(String inputparams, String operator) throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN802701Req.class);
         if (CollectionUtils.isEmpty(req.getCodeList())) {
             throw new BizException("订单列表不能为空");

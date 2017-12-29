@@ -37,7 +37,7 @@ public class XN805093 extends AProcessor {
      * @see com.std.user.api.IProcessor#doCheck(java.lang.String)
      */
     @Override
-    public void doCheck(String inputparams) throws ParaException {
+    public void doCheck(String inputparams, String operator) throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN805093Req.class);
         StringValidater.validateBlank(req.getUserId(), req.getDivRate1(),
             req.getDivRate2(), req.getUpdater());

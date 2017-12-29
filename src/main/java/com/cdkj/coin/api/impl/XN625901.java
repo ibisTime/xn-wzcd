@@ -43,7 +43,7 @@ public class XN625901 extends AProcessor {
      * @see com.cdkj.coin.api.IProcessor#doCheck(java.lang.String)
      */
     @Override
-    public void doCheck(String inputparams) throws ParaException {
+    public void doCheck(String inputparams, String operator) throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN625901Req.class);
         StringValidater.validateBlank(req.getId());
     }

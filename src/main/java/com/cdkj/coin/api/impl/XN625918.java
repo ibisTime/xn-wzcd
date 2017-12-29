@@ -34,7 +34,7 @@ public class XN625918 extends AProcessor {
      * @see com.xnjr.base.api.IProcessor#doCheck(java.lang.String)
      */
     @Override
-    public void doCheck(String inputparams) throws ParaException {
+    public void doCheck(String inputparams, String operator) throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN625918Req.class);
         StringValidater.validateBlank(req.getType(), req.getCompanyCode(),
             req.getSystemCode());

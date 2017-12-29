@@ -31,7 +31,7 @@ public class XN805041 extends AProcessor {
     }
 
     @Override
-    public void doCheck(String inputparams) throws ParaException {
+    public void doCheck(String inputparams, String operator) throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN805041Req.class);
         PhoneUtil.checkMobile(req.getMobile());// 判断格式
         ObjValidater.validateReq(req);

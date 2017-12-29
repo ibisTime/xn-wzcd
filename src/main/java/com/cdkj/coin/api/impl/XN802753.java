@@ -33,7 +33,7 @@ public class XN802753 extends AProcessor {
     }
 
     @Override
-    public void doCheck(String inputparams) throws ParaException {
+    public void doCheck(String inputparams, String operator) throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN802753Req.class);
         if (CollectionUtils.isEmpty(req.getCodeList())) {
             throw new BizException("订单列表不能为空");

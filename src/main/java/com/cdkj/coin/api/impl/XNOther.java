@@ -12,7 +12,7 @@ public class XNOther extends AProcessor {
     }
 
     @Override
-    public void doCheck(String inputparams) throws ParaException {
+    public void doCheck(String inputparams, String operator) throws ParaException {
         throw new ParaException("702xxx", "无效API功能号");
 
     }

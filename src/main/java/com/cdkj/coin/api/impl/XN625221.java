@@ -14,26 +14,27 @@ import com.cdkj.coin.spring.SpringContextHolder;
  */
 public class XN625221 extends AProcessor {
 
-    //草稿发布为广告
-    private IAdsAO adsAO = SpringContextHolder
-            .getBean(IAdsAO.class);
+    // 草稿发布为广告
+    private IAdsAO adsAO = SpringContextHolder.getBean(IAdsAO.class);
+
     XN625220Req req;
 
     @Override
     public Object doBusiness() throws BizException {
 
         throw new BizException("xn000", "请调用625220");
-//        this.adsAO.draftPublish(req);
-//        return new BooleanRes(true);
+        // this.adsAO.draftPublish(req);
+        // return new BooleanRes(true);
 
     }
 
     @Override
-    public void doCheck(String inputparams) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
 
         req = JsonUtil.json2Bean(inputparams, XN625220Req.class);
+        req.setUserId(operator);
         ObjValidater.validateReq(req);
 
     }
 }
-

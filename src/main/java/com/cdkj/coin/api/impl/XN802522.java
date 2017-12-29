@@ -27,7 +27,7 @@ public class XN802522 extends AProcessor {
     }
 
     @Override
-    public void doCheck(String inputparams) throws ParaException {
+    public void doCheck(String inputparams, String operator) throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN802522Req.class);
         StringValidater.validateBlank(req.getCode(), req.getSystemCode());
     }

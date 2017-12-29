@@ -5,7 +5,6 @@ import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.ObjValidater;
 import com.cdkj.coin.dto.req.XN625220Req;
-import com.cdkj.coin.dto.req.XN625224Req;
 import com.cdkj.coin.dto.res.BooleanRes;
 import com.cdkj.coin.exception.BizException;
 import com.cdkj.coin.exception.ParaException;
@@ -16,23 +15,24 @@ import com.cdkj.coin.spring.SpringContextHolder;
  */
 public class XN625225 extends AProcessor {
 
-    private IAdsAO adsAO = SpringContextHolder
-            .getBean(IAdsAO.class);
+    private IAdsAO adsAO = SpringContextHolder.getBean(IAdsAO.class);
 
     private XN625220Req req;
 
     @Override
     public Object doBusiness() throws BizException {
 
-//         this.adsAO.shangJia(req);
-         return new BooleanRes(false);
+        // this.adsAO.shangJia(req);
+        return new BooleanRes(false);
 
     }
 
     @Override
-    public void doCheck(String inputparams) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
 
         req = JsonUtil.json2Bean(inputparams, XN625220Req.class);
+        req.setUserId(operator);
         ObjValidater.validateReq(req);
     }
 }

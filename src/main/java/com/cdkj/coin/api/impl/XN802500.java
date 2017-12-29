@@ -57,7 +57,7 @@ public class XN802500 extends AProcessor {
     * @see com.xnjr.base.api.IProcessor#doCheck(java.lang.String)
     */
     @Override
-    public void doCheck(String inputparams) throws ParaException {
+    public void doCheck(String inputparams, String operator) throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN802500Req.class);
         StringValidater.validateNumber(req.getStart(), req.getLimit());
         StringValidater
