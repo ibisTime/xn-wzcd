@@ -505,6 +505,7 @@ CREATE TABLE `tstd_user` (
   `role_code` varchar(32) DEFAULT NULL COMMENT '角色编号',
   `div_rate1` decimal(18,8) DEFAULT NULL COMMENT '分成比例1',
   `div_rate2` decimal(18,8) DEFAULT NULL COMMENT '分成比例2',
+  `trade_rate` decimal(18,8) DEFAULT NULL COMMENT '交易手续费率',
   `status` varchar(2) DEFAULT NULL COMMENT '状态',
   `union_id` varchar(255) DEFAULT NULL COMMENT '联合编号',
   `h5_open_id` varchar(255) DEFAULT NULL COMMENT '公众号开放编号',

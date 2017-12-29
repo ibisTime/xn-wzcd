@@ -175,20 +175,20 @@ public class MarketAOImpl implements IMarketAO {
 
             } else {
 
-                logger.error(requestStr
-                        + "行情详情数据拉取异常"
-                        + Thread.currentThread().getStackTrace()[1]
-                            .getMethodName());
+                // logger.error(requestStr
+                // + "行情详情数据拉取异常"
+                // + Thread.currentThread().getStackTrace()[1]
+                // .getMethodName());
 
             }
 
         } catch (Exception e) {
 
-            logger
-                .error("行情详情数据拉取异常，原因："
-                        + e.getMessage()
-                        + Thread.currentThread().getStackTrace()[1]
-                            .getMethodName());
+            // logger
+            // .error("行情详情数据拉取异常，原因："
+            // + e.getMessage()
+            // + Thread.currentThread().getStackTrace()[1]
+            // .getMethodName());
 
         }
 
@@ -275,12 +275,12 @@ public class MarketAOImpl implements IMarketAO {
                 market);
 
         } catch (Exception e) {
-            logger
-                .error("行情数据拉取异常，原因："
-                        + e.getMessage()
-                        + "-"
-                        + Thread.currentThread().getStackTrace()[1]
-                            .getMethodName());
+            // logger
+            // .error("行情数据拉取异常，原因："
+            // + e.getMessage()
+            // + "-"
+            // + Thread.currentThread().getStackTrace()[1]
+            // .getMethodName());
         }
 
     }
@@ -326,7 +326,7 @@ public class MarketAOImpl implements IMarketAO {
                 market);
 
         } catch (Exception e) {
-            logger.error("行情数据拉取异常，原因：" + e.getMessage());
+            // logger.error("行情数据拉取异常，原因：" + e.getMessage());
         }
 
     }

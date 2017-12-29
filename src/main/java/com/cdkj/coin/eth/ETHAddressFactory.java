@@ -32,7 +32,7 @@ public class ETHAddressFactory {
 
     }
 
-    private static String productAddress(String password) throws Exception {
+    public static String productAddress(String password) throws Exception {
 
         ECKey key = new ECKey();
 
@@ -69,7 +69,7 @@ public class ETHAddressFactory {
 
     }
 
-    private static String getFileName(String address) {
+    public static String getFileName(String address) {
 
         DateTimeFormatter format = DateTimeFormatter
             .ofPattern("'UTC--'yyyy-MM-dd'T'HH-mm-ss.nVV'--'");
@@ -77,7 +77,7 @@ public class ETHAddressFactory {
         return now.format(format) + address;
     }
 
-    private static void saveFile(String content, final String filePath) {
+    public static void saveFile(String content, final String filePath) {
         //
         try {
             File file = new File(filePath);
