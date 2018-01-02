@@ -25,6 +25,8 @@ import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
 import org.web3j.protocol.core.methods.response.EthSendTransaction;
 import org.web3j.protocol.http.HttpService;
+import org.web3j.utils.Convert;
+import org.web3j.utils.Convert.Unit;
 import org.web3j.utils.Numeric;
 
 import com.cdkj.coin.exception.BizException;
@@ -37,11 +39,11 @@ import com.cdkj.coin.exception.BizException;
 public class AccountTest {
 
     public static void main(String args[]) {
-        // String hash = broadcast("0x608daa186d56d7b61000fb75c80c5137a74f67d0",
-        // "123456789", "0x1bb4fd555fdcdbf365c5fc3d549f5647a631adae",
-        // new BigDecimal("1000000000000000"));
-        // System.out.println("广播完成，交易hash=" + hash + "，交易金额="
-        // + Convert.fromWei("1000000000000000", Unit.ETHER));
+        String hash = broadcast("0x3a7b569f809cbe7e63ebfb02c313bc9a34d5e5c8",
+            "12345678", "0x1bb4fd555fdcdbf365c5fc3d549f5647a631adae",
+            new BigDecimal("1000000000000000"));
+        System.out.println("广播完成，交易hash=" + hash + "，交易金额="
+                + Convert.fromWei("1000000000000000", Unit.ETHER));
 
         // BigDecimal a = new BigDecimal("10000000000000000000");
         // BigDecimal b = new BigDecimal("9999999999999999999");
@@ -52,7 +54,7 @@ public class AccountTest {
         // throw new BizException("xn625000", "余额太少，无需归集");
         // }
 
-        createAccount();
+        // createAccount();
     }
 
     public static void getBalance() {
