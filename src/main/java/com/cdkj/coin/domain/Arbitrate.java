@@ -56,6 +56,17 @@ public class Arbitrate extends ABaseDO {
     // 被告
     private User beigaoInfo;
 
+    // 订单信息
+    private TradeOrder tradeOrder;
+
+    public TradeOrder getTradeOrder() {
+        return tradeOrder;
+    }
+
+    public void setTradeOrder(TradeOrder tradeOrder) {
+        this.tradeOrder = tradeOrder;
+    }
+
     public String getCode() {
         return code;
     }

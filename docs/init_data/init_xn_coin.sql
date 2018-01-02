@@ -66,7 +66,7 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('collection_rule','collection_limit','1','admin',now(),'当账户达到该数量时进行自动归集','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('withdraw_rule','withdraw_fee','0.01','admin',now(),'取现手续费','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('trade_rule','trade_fee_rate','0.01','admin',now(),'交易手续费率','CD-COIN000017','CD-COIN000017');
-INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('trade_rule','activity_trade_fee_rate','0.01','admin',now(),'活动期间交易手续费率','CD-COIN000017','CD-COIN000017');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('trade_rule','activity_trade_fee_rate','-1','admin',now(),'活动期间交易手续费率','CD-COIN000017','CD-COIN000017');
 
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('fen_cheng_rule','fen_cheng_fee','0.001','admin',now(),'推荐分成比例','CD-COIN000017','CD-COIN000017');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('coin_price_x','eth_coin_price_x','10','admin',now(),'eth价格计算x','CD-COIN000017','CD-COIN000017');

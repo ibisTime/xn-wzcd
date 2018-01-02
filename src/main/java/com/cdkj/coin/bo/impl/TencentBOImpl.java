@@ -8,15 +8,15 @@
  */
 package com.cdkj.coin.bo.impl;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -235,6 +235,7 @@ public class TencentBOImpl implements ITencentBO {
 
             String result = doAccessHTTPPostJson(urlString, sendSms,
                 backEncodType);
+
             String errorCode = JSONObject.parseObject(result).getString(
                 "ErrorCode");
             String errorInfo = JSONObject.parseObject(result).getString(
@@ -250,6 +251,9 @@ public class TencentBOImpl implements ITencentBO {
         }
     }
 
+    public static final MediaType JSON = MediaType
+        .parse("application/json; charset=utf-8");
+
     /**
      * POSTJson访问方法
      * @param sendUrl ：访问URL        
@@ -259,56 +263,74 @@ public class TencentBOImpl implements ITencentBO {
      */
     public static String doAccessHTTPPostJson(String sendUrl, String sendParam,
             String backEncodType) {
-        StringBuffer receive = new StringBuffer();
-        BufferedWriter wr = null;
+
+        String requestStr = sendUrl;
+
+        RequestBody requestBody = RequestBody.create(JSON, sendParam);
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        Request request = new Request.Builder().post(requestBody)
+            .url(requestStr).build();
+        Call call = okHttpClient.newCall(request);
         try {
-            if (backEncodType == null || backEncodType.equals("")) {
-                backEncodType = "UTF-8";
-            }
 
-            URL url = new URL(sendUrl);
-            HttpURLConnection URLConn = (HttpURLConnection) url
-                .openConnection();
-
-            URLConn.setDoOutput(true);
-            URLConn.setDoInput(true);
-            ((HttpURLConnection) URLConn).setRequestMethod("POST");
-            URLConn.setUseCaches(false);
-            URLConn.setAllowUserInteraction(true);
-            HttpURLConnection.setFollowRedirects(true);
-            URLConn.setInstanceFollowRedirects(true);
-
-            URLConn.setRequestProperty("Content-Type",
-                "application/json;charset=UTF-8");
-            URLConn.setRequestProperty("Content-Length",
-                String.valueOf(sendParam.getBytes().length));
-
-            DataOutputStream dos = new DataOutputStream(
-                URLConn.getOutputStream());
-            dos.writeBytes(sendParam);
-
-            BufferedReader rd = new BufferedReader(new InputStreamReader(
-                URLConn.getInputStream(), backEncodType));
-            String line;
-            while ((line = rd.readLine()) != null) {
-                receive.append(line).append("\r\n");
-            }
-            rd.close();
-        } catch (java.io.IOException e) {
-            receive.append("访问产生了异常-->").append(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            if (wr != null) {
-                try {
-                    wr.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                wr = null;
-            }
+            Response response = call.execute();
+            String jsonStr = response.body().string();
+            return jsonStr;
+        } catch (Exception e) {
+            throw new BizException("腾讯云http请求异常，原因" + e.getMessage());
         }
-        System.out.println(receive);
-        return receive.toString();
+
+        // StringBuffer receive = new StringBuffer();
+        // BufferedWriter wr = null;
+        // try {
+        // if (backEncodType == null || backEncodType.equals("")) {
+        // backEncodType = "UTF-8";
+        // }
+        //
+        // URL url = new URL(sendUrl);
+        // HttpURLConnection URLConn = (HttpURLConnection) url
+        // .openConnection();
+        //
+        // URLConn.setDoOutput(true);
+        // URLConn.setDoInput(true);
+        // ((HttpURLConnection) URLConn).setRequestMethod("POST");
+        // URLConn.setUseCaches(false);
+        // URLConn.setAllowUserInteraction(true);
+        // HttpURLConnection.setFollowRedirects(true);
+        // URLConn.setInstanceFollowRedirects(true);
+        //
+        // URLConn.setRequestProperty("Content-Type",
+        // "application/json;charset=UTF-8");
+        // URLConn.setRequestProperty("Content-Length",
+        // String.valueOf(sendParam.getBytes().length));
+        //
+        // DataOutputStream dos = new DataOutputStream(
+        // URLConn.getOutputStream());
+        // dos.writeBytes(sendParam);
+        //
+        // BufferedReader rd = new BufferedReader(new InputStreamReader(
+        // URLConn.getInputStream(), backEncodType));
+        // String line;
+        // while ((line = rd.readLine()) != null) {
+        // receive.append(line).append("\r\n");
+        // }
+        // rd.close();
+        // } catch (java.io.IOException e) {
+        // receive.append("访问产生了异常-->").append(e.getMessage());
+        // e.printStackTrace();
+        // } finally {
+        // if (wr != null) {
+        // try {
+        // wr.close();
+        // } catch (IOException ex) {
+        // ex.printStackTrace();
+        // }
+        // wr = null;
+        // }
+        // }
+        // System.out.println(receive);
+        // return receive.toString();
     }
 
     @Override
@@ -359,7 +381,7 @@ public class TencentBOImpl implements ITencentBO {
             params.addProperty("Random", random);
 
             JsonObject text = new JsonObject();
-            text.addProperty("Text", URLEncoder.encode(content, codingType));
+            text.addProperty("Text", content);
 
             JsonObject MsgBody = new JsonObject();
             MsgBody.addProperty("MsgType", "TIMTextElem");
@@ -370,7 +392,16 @@ public class TencentBOImpl implements ITencentBO {
 
             params.add("MsgBody", msgBodyArray);
 
+            JsonObject OfflinePushInfo = new JsonObject();
+            OfflinePushInfo.addProperty("PushFlag", 0);
+            OfflinePushInfo.addProperty("Desc", content);
+            OfflinePushInfo.addProperty("Ext", groupId);
+
+            params.add("OfflinePushInfo", OfflinePushInfo);
+
             String paramsString = params.toString();
+
+            System.out.println(paramsString);
 
             String result = doAccessHTTPPostJson(urlString, paramsString,
                 backEncodType);

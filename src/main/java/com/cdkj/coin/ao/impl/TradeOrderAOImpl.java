@@ -26,7 +26,6 @@ import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.IUserRelationBO;
 import com.cdkj.coin.bo.IUserSettingsBO;
 import com.cdkj.coin.bo.base.Paginable;
-import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.domain.Jour;
@@ -47,6 +46,7 @@ import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.enums.ETradeOrderStatus;
 import com.cdkj.coin.enums.ETradeOrderType;
 import com.cdkj.coin.enums.ETradeType;
+import com.cdkj.coin.enums.EUserKind;
 import com.cdkj.coin.enums.EUserLevel;
 import com.cdkj.coin.enums.EUserReleationType;
 import com.cdkj.coin.enums.EUserSettingsType;
@@ -447,12 +447,14 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         }
 
         // 操作权限判断
-        // 只有 admin 和 买家能释放订单
-        if (!(updater.equals(tradeOrder.getSellUser()) || updater
-            .equals(SysConstants.admin))) {
+        // 卖家能释放订单
+        User user = userBO.getUser(updater);
+        if (EUserKind.Customer.getCode().equals(user.getKind())) {
+            if (!updater.equals(tradeOrder.getSellUser())) {
 
-            throw new BizException("xn000", "您不能释放该订单");
+                throw new BizException("xn000", "您不能释放该订单");
 
+            }
         }
 
         if (ETradeOrderType.BUY.getCode().equals(tradeOrder.getType())) {

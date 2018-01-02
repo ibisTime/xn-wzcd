@@ -79,7 +79,7 @@ public class ArbitrateAOImpl implements IArbitrateAO {
         } else {
 
             // 仲裁不通过，表示买家标记打款，但是实际未付款（买家是骗子）
-            tradeOrderBO.cancel(tradeOrder, updater,
+            tradeOrderAO.cancel(tradeOrder.getCode(), updater,
                 "买家申请仲裁不通过，结果：买家实际未付款，订单取消");
 
         }
@@ -91,8 +91,8 @@ public class ArbitrateAOImpl implements IArbitrateAO {
         if (EBoolean.YES.getCode().equals(result)) {
 
             // 仲裁通过，表示买家标记打款，但是实际未支付（买家是骗子）
-            tradeOrderBO
-                .cancel(tradeOrder, updater, "卖家申请仲裁通过，结果：买家实际未付款，订单取消");
+            tradeOrderAO.cancel(tradeOrder.getCode(), updater,
+                "卖家申请仲裁通过，结果：买家实际未付款，订单取消");
 
         } else {
 
@@ -110,6 +110,8 @@ public class ArbitrateAOImpl implements IArbitrateAO {
         for (Arbitrate arbitrate : results.getList()) {
             arbitrate.setYuangaoInfo(userBO.getUser(arbitrate.getYuangao()));
             arbitrate.setBeigaoInfo(userBO.getUser(arbitrate.getBeigao()));
+            arbitrate.setTradeOrder(tradeOrderBO.getTradeOrder(arbitrate
+                .getTradeOrderCode()));
         }
         return results;
     }
@@ -124,6 +126,8 @@ public class ArbitrateAOImpl implements IArbitrateAO {
         Arbitrate arbitrate = arbitrateBO.getArbitrate(code);
         arbitrate.setYuangaoInfo(userBO.getUser(arbitrate.getYuangao()));
         arbitrate.setBeigaoInfo(userBO.getUser(arbitrate.getBeigao()));
+        arbitrate.setTradeOrder(tradeOrderBO.getTradeOrder(arbitrate
+            .getTradeOrderCode()));
         return arbitrate;
     }
 
