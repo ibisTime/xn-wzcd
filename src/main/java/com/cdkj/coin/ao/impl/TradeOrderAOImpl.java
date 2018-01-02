@@ -344,7 +344,9 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     @Transactional
     public void cancel(String code, String updater, String remark) {
         TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(code);
-        if (!ETradeOrderStatus.TO_PAY.getCode().equals(tradeOrder.getStatus())) {
+        if (!ETradeOrderStatus.TO_PAY.getCode().equals(tradeOrder.getStatus())
+                && !ETradeOrderStatus.ARBITRATE.getCode().equals(
+                    tradeOrder.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前状态下不能取消订单");
         }
@@ -449,7 +451,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 操作权限判断
         // 卖家能释放订单
         User user = userBO.getUser(updater);
-        if (EUserKind.Customer.getCode().equals(user.getKind())) {
+        if (user != null && EUserKind.Customer.getCode().equals(user.getKind())) {
             if (!updater.equals(tradeOrder.getSellUser())) {
 
                 throw new BizException("xn000", "您不能释放该订单");

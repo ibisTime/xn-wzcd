@@ -244,7 +244,6 @@ public class MarketAOImpl implements IMarketAO {
         String requestStr = url;
         OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(
             30, TimeUnit.SECONDS).build();
-        ;
 
         Request request = new Request.Builder().get().url(requestStr).build();
         Call call = okHttpClient.newCall(request);
