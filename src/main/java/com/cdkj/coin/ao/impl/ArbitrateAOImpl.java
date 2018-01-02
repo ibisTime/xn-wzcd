@@ -41,30 +41,23 @@ public class ArbitrateAOImpl implements IArbitrateAO {
     @Override
     @Transactional
     public void handle(String code, String result, String updater, String remark) {
+
+        // 工单信息
         Arbitrate arbitrate = arbitrateBO.getArbitrate(code);
         if (!EArbitrateStatus.TO_HANDLE.getCode().equals(arbitrate.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "仲裁工单不处于待处理状态");
         }
+        // 订单信息
         TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(arbitrate
             .getTradeOrderCode());
-        if (EBoolean.YES.getCode().equals(result)) {
-            if (arbitrate.getYuangao().equals(tradeOrder.getBuyUser())) {
 
-                // todo 直接调用AO 感觉不对
-                // ao 中有对 账户的处理，和订单的处理
-                this.tradeOrderAO.release(tradeOrder.getCode(), updater,
-                    "仲裁后释放");
-
-            } else {
-                // 原告为卖家
-                tradeOrderBO.revokePay(tradeOrder, updater, "仲裁后撤回打款");
-            }
-
-        } else {
-            // 仲裁不通过，订单回归到 待释放的状态
-            this.tradeOrderBO.arbitrateUnPass(tradeOrder);
-
+        if (arbitrate.getYuangao().equals(tradeOrder.getBuyUser())) {
+            // 买家申请仲裁
+            doHandleBuy(tradeOrder, result, updater, remark);
+        } else if (arbitrate.getYuangao().equals(tradeOrder.getSellUser())) {
+            // 卖家申请仲裁
+            doHandleSell(tradeOrder, result, updater, remark);
         }
 
         // 更新仲裁工单信息
@@ -73,6 +66,40 @@ public class ArbitrateAOImpl implements IArbitrateAO {
         // 发送系统消息
         tencentBO.sendNormalMessage(arbitrate.getTradeOrderCode(),
             "系统消息：仲裁申请已处理完成");
+    }
+
+    private void doHandleBuy(TradeOrder tradeOrder, String result,
+            String updater, String remark) {
+        if (EBoolean.YES.getCode().equals(result)) {
+
+            // 仲裁通过，表示买家标记打款，并且实际已支付（卖家是骗子）
+            tradeOrderAO.release(tradeOrder.getCode(), updater,
+                "买家申请仲裁通过，结果：买家实际已付款，自动释放");
+
+        } else {
+
+            // 仲裁不通过，表示买家标记打款，但是实际未付款（买家是骗子）
+            tradeOrderBO.cancel(tradeOrder, updater,
+                "买家申请仲裁不通过，结果：买家实际未付款，订单取消");
+
+        }
+    }
+
+    private void doHandleSell(TradeOrder tradeOrder, String result,
+            String updater, String remark) {
+
+        if (EBoolean.YES.getCode().equals(result)) {
+
+            // 仲裁通过，表示买家标记打款，但是实际未支付（买家是骗子）
+            tradeOrderBO
+                .cancel(tradeOrder, updater, "卖家申请仲裁通过，结果：买家实际未付款，订单取消");
+
+        } else {
+
+            // 仲裁不通过，表示买家标记打款，并且实际已付款（卖家是骗子）
+            tradeOrderAO.release(tradeOrder.getCode(), updater,
+                "卖家申请仲裁不通过，结果：买家实际已付款，自动释放");
+        }
     }
 
     @Override
