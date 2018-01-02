@@ -37,8 +37,8 @@ import com.cdkj.coin.exception.BizException;
 public class AccountTest {
 
     public static void main(String args[]) {
-        // String hash = broadcast("0x3a7b569f809cbe7e63ebfb02c313bc9a34d5e5c8",
-        // "12345678", "0x1bb4fd555fdcdbf365c5fc3d549f5647a631adae",
+        // String hash = broadcast("0x608daa186d56d7b61000fb75c80c5137a74f67d0",
+        // "123456789", "0x1bb4fd555fdcdbf365c5fc3d549f5647a631adae",
         // new BigDecimal("1000000000000000"));
         // System.out.println("广播完成，交易hash=" + hash + "，交易金额="
         // + Convert.fromWei("1000000000000000", Unit.ETHER));
@@ -74,7 +74,7 @@ public class AccountTest {
     public static void createAccount() {
 
         Admin selfAdmin = Admin.build(new HttpService(
-            "http://47.96.161.183:8545"));
+            "http://47.96.161.183:8545/"));
         NewAccountIdentifier newAccountIdentifier;
         try {
             newAccountIdentifier = selfAdmin.personalNewAccount("123456")

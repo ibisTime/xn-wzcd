@@ -208,7 +208,7 @@ public class TencentBOImpl implements ITencentBO {
             String backEncodType = "UTF-8";
             JsonObject smsParams = new JsonObject();
             smsParams.addProperty("Type",
-                URLEncoder.encode("ChatRoom", codingType));
+                URLEncoder.encode("Public", codingType));
             smsParams.addProperty("Name",
                 URLEncoder.encode(groupId + "-Group", codingType));
             smsParams.addProperty("GroupId",
