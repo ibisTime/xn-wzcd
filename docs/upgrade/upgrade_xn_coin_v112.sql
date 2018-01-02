@@ -20,5 +20,10 @@ INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime
 
 /*线下充值放出来*/
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`,`system_code`) VALUES ('COINSR201700000000000000','COINSM2016120711021944714','admin','2017-12-29 03:31:57',NULL,'CD-COIN000017');
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`,`system_code`) VALUES ('COINSR201700000000000000','COINSM2016122317321369746','admin','2017-12-29 03:31:57',NULL,'CD-COIN000017');
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`,`system_code`) VALUES ('COINSR201700000000000000','COINSM2016122413510161245','admin','2017-12-29 03:31:57',NULL,'CD-COIN000017');
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`,`system_code`) VALUES ('COINSR201700000000000000','COINSM2017040616442519963','admin','2017-12-29 03:31:57',NULL,'CD-COIN000017');
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`,`system_code`) VALUES ('COINSR201700000000000000','COINSM201705151132544318','admin','2017-12-29 03:31:57',NULL,'CD-COIN000017');
+
 /*联系客服隐藏掉*/
 DELETE FROM `tsys_menu_role` WHERE `role_code`='COINSR201700000000000000' AND `menu_code`='SM201711272034567989636';
