@@ -42,6 +42,7 @@ import com.cdkj.coin.enums.EJourKind;
 import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.enums.EWithdrawStatus;
 import com.cdkj.coin.exception.BizException;
+import com.cdkj.coin.exception.EBizErrorCode;
 
 @Service
 public class WithdrawAOImpl implements IWithdrawAO {
@@ -95,6 +96,11 @@ public class WithdrawAOImpl implements IWithdrawAO {
 
         // 判断本月是否次数已满，且现在只能有一笔取现未支付记录
         withdrawBO.doCheckTimes(dbAccount);
+
+        if (ethAddressBO.isEthAddressExist(payCardNo)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "地址"
+                    + payCardNo + "已经在本平台被使用，请仔细核对！");
+        }
 
         // 检查是否是已认证的地址
         EthAddress condition = new EthAddress();
