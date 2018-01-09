@@ -254,6 +254,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
         accountBO.unfrozenAmount(dbAccount, data.getAmount(),
             EJourBizTypeUser.AJ_WITHDRAW_UNFROZEN.getCode(), "取现失败退回",
             data.getCode());
+
     }
 
     private void payOrderNO(Withdraw data, String payUser, String payNote,

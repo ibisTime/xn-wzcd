@@ -107,6 +107,10 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             ctqEthTransaction.getHash(), payGroup, code,
             EJourBizTypeUser.AJ_CHARGE.getCode(), "ETH充值-来自地址："
                     + ctqEthTransaction.getFrom());
+        accountBO.changeAmount(account, amount, EChannelType.ETH,
+            ctqEthTransaction.getHash(), payGroup, code,
+            EJourBizTypeUser.AJ_CHARGE.getCode(), "ETH充值-来自地址："
+                    + ctqEthTransaction.getFrom());
         // 落地交易记录
         ethTransactionBO.saveEthTransaction(ctqEthTransaction, code);
         // 更新地址余额
@@ -262,8 +266,8 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         // 平台冷钱包加钱
         Account coldAccount = accountBO
             .getAccount(ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode());
-        accountBO.changeAmount(coldAccount,
-            new BigDecimal(ctqEthTransaction.getValue()), EChannelType.ETH,
+        BigDecimal amount = new BigDecimal(ctqEthTransaction.getValue());
+        accountBO.changeAmount(coldAccount, amount, EChannelType.ETH,
             ctqEthTransaction.getHash(), "ETH", collection.getCode(),
             EJourBizTypeCold.AJ_INCOME.getCode(),
             "归集-来自地址：" + collection.getFromAddress());

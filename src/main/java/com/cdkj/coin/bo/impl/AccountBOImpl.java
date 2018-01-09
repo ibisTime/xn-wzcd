@@ -81,6 +81,10 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
     public Account changeAmount(Account dbAccount, BigDecimal transAmount,
             EChannelType channelType, String channelOrder, String payGroup,
             String refNo, String bizType, String bizNote) {
+        // 如果变动金额为0，直接返回
+        if (transAmount.compareTo(BigDecimal.ZERO) == 0) {
+            return dbAccount;
+        }
         // 金额变动之后可用余额
         BigDecimal avaliableAmount = dbAccount.getAmount()
             .subtract(dbAccount.getFrozenAmount()).add(transAmount);
@@ -165,9 +169,8 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
     @Override
     public Account frozenAmount(Account dbAccount, BigDecimal freezeAmount,
             String bizType, String bizNote, String refNo) {
-        if (freezeAmount.compareTo(BigDecimal.ZERO) == 0
-                || freezeAmount.compareTo(BigDecimal.ZERO) == -1) {
-            throw new BizException("xn000000", "冻结金额需大于0");
+        if (freezeAmount.compareTo(BigDecimal.ZERO) <= 0) {
+            return dbAccount;
         }
         BigDecimal avaliableAmount = dbAccount.getAmount()
             .subtract(dbAccount.getFrozenAmount()).subtract(freezeAmount);
@@ -190,9 +193,8 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
     @Override
     public Account unfrozenAmount(Account dbAccount, BigDecimal freezeAmount,
             String bizType, String bizNote, String refNo) {
-        if (freezeAmount.compareTo(BigDecimal.ZERO) == 0
-                || freezeAmount.compareTo(BigDecimal.ZERO) == -1) {
-            throw new BizException("xn000000", "解冻金额需大于0");
+        if (freezeAmount.compareTo(BigDecimal.ZERO) <= 0) {
+            return dbAccount;
         }
         BigDecimal nowFrozenAmount = dbAccount.getFrozenAmount().subtract(
             freezeAmount);

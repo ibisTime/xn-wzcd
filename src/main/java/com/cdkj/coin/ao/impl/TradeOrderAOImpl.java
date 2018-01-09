@@ -304,7 +304,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 改变广告可交易量
         this.adsBO.cutLeftCount(ads.getCode(), tradeCount);
 
-        // // 冻结卖家 数字货币
+        // 冻结卖家 数字货币
         this.accountBO.frozenAmount(sellUserAccount, tradeCount,
             EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
             EJourBizTypeUser.AJ_ADS_FROZEN.getValue() + "-提交卖出订单",
@@ -399,17 +399,22 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
                     tradeOrder.getSellUser(), ECoin.ETH.getCode());
 
                 // 对卖家订单冻结金额进行解冻
-                this.accountBO.unfrozenAmount(sellUserAccount,
-                    tradeOrder.getCount(),
-                    EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
-                    EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue()
-                            + "-交易订单取消，解冻订单金额", tradeOrder.getCode());
+                if (tradeOrder.getCount().compareTo(BigDecimal.ZERO) > 0) {
+                    this.accountBO.unfrozenAmount(sellUserAccount,
+                        tradeOrder.getCount(),
+                        EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
+                        EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue()
+                                + "-交易订单取消，解冻订单金额", tradeOrder.getCode());
+                }
+
                 // 对卖家订单冻结广告费进行解冻
-                this.accountBO.unfrozenAmount(sellUserAccount,
-                    tradeOrder.getFee(),
-                    EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
-                    EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue()
-                            + "-交易订单取消，解冻订单广告费", tradeOrder.getCode());
+                if (tradeOrder.getFee().compareTo(BigDecimal.ZERO) > 0) {
+                    this.accountBO.unfrozenAmount(sellUserAccount,
+                        tradeOrder.getFee(),
+                        EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
+                        EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue()
+                                + "-交易订单取消，解冻订单广告费", tradeOrder.getCode());
+                }
             }
             // 购买订单
             // 由于出售广告，出售时就冻结了 所有的 交易金额 + 广告费，
@@ -839,10 +844,12 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             EJourBizTypeUser.AJ_SELL.getValue());
 
         // 1.4卖家 扣除交易广告费
-        sellUserAccount = this.accountBO.changeAmount(sellUserAccount,
-            tradeOrder.getFee().negate(), EChannelType.NBZ, null, null,
-            tradeOrder.getCode(), EJourBizTypeUser.AJ_TRADEFEE.getCode(),
-            EJourBizTypeUser.AJ_TRADEFEE.getValue());
+        if (tradeOrder.getFee().negate().compareTo(BigDecimal.ZERO) != 0) {
+            sellUserAccount = this.accountBO.changeAmount(sellUserAccount,
+                tradeOrder.getFee().negate(), EChannelType.NBZ, null, null,
+                tradeOrder.getCode(), EJourBizTypeUser.AJ_TRADEFEE.getCode(),
+                EJourBizTypeUser.AJ_TRADEFEE.getValue());
+        }
 
         Account buyUserAccount = this.accountBO.getAccountByUser(
             tradeOrder.getBuyUser(), tradeOrder.getTradeCoin());
