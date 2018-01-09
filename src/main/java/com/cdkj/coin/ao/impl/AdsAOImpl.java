@@ -331,9 +331,11 @@ public class AdsAOImpl implements IAdsAO {
             throw new BizException("xn000", "发布失败,行情价格获取异常");
         }
         //
-        ads.setMarketPrice(this.getPlatformPrice(market));
-        BigDecimal truePrice = market.getMid().multiply(
-            BigDecimal.ONE.add(req.getPremiumRate()));
+
+        BigDecimal platPrice = this.getPlatformPrice(market);
+        ads.setMarketPrice(platPrice);
+        BigDecimal truePrice = platPrice.multiply(BigDecimal.ONE.add(req
+            .getPremiumRate()));
         if (req.getTradeType().endsWith(ETradeType.SELL.getCode())) {
 
             truePrice = truePrice.compareTo(req.getProtectPrice()) > 0 ? truePrice

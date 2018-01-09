@@ -141,13 +141,18 @@ public class UserAOImpl implements IUserAO {
         userBO.isMobileExist(mobile, kind, companyCode, systemCode);
         // 检查昵称是否已经被使用
         userBO.isNicknameExist(nickname, kind, companyCode, systemCode);
-        // 验证推荐人是否存在,并将手机号转化为用户编号
-        User refereeUser = userBO.getUser(userReferee, userRefereeKind,
-            companyCode, systemCode);
-        if (refereeUser == null) {
-            throw new BizException("xn000000", "推荐人手机号不存在");
+        String refereeUserId = null;
+        User refereeUser = null;
+        if (StringUtils.isNotBlank(userReferee)
+                && StringUtils.isNotBlank(userRefereeKind)) {
+            // 验证推荐人是否存在,并将手机号转化为用户编号
+            refereeUser = userBO.getUser(userReferee, userRefereeKind,
+                companyCode, systemCode);
+            if (refereeUser == null) {
+                throw new BizException("xn000000", "推荐人手机号不存在");
+            }
+            refereeUserId = refereeUser.getUserId();
         }
-        String refereeUserId = refereeUser.getUserId();
         // 验证短信验证码
         smsOutBO.checkCaptcha(mobile, smsCaptcha, ECaptchaType.C_REG.getCode(),
             companyCode, systemCode);
