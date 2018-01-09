@@ -6,9 +6,9 @@ public class SysConstants {
 
     public static final String COLLECTION_LIMIT = "collection_limit"; // 账户余额大于等于该值时，进行归集
 
-    public static final String TRADE_FEE_RATE = "trade_fee_rate"; // 默认交易手续费
+    public static final String TRADE_FEE_RATE = "trade_fee_rate"; // 默认广告手续费
 
-    public static final String ACTIVITY_TRADE_FEE_RATE = "activity_trade_fee_rate"; // 活动交易手续费
+    public static final String ACTIVITY_TRADE_FEE_RATE = "activity_trade_fee_rate"; // 活动期间交易广告费
 
     public static final String WITHDRAW_FEE = "withdraw_fee"; // 提现手续费
 

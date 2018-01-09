@@ -1,6 +1,5 @@
 package com.cdkj.coin.enums;
 
-
 /**
  * @author: xieyj 
  * @since: 2016年11月11日 上午10:09:32 
@@ -14,7 +13,7 @@ public enum EJourBizType {
     // "lb", "蓝补")
     //
     // // 平台
-    // , PLAT_TRADEFEE("tradefee", "交易手续费收入"), PLAT_WITHDRAWFEE("withdrawfee",
+    // , PLAT_TRADEFEE("tradefee", "交易广告费收入"), PLAT_WITHDRAWFEE("withdrawfee",
     // "提现手续费收入"), PLAT_WFEE("mfee", "提现矿工费"), PLAT_MFEE("wfee", "归集矿工费"),
     // PLAT_INVITE(
     // "invite", "邀请好友支出"), PLAT_HC("hc", "红冲"), PLAT_LB("lb", "蓝补")
@@ -24,7 +23,7 @@ public enum EJourBizType {
     // "buy", "交易买入"), USER_SELL("sell", "交易卖出"), USER_ADS_FROZEN(
     // "frozen", "发布广告冻结"), USER_ADS_UNFROZEN("unfrozen", "发布广告解冻"),
     // USER_TRADEFEE(
-    // "tradefee", "交易手续费"), USER_WITHDRAWFEE("withdrawfee", "提现手续费"),
+    // "tradefee", "交易广告费"), USER_WITHDRAWFEE("withdrawfee", "提现手续费"),
     // USER_INVITE(
     // "invite", "邀请好友收入"), USER_HC("hc", "红冲"), USER_LB("lb", "蓝补");
 

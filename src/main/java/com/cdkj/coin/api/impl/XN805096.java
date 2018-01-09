@@ -11,7 +11,7 @@ import com.cdkj.coin.exception.ParaException;
 import com.cdkj.coin.spring.SpringContextHolder;
 
 /**
- * 修改交易手续费率
+ * 修改交易广告费率
  * @author: xieyj 
  * @since: 2017年7月16日 下午4:16:53 
  * @history:
@@ -36,7 +36,8 @@ public class XN805096 extends AProcessor {
      * @see com.std.user.api.IProcessor#doCheck(java.lang.String)
      */
     @Override
-    public void doCheck(String inputparams, String operator) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN805096Req.class);
         StringValidater.validateBlank(req.getUserId(), req.getTradeRate(),
             req.getUpdater());

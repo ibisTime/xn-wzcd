@@ -5,7 +5,7 @@ public class XN805096Req {
     // 用户编号（必填）
     private String userId;
 
-    // 交易手续费率
+    // 交易广告费率
     private String tradeRate;
 
     // 更新人（必填）

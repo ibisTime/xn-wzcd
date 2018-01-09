@@ -46,7 +46,7 @@ public class TradeOrder extends ABaseDO {
     // 交易总额
     private BigDecimal tradeAmount;
 
-    // 手续费
+    // 广告费
     private transient BigDecimal fee;
 
     private String feeString;

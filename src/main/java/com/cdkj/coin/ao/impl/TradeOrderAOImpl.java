@@ -99,6 +99,16 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 检查黑名单
         this.checkPlatformBlackList(buyUser);
 
+        // 校验用户是否存在
+        User user = this.userBO.getUser(buyUser);
+        if (user == null) {
+            throw new BizException("xn00000", "用户不存在");
+        }
+        // 是否实名
+        if (StringUtils.isBlank(user.getRealName())) {
+            throw new BizException("xn00000", "您还未实名认证，请前往个人中心进行认证");
+        }
+
         // 获取广告详情
         Ads ads = adsBO.adsDetail(adsCode);
 
@@ -156,6 +166,16 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
         TradeOrder tradeOrder = null;
 
+        // 校验用户是否存在
+        User user = this.userBO.getUser(buyUser);
+        if (user == null) {
+            throw new BizException("xn00000", "用户不存在");
+        }
+        // 是否实名
+        if (StringUtils.isBlank(user.getRealName())) {
+            throw new BizException("xn00000", "您还未实名认证，请前往个人中心进行认证");
+        }
+
         // 检查黑名单
         this.checkPlatformBlackList(buyUser);
 
@@ -177,7 +197,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 交易金额校验
         doAmountCheck(ads, tradePrice, count, tradeAmount, "交易额大于剩余可出售金额");
 
-        // 计算交易手续费
+        // 计算交易广告费
         BigDecimal fee = count.multiply(ads.getFeeRate()).setScale(0,
             BigDecimal.ROUND_DOWN);
 
@@ -259,7 +279,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
                     + ECoin.ETH.getCode() + "可用余额不足");
         }
 
-        // 计算交易手续费
+        // 计算交易广告费
         BigDecimal fee = tradeCount.multiply(ads.getFeeRate());
 
         // 检查是否有正在聊天订单
@@ -384,15 +404,15 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
                     EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
                     EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue()
                             + "-交易订单取消，解冻订单金额", tradeOrder.getCode());
-                // 对卖家订单冻结手续费进行解冻
+                // 对卖家订单冻结广告费进行解冻
                 this.accountBO.unfrozenAmount(sellUserAccount,
                     tradeOrder.getFee(),
                     EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
                     EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue()
-                            + "-交易订单取消，解冻订单手续费", tradeOrder.getCode());
+                            + "-交易订单取消，解冻订单广告费", tradeOrder.getCode());
             }
             // 购买订单
-            // 由于出售广告，出售时就冻结了 所有的 交易金额 + 手续费，
+            // 由于出售广告，出售时就冻结了 所有的 交易金额 + 广告费，
             // 所以 购买订单取消，也不需要解冻
         }
 
@@ -727,7 +747,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             tradeOrder.getCount(), EChannelType.NBZ, null, null,
             tradeOrder.getCode(), EJourBizTypeUser.AJ_BUY.getCode(),
             EJourBizTypeUser.AJ_BUY.getValue());
-        // 2.2买家 扣除交易手续费
+        // 2.2买家 扣除交易广告费
         buyUserAccount = this.accountBO.changeAmount(buyUserAccount, tradeOrder
             .getFee().negate(), EChannelType.NBZ, null, null, tradeOrder
             .getCode(), EJourBizTypeUser.AJ_TRADEFEE.getCode(),
@@ -806,10 +826,10 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             tradeOrder.getCount(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
             EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue(), tradeOrder.getCode());
 
-        // 1.2卖家 交易所需手续费 解冻
+        // 1.2卖家 交易所需广告费 解冻
         sellUserAccount = this.accountBO.unfrozenAmount(sellUserAccount,
             tradeOrder.getFee(), EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
-            EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-手续费解冻",
+            EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告费解冻",
             tradeOrder.getCode());
 
         // 1.3卖家 扣除交易金额
@@ -818,7 +838,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             tradeOrder.getCode(), EJourBizTypeUser.AJ_SELL.getCode(),
             EJourBizTypeUser.AJ_SELL.getValue());
 
-        // 1.4卖家 扣除交易手续费
+        // 1.4卖家 扣除交易广告费
         sellUserAccount = this.accountBO.changeAmount(sellUserAccount,
             tradeOrder.getFee().negate(), EChannelType.NBZ, null, null,
             tradeOrder.getCode(), EJourBizTypeUser.AJ_TRADEFEE.getCode(),

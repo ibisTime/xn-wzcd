@@ -11,7 +11,7 @@ import com.cdkj.coin.exception.BizException;
  * @history:
  */
 public enum EJourBizTypePlat {
-    AJ_TRADEFEE("tradefee", "交易手续费收入"), AJ_WITHDRAWFEE("withdrawfee", "取现手续费收入"), AJ_WFEE(
+    AJ_TRADEFEE("tradefee", "交易广告费收入"), AJ_WITHDRAWFEE("withdrawfee", "取现手续费收入"), AJ_WFEE(
             "mfee", "取现矿工费"), AJ_MFEE("wfee", "归集矿工费"), AJ_INVITE("invite",
             "推荐人分成支出"), AJ_HC("hc", "红冲"), AJ_LB("lb", "蓝补");
     public static EJourBizTypePlat getBizType(String code) {

@@ -118,7 +118,7 @@ public interface IUserAO {
     public void doModifyDivRate(String userId, Double divRate1,
             Double divRate2, String updater, String remark);
 
-    // 修改交易手续费率
+    // 修改交易广告费率
     public void doModifyTradeRate(String userId, Double tradeRate,
             String updater, String remark);
 

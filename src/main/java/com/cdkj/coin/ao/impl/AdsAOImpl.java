@@ -44,14 +44,14 @@ import com.cdkj.coin.exception.EBizErrorCode;
 
 /**
  * Created by tianlei on 2017/十一月/14.
- * 1.发布： a.卖币广告是发布广告的时候就把出售金额 和 手续费冻结了
+ * 1.发布： a.卖币广告是发布广告的时候就把出售金额 和 广告费冻结了
  * b.买币广告没有冻结
  * 2.购买： a. 卖币广告，改变广告的可售余额即可
  * b.买币广告，冻结卖家金额，同时改变广告可购买金额
  * 3.取消:  a. 卖币广告，改变广告的可售金额即可
  * b.买币广告，需要把 卖家冻结的金额返还
  * 4.释放   a. 卖币广告，卖家冻结金额减少,买家账户余额增加
- * b. 买币广告，卖家冻结金额减少，买家账户余额增加(扣除手续费之后)
+ * b. 买币广告，卖家冻结金额减少，买家账户余额增加(扣除广告费之后)
  */
 @Service
 public class AdsAOImpl implements IAdsAO {
@@ -151,6 +151,11 @@ public class AdsAOImpl implements IAdsAO {
         User user = this.userBO.getUser(req.getUserId());
         if (user == null) {
             throw new BizException("xn00000", "用户不存在");
+        }
+
+        if (ETradeType.BUY.getCode().equals(req.getTradeType())
+                && StringUtils.isBlank(user.getRealName())) {
+            throw new BizException("xn00000", "您还未实名认证，请前往个人中心进行认证");
         }
 
         // 检查 平台 黑名单
@@ -343,11 +348,11 @@ public class AdsAOImpl implements IAdsAO {
 
         ads.setTruePrice(truePrice);
 
-        // 获取用户交易手续费率
+        // 获取用户交易广告费率
         User user = userBO.getUser(req.getUserId());
         Double fee = user.getTradeRate();
 
-        // 如果活动期间的费率大于等于0，表示活动开启，优先去优惠费率
+        // 如果活动期间的广告费率大于等于0，表示活动开启，优先取优惠费率
         Double activityTradeRate = sysConfigBO
             .getDoubleValue(SysConstants.ACTIVITY_TRADE_FEE_RATE);
         if (activityTradeRate >= 0) {
@@ -365,6 +370,10 @@ public class AdsAOImpl implements IAdsAO {
         ads.setLeaveMessage(req.getLeaveMessage());
         ads.setOnlyTrust(req.getOnlyTrust());
         ads.setDisplayTime(req.getDisplayTime());
+
+        if (ads.getTotalCount().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new BizException("xn000000", "出售总量必须大于0");
+        }
 
         if (ads.getTotalCount().multiply(ads.getProtectPrice())
             .compareTo(ads.getMinTrade()) < 0) {
@@ -447,7 +456,7 @@ public class AdsAOImpl implements IAdsAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "账户可用余额不足");
         }
 
-        // 手续费+发布总额
+        // 广告费+发布总额
         BigDecimal feeRate = ads.getFeeRate();
         BigDecimal fee = ads.getTotalCount().multiply(feeRate);
         BigDecimal willFrezonAmount = ads.getTotalCount().add(fee);
@@ -460,7 +469,7 @@ public class AdsAOImpl implements IAdsAO {
                 .subtract(account.getFrozenAmount()).subtract(fee);
             BigDecimal maxSellEther = Convert.fromWei(maxSell,
                 Convert.Unit.ETHER);
-            throw new BizException("xn000", "由于要冻结相应手续费，您最多可以出售"
+            throw new BizException("xn000", "由于要冻结相应广告费，您最多可以出售"
                     + maxSellEther.toString());
         }
 
@@ -469,10 +478,10 @@ public class AdsAOImpl implements IAdsAO {
             EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
             EJourBizTypeUser.AJ_ADS_FROZEN.getValue(), ads.getCode());
 
-        // 冻结 对应的手续费
+        // 冻结 对应的广告费
         account = this.accountBO.frozenAmount(account, fee,
             EJourBizTypeUser.AJ_ADS_FROZEN.getCode(),
-            EJourBizTypeUser.AJ_ADS_FROZEN.getValue() + "-交易手续费冻结",
+            EJourBizTypeUser.AJ_ADS_FROZEN.getValue() + "-交易广告费冻结",
             ads.getCode());
 
     }
@@ -557,18 +566,10 @@ public class AdsAOImpl implements IAdsAO {
         Account sellUserAccount = this.accountBO.getAccountByUser(userId,
             ECoin.ETH.getCode());
 
-        // 计算需要返还的手续费
-        // BigDecimal totalCount = ads.getTotalCount();
+        // 计算需要返还的数量
         BigDecimal leftCount = ads.getLeftCount();
 
-        // 算出剩余 比例
-        // BigDecimal rate = leftCount.divide(totalCount, 10,
-        // BigDecimal.ROUND_DOWN);
-        // 算出应该退还的手续费
-        // BigDecimal backFee = totalCount.multiply(ads.getFeeRate()).multiply(
-        // rate);
-
-        // 算出应该退还的手续费
+        // 算出应该退还的广告费
         BigDecimal backFee = leftCount.multiply(ads.getFeeRate()).setScale(0,
             BigDecimal.ROUND_DOWN);
 
@@ -582,15 +583,15 @@ public class AdsAOImpl implements IAdsAO {
             return;
         }
 
-        // 如果退还手续费 大于 冻结金额，只把冻结金额返还
+        // 如果退还广告费 大于 冻结金额，只把冻结金额返还
         BigDecimal shouldBackFee = backFee.compareTo(sellUserAccount
             .getFrozenAmount()) > 0 ? sellUserAccount.getFrozenAmount()
                 : backFee;
 
-        // 解冻手续费
+        // 解冻广告费
         sellUserAccount = this.accountBO.unfrozenAmount(sellUserAccount,
             shouldBackFee, EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
-            EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告手续费解冻",
+            EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-广告费解冻",
             ads.getCode());
 
     }

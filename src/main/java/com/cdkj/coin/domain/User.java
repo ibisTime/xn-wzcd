@@ -76,7 +76,7 @@ public class User extends ABaseDO {
     // 分成比例2
     private Double divRate2;
 
-    // 交易手续费率
+    // 交易广告费率
     private Double tradeRate;
 
     // 状态
