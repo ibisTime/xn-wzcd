@@ -185,4 +185,8 @@ public interface IUserAO {
     public void closeGoogleAuth(String userId, String smsCaptcha,
             String googleCaptcha);
 
+    // 添加推荐人
+    public void addUserReferee(String userId, String userReferee,
+            String userRefereeKind);
+
 }

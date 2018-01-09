@@ -576,6 +576,15 @@
 		user_id = #{userId}		
 	</update>
 	
+	<update id="update_userReferee" parameterType="user">
+		UPDATE tstd_user
+		SET
+		user_referee = #{userReferee}
+		,user_referee_level = #{userRefereeLevel}
+		WHERE
+		user_id = #{userId}		
+	</update>
+	
 	<update id="approve_user" parameterType="user">
 		UPDATE tstd_user
 		SET

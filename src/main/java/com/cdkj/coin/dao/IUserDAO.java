@@ -83,4 +83,7 @@ public interface IUserDAO extends IBaseDAO<User> {
     public int updateLastLogin(User data);
 
     public int updateGoogleSecret(User data);
+
+    // 修改推荐人
+    public int updateUserReferee(User data);
 }

@@ -144,10 +144,10 @@ public class UserAOImpl implements IUserAO {
         // 验证推荐人是否存在,并将手机号转化为用户编号
         User refereeUser = userBO.getUser(userReferee, userRefereeKind,
             companyCode, systemCode);
-        String refereeUserId = null;
-        if (refereeUser != null) {
-            refereeUserId = refereeUser.getUserId();
+        if (refereeUser == null) {
+            throw new BizException("xn000000", "推荐人手机号不存在");
         }
+        String refereeUserId = refereeUser.getUserId();
         // 验证短信验证码
         smsOutBO.checkCaptcha(mobile, smsCaptcha, ECaptchaType.C_REG.getCode(),
             companyCode, systemCode);
@@ -1103,6 +1103,29 @@ public class UserAOImpl implements IUserAO {
             System.currentTimeMillis());
         // 重置谷歌验证秘钥
         userBO.refreshGoogleSecret(userId, null);
+    }
+
+    @Override
+    public void addUserReferee(String userId, String userReferee,
+            String userRefereeKind) {
+        User user = userBO.getUser(userId);
+        if (user == null) {
+            throw new BizException("xn000000", "编号为" + userId + "的用户不存在");
+        }
+        if (StringUtils.isNotBlank(user.getUserReferee())) {
+            throw new BizException("xn000000", "该用户已经有推荐人");
+        }
+        // 验证推荐人是否存在,并将手机号转化为用户编号
+        User refereeUser = userBO.getUser(userReferee, userRefereeKind,
+            ESystemCode.COIN.getCode(), ESystemCode.COIN.getCode());
+        if (refereeUser == null) {
+            throw new BizException("xn000000", "推荐人手机号不存在");
+        }
+        if (userId.equals(refereeUser.getUserId())) {
+            throw new BizException("xn000000", "推荐人不能是用户本人");
+        }
+        userBO.refreshUserReferee(userId, refereeUser.getUserId(),
+            refereeUser.getLevel());
     }
 
 }

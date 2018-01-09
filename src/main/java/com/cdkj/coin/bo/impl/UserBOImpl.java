@@ -154,8 +154,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
             List<User> list = userDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
                 user = list.get(0);
-            } else
-                throw new BizException("xn702002", "手机号[" + mobile + "]用户不存在");
+            }
         }
         return user;
     }
@@ -827,6 +826,18 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
             data.setUserId(userId);
             data.setGoogleSecret(secret);
             userDAO.updateGoogleSecret(data);
+        }
+    }
+
+    @Override
+    public void refreshUserReferee(String userId, String userReferee,
+            String userRefereeLevel) {
+        if (StringUtils.isNotBlank(userId)) {
+            User data = new User();
+            data.setUserId(userId);
+            data.setUserReferee(userReferee);
+            data.setUserRefereeLevel(userRefereeLevel);
+            userDAO.updateUserReferee(data);
         }
     }
 
