@@ -153,43 +153,50 @@ public class WithdrawAOImpl implements IWithdrawAO {
     public String applyOrder(String accountNumber, BigDecimal amount,
             String payCardInfo, String payCardNo, String applyUser,
             String applyNote) {
-        User user = userBO.getUser(applyUser);
 
-        if (StringUtils.isBlank(user.getTradePwdStrength())) {
-            throw new BizException("xn000000", "请先设置资金密码");
-        }
-        if (amount.compareTo(BigDecimal.ZERO) == 0
-                || amount.compareTo(BigDecimal.ZERO) == -1) {
-            throw new BizException("xn000000", "提现金额需大于零");
+        // 取现手续费
+        BigDecimal fee = sysConfigBO
+            .getBigDecimalValue(SysConstants.WITHDRAW_FEE);
+        fee = Convert.toWei(fee, Unit.ETHER);
+        if (amount.compareTo(fee) == 0 || amount.compareTo(fee) == -1) {
+            throw new BizException("xn000000", "提现金额需大于手续费");
         }
         if (!WalletUtils.isValidAddress(payCardNo)) {
             throw new BizException("xn000000", "提现地址不符合以太坊规则，请仔细核对");
         }
         Account dbAccount = accountBO.getAccount(accountNumber);
+        if (dbAccount.getAmount().subtract(dbAccount.getFrozenAmount())
+            .compareTo(amount) == -1) {
+            throw new BizException("xn000000", "可用余额不足");
+        }
+
         // 判断本月是否次数已满，且现在只能有一笔取现未支付记录
         withdrawBO.doCheckTimes(dbAccount);
-        // 取现手续费
-        BigDecimal fee = sysConfigBO
-            .getBigDecimalValue(SysConstants.WITHDRAW_FEE);
-        fee = Convert.toWei(fee, Unit.ETHER);
-        if (dbAccount.getAmount().compareTo(amount.add(fee)) == -1) {
-            throw new BizException("xn000000", "余额不足");
+
+        List<String> typeList = new ArrayList<String>();
+        typeList.add(EEthAddressType.X.getCode());
+        typeList.add(EEthAddressType.M.getCode());
+        typeList.add(EEthAddressType.W.getCode());
+
+        EthAddress condition1 = new EthAddress();
+        condition1.setAddress(payCardNo);
+        condition1.setTypeList(typeList);
+
+        if (ethAddressBO.getTotalCount(condition1) > 0) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "提现地址已经在本平台被使用，请仔细核对！");
         }
+
         // 生成取现订单
         String withdrawCode = withdrawBO.applyOrder(dbAccount, amount, fee,
             payCardInfo, payCardNo, applyUser, applyNote);
         // 冻结取现金额
         dbAccount = accountBO.frozenAmount(dbAccount, amount,
-            EJourBizTypeUser.AJ_WITHDRAW.getCode(),
-            EJourBizTypeUser.AJ_WITHDRAW.getValue(), withdrawCode);
-        if (fee.compareTo(BigDecimal.ZERO) > 0) {
-            // 冻结取现手续费
-            accountBO.frozenAmount(dbAccount, fee,
-                EJourBizTypeUser.AJ_WITHDRAWFEE.getCode(),
-                EJourBizTypeUser.AJ_WITHDRAWFEE.getValue(), withdrawCode);
-        }
+            EJourBizTypeUser.AJ_WITHDRAW_FROZEN.getCode(),
+            EJourBizTypeUser.AJ_WITHDRAW_FROZEN.getValue(), withdrawCode);
 
         return withdrawCode;
+
     }
 
     @Override
