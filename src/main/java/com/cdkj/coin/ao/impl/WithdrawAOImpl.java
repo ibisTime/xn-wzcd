@@ -79,6 +79,10 @@ public class WithdrawAOImpl implements IWithdrawAO {
     public String applyOrderTradePwd(String accountNumber, BigDecimal amount,
             String payCardInfo, String payCardNo, String applyUser,
             String applyNote, String tradePwd, String googleCaptcha) {
+        User user = userBO.getUser(applyUser);
+        if (StringUtils.isBlank(user.getRealName())) {
+            throw new BizException("xn000000", "请先进行实名认证");
+        }
         // 取现手续费
         BigDecimal fee = sysConfigBO
             .getBigDecimalValue(SysConstants.WITHDRAW_FEE);
@@ -102,7 +106,12 @@ public class WithdrawAOImpl implements IWithdrawAO {
         typeList.add(EEthAddressType.X.getCode());
         typeList.add(EEthAddressType.M.getCode());
         typeList.add(EEthAddressType.W.getCode());
-        if (ethAddressBO.isEthAddressExist(payCardNo, typeList)) {
+
+        EthAddress condition1 = new EthAddress();
+        condition1.setAddress(payCardNo);
+        condition1.setTypeList(typeList);
+
+        if (ethAddressBO.getTotalCount(condition1) > 0) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "提现地址已经在本平台被使用，请仔细核对！");
         }
@@ -119,7 +128,6 @@ public class WithdrawAOImpl implements IWithdrawAO {
             // 验证交易密码
             userBO.checkTradePwd(dbAccount.getUserId(), tradePwd);
             // 假如开启了谷歌认证，校验谷歌验证码
-            User user = userBO.getUser(applyUser);
             if (StringUtils.isNotBlank(user.getGoogleSecret())) {
                 if (StringUtils.isBlank(googleCaptcha)) {
                     throw new BizException("xn000000", "您已开启谷歌认证，请输入谷歌验证码！");
@@ -146,9 +154,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
             String payCardInfo, String payCardNo, String applyUser,
             String applyNote) {
         User user = userBO.getUser(applyUser);
-        if (StringUtils.isBlank(user.getRealName())) {
-            throw new BizException("xn000000", "请先进行实名认证");
-        }
+
         if (StringUtils.isBlank(user.getTradePwdStrength())) {
             throw new BizException("xn000000", "请先设置资金密码");
         }

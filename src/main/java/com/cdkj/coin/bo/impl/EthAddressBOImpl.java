@@ -261,12 +261,11 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
     }
 
     @Override
-    public boolean isEthAddressExist(String address, List<String> typeList) {
+    public boolean isEthAddressExist(String address) {
         boolean flag = false;
         if (StringUtils.isNotBlank(address)) {
             EthAddress condition = new EthAddress();
             condition.setAddress(address);
-            condition.setTypeList(typeList);
             if (ethAddressDAO.selectTotalCount(condition) > 0) {
                 flag = true;
             }

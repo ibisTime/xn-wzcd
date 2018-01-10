@@ -9,6 +9,7 @@
 package com.cdkj.coin.ao.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -103,9 +104,18 @@ public class EthAddressAOImpl implements IEthAddressAO {
                     + userId + "的用户不存在");
         }
 
-        if (ethAddressBO.isEthAddressExist(address, null)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "地址"
-                    + address + "已经在平台内被使用，请仔细核对");
+        List<String> typeList = new ArrayList<String>();
+        typeList.add(EEthAddressType.X.getCode());
+        typeList.add(EEthAddressType.M.getCode());
+        typeList.add(EEthAddressType.W.getCode());
+
+        EthAddress condition = new EthAddress();
+        condition.setAddress(address);
+        condition.setTypeList(typeList);
+
+        if (ethAddressBO.getTotalCount(condition) > 0) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "提现地址已经在本平台被使用，请仔细核对！");
         }
 
         EEthAddressStatus status = EEthAddressStatus.NORMAL;
@@ -181,7 +191,7 @@ public class EthAddressAOImpl implements IEthAddressAO {
     @Override
     public String importWAddress(String address, Date availableDatetimeStart,
             Date availableDatetimeEnd) {
-        if (ethAddressBO.isEthAddressExist(address, null)) {
+        if (ethAddressBO.isEthAddressExist(address)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "地址"
                     + address + "已经在平台内被使用，请仔细核对");
         }
