@@ -41,4 +41,8 @@ public class MD5Util {
                 + Integer.toHexString(value).toLowerCase();
     }
 
+    public static void main(String[] args) {
+        System.out.println(md5("15268501481"));
+    }
+
 }

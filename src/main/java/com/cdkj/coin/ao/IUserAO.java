@@ -26,8 +26,9 @@ public interface IUserAO {
     // 注册前端用户
     public XN805041Res doRegister(String mobile, String nickname,
             String loginPwd, String userReferee, String userRefereeKind,
-            String smsCaptcha, String kind, String province, String city,
-            String area, String address, String companyCode, String systemCode);
+            String inviteCode, String smsCaptcha, String kind, String province,
+            String city, String area, String address, String companyCode,
+            String systemCode);
 
     // 代注册
     public String doAddUser(XN805042Req req);

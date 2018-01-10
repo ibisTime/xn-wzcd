@@ -25,13 +25,14 @@ public class XN805041 extends AProcessor {
     public synchronized Object doBusiness() throws BizException {
         return userAO.doRegister(req.getMobile(), req.getNickname(),
             req.getLoginPwd(), req.getUserReferee(), req.getUserRefereeKind(),
-            req.getSmsCaptcha(), req.getKind(), req.getProvince(),
-            req.getCity(), req.getArea(), req.getAddress(),
+            req.getInviteCode(), req.getSmsCaptcha(), req.getKind(),
+            req.getProvince(), req.getCity(), req.getArea(), req.getAddress(),
             req.getCompanyCode(), req.getSystemCode());
     }
 
     @Override
-    public void doCheck(String inputparams, String operator) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN805041Req.class);
         PhoneUtil.checkMobile(req.getMobile());// 判断格式
         ObjValidater.validateReq(req);

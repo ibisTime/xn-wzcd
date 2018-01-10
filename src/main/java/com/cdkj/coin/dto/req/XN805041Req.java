@@ -19,6 +19,8 @@ public class XN805041Req {
 
     private String userReferee; // 推荐人(选填)
 
+    private String inviteCode; // 推荐人编号，AES加密后的数据(选填)
+
     @NotBlank
     private String smsCaptcha; // 手机验证码
 
@@ -77,6 +79,14 @@ public class XN805041Req {
 
     public void setUserReferee(String userReferee) {
         this.userReferee = userReferee;
+    }
+
+    public String getInviteCode() {
+        return inviteCode;
+    }
+
+    public void setInviteCode(String inviteCode) {
+        this.inviteCode = inviteCode;
     }
 
     public String getSmsCaptcha() {

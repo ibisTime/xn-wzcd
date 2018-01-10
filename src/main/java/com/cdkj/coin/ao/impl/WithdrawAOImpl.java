@@ -1,6 +1,7 @@
 package com.cdkj.coin.ao.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -97,9 +98,13 @@ public class WithdrawAOImpl implements IWithdrawAO {
         // 判断本月是否次数已满，且现在只能有一笔取现未支付记录
         withdrawBO.doCheckTimes(dbAccount);
 
-        if (ethAddressBO.isEthAddressExist(payCardNo)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "地址"
-                    + payCardNo + "已经在本平台被使用，请仔细核对！");
+        List<String> typeList = new ArrayList<String>();
+        typeList.add(EEthAddressType.X.getCode());
+        typeList.add(EEthAddressType.M.getCode());
+        typeList.add(EEthAddressType.W.getCode());
+        if (ethAddressBO.isEthAddressExist(payCardNo, typeList)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "提现地址已经在本平台被使用，请仔细核对！");
         }
 
         // 检查是否是已认证的地址

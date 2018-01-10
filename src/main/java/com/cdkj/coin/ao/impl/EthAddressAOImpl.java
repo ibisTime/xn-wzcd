@@ -103,7 +103,7 @@ public class EthAddressAOImpl implements IEthAddressAO {
                     + userId + "的用户不存在");
         }
 
-        if (ethAddressBO.isEthAddressExist(address)) {
+        if (ethAddressBO.isEthAddressExist(address, null)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "地址"
                     + address + "已经在平台内被使用，请仔细核对");
         }
@@ -181,7 +181,7 @@ public class EthAddressAOImpl implements IEthAddressAO {
     @Override
     public String importWAddress(String address, Date availableDatetimeStart,
             Date availableDatetimeEnd) {
-        if (ethAddressBO.isEthAddressExist(address)) {
+        if (ethAddressBO.isEthAddressExist(address, null)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "地址"
                     + address + "已经在平台内被使用，请仔细核对");
         }

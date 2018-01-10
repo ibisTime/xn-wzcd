@@ -82,6 +82,9 @@ public class EthAddress extends ABaseDO {
     // 状态列表
     private List<String> statusList;
 
+    // 类型列表
+    private List<String> typeList;
+
     public String getCode() {
         return code;
     }
@@ -275,6 +278,14 @@ public class EthAddress extends ABaseDO {
 
     public void setStatusList(List<String> statusList) {
         this.statusList = statusList;
+    }
+
+    public List<String> getTypeList() {
+        return typeList;
+    }
+
+    public void setTypeList(List<String> typeList) {
+        this.typeList = typeList;
     }
 
 }

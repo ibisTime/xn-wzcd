@@ -37,6 +37,7 @@ import com.cdkj.coin.bo.ITencentBO;
 import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.IUserRelationBO;
 import com.cdkj.coin.bo.base.Paginable;
+import com.cdkj.coin.common.AESUtil;
 import com.cdkj.coin.common.DateUtil;
 import com.cdkj.coin.common.MD5Util;
 import com.cdkj.coin.common.PhoneUtil;
@@ -135,23 +136,39 @@ public class UserAOImpl implements IUserAO {
     @Transactional
     public XN805041Res doRegister(String mobile, String nickname,
             String loginPwd, String userReferee, String userRefereeKind,
-            String smsCaptcha, String kind, String province, String city,
-            String area, String address, String companyCode, String systemCode) {
+            String inviteCode, String smsCaptcha, String kind, String province,
+            String city, String area, String address, String companyCode,
+            String systemCode) {
         // 验证手机号是否存在
         userBO.isMobileExist(mobile, kind, companyCode, systemCode);
         // 检查昵称是否已经被使用
         userBO.isNicknameExist(nickname, kind, companyCode, systemCode);
+
         String refereeUserId = null;
         User refereeUser = null;
-        if (StringUtils.isNotBlank(userReferee)
-                && StringUtils.isNotBlank(userRefereeKind)) {
-            // 验证推荐人是否存在,并将手机号转化为用户编号
-            refereeUser = userBO.getUser(userReferee, userRefereeKind,
-                companyCode, systemCode);
-            if (refereeUser == null) {
-                throw new BizException("xn000000", "推荐人手机号不存在");
+
+        if (StringUtils.isNotBlank(inviteCode)) {
+            try {
+                refereeUserId = AESUtil.jdkAESDecryption(inviteCode);
+                refereeUser = userBO.getUser(refereeUserId);
+                if (refereeUser == null) {
+                    throw new BizException("xn000000", "无效的邀请码");
+                }
+            } catch (Exception e) {
+                throw new BizException("无效的邀请码");
             }
-            refereeUserId = refereeUser.getUserId();
+
+        } else {
+            if (StringUtils.isNotBlank(userReferee)
+                    && StringUtils.isNotBlank(userRefereeKind)) {
+                // 验证推荐人是否存在,并将手机号转化为用户编号
+                refereeUser = userBO.getUser(userReferee, userRefereeKind,
+                    companyCode, systemCode);
+                if (refereeUser == null) {
+                    throw new BizException("xn000000", "推荐人手机号不存在");
+                }
+                refereeUserId = refereeUser.getUserId();
+            }
         }
         // 验证短信验证码
         smsOutBO.checkCaptcha(mobile, smsCaptcha, ECaptchaType.C_REG.getCode(),

@@ -2,6 +2,7 @@ package com.cdkj.coin.domain;
 
 import java.util.Date;
 
+import com.cdkj.coin.common.AESUtil;
 import com.cdkj.coin.dao.base.ABaseDO;
 
 /**
@@ -18,6 +19,9 @@ public class User extends ABaseDO {
 
     // userId
     private String userId;
+
+    // AES加密后的userId
+    private String secretUserId;
 
     // 登陆名
     private String loginName;
@@ -215,6 +219,14 @@ public class User extends ABaseDO {
 
     private UserStatistics userStatistics;
 
+    public String getSecretUserId() {
+        return secretUserId;
+    }
+
+    public void setSecretUserId(String secretUserId) {
+        this.secretUserId = secretUserId;
+    }
+
     public UserStatistics getUserStatistics() {
         return userStatistics;
     }
@@ -237,6 +249,7 @@ public class User extends ABaseDO {
 
     public void setUserId(String userId) {
         this.userId = userId;
+        this.secretUserId = AESUtil.jdkAESEncryption(userId);
     }
 
     public String getLoginName() {
