@@ -39,11 +39,14 @@ import com.cdkj.coin.exception.BizException;
 public class AccountTest {
 
     public static void main(String args[]) {
+
+        String amount = "120000000000000";
+        System.out
+            .println("准备开始广播，交易金额=" + Convert.fromWei(amount, Unit.ETHER));
         String hash = broadcast("0x3a7b569f809cbe7e63ebfb02c313bc9a34d5e5c8",
             "12345678", "0x1bb4fd555fdcdbf365c5fc3d549f5647a631adae",
-            new BigDecimal("1000000000000000"));
-        System.out.println("广播完成，交易hash=" + hash + "，交易金额="
-                + Convert.fromWei("1000000000000000", Unit.ETHER));
+            new BigDecimal("120000000000000"));
+        System.out.println("广播完成，交易hash=" + hash);
 
         // BigDecimal a = new BigDecimal("10000000000000000000");
         // BigDecimal b = new BigDecimal("9999999999999999999");
