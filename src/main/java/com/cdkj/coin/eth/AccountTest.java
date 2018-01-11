@@ -21,7 +21,9 @@ import org.web3j.crypto.WalletUtils;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.admin.Admin;
 import org.web3j.protocol.admin.methods.response.NewAccountIdentifier;
+import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.response.EthGetBalance;
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
 import org.web3j.protocol.core.methods.response.EthSendTransaction;
 import org.web3j.protocol.http.HttpService;
@@ -40,12 +42,11 @@ public class AccountTest {
 
     public static void main(String args[]) {
 
-        String amount = "120000000000000";
-        System.out
-            .println("准备开始广播，交易金额=" + Convert.fromWei(amount, Unit.ETHER));
+        // String amount = "全部转出";
+        // System.out
+        // .println("准备开始广播，交易金额=" + Convert.fromWei(amount, Unit.ETHER));
         String hash = broadcast("0x3a7b569f809cbe7e63ebfb02c313bc9a34d5e5c8",
-            "12345678", "0x1bb4fd555fdcdbf365c5fc3d549f5647a631adae",
-            new BigDecimal("120000000000000"));
+            "12345678", "0x1bb4fd555fdcdbf365c5fc3d549f5647a631adae", null);
         System.out.println("广播完成，交易hash=" + hash);
 
         // BigDecimal a = new BigDecimal("10000000000000000000");
@@ -127,13 +128,48 @@ public class AccountTest {
             //
             BigInteger nonce = ethGetTransactionCount.getTransactionCount();
 
+            // 预估矿工费用
+            // BigDecimal gasPrice = new BigDecimal(web3j.ethGasPrice().send()
+            // .getGasPrice().toString());
+            BigDecimal gasPrice = new BigDecimal("30000000000");
+
+            // 查询余额
+            BigDecimal balance = null;
+            DefaultBlockParameter defaultBlockParameter = DefaultBlockParameterName.LATEST;
+            EthGetBalance ethGetBalance = web3j.ethGetBalance(from,
+                defaultBlockParameter).send();
+            if (ethGetBalance != null) {
+                balance = new BigDecimal(ethGetBalance.getBalance().toString());
+            } else {
+                throw new BizException("xn625000", "以太坊余额查询失败");
+            }
+            // 预计消耗gas
+            BigDecimal gasUsed = new BigDecimal(21000);
+            BigDecimal txFee = gasPrice.multiply(gasUsed);
+
+            // value为空，全部转出
+            if (value == null) {
+                value = balance.subtract(txFee);
+            }
+
+            System.out.println("地址余额=" + balance + "，以太坊平均价格=" + gasPrice
+                    + "，预计矿工费=" + txFee + "，预计到账金额=" + value + "，预计剩余金额="
+                    + balance.subtract(txFee).subtract(value));
+            if (value.compareTo(BigDecimal.ZERO) < 0
+                    || value.compareTo(BigDecimal.ZERO) == 0) {
+                throw new BizException("xn625000", "余额不足以支付矿工费，不能转账");
+            }
+
             // TODO 动态获取
             BigInteger gasLimit = BigInteger.valueOf(30000);
-            BigInteger gasPrice = web3j.ethGasPrice().send().getGasPrice();
+
+            System.out.println("预计矿工费:"
+                    + Convert.fromWei(gasUsed.multiply(gasPrice).toString(),
+                        Unit.ETHER));
 
             // 本地签名的
             RawTransaction rawTransaction = RawTransaction.createTransaction(
-                nonce, gasPrice, gasLimit, to,
+                nonce, new BigInteger(gasPrice.toString()), gasLimit, to,
                 new BigInteger(value.toString()), "");
 
             // 签名
@@ -145,15 +181,16 @@ public class AccountTest {
 
             if (ethSendTransaction.getError() != null) {
                 // failure
+                throw new BizException("xn625000", "广播失败"
+                        + ethSendTransaction.getError().getMessage());
             }
             txHash = ethSendTransaction.getTransactionHash();
 
         } catch (Exception e) {
-            throw new BizException("xn625000", "交易广播异常" + e.getMessage());
+            throw new BizException("xn625000", "交易广播异常-" + e.getMessage());
         }
         return txHash;
         // success
 
     }
-
 }
