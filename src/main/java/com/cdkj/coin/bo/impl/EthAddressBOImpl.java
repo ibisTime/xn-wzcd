@@ -43,6 +43,42 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
     @Autowired
     private IEthAddressDAO ethAddressDAO;
 
+    // @Override
+    // public String generateAddress(EEthAddressType type, String
+    // ethAccountName,
+    // String userId, Date availableDatetimeStart,
+    // Date availableDatetimeEnd) {
+    //
+    // String address = null;
+    // String password = RandomUtil.generate8();
+    // try {
+    //
+    // ECKey key = new ECKey();
+    //
+    // byte[] addr = key.getAddress();
+    //
+    // String addrBase16 = Hex.toHexString(addr);
+    //
+    // ECKeyPair ecKeyPair = ECKeyPair.create(key.getPrivKey());
+    // WalletFile walletFile = Wallet.createStandard(password, ecKeyPair);
+    //
+    // ObjectMapper objectMapper = new ObjectMapper();
+    // String jsonStr = objectMapper.writeValueAsString(walletFile);
+    // String filename = ETHAddressFactory.getFileName(addrBase16);
+    //
+    // // 落地地址信息
+    // this.saveEthAddress(type, userId, address, type.getValue(),
+    // password, BigDecimal.ZERO, availableDatetimeStart,
+    // availableDatetimeEnd, EEthAddressStatus.NORMAL, filename,
+    // jsonStr);
+    //
+    // address = "0x" + addrBase16;
+    // } catch (Exception e) {
+    // throw new BizException("以太坊地址创建发送异常，原因：" + e.getMessage());
+    // }
+    // return address;
+    // }
+
     @Override
     public String generateAddress(EEthAddressType type, String ethAccountName,
             String userId, Date availableDatetimeStart,
