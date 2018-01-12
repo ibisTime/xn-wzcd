@@ -1,72 +1,63 @@
 package com.cdkj.coin.dto.req;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN805043Req {
-    // 登录名（必填）
-    private String loginName;
 
-    // 登录密码（选填）
-    private String loginPwd;
+    @NotBlank
+    private String mobile; // 手机号
 
-    // 手机号（选填）
-    private String mobile;
+    @NotBlank
+    @Length(min = 2, max = 10, message = "昵称长度必须在2-10之间")
+    private String nickname; // 昵称
 
-    // 证件类型（选填）
-    private String idKind;
+    @NotBlank
+    private String loginPwd; // 登录密码、
 
-    // 证件号码（选填）
-    private String idNo;
+    @NotBlank
+    private String realName; // 真实姓名
 
-    // 真实姓名（选填）
-    private String realName;
+    @NotBlank
+    private String idNo; // 身份证号
 
-    // 推荐人（选填）
-    private String userReferee;
+    private String userRefereeKind; // 推荐人类型(选填)
 
-    // 用户类型(必填)
-    private String kind;
+    private String userReferee; // 推荐人(选填)
 
-    // 附件(选填)
-    private String pdf;
+    private String inviteCode; // 推荐人编号，AES加密后的数据(选填)
 
-    // 分成比例(选填)
-    private String divRate;
+    @NotBlank
+    private String kind; // 用户类型
 
-    // 是否注册环信(选填)
-    private String isRegHx;
+    private String province; // 省(选填)
 
-    // 省(选填)
-    private String province;
+    private String city; // 市(选填)
 
-    // 市(选填)
-    private String city;
+    private String area; // 区(选填)
 
-    // 区(选填)
-    private String area;
+    private String address; // 详细地址(选填)
 
-    // 经度(选填)
-    private String longitude;
+    @NotBlank
+    private String companyCode; // 公司编号(必填)
 
-    // 维度(选填)
-    private String latitude;
+    @NotBlank
+    private String systemCode; // 系统编号(必填)
 
-    // 更新人(必填)
-    private String updater;
-
-    // 备注(选填)
-    private String remark;
-
-    // 公司编号(必填)
-    private String companyCode;
-
-    // 系统编号(必填)
-    private String systemCode;
-
-    public String getLoginName() {
-        return loginName;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getLoginPwd() {
@@ -77,36 +68,12 @@ public class XN805043Req {
         this.loginPwd = loginPwd;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getUserRefereeKind() {
+        return userRefereeKind;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getIdKind() {
-        return idKind;
-    }
-
-    public void setIdKind(String idKind) {
-        this.idKind = idKind;
-    }
-
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
+    public void setUserRefereeKind(String userRefereeKind) {
+        this.userRefereeKind = userRefereeKind;
     }
 
     public String getUserReferee() {
@@ -117,36 +84,36 @@ public class XN805043Req {
         this.userReferee = userReferee;
     }
 
+    public String getInviteCode() {
+        return inviteCode;
+    }
+
+    public void setInviteCode(String inviteCode) {
+        this.inviteCode = inviteCode;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
+    }
+
     public String getKind() {
         return kind;
     }
 
     public void setKind(String kind) {
         this.kind = kind;
-    }
-
-    public String getPdf() {
-        return pdf;
-    }
-
-    public void setPdf(String pdf) {
-        this.pdf = pdf;
-    }
-
-    public String getDivRate() {
-        return divRate;
-    }
-
-    public void setDivRate(String divRate) {
-        this.divRate = divRate;
-    }
-
-    public String getIsRegHx() {
-        return isRegHx;
-    }
-
-    public void setIsRegHx(String isRegHx) {
-        this.isRegHx = isRegHx;
     }
 
     public String getProvince() {
@@ -173,36 +140,12 @@ public class XN805043Req {
         this.area = area;
     }
 
-    public String getLongitude() {
-        return longitude;
+    public String getAddress() {
+        return address;
     }
 
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getCompanyCode() {
@@ -220,5 +163,4 @@ public class XN805043Req {
     public void setSystemCode(String systemCode) {
         this.systemCode = systemCode;
     }
-
 }

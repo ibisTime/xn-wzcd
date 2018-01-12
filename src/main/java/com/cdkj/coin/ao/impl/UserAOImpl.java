@@ -207,6 +207,72 @@ public class UserAOImpl implements IUserAO {
         return new XN805041Res(userId, refereeUserId, amount);
     }
 
+    @Override
+    @Transactional
+    public void doRegisterAndIdentify(String mobile, String nickname,
+            String loginPwd, String realName, String idNo, String userReferee,
+            String userRefereeKind, String inviteCode, String kind,
+            String province, String city, String area, String address,
+            String companyCode, String systemCode) {
+        // 验证手机号是否存在
+        userBO.isMobileExist(mobile, kind, companyCode, systemCode);
+        // 检查昵称是否已经被使用
+        userBO.isNicknameExist(nickname, kind, companyCode, systemCode);
+
+        String refereeUserId = null;
+        User refereeUser = null;
+
+        if (StringUtils.isNotBlank(inviteCode)) {
+            try {
+                refereeUserId = AESUtil.jdkAESDecryption(inviteCode);
+                refereeUser = userBO.getUser(refereeUserId);
+                if (refereeUser == null) {
+                    throw new BizException("xn000000", "无效的邀请码");
+                }
+            } catch (Exception e) {
+                throw new BizException("无效的邀请码");
+            }
+
+        } else {
+            if (StringUtils.isNotBlank(userReferee)
+                    && StringUtils.isNotBlank(userRefereeKind)) {
+                // 验证推荐人是否存在,并将手机号转化为用户编号
+                refereeUser = userBO.getUser(userReferee, userRefereeKind,
+                    companyCode, systemCode);
+                if (refereeUser == null) {
+                    throw new BizException("xn000000", "推荐人手机号不存在");
+                }
+                refereeUserId = refereeUser.getUserId();
+            }
+        }
+        // 获取默认分成比例
+        Double divRate1 = sysConfigBO
+            .getDoubleValue(SysConstants.FEN_CHENG_FEE);
+        Double divRate2 = sysConfigBO
+            .getDoubleValue(SysConstants.AGENT_FEN_CHENG_FEE);
+        Double tradeRate = sysConfigBO
+            .getDoubleValue(SysConstants.TRADE_FEE_RATE);
+        // 注册用户
+        String userId = userBO.doRegister(mobile, nickname, loginPwd,
+            refereeUser, kind, province, city, area, address, divRate1,
+            divRate2, tradeRate, companyCode, systemCode);
+        // 分配账户
+        distributeAccount(userId, mobile, kind, companyCode, systemCode);
+        // 生成ETH地址
+        String ethAddress = ethAddressBO.generateAddress(EEthAddressType.X,
+            mobile, userId, null, null);
+        // 通知橙提取
+        ctqBO.uploadAddress(ethAddress, EEthAddressType.X.getCode());
+
+        // 注册腾讯云
+        tencentBO.register(userId, nickname, companyCode, systemCode);
+
+        // 实名
+        userBO
+            .refreshIdentity(userId, realName, EIDKind.IDCard.getCode(), idNo);
+
+    }
+
     // 分配账号
     private void distributeAccount(String userId, String mobile, String kind,
             String companyCode, String systemCode) {

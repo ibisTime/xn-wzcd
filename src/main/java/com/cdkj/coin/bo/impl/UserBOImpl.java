@@ -282,44 +282,45 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     @Override
     public String doApplyRegUser(XN805043Req req, String roleCode) {
         String userId = OrderNoGenerater.generate("U");
-        User user = new User();
-        user.setUserId(userId);
-        user.setLoginName(req.getLoginName());
-        user.setMobile(req.getMobile());
-        user.setNickname(userId.substring(userId.length() - 8, userId.length()));
-
-        user.setLoginPwd(MD5Util.md5(req.getLoginPwd()));
-        user.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(req
-            .getLoginPwd()));
-        user.setKind(req.getKind());
-        user.setLevel(EUserLevel.ONE.getCode());
-        user.setUserReferee(req.getUserReferee());
-
-        user.setIdKind(req.getIdKind());
-        user.setIdNo(req.getIdNo());
-        user.setRealName(req.getRealName());
-
-        user.setRoleCode(roleCode);
-
-        user.setDivRate1(Double.valueOf(req.getDivRate()));
-        user.setStatus(EUserStatus.TO_APPROVE.getCode());
-        user.setPdf(req.getPdf());
-
-        user.setProvince(req.getProvince());
-        user.setCity(req.getCity());
-        user.setArea(req.getArea());
-        user.setLatitude(req.getLatitude());
-        user.setLongitude(req.getLongitude());
-
-        Date date = new Date();
-        user.setCreateDatetime(date);
-        user.setUpdater(req.getUpdater());
-        user.setUpdateDatetime(date);
-        user.setRemark(req.getRemark());
-
-        user.setCompanyCode(req.getCompanyCode());
-        user.setSystemCode(req.getSystemCode());
-        userDAO.insert(user);
+        // User user = new User();
+        // user.setUserId(userId);
+        // user.setLoginName(req.getLoginName());
+        // user.setMobile(req.getMobile());
+        // user.setNickname(userId.substring(userId.length() - 8,
+        // userId.length()));
+        //
+        // user.setLoginPwd(MD5Util.md5(req.getLoginPwd()));
+        // user.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(req
+        // .getLoginPwd()));
+        // user.setKind(req.getKind());
+        // user.setLevel(EUserLevel.ONE.getCode());
+        // user.setUserReferee(req.getUserReferee());
+        //
+        // user.setIdKind(req.getIdKind());
+        // user.setIdNo(req.getIdNo());
+        // user.setRealName(req.getRealName());
+        //
+        // user.setRoleCode(roleCode);
+        //
+        // user.setDivRate1(Double.valueOf(req.getDivRate()));
+        // user.setStatus(EUserStatus.TO_APPROVE.getCode());
+        // user.setPdf(req.getPdf());
+        //
+        // user.setProvince(req.getProvince());
+        // user.setCity(req.getCity());
+        // user.setArea(req.getArea());
+        // user.setLatitude(req.getLatitude());
+        // user.setLongitude(req.getLongitude());
+        //
+        // Date date = new Date();
+        // user.setCreateDatetime(date);
+        // user.setUpdater(req.getUpdater());
+        // user.setUpdateDatetime(date);
+        // user.setRemark(req.getRemark());
+        //
+        // user.setCompanyCode(req.getCompanyCode());
+        // user.setSystemCode(req.getSystemCode());
+        // userDAO.insert(user);
         return userId;
     }
 

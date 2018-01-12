@@ -30,6 +30,13 @@ public interface IUserAO {
             String city, String area, String address, String companyCode,
             String systemCode);
 
+    // 注册前端虚拟用户，并实名
+    public void doRegisterAndIdentify(String mobile, String nickname,
+            String loginPwd, String realName, String idNo, String userReferee,
+            String userRefereeKind, String inviteCode, String kind,
+            String province, String city, String area, String address,
+            String companyCode, String systemCode);
+
     // 代注册
     public String doAddUser(XN805042Req req);
 
