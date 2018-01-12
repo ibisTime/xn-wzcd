@@ -28,6 +28,7 @@ import com.cdkj.coin.bo.IUserSettingsBO;
 import com.cdkj.coin.bo.base.Paginable;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.Ads;
+import com.cdkj.coin.domain.Arbitrate;
 import com.cdkj.coin.domain.Jour;
 import com.cdkj.coin.domain.TradeOrder;
 import com.cdkj.coin.domain.User;
@@ -685,6 +686,15 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "只有待下单和已取消的订单可以删除");
         }
+
+        // 判断订单是不是被仲裁过
+        Arbitrate condition = new Arbitrate();
+        condition.setTradeOrderCode(code);
+        if (arbitrateBO.getTotalCount(condition) > 0) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "订单发生仲裁，不能删除");
+        }
+
         tradeOrderBO.removeTradeOrder(tradeOrder);
 
     }
