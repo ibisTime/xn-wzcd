@@ -107,10 +107,6 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             ctqEthTransaction.getHash(), payGroup, code,
             EJourBizTypeUser.AJ_CHARGE.getCode(), "ETH充值-来自地址："
                     + ctqEthTransaction.getFrom());
-        accountBO.changeAmount(account, amount, EChannelType.ETH,
-            ctqEthTransaction.getHash(), payGroup, code,
-            EJourBizTypeUser.AJ_CHARGE.getCode(), "ETH充值-来自地址："
-                    + ctqEthTransaction.getFrom());
         // 落地交易记录
         ethTransactionBO.saveEthTransaction(ctqEthTransaction, code);
         // 更新地址余额
