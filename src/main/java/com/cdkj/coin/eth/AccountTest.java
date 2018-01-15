@@ -42,12 +42,16 @@ public class AccountTest {
 
     public static void main(String args[]) {
 
-        // String amount = "全部转出";
-        // System.out
-        // .println("准备开始广播，交易金额=" + Convert.fromWei(amount, Unit.ETHER));
-        String hash = broadcast("0x3a7b569f809cbe7e63ebfb02c313bc9a34d5e5c8",
-            "12345678", "0x1bb4fd555fdcdbf365c5fc3d549f5647a631adae", null);
+        // for (int i = 0; i < 3; i++) {
+        String amount = "5000000000000000000";
+        System.out
+            .println("准备开始广播，交易金额=" + Convert.fromWei(amount, Unit.ETHER));
+        String hash = broadcast(
+            "0x6cFa2A79263BD6989161616CC0054EbfEf2df30b".toLowerCase(),
+            "12345678", "0x5eefbaf4ae486e17686b523d1718eb57beb2973d",
+            new BigDecimal(amount));
         System.out.println("广播完成，交易hash=" + hash);
+        // }
 
         // BigDecimal a = new BigDecimal("10000000000000000000");
         // BigDecimal b = new BigDecimal("9999999999999999999");
@@ -97,8 +101,7 @@ public class AccountTest {
 
     public static String broadcast(String from, String fromPassword, String to,
             BigDecimal value) {
-        Web3j web3j = Web3j.build(new HttpService(
-            "https://mainnet.infura.io/ZJR3JJlmLyf5mg4A9UxA"));
+        Web3j web3j = Web3j.build(new HttpService("http://127.0.0.1:8545"));
         String txHash = null;
         try {
             String fileDirPath = "/Users/haiqingzheng/Desktop/ethereum/beikeying/data/keystore";
@@ -131,7 +134,7 @@ public class AccountTest {
             // 预估矿工费用
             // BigDecimal gasPrice = new BigDecimal(web3j.ethGasPrice().send()
             // .getGasPrice().toString());
-            BigDecimal gasPrice = new BigDecimal("30000000000");
+            BigDecimal gasPrice = new BigDecimal("40000000000");
 
             // 查询余额
             BigDecimal balance = null;
