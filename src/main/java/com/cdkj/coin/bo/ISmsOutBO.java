@@ -46,12 +46,11 @@ public interface ISmsOutBO {
      * 发送指定内容短信(系统和公司)
      * @param mobile
      * @param content
-     * @param bizType
      * @param companyCode
      * @param systemCode 
      * @create: 2017年2月13日 下午3:03:50 xieyj
      * @history:
      */
-    public void sendSmsOut(String mobile, String content, String bizType,
-            String companyCode, String systemCode);
+    public void sendSmsOut(String mobile, String content, String companyCode,
+            String systemCode);
 }

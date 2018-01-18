@@ -39,8 +39,9 @@ import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.domain.User;
 import com.cdkj.coin.enums.EBoolean;
 import com.cdkj.coin.enums.ECaptchaType;
-import com.cdkj.coin.enums.EEthAddressStatus;
 import com.cdkj.coin.enums.EEthAddressType;
+import com.cdkj.coin.enums.EEthWAddressStatus;
+import com.cdkj.coin.enums.EEthYAddressStatus;
 import com.cdkj.coin.enums.ESysUser;
 import com.cdkj.coin.enums.ESystemCode;
 import com.cdkj.coin.exception.BizException;
@@ -118,7 +119,7 @@ public class EthAddressAOImpl implements IEthAddressAO {
                 "提现地址已经在本平台被使用，请仔细核对！");
         }
 
-        EEthAddressStatus status = EEthAddressStatus.NORMAL;
+        String status = EEthYAddressStatus.NORMAL.getCode();
 
         // 是否设置为认证账户
         if (EBoolean.YES.getCode().equals(isCerti)) {
@@ -137,7 +138,7 @@ public class EthAddressAOImpl implements IEthAddressAO {
                         googleCaptcha, System.currentTimeMillis());
                 }
             }
-            status = EEthAddressStatus.CERTI;
+            status = EEthYAddressStatus.CERTI.getCode();
         }
 
         // 验证码校验
@@ -153,7 +154,7 @@ public class EthAddressAOImpl implements IEthAddressAO {
     @Override
     public void abandonAddress(String code) {
         EthAddress ethAddress = ethAddressBO.getEthAddress(code);
-        if (EEthAddressStatus.INVALID.getCode().equals(ethAddress.getStatus())) {
+        if (EEthYAddressStatus.INVALID.getCode().equals(ethAddress.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "地址已失效，无需重复弃用");
         }
@@ -174,15 +175,10 @@ public class EthAddressAOImpl implements IEthAddressAO {
     }
 
     @Override
-    public String generateMAddress(Date availableDatetimeStart,
-            Date availableDatetimeEnd) {
-        if (availableDatetimeEnd.before(availableDatetimeStart)) {
-            throw new BizException("625000", "可使用时间范围有误");
-        }
+    public String generateMAddress() {
         String ethAccountName = OrderNoGenerater.generate("M");
         String address = ethAddressBO.generateAddress(EEthAddressType.M,
-            ethAccountName, ESysUser.SYS_USER_ETH.getCode(),
-            availableDatetimeStart, availableDatetimeEnd);
+            ethAccountName, ESysUser.SYS_USER_ETH.getCode());
         // 通知橙提取
         ctqBO.uploadAddress(address, EEthAddressType.M.getCode());
         return address;
@@ -204,7 +200,7 @@ public class EthAddressAOImpl implements IEthAddressAO {
             ESysUser.SYS_USER_ETH.getCode(), address,
             EEthAddressType.W.getValue(), null, BigDecimal.ZERO,
             availableDatetimeStart, availableDatetimeEnd,
-            EEthAddressStatus.NORMAL, null, null);
+            EEthWAddressStatus.NORMAL.getCode(), null, null);
     }
 
     @Override

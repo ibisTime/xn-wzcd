@@ -20,16 +20,20 @@ import com.cdkj.coin.bo.IArbitrateBO;
 import com.cdkj.coin.bo.IBlacklistBO;
 import com.cdkj.coin.bo.IJourBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
+import com.cdkj.coin.bo.ISYSDictBO;
+import com.cdkj.coin.bo.ISmsOutBO;
 import com.cdkj.coin.bo.ITencentBO;
 import com.cdkj.coin.bo.ITradeOrderBO;
 import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.IUserRelationBO;
 import com.cdkj.coin.bo.IUserSettingsBO;
 import com.cdkj.coin.bo.base.Paginable;
+import com.cdkj.coin.common.SysConstants;
 import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.Ads;
 import com.cdkj.coin.domain.Arbitrate;
 import com.cdkj.coin.domain.Jour;
+import com.cdkj.coin.domain.SYSDict;
 import com.cdkj.coin.domain.TradeOrder;
 import com.cdkj.coin.domain.User;
 import com.cdkj.coin.domain.UserStatistics;
@@ -92,6 +96,12 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
     @Autowired
     private ITencentBO tencentBO;
 
+    @Autowired
+    private ISmsOutBO smsOutBO;
+
+    @Autowired
+    private ISYSDictBO sysDictBO;
+
     @Override
     @Transactional
     public String contactBuy(String adsCode, String buyUser) {
@@ -128,6 +138,11 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             tencentBO.createGroup(code, buyUser, ads.getUserId());
         }
 
+        // 发送提醒短信
+        User adsUser = userBO.getUser(ads.getUserId());
+        smsOutBO.sendSmsOut(adsUser.getMobile(), SysConstants.ORDER_CONTACT,
+            ESystemCode.COIN.getCode(), ESystemCode.COIN.getCode());
+
         return code;
     }
 
@@ -155,6 +170,11 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             // 创建聊天群组
             tencentBO.createGroup(code, ads.getUserId(), sellUser);
         }
+
+        // 发送提醒短信
+        User adsUser = userBO.getUser(ads.getUserId());
+        smsOutBO.sendSmsOut(adsUser.getMobile(), SysConstants.ORDER_CONTACT,
+            ESystemCode.COIN.getCode(), ESystemCode.COIN.getCode());
 
         return code;
     }
@@ -229,6 +249,11 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         tencentBO
             .sendNormalMessage(tradeOrder.getCode(), "系统消息：交易已下单，等待买家标记打款");
 
+        // 发送提醒短信
+        User adsUser = userBO.getUser(ads.getUserId());
+        smsOutBO.sendSmsOut(adsUser.getMobile(), SysConstants.ORDER_SUBMIT,
+            ESystemCode.COIN.getCode(), ESystemCode.COIN.getCode());
+
         return tradeOrder;
 
     }
@@ -299,9 +324,6 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
                 sellUser);
         }
 
-        // 刷新广告状态，从待交易变为，交易中
-        // this.adsBO.refreshStatus(ads.getCode(), true);
-        int a = 10;
         // 改变广告可交易量
         this.adsBO.cutLeftCount(ads.getCode(), tradeCount);
 
@@ -314,6 +336,11 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 发送系统消息
         tencentBO
             .sendNormalMessage(tradeOrder.getCode(), "系统消息：交易已下单，等待买家标记打款");
+
+        // 发送提醒短信
+        User adsUser = userBO.getUser(ads.getUserId());
+        smsOutBO.sendSmsOut(adsUser.getMobile(), SysConstants.ORDER_SUBMIT,
+            ESystemCode.COIN.getCode(), ESystemCode.COIN.getCode());
 
         return tradeOrder;
 
@@ -363,7 +390,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
 
     @Override
     @Transactional
-    public void cancel(String code, String updater, String remark) {
+    public void userCancel(String code, String updater, String remark) {
         TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(code);
         if (!ETradeOrderStatus.TO_PAY.getCode().equals(tradeOrder.getStatus())
                 && !ETradeOrderStatus.ARBITRATE.getCode().equals(
@@ -422,16 +449,79 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             // 所以 购买订单取消，也不需要解冻
         }
 
-        // !!!!!!!!!!!!!!!!! 必须先取消订单，然后在去检查变更广告状态
         // 变更交易订单信息
         tradeOrderBO.cancel(tradeOrder, updater, remark);
 
-        // 检查广告状态是否进行变更
-        // adsBO.refreshStatus(tradeOrder.getAdsCode(),
-        // tradeOrderBO.isExistOningOrder(tradeOrder.getAdsCode()));
+        // 发送系统消息
+        tencentBO.sendNormalMessage(code, "系统消息：" + remark);
+
+    }
+
+    @Override
+    @Transactional
+    public void platCancel(String code, String updater, String remark) {
+        TradeOrder tradeOrder = tradeOrderBO.getTradeOrder(code);
+        if (!ETradeOrderStatus.ARBITRATE.getCode().equals(
+            tradeOrder.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前状态下不能被平台取消订单");
+        }
+
+        TradeOrder order = this.tradeOrderBO.getTradeOrder(code);
+        if (order == null) {
+            throw new BizException("xn000000", "无效的订单编号");
+        }
+
+        // 变更广告信息 剩余可交易金额
+        adsBO.addLeftCount(tradeOrder.getAdsCode(), tradeOrder.getCount());
+
+        if (tradeOrder.getType().equals(ETradeOrderType.SELL.getCode())) {
+            // 由于出售时冻结了，卖家的余额这里需要解冻
+            Account sellUserAccount = this.accountBO.getAccountByUser(
+                tradeOrder.getSellUser(), ECoin.ETH.getCode());
+
+            // 对卖家冻结金额进行解冻
+            this.accountBO.unfrozenAmount(sellUserAccount,
+                tradeOrder.getCount(),
+                EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
+                EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue() + "-取消卖出订单",
+                tradeOrder.getCode());
+
+        } else if (tradeOrder.getType().equals(ETradeOrderType.BUY.getCode())) {
+            Ads ads = adsBO.adsDetail(tradeOrder.getAdsCode());
+            if (EAdsStatus.XIAJIA.getCode().equals(ads.getStatus())) {
+                // 如果广告已下架，解冻卖家订单金额
+                Account sellUserAccount = this.accountBO.getAccountByUser(
+                    tradeOrder.getSellUser(), ECoin.ETH.getCode());
+
+                // 对卖家订单冻结金额进行解冻
+                if (tradeOrder.getCount().compareTo(BigDecimal.ZERO) > 0) {
+                    this.accountBO.unfrozenAmount(sellUserAccount,
+                        tradeOrder.getCount(),
+                        EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
+                        EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue()
+                                + "-交易订单取消，解冻订单金额", tradeOrder.getCode());
+                }
+
+                // 对卖家订单冻结广告费进行解冻
+                if (tradeOrder.getFee().compareTo(BigDecimal.ZERO) > 0) {
+                    this.accountBO.unfrozenAmount(sellUserAccount,
+                        tradeOrder.getFee(),
+                        EJourBizTypeUser.AJ_ADS_UNFROZEN.getCode(),
+                        EJourBizTypeUser.AJ_ADS_UNFROZEN.getValue()
+                                + "-交易订单取消，解冻订单广告费", tradeOrder.getCode());
+                }
+            }
+            // 购买订单
+            // 由于出售广告，出售时就冻结了 所有的 交易金额 + 广告费，
+            // 所以 购买订单取消，也不需要解冻
+        }
+
+        // 变更交易订单信息
+        tradeOrderBO.cancel(tradeOrder, updater, remark);
 
         // 发送系统消息
-        tencentBO.sendNormalMessage(code, "系统消息：买家取消订单");
+        tencentBO.sendNormalMessage(code, "系统消息：" + remark);
 
     }
 
@@ -445,7 +535,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         if (tradeOrder.getInvalidDatetime().compareTo(new Date()) < 0) {
             // 订单已超时
             // 取消订单
-            this.cancel(tradeOrder.getCode(), "系统", "订单支付超时，系统自动取消");
+            this.userCancel(tradeOrder.getCode(), "系统", "订单支付超时，系统自动取消");
             return;
         }
 
@@ -510,7 +600,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // tradeOrderBO.isExistOningOrder(tradeOrder.getAdsCode()));
 
         // 发送系统消息
-        tencentBO.sendNormalMessage(code, "系统消息：卖家已释放");
+        tencentBO.sendNormalMessage(code, "系统消息：" + remark);
 
         // end__ 校验卖家的设置
         this.handleUserAutoSetting(tradeOrder.getCode(),
@@ -562,10 +652,20 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
         // 更新交易订单信息
         tradeOrderBO.applyArbitrate(tradeOrder, applyUser);
         // 提交仲裁工单
-        arbitrateBO.submit(tradeOrder.getCode(), yuangao, beigao, reason,
-            attach);
+        String arbitrateCode = arbitrateBO.submit(tradeOrder.getCode(),
+            yuangao, beigao, reason, attach);
         // 发送系统消息
         tencentBO.sendNormalMessage(code, "系统消息：订单已申请仲裁");
+
+        // 通知相关人员
+        String content = String.format(SysConstants.ARBITRATE, arbitrateCode);
+        SYSDict condition = new SYSDict();
+        condition.setParentKey(SysConstants.ZC_SMS_NOTICE);
+        List<SYSDict> mobiledDicts = sysDictBO.querySYSDictList(condition);
+        for (SYSDict sysDict : mobiledDicts) {
+            smsOutBO.sendSmsOut(sysDict.getDkey(), content,
+                ESystemCode.COIN.getCode(), ESystemCode.COIN.getCode());
+        }
     }
 
     @Override
@@ -609,7 +709,7 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             .queryTradeOrderList(condition);
         for (TradeOrder tradeOrder : resultList) {
 
-            this.cancel(tradeOrder.getCode(), "系统", "订单支付超时，系统自动取消");
+            this.userCancel(tradeOrder.getCode(), "系统", "订单支付超时，系统自动取消");
 
         }
 

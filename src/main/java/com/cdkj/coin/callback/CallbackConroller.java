@@ -87,6 +87,7 @@ public class CallbackConroller {
                     hashList.add(ctqEthTransaction.getHash());
                 } else if (EEthAddressType.M == toType) {
                     // toAddress=M 每日定存
+                    ethTransactionAO.depositNotice(ctqEthTransaction);
                     hashList.add(ctqEthTransaction.getHash());
                 } else if (EEthAddressType.W == fromType) {
                     // fromAddress=W 每日转移

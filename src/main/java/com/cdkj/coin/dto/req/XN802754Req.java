@@ -1,7 +1,5 @@
 package com.cdkj.coin.dto.req;
 
-import java.util.List;
-
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -14,19 +12,31 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class XN802754Req {
 
     // 取现订单编号(必填)
-    @NotEmpty
-    private List<String> codeList;
+    @NotBlank
+    private String code;
+
+    // 散取地址编号(必填)
+    @NotBlank
+    private String mAddressCode;
 
     // 操作人(必填)
     @NotBlank
     private String approveUser;
 
-    public List<String> getCodeList() {
-        return codeList;
+    public String getCode() {
+        return code;
     }
 
-    public void setCodeList(List<String> codeList) {
-        this.codeList = codeList;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getmAddressCode() {
+        return mAddressCode;
+    }
+
+    public void setmAddressCode(String mAddressCode) {
+        this.mAddressCode = mAddressCode;
     }
 
     public String getApproveUser() {

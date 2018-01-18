@@ -25,8 +25,11 @@ public interface ITradeOrderAO {
     public TradeOrder sell(String adsCode, String sellUser,
             BigDecimal tradePrice, BigDecimal count, BigDecimal tradeAmount);
 
-    // 取消交易订单
-    public void cancel(String code, String updater, String remark);
+    // 自主取消或超时取消交易订单
+    public void userCancel(String code, String updater, String remark);
+
+    // 仲裁取消交易订单
+    public void platCancel(String code, String updater, String remark);
 
     // 买家标记打款
     public void markPay(String code, String updater, String remark);

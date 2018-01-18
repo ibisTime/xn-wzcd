@@ -70,4 +70,9 @@ public class EthAddressDAOImpl extends AMybatisTemplate implements
             BigDecimal.class);
     }
 
+    @Override
+    public int updateStatus(EthAddress data) {
+        return super.update(NAMESPACE.concat("update_status"), data);
+    }
+
 }

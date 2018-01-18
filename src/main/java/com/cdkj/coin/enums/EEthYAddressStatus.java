@@ -1,9 +1,9 @@
 package com.cdkj.coin.enums;
 
-public enum EEthAddressStatus {
+public enum EEthYAddressStatus {
     NORMAL("0", "正常"), CERTI("1", "已认证"), INVALID("2", "已弃用");
 
-    EEthAddressStatus(String code, String value) {
+    EEthYAddressStatus(String code, String value) {
         this.code = code;
         this.value = value;
     }

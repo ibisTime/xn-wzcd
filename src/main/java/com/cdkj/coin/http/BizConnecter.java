@@ -60,7 +60,7 @@ public class BizConnecter {
 
     private static String getPostUrl(String code) {
         String postUrl = POST_URL;
-        if (code.startsWith("626")) {
+        if (code.startsWith("626") || "625917".equals(code)) {
             postUrl = CTQ_URL;
         } else if (code.startsWith("798")) {
             postUrl = CERTI_URL;

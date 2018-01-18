@@ -17,15 +17,15 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN625100Req {
 
-    @NotBlank
-    private String address;// 地址
+    @NotBlank(message = "请先设置归集阀值")
+    private String balanceStart; // 归集阀值
 
-    public String getAddress() {
-        return address;
+    public String getBalanceStart() {
+        return balanceStart;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setBalanceStart(String balanceStart) {
+        this.balanceStart = balanceStart;
     }
 
 }

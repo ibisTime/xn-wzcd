@@ -34,4 +34,7 @@ public interface IEthTransactionAO {
     // 分页查询广播记录
     public Paginable<EthTransaction> queryEthTransactionPage(int start,
             int limit, EthTransaction condition);
+
+    // 每日定存
+    public void depositNotice(CtqEthTransaction ctqEthTransaction);
 }

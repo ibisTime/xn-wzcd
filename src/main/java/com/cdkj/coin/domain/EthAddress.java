@@ -85,6 +85,12 @@ public class EthAddress extends ABaseDO {
     // 类型列表
     private List<String> typeList;
 
+    // 余额起
+    private BigDecimal balanceStart;
+
+    // 余额止
+    private BigDecimal balanceEnd;
+
     public String getCode() {
         return code;
     }
@@ -286,6 +292,22 @@ public class EthAddress extends ABaseDO {
 
     public void setTypeList(List<String> typeList) {
         this.typeList = typeList;
+    }
+
+    public BigDecimal getBalanceStart() {
+        return balanceStart;
+    }
+
+    public void setBalanceStart(BigDecimal balanceStart) {
+        this.balanceStart = balanceStart;
+    }
+
+    public BigDecimal getBalanceEnd() {
+        return balanceEnd;
+    }
+
+    public void setBalanceEnd(BigDecimal balanceEnd) {
+        this.balanceEnd = balanceEnd;
     }
 
 }

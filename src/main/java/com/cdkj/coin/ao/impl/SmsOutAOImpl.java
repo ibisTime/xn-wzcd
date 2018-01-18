@@ -50,14 +50,14 @@ public class SmsOutAOImpl implements ISmsOutAO {
         if (user == null) {
             throw new BizException("xn0000", "该用户编号不存在");
         }
-        smsOutBO.sendSmsOut(user.getMobile(), content, "001200",
-            user.getCompanyCode(), user.getSystemCode());
+        smsOutBO.sendSmsOut(user.getMobile(), content, user.getCompanyCode(),
+            user.getSystemCode());
     }
 
     @Override
     public void sendContent(String tokenId, String mobile, String content,
             String companyCode, String systemCode) {
         PhoneUtil.checkMobile(mobile);
-        smsOutBO.sendSmsOut(mobile, content, "001201", companyCode, systemCode);
+        smsOutBO.sendSmsOut(mobile, content, companyCode, systemCode);
     }
 }

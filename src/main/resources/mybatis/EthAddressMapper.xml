@@ -63,6 +63,12 @@
 			<if test="today != null and today != '' ">
 				<![CDATA[AND t.available_datetime_start <= #{today} AND t.available_datetime_end >= #{today}]]>
 			</if>
+			<if test="balanceStart != null and balanceStart != '' ">
+				<![CDATA[AND t.balance >= #{balanceStart}]]>
+			</if>
+			<if test="balanceEnd != null and balanceEnd != '' ">
+				<![CDATA[AND t.balance <= #{balanceEnd}]]>
+			</if>
 		</trim>
 	</sql>
 	<select id="select_ethAddress" parameterType="ethAddress" resultMap="ethAddress_DB_Result">
@@ -154,7 +160,7 @@
 		)
 	</insert>
 
-    <update id="update_abandon" parameterType="tradeOrder">
+    <update id="update_abandon" parameterType="ethAddress">
 		UPDATE tcoin_eth_address
 		SET
 		status = #{status}
@@ -163,10 +169,18 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_balance" parameterType="tradeOrder">
+	<update id="update_balance" parameterType="ethAddress">
 		UPDATE tcoin_eth_address
 		SET
 		balance = #{balance}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_status" parameterType="ethAddress">
+		UPDATE tcoin_eth_address
+		SET
+		status = #{status}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>

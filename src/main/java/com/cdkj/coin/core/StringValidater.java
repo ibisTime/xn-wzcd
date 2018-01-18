@@ -41,7 +41,7 @@ public class StringValidater {
         try {
             num = new BigDecimal(string);
         } catch (Exception e) {
-            throw new BizException("xn702000", "数字型入参，请按要求填写数字");
+            throw new BizException("xn702000", "数字型(bigDecimal)入参，请按要求填写数字");
         }
         return num;
     }
@@ -75,19 +75,19 @@ public class StringValidater {
 
         return;
 
-//        for (String amountS : amountStrs) {
-//            if (StringUtils.isNotBlank(amountS)) {
-//                if (amountS.length() > 16) {
-//                    // 给前端提示，减去3位
-//                    throw new BizException("xn702000", "金额长度不能超过13位");
-//                }
-//            }
-//            try {
-//                Long.valueOf(amountS);
-//            } catch (Exception e) {
-//                throw new BizException("xn702000", "金额，请按要求填写数字");
-//            }
-//        }
+        // for (String amountS : amountStrs) {
+        // if (StringUtils.isNotBlank(amountS)) {
+        // if (amountS.length() > 16) {
+        // // 给前端提示，减去3位
+        // throw new BizException("xn702000", "金额长度不能超过13位");
+        // }
+        // }
+        // try {
+        // Long.valueOf(amountS);
+        // } catch (Exception e) {
+        // throw new BizException("xn702000", "金额，请按要求填写数字");
+        // }
+        // }
     }
 
     public static void validateNumber(String... params) {

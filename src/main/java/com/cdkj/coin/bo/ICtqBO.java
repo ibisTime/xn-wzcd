@@ -8,6 +8,7 @@
  */
 package com.cdkj.coin.bo;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /** 
@@ -21,4 +22,7 @@ public interface ICtqBO {
 
     // 交易确认
     public void confirm(List<String> hashList);
+
+    // 获取节点扫描信息
+    public BigInteger getScanedBlockNumber();
 }

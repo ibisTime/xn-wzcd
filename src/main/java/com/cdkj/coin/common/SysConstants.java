@@ -38,22 +38,31 @@ public class SysConstants {
 
     public static String TX_ACCOUNT_TYPE = "tx_account_type";// 账号类型
 
-    // C端用户取现倍数
-    public static String CUSERQXBS = "CUSERQXBS";
+    // 取现规则配置
+    public static String CUSERQXBS = "CUSERQXBS"; // C端用户取现倍数
 
-    // C端用户取现费率
-    public static String CUSERQXFL = "CUSERQXFL";
+    public static String CUSERQXFL = "CUSERQXFL"; // C端用户取现费率
 
-    // C端用户取现时效
-    public static String CUSERQXSX = "CUSERQXSX";
+    public static String CUSERQXSX = "CUSERQXSX"; // C端用户取现时效
 
-    // C端用户每月取现次数
-    public static String CUSERMONTIMES = "CUSERMONTIMES";
+    public static String CUSERMONTIMES = "CUSERMONTIMES"; // C端用户每月取现次数
 
-    // C端2C端转账金额倍数
-    public static String TRANSAMOUNTBS = "TRANSAMOUNTBS";
+    public static String TRANSAMOUNTBS = "TRANSAMOUNTBS"; // C端2C端转账金额倍数
 
-    // 取现单笔最大金额
-    public static String QXDBZDJE = "QXDBZDJE";
+    public static String QXDBZDJE = "QXDBZDJE"; // 取现单笔最大金额
+
+    // 短信模板
+    public static String ORDER_CONTACT = "您的广告刚刚被新用户关注，可能随时跟您聊天，赶紧去看看吧！"; // 有人开始聊天
+
+    public static String ORDER_SUBMIT = "您发布的广告已经有新用户下单了噢，赶紧去处理吧！"; // 有人下单
+
+    public static String WITHDRAW = "您有一个新的仲裁订单（编号：%s）需要处理！"; // 有人仲裁
+
+    public static String ARBITRATE = "您有一个新的取现订单（编号：%s）需要处理！"; // 有人提现
+
+    // 短信通知配置
+    public static String ZC_SMS_NOTICE = "zc_sms_notice"; // 仲裁短信通知
+
+    public static String QX_SMS_NOTICE = "qx_sms_notice";// 取现短信通知
 
 }

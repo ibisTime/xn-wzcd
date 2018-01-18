@@ -8,12 +8,10 @@
  */
 package com.cdkj.coin.api.impl;
 
-import com.cdkj.coin.ao.IAdsAO;
 import com.cdkj.coin.ao.ITradeOrderAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
 import com.cdkj.coin.core.ObjValidater;
-import com.cdkj.coin.domain.TradeOrder;
 import com.cdkj.coin.dto.req.XN625244Req;
 import com.cdkj.coin.dto.res.BooleanRes;
 import com.cdkj.coin.exception.BizException;
@@ -31,8 +29,6 @@ public class XN625244 extends AProcessor {
     private ITradeOrderAO tradeOrderAO = SpringContextHolder
         .getBean(ITradeOrderAO.class);
 
-    private IAdsAO adsSellAO = SpringContextHolder.getBean(IAdsAO.class);
-
     private XN625244Req req;
 
     /**
@@ -41,8 +37,7 @@ public class XN625244 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
 
-        TradeOrder tradeOrder = tradeOrderAO.release(req.getCode(),
-            req.getUpdater(), req.getRemark());
+        tradeOrderAO.release(req.getCode(), req.getUpdater(), "卖家已释放");
         return new BooleanRes(true);
 
     }

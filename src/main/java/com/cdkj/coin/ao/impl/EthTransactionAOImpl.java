@@ -40,6 +40,7 @@ import com.cdkj.coin.enums.EChannelType;
 import com.cdkj.coin.enums.ECoin;
 import com.cdkj.coin.enums.EEthAddressType;
 import com.cdkj.coin.enums.EEthCollectionStatus;
+import com.cdkj.coin.enums.EEthMAddressStatus;
 import com.cdkj.coin.enums.EJourBizTypeCold;
 import com.cdkj.coin.enums.EJourBizTypePlat;
 import com.cdkj.coin.enums.EJourBizTypeUser;
@@ -156,14 +157,7 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
                 "ETH", withdraw.getCode(), EJourBizTypeUser.AJ_WITHDRAWFEE
                     .getCode(), EJourBizTypeUser.AJ_WITHDRAWFEE.getValue());
         }
-        // 平台冷钱包减钱
-        Account coldAccount = accountBO
-            .getAccount(ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode());
-        coldAccount = accountBO.changeAmount(coldAccount, withdraw.getAmount()
-            .subtract(withdraw.getFee()).negate(), EChannelType.ETH,
-            ctqEthTransaction.getHash(), "ETH", withdraw.getCode(),
-            EJourBizTypeCold.AJ_PAY.getCode(),
-            "ETH取现-外部地址：" + withdraw.getPayCardNo());
+
         // 平台盈亏账户记入取现手续费
         Account sysAccount = accountBO.getAccount(ESystemAccount.SYS_ACOUNT_ETH
             .getCode());
@@ -196,6 +190,9 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
             ctqEthTransaction.getTo());
         ethAddressBO.refreshBalance(from);
         ethAddressBO.refreshBalance(to);
+
+        // 修改散取地址状态为可使用
+        ethAddressBO.refreshStatus(from, EEthMAddressStatus.NORMAL.getCode());
     }
 
     @Override
@@ -290,6 +287,23 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
     public Paginable<EthTransaction> queryEthTransactionPage(int start,
             int limit, EthTransaction condition) {
         return ethTransactionBO.getPaginable(start, limit, condition);
+    }
+
+    @Override
+    public void depositNotice(CtqEthTransaction ctqEthTransaction) {
+        // 平台冷钱包减钱
+        BigDecimal amount = new BigDecimal(ctqEthTransaction.getValue());
+        Account coldAccount = accountBO
+            .getAccount(ESystemAccount.SYS_ACOUNT_ETH_COLD.getCode());
+        coldAccount = accountBO.changeAmount(coldAccount, amount.negate(),
+            EChannelType.ETH, ctqEthTransaction.getHash(), "ETH",
+            ctqEthTransaction.getHash(), EJourBizTypeCold.AJ_PAY.getCode(),
+            "ETH定存至取现地址(M):" + ctqEthTransaction.getTo());
+        // 更新散取地址余额
+        EthAddress to = ethAddressBO.getEthAddress(EEthAddressType.M,
+            ctqEthTransaction.getTo());
+        ethAddressBO.refreshBalance(to);
+
     }
 
 }

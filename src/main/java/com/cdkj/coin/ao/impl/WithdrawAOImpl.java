@@ -22,6 +22,8 @@ import com.cdkj.coin.bo.IEthTransactionBO;
 import com.cdkj.coin.bo.IGoogleAuthBO;
 import com.cdkj.coin.bo.IJourBO;
 import com.cdkj.coin.bo.ISYSConfigBO;
+import com.cdkj.coin.bo.ISYSDictBO;
+import com.cdkj.coin.bo.ISmsOutBO;
 import com.cdkj.coin.bo.IUserBO;
 import com.cdkj.coin.bo.IWithdrawBO;
 import com.cdkj.coin.bo.base.Paginable;
@@ -31,13 +33,15 @@ import com.cdkj.coin.domain.Account;
 import com.cdkj.coin.domain.EthAddress;
 import com.cdkj.coin.domain.EthTransaction;
 import com.cdkj.coin.domain.Jour;
+import com.cdkj.coin.domain.SYSDict;
 import com.cdkj.coin.domain.User;
 import com.cdkj.coin.domain.Withdraw;
 import com.cdkj.coin.dto.res.XN802758Res;
 import com.cdkj.coin.enums.EAccountType;
 import com.cdkj.coin.enums.EBoolean;
-import com.cdkj.coin.enums.EEthAddressStatus;
 import com.cdkj.coin.enums.EEthAddressType;
+import com.cdkj.coin.enums.EEthMAddressStatus;
+import com.cdkj.coin.enums.EEthYAddressStatus;
 import com.cdkj.coin.enums.EJourBizTypeUser;
 import com.cdkj.coin.enums.EJourKind;
 import com.cdkj.coin.enums.ESystemCode;
@@ -73,6 +77,12 @@ public class WithdrawAOImpl implements IWithdrawAO {
 
     @Autowired
     private IGoogleAuthBO googleAuthBO;
+
+    @Autowired
+    private ISmsOutBO smsOutBO;
+
+    @Autowired
+    private ISYSDictBO sysDictBO;
 
     @Override
     @Transactional
@@ -120,7 +130,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
         EthAddress condition = new EthAddress();
         condition.setType(EEthAddressType.Y.getCode());
         condition.setUserId(dbAccount.getUserId());
-        condition.setStatus(EEthAddressStatus.CERTI.getCode());
+        condition.setStatus(EEthYAddressStatus.CERTI.getCode());
         condition.setAddress(payCardNo);
         if (ethAddressBO.getTotalCount(condition) > 0) {
             // 符合条件无需验证交易密码
@@ -145,6 +155,17 @@ public class WithdrawAOImpl implements IWithdrawAO {
         dbAccount = accountBO.frozenAmount(dbAccount, amount,
             EJourBizTypeUser.AJ_WITHDRAW_FROZEN.getCode(),
             EJourBizTypeUser.AJ_WITHDRAW_FROZEN.getValue(), withdrawCode);
+
+        // 通知相关人员
+        String content = String.format(SysConstants.WITHDRAW, withdrawCode);
+        SYSDict condition2 = new SYSDict();
+        condition2.setParentKey(SysConstants.QX_SMS_NOTICE);
+        List<SYSDict> mobiledDicts = sysDictBO.querySYSDictList(condition2);
+        for (SYSDict sysDict : mobiledDicts) {
+            smsOutBO.sendSmsOut(sysDict.getDkey(), content,
+                ESystemCode.COIN.getCode(), ESystemCode.COIN.getCode());
+        }
+
         return withdrawCode;
     }
 
@@ -216,18 +237,31 @@ public class WithdrawAOImpl implements IWithdrawAO {
 
     @Override
     @Transactional
-    public void broadcast(String code, String approveUser) {
+    public void broadcast(String code, String mAddressCode, String approveUser) {
         // 获取今日散取地址
-        EthAddress mEthAddress = ethAddressBO.getMEthAddressToday();
+        EthAddress mEthAddress = ethAddressBO.getEthAddress(mAddressCode);
+        if (!EEthAddressType.M.getCode().endsWith(mEthAddress.getType())) {
+            throw new BizException("无效的ETH地址，只有散取地址才能进行取现广播！");
+        }
+        if (EEthMAddressStatus.IN_USE.getCode().equals(mEthAddress.getStatus())) {
+            throw new BizException("该散取地址正在广播使用，请稍后再试！");
+        }
+        if (EEthMAddressStatus.INVALID.getCode()
+            .equals(mEthAddress.getStatus())) {
+            throw new BizException("该散取地址已被弃用！");
+        }
+
         String address = mEthAddress.getAddress();
         EthAddress secret = ethAddressBO.getEthAddressSecret(mEthAddress
             .getCode());
+
         // 获取取现订单详情
         Withdraw withdraw = withdrawBO.getWithdraw(code,
             ESystemCode.COIN.getCode());
         // 实际到账金额=取现金额-取现手续费
         BigDecimal realAmount = withdraw.getAmount()
             .subtract(withdraw.getFee());
+
         // 查询散取地址余额
         BigDecimal balance = ethAddressBO.getEthBalance(address);
         logger.info("地址" + address + "余额：" + balance.toString());
@@ -246,6 +280,10 @@ public class WithdrawAOImpl implements IWithdrawAO {
         }
         logger.info("广播成功：交易hash=" + txHash);
         withdrawBO.broadcastOrder(withdraw, txHash, approveUser);
+
+        // 修改取现地址状态为广播中
+        ethAddressBO.refreshStatus(mEthAddress,
+            EEthMAddressStatus.IN_USE.getCode());
     }
 
     @Override

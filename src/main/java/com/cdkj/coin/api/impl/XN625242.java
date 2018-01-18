@@ -36,7 +36,7 @@ public class XN625242 extends AProcessor {
      */
     @Override
     public Object doBusiness() throws BizException {
-        tradeOrderAO.cancel(req.getCode(), req.getUpdater(), req.getRemark());
+        tradeOrderAO.userCancel(req.getCode(), req.getUpdater(), "买家取消订单");
         return new BooleanRes(true);
     }
 

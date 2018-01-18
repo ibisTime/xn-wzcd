@@ -24,6 +24,10 @@ public class AdminClient {
 
     private static String ETH_URL_OTHER = PropertiesUtil.Config.ETH_URL_OTHER;
 
+    private static String ETH_NODE_INFURA = PropertiesUtil.Config.ETH_NODE_INFURA;
+
+    private static String ETH_NODE_BCOIN = PropertiesUtil.Config.ETH_NODE_BCOIN;
+
     private AdminClient() {
     }
 
@@ -33,6 +37,12 @@ public class AdminClient {
 
         private static final Admin otherAdmin = Admin.build(new HttpService(
             ETH_URL_OTHER));
+
+        private static final Admin infuraAdmin = Admin.build(new HttpService(
+            ETH_NODE_INFURA));
+
+        private static final Admin bcoinAdmin = Admin.build(new HttpService(
+            ETH_NODE_BCOIN));
     }
 
     public static final Admin getSelfClient() {
@@ -41,5 +51,13 @@ public class AdminClient {
 
     public static final Admin getThirdClient() {
         return ClientHolder.otherAdmin;
+    }
+
+    public static final Admin getInfuraClient() {
+        return ClientHolder.infuraAdmin;
+    }
+
+    public static final Admin getBcoinClient() {
+        return ClientHolder.bcoinAdmin;
     }
 }

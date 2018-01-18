@@ -40,5 +40,11 @@ public class PropertiesUtil {
         public static String KEY_STORE_PATH = props
             .getProperty("KEY_STORE_PATH");
 
+        public static String ETH_NODE_INFURA = props
+            .getProperty("ETH_NODE_INFURA");
+
+        public static String ETH_NODE_BCOIN = props
+            .getProperty("ETH_NODE_BCOIN");
+
     }
 }

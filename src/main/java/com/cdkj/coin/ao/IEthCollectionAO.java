@@ -16,4 +16,7 @@ public interface IEthCollectionAO {
 
     public BigDecimal getTotalCollect();
 
+    // 手动归集
+    public void collectionManual(BigDecimal balanceStart);
+
 }

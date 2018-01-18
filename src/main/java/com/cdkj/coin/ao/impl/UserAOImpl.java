@@ -188,7 +188,7 @@ public class UserAOImpl implements IUserAO {
         distributeAccount(userId, mobile, kind, companyCode, systemCode);
         // 生成ETH地址
         String ethAddress = ethAddressBO.generateAddress(EEthAddressType.X,
-            mobile, userId, null, null);
+            mobile, userId);
         // 通知橙提取
         ctqBO.uploadAddress(ethAddress, EEthAddressType.X.getCode());
 
@@ -260,7 +260,7 @@ public class UserAOImpl implements IUserAO {
         distributeAccount(userId, mobile, kind, companyCode, systemCode);
         // 生成ETH地址
         String ethAddress = ethAddressBO.generateAddress(EEthAddressType.X,
-            mobile, userId, null, null);
+            mobile, userId);
         // 通知橙提取
         ctqBO.uploadAddress(ethAddress, EEthAddressType.X.getCode());
 
@@ -459,7 +459,7 @@ public class UserAOImpl implements IUserAO {
         // 发送短信
         if (EBoolean.YES.getCode().equals(isSendSms)) {
             smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                    + "用户，您的登录密码为" + loginPwd + "，请及时登录网站更改密码。", "805060",
+                    + "用户，您的登录密码为" + loginPwd + "，请及时登录网站更改密码。",
                 user.getCompanyCode(), user.getSystemCode());
         }
     }
@@ -513,7 +513,7 @@ public class UserAOImpl implements IUserAO {
                     + DateUtil.dateToStr(new Date(),
                         DateUtil.DATA_TIME_PATTERN_1)
                     + "提交的更改绑定手机号码服务已审核通过，现绑定手机号码为" + newMobile
-                    + "，请妥善保管您的账户相关信息。", "805061", user.getCompanyCode(), user
+                    + "，请妥善保管您的账户相关信息。", user.getCompanyCode(), user
                 .getSystemCode());
     }
 
@@ -548,7 +548,7 @@ public class UserAOImpl implements IUserAO {
                     + DateUtil.dateToStr(new Date(),
                         DateUtil.DATA_TIME_PATTERN_1)
                     + "提交的更改绑定手机号码服务已审核通过，现绑定手机号码为" + newMobile
-                    + "，请妥善保管您的账户相关信息。", "805062", user.getCompanyCode(), user
+                    + "，请妥善保管您的账户相关信息。", user.getCompanyCode(), user
                 .getSystemCode());
     }
 
@@ -567,8 +567,7 @@ public class UserAOImpl implements IUserAO {
         userBO.refreshLoginPwd(userId, newLoginPwd);
         // 发送短信
         smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                + "用户，您的登录密码重置成功。请妥善保管您的账户相关信息。", "805063", companyCode,
-            systemCode);
+                + "用户，您的登录密码重置成功。请妥善保管您的账户相关信息。", companyCode, systemCode);
     }
 
     @Override
@@ -597,7 +596,7 @@ public class UserAOImpl implements IUserAO {
                 || EUserKind.Merchant.getCode().equals(user.getKind())) {
             smsOutBO.sendSmsOut(user.getMobile(),
                 "尊敬的" + PhoneUtil.hideMobile(user.getMobile())
-                        + "用户，您的登录密码修改成功。请妥善保管您的账户相关信息。", "805064",
+                        + "用户，您的登录密码修改成功。请妥善保管您的账户相关信息。",
                 user.getCompanyCode(), user.getSystemCode());
         }
     }
@@ -633,8 +632,8 @@ public class UserAOImpl implements IUserAO {
         // 发送短信
         String mobile = user.getMobile();
         smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                + "用户，您的资金密码设置成功。请妥善保管您的账户相关信息。", "805066",
-            user.getCompanyCode(), user.getSystemCode());
+                + "用户，您的资金密码设置成功。请妥善保管您的账户相关信息。", user.getCompanyCode(),
+            user.getSystemCode());
     }
 
     @Override
@@ -660,8 +659,8 @@ public class UserAOImpl implements IUserAO {
         userBO.refreshTradePwd(userId, newTradePwd);
         // 发送短信
         smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                + "用户，您的资金密码重置成功。请妥善保管您的账户相关信息。", "805067",
-            user.getCompanyCode(), user.getSystemCode());
+                + "用户，您的资金密码重置成功。请妥善保管您的账户相关信息。", user.getCompanyCode(),
+            user.getSystemCode());
     }
 
     @Override
@@ -687,8 +686,8 @@ public class UserAOImpl implements IUserAO {
         userBO.refreshTradePwd(userId, newTradePwd);
         // 发送短信
         smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                + "用户，您的资金密码重置成功。请妥善保管您的账户相关信息。", "805068",
-            user.getCompanyCode(), user.getSystemCode());
+                + "用户，您的资金密码重置成功。请妥善保管您的账户相关信息。", user.getCompanyCode(),
+            user.getSystemCode());
     }
 
     @Override
@@ -711,8 +710,8 @@ public class UserAOImpl implements IUserAO {
         userBO.refreshTradePwd(userId, newTradePwd);
         String mobile = user.getMobile();
         smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                + "用户，您的资金密码修改成功。请妥善保管您的账户相关信息。", "805069",
-            user.getCompanyCode(), user.getSystemCode());
+                + "用户，您的资金密码修改成功。请妥善保管您的账户相关信息。", user.getCompanyCode(),
+            user.getSystemCode());
     }
 
     @Override
@@ -770,8 +769,7 @@ public class UserAOImpl implements IUserAO {
         if (!EUserKind.Plat.getCode().equals(user.getKind())) {
             // 发送短信
             smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                    + smsContent, "805091", user.getCompanyCode(),
-                user.getSystemCode());
+                    + smsContent, user.getCompanyCode(), user.getSystemCode());
         }
     }
 

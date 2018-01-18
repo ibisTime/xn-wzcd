@@ -74,13 +74,13 @@ public class ArbitrateAOImpl implements IArbitrateAO {
 
             // 仲裁通过，表示买家标记打款，并且实际已支付（卖家是骗子）
             tradeOrderAO.release(tradeOrder.getCode(), updater,
-                "买家申请仲裁通过，结果：买家实际已付款，自动释放");
+                "买家申请仲裁通过，买家实际已付款，自动释放");
 
         } else {
 
             // 仲裁不通过，表示买家标记打款，但是实际未付款（买家是骗子）
-            tradeOrderAO.cancel(tradeOrder.getCode(), updater,
-                "买家申请仲裁不通过，结果：买家实际未付款，订单取消");
+            tradeOrderAO.platCancel(tradeOrder.getCode(), updater,
+                "买家申请仲裁不通过，买家实际未付款，订单取消");
 
         }
     }
@@ -91,14 +91,14 @@ public class ArbitrateAOImpl implements IArbitrateAO {
         if (EBoolean.YES.getCode().equals(result)) {
 
             // 仲裁通过，表示买家标记打款，但是实际未支付（买家是骗子）
-            tradeOrderAO.cancel(tradeOrder.getCode(), updater,
-                "卖家申请仲裁通过，结果：买家实际未付款，订单取消");
+            tradeOrderAO.platCancel(tradeOrder.getCode(), updater,
+                "卖家申请仲裁通过，买家实际未付款，订单取消");
 
         } else {
 
             // 仲裁不通过，表示买家标记打款，并且实际已付款（卖家是骗子）
             tradeOrderAO.release(tradeOrder.getCode(), updater,
-                "卖家申请仲裁不通过，结果：买家实际已付款，自动释放");
+                "卖家申请仲裁不通过，买家实际已付款，自动释放");
         }
     }
 
