@@ -51,6 +51,8 @@ public class XN625205 extends AProcessor {
         condition.setAvailableDatetimeStart(startDate);
         condition.setAvailableDatetimeEnd(endDate);
         condition.setStatus(req.getStatus());
+        condition.setBalanceStart(StringValidater.toBigDecimal(req
+            .getBalanceStart()));
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
         return ethAddressAO.queryEthAddressPage(start, limit, condition);
@@ -60,7 +62,8 @@ public class XN625205 extends AProcessor {
      * @see com.cdkj.coin.api.IProcessor#doCheck(java.lang.String)
      */
     @Override
-    public void doCheck(String inputparams, String operator) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN625205Req.class);
         ObjValidater.validateReq(req);
     }

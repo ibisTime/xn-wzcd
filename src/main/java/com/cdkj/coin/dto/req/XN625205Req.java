@@ -40,6 +40,9 @@ public class XN625205Req extends APageReq {
     // 状态列表
     private List<String> statusList;
 
+    // 余额起
+    private String balanceStart;
+
     public List<String> getStatusList() {
         return statusList;
     }
@@ -94,5 +97,13 @@ public class XN625205Req extends APageReq {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getBalanceStart() {
+        return balanceStart;
+    }
+
+    public void setBalanceStart(String balanceStart) {
+        this.balanceStart = balanceStart;
     }
 }
