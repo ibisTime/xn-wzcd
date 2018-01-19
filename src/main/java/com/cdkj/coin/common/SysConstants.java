@@ -56,9 +56,9 @@ public class SysConstants {
 
     public static String ORDER_SUBMIT = "您发布的广告已经有新用户下单了噢，赶紧去处理吧！"; // 有人下单
 
-    public static String WITHDRAW = "您有一个新的仲裁订单（编号：%s）需要处理！"; // 有人仲裁
+    public static String ARBITRATE = "您有一个新的仲裁订单（编号：%s）需要处理！"; // 有人仲裁
 
-    public static String ARBITRATE = "您有一个新的取现订单（编号：%s）需要处理！"; // 有人提现
+    public static String WITHDRAW = "您有一个新的取现订单（编号：%s）需要处理！"; // 有人提现
 
     // 短信通知配置
     public static String ZC_SMS_NOTICE = "zc_sms_notice"; // 仲裁短信通知

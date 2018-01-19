@@ -385,7 +385,9 @@ public class AdsAOImpl implements IAdsAO {
             throw new BizException("xn000000", "单笔最大交易额必须大于0");
         }
 
-        if (ads.getTotalCount().multiply(ads.getProtectPrice())
+        BigDecimal totalCount = Convert.fromWei(ads.getTotalCount(),
+            Convert.Unit.ETHER);
+        if (totalCount.multiply(ads.getTruePrice())
             .compareTo(ads.getMinTrade()) < 0) {
             throw new BizException("xn000000", "出售总量价值需大于等于单笔最小交易额");
         }

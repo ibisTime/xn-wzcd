@@ -262,11 +262,17 @@ public class WithdrawAOImpl implements IWithdrawAO {
         BigDecimal realAmount = withdraw.getAmount()
             .subtract(withdraw.getFee());
 
+        // 预估矿工费用
+        BigDecimal gasPrice = ethTransactionBO.getGasPrice();
+        BigDecimal gasUse = new BigDecimal(21000);
+        BigDecimal txFee = gasPrice.multiply(gasUse);
+
         // 查询散取地址余额
         BigDecimal balance = ethAddressBO.getEthBalance(address);
         logger.info("地址" + address + "余额：" + balance.toString());
-        if (balance.compareTo(realAmount) < 0) {
-            throw new BizException("xn625000", "散取地址" + address + "余额不足！");
+        if (balance.compareTo(realAmount.add(txFee)) < 0) {
+            throw new BizException("xn625000", "散取地址" + address
+                    + "余额不足以支付提现金额和矿工费！");
         }
         // 广播
         if (!WalletUtils.isValidAddress(withdraw.getPayCardNo())) {

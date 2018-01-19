@@ -221,8 +221,7 @@ public class EthTransactionAOImpl implements IEthTransactionAO {
         BigDecimal value = balance.subtract(txFee);
         logger.info("地址余额=" + balance + "，以太坊平均价格=" + gasPrice + "，预计矿工费="
                 + txFee + "，预计到账金额=" + value);
-        if (value.compareTo(BigDecimal.ZERO) < 0
-                || value.compareTo(BigDecimal.ZERO) == 0) {
+        if (value.compareTo(BigDecimal.ZERO) <= 0) {
             throw new BizException("xn625000", "余额不足以支付矿工费，不能归集");
         }
         // 归集广播

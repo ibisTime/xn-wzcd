@@ -136,12 +136,12 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             code = tradeOrderBO.contactBuySubmit(ads, buyUser);
             // 创建聊天群组
             tencentBO.createGroup(code, buyUser, ads.getUserId());
+            // 发送提醒短信
+            User adsUser = userBO.getUser(ads.getUserId());
+            smsOutBO.sendSmsOut(adsUser.getMobile(),
+                SysConstants.ORDER_CONTACT, ESystemCode.COIN.getCode(),
+                ESystemCode.COIN.getCode());
         }
-
-        // 发送提醒短信
-        User adsUser = userBO.getUser(ads.getUserId());
-        smsOutBO.sendSmsOut(adsUser.getMobile(), SysConstants.ORDER_CONTACT,
-            ESystemCode.COIN.getCode(), ESystemCode.COIN.getCode());
 
         return code;
     }
@@ -169,12 +169,12 @@ public class TradeOrderAOImpl implements ITradeOrderAO {
             code = tradeOrderBO.contactSellSubmit(ads, sellUser);
             // 创建聊天群组
             tencentBO.createGroup(code, ads.getUserId(), sellUser);
+            // 发送提醒短信
+            User adsUser = userBO.getUser(ads.getUserId());
+            smsOutBO.sendSmsOut(adsUser.getMobile(),
+                SysConstants.ORDER_CONTACT, ESystemCode.COIN.getCode(),
+                ESystemCode.COIN.getCode());
         }
-
-        // 发送提醒短信
-        User adsUser = userBO.getUser(ads.getUserId());
-        smsOutBO.sendSmsOut(adsUser.getMobile(), SysConstants.ORDER_CONTACT,
-            ESystemCode.COIN.getCode(), ESystemCode.COIN.getCode());
 
         return code;
     }

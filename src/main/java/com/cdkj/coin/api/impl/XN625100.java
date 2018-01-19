@@ -8,6 +8,11 @@
  */
 package com.cdkj.coin.api.impl;
 
+import java.math.BigDecimal;
+
+import org.web3j.utils.Convert;
+import org.web3j.utils.Convert.Unit;
+
 import com.cdkj.coin.ao.IEthCollectionAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.JsonUtil;
@@ -37,8 +42,9 @@ public class XN625100 extends AProcessor {
      */
     @Override
     public Object doBusiness() throws BizException {
-        ethCollectionAO.collectionManual(StringValidater.toBigDecimal(req
-            .getBalanceStart()));
+        BigDecimal balanceStart = Convert.toWei(
+            StringValidater.toBigDecimal(req.getBalanceStart()), Unit.ETHER);
+        ethCollectionAO.collectionManual(balanceStart);
         return new BooleanRes(true);
     }
 
