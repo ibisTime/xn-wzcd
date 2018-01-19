@@ -134,9 +134,9 @@ public class EthAddressBOImpl extends PaginableBOImpl<EthAddress> implements
             fis.close();
             // 落地地址信息
             String status = null;
-            if (EEthAddressType.X.getCode().equals(type)) {
+            if (EEthAddressType.X.getCode().equals(type.getCode())) {
                 status = EEthXAddressStatus.NORMAL.getCode();
-            } else if (EEthAddressType.M.getCode().equals(type)) {
+            } else if (EEthAddressType.M.getCode().equals(type.getCode())) {
                 status = EEthMAddressStatus.NORMAL.getCode();
             } else {
                 throw new BizException("不支持生成该类型的ETH地址");

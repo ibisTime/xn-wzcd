@@ -10,6 +10,8 @@ package com.cdkj.coin.api.impl;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.cdkj.coin.ao.IEthAddressAO;
 import com.cdkj.coin.api.AProcessor;
 import com.cdkj.coin.common.DateUtil;
@@ -51,8 +53,10 @@ public class XN625205 extends AProcessor {
         condition.setAvailableDatetimeStart(startDate);
         condition.setAvailableDatetimeEnd(endDate);
         condition.setStatus(req.getStatus());
-        condition.setBalanceStart(StringValidater.toBigDecimal(req
-            .getBalanceStart()));
+        if (StringUtils.isNotBlank(req.getBalanceStart())) {
+            condition.setBalanceStart(StringValidater.toBigDecimal(req
+                .getBalanceStart()));
+        }
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
         return ethAddressAO.queryEthAddressPage(start, limit, condition);
