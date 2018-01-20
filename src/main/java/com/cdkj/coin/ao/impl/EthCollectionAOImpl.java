@@ -53,7 +53,7 @@ public class EthCollectionAOImpl implements IEthCollectionAO {
     @Override
     public void collectionManual(BigDecimal balanceStart) {
 
-        int start = 0;
+        int start = 1;
         int limit = 10;
         while (true) {
             // 取出符合条件的地址列表

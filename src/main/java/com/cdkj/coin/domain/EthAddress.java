@@ -91,6 +91,9 @@ public class EthAddress extends ABaseDO {
     // 余额止
     private BigDecimal balanceEnd;
 
+    // 地址模糊查询
+    private String addressForQuery;
+
     public String getCode() {
         return code;
     }
@@ -308,6 +311,14 @@ public class EthAddress extends ABaseDO {
 
     public void setBalanceEnd(BigDecimal balanceEnd) {
         this.balanceEnd = balanceEnd;
+    }
+
+    public String getAddressForQuery() {
+        return addressForQuery;
+    }
+
+    public void setAddressForQuery(String addressForQuery) {
+        this.addressForQuery = addressForQuery;
     }
 
 }

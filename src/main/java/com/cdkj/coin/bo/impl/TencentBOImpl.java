@@ -209,8 +209,7 @@ public class TencentBOImpl implements ITencentBO {
             JsonObject smsParams = new JsonObject();
             smsParams.addProperty("Type",
                 URLEncoder.encode("Public", codingType));
-            smsParams.addProperty("Name",
-                URLEncoder.encode(groupId + "-Group", codingType));
+            smsParams.addProperty("Name", "Bcoin");
             smsParams.addProperty("GroupId",
                 URLEncoder.encode(groupId, codingType));
 

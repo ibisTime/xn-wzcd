@@ -42,6 +42,9 @@
 			<if test="address != null and address != '' ">
 				AND t.address = #{address}
 			</if>
+			<if test="addressForQuery != null and addressForQuery != '' ">
+				AND t.address like "%"#{addressForQuery}"%"
+			</if>
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>

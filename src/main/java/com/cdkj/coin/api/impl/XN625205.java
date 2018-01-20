@@ -48,7 +48,7 @@ public class XN625205 extends AProcessor {
         Date endDate = DateUtil.getEndDatetime(req.getAvailableDatetimeEnd());
         condition.setStatusList(req.getStatusList());
         condition.setType(req.getType());
-        condition.setAddress(req.getAddress());
+        condition.setAddressForQuery(req.getAddress());
         condition.setUserId(req.getUserId());
         condition.setAvailableDatetimeStart(startDate);
         condition.setAvailableDatetimeEnd(endDate);
