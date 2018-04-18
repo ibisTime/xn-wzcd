@@ -20,6 +20,8 @@
 		
 		<typeAlias alias="sysDict" type="com.cdkj.loan.domain.SYSDict" />
 		<typeAlias alias="sysConfig" type="com.cdkj.loan.domain.SYSConfig" />
+		
+		<typeAlias alias="brand" type="com.cdkj.loan.domain.Brand" />
 	</typeAliases>
 </configuration>
 
