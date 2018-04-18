@@ -12,89 +12,62 @@
 
 	
 	<!-- 分页BO层注入paginableDao -->
-	<bean id="userBO" class="com.cdkj.coin.bo.impl.UserBOImpl">
+	<bean id="userBO" class="com.cdkj.loan.bo.impl.UserBOImpl">
 		<property name="paginableDAO" ref="userDAOImpl" />
 	</bean>
 	
-	<bean id="blacklistBO" class="com.cdkj.coin.bo.impl.BlacklistBOImpl">
+	<bean id="blacklistBO" class="com.cdkj.loan.bo.impl.BlacklistBOImpl">
 		<property name="paginableDAO" ref="blacklistDAOImpl"/>
 	</bean>
 	
-	<bean id="userRelationBO" class="com.cdkj.coin.bo.impl.UserRelationBOImpl">
+	<bean id="userRelationBO" class="com.cdkj.loan.bo.impl.UserRelationBOImpl">
 		<property name="paginableDAO" ref="userRelationDAOImpl" />
 	</bean>
 	
-	<bean id="sysMenuBO" class="com.cdkj.coin.bo.impl.SYSMenuBOImpl">
+	<bean id="sysMenuBO" class="com.cdkj.loan.bo.impl.SYSMenuBOImpl">
 		<property name="paginableDAO" ref="sysMenuDAOImpl"/>
 	</bean>
 	
-	<bean id="sysRoleBO" class="com.cdkj.coin.bo.impl.SYSRoleBOImpl">
+	<bean id="sysRoleBO" class="com.cdkj.loan.bo.impl.SYSRoleBOImpl">
 		<property name="paginableDAO" ref="sysRoleDAOImpl"/>
 	</bean>
 	
-	<bean id="sysMenuRoleBO" class="com.cdkj.coin.bo.impl.SYSMenuRoleBOImpl">
+	<bean id="sysMenuRoleBO" class="com.cdkj.loan.bo.impl.SYSMenuRoleBOImpl">
 		<property name="paginableDAO" ref="sysMenuRoleDAOImpl"/>
 	</bean>
 
-	<bean id="cNavigateBO" class="com.cdkj.coin.bo.impl.CNavigateBOImpl">
+	<bean id="cNavigateBO" class="com.cdkj.loan.bo.impl.CNavigateBOImpl">
 		<property name="paginableDAO" ref="cNavigateDAOImpl"/>
 	</bean>
 	
-	<bean id="accountBO" class="com.cdkj.coin.bo.impl.AccountBOImpl">
+	<bean id="accountBO" class="com.cdkj.loan.bo.impl.AccountBOImpl">
 		<property name="paginableDAO" ref="accountDAOImpl" />
 	</bean>
-	<bean id="jourBO" class="com.cdkj.coin.bo.impl.JourBOImpl">
+	<bean id="jourBO" class="com.cdkj.loan.bo.impl.JourBOImpl">
 		<property name="paginableDAO" ref="jourDAOImpl" />
 	</bean>
-	<bean id="jourHistoryBO" class="com.cdkj.coin.bo.impl.JourHistoryBOImpl">
-		<property name="paginableDAO" ref="jourHistoryDAOImpl" />
-	</bean> 
 	
-	<bean id="exchangeCurrencyBO" class="com.cdkj.coin.bo.impl.ExchangeCurrencyBOImpl">
+	<bean id="exchangeCurrencyBO" class="com.cdkj.loan.bo.impl.ExchangeCurrencyBOImpl">
 		<property name="paginableDAO" ref="exchangeCurrencyDAOImpl"/>
 	</bean>
 
-	<bean id="currencyRateBO" class="com.cdkj.coin.bo.impl.CurrencyRateBOImpl">
-		<property name="paginableDAO" ref="currencyRateDAOImpl"/>
-	</bean>
-	
-	<bean id="chargeBO" class="com.cdkj.coin.bo.impl.ChargeBOImpl">
+	<bean id="chargeBO" class="com.cdkj.loan.bo.impl.ChargeBOImpl">
 		<property name="paginableDAO" ref="chargeDAOImpl"/>
 	</bean>	
 	
-	<bean id="withdrawBO" class="com.cdkj.coin.bo.impl.WithdrawBOImpl">
+	<bean id="withdrawBO" class="com.cdkj.loan.bo.impl.WithdrawBOImpl">
 		<property name="paginableDAO" ref="withdrawDAOImpl"/>
 	</bean>	
 	
-	<bean id="hlOrderBO" class="com.cdkj.coin.bo.impl.HLOrderBOImpl">
+	<bean id="hlOrderBO" class="com.cdkj.loan.bo.impl.HLOrderBOImpl">
 		<property name="paginableDAO" ref="hlOrderDAOImpl" />
 	</bean>
-	
-	<bean id="ethAddressBO" class="com.cdkj.coin.bo.impl.EthAddressBOImpl">
-		<property name="paginableDAO" ref="ethAddressDAOImpl" />
-	</bean>
-	
-	<bean id="ethTransactionBO" class="com.cdkj.coin.bo.impl.EthTransactionBOImpl">
-		<property name="paginableDAO" ref="ethTransactionDAOImpl" />
-	</bean>
-	
-	<bean id="ethCollectionBO" class="com.cdkj.coin.bo.impl.EthCollectionBOImpl">
-		<property name="paginableDAO" ref="ethCollectionDAOImpl" />
-	</bean>
-	
-	<bean id="tradeOrderBO" class="com.cdkj.coin.bo.impl.TradeOrderBOImpl">
-		<property name="paginableDAO" ref="tradeOrderDAOImpl" />
-	</bean>
-	
-	<bean id="arbitrateBO" class="com.cdkj.coin.bo.impl.ArbitrateBOImpl">
-		<property name="paginableDAO" ref="arbitrateDAOImpl" />
-	</bean>
-	
-	<bean id="sysDictBO" class="com.cdkj.coin.bo.impl.SYSDictBOImpl">
+
+	<bean id="sysDictBO" class="com.cdkj.loan.bo.impl.SYSDictBOImpl">
 		<property name="paginableDAO" ref="sysDictDAOImpl"/>
 	</bean>	
 	
-	<bean id="sysConfigBO" class="com.cdkj.coin.bo.impl.SYSConfigBOImpl">
+	<bean id="sysConfigBO" class="com.cdkj.loan.bo.impl.SYSConfigBOImpl">
 		<property name="paginableDAO" ref="sysConfigDAOImpl"/>
 	</bean>	
 	

@@ -10,86 +10,8 @@
 		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-	<context:component-scan base-package="com.cdkj.coin">
+	<context:component-scan base-package="com.cdkj.loan">
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
-
-	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-		<property name="triggers">
-			<list>
-
-				<ref bean="currencyRateTrigger"/>
-				<ref bean="marketTrigger"/>
-				<ref bean="adsMarketRefreshTrigger"/>
-				<ref bean="doCheckUnpayOrderTrigger"/>
-
-			</list>
-		</property>
-		<property name="autoStartup" value="true" />
-	</bean>
-
-	<!-- 定时获取汇率 -->
-	<bean id="currencyRateTrigger"
-		  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="currencyRate" />
-
-		<!--每天 0:0:0 获取一次-->
-		<property name="cronExpression" value="0 0 0 * * ?" />
-	</bean>
-	<bean id="currencyRate"
-		  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="currencyRateAOImpl" />
-		<property name="targetMethod" value="obtainCurrencyRate" />
-		<property name="concurrent" value="false" />
-		<!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->
-	</bean>
-
-	<!-- 定时获取行情 -->
-	<bean id="marketTrigger"
-		  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="market" />
-		<property name="cronExpression" value="*/30 * * * * ?" />
-	</bean>
-	<bean id="market"
-		  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="marketAOImpl" />
-		<property name="targetMethod" value="obtainMarket" />
-		<property name="concurrent" value="false" />
-		<!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->
-	</bean>
-
-	<!-- 定时刷新行情 -->
-	<bean id="adsMarketRefreshTrigger"
-		  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="adsMarket" />
-		<!--延迟10秒启动-->
-		<property name="startDelay" value="10000"/>
-		<!--每10分钟查询-->
-		<property name="cronExpression" value="0 */10 * * * ?" />
-		<!--<property name="cronExpression" value="0 * * * * ?" />-->
-	</bean>
-	<bean id="adsMarket"
-		  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="adsAOImpl" />
-		<property name="targetMethod" value="refreshMarketPrice" />
-		<property name="concurrent" value="false" />
-	</bean>
-
-
-	
-	<!-- 定时扫描未支付订单 -->
-	<bean id="doCheckUnpayOrderTrigger"
-		  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="doCheckUnpayOrder" />
-		<property name="cronExpression" value="0 */1 * * * ?"/><!-- 每分钟执行 -->
-	</bean>
-	<bean id="doCheckUnpayOrder"
-		  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="tradeOrderAOImpl" />
-		<property name="targetMethod" value="doCheckUnpayOrder" />
-		<property name="concurrent" value="false" />
-	</bean>
-
-
 </beans>

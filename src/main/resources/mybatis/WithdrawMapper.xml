@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cdkj.coin.dao.IWithdrawDAO">
+<mapper namespace="com.cdkj.loan.dao.IWithdrawDAO">
 	<resultMap id="withdraw_DB_Result" type="withdraw">
 		<result column="code" property="code" />
 		<result column="account_number" property="accountNumber" />
@@ -33,10 +33,6 @@
 		<result column="pay_datetime" property="payDatetime" />
 		<result column="system_code" property="systemCode" />
 		<result column="company_code" property="companyCode" />
-	</resultMap>
-	<resultMap id="addressUseInfo_DB_Result" type="ethAddress">
-		<result column="use_count" property="useCount" />
-		<result column="use_amount" property="useAmount" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -233,23 +229,6 @@
 		,pay_datetime = #{payDatetime}
 		WHERE code = #{code}
 	</update>
-	
-	<update id="broadcast_order" parameterType="withdraw">
-		UPDATE tstd_withdraw
-		SET
-		status = #{status}
-		,channel_order = #{channelOrder}
-		WHERE code = #{code}
-	</update>
-	
-	<select id="select_addressUseInfo" parameterType="withdraw"
-		resultMap="addressUseInfo_DB_Result">
-		SELECT 
-		COUNT(*) as use_count, 
-		COALESCE(SUM(amount)-SUM(fee),0) as use_amount
-		FROM tstd_withdraw t
-		<include refid="where_condition" />
-	</select>
 	
 	<select id="select_totalWithdraw" parameterType="withdraw"
 		resultType="java.math.BigDecimal">
