@@ -6,7 +6,7 @@
  * @date 2017年11月16日 下午5:02:42 
  * @version V1.0   
  */
-package com.cdkj.coin.dto.res;
+package com.cdkj.loan.dto.res;
 
 /** 
  * @author: haiqingzheng 
