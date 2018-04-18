@@ -1,7 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +16,6 @@ import org.web3j.utils.Convert.Unit;
 
 import com.cdkj.loan.ao.IWithdrawAO;
 import com.cdkj.loan.bo.IAccountBO;
-import com.cdkj.loan.bo.IGoogleAuthBO;
-import com.cdkj.loan.bo.IJourBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSDictBO;
 import com.cdkj.loan.bo.ISmsOutBO;
@@ -33,7 +30,6 @@ import com.cdkj.loan.domain.User;
 import com.cdkj.loan.domain.Withdraw;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EBoolean;
-import com.cdkj.loan.enums.EEthAddressType;
 import com.cdkj.loan.enums.EJourBizTypeUser;
 import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.enums.EWithdrawStatus;
@@ -89,11 +85,6 @@ public class WithdrawAOImpl implements IWithdrawAO {
 
         // 判断本月是否次数已满，且现在只能有一笔取现未支付记录
         withdrawBO.doCheckTimes(dbAccount);
-
-        List<String> typeList = new ArrayList<String>();
-        typeList.add(EEthAddressType.X.getCode());
-        typeList.add(EEthAddressType.M.getCode());
-        typeList.add(EEthAddressType.W.getCode());
 
         // 生成取现订单
         String withdrawCode = withdrawBO.applyOrder(dbAccount, amount, fee,

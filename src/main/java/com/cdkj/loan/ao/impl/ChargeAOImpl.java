@@ -11,22 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.loan.ao.IChargeAO;
 import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IChargeBO;
-import com.cdkj.loan.bo.IJourBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.domain.Charge;
-import com.cdkj.loan.domain.Jour;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EChannelType;
 import com.cdkj.loan.enums.EChargeStatus;
-import com.cdkj.loan.enums.ECoin;
-import com.cdkj.loan.enums.EJourBizTypeCold;
 import com.cdkj.loan.enums.EJourBizTypeUser;
-import com.cdkj.loan.enums.EJourKind;
-import com.cdkj.loan.enums.ESystemAccount;
-import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -39,8 +32,6 @@ public class ChargeAOImpl implements IChargeAO {
 
     @Autowired
     private IUserBO userBO;
-
-
 
     @Override
     public String applyOrder(String accountNumber, BigDecimal amount,
