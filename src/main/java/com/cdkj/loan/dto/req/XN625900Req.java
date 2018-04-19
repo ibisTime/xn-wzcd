@@ -8,6 +8,8 @@
  */
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /** 
  * @author: haiqingzheng 
  * @since: 2016年4月17日 下午5:00:54 
@@ -16,6 +18,7 @@ package com.cdkj.loan.dto.req;
 public class XN625900Req {
 
     // 父key（必填）
+    @NotBlank(message = "不为空")
     private String parentKey;
 
     // key（必填）
