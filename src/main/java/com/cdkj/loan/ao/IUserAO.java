@@ -9,7 +9,6 @@ import com.cdkj.loan.dto.req.XN805043Req;
 import com.cdkj.loan.dto.req.XN805095Req;
 import com.cdkj.loan.dto.res.XN625000Res;
 import com.cdkj.loan.dto.res.XN805041Res;
-import com.cdkj.loan.dto.res.XN805123Res;
 
 /**
  * @author: xieyj 
@@ -178,9 +177,6 @@ public interface IUserAO {
     public void doCheckTradePwd(String userId, String tradePwd);
 
     public XN625000Res getTencentSign(String userId);
-
-    // 查询推荐信息
-    public XN805123Res getInviteInfo(String userId);
 
     // 更新最后一次登录时间
     public void lastLogin(String userId);

@@ -8,7 +8,6 @@
  */
 package com.cdkj.loan.ao.impl;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -42,7 +41,6 @@ import com.cdkj.loan.common.PhoneUtil;
 import com.cdkj.loan.common.RandomUtil;
 import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
-import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.domain.SYSRole;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN805042Req;
@@ -54,14 +52,10 @@ import com.cdkj.loan.dto.res.XN798012Res;
 import com.cdkj.loan.dto.res.XN798013Res;
 import com.cdkj.loan.dto.res.XN798014Res;
 import com.cdkj.loan.dto.res.XN805041Res;
-import com.cdkj.loan.dto.res.XN805123Res;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECaptchaType;
-import com.cdkj.loan.enums.EChannelType;
-import com.cdkj.loan.enums.ECoin;
 import com.cdkj.loan.enums.EIDKind;
-import com.cdkj.loan.enums.EJourBizTypeUser;
 import com.cdkj.loan.enums.ELoginType;
 import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.enums.EUser;
@@ -95,10 +89,9 @@ public class UserAOImpl implements IUserAO {
 
     @Autowired
     protected ISYSRoleBO sysRoleBO;
-    
+
     @Autowired
     IIdentifyBO dentifyBO;
-
 
     @Autowired
     ISmsOutBO smsOutBO;
@@ -178,7 +171,7 @@ public class UserAOImpl implements IUserAO {
             divRate2, tradeRate, companyCode, systemCode);
         // 分配账户
         distributeAccount(userId, mobile, kind, companyCode, systemCode);
-      
+
         // 注册腾讯云
         tencentBO.register(userId, nickname, companyCode, systemCode);
 
@@ -245,9 +238,9 @@ public class UserAOImpl implements IUserAO {
             divRate2, tradeRate, companyCode, systemCode);
         // 分配账户
         distributeAccount(userId, mobile, kind, companyCode, systemCode);
-       
+
         // 注册腾讯云
-        //tencentBO.register(userId, nickname, companyCode, systemCode);
+        // tencentBO.register(userId, nickname, companyCode, systemCode);
 
         // 实名
         userBO
@@ -259,8 +252,6 @@ public class UserAOImpl implements IUserAO {
     private void distributeAccount(String userId, String mobile, String kind,
             String companyCode, String systemCode) {
         List<String> currencyList = new ArrayList<String>();
-        // currencyList.add(ECurrency.BTC.getCode());
-        currencyList.add(ECoin.ETH.getCode());
         for (String currency : currencyList) {
             accountBO.distributeAccount(userId, mobile,
                 EAccountType.getAccountType(kind), currency, systemCode,
@@ -1120,24 +1111,6 @@ public class UserAOImpl implements IUserAO {
     public XN625000Res getTencentSign(String userId) {
         return tencentBO.getSign(userId, ESystemCode.COIN.getCode(),
             ESystemCode.COIN.getCode());
-    }
-
-    @Override
-    public XN805123Res getInviteInfo(String userId) {
-        XN805123Res res = new XN805123Res();
-
-        User condition = new User();
-        condition.setUserReferee(userId);
-        res.setInviteCount(userBO.getTotalCount(condition));
-
-        Account account = accountBO.getAccountByUser(userId,
-            ECoin.ETH.getCode());
-        BigDecimal totalAmount = jourBO.getTotalAmount(
-            EJourBizTypeUser.AJ_INVITE.getCode(), EChannelType.NBZ.getCode(),
-            account.getAccountNumber(), null, null);
-        res.setInviteProfit(totalAmount.toString());
-
-        return res;
     }
 
     @Override

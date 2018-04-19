@@ -1,7 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 
@@ -9,20 +8,14 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.web3j.utils.Convert;
-import org.web3j.utils.Convert.Unit;
 
 import com.cdkj.loan.ao.IAccountAO;
 import com.cdkj.loan.bo.IAccountBO;
-import com.cdkj.loan.bo.IMarketBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Account;
-import com.cdkj.loan.domain.Market;
 import com.cdkj.loan.dto.res.XN802503Res;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EChannelType;
-import com.cdkj.loan.enums.ECoin;
-import com.cdkj.loan.enums.EMarketOrigin;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -30,12 +23,6 @@ public class AccountAOImpl implements IAccountAO {
 
     @Autowired
     private IAccountBO accountBO;
-
-
-
-    @Autowired
-    private IMarketBO marketBO;
-
 
     @Override
     @Transactional
@@ -93,37 +80,11 @@ public class AccountAOImpl implements IAccountAO {
     @Override
     public XN802503Res getAccountByUserId(String userId, String currency) {
         XN802503Res res = new XN802503Res();
-
-        // 总资产
-        BigDecimal totalAmountCNY = BigDecimal.ZERO;
-        BigDecimal totalAmountUSD = BigDecimal.ZERO;
-        BigDecimal totalAmountHKD = BigDecimal.ZERO;
-
         Account condition = new Account();
         condition.setUserId(userId);
         condition.setCurrency(currency);
         List<Account> accountList = accountBO.queryAccountList(condition);
-        for (Account account : accountList) {
-            // 以太坊账户逻辑
-            if (ECoin.ETH.getCode().equals(account.getCurrency())) {
-                // 以太坊B站行情
-                Market market = marketBO.marketByCoinTypeAndOrigin(
-                    ECoin.ETH.getCode(), EMarketOrigin.BITFINEX.getCode());
-                // 人民币总资产折算
-                totalAmountCNY = totalAmountCNY.add(
-                    market.getMid().multiply(
-                        Convert.fromWei(account.getAmount(), Unit.ETHER)))
-                    .setScale(2, RoundingMode.DOWN);
-
-            }
-            // todo 其他币账户逻辑
-        }
-
         res.setAccountList(accountList);
-        res.setTotalAmountCNY(totalAmountCNY.toString());
-        res.setTotalAmountUSD(totalAmountUSD.toString());
-        res.setTotalAmountHKD(totalAmountHKD.toString());
-
         return res;
     }
 
