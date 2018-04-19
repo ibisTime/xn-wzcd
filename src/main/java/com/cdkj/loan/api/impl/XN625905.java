@@ -58,10 +58,11 @@ public class XN625905 extends AProcessor {
      * @see com.cdkj.loan.api.IProcessor#doCheck(java.lang.String)
      */
     @Override
-    public void doCheck(String inputparams, String operator) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN625905Req.class);
-        StringValidater
-            .validateBlank(req.getSystemCode(), req.getCompanyCode());
+        StringValidater.validateBlank(req.getSystemCode(),
+            req.getCompanyCode());
         StringValidater.validateNumber(req.getStart(), req.getLimit());
     }
 

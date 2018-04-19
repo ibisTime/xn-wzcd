@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.cdkj.loan.dao.IBrandDao;
+import com.cdkj.loan.dao.IBrandDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.Brand;
 
 @Repository("brandDaoImpl")
-public class BrandDaoImpl extends AMybatisTemplate implements IBrandDao {
+public class BrandDAOImpl extends AMybatisTemplate implements IBrandDAO {
 
     @Override
     public int insert(Brand data) {
