@@ -1,35 +1,32 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.IBrandAO;
+import com.cdkj.loan.ao.ICUserAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN630403Req;
-import com.cdkj.loan.dto.res.BooleanRes;
+import com.cdkj.loan.dto.req.XN630201Req;
+import com.cdkj.loan.dto.res.XN630201Res;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
-/*上架*/
+public class XN630201 extends AProcessor {
 
-public class XN630403 extends AProcessor {
+    private ICUserAO cuserAO = SpringContextHolder.getBean(ICUserAO.class);
 
-    private IBrandAO brandAO = SpringContextHolder.getBean(IBrandAO.class);
-
-    private XN630403Req req = null;
+    private XN630201Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        brandAO.upBrand(req.getCode(), req.getUpdater(), req.getRemark());
-        return new BooleanRes(true);
+        return new XN630201Res(
+            cuserAO.doCaptchaLoginReg(req.getLoginName(), req.getLoginPwd()));
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN630403Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN630201Req.class);
         ObjValidater.validateReq(req);
-
     }
 
 }

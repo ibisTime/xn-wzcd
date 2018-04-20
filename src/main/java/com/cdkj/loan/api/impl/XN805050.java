@@ -23,13 +23,14 @@ public class XN805050 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return new XN805050Res(userAO.doLogin(req.getLoginName(),
-            req.getLoginPwd(), req.getKind(), req.getCompanyCode(),
-            req.getSystemCode()));
+        return new XN805050Res(
+            userAO.doLogin(req.getLoginName(), req.getLoginPwd(), req.getKind(),
+                req.getCompanyCode(), req.getSystemCode()));
     }
 
     @Override
-    public void doCheck(String inputparams, String operator) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN805050Req.class);
         StringValidater.validateBlank(req.getLoginName(), req.getLoginPwd(),
             req.getKind(), req.getSystemCode());

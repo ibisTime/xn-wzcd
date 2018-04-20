@@ -12,6 +12,10 @@
 
 	
 	<!-- 分页BO层注入paginableDao -->
+	<bean id="brandBO" class="com.cdkj.loan.bo.impl.BrandBOImpl">
+		<property name="paginableDAO" ref="brandDAOImpl" />
+	</bean>
+	
 	<bean id="userBO" class="com.cdkj.loan.bo.impl.UserBOImpl">
 		<property name="paginableDAO" ref="userDAOImpl" />
 	</bean>
@@ -71,4 +75,7 @@
 		<property name="paginableDAO" ref="sysConfigDAOImpl"/>
 	</bean>	
 	
+	<bean id="cuserBO" class="com.cdkj.loan.bo.impl.CUserBOImpl">
+		<property name="paginableDAO" ref="cuserDAOImpl"/>
+	</bean>	
 </beans>

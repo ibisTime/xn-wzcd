@@ -1,38 +1,16 @@
 package com.cdkj.loan.dto.req;
 
-public class XN630407Req extends APageReq {
+public class XN630407Req {
 
-    // 名称（选填）
-    private String name;
+    // 编号（必填）
+    private String code;
 
-    // 字母序号（选填）
-    private String letter;
-
-    // 状态（选填）
-    private String status;
-
-    public String getName() {
-        return name;
+    public String getCode() {
+        return code;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLetter() {
-        return letter;
-    }
-
-    public void setLetter(String letter) {
-        this.letter = letter;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCode(String code) {
+        this.code = code;
     }
 
 }

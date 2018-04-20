@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBrandAO;
 import com.cdkj.loan.bo.IBrandBO;
@@ -14,6 +15,7 @@ import com.cdkj.loan.dto.req.XN630402Req;
 import com.cdkj.loan.enums.EBrandStatus;
 import com.cdkj.loan.exception.BizException;
 
+@Service
 public class BrandAOImpl implements IBrandAO {
 
     @Autowired
@@ -22,14 +24,15 @@ public class BrandAOImpl implements IBrandAO {
     @Override
     public String addBrand(XN630400Req req) {
         Brand brand = new Brand();
-        brand.setDescript(req.getDescription());
         brand.setLetter(req.getLetter());
         brand.setLogo(req.getLogo());
         brand.setName(req.getName());
-        brand.setRemark(req.getRemark());
-        brand.setUpdater(req.getUpdater());
-        brand.setUpdaterDatetime(new Date());
+        brand.setDescription(req.getDescription());
+
         brand.setStatus(EBrandStatus.TO_UP.getCode());
+        brand.setUpdater(req.getUpdater());
+        brand.setUpdateDatetime(new Date());
+        brand.setRemark(req.getRemark());
         return brandBO.saveBrand(brand);
     }
 
@@ -41,10 +44,11 @@ public class BrandAOImpl implements IBrandAO {
         }
         brand.setLogo(req.getLogo());
         brand.setName(req.getName());
-        brand.setDescript(req.getDescription());
+        brand.setDescription(req.getDescription());
         brand.setUpdater(req.getUpdater());
+        brand.setUpdateDatetime(new Date());
         brand.setRemark(req.getRemark());
-
+        brandBO.editBrand(brand);
     }
 
     @Override
@@ -66,7 +70,7 @@ public class BrandAOImpl implements IBrandAO {
     }
 
     @Override
-    public Brand queryBranddeta(String code) {
+    public Brand getBrand(String code) {
         return brandBO.getBrand(code);
     }
 
