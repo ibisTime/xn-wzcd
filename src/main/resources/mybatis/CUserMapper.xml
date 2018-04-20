@@ -137,7 +137,16 @@
 		user_id = #{userId}	
 	</update>
 	
-	
+	<update id="update_role" parameterType="cuser">
+		UPDATE tht_user
+		SET
+		role_code = #{roleCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE
+		user_id = #{userId}	
+	</update>
 	
 	
 	
