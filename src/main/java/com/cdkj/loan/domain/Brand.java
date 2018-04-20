@@ -7,7 +7,7 @@ import com.cdkj.loan.dao.base.ABaseDO;
 public class Brand extends ABaseDO {
 
     // 编号
-    private long code;
+    private String code;
 
     // 字母序号
     private String letter;
@@ -33,11 +33,11 @@ public class Brand extends ABaseDO {
     // 备注
     private String remark;
 
-    public long getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

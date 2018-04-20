@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.ICUserDAO">
+	<resultMap id="CUser_DB_Result" type="cuser">
+		<result column="userId" property="userId" />
+		<result column="loginName" property="loginName" />
+		<result column="mobile" property="mobile" />
+		<result column="photo" property="photo" />
+		<result column="nickname" property="nickname" />
+		<result column="loginPwd" property="loginPwd" />
+		<result column="loginPwdStrengt" property="loginPwdStrengt" />
+		<result column="userReferee" property="userReferee" />
+		<result column="refereeMobile" property="refereeMobile" />
+		<result column="tradePwd" property="tradePwd" />
+		<result column="tradePwdStrength" property="tradePwdStrength" />
+		<result column="idKind" property="idKind" />
+		<result column="idNo" property="idNo" />
+		<result column="realName" property="realName" />
+		<result column="jfAmount" property="jfAmount" />
+		<result column="amount" property="amount" />
+		<result column="creditscore" property="creditscore" />
+		<result column="status" property="status" />
+		<result column="createDatetime" property="createDatetime" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	
+	<select id="select_cuser" parameterType="cuser" resultMap="CUser_DB_Result">
+		SELECT
+		user_id
+		,login_name
+		,mobile
+		,photo
+		,nickname
+		,login_pwd
+		,login_pwd_strengt
+		,user_referee
+		,referee_mobile
+		,trade_pwd
+		,trade_pwd_strength
+		,id_kind
+		,id_no
+		,real_name
+		,jf_amount
+		,amount
+		,creditscore
+		,status
+		,create_datetime
+		,remark
+		FROM
+		tht_user t
+		<include refid="where_condition" />
+		order by t.create_datetime desc
+	</select>
+	
+	<select id="select_cuser_count" parameterType="cuser" resultType="java.lang.Long">
+		SELECT count(1) FROM tht_user t
+		<include refid="where_condition" />
+	</select>
+	
+	<insert id="insert_cuser" parameterType="cuser">
+		INSERT INTO tht_user(
+		user_id
+		,login_name
+		,mobile
+		,photo
+		,nickname
+		,login_pwd
+		,login_pwd_strengt
+		,user_referee
+		,referee_mobile
+		,trade_pwd
+		,trade_pwd_strength
+		,id_kind
+		,id_no
+		,real_name
+		,jf_amount
+		,amount
+		,creditscore
+		,status
+		,create_datetime
+		,remark
+		)
+		VALUES(
+		#{userId}
+		,#{loginName}
+		,#{mobile}
+		,#{photo}
+		,#{nickname}
+		,#{loginPwd}
+		,#{loginPwdSstrengt}
+		,#{userReferee}
+		,#{refereeMobile}
+		,#{tradePwd}
+		,#{tradePwdStrength}
+		,#{idKind}
+		,#{idNo}
+		,#{realName}
+		,#{jfAmount}
+		,#{amount}
+		,#{creditscore}
+		,#{status}
+		,#{createDatetime}
+		,#{remark}
+		)
+	</insert>
+	
+	<update id="update_cuser" parameterType="cuser">
+		UPDATE tht_user SET
+		login_name           =	#{loginName}
+		,mobile              =	#{mobile}
+		,photo               =	#{photo}
+		,nickname            =	#{nickname}
+		,login_pwd           =	#{loginPwd}
+		,login_pwd_strengt   =	#{loginPwdStrengt}
+		,user_referee        =	#{userReferee}
+		,referee_mobile      =	#{refereeMobile}
+		,trade_pwd           =	#{tradePwd}
+		,trade_pwd_strength  =	#{tradePwdStrength}
+		,id_kind             =	#{idKind}
+		,id_no               =	#{idNo}
+		,real_name           =	#{realName}
+		,jf_amount           =	#{jfAmount}
+		,amount              =	#{amount}
+		,creditscore         =	#{creditscore}
+		,status              =	#{status}
+		,create_datetime     =	#{createDatetime}
+		,remark              =	#{remark}
+	</update>
+	
+	<update id="update_login_pwd" parameterType="cuser">
+		UPDATE tht_user
+		SET
+		 login_pwd = #{loginPwd}
+		,login_pwd_strength = #{loginPwdStrength}
+		WHERE
+		user_id = #{userId}	
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

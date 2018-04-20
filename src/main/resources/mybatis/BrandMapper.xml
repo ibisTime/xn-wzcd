@@ -33,7 +33,7 @@
 	</select>
 	
 	<insert id="insert_brand" parameterType="brand">
-		INSERT INTO tsys_role(
+		INSERT INTO tht_brand(
 		code
 		,letter
 		,logo
