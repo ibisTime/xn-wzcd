@@ -26,13 +26,10 @@
 		,remark
 		FROM
 		tht_brand t
-		<include refid="where_condition" />
-		order by t.update_datetime desc
 	</select>
 	
 	<select id="select_brand_count" parameterType="brand" resultType="java.lang.Long">
 		SELECT count(1) FROM tht_brand t
-		<include refid="where_condition" />
 	</select>
 	
 	<insert id="insert_brand" parameterType="brand">

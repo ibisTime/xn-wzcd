@@ -8,7 +8,7 @@ import com.cdkj.loan.dao.IBrandDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.Brand;
 
-@Repository("brandDaoImpl")
+@Repository("brandDAOImpl")
 public class BrandDAOImpl extends AMybatisTemplate implements IBrandDAO {
 
     @Override
