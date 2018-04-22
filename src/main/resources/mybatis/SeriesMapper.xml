@@ -22,8 +22,8 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
-			<if test="brand_code != null and brand_code != '' ">
-				AND t.brandCode = #{brandCode}
+			<if test="brandCode != null and brandCode != '' ">
+				AND t.brand_code = #{brandCode}
 			</if>
 			<if test="name != null and name != '' ">
 				AND t.name like "%"#{name}"%"
@@ -31,7 +31,7 @@
 			<if test="slogan != null and slogan != '' ">
 				AND t.slogan = #{slogan}
 			</if>
-			<if test="adv_pic != null and adv_pic != '' ">
+			<if test="advPic != null and advPic != '' ">
 				AND t.adv_pic = #{advPic}
 			</if>
 			<if test="price != null and price != '' ">
@@ -40,7 +40,7 @@
 			<if test="location != null and location != '' ">
 				AND t.location = #{location}
 			</if>
-			<if test="order_no != null and order_no != '' ">
+			<if test="orderNo != null and orderNo != '' ">
 				AND t.order_no = #{orderNo}
 			</if>
 			<if test="status != null and status != '' ">
@@ -120,14 +120,11 @@
 	
 	<update id="update_series" parameterType="series">
 		UPDATE tht_series SET
-		,brand_code = #{brandCode}     
+		brand_code = #{brandCode}     
 		,name  = #{name}           
 		,slogan = #{slogan}         
 		,adv_pic  = #{advPic}        
 		,price = #{price}          
-		,location =#{location}       
-		,order_no = #{orderNo}       
-		,status = #{status}         
 		,updater = #{updater}        
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}         
@@ -137,8 +134,8 @@
 	<update id="update_series_up" parameterType="series">
 		UPDATE tht_series SET
 		location = #{location}
-		order_no = #{roderNo}
-		status = #{status}
+		,order_no = #{orderNo}
+		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
@@ -147,8 +144,6 @@
 	
 	<update id="update_series_down" parameterType="series">
 		UPDATE tht_series SET
-		location = #{location}
-		order_no = #{roderNo}
 		status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
