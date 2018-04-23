@@ -7,14 +7,27 @@ public class XN805050Req {
     // 登陆密码（必填）
     private String loginPwd;
 
-    // 用户类型（选填）
     private String kind;
 
-    // 公司编号（选填）
     private String companyCode;
 
-    // 系统编号（必填）
     private String systemCode;
+
+    public String getKind() {
+        return kind;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
 
     public String getSystemCode() {
         return systemCode;
@@ -40,19 +53,4 @@ public class XN805050Req {
         this.loginPwd = loginPwd;
     }
 
-    public String getKind() {
-        return kind;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
 }

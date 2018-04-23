@@ -38,7 +38,6 @@ public class BrandDAOImpl extends AMybatisTemplate implements IBrandDAO {
 
     @Override
     public List<Brand> selectList(Brand condition) {
-        // TODO Auto-generated method stub
         return super.selectList(NAMESPACE.concat("select_brand"), condition,
             Brand.class);
     }

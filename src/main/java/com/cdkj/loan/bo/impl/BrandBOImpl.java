@@ -41,6 +41,12 @@ public class BrandBOImpl extends PaginableBOImpl<Brand> implements IBrandBO {
     }
 
     @Override
+    public int editBrand(Brand data) {
+
+        return brandDAO.update(data);
+    }
+
+    @Override
     public Brand getBrand(String code) {
         Brand data = null;
         if (StringUtils.isNotBlank(code)) {

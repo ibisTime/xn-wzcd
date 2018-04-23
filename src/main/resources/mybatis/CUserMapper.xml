@@ -2,30 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.ICUserDAO">
-	<resultMap id="CUser_DB_Result" type="cuser">
-		<result column="userId" property="userId" />
-		<result column="loginName" property="loginName" />
+	<resultMap id="cUser_DB_Result" type="cuser">
+		<result column="user_id" property="userId" />
+		<result column="login_name" property="loginName" />
 		<result column="mobile" property="mobile" />
 		<result column="photo" property="photo" />
 		<result column="nickname" property="nickname" />
-		<result column="loginPwd" property="loginPwd" />
-		<result column="loginPwdStrengt" property="loginPwdStrengt" />
-		<result column="userReferee" property="userReferee" />
-		<result column="refereeMobile" property="refereeMobile" />
-		<result column="tradePwd" property="tradePwd" />
-		<result column="tradePwdStrength" property="tradePwdStrength" />
-		<result column="idKind" property="idKind" />
-		<result column="idNo" property="idNo" />
-		<result column="realName" property="realName" />
-		<result column="jfAmount" property="jfAmount" />
+		<result column="login_pwd" property="loginPwd" />
+		<result column="login_pwd_strength" property="loginPwdStrength" />
+		<result column="user_referee" property="userReferee" />
+		<result column="referee_mobile" property="refereeMobile" />
+		<result column="trade_pwd" property="tradePwd" />
+		<result column="trade_pwd_strength" property="tradePwdStrength" />
+		<result column="id_kind" property="idKind" />
+		<result column="id_no" property="idNo" />
+		<result column="real_name" property="realName" />
+		<result column="jf_amount" property="jfAmount" />
 		<result column="amount" property="amount" />
 		<result column="creditscore" property="creditscore" />
 		<result column="status" property="status" />
-		<result column="createDatetime" property="createDatetime" />
+		<result column="create_datetime" property="createDatetime" />
 		<result column="remark" property="remark" />
 	</resultMap>
 	
-	<select id="select_cuser" parameterType="cuser" resultMap="CUser_DB_Result">
+	
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="userId != null and userId != '' ">
+				AND t.user_id = #{userId}
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="select_cuser" parameterType="cuser" resultMap="cUser_DB_Result">
 		SELECT
 		user_id
 		,login_name
@@ -33,7 +42,7 @@
 		,photo
 		,nickname
 		,login_pwd
-		,login_pwd_strengt
+		,login_pwd_strength
 		,user_referee
 		,referee_mobile
 		,trade_pwd
@@ -66,7 +75,7 @@
 		,photo
 		,nickname
 		,login_pwd
-		,login_pwd_strengt
+		,login_pwd_strength
 		,user_referee
 		,referee_mobile
 		,trade_pwd
@@ -88,7 +97,7 @@
 		,#{photo}
 		,#{nickname}
 		,#{loginPwd}
-		,#{loginPwdSstrengt}
+		,#{loginPwdStrength}
 		,#{userReferee}
 		,#{refereeMobile}
 		,#{tradePwd}
@@ -112,7 +121,7 @@
 		,photo               =	#{photo}
 		,nickname            =	#{nickname}
 		,login_pwd           =	#{loginPwd}
-		,login_pwd_strengt   =	#{loginPwdStrengt}
+		,login_pwd_strength   =	#{loginPwdStrength}
 		,user_referee        =	#{userReferee}
 		,referee_mobile      =	#{refereeMobile}
 		,trade_pwd           =	#{tradePwd}
@@ -129,7 +138,7 @@
 	</update>
 	
 	<update id="update_login_pwd" parameterType="cuser">
-		UPDATE tht_user
+		UPDATE tht_cuser
 		SET
 		 login_pwd = #{loginPwd}
 		,login_pwd_strength = #{loginPwdStrength}
@@ -137,9 +146,22 @@
 		user_id = #{userId}	
 	</update>
 	
+	<update id="update_mobile" parameterType="cuser">
+		UPDATE tht_cuser
+		SET
+		login_name = #{mobile}
+		,mobile = #{mobile}
+		WHERE
+		user_id = #{userId}
+	</update>
 	
-	
-	
+	<update id="update_user_nickname" parameterType="cuser">
+		UPDATE tht_cuser
+		SET
+		 nickname = #{nickname}
+		WHERE
+		user_id = #{userId}	
+	</update>
 	
 	
 	

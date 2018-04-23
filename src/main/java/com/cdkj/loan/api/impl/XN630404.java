@@ -2,6 +2,8 @@ package com.cdkj.loan.api.impl;
 
 import com.cdkj.loan.ao.IBrandAO;
 import com.cdkj.loan.api.AProcessor;
+import com.cdkj.loan.common.JsonUtil;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN630404Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
@@ -24,7 +26,7 @@ public class XN630404 extends AProcessor {
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        // TODO Auto-generated method stub
-
+        req = JsonUtil.json2Bean(inputparams, XN630404Req.class);
+        ObjValidater.validateReq(req);
     }
 }

@@ -24,7 +24,7 @@ public class Brand extends ABaseDO {
     private String name;
 
     // 品牌介绍
-    private String descript;
+    private String description;
 
     // 状态
     private String status;
@@ -33,7 +33,7 @@ public class Brand extends ABaseDO {
     private String updater;
 
     // 最新修改时间
-    private Date updaterDatetime;
+    private Date updateDatetime;
 
     // 备注
     private String remark;
@@ -48,6 +48,14 @@ public class Brand extends ABaseDO {
 
     public String getLetter() {
         return letter;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setLetter(String letter) {
@@ -70,14 +78,6 @@ public class Brand extends ABaseDO {
         this.name = name;
     }
 
-    public String getDescript() {
-        return descript;
-    }
-
-    public void setDescript(String descript) {
-        this.descript = descript;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -94,12 +94,12 @@ public class Brand extends ABaseDO {
         this.updater = updater;
     }
 
-    public Date getUpdaterDatetime() {
-        return updaterDatetime;
+    public Date getUpdateDatetime() {
+        return updateDatetime;
     }
 
-    public void setUpdaterDatetime(Date updaterDatetime) {
-        this.updaterDatetime = updaterDatetime;
+    public void setUpdateDatetime(Date updateDatetime) {
+        this.updateDatetime = updateDatetime;
     }
 
     public String getRemark() {

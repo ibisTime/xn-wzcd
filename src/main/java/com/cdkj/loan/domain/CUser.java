@@ -4,8 +4,13 @@ import com.cdkj.loan.dao.base.ABaseDO;
 
 public class CUser extends ABaseDO {
 
+    /** 
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+     */
+    private static final long serialVersionUID = 6495303240604513334L;
+
     // 编号
-    private Long userId;
+    private String userId;
 
     // 登录名
     private String loginName;
@@ -23,7 +28,7 @@ public class CUser extends ABaseDO {
     private String loginPwd;
 
     // 登录密码强度
-    private String loginPwdStrengt;
+    private String loginPwdStrength;
 
     // 推荐人编号
     private String userReferee;
@@ -64,12 +69,12 @@ public class CUser extends ABaseDO {
     // 备注
     private String remark;
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUserId(String userId2) {
+        this.userId = userId2;
     }
 
     public String getLoginName() {
@@ -112,12 +117,16 @@ public class CUser extends ABaseDO {
         this.loginPwd = loginPwd;
     }
 
-    public String getLoginPwdStrengt() {
-        return loginPwdStrengt;
+    public String getLoginPwdStrength() {
+        return loginPwdStrength;
     }
 
-    public void setLoginPwdStrengt(String loginPwdStrengt) {
-        this.loginPwdStrengt = loginPwdStrengt;
+    public void setLoginPwdStrength(String loginPwdStrength) {
+        this.loginPwdStrength = loginPwdStrength;
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
     }
 
     public String getUserReferee() {

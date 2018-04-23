@@ -11,5 +11,7 @@ public interface IBrandBO extends IPaginableBO<Brand> {
 
     public Brand getBrand(String code);
 
+    public int editBrand(Brand data);
+
     public List<Brand> queryBrand(Brand condition);
 }

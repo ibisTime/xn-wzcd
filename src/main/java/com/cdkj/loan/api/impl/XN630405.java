@@ -22,20 +22,20 @@ public class XN630405 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        Brand brand = new Brand();
-        brand.setName(req.getName());
-        brand.setLetter(req.getLetter());
-        brand.setStatus(req.getStatus());
+        Brand condition = new Brand();
+        condition.setName(req.getName());
+        condition.setLetter(req.getLetter());
+        condition.setStatus(req.getStatus());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IBrandAO.DEFAULT_ORDER_COLUMN;
         }
-        brand.setOrder(orderColumn, req.getOrderDir());
+        condition.setOrder(orderColumn, req.getOrderDir());
 
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
-        return brandAO.queryBrandPage(start, limit, brand);
+        return brandAO.queryBrandPage(start, limit, condition);
     }
 
     @Override

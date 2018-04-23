@@ -27,7 +27,7 @@ public interface IBrandAO {
             Brand condition);
 
     // 详情查询
-    public Brand queryBranddeta(String code);
+    public Brand getBrand(String code);
 
     // 列表查询
     public List<Brand> queryBrandList(Brand condition);
