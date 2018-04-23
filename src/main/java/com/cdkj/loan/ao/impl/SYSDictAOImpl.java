@@ -35,9 +35,7 @@ public class SYSDictAOImpl implements ISYSDictAO {
     public Long addSecondDict(XN630030Req req) {
         String parentKey = req.getParentKey();
         String key = req.getDkey();
-        String companyCode = req.getCompanyCode();
-        String systemCode = req.getSystemCode();
-        sysDictBO.checkKeys(parentKey, key, systemCode, companyCode);
+        sysDictBO.checkKeys(parentKey, key);
         SYSDict sysDict = new SYSDict();
         sysDict.setType(EDictType.SECOND.getCode());
         sysDict.setParentKey(parentKey);
@@ -47,8 +45,6 @@ public class SYSDictAOImpl implements ISYSDictAO {
         sysDict.setUpdater(req.getUpdater());
         sysDict.setUpdateDatetime(new Date());
         sysDict.setRemark(req.getRemark());
-        sysDict.setSystemCode(req.getSystemCode());
-        sysDict.setCompanyCode(req.getCompanyCode());
 
         return sysDictBO.saveSecondDict(sysDict);
     }

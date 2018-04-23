@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IBrandBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
@@ -13,6 +14,7 @@ import com.cdkj.loan.domain.Brand;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
+@Component
 public class BrandBOImpl extends PaginableBOImpl<Brand> implements IBrandBO {
 
     @Autowired

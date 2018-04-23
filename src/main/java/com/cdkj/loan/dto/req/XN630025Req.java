@@ -20,18 +20,6 @@ public class XN630025Req {
     // 父菜单编号(选填)
     private String parentCode;
 
-    // 系统编号(必填)
-    @NotBlank(message = "系统编号不能为空")
-    private String systemCode;
-
-    public String getSystemCode() {
-        return systemCode;
-    }
-
-    public void setSystemCode(String systemCode) {
-        this.systemCode = systemCode;
-    }
-
     public String getRoleCode() {
         return roleCode;
     }

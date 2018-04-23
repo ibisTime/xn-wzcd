@@ -25,8 +25,8 @@ import com.cdkj.loan.enums.EWithdrawStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class WithdrawBOImpl extends PaginableBOImpl<Withdraw> implements
-        IWithdrawBO {
+public class WithdrawBOImpl extends PaginableBOImpl<Withdraw>
+        implements IWithdrawBO {
 
     @Autowired
     private IWithdrawDAO withdrawDAO;
@@ -35,14 +35,14 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw> implements
     ISYSConfigBO sysConfigBO;
 
     @Override
-    public String applyOrder(Account account, BigDecimal amount,
-            BigDecimal fee, String payCardInfo, String payCardNo,
-            String applyUser, String applyNote) {
+    public String applyOrder(Account account, BigDecimal amount, BigDecimal fee,
+            String payCardInfo, String payCardNo, String applyUser,
+            String applyNote) {
         if (amount.compareTo(BigDecimal.ZERO) == 0) {
             throw new BizException("xn000000", "取现金额不能为0");
         }
-        String code = OrderNoGenerater.generate(EGeneratePrefix.Withdraw
-            .getCode());
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.Withdraw.getCode());
         Withdraw data = new Withdraw();
         data.setCode(code);
         data.setAccountNumber(account.getAccountNumber());
@@ -115,8 +115,7 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw> implements
     @Override
     public void doCheckTimes(Account account) {
         // 判断本月申请次数是否达到上限
-        Map<String, String> argsMap = sysConfigBO.getConfigsMap(
-            account.getSystemCode(), account.getCompanyCode());
+        Map<String, String> argsMap = sysConfigBO.getConfigsMap();
         String monthTimesKey = SysConstants.CUSERMONTIMES;
         String monthTimesValue = argsMap.get(monthTimesKey);
         if (StringUtils.isNotBlank(monthTimesValue)) {// 月取现次数判断
@@ -127,8 +126,8 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw> implements
             long totalCount = withdrawDAO.selectTotalCount(condition);
             long maxMonthTimes = Long.valueOf(monthTimesValue);
             if (totalCount >= maxMonthTimes) {
-                throw new BizException("xn0000", "每月取现最多" + maxMonthTimes
-                        + "次,本月申请次数已用尽");
+                throw new BizException("xn0000",
+                    "每月取现最多" + maxMonthTimes + "次,本月申请次数已用尽");
             }
         }
 

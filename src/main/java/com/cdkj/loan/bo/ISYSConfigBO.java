@@ -25,18 +25,11 @@ public interface ISYSConfigBO extends IPaginableBO<SYSConfig> {
 
     public SYSConfig getSYSConfig(Long id);
 
-    public Map<String, String> getConfigsMap(String systemCode);
+    public Map<String, String> getConfigsMap();
 
-    public SYSConfig getSYSConfig(String key, String systemCode);
+    public SYSConfig getSYSConfig(String key);
 
-    public SYSConfig getSYSConfig(String key, String companyCode,
-            String systemCode);
-
-    public Map<String, String> getConfigsMap(String systemCode,
-            String companyCode);
-
-    public Map<String, String> getConfigsMap(String type, String companyCode,
-            String systemCode);
+    public Map<String, String> getConfigsMap(String type);
 
     public String getStringValue(String key);
 

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBrandAO;
 import com.cdkj.loan.bo.IBrandBO;
@@ -14,6 +15,7 @@ import com.cdkj.loan.dto.req.XN630402Req;
 import com.cdkj.loan.enums.EBrandStatus;
 import com.cdkj.loan.exception.BizException;
 
+@Service
 public class BrandAOImpl implements IBrandAO {
 
     @Autowired

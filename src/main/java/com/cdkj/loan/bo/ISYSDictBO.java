@@ -24,8 +24,7 @@ public interface ISYSDictBO extends IPaginableBO<SYSDict> {
 
     public void removeSYSDict(Long id);
 
-    public void checkKeys(String parentKey, String key, String systemCode,
-            String companyCode);
+    public void checkKeys(String parentKey, String key);
 
     public void refreshSYSDict(Long id, String value, String updater,
             String remark);

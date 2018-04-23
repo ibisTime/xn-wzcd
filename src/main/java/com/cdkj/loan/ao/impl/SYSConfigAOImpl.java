@@ -38,14 +38,12 @@ public class SYSConfigAOImpl implements ISYSConfigAO {
     }
 
     @Override
-    public SYSConfig getSYSConfig(String key, String companyCode,
-            String systemCode) {
-        return sysConfigBO.getSYSConfig(key, companyCode, systemCode);
+    public SYSConfig getSYSConfig(String key) {
+        return sysConfigBO.getSYSConfig(key);
     }
 
     @Override
-    public Map<String, String> getSYSConfigMap(String type, String companyCode,
-            String systemCode) {
-        return sysConfigBO.getConfigsMap(type, companyCode, systemCode);
+    public Map<String, String> getSYSConfigMap(String type) {
+        return sysConfigBO.getConfigsMap(type);
     }
 }

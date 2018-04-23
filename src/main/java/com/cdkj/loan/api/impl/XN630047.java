@@ -31,8 +31,7 @@ public class XN630047 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return sysConfigAO.getSYSConfig(req.getKey(), req.getCompanyCode(),
-            req.getSystemCode());
+        return sysConfigAO.getSYSConfig(req.getKey());
     }
 
     @Override

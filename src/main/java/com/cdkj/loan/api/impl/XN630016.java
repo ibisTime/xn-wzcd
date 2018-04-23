@@ -3,7 +3,6 @@ package com.cdkj.loan.api.impl;
 import com.cdkj.loan.ao.ISYSMenuAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.SYSMenu;
 import com.cdkj.loan.dto.req.XN630016Req;
 import com.cdkj.loan.exception.BizException;
@@ -29,7 +28,6 @@ public class XN630016 extends AProcessor {
         condition.setType(req.getType());
         condition.setParentCode(req.getParentCode());
         // condition.setUpdater(req.getUpdater());
-        condition.setSystemCode(req.getSystemCode());
         return sysMenuAO.querySYSMenuList(condition);
     }
 
@@ -37,6 +35,5 @@ public class XN630016 extends AProcessor {
     public void doCheck(String inputparams, String operator)
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN630016Req.class);
-        StringValidater.validateBlank(req.getSystemCode());
     }
 }

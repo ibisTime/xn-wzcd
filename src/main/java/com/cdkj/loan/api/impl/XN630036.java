@@ -38,8 +38,6 @@ public class XN630036 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         SYSDict condition = new SYSDict();
-        condition.setCompanyCode(req.getCompanyCode());
-        condition.setSystemCode(req.getSystemCode());
 
         condition.setType(req.getType());
         condition.setParentKey(req.getParentKey());

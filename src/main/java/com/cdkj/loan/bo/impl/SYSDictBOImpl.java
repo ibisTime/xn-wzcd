@@ -27,8 +27,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class SYSDictBOImpl extends PaginableBOImpl<SYSDict> implements
-        ISYSDictBO {
+public class SYSDictBOImpl extends PaginableBOImpl<SYSDict>
+        implements ISYSDictBO {
     @Autowired
     private ISYSDictDAO sysDictDAO;
 
@@ -85,14 +85,11 @@ public class SYSDictBOImpl extends PaginableBOImpl<SYSDict> implements
     }
 
     @Override
-    public void checkKeys(String parentKey, String key, String systemCode,
-            String companyCode) {
+    public void checkKeys(String parentKey, String key) {
         // 查看父节点是否存在
         SYSDict fDict = new SYSDict();
         fDict.setDkey(parentKey);
         fDict.setType(EDictType.FIRST.getCode());
-        fDict.setSystemCode(systemCode);
-        fDict.setCompanyCode(companyCode);
         if (getTotalCount(fDict) <= 0) {
             throw new BizException("xn000000", "parentKey不存在");
         }
@@ -101,8 +98,6 @@ public class SYSDictBOImpl extends PaginableBOImpl<SYSDict> implements
         condition.setParentKey(parentKey);
         condition.setDkey(key);
         condition.setType(EDictType.SECOND.getCode());
-        condition.setSystemCode(systemCode);
-        condition.setCompanyCode(companyCode);
         if (getTotalCount(condition) > 0) {
             throw new BizException("xn000000", "当前节点下，key重复");
         }

@@ -30,8 +30,6 @@ public class XN630045 extends AProcessor {
         condition.setType(req.getType());
         condition.setCkeyForQuery(req.getCkey());
         condition.setUpdater(req.getUpdater());
-        condition.setCompanyCode(req.getCompanyCode());
-        condition.setSystemCode(req.getSystemCode());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
@@ -48,7 +46,5 @@ public class XN630045 extends AProcessor {
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN630045Req.class);
         StringValidater.validateNumber(req.getStart(), req.getLimit());
-        StringValidater.validateBlank(req.getSystemCode(),
-            req.getCompanyCode());
     }
 }

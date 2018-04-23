@@ -31,7 +31,6 @@ public class XN630015 extends AProcessor {
         condition.setType(req.getType());
         condition.setParentCode(req.getParentCode());
         condition.setUpdater(req.getUpdater());
-        condition.setSystemCode(req.getSystemCode());
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
             column = ISYSMenuAO.DEFAULT_ORDER_COLUMN;
@@ -48,6 +47,5 @@ public class XN630015 extends AProcessor {
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN630015Req.class);
         StringValidater.validateNumber(req.getStart(), req.getLimit());
-        StringValidater.validateBlank(req.getSystemCode());
     }
 }

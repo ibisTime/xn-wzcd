@@ -16,7 +16,6 @@ import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.ISYSConfigDAO;
 import com.cdkj.loan.domain.SYSConfig;
-import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -27,8 +26,8 @@ import com.cdkj.loan.exception.BizException;
  */
 
 @Component
-public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig> implements
-        ISYSConfigBO {
+public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig>
+        implements ISYSConfigBO {
 
     static Logger logger = Logger.getLogger(SYSConfigBOImpl.class);
 
@@ -63,16 +62,13 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig> implements
     }
 
     @Override
-    public Map<String, String> getConfigsMap(String systemCode) {
+    public Map<String, String> getConfigsMap() {
         Map<String, String> map = new HashMap<String, String>();
-        if (StringUtils.isNotBlank(systemCode)) {
-            SYSConfig condition = new SYSConfig();
-            condition.setSystemCode(systemCode);
-            List<SYSConfig> list = sysConfigDAO.selectList(condition);
-            if (CollectionUtils.isNotEmpty(list)) {
-                for (SYSConfig sysConfig : list) {
-                    map.put(sysConfig.getCkey(), sysConfig.getCvalue());
-                }
+        SYSConfig condition = new SYSConfig();
+        List<SYSConfig> list = sysConfigDAO.selectList(condition);
+        if (CollectionUtils.isNotEmpty(list)) {
+            for (SYSConfig sysConfig : list) {
+                map.put(sysConfig.getCkey(), sysConfig.getCvalue());
             }
         }
         return map;
@@ -80,15 +76,11 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig> implements
     }
 
     @Override
-    public SYSConfig getSYSConfig(String key, String companyCode,
-            String systemCode) {
+    public SYSConfig getSYSConfig(String key) {
         SYSConfig sysConfig = null;
-        if (StringUtils.isNotBlank(key) && StringUtils.isNotBlank(systemCode)
-                && StringUtils.isNotBlank(companyCode)) {
+        if (StringUtils.isNotBlank(key)) {
             SYSConfig condition = new SYSConfig();
             condition.setCkey(key);
-            condition.setCompanyCode(companyCode);
-            condition.setSystemCode(systemCode);
             List<SYSConfig> sysConfigList = sysConfigDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(sysConfigList)) {
                 sysConfig = sysConfigList.get(0);
@@ -100,20 +92,14 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig> implements
     }
 
     @Override
-    public SYSConfig getSYSConfig(String key, String systemCode) {
-        return getSYSConfig(key, systemCode, systemCode);
-    }
-
-    @Override
     public Double getDoubleValue(String key) {
         Double result = 0.0;
-        SYSConfig config = getSYSConfig(key, ESystemCode.COIN.getCode(),
-            ESystemCode.COIN.getCode());
+        SYSConfig config = getSYSConfig(key);
         try {
             result = Double.valueOf(config.getCvalue());
         } catch (Exception e) {
-            logger.error("参数名为" + key + "的配置转换成Double类型发生错误, 原因："
-                    + e.getMessage());
+            logger.error(
+                "参数名为" + key + "的配置转换成Double类型发生错误, 原因：" + e.getMessage());
         }
         return result;
     }
@@ -121,34 +107,31 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig> implements
     @Override
     public Integer getIntegerValue(String key) {
         Integer result = 0;
-        SYSConfig config = getSYSConfig(key, ESystemCode.COIN.getCode(),
-            ESystemCode.COIN.getCode());
+        SYSConfig config = getSYSConfig(key);
         try {
             result = Integer.valueOf(config.getCvalue());
         } catch (Exception e) {
-            logger.error("参数名为" + key + "的配置转换成Integer类型发生错误, 原因："
-                    + e.getMessage());
+            logger.error(
+                "参数名为" + key + "的配置转换成Integer类型发生错误, 原因：" + e.getMessage());
         }
         return result;
     }
 
     @Override
     public String getStringValue(String key) {
-        SYSConfig config = getSYSConfig(key, ESystemCode.COIN.getCode(),
-            ESystemCode.COIN.getCode());
+        SYSConfig config = getSYSConfig(key);
         return config.getCvalue();
     }
 
     @Override
     public Long getLongValue(String key) {
         Long result = 0L;
-        SYSConfig config = getSYSConfig(key, ESystemCode.COIN.getCode(),
-            ESystemCode.COIN.getCode());
+        SYSConfig config = getSYSConfig(key);
         try {
             result = Long.valueOf(config.getCvalue());
         } catch (Exception e) {
-            logger.error("参数名为" + key + "的配置转换成Long类型发生错误, 原因："
-                    + e.getMessage());
+            logger
+                .error("参数名为" + key + "的配置转换成Long类型发生错误, 原因：" + e.getMessage());
         }
         return result;
     }
@@ -156,50 +139,25 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig> implements
     @Override
     public BigDecimal getBigDecimalValue(String key) {
         BigDecimal result = BigDecimal.ZERO;
-        SYSConfig config = getSYSConfig(key, ESystemCode.COIN.getCode(),
-            ESystemCode.COIN.getCode());
+        SYSConfig config = getSYSConfig(key);
         try {
             result = new BigDecimal(config.getCvalue());
         } catch (Exception e) {
-            logger.error("参数名为" + key + "的配置转换成BigDecimal类型发生错误, 原因："
-                    + e.getMessage());
+            logger.error(
+                "参数名为" + key + "的配置转换成BigDecimal类型发生错误, 原因：" + e.getMessage());
         }
         return result;
     }
 
     @Override
-    public Map<String, String> getConfigsMap(String systemCode,
-            String companyCode) {
+    public Map<String, String> getConfigsMap(String type) {
         Map<String, String> map = new HashMap<String, String>();
-        if (StringUtils.isNotBlank(systemCode)
-                && StringUtils.isNotBlank(companyCode)) {
-            SYSConfig condition = new SYSConfig();
-            condition.setSystemCode(systemCode);
-            condition.setCompanyCode(companyCode);
-            List<SYSConfig> list = sysConfigDAO.selectList(condition);
-            if (CollectionUtils.isNotEmpty(list)) {
-                for (SYSConfig sysConfig : list) {
-                    map.put(sysConfig.getCkey(), sysConfig.getCvalue());
-                }
-            }
-        }
-        return map;
-    }
-
-    @Override
-    public Map<String, String> getConfigsMap(String type, String companyCode,
-            String systemCode) {
-        Map<String, String> map = new HashMap<String, String>();
-        if (StringUtils.isNotBlank(systemCode)) {
-            SYSConfig condition = new SYSConfig();
-            condition.setCompanyCode(companyCode);
-            condition.setSystemCode(systemCode);
-            condition.setType(type);
-            List<SYSConfig> list = sysConfigDAO.selectList(condition);
-            if (CollectionUtils.isNotEmpty(list)) {
-                for (SYSConfig sysConfig : list) {
-                    map.put(sysConfig.getCkey(), sysConfig.getCvalue());
-                }
+        SYSConfig condition = new SYSConfig();
+        condition.setType(type);
+        List<SYSConfig> list = sysConfigDAO.selectList(condition);
+        if (CollectionUtils.isNotEmpty(list)) {
+            for (SYSConfig sysConfig : list) {
+                map.put(sysConfig.getCkey(), sysConfig.getCvalue());
             }
         }
         return map;
