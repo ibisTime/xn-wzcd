@@ -21,8 +21,11 @@
 		<typeAlias alias="sysDict" type="com.cdkj.loan.domain.SYSDict" />
 		<typeAlias alias="sysConfig" type="com.cdkj.loan.domain.SYSConfig" />
 		
-		<typeAlias alias="brand" type="com.cdkj.loan.domain.Brand" />
 		<typeAlias alias="cuser" type="com.cdkj.loan.domain.CUser" />
+		<typeAlias alias="brand" type="com.cdkj.loan.domain.Brand" />
+		<typeAlias alias="series" type="com.cdkj.loan.domain.Series" />
+		<typeAlias alias="car" type="com.cdkj.loan.domain.Car" />
+		<typeAlias alias="carorder" type="com.cdkj.loan.domain.CarOrder" />
 	</typeAliases>
 </configuration>
 

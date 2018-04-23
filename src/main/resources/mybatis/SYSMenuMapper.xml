@@ -13,6 +13,7 @@
 		<result column="update_datetime" property="updateDatetime" />		
 		<result column="remark" property="remark" />
 		<result column="parent_code" property="parentCode" />
+		<result column="system_code" property="systemCode" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">			
@@ -36,6 +37,9 @@
 			</if>
 			<if test="updater != null and updater != '' ">
 				AND t.updater = #{updater}
+			</if>
+			<if test="systemCode != null and systemCode != '' ">
+				AND t.system_code = #{systemCode}
 			</if>
 		</trim>
 	</sql>
@@ -73,6 +77,7 @@
 		,update_datetime
 		,remark	
 		,parent_code
+		,system_code
 		)
 		VALUES(
 		#{code}
@@ -85,6 +90,7 @@
 		,#{updateDatetime}
 		,#{remark}
 		,#{parentCode}
+		,#{systemCode}
 		)
 	</insert>
 

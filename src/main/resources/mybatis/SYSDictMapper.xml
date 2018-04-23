@@ -12,6 +12,8 @@
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
 		<result column="remark" property="remark" />
+		<result column="company_code" property="companyCode" />
+		<result column="system_code" property="systemCode" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -30,6 +32,12 @@
 			<if test="updater != null and updater != '' ">
 				AND t.updater = #{updater}
 			</if>
+			<if test="companyCode != null and companyCode != '' ">
+				AND t.company_code = #{companyCode}
+			</if>
+			<if test="systemCode != null and systemCode != '' ">
+				AND t.system_code = #{systemCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_sysDict" parameterType="sysDict" resultMap="sysDict_DB_Result">
@@ -43,6 +51,8 @@
 		,updater
 		,update_datetime
 		,remark
+		,company_code
+		,system_code
 		FROM
 		tsys_dict t 
 		<include refid="where_condition" />
@@ -68,6 +78,8 @@
 		,updater
 		,update_datetime
 		,remark
+		,company_code
+		,system_code
 		)
 		VALUES(
 		#{type}
@@ -78,6 +90,8 @@
 		,#{updater}
 		,#{updateDatetime}
 		,#{remark}
+		,#{companyCode}
+		,#{systemCode}
 		)
 	</insert>
 
