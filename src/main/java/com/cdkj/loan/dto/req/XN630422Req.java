@@ -18,6 +18,8 @@ public class XN630422Req {
 
     private String salePrice;// 参考价
 
+    private String sfAmount; // 首付金额
+
     private String slogan;// 广告语
 
     private String advPic;// 广告图
@@ -92,6 +94,14 @@ public class XN630422Req {
 
     public void setSalePrice(String salePrice) {
         this.salePrice = salePrice;
+    }
+
+    public String getSfAmount() {
+        return sfAmount;
+    }
+
+    public void setSfAmount(String sfAmount) {
+        this.sfAmount = sfAmount;
     }
 
     public String getSlogan() {

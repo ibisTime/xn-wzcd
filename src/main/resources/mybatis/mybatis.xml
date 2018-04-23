@@ -25,6 +25,7 @@
 		<typeAlias alias="brand" type="com.cdkj.loan.domain.Brand" />
 		<typeAlias alias="series" type="com.cdkj.loan.domain.Series" />
 		<typeAlias alias="car" type="com.cdkj.loan.domain.Car" />
+		<typeAlias alias="carorder" type="com.cdkj.loan.domain.CarOrder" />
 	</typeAliases>
 </configuration>
 

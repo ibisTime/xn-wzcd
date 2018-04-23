@@ -22,6 +22,8 @@ public class Car extends ABaseDO {
 
     private String salePrice;// 参考价
 
+    private String sfAmount; // 首付金额
+
     private String location;// UI位置
 
     private String orderNo;// UI次序
@@ -104,6 +106,14 @@ public class Car extends ABaseDO {
 
     public void setSalePrice(String salePrice) {
         this.salePrice = salePrice;
+    }
+
+    public String getSfAmount() {
+        return sfAmount;
+    }
+
+    public void setSfAmount(String sfAmount) {
+        this.sfAmount = sfAmount;
     }
 
     public String getLocation() {
