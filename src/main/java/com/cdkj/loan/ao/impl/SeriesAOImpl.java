@@ -58,12 +58,22 @@ public class SeriesAOImpl implements ISeriesAO {
             String updater, String remark) {
         Series series = seriesBO.getSeries(code);
         series.setStatus(EBrandStatus.UP.getCode());
+        series.setLocation(location);
+        series.setOrderNo(orderNo);
+        series.setUpdater(updater);
+        series.setUpdateDatetime(new Date());
+        series.setRemark(remark);
+        seriesBO.editSeries(series);
     }
 
     @Override
     public void downSeries(String code, String updater, String remark) {
         Series series = seriesBO.getSeries(code);
         series.setStatus(EBrandStatus.DOWN.getCode());
+        series.setUpdater(updater);
+        series.setUpdateDatetime(new Date());
+        series.setRemark(remark);
+        seriesBO.editSeries(series);
     }
 
     @Override

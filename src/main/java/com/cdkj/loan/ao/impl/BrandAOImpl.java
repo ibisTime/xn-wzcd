@@ -55,12 +55,20 @@ public class BrandAOImpl implements IBrandAO {
     public void upBrand(String code, String updater, String remark) {
         Brand brand = brandBO.getBrand(code);
         brand.setStatus(EBrandStatus.UP.getCode());
+        brand.setUpdater(updater);
+        brand.setUpdateDatetime(new Date());
+        brand.setRemark(remark);
+        brandBO.editBrand(brand);
     }
 
     @Override
     public void downBrand(String code, String updater, String remark) {
         Brand brand = brandBO.getBrand(code);
         brand.setStatus(EBrandStatus.DOWN.getCode());
+        brand.setUpdater(updater);
+        brand.setUpdateDatetime(new Date());
+        brand.setRemark(remark);
+        brandBO.editBrand(brand);
     }
 
     @Override

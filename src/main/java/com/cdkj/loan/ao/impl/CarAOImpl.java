@@ -71,12 +71,22 @@ public class CarAOImpl implements ICarAO {
             String updater, String remark) {
         Car car = carBO.getCar(code);
         car.setStatus(EBrandStatus.UP.getCode());
+        car.setLocation(location);
+        car.setOrderNo(orderNo);
+        car.setUpdater(updater);
+        car.setUpdateDatetime(new Date());
+        car.setRemark(remark);
+        carBO.editCar(car);
     }
 
     @Override
     public void downCar(String code, String updater, String remark) {
         Car car = carBO.getCar(code);
         car.setStatus(EBrandStatus.DOWN.getCode());
+        car.setUpdater(updater);
+        car.setUpdateDatetime(new Date());
+        car.setRemark(remark);
+        carBO.editCar(car);
     }
 
     @Override

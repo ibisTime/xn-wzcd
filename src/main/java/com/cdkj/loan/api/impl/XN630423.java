@@ -20,8 +20,8 @@ public class XN630423 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        carAO.upCar(req.getCode(), req.getUpdater(), req.getRemark(),
-            req.getLocation(), req.getOrderNo());
+        carAO.upCar(req.getCode(), req.getLocation(), req.getOrderNo(),
+            req.getUpdater(), req.getRemark());
         return new BooleanRes(true);
     }
 
