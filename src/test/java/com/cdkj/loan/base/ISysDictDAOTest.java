@@ -1,6 +1,5 @@
 package com.cdkj.loan.base;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import org.junit.Test;
@@ -25,8 +24,6 @@ public class ISysDictDAOTest extends ADAOTest {
         data.setUpdater("updater");
         data.setUpdateDatetime(new Date());
         data.setRemark("remark");
-        data.setCompanyCode("companyCode");
-        data.setSystemCode("systemCode");
         sysDictDAO.insert(data);
         logger.info("insert : {}", data.getId());
 
@@ -48,6 +45,5 @@ public class ISysDictDAOTest extends ADAOTest {
         Long count = sysDictDAO.selectTotalCount(condition);
         logger.info("selectList : {}", count);
     }
-
 
 }

@@ -38,8 +38,6 @@ public class XN630035 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         SYSDict condition = new SYSDict();
-        condition.setCompanyCode(req.getCompanyCode());
-        condition.setSystemCode(req.getSystemCode());
         condition.setType(req.getType());
         condition.setParentKey(req.getParentKey());
         condition.setDkey(req.getDkey());
@@ -61,8 +59,6 @@ public class XN630035 extends AProcessor {
     public void doCheck(String inputparams, String operator)
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN630035Req.class);
-        StringValidater.validateBlank(req.getSystemCode(),
-            req.getCompanyCode());
         StringValidater.validateNumber(req.getStart(), req.getLimit());
     }
 

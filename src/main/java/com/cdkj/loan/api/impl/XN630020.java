@@ -30,7 +30,6 @@ public class XN630020 extends AProcessor {
         data.setMenuCodeList(req.getMenuCodeList());
         data.setUpdater(req.getUpdater());
         data.setRemark(req.getRemark());
-        data.setSystemCode(req.getSystemCode());
         sysMenuRoleAO.addSYSMenuRole(data);
         return new BooleanRes(true);
     }

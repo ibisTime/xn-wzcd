@@ -19,12 +19,6 @@ public class XN630035Req extends APageReq {
      */
     private static final long serialVersionUID = 5780013307270124748L;
 
-    // 系统编号(必填)
-    private String systemCode;
-
-    // 公司编号(必填)
-    private String companyCode;
-
     // 类型（第一层/第二层）（选填）
     private String type;
 
@@ -33,22 +27,6 @@ public class XN630035Req extends APageReq {
 
     // key（选填）
     private String dkey;
-
-    public String getSystemCode() {
-        return systemCode;
-    }
-
-    public void setSystemCode(String systemCode) {
-        this.systemCode = systemCode;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
 
     public String getType() {
         return type;

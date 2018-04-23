@@ -28,7 +28,6 @@ public class XN630025 extends AProcessor {
         data.setRoleCode(req.getRoleCode());
         data.setParentCode(req.getParentCode());
         data.setType(req.getType());
-        data.setSystemCode(req.getSystemCode());
         return sysMenuRoleAO.querySYSMenuList(data);
     }
 

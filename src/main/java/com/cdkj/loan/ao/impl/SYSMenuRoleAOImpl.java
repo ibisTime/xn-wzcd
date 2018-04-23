@@ -49,7 +49,6 @@ public class SYSMenuRoleAOImpl implements ISYSMenuRoleAO {
                 sysMenuRole.setUpdater(data.getUpdater());
                 sysMenuRole.setUpdateDatetime(new Date());
                 sysMenuRole.setRemark(data.getRemark());
-                sysMenuRole.setSystemCode(data.getSystemCode());
                 count += sysMenuRoleBO.saveSYSMenuRole(sysMenuRole);
             }
         }

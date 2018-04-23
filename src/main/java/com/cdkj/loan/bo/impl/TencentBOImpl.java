@@ -23,7 +23,6 @@ import com.cdkj.loan.bo.ITencentBO;
 import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.dto.res.XN625000Res;
 import com.cdkj.loan.enums.EConfigType;
-import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.EBizErrorCode;
 import com.google.gson.JsonArray;
@@ -66,9 +65,8 @@ public class TencentBOImpl implements ITencentBO {
 
     private String getUrl(String baseUrl) {
         String urlString = null;
-        Map<String, String> sysConfigMap = sysConfigBO.getConfigsMap(
-            EConfigType.TENCENT_IM.getCode(), ESystemCode.COIN.getCode(),
-            ESystemCode.COIN.getCode());
+        Map<String, String> sysConfigMap = sysConfigBO
+            .getConfigsMap(EConfigType.TENCENT_IM.getCode());
         String txAppCode = sysConfigMap.get(SysConstants.TX_APP_CODE);
         String txAppAdmin = sysConfigMap.get(SysConstants.TX_APP_ADMIN);
         String accessKey = sysConfigMap.get(SysConstants.TX_ACCESS_KEY);
@@ -122,10 +120,10 @@ public class TencentBOImpl implements ITencentBO {
         try {
             String urlString = getUrl(TENXUN_CHAT_DULI_URL);
             String result = sendChildSms(urlString, userId, nickname);
-            String errorCode = JSONObject.parseObject(result).getString(
-                "ErrorCode");
-            String errorInfo = JSONObject.parseObject(result).getString(
-                "ErrorInfo");
+            String errorCode = JSONObject.parseObject(result)
+                .getString("ErrorCode");
+            String errorInfo = JSONObject.parseObject(result)
+                .getString("ErrorInfo");
             if (!errorCode.equals("0")) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "腾讯云注册异常,错误编号：" + errorCode + "，原因：" + errorInfo);
@@ -142,8 +140,7 @@ public class TencentBOImpl implements ITencentBO {
     @Override
     public XN625000Res getSign(String userId, String companyCode,
             String systemCode) {
-        Map<String, String> sysConfigMap = sysConfigBO.getConfigsMap(
-            EConfigType.TENCENT_IM.getCode(), companyCode, systemCode);
+        Map<String, String> sysConfigMap = sysConfigBO.getConfigsMap();
         String txAppCode = sysConfigMap.get(SysConstants.TX_APP_CODE);
         String txAppAdmin = sysConfigMap.get(SysConstants.TX_APP_ADMIN);
         String accessKey = sysConfigMap.get(SysConstants.TX_ACCESS_KEY);
@@ -170,7 +167,8 @@ public class TencentBOImpl implements ITencentBO {
             .getResource("jnisigcheck.so").getPath());
         int ret = demo.tls_gen_signature_ex2(txAppCode, userId, secretKey);
         if (0 != ret) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "腾讯云IM签名失败");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "腾讯云IM签名失败");
         }
         XN625000Res res = new XN625000Res();
         res.setTxAppCode(txAppCode);
@@ -235,10 +233,10 @@ public class TencentBOImpl implements ITencentBO {
             String result = doAccessHTTPPostJson(urlString, sendSms,
                 backEncodType);
 
-            String errorCode = JSONObject.parseObject(result).getString(
-                "ErrorCode");
-            String errorInfo = JSONObject.parseObject(result).getString(
-                "ErrorInfo");
+            String errorCode = JSONObject.parseObject(result)
+                .getString("ErrorCode");
+            String errorInfo = JSONObject.parseObject(result)
+                .getString("ErrorInfo");
             if (!errorCode.equals("0")) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "腾讯云创建群组异常,错误编号：" + errorCode + "，原因：" + errorInfo);
@@ -348,10 +346,10 @@ public class TencentBOImpl implements ITencentBO {
 
             String result = doAccessHTTPPostJson(urlString, paramsString,
                 backEncodType);
-            String errorCode = JSONObject.parseObject(result).getString(
-                "ErrorCode");
-            String errorInfo = JSONObject.parseObject(result).getString(
-                "ErrorInfo");
+            String errorCode = JSONObject.parseObject(result)
+                .getString("ErrorCode");
+            String errorInfo = JSONObject.parseObject(result)
+                .getString("ErrorInfo");
             if (!errorCode.equals("0")) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "腾讯云发送系统消息异常,错误编号：" + errorCode + "，原因：" + errorInfo);
@@ -404,10 +402,10 @@ public class TencentBOImpl implements ITencentBO {
 
             String result = doAccessHTTPPostJson(urlString, paramsString,
                 backEncodType);
-            String errorCode = JSONObject.parseObject(result).getString(
-                "ErrorCode");
-            String errorInfo = JSONObject.parseObject(result).getString(
-                "ErrorInfo");
+            String errorCode = JSONObject.parseObject(result)
+                .getString("ErrorCode");
+            String errorInfo = JSONObject.parseObject(result)
+                .getString("ErrorInfo");
             if (!errorCode.equals("0")) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "腾讯云发送普通消息异常,错误编号：" + errorCode + "，原因：" + errorInfo);
@@ -446,10 +444,10 @@ public class TencentBOImpl implements ITencentBO {
 
             String result = doAccessHTTPPostJson(urlString, paramsString,
                 backEncodType);
-            String errorCode = JSONObject.parseObject(result).getString(
-                "ErrorCode");
-            String errorInfo = JSONObject.parseObject(result).getString(
-                "ErrorInfo");
+            String errorCode = JSONObject.parseObject(result)
+                .getString("ErrorCode");
+            String errorInfo = JSONObject.parseObject(result)
+                .getString("ErrorInfo");
             if (!errorCode.equals("0")) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "设置昵称失败,错误编号：" + errorCode + "，原因：" + errorInfo);

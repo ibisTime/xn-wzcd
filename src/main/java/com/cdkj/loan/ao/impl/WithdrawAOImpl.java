@@ -176,8 +176,8 @@ public class WithdrawAOImpl implements IWithdrawAO {
 
     private void approveOrderYES(Withdraw data, String approveUser,
             String approveNote) {
-        withdrawBO.approveOrder(data, EWithdrawStatus.Approved_YES,
-            approveUser, approveNote);
+        withdrawBO.approveOrder(data, EWithdrawStatus.Approved_YES, approveUser,
+            approveNote);
     }
 
     private void approveOrderNO(Withdraw data, String approveUser,
@@ -273,8 +273,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
      */
     private BigDecimal doGetFee(String accountType, BigDecimal amount,
             String systemCode, String companyCode) {
-        Map<String, String> argsMap = sysConfigBO.getConfigsMap(systemCode,
-            companyCode);
+        Map<String, String> argsMap = sysConfigBO.getConfigsMap();
         String qxfl = null;
         if (EAccountType.Customer.getCode().equals(accountType)) {
             qxfl = SysConstants.CUSERQXFL;
@@ -284,11 +283,11 @@ public class WithdrawAOImpl implements IWithdrawAO {
         // 取现单笔最大金额
         String qxDbzdjeValue = argsMap.get(SysConstants.QXDBZDJE);
         if (StringUtils.isNotBlank(qxDbzdjeValue)) {
-            BigDecimal qxDbzdje = BigDecimal.valueOf(Double
-                .valueOf(qxDbzdjeValue));
+            BigDecimal qxDbzdje = BigDecimal
+                .valueOf(Double.valueOf(qxDbzdjeValue));
             if (amount.compareTo(qxDbzdje) == 1) {
-                throw new BizException("xn000000", "取现单笔最大金额不能超过"
-                        + qxDbzdjeValue + "元。");
+                throw new BizException("xn000000",
+                    "取现单笔最大金额不能超过" + qxDbzdjeValue + "元。");
             }
         }
         String feeRateValue = argsMap.get(qxfl);

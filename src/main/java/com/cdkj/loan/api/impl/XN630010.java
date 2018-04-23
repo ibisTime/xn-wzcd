@@ -35,7 +35,6 @@ public class XN630010 extends AProcessor {
 
         data.setUpdater(req.getUpdater());
         data.setRemark(req.getRemark());
-        data.setSystemCode(req.getSystemCode());
         return new PKCodeRes(sysMenuAO.addSYSMenu(data));
     }
 

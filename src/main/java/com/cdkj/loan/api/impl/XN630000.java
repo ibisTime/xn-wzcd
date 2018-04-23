@@ -30,7 +30,6 @@ public class XN630000 extends AProcessor {
         data.setLevel(req.getLevel());
         data.setUpdater(req.getUpdater());
         data.setRemark(req.getRemark());
-        data.setSystemCode(req.getSystemCode());
         return new PKCodeRes(sysRoleAO.addSYSRole(data));
     }
 

@@ -243,8 +243,8 @@ public class UserAOImpl implements IUserAO {
         // tencentBO.register(userId, nickname, companyCode, systemCode);
 
         // 实名
-        userBO
-            .refreshIdentity(userId, realName, EIDKind.IDCard.getCode(), idNo);
+        userBO.refreshIdentity(userId, realName, EIDKind.IDCard.getCode(),
+            idNo);
 
     }
 
@@ -382,9 +382,9 @@ public class UserAOImpl implements IUserAO {
         }
         User user = userList2.get(0);
         if (!EUserStatus.NORMAL.getCode().equals(user.getStatus())) {
-            throw new BizException("xn805050", "该账号"
-                    + EUserStatus.getMap().get(user.getStatus()).getValue()
-                    + "，请联系工作人员");
+            throw new BizException("xn805050",
+                "该账号" + EUserStatus.getMap().get(user.getStatus()).getValue()
+                        + "，请联系工作人员");
         }
         addLoginAmount(user);
         userBO.refreshLastLogin(user.getUserId());
@@ -431,8 +431,9 @@ public class UserAOImpl implements IUserAO {
         }
         // 发送短信
         if (EBoolean.YES.getCode().equals(isSendSms)) {
-            smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                    + "用户，您的登录密码为" + loginPwd + "，请及时登录网站更改密码。",
+            smsOutBO.sendSmsOut(mobile,
+                "尊敬的" + PhoneUtil.hideMobile(mobile) + "用户，您的登录密码为" + loginPwd
+                        + "，请及时登录网站更改密码。",
                 user.getCompanyCode(), user.getSystemCode());
         }
     }
@@ -478,16 +479,13 @@ public class UserAOImpl implements IUserAO {
             user.getCompanyCode(), user.getSystemCode());
         userBO.refreshMobile(userId, newMobile);
         // 发送短信
-        smsOutBO.sendSmsOut(
-            oldMobile,
-            "尊敬的"
-                    + PhoneUtil.hideMobile(oldMobile)
-                    + "用户，您于"
+        smsOutBO.sendSmsOut(oldMobile,
+            "尊敬的" + PhoneUtil.hideMobile(oldMobile) + "用户，您于"
                     + DateUtil.dateToStr(new Date(),
                         DateUtil.DATA_TIME_PATTERN_1)
                     + "提交的更改绑定手机号码服务已审核通过，现绑定手机号码为" + newMobile
-                    + "，请妥善保管您的账户相关信息。", user.getCompanyCode(), user
-                .getSystemCode());
+                    + "，请妥善保管您的账户相关信息。",
+            user.getCompanyCode(), user.getSystemCode());
     }
 
     @Override
@@ -513,16 +511,13 @@ public class UserAOImpl implements IUserAO {
             user.getCompanyCode(), user.getSystemCode());
         userBO.refreshMobile(userId, newMobile);
         // 发送短信
-        smsOutBO.sendSmsOut(
-            oldMobile,
-            "尊敬的"
-                    + PhoneUtil.hideMobile(oldMobile)
-                    + "用户，您于"
+        smsOutBO.sendSmsOut(oldMobile,
+            "尊敬的" + PhoneUtil.hideMobile(oldMobile) + "用户，您于"
                     + DateUtil.dateToStr(new Date(),
                         DateUtil.DATA_TIME_PATTERN_1)
                     + "提交的更改绑定手机号码服务已审核通过，现绑定手机号码为" + newMobile
-                    + "，请妥善保管您的账户相关信息。", user.getCompanyCode(), user
-                .getSystemCode());
+                    + "，请妥善保管您的账户相关信息。",
+            user.getCompanyCode(), user.getSystemCode());
     }
 
     @Override
@@ -539,8 +534,11 @@ public class UserAOImpl implements IUserAO {
             systemCode);
         userBO.refreshLoginPwd(userId, newLoginPwd);
         // 发送短信
-        smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                + "用户，您的登录密码重置成功。请妥善保管您的账户相关信息。", companyCode, systemCode);
+        smsOutBO
+            .sendSmsOut(mobile,
+                "尊敬的" + PhoneUtil.hideMobile(mobile)
+                        + "用户，您的登录密码重置成功。请妥善保管您的账户相关信息。",
+                companyCode, systemCode);
     }
 
     @Override
@@ -585,8 +583,8 @@ public class UserAOImpl implements IUserAO {
 
     @Override
     @Transactional
-    public void doSetTradePwd(String userId, String tradePwd,
-            String smsCaptcha, String googleCaptcha) {
+    public void doSetTradePwd(String userId, String tradePwd, String smsCaptcha,
+            String googleCaptcha) {
         User user = this.doGetUser(userId);
         // 短信验证码是否正确
         smsOutBO.checkCaptcha(user.getMobile(), smsCaptcha, "805066",
@@ -604,9 +602,10 @@ public class UserAOImpl implements IUserAO {
         userBO.refreshTradePwd(userId, tradePwd);
         // 发送短信
         String mobile = user.getMobile();
-        smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                + "用户，您的资金密码设置成功。请妥善保管您的账户相关信息。", user.getCompanyCode(),
-            user.getSystemCode());
+        smsOutBO.sendSmsOut(mobile,
+            "尊敬的" + PhoneUtil.hideMobile(mobile)
+                    + "用户，您的资金密码设置成功。请妥善保管您的账户相关信息。",
+            user.getCompanyCode(), user.getSystemCode());
     }
 
     @Override
@@ -631,9 +630,10 @@ public class UserAOImpl implements IUserAO {
         }
         userBO.refreshTradePwd(userId, newTradePwd);
         // 发送短信
-        smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                + "用户，您的资金密码重置成功。请妥善保管您的账户相关信息。", user.getCompanyCode(),
-            user.getSystemCode());
+        smsOutBO.sendSmsOut(mobile,
+            "尊敬的" + PhoneUtil.hideMobile(mobile)
+                    + "用户，您的资金密码重置成功。请妥善保管您的账户相关信息。",
+            user.getCompanyCode(), user.getSystemCode());
     }
 
     @Override
@@ -648,8 +648,8 @@ public class UserAOImpl implements IUserAO {
             throw new BizException("li01004", "请先实名认证");
         }
         // 证件是否正确
-        if (!(user.getIdKind().equalsIgnoreCase(idKind) && user.getIdNo()
-            .equalsIgnoreCase(idNo))) {
+        if (!(user.getIdKind().equalsIgnoreCase(idKind)
+                && user.getIdNo().equalsIgnoreCase(idNo))) {
             throw new BizException("li01009", "身份证不符合");
         }
         // 短信验证码是否正确
@@ -658,9 +658,10 @@ public class UserAOImpl implements IUserAO {
             user.getCompanyCode(), user.getSystemCode());
         userBO.refreshTradePwd(userId, newTradePwd);
         // 发送短信
-        smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                + "用户，您的资金密码重置成功。请妥善保管您的账户相关信息。", user.getCompanyCode(),
-            user.getSystemCode());
+        smsOutBO.sendSmsOut(mobile,
+            "尊敬的" + PhoneUtil.hideMobile(mobile)
+                    + "用户，您的资金密码重置成功。请妥善保管您的账户相关信息。",
+            user.getCompanyCode(), user.getSystemCode());
     }
 
     @Override
@@ -682,9 +683,10 @@ public class UserAOImpl implements IUserAO {
         }
         userBO.refreshTradePwd(userId, newTradePwd);
         String mobile = user.getMobile();
-        smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                + "用户，您的资金密码修改成功。请妥善保管您的账户相关信息。", user.getCompanyCode(),
-            user.getSystemCode());
+        smsOutBO.sendSmsOut(mobile,
+            "尊敬的" + PhoneUtil.hideMobile(mobile)
+                    + "用户，您的资金密码修改成功。请妥善保管您的账户相关信息。",
+            user.getCompanyCode(), user.getSystemCode());
     }
 
     @Override
@@ -715,7 +717,8 @@ public class UserAOImpl implements IUserAO {
     }
 
     // 修改经纬度
-    public void doModifyLngLat(String userId, String longitude, String latitude) {
+    public void doModifyLngLat(String userId, String longitude,
+            String latitude) {
     }
 
     @Override
@@ -741,8 +744,9 @@ public class UserAOImpl implements IUserAO {
         userBO.refreshStatus(userId, userStatus, updater, remark);
         if (!EUserKind.Plat.getCode().equals(user.getKind())) {
             // 发送短信
-            smsOutBO.sendSmsOut(mobile, "尊敬的" + PhoneUtil.hideMobile(mobile)
-                    + smsContent, user.getCompanyCode(), user.getSystemCode());
+            smsOutBO.sendSmsOut(mobile,
+                "尊敬的" + PhoneUtil.hideMobile(mobile) + smsContent,
+                user.getCompanyCode(), user.getSystemCode());
         }
     }
 
@@ -756,9 +760,6 @@ public class UserAOImpl implements IUserAO {
         SYSRole role = sysRoleBO.getSYSRole(roleCode);
         if (role == null) {
             throw new BizException("li01004", "角色不存在");
-        }
-        if (!user.getSystemCode().equals(role.getSystemCode())) {
-            throw new BizException("li01004", "用户和角色系统不对应");
         }
         userBO.refreshRole(userId, roleCode, updater, remark);
     }
@@ -781,8 +782,8 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
-    public void doModifyDivRate(String userId, Double divRate1,
-            Double divRate2, String updater, String remark) {
+    public void doModifyDivRate(String userId, Double divRate1, Double divRate2,
+            String updater, String remark) {
         User user = userBO.getUser(userId);
         if (user == null) {
             throw new BizException("xn000000", "用户不存在");
@@ -804,8 +805,8 @@ public class UserAOImpl implements IUserAO {
     public void doIdentify(String userId, String idKind, String idNo,
             String realName) {
         // 更新用户表
-        userBO
-            .refreshIdentity(userId, realName, EIDKind.IDCard.getCode(), idNo);
+        userBO.refreshIdentity(userId, realName, EIDKind.IDCard.getCode(),
+            idNo);
         // // 回写Account表realName;
         // accountBO.refreshRealName(user.getUserId(), realName,
         // user.getSystemCode());
@@ -818,8 +819,8 @@ public class UserAOImpl implements IUserAO {
         dentifyBO.doTwoIdentify(user.getSystemCode(), user.getCompanyCode(),
             userId, realName, idKind, idNo);
         // 更新用户表
-        userBO
-            .refreshIdentity(userId, realName, EIDKind.IDCard.getCode(), idNo);
+        userBO.refreshIdentity(userId, realName, EIDKind.IDCard.getCode(),
+            idNo);
         // // 回写Account表realName;
         // accountBO.refreshRealName(user.getUserId(), realName,
         // user.getSystemCode());
@@ -832,8 +833,8 @@ public class UserAOImpl implements IUserAO {
         dentifyBO.doFourIdentify(userId, realName, idKind, idNo, cardNo,
             bindMobile);
         // 更新用户表
-        userBO
-            .refreshIdentity(userId, realName, EIDKind.IDCard.getCode(), idNo);
+        userBO.refreshIdentity(userId, realName, EIDKind.IDCard.getCode(),
+            idNo);
         // // 回写Account表realName;
         // accountBO.refreshRealName(user.getUserId(), realName,
         // user.getSystemCode());

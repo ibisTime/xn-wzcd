@@ -40,20 +40,9 @@ public class SYSMenu extends ABaseDO {
     // 备注
     private String remark;
 
-    // 系统编号（必填）
-    private String systemCode;
-
     // ************* 模糊查询 *****************
     // 名称模糊查询
     private String nameForQuery;
-
-    public String getSystemCode() {
-        return systemCode;
-    }
-
-    public void setSystemCode(String systemCode) {
-        this.systemCode = systemCode;
-    }
 
     public String getCode() {
         return code;

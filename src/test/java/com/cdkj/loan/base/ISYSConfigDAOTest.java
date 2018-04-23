@@ -23,8 +23,6 @@ public class ISYSConfigDAOTest extends ADAOTest {
         data.setUpdater("updater");
         data.setUpdateDatetime(new Date());
         data.setRemark("remark");
-        data.setSystemCode("systemCode");
-        data.setCompanyCode("companyCode");
         sysConfigDAO.insert(data);
         logger.info("insert : {}", data.getId());
 
