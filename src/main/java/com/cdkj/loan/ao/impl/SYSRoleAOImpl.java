@@ -2,6 +2,7 @@ package com.cdkj.loan.ao.impl;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import com.cdkj.loan.bo.ISYSRoleBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.SYSRole;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -42,12 +44,12 @@ public class SYSRoleAOImpl implements ISYSRoleAO {
         if (!sysRoleBO.isSYSRoleExist(roleCode)) {
             throw new BizException("lh4000", "角色编号不存在！");
         }
-        // User condition = new User();
-        // condition.setRoleCode(roleCode);
-        // List<User> list = userBO.queryUserList(condition);
-        // if (!CollectionUtils.sizeIsEmpty(list)) {
-        // throw new BizException("lh4000", "该角色已在使用，无法删除！");
-        // }
+        User condition = new User();
+        condition.setRoleCode(roleCode);
+        List<User> list = userBO.queryUserList(condition);
+        if (!CollectionUtils.sizeIsEmpty(list)) {
+            throw new BizException("lh4000", "该角色已在使用，无法删除！");
+        }
         // 删除角色和角色菜单关联表
         sysRoleBO.removeSYSRole(roleCode);
         sysMenuRoleBO.removeSYSMenuList(roleCode);
