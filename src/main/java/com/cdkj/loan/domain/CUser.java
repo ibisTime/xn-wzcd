@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 public class CUser extends ABaseDO {
@@ -68,6 +70,11 @@ public class CUser extends ABaseDO {
 
     // 备注
     private String remark;
+
+    // *****************db******************
+    private Date createDatetimeStart;
+
+    private Date createDatetimeEnd;
 
     public String getUserId() {
         return userId;
@@ -231,6 +238,22 @@ public class CUser extends ABaseDO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Date getCreateDatetimeStart() {
+        return createDatetimeStart;
+    }
+
+    public void setCreateDatetimeStart(Date createDatetimeStart) {
+        this.createDatetimeStart = createDatetimeStart;
+    }
+
+    public Date getCreateDatetimeEnd() {
+        return createDatetimeEnd;
+    }
+
+    public void setCreateDatetimeEnd(Date createDatetimeEnd) {
+        this.createDatetimeEnd = createDatetimeEnd;
     }
 
 }

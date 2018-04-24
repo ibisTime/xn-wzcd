@@ -141,8 +141,6 @@ public class ExchangeCurrencyBOImpl extends PaginableBOImpl<ExchangeCurrency>
         data.setCreateDatetime(new Date());
         data.setStatus(EExchangeCurrencyStatus.TO_PAY.getCode());
 
-        data.setSystemCode(user.getSystemCode());
-        data.setCompanyCode(user.getCompanyCode());
         exchangeCurrencyDAO.applyExchange(data);
         return code;
     }

@@ -31,7 +31,6 @@ import com.cdkj.loan.domain.Withdraw;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EJourBizTypeUser;
-import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.enums.EWithdrawStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -64,9 +63,9 @@ public class WithdrawAOImpl implements IWithdrawAO {
             String payCardInfo, String payCardNo, String applyUser,
             String applyNote, String tradePwd, String googleCaptcha) {
         User user = userBO.getUser(applyUser);
-        if (StringUtils.isBlank(user.getRealName())) {
-            throw new BizException("xn000000", "请先进行实名认证");
-        }
+        // if (StringUtils.isBlank(user.getRealName())) {
+        // throw new BizException("xn000000", "请先进行实名认证");
+        // }
         // 取现手续费
         BigDecimal fee = sysConfigBO
             .getBigDecimalValue(SysConstants.WITHDRAW_FEE);
@@ -100,8 +99,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
         condition2.setParentKey(SysConstants.QX_SMS_NOTICE);
         List<SYSDict> mobiledDicts = sysDictBO.querySYSDictList(condition2);
         for (SYSDict sysDict : mobiledDicts) {
-            smsOutBO.sendSmsOut(sysDict.getDkey(), content,
-                ESystemCode.COIN.getCode(), ESystemCode.COIN.getCode());
+            smsOutBO.sendSmsOut(sysDict.getDkey(), content);
         }
 
         return withdrawCode;

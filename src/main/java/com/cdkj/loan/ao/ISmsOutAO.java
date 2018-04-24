@@ -10,11 +10,7 @@ public interface ISmsOutAO {
      * @create: 2016年12月15日 上午7:28:43 xieyj
      * @history:
      */
-    public void sendSmsCaptcha(String mobile, String bizType,
-            String companyCode, String systemCode);
-
-    public void sendEmailCaptcha(String email, String bizType,
-            String companyCode, String systemCode);
+    public void sendSmsCaptcha(String mobile, String bizType);
 
     /**
      * 发送内容
@@ -26,6 +22,4 @@ public interface ISmsOutAO {
      */
     public void sendContent(String tokenId, String userId, String content);
 
-    public void sendContent(String tokenId, String mobile, String content,
-            String companyCode, String systemCode);
 }

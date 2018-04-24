@@ -1,11 +1,3 @@
-/**
- * @Title UserDAOImpl.java 
- * @Package com.ibis.pz.impl 
- * @Description 
- * @author miyb  
- * @date 2015-2-6 上午10:22:53 
- * @version V1.0   
- */
 package com.cdkj.loan.dao.impl;
 
 import java.util.List;
@@ -16,11 +8,6 @@ import com.cdkj.loan.dao.IUserDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.User;
 
-/** 
- * @author: miyb 
- * @since: 2015-2-6 上午10:22:53 
- * @history:
- */
 @Repository("userDAOImpl")
 public class UserDAOImpl extends AMybatisTemplate implements IUserDAO {
 
@@ -31,7 +18,7 @@ public class UserDAOImpl extends AMybatisTemplate implements IUserDAO {
 
     @Override
     public int delete(User data) {
-        return 0;
+        return super.delete(NAMESPACE.concat("delete_user"), data);
     }
 
     @Override
@@ -59,148 +46,28 @@ public class UserDAOImpl extends AMybatisTemplate implements IUserDAO {
     }
 
     @Override
-    public int updateIdentity(User data) {
-        return super.update(NAMESPACE.concat("update_identity"), data);
+    public void updateStatus(User data) {
+        super.update(NAMESPACE.concat("update_status"), data);
     }
 
     @Override
-    public int updateRealName(User data) {
-        return super.update(NAMESPACE.concat("update_real_name"), data);
+    public void updateRole(User data) {
+        super.update(NAMESPACE.concat("update_role"), data);
     }
 
     @Override
-    public int updateDivRate(User data) {
-        return super.update(NAMESPACE.concat("update_div_rate"), data);
+    public void updateLoginPwd(User data) {
+        super.update(NAMESPACE.concat("update_login_pwd"), data);
     }
 
     @Override
-    public int updateTradeRate(User data) {
-        return super.update(NAMESPACE.concat("update_trade_rate"), data);
+    public void updateMobile(User data) {
+        super.update(NAMESPACE.concat("update_mobile"), data);
     }
 
     @Override
-    public int updateTradePwd(User data) {
-        return super.update(NAMESPACE.concat("update_trade_pwd"), data);
+    public void updatePhoto(User data) {
+        super.update(NAMESPACE.concat("update_user_photo"), data);
     }
 
-    @Override
-    public int updateLoginPwd(User data) {
-        return super.update(NAMESPACE.concat("update_login_pwd"), data);
-    }
-
-    @Override
-    public int updateMobile(User data) {
-        return super.update(NAMESPACE.concat("update_mobile"), data);
-    }
-
-    @Override
-    public int updateBindMobile(User data) {
-        return super.update(NAMESPACE.concat("update_bind_mobile"), data);
-    }
-
-    @Override
-    public int updateStatus(User data) {
-        return super.update(NAMESPACE.concat("update_status"), data);
-    }
-
-    @Override
-    public int updateRole(User data) {
-        return super.update(NAMESPACE.concat("update_role"), data);
-    }
-
-    /** 
-     * @see com.std.user.dao.IUserDAO#updatePdf(com.std.user.domain.User)
-     */
-    @Override
-    public int updatePdf(User data) {
-        return super.update(NAMESPACE.concat("update_user_pdf"), data);
-
-    }
-
-    /** 
-     * @see com.std.user.dao.IUserDAO#updateLoginName(com.std.user.domain.User)
-     */
-    @Override
-    public int updateLoginName(User data) {
-        return super.update(NAMESPACE.concat("update_user_loginName"), data);
-    }
-
-    @Override
-    public int updateNickname(User data) {
-        return super.update(NAMESPACE.concat("update_user_nickname"), data);
-    }
-
-    @Override
-    public int updatePhoto(User data) {
-        return super.update(NAMESPACE.concat("update_user_photo"), data);
-    }
-
-    @Override
-    public int updateCompany(User data) {
-        return super.update(NAMESPACE.concat("update_user_company"), data);
-    }
-
-    /** 
-     * @see com.std.user.dao.IUserDAO#update(com.std.user.domain.User)
-     */
-    @Override
-    public int update(User data) {
-        return super.update(NAMESPACE.concat("update_user"), data);
-    }
-
-    /** 
-     * @see com.std.user.dao.IUserDAO#updateSupple(com.std.user.domain.User)
-     */
-    @Override
-    public int updateSupple(User data) {
-        return super.update(NAMESPACE.concat("update_user_supple"), data);
-    }
-
-    /** 
-     * @see com.std.user.dao.IUserDAO#updateLevel(com.std.user.domain.User)
-     */
-    @Override
-    public int updateLevel(User data) {
-        return super.update(NAMESPACE.concat("update_level"), data);
-    }
-
-    @Override
-    public int updateWxInfo(User data) {
-        return super.update(NAMESPACE.concat("update_wx_info"), data);
-    }
-
-    @Override
-    public int updateWxOpenId(User data) {
-        return super.update(NAMESPACE.concat("update_wx_openId"), data);
-    }
-
-    @Override
-    public int approveUser(User data) {
-        return super.update(NAMESPACE.concat("approve_user"), data);
-    }
-
-    @Override
-    public int updateEmail(User data) {
-        return super.update(NAMESPACE.concat("update_email"), data);
-    }
-
-    @Override
-    public int updateRemark(User data) {
-        return super.update(NAMESPACE.concat("update_remark"), data);
-    }
-
-    @Override
-    public int updateLastLogin(User data) {
-        return super.update(NAMESPACE.concat("update_lastLogin"), data);
-    }
-
-    @Override
-    public int updateGoogleSecret(User data) {
-        return super.update(NAMESPACE.concat("update_googleSecret"), data);
-    }
-
-    @Override
-    public int updateUserReferee(User data) {
-        return super.update(NAMESPACE.concat("update_userReferee"), data);
-    }
 }

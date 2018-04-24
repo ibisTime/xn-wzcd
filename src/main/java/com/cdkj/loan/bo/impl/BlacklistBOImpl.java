@@ -17,8 +17,8 @@ import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BlacklistBOImpl extends PaginableBOImpl<Blacklist> implements
-        IBlacklistBO {
+public class BlacklistBOImpl extends PaginableBOImpl<Blacklist>
+        implements IBlacklistBO {
 
     @Autowired
     private IBlacklistDAO blacklistDAO;
@@ -37,8 +37,6 @@ public class BlacklistBOImpl extends PaginableBOImpl<Blacklist> implements
             data.setUpdater(updater);
             data.setUpdateDatetime(now);
             data.setRemark(remark);
-            data.setCompanyCode(user.getCompanyCode());
-            data.setSystemCode(user.getSystemCode());
             blacklistDAO.insert(data);
             // 对应 mapper insert方法中必须配置 useGeneratedKeys="true" keyProperty="id"
             id = data.getId();

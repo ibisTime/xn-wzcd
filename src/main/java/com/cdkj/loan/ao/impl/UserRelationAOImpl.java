@@ -39,22 +39,21 @@ public class UserRelationAOImpl implements IUserRelationAO {
     @Autowired
     IUserBO userBO;
 
-
     /**
      * @see com.std.user.ao.IUserRelationAO#queryUserRelationPage(int, int, com.std.user.domain.UserRelation)
      */
     @Override
     public Paginable<UserRelation> queryUserRelationPage(int start, int limit,
-                                                         UserRelation condition) {
-        Paginable<UserRelation> page = userRelationBO.getPaginable(start,
-                limit, condition);
+            UserRelation condition) {
+        Paginable<UserRelation> page = userRelationBO.getPaginable(start, limit,
+            condition);
         for (UserRelation userRelation : page.getList()) {
 
             User lookUser = null;
 
             if (StringUtils.isNotBlank(condition.getUserId())) {
 
-                //查询——我信任的
+                // 查询——我信任的
                 User toUser = userBO.getUser(userRelation.getToUser());
                 lookUser = toUser;
                 //
@@ -62,22 +61,20 @@ public class UserRelationAOImpl implements IUserRelationAO {
 
             } else {
 
-                //查询——信任我的
-                User fromUser = userBO.getUser(userRelation
-                        .getUserId());
+                // 查询——信任我的
+                User fromUser = userBO.getUser(userRelation.getUserId());
                 lookUser = fromUser;
                 userRelation.setFromUserInfo(fromUser);
 
             }
 
-            //查询统计信息
-            //查询对方的 统计信息
+            // 查询统计信息
+            // 查询对方的 统计信息
             if (lookUser != null) {
 
             }
 
         }
-
 
         return page;
 
@@ -107,26 +104,31 @@ public class UserRelationAOImpl implements IUserRelationAO {
 
         if (type.equals(EUserReleationType.BLACKLIST.getCode())) {
 
-            //1.如果是拉黑操作，先取消信任
-            this.checkIsExitOppositionReleationThenRemove(userId, toUserId, EUserReleationType.TRUST.getCode());
+            // 1.如果是拉黑操作，先取消信任
+            this.checkIsExitOppositionReleationThenRemove(userId, toUserId,
+                EUserReleationType.TRUST.getCode());
 
         } else if (type.equals(EUserReleationType.TRUST.getCode())) {
 
-            //2.如果是信任操作，先取消拉黑
-            this.checkIsExitOppositionReleationThenRemove(userId, toUserId, EUserReleationType.BLACKLIST.getCode());
+            // 2.如果是信任操作，先取消拉黑
+            this.checkIsExitOppositionReleationThenRemove(userId, toUserId,
+                EUserReleationType.BLACKLIST.getCode());
 
         }
 
-        userRelationBO.saveUserRelation(userId, toUserId, type, user.getSystemCode());
+        // userRelationBO.saveUserRelation(userId, toUserId, type,
+        // user.getSystemCode());
 
     }
 
     // 判断是否存在 "对立" 关系，并解除
-    private void checkIsExitOppositionReleationThenRemove(String userId, String toUserId, String type) {
+    private void checkIsExitOppositionReleationThenRemove(String userId,
+            String toUserId, String type) {
 
         if (userRelationBO.checkReleation(userId, toUserId, type)) {
 
-            int count = userRelationBO.removeUserRelation(userId, toUserId, type);
+            int count = userRelationBO.removeUserRelation(userId, toUserId,
+                type);
             if (count <= 0) {
                 throw new BizException("xn000", "解除原关系失败");
             }
@@ -155,9 +157,10 @@ public class UserRelationAOImpl implements IUserRelationAO {
     }
 
     @Override
-    public boolean isExistUserRelation(String userId, String toUser, String type) {
+    public boolean isExistUserRelation(String userId, String toUser,
+            String type) {
         List<UserRelation> userRelationList = userRelationBO
-                .queryUserRelationList(userId, toUser, type);
+            .queryUserRelationList(userId, toUser, type);
         boolean flag = false;
         if (CollectionUtils.isNotEmpty(userRelationList)) {
             flag = true;
