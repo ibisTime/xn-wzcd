@@ -25,7 +25,7 @@ public class XN630201 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         return new XN630201Res(
-            cuserAO.doCaptchaLoginReg(req.getLoginName(), req.getLoginPwd()));
+            cuserAO.doLogin(req.getLoginName(), req.getLoginPwd()));
     }
 
     @Override

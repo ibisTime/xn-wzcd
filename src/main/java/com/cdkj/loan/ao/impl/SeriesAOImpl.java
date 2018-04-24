@@ -64,7 +64,7 @@ public class SeriesAOImpl implements ISeriesAO {
         series.setUpdater(updater);
         series.setUpdateDatetime(new Date());
         series.setRemark(remark);
-        seriesBO.editSeries(series);
+        seriesBO.upSeries(series);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class SeriesAOImpl implements ISeriesAO {
         series.setUpdater(updater);
         series.setUpdateDatetime(new Date());
         series.setRemark(remark);
-        seriesBO.editSeries(series);
+        seriesBO.downSeries(series);
     }
 
     @Override
