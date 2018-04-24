@@ -11,6 +11,7 @@ import com.cdkj.loan.domain.CUser;
 @Repository("cuserDAOImpl")
 public class CUserDAOImpl extends AMybatisTemplate implements ICUserDAO {
 
+    // 注册
     @Override
     public int insert(CUser data) {
         return super.insert(NAMESPACE.concat("insert_cuser"), data);

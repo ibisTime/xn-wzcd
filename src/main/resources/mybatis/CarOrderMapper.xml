@@ -145,23 +145,23 @@
 		)
 		VALUES(
 		#{code}
-		,#{user_id}
-		,#{user_mobile}
-		,#{brand_code}
-		,#{brand_name}
-		,#{series_code}
-		,#{series_name}
-		,#{car_code}
-		,#{car_name}
+		,#{userId}
+		,#{userMobile}
+		,#{brandCode}
+		,#{brandName}
+		,#{seriesCode}
+		,#{seriesName}
+		,#{carCode}
+		,#{carName}
 		,#{price}
-		,#{sf_rate}
-		,#{sf_amount}
+		,#{sfRate}
+		,#{sfAmount}
 		,#{periods}
-		,#{create_datetime}
-		,#{sale_desc}
+		,#{createDatetime}
+		,#{saleDesc}
 		,#{status}
 		,#{handler}
-		,#{handle_datetime}
+		,#{handleDatetime}
 		,#{remark}
 		)
 	</insert>

@@ -84,7 +84,7 @@
 	<bean id="seriesBO" class="com.cdkj.loan.bo.impl.SeriesBOImpl">
 		<property name="paginableDAO" ref="seriesDAOImpl"/>
 	</bean>	
-	<bean id="carorderBO" class="com.cdkj.loan.bo.impl.CarOrderBOImpl">
+	<bean id="carOrderBO" class="com.cdkj.loan.bo.impl.CarOrderBOImpl">
 		<property name="paginableDAO" ref="carOrderDAOImpl"/>
 	</bean>	
 </beans>

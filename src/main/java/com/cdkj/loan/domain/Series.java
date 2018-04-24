@@ -16,11 +16,11 @@ public class Series extends ABaseDO {
 
     private String advPic;// 广告图
 
-    private String price;// 价格区间
+    private Long price;// 价格区间
 
-    private String location;// UI位置
+    private Integer location;// UI位置
 
-    private String orderNo;// UI次序
+    private Integer orderNo;// UI次序
 
     private String status;// 状态
 
@@ -70,27 +70,27 @@ public class Series extends ABaseDO {
         this.advPic = advPic;
     }
 
-    public String getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
-    public String getLocation() {
+    public Integer getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Integer location) {
         this.location = location;
     }
 
-    public String getOrderNo() {
+    public Integer getOrderNo() {
         return orderNo;
     }
 
-    public void setOrderNo(String orderNo) {
+    public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
     }
 
