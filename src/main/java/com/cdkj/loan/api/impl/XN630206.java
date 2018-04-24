@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.cdkj.loan.ao.ICUserAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.CUser;
 import com.cdkj.loan.dto.req.XN630206Req;
 import com.cdkj.loan.exception.BizException;
@@ -24,7 +25,7 @@ public class XN630206 extends AProcessor {
         condition.setMobile(req.getMobile());
         condition.setUserReferee(req.getUserReferee());
         condition.setIdKind(req.getIdKind());
-        condition.setIdNo(req.getIdNo());
+        condition.setIdNo(StringValidater.toLong(req.getIdNo()));
         condition.setRealName(req.getRealName());
         condition.setStatus(req.getStatus());
 

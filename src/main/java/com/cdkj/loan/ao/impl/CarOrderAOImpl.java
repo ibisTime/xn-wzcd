@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.ICarOrderAO;
 import com.cdkj.loan.bo.ICarOrderBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.CarOrder;
 import com.cdkj.loan.dto.req.XN630430Req;
 import com.cdkj.loan.enums.ECarOrderStatus;
+import com.cdkj.loan.exception.BizException;
 
 @Service
 public class CarOrderAOImpl implements ICarOrderAO {
@@ -30,10 +32,10 @@ public class CarOrderAOImpl implements ICarOrderAO {
         carOrder.setSeriesName(req.getSeriesName());
         carOrder.setCarCode(req.getCarCode());
         carOrder.setCarName(req.getCarName());
-        carOrder.setPrice(req.getPrice());
-        carOrder.setSfRate(req.getSfRate());
-        carOrder.setSfAmount(req.getSfAmount());
-        carOrder.setPeriods(req.getPeriods());
+        carOrder.setPrice(StringValidater.toLong(req.getPrice()));
+        carOrder.setSfRate(StringValidater.toDouble(req.getSfRate()));
+        carOrder.setSfAmount(StringValidater.toLong(req.getSfAmount()));
+        carOrder.setPeriods(StringValidater.toInteger(req.getPeriods()));
         carOrder.setCreateDatetime(new Date());
         carOrder.setSaleDesc(req.getSaleDesc());
         carOrder.setStatus(ECarOrderStatus.DCL.getCode());
@@ -42,13 +44,23 @@ public class CarOrderAOImpl implements ICarOrderAO {
     }
 
     @Override
-    public void editCarOrder(String code, String handler, String remark) {
+    public void editCarOrder(String code, String result, String handler,
+            String remark) {
         CarOrder carOrder = carOrderBO.getCarOrder(code);
-        carOrder.setStatus(ECarOrderStatus.YCL.getCode());
-        carOrder.setHandler(handler);
-        carOrder.setHandleDatetime(new Date());
-        carOrder.setRemark(remark);
-        carOrderBO.editCarOrder(carOrder);
+        if (ECarOrderStatus.DCL.getCode().equals(carOrder.getStatus())) {
+            if (result.equals(0)) {
+                carOrder.setStatus(ECarOrderStatus.YCL.getCode());
+            } else {
+                carOrder.setStatus(ECarOrderStatus.YZF.getCode());
+            }
+            carOrder.setHandler(handler);
+            carOrder.setHandleDatetime(new Date());
+            carOrder.setRemark(remark);
+            carOrderBO.editCarOrder(carOrder);
+        } else {
+            throw new BizException("mag", "该申请已被处理，请重新选择");
+        }
+
     }
 
     @Override

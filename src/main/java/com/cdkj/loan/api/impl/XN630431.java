@@ -26,8 +26,8 @@ public class XN630431 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        carOrderAO.editCarOrder(req.getCode(), req.getHandler(),
-            req.getRemark());
+        carOrderAO.editCarOrder(req.getCode(), req.getResult(),
+            req.getHandler(), req.getRemark());
         return new BooleanRes(true);
     }
 

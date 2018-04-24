@@ -30,7 +30,7 @@ public class CUserDAOImpl extends AMybatisTemplate implements ICUserDAO {
 
     @Override
     public long selectTotalCount(CUser condition) {
-        return super.selectTotalCount(NAMESPACE.concat("select_cuser"),
+        return super.selectTotalCount(NAMESPACE.concat("select_cuser_count"),
             condition);
     }
 

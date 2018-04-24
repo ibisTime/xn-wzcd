@@ -30,8 +30,8 @@ public class CarAOImpl implements ICarAO {
         car.setSeriesName(req.getSeriesName());
         car.setBrandCode(req.getBrandCode());
         car.setBrandName(req.getBrandName());
-        car.setOriginalPrice(req.getOriginalPrice());
-        car.setSalePrice(req.getSalePrice());
+        car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
+        car.setSalePrice(StringValidater.toLong(req.getSalePrice()));
         car.setSlogan(req.getSlogan());
         car.setAdvPic(req.getAdvPic());
         car.setPic(req.getPic());
@@ -55,8 +55,8 @@ public class CarAOImpl implements ICarAO {
         car.setSeriesName(req.getSeriesName());
         car.setBrandCode(req.getBrandCode());
         car.setBrandName(req.getBrandName());
-        car.setOriginalPrice(req.getOriginalPrice());
-        car.setSalePrice(req.getSalePrice());
+        car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
+        car.setSalePrice(StringValidater.toLong(req.getSalePrice()));
         car.setSlogan(req.getSlogan());
         car.setAdvPic(req.getAdvPic());
         car.setPic(req.getPic());

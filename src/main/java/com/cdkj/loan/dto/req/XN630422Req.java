@@ -14,11 +14,11 @@ public class XN630422Req {
 
     private String brandName;// 品牌名称
 
-    private Long originalPrice;// 原价
+    private String originalPrice;// 原价
 
-    private Long salePrice;// 参考价
+    private String salePrice;// 参考价
 
-    private Long sfAmount; // 首付金额
+    private String sfAmount; // 首付金额
 
     private String slogan;// 广告语
 
@@ -80,27 +80,27 @@ public class XN630422Req {
         this.brandName = brandName;
     }
 
-    public Long getOriginalPrice() {
+    public String getOriginalPrice() {
         return originalPrice;
     }
 
-    public void setOriginalPrice(Long originalPrice) {
+    public void setOriginalPrice(String originalPrice) {
         this.originalPrice = originalPrice;
     }
 
-    public Long getSalePrice() {
+    public String getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(Long salePrice) {
+    public void setSalePrice(String salePrice) {
         this.salePrice = salePrice;
     }
 
-    public Long getSfAmount() {
+    public String getSfAmount() {
         return sfAmount;
     }
 
-    public void setSfAmount(Long sfAmount) {
+    public void setSfAmount(String sfAmount) {
         this.sfAmount = sfAmount;
     }
 

@@ -107,7 +107,7 @@
 		,handle_datetime
 		,remark
 		FROM
-		tht_car t
+		tht_car_order t
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">

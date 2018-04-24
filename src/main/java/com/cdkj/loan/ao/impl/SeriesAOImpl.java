@@ -29,7 +29,7 @@ public class SeriesAOImpl implements ISeriesAO {
         series.setName(req.getName());
         series.setSlogan(req.getSlogan());
         series.setAdvPic(req.getAdvPic());
-        series.setPrice(req.getPrice());
+        series.setPrice(StringValidater.toLong(req.getPrice()));
         series.setStatus(EBrandStatus.TO_UP.getCode());
         series.setUpdater(req.getUpdater());
         series.setUpdateDatetime(new Date());
@@ -47,7 +47,7 @@ public class SeriesAOImpl implements ISeriesAO {
         series.setName(req.getName());
         series.setSlogan(req.getSlogan());
         series.setAdvPic(req.getAdvPic());
-        series.setPrice(req.getPrice());
+        series.setPrice(StringValidater.toLong(req.getPrice()));
         series.setUpdater(req.getUpdater());
         series.setUpdateDatetime(new Date());
         series.setRemark(req.getRemark());

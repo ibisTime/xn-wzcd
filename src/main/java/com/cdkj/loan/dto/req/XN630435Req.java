@@ -10,6 +10,12 @@ public class XN630435Req extends APageReq {
 
     private String seriesName; // 车系名称
 
+    private String carCode; // 车型编号
+
+    private String carName; // 车型名称
+
+    private String price; // 车辆总价
+
     private String sfRate; // 首付比例
 
     private String sfAmount; // 首付金额
@@ -19,6 +25,22 @@ public class XN630435Req extends APageReq {
     private String status; // 状态
 
     private String handler; // 处理人
+
+    public String getCarCode() {
+        return carCode;
+    }
+
+    public void setCarCode(String carCode) {
+        this.carCode = carCode;
+    }
+
+    public String getCarName() {
+        return carName;
+    }
+
+    public void setCarName(String carName) {
+        this.carName = carName;
+    }
 
     public String getBrandCode() {
         return brandCode;
@@ -50,6 +72,14 @@ public class XN630435Req extends APageReq {
 
     public void setSeriesName(String seriesName) {
         this.seriesName = seriesName;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public String getSfRate() {
