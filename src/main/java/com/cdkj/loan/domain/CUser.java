@@ -48,25 +48,25 @@ public class CUser extends ABaseDO {
     private String idKind;
 
     // 证件号
-    private String idNo;
+    private Long idNo;
 
     // 真实姓名
     private String realName;
 
     // 积分余额
-    private String jfAmount;
+    private Long jfAmount;
 
     // 账户余额
-    private String amount;
+    private Long amount;
 
     // 信用分
-    private String creditscore;
+    private Long creditscore;
 
     // 状态
     private String status;
 
     // 注册时间
-    private String createDatetime;
+    private Date createDatetime;
 
     // 备注
     private String remark;
@@ -176,14 +176,6 @@ public class CUser extends ABaseDO {
         this.idKind = idKind;
     }
 
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
     public String getRealName() {
         return realName;
     }
@@ -192,27 +184,35 @@ public class CUser extends ABaseDO {
         this.realName = realName;
     }
 
-    public String getJfAmount() {
+    public Long getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(Long idNo) {
+        this.idNo = idNo;
+    }
+
+    public Long getJfAmount() {
         return jfAmount;
     }
 
-    public void setJfAmount(String jfAmount) {
+    public void setJfAmount(Long jfAmount) {
         this.jfAmount = jfAmount;
     }
 
-    public String getAmount() {
+    public Long getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(Long amount) {
         this.amount = amount;
     }
 
-    public String getCreditscore() {
+    public Long getCreditscore() {
         return creditscore;
     }
 
-    public void setCreditscore(String creditscore) {
+    public void setCreditscore(Long creditscore) {
         this.creditscore = creditscore;
     }
 
@@ -224,11 +224,11 @@ public class CUser extends ABaseDO {
         this.status = status;
     }
 
-    public String getCreateDatetime() {
+    public Date getCreateDatetime() {
         return createDatetime;
     }
 
-    public void setCreateDatetime(String createDatetime) {
+    public void setCreateDatetime(Date createDatetime) {
         this.createDatetime = createDatetime;
     }
 

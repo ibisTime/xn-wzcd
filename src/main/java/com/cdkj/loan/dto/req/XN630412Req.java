@@ -12,7 +12,7 @@ public class XN630412Req {
 
     private String advPic;// 广告图
 
-    private String price;// 价格区间
+    private Long price;// 价格区间
 
     private String updater;// 最新修改人
 
@@ -58,11 +58,11 @@ public class XN630412Req {
         this.advPic = advPic;
     }
 
-    public String getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 

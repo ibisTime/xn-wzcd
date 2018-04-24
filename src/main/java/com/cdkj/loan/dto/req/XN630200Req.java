@@ -4,6 +4,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class XN630200Req {
 
+    private String userId;
+
     @NotBlank
     private String mobile; // 手机号
 
@@ -14,6 +16,21 @@ public class XN630200Req {
     private String loginPwd; // 登录密码
 
     private String refereeMobile; // 推荐人手机（选填）
+
+    public XN630200Req() {
+    }
+
+    public XN630200Req(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getMobile() {
         return mobile;

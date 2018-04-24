@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.ISeriesAO;
 import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630410Req;
 import com.cdkj.loan.dto.req.XN630412Req;
@@ -58,8 +59,8 @@ public class SeriesAOImpl implements ISeriesAO {
             String updater, String remark) {
         Series series = seriesBO.getSeries(code);
         series.setStatus(EBrandStatus.UP.getCode());
-        series.setLocation(location);
-        series.setOrderNo(orderNo);
+        series.setLocation(StringValidater.toInteger(location));
+        series.setOrderNo(StringValidater.toInteger(orderNo));
         series.setUpdater(updater);
         series.setUpdateDatetime(new Date());
         series.setRemark(remark);

@@ -14,6 +14,7 @@ import com.cdkj.loan.bo.ISmsOutBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.domain.CUser;
+import com.cdkj.loan.dto.req.XN630200Req;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -25,6 +26,13 @@ public class CUserAOImpl implements ICUserAO {
 
     @Autowired
     ISmsOutBO smsOutBO;
+
+    @Override
+    public XN630200Req doRegister(String mobile, String loginPwd,
+            String smsCaptcha) {
+        String userId = cuserBO.doRegister(mobile, loginPwd, smsCaptcha);
+        return new XN630200Req(userId);
+    }
 
     // 验证手机号
     /*

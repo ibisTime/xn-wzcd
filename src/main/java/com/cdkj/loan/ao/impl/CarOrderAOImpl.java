@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICarOrderAO;
 import com.cdkj.loan.bo.ICarOrderBO;
@@ -12,6 +13,7 @@ import com.cdkj.loan.domain.CarOrder;
 import com.cdkj.loan.dto.req.XN630430Req;
 import com.cdkj.loan.enums.ECarOrderStatus;
 
+@Service
 public class CarOrderAOImpl implements ICarOrderAO {
 
     @Autowired
@@ -21,6 +23,21 @@ public class CarOrderAOImpl implements ICarOrderAO {
     public String addCarOrder(XN630430Req req) {
         CarOrder carOrder = new CarOrder();
         carOrder.setUserId(req.getUserId());
+        carOrder.setUserMobile(req.getUserMobile());
+        carOrder.setBrandCode(req.getBrandCode());
+        carOrder.setBrandName(req.getBrandName());
+        carOrder.setSeriesCode(req.getSeriesCode());
+        carOrder.setSeriesName(req.getSeriesName());
+        carOrder.setCarCode(req.getCarCode());
+        carOrder.setCarName(req.getCarName());
+        carOrder.setPrice(req.getPrice());
+        carOrder.setSfRate(req.getSfRate());
+        carOrder.setSfAmount(req.getSfAmount());
+        carOrder.setPeriods(req.getPeriods());
+        carOrder.setCreateDatetime(new Date());
+        carOrder.setSaleDesc(req.getSaleDesc());
+        carOrder.setStatus(ECarOrderStatus.DCL.getCode());
+        carOrder.setRemark(req.getRemark());
         return carOrderBO.saveCarOrder(carOrder);
     }
 

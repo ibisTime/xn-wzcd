@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.ICarAO;
 import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.dto.req.XN630420Req;
 import com.cdkj.loan.dto.req.XN630422Req;
@@ -71,8 +72,8 @@ public class CarAOImpl implements ICarAO {
             String updater, String remark) {
         Car car = carBO.getCar(code);
         car.setStatus(EBrandStatus.UP.getCode());
-        car.setLocation(location);
-        car.setOrderNo(orderNo);
+        car.setLocation(StringValidater.toInteger(location));
+        car.setOrderNo(StringValidater.toInteger(orderNo));
         car.setUpdater(updater);
         car.setUpdateDatetime(new Date());
         car.setRemark(remark);

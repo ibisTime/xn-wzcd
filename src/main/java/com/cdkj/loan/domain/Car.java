@@ -18,15 +18,15 @@ public class Car extends ABaseDO {
 
     private String brandName;// 品牌名称
 
-    private String originalPrice;// 原价
+    private Long originalPrice;// 原价
 
-    private String salePrice;// 参考价
+    private Long salePrice;// 参考价
 
-    private String sfAmount; // 首付金额
+    private Long sfAmount; // 首付金额
 
-    private String location;// UI位置
+    private Integer location;// UI位置
 
-    private String orderNo;// UI次序
+    private Integer orderNo;// UI次序
 
     private String slogan;// 广告语
 
@@ -92,43 +92,43 @@ public class Car extends ABaseDO {
         this.brandName = brandName;
     }
 
-    public String getOriginalPrice() {
+    public Long getOriginalPrice() {
         return originalPrice;
     }
 
-    public void setOriginalPrice(String originalPrice) {
+    public void setOriginalPrice(Long originalPrice) {
         this.originalPrice = originalPrice;
     }
 
-    public String getSalePrice() {
+    public Long getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(String salePrice) {
+    public void setSalePrice(Long salePrice) {
         this.salePrice = salePrice;
     }
 
-    public String getSfAmount() {
+    public Long getSfAmount() {
         return sfAmount;
     }
 
-    public void setSfAmount(String sfAmount) {
+    public void setSfAmount(Long sfAmount) {
         this.sfAmount = sfAmount;
     }
 
-    public String getLocation() {
+    public Integer getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Integer location) {
         this.location = location;
     }
 
-    public String getOrderNo() {
+    public Integer getOrderNo() {
         return orderNo;
     }
 
-    public void setOrderNo(String orderNo) {
+    public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
     }
 

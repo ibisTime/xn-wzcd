@@ -12,7 +12,7 @@ public class XN630206Req extends APageReq {
 
     private String idKind; // 证件类型（选填）
 
-    private String idNo; // 证件号（选填）
+    private Long idNo; // 证件号（选填）
 
     private String realName; // 真实姓名（选填）
 
@@ -58,11 +58,11 @@ public class XN630206Req extends APageReq {
         this.idKind = idKind;
     }
 
-    public String getIdNo() {
+    public Long getIdNo() {
         return idNo;
     }
 
-    public void setIdNo(String idNo) {
+    public void setIdNo(Long idNo) {
         this.idNo = idNo;
     }
 

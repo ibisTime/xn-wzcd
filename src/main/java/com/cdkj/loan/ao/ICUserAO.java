@@ -4,9 +4,14 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.CUser;
+import com.cdkj.loan.dto.req.XN630200Req;
 
 public interface ICUserAO {
     String DEFAULT_ORDER_COLUMN = "user_id";
+
+    // C端用户注册
+    public XN630200Req doRegister(String mobile, String loginPwd,
+            String smsCaptcha);
 
     // 检查手机号是否存在
     // public void doCheckMobile(String mobile);
