@@ -1,7 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-import java.util.Date;
-
 public class XN630430Req {
 
     private String userId; // 申请人编号
@@ -28,7 +26,7 @@ public class XN630430Req {
 
     private String periods; // 分期期数
 
-    private Date createDatetime; // 申请时间
+    private String createDatetime; // 申请时间
 
     private String saleDesc; // 计算器信息
 
@@ -130,11 +128,11 @@ public class XN630430Req {
         this.periods = periods;
     }
 
-    public Date getCreateDatetime() {
+    public String getCreateDatetime() {
         return createDatetime;
     }
 
-    public void setCreateDatetime(Date createDatetime) {
+    public void setCreateDatetime(String createDatetime) {
         this.createDatetime = createDatetime;
     }
 

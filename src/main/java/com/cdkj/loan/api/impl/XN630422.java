@@ -10,7 +10,12 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
-/*修改品牌*/
+/**
+ * 修改车型
+ * @author: CYL 
+ * @since: 2018年4月24日 下午5:38:49 
+ * @history:
+ */
 
 public class XN630422 extends AProcessor {
     private ICarAO carAO = SpringContextHolder.getBean(ICarAO.class);

@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 新增品牌
+ * 新增车型
  * @author: CYL 
  * @since: 2018年4月23日 下午4:26:43 
  * @history:

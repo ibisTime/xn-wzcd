@@ -9,6 +9,12 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
+/**
+ * 详情查询
+ * @author: CYL 
+ * @since: 2018年4月24日 下午5:33:59 
+ * @history:
+ */
 public class XN630207 extends AProcessor {
 
     private ICUserAO cuserAO = SpringContextHolder.getBean(ICUserAO.class);

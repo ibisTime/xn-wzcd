@@ -11,6 +11,12 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
+/**
+ * 列表查询
+ * @author: CYL 
+ * @since: 2018年4月24日 下午5:37:56 
+ * @history:
+ */
 public class XN630416 extends AProcessor {
 
     private ISeriesAO seriesAO = SpringContextHolder.getBean(ISeriesAO.class);

@@ -12,6 +12,12 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
+/**
+ * 分页查询
+ * @author: CYL 
+ * @since: 2018年4月24日 下午5:32:51 
+ * @history:
+ */
 public class XN630205 extends AProcessor {
 
     private ICUserAO cuserAO = SpringContextHolder.getBean(ICUserAO.class);
@@ -25,7 +31,7 @@ public class XN630205 extends AProcessor {
         condition.setMobile(req.getMobile());
         condition.setUserReferee(req.getUserReferee());
         condition.setIdKind(req.getIdKind());
-        condition.setIdNo(req.getIdNo());
+        condition.setIdNo(StringValidater.toLong(req.getIdNo()));
         condition.setRealName(req.getRealName());
         condition.setStatus(req.getStatus());
 

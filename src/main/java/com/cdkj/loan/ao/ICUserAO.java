@@ -22,8 +22,8 @@ public interface ICUserAO {
     // 用户登录
     public String doLogin(String loginName, String loginPwd);
 
-    // 检查登录密码是否正确
-    public void doCheckLoginPwd(String userId, String loginPwd);
+    // 检查登录名密码是否正确
+    // public void doCheckLoginPwd(String loginName, String loginPwd);
 
     // 注册
     public String insertCUser(CUser data);

@@ -24,13 +24,13 @@ public class CarOrder extends ABaseDO {
 
     private String carName; // 车型名称
 
-    private String price; // 车辆总价
+    private Long price; // 车辆总价
 
-    private String sfRate; // 首付比例
+    private double sfRate; // 首付比例
 
-    private String sfAmount; // 首付金额
+    private Long sfAmount; // 首付金额
 
-    private String periods; // 分期期数
+    private Integer periods; // 分期期数
 
     private Date createDatetime; // 申请时间
 
@@ -116,44 +116,44 @@ public class CarOrder extends ABaseDO {
         this.carName = carName;
     }
 
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getSfRate() {
-        return sfRate;
-    }
-
-    public void setSfRate(String sfRate) {
-        this.sfRate = sfRate;
-    }
-
-    public String getSfAmount() {
-        return sfAmount;
-    }
-
-    public void setSfAmount(String sfAmount) {
-        this.sfAmount = sfAmount;
-    }
-
-    public String getPeriods() {
-        return periods;
-    }
-
-    public void setPeriods(String periods) {
-        this.periods = periods;
-    }
-
     public Date getCreateDatetime() {
         return createDatetime;
     }
 
     public void setCreateDatetime(Date createDatetime) {
         this.createDatetime = createDatetime;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
+    public double getSfRate() {
+        return sfRate;
+    }
+
+    public void setSfRate(double sfRate) {
+        this.sfRate = sfRate;
+    }
+
+    public Long getSfAmount() {
+        return sfAmount;
+    }
+
+    public void setSfAmount(Long sfAmount) {
+        this.sfAmount = sfAmount;
+    }
+
+    public Integer getPeriods() {
+        return periods;
+    }
+
+    public void setPeriods(Integer periods) {
+        this.periods = periods;
     }
 
     public Date getHandleDatetime() {

@@ -52,6 +52,7 @@ public class CUserAOImpl implements ICUserAO {
         return userId;
     }
 
+    // 用户登录
     @Override
     @Transactional
     public String doLogin(String loginName, String loginPwd) {
@@ -61,7 +62,7 @@ public class CUserAOImpl implements ICUserAO {
         // condition.setLoginName(loginName);
         // condition.setLoginType(ELoginType.MOBILE.getCode());
         // } else {
-        // condition.setLoginName(loginName);
+        condition.setLoginName(loginName);
         // }
         List<CUser> userList1 = cuserBO.queryUserList(condition);
         if (CollectionUtils.isEmpty(userList1)) {
@@ -83,22 +84,22 @@ public class CUserAOImpl implements ICUserAO {
         return cuser.getUserId();
     }
 
-    // 登录密码验证
-    @Override
-    public void doCheckLoginPwd(String userId, String loginPwd) {
-        CUser condition = new CUser();
-        condition.setUserId(userId);
-        List<CUser> userList1 = cuserBO.queryUserList(condition);
-        if (CollectionUtils.isEmpty(userList1)) {
-            throw new BizException("xn702002", "用户不存在");
-        }
-        condition.setLoginPwd(MD5Util.md5(loginPwd));
-        List<CUser> userList2 = cuserBO.queryUserList(condition);
-        if (CollectionUtils.isEmpty(userList2)) {
-            throw new BizException("xn702002", "登录密码错误");
-        }
-
-    }
+    // 登录名密码验证
+    // @Override
+    // public void doCheckLoginPwd(String loginName, String loginPwd) {
+    // CUser condition = new CUser();
+    // condition.setLoginName(loginName);
+    // List<CUser> userList1 = cuserBO.queryUserList(condition);
+    // if (CollectionUtils.isEmpty(userList1)) {
+    // throw new BizException("xn702002", "用户不存在");
+    // }
+    // condition.setLoginPwd(MD5Util.md5(loginPwd));
+    // List<CUser> userList2 = cuserBO.queryUserList(condition);
+    // if (CollectionUtils.isEmpty(userList2)) {
+    // throw new BizException("xn702002", "登录密码错误");
+    // }
+    //
+    // }
 
     @Override
     public String insertCUser(CUser data) {

@@ -29,7 +29,7 @@ public class SeriesAOImpl implements ISeriesAO {
         series.setName(req.getName());
         series.setSlogan(req.getSlogan());
         series.setAdvPic(req.getAdvPic());
-        series.setPrice(req.getPrice());
+        series.setPrice(StringValidater.toLong(req.getPrice()));
         series.setStatus(EBrandStatus.TO_UP.getCode());
         series.setUpdater(req.getUpdater());
         series.setUpdateDatetime(new Date());
@@ -47,7 +47,7 @@ public class SeriesAOImpl implements ISeriesAO {
         series.setName(req.getName());
         series.setSlogan(req.getSlogan());
         series.setAdvPic(req.getAdvPic());
-        series.setPrice(req.getPrice());
+        series.setPrice(StringValidater.toLong(req.getPrice()));
         series.setUpdater(req.getUpdater());
         series.setUpdateDatetime(new Date());
         series.setRemark(req.getRemark());
@@ -58,13 +58,13 @@ public class SeriesAOImpl implements ISeriesAO {
     public void upSeries(String code, String location, String orderNo,
             String updater, String remark) {
         Series series = seriesBO.getSeries(code);
-        series.setStatus(EBrandStatus.UP.getCode());
         series.setLocation(StringValidater.toInteger(location));
         series.setOrderNo(StringValidater.toInteger(orderNo));
+        series.setStatus(EBrandStatus.UP.getCode());
         series.setUpdater(updater);
         series.setUpdateDatetime(new Date());
         series.setRemark(remark);
-        seriesBO.editSeries(series);
+        seriesBO.upSeries(series);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class SeriesAOImpl implements ISeriesAO {
         series.setUpdater(updater);
         series.setUpdateDatetime(new Date());
         series.setRemark(remark);
-        seriesBO.editSeries(series);
+        seriesBO.downSeries(series);
     }
 
     @Override

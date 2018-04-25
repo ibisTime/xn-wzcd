@@ -10,7 +10,12 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
-/*上架*/
+/**
+ * 车型上架
+ * @author: CYL 
+ * @since: 2018年4月24日 下午5:39:02 
+ * @history:
+ */
 
 public class XN630423 extends AProcessor {
 

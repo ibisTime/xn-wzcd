@@ -5,7 +5,6 @@ import java.util.List;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.CarOrder;
 import com.cdkj.loan.dto.req.XN630430Req;
-import com.cdkj.loan.dto.req.XN630431Req;
 
 public interface ICarOrderAO {
     String DEFAULT_ORDER_COLUMN = "code";
@@ -14,7 +13,8 @@ public interface ICarOrderAO {
     public String addCarOrder(XN630430Req req);
 
     // 处理
-    public void editCarOrder(String code,String handler,String remark);
+    public void editCarOrder(String code, String result, String handler,
+            String remark);
 
     // 分页查询
     public Paginable<CarOrder> queryCarPage(int start, int limit,

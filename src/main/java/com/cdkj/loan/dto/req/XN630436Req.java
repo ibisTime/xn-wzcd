@@ -10,15 +10,37 @@ public class XN630436Req extends APageReq {
 
     private String seriesName; // 车系名称
 
-    private String sfRate; // 首付比例
+    private String carCode; // 车型编号
+
+    private String carName; // 车型名称
+
+    private String price; // 车辆总价
+
+    private double sfRate; // 首付比例
 
     private String sfAmount; // 首付金额
 
-    private String periods; // 分期期数
+    private Integer periods; // 分期期数
 
     private String status; // 状态
 
     private String handler; // 处理人
+
+    public String getCarCode() {
+        return carCode;
+    }
+
+    public void setCarCode(String carCode) {
+        this.carCode = carCode;
+    }
+
+    public String getCarName() {
+        return carName;
+    }
+
+    public void setCarName(String carName) {
+        this.carName = carName;
+    }
 
     public String getBrandCode() {
         return brandCode;
@@ -52,12 +74,20 @@ public class XN630436Req extends APageReq {
         this.seriesName = seriesName;
     }
 
-    public String getSfRate() {
+    public double getSfRate() {
         return sfRate;
     }
 
-    public void setSfRate(String sfRate) {
+    public void setSfRate(double sfRate) {
         this.sfRate = sfRate;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public String getSfAmount() {
@@ -68,11 +98,11 @@ public class XN630436Req extends APageReq {
         this.sfAmount = sfAmount;
     }
 
-    public String getPeriods() {
+    public Integer getPeriods() {
         return periods;
     }
 
-    public void setPeriods(String periods) {
+    public void setPeriods(Integer periods) {
         this.periods = periods;
     }
 

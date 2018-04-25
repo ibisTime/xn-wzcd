@@ -8,6 +8,8 @@ public class XN630431Req {
 
     private String remark; // 备注
 
+    private String result; // 处理结果（1通过，0不通过）
+
     public String getCode() {
         return code;
     }
@@ -30,6 +32,14 @@ public class XN630431Req {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 
 }

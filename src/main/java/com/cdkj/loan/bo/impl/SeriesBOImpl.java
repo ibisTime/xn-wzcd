@@ -63,4 +63,14 @@ public class SeriesBOImpl extends PaginableBOImpl<Series> implements ISeriesBO {
         return seriesDAO.selectList(condition);
     }
 
+    @Override
+    public int upSeries(Series data) {
+        return seriesDAO.updateUp(data);
+    }
+
+    @Override
+    public int downSeries(Series data) {
+        return seriesDAO.updateDown(data);
+    }
+
 }

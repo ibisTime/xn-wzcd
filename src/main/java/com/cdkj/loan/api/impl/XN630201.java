@@ -10,6 +10,12 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
+/**
+ * C端用户登录
+ * @author: CYL 
+ * @since: 2018年4月24日 下午5:32:31 
+ * @history:
+ */
 public class XN630201 extends AProcessor {
 
     private ICUserAO cuserAO = SpringContextHolder.getBean(ICUserAO.class);
@@ -19,7 +25,7 @@ public class XN630201 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         return new XN630201Res(
-            cuserAO.doCaptchaLoginReg(req.getLoginName(), req.getLoginPwd()));
+            cuserAO.doLogin(req.getLoginName(), req.getLoginPwd()));
     }
 
     @Override

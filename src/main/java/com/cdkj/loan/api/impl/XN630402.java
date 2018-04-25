@@ -10,7 +10,12 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
-/*修改品牌*/
+/**
+ * 修改品牌
+ * @author: CYL 
+ * @since: 2018年4月24日 下午5:31:42 
+ * @history:
+ */
 
 public class XN630402 extends AProcessor {
     private IBrandAO brandAO = SpringContextHolder.getBean(IBrandAO.class);
