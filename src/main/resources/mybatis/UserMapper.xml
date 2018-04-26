@@ -74,7 +74,7 @@
 
 	<insert id="insert_user" parameterType="user">
 		INSERT INTO
-		thf_user(
+		tht_user(
 		user_id
 		,photo
 		,login_name
