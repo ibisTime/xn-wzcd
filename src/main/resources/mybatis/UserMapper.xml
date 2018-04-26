@@ -74,15 +74,15 @@
 
 	<insert id="insert_user" parameterType="user">
 		INSERT INTO
-		tht_user(
-		userId
+		thf_user(
+		user_id
 		,photo
-		,loginName
+		,login_name
 		,mobile
-		,loginPwd
-		,loginPwdStrength
-		,createDatetme
-		,roleCode
+		,login_pwd
+		,login_pwd_strength
+		,create_datetme
+		,role_code
 		,status
 		,remark
 		)
@@ -104,12 +104,12 @@
 		UPDATE tht_user
 		SET
 		photo = #{photo}
-		,loginName = #{loginName}
+		,login_name = #{loginName}
 		,mobile = #{mobile}
-		,loginPwd = #{loginPwd}
-		,loginPwdStrength = #{loginPwdStrength}
-		,createDatetme = #{createDatetme}
-		,roleCode = #{roleCode}
+		,login_pwd = #{loginPwd}
+		,login_pwd_strength = #{loginPwdStrength}
+		,create_datetme = #{createDatetme}
+		,role_code = #{roleCode}
 		,status = #{status}
 		,remark = #{remark}
 		WHERE code = #{code}
@@ -158,7 +158,7 @@
 
 
 	<update id="update_user_photo" parameterType="user">
-		UPDATE txb_user
+		UPDATE tht_user
 		SET
 		photo = #{photo}
 		WHERE user_id = #{userId}

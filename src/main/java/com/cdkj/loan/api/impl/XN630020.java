@@ -1,5 +1,7 @@
 package com.cdkj.loan.api.impl;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import com.cdkj.loan.ao.ISYSMenuRoleAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
@@ -39,5 +41,8 @@ public class XN630020 extends AProcessor {
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN630020Req.class);
         ObjValidater.validateReq(req);
+        if (CollectionUtils.isEmpty(req.getMenuCodeList())) {
+            throw new BizException("xnlh4000", "菜单列表不能为空");
+        }
     }
 }

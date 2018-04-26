@@ -68,8 +68,6 @@
 		,updater
 		,update_datetime
 		,remark
-		,company_code
-		,system_code
 		)
 		VALUES(
 		#{type}
@@ -80,8 +78,6 @@
 		,#{updater}
 		,#{updateDatetime}
 		,#{remark}
-		,#{companyCode}
-		,#{systemCode}
 		)
 	</insert>
 

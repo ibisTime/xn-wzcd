@@ -1,11 +1,4 @@
-/**
- * @Title XNlh5014.java 
- * @Package com.xnjr.moom.api.impl 
- * @Description 
- * @author haiqingzheng  
- * @date 2016年4月17日 下午8:06:49 
- * @version V1.0   
- */
+
 package com.cdkj.loan.api.impl;
 
 import org.apache.commons.lang3.StringUtils;

@@ -3,6 +3,7 @@ package com.cdkj.loan.dto.req;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 菜单角色-增加菜单角色
@@ -17,7 +18,7 @@ public class XN630020Req {
     private String roleCode;
 
     // 菜单数组（必填）
-    @NotBlank(message = "菜单数组不能为空")
+    @NotEmpty(message = "菜单角色编号不能为空")
     private List<String> menuCodeList;
 
     // 更新人（必填）

@@ -21,14 +21,6 @@ public class XN630047Req {
     @NotBlank(message = "key不能为空")
     private String key;
 
-    // 公司编号(必填)
-    @NotBlank(message = "公司编号不能为空")
-    private String companyCode;
-
-    // 系统编号(必填)
-    @NotBlank(message = "系统编号不能为空")
-    private String systemCode;
-
     public String getKey() {
         return key;
     }
@@ -37,19 +29,4 @@ public class XN630047Req {
         this.key = key;
     }
 
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
-
-    public String getSystemCode() {
-        return systemCode;
-    }
-
-    public void setSystemCode(String systemCode) {
-        this.systemCode = systemCode;
-    }
 }

@@ -12,9 +12,10 @@ import java.util.Date;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
-/** 
- * @author: haiqingzheng 
- * @since: 2016年4月16日 下午9:50:21 
+/**
+ * 
+ * @author: nyc 
+ * @since: 2018年4月25日 下午3:45:49 
  * @history:
  */
 public class SYSDict extends ABaseDO {
