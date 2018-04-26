@@ -129,10 +129,11 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     }
 
     @Override
-    public User getUser(String code) {
+    public User getUser(String userId) {
         User data = null;
-        if (StringUtils.isNotBlank(code)) {
+        if (StringUtils.isNotBlank(userId)) {
             User condition = new User();
+            condition.setUserId(userId);
             data = userDAO.select(condition);
             if (data == null) {
                 throw new BizException("xn0000", "用户不存在");

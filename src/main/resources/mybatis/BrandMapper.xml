@@ -29,7 +29,7 @@
 				AND t.name like "%"#{name}"%"
 			</if>
 			<if test="description != null and description != '' ">
-				AND t.description = #{description}
+				AND t.description like "%"#{description}"%"
 			</if>
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}

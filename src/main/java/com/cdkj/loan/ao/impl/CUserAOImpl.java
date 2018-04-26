@@ -35,10 +35,11 @@ public class CUserAOImpl implements ICUserAO {
     }
 
     // 验证手机号
-    /*
-     * @Override public void doCheckMobile(String mobile) {
-     * cuserBO.isMobileExist(mobile); }
-     */
+
+    @Override
+    public void doCheckMobile(String mobile) {
+        // cuserBO.isMobileExist(mobile);
+    }
 
     @Override
     public String doCaptchaLoginReg(String mobile, String smsCaptcha) {

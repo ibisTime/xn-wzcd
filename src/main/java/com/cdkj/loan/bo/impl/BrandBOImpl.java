@@ -22,7 +22,6 @@ public class BrandBOImpl extends PaginableBOImpl<Brand> implements IBrandBO {
 
     @Override
     public long getTotalCount(Brand condition) {
-        // TODO Auto-generated method stub
         return brandDAO.selectTotalCount(condition);
     }
 
@@ -62,7 +61,6 @@ public class BrandBOImpl extends PaginableBOImpl<Brand> implements IBrandBO {
 
     @Override
     public List<Brand> queryBrand(Brand condition) {
-
         return brandDAO.selectList(condition);
     }
 

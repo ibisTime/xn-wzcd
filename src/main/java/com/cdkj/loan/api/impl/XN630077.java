@@ -9,7 +9,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 列表查用户
+ * 详情查用户
  * @author: nyc 
  * @since: 2018年4月24日 上午11:30:04 
  * @history:

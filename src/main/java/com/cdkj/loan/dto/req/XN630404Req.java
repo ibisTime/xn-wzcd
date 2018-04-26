@@ -1,11 +1,15 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN630404Req {
 
     // 编号（必填）
+    @NotBlank(message = "编号不能为空")
     private String code;
 
     // 最新修改人（必填）
+    @NotBlank(message = "最新修改人不能为空")
     private String updater;
 
     // 备注（必填）

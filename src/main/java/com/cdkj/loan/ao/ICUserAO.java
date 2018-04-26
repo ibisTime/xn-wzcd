@@ -14,16 +14,13 @@ public interface ICUserAO {
             String smsCaptcha);
 
     // 检查手机号是否存在
-    // public void doCheckMobile(String mobile);
+    public void doCheckMobile(String mobile);
 
     // 验证码注册用户
     public String doCaptchaLoginReg(String mobile, String smsCaptcha);
 
     // 用户登录
     public String doLogin(String loginName, String loginPwd);
-
-    // 检查登录名密码是否正确
-    // public void doCheckLoginPwd(String loginName, String loginPwd);
 
     // 注册
     public String insertCUser(CUser data);

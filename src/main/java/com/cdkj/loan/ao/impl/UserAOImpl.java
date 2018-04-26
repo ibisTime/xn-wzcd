@@ -227,8 +227,8 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
-    public User getUser(String code) {
-        return userBO.getUser(code);
+    public User getUser(String userId) {
+        return userBO.getUser(userId);
     }
 
 }

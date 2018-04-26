@@ -54,6 +54,9 @@ public class BrandAOImpl implements IBrandAO {
     @Override
     public void upBrand(String code, String updater, String remark) {
         Brand brand = brandBO.getBrand(code);
+        if (EBrandStatus.UP.getCode().equals(brand.getStatus())) {
+            throw new BizException("xn0000", "品牌已上架,请勿重复上架");
+        }
         brand.setStatus(EBrandStatus.UP.getCode());
         brand.setUpdater(updater);
         brand.setUpdateDatetime(new Date());
@@ -64,6 +67,9 @@ public class BrandAOImpl implements IBrandAO {
     @Override
     public void downBrand(String code, String updater, String remark) {
         Brand brand = brandBO.getBrand(code);
+        if (!EBrandStatus.UP.getCode().equals(brand.getStatus())) {
+            throw new BizException("xn0000", "品牌未上架");
+        }
         brand.setStatus(EBrandStatus.DOWN.getCode());
         brand.setUpdater(updater);
         brand.setUpdateDatetime(new Date());
