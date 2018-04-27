@@ -13,7 +13,7 @@ public class XN630400Req {
     private String logo;
 
     // 字母序号（必填）
-    @NotBlank(message = "字母序号（不能为空")
+    @NotBlank(message = "字母序号不能为空")
     private String letter;
 
     // 品牌介绍（必填）

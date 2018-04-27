@@ -23,7 +23,8 @@ public class XN630200 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return cuserAO.doCaptchaLoginReg(req.getMobile(), req.getSmsCaptcha());
+        return cuserAO.doCaptchaLoginReg(req.getMobile(), req.getSmsCaptcha(),
+            req.getLoginPwd(), req.getConfirmPwd());
     }
 
     @Override
