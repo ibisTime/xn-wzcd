@@ -17,6 +17,12 @@ public class XN630080Req {
     @NotBlank
     private String bizType;
 
+    // 公司编号
+    private String systemCode;
+
+    // 系统编号
+    private String companyCode;
+
     public String getMobile() {
         return mobile;
     }
@@ -31,6 +37,22 @@ public class XN630080Req {
 
     public void setBizType(String bizType) {
         this.bizType = bizType;
+    }
+
+    public String getSystemCode() {
+        return systemCode;
+    }
+
+    public void setSystemCode(String systemCode) {
+        this.systemCode = systemCode;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
     }
 
 }

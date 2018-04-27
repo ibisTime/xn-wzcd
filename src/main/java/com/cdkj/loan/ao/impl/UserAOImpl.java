@@ -112,11 +112,11 @@ public class UserAOImpl implements IUserAO {
 
     @Override
     @Transactional
-    public void doResetLoginPwdByOss(String adminId, String adminLoginPwd,
-            String userId, String loginPwd) {
-        // 验证当前登录密码是否正确
-        userBO.checkLoginPwd(adminId, adminLoginPwd);
-        userBO.refreshLoginPwd(userId, loginPwd);
+    public void doResetLoginPwdByOss(String userId, String loginPwd,
+            String udpater, String remark) {
+
+        User data = userBO.getUser(userId);
+        userBO.refreshLoginPwd(data, loginPwd, udpater, remark);
     }
 
     @Override
@@ -191,7 +191,7 @@ public class UserAOImpl implements IUserAO {
         }
         // 短信验证码是否正确
         // smsOutBO.checkCaptcha(mobile, smsCaptcha, "805063");
-        userBO.refreshLoginPwd(user, newLoginPwd);
+        // userBO.refreshLoginPwd(user, newLoginPwd);
         // // 发送短信
         // smsOutBO.sendSmsOut(mobile,
         // "尊敬的" + PhoneUtil.hideMobile(mobile)

@@ -28,7 +28,8 @@ public interface IUserBO extends IPaginableBO<User> {
 
     public User getUser(String userId);
 
-    public void refreshLoginPwd(User user, String newLoginPwd);
+    public void refreshLoginPwd(User data, String loginPwd, String udpater,
+            String remark);
 
     // 验证登录密码:拿loginPwd进行MD5后与数据库中userId得数据库支付密码比对
     public void checkLoginPwd(String userId, String loginPwd);

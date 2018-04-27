@@ -4,12 +4,12 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.ISmsOutBO;
-import com.cdkj.loan.dto.req.XN630080Req;
 import com.cdkj.loan.dto.req.XN804080Req;
+import com.cdkj.loan.dto.req.XN804081Req;
 import com.cdkj.loan.dto.req.XN804082Req;
-import com.cdkj.loan.dto.req.XN804083Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.dto.res.PKCodeRes;
+import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.http.BizConnecter;
 import com.cdkj.loan.http.JsonUtils;
 
@@ -25,26 +25,15 @@ public class SmsOutBOImpl implements ISmsOutBO {
     @Override
     public void sendSmsCaptcha(String mobile, String bizType) {
         try {
-            XN630080Req req = new XN630080Req();
+            XN804081Req req = new XN804081Req();
             req.setMobile(mobile);
             req.setBizType(bizType);
-            BizConnecter.getBizData("630080", JsonUtils.object2Json(req),
+            req.setSystemCode(ESystemCode.HTWT.getCode());
+            req.setCompanyCode(ESystemCode.HTWT.getCode());
+            BizConnecter.getBizData("804081", JsonUtils.object2Json(req),
                 PKCodeRes.class);
         } catch (Exception e) {
             logger.error("调用短信发送服务异常");
-        }
-    }
-
-    @Override
-    public void sendEmailCaptcha(String email, String bizType) {
-        try {
-            XN804083Req req = new XN804083Req();
-            req.setEmail(email);
-            req.setBizType(bizType);
-            BizConnecter.getBizData("804083", JsonUtils.object2Json(req),
-                PKCodeRes.class);
-        } catch (Exception e) {
-            logger.error("调用邮件发送验证码异常");
         }
     }
 
@@ -54,8 +43,9 @@ public class SmsOutBOImpl implements ISmsOutBO {
         req.setMobile(mobile);
         req.setCaptcha(captcha);
         req.setBizType(bizType);
-        req.setSystemCode("CD-HTWT00020");
-        BizConnecter.getBizData("630200", JsonUtils.object2Json(req),
+        req.setSystemCode(ESystemCode.HTWT.getCode());
+        req.setCompanyCode(ESystemCode.HTWT.getCode());
+        BizConnecter.getBizData("804082", JsonUtils.object2Json(req),
             BooleanRes.class);
     }
 
@@ -66,6 +56,8 @@ public class SmsOutBOImpl implements ISmsOutBO {
             req.setMobile(mobile);
             req.setContent(content);
             req.setType("M");
+            req.setSystemCode(ESystemCode.HTWT.getCode());
+            req.setCompanyCode(ESystemCode.HTWT.getCode());
             BizConnecter.getBizData("804080", JsonUtils.object2Json(req),
                 PKCodeRes.class);
         } catch (Exception e) {

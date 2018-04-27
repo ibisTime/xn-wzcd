@@ -11,6 +11,8 @@
 		<result column="login_pwd_strength" property="loginPwdStrength" />
 		<result column="create_datetime" property="createDatetime" />
 		<result column="role_code" property="roleCode" />
+		<result column="updater" property="updater" />
+		<result column="updateDatetime" property="update_datetime" />
 		<result column="status" property="status" />
 		<result column="remark" property="remark" />
 	</resultMap>
@@ -54,6 +56,8 @@
 		,t.mobile
 		,t.create_datetme
 		,t.role_code
+		,t.updater
+		,t.update_datetime
 		,t.status
 		,t.remark
 		FROM
@@ -83,6 +87,8 @@
 		,login_pwd_strength
 		,create_datetme
 		,role_code
+		,updater
+		,update_datetime
 		,status
 		,remark
 		)
@@ -95,6 +101,8 @@
 		,#{loginPwdStrength}
 		,#{createDatetme}
 		,#{roleCode}
+		,#{updater}
+		,#{updateDatetime}
 		,#{status}
 		,#{remark}
 		)
@@ -132,6 +140,8 @@
 		SET
 		 login_pwd = #{loginPwd}
 		,login_pwd_strength = #{loginPwdStrength}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
 		WHERE
 		user_id = #{userId}	
 	</update>	
@@ -141,7 +151,7 @@
 		SET
 		 role_code = #{roleCode}
 		 ,updater = #{updater}
-		 ,updater_datetime = #{updaterDatetime}
+		 ,update_datetime = #{updateDatetime}
 		 ,remark = #{remark}
 		WHERE
 		user_id = #{userId}	
