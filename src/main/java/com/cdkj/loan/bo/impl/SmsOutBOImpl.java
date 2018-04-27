@@ -4,8 +4,8 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.ISmsOutBO;
+import com.cdkj.loan.dto.req.XN630080Req;
 import com.cdkj.loan.dto.req.XN804080Req;
-import com.cdkj.loan.dto.req.XN804081Req;
 import com.cdkj.loan.dto.req.XN804082Req;
 import com.cdkj.loan.dto.req.XN804083Req;
 import com.cdkj.loan.dto.res.BooleanRes;
@@ -25,10 +25,10 @@ public class SmsOutBOImpl implements ISmsOutBO {
     @Override
     public void sendSmsCaptcha(String mobile, String bizType) {
         try {
-            XN804081Req req = new XN804081Req();
+            XN630080Req req = new XN630080Req();
             req.setMobile(mobile);
             req.setBizType(bizType);
-            BizConnecter.getBizData("804081", JsonUtils.object2Json(req),
+            BizConnecter.getBizData("630080", JsonUtils.object2Json(req),
                 PKCodeRes.class);
         } catch (Exception e) {
             logger.error("调用短信发送服务异常");
@@ -54,7 +54,8 @@ public class SmsOutBOImpl implements ISmsOutBO {
         req.setMobile(mobile);
         req.setCaptcha(captcha);
         req.setBizType(bizType);
-        BizConnecter.getBizData("804082", JsonUtils.object2Json(req),
+        req.setSystemCode("CD-HTWT00020");
+        BizConnecter.getBizData("630200", JsonUtils.object2Json(req),
             BooleanRes.class);
     }
 
