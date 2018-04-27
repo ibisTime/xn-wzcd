@@ -9,7 +9,7 @@ import java.util.Map;
  * @history:
  */
 public enum ESystemCode {
-    HTWT("CD-HTWT000020", "区块链货币");
+    HTWT("CD-HTWT000020", "华图威通");
     public static Map<String, ESystemCode> getMap() {
         Map<String, ESystemCode> map = new HashMap<String, ESystemCode>();
         for (ESystemCode direction : ESystemCode.values()) {

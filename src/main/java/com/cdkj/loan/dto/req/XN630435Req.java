@@ -2,6 +2,11 @@ package com.cdkj.loan.dto.req;
 
 public class XN630435Req extends APageReq {
 
+    /** 
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+     */
+    private static final long serialVersionUID = 1090728314612887096L;
+
     private String brandCode; // 品牌编号
 
     private String brandName; // 品牌名称
