@@ -5,6 +5,7 @@ import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN630200Req;
+import com.cdkj.loan.dto.res.PKCodeRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -23,8 +24,9 @@ public class XN630200 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return cuserAO.doCaptchaLoginReg(req.getMobile(), req.getSmsCaptcha(),
-            req.getLoginPwd(), req.getConfirmPwd());
+        
+        return new PKCodeRes(cuserAO.doCaptchaLoginReg(req.getMobile(),
+            req.getSmsCaptcha(), req.getLoginPwd(), req.getConfirmPwd()));
     }
 
     @Override

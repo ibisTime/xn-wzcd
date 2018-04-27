@@ -45,12 +45,12 @@ public class CUserAOImpl implements ICUserAO {
     public String doCaptchaLoginReg(String mobile, String smsCaptcha,
             String loginPwd, String confirmPwd) {
         // 短信验证码是否正确
-        smsOutBO.checkCaptcha(mobile, smsCaptcha, "630200");
+        smsOutBO.checkCaptcha(mobile, smsCaptcha, "630080");
         String userId = cuserBO.getUserId(mobile);
         if (StringUtils.isNotBlank(userId)) {
             throw new BizException("mag", "手机号已存在，请重新输入！！！");
         }
-        if (loginPwd != confirmPwd) {
+        if (loginPwd.equals(confirmPwd)) {
             throw new BizException("mag", "两次密码不一致，请重新输入！！！");
         }
         userId = cuserBO.saveUser(mobile);
