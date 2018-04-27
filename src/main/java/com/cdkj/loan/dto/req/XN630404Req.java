@@ -12,7 +12,7 @@ public class XN630404Req {
     @NotBlank(message = "最新修改人不能为空")
     private String updater;
 
-    // 备注（必填）
+    // 备注（选填）
     private String remark;
 
     public String getCode() {

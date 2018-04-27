@@ -42,12 +42,16 @@ public class CUserAOImpl implements ICUserAO {
     }
 
     @Override
-    public String doCaptchaLoginReg(String mobile, String smsCaptcha) {
+    public String doCaptchaLoginReg(String mobile, String smsCaptcha,
+            String loginPwd, String confirmPwd) {
         // 短信验证码是否正确
         // smsOutBO.checkCaptcha(mobile, smsCaptcha, "630200", null);
         String userId = cuserBO.getUserId(mobile);
         if (StringUtils.isNotBlank(userId)) {
             throw new BizException("mag", "手机号已存在，请重新输入！！！");
+        }
+        if (loginPwd != confirmPwd) {
+            throw new BizException("mag", "两次密码不一致，请重新输入！！！");
         }
         userId = cuserBO.saveUser(mobile);
         return userId;

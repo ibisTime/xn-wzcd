@@ -1,33 +1,49 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN630430Req {
 
+    @NotBlank(message = "申请人编号不能为空")
     private String userId; // 申请人编号
 
+    @NotBlank(message = "申请人手机号不能为空")
     private String userMobile; // 申请人手机号
 
+    @NotBlank(message = "品牌编号不能为空")
     private String brandCode; // 品牌编号
 
+    @NotBlank(message = "品牌名称不能为空")
     private String brandName; // 品牌名称
 
+    @NotBlank(message = "车系编号不能为空")
     private String seriesCode; // 车系编号
 
+    @NotBlank(message = "车系名称不能为空")
     private String seriesName; // 车系名称
 
+    @NotBlank(message = "车型编号不能为空")
     private String carCode; // 车型编号
 
+    @NotBlank(message = "车型名称不能为空")
     private String carName; // 车型名称
 
+    @NotBlank(message = "车辆总价不能为空")
     private String price; // 车辆总价
 
+    @NotBlank(message = "首付比例不能为空")
     private String sfRate; // 首付比例
 
+    @NotBlank(message = "首付金额不能为空")
     private String sfAmount; // 首付金额
 
+    @NotBlank(message = "分期期数不能为空")
     private String periods; // 分期期数
 
+    @NotBlank(message = "申请时间不能为空")
     private String createDatetime; // 申请时间
 
+    @NotBlank(message = "计算器信息不能为空")
     private String saleDesc; // 计算器信息
 
     private String remark; // 备注

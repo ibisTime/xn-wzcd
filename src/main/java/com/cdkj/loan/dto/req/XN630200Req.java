@@ -15,6 +15,8 @@ public class XN630200Req {
     @NotBlank
     private String loginPwd; // 登录密码
 
+    private String confirmPwd;// 确认密码
+
     private String refereeMobile; // 推荐人手机（选填）
 
     public XN630200Req() {
@@ -22,6 +24,14 @@ public class XN630200Req {
 
     public XN630200Req(String userId) {
         this.userId = userId;
+    }
+
+    public String getConfirmPwd() {
+        return confirmPwd;
+    }
+
+    public void setConfirmPwd(String confirmPwd) {
+        this.confirmPwd = confirmPwd;
     }
 
     public String getUserId() {

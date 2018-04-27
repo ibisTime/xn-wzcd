@@ -17,7 +17,8 @@ public interface ICUserAO {
     public void doCheckMobile(String mobile);
 
     // 验证码注册用户
-    public String doCaptchaLoginReg(String mobile, String smsCaptcha);
+    public String doCaptchaLoginReg(String mobile, String smsCaptcha,
+            String loginPwd, String confirmPwd);
 
     // 用户登录
     public String doLogin(String loginName, String loginPwd);
