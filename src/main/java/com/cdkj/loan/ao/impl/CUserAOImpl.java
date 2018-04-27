@@ -50,11 +50,7 @@ public class CUserAOImpl implements ICUserAO {
         if (StringUtils.isNotBlank(userId)) {
             throw new BizException("mag", "手机号已存在，请重新输入！！！");
         }
-<<<<<<< HEAD
         if (!loginPwd.equals(confirmPwd)) {
-=======
-        if (loginPwd.equals(confirmPwd)) {
->>>>>>> refs/remotes/origin/master
             throw new BizException("mag", "两次密码不一致，请重新输入！！！");
         }
         userId = cuserBO.saveUser(mobile);
