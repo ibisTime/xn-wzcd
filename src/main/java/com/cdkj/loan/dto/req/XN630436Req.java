@@ -16,7 +16,7 @@ public class XN630436Req extends APageReq {
 
     private String price; // 车辆总价
 
-    private double sfRate; // 首付比例
+    private String sfRate; // 首付比例
 
     private String sfAmount; // 首付金额
 
@@ -74,11 +74,11 @@ public class XN630436Req extends APageReq {
         this.seriesName = seriesName;
     }
 
-    public double getSfRate() {
+    public String getSfRate() {
         return sfRate;
     }
 
-    public void setSfRate(double sfRate) {
+    public void setSfRate(String sfRate) {
         this.sfRate = sfRate;
     }
 
