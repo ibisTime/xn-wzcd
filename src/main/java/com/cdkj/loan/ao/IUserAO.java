@@ -41,8 +41,8 @@ public interface IUserAO {
             String newLoginPwd);
 
     // 管理员重置用户密码
-    public void doResetLoginPwdByOss(String adminId, String adminLoginPwd,
-            String userId, String loginPwd);
+    public void doResetLoginPwdByOss(String userId, String loginPwd,
+            String udpater, String remark);
 
     // 修改头像
     public void doModifyPhoto(String userId, String photo);

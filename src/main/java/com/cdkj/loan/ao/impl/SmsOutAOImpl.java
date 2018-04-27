@@ -7,7 +7,6 @@ import com.cdkj.loan.ao.ISmsOutAO;
 import com.cdkj.loan.bo.ISmsOutBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.common.PhoneUtil;
-import com.cdkj.loan.enums.ECaptchaType;
 
 @Service
 public class SmsOutAOImpl implements ISmsOutAO {
@@ -20,11 +19,9 @@ public class SmsOutAOImpl implements ISmsOutAO {
 
     @Override
     public void sendSmsCaptcha(String mobile, String bizType) {
-        if (ECaptchaType.C_REG.getCode().equals(bizType)) {
-            // userBO.isMobileExist(mobile, EUserKind.Customer.getCode(),
-            // companyCode, systemCode);
-        }
+        userBO.isMobileExist(mobile);
         smsOutBO.sendSmsCaptcha(mobile, bizType);
+
     }
 
     @Override

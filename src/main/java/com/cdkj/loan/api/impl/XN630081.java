@@ -3,6 +3,7 @@ package com.cdkj.loan.api.impl;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.QnTokenImpl;
 import com.cdkj.loan.dto.res.XN805951Res;
+import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -19,7 +20,8 @@ public class XN630081 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return new XN805951Res(qnTokenImpl.getUploadToken(null, null));
+        return new XN805951Res(qnTokenImpl.getUploadToken(
+            ESystemCode.HTWT.getCode(), ESystemCode.HTWT.getCode()));
     }
 
     @Override

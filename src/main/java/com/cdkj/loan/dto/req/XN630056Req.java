@@ -9,14 +9,6 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN630056Req {
 
-    // 管理员编号(必填)
-    @NotBlank(message = "用户编号不能为空")
-    private String adminId;
-
-    // 管理员登录密码(必填)
-    @NotBlank(message = "原登录密码不能为空")
-    private String adminLoginPwd;
-
     // 用户编号(必填)
     @NotBlank(message = "用户编号不能为空")
     private String userId;
@@ -25,20 +17,27 @@ public class XN630056Req {
     @NotBlank(message = "新登录密码不能为空")
     private String loginPwd;
 
-    public String getAdminId() {
-        return adminId;
+    // 更新人(必填)
+    @NotBlank(message = "用户编号不能为空")
+    private String updater;
+
+    // 备注(必填)
+    private String remark;
+
+    public String getUpdater() {
+        return updater;
     }
 
-    public void setAdminId(String adminId) {
-        this.adminId = adminId;
+    public void setUpdater(String updater) {
+        this.updater = updater;
     }
 
-    public String getAdminLoginPwd() {
-        return adminLoginPwd;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setAdminLoginPwd(String adminLoginPwd) {
-        this.adminLoginPwd = adminLoginPwd;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getUserId() {

@@ -35,5 +35,5 @@ public interface ISmsOutBO {
      */
     public void sendSmsOut(String mobile, String content);
 
-    void sendEmailCaptcha(String email, String bizType);
+    // void sendEmailCaptcha(String email, String bizType);
 }

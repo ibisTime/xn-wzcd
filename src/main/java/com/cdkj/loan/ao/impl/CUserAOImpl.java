@@ -45,7 +45,7 @@ public class CUserAOImpl implements ICUserAO {
     public String doCaptchaLoginReg(String mobile, String smsCaptcha,
             String loginPwd, String confirmPwd) {
         // 短信验证码是否正确
-        // smsOutBO.checkCaptcha(mobile, smsCaptcha, "630200", null);
+        smsOutBO.checkCaptcha(mobile, smsCaptcha, "630200");
         String userId = cuserBO.getUserId(mobile);
         if (StringUtils.isNotBlank(userId)) {
             throw new BizException("mag", "手机号已存在，请重新输入！！！");
