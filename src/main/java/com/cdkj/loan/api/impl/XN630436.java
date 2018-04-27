@@ -35,7 +35,7 @@ public class XN630436 extends AProcessor {
         condition.setSeriesName(req.getSeriesName());
         condition.setCarCode(req.getCarCode());
         condition.setCarName(req.getCarName());
-        condition.setSfRate(req.getSfRate());
+        condition.setSfRate(StringValidater.toDouble(req.getSfRate()));
         condition.setSfAmount(StringValidater.toLong(req.getSfAmount()));
         condition.setPeriods(req.getPeriods());
         condition.setStatus(req.getStatus());
