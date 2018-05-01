@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IRepayPlanDAO">
+	<resultMap id="repayPlan_DB_Result" type="repayPlan">
+		<result column="code" property="code" />
+		<result column="repay_biz_code" property="repayBizCode" />
+		<result column="user_id" property="userId" />
+		<result column="periods" property="periods" />
+		<result column="cur_periods" property="curPeriods" />
+		<result column="repay_datetime" property="repayDatetime" />
+		<result column="repay_capital" property="repayCapital" />
+		<result column="repay_interest" property="repayInterest" />
+		<result column="payed_amount" property="payedAmount" />
+		<result column="overdue_amount" property="overdueAmount" />
+		<result column="status" property="status" />
+		<result column="overdue_handler" property="overdueHandler" />
+		<result column="overdue_handle_datetime" property="overdueHandleDatetime" />
+		<result column="overdue_handle_note" property="overdueHandleNote" />
+		<result column="total_fee" property="totalFee" />
+		<result column="payed_fee" property="payedFee" />
+		<result column="overdue_deposit" property="overdueDeposit" />
+		<result column="deposit_way" property="depositWay" />
+		<result column="should_deposit" property="shouldDeposit" />
+		<result column="remind_count" property="remindCount" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_repayPlan" parameterType="repayPlan" resultMap="repayPlan_DB_Result">
+		SELECT
+		t.code
+		,t.repay_biz_code
+		,t.user_id
+		,t.periods
+		,t.cur_periods
+		,t.repay_datetime
+		,t.repay_capital
+		,t.repay_interest
+		,t.payed_amount
+		,t.overdue_amount
+		,t.status
+		,t.overdue_handler
+		,t.overdue_handle_datetime
+		,t.overdue_handle_note
+		,t.total_fee
+		,t.payed_fee
+		,t.overdue_deposit
+		,t.deposit_way
+		,t.should_deposit
+		,t.remind_count
+		FROM
+		tht_repay_plan t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_repayPlan_count" parameterType="repayPlan"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tht_repay_plan t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_repayPlan" parameterType="repayPlan">
+		INSERT INTO
+		tht_repay_plan(
+		code
+		,repay_biz_code
+		,user_id
+		,periods
+		,cur_periods
+		,repay_datetime
+		,repay_capital
+		,repay_interest
+		,payed_amount
+		,overdue_amount
+		,status
+		,overdue_handler
+		,overdue_handle_datetime
+		,overdue_handle_note
+		,total_fee
+		,payed_fee
+		,overdue_deposit
+		,deposit_way
+		,should_deposit
+		,remind_count
+		)
+		VALUES(
+		#{code}
+		,#{repayBizCode}
+		,#{userId}
+		,#{periods}
+		,#{curPeriods}
+		,#{repayDatetime}
+		,#{repayCapital}
+		,#{repayInterest}
+		,#{payedAmount}
+		,#{overdueAmount}
+		,#{status}
+		,#{overdueHandler}
+		,#{overdueHandleDatetime}
+		,#{overdueHandleNote}
+		,#{totalFee}
+		,#{payedFee}
+		,#{overdueDeposit}
+		,#{depositWay}
+		,#{shouldDeposit}
+		,#{remindCount}
+		)
+	</insert>
+
+	<update id="update_repayPlan" parameterType="repayPlan">
+		UPDATE tht_repay_plan
+		SET
+		repay_biz_code = #{repayBizCode}
+		,user_id = #{userId}
+		,periods = #{periods}
+		,cur_periods = #{curPeriods}
+		,repay_datetime = #{repayDatetime}
+		,repay_capital = #{repayCapital}
+		,repay_interest = #{repayInterest}
+		,payed_amount = #{payedAmount}
+		,overdue_amount = #{overdueAmount}
+		,status = #{status}
+		,overdue_handler = #{overdueHandler}
+		,overdue_handle_datetime = #{overdueHandleDatetime}
+		,overdue_handle_note = #{overdueHandleNote}
+		,total_fee = #{totalFee}
+		,payed_fee = #{payedFee}
+		,overdue_deposit = #{overdueDeposit}
+		,deposit_way = #{depositWay}
+		,should_deposit = #{shouldDeposit}
+		,remind_count = #{remindCount}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>

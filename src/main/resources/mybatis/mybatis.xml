@@ -35,6 +35,9 @@
 		
 		<typeAlias alias="loanOrder" type="com.cdkj.loan.domain.LoanOrder" />
 		<typeAlias alias="repayBiz" type="com.cdkj.loan.domain.RepayBiz" />
+		<typeAlias alias="repayPlan" type="com.cdkj.loan.domain.RepayPlan" />
+		<typeAlias alias="cost" type="com.cdkj.loan.domain.Cost" />
+		<typeAlias alias="remindLog" type="com.cdkj.loan.domain.RemindLog" />
 		
 	</typeAliases>
 </configuration>

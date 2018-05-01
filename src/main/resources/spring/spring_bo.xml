@@ -112,4 +112,16 @@
 		<property name="paginableDAO" ref="repayBizDAOImpl"/>
 	</bean>
 	
+	<bean id="repayPlanBO" class="com.cdkj.loan.bo.impl.RepayPlanBOImpl">
+		<property name="paginableDAO" ref="repayPlanDAOImpl"/>
+	</bean>
+	
+	<bean id="costBO" class="com.cdkj.loan.bo.impl.CostBOImpl">
+		<property name="paginableDAO" ref="costDAOImpl"/>
+	</bean>
+	
+	<bean id="remindLogBO" class="com.cdkj.loan.bo.impl.RemindLogBOImpl">
+		<property name="paginableDAO" ref="remindLogDAOImpl"/>
+	</bean>
+	
 </beans>

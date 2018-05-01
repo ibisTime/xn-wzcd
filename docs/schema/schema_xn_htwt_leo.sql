@@ -253,7 +253,7 @@ CREATE TABLE `tht_repay_biz` (
 
 CREATE TABLE `tht_repay_plan` (
   `code` varchar(32) NOT NULL COMMENT '编号',
-  `car_loan_code` varchar(32) DEFAULT NULL COMMENT '业务编号',
+  `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',
   `user_id` varchar(32) DEFAULT NULL COMMENT '借款人编号',
   `periods` int(11) DEFAULT NULL COMMENT '总期数',
   `cur_periods` int(11) DEFAULT NULL COMMENT '当前期数',
@@ -265,12 +265,12 @@ CREATE TABLE `tht_repay_plan` (
   `status` varchar(4) DEFAULT NULL COMMENT '状态',
   `overdue_handler` varchar(255) DEFAULT NULL COMMENT '逾期处理人',
   `overdue_handle_datetime` datetime DEFAULT NULL COMMENT '逾期处理时间',
-  `overdue handle_note` text COMMENT '逾期处理说明',
+  `overdue_handle_note` text COMMENT '逾期处理说明',
   `total_fee` bigint(20) DEFAULT NULL COMMENT '清收费用总额',
   `payed_fee` bigint(20) DEFAULT NULL COMMENT '已缴纳清收费用总额',
-  `total_deposit` bigint(20) DEFAULT NULL COMMENT '保证金总金额',
-  `deposit_way` varchar(255) DEFAULT NULL COMMENT '保证金收取方式',
-  `should_deposit` bigint(20) DEFAULT NULL COMMENT '实际可退保证金金额',
+  `overdue_deposit` bigint(20) DEFAULT NULL COMMENT '再次逾期保证金',
+  `deposit_way` varchar(255) DEFAULT NULL COMMENT '再次逾期保证金收取方式',
+  `should_deposit` bigint(20) DEFAULT NULL COMMENT '实际可退的再次逾期保证金',
   `remind_count` int(11) DEFAULT NULL COMMENT '已催款次数',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

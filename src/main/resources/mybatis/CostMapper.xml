@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.ICostDAO">
+	<resultMap id="cost_DB_Result" type="cost">
+		<result column="code" property="code" />
+		<result column="repay_plan_code" property="repayPlanCode" />
+		<result column="item" property="item" />
+		<result column="amount" property="amount" />
+		<result column="pay_datetime" property="payDatetime" />
+		<result column="pay_way" property="payWay" />
+		<result column="status" property="status" />
+		<result column="repay_datetime" property="repayDatetime" />
+		<result column="repay_way" property="repayWay" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_cost" parameterType="cost" resultMap="cost_DB_Result">
+		SELECT
+		t.code
+		,t.repay_plan_code
+		,t.item
+		,t.amount
+		,t.pay_datetime
+		,t.pay_way
+		,t.status
+		,t.repay_datetime
+		,t.repay_way
+		,t.remark
+		FROM
+		tht_cost t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_cost_count" parameterType="cost"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tht_cost t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_cost" parameterType="cost">
+		INSERT INTO
+		tht_cost(
+		code
+		,repay_plan_code
+		,item
+		,amount
+		,pay_datetime
+		,pay_way
+		,status
+		,repay_datetime
+		,repay_way
+		,remark
+		)
+		VALUES(
+		#{code}
+		,#{repayPlanCode}
+		,#{item}
+		,#{amount}
+		,#{payDatetime}
+		,#{payWay}
+		,#{status}
+		,#{repayDatetime}
+		,#{repayWay}
+		,#{remark}
+		)
+	</insert>
+
+	<update id="update_cost" parameterType="cost">
+		UPDATE tht_cost
+		SET
+		repay_plan_code = #{repayPlanCode}
+		,item = #{item}
+		,amount = #{amount}
+		,pay_datetime = #{payDatetime}
+		,pay_way = #{payWay}
+		,status = #{status}
+		,repay_datetime = #{repayDatetime}
+		,repay_way = #{repayWay}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>
