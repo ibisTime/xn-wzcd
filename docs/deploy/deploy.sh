@@ -1,8 +1,8 @@
 
 #!/usr/bin/expect
 
-set tomcat_path "/mnt/www/coin/tomcat_xn_coin"
-set war_name "xn-coin"
+set tomcat_path "/mnt/www/coin/tomcat_xn_htwt"
+set war_name "xn-htwt"
 set host_ip "121.43.101.148"
 set host_pwd "cdkj123456Q"
 
