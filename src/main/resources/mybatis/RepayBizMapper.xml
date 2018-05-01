@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IRepayBizDAO">
+	<resultMap id="repayBiz_DB_Result" type="repayBiz">
+		<result column="code" property="code" />
+		<result column="user_id" property="userId" />
+		<result column="bankcard_code" property="bankcardCode" />
+		<result column="ref_type" property="refType" />
+		<result column="ref_code" property="refCode" />
+		<result column="biz_price" property="bizPrice" />
+		<result column="sf_rate" property="sfRate" />
+		<result column="sf_amount" property="sfAmount" />
+		<result column="loan_bank" property="loanBank" />
+		<result column="loan_amount" property="loanAmount" />
+		<result column="periods" property="periods" />
+		<result column="rest_periods" property="restPeriods" />
+		<result column="bank_rate" property="bankRate" />
+		<result column="loan_start_datetime" property="loanStartDatetime" />
+		<result column="loan_end_datetime" property="loanEndDatetime" />
+		<result column="fx_deposit" property="fxDeposit" />
+		<result column="first_repay_datetime" property="firstRepayDatetime" />
+		<result column="first_repay_amount" property="firstRepayAmount" />
+		<result column="month_datetime" property="monthDatetime" />
+		<result column="month_amount" property="monthAmount" />
+		<result column="ly_deposit" property="lyDeposit" />
+		<result column="cut_ly_deposit" property="cutLyDeposit" />
+		<result column="status" property="status" />
+		<result column="rest_amount" property="restAmount" />
+		<result column="rest_total_cost" property="restTotalCost" />
+		<result column="total_in_deposit" property="totalInDeposit" />
+		<result column="overdue_amount" property="overdueAmount" />
+		<result column="total_overdue_count" property="totalOverdueCount" />
+		<result column="cur_overdue_count" property="curOverdueCount" />
+		<result column="black_handle_note" property="blackHandleNote" />
+		<result column="updater" property="updater" />
+		<result column="update_datetime" property="updateDatetime" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_repayBiz" parameterType="repayBiz" resultMap="repayBiz_DB_Result">
+		SELECT
+		t.code
+		,t.user_id
+		,t.bankcard_code
+		,t.ref_type
+		,t.ref_code
+		,t.biz_price
+		,t.sf_rate
+		,t.sf_amount
+		,t.loan_bank
+		,t.loan_amount
+		,t.periods
+		,t.rest_periods
+		,t.bank_rate
+		,t.loan_start_datetime
+		,t.loan_end_datetime
+		,t.fx_deposit
+		,t.first_repay_datetime
+		,t.first_repay_amount
+		,t.month_datetime
+		,t.month_amount
+		,t.ly_deposit
+		,t.cut_ly_deposit
+		,t.status
+		,t.rest_amount
+		,t.rest_total_cost
+		,t.total_in_deposit
+		,t.overdue_amount
+		,t.total_overdue_count
+		,t.cur_overdue_count
+		,t.black_handle_note
+		,t.updater
+		,t.update_datetime
+		,t.remark
+		FROM
+		tht_repay_biz t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_repayBiz_count" parameterType="repayBiz"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tht_repay_biz t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_repayBiz" parameterType="repayBiz">
+		INSERT INTO
+		tht_repay_biz(
+		code
+		,user_id
+		,bankcard_code
+		,ref_type
+		,ref_code
+		,biz_price
+		,sf_rate
+		,sf_amount
+		,loan_bank
+		,loan_amount
+		,periods
+		,rest_periods
+		,bank_rate
+		,loan_start_datetime
+		,loan_end_datetime
+		,fx_deposit
+		,first_repay_datetime
+		,first_repay_amount
+		,month_datetime
+		,month_amount
+		,ly_deposit
+		,cut_ly_deposit
+		,status
+		,rest_amount
+		,rest_total_cost
+		,total_in_deposit
+		,overdue_amount
+		,total_overdue_count
+		,cur_overdue_count
+		,black_handle_note
+		,updater
+		,update_datetime
+		,remark
+		)
+		VALUES(
+		#{code}
+		,#{userId}
+		,#{bankcardCode}
+		,#{refType}
+		,#{refCode}
+		,#{bizPrice}
+		,#{sfRate}
+		,#{sfAmount}
+		,#{loanBank}
+		,#{loanAmount}
+		,#{periods}
+		,#{restPeriods}
+		,#{bankRate}
+		,#{loanStartDatetime}
+		,#{loanEndDatetime}
+		,#{fxDeposit}
+		,#{firstRepayDatetime}
+		,#{firstRepayAmount}
+		,#{monthDatetime}
+		,#{monthAmount}
+		,#{lyDeposit}
+		,#{cutLyDeposit}
+		,#{status}
+		,#{restAmount}
+		,#{restTotalCost}
+		,#{totalInDeposit}
+		,#{overdueAmount}
+		,#{totalOverdueCount}
+		,#{curOverdueCount}
+		,#{blackHandleNote}
+		,#{updater}
+		,#{updateDatetime}
+		,#{remark}
+		)
+	</insert>
+
+	<update id="update_repayBiz" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		user_id = #{userId}
+		,bankcard_code = #{bankcardCode}
+		,ref_type = #{refType}
+		,ref_code = #{refCode}
+		,biz_price = #{bizPrice}
+		,sf_rate = #{sfRate}
+		,sf_amount = #{sfAmount}
+		,loan_bank = #{loanBank}
+		,loan_amount = #{loanAmount}
+		,periods = #{periods}
+		,rest_periods = #{restPeriods}
+		,bank_rate = #{bankRate}
+		,loan_start_datetime = #{loanStartDatetime}
+		,loan_end_datetime = #{loanEndDatetime}
+		,fx_deposit = #{fxDeposit}
+		,first_repay_datetime = #{firstRepayDatetime}
+		,first_repay_amount = #{firstRepayAmount}
+		,month_datetime = #{monthDatetime}
+		,month_amount = #{monthAmount}
+		,ly_deposit = #{lyDeposit}
+		,cut_ly_deposit = #{cutLyDeposit}
+		,status = #{status}
+		,rest_amount = #{restAmount}
+		,rest_total_cost = #{restTotalCost}
+		,total_in_deposit = #{totalInDeposit}
+		,overdue_amount = #{overdueAmount}
+		,total_overdue_count = #{totalOverdueCount}
+		,cur_overdue_count = #{curOverdueCount}
+		,black_handle_note = #{blackHandleNote}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>

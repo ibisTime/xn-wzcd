@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.ILoanOrderDAO">
+	<resultMap id="loanOrder_DB_Result" type="loanOrder">
+		<result column="code" property="code" />
+		<result column="repay_biz_code" property="repayBizCode" />
+		<result column="user_id" property="userId" />
+		<result column="mobile" property="mobile" />
+		<result column="id_kind" property="idKind" />
+		<result column="id_no" property="idNo" />
+		<result column="real_name" property="realName" />
+		<result column="bank_code" property="bankCode" />
+		<result column="bank_name" property="bankName" />
+		<result column="subbranch" property="subbranch" />
+		<result column="bankcard_number" property="bankcardNumber" />
+		<result column="car_code" property="carCode" />
+		<result column="car_price" property="carPrice" />
+		<result column="sf_rate" property="sfRate" />
+		<result column="sf_amount" property="sfAmount" />
+		<result column="loan_bank" property="loanBank" />
+		<result column="loan_amount" property="loanAmount" />
+		<result column="periods" property="periods" />
+		<result column="bank_rate" property="bankRate" />
+		<result column="loan_start_datetime" property="loanStartDatetime" />
+		<result column="loan_end_datetime" property="loanEndDatetime" />
+		<result column="fk_datetime" property="fkDatetime" />
+		<result column="fx_deposit" property="fxDeposit" />
+		<result column="other_fee" property="otherFee" />
+		<result column="gps_fee" property="gpsFee" />
+		<result column="first_repay_datetime" property="firstRepayDatetime" />
+		<result column="first_repay_amount" property="firstRepayAmount" />
+		<result column="month_datetime" property="monthDatetime" />
+		<result column="month_amount" property="monthAmount" />
+		<result column="ly_deposit" property="lyDeposit" />
+		<result column="status" property="status" />
+		<result column="updater" property="updater" />
+		<result column="update_datetime" property="updateDatetime" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_loanOrder" parameterType="loanOrder" resultMap="loanOrder_DB_Result">
+		SELECT
+		t.code
+		,t.repay_biz_code
+		,t.user_id
+		,t.mobile
+		,t.id_kind
+		,t.id_no
+		,t.real_name
+		,t.bank_code
+		,t.bank_name
+		,t.subbranch
+		,t.bankcard_number
+		,t.car_code
+		,t.car_price
+		,t.sf_rate
+		,t.sf_amount
+		,t.loan_bank
+		,t.loan_amount
+		,t.periods
+		,t.bank_rate
+		,t.loan_start_datetime
+		,t.loan_end_datetime
+		,t.fk_datetime
+		,t.fx_deposit
+		,t.other_fee
+		,t.gps_fee
+		,t.first_repay_datetime
+		,t.first_repay_amount
+		,t.month_datetime
+		,t.month_amount
+		,t.ly_deposit
+		,t.status
+		,t.updater
+		,t.update_datetime
+		,t.remark
+		FROM
+		tht_loan_order t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_loanOrder_count" parameterType="loanOrder"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tht_loan_order t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_loanOrder" parameterType="loanOrder">
+		INSERT INTO
+		tht_loan_order(
+		code
+		,repay_biz_code
+		,user_id
+		,mobile
+		,id_kind
+		,id_no
+		,real_name
+		,bank_code
+		,bank_name
+		,subbranch
+		,bankcard_number
+		,car_code
+		,car_price
+		,sf_rate
+		,sf_amount
+		,loan_bank
+		,loan_amount
+		,periods
+		,bank_rate
+		,loan_start_datetime
+		,loan_end_datetime
+		,fk_datetime
+		,fx_deposit
+		,other_fee
+		,gps_fee
+		,first_repay_datetime
+		,first_repay_amount
+		,month_datetime
+		,month_amount
+		,ly_deposit
+		,status
+		,updater
+		,update_datetime
+		,remark
+		)
+		VALUES(
+		#{code}
+		,#{repayBizCode}
+		,#{userId}
+		,#{mobile}
+		,#{idKind}
+		,#{idNo}
+		,#{realName}
+		,#{bankCode}
+		,#{bankName}
+		,#{subbranch}
+		,#{bankcardNumber}
+		,#{carCode}
+		,#{carPrice}
+		,#{sfRate}
+		,#{sfAmount}
+		,#{loanBank}
+		,#{loanAmount}
+		,#{periods}
+		,#{bankRate}
+		,#{loanStartDatetime}
+		,#{loanEndDatetime}
+		,#{fkDatetime}
+		,#{fxDeposit}
+		,#{otherFee}
+		,#{gpsFee}
+		,#{firstRepayDatetime}
+		,#{firstRepayAmount}
+		,#{monthDatetime}
+		,#{monthAmount}
+		,#{lyDeposit}
+		,#{status}
+		,#{updater}
+		,#{updateDatetime}
+		,#{remark}
+		)
+	</insert>
+
+	<update id="update_loanOrder" parameterType="loanOrder">
+		UPDATE tht_loan_order
+		SET
+		repay_biz_code = #{repayBizCode}
+		,user_id = #{userId}
+		,mobile = #{mobile}
+		,id_kind = #{idKind}
+		,id_no = #{idNo}
+		,real_name = #{realName}
+		,bank_code = #{bankCode}
+		,bank_name = #{bankName}
+		,subbranch = #{subbranch}
+		,bankcard_number = #{bankcardNumber}
+		,car_code = #{carCode}
+		,car_price = #{carPrice}
+		,sf_rate = #{sfRate}
+		,sf_amount = #{sfAmount}
+		,loan_bank = #{loanBank}
+		,loan_amount = #{loanAmount}
+		,periods = #{periods}
+		,bank_rate = #{bankRate}
+		,loan_start_datetime = #{loanStartDatetime}
+		,loan_end_datetime = #{loanEndDatetime}
+		,fk_datetime = #{fkDatetime}
+		,fx_deposit = #{fxDeposit}
+		,other_fee = #{otherFee}
+		,gps_fee = #{gpsFee}
+		,first_repay_datetime = #{firstRepayDatetime}
+		,first_repay_amount = #{firstRepayAmount}
+		,month_datetime = #{monthDatetime}
+		,month_amount = #{monthAmount}
+		,ly_deposit = #{lyDeposit}
+		,status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>
