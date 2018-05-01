@@ -87,4 +87,20 @@
 	<bean id="carOrderBO" class="com.cdkj.loan.bo.impl.CarOrderBOImpl">
 		<property name="paginableDAO" ref="carOrderDAOImpl"/>
 	</bean>	
+	
+	<bean id="categoryBO" class="com.cdkj.loan.bo.impl.CategoryBOImpl">
+		<property name="paginableDAO" ref="categoryDAOImpl" />
+	</bean>
+	
+	<bean id="productBO" class="com.cdkj.loan.bo.impl.ProductBOImpl">
+		<property name="paginableDAO" ref="productDAOImpl"/>
+	</bean>	
+	
+	<bean id="orderBO" class="com.cdkj.loan.bo.impl.OrderBOImpl">
+		<property name="paginableDAO" ref="orderDAOImpl"/>
+	</bean>	
+	
+	<bean id="productOrderBO" class="com.cdkj.loan.bo.impl.ProductOrderBOImpl">
+		<property name="paginableDAO" ref="productOrderDAOImpl"/>
+	</bean>	
 </beans>

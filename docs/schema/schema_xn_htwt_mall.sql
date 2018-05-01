@@ -21,7 +21,7 @@ CREATE TABLE `tmall_product` (
   `pic` text DEFAULT NULL COMMENT 'pic',
   `description` text COMMENT '图文描述',
   `original_price` bigint(20) DEFAULT NULL COMMENT '原价',
-  `price` bigint(20) DEFAULT NULL COMMENT '价格1（人民币）',
+  `price` bigint(20) DEFAULT NULL COMMENT '价格（人民币）',
   `credit_score` bigint(20) DEFAULT NULL COMMENT '最低购买信用分',
   `location` varchar(32) DEFAULT NULL COMMENT '位置(0 普通 1 热门)',
   `order_no` int(11) DEFAULT NULL COMMENT '相对位置编号',
@@ -55,26 +55,31 @@ CREATE TABLE `tmall_order` (
   `receiver` varchar(255) DEFAULT NULL COMMENT '收件人姓名',
   `re_mobile` varchar(32) DEFAULT NULL COMMENT '收件人电话',
   `re_address` varchar(255) DEFAULT NULL COMMENT '收货地址',
+  
   `apply_user` varchar(32) DEFAULT NULL COMMENT '下单人',
   `apply_note` varchar(255) DEFAULT NULL COMMENT '下单嘱咐',
   `apply_datetime` datetime DEFAULT NULL COMMENT '下单时间',
   `amount` bigint(20) DEFAULT NULL COMMENT '金额',
   `yunfei` bigint(20) DEFAULT NULL COMMENT '运费',
+  
   `status` varchar(4) DEFAULT NULL COMMENT '状态',
   `pay_type` varchar(32) DEFAULT NULL COMMENT '支付方式',
   `pay_group` varchar(32) DEFAULT NULL COMMENT '支付组号',
   `pay_code` varchar(32) DEFAULT NULL COMMENT '支付编号',
   `pay_datetime` datetime DEFAULT NULL COMMENT '支付时间',
+  
   `pay_amount` bigint(20) DEFAULT NULL COMMENT '支付金额',
   `deliverer` varchar(32) DEFAULT NULL COMMENT '发货人',
   `delivery_datetime` datetime DEFAULT NULL COMMENT '发货时间',
   `logistics_company` varchar(32) DEFAULT NULL COMMENT '物流公司编号',
   `logistics_code` varchar(32) DEFAULT NULL COMMENT '物流单号',
+  
   `pdf` varchar(255) DEFAULT NULL COMMENT '物流单',
   `signer` varchar(32) DEFAULT NULL COMMENT '签收人',
   `sign_datetime` datetime DEFAULT NULL COMMENT '签收时间',
   `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
+  
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`) COMMENT '订单'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -85,12 +90,10 @@ CREATE TABLE `tmall_product_order` (
   `order_code` varchar(32) DEFAULT NULL COMMENT '订单编号',
   `product_code` varchar(32) DEFAULT NULL COMMENT '商品编号',
   `product_name` varchar(255) DEFAULT NULL COMMENT '商品名称',
-  `product_type` varchar(32) DEFAULT NULL COMMENT '商品类型',
   `product_specs_code` varchar(32) DEFAULT NULL COMMENT '商品参数编号',
   `product_specs_name` varchar(32) DEFAULT NULL COMMENT '商品参数名称',
   `quantity` int(11) DEFAULT NULL COMMENT '数量',
   `price` bigint(20) DEFAULT NULL COMMENT '价格',
-  `is_evaluate` tinyint(1) DEFAULT NULL COMMENT '是否已评价',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

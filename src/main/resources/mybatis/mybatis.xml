@@ -26,6 +26,13 @@
 		<typeAlias alias="series" type="com.cdkj.loan.domain.Series" />
 		<typeAlias alias="car" type="com.cdkj.loan.domain.Car" />
 		<typeAlias alias="carorder" type="com.cdkj.loan.domain.CarOrder" />
+		
+		<typeAlias alias="category" type="com.cdkj.loan.domain.Category" />
+		<typeAlias alias="product" type="com.cdkj.loan.domain.Product" />
+		<typeAlias alias="order" type="com.cdkj.loan.domain.Order" />
+		<typeAlias alias="productOrder" type="com.cdkj.loan.domain.ProductOrder" />
+		<typeAlias alias="productSpecs" type="com.cdkj.loan.domain.ProductSpecs" />
+		
 	</typeAliases>
 </configuration>
 

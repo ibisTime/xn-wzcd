@@ -5,6 +5,13 @@ import java.math.BigDecimal;
 import com.cdkj.loan.core.CalculationUtil;
 
 public class AmountUtil {
+
+    public static Double mulAB(double A, double B) {
+        BigDecimal a = new BigDecimal(Double.toString(A));
+        BigDecimal b = new BigDecimal(Double.toString(B));
+        return a.multiply(b).doubleValue();
+    }
+
     public static Long mul(Long amount, double rate) {
         BigDecimal a = new BigDecimal(Double.toString(amount));
         BigDecimal b = new BigDecimal(Double.toString(rate));
