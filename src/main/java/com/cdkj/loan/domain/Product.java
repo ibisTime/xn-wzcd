@@ -84,6 +84,10 @@ public class Product extends ABaseDO {
     // 产品参数
     private List<ProductSpecs> productSpecsList;
 
+    private Long creditScoreStart;
+
+    private Long creditScoreEnd;
+
     public String getCode() {
         return code;
     }
@@ -242,6 +246,22 @@ public class Product extends ABaseDO {
 
     public void setProductSpecsList(List<ProductSpecs> productSpecsList) {
         this.productSpecsList = productSpecsList;
+    }
+
+    public Long getCreditScoreStart() {
+        return creditScoreStart;
+    }
+
+    public void setCreditScoreStart(Long creditScoreStart) {
+        this.creditScoreStart = creditScoreStart;
+    }
+
+    public Long getCreditScoreEnd() {
+        return creditScoreEnd;
+    }
+
+    public void setCreditScoreEnd(Long creditScoreEnd) {
+        this.creditScoreEnd = creditScoreEnd;
     }
 
 }

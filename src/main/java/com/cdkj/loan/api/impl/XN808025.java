@@ -44,8 +44,11 @@ public class XN808025 extends AProcessor {
         condition.setType(req.getType());
         condition.setName(req.getName());
         condition.setStatus(req.getStatus());
-
         condition.setLocation(req.getLocation());
+        condition.setCreditScoreStart(
+            StringValidater.toLong(req.getCreditScoreStart()));
+        condition
+            .setCreditScoreEnd(StringValidater.toLong(req.getCreditScoreEnd()));
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IProductAO.DEFAULT_ORDER_COLUMN;
@@ -53,8 +56,7 @@ public class XN808025 extends AProcessor {
         condition.setOrder(orderColumn, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
-        return productAO.queryProductPage(start, limit, condition,
-            req.getUserId());
+        return productAO.queryProductPage(start, limit, condition);
     }
 
     /** 

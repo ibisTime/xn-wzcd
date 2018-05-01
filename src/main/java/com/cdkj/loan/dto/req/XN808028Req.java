@@ -21,17 +21,6 @@ public class XN808028Req extends APageReq {
     // 位置(选填)
     private String location;
 
-    // 用户编号(选填)
-    private String userId;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getCategory() {
         return category;
     }

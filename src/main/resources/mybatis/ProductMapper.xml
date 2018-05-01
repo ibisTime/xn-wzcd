@@ -64,6 +64,12 @@
 			<if test="updater != null and updater != '' ">
 				AND t.updater = #{updater}
 			</if>
+			<if test="creditScoreStart != null and creditScoreStart != '' ">
+				<![CDATA[AND t.credit_score >= #{creditScoreStart}]]>
+			</if>
+			<if test="creditScoreEnd != null and creditScoreEnd != '' ">
+				<![CDATA[AND t.credit_score <= #{creditScoreEnd}]]>
+			</if>
 		</trim>
 	</sql>
 	<select id="select_product" parameterType="product" resultMap="product_DB_Result">

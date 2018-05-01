@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,9 +68,14 @@ public class ProductAOImpl implements IProductAO {
         data.setName(req.getName());
         data.setSlogan(req.getSlogan());
         data.setAdvPic(req.getAdvPic());
+
+        data.setSaleStatus(req.getSaleStatus());
         data.setPic(req.getPic());
         data.setDescription(req.getDescription());
+        data.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
+        data.setPrice(StringValidater.toLong(req.getPrice()));
 
+        data.setCreditScore(StringValidater.toLong(req.getCreditScore()));
         data.setStatus(EProductStatus.TO_PUBLISH.getCode());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
@@ -115,9 +120,15 @@ public class ProductAOImpl implements IProductAO {
         data.setName(req.getName());
         data.setSlogan(req.getSlogan());
         data.setAdvPic(req.getAdvPic());
+
+        data.setSaleStatus(req.getSaleStatus());
         data.setPic(req.getPic());
         data.setDescription(req.getDescription());
+        data.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
+        data.setPrice(StringValidater.toLong(req.getPrice()));
 
+        data.setCreditScore(StringValidater.toLong(req.getCreditScore()));
+        data.setStatus(EProductStatus.TO_PUBLISH.getCode());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());
@@ -206,7 +217,7 @@ public class ProductAOImpl implements IProductAO {
 
     @Override
     public Paginable<Product> queryProductPage(int start, int limit,
-            Product condition, String userId) {
+            Product condition) {
         Paginable<Product> results = productBO.getPaginable(start, limit,
             condition);
         if (CollectionUtils.isNotEmpty(results.getList())) {

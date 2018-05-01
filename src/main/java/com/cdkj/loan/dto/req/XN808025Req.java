@@ -35,16 +35,11 @@ public class XN808025Req extends APageReq {
     // 位置(选填)
     private String location;
 
-    // 用户编号(选填)
-    private String userId;
+    // 信用分起（选填）
+    private String creditScoreStart;
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+    // 信用分止（选填）
+    private String creditScoreEnd;
 
     public String getCategory() {
         return category;
@@ -84,6 +79,22 @@ public class XN808025Req extends APageReq {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getCreditScoreStart() {
+        return creditScoreStart;
+    }
+
+    public void setCreditScoreStart(String creditScoreStart) {
+        this.creditScoreStart = creditScoreStart;
+    }
+
+    public String getCreditScoreEnd() {
+        return creditScoreEnd;
+    }
+
+    public void setCreditScoreEnd(String creditScoreEnd) {
+        this.creditScoreEnd = creditScoreEnd;
     }
 
 }
