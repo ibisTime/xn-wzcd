@@ -114,13 +114,11 @@
 		SELECT count(1) FROM tht_loan_order t
 		<include refid="where_condition" />
 	</select>
-
+				
 	<insert id="insert_loanOrder" parameterType="loanOrder">
 		INSERT INTO
 		tht_loan_order(
 		code
-		,repay_biz_code
-		,user_id
 		,mobile
 		,id_kind
 		,id_no
@@ -155,8 +153,6 @@
 		)
 		VALUES(
 		#{code}
-		,#{repayBizCode}
-		,#{userId}
 		,#{mobile}
 		,#{idKind}
 		,#{idNo}
@@ -194,9 +190,7 @@
 	<update id="update_loanOrder" parameterType="loanOrder">
 		UPDATE tht_loan_order
 		SET
-		repay_biz_code = #{repayBizCode}
-		,user_id = #{userId}
-		,mobile = #{mobile}
+		mobile = #{mobile}
 		,id_kind = #{idKind}
 		,id_no = #{idNo}
 		,real_name = #{realName}
@@ -224,6 +218,28 @@
 		,month_amount = #{monthAmount}
 		,ly_deposit = #{lyDeposit}
 		,status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_approveSuccess" parameterType="loanOrder">
+		UPDATE tht_loan_order
+		SET
+		repay_biz_code = #{repayBizCode}
+		,user_id = #{userId}
+		,status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_approveFailed" parameterType="loanOrder">
+		UPDATE tht_loan_order
+		SET
+		status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}

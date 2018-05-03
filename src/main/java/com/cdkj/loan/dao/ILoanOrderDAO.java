@@ -7,4 +7,8 @@ public interface ILoanOrderDAO extends IBaseDAO<LoanOrder> {
     String NAMESPACE = ILoanOrderDAO.class.getName().concat(".");
 
     public int update(LoanOrder data);
+
+    public int updateApproveSuccess(LoanOrder data);
+
+    public int updateApproveFailed(LoanOrder data);
 }

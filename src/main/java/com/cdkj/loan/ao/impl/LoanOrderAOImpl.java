@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ILoanOrderAO;
+import com.cdkj.loan.bo.ICUserBO;
 import com.cdkj.loan.bo.ILoanOrderBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
@@ -25,6 +26,9 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
     @Autowired
     private ILoanOrderBO loanOrderBO;
 
+    @Autowired
+    private ICUserBO cuserBO;
+
     @Override
     public String addLoanOrder(XN630500Req req) {
         LoanOrder data = new LoanOrder();
@@ -32,21 +36,20 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
         data.setIdKind(req.getIdKind());
         data.setIdNo(req.getIdNo());
         data.setRealName(req.getRealName());
-        data.setBankCode(req.getBankCode());
 
+        data.setBankCode(req.getBankCode());
         data.setBankName(req.getBankName());
         data.setSubbranch(req.getSubbranch());
         data.setBankcardNumber(req.getBankcardNumber());
         data.setCarCode(req.getCarCode());
-        data.setCarPrice(StringValidater.toLong(req.getCarPrice()));
 
+        data.setCarPrice(StringValidater.toLong(req.getCarPrice()));
         data.setSfRate(StringValidater.toDouble(req.getSfRate()));
         data.setSfAmount(StringValidater.toLong(req.getSfAmount()));
         data.setLoanBank(req.getLoanBank());
         data.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
-        data.setPeriods(StringValidater.toInteger(req.getPeriods()));
-        ;
 
+        data.setPeriods(StringValidater.toInteger(req.getPeriods()));
         data.setBankRate(StringValidater.toDouble(req.getBankRate()));
         data.setLoanStartDatetime(DateUtil.strToDate(req.getLoanStartDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
@@ -54,17 +57,17 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setFkDatetime(DateUtil.strToDate(req.getFkDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setFxDeposit(StringValidater.toLong(req.getFxDeposit()));
 
+        data.setFxDeposit(StringValidater.toLong(req.getFxDeposit()));
         data.setOtherFee(StringValidater.toLong(req.getOtherFee()));
         data.setGpsFee(StringValidater.toLong(req.getGpsFee()));
         data.setFirstRepayDatetime(DateUtil.strToDate(
             req.getFirstRepayDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setFirstRepayAmount(
             StringValidater.toLong(req.getFirstRepayAmount()));
-        data.setMonthDatetime(DateUtil.strToDate(req.getMonthAmount(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
 
+        data.setMonthDatetime(DateUtil.strToDate(req.getMonthDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setMonthAmount(StringValidater.toLong(req.getMonthAmount()));
         data.setLyDeposit(StringValidater.toLong(req.getLyDeposit()));
         if (req.getIsSubmit().equals(EBoolean.NO.getCode())) {
@@ -72,8 +75,8 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
         }
         data.setStatus(ELoanOrderStatus.TO_AUDIT.getCode());
         data.setUpdater(req.getUpdater());
-        data.setUpdateDatetime(new Date());
 
+        data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());
         return loanOrderBO.saveLoanOrder(data);
     }
@@ -132,12 +135,43 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
         return loanOrderBO.refreshLoanOrder(data);
     }
 
+    /**
+     * 1. 根据code查询车贷订单详情得到loadOrder 
+     * 2. 判断订单状态是否是代审核
+     * 3. 根据aprroveResult判断审核结果 0 订单状态不通过 1通过 
+     * 4. 如果审核通过，用户代注册并实名认证，绑定用户银行卡，自动生成还款业务，自动生成还款计划
+     * 5. 更新车贷订单状态
+     */
     @Override
-    public int dropLoanOrder(String code) {
-        if (!loanOrderBO.isLoanOrderExist(code)) {
-            throw new BizException("xn0000", "车贷订单编号不存在");
+    public void approveLoanOrder(String code, String approveResult,
+            String approveUser, String approveNote) {
+
+        // 根据code查询车贷订单详情得到loadOrder,判断订单状态是否是代审核
+        LoanOrder data = loanOrderBO.checkCanAudit(code);
+
+        if (approveResult.equals(EBoolean.NO.getCode())) {
+            // 审核不通过
+            loanOrderBO.approveFailed(data, approveUser, approveNote);
+        } else {
+            // 用户代注册并实名认证，绑定用户银行卡
+            // String userId =
+            // cuserBO.register(data.getMobile(),data.getIdKind(),data.getRealName(),
+            // data.getIdNo());
+            // // 绑定用户银行卡
+            // bankcardBO.bind(userId, data.getBankcardNumber(),
+            // data.getBankCode(), data.getBankName(), data.getSubbranch());
+            // // 自动生成还款业务
+            // RepayBiz repayBiz = repayBizBO.genereateNewRepayBiz(data);
+            // // 自动生成还款计划
+            // RepayPlan repayPlan =
+            // repayPlanBO.genereateNewRapayPlan(repayBiz);
+            // 审核通过
+            String userId = "U23325353";
+            String repayBizCode = "123456789";
+            loanOrderBO.approveSuccess(data, repayBizCode, userId, approveUser,
+                approveNote);
         }
-        return loanOrderBO.removeLoanOrder(code);
+
     }
 
     @Override

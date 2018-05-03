@@ -12,7 +12,8 @@ public interface ILoanOrderAO {
 
     public String addLoanOrder(XN630500Req req);
 
-    public int dropLoanOrder(String code);
+    public void approveLoanOrder(String code, String approveResult,
+            String approveUser, String approveNote);
 
     public int editLoanOrder(XN630502Req req);
 

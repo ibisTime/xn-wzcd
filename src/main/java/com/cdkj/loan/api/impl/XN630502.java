@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 新增车贷订单
+ * 修改车贷订单（包含提交审核）
  * @author: CYL 
  * @since: 2018年4月30日 下午8:26:08 
  * @history:

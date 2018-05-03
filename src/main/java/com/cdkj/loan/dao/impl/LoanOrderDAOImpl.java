@@ -52,4 +52,14 @@ public class LoanOrderDAOImpl extends AMybatisTemplate
         return super.update(NAMESPACE.concat("update_loanOrder"), data);
     }
 
+    @Override
+    public int updateApproveSuccess(LoanOrder data) {
+        return super.update(NAMESPACE.concat("update_approveSuccess"), data);
+    }
+
+    @Override
+    public int updateApproveFailed(LoanOrder data) {
+        return super.update(NAMESPACE.concat("update_approveFailed"), data);
+    }
+
 }

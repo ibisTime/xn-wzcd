@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,6 +12,8 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ILoanOrderDAO;
 import com.cdkj.loan.domain.LoanOrder;
+import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.ELoanOrderStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -42,17 +45,6 @@ public class LoanOrderBOImpl extends PaginableBOImpl<LoanOrder>
     }
 
     @Override
-    public int removeLoanOrder(String code) {
-        int count = 0;
-        if (StringUtils.isNotBlank(code)) {
-            LoanOrder data = new LoanOrder();
-            data.setCode(code);
-            count = loanOrderDAO.delete(data);
-        }
-        return count;
-    }
-
-    @Override
     public int refreshLoanOrder(LoanOrder data) {
         int count = 0;
         if (StringUtils.isNotBlank(data.getCode())) {
@@ -74,9 +66,42 @@ public class LoanOrderBOImpl extends PaginableBOImpl<LoanOrder>
             condition.setCode(code);
             data = loanOrderDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "记录不存在");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "车贷订单" + code + "不存在");
             }
         }
         return data;
     }
+
+    public LoanOrder checkCanAudit(String code) {
+        LoanOrder data = getLoanOrder(code);
+        if (!data.getStatus().equals(ELoanOrderStatus.TO_AUDIT.getCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "订单不是待审核状态！！！");
+        }
+        return data;
+    }
+
+    @Override
+    public int approveSuccess(LoanOrder data, String repayBizCode,
+            String userId, String approveUser, String approveNote) {
+        data.setRepayBizCode(repayBizCode);
+        data.setUserId(userId);
+        data.setStatus(ELoanOrderStatus.AUDIT_PASS.getCode());
+        data.setUpdater(approveUser);
+        data.setUpdateDatetime(new Date());
+        data.setRemark(approveNote);
+        return loanOrderDAO.updateApproveSuccess(data);
+    }
+
+    @Override
+    public int approveFailed(LoanOrder data, String approveUser,
+            String approveNote) {
+        data.setStatus(ELoanOrderStatus.AUDIT_NOTPASS.getCode());
+        data.setUpdater(approveUser);
+        data.setUpdateDatetime(new Date());
+        data.setRemark(approveNote);
+        return loanOrderDAO.updateApproveFailed(data);
+    }
+
 }
