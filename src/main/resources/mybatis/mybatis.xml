@@ -32,6 +32,7 @@
 		<typeAlias alias="order" type="com.cdkj.loan.domain.Order" />
 		<typeAlias alias="productOrder" type="com.cdkj.loan.domain.ProductOrder" />
 		<typeAlias alias="productSpecs" type="com.cdkj.loan.domain.ProductSpecs" />
+		<typeAlias alias="bankcard" type="com.cdkj.loan.domain.Bankcard" />
 		
 		<typeAlias alias="loanOrder" type="com.cdkj.loan.domain.LoanOrder" />
 		<typeAlias alias="repayBiz" type="com.cdkj.loan.domain.RepayBiz" />

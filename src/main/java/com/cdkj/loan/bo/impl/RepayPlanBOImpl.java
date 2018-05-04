@@ -1,5 +1,7 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -10,7 +12,9 @@ import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IRepayPlanDAO;
+import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.enums.ERepayPlanStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -78,5 +82,42 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             }
         }
         return data;
+    }
+
+    @Override
+    public RepayPlan genereateNewRapayPlan(RepayBiz repayBiz) {
+
+        RepayPlan condition = new RepayPlan();
+
+        String code = null;
+        code = OrderNoGenerater.generate("BC");
+        condition.setCode(code);
+        condition.setRepayBizCode(repayBiz.getCode());
+        condition.setUserId(repayBiz.getUserId());
+        condition.setPeriods(repayBiz.getPeriods());
+        condition.setCurPeriods(1);
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR) + 1;
+        int month = cal.get(Calendar.MONTH) + 1;
+        cal.add(Calendar.MONTH, 1);
+        Date time = cal.getTime();
+        condition.setRepayDatetime(time);
+        Long monthAmount = repayBiz.getMonthAmount();
+        double bankRate = repayBiz.getBankRate();
+        Long repayCapital = monthAmount / (long) (bankRate + 1);
+        condition.setRepayCapital(repayCapital);
+        condition.setRepayInterest(repayBiz.getBankRate());
+        condition.setPayedAmount(0L);
+        condition.setOverdueAmount(0L);
+
+        condition.setStatus(ERepayPlanStatus.REPAYMENTS.getCode());
+        condition.setTotalFee(0L);
+        condition.setPayedFee(0L);
+        condition.setOverdueDeposit(0L);
+        condition.setShouldDeposit(0L);
+
+        condition.setRemindCount(0);
+        return condition;
     }
 }

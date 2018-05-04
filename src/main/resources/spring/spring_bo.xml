@@ -124,4 +124,8 @@
 		<property name="paginableDAO" ref="remindLogDAOImpl"/>
 	</bean>
 	
+	<bean id="bankcardBO" class="com.cdkj.loan.bo.impl.BankcardBOImpl">
+		<property name="paginableDAO" ref="bankcardDAOImpl"/>
+	</bean>
+	
 </beans>

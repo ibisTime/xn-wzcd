@@ -6,13 +6,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.ao.ILoanOrderAO;
 import com.cdkj.loan.bo.ICUserBO;
 import com.cdkj.loan.bo.ILoanOrderBO;
+import com.cdkj.loan.bo.IRepayBizBO;
+import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.LoanOrder;
+import com.cdkj.loan.domain.RepayBiz;
+import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN630500Req;
 import com.cdkj.loan.dto.req.XN630502Req;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -28,6 +33,15 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
 
     @Autowired
     private ICUserBO cuserBO;
+
+    @Autowired
+    private IBankcardAO bankcardAO;
+
+    @Autowired
+    private IRepayBizBO repayBizBO;
+
+    @Autowired
+    private IRepayPlanBO repayPlanBO;
 
     @Override
     public String addLoanOrder(XN630500Req req) {
@@ -153,21 +167,21 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
             // 审核不通过
             loanOrderBO.approveFailed(data, approveUser, approveNote);
         } else {
-            // 用户代注册并实名认证，绑定用户银行卡
-            // String userId =
-            // cuserBO.register(data.getMobile(),data.getIdKind(),data.getRealName(),
-            // data.getIdNo());
-            // // 绑定用户银行卡
-            // bankcardBO.bind(userId, data.getBankcardNumber(),
-            // data.getBankCode(), data.getBankName(), data.getSubbranch());
-            // // 自动生成还款业务
-            // RepayBiz repayBiz = repayBizBO.genereateNewRepayBiz(data);
+            // 用户代注册并实名认证
+            String userId = cuserBO.doRegisterAndIdentify(data.getMobile(),
+                data.getIdKind(), data.getRealName(), data.getIdNo());
+            // 绑定用户银行卡
+            String bankcardCode = bankcardAO.bind(userId,
+                data.getBankcardNumber(), data.getBankCode(),
+                data.getBankName(), data.getSubbranch());
+            // 自动生成还款业务
+            data.setUserId(userId);
+            data.setBankcardNumber(bankcardCode);
+            RepayBiz repayBiz = repayBizBO.genereateNewCarLoanRepayBiz(data);
             // // 自动生成还款计划
-            // RepayPlan repayPlan =
-            // repayPlanBO.genereateNewRapayPlan(repayBiz);
+            RepayPlan repayPlan = repayPlanBO.genereateNewRapayPlan(repayBiz);
             // 审核通过
-            String userId = "U23325353";
-            String repayBizCode = "123456789";
+            String repayBizCode = repayBiz.getCode();
             loanOrderBO.approveSuccess(data, repayBizCode, userId, approveUser,
                 approveNote);
         }

@@ -10,6 +10,10 @@ public interface ICUserBO extends IPaginableBO<CUser> {
     // C端用户注册
     public String doRegister(String mobile, String loginPwd, String smsCaptcha);
 
+    // 车贷订单用户代注册实名认证
+    public String doRegisterAndIdentify(String mobile, String idKind,
+            String realName, String idNo);
+
     // 判断手机号是否存在
     // public void isMobileExist(String mobile);
 

@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -10,369 +12,369 @@ import com.cdkj.loan.dao.base.ABaseDO;
 */
 public class RepayBiz extends ABaseDO {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	// 编号
-	private String code;
+    // 编号
+    private String code;
 
-	// 申请人编号
-	private String userId;
+    // 申请人编号
+    private String userId;
 
-	// 还款卡编号
-	private String bankcardCode;
+    // 还款卡编号
+    private String bankcardCode;
 
-	// 关联类型
-	private String refType;
+    // 关联类型
+    private String refType;
 
-	// 关联编号
-	private String refCode;
+    // 关联编号
+    private String refCode;
 
-	// 业务总价
-	private String bizPrice;
+    // 业务总价
+    private Long bizPrice;
 
-	// 首付比例
-	private String sfRate;
+    // 首付比例
+    private double sfRate;
 
-	// 首付金额
-	private String sfAmount;
+    // 首付金额
+    private Long sfAmount;
 
-	// 贷款银行
-	private String loanBank;
+    // 贷款银行
+    private String loanBank;
 
-	// 贷款金额
-	private String loanAmount;
+    // 贷款金额
+    private Long loanAmount;
 
-	// 总期数
-	private String periods;
+    // 总期数
+    private int periods;
 
-	// 剩余期数
-	private String restPeriods;
+    // 剩余期数
+    private int restPeriods;
 
-	// 银行利率
-	private String bankRate;
+    // 银行利率
+    private double bankRate;
 
-	// 贷款时间起点
-	private String loanStartDatetime;
+    // 贷款时间起点
+    private Date loanStartDatetime;
 
-	// 贷款时间终点
-	private String loanEndDatetime;
+    // 贷款时间终点
+    private Date loanEndDatetime;
 
-	// 风险保证金
-	private String fxDeposit;
+    // 风险保证金
+    private Long fxDeposit;
 
-	// 首期还款日期
-	private String firstRepayDatetime;
+    // 首期还款日期
+    private Date firstRepayDatetime;
 
-	// 首期月供金额
-	private String firstRepayAmount;
+    // 首期月供金额
+    private Long firstRepayAmount;
 
-	// 每期还款日期
-	private String monthDatetime;
+    // 每期还款日期
+    private Date monthDatetime;
 
-	// 每期月供金额
-	private String monthAmount;
+    // 每期月供金额
+    private Long monthAmount;
 
-	// 履约保证金（可退）
-	private String lyDeposit;
+    // 履约保证金（可退）
+    private Long lyDeposit;
 
-	// 扣除的履约保证金
-	private String cutLyDeposit;
+    // 扣除的履约保证金
+    private Long cutLyDeposit;
 
-	// 状态
-	private String status;
+    // 状态
+    private String status;
 
-	// 剩余欠款
-	private String restAmount;
+    // 剩余欠款
+    private Long restAmount;
 
-	// 未还清收总成本
-	private String restTotalCost;
+    // 未还清收总成本
+    private Long restTotalCost;
 
-	// 额外保证金收入
-	private String totalInDeposit;
+    // 额外保证金收入
+    private Long totalInDeposit;
 
-	// 逾期总金额
-	private String overdueAmount;
+    // 逾期总金额
+    private Long overdueAmount;
 
-	// 累计逾期期数
-	private String totalOverdueCount;
+    // 累计逾期期数
+    private int totalOverdueCount;
 
-	// 实际逾期期数
-	private String curOverdueCount;
+    // 实际逾期期数
+    private int curOverdueCount;
 
-	// 黑名单处理结果备案
-	private String blackHandleNote;
+    // 黑名单处理结果备案
+    private String blackHandleNote;
 
-	// 最近修改人
-	private String updater;
+    // 最近修改人
+    private String updater;
 
-	// 最近修改时间
-	private String updateDatetime;
+    // 最近修改时间
+    private Date updateDatetime;
 
-	// 备注
-	private String remark;
+    // 备注
+    private String remark;
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public void setBankcardCode(String bankcardCode) {
-		this.bankcardCode = bankcardCode;
-	}
+    public void setBankcardCode(String bankcardCode) {
+        this.bankcardCode = bankcardCode;
+    }
 
-	public String getBankcardCode() {
-		return bankcardCode;
-	}
+    public String getBankcardCode() {
+        return bankcardCode;
+    }
 
-	public void setRefType(String refType) {
-		this.refType = refType;
-	}
+    public void setRefType(String refType) {
+        this.refType = refType;
+    }
 
-	public String getRefType() {
-		return refType;
-	}
+    public String getRefType() {
+        return refType;
+    }
 
-	public void setRefCode(String refCode) {
-		this.refCode = refCode;
-	}
+    public void setRefCode(String refCode) {
+        this.refCode = refCode;
+    }
 
-	public String getRefCode() {
-		return refCode;
-	}
+    public String getRefCode() {
+        return refCode;
+    }
 
-	public void setBizPrice(String bizPrice) {
-		this.bizPrice = bizPrice;
-	}
+    public Long getBizPrice() {
+        return bizPrice;
+    }
 
-	public String getBizPrice() {
-		return bizPrice;
-	}
+    public void setBizPrice(Long bizPrice) {
+        this.bizPrice = bizPrice;
+    }
 
-	public void setSfRate(String sfRate) {
-		this.sfRate = sfRate;
-	}
+    public double getSfRate() {
+        return sfRate;
+    }
 
-	public String getSfRate() {
-		return sfRate;
-	}
+    public void setSfRate(double sfRate) {
+        this.sfRate = sfRate;
+    }
 
-	public void setSfAmount(String sfAmount) {
-		this.sfAmount = sfAmount;
-	}
+    public Long getSfAmount() {
+        return sfAmount;
+    }
 
-	public String getSfAmount() {
-		return sfAmount;
-	}
+    public void setSfAmount(Long sfAmount) {
+        this.sfAmount = sfAmount;
+    }
 
-	public void setLoanBank(String loanBank) {
-		this.loanBank = loanBank;
-	}
+    public String getLoanBank() {
+        return loanBank;
+    }
 
-	public String getLoanBank() {
-		return loanBank;
-	}
+    public void setLoanBank(String loanBank) {
+        this.loanBank = loanBank;
+    }
 
-	public void setLoanAmount(String loanAmount) {
-		this.loanAmount = loanAmount;
-	}
+    public Long getLoanAmount() {
+        return loanAmount;
+    }
 
-	public String getLoanAmount() {
-		return loanAmount;
-	}
+    public void setLoanAmount(Long loanAmount) {
+        this.loanAmount = loanAmount;
+    }
 
-	public void setPeriods(String periods) {
-		this.periods = periods;
-	}
+    public int getPeriods() {
+        return periods;
+    }
 
-	public String getPeriods() {
-		return periods;
-	}
+    public void setPeriods(int periods) {
+        this.periods = periods;
+    }
 
-	public void setRestPeriods(String restPeriods) {
-		this.restPeriods = restPeriods;
-	}
+    public int getRestPeriods() {
+        return restPeriods;
+    }
 
-	public String getRestPeriods() {
-		return restPeriods;
-	}
+    public void setRestPeriods(int restPeriods) {
+        this.restPeriods = restPeriods;
+    }
 
-	public void setBankRate(String bankRate) {
-		this.bankRate = bankRate;
-	}
+    public double getBankRate() {
+        return bankRate;
+    }
 
-	public String getBankRate() {
-		return bankRate;
-	}
+    public void setBankRate(double bankRate) {
+        this.bankRate = bankRate;
+    }
 
-	public void setLoanStartDatetime(String loanStartDatetime) {
-		this.loanStartDatetime = loanStartDatetime;
-	}
+    public Date getLoanStartDatetime() {
+        return loanStartDatetime;
+    }
 
-	public String getLoanStartDatetime() {
-		return loanStartDatetime;
-	}
+    public void setLoanStartDatetime(Date loanStartDatetime) {
+        this.loanStartDatetime = loanStartDatetime;
+    }
 
-	public void setLoanEndDatetime(String loanEndDatetime) {
-		this.loanEndDatetime = loanEndDatetime;
-	}
+    public Date getLoanEndDatetime() {
+        return loanEndDatetime;
+    }
 
-	public String getLoanEndDatetime() {
-		return loanEndDatetime;
-	}
+    public void setLoanEndDatetime(Date loanEndDatetime) {
+        this.loanEndDatetime = loanEndDatetime;
+    }
 
-	public void setFxDeposit(String fxDeposit) {
-		this.fxDeposit = fxDeposit;
-	}
+    public Long getFxDeposit() {
+        return fxDeposit;
+    }
 
-	public String getFxDeposit() {
-		return fxDeposit;
-	}
+    public void setFxDeposit(Long fxDeposit) {
+        this.fxDeposit = fxDeposit;
+    }
 
-	public void setFirstRepayDatetime(String firstRepayDatetime) {
-		this.firstRepayDatetime = firstRepayDatetime;
-	}
+    public Date getFirstRepayDatetime() {
+        return firstRepayDatetime;
+    }
 
-	public String getFirstRepayDatetime() {
-		return firstRepayDatetime;
-	}
+    public void setFirstRepayDatetime(Date firstRepayDatetime) {
+        this.firstRepayDatetime = firstRepayDatetime;
+    }
 
-	public void setFirstRepayAmount(String firstRepayAmount) {
-		this.firstRepayAmount = firstRepayAmount;
-	}
+    public Long getFirstRepayAmount() {
+        return firstRepayAmount;
+    }
 
-	public String getFirstRepayAmount() {
-		return firstRepayAmount;
-	}
+    public void setFirstRepayAmount(Long firstRepayAmount) {
+        this.firstRepayAmount = firstRepayAmount;
+    }
 
-	public void setMonthDatetime(String monthDatetime) {
-		this.monthDatetime = monthDatetime;
-	}
+    public Date getMonthDatetime() {
+        return monthDatetime;
+    }
 
-	public String getMonthDatetime() {
-		return monthDatetime;
-	}
+    public void setMonthDatetime(Date monthDatetime) {
+        this.monthDatetime = monthDatetime;
+    }
 
-	public void setMonthAmount(String monthAmount) {
-		this.monthAmount = monthAmount;
-	}
+    public Long getMonthAmount() {
+        return monthAmount;
+    }
 
-	public String getMonthAmount() {
-		return monthAmount;
-	}
+    public void setMonthAmount(Long monthAmount) {
+        this.monthAmount = monthAmount;
+    }
 
-	public void setLyDeposit(String lyDeposit) {
-		this.lyDeposit = lyDeposit;
-	}
+    public Long getLyDeposit() {
+        return lyDeposit;
+    }
 
-	public String getLyDeposit() {
-		return lyDeposit;
-	}
+    public void setLyDeposit(Long lyDeposit) {
+        this.lyDeposit = lyDeposit;
+    }
 
-	public void setCutLyDeposit(String cutLyDeposit) {
-		this.cutLyDeposit = cutLyDeposit;
-	}
+    public Long getCutLyDeposit() {
+        return cutLyDeposit;
+    }
 
-	public String getCutLyDeposit() {
-		return cutLyDeposit;
-	}
+    public void setCutLyDeposit(Long cutLyDeposit) {
+        this.cutLyDeposit = cutLyDeposit;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public void setRestAmount(String restAmount) {
-		this.restAmount = restAmount;
-	}
+    public Long getRestAmount() {
+        return restAmount;
+    }
 
-	public String getRestAmount() {
-		return restAmount;
-	}
+    public void setRestAmount(Long restAmount) {
+        this.restAmount = restAmount;
+    }
 
-	public void setRestTotalCost(String restTotalCost) {
-		this.restTotalCost = restTotalCost;
-	}
+    public Long getRestTotalCost() {
+        return restTotalCost;
+    }
 
-	public String getRestTotalCost() {
-		return restTotalCost;
-	}
+    public void setRestTotalCost(Long restTotalCost) {
+        this.restTotalCost = restTotalCost;
+    }
 
-	public void setTotalInDeposit(String totalInDeposit) {
-		this.totalInDeposit = totalInDeposit;
-	}
+    public Long getTotalInDeposit() {
+        return totalInDeposit;
+    }
 
-	public String getTotalInDeposit() {
-		return totalInDeposit;
-	}
+    public void setTotalInDeposit(Long totalInDeposit) {
+        this.totalInDeposit = totalInDeposit;
+    }
 
-	public void setOverdueAmount(String overdueAmount) {
-		this.overdueAmount = overdueAmount;
-	}
+    public Long getOverdueAmount() {
+        return overdueAmount;
+    }
 
-	public String getOverdueAmount() {
-		return overdueAmount;
-	}
+    public void setOverdueAmount(Long overdueAmount) {
+        this.overdueAmount = overdueAmount;
+    }
 
-	public void setTotalOverdueCount(String totalOverdueCount) {
-		this.totalOverdueCount = totalOverdueCount;
-	}
+    public int getTotalOverdueCount() {
+        return totalOverdueCount;
+    }
 
-	public String getTotalOverdueCount() {
-		return totalOverdueCount;
-	}
+    public void setTotalOverdueCount(int totalOverdueCount) {
+        this.totalOverdueCount = totalOverdueCount;
+    }
 
-	public void setCurOverdueCount(String curOverdueCount) {
-		this.curOverdueCount = curOverdueCount;
-	}
+    public int getCurOverdueCount() {
+        return curOverdueCount;
+    }
 
-	public String getCurOverdueCount() {
-		return curOverdueCount;
-	}
+    public void setCurOverdueCount(int curOverdueCount) {
+        this.curOverdueCount = curOverdueCount;
+    }
 
-	public void setBlackHandleNote(String blackHandleNote) {
-		this.blackHandleNote = blackHandleNote;
-	}
+    public String getBlackHandleNote() {
+        return blackHandleNote;
+    }
 
-	public String getBlackHandleNote() {
-		return blackHandleNote;
-	}
+    public void setBlackHandleNote(String blackHandleNote) {
+        this.blackHandleNote = blackHandleNote;
+    }
 
-	public void setUpdater(String updater) {
-		this.updater = updater;
-	}
+    public String getUpdater() {
+        return updater;
+    }
 
-	public String getUpdater() {
-		return updater;
-	}
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
 
-	public void setUpdateDatetime(String updateDatetime) {
-		this.updateDatetime = updateDatetime;
-	}
+    public Date getUpdateDatetime() {
+        return updateDatetime;
+    }
 
-	public String getUpdateDatetime() {
-		return updateDatetime;
-	}
+    public void setUpdateDatetime(Date updateDatetime) {
+        this.updateDatetime = updateDatetime;
+    }
 
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
-	public String getRemark() {
-		return remark;
-	}
+    public String getRemark() {
+        return remark;
+    }
 
 }

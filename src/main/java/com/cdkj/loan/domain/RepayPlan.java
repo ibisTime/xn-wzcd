@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -10,226 +12,226 @@ import com.cdkj.loan.dao.base.ABaseDO;
 */
 public class RepayPlan extends ABaseDO {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	// 编号
-	private String code;
+    // 编号
+    private String code;
 
-	// 还款业务编号
-	private String repayBizCode;
+    // 还款业务编号
+    private String repayBizCode;
 
-	// 借款人编号
-	private String userId;
+    // 借款人编号
+    private String userId;
 
-	// 总期数
-	private String periods;
+    // 总期数
+    private int periods;
 
-	// 当前期数
-	private String curPeriods;
+    // 当前期数
+    private int curPeriods;
 
-	// 还款时间
-	private String repayDatetime;
+    // 还款时间
+    private Date repayDatetime;
 
-	// 本期本金
-	private String repayCapital;
+    // 本期本金
+    private Long repayCapital;
 
-	// 本期利息
-	private String repayInterest;
+    // 本期利息
+    private double repayInterest;
 
-	// 已还金额
-	private String payedAmount;
+    // 已还金额
+    private Long payedAmount;
 
-	// 逾期金额
-	private String overdueAmount;
+    // 逾期金额
+    private Long overdueAmount;
 
-	// 状态
-	private String status;
+    // 状态
+    private String status;
 
-	// 逾期处理人
-	private String overdueHandler;
+    // 逾期处理人
+    private String overdueHandler;
 
-	// 逾期处理时间
-	private String overdueHandleDatetime;
+    // 逾期处理时间
+    private Date overdueHandleDatetime;
 
-	// 逾期处理说明
-	private String overdueHandleNote;
+    // 逾期处理说明
+    private String overdueHandleNote;
 
-	// 清收费用总额
-	private String totalFee;
+    // 清收费用总额
+    private Long totalFee;
 
-	// 已缴纳清收费用总额
-	private String payedFee;
+    // 已缴纳清收费用总额
+    private Long payedFee;
 
-	// 再次逾期保证金
-	private String overdueDeposit;
+    // 再次逾期保证金
+    private Long overdueDeposit;
 
-	// 再次逾期保证金收取方式
-	private String depositWay;
+    // 再次逾期保证金收取方式
+    private String depositWay;
 
-	// 实际可退的再次逾期保证金
-	private String shouldDeposit;
+    // 实际可退的再次逾期保证金
+    private Long shouldDeposit;
 
-	// 已催款次数
-	private String remindCount;
+    // 已催款次数
+    private int remindCount;
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public void setRepayBizCode(String repayBizCode) {
-		this.repayBizCode = repayBizCode;
-	}
+    public void setRepayBizCode(String repayBizCode) {
+        this.repayBizCode = repayBizCode;
+    }
 
-	public String getRepayBizCode() {
-		return repayBizCode;
-	}
+    public String getRepayBizCode() {
+        return repayBizCode;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public void setPeriods(String periods) {
-		this.periods = periods;
-	}
+    public int getPeriods() {
+        return periods;
+    }
 
-	public String getPeriods() {
-		return periods;
-	}
+    public void setPeriods(int periods) {
+        this.periods = periods;
+    }
 
-	public void setCurPeriods(String curPeriods) {
-		this.curPeriods = curPeriods;
-	}
+    public int getCurPeriods() {
+        return curPeriods;
+    }
 
-	public String getCurPeriods() {
-		return curPeriods;
-	}
+    public void setCurPeriods(int curPeriods) {
+        this.curPeriods = curPeriods;
+    }
 
-	public void setRepayDatetime(String repayDatetime) {
-		this.repayDatetime = repayDatetime;
-	}
+    public Date getRepayDatetime() {
+        return repayDatetime;
+    }
 
-	public String getRepayDatetime() {
-		return repayDatetime;
-	}
+    public void setRepayDatetime(Date repayDatetime) {
+        this.repayDatetime = repayDatetime;
+    }
 
-	public void setRepayCapital(String repayCapital) {
-		this.repayCapital = repayCapital;
-	}
+    public Long getRepayCapital() {
+        return repayCapital;
+    }
 
-	public String getRepayCapital() {
-		return repayCapital;
-	}
+    public void setRepayCapital(Long repayCapital) {
+        this.repayCapital = repayCapital;
+    }
 
-	public void setRepayInterest(String repayInterest) {
-		this.repayInterest = repayInterest;
-	}
+    public double getRepayInterest() {
+        return repayInterest;
+    }
 
-	public String getRepayInterest() {
-		return repayInterest;
-	}
+    public void setRepayInterest(double repayInterest) {
+        this.repayInterest = repayInterest;
+    }
 
-	public void setPayedAmount(String payedAmount) {
-		this.payedAmount = payedAmount;
-	}
+    public Long getPayedAmount() {
+        return payedAmount;
+    }
 
-	public String getPayedAmount() {
-		return payedAmount;
-	}
+    public void setPayedAmount(Long payedAmount) {
+        this.payedAmount = payedAmount;
+    }
 
-	public void setOverdueAmount(String overdueAmount) {
-		this.overdueAmount = overdueAmount;
-	}
+    public Long getOverdueAmount() {
+        return overdueAmount;
+    }
 
-	public String getOverdueAmount() {
-		return overdueAmount;
-	}
+    public void setOverdueAmount(Long overdueAmount) {
+        this.overdueAmount = overdueAmount;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public void setOverdueHandler(String overdueHandler) {
-		this.overdueHandler = overdueHandler;
-	}
+    public String getOverdueHandler() {
+        return overdueHandler;
+    }
 
-	public String getOverdueHandler() {
-		return overdueHandler;
-	}
+    public void setOverdueHandler(String overdueHandler) {
+        this.overdueHandler = overdueHandler;
+    }
 
-	public void setOverdueHandleDatetime(String overdueHandleDatetime) {
-		this.overdueHandleDatetime = overdueHandleDatetime;
-	}
+    public Date getOverdueHandleDatetime() {
+        return overdueHandleDatetime;
+    }
 
-	public String getOverdueHandleDatetime() {
-		return overdueHandleDatetime;
-	}
+    public void setOverdueHandleDatetime(Date overdueHandleDatetime) {
+        this.overdueHandleDatetime = overdueHandleDatetime;
+    }
 
-	public void setOverdueHandleNote(String overdueHandleNote) {
-		this.overdueHandleNote = overdueHandleNote;
-	}
+    public String getOverdueHandleNote() {
+        return overdueHandleNote;
+    }
 
-	public String getOverdueHandleNote() {
-		return overdueHandleNote;
-	}
+    public void setOverdueHandleNote(String overdueHandleNote) {
+        this.overdueHandleNote = overdueHandleNote;
+    }
 
-	public void setTotalFee(String totalFee) {
-		this.totalFee = totalFee;
-	}
+    public Long getTotalFee() {
+        return totalFee;
+    }
 
-	public String getTotalFee() {
-		return totalFee;
-	}
+    public void setTotalFee(Long totalFee) {
+        this.totalFee = totalFee;
+    }
 
-	public void setPayedFee(String payedFee) {
-		this.payedFee = payedFee;
-	}
+    public Long getPayedFee() {
+        return payedFee;
+    }
 
-	public String getPayedFee() {
-		return payedFee;
-	}
+    public void setPayedFee(Long payedFee) {
+        this.payedFee = payedFee;
+    }
 
-	public void setOverdueDeposit(String overdueDeposit) {
-		this.overdueDeposit = overdueDeposit;
-	}
+    public Long getOverdueDeposit() {
+        return overdueDeposit;
+    }
 
-	public String getOverdueDeposit() {
-		return overdueDeposit;
-	}
+    public void setOverdueDeposit(Long overdueDeposit) {
+        this.overdueDeposit = overdueDeposit;
+    }
 
-	public void setDepositWay(String depositWay) {
-		this.depositWay = depositWay;
-	}
+    public String getDepositWay() {
+        return depositWay;
+    }
 
-	public String getDepositWay() {
-		return depositWay;
-	}
+    public void setDepositWay(String depositWay) {
+        this.depositWay = depositWay;
+    }
 
-	public void setShouldDeposit(String shouldDeposit) {
-		this.shouldDeposit = shouldDeposit;
-	}
+    public Long getShouldDeposit() {
+        return shouldDeposit;
+    }
 
-	public String getShouldDeposit() {
-		return shouldDeposit;
-	}
+    public void setShouldDeposit(Long shouldDeposit) {
+        this.shouldDeposit = shouldDeposit;
+    }
 
-	public void setRemindCount(String remindCount) {
-		this.remindCount = remindCount;
-	}
+    public int getRemindCount() {
+        return remindCount;
+    }
 
-	public String getRemindCount() {
-		return remindCount;
-	}
+    public void setRemindCount(int remindCount) {
+        this.remindCount = remindCount;
+    }
 
 }

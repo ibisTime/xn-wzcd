@@ -12,6 +12,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.common.PwdUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICUserDAO;
 import com.cdkj.loan.domain.CUser;
 import com.cdkj.loan.enums.EGeneratePrefix;
@@ -143,6 +144,24 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
         user.setLoginPwd(MD5Util.md5(loginPwd));
         user.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
 
+        cuserDAO.insert(user);
+        return userId;
+    }
+
+    @Override
+    public String doRegisterAndIdentify(String mobile, String idKind,
+            String realName, String idNo) {
+        String userId = OrderNoGenerater.generate("U");
+        String loginPwd = "888888";
+        CUser user = new CUser();
+        user.setUserId(userId);
+        user.setMobile(mobile);
+        user.setLoginName(mobile);
+        user.setLoginPwd(loginPwd);
+        user.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
+        user.setIdKind(idKind);
+        user.setIdNo(StringValidater.toLong(idNo));
+        user.setRealName(realName);
         cuserDAO.insert(user);
         return userId;
     }
