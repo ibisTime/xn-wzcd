@@ -94,11 +94,11 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
     }
 
     @Override
-    public CUser getUser(String mobile) {
+    public CUser getUser(String userId) {
         CUser cuser = null;
-        if (StringUtils.isNotBlank(mobile)) {
+        if (StringUtils.isNotBlank(userId)) {
             CUser condition = new CUser();
-            condition.setMobile(mobile);
+            condition.setUserId(userId);
             List<CUser> list = cuserDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
                 cuser = list.get(0);

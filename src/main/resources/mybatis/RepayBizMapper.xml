@@ -42,6 +42,12 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="userId != null and userId != '' ">
+				AND t.user_id = #{userId}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_repayBiz" parameterType="repayBiz" resultMap="repayBiz_DB_Result">
@@ -207,5 +213,14 @@
 		WHERE code = #{code}
 	</update>
 
-
+	<update id="update_repayBiz_bankcard" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+			SET
+		bankcard_code = #{bankcardCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
 </mapper>

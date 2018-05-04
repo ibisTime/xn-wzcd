@@ -22,9 +22,6 @@ public class XN630220Req {
     @NotBlank
     private String updater;// 更新人
 
-    @NotBlank
-    private String updateDatetime;// 更新时间
-
     private String remark;// 备注
 
     public String getUserId() {
@@ -73,14 +70,6 @@ public class XN630220Req {
 
     public void setUpdater(String updater) {
         this.updater = updater;
-    }
-
-    public String getUpdateDatetime() {
-        return updateDatetime;
-    }
-
-    public void setUpdateDatetime(String updateDatetime) {
-        this.updateDatetime = updateDatetime;
     }
 
     public String getRemark() {

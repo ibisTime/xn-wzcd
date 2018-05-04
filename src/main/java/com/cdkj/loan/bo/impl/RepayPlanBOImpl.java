@@ -14,6 +14,7 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IRepayPlanDAO;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.enums.ERefType;
 import com.cdkj.loan.enums.ERepayPlanStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -92,7 +93,8 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         String code = null;
         code = OrderNoGenerater.generate("BC");
         condition.setCode(code);
-        condition.setRepayBizCode(repayBiz.getCode());
+        condition.setRefType(ERefType.CAR.getCode());
+        condition.setRefCode(repayBiz.getCode());
         condition.setUserId(repayBiz.getUserId());
         condition.setPeriods(repayBiz.getPeriods());
         condition.setCurPeriods(1);

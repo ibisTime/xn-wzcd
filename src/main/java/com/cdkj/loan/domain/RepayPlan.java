@@ -17,8 +17,11 @@ public class RepayPlan extends ABaseDO {
     // 编号
     private String code;
 
-    // 还款业务编号
-    private String repayBizCode;
+    // 类型
+    private String refType;
+
+    // 关联编号
+    private String refCode;
 
     // 借款人编号
     private String userId;
@@ -82,12 +85,20 @@ public class RepayPlan extends ABaseDO {
         return code;
     }
 
-    public void setRepayBizCode(String repayBizCode) {
-        this.repayBizCode = repayBizCode;
+    public String getRefType() {
+        return refType;
     }
 
-    public String getRepayBizCode() {
-        return repayBizCode;
+    public void setRefType(String refType) {
+        this.refType = refType;
+    }
+
+    public String getRefCode() {
+        return refCode;
+    }
+
+    public void setRefCode(String refCode) {
+        this.refCode = refCode;
     }
 
     public void setUserId(String userId) {

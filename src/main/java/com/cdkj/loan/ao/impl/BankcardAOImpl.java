@@ -9,10 +9,11 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.ICUserBO;
+import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.domain.Bankcard;
-import com.cdkj.loan.dto.req.XN630220Req;
+import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.enums.EBankcard;
 
 //CHECK ��鲢��ע�� 
@@ -23,21 +24,37 @@ public class BankcardAOImpl implements IBankcardAO {
     private IBankcardBO bankcardBO;
 
     @Autowired
+    private IRepayBizBO repayBizBO;
+
+    @Autowired
     private ICUserBO cuserBO;
 
     @Override
-    public String addBankcard(XN630220Req req) {
+    public String addBankcard(XN630510Req req) {
+
         Bankcard data = new Bankcard();
-        data.setUserId(req.getUserId());
+
+        String code = null;
+        code = OrderNoGenerater.generate("BC");
+        data.setCode(code);
+        String userId = repayBizBO.getRepayBiz(req.getCode()).getUserId();
+        data.setUserId(userId);
+        String realName = cuserBO.getUser(userId).getRealName();
+        data.setRealName(realName);
         data.setBankCode(req.getBankCode());
         data.setBankName(req.getBankName());
+
         data.setSubbranch(req.getSubbranch());
         data.setBankcardNumber(req.getBankcardNumber());
         data.setCreateDatetime(new Date());
+        data.setStatus(EBankcard.NORMAL.getCode());
         data.setUpdater(req.getUpdater());
+
         data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());
-        return bankcardBO.saveBankcard(data);
+
+        bankcardBO.saveBankcard(data);
+        return code;
     }
 
     @Override
@@ -69,8 +86,8 @@ public class BankcardAOImpl implements IBankcardAO {
     @Override
     public String bind(String userId, String realName, String bankcardNumber,
             String bankCode, String bankName, String subbranch) {
-        String code = null;
         Bankcard data = new Bankcard();
+        String code = null;
         code = OrderNoGenerater.generate("BC");
 
         data.setCode(code);
@@ -87,4 +104,5 @@ public class BankcardAOImpl implements IBankcardAO {
         bankcardBO.saveBankcard(data);
         return code;
     }
+
 }

@@ -4,7 +4,8 @@
 <mapper namespace="com.cdkj.loan.dao.IRepayPlanDAO">
 	<resultMap id="repayPlan_DB_Result" type="repayPlan">
 		<result column="code" property="code" />
-		<result column="repay_biz_code" property="repayBizCode" />
+		<result column="ref_type" property="refType" />
+		<result column="ref_code" property="refCode" />
 		<result column="user_id" property="userId" />
 		<result column="periods" property="periods" />
 		<result column="cur_periods" property="curPeriods" />
@@ -29,12 +30,28 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="userId != null and userId != '' ">
+				AND t.user_id = #{userId}
+			</if>
+			<if test="refType != null and refType != '' ">
+				AND t.ref_type = #{refType}
+			</if>
+			<if test="refCode != null and refCode != '' ">
+				AND t.ref_code = #{refCode}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="overdueHandler != null and overdueHandler != '' ">
+				AND t.codoverdue_handlere = #{overdueHandler}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_repayPlan" parameterType="repayPlan" resultMap="repayPlan_DB_Result">
 		SELECT
 		t.code
-		,t.repay_biz_code
+		,t.ref_type
+		,t.ref_code
 		,t.user_id
 		,t.periods
 		,t.cur_periods
@@ -73,7 +90,8 @@
 		INSERT INTO
 		tht_repay_plan(
 		code
-		,repay_biz_code
+		,ref_type
+		,ref_code
 		,user_id
 		,periods
 		,cur_periods
@@ -95,7 +113,8 @@
 		)
 		VALUES(
 		#{code}
-		,#{repayBizCode}
+		,#{refType}
+		,#{refCode}
 		,#{userId}
 		,#{periods}
 		,#{curPeriods}
@@ -120,7 +139,8 @@
 	<update id="update_repayPlan" parameterType="repayPlan">
 		UPDATE tht_repay_plan
 		SET
-		repay_biz_code = #{repayBizCode}
+		ref_type = #{refType}
+		ref_code = #{refCode}
 		,user_id = #{userId}
 		,periods = #{periods}
 		,cur_periods = #{curPeriods}

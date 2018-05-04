@@ -14,7 +14,7 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
     public int removeRepayBiz(String code);
 
-    public int refreshRepayBiz(RepayBiz data);
+    public void refreshRepayBiz(RepayBiz data);
 
     public List<RepayBiz> queryRepayBizList(RepayBiz condition);
 

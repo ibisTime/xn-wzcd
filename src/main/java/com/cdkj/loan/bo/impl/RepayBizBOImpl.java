@@ -13,6 +13,7 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IRepayBizDAO;
 import com.cdkj.loan.domain.LoanOrder;
 import com.cdkj.loan.domain.RepayBiz;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ERefType;
 import com.cdkj.loan.enums.ERepayBizStatus;
 import com.cdkj.loan.exception.BizException;
@@ -57,12 +58,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
-    public int refreshRepayBiz(RepayBiz data) {
-        int count = 0;
-        if (StringUtils.isNotBlank(data.getCode())) {
-            count = repayBizDAO.update(data);
-        }
-        return count;
+    public void refreshRepayBiz(RepayBiz data) {
+        repayBizDAO.update(data);
     }
 
     @Override
@@ -78,7 +75,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
             condition.setCode(code);
             data = repayBizDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "记录不存在");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "还款业务编号" + code + "不存在");
             }
         }
         return data;

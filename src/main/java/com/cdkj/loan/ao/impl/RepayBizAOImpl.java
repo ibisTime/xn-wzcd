@@ -1,59 +1,87 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RepayBiz;
+import com.cdkj.loan.dto.req.XN630510Req;
+import com.cdkj.loan.dto.req.XN630511Req;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
-
-
-
 
 @Service
 public class RepayBizAOImpl implements IRepayBizAO {
 
-	@Autowired
-	private IRepayBizBO repayBizBO;
+    @Autowired
+    private IRepayBizBO repayBizBO;
 
-	@Override
-	public String addRepayBiz(RepayBiz data) {
-		return repayBizBO.saveRepayBiz(data);
-	}
+    @Autowired
+    private IBankcardAO bankcardAO;
 
-	@Override
-	public int editRepayBiz(RepayBiz data) {
-		if (!repayBizBO.isRepayBizExist(data.getCode())) {
-			throw new BizException("xn0000", "记录编号不存在");
-		}
-		return repayBizBO.refreshRepayBiz(data);
-	}
+    @Override
+    public String addRepayBiz(RepayBiz data) {
+        return repayBizBO.saveRepayBiz(data);
+    }
 
-	@Override
-	public int dropRepayBiz(String code) {
-		if (!repayBizBO.isRepayBizExist(code)) {
-			throw new BizException("xn0000", "记录编号不存在");
-		}
-		return repayBizBO.removeRepayBiz(code);
-	}
+    @Override
+    public void editRepayBizAdd(XN630510Req req) {
 
-	@Override
-	public Paginable<RepayBiz> queryRepayBizPage(int start, int limit,
-			RepayBiz condition) {
-		return repayBizBO.getPaginable(start, limit, condition);
-	}
+        RepayBiz repayBiz = new RepayBiz();
 
-	@Override
-	public List<RepayBiz> queryRepayBizList(RepayBiz condition) {
-		return repayBizBO.queryRepayBizList(condition);
-	}
+        repayBiz.setCode(req.getCode());
+        String code = bankcardAO.addBankcard(req);
+        repayBiz.setBankcardCode(code);
+        repayBiz.setUpdater(req.getUpdater());
 
-	@Override
-	public RepayBiz getRepayBiz(String code) {
-		return repayBizBO.getRepayBiz(code);
-	}
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(req.getRemark());
+        repayBizBO.refreshRepayBiz(repayBiz);
+    }
+
+    @Override
+    public void editRepayBizUpdate(XN630511Req req) {
+        RepayBiz repayBiz = new RepayBiz();
+        repayBiz.setCode(req.getCode());
+        if (StringUtils.isNotBlank(req.getBankcardCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "还款卡编号为空，请重新添加！！！");
+        }
+        repayBiz.setBankcardCode(req.getBankcardCode());
+        repayBiz.setUpdater(req.getUpdater());
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(req.getRemark());
+        repayBizBO.refreshRepayBiz(repayBiz);
+    }
+
+    @Override
+    public int dropRepayBiz(String code) {
+        if (!repayBizBO.isRepayBizExist(code)) {
+            throw new BizException("xn0000", "记录编号不存在");
+        }
+        return repayBizBO.removeRepayBiz(code);
+    }
+
+    @Override
+    public Paginable<RepayBiz> queryRepayBizPage(int start, int limit,
+            RepayBiz condition) {
+        return repayBizBO.getPaginable(start, limit, condition);
+    }
+
+    @Override
+    public List<RepayBiz> queryRepayBizList(RepayBiz condition) {
+        return repayBizBO.queryRepayBizList(condition);
+    }
+
+    @Override
+    public RepayBiz getRepayBiz(String code) {
+        return repayBizBO.getRepayBiz(code);
+    }
 }

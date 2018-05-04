@@ -6,14 +6,14 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Bankcard;
-import com.cdkj.loan.dto.req.XN630220Req;
+import com.cdkj.loan.dto.req.XN630510Req;
 
 //CHECK ��鲢��ע�� 
 @Component
 public interface IBankcardAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addBankcard(XN630220Req req);
+    public String addBankcard(XN630510Req req);
 
     public int dropBankcard(String code);
 

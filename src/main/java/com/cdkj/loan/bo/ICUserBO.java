@@ -33,7 +33,7 @@ public interface ICUserBO extends IPaginableBO<CUser> {
 
     public String getUserId(String mobile);
 
-    public CUser getUser(String mobile);
+    public CUser getUser(String userId);
 
     public String saveUser(String mobile);
 

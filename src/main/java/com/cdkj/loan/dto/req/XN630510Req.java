@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN630510Req {
 
     @NotBlank
-    private String code;// 还款卡编号
+    private String code;// 还款业务编号
 
     @NotBlank
     private String bankCode;// 银行行别
