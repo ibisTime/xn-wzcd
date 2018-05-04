@@ -161,29 +161,30 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
             String approveUser, String approveNote) {
 
         // 根据code查询车贷订单详情得到loadOrder,判断订单状态是否是代审核
-        LoanOrder data = loanOrderBO.checkCanAudit(code);
+        LoanOrder loanOrder = loanOrderBO.checkCanAudit(code);
 
         if (approveResult.equals(EBoolean.NO.getCode())) {
             // 审核不通过
-            loanOrderBO.approveFailed(data, approveUser, approveNote);
+            loanOrderBO.approveFailed(loanOrder, approveUser, approveNote);
         } else {
             // 用户代注册并实名认证
-            String userId = cuserBO.doRegisterAndIdentify(data.getMobile(),
-                data.getIdKind(), data.getRealName(), data.getIdNo());
+            String userId = cuserBO.doRegisterAndIdentify(loanOrder.getMobile(),
+                loanOrder.getIdKind(), loanOrder.getRealName(),
+                loanOrder.getIdNo());
             // 绑定用户银行卡
             String bankcardCode = bankcardAO.bind(userId,
-                data.getBankcardNumber(), data.getBankCode(),
-                data.getBankName(), data.getSubbranch());
+                loanOrder.getRealName(), loanOrder.getBankcardNumber(),
+                loanOrder.getBankCode(), loanOrder.getBankName(),
+                loanOrder.getSubbranch());
             // 自动生成还款业务
-            data.setUserId(userId);
-            data.setBankcardNumber(bankcardCode);
-            RepayBiz repayBiz = repayBizBO.genereateNewCarLoanRepayBiz(data);
+            RepayBiz repayBiz = repayBizBO
+                .genereateNewCarLoanRepayBiz(loanOrder, userId, bankcardCode);
             // // 自动生成还款计划
             RepayPlan repayPlan = repayPlanBO.genereateNewRapayPlan(repayBiz);
             // 审核通过
             String repayBizCode = repayBiz.getCode();
-            loanOrderBO.approveSuccess(data, repayBizCode, userId, approveUser,
-                approveNote);
+            loanOrderBO.approveSuccess(loanOrder, repayBizCode, userId,
+                approveUser, approveNote);
         }
 
     }

@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -16,6 +17,7 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICUserDAO;
 import com.cdkj.loan.domain.CUser;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.EUserStatus;
 
 @Component
 public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
@@ -106,6 +108,20 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
     }
 
     @Override
+    public CUser getUserById(String userId) {
+        CUser cuser = null;
+        if (StringUtils.isNotBlank(userId)) {
+            CUser condition = new CUser();
+            condition.setUserId(userId);
+            List<CUser> list = cuserDAO.selectList(condition);
+            if (CollectionUtils.isNotEmpty(list)) {
+                cuser = list.get(0);
+            }
+        }
+        return cuser;
+    }
+
+    @Override
     public String saveUser(String mobile) {
         String cuserId = null;
         if (StringUtils.isNotBlank(mobile)) {
@@ -162,6 +178,10 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
         user.setIdKind(idKind);
         user.setIdNo(StringValidater.toLong(idNo));
         user.setRealName(realName);
+        user.setJfAmount(0L);
+        user.setAmount(0L);
+        user.setStatus(EUserStatus.NORMAL.getCode());
+        user.setCreateDatetime(new Date());
         cuserDAO.insert(user);
         return userId;
     }

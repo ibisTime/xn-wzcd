@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.bo.IBankcardBO;
+import com.cdkj.loan.bo.ICUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.dto.req.XN630220Req;
+import com.cdkj.loan.enums.EBankcard;
 
 //CHECK ��鲢��ע�� 
 @Service
@@ -19,6 +21,9 @@ public class BankcardAOImpl implements IBankcardAO {
 
     @Autowired
     private IBankcardBO bankcardBO;
+
+    @Autowired
+    private ICUserBO cuserBO;
 
     @Override
     public String addBankcard(XN630220Req req) {
@@ -62,18 +67,23 @@ public class BankcardAOImpl implements IBankcardAO {
     }
 
     @Override
-    public String bind(String userId, String bankcardNumber, String bankCode,
-            String bankName, String subbranch) {
+    public String bind(String userId, String realName, String bankcardNumber,
+            String bankCode, String bankName, String subbranch) {
         String code = null;
         Bankcard data = new Bankcard();
         code = OrderNoGenerater.generate("BC");
+
         data.setCode(code);
         data.setUserId(userId);
+        data.setRealName(realName);
         data.setBankcardNumber(bankcardNumber);
         data.setBankCode(bankCode);
+
         data.setBankName(bankName);
         data.setSubbranch(subbranch);
         data.setCreateDatetime(new Date());
+        data.setStatus(EBankcard.NORMAL.getCode());
+
         bankcardBO.saveBankcard(data);
         return code;
     }

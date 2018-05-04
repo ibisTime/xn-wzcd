@@ -98,7 +98,6 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         condition.setCurPeriods(1);
 
         Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR) + 1;
         int month = cal.get(Calendar.MONTH) + 1;
         cal.add(Calendar.MONTH, 1);
         Date time = cal.getTime();
@@ -118,6 +117,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         condition.setShouldDeposit(0L);
 
         condition.setRemindCount(0);
+        repayPlanDAO.insert(condition);
         return condition;
     }
 }

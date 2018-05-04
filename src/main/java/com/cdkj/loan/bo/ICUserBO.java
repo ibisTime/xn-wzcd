@@ -39,4 +39,6 @@ public interface ICUserBO extends IPaginableBO<CUser> {
 
     public String saveCNavigate(CUser data);
 
+    public CUser getUserById(String userId);
+
 }

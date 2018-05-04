@@ -85,56 +85,60 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
-    public RepayBiz genereateNewCarLoanRepayBiz(LoanOrder data) {
+    public RepayBiz genereateNewCarLoanRepayBiz(LoanOrder loanOrder,
+            String userId, String bankcardCode) {
 
-        RepayBiz condition = new RepayBiz();
+        RepayBiz repayBiz = new RepayBiz();
 
         String code = null;
         code = OrderNoGenerater.generate("RB");
-        condition.setCode(code);
-        condition.setRefType(ERefType.CAR.getCode());
-        condition.setRefCode(data.getCode());
-        condition.setBizPrice(data.getCarPrice());
-        condition.setSfRate(data.getSfRate());
+        repayBiz.setCode(code);
+        repayBiz.setRefType(ERefType.CAR.getCode());
+        repayBiz.setRefCode(loanOrder.getCode());
+        repayBiz.setUserId(userId);
+        repayBiz.setBankcardCode(bankcardCode);
+        repayBiz.setBizPrice(loanOrder.getCarPrice());
+        repayBiz.setSfRate(loanOrder.getSfRate());
 
-        condition.setSfAmount(data.getSfAmount());
-        condition.setLoanBank(data.getLoanBank());
-        condition.setLoanAmount(data.getLoanAmount());
-        condition.setPeriods(data.getPeriods());
+        repayBiz.setSfAmount(loanOrder.getSfAmount());
+        repayBiz.setLoanBank(loanOrder.getLoanBank());
+        repayBiz.setLoanAmount(loanOrder.getLoanAmount());
+        repayBiz.setPeriods(loanOrder.getPeriods());
         // int daysBetween = DateUtil.daysBetween(data.getFirstRepayDatetime(),
         // new Date());
         // int periods = data.getPeriods();
         // int restPeriods = periods - daysBetween / 30;
-        condition.setRestPeriods(0);
+        repayBiz.setRestPeriods(0);
 
-        condition.setBankRate(data.getBankRate());
-        condition.setLoanStartDatetime(data.getLoanStartDatetime());
-        condition.setLoanEndDatetime(data.getLoanEndDatetime());
-        condition.setFxDeposit(data.getFxDeposit());
-        condition.setFirstRepayDatetime(data.getFirstRepayDatetime());
+        repayBiz.setBankRate(loanOrder.getBankRate());
+        repayBiz.setLoanStartDatetime(loanOrder.getLoanStartDatetime());
+        repayBiz.setLoanEndDatetime(loanOrder.getLoanEndDatetime());
+        repayBiz.setFxDeposit(loanOrder.getFxDeposit());
+        repayBiz.setFirstRepayDatetime(loanOrder.getFirstRepayDatetime());
 
-        condition.setFirstRepayAmount(data.getFirstRepayAmount());
-        condition.setMonthDatetime(data.getMonthDatetime());
-        condition.setMonthAmount(data.getMonthAmount());
-        condition.setLyDeposit(data.getLyDeposit());
-        condition.setCutLyDeposit(0L);
+        repayBiz.setFirstRepayAmount(loanOrder.getFirstRepayAmount());
+        repayBiz.setMonthDatetime(loanOrder.getMonthDatetime());
+        repayBiz.setMonthAmount(loanOrder.getMonthAmount());
+        repayBiz.setLyDeposit(loanOrder.getLyDeposit());
+        repayBiz.setCutLyDeposit(0L);
 
-        condition.setStatus(ERepayBizStatus.REPAYMENTS.getCode());
-        Long monthAmount = data.getMonthAmount();
-        int periods = data.getPeriods();
+        repayBiz.setStatus(ERepayBizStatus.REPAYMENTS.getCode());
+        Long monthAmount = loanOrder.getMonthAmount();
+        int periods = loanOrder.getPeriods();
         long amount = monthAmount * (long) (periods - 1);
-        condition.setRestAmount(amount);
-        condition.setRestTotalCost(0L);
-        condition.setTotalInDeposit(0L);
-        condition.setOverdueAmount(0L);
+        repayBiz.setRestAmount(amount);
+        repayBiz.setRestTotalCost(0L);
+        repayBiz.setTotalInDeposit(0L);
+        repayBiz.setOverdueAmount(0L);
 
-        condition.setTotalOverdueCount(0);
-        condition.setCurOverdueCount(0);
-        condition.setBlackHandleNote("暂无");
-        condition.setUpdater(data.getUpdater());
-        condition.setUpdateDatetime(new Date());
+        repayBiz.setTotalOverdueCount(0);
+        repayBiz.setCurOverdueCount(0);
+        repayBiz.setBlackHandleNote("暂无");
+        repayBiz.setUpdater(loanOrder.getUpdater());
+        repayBiz.setUpdateDatetime(new Date());
 
-        condition.setRemark(data.getRemark());
-        return condition;
+        repayBiz.setRemark(loanOrder.getRemark());
+        repayBizDAO.insert(repayBiz);
+        return repayBiz;
     }
 }

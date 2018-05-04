@@ -8,10 +8,8 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
-import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBankcardDAO;
 import com.cdkj.loan.domain.Bankcard;
-import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -24,9 +22,6 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
     public String saveBankcard(Bankcard data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.BANKCARD.getCode());
-            data.setCode(code);
             bankcardDAO.insert(data);
         }
         return code;

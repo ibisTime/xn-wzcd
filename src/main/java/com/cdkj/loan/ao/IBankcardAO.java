@@ -27,7 +27,7 @@ public interface IBankcardAO {
     public Bankcard getBankcard(String code);
 
     // 绑定银行卡
-    public String bind(String userId, String bankcardNumber, String bankCode,
-            String bankName, String subbranch);
+    public String bind(String userId, String realName, String bankcardNumber,
+            String bankCode, String bankName, String subbranch);
 
 }

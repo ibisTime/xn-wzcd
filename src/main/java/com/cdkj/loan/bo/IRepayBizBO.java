@@ -20,6 +20,7 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
     public RepayBiz getRepayBiz(String code);
 
-    public RepayBiz genereateNewCarLoanRepayBiz(LoanOrder data);
+    public RepayBiz genereateNewCarLoanRepayBiz(LoanOrder data, String userId,
+            String bankcardCode);
 
 }
