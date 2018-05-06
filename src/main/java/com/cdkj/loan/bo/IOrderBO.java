@@ -3,8 +3,6 @@ package com.cdkj.loan.bo;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
-import com.cdkj.loan.domain.Cart;
-import com.cdkj.loan.domain.CommitOrderPOJO;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.enums.EPayType;
 
@@ -15,7 +13,7 @@ import com.cdkj.loan.enums.EPayType;
  */
 public interface IOrderBO extends IPaginableBO<Order> {
 
-    public String saveOrder(List<Cart> cartList, CommitOrderPOJO pojo);
+    public int saveOrder(Order order);
 
     public int userCancel(String code, String userId, String remark);
 

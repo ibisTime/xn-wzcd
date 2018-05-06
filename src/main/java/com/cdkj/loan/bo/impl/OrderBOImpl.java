@@ -20,23 +20,15 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.IExpressRuleBO;
 import com.cdkj.loan.bo.IOrderBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
-import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.DateUtil;
-import com.cdkj.loan.common.ProvinceUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IOrderDAO;
 import com.cdkj.loan.dao.IProductOrderDAO;
-import com.cdkj.loan.domain.Cart;
-import com.cdkj.loan.domain.CommitOrderPOJO;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.ProductOrder;
-import com.cdkj.loan.domain.ProductSpecs;
-import com.cdkj.loan.dto.res.XN003020Res;
-import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EOrderStatus;
 import com.cdkj.loan.enums.EPayType;
-import com.cdkj.loan.enums.ESystemCode;
 import com.cdkj.loan.exception.BizException;
 
 /** 
@@ -224,56 +216,12 @@ public class OrderBOImpl extends PaginableBOImpl<Order> implements IOrderBO {
     }
 
     @Override
-    public String saveOrder(List<Cart> cartList, CommitOrderPOJO pojo) {
-        // 生成订单基本信息
-        Order order = new Order();
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.ORDER.getCode());
-        order.setCode(code);
-        order.setReceiver(pojo.getReceiver());
-        order.setReMobile(pojo.getReMobile());
-        order.setReAddress(pojo.getReAddress());
-        order.setApplyUser(pojo.getApplyUser());
-
-        order.setApplyNote(pojo.getApplyNote());
-        order.setApplyDatetime(new Date());
-        order.setStatus(EOrderStatus.TO_PAY.getCode());
-
-        order.setUpdater(pojo.getApplyUser());
-        order.setUpdateDatetime(new Date());
-        order.setRemark("订单新提交，待支付");
-        // 计算订单金额
-        Long amount = 0L;
-        Double weight = 0.0;
-        for (Cart cart : cartList) {
-            ProductSpecs productSpecs = cart.getProductSpecs();
-            if (null != productSpecs.getPrice()) {
-                amount = amount
-                        + (cart.getQuantity() * productSpecs.getPrice());
-            }
-            // 落地订单产品关联信息
-            saveProductOrder(order.getCode(), productSpecs, cart.getQuantity());
-            weight = weight + AmountUtil.mulAB(productSpecs.getWeight(),
-                cart.getQuantity());
+    public int saveOrder(Order order) {
+        int count = 0;
+        if (order != null && StringUtils.isNotBlank(order.getCode())) {
+            count = orderDAO.insert(order);
         }
-        // 计算订单运费
-        Long yunfei = 0L;
-        if (!EBoolean.NO.getCode().equals(pojo.getIsNeedYunfei())) {
-            // 运费设置
-            String addRessProvince = ProvinceUtil
-                .getProvince(pojo.getReAddress());
-            XN003020Res expressRule = expressRuleBO.getPrice("浙江省",
-                addRessProvince, weight, ESystemCode.HTWT.getCode(),
-                ESystemCode.HTWT.getCode());// 运费人民币
-            yunfei = expressRule.getExpressFee();
-        }
-        // 计算订单金额
-        order.setAmount(amount);
-        order.setYunfei(yunfei);
-        order.setPayAmount(0L);
-        // 落地订单
-        orderDAO.insert(order);
-        return code;
+        return count;
     }
 
     public int refreshYunfei(Order order, Long yunfei) {
@@ -283,20 +231,6 @@ public class OrderBOImpl extends PaginableBOImpl<Order> implements IOrderBO {
             count = orderDAO.updateYunfei(order);
         }
         return count;
-    }
-
-    private void saveProductOrder(String orderCode, ProductSpecs productSpecs,
-            Integer quantity) {
-        ProductOrder productOrder = new ProductOrder();
-        productOrder.setCode(
-            OrderNoGenerater.generate(EGeneratePrefix.PRODUCT_ORDER.getCode()));
-        productOrder.setOrderCode(orderCode);
-        productOrder.setProductCode(productSpecs.getProductCode());
-        productOrder.setProductSpecsCode(productSpecs.getCode());
-        productOrder.setProductSpecsName(productSpecs.getName());
-        productOrder.setQuantity(quantity);
-        productOrder.setPrice(productSpecs.getPrice());
-        productOrderDAO.insert(productOrder);
     }
 
     @Override

@@ -6,11 +6,8 @@ package com.cdkj.loan.enums;
  * @history:
  */
 public enum EPayType {
-    // RMB_YE("1", "余额支付"), WEIXIN_APP("2", "微信APP"), WEIXIN_H5("5", "微信h5"),
-    // WEIXIN_NATIVE(
-    // "6", "微信扫码"), ALIPAY("3", "支付宝"),
-    YE("1", "余额支付"), WEIXIN_H5("5", "微信h5"), DBHZ("dbhz", "单一币种划转"), ALIPAY("0",
-            "支付宝"), WEIXIN("1", "微信"), BANK_CARD("2", "银行卡转账");
+
+    YE("1", "余额支付"), WITHHOLD("2", "代扣");
 
     EPayType(String code, String value) {
         this.code = code;

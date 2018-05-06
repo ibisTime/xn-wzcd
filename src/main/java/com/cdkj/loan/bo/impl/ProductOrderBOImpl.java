@@ -19,6 +19,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IProductOrderDAO;
 import com.cdkj.loan.domain.ProductOrder;
+import com.cdkj.loan.domain.ProductSpecs;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -35,20 +36,22 @@ public class ProductOrderBOImpl extends PaginableBOImpl<ProductOrder>
     private IProductOrderDAO productOrderDAO;
 
     @Override
-    public String saveProductOrder(String orderCode, String productCode,
-            String productSpecsCode, Integer quantity, Long price,
-            String systemCode) {
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.PRODUCT_ORDER.getCode());
-        ProductOrder data = new ProductOrder();
-        data.setCode(code);
-        data.setOrderCode(orderCode);
-        data.setProductCode(productCode);
-        data.setProductSpecsCode(productSpecsCode);
-        data.setQuantity(quantity);
-        data.setPrice(price);
-        productOrderDAO.insert(data);
-        return code;
+    public String saveProductOrder(String orderCode, ProductSpecs productSpecs,
+            Integer quantity) {
+        ProductOrder productOrder = new ProductOrder();
+        productOrder.setCode(
+            OrderNoGenerater.generate(EGeneratePrefix.PRODUCT_ORDER.getCode()));
+        productOrder.setOrderCode(orderCode);
+        productOrder.setProductCode(productSpecs.getProductCode());
+        productOrder.setProductSpecsCode(productSpecs.getCode());
+        productOrder.setProductSpecsName(productSpecs.getName());
+        productOrder.setQuantity(quantity);
+        productOrder.setPrice(productSpecs.getPrice());
+        productOrder.setSfRate(productSpecs.getSfRate());
+        productOrder.setBankRate(productSpecs.getBankRate());
+        productOrder.setPeriods(productSpecs.getPeriods());
+        productOrderDAO.insert(productOrder);
+        return productOrder.getCode();
     }
 
     @Override

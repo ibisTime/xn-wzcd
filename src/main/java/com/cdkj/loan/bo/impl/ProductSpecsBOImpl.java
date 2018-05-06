@@ -39,9 +39,12 @@ public class ProductSpecsBOImpl extends PaginableBOImpl<ProductSpecs>
             String productCode) {
         if (CollectionUtils.isNotEmpty(productSpecsList)) {
             for (XN808030Req xn808030Req : productSpecsList) {
+
                 String psCode = OrderNoGenerater
                     .generate(EGeneratePrefix.PRODUCT_SPECS.getCode());
+
                 ProductSpecs productSpecs = new ProductSpecs();
+
                 productSpecs.setCode(psCode);
                 productSpecs.setName(xn808030Req.getName());
                 productSpecs.setPic(xn808030Req.getPic());
@@ -51,14 +54,21 @@ public class ProductSpecsBOImpl extends PaginableBOImpl<ProductSpecs>
 
                 productSpecs
                     .setPrice(StringValidater.toLong(xn808030Req.getPrice()));
-
+                productSpecs.setSfRate(
+                    StringValidater.toDouble(xn808030Req.getSfRate()));
+                productSpecs.setBankRate(
+                    StringValidater.toDouble(xn808030Req.getBankRate()));
+                productSpecs.setPeriods(
+                    StringValidater.toInteger(xn808030Req.getPeriods()));
                 productSpecs.setQuantity(
                     StringValidater.toInteger(xn808030Req.getQuantity()));
+
                 productSpecs.setProvince(xn808030Req.getProvince());
                 productSpecs.setWeight(
                     StringValidater.toDouble(xn808030Req.getWeight()));
                 productSpecs.setOrderNo(
                     StringValidater.toInteger(xn808030Req.getOrderNo()));
+
                 productSpecsDAO.insert(productSpecs);
             }
         } else {

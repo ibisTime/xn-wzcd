@@ -1,18 +1,16 @@
 package com.cdkj.loan.api.impl;
 
-import org.apache.commons.collections.CollectionUtils;
-
 import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
-import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN808052Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 批量支付订单
+ * 支付订单
  * @author: xieyj
  * @since: 2016年5月23日 上午9:04:12 
  * @history:
@@ -28,8 +26,7 @@ public class XN808052 extends AProcessor {
      */
     @Override
     public Object doBusiness() throws BizException {
-        Object result = orderAO.toPayOrder(req.getCodeList(), req.getPayType(),
-            req.getTradePwd(), req.getIsDk());
+        Object result = orderAO.toPayOrder(req.getCode(), req.getPayType());
         return result;
     }
 
@@ -40,9 +37,6 @@ public class XN808052 extends AProcessor {
     public void doCheck(String inputparams, String operator)
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN808052Req.class);
-        if (CollectionUtils.isEmpty(req.getCodeList())) {
-            throw new BizException("xn702000", "请选择您要支付的订单");
-        }
-        StringValidater.validateBlank(req.getPayType());
+        ObjValidater.validateReq(req);
     }
 }

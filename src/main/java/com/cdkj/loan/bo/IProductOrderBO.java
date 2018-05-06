@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.ProductOrder;
+import com.cdkj.loan.domain.ProductSpecs;
 
 /** 
  * @author: xieyj 
@@ -12,9 +13,8 @@ import com.cdkj.loan.domain.ProductOrder;
  */
 public interface IProductOrderBO extends IPaginableBO<ProductOrder> {
 
-    public String saveProductOrder(String orderCode, String productCode,
-            String productSpecsCode, Integer quantity, Long price,
-            String systemCode);
+    public String saveProductOrder(String orderCode, ProductSpecs productSpecs,
+            Integer quantity);
 
     public List<ProductOrder> queryProductOrderList(ProductOrder data);
 

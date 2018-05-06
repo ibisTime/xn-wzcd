@@ -10,7 +10,11 @@
 		<result column="original_price" property="originalPrice" />
 		
 		<result column="price" property="price" />
+		<result column="sf_rate" property="sfRate" />
+		<result column="bank_rate" property="bankRate" />
+		<result column="periods" property="periods" />
 		<result column="quantity" property="quantity" />
+		
 		<result column="province" property="province" />
 		<result column="weight" property="weight" />
 		<result column="order_no" property="orderNo" />
@@ -40,7 +44,11 @@
 		,t.original_price
 		
 		,t.price
+		,t.sf_rate
+		,t.periods
+		,t.bank_rate
 		,t.quantity
+		
 		,t.province
 		,t.weight
 		,t.order_no
@@ -70,7 +78,11 @@
 		,original_price
 		
 		,price
+		,sf_rate
+		,periods
+		,bank_rate
 		,quantity
+		
 		,province
 		,weight
 		,order_no
@@ -83,7 +95,11 @@
 		,#{originalPrice}
 		
 		,#{price}
+		,#{sfRate}
+		,#{periods}
+		,#{bankRate}
 		,#{quantity}
+		
 		,#{province}
 		,#{weight}
 		,#{orderNo}

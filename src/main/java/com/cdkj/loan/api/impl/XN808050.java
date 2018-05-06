@@ -1,11 +1,9 @@
 package com.cdkj.loan.api.impl;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
-import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN808050Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
@@ -38,15 +36,6 @@ public class XN808050 extends AProcessor {
     public void doCheck(String inputparams, String operator)
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN808050Req.class);
-        if (null == req.getPojo()) {
-            throw new BizException("xn702000", "订单基本信息不能为空");
-        }
-        if (StringUtils.isBlank(req.getToUser())) {
-            StringValidater.validateBlank(req.getPojo().getReceiver(),
-                req.getPojo().getReMobile(), req.getPojo().getReAddress());
-        }
-        StringValidater.validateBlank(req.getProductSpecsCode(),
-            req.getQuantity(), req.getPojo().getApplyUser());
-        StringValidater.validateNumber(req.getQuantity());
+        ObjValidater.validateReq(req);
     }
 }

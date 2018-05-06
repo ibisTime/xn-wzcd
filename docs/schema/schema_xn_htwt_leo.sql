@@ -119,6 +119,9 @@ CREATE TABLE `tmall_product_specs` (
   `product_code` varchar(32) DEFAULT NULL COMMENT '商品编号',
   `original_price` bigint(20) DEFAULT NULL COMMENT '原价',
   `price` bigint(20) DEFAULT NULL COMMENT '价格（人民币）',
+  `sf_rate` decimal(18,8) DEFAULT NULL COMMENT '首付比例',
+  `periods` int(11) DEFAULT NULL COMMENT '总期数',
+  `bank_rate` decimal(18,8) DEFAULT NULL COMMENT '银行利率',
   `quantity` int(11) DEFAULT NULL COMMENT '库存',
   `province` varchar(255) DEFAULT NULL COMMENT '发货地,精确到省份',
   `weight` DECIMAL(18,8) DEFAULT NULL COMMENT '重量',
@@ -129,7 +132,7 @@ CREATE TABLE `tmall_product_specs` (
 DROP TABLE IF EXISTS `tmall_order`;
 CREATE TABLE `tmall_order` (
   `code` varchar(32) NOT NULL COMMENT '编号',
-  `repay_biz_code` varchar(32) NOT NULL COMMENT '还款业务编号',
+  `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',
   `receiver` varchar(255) DEFAULT NULL COMMENT '收件人姓名',
   `re_mobile` varchar(32) DEFAULT NULL COMMENT '收件人电话',
   `re_address` varchar(255) DEFAULT NULL COMMENT '收货地址',
@@ -139,6 +142,12 @@ CREATE TABLE `tmall_order` (
   `apply_datetime` datetime DEFAULT NULL COMMENT '下单时间',
   `amount` bigint(20) DEFAULT NULL COMMENT '金额',
   `yunfei` bigint(20) DEFAULT NULL COMMENT '运费',
+  
+  `sf_rate` decimal(18,8) DEFAULT NULL COMMENT '首付比例',
+  `sf_amount` bigint(20) DEFAULT NULL COMMENT '首付金额',
+  `loan_amount` bigint(20) DEFAULT NULL COMMENT '贷款金额',
+  `periods` int(11) DEFAULT NULL COMMENT '总期数',
+  `bank_rate` decimal(18,8) DEFAULT NULL COMMENT '银行利率',
   
   `status` varchar(4) DEFAULT NULL COMMENT '状态',
   `pay_type` varchar(32) DEFAULT NULL COMMENT '支付方式',
@@ -172,6 +181,9 @@ CREATE TABLE `tmall_product_order` (
   `product_specs_name` varchar(32) DEFAULT NULL COMMENT '商品参数名称',
   `quantity` int(11) DEFAULT NULL COMMENT '数量',
   `price` bigint(20) DEFAULT NULL COMMENT '价格',
+  `sf_rate` decimal(18,8) DEFAULT NULL COMMENT '首付比例',
+  `periods` int(11) DEFAULT NULL COMMENT '总期数',
+  `bank_rate` decimal(18,8) DEFAULT NULL COMMENT '银行利率',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

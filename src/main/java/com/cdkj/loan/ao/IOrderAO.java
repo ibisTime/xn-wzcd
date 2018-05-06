@@ -22,8 +22,7 @@ public interface IOrderAO {
 
     public void modifyYunfei(String code, Long yunfei);
 
-    public Object toPayOrder(List<String> codeList, String payType,
-            String tradePwd, String isDk);
+    public Object toPayOrder(String code, String payType);
 
     public void userCancel(String code, String userId, String remark);
 

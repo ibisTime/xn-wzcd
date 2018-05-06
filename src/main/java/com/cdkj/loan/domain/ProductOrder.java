@@ -45,6 +45,15 @@ public class ProductOrder extends ABaseDO {
     // 价格
     private Long price;
 
+    // 首付比例
+    private double sfRate;
+
+    // 总期数
+    private int periods;
+
+    // 银行利率
+    private double bankRate;
+
     // **************db properties
 
     // 关联产品
@@ -120,6 +129,30 @@ public class ProductOrder extends ABaseDO {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public double getSfRate() {
+        return sfRate;
+    }
+
+    public void setSfRate(double sfRate) {
+        this.sfRate = sfRate;
+    }
+
+    public int getPeriods() {
+        return periods;
+    }
+
+    public void setPeriods(int periods) {
+        this.periods = periods;
+    }
+
+    public double getBankRate() {
+        return bankRate;
+    }
+
+    public void setBankRate(double bankRate) {
+        this.bankRate = bankRate;
     }
 
 }

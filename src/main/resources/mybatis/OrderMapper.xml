@@ -15,6 +15,12 @@
 		<result column="amount" property="amount" />
 		<result column="yunfei" property="yunfei" />
 		
+		<result column="sf_rate" property="sfRate" />
+		<result column="sf_amount" property="sfAmount" />
+		<result column="loan_amount" property="loanAmount" />
+		<result column="periods" property="periods" />
+		<result column="bank_rate" property="bankRate" />
+		
 		<result column="status" property="status" />
 		<result column="pay_type" property="payType" />
 		<result column="pay_group" property="payGroup" />
@@ -32,6 +38,7 @@
 		<result column="sign_datetime" property="signDatetime" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
+		
 		<result column="remark" property="remark" />
 	</resultMap>
 	<sql id="where_condition">
@@ -126,6 +133,12 @@
 		,t.amount
 		,t.yunfei
 		
+		,t.sf_rate
+		,t.sf_amount
+		,t.loan_amount
+		,t.periods
+		,t.bank_rate
+		
 		,t.status
 		,t.pay_type
 		,t.pay_group
@@ -143,6 +156,7 @@
 		,t.sign_datetime
 		,t.updater
 		,t.update_datetime
+		
 		,t.remark
 		FROM
 		tmall_order t
@@ -162,68 +176,55 @@
 
 	<insert id="insert_order" parameterType="order">
 		INSERT INTO tmall_order(
+		
 		code
-		,type
-		,to_user
-		,take_address
 		,receiver
 		,re_mobile
-		
 		,re_address
 		,apply_user
+		
 		,apply_note
 		,apply_datetime
-		,amount1
-		
-		,amount2
-		,amount3
+		,amount
 		,yunfei
-		,status
-		,prompt_times
+		,sf_rate
 		
+		,sf_amount
+		,loan_amount
+		,periods
+		,bank_rate
+		,status
+		
+		,pay_amount
 		,updater
 		,update_datetime
 		,remark
-		,pay_amount1
-		,pay_amount2
 		
-		,pay_amount3
-		,relation_no
-		,act_code
-		,company_code
-		,system_code
 		)
 		VALUES(
 		#{code}
-		,#{type}
-		,#{toUser}
-		,#{takeAddress}
 		,#{receiver}
 		,#{reMobile}
-		
 		,#{reAddress}
 		,#{applyUser}
+		
 		,#{applyNote}
 		,#{applyDatetime}
-		,#{amount1}
-		
-		,#{amount2}
-		,#{amount3}
+		,#{amount}
 		,#{yunfei}
-		,#{status}
-		,#{promptTimes}
+		,#{sfRate}
 		
+		,#{sfAmount}
+		,#{loanAmount}
+		,#{periods}
+		,#{bankRate}
+		,#{status}
+		
+		,#{payAmount}
 		,#{updater}
 		,#{updateDatetime}
 		,#{remark}
-		,#{payAmount1}
-		,#{payAmount2}
 		
-		,#{payAmount3}
-		,#{relationNo}
-		,#{actCode}
-		,#{companyCode}
-		,#{systemCode}
 		)
 	</insert>
 

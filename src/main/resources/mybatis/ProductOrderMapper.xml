@@ -12,6 +12,9 @@
 		<result column="product_specs_name" property="productSpecsName" />
 		<result column="quantity" property="quantity" />
 		<result column="price" property="price" />
+		<result column="sf_rate" property="sfRate" />
+		<result column="bank_rate" property="bankRate" />
+		<result column="periods" property="periods" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -39,6 +42,9 @@
 		,t.product_specs_name
 		,t.quantity
 		,t.price
+		,t.sf_rate
+		,t.periods
+		,t.bank_rate
 		,tp.name product_name
 		,tp.adv_pic product_adv_pic
 		FROM
@@ -60,7 +66,6 @@
 	<insert id="insert_productOrder" parameterType="productOrder">
 		INSERT INTO tmall_product_order(
 		code
-		,type
 		,order_code
 		,product_code
 		,product_name
@@ -68,10 +73,12 @@
 		,product_specs_name
 		,quantity
 		,price
+		,sf_rate
+		,periods
+		,bank_rate
 		)
 		VALUES(
 		#{code}
-		,#{type}
 		,#{orderCode}
 		,#{productCode}
 		,#{productName}
@@ -79,6 +86,9 @@
 		,#{productSpecsName}
 		,#{quantity}
 		,#{price}
+		,#{sfRate}
+		,#{periods}
+		,#{bankRate}
 		)
 	</insert>
 </mapper>

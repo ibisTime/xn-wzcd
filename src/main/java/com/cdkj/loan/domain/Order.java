@@ -52,6 +52,21 @@ public class Order extends ABaseDO {
     // 运费
     private Long yunfei;
 
+    // 首付比例
+    private double sfRate;
+
+    // 首付金额
+    private Long sfAmount;
+
+    // 贷款金额
+    private Long loanAmount;
+
+    // 总期数
+    private int periods;
+
+    // 银行利率
+    private double bankRate;
+
     // 抵扣人民币
     private Long dkAmount;
 
@@ -473,6 +488,46 @@ public class Order extends ABaseDO {
 
     public void setDeliveryDatetimeEnd(Date deliveryDatetimeEnd) {
         this.deliveryDatetimeEnd = deliveryDatetimeEnd;
+    }
+
+    public double getSfRate() {
+        return sfRate;
+    }
+
+    public void setSfRate(double sfRate) {
+        this.sfRate = sfRate;
+    }
+
+    public Long getSfAmount() {
+        return sfAmount;
+    }
+
+    public void setSfAmount(Long sfAmount) {
+        this.sfAmount = sfAmount;
+    }
+
+    public Long getLoanAmount() {
+        return loanAmount;
+    }
+
+    public void setLoanAmount(Long loanAmount) {
+        this.loanAmount = loanAmount;
+    }
+
+    public int getPeriods() {
+        return periods;
+    }
+
+    public void setPeriods(int periods) {
+        this.periods = periods;
+    }
+
+    public double getBankRate() {
+        return bankRate;
+    }
+
+    public void setBankRate(double bankRate) {
+        this.bankRate = bankRate;
     }
 
 }

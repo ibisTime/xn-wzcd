@@ -17,6 +17,15 @@ public class XN808030Req {
     // 价格(人民币)(必填)
     private String price;
 
+    // 首付比例
+    private String sfRate;
+
+    // 总期数
+    private String periods;
+
+    // 银行利率
+    private String bankRate;
+
     // 库存(必填)
     private String quantity;
 
@@ -67,6 +76,30 @@ public class XN808030Req {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getSfRate() {
+        return sfRate;
+    }
+
+    public void setSfRate(String sfRate) {
+        this.sfRate = sfRate;
+    }
+
+    public String getPeriods() {
+        return periods;
+    }
+
+    public void setPeriods(String periods) {
+        this.periods = periods;
+    }
+
+    public String getBankRate() {
+        return bankRate;
+    }
+
+    public void setBankRate(String bankRate) {
+        this.bankRate = bankRate;
     }
 
     public String getQuantity() {

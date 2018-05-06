@@ -25,7 +25,16 @@ public class ProductSpecs extends ABaseDO {
     // 现价(人民币)
     private Long price;
 
-    // 数量
+    // 首付比例
+    private double sfRate;
+
+    // 总期数
+    private int periods;
+
+    // 银行利率
+    private double bankRate;
+
+    // 库存
     private Integer quantity;
 
     // 发货地（ 精确到省份）
@@ -83,6 +92,30 @@ public class ProductSpecs extends ABaseDO {
 
     public void setPrice(Long price) {
         this.price = price;
+    }
+
+    public double getSfRate() {
+        return sfRate;
+    }
+
+    public void setSfRate(double sfRate) {
+        this.sfRate = sfRate;
+    }
+
+    public int getPeriods() {
+        return periods;
+    }
+
+    public void setPeriods(int periods) {
+        this.periods = periods;
+    }
+
+    public double getBankRate() {
+        return bankRate;
+    }
+
+    public void setBankRate(double bankRate) {
+        this.bankRate = bankRate;
     }
 
     public Integer getQuantity() {
