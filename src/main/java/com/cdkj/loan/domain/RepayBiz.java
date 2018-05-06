@@ -69,7 +69,7 @@ public class RepayBiz extends ABaseDO {
     private Long firstRepayAmount;
 
     // 每期还款日期
-    private Date monthDatetime;
+    private int monthDatetime;
 
     // 每期月供金额
     private Long monthAmount;
@@ -112,6 +112,17 @@ public class RepayBiz extends ABaseDO {
 
     // 备注
     private String remark;
+
+    // ****** 辅助字段 ******
+
+    // 用户信息
+    private CUser user;
+
+    // 车贷订单
+    private LoanOrder loanOrder;
+
+    // 商品订单
+    private Order mallOrder;
 
     public void setCode(String code) {
         this.code = code;
@@ -257,11 +268,11 @@ public class RepayBiz extends ABaseDO {
         this.firstRepayAmount = firstRepayAmount;
     }
 
-    public Date getMonthDatetime() {
+    public int getMonthDatetime() {
         return monthDatetime;
     }
 
-    public void setMonthDatetime(Date monthDatetime) {
+    public void setMonthDatetime(int monthDatetime) {
         this.monthDatetime = monthDatetime;
     }
 
@@ -375,6 +386,30 @@ public class RepayBiz extends ABaseDO {
 
     public String getRemark() {
         return remark;
+    }
+
+    public CUser getUser() {
+        return user;
+    }
+
+    public void setUser(CUser user) {
+        this.user = user;
+    }
+
+    public LoanOrder getLoanOrder() {
+        return loanOrder;
+    }
+
+    public void setLoanOrder(LoanOrder loanOrder) {
+        this.loanOrder = loanOrder;
+    }
+
+    public Order getMallOrder() {
+        return mallOrder;
+    }
+
+    public void setMallOrder(Order mallOrder) {
+        this.mallOrder = mallOrder;
     }
 
 }

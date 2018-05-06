@@ -10,7 +10,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 详情查询
+ * 详情查询还款计划
  * @author: CYL 
  * @since: 2018年4月24日 下午5:40:53 
  * @history:

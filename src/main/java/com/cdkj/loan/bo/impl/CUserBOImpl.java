@@ -77,18 +77,16 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
     }
 
     @Override
-    public String getUserId(String mobile) {
+    public String getUserIdByMobile(String mobile) {
         String userId = null;
         if (StringUtils.isNotBlank(mobile)) {
             CUser condition = new CUser();
             condition.setMobile(mobile);
-            // List<CUser> list = cuserDAO.selectList(condition);
-            // if (CollectionUtils.isNotEmpty(list)) {
-            // CUser data = list.get(0);
-            // userId = data.getUserId();
-            // } else
-            // throw new BizException("xn702002", "手机号[" + mobile + "]用户不存在");
-            userId = condition.getUserId();
+            List<CUser> list = cuserDAO.selectList(condition);
+            if (CollectionUtils.isNotEmpty(list)) {
+                CUser data = list.get(0);
+                userId = data.getUserId();
+            }
         }
         return userId;
     }

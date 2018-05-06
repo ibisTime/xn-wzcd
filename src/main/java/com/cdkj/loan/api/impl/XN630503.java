@@ -24,9 +24,11 @@ public class XN630503 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        loanOrderAO.approveLoanOrder(req.getCode(), req.getApproveResult(),
-            req.getApproveUser(), req.getApproveNote());
-        return new BooleanRes(true);
+        synchronized (XN630503.class) {
+            loanOrderAO.approveLoanOrder(req.getCode(), req.getApproveResult(),
+                req.getApproveUser(), req.getApproveNote());
+            return new BooleanRes(true);
+        }
     }
 
     @Override

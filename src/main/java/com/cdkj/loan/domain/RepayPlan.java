@@ -17,11 +17,8 @@ public class RepayPlan extends ABaseDO {
     // 编号
     private String code;
 
-    // 类型
-    private String refType;
-
-    // 关联编号
-    private String refCode;
+    // 关联业务编号
+    private String repayBizCode;
 
     // 借款人编号
     private String userId;
@@ -77,36 +74,33 @@ public class RepayPlan extends ABaseDO {
     // 已催款次数
     private int remindCount;
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+    // ****** 辅助字段 ******
+
+    // 用户信息
+    private CUser user;
 
     public String getCode() {
         return code;
     }
 
-    public String getRefType() {
-        return refType;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public void setRefType(String refType) {
-        this.refType = refType;
+    public String getRepayBizCode() {
+        return repayBizCode;
     }
 
-    public String getRefCode() {
-        return refCode;
-    }
-
-    public void setRefCode(String refCode) {
-        this.refCode = refCode;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setRepayBizCode(String repayBizCode) {
+        this.repayBizCode = repayBizCode;
     }
 
     public String getUserId() {
         return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public int getPeriods() {
@@ -243,6 +237,14 @@ public class RepayPlan extends ABaseDO {
 
     public void setRemindCount(int remindCount) {
         this.remindCount = remindCount;
+    }
+
+    public CUser getUser() {
+        return user;
+    }
+
+    public void setUser(CUser user) {
+        this.user = user;
     }
 
 }

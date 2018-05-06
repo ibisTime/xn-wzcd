@@ -22,7 +22,7 @@ import com.cdkj.loan.exception.BizException;
 public class CUserAOImpl implements ICUserAO {
 
     @Autowired
-    private ICUserBO cuserBO;
+    private ICUserBO cUserBO;
 
     @Autowired
     ISmsOutBO smsOutBO;
@@ -30,7 +30,7 @@ public class CUserAOImpl implements ICUserAO {
     @Override
     public XN630200Req doRegister(String mobile, String loginPwd,
             String smsCaptcha) {
-        String userId = cuserBO.doRegister(mobile, loginPwd, smsCaptcha);
+        String userId = cUserBO.doRegister(mobile, loginPwd, smsCaptcha);
         return new XN630200Req(userId);
     }
 
@@ -38,7 +38,7 @@ public class CUserAOImpl implements ICUserAO {
 
     @Override
     public void doCheckMobile(String mobile) {
-        // cuserBO.isMobileExist(mobile);
+        // cUserBO.isMobileExist(mobile);
     }
 
     @Override
@@ -46,14 +46,14 @@ public class CUserAOImpl implements ICUserAO {
             String loginPwd, String confirmPwd) {
         // 短信验证码是否正确
         smsOutBO.checkCaptcha(mobile, smsCaptcha, "630080");
-        String userId = cuserBO.getUserId(mobile);
+        String userId = cUserBO.getUserIdByMobile(mobile);
         if (StringUtils.isNotBlank(userId)) {
             throw new BizException("mag", "手机号已存在，请重新输入！！！");
         }
         if (!loginPwd.equals(confirmPwd)) {
             throw new BizException("mag", "两次密码不一致，请重新输入！！！");
         }
-        userId = cuserBO.saveUser(mobile);
+        userId = cUserBO.saveUser(mobile);
         return userId;
     }
 
@@ -69,12 +69,12 @@ public class CUserAOImpl implements ICUserAO {
         // } else {
         condition.setLoginName(loginName);
         // }
-        List<CUser> userList1 = cuserBO.queryUserList(condition);
+        List<CUser> userList1 = cUserBO.queryUserList(condition);
         if (CollectionUtils.isEmpty(userList1)) {
             throw new BizException("xn805050", "登录名不存在");
         }
         condition.setLoginPwd(MD5Util.md5(loginPwd));
-        List<CUser> userList2 = cuserBO.queryUserList(condition);
+        List<CUser> userList2 = cUserBO.queryUserList(condition);
         if (CollectionUtils.isEmpty(userList2)) {
             throw new BizException("xn805050", "登录密码错误");
         }
@@ -85,7 +85,7 @@ public class CUserAOImpl implements ICUserAO {
                         + "，请联系工作人员");
         }
         // addLoginAmount(cuser);
-        // cuserBO.refreshLastLogin(cuser.getUserId());
+        // cUserBO.refreshLastLogin(cuser.getUserId());
         return cuser.getUserId();
     }
 
@@ -94,12 +94,12 @@ public class CUserAOImpl implements ICUserAO {
     // public void doCheckLoginPwd(String loginName, String loginPwd) {
     // CUser condition = new CUser();
     // condition.setLoginName(loginName);
-    // List<CUser> userList1 = cuserBO.queryUserList(condition);
+    // List<CUser> userList1 = cUserBO.queryUserList(condition);
     // if (CollectionUtils.isEmpty(userList1)) {
     // throw new BizException("xn702002", "用户不存在");
     // }
     // condition.setLoginPwd(MD5Util.md5(loginPwd));
-    // List<CUser> userList2 = cuserBO.queryUserList(condition);
+    // List<CUser> userList2 = cUserBO.queryUserList(condition);
     // if (CollectionUtils.isEmpty(userList2)) {
     // throw new BizException("xn702002", "登录密码错误");
     // }
@@ -108,23 +108,23 @@ public class CUserAOImpl implements ICUserAO {
 
     @Override
     public String insertCUser(CUser data) {
-        return cuserBO.saveCNavigate(data);
+        return cUserBO.saveCNavigate(data);
     }
 
     @Override
     public Paginable<CUser> queryCUserPage(int start, int limit,
             CUser condition) {
-        return cuserBO.getPaginable(start, limit, condition);
+        return cUserBO.getPaginable(start, limit, condition);
     }
 
     @Override
     public List<CUser> queryCUserList(CUser condition) {
-        return cuserBO.queryUserList(condition);
+        return cUserBO.queryUserList(condition);
     }
 
     @Override
     public CUser getCUser(String userId) {
-        return cuserBO.getUser(userId);
+        return cUserBO.getUser(userId);
     }
 
 }

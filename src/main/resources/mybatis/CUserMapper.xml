@@ -99,11 +99,9 @@
 		,mobile
 		,photo
 		,nickname
-		,login_pwd
 		,login_pwd_strength
 		,user_referee
 		,referee_mobile
-		,trade_pwd
 		,trade_pwd_strength
 		,id_kind
 		,id_no

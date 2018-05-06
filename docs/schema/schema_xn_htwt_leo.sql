@@ -204,7 +204,7 @@ CREATE TABLE `tht_loan_order` (
   `gps_fee` bigint(20) DEFAULT NULL COMMENT 'GPS收费',
   `first_repay_datetime` datetime DEFAULT NULL COMMENT '首期还款日期',
   `first_repay_amount` bigint(20) DEFAULT NULL COMMENT '首期月供金额',
-  `month_datetime` datetime DEFAULT NULL COMMENT '每期还款日期',
+  `month_datetime` int(11) DEFAULT NULL COMMENT '每期还款日期',
   `month_amount` bigint(20) DEFAULT NULL COMMENT '每期月供金额',
   `ly_deposit` bigint(20) DEFAULT NULL COMMENT '履约保证金',
   `status` varchar(4) DEFAULT NULL COMMENT '状态',
@@ -233,7 +233,7 @@ CREATE TABLE `tht_repay_biz` (
   `fx_deposit` bigint(20) DEFAULT NULL COMMENT '风险保证金',
   `first_repay_datetime` datetime DEFAULT NULL COMMENT '首期还款日期',
   `first_repay_amount` bigint(20) DEFAULT NULL COMMENT '首期月供金额',
-  `month_datetime` datetime DEFAULT NULL COMMENT '每期还款日期',
+  `month_datetime` int(11) DEFAULT NULL COMMENT '每期还款日期',
   `month_amount` bigint(20) DEFAULT NULL COMMENT '每期月供金额',
   `ly_deposit` bigint(20) DEFAULT NULL COMMENT '履约保证金（可退）',
   `cut_ly_deposit` bigint(20) DEFAULT NULL COMMENT '扣除的履约保证金',
@@ -251,6 +251,7 @@ CREATE TABLE `tht_repay_biz` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `tht_repay_plan`;
 CREATE TABLE `tht_repay_plan` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',

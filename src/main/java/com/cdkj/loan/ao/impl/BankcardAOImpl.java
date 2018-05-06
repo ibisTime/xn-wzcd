@@ -27,7 +27,7 @@ public class BankcardAOImpl implements IBankcardAO {
     private IRepayBizBO repayBizBO;
 
     @Autowired
-    private ICUserBO cuserBO;
+    private ICUserBO cUserBO;
 
     @Override
     public String addBankcard(XN630510Req req) {
@@ -39,7 +39,7 @@ public class BankcardAOImpl implements IBankcardAO {
         data.setCode(code);
         String userId = repayBizBO.getRepayBiz(req.getCode()).getUserId();
         data.setUserId(userId);
-        String realName = cuserBO.getUser(userId).getRealName();
+        String realName = cUserBO.getUser(userId).getRealName();
         data.setRealName(realName);
         data.setBankCode(req.getBankCode());
         data.setBankName(req.getBankName());

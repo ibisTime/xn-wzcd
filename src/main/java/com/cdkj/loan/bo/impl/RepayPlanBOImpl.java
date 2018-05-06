@@ -1,6 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,11 +10,12 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IRepayPlanDAO;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
-import com.cdkj.loan.enums.ERefType;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ERepayPlanStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -86,40 +87,82 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
     }
 
     @Override
-    public RepayPlan genereateNewRapayPlan(RepayBiz repayBiz) {
+    public void genereateNewRapayPlan(RepayBiz repayBiz) {
 
-        RepayPlan condition = new RepayPlan();
+        List<RepayPlan> repayPlanList = new ArrayList<RepayPlan>();
 
-        String code = null;
-        code = OrderNoGenerater.generate("BC");
-        condition.setCode(code);
-        condition.setRefType(ERefType.CAR.getCode());
-        condition.setRefCode(repayBiz.getCode());
-        condition.setUserId(repayBiz.getUserId());
-        condition.setPeriods(repayBiz.getPeriods());
-        condition.setCurPeriods(1);
+        for (int i = 0; i < repayBiz.getPeriods(); i++) {
 
-        Calendar cal = Calendar.getInstance();
-        int month = cal.get(Calendar.MONTH) + 1;
-        cal.add(Calendar.MONTH, 1);
-        Date time = cal.getTime();
-        condition.setRepayDatetime(time);
-        Long monthAmount = repayBiz.getMonthAmount();
-        double bankRate = repayBiz.getBankRate();
-        Long repayCapital = monthAmount / (long) (bankRate + 1);
-        condition.setRepayCapital(repayCapital);
-        condition.setRepayInterest(repayBiz.getBankRate());
-        condition.setPayedAmount(0L);
-        condition.setOverdueAmount(0L);
+            RepayPlan repayPlan = new RepayPlan();
 
-        condition.setStatus(ERepayPlanStatus.REPAYMENTS.getCode());
-        condition.setTotalFee(0L);
-        condition.setPayedFee(0L);
-        condition.setOverdueDeposit(0L);
-        condition.setShouldDeposit(0L);
+            int curPeriod = i + 1;
 
-        condition.setRemindCount(0);
-        repayPlanDAO.insert(condition);
-        return condition;
+            String code = OrderNoGenerater.generate("RP");
+
+            Long repayCapital = repayBiz.getMonthAmount();
+            if (i == 0) {
+                repayCapital = repayBiz.getFirstRepayAmount();
+            }
+
+            Date repayDatetime = getRepayDatetime(
+                repayBiz.getFirstRepayDatetime(), repayBiz.getMonthDatetime(),
+                curPeriod);
+
+            repayPlan.setCode(code);
+            repayPlan.setRepayBizCode(repayBiz.getCode());
+            repayPlan.setUserId(repayBiz.getUserId());
+            repayPlan.setPeriods(repayBiz.getPeriods());
+            repayPlan.setCurPeriods(curPeriod);
+
+            repayPlan.setRepayDatetime(repayDatetime);
+            repayPlan.setRepayCapital(repayCapital);
+            repayPlan.setRepayInterest(0L);
+            repayPlan.setPayedAmount(0L);
+            repayPlan.setOverdueAmount(0L);
+
+            repayPlan.setStatus(ERepayPlanStatus.REPAYMENTS.getCode());
+            repayPlan.setTotalFee(0L);
+            repayPlan.setPayedFee(0L);
+            repayPlan.setOverdueDeposit(0L);
+            repayPlan.setShouldDeposit(0L);
+
+            repayPlan.setRemindCount(0);
+
+            repayPlanList.add(repayPlan);
+        }
+
+        repayPlanDAO.insertList(repayPlanList);
     }
+
+    /**
+     * @param firstRepayDatetime 第一期还款时间
+     * @param monthDatetime 每月还款日期
+     * @param period 第几期
+     * @return 
+     * @create: 2018年5月6日 下午3:44:31 haiqingzheng
+     * @history:
+     */
+    private Date getRepayDatetime(Date firstRepayDatetime, int monthDatetime,
+            int curPeriod) {
+        Date repayDatetime = null;
+        if (curPeriod < 1) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "计算每月还款日期发送错误，还款期数必须大于0");
+        }
+        if (curPeriod == 1) {
+            repayDatetime = firstRepayDatetime;
+        } else {
+
+            // Calendar cal = Calendar.getInstance();
+            // int month = cal.get(Calendar.MONTH) + 1;
+            // cal.add(Calendar.MONTH, 1);
+            // Date time = cal.getTime();
+
+            // TODO 时间计算有问题，生成的日期不一定是20号，需要修复
+            repayDatetime = DateUtil.getRelativeDateOfDays(firstRepayDatetime,
+                30 * (curPeriod - 1));
+        }
+        return repayDatetime;
+    }
+
 }

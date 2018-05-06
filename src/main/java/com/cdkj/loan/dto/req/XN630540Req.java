@@ -1,14 +1,15 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN630540Req extends APageReq {
 
     private static final long serialVersionUID = 5066181160930283667L;
 
     private String userId;// 用户编号
 
-    private String refType;// 关联类型
-
-    private String refCode;// 关联业务编号
+    @NotBlank
+    private String repayBizCode;// 关联业务编号
 
     private String status;// 状态
 
@@ -22,20 +23,12 @@ public class XN630540Req extends APageReq {
         this.overdueHandler = overdueHandler;
     }
 
-    public String getRefType() {
-        return refType;
+    public String getRepayBizCode() {
+        return repayBizCode;
     }
 
-    public void setRefType(String refType) {
-        this.refType = refType;
-    }
-
-    public String getRefCode() {
-        return refCode;
-    }
-
-    public void setRefCode(String refCode) {
-        this.refCode = refCode;
+    public void setRepayBizCode(String repayBizCode) {
+        this.repayBizCode = repayBizCode;
     }
 
     public String getUserId() {

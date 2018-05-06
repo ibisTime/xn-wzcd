@@ -96,7 +96,7 @@ public class LoanOrder extends ABaseDO {
     private Long firstRepayAmount;
 
     // 每期还款日期
-    private Date monthDatetime;
+    private int monthDatetime;
 
     // 每期月供金额
     private Long monthAmount;
@@ -115,6 +115,11 @@ public class LoanOrder extends ABaseDO {
 
     // 备注
     private String remark;
+
+    // ****** 辅助字段 ******
+
+    // 用户信息
+    private CUser user;
 
     public String getCode() {
         return code;
@@ -332,11 +337,11 @@ public class LoanOrder extends ABaseDO {
         this.firstRepayAmount = firstRepayAmount;
     }
 
-    public Date getMonthDatetime() {
+    public int getMonthDatetime() {
         return monthDatetime;
     }
 
-    public void setMonthDatetime(Date monthDatetime) {
+    public void setMonthDatetime(int monthDatetime) {
         this.monthDatetime = monthDatetime;
     }
 
@@ -386,6 +391,14 @@ public class LoanOrder extends ABaseDO {
 
     public String getRemark() {
         return remark;
+    }
+
+    public CUser getUser() {
+        return user;
+    }
+
+    public void setUser(CUser user) {
+        this.user = user;
     }
 
 }

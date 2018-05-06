@@ -31,7 +31,7 @@ public interface ICUserBO extends IPaginableBO<CUser> {
 
     public List<CUser> queryUserList(CUser condition);
 
-    public String getUserId(String mobile);
+    public String getUserIdByMobile(String mobile);
 
     public CUser getUser(String userId);
 

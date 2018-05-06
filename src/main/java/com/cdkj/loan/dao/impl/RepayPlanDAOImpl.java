@@ -49,8 +49,14 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
 
     @Override
     public int update(RepayPlan data) {
-        // TODO Auto-generated method stub
         return 0;
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public void insertList(List<RepayPlan> dataList) {
+        super.insertBatch(NAMESPACE.concat("insert_repayPlanList"),
+            (List) dataList);
     }
 
 }

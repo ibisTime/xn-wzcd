@@ -3,8 +3,10 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.ao.ILoanOrderAO;
@@ -17,7 +19,6 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.LoanOrder;
 import com.cdkj.loan.domain.RepayBiz;
-import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN630500Req;
 import com.cdkj.loan.dto.req.XN630502Req;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -32,7 +33,7 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
     private ILoanOrderBO loanOrderBO;
 
     @Autowired
-    private ICUserBO cuserBO;
+    private ICUserBO cUserBO;
 
     @Autowired
     private IBankcardAO bankcardAO;
@@ -80,14 +81,15 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
         data.setFirstRepayAmount(
             StringValidater.toLong(req.getFirstRepayAmount()));
 
-        data.setMonthDatetime(DateUtil.strToDate(req.getMonthDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setMonthDatetime(
+            StringValidater.toInteger(req.getMonthDatetime()));
         data.setMonthAmount(StringValidater.toLong(req.getMonthAmount()));
         data.setLyDeposit(StringValidater.toLong(req.getLyDeposit()));
         if (req.getIsSubmit().equals(EBoolean.NO.getCode())) {
             data.setStatus(ELoanOrderStatus.TO_SUBMIT.getCode());
+        } else {
+            data.setStatus(ELoanOrderStatus.TO_AUDIT.getCode());
         }
-        data.setStatus(ELoanOrderStatus.TO_AUDIT.getCode());
         data.setUpdater(req.getUpdater());
 
         data.setUpdateDatetime(new Date());
@@ -137,11 +139,16 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
             req.getFirstRepayDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setFirstRepayAmount(
             StringValidater.toLong(req.getFirstRepayAmount()));
-        data.setMonthDatetime(DateUtil.strToDate(req.getMonthAmount(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setMonthDatetime(
+            StringValidater.toInteger(req.getMonthDatetime()));
 
         data.setMonthAmount(StringValidater.toLong(req.getMonthAmount()));
         data.setLyDeposit(StringValidater.toLong(req.getLyDeposit()));
+        if (req.getIsSubmit().equals(EBoolean.NO.getCode())) {
+            data.setStatus(ELoanOrderStatus.TO_SUBMIT.getCode());
+        } else {
+            data.setStatus(ELoanOrderStatus.TO_AUDIT.getCode());
+        }
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
 
@@ -157,6 +164,7 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
      * 5. 更新车贷订单状态
      */
     @Override
+    @Transactional
     public void approveLoanOrder(String code, String approveResult,
             String approveUser, String approveNote) {
 
@@ -164,23 +172,34 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
         LoanOrder loanOrder = loanOrderBO.checkCanAudit(code);
 
         if (approveResult.equals(EBoolean.NO.getCode())) {
+
             // 审核不通过
             loanOrderBO.approveFailed(loanOrder, approveUser, approveNote);
+
         } else {
-            // 用户代注册并实名认证
-            String userId = cuserBO.doRegisterAndIdentify(loanOrder.getMobile(),
-                loanOrder.getIdKind(), loanOrder.getRealName(),
-                loanOrder.getIdNo());
+
+            // 检查用户是否已经注册过
+            String userId = cUserBO.getUserIdByMobile(loanOrder.getMobile());
+            if (StringUtils.isBlank(userId)) {
+                // 用户代注册并实名认证
+                userId = cUserBO.doRegisterAndIdentify(loanOrder.getMobile(),
+                    loanOrder.getIdKind(), loanOrder.getRealName(),
+                    loanOrder.getIdNo());
+            }
+
             // 绑定用户银行卡
             String bankcardCode = bankcardAO.bind(userId,
                 loanOrder.getRealName(), loanOrder.getBankcardNumber(),
                 loanOrder.getBankCode(), loanOrder.getBankName(),
                 loanOrder.getSubbranch());
+
             // 自动生成还款业务
             RepayBiz repayBiz = repayBizBO
                 .genereateNewCarLoanRepayBiz(loanOrder, userId, bankcardCode);
-            // // 自动生成还款计划
-            RepayPlan repayPlan = repayPlanBO.genereateNewRapayPlan(repayBiz);
+
+            // 自动生成还款计划
+            repayPlanBO.genereateNewRapayPlan(repayBiz);
+
             // 审核通过
             String repayBizCode = repayBiz.getCode();
             loanOrderBO.approveSuccess(loanOrder, repayBizCode, userId,
@@ -192,7 +211,12 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
     @Override
     public Paginable<LoanOrder> queryLoanOrderPage(int start, int limit,
             LoanOrder condition) {
-        return loanOrderBO.getPaginable(start, limit, condition);
+        Paginable<LoanOrder> results = loanOrderBO.getPaginable(start, limit,
+            condition);
+        for (LoanOrder loanOrder : results.getList()) {
+            loanOrder.setUser(cUserBO.getUser(loanOrder.getUserId()));
+        }
+        return results;
     }
 
     @Override
@@ -202,6 +226,8 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
 
     @Override
     public LoanOrder getLoanOrder(String code) {
-        return loanOrderBO.getLoanOrder(code);
+        LoanOrder loanOrder = loanOrderBO.getLoanOrder(code);
+        loanOrder.setUser(cUserBO.getUser(loanOrder.getUserId()));
+        return loanOrder;
     }
 }

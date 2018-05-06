@@ -4,8 +4,7 @@
 <mapper namespace="com.cdkj.loan.dao.IRepayPlanDAO">
 	<resultMap id="repayPlan_DB_Result" type="repayPlan">
 		<result column="code" property="code" />
-		<result column="ref_type" property="refType" />
-		<result column="ref_code" property="refCode" />
+		<result column="repay_biz_code" property="repayBizCode" />
 		<result column="user_id" property="userId" />
 		<result column="periods" property="periods" />
 		<result column="cur_periods" property="curPeriods" />
@@ -33,11 +32,8 @@
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
-			<if test="refType != null and refType != '' ">
-				AND t.ref_type = #{refType}
-			</if>
-			<if test="refCode != null and refCode != '' ">
-				AND t.ref_code = #{refCode}
+			<if test="repayBizCode != null and repayBizCode != '' ">
+				AND t.repay_biz_code = #{repayBizCode}
 			</if>
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
@@ -50,8 +46,7 @@
 	<select id="select_repayPlan" parameterType="repayPlan" resultMap="repayPlan_DB_Result">
 		SELECT
 		t.code
-		,t.ref_type
-		,t.ref_code
+		,t.repay_biz_code
 		,t.user_id
 		,t.periods
 		,t.cur_periods
@@ -90,8 +85,7 @@
 		INSERT INTO
 		tht_repay_plan(
 		code
-		,ref_type
-		,ref_code
+		,repay_biz_code
 		,user_id
 		,periods
 		,cur_periods
@@ -113,8 +107,7 @@
 		)
 		VALUES(
 		#{code}
-		,#{refType}
-		,#{refCode}
+		,#{repayBizCode}
 		,#{userId}
 		,#{periods}
 		,#{curPeriods}
@@ -161,6 +154,62 @@
 		,remind_count = #{remindCount}
 		WHERE code = #{code}
 	</update>
+	
+	<insert id="insert_repayPlanList" parameterType="List">
+
+		INSERT INTO
+		tht_repay_plan(
+		code
+		,repay_biz_code
+		,user_id
+		,periods
+		,cur_periods
+		,repay_datetime
+		,repay_capital
+		,repay_interest
+		,payed_amount
+		,overdue_amount
+		,status
+		,overdue_handler
+		,overdue_handle_datetime
+		,overdue_handle_note
+		,total_fee
+		,payed_fee
+		,overdue_deposit
+		,deposit_way
+		,should_deposit
+		,remind_count
+		)
+		
+		VALUES
+		
+		<foreach collection="list" item="repayPlan" separator=",">
+		(
+		#{repayPlan.code}
+		,#{repayPlan.repayBizCode}
+		,#{repayPlan.userId}
+		,#{repayPlan.periods}
+		,#{repayPlan.curPeriods}
+		,#{repayPlan.repayDatetime}
+		,#{repayPlan.repayCapital}
+		,#{repayPlan.repayInterest}
+		,#{repayPlan.payedAmount}
+		,#{repayPlan.overdueAmount}
+		,#{repayPlan.status}
+		,#{repayPlan.overdueHandler}
+		,#{repayPlan.overdueHandleDatetime}
+		,#{repayPlan.overdueHandleNote}
+		,#{repayPlan.totalFee}
+		,#{repayPlan.payedFee}
+		,#{repayPlan.overdueDeposit}
+		,#{repayPlan.depositWay}
+		,#{repayPlan.shouldDeposit}
+		,#{repayPlan.remindCount}
+		)
+		
+		</foreach>
+		
+	</insert>
 
 
 </mapper>

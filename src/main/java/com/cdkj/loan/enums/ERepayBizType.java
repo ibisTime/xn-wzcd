@@ -1,10 +1,10 @@
 package com.cdkj.loan.enums;
 
-public enum ERefType {
+public enum ERepayBizType {
     // 还款业务关联类型
     CAR("0", "汽车"), PRODUCT("1", "商品");
 
-    ERefType(String code, String value) {
+    ERepayBizType(String code, String value) {
         this.code = code;
         this.value = value;
     }

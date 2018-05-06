@@ -14,7 +14,7 @@ import com.cdkj.loan.dao.IRepayBizDAO;
 import com.cdkj.loan.domain.LoanOrder;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.enums.EBizErrorCode;
-import com.cdkj.loan.enums.ERefType;
+import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayBizStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -87,55 +87,51 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
             String userId, String bankcardCode) {
 
         RepayBiz repayBiz = new RepayBiz();
+        String code = OrderNoGenerater.generate("RB");
 
-        String code = null;
-        code = OrderNoGenerater.generate("RB");
         repayBiz.setCode(code);
-        repayBiz.setRefType(ERefType.CAR.getCode());
+        repayBiz.setRefType(ERepayBizType.CAR.getCode());
         repayBiz.setRefCode(loanOrder.getCode());
         repayBiz.setUserId(userId);
         repayBiz.setBankcardCode(bankcardCode);
+
         repayBiz.setBizPrice(loanOrder.getCarPrice());
         repayBiz.setSfRate(loanOrder.getSfRate());
-
         repayBiz.setSfAmount(loanOrder.getSfAmount());
         repayBiz.setLoanBank(loanOrder.getLoanBank());
         repayBiz.setLoanAmount(loanOrder.getLoanAmount());
-        repayBiz.setPeriods(loanOrder.getPeriods());
-        // int daysBetween = DateUtil.daysBetween(data.getFirstRepayDatetime(),
-        // new Date());
-        // int periods = data.getPeriods();
-        // int restPeriods = periods - daysBetween / 30;
-        repayBiz.setRestPeriods(0);
 
+        repayBiz.setPeriods(loanOrder.getPeriods());
+        repayBiz.setRestPeriods(loanOrder.getPeriods());
         repayBiz.setBankRate(loanOrder.getBankRate());
         repayBiz.setLoanStartDatetime(loanOrder.getLoanStartDatetime());
         repayBiz.setLoanEndDatetime(loanOrder.getLoanEndDatetime());
+
         repayBiz.setFxDeposit(loanOrder.getFxDeposit());
         repayBiz.setFirstRepayDatetime(loanOrder.getFirstRepayDatetime());
-
         repayBiz.setFirstRepayAmount(loanOrder.getFirstRepayAmount());
         repayBiz.setMonthDatetime(loanOrder.getMonthDatetime());
         repayBiz.setMonthAmount(loanOrder.getMonthAmount());
+
         repayBiz.setLyDeposit(loanOrder.getLyDeposit());
         repayBiz.setCutLyDeposit(0L);
-
         repayBiz.setStatus(ERepayBizStatus.REPAYMENTS.getCode());
         Long monthAmount = loanOrder.getMonthAmount();
         int periods = loanOrder.getPeriods();
         long amount = monthAmount * (long) (periods - 1);
         repayBiz.setRestAmount(amount);
         repayBiz.setRestTotalCost(0L);
+
         repayBiz.setTotalInDeposit(0L);
         repayBiz.setOverdueAmount(0L);
-
         repayBiz.setTotalOverdueCount(0);
         repayBiz.setCurOverdueCount(0);
         repayBiz.setBlackHandleNote("暂无");
+
         repayBiz.setUpdater(loanOrder.getUpdater());
         repayBiz.setUpdateDatetime(new Date());
-
         repayBiz.setRemark(loanOrder.getRemark());
+
         repayBizDAO.insert(repayBiz);
         return repayBiz;
     }
