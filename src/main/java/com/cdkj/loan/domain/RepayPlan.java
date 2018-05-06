@@ -36,7 +36,7 @@ public class RepayPlan extends ABaseDO {
     private Long repayCapital;
 
     // 本期利息
-    private double repayInterest;
+    private Long repayInterest;
 
     // 已还金额
     private Long payedAmount;
@@ -135,11 +135,11 @@ public class RepayPlan extends ABaseDO {
         this.repayCapital = repayCapital;
     }
 
-    public double getRepayInterest() {
+    public Long getRepayInterest() {
         return repayInterest;
     }
 
-    public void setRepayInterest(double repayInterest) {
+    public void setRepayInterest(Long repayInterest) {
         this.repayInterest = repayInterest;
     }
 

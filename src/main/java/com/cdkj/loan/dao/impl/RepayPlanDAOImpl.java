@@ -59,4 +59,9 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
             (List) dataList);
     }
 
+    @Override
+    public int repaySuccess(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_paySuccess"), data);
+    }
+
 }

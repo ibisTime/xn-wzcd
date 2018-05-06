@@ -175,38 +175,10 @@
 		)
 	</insert>
 
-	<update id="update_repayBiz" parameterType="repayBiz">
+	<update id="update_repayComplete" parameterType="repayBiz">
 		UPDATE tht_repay_biz
 		SET
-		user_id = #{userId}
-		,bankcard_code = #{bankcardCode}
-		,ref_type = #{refType}
-		,ref_code = #{refCode}
-		,biz_price = #{bizPrice}
-		,sf_rate = #{sfRate}
-		,sf_amount = #{sfAmount}
-		,loan_bank = #{loanBank}
-		,loan_amount = #{loanAmount}
-		,periods = #{periods}
-		,rest_periods = #{restPeriods}
-		,bank_rate = #{bankRate}
-		,loan_start_datetime = #{loanStartDatetime}
-		,loan_end_datetime = #{loanEndDatetime}
-		,fx_deposit = #{fxDeposit}
-		,first_repay_datetime = #{firstRepayDatetime}
-		,first_repay_amount = #{firstRepayAmount}
-		,month_datetime = #{monthDatetime}
-		,month_amount = #{monthAmount}
-		,ly_deposit = #{lyDeposit}
-		,cut_ly_deposit = #{cutLyDeposit}
-		,status = #{status}
-		,rest_amount = #{restAmount}
-		,rest_total_cost = #{restTotalCost}
-		,total_in_deposit = #{totalInDeposit}
-		,overdue_amount = #{overdueAmount}
-		,total_overdue_count = #{totalOverdueCount}
-		,cur_overdue_count = #{curOverdueCount}
-		,black_handle_note = #{blackHandleNote}
+		status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}

@@ -14,8 +14,10 @@ import com.cdkj.loan.dao.IRepayBizDAO;
 import com.cdkj.loan.domain.LoanOrder;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.enums.EBizErrorCode;
-import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayBizStatus;
+import com.cdkj.loan.enums.ERepayBizType;
+import com.cdkj.loan.enums.ERepayPlanStatus;
+import com.cdkj.loan.enums.ESysUser;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -24,43 +26,6 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
     @Autowired
     private IRepayBizDAO repayBizDAO;
-
-    @Override
-    public boolean isRepayBizExist(String code) {
-        RepayBiz condition = new RepayBiz();
-        condition.setCode(code);
-        if (repayBizDAO.selectTotalCount(condition) > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public String saveRepayBiz(RepayBiz data) {
-        String code = null;
-        if (data != null) {
-            code = OrderNoGenerater.generate("RB");
-            data.setCode(code);
-            repayBizDAO.insert(data);
-        }
-        return code;
-    }
-
-    @Override
-    public int removeRepayBiz(String code) {
-        int count = 0;
-        if (StringUtils.isNotBlank(code)) {
-            RepayBiz data = new RepayBiz();
-            data.setCode(code);
-            count = repayBizDAO.delete(data);
-        }
-        return count;
-    }
-
-    @Override
-    public void refreshRepayBiz(RepayBiz data) {
-        repayBizDAO.update(data);
-    }
 
     @Override
     public List<RepayBiz> queryRepayBizList(RepayBiz condition) {
@@ -115,7 +80,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
         repayBiz.setLyDeposit(loanOrder.getLyDeposit());
         repayBiz.setCutLyDeposit(0L);
-        repayBiz.setStatus(ERepayBizStatus.REPAYMENTS.getCode());
+        repayBiz.setStatus(ERepayPlanStatus.TO_REPAYMENTS.getCode());
         Long monthAmount = loanOrder.getMonthAmount();
         int periods = loanOrder.getPeriods();
         long amount = monthAmount * (long) (periods - 1);
@@ -135,4 +100,19 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBizDAO.insert(repayBiz);
         return repayBiz;
     }
+
+    @Override
+    public void repayCompleteNormal(String repayBizCode) {
+
+        RepayBiz repayBiz = new RepayBiz();
+        repayBiz.setCode(repayBizCode);
+        repayBiz.setStatus(ERepayBizStatus.YET_REPAYMENTS.getCode());
+        repayBiz.setUpdater(ESysUser.SYS_USER_HTWT.getCode());
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark("本业务已正常还款");
+
+        repayBizDAO.repayComplete(repayBiz);
+
+    }
+
 }

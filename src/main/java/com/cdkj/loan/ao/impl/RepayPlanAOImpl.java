@@ -7,9 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IRepayPlanAO;
 import com.cdkj.loan.bo.ICUserBO;
+import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.ERepayPlanStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -20,6 +23,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     @Autowired
     private ICUserBO cUserBO;
+
+    @Autowired
+    private IRepayBizBO repayBizBO;
 
     @Override
     public String addRepayPlan(RepayPlan data) {
@@ -67,4 +73,39 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         repayPlan.setUser(cUserBO.getUser(repayPlan.getUserId()));
         return repayPlan;
     }
+
+    @Override
+    public void repayMonthly(String code) {
+
+        // 查询还款计划
+        RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
+
+        // 校验是否是可还款状态
+        if (!ERepayPlanStatus.TO_REPAYMENTS.getCode()
+            .equals(repayPlan.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "本期还款计划不处于待还款状态");
+        }
+
+        // 检查是否有未还清的还款计划
+        if (repayPlanBO.checkPreUnpay(repayPlan.getRepayBizCode(),
+            repayPlan.getCurPeriods())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "本期之前您还有未还款的计划");
+        }
+
+        // TODO 发起宝付代扣
+        Long payAmount = repayPlan.getRepayCapital()
+                + repayPlan.getRepayInterest() + repayPlan.getOverdueAmount();
+
+        // 支付成功，更新还款计划
+        repayPlanBO.repaySuccess(repayPlan, payAmount);
+
+        // 检查是否已经全部正常还款
+        if (repayPlanBO.checkRepayComplete(repayPlan.getRepayBizCode())) {
+            repayBizBO.repayCompleteNormal(repayPlan.getRepayBizCode());
+        }
+
+    }
+
 }

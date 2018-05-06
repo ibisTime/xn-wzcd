@@ -10,10 +10,6 @@ import com.cdkj.loan.dto.req.XN630511Req;
 public interface IRepayBizAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addRepayBiz(RepayBiz data);
-
-    public int dropRepayBiz(String code);
-
     public void editRepayBizAdd(XN630510Req req);
 
     public void editRepayBizUpdate(XN630511Req req);

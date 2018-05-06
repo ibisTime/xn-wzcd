@@ -6,5 +6,7 @@ import com.cdkj.loan.domain.RepayBiz;
 public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
     String NAMESPACE = IRepayBizDAO.class.getName().concat(".");
 
-    public int update(RepayBiz data);
+    public int updateBankcard(RepayBiz data);
+
+    public int repayComplete(RepayBiz data);
 }

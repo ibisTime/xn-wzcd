@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import com.cdkj.loan.dao.IRepayPlanDAO;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.ERepayBizStatus;
 import com.cdkj.loan.enums.ERepayPlanStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -120,7 +122,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             repayPlan.setPayedAmount(0L);
             repayPlan.setOverdueAmount(0L);
 
-            repayPlan.setStatus(ERepayPlanStatus.REPAYMENTS.getCode());
+            repayPlan.setStatus(ERepayBizStatus.TO_REPAYMENTS.getCode());
             repayPlan.setTotalFee(0L);
             repayPlan.setPayedFee(0L);
             repayPlan.setOverdueDeposit(0L);
@@ -132,6 +134,16 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         }
 
         repayPlanDAO.insertList(repayPlanList);
+    }
+
+    @Override
+    public void repaySuccess(RepayPlan repayPlan, Long payAmount) {
+
+        repayPlan.setPayedAmount(payAmount);
+        repayPlan.setStatus(ERepayBizStatus.YET_REPAYMENTS.getCode());
+
+        repayPlanDAO.repaySuccess(repayPlan);
+
     }
 
     /**
@@ -163,6 +175,65 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
                 30 * (curPeriod - 1));
         }
         return repayDatetime;
+    }
+
+    @Override
+    public boolean checkRepayComplete(String repayBizCode) {
+
+        boolean isComplete = true;
+
+        RepayPlan condition = new RepayPlan();
+        condition.setRepayBizCode(repayBizCode);
+
+        List<RepayPlan> repayPlans = repayPlanDAO.selectList(condition);
+
+        if (CollectionUtils.isNotEmpty(repayPlans)) {
+
+            for (RepayPlan repayPlan : repayPlans) {
+                if (!ERepayPlanStatus.YET_REPAYMENTS.getCode()
+                    .equals(repayPlan.getStatus())
+                        && !ERepayPlanStatus.HESUAN_TO_GREEN.getCode()
+                            .equals(repayPlan.getStatus())) {
+                    isComplete = false;
+                    break;
+                }
+            }
+
+        }
+
+        return isComplete;
+
+    }
+
+    @Override
+    public boolean checkPreUnpay(String repayBizCode, int curPeriod) {
+
+        boolean flag = false;
+
+        RepayPlan condition = new RepayPlan();
+        condition.setRepayBizCode(repayBizCode);
+        condition.setOrder("cur_periods", true);
+        List<RepayPlan> repayPlans = repayPlanDAO.selectList(condition);
+
+        if (CollectionUtils.isNotEmpty(repayPlans)) {
+
+            for (RepayPlan repayPlan : repayPlans) {
+                if (repayPlan.getCurPeriods() >= curPeriod) {
+                    break;
+                }
+                if (!ERepayPlanStatus.YET_REPAYMENTS.getCode()
+                    .equals(repayPlan.getStatus())
+                        && !ERepayPlanStatus.HESUAN_TO_GREEN.getCode()
+                            .equals(repayPlan.getStatus())) {
+                    flag = true;
+                    break;
+                }
+            }
+
+        }
+
+        return flag;
+
     }
 
 }

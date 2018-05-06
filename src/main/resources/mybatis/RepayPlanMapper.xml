@@ -210,6 +210,14 @@
 		</foreach>
 		
 	</insert>
+	
+	<update id="update_paySuccess" parameterType="repayPlan">
+		UPDATE tht_repay_plan
+		SET
+		payed_amount = #{payedAmount}
+		,status = #{status}
+		WHERE code = #{code}
+	</update>
 
 
 </mapper>

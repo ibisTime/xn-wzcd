@@ -40,11 +40,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
     private IOrderBO orderBO;
 
     @Override
-    public String addRepayBiz(RepayBiz data) {
-        return repayBizBO.saveRepayBiz(data);
-    }
-
-    @Override
     public void editRepayBizAdd(XN630510Req req) {
 
         RepayBiz repayBiz = new RepayBiz();
@@ -56,7 +51,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
         repayBiz.setUpdateDatetime(new Date());
         repayBiz.setRemark(req.getRemark());
-        repayBizBO.refreshRepayBiz(repayBiz);
+        // repayBizBO.refreshRepayBiz(repayBiz);
     }
 
     @Override
@@ -71,15 +66,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setUpdater(req.getUpdater());
         repayBiz.setUpdateDatetime(new Date());
         repayBiz.setRemark(req.getRemark());
-        repayBizBO.refreshRepayBiz(repayBiz);
-    }
-
-    @Override
-    public int dropRepayBiz(String code) {
-        if (!repayBizBO.isRepayBizExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
-        }
-        return repayBizBO.removeRepayBiz(code);
+        // repayBizBO.refreshRepayBiz(repayBiz);
     }
 
     @Override

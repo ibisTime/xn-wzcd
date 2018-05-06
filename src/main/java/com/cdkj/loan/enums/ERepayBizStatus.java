@@ -1,9 +1,10 @@
 package com.cdkj.loan.enums;
 
 public enum ERepayBizStatus {
-    REPAYMENTS("0", "待还款"), TO_REPAYMENTS("1", "正常还款"), OVERDUE_TO_HANDLE("2",
-            "已逾期待处理"), HANDLLER_TO_HESUAN("3", "已处理待核算"), HESUAN_TO_GREEN("4",
-                    "核算通过，进绿名单"), HESUANNOT_TO_BLACK("5", "核算不通过，进黑名单");
+    TO_REPAYMENTS("0", "还款中"), YET_REPAYMENTS("1", "正常已还款"), YET_CLEARANCE("2",
+            "正常结清"), EARLY_REPAYMENT("3", "提前还款"), YET_EARLY_CLEARANCE("4",
+                    "确认提前结清"), YET_NOT_CONFIRMED("5",
+                            "确认提前结清"), YET_CONFRIM_RESULT("6", "确认处理结果");
 
     ERepayBizStatus(String code, String value) {
         this.code = code;

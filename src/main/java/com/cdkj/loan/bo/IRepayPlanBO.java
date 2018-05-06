@@ -22,4 +22,10 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     public void genereateNewRapayPlan(RepayBiz repayBiz);
 
+    public void repaySuccess(RepayPlan repayPlan, Long payAmount);
+
+    public boolean checkRepayComplete(String repayBizCode);
+
+    public boolean checkPreUnpay(String repayBizCode, int curPeriod);
+
 }
