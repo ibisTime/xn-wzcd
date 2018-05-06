@@ -18,7 +18,6 @@ import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EExchangeCurrencyStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
-import com.cdkj.loan.enums.EPayType;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -112,7 +111,7 @@ public class ExchangeCurrencyBOImpl extends PaginableBOImpl<ExchangeCurrency>
 
         data.setCreateDatetime(new Date());
         data.setStatus(EExchangeCurrencyStatus.PAYED.getCode());
-        data.setPayType(EPayType.DBHZ.getCode());
+        // data.setPayType(EPayType.DBHZ.getCode());
         data.setPayGroup(code);
         data.setSystemCode(systemCode);
 

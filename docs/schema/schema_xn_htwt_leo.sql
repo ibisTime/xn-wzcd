@@ -313,4 +313,156 @@ CREATE TABLE `tht_remind_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+/*C端用户*/
+CREATE TABLE `tht_cuser` (
+  `user_id` varchar(32) NOT NULL COMMENT '编号',
+  `login_name` varchar(255) DEFAULT NULL COMMENT '登录名',
+  `mobile` varchar(16) DEFAULT NULL COMMENT '手机号',
+  `photo` varchar(255) DEFAULT NULL COMMENT '头像',
+  `nickname` varchar(255) DEFAULT NULL COMMENT '昵称',
+  `login_pwd` varchar(32) DEFAULT NULL COMMENT '登录密码',
+  `login_pwd_strength` varchar(4) DEFAULT NULL COMMENT '登录密码强度',
+  `trade_pwd` varchar(32) DEFAULT NULL COMMENT '支付密码',
+  `trade_pwd_strength` varchar(4) DEFAULT NULL COMMENT '支付密码强度',
+  `user_referee` varchar(32) DEFAULT NULL COMMENT '推荐人编号',
+  `referee_mobile` varchar(16) DEFAULT NULL COMMENT '推荐人手机号',
+  `id_kind` varchar(4) DEFAULT NULL COMMENT '证件类型',
+  `id_no` bigint(20) DEFAULT NULL COMMENT '证件号',
+  `real_name` varchar(32) DEFAULT NULL COMMENT '真实姓名',
+  `jf_amount` bigint(20) DEFAULT NULL COMMENT '积分余额',
+  `amount` bigint(20) DEFAULT NULL COMMENT '账户余额',
+  `creditscore` bigint(20) DEFAULT NULL COMMENT '信用分',
+  `status` varchar(4) DEFAULT NULL COMMENT '状态',
+  `create_datetime` datetime DEFAULT NULL COMMENT '注册时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`user_id`) COMMENT '用户'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tstd_address` (
+  `code` varchar(32) NOT NULL COMMENT '收件编号',
+  `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
+  `addressee` varchar(64) DEFAULT NULL COMMENT '收件人姓名',
+  `mobile` varchar(32) DEFAULT NULL COMMENT '手机号',
+  `province` varchar(64) DEFAULT NULL COMMENT '省份',
+  `city` varchar(64) DEFAULT NULL COMMENT '城市',
+  `area` varchar(64) DEFAULT NULL COMMENT '区',
+  `detail` varchar(255) DEFAULT NULL COMMENT '详细地址',
+  `is_default` char(1) DEFAULT NULL COMMENT '是否默认地址',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `tht_bankcard` (
+  `code` varchar(32) DEFAULT NULL COMMENT '编号',
+  `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
+  `real_name` varchar(255) DEFAULT NULL COMMENT '户名',
+  `bank_code` varchar(32) DEFAULT NULL COMMENT '银行行别',
+  `bank_name` varchar(255) DEFAULT NULL COMMENT '银行名称',
+  `subbranch` varchar(255) DEFAULT NULL COMMENT '开户支行',
+  `bankcard_number` varchar(32) DEFAULT NULL COMMENT '银行卡号',
+  `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
+  `status` varchar(4) DEFAULT NULL COMMENT '状态',
+  `updater` varchar(255) DEFAULT NULL COMMENT '更新人',
+  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*账户*/
+DROP TABLE IF EXISTS `tstd_account`;
+CREATE TABLE `tstd_account` (
+  `account_number` varchar(32) NOT NULL DEFAULT '' COMMENT '账号',
+  `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
+  `real_name` varchar(64) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '真实姓名',
+  `type` varchar(4) DEFAULT NULL COMMENT '类别（B端账号，C端账号，平台账号）',
+  `status` varchar(2) DEFAULT NULL COMMENT '状态（正常/程序冻结/人工冻结）',
+  `currency` varchar(8) DEFAULT NULL COMMENT '币种',
+  `amount` decimal(64,0) DEFAULT NULL COMMENT '余额',
+  `frozen_amount` decimal(64,0) DEFAULT NULL COMMENT '冻结金额',
+  `md5` varchar(32) DEFAULT NULL COMMENT 'MD5',
+  `add_amount` decimal(64,0) DEFAULT '0' COMMENT '累计增加金额',
+  `in_amount` decimal(64,0) DEFAULT '0' COMMENT '入金',
+  `out_amount` decimal(64,0) DEFAULT '0' COMMENT '出金',
+  `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_order` varchar(32) DEFAULT NULL COMMENT '最近一次变动对应的流水编号',
+  PRIMARY KEY (`account_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+/*系统*/
+CREATE TABLE `tht_user` (
+  `user_id` varchar(32) NOT NULL COMMENT '用户ID',
+  `photo` varchar(255) DEFAULT NULL COMMENT '头像',
+  `login_name` varchar(64) DEFAULT NULL COMMENT '登录名',
+  `mobile` varchar(16) DEFAULT NULL COMMENT '手机号',
+  `login_pwd` varbinary(32) DEFAULT NULL COMMENT '登录密码',
+  `login_pwd_strength` char(1) DEFAULT NULL COMMENT '登录密码强度',
+  `create_datetme` datetime DEFAULT NULL COMMENT '注册时间',
+  `role_code` varchar(32) DEFAULT NULL COMMENT '角色编号',
+  `updater` varbinary(32) DEFAULT NULL COMMENT '更新人',
+  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
+  `status` varchar(4) DEFAULT NULL COMMENT '状态',
+  `remark` text COMMENT '备注',
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tsys_menu` (
+  `code` varchar(96) DEFAULT NULL,
+  `name` varchar(96) DEFAULT NULL,
+  `type` varchar(6) DEFAULT NULL,
+  `url` varchar(192) DEFAULT NULL,
+  `order_no` varchar(24) DEFAULT NULL,
+  `updater` varchar(96) DEFAULT NULL,
+  `update_datetime` datetime DEFAULT NULL,
+  `remark` varchar(765) DEFAULT NULL,
+  `parent_code` varchar(96) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tsys_role` (
+  `code` varchar(96) DEFAULT NULL,
+  `name` varchar(96) DEFAULT NULL,
+  `level` varchar(6) DEFAULT NULL,
+  `updater` varchar(96) DEFAULT NULL,
+  `update_datetime` datetime DEFAULT NULL,
+  `remark` varchar(765) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tsys_menu_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_code` varchar(96) DEFAULT NULL,
+  `menu_code` varchar(96) DEFAULT NULL,
+  `updater` varchar(96) DEFAULT NULL,
+  `update_datetime` datetime DEFAULT NULL,
+  `remark` varchar(765) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1635 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tsys_config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(96) DEFAULT NULL,
+  `ckey` varchar(765) DEFAULT NULL,
+  `cvalue` text,
+  `updater` varchar(96) DEFAULT NULL,
+  `update_datetime` datetime DEFAULT NULL,
+  `remark` varchar(765) DEFAULT NULL,
+  `company_code` varchar(96) DEFAULT NULL,
+  `system_code` varchar(96) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `tsys_dict` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` char(3) DEFAULT NULL,
+  `parent_key` varchar(96) DEFAULT NULL,
+  `dkey` varchar(96) DEFAULT NULL,
+  `dvalue` varchar(765) DEFAULT NULL,
+  `updater` varchar(96) DEFAULT NULL,
+  `update_datetime` datetime DEFAULT NULL,
+  `remark` varchar(765) DEFAULT NULL,
+  `company_code` varchar(96) DEFAULT NULL,
+  `system_code` varchar(96) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+
+
+
 
