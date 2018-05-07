@@ -28,6 +28,9 @@ public class Order extends ABaseDO {
     // 还款业务编号
     private String repayBizCode;
 
+    // 还款卡编号
+    private String bankcardCode;
+
     // 收件人姓名
     private String receiver;
 
@@ -142,7 +145,7 @@ public class Order extends ABaseDO {
     List<ProductOrder> productOrderList;
 
     // 下单人
-    private User user;
+    private CUser cuser;
 
     // 状态list
     private List<String> statusList;
@@ -176,6 +179,14 @@ public class Order extends ABaseDO {
 
     public void setRepayBizCode(String repayBizCode) {
         this.repayBizCode = repayBizCode;
+    }
+
+    public String getBankcardCode() {
+        return bankcardCode;
+    }
+
+    public void setBankcardCode(String bankcardCode) {
+        this.bankcardCode = bankcardCode;
     }
 
     public String getReceiver() {
@@ -434,12 +445,12 @@ public class Order extends ABaseDO {
         this.productOrderList = productOrderList;
     }
 
-    public User getUser() {
-        return user;
+    public CUser getCuser() {
+        return cuser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCuser(CUser cuser) {
+        this.cuser = cuser;
     }
 
     public List<String> getStatusList() {

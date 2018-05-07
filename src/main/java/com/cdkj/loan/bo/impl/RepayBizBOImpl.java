@@ -1,19 +1,24 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IRepayBizDAO;
 import com.cdkj.loan.domain.LoanOrder;
+import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EOrderStatus;
 import com.cdkj.loan.enums.ERepayBizStatus;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayPlanStatus;
@@ -26,6 +31,9 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
     @Autowired
     private IRepayBizDAO repayBizDAO;
+
+    @Autowired
+    private IBankcardAO bankcardAO;
 
     @Override
     public List<RepayBiz> queryRepayBizList(RepayBiz condition) {
@@ -96,6 +104,66 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setUpdater(loanOrder.getUpdater());
         repayBiz.setUpdateDatetime(new Date());
         repayBiz.setRemark(loanOrder.getRemark());
+
+        repayBizDAO.insert(repayBiz);
+        return repayBiz;
+    }
+
+    @Override
+    public RepayBiz genereateNewProductLoanRepayBiz(Order order) {
+        RepayBiz repayBiz = new RepayBiz();
+        String code = OrderNoGenerater.generate("RB");
+
+        repayBiz.setCode(code);
+        String userId = order.getApplyUser();
+        repayBiz.setUserId(userId);
+        repayBiz.setBankcardCode(order.getBankcardCode());
+        repayBiz.setRefType(ERepayBizType.PRODUCT.getCode());
+        repayBiz.setRefCode(order.getCode());
+
+        repayBiz.setBizPrice(order.getAmount());
+        repayBiz.setSfRate(order.getSfRate());
+        repayBiz.setSfAmount(order.getSfAmount());
+        String bankName = bankcardAO.getBankcard(order.getBankcardCode())
+            .getBankName();
+        repayBiz.setLoanBank(bankName);
+        repayBiz.setLoanAmount(order.getLoanAmount());
+
+        repayBiz.setPeriods(order.getPeriods());
+        repayBiz.setRestPeriods(order.getPeriods());
+        repayBiz.setBankRate(order.getBankRate());
+        repayBiz.setLoanStartDatetime(new Date());
+        Date addMonths = DateUtils.addMonths(new Date(), order.getPeriods());
+        repayBiz.setLoanEndDatetime(addMonths);
+
+        repayBiz.setFxDeposit(0L);
+        Date date = DateUtils.addMonths(order.getApplyDatetime(), 1);
+        repayBiz.setFirstRepayDatetime(date);
+        long long1 = order.getAmount() - order.getSfAmount();
+        long long2 = long1 / order.getPeriods();
+        long long3 = (long) (long2 * order.getBankRate());
+        repayBiz.setFirstRepayAmount(long3);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(order.getApplyDatetime());
+        int i = calendar.get(Calendar.DAY_OF_MONTH);
+        repayBiz.setMonthDatetime(i);
+        repayBiz.setMonthAmount(long3);
+
+        repayBiz.setLyDeposit(0L);
+        repayBiz.setCutLyDeposit(0L);
+        repayBiz.setStatus(EOrderStatus.LOANING.getCode());
+        repayBiz.setRestAmount(order.getLoanAmount());
+        repayBiz.setRestTotalCost(0L);
+
+        repayBiz.setTotalInDeposit(0L);
+        repayBiz.setOverdueAmount(0L);
+        repayBiz.setTotalOverdueCount(0);
+        repayBiz.setCurOverdueCount(0);
+        repayBiz.setBlackHandleNote("暂无");
+
+        repayBiz.setUpdater(order.getUpdater());
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(order.getRemark());
 
         repayBizDAO.insert(repayBiz);
         return repayBiz;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.LoanOrder;
+import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.RepayBiz;
 
 public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
@@ -22,5 +23,7 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
             String bankcardCode);
 
     public void repayCompleteNormal(String repayBizCode);
+
+    public RepayBiz genereateNewProductLoanRepayBiz(Order order);
 
 }

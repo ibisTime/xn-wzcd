@@ -5,6 +5,7 @@
 	<resultMap id="order_DB_Result" type="order">
 		<result column="code" property="code" />
 		<result column="repay_biz_code" property="repayBizCode" />
+		<result column="bankcard_code" property="bankcardCode" />
 		<result column="receiver" property="receiver" />
 		<result column="re_mobile" property="reMobile" />
 		<result column="re_address" property="reAddress" />
@@ -123,6 +124,7 @@
 		SELECT
 		t.code
 		,t.repay_biz_code
+		,t.bankcard_code
 		,t.receiver
 		,t.re_mobile
 		,t.re_address

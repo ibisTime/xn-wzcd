@@ -14,6 +14,10 @@ public class XN808050Req {
     @NotBlank
     private String productSpecsCode;
 
+    // 还款卡编号
+    @NotBlank
+    private String bankcardCode;
+
     // 数量（必填）
     @NotBlank
     private String quantity;
@@ -43,6 +47,14 @@ public class XN808050Req {
 
     public void setProductSpecsCode(String productSpecsCode) {
         this.productSpecsCode = productSpecsCode;
+    }
+
+    public String getBankcardCode() {
+        return bankcardCode;
+    }
+
+    public void setBankcardCode(String bankcardCode) {
+        this.bankcardCode = bankcardCode;
     }
 
     public String getQuantity() {
