@@ -10,9 +10,9 @@ import com.cdkj.loan.dto.req.XN630511Req;
 public interface IRepayBizAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public void editRepayBizAdd(XN630510Req req);
+    public void editBankcardNew(XN630510Req req);
 
-    public void editRepayBizUpdate(XN630511Req req);
+    public void editBankcardModify(XN630511Req req);
 
     public Paginable<RepayBiz> queryRepayBizPage(int start, int limit,
             RepayBiz condition);

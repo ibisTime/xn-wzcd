@@ -8,6 +8,12 @@ import com.cdkj.loan.domain.RepayBiz;
 
 public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
+    public void refreshBankcardNew(String code, String bankcardCode,
+            String updater, String remark);
+
+    public void refreshBankcardModify(String code, String bankcardCode,
+            String updater, String remark);
+
     public List<RepayBiz> queryRepayBizList(RepayBiz condition);
 
     public RepayBiz getRepayBiz(String code);

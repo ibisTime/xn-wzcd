@@ -115,4 +115,33 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
     }
 
+    @Override
+    public void refreshBankcardNew(String code, String bankcardCode,
+            String updater, String remark) {
+        RepayBiz repayBiz = new RepayBiz();
+        repayBiz.setCode(code);
+        repayBiz.setBankcardCode(bankcardCode);
+        repayBiz.setUpdater(updater);
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(remark);
+        repayBizDAO.updateBankcard(repayBiz);
+    }
+
+    @Override
+    public void refreshBankcardModify(String code, String bankcardCode,
+            String updater, String remark) {
+        RepayBiz repayBiz = new RepayBiz();
+        repayBiz.setCode(code);
+        String bankcardCodelist = repayBiz.getBankcardCode();
+        if (!bankcardCode.equals(bankcardCodelist)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "还款卡编号" + bankcardCode + "不存在，请重新添加！！！");
+        }
+        repayBiz.setBankcardCode(bankcardCode);
+        repayBiz.setUpdater(updater);
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(remark);
+        repayBizDAO.updateBankcard(repayBiz);
+    }
+
 }
