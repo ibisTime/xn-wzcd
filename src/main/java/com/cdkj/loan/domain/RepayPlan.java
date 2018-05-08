@@ -75,6 +75,11 @@ public class RepayPlan extends ABaseDO {
     private int remindCount;
 
     // ****** 辅助字段 ******
+    // 还款计划开始时间
+    private Date repayStartDatetime;
+
+    // 还款计划结束时间
+    private Date repayEndDatetime;
 
     // 用户信息
     private CUser user;
@@ -101,6 +106,22 @@ public class RepayPlan extends ABaseDO {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public Date getRepayStartDatetime() {
+        return repayStartDatetime;
+    }
+
+    public void setRepayStartDatetime(Date repayStartDatetime) {
+        this.repayStartDatetime = repayStartDatetime;
+    }
+
+    public Date getRepayEndDatetime() {
+        return repayEndDatetime;
+    }
+
+    public void setRepayEndDatetime(Date repayEndDatetime) {
+        this.repayEndDatetime = repayEndDatetime;
     }
 
     public int getPeriods() {

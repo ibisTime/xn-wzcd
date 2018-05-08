@@ -32,6 +32,9 @@
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
+			<if test="repayDatetime != null and repayDatetime != '' ">
+				AND t.repay_datetime = #{repayDatetime}
+			</if>
 			<if test="repayBizCode != null and repayBizCode != '' ">
 				AND t.repay_biz_code = #{repayBizCode}
 			</if>
@@ -40,6 +43,12 @@
 			</if>
 			<if test="overdueHandler != null and overdueHandler != '' ">
 				AND t.codoverdue_handlere = #{overdueHandler}
+			</if>
+			<if test="repayStartDatetime != null and repayStartDatetime != '' ">
+				<![CDATA[AND t.repay_datetime >= #{repayStartDatetime}]]>
+			</if>
+			<if test="repayEndDatetime != null and repayEndDatetime != '' ">
+				<![CDATA[AND t.repay_datetime <= #{repayEndDatetime}]]>
 			</if>
 		</trim>
 	</sql>

@@ -278,8 +278,30 @@ public class DateUtil {
         return currentDate.getTime();
     }
 
+    // 获取指定月的第一天
+    public static Date getFristDay() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        return calendar.getTime();
+    }
+
+    // 获取指定月的最后一天
+    public static Date getLastDay() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH,
+            calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        return calendar.getTime();
+    }
+
     public static void main(String[] args) {
-        System.out.println(
-            getEndDatetime(dateToStr(new Date(), FRONT_DATE_FORMAT_STRING)));
+        System.out.println(getLastDay());
     }
 }

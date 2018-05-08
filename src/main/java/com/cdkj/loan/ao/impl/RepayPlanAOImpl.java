@@ -10,6 +10,7 @@ import com.cdkj.loan.bo.ICUserBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ERepayPlanStatus;
@@ -51,10 +52,10 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     @Override
     public Paginable<RepayPlan> queryRepayPlanPage(int start, int limit,
             RepayPlan condition) {
-
+        condition.setRepayStartDatetime(DateUtil.getFristDay());
+        condition.setRepayEndDatetime(DateUtil.getLastDay());
         Paginable<RepayPlan> results = repayPlanBO.getPaginable(start, limit,
             condition);
-
         for (RepayPlan repayPlan : results.getList()) {
             repayPlan.setUser(cUserBO.getUser(repayPlan.getUserId()));
         }
