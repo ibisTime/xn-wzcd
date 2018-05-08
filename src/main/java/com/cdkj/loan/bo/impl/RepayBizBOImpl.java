@@ -212,4 +212,9 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBizDAO.updateBankcard(repayBiz);
     }
 
+    @Override
+    public int refreshStatusEarlyRepayment(RepayBiz repayBiz) {
+        return repayBizDAO.updateRepayBizStatus(repayBiz);
+    }
+
 }

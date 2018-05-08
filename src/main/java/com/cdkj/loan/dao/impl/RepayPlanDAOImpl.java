@@ -52,6 +52,11 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
         return 0;
     }
 
+    @Override
+    public int updateStatus(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_repayplan_status"), data);
+    }
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void insertList(List<RepayPlan> dataList) {

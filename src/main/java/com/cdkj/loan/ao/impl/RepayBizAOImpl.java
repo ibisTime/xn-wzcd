@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +12,27 @@ import com.cdkj.loan.bo.ICUserBO;
 import com.cdkj.loan.bo.ILoanOrderBO;
 import com.cdkj.loan.bo.IOrderBO;
 import com.cdkj.loan.bo.IRepayBizBO;
+import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RepayBiz;
+import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.dto.req.XN630511Req;
+import com.cdkj.loan.dto.res.BooleanRes;
+import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.ERepayBizStatus;
 import com.cdkj.loan.enums.ERepayBizType;
+import com.cdkj.loan.enums.ERepayPlanStatus;
+import com.cdkj.loan.exception.BizException;
 
 @Service
 public class RepayBizAOImpl implements IRepayBizAO {
 
     @Autowired
     private IRepayBizBO repayBizBO;
+
+    @Autowired
+    private IRepayPlanBO repayPlanBO;
 
     @Autowired
     private IBankcardAO bankcardAO;
@@ -35,6 +46,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Autowired
     private IOrderBO orderBO;
 
+    // 变更银行卡
     @Override
     public void editBankcardNew(XN630510Req req) {
         String code = bankcardAO.addBankcard(req);
@@ -42,6 +54,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             req.getRemark());
     }
 
+    // 变更银行卡
     @Override
     public void editBankcardModify(XN630511Req req) {
         repayBizBO.refreshBankcardModify(req.getCode(), req.getBankcardCode(),
@@ -90,5 +103,49 @@ public class RepayBizAOImpl implements IRepayBizAO {
             repayBiz.setMallOrder(orderBO.getOrder(repayBiz.getRefCode()));
         }
 
+    }
+
+    // 提前还款
+    @Override
+    public void EarlyRepayment(String code, String updater, String remark) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizStatus.TO_REPAYMENTS.getCode()
+            .equals(repayBiz.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "改还款业务不处于还款中，请重新选择！！！");
+        }
+        // 判断是否逾期
+        RepayPlan repayPlan = new RepayPlan();
+        repayPlan.setRepayBizCode(code);
+        List<RepayPlan> planList = repayPlanBO.queryRepayPlanList(repayPlan);
+        for (RepayPlan repayPlan2 : planList) {
+            if (repayPlan2.getStatus()
+                .equals(ERepayPlanStatus.OVERDUE_TO_HANDLE.getCode())) {
+                // 逾期处理
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "已逾期，未处理！！！");
+            }
+        }
+        // 代扣
+        BooleanRes res = daiKou(repayBiz);
+        if (res.equals(false)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "代扣失败！！！");
+        }
+        repayBiz.setStatus(ERepayBizStatus.EARLY_REPAYMENT.getCode());
+        // 改变还款计划状态
+        for (RepayPlan repayPlan2 : planList) {
+            repayPlan2.setStatus(ERepayPlanStatus.YET_REPAYMENTS.getCode());
+            repayPlanBO.refreshRepayPlanStatus(repayPlan2);
+        }
+        repayBiz.setUpdater(updater);
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(remark);
+        repayBizBO.refreshStatusEarlyRepayment(repayBiz);
+    }
+
+    private BooleanRes daiKou(RepayBiz repayBiz) {
+        long dkAmount = repayBiz.getFirstRepayAmount()
+                * repayBiz.getRestPeriods();
+        return new BooleanRes(true);
     }
 }

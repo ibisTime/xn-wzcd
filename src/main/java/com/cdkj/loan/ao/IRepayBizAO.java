@@ -21,4 +21,6 @@ public interface IRepayBizAO {
 
     public RepayBiz getRepayBiz(String code);
 
+    public void EarlyRepayment(String code, String updater, String remark);
+
 }

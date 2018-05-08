@@ -26,4 +26,6 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
     public RepayBiz genereateNewProductLoanRepayBiz(Order order);
 
+    public int refreshStatusEarlyRepayment(RepayBiz repayBiz);
+
 }

@@ -195,4 +195,13 @@
 		WHERE code = #{code}
 	</update>
 	
+	<update id="update_repayBiz_status" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+			SET
+		status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
 </mapper>

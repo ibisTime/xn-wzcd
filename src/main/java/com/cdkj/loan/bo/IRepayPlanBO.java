@@ -16,6 +16,8 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     public int refreshRepayPlan(RepayPlan data);
 
+    public int refreshRepayPlanStatus(RepayPlan data);
+
     public List<RepayPlan> queryRepayPlanList(RepayPlan condition);
 
     public RepayPlan getRepayPlan(String code);

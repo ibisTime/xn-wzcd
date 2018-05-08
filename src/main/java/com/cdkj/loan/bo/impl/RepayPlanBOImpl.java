@@ -236,4 +236,13 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
 
     }
 
+    @Override
+    public int refreshRepayPlanStatus(RepayPlan data) {
+        int count = 0;
+        if (StringUtils.isNotBlank(data.getCode())) {
+            count = repayPlanDAO.updateStatus(data);
+        }
+        return count;
+    }
+
 }
