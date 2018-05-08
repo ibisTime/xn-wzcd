@@ -14,10 +14,12 @@ import com.cdkj.loan.bo.IOrderBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.dto.req.XN630511Req;
+import com.cdkj.loan.dto.req.XN630513Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ERepayBizStatus;
@@ -147,5 +149,51 @@ public class RepayBizAOImpl implements IRepayBizAO {
         long dkAmount = repayBiz.getFirstRepayAmount()
                 * repayBiz.getRestPeriods();
         return new BooleanRes(true);
+    }
+
+    @Override
+    public void EnterBlackList(String code, String blackHandleNote,
+            String updater, String remark) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        repayBiz.setBlackHandleNote(blackHandleNote);
+        repayBiz.setStatus(ERepayBizStatus.YET_NOT_CONFIRMED.getCode());
+        repayBiz.setUpdater(updater);
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(remark);
+
+        RepayPlan repayPlan = new RepayPlan();
+        repayPlan.setRepayBizCode(code);
+        List<RepayPlan> planList = repayPlanBO.queryRepayPlanList(repayPlan);
+        for (RepayPlan repayPlan2 : planList) {
+            repayPlan2.setStatus(ERepayPlanStatus.HESUANNOT_TO_BLACK.getCode());
+            repayPlanBO.refreshRepayPlanStatus(repayPlan2);
+        }
+        repayBizBO.refreshRepayBizStatus(repayBiz);
+    }
+
+    @Override
+    public void confirmClose(XN630513Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
+        if (!ERepayBizStatus.YET_REPAYMENTS.getCode()
+            .equals(repayBiz.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "状态不是正常已还款，不能确认结清！！！");
+        }
+        repayBiz.setCutLyDeposit(StringValidater.toLong(req.getCutLyDeposit()));
+        repayBiz.setStatus(ERepayBizStatus.YET_CLEARANCE.getCode());
+        repayBiz.setCloseAttach(req.getCloseAttach());
+        repayBiz.setCloseDatetime(new Date());
+        repayBiz.setUpdater(req.getUpdater());
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(req.getRemark());
+        RepayPlan repayPlan = new RepayPlan();
+
+        repayPlan.setRepayBizCode(req.getCode());
+        List<RepayPlan> planList = repayPlanBO.queryRepayPlanList(repayPlan);
+        for (RepayPlan repayPlan2 : planList) {
+            repayPlan2.setStatus(ERepayPlanStatus.YET_REPAYMENTS.getCode());
+            repayPlanBO.refreshRepayPlanStatus(repayPlan2);
+        }
+        repayBizBO.confirmClose(repayBiz);
     }
 }

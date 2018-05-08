@@ -6,6 +6,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.dto.req.XN630511Req;
+import com.cdkj.loan.dto.req.XN630513Req;
 
 public interface IRepayBizAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
@@ -22,5 +23,10 @@ public interface IRepayBizAO {
     public RepayBiz getRepayBiz(String code);
 
     public void EarlyRepayment(String code, String updater, String remark);
+
+    public void EnterBlackList(String code, String blackHandleNote,
+            String updater, String remark);
+
+    public void confirmClose(XN630513Req req);
 
 }

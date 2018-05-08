@@ -28,4 +28,8 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
     public int refreshStatusEarlyRepayment(RepayBiz repayBiz);
 
+    public int refreshRepayBizStatus(RepayBiz repayBiz);
+
+    public int confirmClose(RepayBiz repayBiz);
+
 }

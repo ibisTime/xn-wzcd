@@ -204,4 +204,27 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="enter_black_list" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+			SET
+		black_handle_note = #{blackHandleNote}
+		,status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="confirm_close" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+			SET
+		close_attach=#{closeAttach}
+		,close_datetime=#{closeDatetime}
+		,status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
 </mapper>

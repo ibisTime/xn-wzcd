@@ -104,7 +104,13 @@ public class RepayBiz extends ABaseDO {
     // 黑名单处理结果备案
     private String blackHandleNote;
 
+    // 结清证明
+    private String closeAttach;//
+
+    // 结清时间
+    private Date closeDatetime;//
     // 最近修改人
+
     private String updater;
 
     // 最近修改时间
@@ -362,6 +368,22 @@ public class RepayBiz extends ABaseDO {
 
     public void setBlackHandleNote(String blackHandleNote) {
         this.blackHandleNote = blackHandleNote;
+    }
+
+    public String getCloseAttach() {
+        return closeAttach;
+    }
+
+    public void setCloseAttach(String closeAttach) {
+        this.closeAttach = closeAttach;
+    }
+
+    public Date getCloseDatetime() {
+        return closeDatetime;
+    }
+
+    public void setCloseDatetime(Date closeDatetime) {
+        this.closeDatetime = closeDatetime;
     }
 
     public String getUpdater() {

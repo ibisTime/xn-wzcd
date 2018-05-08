@@ -217,4 +217,14 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         return repayBizDAO.updateRepayBizStatus(repayBiz);
     }
 
+    @Override
+    public int refreshRepayBizStatus(RepayBiz repayBiz) {
+        return repayBizDAO.EnterBlackList(repayBiz);
+    }
+
+    @Override
+    public int confirmClose(RepayBiz repayBiz) {
+        return repayBizDAO.updateRepayBizStatus(repayBiz);
+    }
+
 }
