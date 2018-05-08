@@ -52,8 +52,6 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     @Override
     public Paginable<RepayPlan> queryRepayPlanPage(int start, int limit,
             RepayPlan condition) {
-        condition.setRepayStartDatetime(DateUtil.getFristDay());
-        condition.setRepayEndDatetime(DateUtil.getLastDay());
         Paginable<RepayPlan> results = repayPlanBO.getPaginable(start, limit,
             condition);
         for (RepayPlan repayPlan : results.getList()) {
@@ -107,6 +105,19 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             repayBizBO.repayCompleteNormal(repayPlan.getRepayBizCode());
         }
 
+    }
+
+    // 当月还款名单
+    @Override
+    public Object dyRepayment(int start, int limit, RepayPlan condition) {
+        condition.setRepayStartDatetime(DateUtil.getFristDay());
+        condition.setRepayEndDatetime(DateUtil.getLastDay());
+        Paginable<RepayPlan> results = repayPlanBO.getPaginable(start, limit,
+            condition);
+        for (RepayPlan repayPlan : results.getList()) {
+            repayPlan.setUser(cUserBO.getUser(repayPlan.getUserId()));
+        }
+        return results;
     }
 
 }
