@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -83,6 +84,17 @@ public class RepayPlan extends ABaseDO {
 
     // 用户信息
     private CUser user;
+
+    // 费用清单
+    private List<Cost> costList;
+
+    public List<Cost> getCostList() {
+        return costList;
+    }
+
+    public void setCostList(List<Cost> costList) {
+        this.costList = costList;
+    }
 
     public String getCode() {
         return code;

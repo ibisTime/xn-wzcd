@@ -30,4 +30,10 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     public boolean checkPreUnpay(String repayBizCode, int curPeriod);
 
+    public int refreshRepayPlanOverdue(RepayPlan repayPlan);
+
+    public int refreshToGreen(RepayPlan repayPlan);
+
+    public int refreshToBlack(RepayPlan repayPlan);
+
 }

@@ -245,4 +245,19 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         return count;
     }
 
+    @Override
+    public int refreshRepayPlanOverdue(RepayPlan repayPlan) {
+        return repayPlanDAO.OverdueHandle(repayPlan);
+    }
+
+    @Override
+    public int refreshToGreen(RepayPlan repayPlan) {
+        return repayPlanDAO.OverdueHandle(repayPlan);
+    }
+
+    @Override
+    public int refreshToBlack(RepayPlan repayPlan) {
+        return repayPlanDAO.OverdueHandle(repayPlan);
+    }
+
 }

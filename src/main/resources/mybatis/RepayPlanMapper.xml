@@ -235,4 +235,13 @@
 		WHERE code = #{code}
 	</update>
 
+	<update id="overdue_handle" parameterType="repayPlan">
+		UPDATE tht_repay_plan
+		SET
+		status = #{status}
+		,overdue_deposit = #{overdueDeposit}
+		,deposit_way = #{depositWay}
+		,overdue_handle_note = #{overdueHandleNote}
+		WHERE code = #{code}
+	</update>
 </mapper>

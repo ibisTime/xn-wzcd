@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -10,116 +12,116 @@ import com.cdkj.loan.dao.base.ABaseDO;
 */
 public class Cost extends ABaseDO {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	// 编号
-	private String code;
+    // 编号
+    private String code;
 
-	// 还款计划编号
-	private String repayPlanCode;
+    // 还款计划编号
+    private String repayPlanCode;
 
-	// 费用项名称
-	private String item;
+    // 费用项名称
+    private String item;
 
-	// 金额
-	private String amount;
+    // 金额
+    private String amount;
 
-	// 发生时间
-	private String payDatetime;
+    // 发生时间
+    private Date payDatetime;
 
-	// 发生付款方式
-	private String payWay;
+    // 发生付款方式
+    private String payWay;
 
-	// 状态
-	private String status;
+    // 状态
+    private String status;
 
-	// 执行时间
-	private String repayDatetime;
+    // 执行时间
+    private Date repayDatetime;
 
-	// 执行付款方式
-	private String repayWay;
+    // 执行付款方式
+    private String repayWay;
 
-	// 备注
-	private String remark;
+    // 备注
+    private String remark;
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public void setRepayPlanCode(String repayPlanCode) {
-		this.repayPlanCode = repayPlanCode;
-	}
+    public void setRepayPlanCode(String repayPlanCode) {
+        this.repayPlanCode = repayPlanCode;
+    }
 
-	public String getRepayPlanCode() {
-		return repayPlanCode;
-	}
+    public String getRepayPlanCode() {
+        return repayPlanCode;
+    }
 
-	public void setItem(String item) {
-		this.item = item;
-	}
+    public void setItem(String item) {
+        this.item = item;
+    }
 
-	public String getItem() {
-		return item;
-	}
+    public String getItem() {
+        return item;
+    }
 
-	public void setAmount(String amount) {
-		this.amount = amount;
-	}
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
 
-	public String getAmount() {
-		return amount;
-	}
+    public String getAmount() {
+        return amount;
+    }
 
-	public void setPayDatetime(String payDatetime) {
-		this.payDatetime = payDatetime;
-	}
+    public void setPayDatetime(Date date) {
+        this.payDatetime = date;
+    }
 
-	public String getPayDatetime() {
-		return payDatetime;
-	}
+    public Date getRepayDatetime() {
+        return repayDatetime;
+    }
 
-	public void setPayWay(String payWay) {
-		this.payWay = payWay;
-	}
+    public void setRepayDatetime(Date repayDatetime) {
+        this.repayDatetime = repayDatetime;
+    }
 
-	public String getPayWay() {
-		return payWay;
-	}
+    public Date getPayDatetime() {
+        return payDatetime;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setPayWay(String payWay) {
+        this.payWay = payWay;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public String getPayWay() {
+        return payWay;
+    }
 
-	public void setRepayDatetime(String repayDatetime) {
-		this.repayDatetime = repayDatetime;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public String getRepayDatetime() {
-		return repayDatetime;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setRepayWay(String repayWay) {
-		this.repayWay = repayWay;
-	}
+    public void setRepayWay(String repayWay) {
+        this.repayWay = repayWay;
+    }
 
-	public String getRepayWay() {
-		return repayWay;
-	}
+    public String getRepayWay() {
+        return repayWay;
+    }
 
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
-	public String getRemark() {
-		return remark;
-	}
+    public String getRemark() {
+        return remark;
+    }
 
 }

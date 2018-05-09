@@ -5,14 +5,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cdkj.loan.ao.ICostAO;
 import com.cdkj.loan.ao.IRepayPlanAO;
 import com.cdkj.loan.bo.ICUserBO;
+import com.cdkj.loan.bo.ICostBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Cost;
 import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.dto.req.XN630532Req;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EIsSubmit;
 import com.cdkj.loan.enums.ERepayPlanStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -27,6 +33,12 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     @Autowired
     private IRepayBizBO repayBizBO;
+
+    @Autowired
+    private ICostAO costAO;
+
+    @Autowired
+    private ICostBO costBO;
 
     @Override
     public String addRepayPlan(RepayPlan data) {
@@ -118,6 +130,41 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             repayPlan.setUser(cUserBO.getUser(repayPlan.getUserId()));
         }
         return results;
+    }
+
+    // 逾期处理
+    @Override
+    public void OverdueHandle(XN630532Req req) {
+        RepayPlan repayPlan = repayPlanBO.getRepayPlan(req.getCode());
+        // 费用清单
+        costAO.addCost(req.getCode(), req.getCostList());
+        Cost cost = new Cost();
+        cost.setRepayPlanCode(req.getCode());
+        costBO.queryCostList(cost);
+        if (req.getIsSubmit().equals(EIsSubmit.SUBMIT.getCode())) {
+            repayPlan.setStatus(ERepayPlanStatus.HESUAN_TO_GREEN.getCode());
+            // 代扣
+        }
+        repayPlan
+            .setOverdueDeposit(StringValidater.toLong(req.getOverdueDeposit()));
+        repayPlan.setDepositWay(req.getOverdueDepositWay());
+        repayPlan.setOverdueHandleNote(req.getRemark());
+        repayPlanBO.refreshRepayPlanOverdue(repayPlan);
+    }
+
+    @Override
+    public void ToGreen(String code, String overdueDeposit) {
+        RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
+        repayPlan.setStatus(ERepayPlanStatus.HESUAN_TO_GREEN.getCode());
+        repayPlan.setOverdueDeposit(StringValidater.toLong(overdueDeposit));
+        repayPlanBO.refreshToGreen(repayPlan);
+    }
+
+    @Override
+    public void ToBlack(String code) {
+        RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
+        repayPlan.setStatus(ERepayPlanStatus.HESUANNOT_TO_BLACK.getCode());
+        repayPlanBO.refreshToBlack(repayPlan);
     }
 
 }

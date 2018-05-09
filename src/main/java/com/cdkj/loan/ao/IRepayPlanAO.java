@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.dto.req.XN630532Req;
 
 public interface IRepayPlanAO {
 
@@ -27,5 +28,14 @@ public interface IRepayPlanAO {
 
     // 当月还款名单
     public Object dyRepayment(int start, int limit, RepayPlan condition);
+
+    // 逾期处理
+    public void OverdueHandle(XN630532Req req);
+
+    // 记绿名单
+    public void ToGreen(String code, String overdueDeposit);
+
+    // 记黑名单
+    public void ToBlack(String code);
 
 }
