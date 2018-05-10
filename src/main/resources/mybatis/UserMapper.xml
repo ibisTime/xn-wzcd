@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cdkj.loan.dao.ICUserDAO">
-	<resultMap id="cuser_DB_Result" type="cuser">
+<mapper namespace="com.cdkj.loan.dao.IUserDAO">
+	<resultMap id="user_DB_Result" type="user">
 		<result column="user_id" property="userId" />
+		<result column="kind" property="kind" />
 		<result column="login_name" property="loginName" />
 		<result column="mobile" property="mobile" />
 		<result column="photo" property="photo" />
@@ -30,6 +31,9 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
+			</if>
+			<if test="kind != null and kind != '' ">
+				AND t.kind = #{kind}
 			</if>
 			<if test="loginName != null and loginName != '' ">
 				AND t.login_name = #{loginName}
@@ -92,9 +96,10 @@
 		</trim>
 	</sql>
 	
-	<select id="select_cuser" parameterType="cuser" resultMap="cuser_DB_Result">
+	<select id="select_user" parameterType="user" resultMap="user_DB_Result">
 		SELECT
 		user_id
+		,kind
 		,login_name
 		,mobile
 		,photo
@@ -123,14 +128,15 @@
 		</trim>
 	</select>
 	
-	<select id="select_cuser_count" parameterType="cuser" resultType="java.lang.Long">
+	<select id="select_user_count" parameterType="user" resultType="java.lang.Long">
 		SELECT count(1) FROM tht_user t
 		<include refid="where_condition" />
 	</select>
 	
-	<insert id="insert_cuser" parameterType="cuser">
+	<insert id="insert_user" parameterType="user">
 		INSERT INTO tstd_user(
 		user_id
+		,kind
 		,login_name
 		,mobile
 		,photo
@@ -153,6 +159,7 @@
 		)
 		VALUES(
 		#{userId}
+		,#{kind}
 		,#{loginName}
 		,#{mobile}
 		,#{photo}
@@ -175,30 +182,7 @@
 		)
 	</insert>
 	
-	<update id="update_cuser" parameterType="cuser">
-		UPDATE tstd_user SET
-		login_name           =	#{loginName}
-		,mobile              =	#{mobile}
-		,photo               =	#{photo}
-		,nickname            =	#{nickname}
-		,login_pwd           =	#{loginPwd}
-		,login_pwd_strength   =	#{loginPwdStrength}
-		,user_referee        =	#{userReferee}
-		,referee_mobile      =	#{refereeMobile}
-		,trade_pwd           =	#{tradePwd}
-		,trade_pwd_strength  =	#{tradePwdStrength}
-		,id_kind             =	#{idKind}
-		,id_no               =	#{idNo}
-		,real_name           =	#{realName}
-		,jf_amount           =	#{jfAmount}
-		,amount              =	#{amount}
-		,creditscore         =	#{creditscore}
-		,status              =	#{status}
-		,create_datetime     =	#{createDatetime}
-		,remark              =	#{remark}
-	</update>
-	
-	<update id="update_login_pwd" parameterType="cuser">
+	<update id="update_login_pwd" parameterType="user">
 		UPDATE tstd_user
 		SET
 		 login_pwd = #{loginPwd}
@@ -207,7 +191,7 @@
 		user_id = #{userId}	
 	</update>
 	
-	<update id="update_mobile" parameterType="cuser">
+	<update id="update_mobile" parameterType="user">
 		UPDATE tstd_user
 		SET
 		login_name = #{mobile}
@@ -216,7 +200,7 @@
 		user_id = #{userId}
 	</update>
 	
-	<update id="update_cuser_nickname" parameterType="cuser">
+	<update id="update_user_nickname" parameterType="user">
 		UPDATE tstd_user
 		SET
 		 nickname = #{nickname}

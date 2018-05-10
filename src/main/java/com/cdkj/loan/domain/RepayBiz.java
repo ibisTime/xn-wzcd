@@ -122,7 +122,7 @@ public class RepayBiz extends ABaseDO {
     // ****** 辅助字段 ******
 
     // 用户信息
-    private CUser user;
+    private User user;
 
     // 车贷订单
     private LoanOrder loanOrder;
@@ -410,11 +410,11 @@ public class RepayBiz extends ABaseDO {
         return remark;
     }
 
-    public CUser getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(CUser user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

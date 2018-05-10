@@ -3,9 +3,9 @@ package com.cdkj.loan.bo;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
-import com.cdkj.loan.domain.CUser;
+import com.cdkj.loan.domain.User;
 
-public interface ICUserBO extends IPaginableBO<CUser> {
+public interface IUserBO extends IPaginableBO<User> {
 
     // C端用户注册
     public String doRegister(String mobile, String loginPwd, String smsCaptcha);
@@ -29,16 +29,16 @@ public interface ICUserBO extends IPaginableBO<CUser> {
     // 判断推荐人是否存在(手机号)
     // public void checkUserReferee(String userReferee, String systemCode);
 
-    public List<CUser> queryUserList(CUser condition);
+    public List<User> queryUserList(User condition);
 
     public String getUserIdByMobile(String mobile);
 
-    public CUser getUser(String userId);
+    public User getUser(String userId);
 
     public String saveUser(String mobile);
 
-    public String saveCNavigate(CUser data);
+    public String saveCNavigate(User data);
 
-    public CUser getUserById(String userId);
+    public User getUserById(String userId);
 
 }

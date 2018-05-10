@@ -8,21 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cdkj.loan.ao.ICUserAO;
-import com.cdkj.loan.bo.ICUserBO;
+import com.cdkj.loan.ao.IUserAO;
 import com.cdkj.loan.bo.ISmsOutBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.MD5Util;
-import com.cdkj.loan.domain.CUser;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN630200Req;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Service
-public class CUserAOImpl implements ICUserAO {
+public class UserAOImpl implements IUserAO {
 
     @Autowired
-    private ICUserBO cUserBO;
+    private IUserBO cUserBO;
 
     @Autowired
     ISmsOutBO smsOutBO;
@@ -61,7 +61,7 @@ public class CUserAOImpl implements ICUserAO {
     @Override
     @Transactional
     public String doLogin(String loginName, String loginPwd) {
-        CUser condition = new CUser();
+        User condition = new User();
         // if (EUserKind.Customer.getCode().equals(kind)
         // || EUserKind.Merchant.getCode().equals(kind)) {
         // condition.setLoginName(loginName);
@@ -69,16 +69,16 @@ public class CUserAOImpl implements ICUserAO {
         // } else {
         condition.setLoginName(loginName);
         // }
-        List<CUser> userList1 = cUserBO.queryUserList(condition);
+        List<User> userList1 = cUserBO.queryUserList(condition);
         if (CollectionUtils.isEmpty(userList1)) {
             throw new BizException("xn805050", "登录名不存在");
         }
         condition.setLoginPwd(MD5Util.md5(loginPwd));
-        List<CUser> userList2 = cUserBO.queryUserList(condition);
+        List<User> userList2 = cUserBO.queryUserList(condition);
         if (CollectionUtils.isEmpty(userList2)) {
             throw new BizException("xn805050", "登录密码错误");
         }
-        CUser cuser = userList2.get(0);
+        User cuser = userList2.get(0);
         if (!EUserStatus.NORMAL.getCode().equals(cuser.getStatus())) {
             throw new BizException("xn805050",
                 "该账号" + EUserStatus.getMap().get(cuser.getStatus()).getValue()
@@ -92,14 +92,14 @@ public class CUserAOImpl implements ICUserAO {
     // 登录名密码验证
     // @Override
     // public void doCheckLoginPwd(String loginName, String loginPwd) {
-    // CUser condition = new CUser();
+    // User condition = new User();
     // condition.setLoginName(loginName);
-    // List<CUser> userList1 = cUserBO.queryUserList(condition);
+    // List<User> userList1 = cUserBO.queryUserList(condition);
     // if (CollectionUtils.isEmpty(userList1)) {
     // throw new BizException("xn702002", "用户不存在");
     // }
     // condition.setLoginPwd(MD5Util.md5(loginPwd));
-    // List<CUser> userList2 = cUserBO.queryUserList(condition);
+    // List<User> userList2 = cUserBO.queryUserList(condition);
     // if (CollectionUtils.isEmpty(userList2)) {
     // throw new BizException("xn702002", "登录密码错误");
     // }
@@ -107,23 +107,22 @@ public class CUserAOImpl implements ICUserAO {
     // }
 
     @Override
-    public String insertCUser(CUser data) {
+    public String insertUser(User data) {
         return cUserBO.saveCNavigate(data);
     }
 
     @Override
-    public Paginable<CUser> queryCUserPage(int start, int limit,
-            CUser condition) {
+    public Paginable<User> queryUserPage(int start, int limit, User condition) {
         return cUserBO.getPaginable(start, limit, condition);
     }
 
     @Override
-    public List<CUser> queryCUserList(CUser condition) {
+    public List<User> queryUserList(User condition) {
         return cUserBO.queryUserList(condition);
     }
 
     @Override
-    public CUser getCUser(String userId) {
+    public User getUser(String userId) {
         return cUserBO.getUser(userId);
     }
 

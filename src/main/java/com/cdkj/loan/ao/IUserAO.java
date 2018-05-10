@@ -3,10 +3,10 @@ package com.cdkj.loan.ao;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.Paginable;
-import com.cdkj.loan.domain.CUser;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN630200Req;
 
-public interface ICUserAO {
+public interface IUserAO {
     String DEFAULT_ORDER_COLUMN = "user_id";
 
     // C端用户注册
@@ -24,16 +24,15 @@ public interface ICUserAO {
     public String doLogin(String loginName, String loginPwd);
 
     // 注册
-    public String insertCUser(CUser data);
+    public String insertUser(User data);
 
     // 分页查询
-    public Paginable<CUser> queryCUserPage(int start, int limit,
-            CUser condition);
+    public Paginable<User> queryUserPage(int start, int limit, User condition);
 
     // 列表查询
-    public List<CUser> queryCUserList(CUser condition);
+    public List<User> queryUserList(User condition);
 
     // 详情查询
-    public CUser getCUser(String userId);
+    public User getUser(String userId);
 
 }

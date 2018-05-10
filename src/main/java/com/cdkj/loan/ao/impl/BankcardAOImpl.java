@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.bo.IBankcardBO;
-import com.cdkj.loan.bo.ICUserBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.OrderNoGenerater;
@@ -27,7 +27,7 @@ public class BankcardAOImpl implements IBankcardAO {
     private IRepayBizBO repayBizBO;
 
     @Autowired
-    private ICUserBO cUserBO;
+    private IUserBO cUserBO;
 
     @Override
     public String addBankcard(XN630510Req req) {

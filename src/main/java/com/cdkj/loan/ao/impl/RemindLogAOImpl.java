@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IRemindLogAO;
-import com.cdkj.loan.bo.ICUserBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.IRemindLogBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.ISmsOutBO;
@@ -30,7 +30,7 @@ public class RemindLogAOImpl implements IRemindLogAO {
     private IRepayPlanBO repayPlanBO;
 
     @Autowired
-    private ICUserBO cUserBO;
+    private IUserBO cUserBO;
 
     @Override
     public String addRemindLog(RemindLog data) {

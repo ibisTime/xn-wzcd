@@ -119,7 +119,7 @@ public class LoanOrder extends ABaseDO {
     // ****** 辅助字段 ******
 
     // 用户信息
-    private CUser user;
+    private User user;
 
     public String getCode() {
         return code;
@@ -393,11 +393,11 @@ public class LoanOrder extends ABaseDO {
         return remark;
     }
 
-    public CUser getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(CUser user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

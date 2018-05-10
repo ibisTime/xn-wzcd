@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
-public class CUser extends ABaseDO {
+public class User extends ABaseDO {
 
     /** 
      * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
@@ -13,6 +13,9 @@ public class CUser extends ABaseDO {
 
     // 编号
     private String userId;
+
+    // 用户类型
+    private String kind;
 
     // 登录名
     private String loginName;
@@ -82,6 +85,14 @@ public class CUser extends ABaseDO {
 
     public void setUserId(String userId2) {
         this.userId = userId2;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
     }
 
     public String getLoginName() {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICostAO;
 import com.cdkj.loan.ao.IRepayPlanAO;
-import com.cdkj.loan.bo.ICUserBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.ICostBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
@@ -29,7 +29,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     private IRepayPlanBO repayPlanBO;
 
     @Autowired
-    private ICUserBO cUserBO;
+    private IUserBO cUserBO;
 
     @Autowired
     private IRepayBizBO repayBizBO;

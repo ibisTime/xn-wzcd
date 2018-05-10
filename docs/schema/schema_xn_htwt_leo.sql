@@ -319,6 +319,7 @@ CREATE TABLE `tht_remind_log` (
 /*C端用户*/
 CREATE TABLE `tstd_user` (
   `user_id` varchar(32) NOT NULL COMMENT '编号',
+  `kind` varchar(4) DEFAULT NULL COMMENT '用户类型',
   `login_name` varchar(255) DEFAULT NULL COMMENT '登录名',
   `mobile` varchar(16) DEFAULT NULL COMMENT '手机号',
   `photo` varchar(255) DEFAULT NULL COMMENT '头像',
@@ -419,7 +420,7 @@ CREATE TABLE `tstd_jour` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*系统*/
-CREATE TABLE `tht_user` (
+CREATE TABLE `tsys_user` (
   `user_id` varchar(32) NOT NULL COMMENT '用户ID',
   `photo` varchar(255) DEFAULT NULL COMMENT '头像',
   `login_name` varchar(64) DEFAULT NULL COMMENT '登录名',

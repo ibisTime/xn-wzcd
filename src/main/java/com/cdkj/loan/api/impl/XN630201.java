@@ -1,6 +1,6 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.ICUserAO;
+import com.cdkj.loan.ao.IUserAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
@@ -18,7 +18,7 @@ import com.cdkj.loan.spring.SpringContextHolder;
  */
 public class XN630201 extends AProcessor {
 
-    private ICUserAO cuserAO = SpringContextHolder.getBean(ICUserAO.class);
+    private IUserAO cuserAO = SpringContextHolder.getBean(IUserAO.class);
 
     private XN630201Req req = null;
 

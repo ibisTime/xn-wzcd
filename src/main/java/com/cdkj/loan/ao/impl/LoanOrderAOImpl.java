@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.ao.ILoanOrderAO;
-import com.cdkj.loan.bo.ICUserBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.ILoanOrderBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
@@ -33,7 +33,7 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
     private ILoanOrderBO loanOrderBO;
 
     @Autowired
-    private ICUserBO cUserBO;
+    private IUserBO cUserBO;
 
     @Autowired
     private IBankcardAO bankcardAO;

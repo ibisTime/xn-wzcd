@@ -83,7 +83,7 @@ public class RepayPlan extends ABaseDO {
     private Date repayEndDatetime;
 
     // 用户信息
-    private CUser user;
+    private User user;
 
     // 费用清单
     private List<Cost> costList;
@@ -272,11 +272,11 @@ public class RepayPlan extends ABaseDO {
         this.remindCount = remindCount;
     }
 
-    public CUser getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(CUser user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

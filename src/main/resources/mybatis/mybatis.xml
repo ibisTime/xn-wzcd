@@ -4,7 +4,7 @@
 	<typeAliases>
 	    
 	    <!-- 用户  -->
-	    <typeAlias alias="cuser" type="com.cdkj.loan.domain.CUser" />
+	    <typeAlias alias="user" type="com.cdkj.loan.domain.User" />
 		<typeAlias alias="address" type="com.std.user.domain.Address" />
 		<typeAlias alias="bankcard" type="com.cdkj.loan.domain.Bankcard" />
 		<typeAlias alias="blacklist" type="com.cdkj.loan.domain.Blacklist" />

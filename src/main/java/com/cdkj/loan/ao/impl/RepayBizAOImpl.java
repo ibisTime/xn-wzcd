@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.ao.IRepayBizAO;
-import com.cdkj.loan.bo.ICUserBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.ILoanOrderBO;
 import com.cdkj.loan.bo.IOrderBO;
 import com.cdkj.loan.bo.IRepayBizBO;
@@ -40,7 +40,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     private IBankcardAO bankcardAO;
 
     @Autowired
-    private ICUserBO cUserBO;
+    private IUserBO cUserBO;
 
     @Autowired
     private ILoanOrderBO loanOrderBO;

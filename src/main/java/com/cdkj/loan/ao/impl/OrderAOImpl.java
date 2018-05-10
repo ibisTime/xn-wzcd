@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.bo.IAccountBO;
-import com.cdkj.loan.bo.ICUserBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.IExpressRuleBO;
 import com.cdkj.loan.bo.IOrderBO;
 import com.cdkj.loan.bo.IProductBO;
@@ -36,7 +36,7 @@ import com.cdkj.loan.common.ProvinceUtil;
 import com.cdkj.loan.core.CalculationUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
-import com.cdkj.loan.domain.CUser;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.Product;
 import com.cdkj.loan.domain.ProductOrder;
@@ -76,7 +76,7 @@ public class OrderAOImpl implements IOrderAO {
     private IProductSpecsBO productSpecsBO;
 
     @Autowired
-    private ICUserBO cUserBO;
+    private IUserBO cUserBO;
 
     @Autowired
     private IAccountBO accountBO;
@@ -182,7 +182,7 @@ public class OrderAOImpl implements IOrderAO {
             throw new BizException("xn000000", "订单不处于待支付状态,不能修改运费");
         }
         orderBO.refreshYunfei(order, yunfei);
-        CUser user = cUserBO.getUser(order.getApplyUser());
+        User user = cUserBO.getUser(order.getApplyUser());
         // 发短信
         smsOutBO.sendSmsOut(user.getMobile(), "尊敬的用户，您的待支付订单[" + order.getCode()
                 + "]运费已成功修改为" + CalculationUtil.diviDown(yunfei) + "元，请及时支付订单");
@@ -210,7 +210,7 @@ public class OrderAOImpl implements IOrderAO {
     }
 
     private Object toPayOrder(Order order, String payType, String isDk) {
-        CUser user = cUserBO.getUser(order.getApplyUser());
+        User user = cUserBO.getUser(order.getApplyUser());
         if (EPayType.YE.getCode().equals(payType)) {
             return toPayOrderYE(order, user, isDk);
         } else if (EPayType.WITHHOLD.getCode().equals(payType)) {
@@ -220,7 +220,7 @@ public class OrderAOImpl implements IOrderAO {
         }
     }
 
-    private Object toPayOrderYE(Order order, CUser user, String isDk) {
+    private Object toPayOrderYE(Order order, User user, String isDk) {
         // String buyUser = user.getUserId();
         // EBizType bizType = EBizType.AJ_GW;
         // XN808071Res dkAmountRes = getOrderDkAmount(order, isDk);
@@ -281,7 +281,7 @@ public class OrderAOImpl implements IOrderAO {
         return new BooleanRes(true);
     }
 
-    private Object toPayOrderWithhold(Order order, CUser user, String isDk) {
+    private Object toPayOrderWithhold(Order order, User user, String isDk) {
         // XN808071Res dkAmountRes = getOrderDkAmount(order, isDk);
         // Long jfAmount = order.getAmount2() + dkAmountRes.getJfAmount();//
         // 积分金额
@@ -376,7 +376,7 @@ public class OrderAOImpl implements IOrderAO {
         // 更新订单信息
         orderBO.platCancel(code, updater, remark, status);
 
-        CUser user = cUserBO.getUser(order.getApplyUser());
+        User user = cUserBO.getUser(order.getApplyUser());
         // 发送短信
         if (StringUtils.isNotBlank(remark)) {
             remark = ",取消原因是：" + remark;
@@ -469,7 +469,7 @@ public class OrderAOImpl implements IOrderAO {
             req.getRemark());
 
         // 发送短信
-        CUser user = cUserBO.getUser(order.getApplyUser());
+        User user = cUserBO.getUser(order.getApplyUser());
         String notice = "";
         if (CollectionUtils.isNotEmpty(order.getProductOrderList())) {
             if (order.getProductOrderList().size() > 1) {

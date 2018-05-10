@@ -8,22 +8,22 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.cdkj.loan.bo.ICUserBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.common.PwdUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
-import com.cdkj.loan.dao.ICUserDAO;
-import com.cdkj.loan.domain.CUser;
+import com.cdkj.loan.dao.IUserDAO;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EUserStatus;
 
 @Component
-public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
+public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
 
     @Autowired
-    private ICUserDAO cuserDAO;
+    private IUserDAO userDAO;
 
     // @Override public void isMobileExist(String mobile) { if
     // (StringUtils.isNotBlank(mobile)) { // 判断格式 PhoneUtil.checkMobile(mobile);
@@ -72,19 +72,19 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
      */
 
     @Override
-    public List<CUser> queryUserList(CUser condition) {
-        return cuserDAO.selectList(condition);
+    public List<User> queryUserList(User condition) {
+        return userDAO.selectList(condition);
     }
 
     @Override
     public String getUserIdByMobile(String mobile) {
         String userId = null;
         if (StringUtils.isNotBlank(mobile)) {
-            CUser condition = new CUser();
+            User condition = new User();
             condition.setMobile(mobile);
-            List<CUser> list = cuserDAO.selectList(condition);
+            List<User> list = userDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
-                CUser data = list.get(0);
+                User data = list.get(0);
                 userId = data.getUserId();
             }
         }
@@ -92,12 +92,12 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
     }
 
     @Override
-    public CUser getUser(String userId) {
-        CUser cuser = null;
+    public User getUser(String userId) {
+        User cuser = null;
         if (StringUtils.isNotBlank(userId)) {
-            CUser condition = new CUser();
+            User condition = new User();
             condition.setUserId(userId);
-            List<CUser> list = cuserDAO.selectList(condition);
+            List<User> list = userDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
                 cuser = list.get(0);
             }
@@ -106,12 +106,12 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
     }
 
     @Override
-    public CUser getUserById(String userId) {
-        CUser cuser = null;
+    public User getUserById(String userId) {
+        User cuser = null;
         if (StringUtils.isNotBlank(userId)) {
-            CUser condition = new CUser();
+            User condition = new User();
             condition.setUserId(userId);
-            List<CUser> list = cuserDAO.selectList(condition);
+            List<User> list = userDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
                 cuser = list.get(0);
             }
@@ -124,16 +124,16 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
         String cuserId = null;
         if (StringUtils.isNotBlank(mobile)) {
             cuserId = OrderNoGenerater.generate("U");
-            CUser data = new CUser();
+            User data = new User();
             data.setUserId(cuserId);
             data.setMobile(mobile);
-            cuserDAO.insert(data);
+            userDAO.insert(data);
         }
         return cuserId;
     }
 
     @Override
-    public String saveCNavigate(CUser data) {
+    public String saveCNavigate(User data) {
         String userId = null;
         if (data != null) {
             if (data.getUserId() == null) {
@@ -141,7 +141,7 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
                     .generate(EGeneratePrefix.DH.getCode());
                 data.setUserId(userId);
             }
-            cuserDAO.insert(data);
+            userDAO.insert(data);
         }
         return userId;
     }
@@ -150,7 +150,7 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
     public String doRegister(String mobile, String loginPwd,
             String smsCaptcha) {
         String userId = OrderNoGenerater.generate("U");
-        CUser user = new CUser();
+        User user = new User();
         user.setUserId(userId);
         user.setLoginName(mobile);
         user.setMobile(mobile);
@@ -158,7 +158,7 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
         user.setLoginPwd(MD5Util.md5(loginPwd));
         user.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
 
-        cuserDAO.insert(user);
+        userDAO.insert(user);
         return userId;
     }
 
@@ -167,7 +167,7 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
             String realName, String idNo) {
         String userId = OrderNoGenerater.generate("U");
         String loginPwd = "888888";
-        CUser user = new CUser();
+        User user = new User();
         user.setUserId(userId);
         user.setMobile(mobile);
         user.setLoginName(mobile);
@@ -180,7 +180,7 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
         user.setAmount(0L);
         user.setStatus(EUserStatus.NORMAL.getCode());
         user.setCreateDatetime(new Date());
-        cuserDAO.insert(user);
+        userDAO.insert(user);
         return userId;
     }
 

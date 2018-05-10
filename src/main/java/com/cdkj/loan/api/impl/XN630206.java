@@ -2,11 +2,11 @@ package com.cdkj.loan.api.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.cdkj.loan.ao.ICUserAO;
+import com.cdkj.loan.ao.IUserAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.StringValidater;
-import com.cdkj.loan.domain.CUser;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN630206Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
@@ -20,13 +20,13 @@ import com.cdkj.loan.spring.SpringContextHolder;
  */
 public class XN630206 extends AProcessor {
 
-    private ICUserAO cuserAO = SpringContextHolder.getBean(ICUserAO.class);
+    private IUserAO cuserAO = SpringContextHolder.getBean(IUserAO.class);
 
     private XN630206Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        CUser condition = new CUser();
+        User condition = new User();
         condition.setLoginName(req.getLoginName());
         condition.setMobile(req.getMobile());
         condition.setUserReferee(req.getUserReferee());
@@ -37,10 +37,10 @@ public class XN630206 extends AProcessor {
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
-            orderColumn = ICUserAO.DEFAULT_ORDER_COLUMN;
+            orderColumn = IUserAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(orderColumn, req.getOrderDir());
-        return cuserAO.queryCUserList(condition);
+        return cuserAO.queryUserList(condition);
     }
 
     @Override
