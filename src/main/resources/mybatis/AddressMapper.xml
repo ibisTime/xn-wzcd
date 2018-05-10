@@ -9,8 +9,8 @@
 		<result column="mobile" property="mobile" />
 		<result column="province" property="province" />
 		<result column="city" property="city" />
-		<result column="area" property="district" />
-		<result column="detail" property="detailAddress" />
+		<result column="area" property="area" />
+		<result column="detail" property="detail" />
 		<result column="is_default" property="isDefault" />
 	</resultMap>
 	<sql id="where_condition">
@@ -75,7 +75,6 @@
 		,#{area}
 		,#{detail}
 		,#{isDefault}
-		
 		)
 	</insert>
 
