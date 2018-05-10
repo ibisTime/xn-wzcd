@@ -5,15 +5,15 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
-import com.cdkj.loan.domain.User;
+import com.cdkj.loan.domain.SYSUser;
 
 @Component
-public interface IUserAO {
+public interface ISYSUserAO {
 
     static final String DEFAULT_ORDER_COLUMN = "user_id";
 
     // 用户登录
-    public String doLogin(String loginName, String loginPwd);
+    public String doLogin(String type, String loginName, String loginPwd);
 
     // 注销/激活用户
     public void doCloseOpen(String userId, String updater, String remark);
@@ -47,12 +47,14 @@ public interface IUserAO {
     // 修改头像
     public void doModifyPhoto(String userId, String photo);
 
-    public Paginable<User> queryUserPage(int start, int limit, User condition);
+    public Paginable<SYSUser> queryUserPage(int start, int limit,
+            SYSUser condition);
 
-    public List<User> queryUserList(User condition);
+    public List<SYSUser> queryUserList(SYSUser condition);
 
-    public User getUser(String code);
+    public SYSUser getUser(String code);
 
-    public String doAddUser(String loginName, String loginPwd, String mobile);
+    public String doAddUser(String type, String loginName, String loginPwd,
+            String mobile);
 
 }

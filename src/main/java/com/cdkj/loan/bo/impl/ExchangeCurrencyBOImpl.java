@@ -14,7 +14,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IExchangeCurrencyDAO;
 import com.cdkj.loan.domain.ExchangeCurrency;
-import com.cdkj.loan.domain.User;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EExchangeCurrencyStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
@@ -121,7 +121,7 @@ public class ExchangeCurrencyBOImpl extends PaginableBOImpl<ExchangeCurrency>
     }
 
     @Override
-    public String applyExchange(User user, BigDecimal fromAmount,
+    public String applyExchange(SYSUser user, BigDecimal fromAmount,
             String fromCurrency, String toCurrency) {
         String code = OrderNoGenerater
             .generate(EGeneratePrefix.EXCHANGE_CURRENCY.getCode());

@@ -2,7 +2,7 @@ package com.cdkj.loan.api.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.cdkj.loan.ao.IUserAO;
+import com.cdkj.loan.ao.ISYSUserAO;
 import com.cdkj.loan.ao.IUserRelationAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
@@ -42,7 +42,7 @@ public class XN805115 extends AProcessor {
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
-            column = IUserAO.DEFAULT_ORDER_COLUMN;
+            column = ISYSUserAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(column, req.getOrderDir());
         condition.setType(type);

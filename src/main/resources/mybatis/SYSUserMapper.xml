@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cdkj.loan.dao.IUserDAO">
+<mapper namespace="com.cdkj.loan.dao.ISYSUserDAO">
 	<resultMap id="user_DB_Result" type="user">
 		<result column="user_id" property="userId" />
+		<result column="type" property="type" />
 		<result column="photo" property="photo" />
 		<result column="login_name" property="loginName" />
 		<result column="mobile" property="mobile" />
@@ -21,6 +22,9 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
+			</if>
+			<if test="type != null and type != '' ">
+				AND t.type = #{type}
 			</if>
 			<if test="loginName != null and loginName != '' ">
 				AND t.login_name = #{loginName}
@@ -51,6 +55,7 @@
 	<select id="select_user" parameterType="user" resultMap="user_DB_Result">
 		SELECT
 		t.user_id
+		,t.type
 		,t.photo
 		,t.login_name
 		,t.mobile
@@ -61,7 +66,7 @@
 		,t.status
 		,t.remark
 		FROM
-		tht_user t
+		tsys_user t
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -72,14 +77,15 @@
 
 	<select id="select_user_count" parameterType="user"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tht_user t
+		SELECT count(1) FROM tsys_user t
 		<include refid="where_condition" />
 	</select>
 
 	<insert id="insert_user" parameterType="user">
 		INSERT INTO
-		tht_user(
+		tsys_user(
 		user_id
+		,type
 		,photo
 		,login_name
 		,mobile
@@ -94,6 +100,7 @@
 		)
 		VALUES(
 		#{userId}
+		,#{type}
 		,#{photo}
 		,#{loginName}
 		,#{mobile}
@@ -109,7 +116,7 @@
 	</insert>
 
 	<update id="update_user" parameterType="user">
-		UPDATE tht_user
+		UPDATE tsys_user
 		SET
 		photo = #{photo}
 		,login_name = #{loginName}
@@ -125,7 +132,7 @@
 	
 		
 	<update id="update_status" parameterType="user">
-		UPDATE tht_user
+		UPDATE tsys_user
 		SET
 		status = #{status}
 		,updater = #{updater}
@@ -136,7 +143,7 @@
 
 
 	<update id="update_login_pwd" parameterType="user">
-		UPDATE tht_user
+		UPDATE tsys_user
 		SET
 		 login_pwd = #{loginPwd}
 		,login_pwd_strength = #{loginPwdStrength}
@@ -147,7 +154,7 @@
 	</update>	
 
 	<update id="update_role" parameterType="user">
-		UPDATE tht_user
+		UPDATE tsys_user
 		SET
 		 role_code = #{roleCode}
 		 ,updater = #{updater}
@@ -159,7 +166,7 @@
 	
 		
 	<update id="update_mobile" parameterType="user">
-		UPDATE tht_user
+		UPDATE tsys_user
 		SET
 		mobile = #{mobile}
 		WHERE
@@ -168,7 +175,7 @@
 
 
 	<update id="update_user_photo" parameterType="user">
-		UPDATE tht_user
+		UPDATE tsys_user
 		SET
 		photo = #{photo}
 		WHERE user_id = #{userId}

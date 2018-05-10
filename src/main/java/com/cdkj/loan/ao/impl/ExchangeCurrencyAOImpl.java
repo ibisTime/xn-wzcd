@@ -6,16 +6,16 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IExchangeCurrencyAO;
 import com.cdkj.loan.bo.IExchangeCurrencyBO;
-import com.cdkj.loan.bo.IUserBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.ExchangeCurrency;
-import com.cdkj.loan.domain.User;
+import com.cdkj.loan.domain.SYSUser;
 
 @Service
 public class ExchangeCurrencyAOImpl implements IExchangeCurrencyAO {
 
     @Autowired
-    private IUserBO userBO;
+    private ISYSUserBO userBO;
 
 
     @Autowired
@@ -29,10 +29,10 @@ public class ExchangeCurrencyAOImpl implements IExchangeCurrencyAO {
             start, limit, condition);
         if (page != null && CollectionUtils.isNotEmpty(page.getList())) {
             for (ExchangeCurrency exchangeCurrency : page.getList()) {
-                User fromUser = userBO
+                SYSUser fromUser = userBO
                     .getUser(exchangeCurrency.getFromUserId());
                 exchangeCurrency.setFromUser(fromUser);
-                User toUser = userBO.getUser(exchangeCurrency.getToUserId());
+                SYSUser toUser = userBO.getUser(exchangeCurrency.getToUserId());
                 exchangeCurrency.setToUser(toUser);
             }
         }
@@ -43,7 +43,7 @@ public class ExchangeCurrencyAOImpl implements IExchangeCurrencyAO {
     public ExchangeCurrency getExchangeCurrency(String code) {
         ExchangeCurrency exchangeCurrency = exchangeCurrencyBO
             .getExchangeCurrency(code);
-        User fromUser = userBO.getUser(exchangeCurrency.getFromUserId());
+        SYSUser fromUser = userBO.getUser(exchangeCurrency.getFromUserId());
         exchangeCurrency.setFromUser(fromUser);
         return exchangeCurrency;
     }

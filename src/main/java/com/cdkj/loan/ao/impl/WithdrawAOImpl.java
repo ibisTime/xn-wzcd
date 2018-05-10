@@ -19,14 +19,14 @@ import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSDictBO;
 import com.cdkj.loan.bo.ISmsOutBO;
-import com.cdkj.loan.bo.IUserBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IWithdrawBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.domain.SYSDict;
-import com.cdkj.loan.domain.User;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.Withdraw;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EBoolean;
@@ -46,7 +46,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
     private IWithdrawBO withdrawBO;
 
     @Autowired
-    private IUserBO userBO;
+    private ISYSUserBO userBO;
 
     @Autowired
     private ISYSConfigBO sysConfigBO;
@@ -62,7 +62,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
     public String applyOrderTradePwd(String accountNumber, BigDecimal amount,
             String payCardInfo, String payCardNo, String applyUser,
             String applyNote, String tradePwd, String googleCaptcha) {
-        User user = userBO.getUser(applyUser);
+        SYSUser user = userBO.getUser(applyUser);
         // if (StringUtils.isBlank(user.getRealName())) {
         // throw new BizException("xn000000", "请先进行实名认证");
         // }
@@ -232,7 +232,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
         if (CollectionUtils.isNotEmpty(page.getList())) {
             List<Withdraw> list = page.getList();
             for (Withdraw withdraw : list) {
-                User user = userBO.getUser(withdraw.getApplyUser());
+                SYSUser user = userBO.getUser(withdraw.getApplyUser());
                 withdraw.setUser(user);
             }
         }
@@ -244,7 +244,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
         List<Withdraw> list = withdrawBO.queryWithdrawList(condition);
         if (CollectionUtils.isNotEmpty(list)) {
             for (Withdraw withdraw : list) {
-                User user = userBO.getUser(withdraw.getApplyUser());
+                SYSUser user = userBO.getUser(withdraw.getApplyUser());
                 withdraw.setUser(user);
             }
         }
@@ -254,7 +254,7 @@ public class WithdrawAOImpl implements IWithdrawAO {
     @Override
     public Withdraw getWithdraw(String code, String systemCode) {
         Withdraw withdraw = withdrawBO.getWithdraw(code, systemCode);
-        User user = userBO.getUser(withdraw.getApplyUser());
+        SYSUser user = userBO.getUser(withdraw.getApplyUser());
         withdraw.setUser(user);
         return withdraw;
     }

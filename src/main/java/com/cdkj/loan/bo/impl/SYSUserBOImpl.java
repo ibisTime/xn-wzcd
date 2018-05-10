@@ -7,24 +7,24 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.cdkj.loan.bo.IUserBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.common.PhoneUtil;
 import com.cdkj.loan.common.PwdUtil;
-import com.cdkj.loan.dao.IUserDAO;
-import com.cdkj.loan.domain.User;
+import com.cdkj.loan.dao.ISYSUserDAO;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
+public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements ISYSUserBO {
 
     @Autowired
-    private IUserDAO userDAO;
+    private ISYSUserDAO userDAO;
 
     @Override
-    public void resetAdminLoginPwd(User user, String loginPwd) {
+    public void resetAdminLoginPwd(SYSUser user, String loginPwd) {
         user.setLoginPwd(MD5Util.md5(loginPwd));
         user.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
         userDAO.updateLoginPwd(user);
@@ -33,7 +33,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     @Override
     public void refreshMobile(String userId, String mobile) {
         if (StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(mobile)) {
-            User data = new User();
+            SYSUser data = new SYSUser();
             data.setUserId(userId);
             data.setMobile(mobile);
             userDAO.updateMobile(data);
@@ -44,7 +44,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     public void refreshRole(String userId, String roleCode, String updater,
             String remark) {
         if (StringUtils.isNotBlank(userId)) {
-            User data = new User();
+            SYSUser data = new SYSUser();
             data.setUserId(userId);
             data.setRoleCode(roleCode);
             data.setUpdater(updater);
@@ -58,7 +58,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     public void refreshStatus(String userId, EUserStatus status, String updater,
             String remark) {
         if (StringUtils.isNotBlank(userId)) {
-            User data = new User();
+            SYSUser data = new SYSUser();
             data.setUserId(userId);
             data.setStatus(status.getCode());
             data.setUpdater(updater);
@@ -73,7 +73,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         if (StringUtils.isNotBlank(mobile)) {
             // 判断格式
             PhoneUtil.checkMobile(mobile);
-            User condition = new User();
+            SYSUser condition = new SYSUser();
             condition.setMobile(mobile);
             long count = getTotalCount(condition);
             if (count > 0) {
@@ -83,7 +83,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     }
 
     @Override
-    public void refreshLoginPwd(User data, String loginPwd, String udpater,
+    public void refreshLoginPwd(SYSUser data, String loginPwd, String udpater,
             String remark) {
         data.setLoginPwd(MD5Util.md5(loginPwd));
         data.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
@@ -96,7 +96,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     @Override
     public void refreshLoginPwd(String userId, String loginPwd) {
         if (StringUtils.isNotBlank(userId)) {
-            User data = new User();
+            SYSUser data = new SYSUser();
             data.setLoginPwd(MD5Util.md5(loginPwd));
             data.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
             userDAO.updateLoginPwd(data);
@@ -106,7 +106,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     @Override
     public void refreshPhoto(String userId, String photo) {
         if (StringUtils.isNotBlank(userId)) {
-            User data = new User();
+            SYSUser data = new SYSUser();
             data.setUserId(userId);
             data.setPhoto(photo);
             userDAO.updatePhoto(data);
@@ -115,7 +115,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
 
     @Override
     public boolean isUserExist(String code) {
-        User condition = new User();
+        SYSUser condition = new SYSUser();
         if (userDAO.selectTotalCount(condition) > 0) {
             return true;
         }
@@ -123,20 +123,20 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     }
 
     @Override
-    public void saveUser(User data) {
+    public void saveUser(SYSUser data) {
         userDAO.insert(data);
     }
 
     @Override
-    public List<User> queryUserList(User condition) {
+    public List<SYSUser> queryUserList(SYSUser condition) {
         return userDAO.selectList(condition);
     }
 
     @Override
-    public User getUser(String userId) {
-        User data = null;
+    public SYSUser getUser(String userId) {
+        SYSUser data = null;
         if (StringUtils.isNotBlank(userId)) {
-            User condition = new User();
+            SYSUser condition = new SYSUser();
             condition.setUserId(userId);
             data = userDAO.select(condition);
             if (data == null) {
@@ -150,7 +150,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     public void checkLoginPwd(String userId, String loginPwd) {
         if (StringUtils.isNotBlank(userId)
                 && StringUtils.isNotBlank(loginPwd)) {
-            User condition = new User();
+            SYSUser condition = new SYSUser();
             condition.setUserId(userId);
             condition.setLoginPwd(MD5Util.md5(loginPwd));
             long count = this.getTotalCount(condition);

@@ -17,9 +17,9 @@ public class XN630051Req {
     @NotBlank(message = "登录密码不能为空")
     private String loginPwd;
 
-    // 手机号（必填）
-    @NotBlank(message = "手机号不能为空")
-    private String mobile;
+    // 类型（必填）
+    @NotBlank(message = "类型不能为空")
+    private String type;
 
     public String getLoginName() {
         return loginName;
@@ -37,12 +37,12 @@ public class XN630051Req {
         this.loginPwd = loginPwd;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getType() {
+        return type;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setType(String type) {
+        this.type = type;
     }
 
 }

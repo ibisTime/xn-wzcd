@@ -10,12 +10,15 @@ import com.cdkj.loan.dao.base.ABaseDO;
 * @since: 2018-04-24 10:03:59
 * @history:
 */
-public class User extends ABaseDO {
+public class SYSUser extends ABaseDO {
 
     private static final long serialVersionUID = 1L;
 
     // 用户Id
     private String userId;
+
+    // 类型
+    private String type;
 
     // 头像
     private String photo;
@@ -63,6 +66,14 @@ public class User extends ABaseDO {
 
     public String getUserId() {
         return userId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setPhoto(String photo) {

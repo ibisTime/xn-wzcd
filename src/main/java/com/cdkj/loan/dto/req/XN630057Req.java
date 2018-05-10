@@ -1,7 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 /**
  * @author: xieyj 
  * @since: 2016年9月17日 下午3:58:52 
@@ -10,11 +8,12 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN630057Req {
 
     // 用户编号(必填)
-    @NotBlank(message = "不能为空")
     private String userId;
 
+    // 角色编号(必填)
+    private String roleCode;
+
     // 更新人(必填)
-    @NotBlank(message = "不能为空")
     private String updater;
 
     // 备注(选填)
@@ -26,6 +25,14 @@ public class XN630057Req {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
 
     public String getUpdater() {
@@ -43,5 +50,4 @@ public class XN630057Req {
     public void setRemark(String remark) {
         this.remark = remark;
     }
-
 }

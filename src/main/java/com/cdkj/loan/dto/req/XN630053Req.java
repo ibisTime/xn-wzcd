@@ -9,32 +9,32 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN630053Req {
 
-    // userId
-    @NotBlank(message = "用户Id不能为空")
-    private String userId;
+    // 手机号(必填)
+    @NotBlank(message = "手机号不能为空")
+    private String mobile;
 
-    // 新手机号
-    @NotBlank(message = "新手机号不能为空")
-    private String newMobile;
-
-    // 验证码
-    @NotBlank(message = "验证码不能为空")
+    // 手机验证码(必填)
+    @NotBlank(message = "手机验证不能为空")
     private String smsCaptcha;
 
-    public String getUserId() {
-        return userId;
+    // 新登录密码(必填)
+    @NotBlank(message = "新登录密码不能为空")
+    private String newLoginPwd;
+
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public String getNewMobile() {
-        return newMobile;
+    public String getNewLoginPwd() {
+        return newLoginPwd;
     }
 
-    public void setNewMobile(String newMobile) {
-        this.newMobile = newMobile;
+    public void setNewLoginPwd(String newLoginPwd) {
+        this.newLoginPwd = newLoginPwd;
     }
 
     public String getSmsCaptcha() {
