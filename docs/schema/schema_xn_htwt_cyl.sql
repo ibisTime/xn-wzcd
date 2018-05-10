@@ -103,21 +103,6 @@ CREATE TABLE `tht_car_order` (
   PRIMARY KEY (`code`) COMMENT '购车意向'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*商品分类*/
-DROP TABLE IF EXISTS `tht_category`;
-
-CREATE TABLE `tht_category` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `parent_code` varchar(32) DEFAULT NULL COMMENT '父亲编号',
-  `name` varchar(255) DEFAULT NULL COMMENT '名称',
-  `pic` varchar(255) DEFAULT NULL COMMENT '图片',
-  `order_no` int(11) DEFAULT NULL COMMENT 'UI次序',
-  `status` varchar(4) DEFAULT NULL COMMENT '状态',
-  `updater` varchar(255) DEFAULT NULL COMMENT '修改人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '修改时间',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*清收费用 */
 DROP TABLE IF EXISTS `tht_cost`;
@@ -201,32 +186,6 @@ CREATE TABLE `tht_loan_order` (
   `updater` varchar(32) DEFAULT NULL COMMENT '最近修改人',
   `update_datetime` datetime DEFAULT NULL COMMENT '最近修改时间',
   `remark` varchar(32) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*商品 */
-DROP TABLE IF EXISTS `tht_product`;
-
-CREATE TABLE `tht_product` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `category` varchar(255) DEFAULT NULL COMMENT '大类',
-  `type` varchar(255) DEFAULT NULL COMMENT '小类',
-  `name` varchar(255) DEFAULT NULL COMMENT '名称',
-  `slogan` text COMMENT '广告语',
-  `adv_pic` varchar(255) DEFAULT NULL COMMENT '广告图',
-  `sale_status` varchar(255) DEFAULT NULL COMMENT '销售状态',
-  `pic` varchar(255) DEFAULT NULL COMMENT '图片',
-  `description` text COMMENT '图文详情',
-  `original_price` bigint(20) DEFAULT NULL COMMENT '原价',
-  `price` bigint(20) DEFAULT NULL COMMENT '现价',
-  `credit_score` int(11) DEFAULT NULL COMMENT '最低购买信用分',
-  `location` int(11) DEFAULT NULL COMMENT 'UI位置',
-  `order_no` int(11) DEFAULT NULL COMMENT 'UI次序',
-  `status` varchar(4) DEFAULT NULL COMMENT '状态',
-  `bought_count` int(11) DEFAULT NULL COMMENT '已购次数',
-  `updater` varchar(255) DEFAULT NULL COMMENT '最新修改人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '最新修改时间',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
