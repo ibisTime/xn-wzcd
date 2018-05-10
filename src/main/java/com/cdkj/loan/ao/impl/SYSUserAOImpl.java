@@ -28,7 +28,7 @@ import com.cdkj.loan.exception.BizException;
 public class SYSUserAOImpl implements ISYSUserAO {
 
     @Autowired
-    private ISYSUserBO userBO;
+    private ISYSUserBO sysUserBO;
 
     @Autowired
     private ISYSRoleBO sysRoleBO;
@@ -51,7 +51,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
         data.setCreateDatetme(new Date());
         data.setStatus(EUserStatus.NORMAL.getCode());
-        userBO.saveUser(data);
+        sysUserBO.saveUser(data);
         return userId;
     }
 
@@ -62,7 +62,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         condition.setLoginName(loginName);
         condition.setLoginPwd(MD5Util.md5(loginPwd));
 
-        List<SYSUser> userList2 = userBO.queryUserList(condition);
+        List<SYSUser> userList2 = sysUserBO.queryUserList(condition);
         if (CollectionUtils.isEmpty(userList2)) {
             throw new BizException("xn805050", "登录密码错误");
         }
@@ -77,7 +77,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
     @Transactional
     public void doChangeMoblie(String userId, String newMobile,
             String smsCaptcha) {
-        SYSUser user = userBO.getUser(userId);
+        SYSUser user = sysUserBO.getUser(userId);
         if (user == null) {
             throw new BizException("xn000000", "用户不存在");
         }
@@ -86,10 +86,10 @@ public class SYSUserAOImpl implements ISYSUserAO {
             throw new BizException("xn000000", "新手机与原手机一致");
         }
         // 验证手机号
-        userBO.isMobileExist(newMobile);
+        sysUserBO.isMobileExist(newMobile);
         // 短信验证码是否正确（往新手机号发送）
         // smsOutBO.checkCaptcha(newMobile, smsCaptcha, "805061");
-        userBO.refreshMobile(userId, newMobile);
+        sysUserBO.refreshMobile(userId, newMobile);
         // 发送短信
         // smsOutBO.sendSmsOut(oldMobile,
         // "尊敬的" + PhoneUtil.hideMobile(oldMobile) + "用户，您于"
@@ -108,11 +108,11 @@ public class SYSUserAOImpl implements ISYSUserAO {
             throw new BizException("li01006", "新登录密码不能与原有密码重复");
         }
         // 验证当前登录密码是否正确
-        userBO.checkLoginPwd(userId, oldLoginPwd);
+        sysUserBO.checkLoginPwd(userId, oldLoginPwd);
         // 重置
-        userBO.refreshLoginPwd(userId, newLoginPwd);
+        sysUserBO.refreshLoginPwd(userId, newLoginPwd);
         // 发送短信
-        SYSUser user = userBO.getUser(userId);
+        SYSUser user = sysUserBO.getUser(userId);
         // if (!EUserKind.Plat.getCode().equals(user.getKind())) {
         // smsOutBO.sendSmsOut(user.getMobile(),
         // "尊敬的" + PhoneUtil.hideMobile(user.getMobile())
@@ -126,18 +126,18 @@ public class SYSUserAOImpl implements ISYSUserAO {
     public void doResetLoginPwdByOss(String userId, String loginPwd,
             String udpater, String remark) {
 
-        SYSUser data = userBO.getUser(userId);
-        userBO.refreshLoginPwd(data, loginPwd, udpater, remark);
+        SYSUser data = sysUserBO.getUser(userId);
+        sysUserBO.refreshLoginPwd(data, loginPwd, udpater, remark);
     }
 
     @Override
     public void doModifyPhoto(String userId, String photo) {
-        userBO.refreshPhoto(userId, photo);
+        sysUserBO.refreshPhoto(userId, photo);
     }
 
     @Override
     public void doCloseOpen(String userId, String updater, String remark) {
-        SYSUser user = userBO.getUser(userId);
+        SYSUser user = sysUserBO.getUser(userId);
         if (user == null) {
             throw new BizException("li01004", "用户不存在");
         }
@@ -167,7 +167,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
     @Override
     public void doRoleUser(String userId, String roleCode, String updater,
             String remark) {
-        SYSUser user = userBO.getUser(userId);
+        SYSUser user = sysUserBO.getUser(userId);
         if (user == null) {
             throw new BizException("li01004", "用户不存在");
         }
@@ -175,20 +175,20 @@ public class SYSUserAOImpl implements ISYSUserAO {
         if (role == null) {
             throw new BizException("li01004", "角色不存在");
         }
-        userBO.refreshRole(userId, roleCode, updater, remark);
+        sysUserBO.refreshRole(userId, roleCode, updater, remark);
     }
 
     @Override
     public void resetAdminLoginPwd(String userId, String newLoginPwd) {
-        SYSUser user = userBO.getUser(userId);
-        userBO.resetAdminLoginPwd(user, newLoginPwd);
+        SYSUser user = sysUserBO.getUser(userId);
+        sysUserBO.resetAdminLoginPwd(user, newLoginPwd);
     }
 
     @Override
     @Transactional
     public void doResetLoginPwd(String mobile, String smsCaptcha,
             String newLoginPwd) {
-        SYSUser user = userBO.getUser(mobile);
+        SYSUser user = sysUserBO.getUser(mobile);
         if (StringUtils.isBlank(user.getUserId())) {
             throw new BizException("li01004", "用户不存在,请先注册");
         }
@@ -212,7 +212,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
     @Override
     public void doCheckMobile(String mobile) {
-        userBO.isMobileExist(mobile);
+        sysUserBO.isMobileExist(mobile);
     }
 
     @Override
@@ -224,7 +224,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
                     .before(condition.getCreateDatetimeStart())) {
             throw new BizException("xn0000", "开始时间不能大于结束时间");
         }
-        return userBO.getPaginable(start, limit, condition);
+        return sysUserBO.getPaginable(start, limit, condition);
     }
 
     @Override
@@ -235,12 +235,12 @@ public class SYSUserAOImpl implements ISYSUserAO {
                     .before(condition.getCreateDatetimeStart())) {
             throw new BizException("xn0000", "开始时间不能大于结束时间");
         }
-        return userBO.queryUserList(condition);
+        return sysUserBO.queryUserList(condition);
     }
 
     @Override
     public SYSUser getUser(String userId) {
-        return userBO.getUser(userId);
+        return sysUserBO.getUser(userId);
     }
 
 }

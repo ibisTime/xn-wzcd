@@ -18,16 +18,17 @@ import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements ISYSUserBO {
+public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
+        implements ISYSUserBO {
 
     @Autowired
-    private ISYSUserDAO userDAO;
+    private ISYSUserDAO sysUserDAO;
 
     @Override
     public void resetAdminLoginPwd(SYSUser user, String loginPwd) {
         user.setLoginPwd(MD5Util.md5(loginPwd));
         user.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
-        userDAO.updateLoginPwd(user);
+        sysUserDAO.updateLoginPwd(user);
     }
 
     @Override
@@ -36,7 +37,7 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements ISYSUserB
             SYSUser data = new SYSUser();
             data.setUserId(userId);
             data.setMobile(mobile);
-            userDAO.updateMobile(data);
+            sysUserDAO.updateMobile(data);
         }
     }
 
@@ -50,7 +51,7 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements ISYSUserB
             data.setUpdater(updater);
             data.setUpdateDatetime(new Date());
             data.setRemark(remark);
-            userDAO.updateRole(data);
+            sysUserDAO.updateRole(data);
         }
     }
 
@@ -64,7 +65,7 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements ISYSUserB
             data.setUpdater(updater);
             data.setUpdateDatetime(new Date());
             data.setRemark(remark);
-            userDAO.updateStatus(data);
+            sysUserDAO.updateStatus(data);
         }
     }
 
@@ -90,7 +91,7 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements ISYSUserB
         data.setUpdater(udpater);
         data.setUpdateDatetime(new Date());
         data.setRemark(remark);
-        userDAO.updateLoginPwd(data);
+        sysUserDAO.updateLoginPwd(data);
     }
 
     @Override
@@ -99,7 +100,7 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements ISYSUserB
             SYSUser data = new SYSUser();
             data.setLoginPwd(MD5Util.md5(loginPwd));
             data.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
-            userDAO.updateLoginPwd(data);
+            sysUserDAO.updateLoginPwd(data);
         }
     }
 
@@ -109,14 +110,14 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements ISYSUserB
             SYSUser data = new SYSUser();
             data.setUserId(userId);
             data.setPhoto(photo);
-            userDAO.updatePhoto(data);
+            sysUserDAO.updatePhoto(data);
         }
     }
 
     @Override
     public boolean isUserExist(String code) {
         SYSUser condition = new SYSUser();
-        if (userDAO.selectTotalCount(condition) > 0) {
+        if (sysUserDAO.selectTotalCount(condition) > 0) {
             return true;
         }
         return false;
@@ -124,12 +125,12 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements ISYSUserB
 
     @Override
     public void saveUser(SYSUser data) {
-        userDAO.insert(data);
+        sysUserDAO.insert(data);
     }
 
     @Override
     public List<SYSUser> queryUserList(SYSUser condition) {
-        return userDAO.selectList(condition);
+        return sysUserDAO.selectList(condition);
     }
 
     @Override
@@ -138,7 +139,7 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements ISYSUserB
         if (StringUtils.isNotBlank(userId)) {
             SYSUser condition = new SYSUser();
             condition.setUserId(userId);
-            data = userDAO.select(condition);
+            data = sysUserDAO.select(condition);
             if (data == null) {
                 throw new BizException("xn0000", "用户不存在");
             }

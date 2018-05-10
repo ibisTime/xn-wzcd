@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.ISYSUserDAO">
-	<resultMap id="user_DB_Result" type="sysUser">
+	<resultMap id="sysUser_DB_Result" type="sysUser">
 		<result column="user_id" property="userId" />
 		<result column="type" property="type" />
 		<result column="photo" property="photo" />
@@ -52,7 +52,7 @@
 		</trim>
 	</sql>
 	
-	<select id="select_user" parameterType="user" resultMap="user_DB_Result">
+	<select id="select_sysUser" parameterType="sysUser" resultMap="sysUser_DB_Result">
 		SELECT
 		t.user_id
 		,t.type
@@ -75,13 +75,13 @@
 		</trim>
 	</select>
 
-	<select id="select_user_count" parameterType="user"
+	<select id="select_sysUser_count" parameterType="sysUser"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tsys_user t
 		<include refid="where_condition" />
 	</select>
 
-	<insert id="insert_user" parameterType="user">
+	<insert id="insert_sysUser" parameterType="sysUser">
 		INSERT INTO
 		tsys_user(
 		user_id
@@ -115,7 +115,7 @@
 		)
 	</insert>
 
-	<update id="update_user" parameterType="user">
+	<update id="update_sysUser" parameterType="sysUser">
 		UPDATE tsys_user
 		SET
 		photo = #{photo}
@@ -131,7 +131,7 @@
 	</update>
 	
 		
-	<update id="update_status" parameterType="user">
+	<update id="update_status" parameterType="sysUser">
 		UPDATE tsys_user
 		SET
 		status = #{status}
@@ -142,7 +142,7 @@
 	</update>
 
 
-	<update id="update_login_pwd" parameterType="user">
+	<update id="update_login_pwd" parameterType="sysUser">
 		UPDATE tsys_user
 		SET
 		 login_pwd = #{loginPwd}
@@ -153,7 +153,7 @@
 		user_id = #{userId}	
 	</update>	
 
-	<update id="update_role" parameterType="user">
+	<update id="update_role" parameterType="sysUser">
 		UPDATE tsys_user
 		SET
 		 role_code = #{roleCode}
@@ -165,7 +165,7 @@
 	</update>	
 	
 		
-	<update id="update_mobile" parameterType="user">
+	<update id="update_mobile" parameterType="sysUser">
 		UPDATE tsys_user
 		SET
 		mobile = #{mobile}
@@ -174,7 +174,7 @@
 	</update>
 
 
-	<update id="update_user_photo" parameterType="user">
+	<update id="update_sysUser_photo" parameterType="sysUser">
 		UPDATE tsys_user
 		SET
 		photo = #{photo}
