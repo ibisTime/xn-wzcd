@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.ExchangeCurrency;
-import com.cdkj.loan.domain.User;
+import com.cdkj.loan.domain.SYSUser;
 
 /**
  * @author: xieyj 
@@ -24,7 +24,7 @@ public interface IExchangeCurrencyBO extends IPaginableBO<ExchangeCurrency> {
     // 1fromCurrency=多少toCurrency
     public Double getExchangeRate(String fromCurrency, String toCurrency);
 
-    public String applyExchange(User user, BigDecimal fromAmount,
+    public String applyExchange(SYSUser user, BigDecimal fromAmount,
             String fromCurrency, String toCurrency);
 
     public void approveExchangeYes(ExchangeCurrency dbOrder, String approver,

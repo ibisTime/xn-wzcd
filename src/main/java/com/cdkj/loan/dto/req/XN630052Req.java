@@ -9,28 +9,51 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN630052Req {
 
-    // 登录名（必填）
-    @NotBlank(message = "登录名不能为空")
-    private String loginName;
+    // userId
+    @NotBlank(message = "用户Id不能为空")
+    private String userId;
 
-    // 登录密码（选填）
-    @NotBlank(message = "登录密码不能为空")
-    private String loginPwd;
+    // 新手机号
+    @NotBlank(message = "新手机号不能为空")
+    private String newMobile;
 
-    public String getLoginName() {
-        return loginName;
+    // 验证码
+    @NotBlank(message = "验证码不能为空")
+    private String smsCaptcha;
+
+    // 备注（选填）
+    private String remark;
+
+    public String getUserId() {
+        return userId;
     }
 
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getLoginPwd() {
-        return loginPwd;
+    public String getNewMobile() {
+        return newMobile;
     }
 
-    public void setLoginPwd(String loginPwd) {
-        this.loginPwd = loginPwd;
+    public void setNewMobile(String newMobile) {
+        this.newMobile = newMobile;
+    }
+
+    public String getSmsCaptcha() {
+        return smsCaptcha;
+    }
+
+    public void setSmsCaptcha(String smsCaptcha) {
+        this.smsCaptcha = smsCaptcha;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
 }

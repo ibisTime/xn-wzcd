@@ -4,69 +4,69 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.cdkj.loan.dao.IUserDAO;
+import com.cdkj.loan.dao.ISYSUserDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
-import com.cdkj.loan.domain.User;
+import com.cdkj.loan.domain.SYSUser;
 
 @Repository("userDAOImpl")
-public class UserDAOImpl extends AMybatisTemplate implements IUserDAO {
+public class SYSUserDAOImpl extends AMybatisTemplate implements ISYSUserDAO {
 
     @Override
-    public int insert(User data) {
+    public int insert(SYSUser data) {
         return super.insert(NAMESPACE.concat("insert_user"), data);
     }
 
     @Override
-    public int delete(User data) {
+    public int delete(SYSUser data) {
         return super.delete(NAMESPACE.concat("delete_user"), data);
     }
 
     @Override
-    public User select(User condition) {
+    public SYSUser select(SYSUser condition) {
         return super.select(NAMESPACE.concat("select_user"), condition,
-            User.class);
+            SYSUser.class);
     }
 
     @Override
-    public long selectTotalCount(User condition) {
+    public long selectTotalCount(SYSUser condition) {
         return super.selectTotalCount(NAMESPACE.concat("select_user_count"),
             condition);
     }
 
     @Override
-    public List<User> selectList(User condition) {
+    public List<SYSUser> selectList(SYSUser condition) {
         return super.selectList(NAMESPACE.concat("select_user"), condition,
-            User.class);
+            SYSUser.class);
     }
 
     @Override
-    public List<User> selectList(User condition, int start, int count) {
+    public List<SYSUser> selectList(SYSUser condition, int start, int count) {
         return super.selectList(NAMESPACE.concat("select_user"), start, count,
-            condition, User.class);
+            condition, SYSUser.class);
     }
 
     @Override
-    public void updateStatus(User data) {
+    public void updateStatus(SYSUser data) {
         super.update(NAMESPACE.concat("update_status"), data);
     }
 
     @Override
-    public void updateRole(User data) {
+    public void updateRole(SYSUser data) {
         super.update(NAMESPACE.concat("update_role"), data);
     }
 
     @Override
-    public void updateLoginPwd(User data) {
+    public void updateLoginPwd(SYSUser data) {
         super.update(NAMESPACE.concat("update_login_pwd"), data);
     }
 
     @Override
-    public void updateMobile(User data) {
+    public void updateMobile(SYSUser data) {
         super.update(NAMESPACE.concat("update_mobile"), data);
     }
 
     @Override
-    public void updatePhoto(User data) {
+    public void updatePhoto(SYSUser data) {
         super.update(NAMESPACE.concat("update_user_photo"), data);
     }
 

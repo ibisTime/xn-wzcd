@@ -11,7 +11,7 @@ import com.cdkj.loan.bo.IBlacklistBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.IBlacklistDAO;
 import com.cdkj.loan.domain.Blacklist;
-import com.cdkj.loan.domain.User;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBlacklistStatus;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
@@ -24,7 +24,7 @@ public class BlacklistBOImpl extends PaginableBOImpl<Blacklist>
     private IBlacklistDAO blacklistDAO;
 
     @Override
-    public Long saveBlacklist(User user, String type, String updater,
+    public Long saveBlacklist(SYSUser user, String type, String updater,
             String remark) {
         Long id = null;
         if (user != null && StringUtils.isNotBlank(user.getUserId())) {

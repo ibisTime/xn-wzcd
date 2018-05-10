@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBlacklistAO;
 import com.cdkj.loan.bo.IBlacklistBO;
-import com.cdkj.loan.bo.IUserBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Blacklist;
-import com.cdkj.loan.domain.User;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBlacklistStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -21,12 +21,12 @@ public class BlacklistAOImpl implements IBlacklistAO {
     private IBlacklistBO blacklistBO;
 
     @Autowired
-    private IUserBO userBO;
+    private ISYSUserBO userBO;
 
     @Override
     public void addBlacklist(String userId, String type, String updater,
             String remark) {
-        User user = userBO.getUser(userId);
+        SYSUser user = userBO.getUser(userId);
         if (user == null) {
             throw new BizException("xn000000", "用户编号不存在");
         }

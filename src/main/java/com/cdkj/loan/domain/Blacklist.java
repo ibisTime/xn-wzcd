@@ -45,13 +45,13 @@ public class Blacklist extends ABaseDO {
     private String systemCode;
 
     // 用户信息
-    private User user;
+    private SYSUser user;
 
-    public User getUser() {
+    public SYSUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(SYSUser user) {
         this.user = user;
     }
 

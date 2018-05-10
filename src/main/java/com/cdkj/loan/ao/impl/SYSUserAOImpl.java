@@ -9,53 +9,64 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cdkj.loan.ao.IUserAO;
+import com.cdkj.loan.ao.ISYSUserAO;
 import com.cdkj.loan.bo.ISYSRoleBO;
-import com.cdkj.loan.bo.IUserBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.common.PwdUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.domain.SYSRole;
-import com.cdkj.loan.domain.User;
+import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.enums.EUser;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Service
-public class UserAOImpl implements IUserAO {
+public class SYSUserAOImpl implements ISYSUserAO {
 
     @Autowired
-    private IUserBO userBO;
+    private ISYSUserBO userBO;
 
     @Autowired
     private ISYSRoleBO sysRoleBO;
 
     @Override
-    public String doAddUser(String loginName, String loginPwd, String mobile) {
-        User data = new User();
+    public String doAddUser(String type, String loginName, String loginPwd,
+            String mobile) {
+        SYSUser data = new SYSUser();
         String userId = OrderNoGenerater.generate("U");
         data.setUserId(userId);
+        if (type.equals("P")) {
+            data.setType(ESysUserType.Plat.getCode());
+        } else {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "暂无别的类别");
+        }
         data.setLoginName(loginName);
+        data.setMobile(mobile);
         data.setLoginPwd(MD5Util.md5(loginPwd));
         data.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
-        data.setCreateDatetme(new Date());
 
+        data.setCreateDatetme(new Date());
+        data.setStatus(EUserStatus.NORMAL.getCode());
         userBO.saveUser(data);
         return userId;
     }
 
     @Override
-    public String doLogin(String loginName, String loginPwd) {
-        User condition = new User();
+    public String doLogin(String type, String loginName, String loginPwd) {
+        SYSUser condition = new SYSUser();
+        condition.setType(type);
         condition.setLoginName(loginName);
         condition.setLoginPwd(MD5Util.md5(loginPwd));
 
-        List<User> userList2 = userBO.queryUserList(condition);
+        List<SYSUser> userList2 = userBO.queryUserList(condition);
         if (CollectionUtils.isEmpty(userList2)) {
             throw new BizException("xn805050", "登录密码错误");
         }
-        User user = userList2.get(0);
+        SYSUser user = userList2.get(0);
         if (!EUserStatus.NORMAL.getCode().equals(user.getStatus())) {
             throw new BizException("xn805050", "该用户操作存在异常");
         }
@@ -66,7 +77,7 @@ public class UserAOImpl implements IUserAO {
     @Transactional
     public void doChangeMoblie(String userId, String newMobile,
             String smsCaptcha) {
-        User user = userBO.getUser(userId);
+        SYSUser user = userBO.getUser(userId);
         if (user == null) {
             throw new BizException("xn000000", "用户不存在");
         }
@@ -101,7 +112,7 @@ public class UserAOImpl implements IUserAO {
         // 重置
         userBO.refreshLoginPwd(userId, newLoginPwd);
         // 发送短信
-        User user = userBO.getUser(userId);
+        SYSUser user = userBO.getUser(userId);
         // if (!EUserKind.Plat.getCode().equals(user.getKind())) {
         // smsOutBO.sendSmsOut(user.getMobile(),
         // "尊敬的" + PhoneUtil.hideMobile(user.getMobile())
@@ -115,7 +126,7 @@ public class UserAOImpl implements IUserAO {
     public void doResetLoginPwdByOss(String userId, String loginPwd,
             String udpater, String remark) {
 
-        User data = userBO.getUser(userId);
+        SYSUser data = userBO.getUser(userId);
         userBO.refreshLoginPwd(data, loginPwd, udpater, remark);
     }
 
@@ -126,7 +137,7 @@ public class UserAOImpl implements IUserAO {
 
     @Override
     public void doCloseOpen(String userId, String updater, String remark) {
-        User user = userBO.getUser(userId);
+        SYSUser user = userBO.getUser(userId);
         if (user == null) {
             throw new BizException("li01004", "用户不存在");
         }
@@ -156,7 +167,7 @@ public class UserAOImpl implements IUserAO {
     @Override
     public void doRoleUser(String userId, String roleCode, String updater,
             String remark) {
-        User user = userBO.getUser(userId);
+        SYSUser user = userBO.getUser(userId);
         if (user == null) {
             throw new BizException("li01004", "用户不存在");
         }
@@ -169,7 +180,7 @@ public class UserAOImpl implements IUserAO {
 
     @Override
     public void resetAdminLoginPwd(String userId, String newLoginPwd) {
-        User user = userBO.getUser(userId);
+        SYSUser user = userBO.getUser(userId);
         userBO.resetAdminLoginPwd(user, newLoginPwd);
     }
 
@@ -177,7 +188,7 @@ public class UserAOImpl implements IUserAO {
     @Transactional
     public void doResetLoginPwd(String mobile, String smsCaptcha,
             String newLoginPwd) {
-        User user = userBO.getUser(mobile);
+        SYSUser user = userBO.getUser(mobile);
         if (StringUtils.isBlank(user.getUserId())) {
             throw new BizException("li01004", "用户不存在,请先注册");
         }
@@ -205,7 +216,8 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
-    public Paginable<User> queryUserPage(int start, int limit, User condition) {
+    public Paginable<SYSUser> queryUserPage(int start, int limit,
+            SYSUser condition) {
         if (condition.getCreateDatetimeStart() != null
                 && condition.getCreateDatetimeEnd() != null
                 && condition.getCreateDatetimeEnd()
@@ -216,7 +228,7 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
-    public List<User> queryUserList(User condition) {
+    public List<SYSUser> queryUserList(SYSUser condition) {
         if (condition.getCreateDatetimeStart() != null
                 && condition.getCreateDatetimeEnd() != null
                 && condition.getCreateDatetimeEnd()
@@ -227,7 +239,7 @@ public class UserAOImpl implements IUserAO {
     }
 
     @Override
-    public User getUser(String userId) {
+    public SYSUser getUser(String userId) {
         return userBO.getUser(userId);
     }
 

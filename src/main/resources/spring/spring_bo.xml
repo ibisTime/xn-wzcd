@@ -13,7 +13,7 @@
 	
 	<!-- 分页BO层注入paginableDao -->
 	
-	<bean id="userBO" class="com.cdkj.loan.bo.impl.UserBOImpl">
+	<bean id="userBO" class="com.cdkj.loan.bo.impl.SYSUserBOImpl">
 		<property name="paginableDAO" ref="userDAOImpl" />
 	</bean>
 	

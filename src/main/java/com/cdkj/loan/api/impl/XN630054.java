@@ -1,6 +1,6 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.IUserAO;
+import com.cdkj.loan.ao.ISYSUserAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
@@ -11,20 +11,20 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 根据手机号修改密码
+ * 根据旧密码修改新密码
  * @author: nyc 
  * @since: 2018年4月24日 上午11:30:04 
  * @history:
  */
 public class XN630054 extends AProcessor {
 
-    private IUserAO userAO = SpringContextHolder.getBean(IUserAO.class);
+    private ISYSUserAO userAO = SpringContextHolder.getBean(ISYSUserAO.class);
 
     private XN630054Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        userAO.doResetLoginPwd(req.getMobile(), req.getSmsCaptcha(),
+        userAO.doModifyLoginPwd(req.getUserId(), req.getOldLoginPwd(),
             req.getNewLoginPwd());
         return new BooleanRes(true);
     }

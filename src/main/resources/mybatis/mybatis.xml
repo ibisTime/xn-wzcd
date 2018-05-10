@@ -2,7 +2,7 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias alias="user" type="com.cdkj.loan.domain.User" />
+		<typeAlias alias="user" type="com.cdkj.loan.domain.SYSUser" />
 		<typeAlias alias="blacklist" type="com.cdkj.loan.domain.Blacklist" />
 		<typeAlias alias="userRelation" type="com.cdkj.loan.domain.UserRelation" />
 		<typeAlias alias="cNavigate" type="com.cdkj.loan.domain.CNavigate" />

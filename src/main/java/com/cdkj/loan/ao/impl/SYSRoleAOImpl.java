@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.loan.ao.ISYSRoleAO;
 import com.cdkj.loan.bo.ISYSMenuRoleBO;
 import com.cdkj.loan.bo.ISYSRoleBO;
-import com.cdkj.loan.bo.IUserBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.SYSRole;
-import com.cdkj.loan.domain.User;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -23,7 +23,7 @@ public class SYSRoleAOImpl implements ISYSRoleAO {
     ISYSRoleBO sysRoleBO;
 
     @Autowired
-    IUserBO userBO;
+    ISYSUserBO userBO;
 
     @Autowired
     ISYSMenuRoleBO sysMenuRoleBO;
@@ -44,9 +44,9 @@ public class SYSRoleAOImpl implements ISYSRoleAO {
         if (!sysRoleBO.isSYSRoleExist(roleCode)) {
             throw new BizException("lh4000", "角色编号不存在！");
         }
-        User condition = new User();
+        SYSUser condition = new SYSUser();
         condition.setRoleCode(roleCode);
-        List<User> list = userBO.queryUserList(condition);
+        List<SYSUser> list = userBO.queryUserList(condition);
         if (!CollectionUtils.sizeIsEmpty(list)) {
             throw new BizException("lh4000", "该角色已在使用，无法删除！");
         }

@@ -48,10 +48,10 @@ public class UserRelation extends ABaseDO {
     private String systemCode;
 
     // 用户
-    private User fromUserInfo;
+    private SYSUser fromUserInfo;
 
     // 用户
-    private User toUserInfo;
+    private SYSUser toUserInfo;
 
     public String getCode() {
         return code;
@@ -109,19 +109,19 @@ public class UserRelation extends ABaseDO {
         this.systemCode = systemCode;
     }
 
-    public User getFromUserInfo() {
+    public SYSUser getFromUserInfo() {
         return fromUserInfo;
     }
 
-    public void setFromUserInfo(User fromUserInfo) {
+    public void setFromUserInfo(SYSUser fromUserInfo) {
         this.fromUserInfo = fromUserInfo;
     }
 
-    public User getToUserInfo() {
+    public SYSUser getToUserInfo() {
         return toUserInfo;
     }
 
-    public void setToUserInfo(User toUserInfo) {
+    public void setToUserInfo(SYSUser toUserInfo) {
         this.toUserInfo = toUserInfo;
     }
 
