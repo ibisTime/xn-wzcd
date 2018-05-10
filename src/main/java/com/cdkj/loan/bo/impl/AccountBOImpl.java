@@ -32,8 +32,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class AccountBOImpl extends PaginableBOImpl<Account> implements
-        IAccountBO {
+public class AccountBOImpl extends PaginableBOImpl<Account>
+        implements IAccountBO {
     @Autowired
     private IAccountDAO accountDAO;
 
@@ -51,8 +51,8 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
         if (StringUtils.isNotBlank(systemCode)
                 && StringUtils.isNotBlank(companyCode)
                 && StringUtils.isNotBlank(userId)) {
-            accountNumber = OrderNoGenerater.generate(EGeneratePrefix.Account
-                .getCode());
+            accountNumber = OrderNoGenerater
+                .generate(EGeneratePrefix.Account.getCode());
             Account data = new Account();
             data.setAccountNumber(accountNumber);
             data.setUserId(userId);
@@ -70,8 +70,6 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
             data.setOutAmount(BigDecimal.ZERO);
             data.setCreateDatetime(new Date());
 
-            data.setSystemCode(systemCode);
-            data.setCompanyCode(companyCode);
             accountDAO.insert(data);
         }
         return accountNumber;
@@ -178,11 +176,10 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
             throw new BizException("xn000000", "账户余额不足");
         }
         // 记录冻结流水
-        String lastOrder = jourBO.addFrozenJour(dbAccount,
-            EChannelType.Offline, null, null, refNo, bizType, bizNote,
-            freezeAmount);
-        BigDecimal nowFrozenAmount = dbAccount.getFrozenAmount().add(
-            freezeAmount);
+        String lastOrder = jourBO.addFrozenJour(dbAccount, EChannelType.Offline,
+            null, null, refNo, bizType, bizNote, freezeAmount);
+        BigDecimal nowFrozenAmount = dbAccount.getFrozenAmount()
+            .add(freezeAmount);
         dbAccount.setAccountNumber(dbAccount.getAccountNumber());
         dbAccount.setFrozenAmount(nowFrozenAmount);
         dbAccount.setLastOrder(lastOrder);
@@ -196,16 +193,15 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
         if (freezeAmount.compareTo(BigDecimal.ZERO) <= 0) {
             return dbAccount;
         }
-        BigDecimal nowFrozenAmount = dbAccount.getFrozenAmount().subtract(
-            freezeAmount);
+        BigDecimal nowFrozenAmount = dbAccount.getFrozenAmount()
+            .subtract(freezeAmount);
         if (nowFrozenAmount.compareTo(BigDecimal.ZERO) == -1) {
             throw new BizException("xn000000", "本次解冻会使账户冻结金额小于0");
         }
 
         // 记录流水
-        String lastOrder = jourBO.addFrozenJour(dbAccount,
-            EChannelType.Offline, null, null, refNo, bizType, bizNote,
-            freezeAmount.negate());
+        String lastOrder = jourBO.addFrozenJour(dbAccount, EChannelType.Offline,
+            null, null, refNo, bizType, bizNote, freezeAmount.negate());
         dbAccount.setFrozenAmount(nowFrozenAmount);
         dbAccount.setLastOrder(lastOrder);
         accountDAO.unfrozenAmount(dbAccount);
@@ -247,14 +243,15 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
     @Override
     public Account getAccountByUser(String userId, String currency) {
         Account data = null;
-        if (StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(currency)) {
+        if (StringUtils.isNotBlank(userId)
+                && StringUtils.isNotBlank(currency)) {
             Account condition = new Account();
             condition.setUserId(userId);
             condition.setCurrency(currency);
             data = accountDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn802000", "用户[" + userId + ";"
-                        + currency + "]无此类型账户");
+                throw new BizException("xn802000",
+                    "用户[" + userId + ";" + currency + "]无此类型账户");
             }
         }
         return data;
@@ -280,8 +277,6 @@ public class AccountBOImpl extends PaginableBOImpl<Account> implements
         Account condition = new Account();
         // 平台账户只有一类,类型+币种+公司+系统=唯一系统账户
         condition.setType(EAccountType.Plat.getCode());
-        condition.setSystemCode(systemCode);
-        condition.setCompanyCode(companyCode);
         condition.setCurrency(currency.getCode());
         return accountDAO.select(condition);
     }

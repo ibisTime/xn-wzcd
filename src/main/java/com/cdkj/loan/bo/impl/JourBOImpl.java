@@ -82,11 +82,9 @@ public class JourBOImpl extends PaginableBOImpl<Jour> implements IJourBO {
         data.setRemark("记得对账哦");
 
         data.setCreateDatetime(new Date());
-        data.setWorkDate(DateUtil.dateToStr(new Date(),
-            DateUtil.DB_DATE_FORMAT_STRING));
+        data.setWorkDate(
+            DateUtil.dateToStr(new Date(), DateUtil.DB_DATE_FORMAT_STRING));
         data.setChannelType(channelType.getCode());
-        data.setSystemCode(dbAccount.getSystemCode());
-        data.setCompanyCode(dbAccount.getCompanyCode());
         jourDAO.insert(data);
         return code;
     }
@@ -132,17 +130,16 @@ public class JourBOImpl extends PaginableBOImpl<Jour> implements IJourBO {
         data.setRemark("记得对账哦");
 
         data.setCreateDatetime(new Date());
-        data.setWorkDate(DateUtil.dateToStr(new Date(),
-            DateUtil.DB_DATE_FORMAT_STRING));
+        data.setWorkDate(
+            DateUtil.dateToStr(new Date(), DateUtil.DB_DATE_FORMAT_STRING));
         data.setChannelType(channelType.getCode());
-        data.setSystemCode(dbAccount.getSystemCode());
-        data.setCompanyCode(dbAccount.getCompanyCode());
         jourDAO.insert(data);
         return code;
     }
 
     @Override
-    public String addJourForHL(Account dbAccount, HLOrder order, String bizType) {
+    public String addJourForHL(Account dbAccount, HLOrder order,
+            String bizType) {
         String code = OrderNoGenerater
             .generate(EGeneratePrefix.AJour.getCode());
 
@@ -165,8 +162,6 @@ public class JourBOImpl extends PaginableBOImpl<Jour> implements IJourBO {
         data.setStatus(EJourStatus.noAdjust.getCode());
         data.setCreateDatetime(new Date());
         data.setWorkDate(null);
-        data.setSystemCode(dbAccount.getSystemCode());
-        data.setCompanyCode(dbAccount.getCompanyCode());
         jourDAO.insert(data);
         return code;
 

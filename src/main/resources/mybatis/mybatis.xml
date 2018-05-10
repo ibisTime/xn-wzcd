@@ -3,6 +3,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="user" type="com.cdkj.loan.domain.User" />
+		<typeAlias alias="address" type="com.std.user.domain.Address" />
 		<typeAlias alias="blacklist" type="com.cdkj.loan.domain.Blacklist" />
 		<typeAlias alias="userRelation" type="com.cdkj.loan.domain.UserRelation" />
 		<typeAlias alias="cNavigate" type="com.cdkj.loan.domain.CNavigate" />

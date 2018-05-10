@@ -38,7 +38,7 @@
 		,t.update_datetime
 		,t.remark
 		FROM
-		tht_bankcard t
+		tstd_bankcard t
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -49,13 +49,13 @@
 
 	<select id="select_bankcard_count" parameterType="bankcard"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tht_bankcard t
+		SELECT count(1) FROM tstd_bankcard t
 		<include refid="where_condition" />
 	</select>
 
 	<insert id="insert_bankcard" parameterType="bankcard">
 		INSERT INTO
-		tht_bankcard(
+		tstd_bankcard(
 		code
 		,user_id
 		,real_name
@@ -86,7 +86,7 @@
 	</insert>
 
 	<update id="update_bankcard" parameterType="bankcard">
-		UPDATE tht_bankcard
+		UPDATE tstd_bankcard
 		SET
 		user_id = #{userId}
 		,real_name = #{realName}

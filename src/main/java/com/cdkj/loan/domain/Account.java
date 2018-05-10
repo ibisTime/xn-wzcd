@@ -67,12 +67,6 @@ public class Account extends ABaseDO {
     // 最近一次变动对应的流水编号
     private String lastOrder;
 
-    // 系统编号
-    private String systemCode;
-
-    // 公司编号
-    private String companyCode;
-
     // **************************db properties **************************
 
     // 创建起始时间
@@ -207,22 +201,6 @@ public class Account extends ABaseDO {
 
     public void setLastOrder(String lastOrder) {
         this.lastOrder = lastOrder;
-    }
-
-    public String getSystemCode() {
-        return systemCode;
-    }
-
-    public void setSystemCode(String systemCode) {
-        this.systemCode = systemCode;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
     }
 
     public Date getCreateDatetimeStart() {

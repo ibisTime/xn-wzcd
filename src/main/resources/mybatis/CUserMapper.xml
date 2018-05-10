@@ -113,7 +113,7 @@
 		,create_datetime
 		,remark
 		FROM
-		tht_cuser t
+		tstd_user t
 		<include refid="where_condition" />
 		<!-- order by t.create_datetime desc -->
 		<trim prefix="ORDER BY ">
@@ -129,7 +129,7 @@
 	</select>
 	
 	<insert id="insert_cuser" parameterType="cuser">
-		INSERT INTO tht_cuser(
+		INSERT INTO tstd_user(
 		user_id
 		,login_name
 		,mobile
@@ -176,7 +176,7 @@
 	</insert>
 	
 	<update id="update_cuser" parameterType="cuser">
-		UPDATE tht_cuser SET
+		UPDATE tstd_user SET
 		login_name           =	#{loginName}
 		,mobile              =	#{mobile}
 		,photo               =	#{photo}
@@ -199,7 +199,7 @@
 	</update>
 	
 	<update id="update_login_pwd" parameterType="cuser">
-		UPDATE tht_cuser
+		UPDATE tstd_user
 		SET
 		 login_pwd = #{loginPwd}
 		,login_pwd_strength = #{loginPwdStrength}
@@ -208,7 +208,7 @@
 	</update>
 	
 	<update id="update_mobile" parameterType="cuser">
-		UPDATE tht_cuser
+		UPDATE tstd_user
 		SET
 		login_name = #{mobile}
 		,mobile = #{mobile}
@@ -217,7 +217,7 @@
 	</update>
 	
 	<update id="update_cuser_nickname" parameterType="cuser">
-		UPDATE tht_cuser
+		UPDATE tstd_user
 		SET
 		 nickname = #{nickname}
 		WHERE

@@ -6,6 +6,7 @@ import com.cdkj.loan.ao.IAccountAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.dto.req.XN802500Req;
@@ -37,12 +38,10 @@ public class XN802500 extends AProcessor {
         condition.setStatus(req.getStatus());
         condition.setCurrency(req.getCurrency());
         condition.setLastOrder(req.getLastOrder());
-        condition.setCreateDatetimeStart(DateUtil.getFrontDate(
-            req.getDateStart(), false));
-        condition.setCreateDatetimeEnd(DateUtil.getFrontDate(req.getDateEnd(),
-            true));
-        condition.setSystemCode(req.getSystemCode());
-        condition.setCompanyCode(req.getCompanyCode());
+        condition.setCreateDatetimeStart(
+            DateUtil.getFrontDate(req.getDateStart(), false));
+        condition.setCreateDatetimeEnd(
+            DateUtil.getFrontDate(req.getDateEnd(), true));
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IAccountAO.DEFAULT_ORDER_COLUMN;
@@ -57,10 +56,9 @@ public class XN802500 extends AProcessor {
     * @see com.xnjr.base.api.IProcessor#doCheck(java.lang.String)
     */
     @Override
-    public void doCheck(String inputparams, String operator) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN802500Req.class);
-        StringValidater.validateNumber(req.getStart(), req.getLimit());
-        StringValidater
-            .validateBlank(req.getSystemCode(), req.getCompanyCode());
+        ObjValidater.validateReq(req);
     }
 }

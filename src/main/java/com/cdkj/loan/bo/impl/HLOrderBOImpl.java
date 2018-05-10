@@ -21,19 +21,19 @@ import com.cdkj.loan.enums.EHLOrderStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class HLOrderBOImpl extends PaginableBOImpl<HLOrder> implements
-        IHLOrderBO {
+public class HLOrderBOImpl extends PaginableBOImpl<HLOrder>
+        implements IHLOrderBO {
     @Autowired
     private IHLOrderDAO hlOrderDAO;
 
     @Override
-    public String applyOrder(Account account, Jour jour,
-            BigDecimal applyAmount, String applyUser, String applyNote) {
+    public String applyOrder(Account account, Jour jour, BigDecimal applyAmount,
+            String applyUser, String applyNote) {
         if (applyAmount.compareTo(BigDecimal.ZERO) == 0) {
             throw new BizException("xn000000", "红蓝订单的变动金额不能为0");
         }
-        String code = OrderNoGenerater.generate(EGeneratePrefix.HLORDER
-            .getCode());
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.HLORDER.getCode());
         HLOrder data = new HLOrder();
         data.setCode(code);
         data.setAccountNumber(account.getAccountNumber());
@@ -54,8 +54,6 @@ public class HLOrderBOImpl extends PaginableBOImpl<HLOrder> implements
         data.setApplyNote(applyNote);
         data.setApplyDatetime(new Date());
 
-        data.setSystemCode(account.getSystemCode());
-        data.setCompanyCode(account.getCompanyCode());
         hlOrderDAO.insert(data);
         return code;
     }

@@ -31,8 +31,8 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
         if (amount.compareTo(BigDecimal.ZERO) == 0) {
             throw new BizException("xn000000", "充值金额不能为0");
         }
-        String code = OrderNoGenerater.generate(EGeneratePrefix.Charge
-            .getCode());
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.Charge.getCode());
         Charge data = new Charge();
         data.setCode(code);
         data.setPayGroup(null);
@@ -52,8 +52,6 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
         data.setApplyUser(applyUser);
         data.setApplyDatetime(new Date());
         data.setChannelType(EChannelType.Offline.getCode());
-        data.setSystemCode(account.getSystemCode());
-        data.setCompanyCode(account.getCompanyCode());
         chargeDAO.insert(data);
         return code;
     }
@@ -66,8 +64,8 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
         if (transAmount.compareTo(BigDecimal.ZERO) == 0) {
             throw new BizException("xn000000", "充值金额不能为0");
         }
-        String code = OrderNoGenerater.generate(EGeneratePrefix.Charge
-            .getCode());
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.Charge.getCode());
         Charge data = new Charge();
         data.setCode(code);
         data.setPayGroup(payGroup);
@@ -87,9 +85,6 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
         data.setApplyUser(applyUser);
         data.setApplyDatetime(new Date());
         data.setChannelType(channelType.getCode());
-        data.setSystemCode(account.getSystemCode());
-
-        data.setCompanyCode(account.getCompanyCode());
         chargeDAO.insert(data);
         return code;
     }

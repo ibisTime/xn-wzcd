@@ -60,8 +60,6 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw>
 
         data.setApplyNote(applyNote);
         data.setApplyDatetime(new Date());
-        data.setSystemCode(account.getSystemCode());
-        data.setCompanyCode(account.getCompanyCode());
         withdrawDAO.insert(data);
         return code;
     }

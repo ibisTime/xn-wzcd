@@ -1,3 +1,12 @@
+
+/*
+ * 平台用户（菜单、角色）系统参数（数据字典、系统参数） tsys_ 柴
+ * C端用户+账户 tstd_  郑
+ * 商品分期 tmall_
+ * 车贷意向 车贷分期 还款业务 tht_
+ * 
+ * */
+
 /*意向收集*/
 CREATE TABLE `tht_brand` (
   `code` varchar(32) NOT NULL COMMENT '编号',
@@ -76,7 +85,6 @@ CREATE TABLE `tht_car_order` (
 
 
 /*商品分期*/
-DROP TABLE IF EXISTS `tmall_category`;
 CREATE TABLE `tmall_category` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `parent_code` varchar(32) DEFAULT NULL COMMENT '父节点',
@@ -87,7 +95,6 @@ CREATE TABLE `tmall_category` (
   PRIMARY KEY (`code`) COMMENT '分类'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-DROP TABLE IF EXISTS `tmall_product`;
 CREATE TABLE `tmall_product` (
   `code` varchar(32) NOT NULL COMMENT '商品编号',
   `category` varchar(32) DEFAULT NULL COMMENT '大类',
@@ -111,7 +118,6 @@ CREATE TABLE `tmall_product` (
   PRIMARY KEY (`code`) COMMENT '产品'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-DROP TABLE IF EXISTS  `tmall_product_specs`;
 CREATE TABLE `tmall_product_specs` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `name` varchar(255) DEFAULT NULL COMMENT '规格名称',
@@ -129,7 +135,6 @@ CREATE TABLE `tmall_product_specs` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-DROP TABLE IF EXISTS `tmall_order`;
 CREATE TABLE `tmall_order` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',
@@ -171,7 +176,6 @@ CREATE TABLE `tmall_order` (
   PRIMARY KEY (`code`) COMMENT '订单'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-DROP TABLE IF EXISTS `tmall_product_order`;
 CREATE TABLE `tmall_product_order` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `order_code` varchar(32) DEFAULT NULL COMMENT '订单编号',
@@ -263,7 +267,6 @@ CREATE TABLE `tht_repay_biz` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `tht_repay_plan`;
 CREATE TABLE `tht_repay_plan` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',
@@ -314,7 +317,7 @@ CREATE TABLE `tht_remind_log` (
 
 
 /*C端用户*/
-CREATE TABLE `tht_cuser` (
+CREATE TABLE `tstd_user` (
   `user_id` varchar(32) NOT NULL COMMENT '编号',
   `login_name` varchar(255) DEFAULT NULL COMMENT '登录名',
   `mobile` varchar(16) DEFAULT NULL COMMENT '手机号',
@@ -351,7 +354,7 @@ CREATE TABLE `tstd_address` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `tht_bankcard` (
+CREATE TABLE `tstd_bankcard` (
   `code` varchar(32) DEFAULT NULL COMMENT '编号',
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
   `real_name` varchar(255) DEFAULT NULL COMMENT '户名',
@@ -367,7 +370,6 @@ CREATE TABLE `tht_bankcard` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*账户*/
-DROP TABLE IF EXISTS `tstd_account`;
 CREATE TABLE `tstd_account` (
   `account_number` varchar(32) NOT NULL DEFAULT '' COMMENT '账号',
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
@@ -386,6 +388,35 @@ CREATE TABLE `tstd_account` (
   PRIMARY KEY (`account_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `tstd_jour` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `kind` varchar(32) DEFAULT NULL COMMENT '流水类型（余额流水、冻结流水）',
+  `pay_group` varchar(255) DEFAULT NULL COMMENT '订单分组组号',
+  `ref_no` varchar(255) DEFAULT NULL COMMENT '参考订单号',
+  `channel_type` varchar(32) DEFAULT NULL COMMENT '支付渠道类型',
+  `channel_order` varchar(255) DEFAULT NULL COMMENT '支付渠道单号',
+  `account_number` varchar(32) DEFAULT NULL COMMENT '账号',
+  `trans_amount` decimal(64,0) DEFAULT NULL COMMENT '变动金额',
+  `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
+  `real_name` varchar(64) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '真实姓名',
+  `type` varchar(4) DEFAULT NULL COMMENT '账户类型',
+  `currency` varchar(8) DEFAULT NULL COMMENT '币种',
+  `biz_type` varchar(32) DEFAULT NULL COMMENT '业务类型',
+  `biz_note` varchar(255) DEFAULT NULL COMMENT '业务类型',
+  `pre_amount` decimal(64,0) DEFAULT NULL COMMENT '变动前金额',
+  `post_amount` decimal(64,0) DEFAULT NULL COMMENT '变动后金额',
+  `status` varchar(4) DEFAULT NULL COMMENT '状态',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
+  `work_date` varchar(8) DEFAULT NULL COMMENT '拟对账时间',
+  `check_user` varchar(32) DEFAULT NULL COMMENT '对账人',
+  `check_note` varchar(255) DEFAULT NULL COMMENT '对账说明',
+  `check_datetime` datetime DEFAULT NULL COMMENT '对账时间',
+  `adjust_user` varchar(32) DEFAULT NULL COMMENT '调账人',
+  `adjust_note` varchar(255) DEFAULT NULL COMMENT '调账说明',
+  `adjust_datetime` datetime DEFAULT NULL COMMENT '调账时间',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*系统*/
 CREATE TABLE `tht_user` (

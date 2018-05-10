@@ -3,6 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.IAccountDAO">
 	<resultMap id="account_DB_Result" type="account">
+		
 		<result column="account_number" property="accountNumber" />
 		<result column="user_id" property="userId" />
 		<result column="real_name" property="realName" />
@@ -19,9 +20,7 @@
 		<result column="out_amount" property="outAmount" />
 		<result column="create_datetime" property="createDatetime" />	
 		<result column="last_order" property="lastOrder" />	
-		<result column="system_code" property="systemCode" />
 		
-		<result column="company_code" property="companyCode" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">	
@@ -59,12 +58,6 @@
 			<if test="lastOrder != null and lastOrder != '' ">
 				AND t.last_order = #{lastOrder}
 			</if>
-			<if test="systemCode != null and systemCode != '' ">
-				AND t.system_code = #{systemCode}
-			</if>
-			<if test="companyCode != null and companyCode != '' ">
-				AND t.company_code = #{companyCode}
-			</if>
 		</trim>
 	</sql>
 	
@@ -87,8 +80,6 @@
 		,t.create_datetime
 		
 		,t.last_order
-		,t.system_code
-		,t.company_code
 		FROM
 		tstd_account t
 		<include refid="where_condition"/>
@@ -121,8 +112,6 @@
 		,in_amount
 		,out_amount
 		,create_datetime
-		,system_code
-		,company_code
 		)
 		VALUES(
 		#{accountNumber}
@@ -140,8 +129,6 @@
 		,#{inAmount}
 		,#{outAmount}
 		,#{createDatetime}
-		,#{systemCode}
-		,#{companyCode}
 		)
 	</insert>
 	
