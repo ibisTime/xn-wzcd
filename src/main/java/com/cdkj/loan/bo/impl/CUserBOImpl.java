@@ -23,7 +23,7 @@ import com.cdkj.loan.enums.EUserStatus;
 public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
 
     @Autowired
-    private ICUserDAO cuserDAO;
+    private ICUserDAO cUserDAO;
 
     // @Override public void isMobileExist(String mobile) { if
     // (StringUtils.isNotBlank(mobile)) { // 判断格式 PhoneUtil.checkMobile(mobile);
@@ -73,7 +73,7 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
 
     @Override
     public List<CUser> queryUserList(CUser condition) {
-        return cuserDAO.selectList(condition);
+        return cUserDAO.selectList(condition);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
         if (StringUtils.isNotBlank(mobile)) {
             CUser condition = new CUser();
             condition.setMobile(mobile);
-            List<CUser> list = cuserDAO.selectList(condition);
+            List<CUser> list = cUserDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
                 CUser data = list.get(0);
                 userId = data.getUserId();
@@ -97,7 +97,7 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
         if (StringUtils.isNotBlank(userId)) {
             CUser condition = new CUser();
             condition.setUserId(userId);
-            List<CUser> list = cuserDAO.selectList(condition);
+            List<CUser> list = cUserDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
                 cuser = list.get(0);
             }
@@ -111,7 +111,7 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
         if (StringUtils.isNotBlank(userId)) {
             CUser condition = new CUser();
             condition.setUserId(userId);
-            List<CUser> list = cuserDAO.selectList(condition);
+            List<CUser> list = cUserDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
                 cuser = list.get(0);
             }
@@ -127,7 +127,7 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
             CUser data = new CUser();
             data.setUserId(cuserId);
             data.setMobile(mobile);
-            cuserDAO.insert(data);
+            cUserDAO.insert(data);
         }
         return cuserId;
     }
@@ -141,7 +141,7 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
                     .generate(EGeneratePrefix.DH.getCode());
                 data.setUserId(userId);
             }
-            cuserDAO.insert(data);
+            cUserDAO.insert(data);
         }
         return userId;
     }
@@ -158,7 +158,7 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
         user.setLoginPwd(MD5Util.md5(loginPwd));
         user.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
 
-        cuserDAO.insert(user);
+        cUserDAO.insert(user);
         return userId;
     }
 
@@ -180,7 +180,7 @@ public class CUserBOImpl extends PaginableBOImpl<CUser> implements ICUserBO {
         user.setAmount(0L);
         user.setStatus(EUserStatus.NORMAL.getCode());
         user.setCreateDatetime(new Date());
-        cuserDAO.insert(user);
+        cUserDAO.insert(user);
         return userId;
     }
 

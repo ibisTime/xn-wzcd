@@ -8,41 +8,41 @@ import com.cdkj.loan.dao.ISYSUserDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.SYSUser;
 
-@Repository("userDAOImpl")
+@Repository("sysUserDAOImpl")
 public class SYSUserDAOImpl extends AMybatisTemplate implements ISYSUserDAO {
 
     @Override
     public int insert(SYSUser data) {
-        return super.insert(NAMESPACE.concat("insert_user"), data);
+        return super.insert(NAMESPACE.concat("insert_sysUser"), data);
     }
 
     @Override
     public int delete(SYSUser data) {
-        return super.delete(NAMESPACE.concat("delete_user"), data);
+        return super.delete(NAMESPACE.concat("delete_sysUser"), data);
     }
 
     @Override
     public SYSUser select(SYSUser condition) {
-        return super.select(NAMESPACE.concat("select_user"), condition,
+        return super.select(NAMESPACE.concat("select_sysUser"), condition,
             SYSUser.class);
     }
 
     @Override
     public long selectTotalCount(SYSUser condition) {
-        return super.selectTotalCount(NAMESPACE.concat("select_user_count"),
+        return super.selectTotalCount(NAMESPACE.concat("select_sysUser_count"),
             condition);
     }
 
     @Override
     public List<SYSUser> selectList(SYSUser condition) {
-        return super.selectList(NAMESPACE.concat("select_user"), condition,
+        return super.selectList(NAMESPACE.concat("select_sysUser"), condition,
             SYSUser.class);
     }
 
     @Override
     public List<SYSUser> selectList(SYSUser condition, int start, int count) {
-        return super.selectList(NAMESPACE.concat("select_user"), start, count,
-            condition, SYSUser.class);
+        return super.selectList(NAMESPACE.concat("select_sysUser"), start,
+            count, condition, SYSUser.class);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class SYSUserDAOImpl extends AMybatisTemplate implements ISYSUserDAO {
 
     @Override
     public void updatePhoto(SYSUser data) {
-        super.update(NAMESPACE.concat("update_user_photo"), data);
+        super.update(NAMESPACE.concat("update_sysUser_photo"), data);
     }
 
 }

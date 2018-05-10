@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.ICUserDAO">
-	<resultMap id="cuser_DB_Result" type="cuser">
+	<resultMap id="cUser_DB_Result" type="cUser">
 		<result column="user_id" property="userId" />
 		<result column="login_name" property="loginName" />
 		<result column="mobile" property="mobile" />
@@ -92,7 +92,7 @@
 		</trim>
 	</sql>
 	
-	<select id="select_cuser" parameterType="cuser" resultMap="cuser_DB_Result">
+	<select id="select_cUser" parameterType="cUser" resultMap="cUser_DB_Result">
 		SELECT
 		user_id
 		,login_name
@@ -123,12 +123,12 @@
 		</trim>
 	</select>
 	
-	<select id="select_cuser_count" parameterType="cuser" resultType="java.lang.Long">
-		SELECT count(1) FROM tht_user t
+	<select id="select_cUser_count" parameterType="cUser" resultType="java.lang.Long">
+		SELECT count(1) FROM tstd_user t
 		<include refid="where_condition" />
 	</select>
 	
-	<insert id="insert_cuser" parameterType="cuser">
+	<insert id="insert_cUser" parameterType="cUser">
 		INSERT INTO tstd_user(
 		user_id
 		,login_name
@@ -175,7 +175,7 @@
 		)
 	</insert>
 	
-	<update id="update_cuser" parameterType="cuser">
+	<update id="update_cUser" parameterType="cUser">
 		UPDATE tstd_user SET
 		login_name           =	#{loginName}
 		,mobile              =	#{mobile}
@@ -198,7 +198,7 @@
 		,remark              =	#{remark}
 	</update>
 	
-	<update id="update_login_pwd" parameterType="cuser">
+	<update id="update_login_pwd" parameterType="cUser">
 		UPDATE tstd_user
 		SET
 		 login_pwd = #{loginPwd}
@@ -207,7 +207,7 @@
 		user_id = #{userId}	
 	</update>
 	
-	<update id="update_mobile" parameterType="cuser">
+	<update id="update_mobile" parameterType="cUser">
 		UPDATE tstd_user
 		SET
 		login_name = #{mobile}
@@ -216,7 +216,7 @@
 		user_id = #{userId}
 	</update>
 	
-	<update id="update_cuser_nickname" parameterType="cuser">
+	<update id="update_cUser_nickname" parameterType="cUser">
 		UPDATE tstd_user
 		SET
 		 nickname = #{nickname}

@@ -8,13 +8,13 @@ import com.cdkj.loan.dao.ICUserDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.CUser;
 
-@Repository("cuserDAOImpl")
+@Repository("cUserDAOImpl")
 public class CUserDAOImpl extends AMybatisTemplate implements ICUserDAO {
 
     // 注册
     @Override
     public int insert(CUser data) {
-        return super.insert(NAMESPACE.concat("insert_cuser"), data);
+        return super.insert(NAMESPACE.concat("insert_cUser"), data);
     }
 
     @Override
@@ -24,25 +24,25 @@ public class CUserDAOImpl extends AMybatisTemplate implements ICUserDAO {
 
     @Override
     public CUser select(CUser condition) {
-        return super.select(NAMESPACE.concat("select_cuser"), condition,
+        return super.select(NAMESPACE.concat("select_cUser"), condition,
             CUser.class);
     }
 
     @Override
     public long selectTotalCount(CUser condition) {
-        return super.selectTotalCount(NAMESPACE.concat("select_cuser_count"),
+        return super.selectTotalCount(NAMESPACE.concat("select_cUser_count"),
             condition);
     }
 
     @Override
     public List<CUser> selectList(CUser condition) {
-        return super.selectList(NAMESPACE.concat("select_cuser"), condition,
+        return super.selectList(NAMESPACE.concat("select_cUser"), condition,
             CUser.class);
     }
 
     @Override
     public List<CUser> selectList(CUser condition, int start, int count) {
-        return super.selectList(NAMESPACE.concat("select_cuser"), start, count,
+        return super.selectList(NAMESPACE.concat("select_cUser"), start, count,
             condition, CUser.class);
     }
 

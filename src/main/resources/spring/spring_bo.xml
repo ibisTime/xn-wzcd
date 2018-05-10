@@ -13,11 +13,11 @@
 	
 	<!-- 分页BO层注入paginableDao -->
 	
-	<bean id="userBO" class="com.cdkj.loan.bo.impl.SYSUserBOImpl">
-		<property name="paginableDAO" ref="userDAOImpl" />
+	<bean id="sysUserBO" class="com.cdkj.loan.bo.impl.SYSUserBOImpl">
+		<property name="paginableDAO" ref="sysUserDAOImpl" />
 	</bean>
 	
-	<bean id="addressBO" class="com.std.user.bo.impl.AddressBOImpl">
+	<bean id="addressBO" class="com.cdkj.loan.bo.impl.AddressBOImpl">
 		<property name="paginableDAO" ref="addressDAOImpl"/>
 	</bean>	
 	
@@ -80,7 +80,7 @@
 		<property name="paginableDAO" ref="brandDAOImpl" />
 	</bean>
 	<bean id="cUserBO" class="com.cdkj.loan.bo.impl.CUserBOImpl">
-		<property name="paginableDAO" ref="cuserDAOImpl"/>
+		<property name="paginableDAO" ref="cUserDAOImpl"/>
 	</bean>	
 	<bean id="carBO" class="com.cdkj.loan.bo.impl.CarBOImpl">
 		<property name="paginableDAO" ref="carDAOImpl"/>
