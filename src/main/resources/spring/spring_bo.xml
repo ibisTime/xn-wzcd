@@ -67,6 +67,10 @@
 	<bean id="hlOrderBO" class="com.cdkj.loan.bo.impl.HLOrderBOImpl">
 		<property name="paginableDAO" ref="hlOrderDAOImpl" />
 	</bean>
+	
+	<bean id="baofooWithholdBO" class="com.cdkj.loan.bo.impl.BaofooWithholdBOImpl">
+		<property name="paginableDAO" ref="baofooWithholdDAOImpl" />
+	</bean>
 
 	<bean id="sysDictBO" class="com.cdkj.loan.bo.impl.SYSDictBOImpl">
 		<property name="paginableDAO" ref="sysDictDAOImpl"/>

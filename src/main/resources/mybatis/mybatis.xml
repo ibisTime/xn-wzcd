@@ -19,6 +19,7 @@
 		<typeAlias alias="charge" type="com.cdkj.loan.domain.Charge" />
 		<typeAlias alias="withdraw" type="com.cdkj.loan.domain.Withdraw" />
 		<typeAlias alias="hlOrder" type="com.cdkj.loan.domain.HLOrder" />
+		<typeAlias alias="baofooWithhold" type="com.cdkj.loan.domain.BaofooWithhold" />
 		
 		<!-- 系统  -->
 		<typeAlias alias="sysUser" type="com.cdkj.loan.domain.SYSUser" />

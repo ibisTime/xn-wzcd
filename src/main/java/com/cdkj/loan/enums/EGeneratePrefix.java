@@ -13,7 +13,9 @@ public enum EGeneratePrefix {
     ADVERTISE("AD", "广告"), DH("DH", "导航"), TRADE_ORDER("JY",
             "交易订单"), ARBITRATE("ZC", "仲裁工单")
 
-    , Account("A", "账户"), AJour("AJ", "账户流水"), EXCHANGE_CURRENCY("EC", "币种兑换"), HLORDER("HL", "红蓝订单"), Charge("CZ", "充值订单"), Withdraw("QX", "取现订单"), Collection("CO", "归集订单"),
+    , Account("A", "账户"), AJour("AJ", "账户流水"), EXCHANGE_CURRENCY("EC",
+            "币种兑换"), HLORDER("HL", "红蓝订单"), Charge("CZ", "充值订单"), Withdraw("QX",
+                    "取现订单"), BAOFOO_PAY_ORDER("BFDF", "宝付代付订单"),
 
     Brand("B", "品牌"), Series("S", "车系"), Car("C", "车型"), Car_Order("COD",
             "购买意向"),

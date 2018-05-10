@@ -69,3 +69,4 @@ CREATE TABLE `tbf_withhold` (
   `trans_serial_no` varchar(32) DEFAULT NULL COMMENT '商户流水号',
   PRIMARY KEY (`trans_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

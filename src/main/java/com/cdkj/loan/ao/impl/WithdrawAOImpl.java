@@ -10,9 +10,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.web3j.crypto.WalletUtils;
-import org.web3j.utils.Convert;
-import org.web3j.utils.Convert.Unit;
 
 import com.cdkj.loan.ao.IWithdrawAO;
 import com.cdkj.loan.bo.IAccountBO;
@@ -69,12 +66,8 @@ public class WithdrawAOImpl implements IWithdrawAO {
         // 取现手续费
         BigDecimal fee = sysConfigBO
             .getBigDecimalValue(SysConstants.WITHDRAW_FEE);
-        fee = Convert.toWei(fee, Unit.ETHER);
         if (amount.compareTo(fee) == 0 || amount.compareTo(fee) == -1) {
             throw new BizException("xn000000", "提现金额需大于手续费");
-        }
-        if (!WalletUtils.isValidAddress(payCardNo)) {
-            throw new BizException("xn000000", "提现地址不符合以太坊规则，请仔细核对");
         }
         Account dbAccount = accountBO.getAccount(accountNumber);
         if (dbAccount.getAmount().subtract(dbAccount.getFrozenAmount())
@@ -114,12 +107,8 @@ public class WithdrawAOImpl implements IWithdrawAO {
         // 取现手续费
         BigDecimal fee = sysConfigBO
             .getBigDecimalValue(SysConstants.WITHDRAW_FEE);
-        fee = Convert.toWei(fee, Unit.ETHER);
         if (amount.compareTo(fee) == 0 || amount.compareTo(fee) == -1) {
             throw new BizException("xn000000", "提现金额需大于手续费");
-        }
-        if (!WalletUtils.isValidAddress(payCardNo)) {
-            throw new BizException("xn000000", "提现地址不符合以太坊规则，请仔细核对");
         }
         Account dbAccount = accountBO.getAccount(accountNumber);
         if (dbAccount.getAmount().subtract(dbAccount.getFrozenAmount())
