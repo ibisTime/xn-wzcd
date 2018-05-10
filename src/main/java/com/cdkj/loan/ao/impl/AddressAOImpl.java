@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IAddressAO;
 import com.cdkj.loan.bo.IAddressBO;
-import com.cdkj.loan.bo.IUserBO;
+import com.cdkj.loan.bo.ICUserBO;
 import com.cdkj.loan.domain.Address;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
@@ -31,7 +31,7 @@ import com.cdkj.loan.exception.BizException;
 public class AddressAOImpl implements IAddressAO {
 
     @Autowired
-    IUserBO userBO;
+    ICUserBO userBO;
 
     @Autowired
     IAddressBO addressBO;
