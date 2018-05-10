@@ -18,6 +18,7 @@ import com.cdkj.loan.dao.IUserDAO;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EUserStatus;
+import com.cdkj.loan.exception.BizException;
 
 @Component
 public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
@@ -25,24 +26,30 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     @Autowired
     private IUserDAO userDAO;
 
-    // @Override public void isMobileExist(String mobile) { if
-    // (StringUtils.isNotBlank(mobile)) { // 判断格式 PhoneUtil.checkMobile(mobile);
-    // CUser condition = new CUser(); condition.setMobile(mobile); long count =
-    // getTotalCount(condition); if (count > 0) { throw new
-    // BizException("li01003", "手机号已经存在"); } } }
+    @Override
+    public void isMobileExist(String mobile) {
+        if (StringUtils.isNotBlank(mobile)) { // 判断格式
+                                              // PhoneUtil.checkMobile(mobile);
+            User condition = new User();
+            condition.setMobile(mobile);
+            long count = getTotalCount(condition);
+            if (count > 0) {
+                throw new BizException("li01003", "手机号已经存在");
+            }
+        }
+    }
 
     /*
      * @Override public void isNicknameExist(String nickname) { if
-     * (StringUtils.isNotBlank(nickname)) { // 判断格式 CUser condition = new
-     * CUser(); condition.setNickname(nickname); long count =
-     * getTotalCount(condition); if (count > 0) { throw new
-     * BizException("li01003", "昵称已经被使用"); } } }
+     * (StringUtils.isNotBlank(nickname)) { // 判断格式 User condition = new User();
+     * condition.setNickname(nickname); long count = getTotalCount(condition);
+     * if (count > 0) { throw new BizException("li01003", "昵称已经被使用"); } } }
      */
 
     /*
      * @Override public void isLoginNameExist(String loginName) { if
-     * (StringUtils.isNotBlank(loginName)) { // 判断格式 CUser condition = new
-     * CUser(); condition.setLoginName(loginName); long count =
+     * (StringUtils.isNotBlank(loginName)) { // 判断格式 User condition = new
+     * User(); condition.setLoginName(loginName); long count =
      * getTotalCount(condition); if (count > 0) { throw new
      * BizException("li01003", "登录名已经存在"); } } }
      */
@@ -51,7 +58,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     // public void checkLoginPwd(String userId, String loginPwd) {
     // if (StringUtils.isNotBlank(userId)
     // && StringUtils.isNotBlank(loginPwd)) {
-    // CUser condition = new CUser();
+    // User condition = new User();
     // condition.setUserId(userId);
     // condition.setLoginPwd(MD5Util.md5(loginPwd));
     // long count = this.getTotalCount(condition);
@@ -65,8 +72,8 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
 
     /*
      * @Override public void checkUserReferee(String userReferee, String
-     * systemCode) { if (StringUtils.isNotBlank(userReferee)) { // 判断格式 CUser
-     * condition = new CUser(); condition.setUserId(userReferee); long count =
+     * systemCode) { if (StringUtils.isNotBlank(userReferee)) { // 判断格式 User
+     * condition = new User(); condition.setUserId(userReferee); long count =
      * getTotalCount(condition); if (count <= 0) { throw new
      * BizException("li01003", "推荐人不存在"); } } }
      */
@@ -93,43 +100,43 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
 
     @Override
     public User getUser(String userId) {
-        User cuser = null;
+        User user = null;
         if (StringUtils.isNotBlank(userId)) {
             User condition = new User();
             condition.setUserId(userId);
             List<User> list = userDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
-                cuser = list.get(0);
+                user = list.get(0);
             }
         }
-        return cuser;
+        return user;
     }
 
     @Override
     public User getUserById(String userId) {
-        User cuser = null;
+        User user = null;
         if (StringUtils.isNotBlank(userId)) {
             User condition = new User();
             condition.setUserId(userId);
             List<User> list = userDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
-                cuser = list.get(0);
+                user = list.get(0);
             }
         }
-        return cuser;
+        return user;
     }
 
     @Override
     public String saveUser(String mobile) {
-        String cuserId = null;
+        String userId = null;
         if (StringUtils.isNotBlank(mobile)) {
-            cuserId = OrderNoGenerater.generate("U");
+            userId = OrderNoGenerater.generate("U");
             User data = new User();
-            data.setUserId(cuserId);
+            data.setUserId(userId);
             data.setMobile(mobile);
             userDAO.insert(data);
         }
-        return cuserId;
+        return userId;
     }
 
     @Override

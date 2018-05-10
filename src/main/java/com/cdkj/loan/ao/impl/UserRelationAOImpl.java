@@ -17,10 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IUserRelationAO;
-import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.IUserRelationBO;
 import com.cdkj.loan.bo.base.Paginable;
-import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.domain.UserRelation;
 import com.cdkj.loan.enums.EUserReleationType;
 import com.cdkj.loan.exception.BizException;
@@ -37,7 +37,7 @@ public class UserRelationAOImpl implements IUserRelationAO {
     IUserRelationBO userRelationBO;
 
     @Autowired
-    ISYSUserBO userBO;
+    IUserBO userBO;
 
     /**
      * @see com.std.user.ao.IUserRelationAO#queryUserRelationPage(int, int, com.std.user.domain.UserRelation)
@@ -49,12 +49,12 @@ public class UserRelationAOImpl implements IUserRelationAO {
             condition);
         for (UserRelation userRelation : page.getList()) {
 
-            SYSUser lookUser = null;
+            User lookUser = null;
 
             if (StringUtils.isNotBlank(condition.getUserId())) {
 
                 // 查询——我信任的
-                SYSUser toUser = userBO.getUser(userRelation.getToUser());
+                User toUser = userBO.getUser(userRelation.getToUser());
                 lookUser = toUser;
                 //
                 userRelation.setToUserInfo(toUser);
@@ -62,7 +62,7 @@ public class UserRelationAOImpl implements IUserRelationAO {
             } else {
 
                 // 查询——信任我的
-                SYSUser fromUser = userBO.getUser(userRelation.getUserId());
+                User fromUser = userBO.getUser(userRelation.getUserId());
                 lookUser = fromUser;
                 userRelation.setFromUserInfo(fromUser);
 
@@ -86,11 +86,11 @@ public class UserRelationAOImpl implements IUserRelationAO {
     @Transactional
     @Override
     public void followUser(String userId, String toUserId, String type) {
-        SYSUser user = userBO.getUser(userId);
+        User user = userBO.getUser(userId);
         if (user == null) {
             throw new BizException("xn702001", "用户不存在");
         }
-        SYSUser toUser = userBO.getUser(toUserId);
+        User toUser = userBO.getUser(toUserId);
         if (toUser == null) {
             throw new BizException("xn702001", "关注用户不存在");
         }
@@ -141,11 +141,11 @@ public class UserRelationAOImpl implements IUserRelationAO {
      */
     @Override
     public void unfollowUser(String userId, String toUserId, String type) {
-        SYSUser user = userBO.getUser(userId);
+        User user = userBO.getUser(userId);
         if (user == null) {
             throw new BizException("xn702001", "用户不存在");
         }
-        SYSUser toUser = userBO.getUser(toUserId);
+        User toUser = userBO.getUser(toUserId);
         if (toUser == null) {
             throw new BizException("xn702001", "取消关注用户不存在");
         }

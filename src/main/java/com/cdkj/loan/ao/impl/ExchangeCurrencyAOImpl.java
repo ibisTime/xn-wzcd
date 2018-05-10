@@ -6,33 +6,31 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IExchangeCurrencyAO;
 import com.cdkj.loan.bo.IExchangeCurrencyBO;
-import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.ExchangeCurrency;
-import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.User;
 
 @Service
 public class ExchangeCurrencyAOImpl implements IExchangeCurrencyAO {
 
     @Autowired
-    private ISYSUserBO userBO;
-
+    private IUserBO userBO;
 
     @Autowired
     private IExchangeCurrencyBO exchangeCurrencyBO;
 
-
     @Override
     public Paginable<ExchangeCurrency> queryExchangeCurrencyPage(int start,
             int limit, ExchangeCurrency condition) {
-        Paginable<ExchangeCurrency> page = exchangeCurrencyBO.getPaginable(
-            start, limit, condition);
+        Paginable<ExchangeCurrency> page = exchangeCurrencyBO
+            .getPaginable(start, limit, condition);
         if (page != null && CollectionUtils.isNotEmpty(page.getList())) {
             for (ExchangeCurrency exchangeCurrency : page.getList()) {
-                SYSUser fromUser = userBO
+                User fromUser = userBO
                     .getUser(exchangeCurrency.getFromUserId());
                 exchangeCurrency.setFromUser(fromUser);
-                SYSUser toUser = userBO.getUser(exchangeCurrency.getToUserId());
+                User toUser = userBO.getUser(exchangeCurrency.getToUserId());
                 exchangeCurrency.setToUser(toUser);
             }
         }
@@ -43,7 +41,7 @@ public class ExchangeCurrencyAOImpl implements IExchangeCurrencyAO {
     public ExchangeCurrency getExchangeCurrency(String code) {
         ExchangeCurrency exchangeCurrency = exchangeCurrencyBO
             .getExchangeCurrency(code);
-        SYSUser fromUser = userBO.getUser(exchangeCurrency.getFromUserId());
+        User fromUser = userBO.getUser(exchangeCurrency.getFromUserId());
         exchangeCurrency.setFromUser(fromUser);
         return exchangeCurrency;
     }

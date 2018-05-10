@@ -23,7 +23,7 @@ public class SYSRoleAOImpl implements ISYSRoleAO {
     ISYSRoleBO sysRoleBO;
 
     @Autowired
-    ISYSUserBO userBO;
+    ISYSUserBO sysUserBO;
 
     @Autowired
     ISYSMenuRoleBO sysMenuRoleBO;
@@ -46,7 +46,7 @@ public class SYSRoleAOImpl implements ISYSRoleAO {
         }
         SYSUser condition = new SYSUser();
         condition.setRoleCode(roleCode);
-        List<SYSUser> list = userBO.queryUserList(condition);
+        List<SYSUser> list = sysUserBO.queryUserList(condition);
         if (!CollectionUtils.sizeIsEmpty(list)) {
             throw new BizException("lh4000", "该角色已在使用，无法删除！");
         }

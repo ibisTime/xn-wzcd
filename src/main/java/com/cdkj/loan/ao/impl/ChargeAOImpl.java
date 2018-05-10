@@ -11,11 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.loan.ao.IChargeAO;
 import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IChargeBO;
-import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.domain.Charge;
-import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EChannelType;
 import com.cdkj.loan.enums.EChargeStatus;
@@ -31,7 +31,7 @@ public class ChargeAOImpl implements IChargeAO {
     private IChargeBO chargeBO;
 
     @Autowired
-    private ISYSUserBO userBO;
+    private IUserBO userBO;
 
     @Override
     public String applyOrder(String accountNumber, BigDecimal amount,
@@ -84,7 +84,7 @@ public class ChargeAOImpl implements IChargeAO {
         if (CollectionUtils.isNotEmpty(page.getList())) {
             List<Charge> list = page.getList();
             for (Charge charge : list) {
-                SYSUser user = userBO.getUser(charge.getApplyUser());
+                User user = userBO.getUser(charge.getApplyUser());
                 charge.setUser(user);
             }
         }
@@ -96,7 +96,7 @@ public class ChargeAOImpl implements IChargeAO {
         List<Charge> list = chargeBO.queryChargeList(condition);
         if (CollectionUtils.isNotEmpty(list)) {
             for (Charge charge : list) {
-                SYSUser user = userBO.getUser(charge.getApplyUser());
+                User user = userBO.getUser(charge.getApplyUser());
                 charge.setUser(user);
             }
         }
@@ -106,7 +106,7 @@ public class ChargeAOImpl implements IChargeAO {
     @Override
     public Charge getCharge(String code, String systemCode) {
         Charge charge = chargeBO.getCharge(code, systemCode);
-        SYSUser user = userBO.getUser(charge.getApplyUser());
+        User user = userBO.getUser(charge.getApplyUser());
         charge.setUser(user);
         return charge;
     }

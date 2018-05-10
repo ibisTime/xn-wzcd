@@ -20,7 +20,7 @@ import com.cdkj.loan.spring.SpringContextHolder;
  */
 public class XN630206 extends AProcessor {
 
-    private IUserAO cuserAO = SpringContextHolder.getBean(IUserAO.class);
+    private IUserAO userAO = SpringContextHolder.getBean(IUserAO.class);
 
     private XN630206Req req = null;
 
@@ -40,7 +40,7 @@ public class XN630206 extends AProcessor {
             orderColumn = IUserAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(orderColumn, req.getOrderDir());
-        return cuserAO.queryUserList(condition);
+        return userAO.queryUserList(condition);
     }
 
     @Override

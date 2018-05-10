@@ -18,14 +18,14 @@ import com.cdkj.loan.spring.SpringContextHolder;
  */
 public class XN630201 extends AProcessor {
 
-    private IUserAO cuserAO = SpringContextHolder.getBean(IUserAO.class);
+    private IUserAO userAO = SpringContextHolder.getBean(IUserAO.class);
 
     private XN630201Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
         return new XN630201Res(
-            cuserAO.doLogin(req.getLoginName(), req.getLoginPwd()));
+            userAO.doLogin(req.getLoginName(), req.getLoginPwd()));
     }
 
     @Override

@@ -22,7 +22,7 @@ import com.cdkj.loan.exception.BizException;
 public class UserAOImpl implements IUserAO {
 
     @Autowired
-    private IUserBO cUserBO;
+    private IUserBO userBO;
 
     @Autowired
     ISmsOutBO smsOutBO;
@@ -30,7 +30,7 @@ public class UserAOImpl implements IUserAO {
     @Override
     public XN630200Req doRegister(String mobile, String loginPwd,
             String smsCaptcha) {
-        String userId = cUserBO.doRegister(mobile, loginPwd, smsCaptcha);
+        String userId = userBO.doRegister(mobile, loginPwd, smsCaptcha);
         return new XN630200Req(userId);
     }
 
@@ -38,7 +38,7 @@ public class UserAOImpl implements IUserAO {
 
     @Override
     public void doCheckMobile(String mobile) {
-        // cUserBO.isMobileExist(mobile);
+        // userBO.isMobileExist(mobile);
     }
 
     @Override
@@ -46,14 +46,14 @@ public class UserAOImpl implements IUserAO {
             String loginPwd, String confirmPwd) {
         // 短信验证码是否正确
         smsOutBO.checkCaptcha(mobile, smsCaptcha, "630080");
-        String userId = cUserBO.getUserIdByMobile(mobile);
+        String userId = userBO.getUserIdByMobile(mobile);
         if (StringUtils.isNotBlank(userId)) {
             throw new BizException("mag", "手机号已存在，请重新输入！！！");
         }
         if (!loginPwd.equals(confirmPwd)) {
             throw new BizException("mag", "两次密码不一致，请重新输入！！！");
         }
-        userId = cUserBO.saveUser(mobile);
+        userId = userBO.saveUser(mobile);
         return userId;
     }
 
@@ -69,24 +69,24 @@ public class UserAOImpl implements IUserAO {
         // } else {
         condition.setLoginName(loginName);
         // }
-        List<User> userList1 = cUserBO.queryUserList(condition);
+        List<User> userList1 = userBO.queryUserList(condition);
         if (CollectionUtils.isEmpty(userList1)) {
             throw new BizException("xn805050", "登录名不存在");
         }
         condition.setLoginPwd(MD5Util.md5(loginPwd));
-        List<User> userList2 = cUserBO.queryUserList(condition);
+        List<User> userList2 = userBO.queryUserList(condition);
         if (CollectionUtils.isEmpty(userList2)) {
             throw new BizException("xn805050", "登录密码错误");
         }
-        User cuser = userList2.get(0);
-        if (!EUserStatus.NORMAL.getCode().equals(cuser.getStatus())) {
+        User user = userList2.get(0);
+        if (!EUserStatus.NORMAL.getCode().equals(user.getStatus())) {
             throw new BizException("xn805050",
-                "该账号" + EUserStatus.getMap().get(cuser.getStatus()).getValue()
+                "该账号" + EUserStatus.getMap().get(user.getStatus()).getValue()
                         + "，请联系工作人员");
         }
-        // addLoginAmount(cuser);
-        // cUserBO.refreshLastLogin(cuser.getUserId());
-        return cuser.getUserId();
+        // addLoginAmount(user);
+        // userBO.refreshLastLogin(user.getUserId());
+        return user.getUserId();
     }
 
     // 登录名密码验证
@@ -94,12 +94,12 @@ public class UserAOImpl implements IUserAO {
     // public void doCheckLoginPwd(String loginName, String loginPwd) {
     // User condition = new User();
     // condition.setLoginName(loginName);
-    // List<User> userList1 = cUserBO.queryUserList(condition);
+    // List<User> userList1 = userBO.queryUserList(condition);
     // if (CollectionUtils.isEmpty(userList1)) {
     // throw new BizException("xn702002", "用户不存在");
     // }
     // condition.setLoginPwd(MD5Util.md5(loginPwd));
-    // List<User> userList2 = cUserBO.queryUserList(condition);
+    // List<User> userList2 = userBO.queryUserList(condition);
     // if (CollectionUtils.isEmpty(userList2)) {
     // throw new BizException("xn702002", "登录密码错误");
     // }
@@ -108,22 +108,22 @@ public class UserAOImpl implements IUserAO {
 
     @Override
     public String insertUser(User data) {
-        return cUserBO.saveCNavigate(data);
+        return userBO.saveCNavigate(data);
     }
 
     @Override
     public Paginable<User> queryUserPage(int start, int limit, User condition) {
-        return cUserBO.getPaginable(start, limit, condition);
+        return userBO.getPaginable(start, limit, condition);
     }
 
     @Override
     public List<User> queryUserList(User condition) {
-        return cUserBO.queryUserList(condition);
+        return userBO.queryUserList(condition);
     }
 
     @Override
     public User getUser(String userId) {
-        return cUserBO.getUser(userId);
+        return userBO.getUser(userId);
     }
 
 }

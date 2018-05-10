@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.ao.IRepayBizAO;
-import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.ILoanOrderBO;
 import com.cdkj.loan.bo.IOrderBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.RepayBiz;
@@ -40,7 +40,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     private IBankcardAO bankcardAO;
 
     @Autowired
-    private IUserBO cUserBO;
+    private IUserBO userBO;
 
     @Autowired
     private ILoanOrderBO loanOrderBO;
@@ -96,7 +96,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
      */
     private void setRefInfo(RepayBiz repayBiz) {
 
-        repayBiz.setUser(cUserBO.getUser(repayBiz.getUserId()));
+        repayBiz.setUser(userBO.getUser(repayBiz.getUserId()));
 
         if (ERepayBizType.CAR.getCode().equals(repayBiz.getRefType())) {
             repayBiz

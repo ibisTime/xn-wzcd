@@ -73,9 +73,9 @@ public class ExchangeCurrency extends ABaseDO {
     private String systemCode;
 
     // ******************************************
-    private SYSUser fromUser;
+    private User fromUser;
 
-    private SYSUser toUser;
+    private User toUser;
 
     private Date createDatetimeStart;
 
@@ -233,19 +233,19 @@ public class ExchangeCurrency extends ABaseDO {
         this.systemCode = systemCode;
     }
 
-    public SYSUser getFromUser() {
+    public User getFromUser() {
         return fromUser;
     }
 
-    public void setFromUser(SYSUser fromUser) {
+    public void setFromUser(User fromUser) {
         this.fromUser = fromUser;
     }
 
-    public SYSUser getToUser() {
+    public User getToUser() {
         return toUser;
     }
 
-    public void setToUser(SYSUser toUser) {
+    public void setToUser(User toUser) {
         this.toUser = toUser;
     }
 

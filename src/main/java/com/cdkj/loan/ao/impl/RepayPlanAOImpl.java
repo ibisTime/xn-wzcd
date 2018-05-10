@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICostAO;
 import com.cdkj.loan.ao.IRepayPlanAO;
-import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.ICostBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
@@ -29,7 +29,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     private IRepayPlanBO repayPlanBO;
 
     @Autowired
-    private IUserBO cUserBO;
+    private IUserBO userBO;
 
     @Autowired
     private IRepayBizBO repayBizBO;
@@ -67,7 +67,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         Paginable<RepayPlan> results = repayPlanBO.getPaginable(start, limit,
             condition);
         for (RepayPlan repayPlan : results.getList()) {
-            repayPlan.setUser(cUserBO.getUser(repayPlan.getUserId()));
+            repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
         }
 
         return results;
@@ -81,7 +81,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     @Override
     public RepayPlan getRepayPlan(String code) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
-        repayPlan.setUser(cUserBO.getUser(repayPlan.getUserId()));
+        repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
         return repayPlan;
     }
 
@@ -127,7 +127,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         Paginable<RepayPlan> results = repayPlanBO.getPaginable(start, limit,
             condition);
         for (RepayPlan repayPlan : results.getList()) {
-            repayPlan.setUser(cUserBO.getUser(repayPlan.getUserId()));
+            repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
         }
         return results;
     }

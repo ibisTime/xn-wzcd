@@ -15,7 +15,7 @@ public interface IUserBO extends IPaginableBO<User> {
             String realName, String idNo);
 
     // 判断手机号是否存在
-    // public void isMobileExist(String mobile);
+    public void isMobileExist(String mobile);
 
     // 判断昵称是否存在
     // public void isNicknameExist(String nickname);

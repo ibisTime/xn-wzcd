@@ -118,13 +118,13 @@ public class Withdraw extends ABaseDO {
     private Date payDatetimeEnd;
 
     // 申请用户
-    private SYSUser user;
+    private User user;
 
-    public SYSUser getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(SYSUser user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

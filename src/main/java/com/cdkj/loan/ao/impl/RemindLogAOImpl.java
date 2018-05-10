@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IRemindLogAO;
-import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.IRemindLogBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.ISmsOutBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RemindLog;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -30,7 +30,7 @@ public class RemindLogAOImpl implements IRemindLogAO {
     private IRepayPlanBO repayPlanBO;
 
     @Autowired
-    private IUserBO cUserBO;
+    private IUserBO userBO;
 
     @Override
     public String addRemindLog(RemindLog data) {
@@ -76,12 +76,12 @@ public class RemindLogAOImpl implements IRemindLogAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "暂无消息推送！");
         }
         String userId = repayPlanBO.getRepayPlan(code).getUserId();
-        String mobile = cUserBO.getUser(userId).getMobile();
+        String mobile = userBO.getUser(userId).getMobile();
         smsOutBO.sendSmsOut(mobile, "短信催收！！！");
         RemindLog remindLog = new RemindLog();
         remindLog.setRepayPlanCode(code);
         remindLog.setWay(way);
-        String realName = cUserBO.getUser(userId).getRealName();
+        String realName = userBO.getUser(userId).getRealName();
         remindLog.setToUser(realName);
         remindLog.setCreateDatetime(new Date());
         remindLogBO.saveRemindLog(remindLog);

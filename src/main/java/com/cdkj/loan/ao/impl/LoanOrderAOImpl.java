@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.ao.ILoanOrderAO;
-import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.ILoanOrderBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
@@ -33,7 +33,7 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
     private ILoanOrderBO loanOrderBO;
 
     @Autowired
-    private IUserBO cUserBO;
+    private IUserBO userBO;
 
     @Autowired
     private IBankcardAO bankcardAO;
@@ -179,10 +179,10 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
         } else {
 
             // 检查用户是否已经注册过
-            String userId = cUserBO.getUserIdByMobile(loanOrder.getMobile());
+            String userId = userBO.getUserIdByMobile(loanOrder.getMobile());
             if (StringUtils.isBlank(userId)) {
                 // 用户代注册并实名认证
-                userId = cUserBO.doRegisterAndIdentify(loanOrder.getMobile(),
+                userId = userBO.doRegisterAndIdentify(loanOrder.getMobile(),
                     loanOrder.getIdKind(), loanOrder.getRealName(),
                     loanOrder.getIdNo());
             }
@@ -214,7 +214,7 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
         Paginable<LoanOrder> results = loanOrderBO.getPaginable(start, limit,
             condition);
         for (LoanOrder loanOrder : results.getList()) {
-            loanOrder.setUser(cUserBO.getUser(loanOrder.getUserId()));
+            loanOrder.setUser(userBO.getUser(loanOrder.getUserId()));
         }
         return results;
     }
@@ -227,7 +227,7 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
     @Override
     public LoanOrder getLoanOrder(String code) {
         LoanOrder loanOrder = loanOrderBO.getLoanOrder(code);
-        loanOrder.setUser(cUserBO.getUser(loanOrder.getUserId()));
+        loanOrder.setUser(userBO.getUser(loanOrder.getUserId()));
         return loanOrder;
     }
 }

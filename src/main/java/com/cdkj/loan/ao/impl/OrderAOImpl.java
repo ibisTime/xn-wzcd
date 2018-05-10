@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.bo.IAccountBO;
-import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.IExpressRuleBO;
 import com.cdkj.loan.bo.IOrderBO;
 import com.cdkj.loan.bo.IProductBO;
@@ -30,18 +29,19 @@ import com.cdkj.loan.bo.IProductSpecsBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.ISmsOutBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.ProvinceUtil;
 import com.cdkj.loan.core.CalculationUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
-import com.cdkj.loan.domain.User;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.Product;
 import com.cdkj.loan.domain.ProductOrder;
 import com.cdkj.loan.domain.ProductSpecs;
 import com.cdkj.loan.domain.RepayBiz;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN808050Req;
 import com.cdkj.loan.dto.req.XN808054Req;
 import com.cdkj.loan.dto.req.XN808070CReq;
@@ -76,7 +76,7 @@ public class OrderAOImpl implements IOrderAO {
     private IProductSpecsBO productSpecsBO;
 
     @Autowired
-    private IUserBO cUserBO;
+    private IUserBO userBO;
 
     @Autowired
     private IAccountBO accountBO;
@@ -182,7 +182,7 @@ public class OrderAOImpl implements IOrderAO {
             throw new BizException("xn000000", "订单不处于待支付状态,不能修改运费");
         }
         orderBO.refreshYunfei(order, yunfei);
-        User user = cUserBO.getUser(order.getApplyUser());
+        User user = userBO.getUser(order.getApplyUser());
         // 发短信
         smsOutBO.sendSmsOut(user.getMobile(), "尊敬的用户，您的待支付订单[" + order.getCode()
                 + "]运费已成功修改为" + CalculationUtil.diviDown(yunfei) + "元，请及时支付订单");
@@ -210,7 +210,7 @@ public class OrderAOImpl implements IOrderAO {
     }
 
     private Object toPayOrder(Order order, String payType, String isDk) {
-        User user = cUserBO.getUser(order.getApplyUser());
+        User user = userBO.getUser(order.getApplyUser());
         if (EPayType.YE.getCode().equals(payType)) {
             return toPayOrderYE(order, user, isDk);
         } else if (EPayType.WITHHOLD.getCode().equals(payType)) {
@@ -376,7 +376,7 @@ public class OrderAOImpl implements IOrderAO {
         // 更新订单信息
         orderBO.platCancel(code, updater, remark, status);
 
-        User user = cUserBO.getUser(order.getApplyUser());
+        User user = userBO.getUser(order.getApplyUser());
         // 发送短信
         if (StringUtils.isNotBlank(remark)) {
             remark = ",取消原因是：" + remark;
@@ -393,7 +393,7 @@ public class OrderAOImpl implements IOrderAO {
         Paginable<Order> page = orderBO.getPaginable(start, limit, condition);
         if (page != null && CollectionUtils.isNotEmpty(page.getList())) {
             for (Order order : page.getList()) {
-                order.setCuser(cUserBO.getUser(order.getApplyUser()));
+                order.setUser(userBO.getUser(order.getApplyUser()));
                 ProductOrder imCondition = new ProductOrder();
                 imCondition.setOrderCode(order.getCode());
                 List<ProductOrder> productOrderList = productOrderBO
@@ -433,7 +433,7 @@ public class OrderAOImpl implements IOrderAO {
                 List<ProductOrder> productOrderList = productOrderBO
                     .queryProductOrderList(imCondition);
                 order.setProductOrderList(productOrderList);
-                order.setCuser(cUserBO.getUser(order.getApplyUser()));
+                order.setUser(userBO.getUser(order.getApplyUser()));
             }
         }
         return list;
@@ -445,13 +445,13 @@ public class OrderAOImpl implements IOrderAO {
     @Override
     public Order getOrder(String code) {
         Order order = orderBO.getOrder(code);
-        order.setCuser(cUserBO.getUser(order.getApplyUser()));
+        order.setUser(userBO.getUser(order.getApplyUser()));
         ProductOrder imCondition = new ProductOrder();
         imCondition.setOrderCode(order.getCode());
         List<ProductOrder> productOrderList = productOrderBO
             .queryProductOrderList(imCondition);
         order.setProductOrderList(productOrderList);
-        order.setCuser(cUserBO.getUser(order.getApplyUser()));
+        order.setUser(userBO.getUser(order.getApplyUser()));
         return order;
     }
 
@@ -469,7 +469,7 @@ public class OrderAOImpl implements IOrderAO {
             req.getRemark());
 
         // 发送短信
-        User user = cUserBO.getUser(order.getApplyUser());
+        User user = userBO.getUser(order.getApplyUser());
         String notice = "";
         if (CollectionUtils.isNotEmpty(order.getProductOrderList())) {
             if (order.getProductOrderList().size() > 1) {

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ISmsOutAO;
 import com.cdkj.loan.bo.ISmsOutBO;
-import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.common.PhoneUtil;
 
 @Service
@@ -15,7 +15,7 @@ public class SmsOutAOImpl implements ISmsOutAO {
     ISmsOutBO smsOutBO;
 
     @Autowired
-    ISYSUserBO userBO;
+    IUserBO userBO;
 
     @Override
     public void sendSmsCaptcha(String mobile, String bizType) {

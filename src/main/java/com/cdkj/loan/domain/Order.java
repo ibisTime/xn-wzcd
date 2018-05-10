@@ -145,7 +145,7 @@ public class Order extends ABaseDO {
     List<ProductOrder> productOrderList;
 
     // 下单人
-    private User cuser;
+    private User user;
 
     // 状态list
     private List<String> statusList;
@@ -445,12 +445,12 @@ public class Order extends ABaseDO {
         this.productOrderList = productOrderList;
     }
 
-    public User getCuser() {
-        return cuser;
+    public User getUser() {
+        return user;
     }
 
-    public void setCuser(User cuser) {
-        this.cuser = cuser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<String> getStatusList() {
