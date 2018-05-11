@@ -20,6 +20,7 @@ import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.common.PhoneUtil;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EAccountType;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ECaptchaType;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EUser;
@@ -51,8 +52,7 @@ public class UserAOImpl implements IUserAO {
         userBO.isNicknameExist(nickname, kind);
 
         // 验证短信验证码
-        // smsOutBO.checkCaptcha(mobile, smsCaptcha,
-        // ECaptchaType.C_REG.getCode());
+        smsOutBO.checkCaptcha(mobile, smsCaptcha, ECaptchaType.C_REG.getCode());
 
         // 注册用户
         String userId = userBO.doRegister(mobile, nickname, loginPwd, kind);
@@ -84,10 +84,12 @@ public class UserAOImpl implements IUserAO {
         smsOutBO.checkCaptcha(mobile, smsCaptcha, "630080");
         String userId = userBO.getUserIdByMobile(mobile);
         if (StringUtils.isNotBlank(userId)) {
-            throw new BizException("mag", "手机号已存在，请重新输入！！！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "手机号已存在，请重新输入！！！");
         }
         if (!loginPwd.equals(confirmPwd)) {
-            throw new BizException("mag", "两次密码不一致，请重新输入！！！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "两次密码不一致，请重新输入！！！");
         }
         userId = userBO.saveUser(mobile);
         return userId;
@@ -104,18 +106,18 @@ public class UserAOImpl implements IUserAO {
         List<User> userList1 = userBO.queryUserList(condition);
 
         if (CollectionUtils.isEmpty(userList1)) {
-            throw new BizException("xn805050", "登录名不存在");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "登录名不存在");
         }
 
         condition.setLoginPwd(MD5Util.md5(loginPwd));
         List<User> userList2 = userBO.queryUserList(condition);
         if (CollectionUtils.isEmpty(userList2)) {
-            throw new BizException("xn805050", "登录密码错误");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "登录密码错误");
         }
 
         User user = userList2.get(0);
         if (!EUserStatus.NORMAL.getCode().equals(user.getStatus())) {
-            throw new BizException("xn805050",
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "该账号" + EUserStatus.getMap().get(user.getStatus()).getValue()
                         + "，请联系工作人员");
         }
@@ -130,12 +132,13 @@ public class UserAOImpl implements IUserAO {
 
         User user = userBO.getUser(userId);
         if (user == null) {
-            throw new BizException("xn000000", "用户不存在");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "用户不存在");
         }
 
         String oldMobile = user.getMobile();
         if (newMobile.equals(oldMobile)) {
-            throw new BizException("xn000000", "新手机与原手机一致");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "新手机与原手机一致");
         }
 
         // 验证手机号
@@ -162,7 +165,8 @@ public class UserAOImpl implements IUserAO {
             String newLoginPwd, String kind) {
         String userId = userBO.getUserId(mobile, kind);
         if (StringUtils.isBlank(userId)) {
-            throw new BizException("li01004", "用户不存在,请先注册");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "用户不存在,请先注册");
         }
         // 短信验证码是否正确
         smsOutBO.checkCaptcha(mobile, smsCaptcha, "805063");
@@ -178,7 +182,8 @@ public class UserAOImpl implements IUserAO {
             String newLoginPwd) {
         User user = userBO.getUser(userId);
         if (oldLoginPwd.equals(newLoginPwd)) {
-            throw new BizException("li01006", "新登录密码不能与原有密码重复");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "新登录密码不能与原有密码重复");
         }
         // 验证当前登录密码是否正确
         userBO.checkLoginPwd(userId, oldLoginPwd);
@@ -213,7 +218,7 @@ public class UserAOImpl implements IUserAO {
             String smsCaptcha) {
         User user = userBO.getUser(userId);
         if (user == null) {
-            throw new BizException("li010004", "用户名不存在");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "用户名不存在");
         }
         // 短信验证码是否正确
         String mobile = user.getMobile();
@@ -229,7 +234,8 @@ public class UserAOImpl implements IUserAO {
     public void doModifyTradePwd(String userId, String oldTradePwd,
             String newTradePwd) {
         if (oldTradePwd.equals(newTradePwd)) {
-            throw new BizException("li01008", "新资金密码与原有资金密码重复");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "新资金密码与原有资金密码重复");
         }
         User conditon = new User();
         conditon.setUserId(userId);
@@ -239,7 +245,7 @@ public class UserAOImpl implements IUserAO {
         if (CollectionUtils.isNotEmpty(list)) {
             user = list.get(0);
         } else {
-            throw new BizException("li01008", "旧资金密码不正确");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "旧资金密码不正确");
         }
         userBO.refreshTradePwd(userId, newTradePwd);
         String mobile = user.getMobile();
@@ -250,6 +256,11 @@ public class UserAOImpl implements IUserAO {
     @Override
     public void modifyPhoto(String userId, String photo) {
         userBO.refreshPhoto(userId, photo);
+    }
+
+    @Override
+    public void modifyNickname(String userId, String nickname) {
+        userBO.refreshNickname(userId, nickname);
     }
 
     @Override
@@ -266,7 +277,8 @@ public class UserAOImpl implements IUserAO {
     public User getUser(String userId) {
         User user = userBO.getUser(userId);
         if (user == null) {
-            throw new BizException("li01004", userId + "用户不存在");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                userId + "用户不存在");
         } else {
             // 是否设置过交易密码
             if (StringUtils.isNotBlank(user.getTradePwdStrength())) {
@@ -292,11 +304,11 @@ public class UserAOImpl implements IUserAO {
     public void doCloseOpen(String userId, String updater, String remark) {
         User user = userBO.getUser(userId);
         if (user == null) {
-            throw new BizException("li01004", "用户不存在");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "用户不存在");
         }
         // admin 不注销
         if (EUser.ADMIN.getCode().equals(user.getLoginName())) {
-            throw new BizException("li01004", "管理员无法注销");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "管理员无法注销");
         }
         String mobile = user.getMobile();
         String smsContent = "";

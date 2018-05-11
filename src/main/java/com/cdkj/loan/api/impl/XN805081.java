@@ -12,8 +12,8 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 修改昵称
- * @author: xieyj 
- * @since: 2017年7月16日 下午3:01:12 
+ * @author: CYL 
+ * @since: 2018年5月11日 下午5:06:20 
  * @history:
  */
 public class XN805081 extends AProcessor {
@@ -24,7 +24,7 @@ public class XN805081 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        // TODO 修改昵称逻辑，留给柴运来练手
+        userAO.modifyNickname(req.getUserId(), req.getNickname());
         return new BooleanRes(true);
     }
 

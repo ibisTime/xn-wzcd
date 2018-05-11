@@ -1,13 +1,18 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN805064Req {
     // userId
+    @NotBlank
     private String userId;
 
     // 原登录密码
+    @NotBlank
     private String oldLoginPwd;
 
     // 新登录密码
+    @NotBlank
     private String newLoginPwd;
 
     public String getUserId() {

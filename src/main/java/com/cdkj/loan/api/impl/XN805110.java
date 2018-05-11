@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.cdkj.loan.ao.IUserRelationAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
-import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN805110Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.enums.EUserReleationType;
@@ -32,13 +32,14 @@ public class XN805110 extends AProcessor {
         if (StringUtils.isBlank(type)) {
             type = EUserReleationType.TRUST.getCode();
         }
-        userRelationAO.followUser(req.getUserId(), req.getToUser(),type);
+        userRelationAO.followUser(req.getUserId(), req.getToUser(), type);
         return new BooleanRes(true);
     }
 
     @Override
-    public void doCheck(String inputparams, String operator) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN805110Req.class);
-        StringValidater.validateBlank(req.getUserId(), req.getToUser());
+        ObjValidater.validateReq(req);
     }
 }

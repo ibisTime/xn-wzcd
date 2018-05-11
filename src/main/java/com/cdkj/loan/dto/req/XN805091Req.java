@@ -1,11 +1,15 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN805091Req {
 
     // 用户编号(必填)
+    @NotBlank
     private String userId;
 
     // 更新人(必填)
+    @NotBlank
     private String updater;
 
     // 备注(选填)

@@ -47,6 +47,9 @@ public interface IUserAO {
     // 修改头像
     public void modifyPhoto(String userId, String photo);
 
+    // 修改昵称
+    public void modifyNickname(String userId, String nickname);
+
     // 注销/激活用户
     public void doCloseOpen(String userId, String updater, String remark);
 

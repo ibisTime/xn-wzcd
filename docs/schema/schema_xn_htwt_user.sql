@@ -20,6 +20,8 @@ CREATE TABLE `tstd_user` (
   `creditscore` bigint(20) DEFAULT NULL COMMENT '信用分',
   `status` varchar(4) DEFAULT NULL COMMENT '状态',
   `create_datetime` datetime DEFAULT NULL COMMENT '注册时间',
+  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`) COMMENT '用户'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

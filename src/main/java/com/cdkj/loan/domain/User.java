@@ -71,6 +71,12 @@ public class User extends ABaseDO {
     // 注册时间
     private Date createDatetime;
 
+    // 更新人
+    private String updater;
+
+    // 更新时间
+    private Date updateDatetime;
+
     // 备注
     private String remark;
 
@@ -265,6 +271,22 @@ public class User extends ABaseDO {
 
     public void setCreateDatetime(Date createDatetime) {
         this.createDatetime = createDatetime;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+
+    public Date getUpdateDatetime() {
+        return updateDatetime;
+    }
+
+    public void setUpdateDatetime(Date updateDatetime) {
+        this.updateDatetime = updateDatetime;
     }
 
     public String getRemark() {

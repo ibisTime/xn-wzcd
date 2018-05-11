@@ -1,11 +1,15 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN805080Req {
 
     // userId（必填）
+    @NotBlank
     private String userId;
 
     // 头像（必填）
+    @NotBlank
     private String photo;
 
     public String getUserId() {
