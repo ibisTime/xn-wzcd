@@ -1,22 +1,30 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN805063Req {
     // 手机号(必填)
+    @NotBlank
     private String mobile;
 
     // 手机验证码(必填)
+    @NotBlank
     private String smsCaptcha;
 
     // 新登录密码(必填)
+    @NotBlank
     private String newLoginPwd;
 
     // 类别(必填)
+    @NotBlank
     private String kind;
 
     // 公司编号(必填)
+    @NotBlank
     private String companyCode;
 
     // 系统编号(必填)
+    @NotBlank
     private String systemCode;
 
     public String getMobile() {

@@ -1,13 +1,18 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN805066Req {
     // userId（必填）
+    @NotBlank
     private String userId;
 
     // 支付密码（必填）
+    @NotBlank
     private String tradePwd;
 
     // 手机验证码（必填）
+    @NotBlank
     private String smsCaptcha;
 
     public String getUserId() {

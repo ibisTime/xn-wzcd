@@ -8,6 +8,8 @@
  */
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /** 
  * @author: xieyj 
  * @since: 2016年8月31日 下午12:02:51 
@@ -15,12 +17,15 @@ package com.cdkj.loan.dto.req;
  */
 public class XN805110Req {
     // 用户编号(必填)
+    @NotBlank
     private String userId;
 
     // 关注用户编号(必填)
+    @NotBlank
     private String toUser;
 
     // 关系类型
+    @NotBlank
     private String type;
 
     public String getUserId() {

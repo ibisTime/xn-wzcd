@@ -1,17 +1,23 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN805067Req {
 
     // userId（必填）
+    @NotBlank
     private String userId;
 
     // 新支付密码（必填）
+    @NotBlank
     private String newTradePwd;
 
     // 短信验证码（必填）
+    @NotBlank
     private String smsCaptcha;
 
     // 谷歌验证码（条件比填，开启谷歌认证时必填）
+    @NotBlank
     private String googleCaptcha;
 
     public String getGoogleCaptcha() {

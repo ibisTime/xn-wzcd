@@ -131,16 +131,18 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
                 && StringUtils.isNotBlank(tradePwd)) {
             User user = this.getUser(userId);
             if (StringUtils.isBlank(user.getTradePwdStrength())) {
-                throw new BizException("jd00001", "请您先设置资金密码！");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "请您先设置资金密码！");
             }
             User condition = new User();
             condition.setUserId(userId);
             condition.setTradePwd(MD5Util.md5(tradePwd));
             if (this.getTotalCount(condition) != 1) {
-                throw new BizException("jd00001", "资金密码错误");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "资金密码错误");
             }
         } else {
-            throw new BizException("jd00001", "资金密码错误");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "资金密码错误");
         }
     }
 
@@ -153,10 +155,11 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
             condition.setLoginPwd(MD5Util.md5(loginPwd));
             long count = this.getTotalCount(condition);
             if (count != 1) {
-                throw new BizException("jd00001", "原登录密码错误");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "原登录密码错误");
             }
         } else {
-            throw new BizException("jd00001", "原登录密码错误");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "原登录密码错误");
         }
     }
 
