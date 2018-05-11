@@ -23,12 +23,15 @@ public class XN805041 extends AProcessor {
     private XN805041Req req = null;
 
     @Override
-    public synchronized Object doBusiness() throws BizException {
+    public Object doBusiness() throws BizException {
 
-        String userId = userAO.doRegister(req.getMobile(), req.getNickname(),
-            req.getLoginPwd(), req.getSmsCaptcha(), req.getKind());
+        synchronized (XN805041.class) {
+            String userId = userAO.doRegister(req.getMobile(),
+                req.getNickname(), req.getLoginPwd(), req.getSmsCaptcha(),
+                req.getKind());
 
-        return new PKCodeRes(userId);
+            return new PKCodeRes(userId);
+        }
 
     }
 

@@ -20,6 +20,7 @@ import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.common.PhoneUtil;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EAccountType;
+import com.cdkj.loan.enums.ECaptchaType;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EUser;
 import com.cdkj.loan.enums.EUserKind;
