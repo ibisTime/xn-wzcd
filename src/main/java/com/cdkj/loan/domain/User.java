@@ -51,7 +51,7 @@ public class User extends ABaseDO {
     private String idKind;
 
     // 证件号
-    private Long idNo;
+    private String idNo;
 
     // 真实姓名
     private String realName;
@@ -78,6 +78,30 @@ public class User extends ABaseDO {
     private Date createDatetimeStart;
 
     private Date createDatetimeEnd;
+
+    // 登录名模糊查询
+    private String loginNameForQuery;
+
+    // 昵称模糊查询
+    private String nicknameForQuery;
+
+    // 手机号模糊查询
+    private String mobileForQuery;
+
+    // 真实姓名模糊查询
+    private String realNameForQuery;
+
+    // 是否被拉入黑名单
+    private boolean blacklistFlag;
+
+    // 是否实名认证
+    private boolean identifyFlag;
+
+    // 是否绑定银行卡
+    private boolean bankcardFlag;
+
+    // 是否设置交易密码
+    private boolean tradepwdFlag;
 
     public String getUserId() {
         return userId;
@@ -195,11 +219,11 @@ public class User extends ABaseDO {
         this.realName = realName;
     }
 
-    public Long getIdNo() {
+    public String getIdNo() {
         return idNo;
     }
 
-    public void setIdNo(Long idNo) {
+    public void setIdNo(String idNo) {
         this.idNo = idNo;
     }
 
@@ -265,6 +289,70 @@ public class User extends ABaseDO {
 
     public void setCreateDatetimeEnd(Date createDatetimeEnd) {
         this.createDatetimeEnd = createDatetimeEnd;
+    }
+
+    public String getLoginNameForQuery() {
+        return loginNameForQuery;
+    }
+
+    public void setLoginNameForQuery(String loginNameForQuery) {
+        this.loginNameForQuery = loginNameForQuery;
+    }
+
+    public String getNicknameForQuery() {
+        return nicknameForQuery;
+    }
+
+    public void setNicknameForQuery(String nicknameForQuery) {
+        this.nicknameForQuery = nicknameForQuery;
+    }
+
+    public String getMobileForQuery() {
+        return mobileForQuery;
+    }
+
+    public void setMobileForQuery(String mobileForQuery) {
+        this.mobileForQuery = mobileForQuery;
+    }
+
+    public String getRealNameForQuery() {
+        return realNameForQuery;
+    }
+
+    public void setRealNameForQuery(String realNameForQuery) {
+        this.realNameForQuery = realNameForQuery;
+    }
+
+    public boolean isBlacklistFlag() {
+        return blacklistFlag;
+    }
+
+    public void setBlacklistFlag(boolean blacklistFlag) {
+        this.blacklistFlag = blacklistFlag;
+    }
+
+    public boolean isIdentifyFlag() {
+        return identifyFlag;
+    }
+
+    public void setIdentifyFlag(boolean identifyFlag) {
+        this.identifyFlag = identifyFlag;
+    }
+
+    public boolean isBankcardFlag() {
+        return bankcardFlag;
+    }
+
+    public void setBankcardFlag(boolean bankcardFlag) {
+        this.bankcardFlag = bankcardFlag;
+    }
+
+    public boolean isTradepwdFlag() {
+        return tradepwdFlag;
+    }
+
+    public void setTradepwdFlag(boolean tradepwdFlag) {
+        this.tradepwdFlag = tradepwdFlag;
     }
 
 }

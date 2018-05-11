@@ -46,4 +46,34 @@ public class UserDAOImpl extends AMybatisTemplate implements IUserDAO {
             condition, User.class);
     }
 
+    @Override
+    public int updateTradePwd(User data) {
+        return super.update(NAMESPACE.concat("update_trade_pwd"), data);
+    }
+
+    @Override
+    public int updateLoginPwd(User data) {
+        return super.update(NAMESPACE.concat("update_login_pwd"), data);
+    }
+
+    @Override
+    public int updateMobile(User data) {
+        return super.update(NAMESPACE.concat("update_mobile"), data);
+    }
+
+    @Override
+    public int updateNickname(User data) {
+        return super.update(NAMESPACE.concat("update_nickname"), data);
+    }
+
+    @Override
+    public int updatePhoto(User data) {
+        return super.update(NAMESPACE.concat("update_photo"), data);
+    }
+
+    @Override
+    public int updateStatus(User data) {
+        return super.update(NAMESPACE.concat("update_status"), data);
+    }
+
 }

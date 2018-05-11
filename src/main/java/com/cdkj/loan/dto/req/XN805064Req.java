@@ -10,9 +10,6 @@ public class XN805064Req {
     // 新登录密码
     private String newLoginPwd;
 
-    // 谷歌验证码(选填)
-    private String googleCaptcha;
-
     public String getUserId() {
         return userId;
     }
@@ -37,11 +34,4 @@ public class XN805064Req {
         this.newLoginPwd = newLoginPwd;
     }
 
-    public String getGoogleCaptcha() {
-        return googleCaptcha;
-    }
-
-    public void setGoogleCaptcha(String googleCaptcha) {
-        this.googleCaptcha = googleCaptcha;
-    }
 }

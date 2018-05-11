@@ -1,17 +1,20 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN805061Req {
+
     // userId
+    @NotBlank
     private String userId;
 
     // 新手机号
+    @NotBlank
     private String newMobile;
 
     // 验证码
+    @NotBlank
     private String smsCaptcha;
-
-    // 是否区分不同商户（选填 1 区分，其他不区分）
-    private String isMall;
 
     public String getUserId() {
         return userId;
@@ -35,14 +38,6 @@ public class XN805061Req {
 
     public void setSmsCaptcha(String smsCaptcha) {
         this.smsCaptcha = smsCaptcha;
-    }
-
-    public String getIsMall() {
-        return isMall;
-    }
-
-    public void setIsMall(String isMall) {
-        this.isMall = isMall;
     }
 
 }

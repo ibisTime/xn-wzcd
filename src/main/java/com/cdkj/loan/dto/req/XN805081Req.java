@@ -5,11 +5,8 @@ public class XN805081Req {
     // userId（必填）
     private String userId;
 
-    // 邮箱（必填）
-    private String email;
-
-    // 验证码（必填）
-    private String captcha;
+    // 昵称（必填）
+    private String nickname;
 
     public String getUserId() {
         return userId;
@@ -19,20 +16,12 @@ public class XN805081Req {
         this.userId = userId;
     }
 
-    public String getEmail() {
-        return email;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCaptcha() {
-        return captcha;
-    }
-
-    public void setCaptcha(String captcha) {
-        this.captcha = captcha;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
 }

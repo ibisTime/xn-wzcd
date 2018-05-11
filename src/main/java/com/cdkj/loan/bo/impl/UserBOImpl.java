@@ -13,11 +13,9 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.common.PwdUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.IUserDAO;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EBizErrorCode;
-import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -57,37 +55,110 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         }
     }
 
-    /*
-     * @Override public void isLoginNameExist(String loginName) { if
-     * (StringUtils.isNotBlank(loginName)) { // 判断格式 User condition = new
-     * User(); condition.setLoginName(loginName); long count =
-     * getTotalCount(condition); if (count > 0) { throw new
-     * BizException("li01003", "登录名已经存在"); } } }
-     */
+    @Override
+    public int refreshMobile(String userId, String mobile) {
+        int count = 0;
+        if (StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(mobile)) {
+            User data = new User();
+            data.setUserId(userId);
+            data.setMobile(mobile);
+            count = userDAO.updateMobile(data);
+        }
+        return count;
+    }
 
-    // @Override
-    // public void checkLoginPwd(String userId, String loginPwd) {
-    // if (StringUtils.isNotBlank(userId)
-    // && StringUtils.isNotBlank(loginPwd)) {
-    // User condition = new User();
-    // condition.setUserId(userId);
-    // condition.setLoginPwd(MD5Util.md5(loginPwd));
-    // long count = this.getTotalCount(condition);
-    // if (count != 1) {
-    // throw new BizException("jd00001", "原登录密码错误");
-    // }
-    // } else {
-    // throw new BizException("jd00001", "原登录密码错误");
-    // }
-    // }
+    @Override
+    public int refreshLoginPwd(String userId, String loginPwd) {
+        int count = 0;
+        if (StringUtils.isNotBlank(userId)) {
+            User data = new User();
+            data.setUserId(userId);
+            data.setLoginPwd(MD5Util.md5(loginPwd));
+            data.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
+            count = userDAO.updateLoginPwd(data);
+        }
+        return count;
+    }
 
-    /*
-     * @Override public void checkUserReferee(String userReferee, String
-     * systemCode) { if (StringUtils.isNotBlank(userReferee)) { // 判断格式 User
-     * condition = new User(); condition.setUserId(userReferee); long count =
-     * getTotalCount(condition); if (count <= 0) { throw new
-     * BizException("li01003", "推荐人不存在"); } } }
-     */
+    @Override
+    public int refreshTradePwd(String userId, String tradePwd) {
+        int count = 0;
+        if (StringUtils.isNotBlank(userId)) {
+            User data = new User();
+            data.setUserId(userId);
+            data.setTradePwd(MD5Util.md5(tradePwd));
+            data.setTradePwdStrength(PwdUtil.calculateSecurityLevel(tradePwd));
+            count = userDAO.updateTradePwd(data);
+        }
+        return count;
+    }
+
+    @Override
+    public void refreshNickname(String userId, String nickname) {
+        if (StringUtils.isNotBlank(userId)) {
+            User data = new User();
+            data.setUserId(userId);
+            data.setNickname(nickname);
+            userDAO.updateNickname(data);
+        }
+    }
+
+    @Override
+    public void refreshPhoto(String userId, String photo) {
+        if (StringUtils.isNotBlank(userId)) {
+            User data = new User();
+            data.setUserId(userId);
+            data.setPhoto(photo);
+            userDAO.updatePhoto(data);
+        }
+    }
+
+    @Override
+    public void refreshStatus(String userId, EUserStatus status, String updater,
+            String remark) {
+        if (StringUtils.isNotBlank(userId)) {
+            User data = new User();
+            data.setUserId(userId);
+            data.setStatus(status.getCode());
+            data.setRemark(remark);
+            userDAO.updateStatus(data);
+        }
+    }
+
+    @Override
+    public void checkTradePwd(String userId, String tradePwd) {
+        if (StringUtils.isNotBlank(userId)
+                && StringUtils.isNotBlank(tradePwd)) {
+            User user = this.getUser(userId);
+            if (StringUtils.isBlank(user.getTradePwdStrength())) {
+                throw new BizException("jd00001", "请您先设置资金密码！");
+            }
+            User condition = new User();
+            condition.setUserId(userId);
+            condition.setTradePwd(MD5Util.md5(tradePwd));
+            if (this.getTotalCount(condition) != 1) {
+                throw new BizException("jd00001", "资金密码错误");
+            }
+        } else {
+            throw new BizException("jd00001", "资金密码错误");
+        }
+    }
+
+    @Override
+    public void checkLoginPwd(String userId, String loginPwd) {
+        if (StringUtils.isNotBlank(userId)
+                && StringUtils.isNotBlank(loginPwd)) {
+            User condition = new User();
+            condition.setUserId(userId);
+            condition.setLoginPwd(MD5Util.md5(loginPwd));
+            long count = this.getTotalCount(condition);
+            if (count != 1) {
+                throw new BizException("jd00001", "原登录密码错误");
+            }
+        } else {
+            throw new BizException("jd00001", "原登录密码错误");
+        }
+    }
 
     @Override
     public List<User> queryUserList(User condition) {
@@ -124,17 +195,36 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     }
 
     @Override
-    public User getUserById(String userId) {
+    public User getUser(String mobile, String kind) {
         User user = null;
-        if (StringUtils.isNotBlank(userId)) {
+        if (StringUtils.isNotBlank(mobile) && StringUtils.isNotBlank(kind)) {
             User condition = new User();
-            condition.setUserId(userId);
+            condition.setMobile(mobile);
+            condition.setKind(kind);
             List<User> list = userDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
                 user = list.get(0);
             }
         }
         return user;
+    }
+
+    @Override
+    public String getUserId(String mobile, String kind) {
+        String userId = null;
+        if (StringUtils.isNotBlank(mobile) && StringUtils.isNotBlank(kind)) {
+            User condition = new User();
+            condition.setMobile(mobile);
+            condition.setKind(kind);
+            List<User> list = userDAO.selectList(condition);
+            if (CollectionUtils.isNotEmpty(list)) {
+                User data = list.get(0);
+                userId = data.getUserId();
+            } else
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "手机号[" + mobile + "]用户不存在");
+        }
+        return userId;
     }
 
     @Override
@@ -145,20 +235,6 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
             User data = new User();
             data.setUserId(userId);
             data.setMobile(mobile);
-            userDAO.insert(data);
-        }
-        return userId;
-    }
-
-    @Override
-    public String saveCNavigate(User data) {
-        String userId = null;
-        if (data != null) {
-            if (data.getUserId() == null) {
-                userId = OrderNoGenerater
-                    .generate(EGeneratePrefix.DH.getCode());
-                data.setUserId(userId);
-            }
             userDAO.insert(data);
         }
         return userId;
@@ -194,7 +270,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         user.setLoginPwd(loginPwd);
         user.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
         user.setIdKind(idKind);
-        user.setIdNo(StringValidater.toLong(idNo));
+        user.setIdNo(idNo);
         user.setRealName(realName);
         user.setJfAmount(0L);
         user.setAmount(0L);

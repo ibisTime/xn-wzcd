@@ -10,9 +10,6 @@ public class XN805066Req {
     // 手机验证码（必填）
     private String smsCaptcha;
 
-    // 谷歌验证码（选填）
-    private String googleCaptcha;
-
     public String getUserId() {
         return userId;
     }
@@ -35,14 +32,6 @@ public class XN805066Req {
 
     public void setSmsCaptcha(String smsCaptcha) {
         this.smsCaptcha = smsCaptcha;
-    }
-
-    public String getGoogleCaptcha() {
-        return googleCaptcha;
-    }
-
-    public void setGoogleCaptcha(String googleCaptcha) {
-        this.googleCaptcha = googleCaptcha;
     }
 
 }

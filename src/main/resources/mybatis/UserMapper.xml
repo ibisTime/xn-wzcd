@@ -38,14 +38,23 @@
 			<if test="loginName != null and loginName != '' ">
 				AND t.login_name = #{loginName}
 			</if>
+			<if test="loginNameForQuery != null and loginNameForQuery != '' ">
+				AND t.login_name like "%"#{loginNameForQuery}"%"
+			</if>
 			<if test="mobile != null and mobile != '' ">
 				AND t.mobile = #{mobile}
+			</if>
+			<if test="mobileForQuery != null and mobileForQuery != '' ">
+				AND t.mobile like "%"#{mobileForQuery}"%"
 			</if>
 			<if test="photo != null and photo != '' ">
 				AND t.photo = #{photo}
 			</if>
 			<if test="nickname != null and nickname != '' ">
 				AND t.nickname = #{nickname}
+			</if>
+			<if test="nicknameForQuery != null and nicknameForQuery != '' ">
+				AND t.nickname like "%"#{nicknameForQuery}"%"
 			</if>
 			<if test="loginPwd != null and loginPwd != '' ">
 				AND t.login_pwd = #{loginPwd}
@@ -73,6 +82,9 @@
 			</if>
 			<if test="realName != null and realName != '' ">
 				AND t.real_name = #{realName}
+			</if>
+			<if test="realNameForQuery != null and realNameForQuery != '' ">
+				AND t.real_name like "%"#{realNameForQuery}"%"
 			</if>
 			<if test="jfAmount != null and jfAmount != '' ">
 				AND t.jf_amount = #{jfAmount}
@@ -191,6 +203,15 @@
 		user_id = #{userId}	
 	</update>
 	
+	<update id="update_trade_pwd" parameterType="user">
+		UPDATE tstd_user
+		SET
+		 trade_pwd = #{tradePwd}
+		,trade_pwd_strength = #{tradePwdStrength}
+		WHERE
+		user_id = #{userId}	
+	</update>
+	
 	<update id="update_mobile" parameterType="user">
 		UPDATE tstd_user
 		SET
@@ -200,7 +221,7 @@
 		user_id = #{userId}
 	</update>
 	
-	<update id="update_user_nickname" parameterType="user">
+	<update id="update_nickname" parameterType="user">
 		UPDATE tstd_user
 		SET
 		 nickname = #{nickname}
@@ -208,8 +229,22 @@
 		user_id = #{userId}	
 	</update>
 	
+	<update id="update_photo" parameterType="user">
+		UPDATE tstd_user
+		SET
+		photo = #{photo}
+		WHERE user_id = #{userId}
+	</update>
 	
-	
-	
+	<update id="update_status" parameterType="user">
+		UPDATE tstd_user
+		SET
+		status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE
+		user_id = #{userId}	
+	</update>
 	
 </mapper>
