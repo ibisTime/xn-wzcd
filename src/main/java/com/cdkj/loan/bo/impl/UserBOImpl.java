@@ -177,7 +177,8 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
 
         user.setLoginPwd(MD5Util.md5(loginPwd));
         user.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
-
+        user.setStatus(EUserStatus.NORMAL.getCode());
+        user.setCreateDatetime(new Date());
         userDAO.insert(user);
         return userId;
     }
