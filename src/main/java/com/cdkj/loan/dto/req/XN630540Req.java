@@ -1,14 +1,11 @@
 package com.cdkj.loan.dto.req;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 public class XN630540Req extends APageReq {
 
     private static final long serialVersionUID = 5066181160930283667L;
 
     private String userId;// 用户编号
 
-    @NotBlank
     private String repayBizCode;// 关联业务编号
 
     private String status;// 状态
