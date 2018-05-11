@@ -8,12 +8,12 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 上传图片
- * @author: nyc 
- * @since: 2018年4月25日 上午10:52:10 
+ * 根据系统编号获取七牛uploadToken
+ * @author: xieyj 
+ * @since: 2016年10月11日 上午9:45:51 
  * @history:
  */
-public class XN630081 extends AProcessor {
+public class XN630091 extends AProcessor {
     private QnTokenImpl qnTokenImpl = SpringContextHolder
         .getBean(QnTokenImpl.class);
 
@@ -25,6 +25,5 @@ public class XN630081 extends AProcessor {
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-
     }
 }

@@ -1,13 +1,13 @@
 package com.cdkj.loan.dto.res;
 
-public class XN805951Res {
+public class XN630091Res {
     // 上传凭证
     private String uploadToken;
 
-    public XN805951Res() {
+    public XN630091Res() {
     }
 
-    public XN805951Res(String uploadToken) {
+    public XN630091Res(String uploadToken) {
         this.uploadToken = uploadToken;
     }
 

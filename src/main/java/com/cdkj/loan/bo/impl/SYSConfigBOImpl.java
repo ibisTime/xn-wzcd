@@ -151,6 +151,7 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig>
 
     @Override
     public Map<String, String> getConfigsMap(String type) {
+
         Map<String, String> map = new HashMap<String, String>();
         SYSConfig condition = new SYSConfig();
         condition.setType(type);
