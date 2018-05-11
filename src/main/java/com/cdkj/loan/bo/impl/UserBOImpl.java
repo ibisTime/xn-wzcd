@@ -120,6 +120,8 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
             User data = new User();
             data.setUserId(userId);
             data.setStatus(status.getCode());
+            data.setUpdater(updater);
+            data.setUpdateDatetime(new Date());
             data.setRemark(remark);
             userDAO.updateStatus(data);
         }
