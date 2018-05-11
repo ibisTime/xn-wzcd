@@ -52,8 +52,7 @@ public class UserAOImpl implements IUserAO {
         userBO.isNicknameExist(nickname, kind);
 
         // 验证短信验证码
-        // smsOutBO.checkCaptcha(mobile, smsCaptcha,
-        // ECaptchaType.C_REG.getCode());
+        smsOutBO.checkCaptcha(mobile, smsCaptcha, ECaptchaType.C_REG.getCode());
 
         // 注册用户
         String userId = userBO.doRegister(mobile, nickname, loginPwd, kind);
@@ -257,6 +256,11 @@ public class UserAOImpl implements IUserAO {
     @Override
     public void modifyPhoto(String userId, String photo) {
         userBO.refreshPhoto(userId, photo);
+    }
+
+    @Override
+    public void modifyNickname(String userId, String nickname) {
+        userBO.refreshNickname(userId, nickname);
     }
 
     @Override

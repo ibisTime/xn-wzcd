@@ -16,18 +16,6 @@ public class XN805067Req {
     @NotBlank
     private String smsCaptcha;
 
-    // 谷歌验证码（条件比填，开启谷歌认证时必填）
-    @NotBlank
-    private String googleCaptcha;
-
-    public String getGoogleCaptcha() {
-        return googleCaptcha;
-    }
-
-    public void setGoogleCaptcha(String googleCaptcha) {
-        this.googleCaptcha = googleCaptcha;
-    }
-
     public String getUserId() {
         return userId;
     }
