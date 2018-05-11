@@ -141,7 +141,7 @@
 	</select>
 	
 	<select id="select_user_count" parameterType="user" resultType="java.lang.Long">
-		SELECT count(1) FROM tht_user t
+		SELECT count(1) FROM tstd_user t
 		<include refid="where_condition" />
 	</select>
 	

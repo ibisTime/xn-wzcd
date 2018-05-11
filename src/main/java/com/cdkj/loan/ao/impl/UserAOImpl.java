@@ -20,7 +20,6 @@ import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.common.PhoneUtil;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EAccountType;
-import com.cdkj.loan.enums.ECaptchaType;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EUser;
 import com.cdkj.loan.enums.EUserKind;
@@ -51,7 +50,8 @@ public class UserAOImpl implements IUserAO {
         userBO.isNicknameExist(nickname, kind);
 
         // 验证短信验证码
-        smsOutBO.checkCaptcha(mobile, smsCaptcha, ECaptchaType.C_REG.getCode());
+        // smsOutBO.checkCaptcha(mobile, smsCaptcha,
+        // ECaptchaType.C_REG.getCode());
 
         // 注册用户
         String userId = userBO.doRegister(mobile, nickname, loginPwd, kind);
