@@ -4,14 +4,13 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.User;
-import com.cdkj.loan.dto.req.XN630200Req;
 
 public interface IUserAO {
     String DEFAULT_ORDER_COLUMN = "user_id";
 
     // C端用户注册
-    public XN630200Req doRegister(String mobile, String loginPwd,
-            String smsCaptcha);
+    public String doRegister(String mobile, String nickname, String loginPwd,
+            String smsCaptcha, String kind);
 
     // 检查手机号是否存在
     public void doCheckMobile(String mobile);
@@ -21,7 +20,7 @@ public interface IUserAO {
             String loginPwd, String confirmPwd);
 
     // 用户登录
-    public String doLogin(String loginName, String loginPwd);
+    public String doLogin(String loginName, String loginPwd, String kind);
 
     // 注册
     public String insertUser(User data);

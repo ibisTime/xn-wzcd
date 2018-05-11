@@ -16,6 +16,7 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.IUserDAO;
 import com.cdkj.loan.domain.User;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
@@ -27,24 +28,34 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     private IUserDAO userDAO;
 
     @Override
-    public void isMobileExist(String mobile) {
+    public void isMobileExist(String mobile, String kind) {
         if (StringUtils.isNotBlank(mobile)) { // 判断格式
                                               // PhoneUtil.checkMobile(mobile);
             User condition = new User();
             condition.setMobile(mobile);
+            condition.setKind(kind);
+
             long count = getTotalCount(condition);
             if (count > 0) {
-                throw new BizException("li01003", "手机号已经存在");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "手机号已经存在");
             }
         }
     }
 
-    /*
-     * @Override public void isNicknameExist(String nickname) { if
-     * (StringUtils.isNotBlank(nickname)) { // 判断格式 User condition = new User();
-     * condition.setNickname(nickname); long count = getTotalCount(condition);
-     * if (count > 0) { throw new BizException("li01003", "昵称已经被使用"); } } }
-     */
+    @Override
+    public void isNicknameExist(String nickname, String kind) {
+        if (StringUtils.isNotBlank(nickname)) { // 判断格式 User condition = new
+            User condition = new User(); // User();
+            condition.setNickname(nickname);
+            condition.setKind(kind);
+            long count = getTotalCount(condition);
+            if (count > 0) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "昵称已经被使用");
+            }
+        }
+    }
 
     /*
      * @Override public void isLoginNameExist(String loginName) { if
@@ -154,11 +165,13 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     }
 
     @Override
-    public String doRegister(String mobile, String loginPwd,
-            String smsCaptcha) {
+    public String doRegister(String mobile, String nickname, String loginPwd,
+            String kind) {
+
         String userId = OrderNoGenerater.generate("U");
         User user = new User();
         user.setUserId(userId);
+        user.setKind(kind);
         user.setLoginName(mobile);
         user.setMobile(mobile);
 

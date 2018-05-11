@@ -1,6 +1,7 @@
 package com.cdkj.loan.dto.res;
 
 public class XN805041Res {
+
     private String userId;
 
     private String userReferee;

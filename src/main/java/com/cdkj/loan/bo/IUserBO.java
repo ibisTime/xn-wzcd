@@ -8,17 +8,18 @@ import com.cdkj.loan.domain.User;
 public interface IUserBO extends IPaginableBO<User> {
 
     // C端用户注册
-    public String doRegister(String mobile, String loginPwd, String smsCaptcha);
+    public String doRegister(String mobile, String nickname, String loginPwd,
+            String kind);
 
     // 车贷订单用户代注册实名认证
     public String doRegisterAndIdentify(String mobile, String idKind,
             String realName, String idNo);
 
     // 判断手机号是否存在
-    public void isMobileExist(String mobile);
+    public void isMobileExist(String mobile, String kind);
 
     // 判断昵称是否存在
-    // public void isNicknameExist(String nickname);
+    public void isNicknameExist(String nickname, String kind);
 
     // 判断登录名是否存在
     // public void isLoginNameExist(String loginName);

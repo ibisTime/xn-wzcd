@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -9,12 +10,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IUserAO;
+import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.ISmsOutBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.domain.User;
-import com.cdkj.loan.dto.req.XN630200Req;
+import com.cdkj.loan.enums.EAccountType;
+import com.cdkj.loan.enums.ECaptchaType;
+import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -27,11 +31,44 @@ public class UserAOImpl implements IUserAO {
     @Autowired
     ISmsOutBO smsOutBO;
 
+    @Autowired
+    IAccountBO accountBO;
+
     @Override
-    public XN630200Req doRegister(String mobile, String loginPwd,
-            String smsCaptcha) {
-        String userId = userBO.doRegister(mobile, loginPwd, smsCaptcha);
-        return new XN630200Req(userId);
+    @Transactional
+    public String doRegister(String mobile, String nickname, String loginPwd,
+            String smsCaptcha, String kind) {
+
+        // 验证手机号是否存在
+        userBO.isMobileExist(mobile, kind);
+
+        // 检查昵称是否已经被使用
+        userBO.isNicknameExist(nickname, kind);
+
+        // 验证短信验证码
+        smsOutBO.checkCaptcha(mobile, smsCaptcha, ECaptchaType.C_REG.getCode());
+
+        // 注册用户
+        String userId = userBO.doRegister(mobile, nickname, loginPwd, kind);
+
+        // 分配账户
+        distributeAccount(userId, mobile, kind);
+
+        return userId;
+    }
+
+    // 分配账号
+    private void distributeAccount(String userId, String mobile, String kind) {
+
+        List<String> currencyList = new ArrayList<String>();
+        currencyList.add(ECurrency.CNY.getCode());
+        currencyList.add(ECurrency.JF.getCode());
+        currencyList.add(ECurrency.XYF.getCode());
+
+        for (String currency : currencyList) {
+            accountBO.distributeAccount(userId, mobile,
+                EAccountType.getAccountType(kind), currency);
+        }
     }
 
     // 验证手机号
@@ -60,32 +97,30 @@ public class UserAOImpl implements IUserAO {
     // 用户登录
     @Override
     @Transactional
-    public String doLogin(String loginName, String loginPwd) {
+    public String doLogin(String loginName, String loginPwd, String kind) {
+
         User condition = new User();
-        // if (EUserKind.Customer.getCode().equals(kind)
-        // || EUserKind.Merchant.getCode().equals(kind)) {
-        // condition.setLoginName(loginName);
-        // condition.setLoginType(ELoginType.MOBILE.getCode());
-        // } else {
         condition.setLoginName(loginName);
-        // }
+        condition.setKind(kind);
         List<User> userList1 = userBO.queryUserList(condition);
+
         if (CollectionUtils.isEmpty(userList1)) {
             throw new BizException("xn805050", "登录名不存在");
         }
+
         condition.setLoginPwd(MD5Util.md5(loginPwd));
         List<User> userList2 = userBO.queryUserList(condition);
         if (CollectionUtils.isEmpty(userList2)) {
             throw new BizException("xn805050", "登录密码错误");
         }
+
         User user = userList2.get(0);
         if (!EUserStatus.NORMAL.getCode().equals(user.getStatus())) {
             throw new BizException("xn805050",
                 "该账号" + EUserStatus.getMap().get(user.getStatus()).getValue()
                         + "，请联系工作人员");
         }
-        // addLoginAmount(user);
-        // userBO.refreshLastLogin(user.getUserId());
+
         return user.getUserId();
     }
 

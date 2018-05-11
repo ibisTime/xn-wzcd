@@ -1,41 +1,20 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN805050Req {
+
     // 登陆名（必填）
+    @NotBlank
     private String loginName;
 
     // 登陆密码（必填）
+    @NotBlank
     private String loginPwd;
 
+    // 用户类型（必填）
+    @NotBlank
     private String kind;
-
-    private String companyCode;
-
-    private String systemCode;
-
-    public String getKind() {
-        return kind;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
-
-    public String getSystemCode() {
-        return systemCode;
-    }
-
-    public void setSystemCode(String systemCode) {
-        this.systemCode = systemCode;
-    }
 
     public String getLoginName() {
         return loginName;
@@ -51,6 +30,14 @@ public class XN805050Req {
 
     public void setLoginPwd(String loginPwd) {
         this.loginPwd = loginPwd;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
     }
 
 }

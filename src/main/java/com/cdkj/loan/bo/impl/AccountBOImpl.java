@@ -45,27 +45,29 @@ public class AccountBOImpl extends PaginableBOImpl<Account>
 
     @Override
     public String distributeAccount(String userId, String realName,
-            EAccountType accountType, String currency, String systemCode,
-            String companyCode) {
+            EAccountType accountType, String currency) {
+
         String accountNumber = null;
-        if (StringUtils.isNotBlank(systemCode)
-                && StringUtils.isNotBlank(companyCode)
-                && StringUtils.isNotBlank(userId)) {
+
+        if (StringUtils.isNotBlank(userId)) {
+
             accountNumber = OrderNoGenerater
                 .generate(EGeneratePrefix.Account.getCode());
+
             Account data = new Account();
+
             data.setAccountNumber(accountNumber);
             data.setUserId(userId);
             data.setRealName(realName);
-
             data.setType(accountType.getCode());
             data.setCurrency(currency);
+
             data.setStatus(EAccountStatus.NORMAL.getCode());
             data.setAmount(BigDecimal.ZERO);
             data.setFrozenAmount(BigDecimal.ZERO);
-
             data.setMd5(AccountUtil.md5(data.getAmount()));
             data.setAddAmount(BigDecimal.ZERO);
+
             data.setInAmount(BigDecimal.ZERO);
             data.setOutAmount(BigDecimal.ZERO);
             data.setCreateDatetime(new Date());

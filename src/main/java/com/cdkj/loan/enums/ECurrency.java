@@ -19,10 +19,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 public enum ECurrency {
-    CNY("CNY", "人民币"),
-    USD("USD", "美元"),
-    HKD("HKD", "港币");
 
+    CNY("CNY", "人民币"), JF("JF", "积分"), XYF("XYF", "信用分");
 
     public static Map<String, ECurrency> getCurrencyMap() {
         Map<String, ECurrency> map = new HashMap<String, ECurrency>();
@@ -36,7 +34,8 @@ public enum ECurrency {
         Map<String, ECurrency> map = getCurrencyMap();
         ECurrency result = map.get(code);
         if (result == null) {
-            throw new BizException("XN0000", code + "对应的currency不存在");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                code + "对应的currency不存在");
         }
         return result;
     }

@@ -38,7 +38,7 @@ public class AccountAOImpl implements IAccountAO {
             }
             for (String currency : currencyList) {
                 accountBO.distributeAccount(userId, realName, eAccountType,
-                    currency, systemCode, companyCode);
+                    currency);
             }
         }
     }
@@ -61,9 +61,8 @@ public class AccountAOImpl implements IAccountAO {
             String toUserId, String toCurrency, BigDecimal transAmount,
             String fromBizType, String toBizType, String fromBizNote,
             String toBizNote, String refNo) {
-        accountBO.transAmountCZB(fromUserId, fromCurrency, toUserId,
-            toCurrency, transAmount, fromBizType, toBizType, fromBizNote,
-            toBizNote, refNo);
+        accountBO.transAmountCZB(fromUserId, fromCurrency, toUserId, toCurrency,
+            transAmount, fromBizType, toBizType, fromBizNote, toBizNote, refNo);
     }
 
     @Override
