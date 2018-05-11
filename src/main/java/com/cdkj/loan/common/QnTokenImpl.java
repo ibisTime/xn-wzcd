@@ -32,7 +32,7 @@ public class QnTokenImpl {
     ISYSConfigBO sysConfigBO;
 
     // 简单上传，使用默认策略，只需要设置上传的空间名就可以了
-    public String getUploadToken(String companyCode, String systemCode) {
+    public String getUploadToken() {
         Map<String, String> resultMap = sysConfigBO
             .getConfigsMap(EConfigType.QINIU.getCode());
         if (resultMap == null) {
