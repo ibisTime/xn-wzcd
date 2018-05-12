@@ -33,6 +33,7 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','telephone','0571-88888888','admin','2018-04-19 06:09:55','联系电话','CD-CHTWT000020','CD-CHTWT000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','about_us','关于我们112','admin','2018-04-28 10:24:32',NULL,'CD-CHTWT000020','CD-CHTWT000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('sys_txt','service_time','9:00-17:00','admin','2018-04-26 16:38:23',NULL,'CD-CHTWT000020','CD-CHTWT000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('yonghu','withdraw_fee','1','admin','2018-05-12 19:35:14','提现手续费','CD-CHTWT000020','CD-CHTWT000020');
 
 /*
 -- Query: SELECT code,name,type,url,order_no,'admin' updater, now() as update_datetime,remark,parent_code FROM tsys_menu
