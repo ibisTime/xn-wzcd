@@ -164,15 +164,8 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         if (curPeriod == 1) {
             repayDatetime = firstRepayDatetime;
         } else {
-
-            // Calendar cal = Calendar.getInstance();
-            // int month = cal.get(Calendar.MONTH) + 1;
-            // cal.add(Calendar.MONTH, 1);
-            // Date time = cal.getTime();
-
-            // TODO 时间计算有问题，生成的日期不一定是20号，需要修复
-            repayDatetime = DateUtil.getRelativeDateOfDays(firstRepayDatetime,
-                30 * (curPeriod - 1));
+            repayDatetime = DateUtil.getIntervalDate(firstRepayDatetime,
+                curPeriod - 1, monthDatetime);
         }
         return repayDatetime;
     }

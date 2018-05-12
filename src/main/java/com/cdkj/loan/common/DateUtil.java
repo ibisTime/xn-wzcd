@@ -279,7 +279,7 @@ public class DateUtil {
     }
 
     // 获取指定月的第一天
-    public static Date getFristDay() {
+    public static Date getFirstDay() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -301,7 +301,29 @@ public class DateUtil {
         return calendar.getTime();
     }
 
+    /**
+     * 获取每个月份固定日期
+     * @param startDate
+     * @param interval
+     * @param day
+     * @return 
+     * @create: 2018年5月12日 下午1:59:26 haiqingzheng
+     * @history:
+     */
+    public static Date getIntervalDate(Date startDate, int interval, int day) {
+
+        Calendar calendar = Calendar.getInstance();// 获得一个日历的实例
+        calendar.setTime(startDate);// 设置日历时间
+        calendar.add(Calendar.MONTH, interval);// 在日历的月份上增加月数
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        return calendar.getTime();// 的到你想要得6个月后的日期
+
+    }
+
     public static void main(String[] args) {
-        System.out.println(getLastDay());
+        System.out.println(getIntervalDate(new Date(), 10, 20));
     }
 }

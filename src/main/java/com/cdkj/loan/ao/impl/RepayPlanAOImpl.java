@@ -122,7 +122,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     // 当月还款名单
     @Override
     public Object dyRepayment(int start, int limit, RepayPlan condition) {
-        condition.setRepayStartDatetime(DateUtil.getFristDay());
+        condition.setRepayStartDatetime(DateUtil.getFirstDay());
         condition.setRepayEndDatetime(DateUtil.getLastDay());
         Paginable<RepayPlan> results = repayPlanBO.getPaginable(start, limit,
             condition);

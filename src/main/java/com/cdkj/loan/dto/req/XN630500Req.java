@@ -1,5 +1,8 @@
 package com.cdkj.loan.dto.req;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 public class XN630500Req {
@@ -77,10 +80,12 @@ public class XN630500Req {
     private String firstRepayAmount;// 首期月供金额
 
     @NotBlank
+    @Min(0)
+    @Max(28)
     private String monthDatetime;// 每期还款日期
 
     @NotBlank
-    private String monthAmount;// 首期月供金额
+    private String monthAmount;// 每期月供金额
 
     @NotBlank
     private String lyDeposit;// 履约保证金
