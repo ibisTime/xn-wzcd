@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 取现详情查询
  * @author: xieyj 
@@ -7,10 +9,10 @@ package com.cdkj.loan.dto.req;
  * @history:
  */
 public class XN802756Req {
-    private String code;
 
-    // 系统编号
-    private String systemCode;
+    // 订单编号
+    @NotBlank
+    private String code;
 
     public String getCode() {
         return code;
@@ -18,14 +20,6 @@ public class XN802756Req {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getSystemCode() {
-        return systemCode;
-    }
-
-    public void setSystemCode(String systemCode) {
-        this.systemCode = systemCode;
     }
 
 }

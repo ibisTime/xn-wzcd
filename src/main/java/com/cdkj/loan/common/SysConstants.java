@@ -4,19 +4,7 @@ public class SysConstants {
 
     public static final String admin = "admin";
 
-    public static final String COLLECTION_LIMIT = "collection_limit"; // 账户余额大于等于该值时，进行归集
-
-    public static final String TRADE_FEE_RATE = "trade_fee_rate"; // 默认广告手续费
-
-    public static final String ACTIVITY_TRADE_FEE_RATE = "activity_trade_fee_rate"; // 活动期间交易广告费
-
     public static final String WITHDRAW_FEE = "withdraw_fee"; // 提现手续费
-
-    public static final String FEN_CHENG_FEE = "fen_cheng_fee"; // 普通交易者默认分佣
-
-    public static final String AGENT_FEN_CHENG_FEE = "agent_fen_cheng_fee"; // 代理人默认分佣
-
-    public static final String ETH_COIN_PRICE_X = "eth_coin_price_x"; // 以太币价格计算因子
 
     // 七牛云图片配置
     public static String QINIU_ACCESS_KEY = "qiniu_access_key";
@@ -26,17 +14,6 @@ public class SysConstants {
     public static String QINIU_BUCKET = "qiniu_bucket";
 
     public static String QINIU_DOMAIN = "qiniu_domain";
-
-    // 腾讯云配置
-    public static String TX_APP_CODE = "tx_app_code";// 应用编号
-
-    public static String TX_APP_ADMIN = "tx_app_admin";// 应用编号
-
-    public static String TX_ACCESS_KEY = "tx_access_key";// 公钥
-
-    public static String TX_SECRET_KEY = "tx_secret_key";// 私钥
-
-    public static String TX_ACCOUNT_TYPE = "tx_account_type";// 账号类型
 
     // 取现规则配置
     public static String CUSERQXBS = "CUSERQXBS"; // C端用户取现倍数

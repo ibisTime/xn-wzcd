@@ -2,7 +2,6 @@ package com.cdkj.loan.ao.impl;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -19,13 +18,12 @@ import com.cdkj.loan.bo.ISmsOutBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.IWithdrawBO;
 import com.cdkj.loan.bo.base.Paginable;
-import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.domain.SYSDict;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.domain.Withdraw;
-import com.cdkj.loan.enums.EAccountType;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EJourBizTypeUser;
 import com.cdkj.loan.enums.EWithdrawStatus;
@@ -60,19 +58,20 @@ public class WithdrawAOImpl implements IWithdrawAO {
             String payCardInfo, String payCardNo, String applyUser,
             String applyNote, String tradePwd, String googleCaptcha) {
         User user = userBO.getUser(applyUser);
-        // if (StringUtils.isBlank(user.getRealName())) {
-        // throw new BizException("xn000000", "请先进行实名认证");
-        // }
+        if (StringUtils.isBlank(user.getRealName())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请先进行实名认证");
+        }
         // 取现手续费
         BigDecimal fee = sysConfigBO
             .getBigDecimalValue(SysConstants.WITHDRAW_FEE);
         if (amount.compareTo(fee) == 0 || amount.compareTo(fee) == -1) {
-            throw new BizException("xn000000", "提现金额需大于手续费");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "提现金额需大于手续费");
         }
         Account dbAccount = accountBO.getAccount(accountNumber);
         if (dbAccount.getAmount().subtract(dbAccount.getFrozenAmount())
             .compareTo(amount) == -1) {
-            throw new BizException("xn000000", "可用余额不足");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "可用余额不足");
         }
 
         // 判断本月是否次数已满，且现在只能有一笔取现未支付记录
@@ -108,12 +107,13 @@ public class WithdrawAOImpl implements IWithdrawAO {
         BigDecimal fee = sysConfigBO
             .getBigDecimalValue(SysConstants.WITHDRAW_FEE);
         if (amount.compareTo(fee) == 0 || amount.compareTo(fee) == -1) {
-            throw new BizException("xn000000", "提现金额需大于手续费");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "提现金额需大于手续费");
         }
         Account dbAccount = accountBO.getAccount(accountNumber);
         if (dbAccount.getAmount().subtract(dbAccount.getFrozenAmount())
             .compareTo(amount) == -1) {
-            throw new BizException("xn000000", "可用余额不足");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "可用余额不足");
         }
 
         // 判断本月是否次数已满，且现在只能有一笔取现未支付记录
@@ -134,10 +134,11 @@ public class WithdrawAOImpl implements IWithdrawAO {
     @Override
     @Transactional
     public void approveOrder(String code, String approveUser,
-            String approveResult, String approveNote, String systemCode) {
-        Withdraw data = withdrawBO.getWithdraw(code, systemCode);
+            String approveResult, String approveNote) {
+        Withdraw data = withdrawBO.getWithdraw(code);
         if (!EWithdrawStatus.toApprove.getCode().equals(data.getStatus())) {
-            throw new BizException("xn000000", "申请记录状态不是待审批状态，无法审批");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "申请记录状态不是待审批状态，无法审批");
         }
         if (EBoolean.YES.getCode().equals(approveResult)) {
             approveOrderYES(data, approveUser, approveNote);
@@ -149,10 +150,11 @@ public class WithdrawAOImpl implements IWithdrawAO {
     @Override
     @Transactional
     public void payOrder(String code, String payUser, String payResult,
-            String payNote, String channelOrder, String systemCode) {
-        Withdraw data = withdrawBO.getWithdraw(code, systemCode);
+            String payNote, String channelOrder) {
+        Withdraw data = withdrawBO.getWithdraw(code);
         if (!EWithdrawStatus.Approved_YES.getCode().equals(data.getStatus())) {
-            throw new BizException("xn000000", "申请记录状态不是待支付状态，无法支付");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "申请记录状态不是待支付状态，无法支付");
         }
         if (EBoolean.YES.getCode().equals(payResult)) {
             payOrderYES(data, payUser, payNote, channelOrder);
@@ -241,8 +243,8 @@ public class WithdrawAOImpl implements IWithdrawAO {
     }
 
     @Override
-    public Withdraw getWithdraw(String code, String systemCode) {
-        Withdraw withdraw = withdrawBO.getWithdraw(code, systemCode);
+    public Withdraw getWithdraw(String code) {
+        Withdraw withdraw = withdrawBO.getWithdraw(code);
         User user = userBO.getUser(withdraw.getApplyUser());
         withdraw.setUser(user);
         return withdraw;
@@ -258,30 +260,29 @@ public class WithdrawAOImpl implements IWithdrawAO {
      * @create: 2017年5月17日 上午7:53:01 xieyj
      * @history:
      */
-    private BigDecimal doGetFee(String accountType, BigDecimal amount,
-            String systemCode, String companyCode) {
-        Map<String, String> argsMap = sysConfigBO.getConfigsMap();
-        String qxfl = null;
-        if (EAccountType.Customer.getCode().equals(accountType)) {
-            qxfl = SysConstants.CUSERQXFL;
-        } else {// 暂定其他账户类型不收手续费
-            return BigDecimal.ZERO;
-        }
-        // 取现单笔最大金额
-        String qxDbzdjeValue = argsMap.get(SysConstants.QXDBZDJE);
-        if (StringUtils.isNotBlank(qxDbzdjeValue)) {
-            BigDecimal qxDbzdje = BigDecimal
-                .valueOf(Double.valueOf(qxDbzdjeValue));
-            if (amount.compareTo(qxDbzdje) == 1) {
-                throw new BizException("xn000000",
-                    "取现单笔最大金额不能超过" + qxDbzdjeValue + "元。");
-            }
-        }
-        String feeRateValue = argsMap.get(qxfl);
-        Double feeRate = 0D;
-        if (StringUtils.isNotBlank(feeRateValue)) {
-            feeRate = Double.valueOf(feeRateValue);
-        }
-        return AmountUtil.mul(amount, feeRate);
-    }
+    // private BigDecimal doGetFee(String accountType, BigDecimal amount) {
+    // Map<String, String> argsMap = sysConfigBO.getConfigsMap();
+    // String qxfl = null;
+    // if (EAccountType.Customer.getCode().equals(accountType)) {
+    // qxfl = SysConstants.CUSERQXFL;
+    // } else {// 暂定其他账户类型不收手续费
+    // return BigDecimal.ZERO;
+    // }
+    // // 取现单笔最大金额
+    // String qxDbzdjeValue = argsMap.get(SysConstants.QXDBZDJE);
+    // if (StringUtils.isNotBlank(qxDbzdjeValue)) {
+    // BigDecimal qxDbzdje = BigDecimal
+    // .valueOf(Double.valueOf(qxDbzdjeValue));
+    // if (amount.compareTo(qxDbzdje) == 1) {
+    // throw new BizException("xn000000",
+    // "取现单笔最大金额不能超过" + qxDbzdjeValue + "元。");
+    // }
+    // }
+    // String feeRateValue = argsMap.get(qxfl);
+    // Double feeRate = 0D;
+    // if (StringUtils.isNotBlank(feeRateValue)) {
+    // feeRate = Double.valueOf(feeRateValue);
+    // }
+    // return AmountUtil.mul(amount, feeRate);
+    // }
 }

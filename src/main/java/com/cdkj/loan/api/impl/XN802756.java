@@ -3,7 +3,7 @@ package com.cdkj.loan.api.impl;
 import com.cdkj.loan.ao.IWithdrawAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
-import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN802756Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
@@ -23,14 +23,14 @@ public class XN802756 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return withdrawAO.getWithdraw(req.getCode(), req.getSystemCode());
+        return withdrawAO.getWithdraw(req.getCode());
     }
 
     @Override
-    public void doCheck(String inputparams, String operator) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN802756Req.class);
-        StringValidater.validateBlank(req.getCode(), req.getSystemCode());
-
+        ObjValidater.validateReq(req);
     }
 
 }
