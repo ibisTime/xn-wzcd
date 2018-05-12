@@ -40,10 +40,10 @@ public class XN808068 extends AProcessor {
         condition.setDeliverer(req.getDeliverer());
         condition.setLogisticsCode(req.getLogisticsCode());
         condition.setLogisticsCompany(req.getLogisticsCompany());
-        condition.setApplyDatetimeStart(DateUtil.strToDate(req.getDateStart(),
-            DateUtil.DATA_TIME_PATTERN_1));
-        condition.setApplyDatetimeEnd(
-            DateUtil.strToDate(req.getDateEnd(), DateUtil.DATA_TIME_PATTERN_1));
+        condition.setApplyDatetimeStart(DateUtil.strToDate(
+            req.getCreateDatetimeStart(), DateUtil.DATA_TIME_PATTERN_1));
+        condition.setApplyDatetimeEnd(DateUtil.strToDate(
+            req.getCreateDatetimeEnd(), DateUtil.DATA_TIME_PATTERN_1));
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IOrderAO.DEFAULT_ORDER_COLUMN;

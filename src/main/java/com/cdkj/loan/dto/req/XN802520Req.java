@@ -147,22 +147,6 @@ public class XN802520Req extends APageReq {
         this.status = status;
     }
 
-    public String getCreateDatetimeStart() {
-        return createDatetimeStart;
-    }
-
-    public void setCreateDatetimeStart(String createDatetimeStart) {
-        this.createDatetimeStart = createDatetimeStart;
-    }
-
-    public String getCreateDatetimeEnd() {
-        return createDatetimeEnd;
-    }
-
-    public void setCreateDatetimeEnd(String createDatetimeEnd) {
-        this.createDatetimeEnd = createDatetimeEnd;
-    }
-
     public String getWorkDate() {
         return workDate;
     }
