@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 线下取现申请
  * @author: xieyj 
@@ -9,21 +11,27 @@ package com.cdkj.loan.dto.req;
 public class XN802751Req {
 
     // 针对账号（必填）
+    @NotBlank
     private String accountNumber;
 
     // 取现金额（必填）
+    @NotBlank
     private String amount;
 
     // 支付渠道账号信息（如开户支行）（必填）
+    @NotBlank
     private String payCardInfo;
 
     // 支付渠道账号（如银行卡号）（必填）
+    @NotBlank
     private String payCardNo;
 
     // 申请人（必填）
+    @NotBlank
     private String applyUser;
 
     // 申请说明（选填）
+    @NotBlank
     private String applyNote;
 
     public String getAccountNumber() {

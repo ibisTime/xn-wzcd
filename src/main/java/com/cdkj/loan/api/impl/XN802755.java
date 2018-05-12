@@ -6,6 +6,7 @@ import com.cdkj.loan.ao.IWithdrawAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Withdraw;
 import com.cdkj.loan.dto.req.XN802755Req;
@@ -27,36 +28,35 @@ public class XN802755 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
+
         Withdraw condition = new Withdraw();
-        if (StringUtils.isNotBlank(req.getAccountNumber())) {
-            condition.setAccountNumber(req.getAccountNumber());
-        }
+
         condition.setCodeForQuery(req.getCode());
+        condition.setAccountNumber(req.getAccountNumber());
         condition.setAccountName(req.getAccountName());
         condition.setType(req.getType());
         condition.setChannelType(req.getChannelType());
+
         condition.setStatus(req.getStatus());
         condition.setApplyUser(req.getApplyUser());
-
         condition.setApproveUser(req.getApproveUser());
         condition.setPayUser(req.getPayUser());
         condition.setPayGroup(req.getPayGroup());
-        condition.setChannelOrder(req.getChannelOrder());
-        condition.setCompanyCode(req.getCompanyCode());
-        condition.setSystemCode(req.getSystemCode());
 
-        condition.setApplyDatetimeStart(DateUtil.getFrontDate(
-            req.getApplyDateStart(), false));
-        condition.setApplyDatetimeEnd(DateUtil.getFrontDate(
-            req.getApplyDateEnd(), true));
-        condition.setApproveDatetimeStart(DateUtil.getFrontDate(
-            req.getApproveDateStart(), false));
-        condition.setApproveDatetimeEnd(DateUtil.getFrontDate(
-            req.getApproveDateEnd(), true));
-        condition.setPayDatetimeStart(DateUtil.getFrontDate(
-            req.getPayDateStart(), false));
-        condition.setPayDatetimeEnd(DateUtil.getFrontDate(req.getPayDateEnd(),
-            true));
+        condition.setChannelOrder(req.getChannelOrder());
+        condition.setApplyDatetimeStart(
+            DateUtil.getFrontDate(req.getApplyDateStart(), false));
+        condition.setApplyDatetimeEnd(
+            DateUtil.getFrontDate(req.getApplyDateEnd(), true));
+        condition.setApproveDatetimeStart(
+            DateUtil.getFrontDate(req.getApproveDateStart(), false));
+        condition.setApproveDatetimeEnd(
+            DateUtil.getFrontDate(req.getApproveDateEnd(), true));
+
+        condition.setPayDatetimeStart(
+            DateUtil.getFrontDate(req.getPayDateStart(), false));
+        condition.setPayDatetimeEnd(
+            DateUtil.getFrontDate(req.getPayDateEnd(), true));
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
@@ -69,12 +69,10 @@ public class XN802755 extends AProcessor {
     }
 
     @Override
-    public void doCheck(String inputparams, String operator) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN802755Req.class);
-        StringValidater.validateNumber(req.getStart(), req.getLimit());
-        StringValidater
-            .validateBlank(req.getSystemCode(), req.getCompanyCode());
-
+        ObjValidater.validateReq(req);
     }
 
 }

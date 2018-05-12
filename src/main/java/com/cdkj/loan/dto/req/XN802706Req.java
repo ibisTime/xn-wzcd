@@ -9,26 +9,17 @@ import org.hibernate.validator.constraints.NotBlank;
  * @history:
  */
 public class XN802706Req {
-    private String code;
 
-    // 系统编号
+    // 订单编号（必填）
     @NotBlank
-    private String systemCode;
-
+    private String code;
+    
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getSystemCode() {
-        return systemCode;
-    }
-
-    public void setSystemCode(String systemCode) {
-        this.systemCode = systemCode;
     }
 
 }

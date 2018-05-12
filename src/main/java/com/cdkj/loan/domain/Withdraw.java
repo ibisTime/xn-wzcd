@@ -25,14 +25,10 @@ public class Withdraw extends ABaseDO {
     private String type;
 
     // 取现金额
-    private transient BigDecimal amount;
-
-    private String amountString;
+    private BigDecimal amount;
 
     // 取现手续费
-    private transient BigDecimal fee;
-
-    private String feeString;
+    private BigDecimal fee;
 
     // 支付渠道
     private String channelType;
@@ -82,18 +78,10 @@ public class Withdraw extends ABaseDO {
     private String payCode;
 
     // 支付手续费
-    private transient BigDecimal payFee;
-
-    private String payFeeString;
+    private BigDecimal payFee;
 
     // 支付回录时间
     private Date payDatetime;
-
-    // 系统编号
-    private String systemCode;
-
-    // 公司编号
-    private String companyCode;
 
     // *******************************
     // 订单编号模糊查询
@@ -214,15 +202,6 @@ public class Withdraw extends ABaseDO {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
-        this.amountString = amount.toString();
-    }
-
-    public String getAmountString() {
-        return amountString;
-    }
-
-    public void setAmountString(String amountString) {
-        this.amountString = amountString;
     }
 
     public BigDecimal getFee() {
@@ -231,15 +210,6 @@ public class Withdraw extends ABaseDO {
 
     public void setFee(BigDecimal fee) {
         this.fee = fee;
-        this.feeString = fee.toString();
-    }
-
-    public String getFeeString() {
-        return feeString;
-    }
-
-    public void setFeeString(String feeString) {
-        this.feeString = feeString;
     }
 
     public String getChannelType() {
@@ -370,22 +340,6 @@ public class Withdraw extends ABaseDO {
         this.payDatetime = payDatetime;
     }
 
-    public String getSystemCode() {
-        return systemCode;
-    }
-
-    public void setSystemCode(String systemCode) {
-        this.systemCode = systemCode;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
-
     public String getPayCode() {
         return payCode;
     }
@@ -400,15 +354,6 @@ public class Withdraw extends ABaseDO {
 
     public void setPayFee(BigDecimal payFee) {
         this.payFee = payFee;
-        this.payFeeString = payFee.toString();
-    }
-
-    public String getPayFeeString() {
-        return payFeeString;
-    }
-
-    public void setPayFeeString(String payFeeString) {
-        this.payFeeString = payFeeString;
     }
 
     public String getCodeForQuery() {

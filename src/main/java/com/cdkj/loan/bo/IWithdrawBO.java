@@ -16,8 +16,8 @@ public interface IWithdrawBO extends IPaginableBO<Withdraw> {
             String payCardInfo, String payCardNo, String applyUser,
             String applyNote);
 
-    void approveOrder(Withdraw data, EWithdrawStatus status,
-            String approveUser, String approveNote);
+    void approveOrder(Withdraw data, EWithdrawStatus status, String approveUser,
+            String approveNote);
 
     void payOrder(Withdraw data, EWithdrawStatus status, String payUser,
             String payNote, String channelOrder, String payCode,
@@ -25,9 +25,7 @@ public interface IWithdrawBO extends IPaginableBO<Withdraw> {
 
     List<Withdraw> queryWithdrawList(Withdraw condition);
 
-    Withdraw getWithdraw(String code, String systemCode);
-
-    public Withdraw getWithdraw(String hash);
+    public Withdraw getWithdraw(String code);
 
     public BigDecimal getTotalWithdraw();
 }

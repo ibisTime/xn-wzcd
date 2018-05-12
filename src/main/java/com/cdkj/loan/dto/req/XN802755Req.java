@@ -22,7 +22,7 @@ public class XN802755Req extends APageReq {
     // 针对户名（手机号或其他）
     private String accountName;
 
-    // 类型
+    // 账户类型
     private String type;
 
     // 支付渠道
@@ -45,12 +45,6 @@ public class XN802755Req extends APageReq {
 
     // 支付渠道的订单编号（支付渠道代表）
     private String channelOrder;
-
-    // 系统编号
-    private String systemCode;
-
-    // 公司编号
-    private String companyCode;
 
     // ******** db *****
 
@@ -201,22 +195,6 @@ public class XN802755Req extends APageReq {
 
     public void setChannelOrder(String channelOrder) {
         this.channelOrder = channelOrder;
-    }
-
-    public String getSystemCode() {
-        return systemCode;
-    }
-
-    public void setSystemCode(String systemCode) {
-        this.systemCode = systemCode;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
     }
 
     public String getUserId() {

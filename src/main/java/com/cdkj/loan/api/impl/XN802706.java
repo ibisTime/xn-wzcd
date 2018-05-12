@@ -30,7 +30,6 @@ public class XN802706 extends AProcessor {
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN802706Req.class);
         ObjValidater.validateReq(req);
-
     }
 
 }

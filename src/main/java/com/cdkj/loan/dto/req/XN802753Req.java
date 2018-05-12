@@ -2,6 +2,9 @@ package com.cdkj.loan.dto.req;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * 支付回录
  * @author: xieyj 
@@ -9,31 +12,26 @@ import java.util.List;
  * @history:
  */
 public class XN802753Req {
-    // 系统编号(必填)
-    private String systemCode;
 
     // 取现订单编号(必填)
+    @NotEmpty
     private List<String> codeList;
 
     // 支付回录人(必填)
+    @NotBlank
     private String payUser;
 
     // 审核结果1 是 0 否(必填)
+    @NotBlank
     private String payResult;
 
     // 支付回录说明(必填)
+    @NotBlank
     private String payNote;
 
     // 支付渠道订单编号（支付渠道代表）(必填)
+    @NotBlank
     private String channelOrder;
-
-    public String getSystemCode() {
-        return systemCode;
-    }
-
-    public void setSystemCode(String systemCode) {
-        this.systemCode = systemCode;
-    }
 
     public List<String> getCodeList() {
         return codeList;

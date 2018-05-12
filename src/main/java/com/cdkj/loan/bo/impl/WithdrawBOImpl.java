@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,6 +18,7 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IWithdrawDAO;
 import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.domain.Withdraw;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EChannelType;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EWithdrawStatus;
@@ -39,7 +39,7 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw>
             String payCardInfo, String payCardNo, String applyUser,
             String applyNote) {
         if (amount.compareTo(BigDecimal.ZERO) == 0) {
-            throw new BizException("xn000000", "取现金额不能为0");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "取现金额不能为0");
         }
         String code = OrderNoGenerater
             .generate(EGeneratePrefix.Withdraw.getCode());
@@ -50,7 +50,7 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw>
         data.setAmount(amount);
         data.setFee(fee);
 
-        data.setChannelType(EChannelType.ETH.getCode());
+        data.setChannelType(EChannelType.Offline.getCode());
         data.setPayCardInfo(payCardInfo);
         // 取现户名，应该和银行卡户名一致
         data.setAccountName(account.getRealName());
@@ -96,12 +96,11 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw>
     }
 
     @Override
-    public Withdraw getWithdraw(String code, String systemCode) {
+    public Withdraw getWithdraw(String code) {
         Withdraw order = null;
         if (StringUtils.isNotBlank(code)) {
             Withdraw condition = new Withdraw();
             condition.setCode(code);
-            condition.setSystemCode(systemCode);
             order = withdrawDAO.select(condition);
         }
         return order;
@@ -136,18 +135,6 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw>
         if (withdrawDAO.selectTotalCount(condition) > 0) {
             throw new BizException("xn000000", "上笔取现申请还未处理成功，不能再次申请");
         }
-    }
-
-    @Override
-    public Withdraw getWithdraw(String hash) {
-        Withdraw withdraw = null;
-        Withdraw condition = new Withdraw();
-        condition.setChannelOrder(hash);
-        List<Withdraw> results = withdrawDAO.selectList(condition);
-        if (CollectionUtils.isNotEmpty(results)) {
-            withdraw = results.get(0);
-        }
-        return withdraw;
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import com.cdkj.loan.ao.IWithdrawAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dto.req.XN802751Req;
 import com.cdkj.loan.dto.res.PKCodeRes;
@@ -35,10 +36,9 @@ public class XN802751 extends AProcessor {
     }
 
     @Override
-    public void doCheck(String inputparams, String operator) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN802751Req.class);
-        StringValidater.validateBlank(req.getAccountNumber(),
-            req.getPayCardInfo(), req.getPayCardNo(), req.getApplyUser());
-        StringValidater.validateAmount(req.getAmount());
+        ObjValidater.validateReq(req);
     }
 }
