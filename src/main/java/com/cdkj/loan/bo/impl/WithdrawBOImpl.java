@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -136,18 +135,6 @@ public class WithdrawBOImpl extends PaginableBOImpl<Withdraw>
         if (withdrawDAO.selectTotalCount(condition) > 0) {
             throw new BizException("xn000000", "上笔取现申请还未处理成功，不能再次申请");
         }
-    }
-
-    @Override
-    public Withdraw getWithdraw(String hash) {
-        Withdraw withdraw = null;
-        Withdraw condition = new Withdraw();
-        condition.setChannelOrder(hash);
-        List<Withdraw> results = withdrawDAO.selectList(condition);
-        if (CollectionUtils.isNotEmpty(results)) {
-            withdraw = results.get(0);
-        }
-        return withdraw;
     }
 
     @Override
