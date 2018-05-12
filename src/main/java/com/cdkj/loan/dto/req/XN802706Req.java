@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 查询充值订单详情
  * @author: xieyj 
@@ -10,6 +12,7 @@ public class XN802706Req {
     private String code;
 
     // 系统编号
+    @NotBlank
     private String systemCode;
 
     public String getCode() {

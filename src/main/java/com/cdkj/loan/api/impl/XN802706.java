@@ -3,7 +3,7 @@ package com.cdkj.loan.api.impl;
 import com.cdkj.loan.ao.IChargeAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
-import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN802706Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
@@ -22,13 +22,14 @@ public class XN802706 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return chargeAO.getCharge(req.getCode(), req.getSystemCode());
+        return chargeAO.getCharge(req.getCode());
     }
 
     @Override
-    public void doCheck(String inputparams, String operator) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN802706Req.class);
-        StringValidater.validateBlank(req.getCode(), req.getSystemCode());
+        ObjValidater.validateReq(req);
 
     }
 
