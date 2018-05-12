@@ -25,9 +25,7 @@ public class Charge extends ABaseDO {
     private String accountNumber;
 
     // 充值金额---核心字段5
-    private transient BigDecimal amount;
-
-    private String amountString;
+    private BigDecimal amount;
 
     // 针对户名
     private String accountName;
@@ -70,12 +68,6 @@ public class Charge extends ABaseDO {
 
     // 支付渠道
     private String channelType;
-
-    // 系统编号
-    private String systemCode;
-
-    // 公司编号
-    private String companyCode;
 
     // *******************************
 
@@ -135,15 +127,6 @@ public class Charge extends ABaseDO {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
-        this.amountString = amount.toString();
-    }
-
-    public String getAmountString() {
-        return amountString;
-    }
-
-    public void setAmountString(String amountString) {
-        this.amountString = amountString;
     }
 
     public String getAccountName() {
@@ -256,22 +239,6 @@ public class Charge extends ABaseDO {
 
     public void setChannelType(String channelType) {
         this.channelType = channelType;
-    }
-
-    public String getSystemCode() {
-        return systemCode;
-    }
-
-    public void setSystemCode(String systemCode) {
-        this.systemCode = systemCode;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
     }
 
     public Date getApplyDatetimeStart() {

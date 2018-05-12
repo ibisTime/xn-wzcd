@@ -6,6 +6,7 @@ import com.cdkj.loan.ao.IChargeAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Charge;
 import com.cdkj.loan.dto.req.XN802705Req;
@@ -40,19 +41,17 @@ public class XN802705 extends AProcessor {
         condition.setStatus(req.getStatus());
         condition.setApplyUser(req.getApplyUser());
 
-        condition.setApplyDatetimeStart(DateUtil.getFrontDate(
-            req.getApplyDateStart(), false));
-        condition.setApplyDatetimeEnd(DateUtil.getFrontDate(
-            req.getApplyDateEnd(), true));
+        condition.setApplyDatetimeStart(
+            DateUtil.getFrontDate(req.getApplyDateStart(), false));
+        condition.setApplyDatetimeEnd(
+            DateUtil.getFrontDate(req.getApplyDateEnd(), true));
         condition.setPayUser(req.getPayUser());
-        condition.setPayDatetimeStart(DateUtil.getFrontDate(
-            req.getPayDateStart(), false));
-        condition.setPayDatetimeEnd(DateUtil.getFrontDate(req.getPayDateEnd(),
-            true));
+        condition.setPayDatetimeStart(
+            DateUtil.getFrontDate(req.getPayDateStart(), false));
+        condition.setPayDatetimeEnd(
+            DateUtil.getFrontDate(req.getPayDateEnd(), true));
 
         condition.setChannelType(req.getChannelType());
-        condition.setSystemCode(req.getSystemCode());
-        condition.setCompanyCode(req.getCompanyCode());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IChargeAO.DEFAULT_ORDER_COLUMN;
@@ -65,10 +64,9 @@ public class XN802705 extends AProcessor {
     }
 
     @Override
-    public void doCheck(String inputparams, String operator) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN802705Req.class);
-        StringValidater.validateNumber(req.getStart(), req.getLimit());
-        StringValidater
-            .validateBlank(req.getSystemCode(), req.getCompanyCode());
+        ObjValidater.validateReq(req);
     }
 }

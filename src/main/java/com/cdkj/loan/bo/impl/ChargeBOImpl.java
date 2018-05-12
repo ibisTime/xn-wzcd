@@ -14,6 +14,7 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IChargeDAO;
 import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.domain.Charge;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EChannelType;
 import com.cdkj.loan.enums.EChargeStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
@@ -29,7 +30,7 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
             BigDecimal amount, String payCardInfo, String payCardNo,
             String applyUser, String applyNote) {
         if (amount.compareTo(BigDecimal.ZERO) == 0) {
-            throw new BizException("xn000000", "充值金额不能为0");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "充值金额不能为0");
         }
         String code = OrderNoGenerater
             .generate(EGeneratePrefix.Charge.getCode());
@@ -123,12 +124,11 @@ public class ChargeBOImpl extends PaginableBOImpl<Charge> implements IChargeBO {
     }
 
     @Override
-    public Charge getCharge(String code, String systemCode) {
+    public Charge getCharge(String code) {
         Charge order = null;
         if (StringUtils.isNotBlank(code)) {
             Charge condition = new Charge();
             condition.setCode(code);
-            condition.setSystemCode(systemCode);
             order = chargeDAO.select(condition);
             if (null == order) {
                 throw new BizException("xn000000", "订单号[" + code + "]不存在");

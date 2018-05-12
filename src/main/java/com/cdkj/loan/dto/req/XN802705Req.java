@@ -28,7 +28,7 @@ public class XN802705Req extends APageReq {
     // 针对户名（手机号或其他）
     private String accountName;
 
-    // 类型
+    // 账户类型
     private String type;
 
     // 币种
@@ -63,12 +63,6 @@ public class XN802705Req extends APageReq {
 
     // 支付渠道
     private String channelType;
-
-    // 系统编号
-    private String systemCode;
-
-    // 公司编号
-    private String companyCode;
 
     public String getCode() {
         return code;
@@ -188,22 +182,6 @@ public class XN802705Req extends APageReq {
 
     public void setChannelType(String channelType) {
         this.channelType = channelType;
-    }
-
-    public String getSystemCode() {
-        return systemCode;
-    }
-
-    public void setSystemCode(String systemCode) {
-        this.systemCode = systemCode;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
     }
 
     public String getCurrency() {

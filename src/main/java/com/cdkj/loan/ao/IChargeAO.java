@@ -15,13 +15,13 @@ public interface IChargeAO {
             String applyNote);
 
     public void payOrder(String code, String payUser, String payResult,
-            String payNote, String systemCode);
+            String payNote);
 
     public Paginable<Charge> queryChargePage(int start, int limit,
             Charge condition);
 
     public List<Charge> queryChargeList(Charge condition);
 
-    public Charge getCharge(String code, String systemCode);
+    public Charge getCharge(String code);
 
 }

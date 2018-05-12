@@ -20,6 +20,7 @@ import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.domain.HLOrder;
 import com.cdkj.loan.enums.EAccountStatus;
 import com.cdkj.loan.enums.EAccountType;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EChannelType;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EGeneratePrefix;
@@ -228,7 +229,8 @@ public class AccountBOImpl extends PaginableBOImpl<Account>
             condition.setAccountNumber(accountNumber);
             data = accountDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn702502", "无对应账户，请检查账号正确性");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "无对应账户，请检查账号正确性");
             }
         }
         return data;
