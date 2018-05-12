@@ -43,9 +43,9 @@ public class XN808065 extends AProcessor {
         condition.setLogisticsCode(req.getLogisticsCode());
         condition.setLogisticsCompany(req.getLogisticsCompany());
         condition.setApplyDatetimeStart(
-            DateUtil.getFrontDate(req.getDateStart(), false));
-        condition
-            .setApplyDatetimeEnd(DateUtil.getFrontDate(req.getDateEnd(), true));
+            DateUtil.getFrontDate(req.getCreateDatetimeStart(), false));
+        condition.setApplyDatetimeEnd(
+            DateUtil.getFrontDate(req.getCreateDatetimeEnd(), true));
         condition.setPayDatetimeStart(
             DateUtil.getFrontDate(req.getPayDatetimeStart(), false));
         condition.setPayDatetimeEnd(

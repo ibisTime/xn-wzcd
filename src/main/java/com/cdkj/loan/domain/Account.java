@@ -34,32 +34,22 @@ public class Account extends ABaseDO {
     private String currency;
 
     // 余额
-    private transient BigDecimal amount;
-
-    private String amountString;
+    private BigDecimal amount;
 
     // 冻结金额
-    private transient BigDecimal frozenAmount;
-
-    private String frozenAmountString;
+    private BigDecimal frozenAmount;
 
     // md5
     private String md5;
 
     // 累计增加金额
-    private transient BigDecimal addAmount;
-
-    private String addAmountString;
+    private BigDecimal addAmount;
 
     // 入金
-    private transient BigDecimal inAmount;
-
-    private String inAmountString;
+    private BigDecimal inAmount;
 
     // 出金
-    private transient BigDecimal outAmount;
-
-    private String outAmountString;
+    private BigDecimal outAmount;
 
     // 创建时间
     private Date createDatetime;
@@ -140,7 +130,6 @@ public class Account extends ABaseDO {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
-        this.amountString = amount.toString();
     }
 
     public BigDecimal getFrozenAmount() {
@@ -149,7 +138,6 @@ public class Account extends ABaseDO {
 
     public void setFrozenAmount(BigDecimal frozenAmount) {
         this.frozenAmount = frozenAmount;
-        this.frozenAmountString = frozenAmount.toString();
     }
 
     public String getMd5() {
@@ -166,7 +154,6 @@ public class Account extends ABaseDO {
 
     public void setAddAmount(BigDecimal addAmount) {
         this.addAmount = addAmount;
-        this.addAmountString = addAmount.toString();
     }
 
     public BigDecimal getInAmount() {
@@ -175,7 +162,6 @@ public class Account extends ABaseDO {
 
     public void setInAmount(BigDecimal inAmount) {
         this.inAmount = inAmount;
-        this.inAmountString = inAmount.toString();
     }
 
     public BigDecimal getOutAmount() {
@@ -184,7 +170,6 @@ public class Account extends ABaseDO {
 
     public void setOutAmount(BigDecimal outAmount) {
         this.outAmount = outAmount;
-        this.outAmountString = outAmount.toString();
     }
 
     public Date getCreateDatetime() {
@@ -217,46 +202,6 @@ public class Account extends ABaseDO {
 
     public void setCreateDatetimeEnd(Date createDatetimeEnd) {
         this.createDatetimeEnd = createDatetimeEnd;
-    }
-
-    public String getAmountString() {
-        return amountString;
-    }
-
-    public void setAmountString(String amountString) {
-        this.amountString = amountString;
-    }
-
-    public String getFrozenAmountString() {
-        return frozenAmountString;
-    }
-
-    public void setFrozenAmountString(String frozenAmountString) {
-        this.frozenAmountString = frozenAmountString;
-    }
-
-    public String getAddAmountString() {
-        return addAmountString;
-    }
-
-    public void setAddAmountString(String addAmountString) {
-        this.addAmountString = addAmountString;
-    }
-
-    public String getInAmountString() {
-        return inAmountString;
-    }
-
-    public void setInAmountString(String inAmountString) {
-        this.inAmountString = inAmountString;
-    }
-
-    public String getOutAmountString() {
-        return outAmountString;
-    }
-
-    public void setOutAmountString(String outAmountString) {
-        this.outAmountString = outAmountString;
     }
 
 }

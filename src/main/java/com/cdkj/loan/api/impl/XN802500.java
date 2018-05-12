@@ -39,9 +39,9 @@ public class XN802500 extends AProcessor {
         condition.setCurrency(req.getCurrency());
         condition.setLastOrder(req.getLastOrder());
         condition.setCreateDatetimeStart(
-            DateUtil.getFrontDate(req.getDateStart(), false));
+            DateUtil.getFrontDate(req.getCreateDatetimeStart(), false));
         condition.setCreateDatetimeEnd(
-            DateUtil.getFrontDate(req.getDateEnd(), true));
+            DateUtil.getFrontDate(req.getCreateDatetimeEnd(), true));
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IAccountAO.DEFAULT_ORDER_COLUMN;

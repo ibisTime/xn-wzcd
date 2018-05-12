@@ -206,7 +206,7 @@ public class JourBOImpl extends PaginableBOImpl<Jour> implements IJourBO {
     }
 
     @Override
-    public Jour getJour(String code, String systemCode) {
+    public Jour getJour(String code) {
         Jour data = null;
         if (StringUtils.isNotBlank(code)) {
             Jour condition = new Jour();
