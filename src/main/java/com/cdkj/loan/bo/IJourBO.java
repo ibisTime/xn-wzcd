@@ -17,7 +17,8 @@ import com.cdkj.loan.enums.EChannelType;
  */
 public interface IJourBO extends IPaginableBO<Jour> {
     // 不需要对账的新增
-    public String addJourForHL(Account dbAccount, HLOrder order, String bizType);
+    public String addJourForHL(Account dbAccount, HLOrder order,
+            String bizType);
 
     // 余额流水新增
     public String addJour(Account dbAccount, EChannelType channelType,
@@ -40,7 +41,7 @@ public interface IJourBO extends IPaginableBO<Jour> {
 
     public List<Jour> queryJourList(Jour condition);
 
-    public Jour getJour(String code, String systemCode);
+    public Jour getJour(String code);
 
     public Jour getJourNotException(String code, String systemCode);
 

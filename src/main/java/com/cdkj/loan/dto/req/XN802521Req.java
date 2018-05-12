@@ -6,6 +6,9 @@ public class XN802521Req extends AListReq {
      */
     private static final long serialVersionUID = 1L;
 
+    // 流水类型
+    private String kind;
+
     // 订单分组组号（信息代表）---核心字段1
     private String payGroup;
 
@@ -54,18 +57,12 @@ public class XN802521Req extends AListReq {
     // 调账人
     private String adjustUser;
 
-    // 系统编号
-    private String systemCode;
-
-    // 公司编号
-    private String companyCode;
-
-    public String getCompanyCode() {
-        return companyCode;
+    public String getKind() {
+        return kind;
     }
 
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
+    public void setKind(String kind) {
+        this.kind = kind;
     }
 
     public String getPayGroup() {
@@ -196,11 +193,4 @@ public class XN802521Req extends AListReq {
         this.adjustUser = adjustUser;
     }
 
-    public String getSystemCode() {
-        return systemCode;
-    }
-
-    public void setSystemCode(String systemCode) {
-        this.systemCode = systemCode;
-    }
 }

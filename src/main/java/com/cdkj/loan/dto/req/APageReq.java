@@ -26,10 +26,10 @@ public abstract class APageReq implements Serializable {
     private static final long serialVersionUID = 9192316630188356600L;
 
     // 创建起始时间(YYYY-MM-DD)
-    private String dateStart;
+    private String createDatetimeStart;
 
     // 创建终止时间(YYYY-MM-DD)
-    private String dateEnd;
+    private String createDatetimeEnd;
 
     @NotBlank(message = "第几页start参数不能为空")
     @Min(0)
@@ -42,22 +42,6 @@ public abstract class APageReq implements Serializable {
     private String orderColumn;// 分页字段
 
     private String orderDir;// 分页方向
-
-    public String getDateStart() {
-        return dateStart;
-    }
-
-    public void setDateStart(String dateStart) {
-        this.dateStart = dateStart;
-    }
-
-    public String getDateEnd() {
-        return dateEnd;
-    }
-
-    public void setDateEnd(String dateEnd) {
-        this.dateEnd = dateEnd;
-    }
 
     public String getStart() {
         return start;
@@ -89,6 +73,22 @@ public abstract class APageReq implements Serializable {
 
     public void setOrderDir(String orderDir) {
         this.orderDir = orderDir;
+    }
+
+    public String getCreateDatetimeStart() {
+        return createDatetimeStart;
+    }
+
+    public void setCreateDatetimeStart(String createDatetimeStart) {
+        this.createDatetimeStart = createDatetimeStart;
+    }
+
+    public String getCreateDatetimeEnd() {
+        return createDatetimeEnd;
+    }
+
+    public void setCreateDatetimeEnd(String createDatetimeEnd) {
+        this.createDatetimeEnd = createDatetimeEnd;
     }
 
 }

@@ -3,6 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.IJourDAO">
 	<resultMap id="jour_DB_Result" type="jour">
+	
 		<result column="code" property="code" />
 		<result column="kind" property="kind" />
 		<result column="pay_group" property="payGroup" />
@@ -34,8 +35,6 @@
 		<result column="adjust_note" property="adjustNote" />
 		
 		<result column="adjust_datetime" property="adjustDatetime" />
-		<result column="system_code" property="systemCode" />
-		<result column="company_code" property="companyCode" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -114,12 +113,6 @@
 			<if test="workDate != null and workDate != '' ">
 				AND t.work_date = #{workDate}
 			</if>
-			<if test="systemCode != null and systemCode != '' ">
-				AND t.system_code = #{systemCode}
-			</if>
-			<if test="companyCode != null and companyCode != '' ">
-				AND t.company_code = #{companyCode}
-			</if>
 		</trim>
 	</sql>
 	<select id="select_jour" parameterType="jour" resultMap="jour_DB_Result">
@@ -155,8 +148,6 @@
 		,t.adjust_note
 		
 		,t.adjust_datetime
-		,t.system_code
-		,t.company_code
 		FROM
 		tstd_jour t
 		<include refid="where_condition" />
@@ -199,9 +190,6 @@
 		,remark
 		,create_datetime
 		,work_date
-		,system_code
-		
-		,company_code
 		)
 		VALUES(
 		#{code}
@@ -227,9 +215,6 @@
 		,#{remark}
 		,#{createDatetime}
 		,#{workDate}
-		,#{systemCode}
-		
-		,#{companyCode}
 		)
 	</insert>
 	

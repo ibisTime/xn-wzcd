@@ -6,6 +6,7 @@ import com.cdkj.loan.ao.IJourAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Jour;
 import com.cdkj.loan.dto.req.XN802524Req;
@@ -32,10 +33,10 @@ public class XN802524 extends AProcessor {
         condition.setBizType(req.getBizType());
         condition.setChannelType(req.getChannelType());
         condition.setStatus(req.getStatus());
-        condition.setCreateDatetimeStart(DateUtil.getFrontDate(
-            req.getDateStart(), false));
-        condition.setCreateDatetimeEnd(DateUtil.getFrontDate(req.getDateEnd(),
-            true));
+        condition.setCreateDatetimeStart(
+            DateUtil.getFrontDate(req.getCreateDatetimeStart(), false));
+        condition.setCreateDatetimeEnd(
+            DateUtil.getFrontDate(req.getCreateDatetimeEnd(), true));
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IJourAO.DEFAULT_ORDER_COLUMN;
@@ -47,9 +48,9 @@ public class XN802524 extends AProcessor {
     }
 
     @Override
-    public void doCheck(String inputparams, String operator) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN802524Req.class);
-        StringValidater.validateNumber(req.getStart(), req.getLimit());
-        StringValidater.validateBlank(req.getAccountNumber());
+        ObjValidater.validateReq(req);
     }
 }

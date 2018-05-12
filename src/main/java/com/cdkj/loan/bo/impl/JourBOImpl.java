@@ -211,10 +211,9 @@ public class JourBOImpl extends PaginableBOImpl<Jour> implements IJourBO {
         if (StringUtils.isNotBlank(code)) {
             Jour condition = new Jour();
             condition.setCode(code);
-            condition.setSystemCode(systemCode);
             data = jourDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn000000", "单号不存在");
+                throw new BizException("xn000000", "账户流水不存在");
             }
         }
         return data;

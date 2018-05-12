@@ -34,7 +34,6 @@ public class JourAOImpl implements IJourAO {
     @Autowired
     private IJourBO jourBO;
 
-
     @Autowired
     private IAccountBO accountBO;
 
@@ -46,8 +45,8 @@ public class JourAOImpl implements IJourAO {
      */
     @Override
     @Transactional
-    public void checkJour(String code, BigDecimal checkAmount,
-            String checkUser, String checkNote, String systemCode) {
+    public void checkJour(String code, BigDecimal checkAmount, String checkUser,
+            String checkNote, String systemCode) {
         Jour jour = jourBO.getJourNotException(code, systemCode);
         if (null != jour) {
             doCheckJourNow(code, checkAmount, checkUser, checkNote, jour);// 现在流水对账
@@ -119,8 +118,8 @@ public class JourAOImpl implements IJourAO {
     }
 
     @Override
-    public Jour getJour(String code, String systemCode) {
-        return jourBO.getJour(code, systemCode);
+    public Jour getJour(String code) {
+        return jourBO.getJour(code);
     }
 
     @Override
@@ -135,8 +134,8 @@ public class JourAOImpl implements IJourAO {
             String dateStart, String dateEnd) {
         Jour condition = new Jour();
         condition.setAccountNumber(accountNumber);
-        condition.setCreateDatetimeStart(DateUtil
-            .getFrontDate(dateStart, false));
+        condition
+            .setCreateDatetimeStart(DateUtil.getFrontDate(dateStart, false));
         condition.setCreateDatetimeEnd(DateUtil.getFrontDate(dateEnd, true));
 
         List<Jour> jourList = jourBO.queryJourList(condition);
@@ -145,8 +144,8 @@ public class JourAOImpl implements IJourAO {
         for (Jour jour : jourList) {
             BigDecimal transAmount = jour.getTransAmount();
             if (transAmount.compareTo(BigDecimal.ZERO) == 1
-                    && !EJourBizTypeUser.AJ_WITHDRAW.getCode().equals(
-                        jour.getBizType())) {// 取现解冻排除
+                    && !EJourBizTypeUser.AJ_WITHDRAW.getCode()
+                        .equals(jour.getBizType())) {// 取现解冻排除
                 incomeAmount = incomeAmount.add(transAmount);
             }
             if (EJourBizTypeUser.AJ_WITHDRAW.getCode()

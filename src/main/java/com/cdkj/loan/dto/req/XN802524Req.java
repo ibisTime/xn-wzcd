@@ -1,14 +1,18 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN802524Req extends APageReq {
     /** 
      * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
      */
     private static final long serialVersionUID = 1L;
 
+    // 流水类型
     private String kind;
 
     // 流水所属账号(必填)
+    @NotBlank
     private String accountNumber;
 
     // 业务类型(选填)

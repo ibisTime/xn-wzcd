@@ -39,17 +39,3 @@ CREATE TABLE `tstd_address` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `tstd_bankcard` (
-  `code` varchar(32) DEFAULT NULL COMMENT '编号',
-  `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
-  `real_name` varchar(255) DEFAULT NULL COMMENT '户名',
-  `bank_code` varchar(32) DEFAULT NULL COMMENT '银行行别',
-  `bank_name` varchar(255) DEFAULT NULL COMMENT '银行名称',
-  `subbranch` varchar(255) DEFAULT NULL COMMENT '开户支行',
-  `bankcard_number` varchar(32) DEFAULT NULL COMMENT '银行卡号',
-  `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
-  `status` varchar(4) DEFAULT NULL COMMENT '状态',
-  `updater` varchar(255) DEFAULT NULL COMMENT '更新人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;

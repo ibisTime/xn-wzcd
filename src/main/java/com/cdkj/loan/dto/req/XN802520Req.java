@@ -6,6 +6,7 @@ public class XN802520Req extends APageReq {
      */
     private static final long serialVersionUID = 1L;
 
+    // 流水类型
     private String kind;
 
     // 订单分组组号（信息代表）---核心字段1
@@ -41,12 +42,6 @@ public class XN802520Req extends APageReq {
     // 状态
     private String status;
 
-    // 开始时间起
-    private String createDatetimeStart;
-
-    // 开始时间止
-    private String createDatetimeEnd;
-
     // 拟对账时间
     private String workDate;
 
@@ -56,26 +51,12 @@ public class XN802520Req extends APageReq {
     // 调账人
     private String adjustUser;
 
-    // 系统编号
-    private String systemCode;
-
-    // 公司编号
-    private String companyCode;
-
     public String getKind() {
         return kind;
     }
 
     public void setKind(String kind) {
         this.kind = kind;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
     }
 
     public String getPayGroup() {
@@ -206,11 +187,4 @@ public class XN802520Req extends APageReq {
         this.adjustUser = adjustUser;
     }
 
-    public String getSystemCode() {
-        return systemCode;
-    }
-
-    public void setSystemCode(String systemCode) {
-        this.systemCode = systemCode;
-    }
 }

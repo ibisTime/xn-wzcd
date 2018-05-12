@@ -24,14 +24,14 @@ public interface IJourAO {
     String DEFAULT_ORDER_COLUMN = "code";
 
     // 流水对账(包括现在和历史流水)
-    public void checkJour(String code, BigDecimal checkAmount,
-            String checkUser, String checkNote, String systemCode);
+    public void checkJour(String code, BigDecimal checkAmount, String checkUser,
+            String checkNote, String systemCode);
 
     public Paginable<Jour> queryJourPage(int start, int limit, Jour condition);
 
     public List<Jour> queryJourList(Jour condition);
 
-    public Jour getJour(String code, String systemCode);
+    public Jour getJour(String code);
 
     public BigDecimal getTotalAmount(String bizType, String channelType,
             String accountNumber, String dateStart, String dateEnd);
