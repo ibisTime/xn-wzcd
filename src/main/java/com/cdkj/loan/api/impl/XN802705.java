@@ -27,7 +27,9 @@ public class XN802705 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
+
         Charge condition = new Charge();
+
         condition.setCodeForQuery(req.getCode());
         condition.setPayGroup(req.getPayGroup());
         condition.setRefNo(req.getRefNo());
@@ -39,8 +41,8 @@ public class XN802705 extends AProcessor {
         condition.setBizType(req.getBizType());
         condition.setPayCardNo(req.getPayCardNo());
         condition.setStatus(req.getStatus());
-        condition.setApplyUser(req.getApplyUser());
 
+        condition.setApplyUser(req.getApplyUser());
         condition.setApplyDatetimeStart(
             DateUtil.getFrontDate(req.getApplyDateStart(), false));
         condition.setApplyDatetimeEnd(
@@ -48,10 +50,11 @@ public class XN802705 extends AProcessor {
         condition.setPayUser(req.getPayUser());
         condition.setPayDatetimeStart(
             DateUtil.getFrontDate(req.getPayDateStart(), false));
+
         condition.setPayDatetimeEnd(
             DateUtil.getFrontDate(req.getPayDateEnd(), true));
-
         condition.setChannelType(req.getChannelType());
+
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IChargeAO.DEFAULT_ORDER_COLUMN;
@@ -60,6 +63,7 @@ public class XN802705 extends AProcessor {
         condition.setOrder(orderColumn, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
+
         return chargeAO.queryChargePage(start, limit, condition);
     }
 

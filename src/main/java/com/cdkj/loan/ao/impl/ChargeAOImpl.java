@@ -114,9 +114,12 @@ public class ChargeAOImpl implements IChargeAO {
 
     @Override
     public Charge getCharge(String code) {
+
         Charge charge = chargeBO.getCharge(code);
+
         User user = userBO.getUser(charge.getApplyUser());
         charge.setUser(user);
+
         return charge;
     }
 }
