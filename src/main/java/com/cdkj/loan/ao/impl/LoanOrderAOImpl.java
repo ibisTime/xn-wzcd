@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.ao.ILoanOrderAO;
+import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.ILoanOrderBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
@@ -36,7 +36,7 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
     private IUserBO userBO;
 
     @Autowired
-    private IBankcardAO bankcardAO;
+    private IBankcardBO bankcardBO;
 
     @Autowired
     private IRepayBizBO repayBizBO;
@@ -188,7 +188,7 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
             }
 
             // 绑定用户银行卡
-            String bankcardCode = bankcardAO.bind(userId,
+            String bankcardCode = bankcardBO.bind(userId,
                 loanOrder.getRealName(), loanOrder.getBankcardNumber(),
                 loanOrder.getBankCode(), loanOrder.getBankName(),
                 loanOrder.getSubbranch());

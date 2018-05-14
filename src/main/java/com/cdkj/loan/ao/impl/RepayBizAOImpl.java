@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.ao.IRepayBizAO;
+import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.ILoanOrderBO;
 import com.cdkj.loan.bo.IOrderBO;
 import com.cdkj.loan.bo.IRepayBizBO;
@@ -37,7 +37,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     private IRepayPlanBO repayPlanBO;
 
     @Autowired
-    private IBankcardAO bankcardAO;
+    private IBankcardBO bankcardBO;
 
     @Autowired
     private IUserBO userBO;
@@ -51,7 +51,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     // 变更银行卡
     @Override
     public void editBankcardNew(XN630510Req req) {
-        String code = bankcardAO.addBankcard(req);
+        String code = bankcardBO.saveBankcard(req);
         repayBizBO.refreshBankcardNew(req.getCode(), code, req.getUpdater(),
             req.getRemark());
     }
@@ -59,6 +59,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     // 变更银行卡
     @Override
     public void editBankcardModify(XN630511Req req) {
+        bankcardBO.getBankcard(req.getCode());
         repayBizBO.refreshBankcardModify(req.getCode(), req.getBankcardCode(),
             req.getUpdater(), req.getRemark());
     }

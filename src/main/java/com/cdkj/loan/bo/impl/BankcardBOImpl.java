@@ -1,27 +1,41 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
-import com.cdkj.loan.dao.IBankcardDAO;
+import com.cdkj.loan.core.OrderNoGenerater;
+import com.cdkj.loan.dao.IBankCardDAO;
 import com.cdkj.loan.domain.Bankcard;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 
+/**
+ * @author: asus 
+ * @since: 2016年12月22日 下午4:32:05 
+ * @history:
+ */
 @Component
 public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
         implements IBankcardBO {
 
     @Autowired
-    private IBankcardDAO bankcardDAO;
+    private IBankCardDAO bankcardDAO;
 
+    @Override
     public String saveBankcard(Bankcard data) {
         String code = null;
         if (data != null) {
+            code = OrderNoGenerater.generate("BC");
+            data.setCode(code);
+            data.setStatus(EBoolean.YES.getCode());
+            data.setCreateDatetime(new Date());
             bankcardDAO.insert(data);
         }
         return code;
@@ -60,9 +74,44 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
             condition.setCode(code);
             data = bankcardDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "编号不存在！！！！");
+                throw new BizException("xn0000", "银行卡不存在");
             }
         }
         return data;
+    }
+
+    @Override
+    public Bankcard getBankcardInfo(String code) {
+        Bankcard data = null;
+        if (StringUtils.isNotBlank(code)) {
+            Bankcard condition = new Bankcard();
+            condition.setCode(code);
+            data = bankcardDAO.select(condition);
+        }
+        return data;
+    }
+
+    /** 
+     * @see com.std.account.bo.IBankcardBO#getBankcardByBankcardNumber(java.lang.String)
+     */
+    @Override
+    public Bankcard getBankcardByBankcardNumber(String bankcardNumber) {
+        Bankcard data = null;
+        if (StringUtils.isNotBlank(bankcardNumber)) {
+            Bankcard condition = new Bankcard();
+            condition.setBankcardNumber(bankcardNumber);
+            List<Bankcard> list = bankcardDAO.selectList(condition);
+            if (CollectionUtils.isNotEmpty(list)) {
+                data = list.get(0);
+            }
+        }
+        return data;
+    }
+
+    @Override
+    public List<Bankcard> queryBankcardList(String userId) {
+        Bankcard condition = new Bankcard();
+        condition.setUserId(userId);
+        return bankcardDAO.selectList(condition);
     }
 }

@@ -6,18 +6,27 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Bankcard;
-import com.cdkj.loan.dto.req.XN630510Req;
+import com.cdkj.loan.dto.req.XN802010Req;
+import com.cdkj.loan.dto.req.XN802012Req;
+import com.cdkj.loan.dto.req.XN802013Req;
 
-//CHECK ��鲢��ע�� 
+/**
+ * @author: xieyj 
+ * @since: 2017年6月7日 下午10:34:08 
+ * @history:
+ */
 @Component
 public interface IBankcardAO {
+
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addBankcard(XN630510Req req);
+    public String addBankcard(XN802010Req req);
 
-    public int dropBankcard(String code);
+    public void dropBankcard(String code);
 
-    public int editBankcard(Bankcard data);
+    public void editBankcard(XN802012Req req);
+
+    public void editBankcard(XN802013Req req);
 
     public Paginable<Bankcard> queryBankcardPage(int start, int limit,
             Bankcard condition);
@@ -25,9 +34,5 @@ public interface IBankcardAO {
     public List<Bankcard> queryBankcardList(Bankcard condition);
 
     public Bankcard getBankcard(String code);
-
-    // 绑定银行卡
-    public String bind(String userId, String realName, String bankcardNumber,
-            String bankCode, String bankName, String subbranch);
 
 }

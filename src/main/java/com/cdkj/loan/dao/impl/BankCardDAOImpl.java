@@ -4,13 +4,18 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.cdkj.loan.dao.IBankcardDAO;
+import com.cdkj.loan.dao.IBankCardDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.Bankcard;
 
-//CHECK 。。。 
+/**
+ * 
+ * @author: asus 
+ * @since: 2016年12月22日 下午4:30:48 
+ * @history:
+ */
 @Repository("bankcardDAOImpl")
-public class BankcardDAOImpl extends AMybatisTemplate implements IBankcardDAO {
+public class BankCardDAOImpl extends AMybatisTemplate implements IBankCardDAO {
 
     @Override
     public int insert(Bankcard data) {

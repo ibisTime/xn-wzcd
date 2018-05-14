@@ -17,22 +17,6 @@ CREATE TABLE `tstd_account` (
   PRIMARY KEY (`account_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-CREATE TABLE `tstd_bankcard` (
-  `code` varchar(32) DEFAULT NULL COMMENT '编号',
-  `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
-  `real_name` varchar(255) DEFAULT NULL COMMENT '户名',
-  `bank_code` varchar(32) DEFAULT NULL COMMENT '银行行别',
-  `bank_name` varchar(255) DEFAULT NULL COMMENT '银行名称',
-  `subbranch` varchar(255) DEFAULT NULL COMMENT '开户支行',
-  `bankcard_number` varchar(32) DEFAULT NULL COMMENT '银行卡号',
-  `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
-  `status` varchar(4) DEFAULT NULL COMMENT '状态',
-  `updater` varchar(255) DEFAULT NULL COMMENT '更新人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 CREATE TABLE `tstd_jour` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `kind` varchar(32) DEFAULT NULL COMMENT '流水类型（余额流水、冻结流水）',
@@ -137,3 +121,33 @@ CREATE TABLE `tbf_withhold` (
   PRIMARY KEY (`trans_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `tstd_channel_bank` (
+  `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '编号（自增长）',
+  `bank_code` varchar(32) DEFAULT NULL COMMENT '银行编号',
+  `bank_name` varchar(32) DEFAULT NULL COMMENT '银行名称',
+  `channel_type` varchar(4) DEFAULT NULL COMMENT '渠道类型',
+  `status` varchar(4) DEFAULT NULL COMMENT '状态（启用/不启用）',
+  `channel_bank` varchar(32) DEFAULT NULL COMMENT '渠道给银行的代号',
+  `max_order` bigint(32) DEFAULT NULL COMMENT '笔数限制',
+  `order_amount` bigint(32) DEFAULT NULL COMMENT '单笔限额',
+  `day_amount` bigint(32) DEFAULT NULL COMMENT '每日限额',
+  `month_amount` bigint(32) DEFAULT NULL COMMENT '每月限额',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tstd_bankcard` (
+  `code` varchar(32) DEFAULT NULL COMMENT '编号',
+  `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
+  `real_name` varchar(255) DEFAULT NULL COMMENT '户名',
+  `bank_code` varchar(32) DEFAULT NULL COMMENT '银行行别',
+  `bank_name` varchar(255) DEFAULT NULL COMMENT '银行名称',
+  `subbranch` varchar(255) DEFAULT NULL COMMENT '开户支行',
+  `bankcard_number` varchar(32) DEFAULT NULL COMMENT '银行卡号',
+  `bind_mobile` varchar(32) DEFAULT NULL COMMENT '银行卡绑定手机号',
+  `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
+  `status` varchar(4) DEFAULT NULL COMMENT '状态',
+  `updater` varchar(255) DEFAULT NULL COMMENT '更新人',
+  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

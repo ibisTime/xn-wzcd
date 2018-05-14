@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cdkj.loan.dao.IBankcardDAO">
+<mapper namespace="com.std.account.dao.IBankCardDAO">
 	<resultMap id="bankcard_DB_Result" type="bankcard">
 		<result column="code" property="code" />
 		<result column="user_id" property="userId" />
@@ -10,6 +10,7 @@
 		<result column="bank_name" property="bankName" />
 		<result column="subbranch" property="subbranch" />
 		<result column="bankcard_number" property="bankcardNumber" />
+		<result column="bind_mobile" property="bindMobile" />
 		<result column="create_datetime" property="createDatetime" />
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
@@ -20,6 +21,21 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
+			</if>
+			<if test="userId != null and userId != '' ">
+				AND t.user_id = #{userId}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="bankcardNumber != null and bankcardNumber != '' ">
+				AND t.bankcard_number = #{bankcardNumber}
+			</if>
+			<if test="bankCode != null and bankCode != '' ">
+				AND t.bank_code = #{bankCode}
+			</if>
+			<if test="bankName != null and bankName != '' ">
+				AND t.bank_name = #{bankName}
 			</if>
 		</trim>
 	</sql>
@@ -32,6 +48,7 @@
 		,t.bank_name
 		,t.subbranch
 		,t.bankcard_number
+		,t.bind_mobile
 		,t.create_datetime
 		,t.status
 		,t.updater
@@ -56,6 +73,7 @@
 	<insert id="insert_bankcard" parameterType="bankcard">
 		INSERT INTO
 		tstd_bankcard(
+		tstd_bankcard(
 		code
 		,user_id
 		,real_name
@@ -63,6 +81,7 @@
 		,bank_name
 		,subbranch
 		,bankcard_number
+		,bind_mobile
 		,create_datetime
 		,status
 		,updater
@@ -77,6 +96,7 @@
 		,#{bankName}
 		,#{subbranch}
 		,#{bankcardNumber}
+		,#{bindMobile}
 		,#{createDatetime}
 		,#{status}
 		,#{updater}
@@ -88,19 +108,22 @@
 	<update id="update_bankcard" parameterType="bankcard">
 		UPDATE tstd_bankcard
 		SET
-		user_id = #{userId}
+		bankcard_number = #{bankcardNumber}
 		,real_name = #{realName}
 		,bank_code = #{bankCode}
 		,bank_name = #{bankName}
 		,subbranch = #{subbranch}
-		,bankcard_number = #{bankcardNumber}
-		,create_datetime = #{createDatetime}
-		,status = #{status}
+		,bind_mobile = #{bindMobile}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 
+	<delete id="delete_bankcard" parameterType="bankcard">
+		DELETE FROM
+		tstd_bankcard
+		WHERE code = #{code}
+	</delete>
 
 </mapper>

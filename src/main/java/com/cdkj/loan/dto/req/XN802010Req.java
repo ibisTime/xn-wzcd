@@ -1,59 +1,49 @@
-package com.cdkj.loan.domain;
+package com.cdkj.loan.dto.req;
 
-import java.util.Date;
+import org.hibernate.validator.constraints.NotBlank;
 
-import com.cdkj.loan.dao.base.ABaseDO;
+/**
+ * 绑定银行卡
+ * @author: asus 
+ * @since: 2016年12月22日 下午4:56:20 
+ * @history:
+ */
+public class XN802010Req {
 
-public class Bankcard extends ABaseDO {
-
-    private static final long serialVersionUID = 5726488508006916065L;
-
-    // 编号
-    private String code;
-
-    // 用户编号
+    // 用户编号（必填）
+    @NotBlank
     private String userId;
 
-    // 户名
+    // 用户姓名（必填）
+    @NotBlank
     private String realName;
 
-    // 银行行别
+    // 银行编号（必填）
+    @NotBlank
     private String bankCode;
 
-    // 银行名称
+    // 银行名称（必填）
+    @NotBlank
     private String bankName;
 
-    // 开户支行
+    // 支行名称（必填）
+    @NotBlank
     private String subbranch;
 
-    // 银行卡号
+    // 卡号（必填）
+    @NotBlank
     private String bankcardNumber;
 
-    // 银行卡绑定手机号
+    // 绑定手机号（必填）
+    @NotBlank
     private String bindMobile;
 
-    // 创建时间
-    private Date createDatetime;
-
-    // 状态
-    private String status;
-
-    // 更新人
+    // 操作人（必填）
+    @NotBlank
     private String updater;
 
-    // 更新时间
-    private Date updateDatetime;
-
-    // 备注
+    // 备注（选填）
     private String remark;
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public String getUserId() {
         return userId;
@@ -111,36 +101,12 @@ public class Bankcard extends ABaseDO {
         this.bindMobile = bindMobile;
     }
 
-    public Date getCreateDatetime() {
-        return createDatetime;
-    }
-
-    public void setCreateDatetime(Date createDatetime) {
-        this.createDatetime = createDatetime;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getUpdater() {
         return updater;
     }
 
     public void setUpdater(String updater) {
         this.updater = updater;
-    }
-
-    public Date getUpdateDatetime() {
-        return updateDatetime;
-    }
-
-    public void setUpdateDatetime(Date updateDatetime) {
-        this.updateDatetime = updateDatetime;
     }
 
     public String getRemark() {
