@@ -1,8 +1,11 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN802503Req {
 
     // 账户编号(必填)
+    @NotBlank
     private String userId;
 
     // 币种(选填)

@@ -13,7 +13,7 @@ public class XN802706Req {
     // 订单编号（必填）
     @NotBlank
     private String code;
-
+    
     public String getCode() {
         return code;
     }
