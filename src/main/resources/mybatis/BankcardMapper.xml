@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.std.account.dao.IBankCardDAO">
+<mapper namespace="com.cdkj.loan.dao.IBankCardDAO">
 	<resultMap id="bankcard_DB_Result" type="bankcard">
 		<result column="code" property="code" />
 		<result column="user_id" property="userId" />
@@ -72,7 +72,6 @@
 
 	<insert id="insert_bankcard" parameterType="bankcard">
 		INSERT INTO
-		tstd_bankcard(
 		tstd_bankcard(
 		code
 		,user_id

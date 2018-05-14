@@ -4,10 +4,13 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.Bankcard;
+import com.cdkj.loan.dto.req.XN630510Req;
 
 public interface IBankcardBO extends IPaginableBO<Bankcard> {
 
     public String saveBankcard(Bankcard data);
+
+    public String saveBankcardBiz(XN630510Req req);
 
     public int removeBankcard(String code);
 
@@ -25,4 +28,5 @@ public interface IBankcardBO extends IPaginableBO<Bankcard> {
 
     public String bind(String userId, String realName, String bankcardNumber,
             String bankCode, String bankName, String subbranch);
+
 }

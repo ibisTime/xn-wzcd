@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -15,6 +16,7 @@ import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.dto.req.XN802010Req;
 import com.cdkj.loan.dto.req.XN802012Req;
 import com.cdkj.loan.dto.req.XN802013Req;
+import com.cdkj.loan.enums.EBankcard;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
 
@@ -41,13 +43,17 @@ public class BankcardAOImpl implements IBankcardAO {
         }
 
         Bankcard data = new Bankcard();
-        data.setBankcardNumber(req.getBankcardNumber());
+        data.setUserId(req.getUserId());
+        data.setRealName(req.getRealName());
         data.setBankCode(req.getBankCode());
         data.setBankName(req.getBankName());
         data.setSubbranch(req.getSubbranch());
+        data.setBankcardNumber(req.getBankcardNumber());
         data.setBindMobile(req.getBindMobile());
-        data.setUserId(req.getUserId());
-        data.setRealName(req.getRealName());
+        data.setCreateDatetime(new Date());
+        data.setStatus(EBankcard.NORMAL.getCode());
+        data.setUpdater(req.getUpdater());
+        data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());
         return bankcardBO.saveBankcard(data);
     }
@@ -83,6 +89,8 @@ public class BankcardAOImpl implements IBankcardAO {
         data.setBankName(req.getBankName());
         data.setSubbranch(req.getSubbranch());
         data.setBindMobile(req.getBindMobile());
+        data.setUpdater(req.getUpdater());
+        data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());
         bankcardBO.refreshBankcard(data);
     }
@@ -114,7 +122,6 @@ public class BankcardAOImpl implements IBankcardAO {
         data.setBankName(req.getBankName());
         data.setSubbranch(req.getSubbranch());
         data.setBindMobile(req.getBindMobile());
-        data.setStatus(req.getStatus());
         data.setRemark(req.getRemark());
         bankcardBO.refreshBankcard(data);
     }

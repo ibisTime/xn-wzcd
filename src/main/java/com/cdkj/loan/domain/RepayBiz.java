@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -126,6 +127,9 @@ public class RepayBiz extends ABaseDO {
 
     // 车贷订单
     private LoanOrder loanOrder;
+
+    // 车贷订单列表
+    List<LoanOrder> loanOrderList;
 
     // 商品订单
     private Order mallOrder;
@@ -432,6 +436,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setMallOrder(Order mallOrder) {
         this.mallOrder = mallOrder;
+    }
+
+    public List<LoanOrder> getLoanOrderList() {
+        return loanOrderList;
+    }
+
+    public void setLoanOrderList(List<LoanOrder> loanOrderList) {
+        this.loanOrderList = loanOrderList;
     }
 
 }

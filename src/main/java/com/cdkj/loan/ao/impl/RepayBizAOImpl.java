@@ -51,7 +51,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     // 变更银行卡
     @Override
     public void editBankcardNew(XN630510Req req) {
-        String code = bankcardBO.saveBankcard(req);
+        String code = bankcardBO.saveBankcardBiz(req);
         repayBizBO.refreshBankcardNew(req.getCode(), code, req.getUpdater(),
             req.getRemark());
     }
@@ -70,6 +70,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
         Paginable<RepayBiz> results = repayBizBO.getPaginable(start, limit,
             condition);
         for (RepayBiz repayBiz : results.getList()) {
+            // LoanOrder loanOrder = new LoanOrder();
+            // loanOrder.setRepayBizCode(repayBiz.getCode());
+            // List<LoanOrder> queryLoanOrderList = loanOrderBO
+            // .queryLoanOrderList(loanOrder);
+            // repayBiz.setLoanOrderList(queryLoanOrderList);
             setRefInfo(repayBiz);
         }
         return results;

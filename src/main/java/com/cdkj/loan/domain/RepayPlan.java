@@ -42,6 +42,9 @@ public class RepayPlan extends ABaseDO {
     // 已还金额
     private Long payedAmount;
 
+    // 剩余欠款
+    private long overplusAmount;
+
     // 逾期金额
     private Long overdueAmount;
 
@@ -270,6 +273,14 @@ public class RepayPlan extends ABaseDO {
 
     public void setRemindCount(int remindCount) {
         this.remindCount = remindCount;
+    }
+
+    public long getOverplusAmount() {
+        return overplusAmount;
+    }
+
+    public void setOverplusAmount(long overplusAmount) {
+        this.overplusAmount = overplusAmount;
     }
 
     public User getUser() {

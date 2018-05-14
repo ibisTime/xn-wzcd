@@ -176,6 +176,7 @@ CREATE TABLE `tht_repay_plan` (
   `repay_capital` bigint(20) DEFAULT NULL COMMENT '本期本金',
   `repay_interest` decimal(18,8) DEFAULT NULL COMMENT '本期利息',
   `payed_amount` bigint(20) DEFAULT NULL COMMENT '已还金额',
+  `overplus_amount` bigint(20) DEFAULT NULL COMMENT '剩余欠款',
   `overdue_amount` bigint(20) DEFAULT NULL COMMENT '逾期金额',
   `status` varchar(4) DEFAULT NULL COMMENT '状态',
   `overdue_handler` varchar(255) DEFAULT NULL COMMENT '逾期处理人',

@@ -13,7 +13,9 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBankCardDAO;
 import com.cdkj.loan.domain.Bankcard;
-import com.cdkj.loan.enums.EBoolean;
+import com.cdkj.loan.dto.req.XN630510Req;
+import com.cdkj.loan.enums.EBankcard;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -34,10 +36,31 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
         if (data != null) {
             code = OrderNoGenerater.generate("BC");
             data.setCode(code);
-            data.setStatus(EBoolean.YES.getCode());
-            data.setCreateDatetime(new Date());
             bankcardDAO.insert(data);
         }
+        return code;
+    }
+
+    @Override
+    public String saveBankcardBiz(XN630510Req req) {
+        // 判断卡号是否重复
+        List<Bankcard> list = queryBankcardList(req.getBankName());
+        if (CollectionUtils.isNotEmpty(list)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "您已绑定银行卡,无需绑定多张");
+        }
+
+        Bankcard data = new Bankcard();
+        String code = OrderNoGenerater.generate("BC");
+        data.setCode(code);
+        data.setBankcardNumber(req.getBankcardNumber());
+        data.setBankCode(req.getBankCode());
+        data.setBankName(req.getBankName());
+        data.setSubbranch(req.getSubbranch());
+        data.setUpdater(req.getUpdater());
+        data.setUpdateDatetime(new Date());
+        data.setRemark(req.getRemark());
+        bankcardDAO.insert(data);
         return code;
     }
 
@@ -74,7 +97,8 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
             condition.setCode(code);
             data = bankcardDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "银行卡不存在");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "银行卡不存在");
             }
         }
         return data;
@@ -113,5 +137,27 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
         Bankcard condition = new Bankcard();
         condition.setUserId(userId);
         return bankcardDAO.selectList(condition);
+    }
+
+    @Override
+    public String bind(String userId, String realName, String bankcardNumber,
+            String bankCode, String bankName, String subbranch) {
+        Bankcard data = new Bankcard();
+        String code = null;
+        code = OrderNoGenerater.generate("BC");
+
+        data.setCode(code);
+        data.setUserId(userId);
+        data.setRealName(realName);
+        data.setBankcardNumber(bankcardNumber);
+        data.setBankCode(bankCode);
+
+        data.setBankName(bankName);
+        data.setSubbranch(subbranch);
+        data.setCreateDatetime(new Date());
+        data.setStatus(EBankcard.NORMAL.getCode());
+
+        saveBankcard(data);
+        return code;
     }
 }

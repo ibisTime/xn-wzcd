@@ -120,14 +120,18 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             repayPlan.setRepayCapital(repayCapital);
             repayPlan.setRepayInterest(0L);
             repayPlan.setPayedAmount(0L);
-            repayPlan.setOverdueAmount(0L);
+            long r = repayPlan.getRepayCapital() + repayPlan.getRepayInterest();
+            long p = repayPlan.getPeriods() - repayPlan.getCurPeriods();
+            long overplusAmount = p * r;
+            repayPlan.setOverplusAmount(overplusAmount);
 
+            repayPlan.setOverdueAmount(0L);
             repayPlan.setStatus(ERepayBizStatus.TO_REPAYMENTS.getCode());
             repayPlan.setTotalFee(0L);
             repayPlan.setPayedFee(0L);
             repayPlan.setOverdueDeposit(0L);
-            repayPlan.setShouldDeposit(0L);
 
+            repayPlan.setShouldDeposit(0L);
             repayPlan.setRemindCount(0);
 
             repayPlanList.add(repayPlan);

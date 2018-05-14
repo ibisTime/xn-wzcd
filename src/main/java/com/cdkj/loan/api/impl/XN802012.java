@@ -3,7 +3,7 @@ package com.cdkj.loan.api.impl;
 import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
-import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN802012Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
@@ -32,7 +32,6 @@ public class XN802012 extends AProcessor {
     public void doCheck(String inputparams, String operator)
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN802012Req.class);
-        StringValidater.validateBlank(req.getCode(), req.getBankcardNumber(),
-            req.getBankCode(), req.getBankName());
+        ObjValidater.validateReq(req);
     }
 }

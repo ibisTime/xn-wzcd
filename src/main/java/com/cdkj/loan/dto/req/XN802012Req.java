@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * @author: xieyj 
  * @since: 2017年1月18日 上午11:09:57 
@@ -8,18 +10,22 @@ package com.cdkj.loan.dto.req;
 public class XN802012Req {
 
     // 编号(必填)
+    @NotBlank
     private String code;
 
     // 户名(选填，有传就修改，没传不修改)
     private String realName;
 
     // 卡号(必填)
+    @NotBlank
     private String bankcardNumber;
 
     // 银行行别（必填）
+    @NotBlank
     private String bankCode;
 
     // 银行名称（必填）
+    @NotBlank
     private String bankName;
 
     // 支行名称（选填）
@@ -27,6 +33,10 @@ public class XN802012Req {
 
     // 绑定手机号（选填）
     private String bindMobile;
+
+    // 更新人
+    @NotBlank
+    private String updater;
 
     // 备注（选填）
     private String remark;
@@ -85,6 +95,14 @@ public class XN802012Req {
 
     public void setBindMobile(String bindMobile) {
         this.bindMobile = bindMobile;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
     }
 
     public String getRemark() {
