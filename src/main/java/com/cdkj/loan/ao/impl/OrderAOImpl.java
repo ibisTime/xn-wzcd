@@ -47,6 +47,7 @@ import com.cdkj.loan.dto.req.XN808054Req;
 import com.cdkj.loan.dto.req.XN808070CReq;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.dto.res.XN003020Res;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizType;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EOrderStatus;
@@ -106,12 +107,13 @@ public class OrderAOImpl implements IOrderAO {
         // 检查产品状态
         Product product = productBO.getProduct(productSpecs.getProductCode());
         if (!EProductStatus.PUBLISH_YES.getCode().equals(product.getStatus())) {
-            throw new BizException("xn0000", "该产品未上架，不能下单");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "该产品未上架，不能下单");
         }
         // 判断库存是否充足（暂时不考虑库存）
         // Integer quantity = StringValidater.toInteger(req.getQuantity());
         // if (productSpecs.getQuantity() - quantity < 0) {
-        // throw new BizException("xn0000", "库存不够，不能下单");
+        // throw new BizException(EBizErrorCode.DEFAULT.getCode(), "库存不够，不能下单");
         // }
 
         // 生成订单基本信息
@@ -145,6 +147,7 @@ public class OrderAOImpl implements IOrderAO {
         String code = OrderNoGenerater
             .generate(EGeneratePrefix.ORDER.getCode());
         order.setCode(code);
+        order.setRepayBizCode(req.getRepayBizCode());
         order.setBankcardCode(req.getBankcardCode());
         order.setReceiver(req.getReceiver());
         order.setReMobile(req.getReMobile());
@@ -179,7 +182,8 @@ public class OrderAOImpl implements IOrderAO {
     public void modifyYunfei(String code, Long yunfei) {
         Order order = orderBO.getOrder(code);
         if (!EOrderStatus.TO_PAY.getCode().equals(order.getStatus())) {
-            throw new BizException("xn000000", "订单不处于待支付状态,不能修改运费");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "订单不处于待支付状态,不能修改运费");
         }
         orderBO.refreshYunfei(order, yunfei);
         User user = userBO.getUser(order.getApplyUser());
@@ -196,7 +200,8 @@ public class OrderAOImpl implements IOrderAO {
 
         Order order = orderBO.getOrder(code);
         if (!EOrderStatus.TO_PAY.getCode().equals(order.getStatus())) {
-            throw new BizException("xn000000", "订单不处于待支付状态");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "订单不处于待支付状态");
         }
 
         // 验证产品是否有未上架的
@@ -216,7 +221,7 @@ public class OrderAOImpl implements IOrderAO {
         } else if (EPayType.WITHHOLD.getCode().equals(payType)) {
             return toPayOrderWithhold(order, user, isDk);
         } else {
-            throw new BizException("xn0000", "支付类型不支持");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "支付类型不支持");
         }
     }
 
@@ -232,14 +237,14 @@ public class OrderAOImpl implements IOrderAO {
         // ECurrency.HW_XJK);
         // if (orderAmount > (rmbAccount.getAmount() +
         // hyXjkAccount.getAmount())) {
-        // throw new BizException("xn0000", "账户余额不足");
+        // throw new BizException(EBizErrorCode.DEFAULT.getCode(), "账户余额不足");
         // }
         // Long jfAmount = order.getAmount2() + dkAmountRes.getJfAmount();//
         // 积分金额
         // Account jfAccount = accountBO.getRemoteAccount(buyUser,
         // ECurrency.JF);
         // if (jfAmount > jfAccount.getAmount()) {
-        // throw new BizException("xn0000", "积分不足");
+        // throw new BizException(EBizErrorCode.DEFAULT.getCode(), "积分不足");
         // }
         // Long cnyAmount = 0L;
         // Long xjkAmount = 0L;
@@ -288,7 +293,7 @@ public class OrderAOImpl implements IOrderAO {
         // Account jfAccount = accountBO.getRemoteAccount(user.getUserId(),
         // ECurrency.JF);
         // if (jfAmount > jfAccount.getAmount()) {
-        // throw new BizException("xn0000", "积分不足");
+        // throw new BizException(EBizErrorCode.DEFAULT.getCode(), "积分不足");
         // }
         // String payGroup = orderBO.addPayGroup(order.getCode(),
         // EPayType.WECHAT_H5, dkAmountRes.getCnyAmount(),
@@ -316,7 +321,8 @@ public class OrderAOImpl implements IOrderAO {
                     .getProduct(productOrder.getProductCode());
                 if (!EProductStatus.PUBLISH_YES.getCode()
                     .equals(product.getStatus())) {
-                    throw new BizException("xn0000", "订单中有未上架产品，不能支付");
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "订单中有未上架产品，不能支付");
                 }
             }
         }
@@ -326,10 +332,12 @@ public class OrderAOImpl implements IOrderAO {
     public void userCancel(String code, String userId, String remark) {
         Order data = orderBO.getOrder(code);
         if (!userId.equals(data.getApplyUser())) {
-            throw new BizException("xn0000", "订单申请人和取消操作用户不符");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "订单申请人和取消操作用户不符");
         }
         if (!EOrderStatus.TO_PAY.getCode().equals(data.getStatus())) {
-            throw new BizException("xn0000", "订单状态不是待支付状态，不能进行取消操作");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "订单状态不是待支付状态，不能进行取消操作");
         }
         orderBO.userCancel(code, userId, remark);
     }
@@ -347,7 +355,8 @@ public class OrderAOImpl implements IOrderAO {
         Order order = orderBO.getOrder(code);
         if (!EOrderStatus.PAY_YES.getCode().equals(order.getStatus())
                 && !EOrderStatus.SEND.getCode().equals(order.getStatus())) {
-            throw new BizException("xn0000", "该订单不是支付成功或已发货状态，无法操作");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "该订单不是支付成功或已发货状态，无法操作");
         }
         String status = null;
         if (EOrderStatus.PAY_YES.getCode().equals(order.getStatus())) {
@@ -461,7 +470,8 @@ public class OrderAOImpl implements IOrderAO {
         Order order = orderBO.getOrder(req.getCode());
         if (!EOrderStatus.PAY_YES.getCode()
             .equalsIgnoreCase(order.getStatus())) {
-            throw new BizException("xn000000", "订单不是已支付状态，无法操作");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "订单不是已支付状态，无法操作");
         }
         orderBO.deliverLogistics(req.getCode(), req.getLogisticsCompany(),
             req.getLogisticsCode(), req.getDeliverer(),
@@ -492,7 +502,8 @@ public class OrderAOImpl implements IOrderAO {
     public void confirm(String code, String updater, String remark) {
         Order order = orderBO.getOrder(code);
         if (!EOrderStatus.SEND.getCode().equalsIgnoreCase(order.getStatus())) {
-            throw new BizException("xn000000", "订单不是已发货状态，无法操作");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "订单不是已发货状态，无法操作");
         }
         doConfirm(order, updater, remark);
     }
@@ -512,7 +523,8 @@ public class OrderAOImpl implements IOrderAO {
     public void paySuccessHW(String payGroup, String payCode, Long amount) {
         // List<Order> orderList = orderBO.queryOrderListByPayGroup(payGroup);
         // if (CollectionUtils.isEmpty(orderList)) {
-        // throw new BizException("XN000000", "找不到对应的订单记录");
+        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+        // "找不到对应的订单记录");
         // }
         // Order order = orderList.get(0);
         // if (EOrderStatus.TO_PAY.getCode().equals(order.getStatus())) {
@@ -616,7 +628,8 @@ public class OrderAOImpl implements IOrderAO {
     public void dropOrderCancelByUser(String code) {
         Order order = orderBO.getOrder(code);
         if (!EOrderStatus.YHYC.getCode().equals(order.getStatus())) {
-            throw new BizException("XN000000", "订单不是已取消状态，不能删除");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "订单不是已取消状态，不能删除");
         }
         orderBO.removeOrder(code);
     }

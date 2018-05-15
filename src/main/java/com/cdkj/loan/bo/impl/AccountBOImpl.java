@@ -254,7 +254,7 @@ public class AccountBOImpl extends PaginableBOImpl<Account>
             condition.setCurrency(currency);
             data = accountDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn802000",
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "用户[" + userId + ";" + currency + "]无此类型账户");
             }
         }

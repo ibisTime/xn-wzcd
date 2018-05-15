@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,12 +13,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IUserAO;
 import com.cdkj.loan.bo.IAccountBO;
+import com.cdkj.loan.bo.ICreditscoreBO;
+import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISmsOutBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.common.PhoneUtil;
+import com.cdkj.loan.common.SysConstants;
+import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -40,6 +45,12 @@ public class UserAOImpl implements IUserAO {
     @Autowired
     IAccountBO accountBO;
 
+    @Autowired
+    ISYSConfigBO sysConfigBO;
+
+    @Autowired
+    ICreditscoreBO creditscoreBO;
+
     @Override
     @Transactional
     public String doRegister(String mobile, String nickname, String loginPwd,
@@ -59,6 +70,18 @@ public class UserAOImpl implements IUserAO {
 
         // 分配账户
         distributeAccount(userId, mobile, kind);
+
+        // 获取信用分账户
+        Account xyfAccount = accountBO.getAccountByUser(userId,
+            ECurrency.XYF.getCode());
+
+        // 获取初始信用分配置
+        BigDecimal initialScore = sysConfigBO
+            .getBigDecimalValue(SysConstants.REGISTER_ADD);
+
+        // 加上信用分
+        creditscoreBO.changeCreditscore(xyfAccount, initialScore, userId,
+            "注册获取初始信用分");
 
         return userId;
     }

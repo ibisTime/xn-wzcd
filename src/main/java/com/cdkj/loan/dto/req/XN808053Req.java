@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 取消订单
  * @author: xieyj 
@@ -9,9 +11,11 @@ package com.cdkj.loan.dto.req;
 public class XN808053Req {
 
     // 用户编号（必填）
+    @NotBlank
     private String userId;
 
     // 编号（必填）
+    @NotBlank
     private String code;
 
     // 取消原因（选填）

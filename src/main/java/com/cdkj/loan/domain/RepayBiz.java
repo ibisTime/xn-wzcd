@@ -131,8 +131,19 @@ public class RepayBiz extends ABaseDO {
     // 车贷订单列表
     List<LoanOrder> loanOrderList;
 
+    // 还款计划列表
+    List<RepayPlan> repayPlanList;
+
     // 商品订单
     private Order mallOrder;
+
+    public List<RepayPlan> getRepayPlanList() {
+        return repayPlanList;
+    }
+
+    public void setRepayPlanList(List<RepayPlan> repayPlanList) {
+        this.repayPlanList = repayPlanList;
+    }
 
     public void setCode(String code) {
         this.code = code;

@@ -103,6 +103,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
     private void setRefInfo(RepayBiz repayBiz) {
 
         repayBiz.setUser(userBO.getUser(repayBiz.getUserId()));
+        RepayPlan repayPlan = new RepayPlan();
+        repayPlan.setRepayBizCode(repayBiz.getCode());
+        List<RepayPlan> repayPlanList = repayPlanBO
+            .queryRepayPlanList(repayPlan);
+        repayBiz.setRepayPlanList(repayPlanList);
 
         if (ERepayBizType.CAR.getCode().equals(repayBiz.getRefType())) {
             repayBiz

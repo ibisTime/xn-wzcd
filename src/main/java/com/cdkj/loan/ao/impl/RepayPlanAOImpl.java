@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICostAO;
 import com.cdkj.loan.ao.IRepayPlanAO;
+import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.ICostBO;
+import com.cdkj.loan.bo.ICreditscoreBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.IUserBO;
@@ -39,6 +41,12 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     @Autowired
     private ICostBO costBO;
+
+    @Autowired
+    ICreditscoreBO creditscoreBO;
+
+    @Autowired
+    IAccountBO accountBO;
 
     @Override
     public String addRepayPlan(RepayPlan data) {
@@ -119,6 +127,13 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
         // 支付成功，更新还款计划
         repayPlanBO.repaySuccess(repayPlan, payAmount);
+
+        // 加信用分
+
+        // Account account = accountBO.getAccountByUser(repayPlan.getUserId(),
+        // ECurrency.XYF.getCode());
+        // creditscoreBO.changeCreditscore(account, changeScore,
+        // repayPlan.getCode(), "按月正常还款");
 
         // 检查是否已经全部正常还款
         if (repayPlanBO.checkRepayComplete(repayPlan.getRepayBizCode())) {

@@ -30,12 +30,6 @@ public class XN805120Req extends APageReq {
     // 状态(选填)
     private String status;
 
-    // 注册时间起(选填)
-    private String createDatetimeStart;
-
-    // 注册时间止(选填)
-    private String createDatetimeEnd;
-
     public String getLoginName() {
         return loginName;
     }
@@ -98,22 +92,6 @@ public class XN805120Req extends APageReq {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getCreateDatetimeStart() {
-        return createDatetimeStart;
-    }
-
-    public void setCreateDatetimeStart(String createDatetimeStart) {
-        this.createDatetimeStart = createDatetimeStart;
-    }
-
-    public String getCreateDatetimeEnd() {
-        return createDatetimeEnd;
-    }
-
-    public void setCreateDatetimeEnd(String createDatetimeEnd) {
-        this.createDatetimeEnd = createDatetimeEnd;
     }
 
 }

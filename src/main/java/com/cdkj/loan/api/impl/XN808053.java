@@ -3,7 +3,7 @@ package com.cdkj.loan.api.impl;
 import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
-import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN808053Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
@@ -39,6 +39,6 @@ public class XN808053 extends AProcessor {
     public void doCheck(String inputparams, String operator)
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN808053Req.class);
-        StringValidater.validateBlank(req.getCode(), req.getUserId());
+        ObjValidater.validateReq(req);
     }
 }

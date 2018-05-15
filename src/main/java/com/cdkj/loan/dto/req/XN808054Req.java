@@ -8,6 +8,8 @@
  */
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /** 
  * @author: haiqingzheng 
  * @since: 2016年5月29日 下午3:21:20 
@@ -16,24 +18,30 @@ package com.cdkj.loan.dto.req;
 public class XN808054Req {
 
     // 订单号(必填)
+    @NotBlank
     private String code;
 
     // 物流公司(必填)
+    @NotBlank
     private String logisticsCompany;
 
     // 物流单号(必填)
+    @NotBlank
     private String logisticsCode;
 
     // 发货人(必填)
+    @NotBlank
     private String deliverer;
 
     // 发货时间(必填)
+    @NotBlank
     private String deliveryDatetime;
 
     // 发货单留存(选填)
     private String pdf;
 
     // 更新人(必填)
+    @NotBlank
     private String updater;
 
     // 备注(选填)

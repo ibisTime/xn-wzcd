@@ -180,6 +180,8 @@
 		INSERT INTO tmall_order(
 		
 		code
+		,repay_biz_code
+		,bankcard_code
 		,receiver
 		,re_mobile
 		,re_address
@@ -205,6 +207,8 @@
 		)
 		VALUES(
 		#{code}
+		,#{repayBizCode}
+		,#{bankcardCode}
 		,#{receiver}
 		,#{reMobile}
 		,#{reAddress}
