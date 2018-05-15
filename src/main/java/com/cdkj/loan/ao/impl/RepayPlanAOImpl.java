@@ -48,7 +48,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     @Override
     public int editRepayPlan(RepayPlan data) {
         if (!repayPlanBO.isRepayPlanExist(data.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "记录编号不存在");
         }
         return repayPlanBO.refreshRepayPlan(data);
     }
@@ -56,7 +56,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     @Override
     public int dropRepayPlan(String code) {
         if (!repayPlanBO.isRepayPlanExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "记录编号不存在");
         }
         return repayPlanBO.removeRepayPlan(code);
     }
@@ -84,6 +84,12 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     public RepayPlan getRepayPlan(String code) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
         repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
+        repayPlan
+            .setRepayBiz(repayBizBO.getRepayBiz(repayPlan.getRepayBizCode()));
+        Cost cost = new Cost();
+        cost.setRepayPlanCode(code);
+        List<Cost> list = costBO.queryCostList(cost);
+        repayPlan.setCostList(list);
         return repayPlan;
     }
 
