@@ -68,6 +68,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             condition);
         for (RepayPlan repayPlan : results.getList()) {
             repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
+            repayPlan.setRepayBiz(
+                repayBizBO.getRepayBiz(repayPlan.getRepayBizCode()));
         }
 
         return results;

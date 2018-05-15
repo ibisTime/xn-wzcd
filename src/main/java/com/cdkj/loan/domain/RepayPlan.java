@@ -88,6 +88,9 @@ public class RepayPlan extends ABaseDO {
     // 用户信息
     private User user;
 
+    // 还款业务
+    private RepayBiz repayBiz;
+
     // 费用清单
     private List<Cost> costList;
 
@@ -289,6 +292,14 @@ public class RepayPlan extends ABaseDO {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public RepayBiz getRepayBiz() {
+        return repayBiz;
+    }
+
+    public void setRepayBiz(RepayBiz repayBiz) {
+        this.repayBiz = repayBiz;
     }
 
 }
