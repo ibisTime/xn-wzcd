@@ -63,14 +63,8 @@ public class Jour extends ABaseDO {
 
     private transient BigDecimal preAmount;
 
-    // 变动前金额
-    private String preAmountString;
-
     // 变动后金额
     private transient BigDecimal postAmount;
-
-    // 变动后金额
-    private String postAmountString;
 
     // 状态
     private String status;
@@ -232,7 +226,6 @@ public class Jour extends ABaseDO {
 
     public void setPreAmount(BigDecimal preAmount) {
         this.preAmount = preAmount;
-        this.preAmountString = preAmount.toString();
     }
 
     public BigDecimal getPostAmount() {
@@ -241,7 +234,6 @@ public class Jour extends ABaseDO {
 
     public void setPostAmount(BigDecimal postAmount) {
         this.postAmount = postAmount;
-        this.postAmountString = postAmount.toString();
     }
 
     public String getStatus() {
@@ -370,22 +362,6 @@ public class Jour extends ABaseDO {
 
     public void setCreateDatetimeEnd(Date createDatetimeEnd) {
         this.createDatetimeEnd = createDatetimeEnd;
-    }
-
-    public String getPreAmountString() {
-        return preAmountString;
-    }
-
-    public void setPreAmountString(String preAmountString) {
-        this.preAmountString = preAmountString;
-    }
-
-    public String getPostAmountString() {
-        return postAmountString;
-    }
-
-    public void setPostAmountString(String postAmountString) {
-        this.postAmountString = postAmountString;
     }
 
     public String getTransAmountString() {

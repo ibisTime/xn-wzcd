@@ -26,7 +26,7 @@ public class CarOrder extends ABaseDO {
 
     private Long price; // 车辆总价
 
-    private double sfRate; // 首付比例
+    private Double sfRate; // 首付比例
 
     private Long sfAmount; // 首付金额
 
@@ -132,11 +132,11 @@ public class CarOrder extends ABaseDO {
         this.price = price;
     }
 
-    public double getSfRate() {
+    public Double getSfRate() {
         return sfRate;
     }
 
-    public void setSfRate(double sfRate) {
+    public void setSfRate(Double sfRate) {
         this.sfRate = sfRate;
     }
 

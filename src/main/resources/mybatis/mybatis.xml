@@ -49,6 +49,9 @@
 		<typeAlias alias="cost" type="com.cdkj.loan.domain.Cost" />
 		<typeAlias alias="remindLog" type="com.cdkj.loan.domain.RemindLog" />
 		
+		<!-- 银行  -->
+		<typeAlias alias="channelBank" type="com.cdkj.loan.domain.ChannelBank" />
+		
 	</typeAliases>
 </configuration>
 
