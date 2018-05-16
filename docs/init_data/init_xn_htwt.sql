@@ -39,6 +39,11 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('credit_rule','product_normal','1','admin',now(),'商品还款计划每正常执行一次','CD-CHTWT000020','CD-CHTWT000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('credit_rule','car_delay','-2','admin',now(),'商品还款计划每延期执行一次','CD-CHTWT000020','CD-CHTWT000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('credit_rule','product_delay','-1','admin',now(),'商品还款计划每延期执行一次','CD-CHTWT000020','CD-CHTWT000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('car_periods','12','5.25','admin',now(),'车贷期数管理的期数和利率','CD-CHTWT000020','CD-CHTWT000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('car_periods','24','1.10','admin',now(),'车贷期数管理的期数和利率','CD-CHTWT000020','CD-CHTWT000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('product_periods','12','5.25','admin',now(),'商品期数管理的期数和利率','CD-CHTWT000020','CD-CHTWT000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('product_periods','24','1.10','admin',now(),'商品期数管理的期数和利率','CD-CHTWT000020','CD-CHTWT000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('basic_data','repayment_fee','30','admin',now(),'提前还款服务费','CD-CHTWT000020','CD-CHTWT000020');
 
 /*
 -- Query: SELECT code,name,type,url,order_no,'admin' updater, now() as update_datetime,remark,parent_code FROM tsys_menu

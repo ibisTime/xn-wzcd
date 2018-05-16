@@ -9,6 +9,14 @@ public class SysConstants {
     // 信用分配置
     public static final String REGISTER_ADD = "register_add"; // 新用户注册初始信用分
 
+    public static final String CAR_NORMAL = "car_normal"; // 车贷还款计划每正常执行一次
+
+    public static final String PRODUCT_NORMAL = "product_normal"; // 商品还款计划每正常执行一次
+
+    public static final String CAR_DELAY = "car_delay"; // 商品还款计划每延期执行一次
+
+    public static final String PRODUCT_DELAY = "product_delay"; // 商品还款计划每延期执行一次
+
     // 七牛云图片配置
     public static String QINIU_ACCESS_KEY = "qiniu_access_key";
 

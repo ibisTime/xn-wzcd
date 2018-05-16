@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +13,20 @@ import com.cdkj.loan.bo.ICostBO;
 import com.cdkj.loan.bo.ICreditscoreBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
+import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.domain.Cost;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN630532Req;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EIsSubmit;
+import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayPlanStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -47,6 +53,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     @Autowired
     IAccountBO accountBO;
+
+    @Autowired
+    ISYSConfigBO sysConfigBO;
 
     @Override
     public String addRepayPlan(RepayPlan data) {
@@ -130,10 +139,21 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
         // 加信用分
 
-        // Account account = accountBO.getAccountByUser(repayPlan.getUserId(),
-        // ECurrency.XYF.getCode());
-        // creditscoreBO.changeCreditscore(account, changeScore,
-        // repayPlan.getCode(), "按月正常还款");
+        Account account = accountBO.getAccountByUser(repayPlan.getUserId(),
+            ECurrency.XYF.getCode());
+        // 判断是汽车还是商品
+        String refType = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode())
+            .getRefType();
+        BigDecimal changeScore = null;
+        if (refType.equals(ERepayBizType.CAR.getCode())) {
+            changeScore = sysConfigBO
+                .getBigDecimalValue(SysConstants.CAR_NORMAL);
+        } else {
+            changeScore = sysConfigBO
+                .getBigDecimalValue(SysConstants.PRODUCT_NORMAL);
+        }
+        creditscoreBO.changeCreditscore(account, changeScore,
+            repayPlan.getCode(), "按月正常还款");
 
         // 检查是否已经全部正常还款
         if (repayPlanBO.checkRepayComplete(repayPlan.getRepayBizCode())) {

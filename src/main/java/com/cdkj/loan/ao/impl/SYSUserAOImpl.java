@@ -156,8 +156,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
             smsContent = "您的账号已被管理员解封,请遵守平台相关规则";
             userStatus = EUserStatus.NORMAL;
         }
-        // userBO.refreshStatus(userId, userStatus, updater, remark);
-        // if (!EUserKind.Plat.getCode().equals(user.getKind())
+        sysUserBO.refreshStatus(userId, userStatus, updater, remark);
+        // if (!EUserKind.Plat.getCode().equals(user.getType())
         // && PhoneUtil.isMobile(mobile)) {
         // // 发送短信
         // smsOutBO.sendSmsOut(mobile,
