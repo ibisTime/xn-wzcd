@@ -22,11 +22,7 @@ import com.cdkj.loan.exception.BizException;
 public class BizConnecter {
     public static final String YES = "0";
 
-    public static final String CTQ_URL = PropertiesUtil.Config.CTQ_URL;
-
     public static final String SMS_URL = PropertiesUtil.Config.SMS_URL;
-
-    public static final String CERTI_URL = PropertiesUtil.Config.CERTI_URL;
 
     public static final String POST_URL = "...";
 
@@ -60,11 +56,7 @@ public class BizConnecter {
 
     private static String getPostUrl(String code) {
         String postUrl = POST_URL;
-        if (code.startsWith("626") || "625917".equals(code)) {
-            postUrl = CTQ_URL;
-        } else if (code.startsWith("798")) {
-            postUrl = CERTI_URL;
-        } else if (code.startsWith("804")) {
+        if (code.startsWith("804")) {
             postUrl = SMS_URL;
         }
         return postUrl;

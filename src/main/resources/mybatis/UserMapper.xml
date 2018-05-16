@@ -18,9 +18,6 @@
 		<result column="id_kind" property="idKind" />
 		<result column="id_no" property="idNo" />
 		<result column="real_name" property="realName" />
-		<result column="jf_amount" property="jfAmount" />
-		<result column="amount" property="amount" />
-		<result column="creditscore" property="creditscore" />
 		<result column="status" property="status" />
 		<result column="create_datetime" property="createDatetime" />
 		<result column="remark" property="remark" />
@@ -86,15 +83,6 @@
 			<if test="realNameForQuery != null and realNameForQuery != '' ">
 				AND t.real_name like "%"#{realNameForQuery}"%"
 			</if>
-			<if test="jfAmount != null and jfAmount != '' ">
-				AND t.jf_amount = #{jfAmount}
-			</if>
-			<if test="amount != null and amount != '' ">
-				AND t.amount = #{amount}
-			</if>
-			<if test="creditscore != null and creditscore != '' ">
-				AND t.creditscore = #{creditscore}
-			</if>
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
@@ -123,9 +111,6 @@
 		,id_kind
 		,id_no
 		,real_name
-		,jf_amount
-		,amount
-		,creditscore
 		,status
 		,create_datetime
 		,remark
@@ -162,9 +147,6 @@
 		,id_kind
 		,id_no
 		,real_name
-		,jf_amount
-		,amount
-		,creditscore
 		,status
 		,create_datetime
 		,remark
@@ -185,9 +167,6 @@
 		,#{idKind}
 		,#{idNo}
 		,#{realName}
-		,#{jfAmount}
-		,#{amount}
-		,#{creditscore}
 		,#{status}
 		,#{createDatetime}
 		,#{remark}

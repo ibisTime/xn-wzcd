@@ -63,7 +63,8 @@ public class UserAOImpl implements IUserAO {
         userBO.isNicknameExist(nickname, kind);
 
         // 验证短信验证码
-        smsOutBO.checkCaptcha(mobile, smsCaptcha, ECaptchaType.C_REG.getCode());
+        // smsOutBO.checkCaptcha(mobile, smsCaptcha,
+        // ECaptchaType.C_REG.getCode());
 
         // 注册用户
         String userId = userBO.doRegister(mobile, nickname, loginPwd, kind);

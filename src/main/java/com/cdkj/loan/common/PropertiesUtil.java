@@ -27,24 +27,8 @@ public class PropertiesUtil {
     }
 
     public static final class Config {
-        public static String CTQ_URL = props.getProperty("CTQ_URL");
 
         public static String SMS_URL = props.getProperty("SMS_URL");
-
-        public static String CERTI_URL = props.getProperty("CERTI_URL");
-
-        public static String ETH_URL_SELF = props.getProperty("ETH_URL_SELF");
-
-        public static String ETH_URL_OTHER = props.getProperty("ETH_URL_OTHER");
-
-        public static String KEY_STORE_PATH = props
-            .getProperty("KEY_STORE_PATH");
-
-        public static String ETH_NODE_INFURA = props
-            .getProperty("ETH_NODE_INFURA");
-
-        public static String ETH_NODE_BCOIN = props
-            .getProperty("ETH_NODE_BCOIN");
 
     }
 }

@@ -56,15 +56,6 @@ public class User extends ABaseDO {
     // 真实姓名
     private String realName;
 
-    // 积分余额
-    private Long jfAmount;
-
-    // 账户余额
-    private Long amount;
-
-    // 信用分
-    private Long creditscore;
-
     // 状态
     private String status;
 
@@ -231,30 +222,6 @@ public class User extends ABaseDO {
 
     public void setIdNo(String idNo) {
         this.idNo = idNo;
-    }
-
-    public Long getJfAmount() {
-        return jfAmount;
-    }
-
-    public void setJfAmount(Long jfAmount) {
-        this.jfAmount = jfAmount;
-    }
-
-    public Long getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Long amount) {
-        this.amount = amount;
-    }
-
-    public Long getCreditscore() {
-        return creditscore;
-    }
-
-    public void setCreditscore(Long creditscore) {
-        this.creditscore = creditscore;
     }
 
     public String getStatus() {

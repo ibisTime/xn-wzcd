@@ -10,6 +10,7 @@ import com.cdkj.loan.bo.ICreditscoreBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.domain.User;
+import com.cdkj.loan.enums.EChannelType;
 
 @Component
 public class CreditscoreBOImpl extends PaginableBOImpl<User>
@@ -22,8 +23,8 @@ public class CreditscoreBOImpl extends PaginableBOImpl<User>
     public void changeCreditscore(Account account, BigDecimal changeScore,
             String refNo, String bizNote) {
 
-        accountBO.changeAmount(account, changeScore, null, null, null, refNo,
-            null, bizNote);
+        accountBO.changeAmount(account, changeScore, EChannelType.NBZ, null,
+            null, refNo, null, bizNote);
 
     }
 

@@ -35,7 +35,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
     @Override
     public String doAddUser(String type, String loginName, String loginPwd,
-            String mobile) {
+            String mobile, String roleCode) {
         SYSUser data = new SYSUser();
         String userId = OrderNoGenerater.generate("U");
         data.setUserId(userId);
@@ -50,6 +50,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         data.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
 
         data.setCreateDatetme(new Date());
+        data.setRoleCode(roleCode);
         data.setStatus(EUserStatus.NORMAL.getCode());
         sysUserBO.saveUser(data);
         return userId;

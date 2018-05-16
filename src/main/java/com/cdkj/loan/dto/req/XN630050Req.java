@@ -28,6 +28,10 @@ public class XN630050Req {
     // 推荐人（选填）
     private String userRefree;
 
+    // 角色编号
+    @NotBlank
+    private String roleCode;
+
     // 备注（选填）
     private String remark;
 
@@ -41,6 +45,14 @@ public class XN630050Req {
 
     public String getLoginPwd() {
         return loginPwd;
+    }
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
 
     public void setLoginPwd(String loginPwd) {

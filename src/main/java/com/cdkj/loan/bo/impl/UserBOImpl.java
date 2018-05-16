@@ -278,8 +278,6 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         user.setIdKind(idKind);
         user.setIdNo(idNo);
         user.setRealName(realName);
-        user.setJfAmount(0L);
-        user.setAmount(0L);
         user.setStatus(EUserStatus.NORMAL.getCode());
         user.setCreateDatetime(new Date());
         userDAO.insert(user);
