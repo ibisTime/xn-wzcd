@@ -137,6 +137,9 @@ public class RepayBiz extends ABaseDO {
     // 商品订单
     private Order mallOrder;
 
+    // 实际退款金额
+    private Long actualRefunds;
+
     public List<RepayPlan> getRepayPlanList() {
         return repayPlanList;
     }
@@ -455,6 +458,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setLoanOrderList(List<LoanOrder> loanOrderList) {
         this.loanOrderList = loanOrderList;
+    }
+
+    public Long getActualRefunds() {
+        return actualRefunds;
+    }
+
+    public void setActualRefunds(Long actualRefunds) {
+        this.actualRefunds = actualRefunds;
     }
 
 }

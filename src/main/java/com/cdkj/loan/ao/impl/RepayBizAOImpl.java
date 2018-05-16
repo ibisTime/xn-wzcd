@@ -88,6 +88,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Override
     public RepayBiz getRepayBiz(String code) {
 
+        // 查询实际退款金额
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
 
         setRefInfo(repayBiz);
@@ -115,6 +116,14 @@ public class RepayBizAOImpl implements IRepayBizAO {
         } else {
             repayBiz.setMallOrder(orderBO.getOrder(repayBiz.getRefCode()));
         }
+
+        Long deposit = repayBiz.getLyDeposit() - repayBiz.getCutLyDeposit();
+
+        for (RepayPlan repayPlan2 : repayPlanList) {
+            Long shouldDeposit = repayPlan2.getShouldDeposit();
+            deposit = deposit + shouldDeposit;
+        }
+        repayBiz.setActualRefunds(deposit);
 
     }
 

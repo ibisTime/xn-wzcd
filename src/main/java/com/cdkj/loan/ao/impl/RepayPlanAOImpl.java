@@ -88,7 +88,11 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             repayPlan.setRepayBiz(
                 repayBizBO.getRepayBiz(repayPlan.getRepayBizCode()));
         }
-
+        // RepayPlan repayPlan = repayPlanBO.getRepayPlan(condition.getCode());
+        // Cost cost = new Cost();
+        // cost.setRepayPlanCode(condition.getCode());
+        // List<Cost> list = costBO.queryCostList(cost);
+        // repayPlan.setCostList(list);
         return results;
     }
 
