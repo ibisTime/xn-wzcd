@@ -1,5 +1,7 @@
 package com.cdkj.loan.ao.impl;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,12 +74,30 @@ public class ProductSpecsAOImpl implements IProductSpecsAO {
 
     @Override
     public ProductSpecs getProductSpecs(String code) {
-        return productSpecsBO.getProductSpecs(code);
+        ProductSpecs productSpecs = productSpecsBO.getProductSpecs(code);
+        Double sfAmount = productSpecs.getPrice() * productSpecs.getSfRate();
+        Double amount = productSpecs.getPrice() - sfAmount;
+        Double monthAmount = amount / productSpecs.getPeriods();
+        BigDecimal aBigDecimal = new BigDecimal(monthAmount);
+        aBigDecimal.setScale(0, RoundingMode.DOWN);
+        productSpecs.setMonthAmount(aBigDecimal.longValue());
+        return productSpecs;
     }
 
     @Override
     public List<ProductSpecs> queryProductSpecsList(ProductSpecs condition) {
-        return productSpecsBO.queryProductSpecsList(condition);
+        List<ProductSpecs> productSpecsList = productSpecsBO
+            .queryProductSpecsList(condition);
+        for (ProductSpecs productSpecs : productSpecsList) {
+            Double sfAmount = productSpecs.getPrice()
+                    * productSpecs.getSfRate();
+            Double amount = productSpecs.getPrice() - sfAmount;
+            Double monthAmount = amount / productSpecs.getPeriods();
+            BigDecimal aBigDecimal = new BigDecimal(monthAmount);
+            aBigDecimal.setScale(0, RoundingMode.DOWN);
+            productSpecs.setMonthAmount(aBigDecimal.longValue());
+        }
+        return productSpecsList;
     }
 
 }

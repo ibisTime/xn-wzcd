@@ -8,6 +8,8 @@
  */
 package com.cdkj.loan.ao.impl;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -232,7 +234,27 @@ public class ProductAOImpl implements IProductAO {
 
     @Override
     public List<Product> queryProductList(Product condition) {
-        return productBO.queryProductList(condition);
+
+        List<Product> products = productBO.queryProductList(condition);
+
+        if (CollectionUtils.isNotEmpty(products)) {
+            for (Product product : products) {
+                List<ProductSpecs> productSpecsList = productSpecsBO
+                    .queryProductSpecsList(product.getCode());
+                for (ProductSpecs productSpecs : productSpecsList) {
+                    Double sfAmount = productSpecs.getPrice()
+                            * productSpecs.getSfRate();
+                    Double amount = productSpecs.getPrice() - sfAmount;
+                    Double monthAmount = amount / productSpecs.getPeriods();
+                    BigDecimal aBigDecimal = new BigDecimal(monthAmount);
+                    aBigDecimal.setScale(0, RoundingMode.DOWN);
+                    productSpecs.setMonthAmount(aBigDecimal.longValue());
+                }
+                product.setProductSpecsList(productSpecsList);
+            }
+        }
+
+        return products;
     }
 
     @Override
@@ -241,6 +263,15 @@ public class ProductAOImpl implements IProductAO {
         if (null != product) {
             List<ProductSpecs> productSpecsList = productSpecsBO
                 .queryProductSpecsList(code);
+            for (ProductSpecs productSpecs : productSpecsList) {
+                Double sfAmount = productSpecs.getPrice()
+                        * productSpecs.getSfRate();
+                Double amount = productSpecs.getPrice() - sfAmount;
+                Double monthAmount = amount / productSpecs.getPeriods();
+                BigDecimal aBigDecimal = new BigDecimal(monthAmount);
+                aBigDecimal.setScale(0, RoundingMode.DOWN);
+                productSpecs.setMonthAmount(aBigDecimal.longValue());
+            }
             product.setProductSpecsList(productSpecsList);
         }
         return product;

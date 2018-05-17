@@ -46,6 +46,17 @@ public class ProductSpecs extends ABaseDO {
     // 相对位置编号
     private Integer orderNo;
 
+    // 月供
+    private Long monthAmount;
+
+    public Long getMonthAmount() {
+        return monthAmount;
+    }
+
+    public void setMonthAmount(Long monthAmount) {
+        this.monthAmount = monthAmount;
+    }
+
     public String getCode() {
         return code;
     }
