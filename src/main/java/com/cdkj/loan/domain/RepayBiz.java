@@ -140,6 +140,17 @@ public class RepayBiz extends ABaseDO {
     // 实际退款金额
     private Long actualRefunds;
 
+    // 借款余额
+    private Long loanBalance;
+
+    public Long getLoanBalance() {
+        return loanBalance;
+    }
+
+    public void setLoanBalance(Long loanBalance) {
+        this.loanBalance = loanBalance;
+    }
+
     public List<RepayPlan> getRepayPlanList() {
         return repayPlanList;
     }

@@ -94,6 +94,31 @@ public class RepayPlan extends ABaseDO {
     // 费用清单
     private List<Cost> costList;
 
+    // 催收记录
+    private List<RemindLog> remindLogList;
+
+    // 状态list
+    private List<String> statusList;
+
+    // 未结清贷款金额
+    private Long unsettledLoan;
+
+    public Long getUnsettledLoan() {
+        return unsettledLoan;
+    }
+
+    public void setUnsettledLoan(Long unsettledLoan) {
+        this.unsettledLoan = unsettledLoan;
+    }
+
+    public List<String> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
+    }
+
     public List<Cost> getCostList() {
         return costList;
     }
@@ -300,6 +325,14 @@ public class RepayPlan extends ABaseDO {
 
     public void setRepayBiz(RepayBiz repayBiz) {
         this.repayBiz = repayBiz;
+    }
+
+    public List<RemindLog> getRemindLogList() {
+        return remindLogList;
+    }
+
+    public void setRemindLogList(List<RemindLog> remindLogList) {
+        this.remindLogList = remindLogList;
     }
 
 }

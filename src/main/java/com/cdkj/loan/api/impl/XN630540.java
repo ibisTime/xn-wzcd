@@ -31,6 +31,7 @@ public class XN630540 extends AProcessor {
         condition.setRepayBizCode(req.getRepayBizCode());
         condition.setStatus(req.getStatus());
         condition.setOverdueHandler(req.getOverdueHandler());
+        condition.setStatusList(req.getStatusList());
 
         condition.setOrder("cur_periods", true);
 

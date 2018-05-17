@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ICostAO;
 import com.cdkj.loan.ao.IRepayPlanAO;
 import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.ICostBO;
 import com.cdkj.loan.bo.ICreditscoreBO;
+import com.cdkj.loan.bo.IRemindLogBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
@@ -21,11 +23,12 @@ import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.domain.Cost;
+import com.cdkj.loan.domain.RemindLog;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN630532Req;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECurrency;
-import com.cdkj.loan.enums.EIsSubmit;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayPlanStatus;
 import com.cdkj.loan.exception.BizException;
@@ -57,6 +60,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     @Autowired
     ISYSConfigBO sysConfigBO;
 
+    @Autowired
+    IRemindLogBO remindLogBO;
+
     @Override
     public String addRepayPlan(RepayPlan data) {
         return repayPlanBO.saveRepayPlan(data);
@@ -83,11 +89,22 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             RepayPlan condition) {
         Paginable<RepayPlan> results = repayPlanBO.getPaginable(start, limit,
             condition);
+        Long unsettledLoan = 0L;
         for (RepayPlan repayPlan : results.getList()) {
             repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
             repayPlan.setRepayBiz(
                 repayBizBO.getRepayBiz(repayPlan.getRepayBizCode()));
+            if (repayPlan.getStatus()
+                .equals(ERepayPlanStatus.OVERDUE_TO_HANDLE.getCode())
+                    || repayPlan.getStatus()
+                        .equals(ERepayPlanStatus.HESUAN_TO_GREEN.getCode())) {
+                Long amount = repayPlan.getTotalFee() - repayPlan.getPayedFee()
+                        + repayPlan.getOverplusAmount();
+                unsettledLoan = unsettledLoan + amount;
+            }
+
         }
+
         // RepayPlan repayPlan = repayPlanBO.getRepayPlan(condition.getCode());
         // Cost cost = new Cost();
         // cost.setRepayPlanCode(condition.getCode());
@@ -111,6 +128,12 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         cost.setRepayPlanCode(code);
         List<Cost> list = costBO.queryCostList(cost);
         repayPlan.setCostList(list);
+
+        RemindLog remindLog = new RemindLog();
+        remindLog.setRepayPlanCode(code);
+        List<RemindLog> remindLogList = remindLogBO
+            .queryRemindLogList(remindLog);
+        repayPlan.setRemindLogList(remindLogList);
         return repayPlan;
     }
 
@@ -181,22 +204,40 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     // 逾期处理
     @Override
+    @Transactional
     public void OverdueHandle(XN630532Req req) {
+
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(req.getCode());
-        // 费用清单
-        costAO.addCost(req.getCode(), req.getCostList());
-        Cost cost = new Cost();
-        cost.setRepayPlanCode(req.getCode());
-        costBO.queryCostList(cost);
-        if (req.getIsSubmit().equals(EIsSubmit.SUBMIT.getCode())) {
-            repayPlan.setStatus(ERepayPlanStatus.HESUAN_TO_GREEN.getCode());
-            // 代扣
+
+        if (!ERepayPlanStatus.OVERDUE_TO_HANDLE.getCode()
+            .equals(repayPlan.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "该条还款计划不是逾期状态！！！");
         }
+
+        // 删除原来费用清单
+        costAO.dropCost(req.getCode());
+
+        // 添加费用清单
+        costAO.addCost(req.getCode(), req.getCostList());
+
+        // 更新还款计划
         repayPlan
             .setOverdueDeposit(StringValidater.toLong(req.getOverdueDeposit()));
         repayPlan.setDepositWay(req.getOverdueDepositWay());
         repayPlan.setOverdueHandleNote(req.getRemark());
         repayPlanBO.refreshRepayPlanOverdue(repayPlan);
+
+        // 判断是否提交扣款
+        if (req.getIsSubmit().equals(EBoolean.YES.getCode())) {
+            // TODO 代扣
+
+            if ("1" == "1") {
+                // 代扣成功
+                ToGreen(req.getCode(), req.getOverdueDeposit());
+            }
+        }
+
     }
 
     @Override
@@ -212,6 +253,24 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
         repayPlan.setStatus(ERepayPlanStatus.HESUANNOT_TO_BLACK.getCode());
         repayPlanBO.refreshToBlack(repayPlan);
+    }
+
+    @Override
+    public Long getUnsettledLoan() {
+        RepayPlan condition = new RepayPlan();
+        List<RepayPlan> results = repayPlanBO.queryRepayPlanList(condition);
+        Long unsettledLoan = 0L;
+        for (RepayPlan repayPlan : results) {
+            if (repayPlan.getStatus()
+                .equals(ERepayPlanStatus.OVERDUE_TO_HANDLE.getCode())
+                    || repayPlan.getStatus()
+                        .equals(ERepayPlanStatus.HESUAN_TO_GREEN.getCode())) {
+                Long amount = repayPlan.getTotalFee() - repayPlan.getPayedFee()
+                        + repayPlan.getOverplusAmount();
+                unsettledLoan = unsettledLoan + amount;
+            }
+        }
+        return unsettledLoan;
     }
 
 }

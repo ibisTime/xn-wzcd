@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 public class XN630540Req extends APageReq {
 
     private static final long serialVersionUID = 5066181160930283667L;
@@ -11,6 +13,8 @@ public class XN630540Req extends APageReq {
     private String status;// 状态
 
     private String overdueHandler;// 逾期处理人
+
+    private List<String> statusList; // 状态List
 
     public String getOverdueHandler() {
         return overdueHandler;
@@ -42,6 +46,14 @@ public class XN630540Req extends APageReq {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<String> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
     }
 
 }

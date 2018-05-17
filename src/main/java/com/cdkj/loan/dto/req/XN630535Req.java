@@ -13,10 +13,8 @@ public class XN630535Req {
     @NotBlank
     private String payDatetime;// 发生时间
 
-    @NotBlank
     private String payWay;// 发生付款方式
 
-    @NotBlank
     private String repayWay;// 执行付款方式
 
     private String remark;// 备注

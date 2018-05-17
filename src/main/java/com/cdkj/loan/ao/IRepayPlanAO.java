@@ -38,4 +38,6 @@ public interface IRepayPlanAO {
     // 记黑名单
     public void ToBlack(String code);
 
+    public Long getUnsettledLoan();
+
 }

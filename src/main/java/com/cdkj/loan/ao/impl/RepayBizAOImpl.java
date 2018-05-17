@@ -118,13 +118,18 @@ public class RepayBizAOImpl implements IRepayBizAO {
         }
 
         Long deposit = repayBiz.getLyDeposit() - repayBiz.getCutLyDeposit();
-
+        Long amount = 0L;
         for (RepayPlan repayPlan2 : repayPlanList) {
+            // 实际退款金额
             Long shouldDeposit = repayPlan2.getShouldDeposit();
             deposit = deposit + shouldDeposit;
+
+            // 借款余额
+            Long overplusAmount = repayPlan2.getOverplusAmount();
+            amount = amount + overplusAmount;
         }
         repayBiz.setActualRefunds(deposit);
-
+        repayBiz.setLoanBalance(amount);
     }
 
     // 提前还款
