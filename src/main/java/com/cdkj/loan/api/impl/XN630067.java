@@ -3,6 +3,7 @@ package com.cdkj.loan.api.impl;
 import com.cdkj.loan.ao.ISYSUserAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN630067Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
@@ -30,6 +31,7 @@ public class XN630067 extends AProcessor {
     public void doCheck(String inputparams, String operator)
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN630067Req.class);
+        ObjValidater.validateReq(req);
     }
 
 }

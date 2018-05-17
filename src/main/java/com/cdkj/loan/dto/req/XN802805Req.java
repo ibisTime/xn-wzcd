@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN802805Req extends APageReq {
     /** 
      * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
@@ -46,9 +48,11 @@ public class XN802805Req extends APageReq {
     private String approveDateEnd;
 
     // 系统编号
+    @NotBlank
     private String systemCode;
 
     // 公司编号
+    @NotBlank
     private String companyCode;
 
     public String getCompanyCode() {

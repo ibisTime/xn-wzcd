@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import com.cdkj.loan.ao.IJourAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dto.req.XN802800Req;
 import com.cdkj.loan.dto.res.BooleanRes;
@@ -25,18 +26,19 @@ public class XN802800 extends AProcessor {
 
     @Override
     public synchronized Object doBusiness() throws BizException {
-        BigDecimal checkAmount = StringValidater.toBigDecimal(req
-            .getCheckAmount());
+        BigDecimal checkAmount = StringValidater
+            .toBigDecimal(req.getCheckAmount());
         jourAO.checkJour(req.getCode(), checkAmount, req.getCheckUser(),
             req.getCheckNote(), req.getSystemCode());
         return new BooleanRes(true);
     }
 
     @Override
-    public void doCheck(String inputparams, String operator) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN802800Req.class);
         StringValidater.validateBlank(req.getCode(), req.getCheckNote(),
             req.getCheckUser(), req.getSystemCode());
-        StringValidater.validateAmount(req.getCheckAmount());
+        ObjValidater.validateReq(req);
     }
 }

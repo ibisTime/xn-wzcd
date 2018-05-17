@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.cdkj.loan.ao.ISYSRoleAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.SYSRole;
 import com.cdkj.loan.dto.req.XN630005Req;
@@ -45,6 +46,6 @@ public class XN630005 extends AProcessor {
     public void doCheck(String inputparams, String operator)
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN630005Req.class);
-        StringValidater.validateNumber(req.getStart(), req.getLimit());
+        ObjValidater.validateReq(req);
     }
 }

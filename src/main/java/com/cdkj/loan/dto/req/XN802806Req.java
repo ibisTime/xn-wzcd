@@ -1,9 +1,14 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN802806Req {
+
+    @NotBlank
     private String code;
 
     // 系统编号
+    @NotBlank
     private String systemCode;
 
     public String getCode() {

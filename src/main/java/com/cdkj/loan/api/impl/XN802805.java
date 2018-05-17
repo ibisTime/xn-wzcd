@@ -6,6 +6,7 @@ import com.cdkj.loan.ao.IHLOrderAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.HLOrder;
 import com.cdkj.loan.dto.req.XN802805Req;
@@ -37,16 +38,16 @@ public class XN802805 extends AProcessor {
         condition.setDirection(req.getDirection());
         condition.setStatus(req.getStatus());
         condition.setApplyUser(req.getApplyUser());
-        condition.setApplyDatetimeStart(DateUtil.getFrontDate(
-            req.getApplyDateStart(), false));
-        condition.setApplyDatetimeEnd(DateUtil.getFrontDate(
-            req.getApplyDateEnd(), true));
+        condition.setApplyDatetimeStart(
+            DateUtil.getFrontDate(req.getApplyDateStart(), false));
+        condition.setApplyDatetimeEnd(
+            DateUtil.getFrontDate(req.getApplyDateEnd(), true));
 
         condition.setApproveUser(req.getApproveUser());
-        condition.setApproveDatetimeStart(DateUtil.getFrontDate(
-            req.getApproveDateStart(), false));
-        condition.setApproveDatetimeEnd(DateUtil.getFrontDate(
-            req.getApproveDateEnd(), true));
+        condition.setApproveDatetimeStart(
+            DateUtil.getFrontDate(req.getApproveDateStart(), false));
+        condition.setApproveDatetimeEnd(
+            DateUtil.getFrontDate(req.getApproveDateEnd(), true));
         condition.setSystemCode(req.getSystemCode());
         condition.setCompanyCode(req.getCompanyCode());
 
@@ -61,10 +62,9 @@ public class XN802805 extends AProcessor {
     }
 
     @Override
-    public void doCheck(String inputparams, String operator) throws ParaException {
+    public void doCheck(String inputparams, String operator)
+            throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN802805Req.class);
-        StringValidater.validateNumber(req.getStart(), req.getLimit());
-        StringValidater
-            .validateBlank(req.getSystemCode(), req.getCompanyCode());
+        ObjValidater.validateReq(req);
     }
 }

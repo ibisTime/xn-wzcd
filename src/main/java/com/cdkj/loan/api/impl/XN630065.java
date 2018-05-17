@@ -6,7 +6,7 @@ import com.cdkj.loan.ao.ISYSUserAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
-import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630065Req;
 import com.cdkj.loan.exception.BizException;
@@ -49,7 +49,7 @@ public class XN630065 extends AProcessor {
     public void doCheck(String inputparams, String operator)
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN630065Req.class);
-        StringValidater.validateBlank(req.getStart(), req.getLimit());
+        ObjValidater.validateReq(req);
     }
 
 }
