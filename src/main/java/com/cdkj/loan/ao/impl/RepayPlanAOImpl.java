@@ -89,19 +89,10 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             RepayPlan condition) {
         Paginable<RepayPlan> results = repayPlanBO.getPaginable(start, limit,
             condition);
-        Long unsettledLoan = 0L;
         for (RepayPlan repayPlan : results.getList()) {
             repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
             repayPlan.setRepayBiz(
                 repayBizBO.getRepayBiz(repayPlan.getRepayBizCode()));
-            if (repayPlan.getStatus()
-                .equals(ERepayPlanStatus.OVERDUE_TO_HANDLE.getCode())
-                    || repayPlan.getStatus()
-                        .equals(ERepayPlanStatus.HESUAN_TO_GREEN.getCode())) {
-                Long amount = repayPlan.getTotalFee() - repayPlan.getPayedFee()
-                        + repayPlan.getOverplusAmount();
-                unsettledLoan = unsettledLoan + amount;
-            }
 
         }
 
