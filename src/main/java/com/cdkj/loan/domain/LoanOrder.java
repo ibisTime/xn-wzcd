@@ -121,6 +121,12 @@ public class LoanOrder extends ABaseDO {
     // 用户信息
     private User user;
 
+    private String carName; // 车型名称
+
+    private String seriesName; // 车系名称
+
+    private String brandName; // 品牌名称
+
     public String getCode() {
         return code;
     }
@@ -399,6 +405,30 @@ public class LoanOrder extends ABaseDO {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getCarName() {
+        return carName;
+    }
+
+    public void setCarName(String carName) {
+        this.carName = carName;
+    }
+
+    public String getSeriesName() {
+        return seriesName;
+    }
+
+    public void setSeriesName(String seriesName) {
+        this.seriesName = seriesName;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 
 }

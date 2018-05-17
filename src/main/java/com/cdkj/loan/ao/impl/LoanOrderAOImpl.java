@@ -10,15 +10,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ILoanOrderAO;
 import com.cdkj.loan.bo.IBankcardBO;
+import com.cdkj.loan.bo.IBrandBO;
+import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.ILoanOrderBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
+import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Brand;
+import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.LoanOrder;
 import com.cdkj.loan.domain.RepayBiz;
+import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630500Req;
 import com.cdkj.loan.dto.req.XN630502Req;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -44,6 +50,15 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
     @Autowired
     private IRepayPlanBO repayPlanBO;
 
+    @Autowired
+    private ICarBO carBO;
+
+    @Autowired
+    private ISeriesBO seriesBO;
+
+    @Autowired
+    private IBrandBO brandBO;
+
     @Override
     public String addLoanOrder(XN630500Req req) {
         LoanOrder data = new LoanOrder();
@@ -57,6 +72,13 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
         data.setSubbranch(req.getSubbranch());
         data.setBankcardNumber(req.getBankcardNumber());
         data.setCarCode(req.getCarCode());
+
+        Car car = carBO.getCar(req.getCarCode());
+        data.setCarName(car.getName());
+        Series series = seriesBO.getSeries(car.getSeriesCode());
+        data.setSeriesName(series.getName());
+        Brand brand = brandBO.getBrand(series.getBrandCode());
+        data.setBrandName(brand.getName());
 
         data.setCarPrice(StringValidater.toLong(req.getCarPrice()));
         data.setSfRate(StringValidater.toDouble(req.getSfRate()));
@@ -211,6 +233,12 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
     @Override
     public Paginable<LoanOrder> queryLoanOrderPage(int start, int limit,
             LoanOrder condition) {
+        Car car = carBO.getCar(condition.getCarCode());
+        condition.setCarName(car.getName());
+        Series series = seriesBO.getSeries(car.getSeriesCode());
+        condition.setSeriesName(series.getName());
+        Brand brand = brandBO.getBrand(series.getBrandCode());
+        condition.setBrandName(brand.getName());
         Paginable<LoanOrder> results = loanOrderBO.getPaginable(start, limit,
             condition);
         for (LoanOrder loanOrder : results.getList()) {
@@ -227,6 +255,12 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
     @Override
     public LoanOrder getLoanOrder(String code) {
         LoanOrder loanOrder = loanOrderBO.getLoanOrder(code);
+        Car car = carBO.getCar(loanOrder.getCarCode());
+        loanOrder.setCarName(car.getName());
+        Series series = seriesBO.getSeries(car.getSeriesCode());
+        loanOrder.setSeriesName(series.getName());
+        Brand brand = brandBO.getBrand(series.getBrandCode());
+        loanOrder.setBrandName(brand.getName());
         loanOrder.setUser(userBO.getUser(loanOrder.getUserId()));
         return loanOrder;
     }
