@@ -57,6 +57,9 @@ public class Charge extends ABaseDO {
     // 申请时间
     private Date applyDatetime;
 
+    // 申请说明
+    private String applyNote;
+
     // 支付回录人
     private String payUser;
 
@@ -95,6 +98,14 @@ public class Charge extends ABaseDO {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getApplyNote() {
+        return applyNote;
+    }
+
+    public void setApplyNote(String applyNote) {
+        this.applyNote = applyNote;
     }
 
     public String getPayGroup() {

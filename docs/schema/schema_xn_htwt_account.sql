@@ -47,6 +47,7 @@ CREATE TABLE `tstd_jour` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*申请表*/
 CREATE TABLE `tstd_charge` (
   `code` varchar(32) NOT NULL COMMENT '针对编号',
   `pay_group` varchar(32) DEFAULT NULL COMMENT '支付组号',
@@ -62,6 +63,7 @@ CREATE TABLE `tstd_charge` (
   `pay_card_no` varchar(255) DEFAULT NULL COMMENT '支付渠道账号',
   `status` varchar(4) NOT NULL COMMENT '状态',
   `apply_user` varchar(32) DEFAULT NULL COMMENT '申请人',
+  `apply_note` varchar(255) DEFAULT NULL COMMENT '申请说明',
   `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
   `pay_user` varchar(32) DEFAULT NULL COMMENT '支付回录人',
   `pay_note` varchar(255) DEFAULT NULL COMMENT '支付渠道说明',
