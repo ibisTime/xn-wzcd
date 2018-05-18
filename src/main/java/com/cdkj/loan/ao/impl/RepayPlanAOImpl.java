@@ -189,6 +189,11 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             condition);
         for (RepayPlan repayPlan : results.getList()) {
             repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
+            repayPlan.setRepayBiz(
+                repayBizBO.getRepayBiz(repayPlan.getRepayBizCode()));
+            Long monthRepayAmount = repayPlan.getRepayCapital()
+                    * repayPlan.getRepayInterest();
+            repayPlan.setMonthRepayAmount(monthRepayAmount);
         }
         return results;
     }

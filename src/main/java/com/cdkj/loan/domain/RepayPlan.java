@@ -103,6 +103,17 @@ public class RepayPlan extends ABaseDO {
     // 未结清贷款金额
     private Long unsettledLoan;
 
+    // 本月还款金额
+    private Long monthRepayAmount;
+
+    public Long getMonthRepayAmount() {
+        return monthRepayAmount;
+    }
+
+    public void setMonthRepayAmount(Long monthRepayAmount) {
+        this.monthRepayAmount = monthRepayAmount;
+    }
+
     public Long getUnsettledLoan() {
         return unsettledLoan;
     }
