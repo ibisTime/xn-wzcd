@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.bo.IAccountBO;
+import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IExpressRuleBO;
 import com.cdkj.loan.bo.IOrderBO;
 import com.cdkj.loan.bo.IProductBO;
@@ -96,6 +97,9 @@ public class OrderAOImpl implements IOrderAO {
 
     @Autowired
     private IRepayPlanBO repayPlanBO;
+
+    @Autowired
+    private IBankcardBO bankcardBO;
 
     @Override
     @Transactional
@@ -193,7 +197,7 @@ public class OrderAOImpl implements IOrderAO {
 
     @Override
     @Transactional
-    public Object toPayOrder(String code, String payType) {
+    public Object toPayOrder(String code, String payType, String tradePwd) {
 
         String isDk = "0";
 
@@ -202,6 +206,11 @@ public class OrderAOImpl implements IOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "订单不处于待支付状态");
         }
+
+        // 判断支付密码
+        String bankcardCode = orderBO.getOrder(code).getBankcardCode();
+        String userId = bankcardBO.getBankcard(bankcardCode).getUserId();
+        userBO.checkTradePwd(userId, tradePwd);
 
         // 验证产品是否有未上架的
         doCheckProductOnline(order);

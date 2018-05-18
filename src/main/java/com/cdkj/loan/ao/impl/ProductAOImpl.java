@@ -226,6 +226,15 @@ public class ProductAOImpl implements IProductAO {
             for (Product product : results.getList()) {
                 List<ProductSpecs> productSpecsList = productSpecsBO
                     .queryProductSpecsList(product.getCode());
+                for (ProductSpecs productSpecs : productSpecsList) {
+                    Double sfAmount = productSpecs.getPrice()
+                            * productSpecs.getSfRate();
+                    Double amount = productSpecs.getPrice() - sfAmount;
+                    Double monthAmount = amount / productSpecs.getPeriods();
+                    BigDecimal aBigDecimal = new BigDecimal(monthAmount);
+                    aBigDecimal.setScale(0, RoundingMode.DOWN);
+                    productSpecs.setMonthAmount(aBigDecimal.longValue());
+                }
                 product.setProductSpecsList(productSpecsList);
             }
         }

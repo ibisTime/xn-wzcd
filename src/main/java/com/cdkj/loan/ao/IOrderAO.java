@@ -22,7 +22,7 @@ public interface IOrderAO {
 
     public void modifyYunfei(String code, Long yunfei);
 
-    public Object toPayOrder(String code, String payType);
+    public Object toPayOrder(String code, String payType, String tradePwd);
 
     public void userCancel(String code, String userId, String remark);
 

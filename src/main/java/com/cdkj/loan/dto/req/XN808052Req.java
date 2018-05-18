@@ -18,6 +18,10 @@ public class XN808052Req {
     @NotBlank
     private String payType;
 
+    // 支付密码（必填）
+    @NotBlank
+    private String tradePwd;
+
     public String getCode() {
         return code;
     }
@@ -32,6 +36,14 @@ public class XN808052Req {
 
     public void setPayType(String payType) {
         this.payType = payType;
+    }
+
+    public String getTradePwd() {
+        return tradePwd;
+    }
+
+    public void setTradePwd(String tradePwd) {
+        this.tradePwd = tradePwd;
     }
 
 }
