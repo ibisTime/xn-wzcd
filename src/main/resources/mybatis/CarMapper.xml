@@ -5,7 +5,7 @@
 	<resultMap id="car_DB_Result" type="car">
 		<result column="code" property="code" />
 		<result column="name" property="name" />
-		<result column="series_node" property="seriesCode" />
+		<result column="series_code" property="seriesCode" />
 		<result column="series_name" property="seriesName" />
 		<result column="brand_code" property="brandCode" />
 		<result column="brand_name" property="brandName" />

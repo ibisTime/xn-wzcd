@@ -147,7 +147,6 @@ public class OrderAOImpl implements IOrderAO {
         String code = OrderNoGenerater
             .generate(EGeneratePrefix.ORDER.getCode());
         order.setCode(code);
-        order.setRepayBizCode(req.getRepayBizCode());
         order.setBankcardCode(req.getBankcardCode());
         order.setReceiver(req.getReceiver());
         order.setReMobile(req.getReMobile());
