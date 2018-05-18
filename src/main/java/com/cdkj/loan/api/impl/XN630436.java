@@ -29,6 +29,7 @@ public class XN630436 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         CarOrder condition = new CarOrder();
+        condition.setUserId(req.getUserId());
         condition.setBrandCode(req.getBrandCode());
         condition.setBrandName(req.getBrandName());
         condition.setSeriesCode(req.getSeriesCode());

@@ -7,6 +7,8 @@ public class XN630435Req extends APageReq {
      */
     private static final long serialVersionUID = 1090728314612887096L;
 
+    private String userId;// 用户编号
+
     private String brandCode; // 品牌编号
 
     private String brandName; // 品牌名称
@@ -30,6 +32,14 @@ public class XN630435Req extends APageReq {
     private String status; // 状态
 
     private String handler; // 处理人
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getCarCode() {
         return carCode;
