@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.loan.ao.ICostAO;
 import com.cdkj.loan.ao.IRepayPlanAO;
 import com.cdkj.loan.bo.IAccountBO;
+import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.ICostBO;
 import com.cdkj.loan.bo.ICreditscoreBO;
 import com.cdkj.loan.bo.IRemindLogBO;
@@ -62,6 +63,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     @Autowired
     IRemindLogBO remindLogBO;
+
+    @Autowired
+    IBankcardBO bankcardBO;
 
     @Override
     public String addRepayPlan(RepayPlan data) {
@@ -125,6 +129,12 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         List<RemindLog> remindLogList = remindLogBO
             .queryRemindLogList(remindLog);
         repayPlan.setRemindLogList(remindLogList);
+
+        String bankcardCode = repayBizBO
+            .getRepayBiz(repayPlan.getRepayBizCode()).getBankcardCode();
+        String bankcardNumber = bankcardBO.getBankcard(bankcardCode)
+            .getBankcardNumber();
+        repayPlan.setBankcardNumber(bankcardNumber);
         return repayPlan;
     }
 

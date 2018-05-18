@@ -106,6 +106,17 @@ public class RepayPlan extends ABaseDO {
     // 本月还款金额
     private Long monthRepayAmount;
 
+    // 还款卡号
+    private String bankcardNumber;
+
+    public String getBankcardNumber() {
+        return bankcardNumber;
+    }
+
+    public void setBankcardNumber(String bankcardNumber) {
+        this.bankcardNumber = bankcardNumber;
+    }
+
     public Long getMonthRepayAmount() {
         return monthRepayAmount;
     }
