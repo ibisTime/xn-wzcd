@@ -233,16 +233,15 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
     @Override
     public Paginable<LoanOrder> queryLoanOrderPage(int start, int limit,
             LoanOrder condition) {
-        Car car = carBO.getCar(condition.getCarCode());
-        condition.setCarName(car.getName());
-        Series series = seriesBO.getSeries(car.getSeriesCode());
-        condition.setSeriesName(series.getName());
-        Brand brand = brandBO.getBrand(series.getBrandCode());
-        condition.setBrandName(brand.getName());
+
         Paginable<LoanOrder> results = loanOrderBO.getPaginable(start, limit,
             condition);
         for (LoanOrder loanOrder : results.getList()) {
             loanOrder.setUser(userBO.getUser(loanOrder.getUserId()));
+            Car car = carBO.getCar(loanOrder.getCarCode());
+            loanOrder.setCarName(car.getName());
+            loanOrder.setSeriesName(car.getSeriesName());
+            loanOrder.setBrandName(car.getBrandName());
         }
         return results;
     }

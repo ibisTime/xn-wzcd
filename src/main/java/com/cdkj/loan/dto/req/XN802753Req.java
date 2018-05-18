@@ -29,8 +29,7 @@ public class XN802753Req {
     @NotBlank
     private String payNote;
 
-    // 支付渠道订单编号（支付渠道代表）(必填)
-    @NotBlank
+    // 支付渠道订单编号（支付渠道代表）(选填)
     private String channelOrder;
 
     public List<String> getCodeList() {
