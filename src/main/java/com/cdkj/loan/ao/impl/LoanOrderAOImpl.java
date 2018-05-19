@@ -62,6 +62,7 @@ public class LoanOrderAOImpl implements ILoanOrderAO {
     @Override
     public String addLoanOrder(XN630500Req req) {
         LoanOrder data = new LoanOrder();
+        data.setUserId(req.getUserId());
         data.setMobile(req.getMobile());
         data.setIdKind(req.getIdKind());
         data.setIdNo(req.getIdNo());

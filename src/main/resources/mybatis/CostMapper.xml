@@ -19,6 +19,9 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="repayPlanCode != null and repayPlanCode != '' ">
+				AND t.repay_plan_code = #{repayPlanCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_cost" parameterType="cost" resultMap="cost_DB_Result">
@@ -76,6 +79,12 @@
 		,#{remark}
 		)
 	</insert>
+	
+	<delete id="delete_cost" parameterType="cost">
+		DELETE FROM tht_cost
+		WHERE
+		repay_plan_code = #{repayPlanCode}			
+	</delete>
 
 	<update id="update_cost" parameterType="cost">
 		UPDATE tht_cost

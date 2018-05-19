@@ -37,6 +37,7 @@ import com.cdkj.loan.common.ProvinceUtil;
 import com.cdkj.loan.core.CalculationUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.Product;
 import com.cdkj.loan.domain.ProductOrder;
@@ -286,6 +287,8 @@ public class OrderAOImpl implements IOrderAO {
         // orderBO.refreshPayYESuccess(order, cnyAmount, jfAmount, xjkAmount,
         // EPayType.YE.getCode(), dkAmountRes.getCnyAmount(),
         // dkAmountRes.getJfAmount());
+        // 这个方法只修改状态，上面的方法取消注释后删除
+        orderBO.refreshStatus(order);
         // List<ProductOrder> productOrders = productOrderBO
         // .queryProductOrderList(order.getCode());
         // for (ProductOrder productOrder : productOrders) {
@@ -471,6 +474,8 @@ public class OrderAOImpl implements IOrderAO {
             .queryProductOrderList(imCondition);
         order.setProductOrderList(productOrderList);
         order.setUser(userBO.getUser(order.getApplyUser()));
+        Bankcard bankcard = bankcardBO.getBankcard(order.getBankcardCode());
+        order.setBankcardNumber(bankcard.getBankcardNumber());
         return order;
     }
 

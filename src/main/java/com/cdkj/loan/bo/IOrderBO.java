@@ -53,4 +53,6 @@ public interface IOrderBO extends IPaginableBO<Order> {
     public Long selectXFAmount(String userId);
 
     public void removeOrder(String code);
+
+    public int refreshStatus(Order order);
 }

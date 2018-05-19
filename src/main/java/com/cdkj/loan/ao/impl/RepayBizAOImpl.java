@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ILoanOrderAO;
+import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.bo.IBankcardBO;
-import com.cdkj.loan.bo.IOrderBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.IUserBO;
@@ -46,7 +46,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     private ILoanOrderAO loanOrderAO;
 
     @Autowired
-    private IOrderBO orderBO;
+    private IOrderAO orderAO;
 
     // 变更银行卡
     @Override
@@ -114,7 +114,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             repayBiz
                 .setLoanOrder(loanOrderAO.getLoanOrder(repayBiz.getRefCode()));
         } else {
-            repayBiz.setMallOrder(orderBO.getOrder(repayBiz.getRefCode()));
+            repayBiz.setMallOrder(orderAO.getOrder(repayBiz.getRefCode()));
         }
 
         Long deposit = repayBiz.getLyDeposit() - repayBiz.getCutLyDeposit();

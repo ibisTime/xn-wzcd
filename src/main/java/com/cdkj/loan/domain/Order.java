@@ -165,6 +165,17 @@ public class Order extends ABaseDO {
     // 发货时间止
     private Date deliveryDatetimeEnd;
 
+    // 还款卡号
+    private String bankcardNumber;
+
+    public String getBankcardNumber() {
+        return bankcardNumber;
+    }
+
+    public void setBankcardNumber(String bankcardNumber) {
+        this.bankcardNumber = bankcardNumber;
+    }
+
     public String getCode() {
         return code;
     }

@@ -299,6 +299,16 @@
 		code = #{code}
 	</update>
 	
+	<update id="update_status" parameterType="order">
+		UPDATE tmall_order
+		SET
+		status = #{status}
+		,pay_datetime = #{payDatetime}
+		,remark = #{remark}
+		WHERE
+		code = #{code}
+	</update>
+	
 	<update id="update_payRelationSuccess" parameterType="order">
 		UPDATE tmall_order
 		SET

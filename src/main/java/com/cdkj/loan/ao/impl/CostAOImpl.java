@@ -44,9 +44,6 @@ public class CostAOImpl implements ICostAO {
 
     @Override
     public int dropCost(String code) {
-        if (!costBO.isCostExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
-        }
         return costBO.removeCost(code);
     }
 

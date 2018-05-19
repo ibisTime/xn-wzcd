@@ -142,6 +142,21 @@ public class OrderBOImpl extends PaginableBOImpl<Order> implements IOrderBO {
     }
 
     @Override
+    public int refreshStatus(Order order) {
+        int count = 0;
+        if (order != null && StringUtils.isNotBlank(order.getCode())) {
+            Date now = new Date();
+            order.setStatus(EOrderStatus.PAY_YES.getCode());
+            order.setPayDatetime(now);
+            order.setUpdater(order.getApplyUser());
+            order.setUpdateDatetime(now);
+            order.setRemark("订单已成功支付");
+            count = orderDAO.updateStatus(order);
+        }
+        return count;
+    }
+
+    @Override
     public int refreshRelationPaySuccess(Order order, Long payAmount,
             String payType, String payGroup, String payCode) {
         int count = 0;
@@ -286,4 +301,5 @@ public class OrderBOImpl extends PaginableBOImpl<Order> implements IOrderBO {
         data.setRemark("前端用户删除订单");
         orderDAO.updateRemove(data);
     }
+
 }
