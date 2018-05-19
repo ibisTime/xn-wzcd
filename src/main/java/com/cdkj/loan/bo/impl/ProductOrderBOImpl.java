@@ -43,6 +43,7 @@ public class ProductOrderBOImpl extends PaginableBOImpl<ProductOrder>
             OrderNoGenerater.generate(EGeneratePrefix.PRODUCT_ORDER.getCode()));
         productOrder.setOrderCode(orderCode);
         productOrder.setProductCode(productSpecs.getProductCode());
+        productOrder.setProductName(productSpecs.getName());
         productOrder.setProductSpecsCode(productSpecs.getCode());
         productOrder.setProductSpecsName(productSpecs.getName());
         productOrder.setQuantity(quantity);
