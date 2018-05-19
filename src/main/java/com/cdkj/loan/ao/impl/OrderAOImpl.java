@@ -133,9 +133,7 @@ public class OrderAOImpl implements IOrderAO {
         }
 
         weight = weight + AmountUtil.mulAB(productSpecs.getWeight(), quantity);
-        // 落地订单产品关联信息
-        productOrderBO.saveProductOrder(order.getCode(), productSpecs,
-            quantity);
+
         // 计算订单运费，暂时不考虑运费
         Long yunfei = 0L;
         // if (!EBoolean.NO.getCode().equals(req.getIsNeedYunfei())) {
@@ -150,6 +148,10 @@ public class OrderAOImpl implements IOrderAO {
 
         String code = OrderNoGenerater
             .generate(EGeneratePrefix.ORDER.getCode());
+
+        // 落地订单产品关联信息
+        productOrderBO.saveProductOrder(code, productSpecs, quantity);
+
         order.setCode(code);
         order.setBankcardCode(req.getBankcardCode());
         order.setReceiver(req.getReceiver());
