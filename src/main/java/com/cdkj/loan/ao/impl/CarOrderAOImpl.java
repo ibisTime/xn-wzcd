@@ -48,7 +48,7 @@ public class CarOrderAOImpl implements ICarOrderAO {
             String remark) {
         CarOrder carOrder = carOrderBO.getCarOrder(code);
         if (ECarOrderStatus.DCL.getCode().equals(carOrder.getStatus())) {
-            if (result.equals(0)) {
+            if (result.equals("0")) {
                 carOrder.setStatus(ECarOrderStatus.YCL.getCode());
             } else {
                 carOrder.setStatus(ECarOrderStatus.YZF.getCode());
