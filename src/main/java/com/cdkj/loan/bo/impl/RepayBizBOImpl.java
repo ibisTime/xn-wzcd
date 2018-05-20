@@ -18,7 +18,6 @@ import com.cdkj.loan.domain.LoanOrder;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.enums.EBizErrorCode;
-import com.cdkj.loan.enums.EOrderStatus;
 import com.cdkj.loan.enums.ERepayBizStatus;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayPlanStatus;
@@ -151,7 +150,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
         repayBiz.setLyDeposit(0L);
         repayBiz.setCutLyDeposit(0L);
-        repayBiz.setStatus(EOrderStatus.PAY_YES.getCode());
+        repayBiz.setStatus(ERepayBizStatus.TO_REPAYMENTS.getCode());
         repayBiz.setRestAmount(order.getLoanAmount());
         repayBiz.setRestTotalCost(0L);
 
