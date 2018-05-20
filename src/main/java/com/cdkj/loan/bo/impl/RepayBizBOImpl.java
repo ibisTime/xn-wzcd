@@ -1,5 +1,7 @@
 package com.cdkj.loan.bo.impl;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -138,15 +140,16 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setFxDeposit(0L);
         Date date = DateUtils.addMonths(order.getApplyDatetime(), 1);
         repayBiz.setFirstRepayDatetime(date);
-        long long1 = order.getAmount() - order.getSfAmount();
-        long long2 = long1 / order.getPeriods();
-        long long3 = (long) (long2 * order.getBankRate());
-        repayBiz.setFirstRepayAmount(long3);
+        Long monthlyAmount = new BigDecimal(order.getLoanAmount())
+            .divide(new BigDecimal(order.getPeriods()), 0, RoundingMode.DOWN)
+            .longValue();
+        // long long3 = (long) (long2 * order.getBankRate());
+        repayBiz.setFirstRepayAmount(monthlyAmount);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(order.getApplyDatetime());
         int i = calendar.get(Calendar.DAY_OF_MONTH);
         repayBiz.setMonthDatetime(i);
-        repayBiz.setMonthAmount(long3);
+        repayBiz.setMonthAmount(monthlyAmount);
 
         repayBiz.setLyDeposit(0L);
         repayBiz.setCutLyDeposit(0L);
