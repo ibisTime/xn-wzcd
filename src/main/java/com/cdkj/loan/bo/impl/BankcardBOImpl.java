@@ -34,8 +34,6 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
     public String saveBankcard(Bankcard data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate("BC");
-            data.setCode(code);
             bankcardDAO.insert(data);
         }
         return code;
@@ -142,9 +140,10 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
     @Override
     public String bind(String userId, String realName, String bankcardNumber,
             String bankCode, String bankName, String subbranch) {
+
         Bankcard data = new Bankcard();
-        String code = null;
-        code = OrderNoGenerater.generate("BC");
+
+        String code = OrderNoGenerater.generate("BC");
 
         data.setCode(code);
         data.setUserId(userId);
@@ -158,6 +157,7 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
         data.setStatus(EBankcard.NORMAL.getCode());
 
         saveBankcard(data);
+
         return code;
     }
 }

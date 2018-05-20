@@ -8,9 +8,6 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN630500Req {
 
     @NotBlank
-    private String userId;// 用户编号
-
-    @NotBlank
     private String mobile;// 手机号
 
     @NotBlank
@@ -100,14 +97,6 @@ public class XN630500Req {
     private String updater;// 最近修改人
 
     private String remark;// 备注
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public String getMobile() {
         return mobile;
