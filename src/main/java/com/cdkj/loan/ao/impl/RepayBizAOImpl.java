@@ -105,7 +105,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
         repayBiz.setUser(userBO.getUser(repayBiz.getUserId()));
         RepayPlan repayPlan = new RepayPlan();
-        repayPlan.setOrder("cur_periods", true);
         repayPlan.setRepayBizCode(repayBiz.getCode());
         List<RepayPlan> repayPlanList = repayPlanBO
             .queryRepayPlanList(repayPlan);

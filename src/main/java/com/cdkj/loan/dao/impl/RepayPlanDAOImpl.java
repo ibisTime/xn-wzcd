@@ -70,6 +70,11 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
     }
 
     @Override
+    public int repayPartSuccess(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_payPartSuccess"), data);
+    }
+
+    @Override
     public int OverdueHandle(RepayPlan data) {
         return super.update(NAMESPACE.concat("overdue_handle"), data);
     }

@@ -170,7 +170,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
-    public void repayCompleteNormal(String repayBizCode) {
+    public void repaySuccessNormal(String repayBizCode) {
 
         RepayBiz repayBiz = new RepayBiz();
         repayBiz.setCode(repayBizCode);
@@ -225,6 +225,20 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     @Override
     public int confirmClose(RepayBiz repayBiz) {
         return repayBizDAO.updateRepayBizStatus(repayBiz);
+    }
+
+    @Override
+    public int refreshRestAmount(RepayBiz repayBiz, Long realWithholdAmount) {
+
+        int count = 0;
+
+        if (repayBiz != null && realWithholdAmount != null) {
+            repayBiz
+                .setRestAmount(repayBiz.getRestAmount() - realWithholdAmount);
+            count = repayBizDAO.updateRepayBizRestAmount(repayBiz);
+        }
+
+        return count;
     }
 
 }

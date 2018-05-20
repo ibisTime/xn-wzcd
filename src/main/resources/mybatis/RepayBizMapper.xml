@@ -216,6 +216,13 @@
 		WHERE code = #{code}
 	</update>
 	
+	<update id="update_repayBiz_restAmount" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+			SET
+			rest_amount = #{restAmount}
+		WHERE code = #{code}
+	</update>
+	
 	<update id="confirm_close" parameterType="repayBiz">
 		UPDATE tht_repay_biz
 			SET
