@@ -44,6 +44,19 @@ public class CarOrder extends ABaseDO {
 
     private String remark; // 备注
 
+    /*-----------辅助字段------------*/
+
+    // 车型
+    private Car car;
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
     public String getCode() {
         return code;
     }

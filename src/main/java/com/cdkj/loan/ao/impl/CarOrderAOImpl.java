@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICarOrderAO;
+import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.ICarOrderBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.CarOrder;
 import com.cdkj.loan.dto.req.XN630430Req;
 import com.cdkj.loan.enums.ECarOrderStatus;
@@ -20,6 +22,9 @@ public class CarOrderAOImpl implements ICarOrderAO {
 
     @Autowired
     private ICarOrderBO carOrderBO;
+
+    @Autowired
+    private ICarBO carBO;
 
     @Override
     public String addCarOrder(XN630430Req req) {
@@ -66,7 +71,14 @@ public class CarOrderAOImpl implements ICarOrderAO {
     @Override
     public Paginable<CarOrder> queryCarPage(int start, int limit,
             CarOrder condition) {
-        return carOrderBO.getPaginable(start, limit, condition);
+        Paginable<CarOrder> results = carOrderBO.getPaginable(start, limit,
+            condition);
+        List<CarOrder> list = results.getList();
+        for (CarOrder carOrder : list) {
+            Car car = carBO.getCar(carOrder.getCarCode());
+            carOrder.setCar(car);
+        }
+        return results;
     }
 
     @Override
@@ -76,7 +88,12 @@ public class CarOrderAOImpl implements ICarOrderAO {
 
     @Override
     public List<CarOrder> queryCarOrderList(CarOrder condition) {
-        return carOrderBO.queryCarOrder(condition);
+        List<CarOrder> carOrderList = carOrderBO.queryCarOrder(condition);
+        for (CarOrder carOrder : carOrderList) {
+            Car car = carBO.getCar(condition.getCarCode());
+            carOrder.setCar(car);
+        }
+        return carOrderList;
     }
 
 }
