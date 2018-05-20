@@ -75,6 +75,14 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
     }
 
     @Override
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
+            String repayBizCode) {
+        RepayPlan condition = new RepayPlan();
+        condition.setRepayBizCode(repayBizCode);
+        return repayPlanDAO.selectList(condition);
+    }
+
+    @Override
     public RepayPlan getRepayPlan(String code) {
         RepayPlan data = null;
         if (StringUtils.isNotBlank(code)) {

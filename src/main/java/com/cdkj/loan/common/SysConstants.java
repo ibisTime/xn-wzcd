@@ -39,13 +39,9 @@ public class SysConstants {
 
     public static String QXDBZDJE = "QXDBZDJE"; // 取现单笔最大金额
 
+    public static String TQ_SERVICE = "tq_service";// 提前还款服务费
+
     // 短信模板
-    public static String ORDER_CONTACT = "您的广告刚刚被新用户关注，可能随时跟您聊天，赶紧去看看吧！"; // 有人开始聊天
-
-    public static String ORDER_SUBMIT = "您发布的广告已经有新用户下单了噢，赶紧去处理吧！"; // 有人下单
-
-    public static String ARBITRATE = "您有一个新的仲裁订单（编号：%s）需要处理！"; // 有人仲裁
-
     public static String WITHDRAW = "您有一个新的取现订单（编号：%s）需要处理！"; // 有人提现
 
     // 短信通知配置

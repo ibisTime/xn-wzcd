@@ -34,4 +34,6 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
     public int refreshRestAmount(RepayBiz repayBiz, Long realWithholdAmount);
 
+    public int repayEarlySuccess(RepayBiz repayBiz, Long realWithholdAmount);
+
 }

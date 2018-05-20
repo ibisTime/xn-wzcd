@@ -18,4 +18,6 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
 
     public int updateRepayBizRestAmount(RepayBiz repayBiz);
 
+    public int updateRepayEarlySuccess(RepayBiz data);
+
 }

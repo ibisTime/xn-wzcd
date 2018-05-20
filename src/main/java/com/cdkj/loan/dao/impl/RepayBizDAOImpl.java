@@ -76,4 +76,9 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
             data);
     }
 
+    @Override
+    public int updateRepayEarlySuccess(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_repayEarlySuccess"), data);
+    }
+
 }

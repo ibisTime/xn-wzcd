@@ -20,6 +20,9 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     public List<RepayPlan> queryRepayPlanList(RepayPlan condition);
 
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
+            String repayBizCode);
+
     public RepayPlan getRepayPlan(String code);
 
     public void genereateNewRapayPlan(RepayBiz repayBiz);

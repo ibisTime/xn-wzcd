@@ -241,4 +241,22 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         return count;
     }
 
+    @Override
+    public int repayEarlySuccess(RepayBiz repayBiz, Long realWithholdAmount) {
+
+        int count = 0;
+
+        if (repayBiz != null && realWithholdAmount != null) {
+            repayBiz.setStatus(ERepayBizStatus.EARLY_REPAYMENT.getCode());
+            repayBiz
+                .setRestAmount(repayBiz.getRestAmount() - realWithholdAmount);
+            repayBiz.setUpdateDatetime(new Date());
+            repayBiz.setRemark("该业务已提前还款，待结清");
+
+            count = repayBizDAO.updateRepayEarlySuccess(repayBiz);
+        }
+
+        return count;
+    }
+
 }
