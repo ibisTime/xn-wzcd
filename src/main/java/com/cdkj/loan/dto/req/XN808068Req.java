@@ -16,17 +16,17 @@ public class XN808068Req extends APageReq {
     private static final long serialVersionUID = 1L;
 
     // 状态
-    private List<String> status;
+    private List<String> statusList;
 
     // 下单人
     private String applyUser;
 
-    public List<String> getStatus() {
-        return status;
+    public List<String> getStatusList() {
+        return statusList;
     }
 
-    public void setStatus(List<String> status) {
-        this.status = status;
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
     }
 
     public String getApplyUser() {
