@@ -3,7 +3,6 @@ package com.cdkj.loan.api.impl;
 import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.IOrderAO;
-import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
@@ -24,9 +23,6 @@ public class XN808068 extends AProcessor {
 
     private IOrderAO orderAO = SpringContextHolder.getBean(IOrderAO.class);
 
-    private IRepayBizAO repayBizAO = SpringContextHolder
-        .getBean(IRepayBizAO.class);
-
     private XN808068Req req = null;
 
     /** 
@@ -34,13 +30,6 @@ public class XN808068 extends AProcessor {
      */
     @Override
     public Object doBusiness() throws BizException {
-
-        if ("repaying".equals(req.getStatus())) {
-
-        }
-        if ("repayed".equals(req.getStatus())) {
-
-        }
 
         Order condition = new Order();
         condition.setApplyUser(req.getApplyUser());
