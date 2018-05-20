@@ -16,6 +16,7 @@ import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.ISYSConfigDAO;
 import com.cdkj.loan.domain.SYSConfig;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -85,7 +86,8 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig>
             if (CollectionUtils.isNotEmpty(sysConfigList)) {
                 sysConfig = sysConfigList.get(0);
             } else {
-                throw new BizException("xn000000", key + "对应记录不存在");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "系统参数" + key + "不存在");
             }
         }
         return sysConfig;

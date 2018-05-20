@@ -12,15 +12,17 @@ import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
+import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.dto.req.XN630511Req;
 import com.cdkj.loan.dto.req.XN630513Req;
-import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ERepayBizStatus;
 import com.cdkj.loan.enums.ERepayBizType;
@@ -47,6 +49,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     @Autowired
     private IOrderAO orderAO;
+
+    @Autowired
+    private ISYSConfigBO sysConfigBO;
 
     // 变更银行卡
     @Override
@@ -140,42 +145,66 @@ public class RepayBizAOImpl implements IRepayBizAO {
         if (!ERepayBizStatus.TO_REPAYMENTS.getCode()
             .equals(repayBiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "改还款业务不处于还款中，请重新选择！！！");
+                "该还款业务不处于还款中，请重新选择！！！");
         }
         // 判断是否逾期
-        RepayPlan repayPlan = new RepayPlan();
-        repayPlan.setRepayBizCode(code);
-        List<RepayPlan> planList = repayPlanBO.queryRepayPlanList(repayPlan);
-        for (RepayPlan repayPlan2 : planList) {
-            if (repayPlan2.getStatus()
-                .equals(ERepayPlanStatus.OVERDUE_TO_HANDLE.getCode())) {
+        List<RepayPlan> planList = repayPlanBO
+            .queryRepayPlanListByRepayBizCode(code);
+        for (RepayPlan repayPlan : planList) {
+            if (!repayPlan.getStatus()
+                .equals(ERepayPlanStatus.TO_REPAYMENTS.getCode())
+                    && !repayPlan.getStatus()
+                        .equals(ERepayPlanStatus.YET_REPAYMENTS.getCode())
+                    && !repayPlan.getStatus()
+                        .equals(ERepayPlanStatus.HESUAN_TO_GREEN.getCode())) {
                 // 逾期处理
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "已逾期，未处理！！！");
+                    "当前有逾期未处理完成的还款计划，不能提前还款！");
             }
         }
-        // 代扣
-        BooleanRes res = daiKou(repayBiz);
-        if (res.equals(false)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "代扣失败！！！");
-        }
-        repayBiz.setStatus(ERepayBizStatus.EARLY_REPAYMENT.getCode());
+
+        // 提前还款服务费
+        Long fwAmount = sysConfigBO.getLongValue(SysConstants.TQ_SERVICE);
+
+        // 代扣总金额
+        Long allAmount = repayBiz.getRestAmount() + fwAmount;
+
+        // 代扣银行卡
+        Bankcard bankcard = bankcardBO.getBankcard(repayBiz.getBankcardCode());
+
+        // 必须扣全部，要么扣成功，要么扣失败，不能扣部分金额
+        Long realWithholdAmount = baofuWithhold(bankcard, allAmount);
+
+        // 更新还款业务
+        repayBizBO.repayEarlySuccess(repayBiz, realWithholdAmount);
+
         // 改变还款计划状态
-        for (RepayPlan repayPlan2 : planList) {
-            repayPlan2.setStatus(ERepayPlanStatus.YET_REPAYMENTS.getCode());
-            repayPlanBO.refreshRepayPlanStatus(repayPlan2);
+        for (RepayPlan repayPlan : planList) {
+            if (!ERepayPlanStatus.TO_REPAYMENTS.getCode()
+                .equals(repayPlan.getStatus())) {
+                continue;
+            }
+            repayPlan.setStatus(ERepayPlanStatus.YET_REPAYMENTS.getCode());
+            repayPlanBO.refreshRepayPlanStatus(repayPlan);
         }
-        repayBiz.setUpdater(updater);
-        repayBiz.setUpdateDatetime(new Date());
-        repayBiz.setRemark(remark);
-        repayBizBO.refreshStatusEarlyRepayment(repayBiz);
+
     }
 
-    private BooleanRes daiKou(RepayBiz repayBiz) {
-        long dkAmount = repayBiz.getFirstRepayAmount()
-                * repayBiz.getRestPeriods();
-        return new BooleanRes(true);
+    private Long baofuWithhold(Bankcard bankcard, Long amount) {
+        Long successAmount = 0L;
+
+        // TODO 宝付代扣逻辑
+
+        successAmount = amount;
+
+        return successAmount;
     }
+
+    // private BooleanRes daiKou(RepayBiz repayBiz) {
+    // long dkAmount = repayBiz.getFirstRepayAmount()
+    // * repayBiz.getRestPeriods();
+    // return new BooleanRes(true);
+    // }
 
     @Override
     public void EnterBlackList(String code, String blackHandleNote,

@@ -20,11 +20,14 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     public List<RepayPlan> queryRepayPlanList(RepayPlan condition);
 
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
+            String repayBizCode);
+
     public RepayPlan getRepayPlan(String code);
 
     public void genereateNewRapayPlan(RepayBiz repayBiz);
 
-    public void repaySuccess(RepayPlan repayPlan, Long payAmount);
+    public void repaySuccess(RepayPlan repayPlan, Long realWithholdAmount);
 
     public boolean checkRepayComplete(String repayBizCode);
 
@@ -35,5 +38,7 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
     public int refreshToGreen(RepayPlan repayPlan);
 
     public int refreshToBlack(RepayPlan repayPlan);
+
+    public void repayPartSuccess(RepayPlan repayPlan, Long realWithholdAmount);
 
 }

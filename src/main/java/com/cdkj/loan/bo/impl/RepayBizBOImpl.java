@@ -169,7 +169,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
-    public void repayCompleteNormal(String repayBizCode) {
+    public void repaySuccessNormal(String repayBizCode) {
 
         RepayBiz repayBiz = new RepayBiz();
         repayBiz.setCode(repayBizCode);
@@ -224,6 +224,38 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     @Override
     public int confirmClose(RepayBiz repayBiz) {
         return repayBizDAO.updateRepayBizStatus(repayBiz);
+    }
+
+    @Override
+    public int refreshRestAmount(RepayBiz repayBiz, Long realWithholdAmount) {
+
+        int count = 0;
+
+        if (repayBiz != null && realWithholdAmount != null) {
+            repayBiz
+                .setRestAmount(repayBiz.getRestAmount() - realWithholdAmount);
+            count = repayBizDAO.updateRepayBizRestAmount(repayBiz);
+        }
+
+        return count;
+    }
+
+    @Override
+    public int repayEarlySuccess(RepayBiz repayBiz, Long realWithholdAmount) {
+
+        int count = 0;
+
+        if (repayBiz != null && realWithholdAmount != null) {
+            repayBiz.setStatus(ERepayBizStatus.EARLY_REPAYMENT.getCode());
+            repayBiz
+                .setRestAmount(repayBiz.getRestAmount() - realWithholdAmount);
+            repayBiz.setUpdateDatetime(new Date());
+            repayBiz.setRemark("该业务已提前还款，待结清");
+
+            count = repayBizDAO.updateRepayEarlySuccess(repayBiz);
+        }
+
+        return count;
     }
 
 }

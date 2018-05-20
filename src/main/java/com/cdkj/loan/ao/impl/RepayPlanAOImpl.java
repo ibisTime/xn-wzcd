@@ -23,8 +23,10 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Account;
+import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.domain.Cost;
 import com.cdkj.loan.domain.RemindLog;
+import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN630532Req;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -139,10 +141,14 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     }
 
     @Override
+    @Transactional
     public void repayMonthly(String code) {
 
         // 查询还款计划
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
+
+        // 查询还款业务
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
 
         // 校验是否是可还款状态
         if (!ERepayPlanStatus.TO_REPAYMENTS.getCode()
@@ -158,20 +164,64 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
                 "本期之前您还有未还款的计划");
         }
 
-        // TODO 发起宝付代扣
-        Long payAmount = repayPlan.getRepayCapital()
-                + repayPlan.getRepayInterest() + repayPlan.getOverdueAmount();
+        // 本次应扣款的金额
+        Long shouldWithholdAmount = repayPlan.getOverplusAmount();
 
-        // 支付成功，更新还款计划
-        repayPlanBO.repaySuccess(repayPlan, payAmount);
+        // 还款卡获取
+        Bankcard bankcard = bankcardBO.getBankcard(repayBiz.getBankcardCode());
 
+        // 宝付代扣发起，返回本次真实扣成功的金额
+        Long realWithholdAmount = baofuWithhold(bankcard, shouldWithholdAmount);
+
+        // 该还款计划本次代扣完成后剩余应还金额
+        Long overplusAmount = shouldWithholdAmount - realWithholdAmount;
+
+        if (overplusAmount <= 0) {// 本次计划还清了
+
+            repayAll(repayPlan, repayBiz, realWithholdAmount);
+
+        } else { // 扣了一部分
+
+            repayPart(repayPlan, repayBiz, realWithholdAmount);
+
+        }
+
+    }
+
+    private void repayPart(RepayPlan repayPlan, RepayBiz repayBiz,
+            Long realWithholdAmount) {
+        // 还剩多少 付了多少
+        // 1、更新本次还款计划的剩余应还款金额和已支付金额
+        repayPlanBO.repayPartSuccess(repayPlan, realWithholdAmount);
+
+        // 2、更新还款业务的剩余总额
+        repayBizBO.refreshRestAmount(repayBiz, realWithholdAmount);
+    }
+
+    private void repayAll(RepayPlan repayPlan, RepayBiz repayBiz,
+            Long realWithholdAmount) {
+        // 更新还款计划
+        repayPlanBO.repaySuccess(repayPlan, realWithholdAmount);
+
+        // 更新还款业务剩余金额
+        repayBizBO.refreshRestAmount(repayBiz, realWithholdAmount);
+
+        // 检查是否已经全部正常还款
+        if (repayPlanBO.checkRepayComplete(repayPlan.getRepayBizCode())) {
+            repayBizBO.repaySuccessNormal(repayPlan.getRepayBizCode());
+        }
+
+        // 增加信用分
+        addCreditScore(repayPlan, repayBiz);
+    }
+
+    private void addCreditScore(RepayPlan repayPlan, RepayBiz repayBiz) {
         // 加信用分
-
         Account account = accountBO.getAccountByUser(repayPlan.getUserId(),
             ECurrency.XYF.getCode());
+
         // 判断是汽车还是商品
-        String refType = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode())
-            .getRefType();
+        String refType = repayBiz.getRefType();
         BigDecimal changeScore = null;
         if (refType.equals(ERepayBizType.CAR.getCode())) {
             changeScore = sysConfigBO
@@ -182,12 +232,15 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         }
         creditscoreBO.changeCreditscore(account, changeScore,
             repayPlan.getCode(), "按月正常还款");
+    }
 
-        // 检查是否已经全部正常还款
-        if (repayPlanBO.checkRepayComplete(repayPlan.getRepayBizCode())) {
-            repayBizBO.repayCompleteNormal(repayPlan.getRepayBizCode());
-        }
+    private Long baofuWithhold(Bankcard bankcard, Long amount) {
+        Long successAmount = 0L;
 
+        // TODO 宝付代扣逻辑
+        successAmount = amount;
+
+        return successAmount;
     }
 
     // 当月还款名单

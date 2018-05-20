@@ -75,6 +75,14 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
     }
 
     @Override
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
+            String repayBizCode) {
+        RepayPlan condition = new RepayPlan();
+        condition.setRepayBizCode(repayBizCode);
+        return repayPlanDAO.selectList(condition);
+    }
+
+    @Override
     public RepayPlan getRepayPlan(String code) {
         RepayPlan data = null;
         if (StringUtils.isNotBlank(code)) {
@@ -120,10 +128,11 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             repayPlan.setRepayCapital(repayCapital);
             repayPlan.setRepayInterest(0L);
             repayPlan.setPayedAmount(0L);
-            long r = repayPlan.getRepayCapital() + repayPlan.getRepayInterest();
-            long p = repayPlan.getPeriods() - repayPlan.getCurPeriods();
-            long overplusAmount = p * r;
-            repayPlan.setOverplusAmount(overplusAmount);
+
+            // 每期应还金额
+            long shouldRepayAmount = repayPlan.getRepayCapital()
+                    + repayPlan.getRepayInterest();
+            repayPlan.setOverplusAmount(shouldRepayAmount);
 
             repayPlan.setOverdueAmount(0L);
             repayPlan.setStatus(ERepayBizStatus.TO_REPAYMENTS.getCode());
@@ -141,13 +150,30 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
     }
 
     @Override
-    public void repaySuccess(RepayPlan repayPlan, Long payAmount) {
+    public void repaySuccess(RepayPlan repayPlan, Long realWithholdAmount) {
 
-        repayPlan.setPayedAmount(payAmount);
+        repayPlan
+            .setPayedAmount(repayPlan.getPayedAmount() + realWithholdAmount);
+
+        repayPlan.setOverplusAmount(
+            repayPlan.getOverplusAmount() - realWithholdAmount);
+
         repayPlan.setStatus(ERepayBizStatus.YET_REPAYMENTS.getCode());
 
         repayPlanDAO.repaySuccess(repayPlan);
 
+    }
+
+    @Override
+    public void repayPartSuccess(RepayPlan repayPlan, Long realWithholdAmount) {
+
+        repayPlan
+            .setPayedAmount(repayPlan.getPayedAmount() + realWithholdAmount);
+
+        repayPlan.setOverplusAmount(
+            repayPlan.getOverplusAmount() - realWithholdAmount);
+
+        repayPlanDAO.repayPartSuccess(repayPlan);
     }
 
     /**

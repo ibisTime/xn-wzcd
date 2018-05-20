@@ -22,7 +22,7 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     public RepayBiz genereateNewCarLoanRepayBiz(LoanOrder data, String userId,
             String bankcardCode);
 
-    public void repayCompleteNormal(String repayBizCode);
+    public void repaySuccessNormal(String repayBizCode);
 
     public RepayBiz genereateNewProductLoanRepayBiz(Order order);
 
@@ -31,5 +31,9 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     public int refreshRepayBizStatus(RepayBiz repayBiz);
 
     public int confirmClose(RepayBiz repayBiz);
+
+    public int refreshRestAmount(RepayBiz repayBiz, Long realWithholdAmount);
+
+    public int repayEarlySuccess(RepayBiz repayBiz, Long realWithholdAmount);
 
 }

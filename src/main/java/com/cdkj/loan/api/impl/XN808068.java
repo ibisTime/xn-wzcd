@@ -33,7 +33,6 @@ public class XN808068 extends AProcessor {
 
         Order condition = new Order();
         condition.setApplyUser(req.getApplyUser());
-        condition.setStatusList(req.getStatusList());
         condition.setFrontStatus("1");// 前端过滤已删除订单
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getCreateDatetimeStart(), DateUtil.DATA_TIME_PATTERN_1));

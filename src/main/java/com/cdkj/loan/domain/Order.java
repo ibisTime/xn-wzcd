@@ -144,6 +144,9 @@ public class Order extends ABaseDO {
     // 订单产品详情列表
     List<ProductOrder> productOrderList;
 
+    // 还款业务列表
+    List<RepayBiz> repayBizList;
+
     // 下单人
     private User user;
 
@@ -550,6 +553,14 @@ public class Order extends ABaseDO {
 
     public void setBankRate(double bankRate) {
         this.bankRate = bankRate;
+    }
+
+    public List<RepayBiz> getRepayBizList() {
+        return repayBizList;
+    }
+
+    public void setRepayBizList(List<RepayBiz> repayBizList) {
+        this.repayBizList = repayBizList;
     }
 
 }
