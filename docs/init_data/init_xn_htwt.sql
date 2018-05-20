@@ -1,4 +1,9 @@
 
+/* 首页导航 */
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201711271342486662078','banner1','2','','FpqRhLEfxuaHgpXuv6fVUZfLPbjV','1','0',1,'1','0','','1','CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201711271344255452496','banner2','2','','Fu7iYb62hGIeXCwX1JhsPkygoSC9','1','0',2,'1','0','','1','CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201711271344255452497','banner3','2','','FjBmqZAnp0H25x5eYOclk70iI-tW','1','0',3,'1','0','','1','CD-HTWT000020','CD-HTWT000020');
+
 /* 最高权限用户admin */
 INSERT INTO `tsys_user` (`user_id`,`type`,`photo`,`login_name`,`mobile`,`login_pwd`,`login_pwd_strength`,`create_datetme`,`role_code`,`updater`,`update_datetime`,`status`,`remark`) VALUES ('USYS201800000000001','P',NULL,'admin',NULL,'21218cca77804d2ba1922c33e0151105','1',now(),'RO201800000000000001','admin',now(),'0','超级用户');
 
