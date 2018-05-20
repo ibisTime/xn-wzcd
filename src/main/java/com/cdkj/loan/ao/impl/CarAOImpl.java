@@ -25,21 +25,25 @@ public class CarAOImpl implements ICarAO {
     @Override
     public String addCar(XN630420Req req) {
         Car car = new Car();
+
         car.setName(req.getName());
         car.setSeriesCode(req.getSeriesCode());
         car.setSeriesName(req.getSeriesName());
         car.setBrandCode(req.getBrandCode());
         car.setBrandName(req.getBrandName());
+
         car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
         car.setSalePrice(StringValidater.toLong(req.getSalePrice()));
+        car.setSfAmount(StringValidater.toLong(req.getSfAmount()));
         car.setSlogan(req.getSlogan());
         car.setAdvPic(req.getAdvPic());
+
         car.setPic(req.getPic());
         car.setDescription(req.getDescription());
-
         car.setStatus(EBrandStatus.TO_UP.getCode());
         car.setUpdater(req.getUpdater());
         car.setUpdateDatetime(new Date());
+
         car.setRemark(req.getRemark());
         return carBO.saveCar(car);
     }
@@ -57,6 +61,7 @@ public class CarAOImpl implements ICarAO {
         car.setBrandName(req.getBrandName());
         car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
         car.setSalePrice(StringValidater.toLong(req.getSalePrice()));
+        car.setSfAmount(StringValidater.toLong(req.getSfAmount()));
         car.setSlogan(req.getSlogan());
         car.setAdvPic(req.getAdvPic());
         car.setPic(req.getPic());
