@@ -25,6 +25,7 @@ public class XN630520 extends AProcessor {
         RepayBiz condition = new RepayBiz();
         condition.setCode(req.getCode());
         condition.setUserId(req.getUserId());
+        condition.setRefType(req.getRefType());
         condition.setStatus(req.getStatus());
 
         String orderColumn = req.getOrderColumn();
