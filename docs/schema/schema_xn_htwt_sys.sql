@@ -1,14 +1,15 @@
 /*系统*/
 CREATE TABLE `tsys_user` (
   `user_id` varchar(32) NOT NULL COMMENT '用户ID',
+  `type` varchar(4) DEFAULT NULL COMMENT '类型',
   `photo` varchar(255) DEFAULT NULL COMMENT '头像',
   `login_name` varchar(64) DEFAULT NULL COMMENT '登录名',
   `mobile` varchar(16) DEFAULT NULL COMMENT '手机号',
-  `login_pwd` varbinary(32) DEFAULT NULL COMMENT '登录密码',
+  `login_pwd` varchar(32) DEFAULT NULL COMMENT '登录密码',
   `login_pwd_strength` char(1) DEFAULT NULL COMMENT '登录密码强度',
   `create_datetme` datetime DEFAULT NULL COMMENT '注册时间',
   `role_code` varchar(32) DEFAULT NULL COMMENT '角色编号',
-  `updater` varbinary(32) DEFAULT NULL COMMENT '更新人',
+  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
   `status` varchar(4) DEFAULT NULL COMMENT '状态',
   `remark` text COMMENT '备注',
