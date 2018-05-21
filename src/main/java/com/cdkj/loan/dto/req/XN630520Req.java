@@ -8,6 +8,8 @@ public class XN630520Req extends APageReq {
 
     private String userId;// 用户编号
 
+    private String refType;// 关联类型
+
     private String status;// 状态
 
     public String getCode() {
@@ -24,6 +26,14 @@ public class XN630520Req extends APageReq {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getRefType() {
+        return refType;
+    }
+
+    public void setRefType(String refType) {
+        this.refType = refType;
     }
 
     public String getStatus() {

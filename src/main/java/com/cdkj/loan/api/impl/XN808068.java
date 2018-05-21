@@ -38,6 +38,7 @@ public class XN808068 extends AProcessor {
             req.getCreateDatetimeStart(), DateUtil.DATA_TIME_PATTERN_1));
         condition.setApplyDatetimeEnd(DateUtil.strToDate(
             req.getCreateDatetimeEnd(), DateUtil.DATA_TIME_PATTERN_1));
+        condition.setStatusList(req.getStatusList());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IOrderAO.DEFAULT_ORDER_COLUMN;

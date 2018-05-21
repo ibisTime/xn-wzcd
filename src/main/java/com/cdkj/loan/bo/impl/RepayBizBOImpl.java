@@ -90,9 +90,6 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setLyDeposit(loanOrder.getLyDeposit());
         repayBiz.setCutLyDeposit(0L);
         repayBiz.setStatus(ERepayPlanStatus.TO_REPAYMENTS.getCode());
-        // Long monthAmount = loanOrder.getMonthAmount();
-        // int periods = loanOrder.getPeriods();
-        // long amount = monthAmount * (long) (periods - 1);
         repayBiz.setRestAmount(loanOrder.getLoanAmount());
         repayBiz.setRestTotalCost(0L);
 

@@ -90,7 +90,7 @@ public class CarOrderAOImpl implements ICarOrderAO {
     public List<CarOrder> queryCarOrderList(CarOrder condition) {
         List<CarOrder> carOrderList = carOrderBO.queryCarOrder(condition);
         for (CarOrder carOrder : carOrderList) {
-            Car car = carBO.getCar(condition.getCarCode());
+            Car car = carBO.getCar(carOrder.getCarCode());
             carOrder.setCar(car);
         }
         return carOrderList;
