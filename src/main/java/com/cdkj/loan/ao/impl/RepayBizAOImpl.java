@@ -230,12 +230,19 @@ public class RepayBizAOImpl implements IRepayBizAO {
     public void confirmClose(XN630513Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         if (!ERepayBizStatus.YET_REPAYMENTS.getCode()
-            .equals(repayBiz.getStatus())) {
+            .equals(repayBiz.getStatus())
+                || !ERepayBizStatus.EARLY_REPAYMENT.getCode()
+                    .equals(repayBiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "状态不是正常已还款，不能确认结清！！！");
+                "状态不是正常已还款或提前还款，不能确认结清！！！");
         }
         repayBiz.setCutLyDeposit(StringValidater.toLong(req.getCutLyDeposit()));
-        repayBiz.setStatus(ERepayBizStatus.YET_CLEARANCE.getCode());
+        if (repayBiz.getStatus()
+            .equals(ERepayBizStatus.TO_REPAYMENTS.getCode())) {
+            repayBiz.setStatus(ERepayBizStatus.YET_CLEARANCE.getCode());
+        } else {
+            repayBiz.setStatus(ERepayBizStatus.YET_EARLY_CLEARANCE.getCode());
+        }
         repayBiz.setCloseAttach(req.getCloseAttach());
         repayBiz.setCloseDatetime(new Date());
         repayBiz.setUpdater(req.getUpdater());
