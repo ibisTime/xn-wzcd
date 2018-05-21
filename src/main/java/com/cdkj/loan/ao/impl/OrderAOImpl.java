@@ -151,7 +151,7 @@ public class OrderAOImpl implements IOrderAO {
             .generate(EGeneratePrefix.ORDER.getCode());
 
         // 落地订单产品关联信息
-        productOrderBO.saveProductOrder(code, productSpecs, quantity);
+        productOrderBO.saveProductOrder(code, product, productSpecs, quantity);
 
         order.setCode(code);
         order.setBankcardCode(req.getBankcardCode());

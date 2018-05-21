@@ -7,6 +7,7 @@ import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN630543Req;
+import com.cdkj.loan.enums.ERepayPlanStatus;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -28,7 +29,7 @@ public class XN630543 extends AProcessor {
     public Object doBusiness() throws BizException {
         RepayPlan condition = new RepayPlan();
         condition.setUserId(req.getUserId());
-
+        condition.setStatus(ERepayPlanStatus.TO_REPAYMENTS.getCode());
         condition.setOrder("cur_periods", true);
 
         int start = StringValidater.toInteger(req.getStart());

@@ -90,10 +90,10 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setLyDeposit(loanOrder.getLyDeposit());
         repayBiz.setCutLyDeposit(0L);
         repayBiz.setStatus(ERepayPlanStatus.TO_REPAYMENTS.getCode());
-        Long monthAmount = loanOrder.getMonthAmount();
-        int periods = loanOrder.getPeriods();
-        long amount = monthAmount * (long) (periods - 1);
-        repayBiz.setRestAmount(amount);
+        // Long monthAmount = loanOrder.getMonthAmount();
+        // int periods = loanOrder.getPeriods();
+        // long amount = monthAmount * (long) (periods - 1);
+        repayBiz.setRestAmount(loanOrder.getLoanAmount());
         repayBiz.setRestTotalCost(0L);
 
         repayBiz.setTotalInDeposit(0L);
@@ -250,8 +250,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
         if (repayBiz != null && realWithholdAmount != null) {
             repayBiz.setStatus(ERepayBizStatus.EARLY_REPAYMENT.getCode());
-            repayBiz
-                .setRestAmount(repayBiz.getRestAmount() - realWithholdAmount);
+            repayBiz.setRestAmount(0L);
             repayBiz.setUpdateDatetime(new Date());
             repayBiz.setRemark("该业务已提前还款，待结清");
 

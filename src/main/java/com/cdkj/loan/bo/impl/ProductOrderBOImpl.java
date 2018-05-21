@@ -18,6 +18,7 @@ import com.cdkj.loan.bo.IProductOrderBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IProductOrderDAO;
+import com.cdkj.loan.domain.Product;
 import com.cdkj.loan.domain.ProductOrder;
 import com.cdkj.loan.domain.ProductSpecs;
 import com.cdkj.loan.enums.EGeneratePrefix;
@@ -36,14 +37,14 @@ public class ProductOrderBOImpl extends PaginableBOImpl<ProductOrder>
     private IProductOrderDAO productOrderDAO;
 
     @Override
-    public String saveProductOrder(String orderCode, ProductSpecs productSpecs,
-            Integer quantity) {
+    public String saveProductOrder(String orderCode, Product product,
+            ProductSpecs productSpecs, Integer quantity) {
         ProductOrder productOrder = new ProductOrder();
         productOrder.setCode(
             OrderNoGenerater.generate(EGeneratePrefix.PRODUCT_ORDER.getCode()));
         productOrder.setOrderCode(orderCode);
-        productOrder.setProductCode(productSpecs.getProductCode());
-        productOrder.setProductName(productSpecs.getName());
+        productOrder.setProductCode(product.getCode());
+        productOrder.setProductName(product.getName());
         productOrder.setProductSpecsCode(productSpecs.getCode());
         productOrder.setProductSpecsName(productSpecs.getName());
         productOrder.setQuantity(quantity);
