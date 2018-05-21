@@ -231,7 +231,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         if (!ERepayBizStatus.YET_REPAYMENTS.getCode()
             .equals(repayBiz.getStatus())
-                || !ERepayBizStatus.EARLY_REPAYMENT.getCode()
+                && !ERepayBizStatus.EARLY_REPAYMENT.getCode()
                     .equals(repayBiz.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "状态不是正常已还款或提前还款，不能确认结清！！！");
