@@ -1,5 +1,33 @@
+/*请款预算单*/
+DROP TABLE IF EXISTS `tdq_req_budget`;
+CREATE TABLE `tdq_req_budget` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `company_code` varchar(32) DEFAULT NULL COMMENT '业务公司编号',
+  `receipt_bank` varchar(255) DEFAULT NULL COMMENT '收款银行',
+  `receipt_account` varchar(255) DEFAULT NULL COMMENT '收款账号',
+  `budget_amount` bigint(20) DEFAULT NULL COMMENT '预算金额',
+  `use_datetime` datetime DEFAULT NULL COMMENT '用款日期',
+  `finance_check_note` text COMMENT '财务审核说明',
+  `pay_amount` bigint(255) DEFAULT NULL COMMENT '打款金额',
+  `pay_bank` varchar(255) DEFAULT NULL COMMENT '打款银行',
+  `pay_account` varchar(255) DEFAULT NULL COMMENT '打款账号',
+  `water_bill` varchar(255) DEFAULT NULL COMMENT '水单',
+  `pay_datetime` datetime DEFAULT NULL COMMENT '打款时间',
+  `pay_remark` text COMMENT '打款备注',
+  `dz_amount` varchar(255) DEFAULT NULL COMMENT '垫资总额',
+  `dz_datetime` datetime DEFAULT NULL COMMENT '垫资日期',
+  `collection_bank` varchar(255) DEFAULT NULL COMMENT '收回款银行',
+  `collection_amount` bigint(20) DEFAULT NULL COMMENT '收回款金额',
+  `collection_account` varchar(255) DEFAULT NULL COMMENT '收回款账号',
+  `collection_datetime` datetime DEFAULT NULL COMMENT '收回款日期',
+  `collection_remark` text COMMENT '收回款备注',
+  `node_code` varchar(32) DEFAULT NULL COMMENT '节点编号',
+  PRIMARY KEY (`code`) COMMENT '请款预算单'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*预算单表*/
-CREATE TABLE `twz_budget` (
+DROP TABLE IF EXISTS `tdq_budget_order`;
+CREATE TABLE `tdq_budget_order` (
   `code` varchar(32) NOT NULL COMMENT '预算单编号',
   `loan_type` varchar(4) DEFAULT NULL COMMENT '客户类型',
   `loan_name` varchar(32) DEFAULT NULL COMMENT '客户姓名',
@@ -155,7 +183,8 @@ CREATE TABLE `twz_budget` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*征信表*/
-CREATE TABLE `twz_credit` (
+DROP TABLE IF EXISTS `tdq_credit`;
+CREATE TABLE `tdq_credit` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `budget_code` varchar(32) DEFAULT NULL COMMENT '预算单编号',
   `company_code` varchar(32) DEFAULT NULL COMMENT '业务公司',
@@ -173,7 +202,8 @@ CREATE TABLE `twz_credit` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*征信人员表*/
-CREATE TABLE `twz_credit_user` (
+DROP TABLE IF EXISTS `tdq_credit_user`;
+CREATE TABLE `tdq_credit_user` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `credit_code` varchar(32) DEFAULT NULL COMMENT '征信业务编号',
   `loan_role` varchar(64) DEFAULT NULL COMMENT '贷款角色',
@@ -188,43 +218,5 @@ CREATE TABLE `twz_credit_user` (
   `interview_pic` varchar(255) DEFAULT NULL COMMENT '面签照片',
   `bank_result` varchar(32) DEFAULT NULL COMMENT '银行查询结果',
   `court_result` varchar(32) DEFAULT NULL COMMENT '法院网查询结果',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*请款预算单表*/
-CREATE TABLE `twz_request_budget` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `company_code` varchar(32) DEFAULT NULL COMMENT '业务公司编号',
-  `receipt_bank` varchar(255) DEFAULT NULL COMMENT '收款银行',
-  `receipt_account` varchar(255) DEFAULT NULL COMMENT '收款账号',
-  `budget_amount` bigint(20) DEFAULT NULL COMMENT '预算金额',
-  `use_datetime` datetime DEFAULT NULL COMMENT '用款日期',
-  `finance_check_note` text COMMENT '财务审核说明',
-  `pay_datetime` datetime DEFAULT NULL COMMENT '打款时间',
-  `pay_bank` varchar(255) DEFAULT NULL COMMENT '打款银行',
-  `pay_account` varchar(255) DEFAULT NULL COMMENT '打款账号',
-  `water_bill` varchar(255) DEFAULT NULL COMMENT '水单',
-  `pay_remark` text COMMENT '打款备注',
-  `apply_user` varchar(255) DEFAULT NULL COMMENT '申请人',
-  `apply_datetime` datetime DEFAULT NULL COMMENT '申请日期',
-  `status` varchar(4) DEFAULT NULL COMMENT '办理状态',
-  `pay_amount` bigint(255) DEFAULT NULL COMMENT '打款金额',
-  `dz_amount` varchar(255) DEFAULT NULL COMMENT '垫资总额',
-  `dz_datetime` datetime DEFAULT NULL COMMENT '垫资日期',
-  `collection_bank` varchar(255) DEFAULT NULL COMMENT '收回款银行',
-  `collection_account` varchar(255) DEFAULT NULL COMMENT '收回款账号',
-  `collection_datetime` datetime DEFAULT NULL COMMENT '收回款日期',
-  `collection_remark` text COMMENT '收回款备注',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*流程配置表*/
-CREATE TABLE `twz_node` (
-  `code` varchar(32) NOT NULL DEFAULT '节点编号',
-  `type` varchar(4) DEFAULT '类型',
-  `name` varchar(32) DEFAULT '节点名称',
-  `next_node` varchar(32) DEFAULT '下一个节点',
-  `back_node` varchar(32) DEFAULT '返回节点',
-  `remark` varchar(255) DEFAULT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
