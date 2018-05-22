@@ -104,10 +104,8 @@ CREATE TABLE `tsys_department` (
   `updater` VARCHAR(32) NULL COMMENT '更新人',
   `update_datetime` DATETIME NULL COMMENT '更新时间',
   `remark` VARCHAR(255) NULL COMMENT '备注',
-  PRIMARY KEY (`code`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COMMENT = '部门表';
+  PRIMARY KEY (`code`)  COMMENT '部门表'
+)  ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
 
 /*节点表*/
 DROP TABLE IF EXISTS `tsys_node`;
@@ -118,7 +116,7 @@ CREATE TABLE `tsys_node` (
     `next_node` VARCHAR(32) DEFAULT NULL COMMENT '下一个节点',
     `back_node` VARCHAR(32) DEFAULT NULL COMMENT '返回节点',
     `remark` VARCHAR(255) DEFAULT NULL COMMENT '备注',
-    PRIMARY KEY (`code`) COMMENT '节点'
+    PRIMARY KEY (`code`) COMMENT '流程配置'
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8;
 
 /*角色节点表*/
@@ -143,11 +141,16 @@ CREATE TABLE `tsys_biz_log` (
   `status` varchar(32) NOT NULL COMMENT '状态(0 待处理 1 已完成)',
   `operate_role` varchar(32) NOT NULL COMMENT '操作角色',
   `operator` varchar(32) NOT NULL COMMENT '操作人',
-  `operater_name` varchar(32) NULL COMMENT '操作人姓名',
+  `operator_name` varchar(32) NULL COMMENT '操作人姓名',
   
   `operator_mobile` varchar(32) NULL COMMENT '操作人手机号',
   `start_datetime` datetime NOT NULL COMMENT '操作开始时间',
-  `start_datetime` datetime  NULL COMMENT '操作结束时间',
+  `end_datetime` datetime  NULL COMMENT '操作结束时间',
   `speed_time` int(11) NULL COMMENT '花费时间(单位：秒)',
   PRIMARY KEY (`id`) COMMENT '业务日志跟踪表'
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8;
+
+
+
+
+
