@@ -217,3 +217,31 @@ CREATE TABLE `twz_request_budget` (
   `collection_remark` text COMMENT '收回款备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*流程配置表*/
+CREATE TABLE `twz_node` (
+  `code` varchar(32) NOT NULL DEFAULT '节点编号',
+  `type` varchar(4) DEFAULT '类型',
+  `name` varchar(32) DEFAULT '节点名称',
+  `next_node` varchar(32) DEFAULT '下一个节点',
+  `back_node` varchar(32) DEFAULT '返回节点',
+  `remark` varchar(255) DEFAULT '备注',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*部门表*/
+CREATE TABLE `dev_wzcd`.`twz_department` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `name` VARCHAR(45) NULL COMMENT '部门名称',
+  `lead_name` VARCHAR(45) NULL COMMENT '负责人',
+  `mobile` INT NULL COMMENT '负责人手机号',
+  `parent_code` VARCHAR(32) NULL COMMENT '上级部门编号',
+  `status` VARCHAR(4) NULL COMMENT '状态',
+  `updater` VARCHAR(45) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '部门表';
+
