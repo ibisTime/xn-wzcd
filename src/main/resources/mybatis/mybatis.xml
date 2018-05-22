@@ -28,6 +28,7 @@
 		<typeAlias alias="sysMenuRole" type="com.cdkj.loan.domain.SYSMenuRole" />
 		<typeAlias alias="sysDict" type="com.cdkj.loan.domain.SYSDict" />
 		<typeAlias alias="sysConfig" type="com.cdkj.loan.domain.SYSConfig" />
+		<typeAlias alias="department" type="com.cdkj.loan.domain.Department" />
 
         <!-- 车贷意向  -->
 		<typeAlias alias="brand" type="com.cdkj.loan.domain.Brand" />

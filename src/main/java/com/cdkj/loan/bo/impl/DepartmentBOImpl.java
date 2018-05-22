@@ -19,7 +19,7 @@ public class DepartmentBOImpl extends PaginableBOImpl<Department>
         implements IDepartmentBO {
 
     @Autowired
-    private IDepartmentDAO DepartmentDAO;
+    private IDepartmentDAO departmentDAO;
 
     public String saveDepartment(Department data) {
         String code = null;
@@ -27,34 +27,28 @@ public class DepartmentBOImpl extends PaginableBOImpl<Department>
             code = OrderNoGenerater
                 .generate(EGeneratePrefix.DEPARTMENT.getCode());
             data.setCode(code);
-            DepartmentDAO.insert(data);
+            departmentDAO.insert(data);
         }
         return code;
     }
 
     @Override
-    public int removeDepartment(String code) {
-        int count = 0;
-        if (StringUtils.isNotBlank(code)) {
-            Department data = new Department();
-            data.setCode(code);
-            count = DepartmentDAO.delete(data);
-        }
-        return count;
+    public int refreshStatus(Department data) {
+        return departmentDAO.updateStatus(data);
     }
 
     @Override
     public int refreshDepartment(Department data) {
         int count = 0;
         if (StringUtils.isNotBlank(data.getCode())) {
-            count = DepartmentDAO.update(data);
+            count = departmentDAO.update(data);
         }
         return count;
     }
 
     @Override
     public List<Department> queryDepartmentList(Department condition) {
-        return DepartmentDAO.selectList(condition);
+        return departmentDAO.selectList(condition);
     }
 
     @Override
@@ -63,7 +57,7 @@ public class DepartmentBOImpl extends PaginableBOImpl<Department>
         if (StringUtils.isNotBlank(code)) {
             Department condition = new Department();
             condition.setCode(code);
-            data = DepartmentDAO.select(condition);
+            data = departmentDAO.select(condition);
             if (data == null) {
                 throw new BizException("xn0000", "�� ��Ų�����");
             }

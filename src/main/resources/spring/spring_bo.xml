@@ -136,6 +136,10 @@
 		<property name="paginableDAO" ref="bankcardDAOImpl"/>
 	</bean>
 	
+	<bean id="departmentBO" class="com.cdkj.loan.bo.impl.DepartmentBOImpl">
+		<property name="paginableDAO" ref="departmentDAOImpl"/>
+	</bean>
+	
 	<bean id="channelBankBO" class="com.cdkj.loan.bo.impl.ChannelBankBOImpl">
 		<property name="paginableDAO" ref="channelBankDAOImpl"/>
 	</bean>

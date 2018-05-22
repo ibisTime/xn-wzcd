@@ -8,4 +8,6 @@ public interface IDepartmentDAO extends IBaseDAO<Department> {
     String NAMESPACE = IDepartmentDAO.class.getName().concat(".");
 
     int update(Department data);
+
+    int updateStatus(Department data);
 }

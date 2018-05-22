@@ -1,41 +1,28 @@
-package com.cdkj.loan.domain;
+package com.cdkj.loan.dto.req;
 
-import java.util.Date;
+import org.hibernate.validator.constraints.NotBlank;
 
-import com.cdkj.loan.dao.base.ABaseDO;
+public class XN630102Req {
 
-public class Department extends ABaseDO {
-    private static final long serialVersionUID = 682677933434404190L;
-
+    @NotBlank
     private String code;// 编号
 
+    @NotBlank
     private String name;// 部门名称
 
+    @NotBlank
     private String leadName;// 负责人
 
+    @NotBlank
     private String mobile;// 负责人手机号
 
+    @NotBlank
     private String parentCode;// 上级部门编号
 
-    private String status;// 状态
-
+    @NotBlank
     private String updater;// 更新人
 
-    private Date updateDatetime;// 更新时间
-
     private String remark;// 备注
-
-    /*-----------辅助字段------------*/
-
-    private String keyword;// 关键字
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
 
     public String getCode() {
         return code;
@@ -77,28 +64,12 @@ public class Department extends ABaseDO {
         this.parentCode = parentCode;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getUpdater() {
         return updater;
     }
 
     public void setUpdater(String updater) {
         this.updater = updater;
-    }
-
-    public Date getUpdateDatetime() {
-        return updateDatetime;
-    }
-
-    public void setUpdateDatetime(Date updateDatetime) {
-        this.updateDatetime = updateDatetime;
     }
 
     public String getRemark() {

@@ -5,25 +5,16 @@ import java.util.List;
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.Department;
 
-
-
-
 public interface IDepartmentBO extends IPaginableBO<Department> {
 
+    public String saveDepartment(Department data);
 
-	public String saveDepartment(Department data);
+    public int refreshStatus(Department data);
 
+    public int refreshDepartment(Department data);
 
-	public int removeDepartment(String code);
+    public List<Department> queryDepartmentList(Department condition);
 
-
-	public int refreshDepartment(Department data);
-
-
-	public List<Department> queryDepartmentList(Department condition);
-
-
-	public Department getDepartment(String code);
-
+    public Department getDepartment(String code);
 
 }
