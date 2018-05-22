@@ -9,24 +9,22 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "Bankcard";
+    private static String key = "Department";
 
     // 实体名称
-    private static String keyName = "银行卡";
+    private static String keyName = "部门表";
 
     // 包路径
-    private static String packge = "com.cdkj.htwt.";
+    private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tht_bankcard";
+    private static String dbname = "twz_department";
 
-    private static String[] DBwords = { "code", "user_id", "real_name",
-            "bank_code", "bank_name", "subbranch", "bankcard_number",
-            "create_datetime", "status", "updater", "update_datetime",
-            "remark" };
+    private static String[] DBwords = { "code", "name", "lead_name", "mobile",
+            "parent_code", "status", "updater", "update_datetime", "remark" };
 
-    private static String[] DBwordsName = { "编号", "用户编号", "户名", "银行行别", "银行名称",
-            "开户支行", "银行卡号", "创建时间", "状态", "更新人", "更新时间", "备注" };
+    private static String[] DBwordsName = { "编号", "部门名称", "负责人", "负责人手机号",
+            "上级部门编号", "状态", "更新人", "更新时间", "备注" };
 
     private static String[] DOwords = getDOwords();
 
