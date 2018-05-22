@@ -9,22 +9,22 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "Department";
+    private static String key = "SYSNode";
 
     // 实体名称
-    private static String keyName = "部门表";
+    private static String keyName = "流程配置表";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "twz_department";
+    private static String dbname = "tsys_node";
 
-    private static String[] DBwords = { "code", "name", "lead_name", "mobile",
-            "parent_code", "status", "updater", "update_datetime", "remark" };
+    private static String[] DBwords = { "code", " name", "type", "next_node",
+            "back_node", "remark" };
 
-    private static String[] DBwordsName = { "编号", "部门名称", "负责人", "负责人手机号",
-            "上级部门编号", "状态", "更新人", "更新时间", "备注" };
+    private static String[] DBwordsName = { "节点编号", "节点名称", "类型", "下一个节点",
+            "返回节点", "备注" };
 
     private static String[] DOwords = getDOwords();
 

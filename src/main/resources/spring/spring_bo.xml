@@ -144,4 +144,8 @@
 		<property name="paginableDAO" ref="channelBankDAOImpl"/>
 	</bean>
 	
+	<bean id="reqBudgetBO" class="com.cdkj.loan.bo.impl.ReqBudgetBOImpl">
+		<property name="paginableDAO" ref="reqBudgetDAOImpl"/>
+	</bean>
+	
 </beans>

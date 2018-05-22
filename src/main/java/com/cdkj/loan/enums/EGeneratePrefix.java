@@ -22,7 +22,7 @@ public enum EGeneratePrefix {
             "DD", "订单"), PRODUCT_ORDER("CD",
                     "产品订单"), PAY_GROUP("PG", "支付组号"), BANKCARD("CD", "银行卡"),
 
-    DEPARTMENT("DP", "部门");
+    DEPARTMENT("DP", "部门"), REQBUDGET("RB", "请款预算单表");
 
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();

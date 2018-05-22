@@ -53,6 +53,10 @@
 		<!-- 银行  -->
 		<typeAlias alias="channelBank" type="com.cdkj.loan.domain.ChannelBank" />
 		
+		
+		
+		<typeAlias alias="reqBudget" type="com.cdkj.loan.domain.ReqBudget" />
+		
 	</typeAliases>
 </configuration>
 
