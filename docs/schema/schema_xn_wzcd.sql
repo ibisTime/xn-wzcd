@@ -17,6 +17,7 @@ CREATE TABLE `tdq_req_budget` (
   `dz_amount` varchar(255) DEFAULT NULL COMMENT '垫资总额',
   `dz_datetime` datetime DEFAULT NULL COMMENT '垫资日期',
   `collection_bank` varchar(255) DEFAULT NULL COMMENT '收回款银行',
+  `collection_amount` bigint(20) DEFAULT NULL COMMENT '收回款金额',
   `collection_account` varchar(255) DEFAULT NULL COMMENT '收回款账号',
   `collection_datetime` datetime DEFAULT NULL COMMENT '收回款日期',
   `collection_remark` text COMMENT '收回款备注',
