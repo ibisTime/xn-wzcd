@@ -45,7 +45,7 @@ CREATE TABLE `tsys_menu_role` (
   `update_datetime` datetime DEFAULT NULL,
   `remark` varchar(765) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1635 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `tsys_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -58,7 +58,7 @@ CREATE TABLE `tsys_config` (
   `company_code` varchar(96) DEFAULT NULL,
   `system_code` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `tsys_dict` (
@@ -73,7 +73,7 @@ CREATE TABLE `tsys_dict` (
   `company_code` varchar(96) DEFAULT NULL,
   `system_code` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `tstd_cnavigate` (
   `code` varchar(32) NOT NULL COMMENT '编号',
@@ -108,3 +108,46 @@ CREATE TABLE `tsys_department` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '部门表';
+
+/*节点表*/
+DROP TABLE IF EXISTS `tsys_node`;
+CREATE TABLE `tsys_node` (
+    `code` VARCHAR(32) NOT NULL COMMENT '节点编号',
+    `name` VARCHAR(255) DEFAULT NULL COMMENT '节点名称',
+    `type` VARCHAR(4) DEFAULT NULL COMMENT '类型',
+    `next_node` VARCHAR(32) DEFAULT NULL COMMENT '下一个节点',
+    `back_node` VARCHAR(32) DEFAULT NULL COMMENT '返回节点',
+    `remark` VARCHAR(255) DEFAULT NULL COMMENT '备注',
+    PRIMARY KEY (`code`) COMMENT '节点'
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8;
+
+/*角色节点表*/
+DROP TABLE IF EXISTS `tsys_role_node`;
+CREATE TABLE `tsys_role_node` (
+    `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '序号',
+    `role_code` VARCHAR(32) DEFAULT NULL COMMENT '角色编号',
+	`node_code` VARCHAR(32) DEFAULT NULL COMMENT '节点编号',
+    PRIMARY KEY (`id`) COMMENT '角色节点'
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8;
+
+/*业务日志跟踪表*/
+DROP TABLE IF EXISTS `tsys_biz_log`;
+CREATE TABLE `tsys_biz_log` (
+  `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `parent_order` varchar(32) NOT NULL COMMENT '上级订单编号',
+  `ref_type` varchar(32) NOT NULL COMMENT '关联订单类型',
+  `ref_order` varchar(32) NOT NULL COMMENT '关联订单编号',
+  `start_node` varchar(32) NOT NULL COMMENT '开始节点',
+
+  `end_node` varchar(32) NULL COMMENT '下个节点(处理完后记录)',
+  `status` varchar(32) NOT NULL COMMENT '状态(0 待处理 1 已完成)',
+  `operate_role` varchar(32) NOT NULL COMMENT '操作角色',
+  `operator` varchar(32) NOT NULL COMMENT '操作人',
+  `operater_name` varchar(32) NULL COMMENT '操作人姓名',
+  
+  `operator_mobile` varchar(32) NULL COMMENT '操作人手机号',
+  `start_datetime` datetime NOT NULL COMMENT '操作开始时间',
+  `start_datetime` datetime  NULL COMMENT '操作结束时间',
+  `speed_time` int(11) NULL COMMENT '花费时间(单位：秒)',
+  PRIMARY KEY (`id`) COMMENT '业务日志跟踪表'
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8;
