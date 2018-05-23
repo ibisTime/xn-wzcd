@@ -10,9 +10,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 角色批量设置节点
+ * 根据角色查询节点信息
  * @author: hp 
- * @since: 2018年5月23日 下午3:32:10 
+ * @since: 2018年5月23日 下午4:35:57 
  * @history:
  */
 public class XN630167 extends AProcessor {
@@ -24,7 +24,7 @@ public class XN630167 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return roleNodeAO.queryNodeRoleListByRoleCode(req.getRoleCode());
+        return roleNodeAO.queryNodeListByRoleCode(req.getRoleCode());
     }
 
     @Override

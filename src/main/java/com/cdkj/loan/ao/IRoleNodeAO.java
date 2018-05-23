@@ -2,7 +2,7 @@ package com.cdkj.loan.ao;
 
 import java.util.List;
 
-import com.cdkj.loan.domain.RoleNode;
+import com.cdkj.loan.domain.Node;
 
 public interface IRoleNodeAO {
 
@@ -11,6 +11,6 @@ public interface IRoleNodeAO {
     // 给角色分配节点
     public void assignNodeForRole(String roleCode, List<String> nodeList);
 
-    public List<RoleNode> queryNodeRoleListByRoleCode(String roleCode);
+    public List<Node> queryNodeListByRoleCode(String roleCode);
 
 }

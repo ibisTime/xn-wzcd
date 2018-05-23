@@ -3,6 +3,7 @@ package com.cdkj.loan.dao;
 import java.util.List;
 
 import com.cdkj.loan.dao.base.IBaseDAO;
+import com.cdkj.loan.domain.Node;
 import com.cdkj.loan.domain.RoleNode;
 
 public interface IRoleNodeDAO extends IBaseDAO<RoleNode> {
@@ -11,5 +12,7 @@ public interface IRoleNodeDAO extends IBaseDAO<RoleNode> {
     public void insertRoleNodeList(List<RoleNode> nodeList);
 
     public void deleteRoleNodeList(RoleNode data);
+
+    public List<Node> selectNodeListByRole(RoleNode condition);
 
 }

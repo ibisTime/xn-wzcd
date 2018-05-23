@@ -8,11 +8,9 @@
 		<result column="node_code" property="nodeCode" />
 	</resultMap>
 	
-	<resultMap id="node_DB_Result" type="roleNode">
-		<result column="id" property="id" />
-		<result column="role_code" property="roleCode" />
-		<result column="node_code" property="nodeCode" />
-		<result column="node_name" property="nodeName" />
+	<resultMap id="node_DB_Result" type="node">
+		<result column="code" property="code" />
+		<result column="name" property="name" />
 	</resultMap>
 	
 	<sql id="where_condition">
@@ -44,18 +42,16 @@
 		</trim>	
 	</select>
 	
-	<select id="select_nodeList" parameterType="roleNode" resultMap="roleNode_DB_Result">
+	<select id="select_nodeList" parameterType="roleNode" resultMap="node_DB_Result">
 		SELECT
-		t.id
-		,t.role_code
-		,t.node_code
-		,tn.name node_name
+		tn.code
+		,tn.name
 		FROM
-		tsys_role_node t inner join tsys_node tn
+		tsys_role_node t inner join tsys_node tn on t.node_code = tn.code
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
-				${order}
+				t.${order}
 			</if>
 		</trim>	
 	</select>
@@ -65,17 +61,21 @@
 		<include refid="where_condition" />
 	</select>
 	
-	<insert id="insert_roleNodeList" parameterType="java.util.List">
-	    insert into tsys_role_node(
-	    role_code
-	    ,node_code
-	    )
-	    values 
-	    <foreach collection="list" item="item" index="index" separator="," >
-	        (#{item.roleCode}
-	        ,#{item.nodeCode})
-	    </foreach>
+	<insert id="insert_roleNodeList" parameterType="List">
+		INSERT INTO
+		tsys_role_node(
+		role_code
+		,node_code
+		)
+		VALUES
+		<foreach collection="list" item="roleNode" separator=",">
+			(
+			#{roleNode.roleCode}
+			,#{roleNode.nodeCode}
+			)
+		</foreach>
 	</insert>
+	
 	
 	<delete id="delete_roleNode" parameterType="roleNode">
 		DELETE FROM tsys_role_node 
