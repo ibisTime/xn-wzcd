@@ -167,6 +167,7 @@
 		,pay_account = #{payAccount}
 		,water_bill = #{waterBill}
 		,pay_remark = #{payRemark}
+		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 	
@@ -178,6 +179,7 @@
 		,collection_account = #{collectionAccount}
 		,collection_datetime = #{collectionDatetime}
 		,collection_remark = #{collectionRemark}
+		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 

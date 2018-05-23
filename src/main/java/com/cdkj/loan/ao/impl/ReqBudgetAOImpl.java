@@ -39,7 +39,10 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         data.setUseDatetime(DateUtil.strToDate(req.getUseDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setBudgetAmount(StringValidater.toLong(req.getButtonCode()));
-        if (req.getButtonCode().equals(EButtonCode.SEND.getCode())) {
+        data.setApplyUser(req.getApplyUser());
+        data.setApplyDatetime(new Date());
+        data.setCurNodeCode(EReqBudgetNode.STARTNODE.getCode());
+        if (EButtonCode.SEND.getCode().equals(req.getButtonCode())) {
             // 发送申请
             data.setCurNodeCode(
                 nodeBO.getNode(EReqBudgetNode.APPLY.getCode()).getNextNode());
@@ -56,6 +59,8 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
             StringValidater.toLong(req.getCollectionAmount()));
         data.setCollectionDatetime(new Date());
         data.setCollectionRemark(req.getCollectionRemark());
+        data.setCurNodeCode(nodeBO
+            .getNode(EReqBudgetNode.ALREADY_CREDIT.getCode()).getNextNode());
         return reqBudgetBO.refreshReqBudgetCollection(data);
     }
 
@@ -82,17 +87,17 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
 
     @Override
     public int audit(XN632101Req req) {
-        ReqBudget condition = reqBudgetBO.getReqBudget(req.getCode());
-        if (req.getApproveResult().equals(EApproveResult.PASS.getCode())) {
+        ReqBudget reqBudget = reqBudgetBO.getReqBudget(req.getCode());
+        if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             // 审核通过，改变节点
-            condition.setCurNodeCode(
+            reqBudget.setCurNodeCode(
                 nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getNextNode());
         } else {
-            condition.setCurNodeCode(
+            reqBudget.setCurNodeCode(
                 nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getBackNode());
         }
 
-        return reqBudgetBO.refreshReqBudgetNode(condition);
+        return reqBudgetBO.refreshReqBudgetNode(reqBudget);
     }
 
     @Override
@@ -104,6 +109,8 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         condition.setPayAccount(req.getPayAccount());
         condition.setWaterBill(req.getWaterBill());
         condition.setPayRemark(req.getPayRemark());
+        condition.setCurNodeCode(
+            nodeBO.getNode(EReqBudgetNode.CREDIT.getCode()).getNextNode());
 
         return reqBudgetBO.credit(condition);
     }

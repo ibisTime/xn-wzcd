@@ -1,27 +1,27 @@
 package com.cdkj.loan.dto.req;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.validator.constraints.NotBlank;
 
 public class XN632100Req {
-    @Autowired
+    @NotBlank
     private String userId;// 用户编号
 
-    @Autowired
+    @NotBlank
     private String receiptBank;// 收款银行
 
-    @Autowired
+    @NotBlank
     private String receiptAccount;// 收款账号
 
-    @Autowired
+    @NotBlank
     private String budgetAmount;// 预算金额
 
-    @Autowired
+    @NotBlank
     private String useDatetime;// 用款日期
 
-    @Autowired
-    private String operator;// 操作人
+    @NotBlank
+    private String applyUser;// 操作人
 
-    @Autowired
+    @NotBlank
     private String buttonCode;// 按钮标识
 
     public String getUserId() {
@@ -64,12 +64,12 @@ public class XN632100Req {
         this.useDatetime = useDatetime;
     }
 
-    public String getOperator() {
-        return operator;
+    public String getApplyUser() {
+        return applyUser;
     }
 
-    public void setOperator(String operator) {
-        this.operator = operator;
+    public void setApplyUser(String applyUser) {
+        this.applyUser = applyUser;
     }
 
     public String getButtonCode() {

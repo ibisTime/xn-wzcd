@@ -30,6 +30,8 @@ public class ReqBudget extends ABaseDO {
 
     private Date payDatetime;// 打款时间
 
+    private String applyUser;// 申请人
+
     private Date applyDatetime;// 申请时间
 
     private String payRemark;// 打款备注
@@ -174,6 +176,14 @@ public class ReqBudget extends ABaseDO {
 
     public void setPayRemark(String payRemark) {
         this.payRemark = payRemark;
+    }
+
+    public String getApplyUser() {
+        return applyUser;
+    }
+
+    public void setApplyUser(String applyUser) {
+        this.applyUser = applyUser;
     }
 
     public Long getDzAmount() {
