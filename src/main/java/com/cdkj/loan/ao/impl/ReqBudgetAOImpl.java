@@ -47,8 +47,7 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
             data.setCurNodeCode(
                 nodeBO.getNode(EReqBudgetNode.APPLY.getCode()).getNextNode());
         }
-        String reqBudget = reqBudgetBO.saveReqBudget(data);
-        return reqBudget;
+        return reqBudgetBO.saveReqBudget(data);
     }
 
     @Override
@@ -110,7 +109,7 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         condition.setWaterBill(req.getWaterBill());
         condition.setPayRemark(req.getPayRemark());
         condition.setCurNodeCode(
-            nodeBO.getNode(EReqBudgetNode.CREDIT.getCode()).getNextNode());
+            nodeBO.getNode(EReqBudgetNode.LOAN.getCode()).getNextNode());
 
         return reqBudgetBO.credit(condition);
     }
