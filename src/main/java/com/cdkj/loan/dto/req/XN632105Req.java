@@ -6,7 +6,7 @@ public class XN632105Req extends APageReq {
      */
     private static final long serialVersionUID = 5780013307270124748L;
 
-    private String companyName;// 业务公司编号
+    private String companyCode;// 业务公司编号
 
     private String applyDatetime;// 打款日期
 
@@ -26,12 +26,12 @@ public class XN632105Req extends APageReq {
 
     private String roleCode;// 角色编号
 
-    public String getCompanyName() {
-        return companyName;
+    public String getCompanyCode() {
+        return companyCode;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
     }
 
     public String getApplyDatetime() {

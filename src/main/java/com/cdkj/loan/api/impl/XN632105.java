@@ -24,9 +24,7 @@ public class XN632105 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         ReqBudget condition = new ReqBudget();
-        // TODO
-        // 业务公司编号
-        // condition.setCompanyCode();
+        condition.setCompanyCode(req.getCompanyCode());
         condition.setCurNodeCode(req.getCurNodeCode());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
@@ -40,8 +38,8 @@ public class XN632105 extends AProcessor {
         condition.setOrder(orderColumn, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
-        return reqBudgetAO
-            .queryReqBudgetPageByRoleCode(start, limit, condition);
+        return reqBudgetAO.queryReqBudgetPageByRoleCode(start, limit,
+            condition);
     }
 
     @Override
