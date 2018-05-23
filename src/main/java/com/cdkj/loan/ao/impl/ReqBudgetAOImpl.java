@@ -79,9 +79,10 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
             // 审核通过，改变节点
             condition.setCurNodeCode(
                 nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getNextNode());
+        } else {
+            condition.setCurNodeCode(
+                nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getBackNode());
         }
-        condition.setCurNodeCode(
-            nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getBackNode());
 
         return reqBudgetBO.refreshReqBudgetNode(condition);
     }
