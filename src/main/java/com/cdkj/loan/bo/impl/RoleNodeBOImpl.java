@@ -2,20 +2,18 @@ package com.cdkj.loan.bo.impl;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IRoleNodeBO;
+import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.IRoleNodeDAO;
+import com.cdkj.loan.domain.Node;
 import com.cdkj.loan.domain.RoleNode;
 
 @Component
-public class RoleNodeBOImpl implements IRoleNodeBO {
-
-    protected static final Logger logger = LoggerFactory
-        .getLogger(OrderBOImpl.class);
+public class RoleNodeBOImpl extends PaginableBOImpl<RoleNode> implements
+        IRoleNodeBO {
 
     @Autowired
     private IRoleNodeDAO roleNodeDAO;
@@ -26,10 +24,10 @@ public class RoleNodeBOImpl implements IRoleNodeBO {
     }
 
     @Override
-    public List<RoleNode> queryNodeRoleListByRoleCode(String roleCode) {
+    public List<Node> queryNodeListByRoleCode(String roleCode) {
         RoleNode condition = new RoleNode();
         condition.setRoleCode(roleCode);
-        return roleNodeDAO.selectList(condition);
+        return roleNodeDAO.selectNodeListByRole(condition);
     }
 
 }

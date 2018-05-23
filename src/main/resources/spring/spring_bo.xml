@@ -148,7 +148,7 @@
 		<property name="paginableDAO" ref="reqBudgetDAOImpl"/>
 	</bean>
 	
-	<bean id="roleNode" class="com.cdkj.loan.bo.impl.RoleNodeBOImpl">
+	<bean id="roleNodeBO" class="com.cdkj.loan.bo.impl.RoleNodeBOImpl">
 		<property name="paginableDAO" ref="roleNodeDAOImpl"/>
 	</bean>
 	

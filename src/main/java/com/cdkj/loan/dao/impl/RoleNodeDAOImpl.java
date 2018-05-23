@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cdkj.loan.dao.IRoleNodeDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
+import com.cdkj.loan.domain.Node;
 import com.cdkj.loan.domain.RoleNode;
 
 @Repository("roleNodeDAOImpl")
@@ -39,6 +40,12 @@ public class RoleNodeDAOImpl extends AMybatisTemplate implements IRoleNodeDAO {
     public List<RoleNode> selectList(RoleNode condition) {
         return super.selectList(NAMESPACE.concat("select_roleNode"), condition,
             RoleNode.class);
+    }
+
+    @Override
+    public List<Node> selectNodeListByRole(RoleNode condition) {
+        return super.selectList(NAMESPACE.concat("select_nodeList"), condition,
+            Node.class);
     }
 
     @Override
