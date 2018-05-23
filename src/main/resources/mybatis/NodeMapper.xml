@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.INodeDAO">
-	<resultMap id="Node_DB_Result" type="Node">
+	<resultMap id="node_DB_Result" type="node">
 		<result column="code" property="code" />
 		<result column=" name" property=" name" />
 		<result column="type" property="type" />

@@ -37,11 +37,12 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         data.setUseDatetime(DateUtil.strToDate(req.getUseDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setBudgetAmount(StringValidater.toLong(req.getButtonCode()));
-        String reqBudget = reqBudgetBO.saveReqBudget(data);
         if (req.getButtonCode().equals(EButtonCode.SEND.getCode())) {
             // 发送申请
-            // data.setCurNodeCode(nodeBO.);
+            data.setCurNodeCode(
+                nodeBO.getNode(EReqBudgetNode.APPLY.getCode()).getNextNode());
         }
+        String reqBudget = reqBudgetBO.saveReqBudget(data);
         return reqBudget;
     }
 
