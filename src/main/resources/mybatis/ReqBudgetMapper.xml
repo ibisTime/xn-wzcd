@@ -10,13 +10,13 @@
 		<result column="budget_amount" property="budgetAmount" />
 		<result column="use_datetime" property="useDatetime" />
 		<result column="finance_check_note" property="financeCheckNote" />
-		<result column="pay_datetime" property="payDatetime" />
+		<result column="pay_amount" property="payAmount" />
 		<result column="pay_bank" property="payBank" />
 		<result column="pay_account" property="payAccount" />
 		<result column="water_bill" property="waterBill" />
-		<result column="pay_remark" property="payRemark" />
+		<result column="pay_datetime" property="payDatetime" />
 		<result column="apply_datetime" property="applyDatetime" />
-		<result column="pay_amount" property="payAmount" />
+		<result column="pay_remark" property="payRemark" />
 		<result column="dz_amount" property="dzAmount" />
 		<result column="dz_datetime" property="dzDatetime" />
 		<result column="collection_bank" property="collectionBank" />
@@ -41,13 +41,13 @@
 		,t.budget_amount
 		,t.use_datetime
 		,t.finance_check_note
-		,t.pay_datetime
+		,t.pay_amount
 		,t.pay_bank
 		,t.pay_account
 		,t.water_bill
-		,t.pay_remark
+		,t.pay_datetime
 		,t.apply_datetime
-		,t.pay_amount
+		,t.pay_remark
 		,t.dz_amount
 		,t.dz_datetime
 		,t.collection_bank
@@ -56,7 +56,7 @@
 		,t.collection_remark
 		,t.cur_node_code
 		FROM
-		req_budget t
+		tdq_req_budget t
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -67,13 +67,13 @@
 
 	<select id="select_reqBudget_count" parameterType="reqBudget"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM req_budget t
+		SELECT count(1) FROM tdq_req_budget t
 		<include refid="where_condition" />
 	</select>
 
 	<insert id="insert_reqBudget" parameterType="reqBudget">
 		INSERT INTO
-		req_budget(
+		tdq_req_budget(
 		code
 		,company_code
 		,receipt_bank
@@ -81,13 +81,13 @@
 		,budget_amount
 		,use_datetime
 		,finance_check_note
-		,pay_datetime
+		,pay_amount
 		,pay_bank
 		,pay_account
 		,water_bill
-		,pay_remark
+		,pay_datetime
 		,apply_datetime
-		,pay_amount
+		,pay_remark
 		,dz_amount
 		,dz_datetime
 		,collection_bank
@@ -104,13 +104,13 @@
 		,#{budgetAmount}
 		,#{useDatetime}
 		,#{financeCheckNote}
-		,#{payDatetime}
+		,#{payAmount}
 		,#{payBank}
 		,#{payAccount}
 		,#{waterBill}
-		,#{payRemark}
+		,#{payDatetime}
 		,#{applyDatetime}
-		,#{payAmount}
+		,#{payRemark}
 		,#{dzAmount}
 		,#{dzDatetime}
 		,#{collectionBank}
@@ -122,7 +122,7 @@
 	</insert>
 
 	<update id="update_reqBudget" parameterType="reqBudget">
-		UPDATE req_budget
+		UPDATE tdq_req_budget
 		SET
 		company_code = #{companyCode}
 		,receipt_bank = #{receiptBank}
@@ -130,13 +130,13 @@
 		,budget_amount = #{budgetAmount}
 		,use_datetime = #{useDatetime}
 		,finance_check_note = #{financeCheckNote}
-		,pay_datetime = #{payDatetime}
+		,pay_amount = #{payAmount}
 		,pay_bank = #{payBank}
 		,pay_account = #{payAccount}
 		,water_bill = #{waterBill}
-		,pay_remark = #{payRemark}
+		,pay_datetime = #{payDatetime}
 		,apply_datetime = #{applyDatetime}
-		,pay_amount = #{payAmount}
+		,pay_remark = #{payRemark}
 		,dz_amount = #{dzAmount}
 		,dz_datetime = #{dzDatetime}
 		,collection_bank = #{collectionBank}
@@ -148,18 +148,18 @@
 	</update>
 	
 	<update id="update_node" parameterType="reqBudget">
-		UPDATE req_budget
+		UPDATE tdq_req_budget
 		SET
 		cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 	
 	<update id="credit" parameterType="reqBudget">
-		UPDATE req_budget
+		UPDATE tdq_req_budget
 		SET
 		pay_bank = #{payBank}
-		,pay_account = #{payAccount}
 		,pay_amount = #{payAmount}
+		,pay_account = #{payAccount}
 		,water_bill = #{waterBill}
 		,pay_remark = #{payRemark}
 		WHERE code = #{code}

@@ -30,6 +30,8 @@ public class ReqBudget extends ABaseDO {
 
     private Date payDatetime;// 打款时间
 
+    private Date applyDatetime;// 申请时间
+
     private String payRemark;// 打款备注
 
     private Long dzAmount;// 垫资总额
@@ -45,8 +47,6 @@ public class ReqBudget extends ABaseDO {
     private Date collectionDatetime;// 收回款日期
 
     private String collectionRemark;// 收回款备注
-
-    private Date applyDatetime;// 申请时间
 
     private String curNodeCode;// 节点编号
 

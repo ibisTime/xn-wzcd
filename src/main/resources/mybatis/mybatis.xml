@@ -56,7 +56,7 @@
 		
 		
 		<typeAlias alias="reqBudget" type="com.cdkj.loan.domain.ReqBudget" />
-		<typeAlias alias="sysNode" type="com.cdkj.loan.domain.SYSNode" />
+		<typeAlias alias="Node" type="com.cdkj.loan.domain.Node" />
 		
 	</typeAliases>
 </configuration>

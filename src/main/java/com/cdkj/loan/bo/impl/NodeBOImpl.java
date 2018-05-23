@@ -6,70 +6,69 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.cdkj.loan.bo.ISYSNodeBO;
+import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
-import com.cdkj.loan.dao.ISYSNodeDAO;
-import com.cdkj.loan.domain.SYSNode;
+import com.cdkj.loan.dao.INodeDAO;
+import com.cdkj.loan.domain.Node;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class SYSNodeBOImpl extends PaginableBOImpl<SYSNode>
-        implements ISYSNodeBO {
+public class NodeBOImpl extends PaginableBOImpl<Node> implements INodeBO {
 
     @Autowired
-    ISYSNodeDAO sysNodeDAO;
+    INodeDAO nodeDAO;
 
     @Override
-    public long getTotalCount(SYSNode condition) {
+    public long getTotalCount(Node condition) {
         // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
-    public Paginable<SYSNode> getPaginable(int start, SYSNode condition) {
+    public Paginable<Node> getPaginable(int start, Node condition) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Paginable<SYSNode> getPaginable(int start, int pageSize,
-            SYSNode condition) {
+    public Paginable<Node> getPaginable(int start, int pageSize,
+            Node condition) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public String saveSYSNode(SYSNode data) {
+    public String saveNode(Node data) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public int removeSYSNode(String code) {
+    public int removeNode(String code) {
         // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
-    public int refreshSYSNode(SYSNode data) {
+    public int refreshNode(Node data) {
         // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
-    public List<SYSNode> querySYSNodeList(SYSNode condition) {
+    public List<Node> queryNodeList(Node condition) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public SYSNode getSYSNode(String code) {
-        SYSNode data = null;
+    public Node getNode(String code) {
+        Node data = null;
         if (StringUtils.isNotBlank(code)) {
-            SYSNode condition = new SYSNode();
+            Node condition = new Node();
             condition.setCode(code);
-            data = sysNodeDAO.select(condition);
+            data = nodeDAO.select(condition);
             if (data == null) {
                 throw new BizException("xn0000", "记录不存在");
             }

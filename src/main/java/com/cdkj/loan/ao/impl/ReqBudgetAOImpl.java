@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IReqBudgetAO;
+import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.IReqBudgetBO;
-import com.cdkj.loan.bo.ISYSNodeBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
@@ -26,7 +26,7 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     private IReqBudgetBO reqBudgetBO;
 
     @Autowired
-    private ISYSNodeBO sysNodeBO;
+    private INodeBO nodeBO;
 
     @Override
     public String addReqBudget(XN632100Req req) {
@@ -40,7 +40,7 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         String reqBudget = reqBudgetBO.saveReqBudget(data);
         if (req.getButtonCode().equals(EButtonCode.SEND.getCode())) {
             // 发送申请
-
+            // data.setCurNodeCode(nodeBO.);
         }
         return reqBudget;
     }
@@ -76,11 +76,11 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         ReqBudget condition = reqBudgetBO.getReqBudget(req.getCode());
         if (req.getApproveResult().equals(EApproveResult.PASS.getCode())) {
             // 审核通过，改变节点
-            condition.setCurNodeCode(sysNodeBO
-                .getSYSNode(EReqBudgetNode.AUDIT.getCode()).getNextNode());
+            condition.setCurNodeCode(
+                nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getNextNode());
         }
         condition.setCurNodeCode(
-            sysNodeBO.getSYSNode(EReqBudgetNode.AUDIT.getCode()).getBackNode());
+            nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getBackNode());
 
         return reqBudgetBO.refreshReqBudgetNode(condition);
     }

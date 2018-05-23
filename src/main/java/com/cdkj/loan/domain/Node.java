@@ -2,7 +2,7 @@ package com.cdkj.loan.domain;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
-public class SYSNode extends ABaseDO {
+public class Node extends ABaseDO {
     private static final long serialVersionUID = 4733016091171187458L;
 
     private String code;// 节点编号
