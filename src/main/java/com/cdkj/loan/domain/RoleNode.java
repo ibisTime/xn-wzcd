@@ -8,21 +8,21 @@ import com.cdkj.loan.dao.base.ABaseDO;
  * @since: 2018年5月22日 下午11:43:35 
  * @history:
  */
-public class SYSRoleNode extends ABaseDO {
+public class RoleNode extends ABaseDO {
 
     /** 
      * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
      */
-    private static final long serialVersionUID = 7757508097444907536L;
+    private static final long serialVersionUID = 714329834347444387L;
 
     // 序号
     private Long id;
 
-    // 节点编号
-    private String nodeCode;
-
     // 角色编号
     private String roleCode;
+
+    // 节点编号
+    private String nodeCode;
 
     public Long getId() {
         return id;
