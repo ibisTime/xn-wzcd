@@ -30,6 +30,9 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="roleCode != null and roleCode != '' ">
+				AND trn.role_code = #{roleCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_reqBudget" parameterType="reqBudget" resultMap="reqBudget_DB_Result">
@@ -68,6 +71,46 @@
 	<select id="select_reqBudget_count" parameterType="reqBudget"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tdq_req_budget t
+		<include refid="where_condition" />
+	</select>
+	
+	<select id="select_reqBudget_roleCode" parameterType="reqBudget" resultMap="reqBudget_DB_Result">
+		SELECT
+		distinct
+		t.code
+		,t.company_code
+		,t.receipt_bank
+		,t.receipt_account
+		,t.budget_amount
+		,t.use_datetime
+		,t.finance_check_note
+		,t.pay_amount
+		,t.pay_bank
+		,t.pay_account
+		,t.water_bill
+		,t.pay_datetime
+		,t.apply_datetime
+		,t.pay_remark
+		,t.dz_amount
+		,t.dz_datetime
+		,t.collection_bank
+		,t.collection_account
+		,t.collection_datetime
+		,t.collection_remark
+		,t.cur_node_code
+		FROM
+		tdq_req_budget t inner join tsys_role_node trn on t.cur_node_code = trn.node_code
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="select_reqBudget_count_byRoleCode" parameterType="reqBudget"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_req_budget t inner join tsys_role_node trn on t.cur_node_code = trn.node_code
 		<include refid="where_condition" />
 	</select>
 

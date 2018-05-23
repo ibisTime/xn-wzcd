@@ -32,13 +32,6 @@ public class NodeBOImpl extends PaginableBOImpl<Node> implements INodeBO {
     }
 
     @Override
-    public Paginable<Node> getPaginable(int start, int pageSize,
-            Node condition) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public String saveNode(Node data) {
         // TODO Auto-generated method stub
         return null;

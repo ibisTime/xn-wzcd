@@ -39,8 +39,8 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         data.setBudgetAmount(StringValidater.toLong(req.getButtonCode()));
         if (req.getButtonCode().equals(EButtonCode.SEND.getCode())) {
             // 发送申请
-            data.setCurNodeCode(
-                nodeBO.getNode(EReqBudgetNode.APPLY.getCode()).getNextNode());
+            data.setCurNodeCode(nodeBO.getNode(EReqBudgetNode.APPLY.getCode())
+                .getNextNode());
         }
         String reqBudget = reqBudgetBO.saveReqBudget(data);
         return reqBudget;
@@ -57,9 +57,9 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     }
 
     @Override
-    public Paginable<ReqBudget> queryReqBudgetPage(int start, int limit,
-            ReqBudget condition) {
-        return reqBudgetBO.getPaginable(start, limit, condition);
+    public Paginable<ReqBudget> queryReqBudgetPageByRoleCode(int start,
+            int limit, ReqBudget condition) {
+        return reqBudgetBO.getPaginableByRoleCode(start, limit, condition);
     }
 
     @Override
@@ -77,11 +77,11 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         ReqBudget condition = reqBudgetBO.getReqBudget(req.getCode());
         if (req.getApproveResult().equals(EApproveResult.PASS.getCode())) {
             // 审核通过，改变节点
-            condition.setCurNodeCode(
-                nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getNextNode());
+            condition.setCurNodeCode(nodeBO.getNode(
+                EReqBudgetNode.AUDIT.getCode()).getNextNode());
         }
-        condition.setCurNodeCode(
-            nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getBackNode());
+        condition.setCurNodeCode(nodeBO.getNode(EReqBudgetNode.AUDIT.getCode())
+            .getBackNode());
 
         return reqBudgetBO.refreshReqBudgetNode(condition);
     }

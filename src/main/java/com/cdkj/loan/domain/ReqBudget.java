@@ -56,6 +56,16 @@ public class ReqBudget extends ABaseDO {
 
     private Date applyDatetimeEnd;// 打款时间止
 
+    private String roleCode; // 角色编号
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
+
     public Date getApplyDatetimeStart() {
         return applyDatetimeStart;
     }

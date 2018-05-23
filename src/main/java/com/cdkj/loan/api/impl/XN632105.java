@@ -24,7 +24,6 @@ public class XN632105 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         ReqBudget condition = new ReqBudget();
-
         // TODO
         // 业务公司编号
         // condition.setCompanyCode();
@@ -41,7 +40,8 @@ public class XN632105 extends AProcessor {
         condition.setOrder(orderColumn, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
-        return reqBudgetAO.queryReqBudgetPage(start, limit, condition);
+        return reqBudgetAO
+            .queryReqBudgetPageByRoleCode(start, limit, condition);
     }
 
     @Override

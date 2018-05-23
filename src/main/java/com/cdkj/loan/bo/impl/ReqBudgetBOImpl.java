@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IReqBudgetBO;
+import com.cdkj.loan.bo.base.Page;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IReqBudgetDAO;
@@ -16,8 +18,8 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget>
-        implements IReqBudgetBO {
+public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget> implements
+        IReqBudgetBO {
 
     @Autowired
     private IReqBudgetDAO reqBudgetDAO;
@@ -25,8 +27,8 @@ public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget>
     public String saveReqBudget(ReqBudget data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.REQBUDGET.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.REQBUDGET
+                .getCode());
             data.setCode(code);
             reqBudgetDAO.insert(data);
         }
@@ -89,6 +91,23 @@ public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget>
             }
         }
         return data;
+    }
+
+    @Override
+    public Paginable<ReqBudget> getPaginableByRoleCode(int start, int pageSize,
+            ReqBudget condition) {
+        prepare(condition);
+
+        long totalCount = reqBudgetDAO.selectTotalCountByRoleCode(condition);
+
+        Paginable<ReqBudget> page = new Page<ReqBudget>(start, pageSize,
+            totalCount);
+
+        List<ReqBudget> dataList = reqBudgetDAO.selectReqBudgetByRoleCodeList(
+            condition, page.getStart(), page.getPageSize());
+
+        page.setList(dataList);
+        return page;
     }
 
 }

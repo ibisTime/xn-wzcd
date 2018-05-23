@@ -41,8 +41,10 @@ public class NodeDAOImpl extends AMybatisTemplate implements INodeDAO {
 
     @Override
     public List<Node> selectList(Node condition, int start, int count) {
+
         return super.selectList(NAMESPACE.concat("select_node"), start, count,
             condition, Node.class);
+
     }
 
 }
