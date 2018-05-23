@@ -8,6 +8,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.dto.req.XN632100Req;
 import com.cdkj.loan.dto.req.XN632101Req;
+import com.cdkj.loan.dto.req.XN632102Req;
 
 @Component
 public interface IReqBudgetAO {
@@ -26,6 +27,8 @@ public interface IReqBudgetAO {
 
     public ReqBudget getReqBudget(String code);
 
-    public int editNode(XN632101Req req);
+    public int audit(XN632101Req req);
+
+    public int credit(XN632102Req req);
 
 }

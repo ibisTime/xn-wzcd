@@ -53,13 +53,12 @@
 		<!-- 银行  -->
 		<typeAlias alias="channelBank" type="com.cdkj.loan.domain.ChannelBank" />
 		
-		
-		
-		<typeAlias alias="reqBudget" type="com.cdkj.loan.domain.ReqBudget" />
-		<typeAlias alias="SYSNode" type="com.cdkj.loan.domain.SYSNode" />
-		
+		<!-- 节点控制  -->
+		<typeAlias alias="node" type="com.cdkj.loan.domain.Node" />
 		<typeAlias alias="roleNode" type="com.cdkj.loan.domain.RoleNode" />
+		<typeAlias alias="reqBudget" type="com.cdkj.loan.domain.ReqBudget" />
 	</typeAliases>
+	
 </configuration>
 
 

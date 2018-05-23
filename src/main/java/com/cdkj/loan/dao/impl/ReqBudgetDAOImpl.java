@@ -53,4 +53,14 @@ public class ReqBudgetDAOImpl extends AMybatisTemplate
         return 0;
     }
 
+    @Override
+    public int updateNode(ReqBudget data) {
+        return super.update(NAMESPACE.concat("update_node"), data);
+    }
+
+    @Override
+    public int credit(ReqBudget data) {
+        return super.update(NAMESPACE.concat("credit"), data);
+    }
+
 }

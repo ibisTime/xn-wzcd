@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cdkj.loan.dao.ISYSNodeDAO">
-	<resultMap id="SYSNode_DB_Result" type="SYSNode">
+<mapper namespace="com.cdkj.loan.dao.INodeDAO">
+	<resultMap id="node_DB_Result" type="node">
 		<result column="code" property="code" />
-		<result column=" name" property=" name" />
+		<result column="name" property="name" />
 		<result column="type" property="type" />
 		<result column="next_node" property="nextNode" />
 		<result column="back_node" property="backNode" />
@@ -17,10 +17,10 @@
 			</if>
 		</trim>
 	</sql>
-	<select id="select_SYSNode" parameterType="SYSNode" resultMap="SYSNode_DB_Result">
+	<select id="select_node" parameterType="node" resultMap="node_DB_Result">
 		SELECT
 		t.code
-		,t. name
+		,t.name
 		,t.type
 		,t.next_node
 		,t.back_node
@@ -35,17 +35,17 @@
 		</trim>
 	</select>
 
-	<select id="select_SYSNode_count" parameterType="SYSNode"
+	<select id="select_node_count" parameterType="node"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tsys_node t
 		<include refid="where_condition" />
 	</select>
 
-	<insert id="insert_SYSNode" parameterType="SYSNode">
+	<insert id="insert_node" parameterType="node">
 		INSERT INTO
 		tsys_node(
 		code
-		, name
+		,name
 		,type
 		,next_node
 		,back_node
@@ -53,7 +53,7 @@
 		)
 		VALUES(
 		#{code}
-		,#{ name}
+		,#{name}
 		,#{type}
 		,#{nextNode}
 		,#{backNode}
@@ -61,16 +61,14 @@
 		)
 	</insert>
 
-	<update id="update_SYSNode" parameterType="SYSNode">
+	<update id="update_node" parameterType="node">
 		UPDATE tsys_node
 		SET
-		 name = #{ name}
+		name = #{name}
 		,type = #{type}
 		,next_node = #{nextNode}
 		,back_node = #{backNode}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
-
-
 </mapper>
