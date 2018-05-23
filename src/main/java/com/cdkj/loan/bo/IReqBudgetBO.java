@@ -3,6 +3,7 @@ package com.cdkj.loan.bo;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.ReqBudget;
 
 public interface IReqBudgetBO extends IPaginableBO<ReqBudget> {
@@ -21,6 +22,8 @@ public interface IReqBudgetBO extends IPaginableBO<ReqBudget> {
 
     public int credit(ReqBudget condition);
 
-    public int refreshReqBudgetCollection(ReqBudget data);
+    public Paginable<ReqBudget> getPaginableByRoleCode(int start, int pageSize,
+            ReqBudget condition);
 
+    public int refreshReqBudgetCollection(ReqBudget data);
 }
