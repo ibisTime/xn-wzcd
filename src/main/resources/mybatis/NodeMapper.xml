@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.ISYSNodeDAO">
+	<resultMap id="SYSNode_DB_Result" type="SYSNode">
+		<result column="code" property="code" />
+		<result column=" name" property=" name" />
+		<result column="type" property="type" />
+		<result column="next_node" property="nextNode" />
+		<result column="back_node" property="backNode" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_SYSNode" parameterType="SYSNode" resultMap="SYSNode_DB_Result">
+		SELECT
+		t.code
+		,t. name
+		,t.type
+		,t.next_node
+		,t.back_node
+		,t.remark
+		FROM
+		tsys_node t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_SYSNode_count" parameterType="SYSNode"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tsys_node t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_SYSNode" parameterType="SYSNode">
+		INSERT INTO
+		tsys_node(
+		code
+		, name
+		,type
+		,next_node
+		,back_node
+		,remark
+		)
+		VALUES(
+		#{code}
+		,#{ name}
+		,#{type}
+		,#{nextNode}
+		,#{backNode}
+		,#{remark}
+		)
+	</insert>
+
+	<update id="update_SYSNode" parameterType="SYSNode">
+		UPDATE tsys_node
+		SET
+		 name = #{ name}
+		,type = #{type}
+		,next_node = #{nextNode}
+		,back_node = #{backNode}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>
