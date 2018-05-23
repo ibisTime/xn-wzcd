@@ -11,6 +11,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IReqBudgetDAO;
 import com.cdkj.loan.domain.ReqBudget;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -53,6 +54,24 @@ public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget>
     }
 
     @Override
+    public int refreshReqBudgetNode(ReqBudget data) {
+        int count = 0;
+        if (StringUtils.isNotBlank(data.getCode())) {
+            count = reqBudgetDAO.updateNode(data);
+        }
+        return count;
+    }
+
+    @Override
+    public int credit(ReqBudget data) {
+        int count = 0;
+        if (StringUtils.isNotBlank(data.getCode())) {
+            count = reqBudgetDAO.credit(data);
+        }
+        return count;
+    }
+
+    @Override
     public List<ReqBudget> queryReqBudgetList(ReqBudget condition) {
         return reqBudgetDAO.selectList(condition);
     }
@@ -65,9 +84,11 @@ public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget>
             condition.setCode(code);
             data = reqBudgetDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "预算单编号不存在!");
             }
         }
         return data;
     }
+
 }

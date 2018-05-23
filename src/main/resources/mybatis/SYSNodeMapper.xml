@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.ISYSNodeDAO">
-	<resultMap id="SYSNode_DB_Result" type="SYSNode">
+	<resultMap id="sysNode_DB_Result" type="sysNode">
 		<result column="code" property="code" />
 		<result column=" name" property=" name" />
 		<result column="type" property="type" />
@@ -17,7 +17,7 @@
 			</if>
 		</trim>
 	</sql>
-	<select id="select_SYSNode" parameterType="SYSNode" resultMap="SYSNode_DB_Result">
+	<select id="select_sysNode" parameterType="sysNode" resultMap="sysNode_DB_Result">
 		SELECT
 		t.code
 		,t. name
@@ -35,13 +35,13 @@
 		</trim>
 	</select>
 
-	<select id="select_SYSNode_count" parameterType="SYSNode"
+	<select id="select_sysNode_count" parameterType="sysNode"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tsys_node t
 		<include refid="where_condition" />
 	</select>
 
-	<insert id="insert_SYSNode" parameterType="SYSNode">
+	<insert id="insert_sysNode" parameterType="sysNode">
 		INSERT INTO
 		tsys_node(
 		code
@@ -61,7 +61,7 @@
 		)
 	</insert>
 
-	<update id="update_SYSNode" parameterType="SYSNode">
+	<update id="update_sysNode" parameterType="sysNode">
 		UPDATE tsys_node
 		SET
 		 name = #{ name}

@@ -46,7 +46,31 @@ public class ReqBudget extends ABaseDO {
 
     private String collectionRemark;// 收回款备注
 
-    private String nodeCode;// 节点编号
+    private Date applyDatetime;// 申请时间
+
+    private String curNodeCode;// 节点编号
+
+    /*-------辅助字段----------*/
+
+    private Date applyDatetimeStart;// 打款时间起
+
+    private Date applyDatetimeEnd;// 打款时间止
+
+    public Date getApplyDatetimeStart() {
+        return applyDatetimeStart;
+    }
+
+    public void setApplyDatetimeStart(Date applyDatetimeStart) {
+        this.applyDatetimeStart = applyDatetimeStart;
+    }
+
+    public Date getApplyDatetimeEnd() {
+        return applyDatetimeEnd;
+    }
+
+    public void setApplyDatetimeEnd(Date applyDatetimeEnd) {
+        this.applyDatetimeEnd = applyDatetimeEnd;
+    }
 
     public String getCode() {
         return code;
@@ -208,12 +232,20 @@ public class ReqBudget extends ABaseDO {
         this.collectionRemark = collectionRemark;
     }
 
-    public String getNodeCode() {
-        return nodeCode;
+    public String getCurNodeCode() {
+        return curNodeCode;
     }
 
-    public void setNodeCode(String nodeCode) {
-        this.nodeCode = nodeCode;
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
+    public Date getApplyDatetime() {
+        return applyDatetime;
+    }
+
+    public void setApplyDatetime(Date applyDatetime) {
+        this.applyDatetime = applyDatetime;
     }
 
 }

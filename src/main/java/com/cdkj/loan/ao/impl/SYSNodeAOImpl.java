@@ -14,36 +14,36 @@ import com.cdkj.loan.domain.SYSNode;
 public class SYSNodeAOImpl implements ISYSNodeAO {
 
     @Autowired
-    private ISYSNodeBO SYSNodeBO;
+    private ISYSNodeBO sysNodeBO;
 
     @Override
     public String addSYSNode(SYSNode data) {
-        return SYSNodeBO.saveSYSNode(data);
+        return sysNodeBO.saveSYSNode(data);
     }
 
     @Override
     public int editSYSNode(SYSNode data) {
-        return SYSNodeBO.refreshSYSNode(data);
+        return sysNodeBO.refreshSYSNode(data);
     }
 
     @Override
     public int dropSYSNode(String code) {
-        return SYSNodeBO.removeSYSNode(code);
+        return sysNodeBO.removeSYSNode(code);
     }
 
     @Override
     public Paginable<SYSNode> querySYSNodePage(int start, int limit,
             SYSNode condition) {
-        return SYSNodeBO.getPaginable(start, limit, condition);
+        return sysNodeBO.getPaginable(start, limit, condition);
     }
 
     @Override
     public List<SYSNode> querySYSNodeList(SYSNode condition) {
-        return SYSNodeBO.querySYSNodeList(condition);
+        return sysNodeBO.querySYSNodeList(condition);
     }
 
     @Override
     public SYSNode getSYSNode(String code) {
-        return SYSNodeBO.getSYSNode(code);
+        return sysNodeBO.getSYSNode(code);
     }
 }

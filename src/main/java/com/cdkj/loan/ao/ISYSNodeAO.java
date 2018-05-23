@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.SYSNode;
 
-//CHECK ��鲢��ע�� 
 @Component
 public interface ISYSNodeAO {
     static final String DEFAULT_ORDER_COLUMN = "code";

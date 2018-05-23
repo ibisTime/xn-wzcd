@@ -8,4 +8,8 @@ public interface IReqBudgetDAO extends IBaseDAO<ReqBudget> {
     String NAMESPACE = IReqBudgetDAO.class.getName().concat(".");
 
     int update(ReqBudget data);
+
+    int updateNode(ReqBudget data);
+
+    int credit(ReqBudget data);
 }
