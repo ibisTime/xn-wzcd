@@ -52,6 +52,11 @@ public class ReqBudgetDAOImpl extends AMybatisTemplate implements IReqBudgetDAO 
     }
 
     @Override
+    public int updateCollection(ReqBudget data) {
+        return super.update(NAMESPACE.concat("update_collection"), data);
+    }
+
+    @Override
     public int updateNode(ReqBudget data) {
         return super.update(NAMESPACE.concat("update_node"), data);
     }

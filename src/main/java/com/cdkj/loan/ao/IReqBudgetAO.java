@@ -9,6 +9,7 @@ import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.dto.req.XN632100Req;
 import com.cdkj.loan.dto.req.XN632101Req;
 import com.cdkj.loan.dto.req.XN632102Req;
+import com.cdkj.loan.dto.req.XN632103Req;
 
 @Component
 public interface IReqBudgetAO {
@@ -18,7 +19,7 @@ public interface IReqBudgetAO {
 
     public int dropReqBudget(String code);
 
-    public int editReqBudget(ReqBudget data);
+    public int editReqBudget(XN632103Req req);
 
     public Paginable<ReqBudget> queryReqBudgetPageByRoleCode(int start,
             int limit, ReqBudget condition);

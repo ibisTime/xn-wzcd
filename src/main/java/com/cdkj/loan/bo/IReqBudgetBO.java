@@ -24,4 +24,6 @@ public interface IReqBudgetBO extends IPaginableBO<ReqBudget> {
 
     public Paginable<ReqBudget> getPaginableByRoleCode(int start, int pageSize,
             ReqBudget condition);
+
+    public int refreshReqBudgetCollection(ReqBudget data);
 }

@@ -20,4 +20,5 @@ public interface IReqBudgetDAO extends IBaseDAO<ReqBudget> {
 
     long selectTotalCountByRoleCode(ReqBudget condition);
 
+    int updateCollection(ReqBudget data);
 }
