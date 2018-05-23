@@ -21,4 +21,6 @@ public interface IReqBudgetBO extends IPaginableBO<ReqBudget> {
 
     public int credit(ReqBudget condition);
 
+    public int refreshReqBudgetCollection(ReqBudget data);
+
 }

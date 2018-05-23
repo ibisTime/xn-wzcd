@@ -91,4 +91,13 @@ public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget>
         return data;
     }
 
+    @Override
+    public int refreshReqBudgetCollection(ReqBudget data) {
+        int count = 0;
+        if (StringUtils.isNotBlank(data.getCode())) {
+            count = reqBudgetDAO.updateCollection(data);
+        }
+        return count;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.dto.req.XN632100Req;
 import com.cdkj.loan.dto.req.XN632101Req;
 import com.cdkj.loan.dto.req.XN632102Req;
+import com.cdkj.loan.dto.req.XN632103Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EButtonCode;
 import com.cdkj.loan.enums.EReqBudgetNode;
@@ -47,8 +49,14 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     }
 
     @Override
-    public int editReqBudget(ReqBudget data) {
-        return reqBudgetBO.refreshReqBudget(data);
+    public int editReqBudget(XN632103Req req) {
+        ReqBudget data = reqBudgetBO.getReqBudget(req.getCode());
+        data.setCollectionBank(req.getCollectionBank());
+        data.setCollectionAmount(
+            StringValidater.toLong(req.getCollectionAmount()));
+        data.setCollectionDatetime(new Date());
+        data.setCollectionRemark(req.getCollectionRemark());
+        return reqBudgetBO.refreshReqBudgetCollection(data);
     }
 
     @Override

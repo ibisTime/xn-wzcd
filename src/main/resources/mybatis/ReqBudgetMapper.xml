@@ -20,6 +20,7 @@
 		<result column="dz_amount" property="dzAmount" />
 		<result column="dz_datetime" property="dzDatetime" />
 		<result column="collection_bank" property="collectionBank" />
+		<result column="collection_amount" property="collectionAmount" />
 		<result column="collection_account" property="collectionAccount" />
 		<result column="collection_datetime" property="collectionDatetime" />
 		<result column="collection_remark" property="collectionRemark" />
@@ -51,6 +52,7 @@
 		,t.dz_amount
 		,t.dz_datetime
 		,t.collection_bank
+		,t.collection_amount
 		,t.collection_account
 		,t.collection_datetime
 		,t.collection_remark
@@ -91,6 +93,7 @@
 		,dz_amount
 		,dz_datetime
 		,collection_bank
+		,collection_amount
 		,collection_account
 		,collection_datetime
 		,collection_remark
@@ -114,6 +117,7 @@
 		,#{dzAmount}
 		,#{dzDatetime}
 		,#{collectionBank}
+		,#{collectionAmount}
 		,#{collectionAccount}
 		,#{collectionDatetime}
 		,#{collectionRemark}
@@ -140,6 +144,7 @@
 		,dz_amount = #{dzAmount}
 		,dz_datetime = #{dzDatetime}
 		,collection_bank = #{collectionBank}
+		,collection_amount = #{collectionAmount}
 		,collection_account = #{collectionAccount}
 		,collection_datetime = #{collectionDatetime}
 		,collection_remark = #{collectionRemark}
@@ -162,6 +167,17 @@
 		,pay_account = #{payAccount}
 		,water_bill = #{waterBill}
 		,pay_remark = #{payRemark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_collection" parameterType="reqBudget">
+		UPDATE tdq_req_budget
+		SET
+		collection_bank = #{collectionBank}
+		,collection_amount = #{collectionAmount}
+		,collection_account = #{collectionAccount}
+		,collection_datetime = #{collectionDatetime}
+		,collection_remark = #{collectionRemark}
 		WHERE code = #{code}
 	</update>
 

@@ -12,4 +12,6 @@ public interface IReqBudgetDAO extends IBaseDAO<ReqBudget> {
     int updateNode(ReqBudget data);
 
     int credit(ReqBudget data);
+
+    int updateCollection(ReqBudget data);
 }
