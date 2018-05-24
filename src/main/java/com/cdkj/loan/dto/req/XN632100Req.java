@@ -4,9 +4,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class XN632100Req {
     @NotBlank
-    private String userId;// 用户编号
-
-    @NotBlank
     private String receiptBank;// 收款银行
 
     @NotBlank
@@ -23,14 +20,6 @@ public class XN632100Req {
 
     @NotBlank
     private String buttonCode;// 按钮标识
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public String getReceiptBank() {
         return receiptBank;

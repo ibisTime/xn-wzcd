@@ -17,6 +17,17 @@ public class Node extends ABaseDO {
 
     private String remark;// 备注
 
+    // **********db properties**********
+    private String nameQuery;
+
+    public String getNameQuery() {
+        return nameQuery;
+    }
+
+    public void setNameQuery(String nameQuery) {
+        this.nameQuery = nameQuery;
+    }
+
     public String getCode() {
         return code;
     }

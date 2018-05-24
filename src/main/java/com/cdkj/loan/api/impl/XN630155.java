@@ -30,7 +30,7 @@ public class XN630155 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         Node condition = new Node();
-        condition.setName(req.getName());
+        condition.setNameQuery(req.getName());
         condition.setType(req.getType());
         condition.setNextNode(req.getNextNode());
         condition.setBackNode(req.getBackNode());
