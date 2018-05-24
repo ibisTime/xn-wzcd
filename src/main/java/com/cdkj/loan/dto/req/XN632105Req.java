@@ -12,16 +12,6 @@ public class XN632105Req extends APageReq {
 
     private String applyDatetimeEnd;// 申请时间止
 
-    private String roleCode;// 角色编号
-
-    public String getRoleCode() {
-        return roleCode;
-    }
-
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode;
-    }
-
     public String getCompanyCode() {
         return companyCode;
     }
