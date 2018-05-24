@@ -24,6 +24,9 @@ public interface IReqBudgetAO {
     public Paginable<ReqBudget> queryReqBudgetPage(int start, int limit,
             ReqBudget condition);
 
+    public Paginable<ReqBudget> queryReqBudgetPage(int start, int limit,
+            ReqBudget condition);
+
     public Paginable<ReqBudget> queryReqBudgetPageByRoleCode(int start,
             int limit, ReqBudget condition);
 

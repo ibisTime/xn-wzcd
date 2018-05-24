@@ -46,8 +46,8 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         data.setCurNodeCode(EReqBudgetNode.STARTNODE.getCode());
         if (EButtonCode.SEND.getCode().equals(req.getButtonCode())) {
             // 发送申请
-            data.setCurNodeCode(
-                nodeBO.getNode(EReqBudgetNode.APPLY.getCode()).getNextNode());
+            data.setCurNodeCode(nodeBO.getNode(EReqBudgetNode.APPLY.getCode())
+                .getNextNode());
         }
         return reqBudgetBO.saveReqBudget(data);
     }
@@ -61,13 +61,19 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
                 "当前节点不是已放款节点，不能操作");
         }
         data.setCollectionBank(req.getCollectionBank());
-        data.setCollectionAmount(
-            StringValidater.toLong(req.getCollectionAmount()));
+        data.setCollectionAmount(StringValidater.toLong(req
+            .getCollectionAmount()));
         data.setCollectionDatetime(new Date());
         data.setCollectionRemark(req.getCollectionRemark());
+<<<<<<< HEAD
         data.setCurNodeCode(nodeBO
             .getNode(EReqBudgetNode.ALREADY_CREDIT.getCode()).getNextNode());
         return reqBudgetBO.collectionReqBudget(data);
+=======
+        data.setCurNodeCode(nodeBO.getNode(
+            EReqBudgetNode.ALREADY_CREDIT.getCode()).getNextNode());
+        return reqBudgetBO.refreshReqBudgetCollection(data);
+>>>>>>> refs/remotes/origin/branch_wzcd_v1.0.0
     }
 
     @Override
@@ -100,19 +106,23 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     @Override
     public int audit(XN632101Req req) {
         ReqBudget reqBudget = reqBudgetBO.getReqBudget(req.getCode());
+<<<<<<< HEAD
         if (!EReqBudgetNode.AUDIT.getCode()
             .equals(reqBudget.getCurNodeCode())) {
+=======
+        if (!EReqBudgetNode.AUDIT.getCode().equals(reqBudget.getCurNodeCode())) {
+>>>>>>> refs/remotes/origin/branch_wzcd_v1.0.0
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是审核节点，不能操作");
         }
 
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             // 审核通过，改变节点
-            reqBudget.setCurNodeCode(
-                nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getNextNode());
+            reqBudget.setCurNodeCode(nodeBO.getNode(
+                EReqBudgetNode.AUDIT.getCode()).getNextNode());
         } else {
-            reqBudget.setCurNodeCode(
-                nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getBackNode());
+            reqBudget.setCurNodeCode(nodeBO.getNode(
+                EReqBudgetNode.AUDIT.getCode()).getBackNode());
         }
 
         return reqBudgetBO.refreshReqBudgetNode(reqBudget);
@@ -131,8 +141,8 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         condition.setPayAccount(req.getPayAccount());
         condition.setWaterBill(req.getWaterBill());
         condition.setPayRemark(req.getPayRemark());
-        condition.setCurNodeCode(
-            nodeBO.getNode(EReqBudgetNode.LOAN.getCode()).getNextNode());
+        condition.setCurNodeCode(nodeBO.getNode(EReqBudgetNode.LOAN.getCode())
+            .getNextNode());
 
         return reqBudgetBO.loan(condition);
     }
