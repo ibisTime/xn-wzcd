@@ -1,11 +1,3 @@
-/**
- * @Title XNlh5013.java 
- * @Package com.xnjr.moom.api.impl 
- * @Description 
- * @author haiqingzheng  
- * @date 2016年4月17日 下午7:40:47 
- * @version V1.0   
- */
 package com.cdkj.loan.api.impl;
 
 import org.apache.commons.lang3.StringUtils;
@@ -38,8 +30,6 @@ public class XN630155 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         Node condition = new Node();
-
-        condition.setCode(req.getCode());
         condition.setName(req.getName());
         condition.setType(req.getType());
         condition.setNextNode(req.getNextNode());

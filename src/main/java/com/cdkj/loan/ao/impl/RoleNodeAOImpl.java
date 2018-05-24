@@ -23,7 +23,7 @@ public class RoleNodeAOImpl implements IRoleNodeAO {
         // 批量新增节点
         List<RoleNode> roleNodeList = new ArrayList<RoleNode>();
         for (int i = 0; i < nodeList.size(); i++) {
-            String nodeCode = (String) nodeList.get(i);
+            String nodeCode = nodeList.get(i);
             RoleNode roleNode = new RoleNode();
             roleNode.setRoleCode(roleCode);
             roleNode.setNodeCode(nodeCode);
