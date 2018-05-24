@@ -47,4 +47,12 @@ public class NodeDAOImpl extends AMybatisTemplate implements INodeDAO {
 
     }
 
+    @Override
+    public List<Node> selectNodeListIncludeCurRole(Node node) {
+
+        return super.selectList(
+            NAMESPACE.concat("select_nodeList_include_curRole"), node,
+            Node.class);
+    }
+
 }

@@ -54,4 +54,10 @@ public class NodeBOImpl extends PaginableBOImpl<Node> implements INodeBO {
         return data;
     }
 
+    @Override
+    public List<Node> queryNodeListIncludeCurRole(Node node) {
+
+        return nodeDAO.selectNodeListIncludeCurRole(node);
+    }
+
 }

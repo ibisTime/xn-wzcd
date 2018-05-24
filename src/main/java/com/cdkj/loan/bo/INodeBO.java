@@ -22,4 +22,7 @@ public interface INodeBO extends IPaginableBO<Node> {
     // 详情查询
     public Node getNode(String code);
 
+    // 查询所有节点列表（包含当前角色）
+    public List<Node> queryNodeListIncludeCurRole(Node node);
+
 }

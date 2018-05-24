@@ -17,6 +17,28 @@ public class Node extends ABaseDO {
 
     private String remark;// 备注
 
+    // ***************db properties*****************
+
+    private String roleCode; // 角色编号
+
+    private String isChoice; // 当前角色是否拥有
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
+
+    public String getIsChoice() {
+        return isChoice;
+    }
+
+    public void setIsChoice(String isChoice) {
+        this.isChoice = isChoice;
+    }
+
     public String getCode() {
         return code;
     }

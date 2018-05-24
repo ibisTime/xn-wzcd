@@ -86,4 +86,6 @@
 		DELETE FROM tsys_role_node 
 		WHERE role_code = #{roleCode}		
 	</delete>
+	
+	
 </mapper>
