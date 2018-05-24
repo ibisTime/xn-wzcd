@@ -10,8 +10,6 @@ public class XN632105Req extends APageReq {
 
     private String applyDatetime;// 打款日期
 
-    private String curNodeCode;// 节点编号
-
     private String applyDatetimeStart;// 申请时间起
 
     private String applyDatetimeEnd;// 申请时间止
@@ -40,14 +38,6 @@ public class XN632105Req extends APageReq {
 
     public void setApplyDatetime(String applyDatetime) {
         this.applyDatetime = applyDatetime;
-    }
-
-    public String getCurNodeCode() {
-        return curNodeCode;
-    }
-
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
     }
 
     public String getApplyDatetimeStart() {

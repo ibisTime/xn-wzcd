@@ -25,10 +25,9 @@ public class XN632105 extends AProcessor {
     public Object doBusiness() throws BizException {
         ReqBudget condition = new ReqBudget();
         condition.setCompanyCode(req.getCompanyCode());
-        condition.setCurNodeCode(req.getCurNodeCode());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setApplyDatetimeStart(DateUtil.strToDate(
+        condition.setApplyDatetimeEnd(DateUtil.strToDate(
             req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setRoleCode(req.getRoleCode());
         String orderColumn = req.getOrderColumn();
