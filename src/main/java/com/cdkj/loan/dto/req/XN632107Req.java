@@ -2,9 +2,7 @@ package com.cdkj.loan.dto.req;
 
 public class XN632107Req {
 
-    private String companyName;// 业务公司编号
-
-    private String applyDatetime;// 打款日期
+    private String companyCode;// 业务公司编号
 
     private String curNodeCode;// 办理状态
 
@@ -12,20 +10,12 @@ public class XN632107Req {
 
     private String applyDatetimeEnd;// 申请时间止
 
-    public String getCompanyName() {
-        return companyName;
+    public String getCompanyCode() {
+        return companyCode;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getApplyDatetime() {
-        return applyDatetime;
-    }
-
-    public void setApplyDatetime(String applyDatetime) {
-        this.applyDatetime = applyDatetime;
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
     }
 
     public String getCurNodeCode() {

@@ -10,6 +10,12 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
+/**
+ * 财务经理审核
+ * @author: CYL 
+ * @since: 2018年5月24日 下午2:17:01 
+ * @history:
+ */
 public class XN632101 extends AProcessor {
     private IReqBudgetAO reqBudgetAO = SpringContextHolder
         .getBean(IReqBudgetAO.class);

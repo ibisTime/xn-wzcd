@@ -11,6 +11,12 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
+/**
+ * 请款预算单列表查询
+ * @author: CYL 
+ * @since: 2018年5月24日 下午2:23:48 
+ * @history:
+ */
 public class XN632107 extends AProcessor {
     private IReqBudgetAO reqBudgetAO = SpringContextHolder
         .getBean(IReqBudgetAO.class);
@@ -21,9 +27,7 @@ public class XN632107 extends AProcessor {
     public Object doBusiness() throws BizException {
         ReqBudget condition = new ReqBudget();
 
-        // TODO
-        // 业务公司编号
-        // condition.setCompanyCode();
+        condition.setCompanyCode(req.getCompanyCode());
         condition.setCurNodeCode(req.getCurNodeCode());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));

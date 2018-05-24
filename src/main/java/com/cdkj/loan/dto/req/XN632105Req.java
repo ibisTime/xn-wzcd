@@ -8,8 +8,6 @@ public class XN632105Req extends APageReq {
 
     private String companyCode;// 业务公司编号
 
-    private String applyDatetime;// 打款日期
-
     private String applyDatetimeStart;// 申请时间起
 
     private String applyDatetimeEnd;// 申请时间止
@@ -30,14 +28,6 @@ public class XN632105Req extends APageReq {
 
     public void setCompanyCode(String companyCode) {
         this.companyCode = companyCode;
-    }
-
-    public String getApplyDatetime() {
-        return applyDatetime;
-    }
-
-    public void setApplyDatetime(String applyDatetime) {
-        this.applyDatetime = applyDatetime;
     }
 
     public String getApplyDatetimeStart() {

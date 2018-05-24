@@ -20,10 +20,10 @@ public interface IReqBudgetBO extends IPaginableBO<ReqBudget> {
 
     public int refreshReqBudgetNode(ReqBudget condition);
 
-    public int credit(ReqBudget condition);
+    public int loan(ReqBudget condition);
 
     public Paginable<ReqBudget> getPaginableByRoleCode(int start, int pageSize,
             ReqBudget condition);
 
-    public int refreshReqBudgetCollection(ReqBudget data);
+    public int collectionReqBudget(ReqBudget data);
 }

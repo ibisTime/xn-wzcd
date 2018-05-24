@@ -211,7 +211,7 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="credit" parameterType="reqBudget">
+	<update id="loan" parameterType="reqBudget">
 		UPDATE tdq_req_budget
 		SET
 		pay_bank = #{payBank}

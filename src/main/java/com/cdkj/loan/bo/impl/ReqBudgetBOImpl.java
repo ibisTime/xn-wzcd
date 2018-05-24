@@ -18,8 +18,8 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget> implements
-        IReqBudgetBO {
+public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget>
+        implements IReqBudgetBO {
 
     @Autowired
     private IReqBudgetDAO reqBudgetDAO;
@@ -27,8 +27,8 @@ public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget> implements
     public String saveReqBudget(ReqBudget data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.REQBUDGET
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.REQBUDGET.getCode());
             data.setCode(code);
             reqBudgetDAO.insert(data);
         }
@@ -65,10 +65,10 @@ public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget> implements
     }
 
     @Override
-    public int credit(ReqBudget data) {
+    public int loan(ReqBudget data) {
         int count = 0;
         if (StringUtils.isNotBlank(data.getCode())) {
-            count = reqBudgetDAO.credit(data);
+            count = reqBudgetDAO.loan(data);
         }
         return count;
     }
@@ -111,10 +111,10 @@ public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget> implements
     }
 
     @Override
-    public int refreshReqBudgetCollection(ReqBudget data) {
+    public int collectionReqBudget(ReqBudget data) {
         int count = 0;
         if (StringUtils.isNotBlank(data.getCode())) {
-            count = reqBudgetDAO.updateCollection(data);
+            count = reqBudgetDAO.collectionReqBudget(data);
         }
         return count;
     }
