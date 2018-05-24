@@ -17,7 +17,9 @@ public class Node extends ABaseDO {
 
     private String remark;// 备注
 
-    // ***************db properties*****************
+    // **********db properties**********
+
+    private String nameQuery;
 
     private String roleCode; // 角色编号
 
@@ -37,6 +39,15 @@ public class Node extends ABaseDO {
 
     public void setIsChoice(String isChoice) {
         this.isChoice = isChoice;
+    }
+
+    public String getNameQuery() {
+        return nameQuery;
+    }
+
+    public void setNameQuery(String nameQuery) {
+        this.nameQuery = nameQuery;
+
     }
 
     public String getCode() {

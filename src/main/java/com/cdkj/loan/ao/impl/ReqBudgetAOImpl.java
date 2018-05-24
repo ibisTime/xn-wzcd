@@ -18,8 +18,10 @@ import com.cdkj.loan.dto.req.XN632101Req;
 import com.cdkj.loan.dto.req.XN632102Req;
 import com.cdkj.loan.dto.req.XN632103Req;
 import com.cdkj.loan.enums.EApproveResult;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EButtonCode;
 import com.cdkj.loan.enums.EReqBudgetNode;
+import com.cdkj.loan.exception.BizException;
 
 @Service
 public class ReqBudgetAOImpl implements IReqBudgetAO {
@@ -51,8 +53,13 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     }
 
     @Override
-    public int editReqBudget(XN632103Req req) {
+    public int collectionReqBudget(XN632103Req req) {
         ReqBudget data = reqBudgetBO.getReqBudget(req.getCode());
+        if (!EReqBudgetNode.ALREADY_CREDIT.getCode()
+            .equals(data.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是已放款节点，不能操作");
+        }
         data.setCollectionBank(req.getCollectionBank());
         data.setCollectionAmount(
             StringValidater.toLong(req.getCollectionAmount()));
@@ -60,12 +67,18 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         data.setCollectionRemark(req.getCollectionRemark());
         data.setCurNodeCode(nodeBO
             .getNode(EReqBudgetNode.ALREADY_CREDIT.getCode()).getNextNode());
-        return reqBudgetBO.refreshReqBudgetCollection(data);
+        return reqBudgetBO.collectionReqBudget(data);
     }
 
     @Override
     public int dropReqBudget(String code) {
         return reqBudgetBO.removeReqBudget(code);
+    }
+
+    @Override
+    public Paginable<ReqBudget> queryReqBudgetPage(int start, int limit,
+            ReqBudget condition) {
+        return reqBudgetBO.getPaginable(start, limit, condition);
     }
 
     @Override
@@ -87,6 +100,12 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     @Override
     public int audit(XN632101Req req) {
         ReqBudget reqBudget = reqBudgetBO.getReqBudget(req.getCode());
+        if (!EReqBudgetNode.AUDIT.getCode()
+            .equals(reqBudget.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是审核节点，不能操作");
+        }
+
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             // 审核通过，改变节点
             reqBudget.setCurNodeCode(
@@ -100,8 +119,12 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     }
 
     @Override
-    public int credit(XN632102Req req) {
+    public int loan(XN632102Req req) {
         ReqBudget condition = reqBudgetBO.getReqBudget(req.getCode());
+        if (!EReqBudgetNode.LOAN.getCode().equals(condition.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是确认放款节点，不能操作");
+        }
         condition.setPayAmount(StringValidater.toLong(req.getPayAmount()));
 
         condition.setPayBank(req.getPayBank());
@@ -111,6 +134,6 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         condition.setCurNodeCode(
             nodeBO.getNode(EReqBudgetNode.LOAN.getCode()).getNextNode());
 
-        return reqBudgetBO.credit(condition);
+        return reqBudgetBO.loan(condition);
     }
 }

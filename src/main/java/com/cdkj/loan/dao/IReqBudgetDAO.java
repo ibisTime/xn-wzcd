@@ -13,12 +13,12 @@ public interface IReqBudgetDAO extends IBaseDAO<ReqBudget> {
 
     int updateNode(ReqBudget data);
 
-    int credit(ReqBudget data);
+    int loan(ReqBudget data);
 
     List<ReqBudget> selectReqBudgetByRoleCodeList(ReqBudget condition,
             int start, int count);
 
     long selectTotalCountByRoleCode(ReqBudget condition);
 
-    int updateCollection(ReqBudget data);
+    int collectionReqBudget(ReqBudget data);
 }

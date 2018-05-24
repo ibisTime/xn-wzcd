@@ -16,6 +16,21 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="nameQuery != null and nameQuery != '' ">
+				AND t.name like "%"#{nameQuery}"%"
+			</if>
+			<if test="name != null and name != '' ">
+				AND t.name = #{name}
+			</if>
+			<if test="type != null and type != '' ">
+				AND t.type = #{type}
+			</if>
+			<if test="nextNode != null and nextNode != '' ">
+				AND t.next_node = #{nextNode}
+			</if>
+			<if test="backNode != null and backNode != '' ">
+				AND t.back_node = #{backNode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_node" parameterType="node" resultMap="node_DB_Result">
@@ -66,7 +81,6 @@
 		UPDATE tsys_node
 		SET
 		name = #{name}
-		,type = #{type}
 		,next_node = #{nextNode}
 		,back_node = #{backNode}
 		,remark = #{remark}

@@ -4,7 +4,7 @@
 <mapper namespace="com.cdkj.loan.dao.IReqBudgetDAO">
 	<resultMap id="reqBudget_DB_Result" type="reqBudget">
 		<result column="code" property="code" />
-		<result column="company_code" property="companyCode" />
+		<result column="company_code" property="back_node" />
 		<result column="receipt_bank" property="receiptBank" />
 		<result column="receipt_account" property="receiptAccount" />
 		<result column="budget_amount" property="budgetAmount" />
@@ -33,6 +33,15 @@
 			</if>
 			<if test="roleCode != null and roleCode != '' ">
 				AND trn.role_code = #{roleCode}
+			</if>
+			<if test="companyCode != null and companyCode != '' ">
+				AND trn.company_code = #{companyCode}
+			</if>
+			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
+				<![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
+			</if>
+			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
+				<![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
 			</if>
 		</trim>
 	</sql>
@@ -202,7 +211,7 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="credit" parameterType="reqBudget">
+	<update id="loan" parameterType="reqBudget">
 		UPDATE tdq_req_budget
 		SET
 		pay_bank = #{payBank}
