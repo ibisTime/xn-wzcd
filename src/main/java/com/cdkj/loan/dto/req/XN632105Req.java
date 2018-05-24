@@ -8,15 +8,9 @@ public class XN632105Req extends APageReq {
 
     private String companyCode;// 业务公司编号
 
-<<<<<<< HEAD
     private String applyDatetimeStart;// 申请时间起
 
     private String applyDatetimeEnd;// 申请时间止
-=======
-    private String applyDatetimeStart;// 打款日期起
-
-    private String applyDatetimeEnd;// 打款日期止
->>>>>>> refs/remotes/origin/branch_wzcd_v1.0.0
 
     private String roleCode;// 角色编号
 
