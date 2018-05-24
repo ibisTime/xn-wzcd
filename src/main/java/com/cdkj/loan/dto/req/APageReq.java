@@ -39,9 +39,9 @@ public abstract class APageReq implements Serializable {
     @Min(0)
     private String limit;
 
-    private String orderColumn;// 分页字段
+    private String orderColumn;// 排序字段(数据库字段)
 
-    private String orderDir;// 分页方向
+    private String orderDir;// 排序方向
 
     public String getStart() {
         return start;

@@ -135,9 +135,8 @@ CREATE TABLE `tsys_biz_log` (
   `parent_order` varchar(32) NOT NULL COMMENT '上级订单编号',
   `ref_type` varchar(32) NOT NULL COMMENT '关联订单类型',
   `ref_order` varchar(32) NOT NULL COMMENT '关联订单编号',
-  `start_node` varchar(32) NOT NULL COMMENT '开始节点',
-
-  `end_node` varchar(32) NULL COMMENT '下个节点(处理完后记录)',
+  `deal_node` varchar(32) NOT NULL COMMENT '处理节点',
+  `deal_note` varchar(32) NOT NULL COMMENT '处理说明',
   `status` varchar(32) NOT NULL COMMENT '状态(0 待处理 1 已完成)',
   `operate_role` varchar(32) NOT NULL COMMENT '操作角色',
   `operator` varchar(32) NOT NULL COMMENT '操作人',

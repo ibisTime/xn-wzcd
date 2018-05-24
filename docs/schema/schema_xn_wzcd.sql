@@ -26,21 +26,25 @@ CREATE TABLE `tdq_req_budget` (
   `receipt_bank` varchar(255) DEFAULT NULL COMMENT '收款银行',
   `receipt_account` varchar(255) DEFAULT NULL COMMENT '收款账号',
   `budget_amount` bigint(20) DEFAULT NULL COMMENT '预算金额',
+  
   `use_datetime` datetime DEFAULT NULL COMMENT '用款日期',
   `apply_user` varchar(32) DEFAULT NULL COMMENT '申请人',
   `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
   `finance_check_note` text COMMENT '财务审核说明',
   `pay_amount` bigint(255) DEFAULT NULL COMMENT '打款金额',
+  
   `pay_bank` varchar(255) DEFAULT NULL COMMENT '打款银行',
   `pay_account` varchar(255) DEFAULT NULL COMMENT '打款账号',
   `water_bill` varchar(255) DEFAULT NULL COMMENT '水单',
   `pay_datetime` datetime DEFAULT NULL COMMENT '打款时间',
   `pay_remark` text COMMENT '打款备注',
+  
   `dz_amount` varchar(255) DEFAULT NULL COMMENT '垫资总额',
   `dz_datetime` datetime DEFAULT NULL COMMENT '垫资日期',
   `collection_bank` varchar(255) DEFAULT NULL COMMENT '收回款银行',
   `collection_amount` bigint(20) DEFAULT NULL COMMENT '收回款金额',
   `collection_account` varchar(255) DEFAULT NULL COMMENT '收回款账号',
+  
   `collection_datetime` datetime DEFAULT NULL COMMENT '收回款日期',
   `collection_remark` text COMMENT '收回款备注',
   `cur_node_code` varchar(32) DEFAULT NULL COMMENT '节点编号',

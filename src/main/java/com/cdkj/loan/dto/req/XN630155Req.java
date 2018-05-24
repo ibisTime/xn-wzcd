@@ -6,8 +6,6 @@ public class XN630155Req extends APageReq {
      */
     private static final long serialVersionUID = 5780013307270124748L;
 
-    private String code;// 节点编号
-
     private String name;// 节点名称
 
     private String type;// 流程类型
@@ -15,14 +13,6 @@ public class XN630155Req extends APageReq {
     private String nextNode;// 下一个节点
 
     private String backNode;// 返回节点
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public String getName() {
         return name;

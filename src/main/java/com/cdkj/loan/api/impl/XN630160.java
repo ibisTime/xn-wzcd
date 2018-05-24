@@ -39,7 +39,6 @@ public class XN630160 extends AProcessor {
         ObjValidater.validateReq(req);
         if (CollectionUtils.isEmpty(req.getNodeList())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "节点列表不能为空");
-
         }
     }
 }
