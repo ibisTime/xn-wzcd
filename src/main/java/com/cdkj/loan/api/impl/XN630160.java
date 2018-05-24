@@ -15,8 +15,8 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 角色批量设置节点
- * @author: hp 
- * @since: 2018年5月23日 下午3:32:10 
+ * @author: jiafr 
+ * @since: 2018年5月24日 下午2:31:15 
  * @history:
  */
 public class XN630160 extends AProcessor {

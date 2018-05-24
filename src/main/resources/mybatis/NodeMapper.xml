@@ -9,6 +9,7 @@
 		<result column="next_node" property="nextNode" />
 		<result column="back_node" property="backNode" />
 		<result column="remark" property="remark" />
+		<result column="isChoice" property="isChoice" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -85,4 +86,13 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
+	
+	<select id="select_nodeList_include_curRole" parameterType="node" resultMap="node_DB_Result">
+		select 
+		tn.code
+		,tn.name  
+		,tn.type 
+		,CASE WHEN EXISTS(SELECT 1 FROM tsys_role_node trn WHERE  tn.code=trn.node_code AND trn.role_code=#{roleCode}) THEN 1 ELSE 0 END AS isChoice
+		from tsys_node tn
+	</select>
 </mapper>
