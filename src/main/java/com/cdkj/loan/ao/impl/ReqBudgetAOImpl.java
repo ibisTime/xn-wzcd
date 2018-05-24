@@ -71,7 +71,8 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     @Override
     public Paginable<ReqBudget> queryReqBudgetPageByRoleCode(int start,
             int limit, ReqBudget condition) {
-        return reqBudgetBO.getPaginableByRoleCode(start, limit, condition);
+        // return reqBudgetBO.getPaginableByRoleCode(start, limit, condition);
+        return reqBudgetBO.getPaginable(start, limit, condition);
     }
 
     @Override

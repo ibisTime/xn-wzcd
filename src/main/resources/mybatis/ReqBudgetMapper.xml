@@ -37,8 +37,11 @@
 			<if test="companyCode != null and companyCode != '' ">
 				AND trn.company_code = #{companyCode}
 			</if>
-			<if test="applyDatetime != null and applyDatetime != '' ">
-				AND trn.apply_datetime = #{applyDatetime}
+			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
+				<![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
+			</if>
+			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
+				<![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
 			</if>
 		</trim>
 	</sql>
