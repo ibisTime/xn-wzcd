@@ -1,3 +1,23 @@
+/*业务日志表*/
+CREATE TABLE `biz_log` (
+  `id` bigint(32) NOT NULL COMMENT '序号',
+  `parent_order` varchar(32) DEFAULT NULL COMMENT '上级订单编号',
+  `ref_type` varchar(4) DEFAULT NULL COMMENT '关联订单类型',
+  `ref_order` varchar(32) CHARACTER SET utf8 COLLATE utf8_estonian_ci DEFAULT NULL COMMENT '关联订单编号',
+  `start_node` varchar(32) DEFAULT NULL COMMENT '开始节点',
+  `end_node` varchar(32) DEFAULT NULL COMMENT '下个节点',
+  `status` varchar(4) DEFAULT NULL COMMENT '状态',
+  `operate_role` varchar(255) DEFAULT NULL COMMENT '操作角色',
+  `operator` varchar(255) DEFAULT NULL COMMENT '操作人',
+  `operator_name` varchar(255) DEFAULT NULL COMMENT '操作人姓名',
+  `operator_mobile` int(11) DEFAULT NULL COMMENT '操作人手机号',
+  `start_datetime` datetime DEFAULT NULL COMMENT '操作开始时间',
+  `end_datetime` datetime DEFAULT NULL COMMENT '操作结束时间',
+  `speed_time` datetime DEFAULT NULL COMMENT '花费时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='业务日志表';
+
+
 /*请款预算单*/
 DROP TABLE IF EXISTS `tdq_req_budget`;
 CREATE TABLE `tdq_req_budget` (
@@ -7,6 +27,8 @@ CREATE TABLE `tdq_req_budget` (
   `receipt_account` varchar(255) DEFAULT NULL COMMENT '收款账号',
   `budget_amount` bigint(20) DEFAULT NULL COMMENT '预算金额',
   `use_datetime` datetime DEFAULT NULL COMMENT '用款日期',
+  `apply_user` varchar(32) DEFAULT NULL COMMENT '申请人',
+  `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
   `finance_check_note` text COMMENT '财务审核说明',
   `pay_amount` bigint(255) DEFAULT NULL COMMENT '打款金额',
   `pay_bank` varchar(255) DEFAULT NULL COMMENT '打款银行',
@@ -21,9 +43,10 @@ CREATE TABLE `tdq_req_budget` (
   `collection_account` varchar(255) DEFAULT NULL COMMENT '收回款账号',
   `collection_datetime` datetime DEFAULT NULL COMMENT '收回款日期',
   `collection_remark` text COMMENT '收回款备注',
-  `node_code` varchar(32) DEFAULT NULL COMMENT '节点编号',
+  `cur_node_code` varchar(32) DEFAULT NULL COMMENT '节点编号',
   PRIMARY KEY (`code`) COMMENT '请款预算单'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 /*预算单表*/
 DROP TABLE IF EXISTS `tdq_budget_order`;

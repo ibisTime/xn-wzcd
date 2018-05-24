@@ -10,11 +10,13 @@ public class XN632105Req extends APageReq {
 
     private String applyDatetime;// 打款日期
 
-    private String curNodeCode;// 办理状态
+    private String curNodeCode;// 节点编号
 
     private String applyDatetimeStart;// 申请时间起
 
     private String applyDatetimeEnd;// 申请时间止
+
+    private String roleCode;// 角色编号
 
     public String getRoleCode() {
         return roleCode;
@@ -23,8 +25,6 @@ public class XN632105Req extends APageReq {
     public void setRoleCode(String roleCode) {
         this.roleCode = roleCode;
     }
-
-    private String roleCode;// 角色编号
 
     public String getCompanyCode() {
         return companyCode;
