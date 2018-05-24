@@ -6,7 +6,7 @@ import com.cdkj.loan.dao.base.ABaseDO;
 
 public class SYSBizLog extends ABaseDO {
 
-    private Long id;// 序号
+    private int id;// 序号
 
     private String parentOrder;// 上级订单编号
 
@@ -32,13 +32,13 @@ public class SYSBizLog extends ABaseDO {
 
     private Date endDatetime;// 操作结束时间
 
-    private Long speedTime;// 花费时间
+    private String speedTime;// 花费时间
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -138,11 +138,11 @@ public class SYSBizLog extends ABaseDO {
         this.endDatetime = endDatetime;
     }
 
-    public Long getSpeedTime() {
+    public String getSpeedTime() {
         return speedTime;
     }
 
-    public void setSpeedTime(Long speedTime) {
+    public void setSpeedTime(String speedTime) {
         this.speedTime = speedTime;
     }
 

@@ -5,5 +5,9 @@ import com.cdkj.loan.domain.SYSBizLog;
 
 //dao层 
 public interface ISYSBizLogDAO extends IBaseDAO<SYSBizLog> {
-	String NAMESPACE = ISYSBizLogDAO.class.getName().concat(".");
+    String NAMESPACE = ISYSBizLogDAO.class.getName().concat(".");
+
+    public int updateDatetime(SYSBizLog data);
+
+    public long selectSysBizLogLatest(SYSBizLog data);
 }

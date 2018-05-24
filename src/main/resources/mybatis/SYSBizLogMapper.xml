@@ -20,8 +20,8 @@
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
+			<if test="id != null and id != '' ">
+				AND t.id = #{id}
 			</if>
 			<if test="parentOrder != null and parentOrder != '' ">
 				AND t.parent_order = #{parentOrder}
@@ -83,14 +83,21 @@
 			</if>
 		</trim>
 	</select>
+	
 
 	<select id="select_sysBizLog_count" parameterType="sysBizLog"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tsys_biz_log t
 		<include refid="where_condition" />
 	</select>
+	
+	<select id="select_sysBizLog_latest" parameterType="sysBizLog"
+		resultType="java.lang.Integer">
+		SELECT max(id) FROM tsys_biz_log t
+		<include refid="where_condition" />
+	</select>
 
-	<insert id="insert_sysBizLog" parameterType="sysBizLog">
+	<insert id="insert_sysBizLog" parameterType="sysBizLog" useGeneratedKeys="true">
 		INSERT INTO
 		tsys_biz_log(
 		id
@@ -142,7 +149,15 @@
 		,start_datetime = #{startDatetime}
 		,end_datetime = #{endDatetime}
 		,speed_time = #{speedTime}
-		WHERE code = #{code}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="update_datetime" parameterType="sysBizLog">
+		UPDATE tsys_biz_log
+		SET
+		end_datetime = #{endDatetime}
+		,speed_time = #{speedTime}
+		WHERE id = #{id}
 	</update>
 
 

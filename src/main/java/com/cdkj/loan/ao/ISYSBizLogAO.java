@@ -18,6 +18,6 @@ public interface ISYSBizLogAO {
 
     public List<SYSBizLog> querySYSBizLogList(SYSBizLog condition);
 
-    public SYSBizLog getSYSBizLog(Long id);
+    public SYSBizLog getSYSBizLog(int id);
 
 }

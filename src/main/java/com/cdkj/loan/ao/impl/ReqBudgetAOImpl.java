@@ -9,10 +9,15 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.IReqBudgetAO;
 import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.IReqBudgetBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.ISYSRoleBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.ReqBudget;
+import com.cdkj.loan.domain.SYSBizLog;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632100Req;
 import com.cdkj.loan.dto.req.XN632101Req;
 import com.cdkj.loan.dto.req.XN632102Req;
@@ -21,6 +26,7 @@ import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EButtonCode;
 import com.cdkj.loan.enums.EReqBudgetNode;
+import com.cdkj.loan.enums.ESYSBizLogStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -31,6 +37,15 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
 
     @Autowired
     private INodeBO nodeBO;
+
+    @Autowired
+    private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private IUserBO userBO;
+
+    @Autowired
+    private ISYSRoleBO sysRoleBO;
 
     @Override
     public String addReqBudget(XN632100Req req) {
@@ -44,6 +59,8 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         data.setApplyUser(req.getApplyUser());
         data.setApplyDatetime(new Date());
         data.setCurNodeCode(EReqBudgetNode.STARTNODE.getCode());
+        // 申请写入日志
+        reqWriteLog(req);
         if (EButtonCode.SEND.getCode().equals(req.getButtonCode())) {
             // 发送申请
             data.setCurNodeCode(
@@ -52,6 +69,30 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         return reqBudgetBO.saveReqBudget(data);
     }
 
+    private int reqWriteLog(XN632100Req req) {
+        // 申请写入日志
+        SYSBizLog data = new SYSBizLog();
+        data.setOperator(req.getApplyUser());
+        // 判断是否保存
+        if (EButtonCode.SEND.getCode().equals(req.getButtonCode())) {
+            data.setDealNode(EReqBudgetNode.APPLY.getCode());
+        } else {
+            data.setDealNode(EReqBudgetNode.STARTNODE.getCode());
+        }
+        data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
+        String level = sysRoleBO.getSYSRole(req.getApplyUser()).getLevel();
+        data.setOperateRole(level);
+        data.setOperator(req.getApplyUser());
+        User user = userBO.getUser(req.getApplyUser());
+        data.setOperatorName(user.getRealName());
+
+        data.setOperatorMobile(user.getMobile());
+        data.setStartDatetime(new Date());
+
+        return sysBizLogBO.saveSYSBizLog(data);
+    }
+
+    // 收回预算款
     @Override
     public int collectionReqBudget(XN632103Req req) {
         ReqBudget data = reqBudgetBO.getReqBudget(req.getCode());
@@ -67,7 +108,28 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         data.setCollectionRemark(req.getCollectionRemark());
         data.setCurNodeCode(nodeBO
             .getNode(EReqBudgetNode.ALREADY_CREDIT.getCode()).getNextNode());
+        // 收回预算款写入日志
+        collectionWriteLog(req);
+        // 修改结束时间和花费时间
+        updateDatetime(data);
         return reqBudgetBO.collectionReqBudget(data);
+    }
+
+    // TODO 收回预算款写入日志
+    private void collectionWriteLog(XN632103Req req) {
+        SYSBizLog data = new SYSBizLog();
+        data.setDealNode(EReqBudgetNode.COLLECTION.getCode());
+        data.setDealNote(req.getCollectionRemark());
+        data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
+        String level = sysRoleBO.getSYSRole(req.getOperator()).getLevel();
+        data.setOperateRole(level);
+        data.setOperator(req.getOperator());
+        User user = userBO.getUser(req.getOperator());
+        data.setOperatorName(user.getRealName());
+
+        data.setOperatorMobile(user.getMobile());
+        data.setStartDatetime(new Date());
+        sysBizLogBO.saveSYSBizLog(data);
     }
 
     @Override
@@ -97,6 +159,7 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         return reqBudgetBO.getReqBudget(code);
     }
 
+    // 财务经理审核
     @Override
     public int audit(XN632101Req req) {
         ReqBudget reqBudget = reqBudgetBO.getReqBudget(req.getCode());
@@ -110,14 +173,36 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
             // 审核通过，改变节点
             reqBudget.setCurNodeCode(
                 nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getNextNode());
+            // 申请写入日志
+            auditWriteLog(req);
         } else {
             reqBudget.setCurNodeCode(
                 nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getBackNode());
         }
-
+        // 修改结束时间和花费时间
+        updateDatetime(reqBudget);
         return reqBudgetBO.refreshReqBudgetNode(reqBudget);
     }
 
+    // TODO 申请写入日志
+    private void auditWriteLog(XN632101Req req) {
+        SYSBizLog data = new SYSBizLog();
+        data.setDealNode(EReqBudgetNode.AUDIT.getCode());
+        data.setDealNote(req.getFinanceCheckNote());
+        data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
+        String level = sysRoleBO.getSYSRole(req.getOperator()).getLevel();
+        data.setOperateRole(level);
+        data.setOperator(req.getOperator());
+        User user = userBO.getUser(req.getOperator());
+        data.setOperatorName(user.getRealName());
+
+        data.setOperatorMobile(user.getMobile());
+        data.setStartDatetime(new Date());
+        sysBizLogBO.saveSYSBizLog(data);
+
+    }
+
+    // 确认放款
     @Override
     public int loan(XN632102Req req) {
         ReqBudget condition = reqBudgetBO.getReqBudget(req.getCode());
@@ -134,6 +219,38 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         condition.setCurNodeCode(
             nodeBO.getNode(EReqBudgetNode.LOAN.getCode()).getNextNode());
 
+        // 放款写入日志
+        loanWriteLog(req);
+        // 修改结束时间和花费时间
+        updateDatetime(condition);
         return reqBudgetBO.loan(condition);
+    }
+
+    // TODO 放款写入日志
+    private void loanWriteLog(XN632102Req req) {
+        SYSBizLog data = new SYSBizLog();
+        data.setDealNode(EReqBudgetNode.LOAN.getCode());
+        data.setDealNote(req.getPayRemark());
+        data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
+        String level = sysRoleBO.getSYSRole(req.getOperator()).getLevel();
+        data.setOperateRole(level);
+        data.setOperator(req.getOperator());
+        User user = userBO.getUser(req.getOperator());
+        data.setOperatorName(user.getRealName());
+
+        data.setOperatorMobile(user.getMobile());
+        data.setStartDatetime(new Date());
+        sysBizLogBO.saveSYSBizLog(data);
+    }
+
+    // 修改结束时间和花费时间
+    private void updateDatetime(ReqBudget reqBudget) {
+        SYSBizLog sysBizLog = new SYSBizLog();
+        sysBizLog.setRefOrder(reqBudget.getCode());
+        sysBizLog.setDealNode(reqBudget.getCurNodeCode());
+        int id = (int) sysBizLogBO.getSYSBizLoglatest(sysBizLog);
+        SYSBizLog bizLog = sysBizLogBO.getSYSBizLog(id);
+        bizLog.setEndDatetime(new Date());
+        sysBizLogBO.refreshSYSBizLog(bizLog);
     }
 }

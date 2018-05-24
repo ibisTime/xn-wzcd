@@ -24,7 +24,7 @@ public class XN630177 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return sysBizLogAO.getSYSBizLog(StringValidater.toLong(req.getId()));
+        return sysBizLogAO.getSYSBizLog(StringValidater.toInteger(req.getId()));
     }
 
     /** 

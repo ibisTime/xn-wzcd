@@ -27,7 +27,7 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
     }
 
     @Override
-    public SYSBizLog getSYSBizLog(Long id) {
+    public SYSBizLog getSYSBizLog(int id) {
         return sysBizLogBO.getSYSBizLog(id);
     }
 
