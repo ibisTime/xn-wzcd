@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.ICreditUserDAO">
+	<resultMap id="creditUser_DB_Result" type="creditUser">
+	
+		<result column="code" property="code" />
+		<result column="credit_code" property="creditCode" />
+		<result column="loan_role" property="shopWay" />
+		<result column="user_name" property="loanRole" />
+		<result column="relation" property="relation" />
+		
+		<result column="mobile" property="mobile" />
+		<result column="id_no" property="idNo" />
+		<result column="id_no_front" property="idNoFront" />
+		<result column="id_no_reverse" property="id_no_reverse" />
+		<result column="auth_pdf" property="auth_pdf" />
+		
+		<result column="interview_pic" property="interview_pic" />
+		<result column="dkdy_count" property="dkdy_count" />
+		<result column="dkdy_amount" property="dkdy_amount" />
+		<result column="dkdy_2year_over_times" property="dkdy_2year_over_times" />
+		<result column="dkdy_max_over_amount" property="dkdy_max_over_amount" />
+		
+		<result column="dkdy_current_over_ amount" property="dkdy_current_over_" />
+		<result column="dkdy_6month_avg_amount" property="dkdy_6month_avg_amount" />
+		<result column="hkxy_unsettle_count" property="hkxy_unsettle_count" />
+		<result column="hkxy_unsettle_amount" property="hkxy_unsettle_amount" />
+		<result column="hkxy_2year_over_times" property="hkxy_2year_over_times" />
+		
+		<result column="hkxy_monthmax_over_amount" property="hkxy_monthmax_over_amount" />		
+		<result column="hkxy_current_over_amount" property="hkxy_current_over_amount" />
+		<result column="hkxy_6month_avg_amount amount" property="hkxy_6month_avg_amount" />
+		<result column="xyk_count" property="xyk_count" />
+		<result column="xyk_credit_amount" property="xyk_credit_amount" />
+		
+		<result column="xyk_6month_use_amount" property="xyk_6month_use_amount" />
+		<result column="xyk_2year_over_times" property="xyk_2year_over_times" />
+		<result column="xyk_month_max_over_amount" property="xyk_month_max_over_amount" />
+		<result column="xyk_current_over_amount" property="xyk_current_over_amount" />
+		<result column="out_guarantees_count" property="out_guarantees_count" />
+		
+		<result column="out_guarantees_amount" property="out_guarantees_amount" />
+		<result column="out_guarantees_remark" property="out_guarantees_remark" />		
+	</resultMap>
+	
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">	
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="loanBank != null and loanBank != '' ">
+				AND t.loan_bank = #{loanBank}
+			</if>
+			<if test="shopWay != null and shopWay != '' ">
+				AND t.shop_way = #{shopWay}
+			</if>
+			<if test="loanAmount != null and loanAmount != '' ">
+				AND t.loan_amount = #{loanAmount}
+			</if>
+			<if test="xszFront != null and xszFront != '' ">
+				AND t.xsz_front = #{xszFront}
+			</if>
+			<if test="xszReverse != null and xszReverse != '' ">
+				AND t.xsz_reverse = #{xszReverse}
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="select_credit" parameterType="credit" resultMap="credit_DB_Result">
+		select 
+		t.code
+		,t.loan_bank
+		,t.shop_way
+		,t.loan_amount
+		,t.xsz_front
+		,t.xsz_reverse
+		from tdq_credit
+		<include refid="where_condition"/>
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	
+	<insert id="insert_credit" parameterType="credit">
+		INSERT INTO tdq_credit(
+		code
+		,loan_bank
+		,shop_way
+		,loan_amount
+		,xsz_front
+		
+		,xsz_reverse
+		,cur_node_code
+		)
+		VALUES(
+		#{code}
+		,#{loanBank}
+		,#{shopWay}
+		,#{loanAmount}
+		,#{xszFront}
+		
+		,#{xszReverse}
+		,#{curNodeCode}
+		)
+	</insert>
+	
+	<update id="update_credit" parameterType="credit">
+		UPDATE tdq_credit
+		SET
+		loan_bank = #{frozenAmount}
+		,shop_way = #{lastOrder}
+		,loan_amount = #{lastOrder}
+		,xsz_front = #{lastOrder}
+		,xsz_reverse = #{lastOrder}
+		,cur_node_code = #{lastOrder}
+		WHERE
+		code = #{code}
+	</update>
+	
+	<select id="select_credit_count" parameterType="credit"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_credit t
+		<include refid="where_condition" />
+	</select>
+	
+</mapper>
