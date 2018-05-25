@@ -54,9 +54,9 @@ public class ReqBudget extends ABaseDO {
 
     /*-------辅助字段----------*/
 
-    private Date applyDatetimeStart;// 打款时间起
+    private Date applyDatetimeStart;// 申请时间起
 
-    private Date applyDatetimeEnd;// 打款时间止
+    private Date applyDatetimeEnd;// 申请时间止
 
     private String roleCode; // 角色编号
 

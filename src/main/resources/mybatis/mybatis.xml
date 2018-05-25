@@ -57,11 +57,15 @@
 		<typeAlias alias="node" type="com.cdkj.loan.domain.Node" />
 		<typeAlias alias="roleNode" type="com.cdkj.loan.domain.RoleNode" />
 		<typeAlias alias="reqBudget" type="com.cdkj.loan.domain.ReqBudget" />
+
 		
 		<!-- 征信 -->
 		<typeAlias alias="credit" type="com.cdkj.loan.domain.Credit" />
 		<typeAlias alias="creditUser" type="com.cdkj.loan.domain.CreditUser" />
 		
+
+		<typeAlias alias="sysBizLog" type="com.cdkj.loan.domain.SYSBizLog" />
+
 	</typeAliases>
 	
 </configuration>

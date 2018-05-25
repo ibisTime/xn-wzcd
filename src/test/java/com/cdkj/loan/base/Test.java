@@ -9,22 +9,25 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "SYSNode";
+    private static String key = "SYSBizLog";
 
     // 实体名称
-    private static String keyName = "流程配置表";
+    private static String keyName = "业务日志表";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tsys_node";
+    private static String dbname = "tsys_biz_log";
 
-    private static String[] DBwords = { "code", " name", "type", "next_node",
-            "back_node", "remark" };
+    private static String[] DBwords = { "id", "parent_order", "ref_type",
+            "ref_order", "start_node", "end_node", "status", "operate_role",
+            "operator", "operator_name", "operator_mobile", "start_datetime",
+            "end_datetime", "speed_time" };
 
-    private static String[] DBwordsName = { "节点编号", "节点名称", "类型", "下一个节点",
-            "返回节点", "备注" };
+    private static String[] DBwordsName = { "序号", "上级订单编号", "关联订单类型", "关联订单编号",
+            "开始节点", "下个节点(处理完后记录)", "状态", "操作角色", "操作人", "操作人姓名", "操作人手机号",
+            "操作开始时间", "操作结束时间", "花费时间" };
 
     private static String[] DOwords = getDOwords();
 
