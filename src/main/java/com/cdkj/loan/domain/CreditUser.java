@@ -16,29 +16,23 @@ public class CreditUser extends ABaseDO {
     // 征信单编号
     private String creditCode;
 
-    // 贷款角色
-    private String loanRole;
-
     // 姓名
     private String userName;
 
     // 与借款人关系
     private String relation;
 
-    // 手机号
-    private String mobile;
+    // 贷款角色
+    private String loanRole;
 
     // 身份证号
     private String idNo;
 
-    // 身份证正面
-    private String idNoFront;
-
-    // 身份证反面
-    private String idNoReverse;
+    // 手机号
+    private String mobile;
 
     // 征信查询授权书
-    private String creditInquireAuthorization;
+    private String authPdf;
 
     // 面签照片
     private String interviewPic;
@@ -124,14 +118,6 @@ public class CreditUser extends ABaseDO {
         this.creditCode = creditCode;
     }
 
-    public String getLoanRole() {
-        return loanRole;
-    }
-
-    public void setLoanRole(String loanRole) {
-        this.loanRole = loanRole;
-    }
-
     public String getUserName() {
         return userName;
     }
@@ -148,12 +134,12 @@ public class CreditUser extends ABaseDO {
         this.relation = relation;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getLoanRole() {
+        return loanRole;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setLoanRole(String loanRole) {
+        this.loanRole = loanRole;
     }
 
     public String getIdNo() {
@@ -164,28 +150,20 @@ public class CreditUser extends ABaseDO {
         this.idNo = idNo;
     }
 
-    public String getIdNoFront() {
-        return idNoFront;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setIdNoFront(String idNoFront) {
-        this.idNoFront = idNoFront;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public String getIdNoReverse() {
-        return idNoReverse;
+    public String getAuthPdf() {
+        return authPdf;
     }
 
-    public void setIdNoReverse(String idNoReverse) {
-        this.idNoReverse = idNoReverse;
-    }
-
-    public String getCreditInquireAuthorization() {
-        return creditInquireAuthorization;
-    }
-
-    public void setCreditInquireAuthorization(String creditInquireAuthorization) {
-        this.creditInquireAuthorization = creditInquireAuthorization;
+    public void setAuthPdf(String authPdf) {
+        this.authPdf = authPdf;
     }
 
     public String getInterviewPic() {

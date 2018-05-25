@@ -78,6 +78,7 @@
 		)
 	</insert>
 	
+	
 	<update id="update_credit" parameterType="credit">
 		UPDATE tdq_credit
 		SET

@@ -6,42 +6,39 @@
 	
 		<result column="code" property="code" />
 		<result column="credit_code" property="creditCode" />
-		<result column="loan_role" property="shopWay" />
-		<result column="user_name" property="loanRole" />
+		
+		<result column="user_name" property="userName" />
 		<result column="relation" property="relation" />
-		
-		<result column="mobile" property="mobile" />
+		<result column="loan_role" property="loanRole" />
 		<result column="id_no" property="idNo" />
-		<result column="id_no_front" property="idNoFront" />
-		<result column="id_no_reverse" property="id_no_reverse" />
-		<result column="auth_pdf" property="auth_pdf" />
+		<result column="mobile" property="mobile" />
+		<result column="auth_pdf" property="authPdf" />
+		<result column="interview_pic" property="interviewPic" />
 		
-		<result column="interview_pic" property="interview_pic" />
-		<result column="dkdy_count" property="dkdy_count" />
-		<result column="dkdy_amount" property="dkdy_amount" />
-		<result column="dkdy_2year_over_times" property="dkdy_2year_over_times" />
-		<result column="dkdy_max_over_amount" property="dkdy_max_over_amount" />
+		<result column="dkdy_count" property="dkdyCount" />
+		<result column="dkdy_amount" property="dkdyAmount" />
+		<result column="dkdy_2year_over_times" property="dkdy2YearOverTimes" />
+		<result column="dkdy_max_over_amount" property="dkdyMaxOverAmount" />
+		<result column="dkdy_current_over_amount" property="dkdyCurrentOverAmount" />
+		<result column="dkdy_6month_avg_amount" property="dkdy6MonthAvgAmount" />
 		
-		<result column="dkdy_current_over_ amount" property="dkdy_current_over_" />
-		<result column="dkdy_6month_avg_amount" property="dkdy_6month_avg_amount" />
-		<result column="hkxy_unsettle_count" property="hkxy_unsettle_count" />
-		<result column="hkxy_unsettle_amount" property="hkxy_unsettle_amount" />
-		<result column="hkxy_2year_over_times" property="hkxy_2year_over_times" />
+		<result column="hkxy_unsettle_count" property="hkxyUnsettleCount" />
+		<result column="hkxy_unsettle_amount" property="hkxyUnsettleAmount" />
+		<result column="hkxy_2year_over_times" property="hkxy2YearOverTimes" />
+		<result column="hkxy_monthmax_over_amount" property="hkxyMonthmaxOverAmount" />		
+		<result column="hkxy_current_over_amount" property="hkxyCurrentOverAmount" />
+		<result column="hkxy_6month_avg_amount" property="hkxy6MonthAvgAmount" />
 		
-		<result column="hkxy_monthmax_over_amount" property="hkxy_monthmax_over_amount" />		
-		<result column="hkxy_current_over_amount" property="hkxy_current_over_amount" />
-		<result column="hkxy_6month_avg_amount amount" property="hkxy_6month_avg_amount" />
-		<result column="xyk_count" property="xyk_count" />
-		<result column="xyk_credit_amount" property="xyk_credit_amount" />
+		<result column="xyk_count" property="xykCount" />
+		<result column="xyk_credit_amount" property="xykCreditAmount" />
+		<result column="xyk_6month_use_amount" property="xyk6MonthUseAmount" />
+		<result column="xyk_2year_over_times" property="xykYearOverTimes" />
+		<result column="xyk_month_max_over_amount" property="xykMonthMaxOverAmount" />
+		<result column="xyk_current_over_amount" property="xykCurrentOverAmount" />
 		
-		<result column="xyk_6month_use_amount" property="xyk_6month_use_amount" />
-		<result column="xyk_2year_over_times" property="xyk_2year_over_times" />
-		<result column="xyk_month_max_over_amount" property="xyk_month_max_over_amount" />
-		<result column="xyk_current_over_amount" property="xyk_current_over_amount" />
-		<result column="out_guarantees_count" property="out_guarantees_count" />
-		
-		<result column="out_guarantees_amount" property="out_guarantees_amount" />
-		<result column="out_guarantees_remark" property="out_guarantees_remark" />		
+		<result column="out_guarantees_count" property="outGuaranteesCount" />
+		<result column="out_guarantees_amount" property="outGuaranteesAmount" />
+		<result column="out_guarantees_remark" property="outGuaranteesRemark" />		
 	</resultMap>
 	
 	<sql id="where_condition">
@@ -67,7 +64,117 @@
 		</trim>
 	</sql>
 	
-	<select id="select_credit" parameterType="credit" resultMap="credit_DB_Result">
+	<insert id="insert_creditUserLsit" parameterType="List">
+		INSERT INTO 
+		stdq_credit_user(
+		code
+		,credit_code
+		
+		,user_name
+		,relation
+		,loan_role
+		,id_no
+		,mobile
+		,auth_pdf
+		,interview_pic
+		
+		,dkdy_count
+		,dkdy_amount
+		,dkdy_2year_over_times
+		,dkdy_max_over_amount
+		,dkdy_current_over_amount
+		,dkdy_6month_avg_amount
+		
+		,hkxy_unsettle_count
+		,hkxy_unsettle_amount
+		,hkxy_2year_over_times
+		,hkxy_monthmax_over_amount
+		,hkxy_current_over_amount
+		,hkxy_6month_avg_amount
+		
+		,xyk_count
+		,xyk_credit_amount
+		,xyk_6month_use_amount
+		,xyk_2year_over_times
+		,xyk_month_max_over_amount
+		,xyk_current_over_amount
+		
+		,out_guarantees_count
+		,out_guarantees_amount
+		,out_guarantees_remark
+		)
+		VALUES(
+		<foreach collection="list" item="creditUser" separator=",">
+			#{code}
+			#{creditCode}
+			
+			#{userName}
+			#{relation}
+			#{loanRole}
+			#{idNo}
+			#{mobile}
+			#{authPdf}
+			#{interviewPic}
+
+			#{dkdyCount}
+			#{dkdyAmount}
+			#{dkdy2YearOverTimes}
+			#{dkdyMaxOverAmount}
+			#{dkdyCurrentOverAmount}
+			#{dkdy6MonthAvgAmount}
+			
+			#{hkxyUnsettleCount}
+			#{hkxyUnsettleAmount}
+			#{hkxy2YearOverTimes}
+			#{hkxyMonthmaxOverAmount}
+			#{hkxyCurrentOverAmount}
+			#{hkxy6MonthAvgAmount}
+			
+			#{xykCount}
+			#{xykCreditAmount}
+			#{xyk6MonthUseAmount}
+			#{xykYearOverTimes}
+			#{xykMonthMaxOverAmount}
+			#{xykCurrentOverAmount}
+			
+			#{outGuaranteesCount}
+			#{outGuaranteesAmount}
+			#{outGuaranteesRemark}
+		</foreach>
+		)
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</insert>
+
+	
+	<insert id="insert_creditUser" parameterType="credit">
+		INSERT INTO tdq_credit(
+		code
+		
+		)
+		VALUES(
+		#{code}
+
+		)
+	</insert>
+	
+	
+	
+	
+
+	
+	
+		<select id="select_creditUser" parameterType="credit" resultMap="credit_DB_Result">
 		select 
 		t.code
 		,t.loan_bank
@@ -83,32 +190,8 @@
 			</if>
 		</trim>
 	</select>
-
 	
-	<insert id="insert_credit" parameterType="credit">
-		INSERT INTO tdq_credit(
-		code
-		,loan_bank
-		,shop_way
-		,loan_amount
-		,xsz_front
-		
-		,xsz_reverse
-		,cur_node_code
-		)
-		VALUES(
-		#{code}
-		,#{loanBank}
-		,#{shopWay}
-		,#{loanAmount}
-		,#{xszFront}
-		
-		,#{xszReverse}
-		,#{curNodeCode}
-		)
-	</insert>
-	
-	<update id="update_credit" parameterType="credit">
+	<update id="update_creditUser" parameterType="credit">
 		UPDATE tdq_credit
 		SET
 		loan_bank = #{frozenAmount}
@@ -121,7 +204,7 @@
 		code = #{code}
 	</update>
 	
-	<select id="select_credit_count" parameterType="credit"
+	<select id="select_credit_countUser" parameterType="credit"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tdq_credit t
 		<include refid="where_condition" />

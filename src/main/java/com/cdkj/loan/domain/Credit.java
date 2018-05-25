@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -46,6 +47,16 @@ public class Credit extends ABaseDO {
     private String curNodeCode;
 
     // ****************db properties*******************
+
+    private List<CreditUser> creditUserList;
+
+    public List<CreditUser> getCreditUserList() {
+        return creditUserList;
+    }
+
+    public void setCreditUserList(List<CreditUser> creditUserList) {
+        this.creditUserList = creditUserList;
+    }
 
     public String getCode() {
         return code;
