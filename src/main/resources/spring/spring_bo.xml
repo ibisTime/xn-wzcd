@@ -160,4 +160,8 @@
 		<property name="paginableDAO" ref="sysBizLogDAOImpl"/>
 	</bean>
 	
+	<bean id="insuranceCompanyBO" class="com.cdkj.loan.bo.impl.InsuranceCompanyBOImpl">
+		<property name="paginableDAO" ref="insuranceCompanyDAOImpl"/>
+	</bean>
+	
 </beans>
