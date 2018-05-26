@@ -18,7 +18,10 @@ public interface ICreditBO extends IPaginableBO<Credit> {
     public void updateCredit(Credit credit);
 
     // 查询征信单详情
-    public Credit queryCreditDetail(String code);
+    public Credit getCredit(String code);
+
+    // 查询更多征信单详情，包含征信人员信息
+    public Credit getMoreCredit(String code);
 
     // 更新征信单节点
     public void refreshCreditNode(Credit credit);

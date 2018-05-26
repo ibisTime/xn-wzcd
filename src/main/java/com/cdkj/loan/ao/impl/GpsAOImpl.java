@@ -10,6 +10,7 @@ import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.domain.Gps;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 
 @Service
@@ -25,6 +26,8 @@ public class GpsAOImpl implements IGpsAO {
         data.setCode(code);
         data.setGpsNo(gpsNo);
         data.setGpsType(gpsType);
+        data.setApplyStatus(EBoolean.NO.getCode());
+        data.setUseStatus(EBoolean.NO.getCode());
         gpsBO.saveGps(data);
         return code;
     }

@@ -6,12 +6,13 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.dto.req.XN632120Req;
 
 @Component
 public interface IBudgetOrderAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addBudgetOrder(BudgetOrder data);
+    public String addBudgetOrder(XN632120Req req);
 
     public void approveAreaManager(String code, String operator,
             String approveResult, String approveNote);

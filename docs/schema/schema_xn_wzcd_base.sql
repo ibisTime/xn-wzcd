@@ -186,7 +186,7 @@ COMMENT = '保险公司信息表';
 /*GPS库存管理(确定)*/
 DROP TABLE IF EXISTS `tb_gps`;
 CREATE TABLE `tb_gps` (
-  `code` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
   `gps_no` VARCHAR(32) NOT NULL COMMENT 'gps编号',
   `gps_type` VARCHAR(32) NOT NULL COMMENT 'gps类型( 1 有线 0 无线)',
   `company_code` VARCHAR(32) NULL COMMENT '公司编号',

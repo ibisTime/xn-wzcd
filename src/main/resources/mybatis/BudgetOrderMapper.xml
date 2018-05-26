@@ -8,6 +8,7 @@
 		<result column="customer_name" property="customerName" />
 		<result column="car_dealer_code" property="carDealerCode" />
 		<result column="loan_bank_code" property="loanBankCode" />
+	    <result column="loan_bank_subbranch" property="loanBankSubbranch" />
 		
 		<result column="original_price" property="originalPrice" />
 		<result column="car_model" property="carModel" />
@@ -29,16 +30,19 @@
 		
 		<result column="company_code" property="companyCode" />
 		<result column="sale_user_id" property="saleUserId" />
-		<result column="car_price" property="carPrice" />
-		<result column="bank_branch" property="bankBranch" />
-		<result column="is_house_property" property="isHouseProperty" />
+		<result column="apply_user_company" property="applyUserCompany" />
+		<result column="apply_user_duty" property="applyUserDuty" />
+		<result column="apply_user_ghr_relation" property="applyUserGhrRelation" />
+		<result column="marry_state" property="marryState" />
+		<result column="other_income_note" property="otherIncomeNote" />
 		
+		<result column="is_house_property" property="isHouseProperty" />
 		<result column="house_property" property="houseProperty" />
 		<result column="is_house_contract" property="isHouseContract" />
 		<result column="house_contract" property="houseContract" />
 		<result column="house_invoice" property="houseInvoice" />
-		<result column="is_license" property="isLicense" />
 		
+		<result column="is_license" property="isLicense" />
 		<result column="license" property="license" />
 		<result column="is_site_prove" property="isSiteProve" />
 		<result column="site_prove" property="siteProve" />
@@ -204,6 +208,7 @@
 		,t.customer_name
 		,t.car_dealer_code
 		,t.loan_bank_code
+		,t.loan_bank_subbranch
 		,t.original_price
 		,t.car_model
 		,t.loan_periods
@@ -221,8 +226,11 @@
 		,t.bank_loan_cs
 		,t.company_code
 		,t.sale_user_id
-		,t.car_price
-		,t.bank_branch
+		,t.apply_user_company
+		,t.apply_user_duty
+		,t.apply_user_ghr_relation
+		,t.marry_state
+		,t.other_income_note
 		,t.is_house_property
 		,t.house_property
 		,t.is_house_contract
@@ -376,6 +384,7 @@
 		,customer_name
 		,car_dealer_code
 		,loan_bank_code
+		,loan_bank_subbranch
 		,original_price
 		,car_model
 		,loan_periods
@@ -393,8 +402,13 @@
 		,bank_loan_cs
 		,company_code
 		,sale_user_id
-		,car_price
-		,bank_branch
+		
+		,apply_user_company
+		,apply_user_duty
+		,apply_user_ghr_relation
+		,marry_state
+		,other_income_note
+		
 		,is_house_property
 		,house_property
 		,is_house_contract
@@ -469,6 +483,7 @@
 		,#{customerName}
 		,#{carDealerCode}
 		,#{loanBankCode}
+		,#{loanBankSubbranch}
 		,#{originalPrice}
 		,#{carModel}
 		,#{loanPeriods}
@@ -486,8 +501,13 @@
 		,#{bankLoanCs}
 		,#{companyCode}
 		,#{saleUserId}
-		,#{carPrice}
-		,#{bankBranch}
+		
+		,#{applyUserCompany}
+		,#{applyUserDuty}
+		,#{applyUserGhrRelation}
+		,#{marryState}
+		,#{otherIncomeNote}
+		
 		,#{isHouseProperty}
 		,#{houseProperty}
 		,#{isHouseContract}

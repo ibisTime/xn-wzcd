@@ -34,7 +34,7 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Service
-public class creditAOImpl implements ICreditAO {
+public class CreditAOImpl implements ICreditAO {
 
     @Autowired
     private ICreditBO creditBO;
@@ -145,7 +145,7 @@ public class creditAOImpl implements ICreditAO {
 
         }
 
-        Credit creditCurrent = creditBO.queryCreditDetail(req.getCreditCode());
+        Credit creditCurrent = creditBO.getCredit(req.getCreditCode());
         creditCurrent.setCurNodeCode(nodeBO.getNode(
             ECreditNode.MODIFY.getCode()).getNextNode());
 
@@ -203,7 +203,7 @@ public class creditAOImpl implements ICreditAO {
     // 征信详情查询
     @Override
     public Credit queryCreditDetail(String code) {
-        Credit credit = creditBO.queryCreditDetail(code);
+        Credit credit = creditBO.getCredit(code);
 
         List<CreditUser> creditUserList = creditUserBO
             .queryCreditUserListByCreditCode(code);
@@ -216,7 +216,7 @@ public class creditAOImpl implements ICreditAO {
     // 查询征信单 根据征信单编号
     @Override
     public Credit queryCreditByCode(String creditCode) {
-        Credit credit = creditBO.queryCreditDetail(creditCode);
+        Credit credit = creditBO.getCredit(creditCode);
         return credit;
     }
 
@@ -224,7 +224,7 @@ public class creditAOImpl implements ICreditAO {
     @Override
     public void primaryAudit(XN632113Req req) {
 
-        Credit credit = creditBO.queryCreditDetail(req.getCode());
+        Credit credit = creditBO.getCredit(req.getCode());
 
         if (!ECreditNode.PRIMARYAUDIT.getCode().equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -254,7 +254,7 @@ public class creditAOImpl implements ICreditAO {
     @Override
     public void firstAudit(XN632114Req req) {
 
-        Credit credit = creditBO.queryCreditDetail(req.getCode());
+        Credit credit = creditBO.getCredit(req.getCode());
 
         if (!ECreditNode.FIRSTAUDIT.getCode().equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),

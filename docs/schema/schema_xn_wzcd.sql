@@ -40,6 +40,7 @@ CREATE TABLE `tdq_budget_order` (
   `customer_name` varchar(32) DEFAULT NULL COMMENT '客户姓名',
   `car_dealer_code` varchar(32) DEFAULT NULL COMMENT '汽车经销商编号',
   `loan_bank_code` varchar(32) DEFAULT NULL COMMENT '贷款银行编号',
+  `loan_bank_subbranch` varchar(255) DEFAULT NULL COMMENT '贷款银行经办支行',
   `original_price` bigint(20) DEFAULT NULL COMMENT '厂商指导价',
   `car_model` varchar(32) DEFAULT NULL COMMENT '车辆型号',
   `loan_periods` int(11) DEFAULT NULL COMMENT '贷款周期',
@@ -59,9 +60,13 @@ CREATE TABLE `tdq_budget_order` (
   
   `company_code` varchar(255) DEFAULT NULL COMMENT '公司编号',
   `sale_user_id` varchar(32) DEFAULT NULL COMMENT '业务员编号',
-  `car_price` bigint(20) DEFAULT NULL COMMENT '车辆价格',
-  `bank_branch` varchar(255) DEFAULT NULL COMMENT '银行经办支行',
   
+  `apply_user_company` varchar(255) DEFAULT NULL COMMENT '申请人就职单位',
+  `apply_user_duty` varchar(255) DEFAULT NULL COMMENT '申请人职位',
+  `apply_user_ghr_relation` varchar(255) DEFAULT NULL COMMENT '申请人与共还人关系',
+  `marry_state` varchar(32) DEFAULT NULL COMMENT '婚姻状况',
+  `other_income_note` varchar(255) DEFAULT NULL COMMENT '其他收入说明',
+
   `is_house_property` varchar(4) DEFAULT NULL COMMENT '房产证情况',
   `house_property` varchar(255) DEFAULT NULL COMMENT '房产证',
   `is_house_contract` varchar(4) DEFAULT NULL COMMENT '有无购房合同',
