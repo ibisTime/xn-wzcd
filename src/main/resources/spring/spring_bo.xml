@@ -163,6 +163,15 @@
 		<property name="paginableDAO" ref="sysBizLogDAOImpl"/>
 	</bean>
 	
+
+	<bean id="creditUserBO" class="com.cdkj.loan.bo.impl.CreditUserBOImpl">
+		<property name="paginableDAO" ref="creditUserDAOImpl"/>
+	</bean>
+	
+    <bean id="creditBO" class="com.cdkj.loan.bo.impl.CreditBOImpl">
+		<property name="paginableDAO" ref="creditDAOImpl"/>
+	</bean>
+
 	<bean id="insuranceCompanyBO" class="com.cdkj.loan.bo.impl.InsuranceCompanyBOImpl">
 		<property name="paginableDAO" ref="insuranceCompanyDAOImpl"/>
 	</bean>
@@ -175,4 +184,11 @@
 		<property name="paginableDAO" ref="carDealerDAOImpl"/>
 	</bean>
 	
+	<bean id="gpsBO" class="com.cdkj.loan.bo.impl.GpsBOImpl">
+		<property name="paginableDAO" ref="gpsDAOImpl"/>
+	</bean>
+	
+	<bean id="budgetOrderBO" class="com.cdkj.loan.bo.impl.BudgetOrderBOImpl">
+		<property name="paginableDAO" ref="budgetOrderDAOImpl"/>
+	</bean>
 </beans>

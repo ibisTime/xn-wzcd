@@ -63,7 +63,7 @@
 		<!-- 征信 -->
 		<typeAlias alias="credit" type="com.cdkj.loan.domain.Credit" />
 		<typeAlias alias="creditUser" type="com.cdkj.loan.domain.CreditUser" />
-		
+		<typeAlias alias="budgetOrder" type="com.cdkj.loan.domain.BudgetOrder" />
 
 		<typeAlias alias="sysBizLog" type="com.cdkj.loan.domain.SYSBizLog" />
 		
@@ -73,6 +73,10 @@
 		
 		<!-- 经销商信息 -->
 		<typeAlias alias="carDealer" type="com.cdkj.loan.domain.CarDealer" />
+
+		
+		<!-- 行政 -->
+		<typeAlias alias="gps" type="com.cdkj.loan.domain.Gps" />
 
 	</typeAliases>
 	

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IGpsDAO">
+	<resultMap id="gps_DB_Result" type="gps">
+		<result column="code" property="code" />
+		<result column="gps_no" property="gpsNo" />
+		<result column="gps_type" property="gpsType" />
+		<result column="company_code" property="companyCode" />
+		<result column="apply_user" property="applyUser" />
+		<result column="apply_status" property="applyStatus" />
+		
+		<result column="apply_datetime" property="applyDatetime" />
+		<result column="use_status" property="useStatus" />
+		<result column="use_datetime" property="useDatetime" />
+		<result column="biz_code" property="bizCode" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="gpsNo != null and gpsNo != '' ">
+				AND t.gps_no = #{gpsNo}
+			</if>
+			<if test="gpsType != null and gpsType != '' ">
+				AND t.gps_type = #{gpsType}
+			</if>
+			<if test="companyCode != null and companyCode != '' ">
+				AND t.company_code = #{companyCode}
+			</if>
+			<if test="applyStatus != null and applyStatus != '' ">
+				AND t.apply_status = #{applyStatus}
+			</if>
+			<if test="useStatus != null and useStatus != '' ">
+				AND t.use_status = #{useStatus}
+			</if>
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_gps" parameterType="gps" resultMap="gps_DB_Result">
+		SELECT
+		t.code
+		,t.gps_no
+		,t.gps_type
+		,t.company_code
+		,t.apply_user
+		,t.apply_status
+		,t.apply_datetime
+		,t.use_status
+		,t.use_datetime
+		,t.biz_code
+		FROM
+		tb_gps t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_gps_count" parameterType="gps"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tb_gps t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_gps" parameterType="gps">
+		INSERT INTO
+		tb_gps(
+		code
+		,gps_no
+		,gps_type
+		)
+		VALUES(
+		#{code}
+		,#{gpsNo}
+		,#{gpsType}
+		)
+	</insert>
+
+	<update id="update_gps_apply" parameterType="gps">
+		UPDATE tb_gps
+		SET
+		company_code = #{companyCode}
+		,apply_user = #{applyUser}
+		,apply_status = #{applyStatus}
+		,apply_datetime = #{applyDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_gps_use" parameterType="gps">
+		UPDATE tb_gps
+		SET
+		use_status = #{useStatus}
+		,use_datetime = #{useDatetime}
+		,biz_code = #{bizCode}
+		WHERE code = #{code}
+	</update>
+</mapper>

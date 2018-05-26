@@ -13,4 +13,10 @@ public interface ICreditDAO extends IBaseDAO<Credit> {
 
     String NAMESPACE = ICreditDAO.class.getName().concat(".");
 
+    // 修改征信
+    public int updateCredit(Credit credit);
+
+    // 更新征信单节点
+    public int updateNode(Credit credit);
+
 }

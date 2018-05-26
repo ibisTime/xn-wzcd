@@ -5,13 +5,10 @@ import java.util.List;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
-/**
- * 征信新增
- * @author: jiafr 
- * @since: 2018年5月24日 下午8:57:22 
- * @history:
- */
-public class XN632110Req {
+public class XN632112Req {
+
+    @NotBlank
+    private String creditCode;
 
     @NotBlank
     private String loanBank;
@@ -28,21 +25,10 @@ public class XN632110Req {
     @NotBlank
     private String xszReverse;
 
-    @NotBlank
-    private String operator;
-
     // **************db properties*******************
 
     @NotEmpty
-    private List<XN632110ReqChild> creditUserList;
-
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
-    }
+    private List<XN632112ReqChild> creditUserList;
 
     public String getLoanBank() {
         return loanBank;
@@ -84,12 +70,20 @@ public class XN632110Req {
         this.xszReverse = xszReverse;
     }
 
-    public List<XN632110ReqChild> getCreditUserList() {
+    public List<XN632112ReqChild> getCreditUserList() {
         return creditUserList;
     }
 
-    public void setCreditUserList(List<XN632110ReqChild> creditUserList) {
+    public void setCreditUserList(List<XN632112ReqChild> creditUserList) {
         this.creditUserList = creditUserList;
+    }
+
+    public String getCreditCode() {
+        return creditCode;
+    }
+
+    public void setCreditCode(String creditCode) {
+        this.creditCode = creditCode;
     }
 
 }

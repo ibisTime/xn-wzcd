@@ -23,19 +23,19 @@ public class Credit extends ABaseDO {
     private String companyCode;
 
     // 业务员编号
-    private String salesmanCode;
+    private String saleUserId;
 
     // 申请时间
     private Date applyDatetime;
 
-    // 贷款银行
-    private String loanBank;
+    // 贷款银行编号
+    private String loanBankCode;
 
     // 购车途径
     private String shopWay;
 
     // 贷款金额
-    private String loanAmount;
+    private Long loanAmount;
 
     // 行驶证正面
     private String xszFront;
@@ -43,20 +43,31 @@ public class Credit extends ABaseDO {
     // 行驶证反面
     private String xszReverse;
 
-    // 节点编号
+    // 当前节点编号
     private String curNodeCode;
+
+    // 附件
+    private String accessory;
 
     // ****************db properties*******************
 
+    // 业务公司
+    private String companyName;
+
+    // 贷款银行
+    private String loanBankName;
+
+    // 业务员
+    private String salesmanName;
+
+    // 节点名称
+    private String status;
+
+    // 征信人员中的主申请人的信息 ： 客户姓名 手机号 身份证号
+    private CreditUser creditUser;
+
+    // 征信人员信息
     private List<CreditUser> creditUserList;
-
-    public List<CreditUser> getCreditUserList() {
-        return creditUserList;
-    }
-
-    public void setCreditUserList(List<CreditUser> creditUserList) {
-        this.creditUserList = creditUserList;
-    }
 
     public String getCode() {
         return code;
@@ -82,12 +93,12 @@ public class Credit extends ABaseDO {
         this.companyCode = companyCode;
     }
 
-    public String getSalesmanCode() {
-        return salesmanCode;
+    public String getSaleUserId() {
+        return saleUserId;
     }
 
-    public void setSalesmanCode(String salesmanCode) {
-        this.salesmanCode = salesmanCode;
+    public void setSaleUserId(String saleUserId) {
+        this.saleUserId = saleUserId;
     }
 
     public Date getApplyDatetime() {
@@ -98,12 +109,12 @@ public class Credit extends ABaseDO {
         this.applyDatetime = applyDatetime;
     }
 
-    public String getLoanBank() {
-        return loanBank;
+    public String getLoanBankCode() {
+        return loanBankCode;
     }
 
-    public void setLoanBank(String loanBank) {
-        this.loanBank = loanBank;
+    public void setLoanBankCode(String loanBankCode) {
+        this.loanBankCode = loanBankCode;
     }
 
     public String getShopWay() {
@@ -114,11 +125,11 @@ public class Credit extends ABaseDO {
         this.shopWay = shopWay;
     }
 
-    public String getLoanAmount() {
+    public Long getLoanAmount() {
         return loanAmount;
     }
 
-    public void setLoanAmount(String loanAmount) {
+    public void setLoanAmount(Long loanAmount) {
         this.loanAmount = loanAmount;
     }
 
@@ -144,6 +155,62 @@ public class Credit extends ABaseDO {
 
     public void setCurNodeCode(String curNodeCode) {
         this.curNodeCode = curNodeCode;
+    }
+
+    public String getAccessory() {
+        return accessory;
+    }
+
+    public void setAccessory(String accessory) {
+        this.accessory = accessory;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getLoanBankName() {
+        return loanBankName;
+    }
+
+    public void setLoanBankName(String loanBankName) {
+        this.loanBankName = loanBankName;
+    }
+
+    public String getSalesmanName() {
+        return salesmanName;
+    }
+
+    public void setSalesmanName(String salesmanName) {
+        this.salesmanName = salesmanName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public CreditUser getCreditUser() {
+        return creditUser;
+    }
+
+    public void setCreditUser(CreditUser creditUser) {
+        this.creditUser = creditUser;
+    }
+
+    public List<CreditUser> getCreditUserList() {
+        return creditUserList;
+    }
+
+    public void setCreditUserList(List<CreditUser> creditUserList) {
+        this.creditUserList = creditUserList;
     }
 
 }

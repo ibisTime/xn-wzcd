@@ -43,17 +43,47 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         return null;
     }
 
-    // 批量新增征信人员列表
+    // 修改征信人员
     @Override
-    public void addCreditList(List<CreditUser> dataList) {
+    public void updateCreditUser(CreditUser creditUser) {
 
-        for (CreditUser creditUser : dataList) {
-            String code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER
-                .getCode());
-            creditUser.setCode(code);
-        }
+        creditUserDAO.updateCreditUser(creditUser);
 
-        creditUserDAO.insertCreditUserList(dataList);
+    }
+
+    // 录入银行征信结果
+    @Override
+    public void inputBankCreditResult(CreditUser creditUser) {
+        creditUserDAO.inputBankCreditResult(creditUser);
+
+    }
+
+    // 新增征信人员
+    @Override
+    public void addCreditUser(CreditUser creditUser) {
+        String code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER
+            .getCode());
+        creditUser.setCode(code);
+        creditUserDAO.insert(creditUser);
+    }
+
+    // 批量查询征信人员 根据征信单编号
+    @Override
+    public List<CreditUser> queryCreditUserListByCreditCode(String creditCode) {
+
+        CreditUser creditUser = new CreditUser();
+        creditUser.setCreditCode(creditCode);
+
+        return creditUserDAO.selectList(creditUser);
+    }
+
+    // 查看征信报告详情
+    @Override
+    public CreditUser queryCreditReportDetail(String code) {
+
+        CreditUser creditUser = new CreditUser();
+        creditUser.setCode(code);
+        return creditUserDAO.select(creditUser);
     }
 
 }

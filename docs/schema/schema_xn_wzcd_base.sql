@@ -172,6 +172,7 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '经销商协议表';
 
 /*保险公司信息表(确定)*/
+DROP TABLE IF EXISTS `tb_insurance_company`;
 CREATE TABLE `tb_insurance_company` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
   `name` VARCHAR(255) NULL COMMENT '名称',
@@ -184,8 +185,11 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '保险公司信息表';
 
 /*GPS库存管理(确定)*/
+DROP TABLE IF EXISTS `tb_gps`;
 CREATE TABLE `tb_gps` (
-  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `code` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `gps_no` VARCHAR(32) NOT NULL COMMENT 'gps编号',
+  `gps_type` VARCHAR(32) NOT NULL COMMENT 'gps类型( 1 有线 0 无线)',
   `company_code` VARCHAR(32) NULL COMMENT '公司编号',
   `apply_user` VARCHAR(32) NULL COMMENT '申请人',
   `apply_status` VARCHAR(32) NULL COMMENT '申请状态',
