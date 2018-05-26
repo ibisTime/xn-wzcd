@@ -1,42 +1,42 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.IDepartmentAO;
+import com.cdkj.loan.ao.ICollectBankcardAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.domain.Department;
-import com.cdkj.loan.dto.req.XN630106Req;
+import com.cdkj.loan.domain.CollectBankcard;
+import com.cdkj.loan.dto.req.XN632007Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 列表查询部门
+ * 列表查询收款账号
  * @author: CYL 
- * @since: 2018年5月22日 下午6:00:55 
+ * @since: 2018年5月25日 下午4:55:45 
  * @history:
  */
-public class XN630106 extends AProcessor {
-    private IDepartmentAO departmentAO = SpringContextHolder
-        .getBean(IDepartmentAO.class);
+public class XN632007 extends AProcessor {
+    private ICollectBankcardAO collectBankcardAO = SpringContextHolder
+        .getBean(ICollectBankcardAO.class);
 
-    private XN630106Req req = null;
+    private XN632007Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        Department condition = new Department();
-        condition.setParentCode(req.getParentCode());
+        CollectBankcard condition = new CollectBankcard();
         condition.setType(req.getType());
-        condition.setStatus(req.getStatus());
+        condition.setCompanyCode(req.getCompanyCode());
         condition.setKeyword(req.getKeyword());
 
-        return departmentAO.queryDepartmentList(condition);
+        return collectBankcardAO.queryCollectBankcardList(condition);
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN630106Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632007Req.class);
         ObjValidater.validateReq(req);
     }
+
 }

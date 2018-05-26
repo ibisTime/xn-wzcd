@@ -81,4 +81,12 @@ public class XN630102Req {
         this.remark = remark;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }

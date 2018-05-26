@@ -27,6 +27,7 @@ public class DepartmentAOImpl implements IDepartmentAO {
         data.setLeadName(req.getLeadName());
         data.setMobile(req.getMobile());
         data.setParentCode(req.getParentCode());
+        data.setType(req.getType());
         data.setStatus(EDepartmentStatus.AVAILABLE.getCode());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
@@ -42,8 +43,9 @@ public class DepartmentAOImpl implements IDepartmentAO {
         data.setLeadName(req.getLeadName());
         data.setMobile(req.getMobile());
         data.setParentCode(req.getParentCode());
-        data.setStatus(EDepartmentStatus.AVAILABLE.getCode());
+        data.setType(req.getType());
 
+        data.setStatus(EDepartmentStatus.AVAILABLE.getCode());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());

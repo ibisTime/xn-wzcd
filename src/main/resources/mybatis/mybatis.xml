@@ -69,6 +69,7 @@
 		
 		<!-- 基础数据 -->
 		<typeAlias alias="insuranceCompany" type="com.cdkj.loan.domain.InsuranceCompany" />
+		<typeAlias alias="collectBankcard" type="com.cdkj.loan.domain.CollectBankcard" />
 
 	</typeAliases>
 	
