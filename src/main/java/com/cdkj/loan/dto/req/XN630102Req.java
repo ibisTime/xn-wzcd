@@ -18,6 +18,9 @@ public class XN630102Req {
     private String parentCode;// 上级部门编号
 
     @NotBlank
+    private String type;// 类型
+
+    @NotBlank
     private String updater;// 更新人
 
     private String remark;// 备注

@@ -15,6 +15,9 @@ public class XN630100Req {
     private String parentCode;// 上级部门编号
 
     @NotBlank
+    private String type;// 类型
+
+    @NotBlank
     private String updater;// 更新人
 
     private String remark;// 备注
@@ -25,6 +28,14 @@ public class XN630100Req {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getLeadName() {

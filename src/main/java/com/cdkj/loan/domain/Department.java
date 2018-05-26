@@ -17,6 +17,8 @@ public class Department extends ABaseDO {
 
     private String parentCode;// 上级部门编号
 
+    private String type;// 类型
+
     private String status;// 状态
 
     private String updater;// 更新人
@@ -67,6 +69,14 @@ public class Department extends ABaseDO {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getParentCode() {
