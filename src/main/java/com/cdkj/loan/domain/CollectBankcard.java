@@ -4,6 +4,11 @@ import com.cdkj.loan.dao.base.ABaseDO;
 
 public class CollectBankcard extends ABaseDO {
 
+    /** 
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+     */
+    private static final long serialVersionUID = 1L;
+
     private String code;// 编号
 
     private String type;// 类型
@@ -20,11 +25,31 @@ public class CollectBankcard extends ABaseDO {
 
     private String bankcardNumber;// 账号
 
+    private String pointRate;// 返点比例
+
     private String remark;// 备注
 
     /*---------辅助字段----------*/
 
-    private String keyword;
+    private String keyword;// 关键字
+
+    private String companyName;// 公司名称
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getPointRate() {
+        return pointRate;
+    }
+
+    public void setPointRate(String pointRate) {
+        this.pointRate = pointRate;
+    }
 
     public String getKeyword() {
         return keyword;

@@ -15,7 +15,8 @@ package com.cdkj.loan.enums;
  * @history:
  */
 public enum ECollectBankcard {
-    PLATFORM("1", "平台"), FILIALE("2", "分公司");
+    PLATFORM("1", "平台普通账户"), DEALER_COLLECT("2", "经销商的收款账号"), DEALER_REBATE("3",
+            "经销商返点账号");
 
     ECollectBankcard(String code, String value) {
         this.code = code;

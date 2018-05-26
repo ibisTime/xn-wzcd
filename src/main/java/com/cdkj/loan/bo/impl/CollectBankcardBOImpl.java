@@ -2,6 +2,7 @@ package com.cdkj.loan.bo.impl;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,54 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
     @Autowired
     private ICollectBankcardDAO collectBankcardDAO;
 
+    @Override
+    public void saveCollectBankcardList(
+            List<CollectBankcard> collectBankcardList, String type) {
+        if (CollectionUtils.isNotEmpty(collectBankcardList)) {
+            for (CollectBankcard collectBankcard : collectBankcardList) {
+                String cbCode = OrderNoGenerater
+                    .generate(EGeneratePrefix.COLLECTBANKCARD.getCode());
+                CollectBankcard data = new CollectBankcard();
+                data.setCode(cbCode);
+                data.setType(type);
+                data.setCompanyCode(collectBankcard.getCompanyCode());
+                data.setRealName(collectBankcard.getRealName());
+                data.setBankCode(collectBankcard.getBankCode());
+                data.setBankName(collectBankcard.getBankName());
+                data.setSubbranch(collectBankcard.getSubbranch());
+                data.setBankcardNumber(collectBankcard.getBankcardNumber());
+                data.setRemark(collectBankcard.getRemark());
+                data.setRemark(collectBankcard.getRemark());
+                collectBankcardDAO.insert(data);
+            }
+        }
+    }
+
+    @Override
+    public void saveCollectBankcardList(
+            List<CollectBankcard> collectBankcardList, String type,
+            String bankCode) {
+        if (CollectionUtils.isNotEmpty(collectBankcardList)) {
+            for (CollectBankcard collectBankcard : collectBankcardList) {
+                String cbCode = OrderNoGenerater
+                    .generate(EGeneratePrefix.COLLECTBANKCARD.getCode());
+                CollectBankcard data = new CollectBankcard();
+                data.setCode(cbCode);
+                data.setType(type);
+                data.setCompanyCode(collectBankcard.getCompanyCode());
+                data.setRealName(collectBankcard.getRealName());
+                data.setBankCode(bankCode);
+                data.setBankName(collectBankcard.getBankName());
+                data.setSubbranch(collectBankcard.getSubbranch());
+                data.setBankcardNumber(collectBankcard.getBankcardNumber());
+                data.setPointRate(collectBankcard.getPointRate());
+                data.setRemark(collectBankcard.getRemark());
+                collectBankcardDAO.insert(data);
+            }
+        }
+    }
+
+    @Override
     public String saveCollectBankcard(CollectBankcard data) {
         String code = null;
         if (data != null) {
@@ -73,4 +122,13 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
         }
         return data;
     }
+
+    @Override
+    public void removeCollectBankcardByList(
+            List<CollectBankcard> CollectBankcardList) {
+        for (CollectBankcard collectBankcard : CollectBankcardList) {
+            collectBankcardDAO.delete(collectBankcard);
+        }
+    }
+
 }

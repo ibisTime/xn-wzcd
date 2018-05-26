@@ -1,7 +1,7 @@
 /*收款账号表(确定)*/
 CREATE TABLE `tb_collect_bankcard` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
-  `type` VARCHAR(4) NULL COMMENT '类型',
+  `type` VARCHAR(4) NULL COMMENT '类型(1 普通账户 2 经销商的收款账号 3 经销商返点账号)',
   `company_code` VARCHAR(32) NULL COMMENT '公司编号',
   `real_name` VARCHAR(255) NULL COMMENT '户名',
   `bank_code` varchar(32) DEFAULT NULL COMMENT '银行行别',
@@ -112,6 +112,7 @@ CREATE TABLE `tb_car_dealer` (
   `belong_branch_company` VARCHAR(255) NULL COMMENT '归属分公司',
   `cur_node_code` VARCHAR(32) NULL COMMENT '当前节点编号',
   `approve_note` VARCHAR(255) NULL COMMENT '审核说明',
+  `policy_note` text NULL COMMENT '政策说明',
   `remark` VARCHAR(255) NULL COMMENT '备注',
   PRIMARY KEY (`code`))
 ENGINE = InnoDB
@@ -164,7 +165,7 @@ CREATE TABLE `tb_car_dealer_protocol` (
   `insu_agency_year3_type` VARCHAR(32) NULL COMMENT '3年保险代理费类型(1平台/2车行)',
   
   `insu_agency_year3_fee` bigint(20) NULL COMMENT '3年保险代理费',
-  `policy_note` text NULL COMMENT '政策说明',
+  
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
