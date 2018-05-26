@@ -29,7 +29,13 @@ public class CreditUser extends ABaseDO {
     private String idNo;
 
     // 手机号
-    private String mobile;
+    private Integer mobile;
+
+    // 身份证正面
+    private String idNoFront;
+
+    // 身份证反面
+    private String idNoReverse;
 
     // 征信查询授权书
     private String authPdf;
@@ -38,64 +44,64 @@ public class CreditUser extends ABaseDO {
     private String interviewPic;
 
     // 贷款抵押笔数
-    private String dkdyCount;
+    private Integer dkdyCount;
 
     // 贷款抵押贷款余额
-    private String dkdyAmount;
+    private Long dkdyAmount;
 
     // 贷款抵押近两年逾期次数
-    private String dkdy2YearOverTimes;
+    private Integer dkdy2YearOverTimes;
 
     // 贷款抵押最高逾期金额
-    private String dkdyMaxOverAmount;
+    private Long dkdyMaxOverAmount;
 
     // 贷款抵押当前逾期金额
-    private String dkdyCurrentOverAmount;
+    private Long dkdyCurrentOverAmount;
 
     // 贷款抵押近6个月平均月还
-    private String dkdy6monthAvgAmount;
+    private Long dkdy6monthAvgAmount;
 
     // 贷款信用未结清贷款笔数
-    private String hkxyUnsettleCount;
+    private Integer hkxyUnsettleCount;
 
     // 贷款信用未结清贷款余额
-    private String hkxyUnsettleAmount;
+    private Long hkxyUnsettleAmount;
 
     // 贷款信用近两年逾期次数
-    private String hkxy2YearOverTimes;
+    private Integer hkxy2YearOverTimes;
 
     // 贷款信用单月最高逾期金额
-    private String hkxyMonthMaxOverAmount;
+    private Long hkxyMonthMaxOverAmount;
 
     // 贷款信用当前逾期金额
-    private String hkxyCurrentOverAmount;
+    private Long hkxyCurrentOverAmount;
 
     // 贷款信用近6个月平均月还
-    private String hkxy6MonthAvgAmount;
+    private Long hkxy6MonthAvgAmount;
 
     // 信用卡张数
-    private String xykCount;
+    private Integer xykCount;
 
     // 信用卡授信总额
-    private String xykCreditAmount;
+    private Long xykCreditAmount;
 
     // 信用卡近6个月使用额
-    private String xyk6MonthUseAmount;
+    private Long xyk6MonthUseAmount;
 
     // 信用卡近两年逾期次数
-    private String xyk2YearOverTimes;
+    private Integer xyk2YearOverTimes;
 
     // 信用卡单月最高逾期金额
-    private String xykMonthMaxOverAmount;
+    private Long xykMonthMaxOverAmount;
 
     // 信用卡当前逾期金额
-    private String xykCurrentOverAmount;
+    private Long xykCurrentOverAmount;
 
     // 对外担保笔数
-    private String outGuaranteesCount;
+    private Integer outGuaranteesCount;
 
     // 对外担保余额
-    private String outGuaranteesAmount;
+    private Long outGuaranteesAmount;
 
     // 对外担保备注
     private String outGuaranteesRemark;
@@ -150,12 +156,28 @@ public class CreditUser extends ABaseDO {
         this.idNo = idNo;
     }
 
-    public String getMobile() {
+    public Integer getMobile() {
         return mobile;
     }
 
-    public void setMobile(String mobile) {
+    public void setMobile(Integer mobile) {
         this.mobile = mobile;
+    }
+
+    public String getIdNoFront() {
+        return idNoFront;
+    }
+
+    public void setIdNoFront(String idNoFront) {
+        this.idNoFront = idNoFront;
+    }
+
+    public String getIdNoReverse() {
+        return idNoReverse;
+    }
+
+    public void setIdNoReverse(String idNoReverse) {
+        this.idNoReverse = idNoReverse;
     }
 
     public String getAuthPdf() {
@@ -174,163 +196,163 @@ public class CreditUser extends ABaseDO {
         this.interviewPic = interviewPic;
     }
 
-    public String getDkdyCount() {
+    public Integer getDkdyCount() {
         return dkdyCount;
     }
 
-    public void setDkdyCount(String dkdyCount) {
+    public void setDkdyCount(Integer dkdyCount) {
         this.dkdyCount = dkdyCount;
     }
 
-    public String getDkdyAmount() {
+    public Long getDkdyAmount() {
         return dkdyAmount;
     }
 
-    public void setDkdyAmount(String dkdyAmount) {
+    public void setDkdyAmount(Long dkdyAmount) {
         this.dkdyAmount = dkdyAmount;
     }
 
-    public String getDkdy2YearOverTimes() {
+    public Integer getDkdy2YearOverTimes() {
         return dkdy2YearOverTimes;
     }
 
-    public void setDkdy2YearOverTimes(String dkdy2YearOverTimes) {
+    public void setDkdy2YearOverTimes(Integer dkdy2YearOverTimes) {
         this.dkdy2YearOverTimes = dkdy2YearOverTimes;
     }
 
-    public String getDkdyMaxOverAmount() {
+    public Long getDkdyMaxOverAmount() {
         return dkdyMaxOverAmount;
     }
 
-    public void setDkdyMaxOverAmount(String dkdyMaxOverAmount) {
+    public void setDkdyMaxOverAmount(Long dkdyMaxOverAmount) {
         this.dkdyMaxOverAmount = dkdyMaxOverAmount;
     }
 
-    public String getDkdyCurrentOverAmount() {
+    public Long getDkdyCurrentOverAmount() {
         return dkdyCurrentOverAmount;
     }
 
-    public void setDkdyCurrentOverAmount(String dkdyCurrentOverAmount) {
+    public void setDkdyCurrentOverAmount(Long dkdyCurrentOverAmount) {
         this.dkdyCurrentOverAmount = dkdyCurrentOverAmount;
     }
 
-    public String getDkdy6monthAvgAmount() {
+    public Long getDkdy6monthAvgAmount() {
         return dkdy6monthAvgAmount;
     }
 
-    public void setDkdy6monthAvgAmount(String dkdy6monthAvgAmount) {
+    public void setDkdy6monthAvgAmount(Long dkdy6monthAvgAmount) {
         this.dkdy6monthAvgAmount = dkdy6monthAvgAmount;
     }
 
-    public String getHkxyUnsettleCount() {
+    public Integer getHkxyUnsettleCount() {
         return hkxyUnsettleCount;
     }
 
-    public void setHkxyUnsettleCount(String hkxyUnsettleCount) {
+    public void setHkxyUnsettleCount(Integer hkxyUnsettleCount) {
         this.hkxyUnsettleCount = hkxyUnsettleCount;
     }
 
-    public String getHkxyUnsettleAmount() {
+    public Long getHkxyUnsettleAmount() {
         return hkxyUnsettleAmount;
     }
 
-    public void setHkxyUnsettleAmount(String hkxyUnsettleAmount) {
+    public void setHkxyUnsettleAmount(Long hkxyUnsettleAmount) {
         this.hkxyUnsettleAmount = hkxyUnsettleAmount;
     }
 
-    public String getHkxy2YearOverTimes() {
+    public Integer getHkxy2YearOverTimes() {
         return hkxy2YearOverTimes;
     }
 
-    public void setHkxy2YearOverTimes(String hkxy2YearOverTimes) {
+    public void setHkxy2YearOverTimes(Integer hkxy2YearOverTimes) {
         this.hkxy2YearOverTimes = hkxy2YearOverTimes;
     }
 
-    public String getHkxyMonthMaxOverAmount() {
+    public Long getHkxyMonthMaxOverAmount() {
         return hkxyMonthMaxOverAmount;
     }
 
-    public void setHkxyMonthMaxOverAmount(String hkxyMonthMaxOverAmount) {
+    public void setHkxyMonthMaxOverAmount(Long hkxyMonthMaxOverAmount) {
         this.hkxyMonthMaxOverAmount = hkxyMonthMaxOverAmount;
     }
 
-    public String getHkxyCurrentOverAmount() {
+    public Long getHkxyCurrentOverAmount() {
         return hkxyCurrentOverAmount;
     }
 
-    public void setHkxyCurrentOverAmount(String hkxyCurrentOverAmount) {
+    public void setHkxyCurrentOverAmount(Long hkxyCurrentOverAmount) {
         this.hkxyCurrentOverAmount = hkxyCurrentOverAmount;
     }
 
-    public String getHkxy6MonthAvgAmount() {
+    public Long getHkxy6MonthAvgAmount() {
         return hkxy6MonthAvgAmount;
     }
 
-    public void setHkxy6MonthAvgAmount(String hkxy6MonthAvgAmount) {
+    public void setHkxy6MonthAvgAmount(Long hkxy6MonthAvgAmount) {
         this.hkxy6MonthAvgAmount = hkxy6MonthAvgAmount;
     }
 
-    public String getXykCount() {
+    public Integer getXykCount() {
         return xykCount;
     }
 
-    public void setXykCount(String xykCount) {
+    public void setXykCount(Integer xykCount) {
         this.xykCount = xykCount;
     }
 
-    public String getXykCreditAmount() {
+    public Long getXykCreditAmount() {
         return xykCreditAmount;
     }
 
-    public void setXykCreditAmount(String xykCreditAmount) {
+    public void setXykCreditAmount(Long xykCreditAmount) {
         this.xykCreditAmount = xykCreditAmount;
     }
 
-    public String getXyk6MonthUseAmount() {
+    public Long getXyk6MonthUseAmount() {
         return xyk6MonthUseAmount;
     }
 
-    public void setXyk6MonthUseAmount(String xyk6MonthUseAmount) {
+    public void setXyk6MonthUseAmount(Long xyk6MonthUseAmount) {
         this.xyk6MonthUseAmount = xyk6MonthUseAmount;
     }
 
-    public String getXyk2YearOverTimes() {
+    public Integer getXyk2YearOverTimes() {
         return xyk2YearOverTimes;
     }
 
-    public void setXyk2YearOverTimes(String xyk2YearOverTimes) {
+    public void setXyk2YearOverTimes(Integer xyk2YearOverTimes) {
         this.xyk2YearOverTimes = xyk2YearOverTimes;
     }
 
-    public String getXykMonthMaxOverAmount() {
+    public Long getXykMonthMaxOverAmount() {
         return xykMonthMaxOverAmount;
     }
 
-    public void setXykMonthMaxOverAmount(String xykMonthMaxOverAmount) {
+    public void setXykMonthMaxOverAmount(Long xykMonthMaxOverAmount) {
         this.xykMonthMaxOverAmount = xykMonthMaxOverAmount;
     }
 
-    public String getXykCurrentOverAmount() {
+    public Long getXykCurrentOverAmount() {
         return xykCurrentOverAmount;
     }
 
-    public void setXykCurrentOverAmount(String xykCurrentOverAmount) {
+    public void setXykCurrentOverAmount(Long xykCurrentOverAmount) {
         this.xykCurrentOverAmount = xykCurrentOverAmount;
     }
 
-    public String getOutGuaranteesCount() {
+    public Integer getOutGuaranteesCount() {
         return outGuaranteesCount;
     }
 
-    public void setOutGuaranteesCount(String outGuaranteesCount) {
+    public void setOutGuaranteesCount(Integer outGuaranteesCount) {
         this.outGuaranteesCount = outGuaranteesCount;
     }
 
-    public String getOutGuaranteesAmount() {
+    public Long getOutGuaranteesAmount() {
         return outGuaranteesAmount;
     }
 
-    public void setOutGuaranteesAmount(String outGuaranteesAmount) {
+    public void setOutGuaranteesAmount(Long outGuaranteesAmount) {
         this.outGuaranteesAmount = outGuaranteesAmount;
     }
 

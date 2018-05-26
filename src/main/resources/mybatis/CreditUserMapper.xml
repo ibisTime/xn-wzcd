@@ -12,6 +12,8 @@
 		<result column="loan_role" property="loanRole" />
 		<result column="id_no" property="idNo" />
 		<result column="mobile" property="mobile" />
+		<result column="id_no_front" property="idNoFront" />
+		<result column="id_no_reverse" property="idNoReverse" />
 		<result column="auth_pdf" property="authPdf" />
 		<result column="interview_pic" property="interviewPic" />
 		
@@ -46,62 +48,50 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
-			<if test="loanBank != null and loanBank != '' ">
-				AND t.loan_bank = #{loanBank}
-			</if>
-			<if test="shopWay != null and shopWay != '' ">
-				AND t.shop_way = #{shopWay}
-			</if>
-			<if test="loanAmount != null and loanAmount != '' ">
-				AND t.loan_amount = #{loanAmount}
-			</if>
-			<if test="xszFront != null and xszFront != '' ">
-				AND t.xsz_front = #{xszFront}
-			</if>
-			<if test="xszReverse != null and xszReverse != '' ">
-				AND t.xsz_reverse = #{xszReverse}
+			<if test="creditCode != null and creditCode != '' ">
+				AND t.credit_code = #{creditCode}
 			</if>
 		</trim>
 	</sql>
 	
-	<insert id="insert_creditUserLsit" parameterType="List">
+	<insert id="insert_creditUser" parameterType="creditUser">
 		INSERT INTO 
 		stdq_credit_user(
 		code
 		,credit_code
-		
 		,user_name
 		,relation
 		,loan_role
 		,id_no
 		,mobile
 		,auth_pdf
-		,interview_pic
-		
-		,dkdy_count
-		,dkdy_amount
-		,dkdy_2year_over_times
-		,dkdy_max_over_amount
-		,dkdy_current_over_amount
-		,dkdy_6month_avg_amount
-		
-		,hkxy_unsettle_count
-		,hkxy_unsettle_amount
-		,hkxy_2year_over_times
-		,hkxy_monthmax_over_amount
-		,hkxy_current_over_amount
-		,hkxy_6month_avg_amount
-		
-		,xyk_count
-		,xyk_credit_amount
-		,xyk_6month_use_amount
-		,xyk_2year_over_times
-		,xyk_month_max_over_amount
-		,xyk_current_over_amount
-		
-		,out_guarantees_count
-		,out_guarantees_amount
-		,out_guarantees_remark
+		,interview_pic		
+		)
+		VALUES(
+			#{code}
+			#{creditCode}
+			#{userName}
+			#{relation}
+			#{loanRole}
+			#{idNo}
+			#{mobile}
+			#{authPdf}
+			#{interviewPic}
+		)
+	</insert>
+	
+	<insert id="insert_creditUserLsit" parameterType="List">
+		INSERT INTO 
+		stdq_credit_user(
+		code
+		,credit_code
+		,user_name
+		,relation
+		,loan_role
+		,id_no
+		,mobile
+		,auth_pdf
+		,interview_pic		
 		)
 		VALUES(
 		<foreach collection="list" item="creditUser" separator=",">
@@ -115,74 +105,72 @@
 			#{mobile}
 			#{authPdf}
 			#{interviewPic}
-
-			#{dkdyCount}
-			#{dkdyAmount}
-			#{dkdy2YearOverTimes}
-			#{dkdyMaxOverAmount}
-			#{dkdyCurrentOverAmount}
-			#{dkdy6MonthAvgAmount}
-			
-			#{hkxyUnsettleCount}
-			#{hkxyUnsettleAmount}
-			#{hkxy2YearOverTimes}
-			#{hkxyMonthmaxOverAmount}
-			#{hkxyCurrentOverAmount}
-			#{hkxy6MonthAvgAmount}
-			
-			#{xykCount}
-			#{xykCreditAmount}
-			#{xyk6MonthUseAmount}
-			#{xykYearOverTimes}
-			#{xykMonthMaxOverAmount}
-			#{xykCurrentOverAmount}
-			
-			#{outGuaranteesCount}
-			#{outGuaranteesAmount}
-			#{outGuaranteesRemark}
 		</foreach>
 		)
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	</insert>
-
-	
-	<insert id="insert_creditUser" parameterType="credit">
-		INSERT INTO tdq_credit(
-		code
-		
-		)
-		VALUES(
-		#{code}
-
-		)
 	</insert>
 	
-	
-	
-	
+	<update id="update_creditUser" parameterType="creditUser">
+		UPDATE tdq_credit_user
+		SET
+		user_name=#{userName}
+		,relation=#{relation}
+		,loan_role=#{loanRole}
+		,id_no=#{idNo}
+		,mobile=#{mobile}
+		,id_no_front=#{idNoFront}
+		,id_no_reverse=#{idNoReverse}
+		,auth_pdf=#{authPdf}
+		,interview_pic=#{interviewPic}
 
+		WHERE
+		code = #{code}
+	</update>
 	
+		
+	<update id="input_bankCreditResult" parameterType="creditUser">
+		UPDATE tdq_credit_user
+		SET
+
+		dkdy_count=#{dkdyCount}
+		,dkdy_amount = #{dkdyAmount}
+		,dkdy_2year_over_times=#{dkdy2YearOverTimes}
+		,dkdy_max_over_amount=#{dkdyMaxOverAmount}
+		,dkdy_current_over_amount=#{dkdyCurrentOverAmount}
+		,dkdy_6month_avg_amount=#{dkdy6MonthAvgAmount}
+		
+		,hkxy_unsettle_count=#{hkxyUnsettleCount}
+		,hkxy_unsettle_amount=#{hkxyUnsettleAmount}
+		,hkxy_2year_over_times=#{hkxy2YearOverTimes}
+		,hkxy_monthmax_over_amount=#{hkxyMonthmaxOverAmount}
+		,hkxy_current_over_amount=#{hkxyCurrentOverAmount}
+		,hkxy_6month_avg_amount=#{hkxy6MonthAvgAmount}
+		
+		,xyk_count=#{xykCount}
+		,xyk_credit_amount=#{xykCreditAmount}
+		,xyk_6month_use_amount=#{xyk6MonthUseAmount}
+		,xyk_2year_over_times=#{xykYearOverTimes}
+		,xyk_month_max_over_amount=#{xykMonthMaxOverAmount}
+		,xyk_current_over_amount=#{xykCurrentOverAmount}
+		
+		,out_guarantees_count=#{outGuaranteesCount}
+		,out_guarantees_amount=#{outGuaranteesAmount}
+		,out_guarantees_remark#{outGuaranteesRemark}
+		WHERE
+		code = #{code}
+	</update>
 	
-		<select id="select_creditUser" parameterType="credit" resultMap="credit_DB_Result">
+	<select id="select_creditUserList" parameterType="creditUser" resultMap="creditUser_DB_Result">
 		select 
-		t.code
-		,t.loan_bank
-		,t.shop_way
-		,t.loan_amount
-		,t.xsz_front
-		,t.xsz_reverse
-		from tdq_credit
+		t.user_name
+		,t.relation
+		,t.loan_role
+		,t.mobile
+		,t.idNo
+		,t.idNoFront
+		,t.idNoReverse
+		,t.authPdf
+		,t.interviewPic
+		from tdq_credit_User t
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -191,22 +179,49 @@
 		</trim>
 	</select>
 	
-	<update id="update_creditUser" parameterType="credit">
-		UPDATE tdq_credit
-		SET
-		loan_bank = #{frozenAmount}
-		,shop_way = #{lastOrder}
-		,loan_amount = #{lastOrder}
-		,xsz_front = #{lastOrder}
-		,xsz_reverse = #{lastOrder}
-		,cur_node_code = #{lastOrder}
-		WHERE
-		code = #{code}
-	</update>
 	
-	<select id="select_credit_countUser" parameterType="credit"
+	<select id="select_creditUser" parameterType="creditUser" resultMap="creditUser_DB_Result">
+		select 
+		
+		dkdy_count
+		,t.dkdy_amount
+		,t.dkdy_2year_over_times
+		,t.dkdy_max_over_amount
+		,t.dkdy_current_over_amount
+		,t.dkdy_6month_avg_amount
+				
+		,t.hkxy_unsettle_count
+		,t.hkxy_unsettle_amount
+		,t.hkxy_2year_over_times
+		,t.hkxy_monthmax_over_amount
+		,t.hkxy_current_over_amount
+		,t.hkxy_6month_avg_amount
+				
+		,t.xyk_count
+		,t.xyk_credit_amount
+		,t.xyk_6month_use_amount
+		,t.xyk_2year_over_times
+		,t.xyk_month_max_over_amount
+		,t.xyk_current_over_amount
+				
+		,t.out_guarantees_count
+		,t.out_guarantees_amount
+		,t.out_guarantees_remark
+			
+		from tdq_credit_User t
+		<include refid="where_condition"/>
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	
+
+	
+	<select id="select_credit_countUser" parameterType="creditUser"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tdq_credit t
+		SELECT count(1) FROM tdq_credit_User t
 		<include refid="where_condition" />
 	</select>
 	

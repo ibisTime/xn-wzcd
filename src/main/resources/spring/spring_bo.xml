@@ -160,4 +160,11 @@
 		<property name="paginableDAO" ref="sysBizLogDAOImpl"/>
 	</bean>
 	
+	<bean id="creditUserBO" class="com.cdkj.loan.bo.impl.CreditUserBOImpl">
+		<property name="paginableDAO" ref="creditUserDAOImpl"/>
+	</bean>
+	
+    <bean id="creditBO" class="com.cdkj.loan.bo.impl.CreditBOImpl">
+		<property name="paginableDAO" ref="creditDAOImpl"/>
+	</bean>
 </beans>

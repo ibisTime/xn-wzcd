@@ -5,12 +5,17 @@
 	<resultMap id="credit_DB_Result" type="credit">
 	
 		<result column="code" property="code" />
+		<result column="budget_code" property="budgetCode" />
+		<result column="company_code" property="companyCode" />
+		<result column="sale_user_code" property="saleUserCode" />
+		<result column="apply_datetime" property="applyDatetime" />
 		<result column="loan_bank" property="loanBank" />
 		<result column="shop_way" property="shopWay" />
 		<result column="loan_amount" property="loanAmount" />
 		<result column="xsz_front" property="xszFront" />
 		<result column="xsz_reverse" property="xszReverse" />
 		<result column="cur_node_code" property="curNodeCode" />
+		<result column="accessory" property="accessory" />
 		
 	</resultMap>
 	
@@ -18,6 +23,18 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR">	
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
+			</if>
+			<if test="budgetCode != null and budgetCode != '' ">
+				AND t.budget_code = #{budgetCode}
+			</if>
+			<if test="companyCode != null and companyCode != '' ">
+				AND t.company_code = #{companyCode}
+			</if>
+			<if test="salesmanCode != null and salesmanCode != '' ">
+				AND t.salesman_code = #{salesmanCode}
+			</if>
+			<if test="applyDatetime != null and applyDatetime != '' ">
+				AND t.apply_datetime = #{code}
 			</if>
 			<if test="loanBank != null and loanBank != '' ">
 				AND t.loan_bank = #{loanBank}
@@ -33,6 +50,12 @@
 			</if>
 			<if test="xszReverse != null and xszReverse != '' ">
 				AND t.xsz_reverse = #{xszReverse}
+			</if>
+			<if test="curNodeCode != null and curNodeCode != '' ">
+				AND t.cur_node_code = #{xszReverse}
+			</if>
+			<if test="roleCode != null and roleCode != '' ">
+				AND trn.role_code = #{roleCode}
 			</if>
 		</trim>
 	</sql>
@@ -53,6 +76,23 @@
 			</if>
 		</trim>
 	</select>
+	
+	<select id="select_credit_PagingQuery" parameterType="credit" resultMap="credit_DB_Result">
+		select 
+		t.code
+		,t.company_code
+		,t.loanBank
+		,t.salesman_code
+		,t.apply_datetime
+		,t.cur_node_code
+		from tdq_credit t inner join tsys_role_node trn on tc.cur_node_code=trn.node_code
+		<include refid="where_condition"/>
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
 
 	
 	<insert id="insert_credit" parameterType="credit">
@@ -62,7 +102,6 @@
 		,shop_way
 		,loan_amount
 		,xsz_front
-		
 		,xsz_reverse
 		,cur_node_code
 		)
@@ -72,7 +111,6 @@
 		,#{shopWay}
 		,#{loanAmount}
 		,#{xszFront}
-		
 		,#{xszReverse}
 		,#{curNodeCode}
 		)
@@ -82,20 +120,30 @@
 	<update id="update_credit" parameterType="credit">
 		UPDATE tdq_credit
 		SET
-		loan_bank = #{frozenAmount}
-		,shop_way = #{lastOrder}
-		,loan_amount = #{lastOrder}
-		,xsz_front = #{lastOrder}
-		,xsz_reverse = #{lastOrder}
-		,cur_node_code = #{lastOrder}
+		loan_bank = #{LoanBank}
+		,shop_way = #{shopWay}
+		,loan_amount = #{loanAmount}
+		,xsz_front = #{xszFront}
+		,xsz_reverse = #{xszReverse}
+		,cur_node_code = #{curNodeCode}
+		,accessory = #{accessory}
 		WHERE
 		code = #{code}
 	</update>
 	
 	<select id="select_credit_count" parameterType="credit"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tdq_credit t
+		SELECT count(1)
+		From tdq_credit t inner join tsys_role_node trn on t.cur_node_code=trn.node_code
 		<include refid="where_condition" />
 	</select>
+	
+	<update id="update_node" parameterType="credit">
+		UPDATE tdq_credit
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
 	
 </mapper>
