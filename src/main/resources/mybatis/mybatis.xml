@@ -65,6 +65,10 @@
 		
 
 		<typeAlias alias="sysBizLog" type="com.cdkj.loan.domain.SYSBizLog" />
+		
+		<!-- 基础数据 -->
+		<typeAlias alias="insuranceCompany" type="com.cdkj.loan.domain.InsuranceCompany" />
+		
 
 	</typeAliases>
 	

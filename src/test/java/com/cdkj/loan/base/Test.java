@@ -9,25 +9,21 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "SYSBizLog";
+    private static String key = "InsuranceCompany";
 
     // 实体名称
-    private static String keyName = "业务日志表";
+    private static String keyName = "保险公司信息表";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tsys_biz_log";
+    private static String dbname = "tb_insurance_company";
 
-    private static String[] DBwords = { "id", "parent_order", "ref_type",
-            "ref_order", "start_node", "end_node", "status", "operate_role",
-            "operator", "operator_name", "operator_mobile", "start_datetime",
-            "end_datetime", "speed_time" };
+    private static String[] DBwords = { "code", "name", "contact", "mobile",
+            "remark" };
 
-    private static String[] DBwordsName = { "序号", "上级订单编号", "关联订单类型", "关联订单编号",
-            "开始节点", "下个节点(处理完后记录)", "状态", "操作角色", "操作人", "操作人姓名", "操作人手机号",
-            "操作开始时间", "操作结束时间", "花费时间" };
+    private static String[] DBwordsName = { "编号", "名称", "联系人", "联系电话", "备注" };
 
     private static String[] DOwords = getDOwords();
 
