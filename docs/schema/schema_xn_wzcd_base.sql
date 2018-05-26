@@ -4,8 +4,11 @@ CREATE TABLE `tb_collect_bankcard` (
   `type` VARCHAR(4) NULL COMMENT '类型',
   `company_code` VARCHAR(32) NULL COMMENT '公司编号',
   `real_name` VARCHAR(255) NULL COMMENT '户名',
-  `bankcard_number` VARCHAR(32) NULL COMMENT '账号',
-  `open_bank` VARCHAR(255) NULL COMMENT '开户行',
+  `bank_code` varchar(32) DEFAULT NULL COMMENT '银行行别',
+  
+  `bank_name` varchar(255) DEFAULT NULL COMMENT '银行名称',
+  `subbranch` varchar(255) DEFAULT NULL COMMENT '开户支行',
+  `bankcard_number` VARCHAR(255) NULL COMMENT '账号',
   `remark` VARCHAR(255) NULL COMMENT '备注',
   PRIMARY KEY (`code`))
 ENGINE = InnoDB
