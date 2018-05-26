@@ -10,6 +10,12 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
+/**
+ * 新增部门
+ * @author: CYL 
+ * @since: 2018年5月26日 下午2:54:15 
+ * @history:
+ */
 public class XN630100 extends AProcessor {
     private IDepartmentAO departmentAO = SpringContextHolder
         .getBean(IDepartmentAO.class);

@@ -38,6 +38,9 @@ public class SYSUser extends ABaseDO {
     // 注册时间
     private Date createDatetme;
 
+    // 部门编号
+    private String departmentCode;
+
     // 角色编号
     private String roleCode;
 
@@ -122,6 +125,14 @@ public class SYSUser extends ABaseDO {
 
     public Date getCreateDatetme() {
         return createDatetme;
+    }
+
+    public String getDepartmentCode() {
+        return departmentCode;
+    }
+
+    public void setDepartmentCode(String departmentCode) {
+        this.departmentCode = departmentCode;
     }
 
     public void setRoleCode(String roleCode) {

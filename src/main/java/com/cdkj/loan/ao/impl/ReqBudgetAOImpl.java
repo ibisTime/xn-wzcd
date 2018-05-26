@@ -5,19 +5,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IReqBudgetAO;
 import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.IReqBudgetBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSRoleBO;
-import com.cdkj.loan.bo.IUserBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.domain.SYSBizLog;
-import com.cdkj.loan.domain.User;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632100Req;
 import com.cdkj.loan.dto.req.XN632101Req;
 import com.cdkj.loan.dto.req.XN632102Req;
@@ -30,6 +31,7 @@ import com.cdkj.loan.enums.ESYSBizLogStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Service
+@Transactional
 public class ReqBudgetAOImpl implements IReqBudgetAO {
 
     @Autowired
@@ -42,7 +44,7 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     private ISYSBizLogBO sysBizLogBO;
 
     @Autowired
-    private IUserBO userBO;
+    private ISYSUserBO sysUserBO;
 
     @Autowired
     private ISYSRoleBO sysRoleBO;
@@ -59,19 +61,26 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         data.setApplyUser(req.getApplyUser());
         data.setApplyDatetime(new Date());
         data.setCurNodeCode(EReqBudgetNode.STARTNODE.getCode());
-        // 申请写入日志
-        reqWriteLog(req);
         if (EButtonCode.SEND.getCode().equals(req.getButtonCode())) {
             // 发送申请
             data.setCurNodeCode(
                 nodeBO.getNode(EReqBudgetNode.APPLY.getCode()).getNextNode());
         }
-        return reqBudgetBO.saveReqBudget(data);
+        String code = reqBudgetBO.saveReqBudget(data);
+        // 申请写入日志
+        reqWriteLog(req, code);
+        return code;
     }
 
-    private int reqWriteLog(XN632100Req req) {
-        // 申请写入日志
+    // 申请写入日志
+    private int reqWriteLog(XN632100Req req, String code) {
         SYSBizLog data = new SYSBizLog();
+        // 上级订单编号：他自己
+        // TODO
+        data.setParentOrder(code);
+        data.setRefType("refType");
+        data.setRefOrder("refOrder");
+        data.setDealNote("dealNote");
         data.setOperator(req.getApplyUser());
         // 判断是否保存
         if (EButtonCode.SEND.getCode().equals(req.getButtonCode())) {
@@ -80,12 +89,13 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
             data.setDealNode(EReqBudgetNode.STARTNODE.getCode());
         }
         data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
-        String level = sysRoleBO.getSYSRole(req.getApplyUser()).getLevel();
+        SYSUser user = sysUserBO.getUser(req.getApplyUser());
+        String roleCode = user.getRoleCode();
+        String level = sysRoleBO.getSYSRole(roleCode).getLevel();
         data.setOperateRole(level);
         data.setOperator(req.getApplyUser());
-        User user = userBO.getUser(req.getApplyUser());
-        data.setOperatorName(user.getRealName());
 
+        data.setOperatorName(user.getLoginName());
         data.setOperatorMobile(user.getMobile());
         data.setStartDatetime(new Date());
 
@@ -118,14 +128,19 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     // TODO 收回预算款写入日志
     private void collectionWriteLog(XN632103Req req) {
         SYSBizLog data = new SYSBizLog();
+        // TODO
+        data.setParentOrder("parentOrder");
+        data.setRefType("refType");
+        data.setRefOrder("refOrder");
         data.setDealNode(EReqBudgetNode.COLLECTION.getCode());
         data.setDealNote(req.getCollectionRemark());
         data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
-        String level = sysRoleBO.getSYSRole(req.getOperator()).getLevel();
+        SYSUser user = sysUserBO.getUser(req.getOperator());
+        String roleCode = user.getRoleCode();
+        String level = sysRoleBO.getSYSRole(roleCode).getLevel();
         data.setOperateRole(level);
         data.setOperator(req.getOperator());
-        User user = userBO.getUser(req.getOperator());
-        data.setOperatorName(user.getRealName());
+        data.setOperatorName(user.getLoginName());
 
         data.setOperatorMobile(user.getMobile());
         data.setStartDatetime(new Date());
@@ -173,28 +188,37 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
             // 审核通过，改变节点
             reqBudget.setCurNodeCode(
                 nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getNextNode());
-            // 申请写入日志
-            auditWriteLog(req);
         } else {
             reqBudget.setCurNodeCode(
                 nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getBackNode());
         }
+        // 审核写入日志
+        auditWriteLog(req);
         // 修改结束时间和花费时间
         updateDatetime(reqBudget);
         return reqBudgetBO.refreshReqBudgetNode(reqBudget);
     }
 
-    // TODO 申请写入日志
+    // TODO 审核写入日志
     private void auditWriteLog(XN632101Req req) {
         SYSBizLog data = new SYSBizLog();
-        data.setDealNode(EReqBudgetNode.AUDIT.getCode());
+        // TODO
+        data.setParentOrder("parentOrder");
+        data.setRefType("refType");
+        data.setRefOrder("refOrder");
+        if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
+            data.setDealNode(EReqBudgetNode.AUDIT.getCode());
+        } else {
+            data.setDealNode(EReqBudgetNode.REFILL.getCode());
+        }
         data.setDealNote(req.getFinanceCheckNote());
         data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
-        String level = sysRoleBO.getSYSRole(req.getOperator()).getLevel();
+        SYSUser user = sysUserBO.getUser(req.getOperator());
+        String roleCode = user.getRoleCode();
+        String level = sysRoleBO.getSYSRole(roleCode).getLevel();
         data.setOperateRole(level);
         data.setOperator(req.getOperator());
-        User user = userBO.getUser(req.getOperator());
-        data.setOperatorName(user.getRealName());
+        data.setOperatorName(user.getLoginName());
 
         data.setOperatorMobile(user.getMobile());
         data.setStartDatetime(new Date());
@@ -229,14 +253,19 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     // TODO 放款写入日志
     private void loanWriteLog(XN632102Req req) {
         SYSBizLog data = new SYSBizLog();
+        // TODO
+        data.setParentOrder("parentOrder");
+        data.setRefType("refType");
+        data.setRefOrder("refOrder");
         data.setDealNode(EReqBudgetNode.LOAN.getCode());
         data.setDealNote(req.getPayRemark());
         data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
-        String level = sysRoleBO.getSYSRole(req.getOperator()).getLevel();
+        SYSUser user = sysUserBO.getUser(req.getOperator());
+        String roleCode = user.getRoleCode();
+        String level = sysRoleBO.getSYSRole(roleCode).getLevel();
         data.setOperateRole(level);
         data.setOperator(req.getOperator());
-        User user = userBO.getUser(req.getOperator());
-        data.setOperatorName(user.getRealName());
+        data.setOperatorName(user.getLoginName());
 
         data.setOperatorMobile(user.getMobile());
         data.setStartDatetime(new Date());

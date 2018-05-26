@@ -5,6 +5,7 @@
 	    
 	    <!-- 用户  -->
 	    <typeAlias alias="user" type="com.cdkj.loan.domain.User" />
+	    <typeAlias alias="saleUser" type="com.cdkj.loan.domain.SaleUser" />
 		<typeAlias alias="address" type="com.cdkj.loan.domain.Address" />
 		<typeAlias alias="bankcard" type="com.cdkj.loan.domain.Bankcard" />
 		<typeAlias alias="blacklist" type="com.cdkj.loan.domain.Blacklist" />
@@ -62,9 +63,15 @@
 		<!-- 征信 -->
 		<typeAlias alias="credit" type="com.cdkj.loan.domain.Credit" />
 		<typeAlias alias="creditUser" type="com.cdkj.loan.domain.CreditUser" />
-		
+		<typeAlias alias="budgetOrder" type="com.cdkj.loan.domain.BudgetOrder" />
 
 		<typeAlias alias="sysBizLog" type="com.cdkj.loan.domain.SYSBizLog" />
+		
+		<!-- 基础数据 -->
+		<typeAlias alias="insuranceCompany" type="com.cdkj.loan.domain.InsuranceCompany" />
+		
+		<!-- 行政 -->
+		<typeAlias alias="gps" type="com.cdkj.loan.domain.Gps" />
 
 	</typeAliases>
 	

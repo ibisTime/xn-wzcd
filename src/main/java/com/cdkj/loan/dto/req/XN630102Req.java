@@ -10,14 +10,15 @@ public class XN630102Req {
     @NotBlank
     private String name;// 部门名称
 
-    @NotBlank
     private String leadName;// 负责人
 
-    @NotBlank
     private String mobile;// 负责人手机号
 
     @NotBlank
     private String parentCode;// 上级部门编号
+
+    @NotBlank
+    private String type;// 类型
 
     @NotBlank
     private String updater;// 更新人

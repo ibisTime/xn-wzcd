@@ -2,19 +2,20 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class XN630100Req{
+public class XN630100Req {
 
     @NotBlank
     private String name;// 部门名称
 
-    @NotBlank
     private String leadName;// 负责人
 
-    @NotBlank
     private String mobile;// 负责人手机号
 
     @NotBlank
     private String parentCode;// 上级部门编号
+
+    @NotBlank
+    private String type;// 类型
 
     @NotBlank
     private String updater;// 更新人
@@ -27,6 +28,14 @@ public class XN630100Req{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getLeadName() {
