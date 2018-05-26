@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.IUserAO;
 import com.cdkj.loan.api.AProcessor;
-import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
@@ -39,10 +38,10 @@ public class XN805120 extends AProcessor {
         condition.setIdNo(req.getIdNo());
         condition.setRealName(req.getRealName());
         condition.setStatus(req.getStatus());
-        condition.setCreateDatetimeStart(
-            DateUtil.getFrontDate(req.getCreateDatetimeStart(), false));
-        condition.setCreateDatetimeEnd(
-            DateUtil.getFrontDate(req.getCreateDatetimeEnd(), true));
+        condition.setCreateDatetimeStart(DateUtil.getFrontDate(
+            req.getCreateDatetimeStart(), false));
+        condition.setCreateDatetimeEnd(DateUtil.getFrontDate(
+            req.getCreateDatetimeEnd(), true));
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
@@ -51,10 +50,7 @@ public class XN805120 extends AProcessor {
         condition.setOrder(column, req.getOrderDir());
         int start = Integer.valueOf(req.getStart());
         int limit = Integer.valueOf(req.getLimit());
-        Paginable<User> paginable = userAO.queryUserPage(start, limit,
-            condition);
-
-        return paginable;
+        return userAO.queryUserPage(start, limit, condition);
     }
 
     @Override

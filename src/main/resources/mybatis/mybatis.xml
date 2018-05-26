@@ -62,13 +62,16 @@
 		<!-- 征信 -->
 		<typeAlias alias="credit" type="com.cdkj.loan.domain.Credit" />
 		<typeAlias alias="creditUser" type="com.cdkj.loan.domain.CreditUser" />
-		
+		<typeAlias alias="budgetOrder" type="com.cdkj.loan.domain.BudgetOrder" />
 
 		<typeAlias alias="sysBizLog" type="com.cdkj.loan.domain.SYSBizLog" />
 		
 		<!-- 基础数据 -->
 		<typeAlias alias="insuranceCompany" type="com.cdkj.loan.domain.InsuranceCompany" />
 		
+		<!-- 行政 -->
+		<typeAlias alias="gps" type="com.cdkj.loan.domain.Gps" />
+
 
 	</typeAliases>
 	

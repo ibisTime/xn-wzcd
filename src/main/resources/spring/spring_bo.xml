@@ -164,4 +164,11 @@
 		<property name="paginableDAO" ref="insuranceCompanyDAOImpl"/>
 	</bean>
 	
+	<bean id="gpsBO" class="com.cdkj.loan.bo.impl.GpsBOImpl">
+		<property name="paginableDAO" ref="gpsDAOImpl"/>
+	</bean>
+	
+	<bean id="budgetOrderBO" class="com.cdkj.loan.bo.impl.BudgetOrderBOImpl">
+		<property name="paginableDAO" ref="budgetOrderDAOImpl"/>
+	</bean>
 </beans>
