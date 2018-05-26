@@ -86,6 +86,9 @@
 	<bean id="userBO" class="com.cdkj.loan.bo.impl.UserBOImpl">
 		<property name="paginableDAO" ref="userDAOImpl"/>
 	</bean>	
+	<bean id="saleUserBO" class="com.cdkj.loan.bo.impl.SaleUserBOImpl">
+		<property name="paginableDAO" ref="saleUserDAOImpl"/>
+	</bean>	
 	<bean id="carBO" class="com.cdkj.loan.bo.impl.CarBOImpl">
 		<property name="paginableDAO" ref="carDAOImpl"/>
 	</bean>	

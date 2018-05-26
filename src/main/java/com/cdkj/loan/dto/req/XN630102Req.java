@@ -10,10 +10,8 @@ public class XN630102Req {
     @NotBlank
     private String name;// 部门名称
 
-    @NotBlank
     private String leadName;// 负责人
 
-    @NotBlank
     private String mobile;// 负责人手机号
 
     @NotBlank
