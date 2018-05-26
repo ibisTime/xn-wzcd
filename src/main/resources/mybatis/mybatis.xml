@@ -69,6 +69,11 @@
 		
 		<!-- 基础数据 -->
 		<typeAlias alias="insuranceCompany" type="com.cdkj.loan.domain.InsuranceCompany" />
+		<typeAlias alias="collectBankcard" type="com.cdkj.loan.domain.CollectBankcard" />
+		
+		<!-- 经销商信息 -->
+		<typeAlias alias="carDealer" type="com.cdkj.loan.domain.CarDealer" />
+
 		
 		<!-- 行政 -->
 		<typeAlias alias="gps" type="com.cdkj.loan.domain.Gps" />

@@ -176,6 +176,14 @@
 		<property name="paginableDAO" ref="insuranceCompanyDAOImpl"/>
 	</bean>
 	
+	<bean id="collectBankcardBO" class="com.cdkj.loan.bo.impl.CollectBankcardBOImpl">
+		<property name="paginableDAO" ref="collectBankcardDAOImpl"/>
+	</bean>
+	
+	<bean id="carDealerBO" class="com.cdkj.loan.bo.impl.CarDealerBOImpl">
+		<property name="paginableDAO" ref="carDealerDAOImpl"/>
+	</bean>
+	
 	<bean id="gpsBO" class="com.cdkj.loan.bo.impl.GpsBOImpl">
 		<property name="paginableDAO" ref="gpsDAOImpl"/>
 	</bean>
