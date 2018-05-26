@@ -181,3 +181,38 @@ CREATE TABLE `tb_insurance_company` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '保险公司信息表';
+
+/*GPS库存管理(确定)*/
+CREATE TABLE `tb_gps` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `company_code` VARCHAR(32) NULL COMMENT '公司编号',
+  `apply_user` VARCHAR(32) NULL COMMENT '申请人',
+  `apply_status` VARCHAR(32) NULL COMMENT '申请状态',
+  `apply_datetime` DATETIME NULL COMMENT '申请日期',
+  
+  `use_status` VARCHAR(32) NULL COMMENT '使用状态',
+  `use_datetime` DATETIME NULL COMMENT '使用日期',
+  `biz_code` VARCHAR(32) NULL COMMENT '业务编号',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = 'gps库存管理';
+
+/*GPS申领管理(确定)*/
+DROP TABLE IF EXISTS `tb_gps_apply`;
+CREATE TABLE `tb_gps_apply` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `type` VARCHAR(32) NOT NULL COMMENT '类型(1 公司 2 个人)',
+  `company_code` VARCHAR(32) NULL COMMENT '公司编号',
+  `apply_user` VARCHAR(32) NULL COMMENT '申请人',
+  `apply_datetime` DATETIME NULL COMMENT '申请日期',
+  
+  `apply_count` int(11) NULL COMMENT '申请个数',
+  `send_datetime` DATETIME NULL COMMENT '发货日期',
+  `receive_datetime` DATETIME NULL COMMENT '收货日期',
+  `status` VARCHAR(32) NULL COMMENT '状态(1 0 待审核 1 审核通过,待发货 2 审核不通过 3 已发货,待收货 4 已收货)',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = 'gps申领管理';

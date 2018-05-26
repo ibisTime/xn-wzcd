@@ -32,7 +32,6 @@ CREATE TABLE `tdq_req_budget` (
   PRIMARY KEY (`code`) COMMENT '请款预算单'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 /*预算单表*/
 DROP TABLE IF EXISTS `tdq_budget_order`;
 CREATE TABLE `tdq_budget_order` (
@@ -230,7 +229,7 @@ CREATE TABLE `tdq_credit_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*收款账号表*/
-CREATE TABLE `dev_wzcd`.`tb_collect_account` (
+CREATE TABLE `tb_collect_account` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
   `type` VARCHAR(4) NULL COMMENT '类型',
   `company_code` VARCHAR(32) NULL COMMENT '公司编号',
@@ -244,7 +243,7 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '收款账号表';
 
 /*身份证区域表*/
-CREATE TABLE `dev_wzcd`.`td_id_no_area` (
+CREATE TABLE `tb_id_no_area` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
   `area_no` VARCHAR(32) NULL COMMENT '身份证区域号',
   `area_name` VARCHAR(255) NULL COMMENT '身份证区域名称',
@@ -255,7 +254,7 @@ COLLATE = utf8_estonian_ci
 COMMENT = '身份证区域表';
 
 /*经销商信息表*/
-CREATE TABLE `dev_wzcd`.`tb_car_dealer` (
+CREATE TABLE `tb_car_dealer` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
   `full_name` VARCHAR(255) NULL COMMENT '全称',
   `abbr_name` VARCHAR(255) NULL COMMENT '简称',
@@ -282,7 +281,7 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '经销商信息表';
 
 /*银行信息表*/
-CREATE TABLE `dev_wzcd`.`tb_bank` (
+CREATE TABLE `tb_bank` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
   `bank_name` VARCHAR(255) NULL COMMENT '银行名称',
   `rate12` DECIMAL NULL COMMENT '12期',
@@ -316,7 +315,7 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '银行信息表';
 
 /*银行利率明细表*/
-CREATE TABLE `dev_wzcd`.`tb_bank_rate` (
+CREATE TABLE `tb_bank_rate` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
   `bank_code` VARCHAR(32) NULL COMMENT '银行编号',
   `period` INT(11) NULL COMMENT '期数',
@@ -328,7 +327,7 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '银行利率明细表';
 
 /*保险公司信息表*/
-CREATE TABLE `dev_wzcd`.`tb_insurance_company` (
+CREATE TABLE `tb_insurance_company` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
   `name` VARCHAR(255) NULL COMMENT '名称',
   `contact` VARCHAR(255) NULL COMMENT '联系人',
@@ -340,7 +339,7 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '保险公司信息表';
 
 /*省份编号表*/
-CREATE TABLE `dev_wzcd`.`tb_province_no` (
+CREATE TABLE `tb_province_no` (
   `no` VARCHAR(32) NOT NULL COMMENT '编号',
   `name` VARCHAR(255) NULL COMMENT '名称',
   PRIMARY KEY (`no`))
