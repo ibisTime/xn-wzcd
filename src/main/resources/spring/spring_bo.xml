@@ -203,4 +203,8 @@
 	<bean id="provinceBO" class="com.cdkj.loan.bo.impl.ProvinceBOImpl">
 		<property name="paginableDAO" ref="provinceDAOImpl"/>
 	</bean>
+	
+	<bean id="bankBO" class="com.cdkj.loan.bo.impl.BankBOImpl">
+		<property name="paginableDAO" ref="bankDAOImpl"/>
+	</bean>
 </beans>

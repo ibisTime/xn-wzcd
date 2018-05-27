@@ -72,6 +72,9 @@
 		<typeAlias alias="collectBankcard" type="com.cdkj.loan.domain.CollectBankcard" />
 		<typeAlias alias="area" type="com.cdkj.loan.domain.Area" />
 		<typeAlias alias="province" type="com.cdkj.loan.domain.Province" />
+		<typeAlias alias="bank" type="com.cdkj.loan.domain.Bank" />
+		
+		<typeAlias alias="bankRate" type="com.cdkj.loan.domain.BankRate" />
 		
 		<!-- 经销商信息 -->
 		<typeAlias alias="carDealer" type="com.cdkj.loan.domain.CarDealer" />

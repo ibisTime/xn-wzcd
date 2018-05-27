@@ -64,6 +64,7 @@ public class CreditAOImpl implements ICreditAO {
 
         // 新增征信单
         Credit credit = new Credit();
+
         credit.setLoanBankCode(req.getLoanBankCode());
         credit.setShopWay(req.getShopWay());
         credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
@@ -81,12 +82,16 @@ public class CreditAOImpl implements ICreditAO {
         List<XN632110ReqChild> childList = req.getCreditUserList();
         for (XN632110ReqChild child : childList) {
             CreditUser creditUser = new CreditUser();
+
             creditUser.setCreditCode(creditCode);
-            creditUser.setUserName(child.getUserName());
+
             creditUser.setRelation(child.getRelation());
+            creditUser.setUserName(child.getUserName());
             creditUser.setLoanRole(child.getLoanRole());
+            creditUser.setMobile(child.getMobile());
             creditUser.setIdNo(child.getIdNo());
-            creditUser.setMobile(StringValidater.toInteger(child.getMobile()));
+            creditUser.setIdNoFront(child.getIdNoFront());
+            creditUser.setIdNoReverse(child.getIdNoReverse());
             creditUser.setAuthPdf(child.getAuthPdf());
             creditUser.setInterviewPic(child.getInterviewPic());
 
@@ -132,8 +137,7 @@ public class CreditAOImpl implements ICreditAO {
 
             creditUser.setRelation(reqChild.getRelation());
 
-            creditUser
-                .setMobile(StringValidater.toInteger(reqChild.getMobile()));
+            creditUser.setMobile(reqChild.getMobile());
 
             creditUser.setIdNo(reqChild.getIdNo());
 
