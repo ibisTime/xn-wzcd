@@ -26,7 +26,7 @@ public class XN630106 extends AProcessor {
     public Object doBusiness() throws BizException {
         Department condition = new Department();
         condition.setParentCode(req.getParentCode());
-        condition.setType(req.getType());
+        condition.setTypeList(req.getTypeList());
         condition.setStatus(req.getStatus());
         condition.setKeyword(req.getKeyword());
 

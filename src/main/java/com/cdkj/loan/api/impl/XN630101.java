@@ -24,7 +24,7 @@ public class XN630101 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        departmentAO.editStatus(req.getCode());
+        departmentAO.dropDepartment(req.getCode());
         return new BooleanRes(true);
     }
 

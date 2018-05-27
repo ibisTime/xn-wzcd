@@ -1,21 +1,7 @@
-/**
- * @Title ECheckResult.java 
- * @Package com.ibis.account.enums 
- * @Description 
- * @author miyb  
- * @date 2015-2-26 下午2:58:54 
- * @version V1.0   
- */
 package com.cdkj.loan.enums;
 
-/**
- * 部门状态
- * @author: CYL 
- * @since: 2018年5月22日 下午5:38:03 
- * @history:
- */
 public enum EDepartmentType {
-    DEPARTMENT("1", "部门"), POSITION("2", "职位");
+    SUBBRANCH_COMPANY("1", "子公司"), DEPARTMENT("2", "部门"), POSITION("3", "职位");
 
     EDepartmentType(String code, String value) {
         this.code = code;
