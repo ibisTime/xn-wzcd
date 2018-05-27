@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,8 @@ public class CreditAOImpl implements ICreditAO {
         credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
         credit.setXszFront(req.getXszFront());
         credit.setXszReverse(req.getXszReverse());
+
+        credit.setApplyDatetime(new Date());
 
         credit.setCurNodeCode(nodeBO.getNode(ECreditNode.START.getCode())
             .getNextNode());
@@ -186,8 +189,8 @@ public class CreditAOImpl implements ICreditAO {
             // 从征信人员表查申请人的客户姓名 手机号 身份证号
             // credit.setLoanName(creditUserBO.queryCreditUserMain(credit.getCode()));
             // 从部门表查业务公司名
-            credit.setCompanyName((departmentBO.getDepartment(credit
-                .getCompanyCode()).getName()));
+            // credit.setCompanyName((departmentBO.getDepartment(credit
+            // .getCompanyCode()).getName()));
             // 从银行表查贷款银行名
             // credit.setLoanBankName(bankBO.getName());
 
@@ -216,8 +219,7 @@ public class CreditAOImpl implements ICreditAO {
     // 查询征信单 根据征信单编号
     @Override
     public Credit queryCreditByCode(String creditCode) {
-        Credit credit = creditBO.getCredit(creditCode);
-        return credit;
+        return creditBO.getCredit(creditCode);
     }
 
     // 征信初审
@@ -233,8 +235,9 @@ public class CreditAOImpl implements ICreditAO {
 
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             // 审核通过，改变节点
-            credit.setCurNodeCode(nodeBO.getNode(
-                ECreditNode.PRIMARYAUDIT.getCode()).getNextNode());
+
+            credit.setCurNodeCode(nodeBO.getNode(credit.getCurNodeCode())
+                .getNextNode());
             // 审核通过并且选填了附件
             if (null != req.getAccessory() && !"".equals(req.getAccessory())) {
                 credit.setAccessory(req.getAccessory());
@@ -243,8 +246,8 @@ public class CreditAOImpl implements ICreditAO {
             }
 
         } else {
-            credit.setCurNodeCode(nodeBO.getNode(
-                ECreditNode.PRIMARYAUDIT.getCode()).getBackNode());
+            credit.setCurNodeCode(nodeBO.getNode(credit.getCurNodeCode())
+                .getBackNode());
         }
 
         creditBO.refreshCreditNode(credit);

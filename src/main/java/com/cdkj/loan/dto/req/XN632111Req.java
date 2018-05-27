@@ -2,6 +2,9 @@ package com.cdkj.loan.dto.req;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * 632111 录入银行征信结果
  * @author: jiafr 
@@ -11,12 +14,15 @@ import java.util.List;
 public class XN632111Req {
 
     // 操作人
-    private String oprerator;
+    @NotBlank
+    private String operator;
 
     // 征信单编号
+    @NotBlank
     private String creditCode;
 
     // 银行征信结果集合
+    @NotEmpty
     private List<XN632111ReqChild> bankCreditResultList;
 
     public List<XN632111ReqChild> getBankCreditResultList() {
@@ -29,11 +35,11 @@ public class XN632111Req {
     }
 
     public String getOprerator() {
-        return oprerator;
+        return operator;
     }
 
     public void setOprerator(String oprerator) {
-        this.oprerator = oprerator;
+        this.operator = oprerator;
     }
 
     public String getCreditCode() {
