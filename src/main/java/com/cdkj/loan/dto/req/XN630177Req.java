@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN630177Req {
 
     @NotBlank
-    private String id;// 上级订单编号
+    private String id;// id
 
     public String getId() {
         return id;

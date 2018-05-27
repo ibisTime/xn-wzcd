@@ -27,9 +27,6 @@ public class XN630177 extends AProcessor {
         return sysBizLogAO.getSYSBizLog(StringValidater.toInteger(req.getId()));
     }
 
-    /** 
-     * @see com.cdkj.loan.api.IProcessor#doCheck(java.lang.String)
-     */
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {

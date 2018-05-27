@@ -39,6 +39,16 @@ public class SYSBizLog extends ABaseDO {
 
     private String speedTime;// 花费时间
 
+    /*-------------辅助字段---------------*/
+
+    private Date startDatetimeStart;
+
+    private Date endDatetimeEnd;
+
+    private String operatorNameForQuery;// 操作人姓名模糊查
+
+    private String operatorMobileForQuery;// 操作人手机号模糊查
+
     public int getId() {
         return id;
     }
@@ -150,4 +160,37 @@ public class SYSBizLog extends ABaseDO {
     public void setSpeedTime(String speedTime) {
         this.speedTime = speedTime;
     }
+
+    public String getOperatorNameForQuery() {
+        return operatorNameForQuery;
+    }
+
+    public void setOperatorNameForQuery(String operatorNameForQuery) {
+        this.operatorNameForQuery = operatorNameForQuery;
+    }
+
+    public String getOperatorMobileForQuery() {
+        return operatorMobileForQuery;
+    }
+
+    public void setOperatorMobileForQuery(String operatorMobileForQuery) {
+        this.operatorMobileForQuery = operatorMobileForQuery;
+    }
+
+    public Date getStartDatetimeStart() {
+        return startDatetimeStart;
+    }
+
+    public void setStartDatetimeStart(Date startDatetimeStart) {
+        this.startDatetimeStart = startDatetimeStart;
+    }
+
+    public Date getEndDatetimeEnd() {
+        return endDatetimeEnd;
+    }
+
+    public void setEndDatetimeEnd(Date endDatetimeEnd) {
+        this.endDatetimeEnd = endDatetimeEnd;
+    }
+
 }

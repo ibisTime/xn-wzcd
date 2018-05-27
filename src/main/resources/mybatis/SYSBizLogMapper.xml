@@ -47,14 +47,20 @@
 			<if test="operatorName != null and operatorName != '' ">
 				AND t.operator_name = #{operatorName}
 			</if>
+			<if test="operatorNameForQuery != null and operatorNameForQuery != '' ">
+				AND t.operator_name like "%"#{operatorNameForQuery}"%"
+			</if>
 			<if test="operatorMobile != null and operatorMobile != '' ">
 				AND t.operator_mobile = #{operatorMobile}
 			</if>
-			<if test="startDatetime != null and startDatetime != '' ">
-				AND t.start_datetime = #{startDatetime}
+			<if test="operatorMobileForQuery != null and operatorMobileForQuery != '' ">
+				AND t.operator_mobile like "%"#{operatorMobileForQuery}"%"
 			</if>
-			<if test="endDatetime != null and endDatetime != '' ">
-				AND t.end_datetime = #{endDatetime}
+			<if test="startDatetimeStart != null and startDatetimeStart != '' ">
+				<![CDATA[AND t.start_datetime >= #{startDatetimeStart}]]>
+			</if>
+			<if test="endDatetimeEnd != null and endDatetimeEnd != '' ">
+				<![CDATA[AND t.end_datetime <= #{endDatetimeEnd}]]>
 			</if>
 		</trim>
 	</sql>
@@ -108,7 +114,7 @@
 		,t.end_datetime
 		,t.speed_time
 		FROM
-		tsys_biz_log where id in (select max(id) FROM tsys_biz_log t
+		tsys_biz_log t where t.id in (select max(id) FROM tsys_biz_log t
 		<include refid="where_condition" />)
 	</select>
 

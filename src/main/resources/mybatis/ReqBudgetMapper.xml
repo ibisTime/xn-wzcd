@@ -15,6 +15,7 @@
 		<result column="pay_account" property="payAccount" />
 		<result column="water_bill" property="waterBill" />
 		<result column="pay_datetime" property="payDatetime" />
+		<result column="apply_user" property="applyUser" />
 		<result column="apply_datetime" property="applyDatetime" />
 		<result column="pay_remark" property="payRemark" />
 		<result column="dz_amount" property="dzAmount" />
@@ -59,6 +60,7 @@
 		,t.pay_account
 		,t.water_bill
 		,t.pay_datetime
+		,t.apply_user
 		,t.apply_datetime
 		,t.pay_remark
 		,t.dz_amount
@@ -100,6 +102,7 @@
 		,t.pay_account
 		,t.water_bill
 		,t.pay_datetime
+		,t.apply_user
 		,t.apply_datetime
 		,t.pay_remark
 		,t.dz_amount
@@ -140,6 +143,7 @@
 		,pay_account
 		,water_bill
 		,pay_datetime
+		,apply_user
 		,apply_datetime
 		,pay_remark
 		,dz_amount
@@ -164,6 +168,7 @@
 		,#{payAccount}
 		,#{waterBill}
 		,#{payDatetime}
+		,#{applyUser}
 		,#{applyDatetime}
 		,#{payRemark}
 		,#{dzAmount}
@@ -191,6 +196,7 @@
 		,pay_account = #{payAccount}
 		,water_bill = #{waterBill}
 		,pay_datetime = #{payDatetime}
+		,apply_user = #{applyUser}
 		,apply_datetime = #{applyDatetime}
 		,pay_remark = #{payRemark}
 		,dz_amount = #{dzAmount}
@@ -211,6 +217,7 @@
 		WHERE code = #{code}
 	</update>
 	
+	
 	<update id="loan" parameterType="reqBudget">
 		UPDATE tdq_req_budget
 		SET
@@ -218,6 +225,7 @@
 		,pay_amount = #{payAmount}
 		,pay_account = #{payAccount}
 		,water_bill = #{waterBill}
+		,pay_datetime = #{payDatetime}
 		,pay_remark = #{payRemark}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
