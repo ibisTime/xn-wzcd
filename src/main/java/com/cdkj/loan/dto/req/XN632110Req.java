@@ -22,10 +22,8 @@ public class XN632110Req {
     @NotBlank
     private String loanAmount;
 
-    @NotBlank
     private String xszFront;
 
-    @NotBlank
     private String xszReverse;
 
     @NotBlank

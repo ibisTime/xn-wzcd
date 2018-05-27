@@ -12,20 +12,20 @@ import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.INodeBO;
-import com.cdkj.loan.bo.ISaleUserBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632110ReqChild;
 import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632112ReqChild;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632114Req;
-import com.cdkj.loan.dto.req.XN632115Req;
 import com.cdkj.loan.dto.req.XN632116Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -55,26 +55,22 @@ public class CreditAOImpl implements ICreditAO {
     private IBankBO bankBO;
 
     @Autowired
-    private ISaleUserBO saleUserBO;
-
-    /*
-     * @Autowired private IBankBO bankBO;
-     * @Autowired private ISaleUser saleUserBO;
-     */
+    private IDepartmentBO departmentBO;
 
     @Autowired
-    private IDepartmentBO departmentBO;
+    private ISYSUserBO sysUserBO;
 
     // 征信新增
     @Override
     public String addCredit(XN632110Req req) {
 
         // 操作人编号
-        String operator = req.getOperator();
+        SYSUser sysUser = sysUserBO.getUser(req.getOperator());
 
         // 新增征信单
         Credit credit = new Credit();
-
+        credit.setCompanyCode(sysUser.getCompanyCode());
+        credit.setSaleUserId(sysUser.getUserId());
         credit.setLoanBankCode(req.getLoanBankCode());
         credit.setShopWay(req.getShopWay());
         credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
@@ -173,34 +169,12 @@ public class CreditAOImpl implements ICreditAO {
 
     // 分页查询 按角色权限
     @Override
-    public Paginable<Credit> queryCreditPage(XN632115Req req) {
-
-        // 征信表分页查询结果
-        Credit condition = new Credit();
-
-        int start = StringValidater.toInteger(req.getStart());
-        int limit = StringValidater.toInteger(req.getLimit());
-
-        String Column = req.getOrderColumn();
-
-        condition.setOrder(Column, req.getOrderDir());
-
-        condition.setApplyDatetime(DateUtil.strToDate(req.getApplyDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-
-        condition.setLoanBankCode(req.getLoanBankCode());
-
-        condition.setSaleUserId(req.getSaleUserId());
-
-        condition.setCode(req.getCreditCode());
-
+    public Paginable<Credit> queryCreditPageByRole(int start, int limit,
+            Credit condition) {
         Paginable<Credit> result = creditBO.getPaginable(start, limit,
             condition);
-
         List<Credit> list = result.getList();
-
         for (Credit credit : list) {
-
             // 从征信人员表查申请人的客户姓名 手机号 身份证号
             credit.setCreditUser(creditUserBO.getCreditUserByCreditCode(
                 credit.getCode(), ELoanRole.APPLY_USER));
@@ -209,14 +183,14 @@ public class CreditAOImpl implements ICreditAO {
             credit.setCompanyName((departmentBO.getDepartment(credit
                 .getCompanyCode()).getName()));
             // 从银行表查贷款银行名
-            Bank bank = new Bank();
-            bank.setBankCode(credit.getLoanBankCode());
-            credit.setLoanBankName((bankBO.getBank(bank)).getBankName());
+            // Bank bank = new Bank();
+            // bank.setBankCode(credit.getLoanBankCode());
+            // credit.setLoanBankName((bankBO.getBank(bank)).getBankName());
             // 从业务员表查业务员姓名
-            credit.setSalesmanName((saleUserBO.getSaleUser(credit
-                .getSaleUserId())).getRealName());
+            // credit.setSalesmanName((saleUserBO.getSaleUser(credit
+            // .getSaleUserId())).getRealName());
             // 从节点表查节点名称
-            credit.setStatus(nodeBO.getNode(credit.getCurNodeCode()).getName());
+            // credit.setStatus(nodeBO.getNode(credit.getCurNodeCode()).getName());
         }
 
         return result;
@@ -338,9 +312,9 @@ public class CreditAOImpl implements ICreditAO {
             Bank bank = new Bank();
             bank.setBankCode(credit.getLoanBankCode());
             credit.setLoanBankName((bankBO.getBank(bank)).getBankName());
-            // 从业务员表查业务员姓名
-            credit.setSalesmanName((saleUserBO.getSaleUser(credit
-                .getSaleUserId())).getRealName());
+            // // 从业务员表查业务员姓名
+            // credit.setSalesmanName((saleUserBO.getSaleUser(credit
+            // .getSaleUserId())).getRealName());
             // 从节点表查节点名称
             credit.setStatus(nodeBO.getNode(credit.getCurNodeCode()).getName());
         }

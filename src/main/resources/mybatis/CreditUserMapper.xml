@@ -56,8 +56,8 @@
 			<if test="creditCode != null and creditCode != '' ">
 				AND t.credit_code = #{creditCode}
 			</if>
-			<if test="isRelation != null and isRelation != '' ">
-				AND t.is_relation = #{isRelation}
+			<if test="relation != null and relation != '' ">
+				AND t.relation = #{relation}
 			</if>
 		</trim>
 	</sql>

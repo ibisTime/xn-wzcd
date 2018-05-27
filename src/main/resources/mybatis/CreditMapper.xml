@@ -94,6 +94,7 @@
 	
 	<select id="select_credit_PagingQuery" parameterType="credit" resultMap="credit_DB_Result">
 		select 
+		distinct
 		t.code
 		,t.company_code
 		,t.loan_bank_code
@@ -105,7 +106,7 @@
 		,t.loan_amount
 		,t.xsz_front
 		,t.xsz_reverse
-		from tdq_credit t inner join tsys_role_node trn on t.cur_node_code=trn.node_code
+		from tdq_credit t left join tsys_role_node trn on t.cur_node_code=trn.node_code
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -179,8 +180,8 @@
 	
 	<select id="select_credit_count" parameterType="credit"
 		resultType="java.lang.Long">
-		SELECT count(1)
-		From tdq_credit t inner join tsys_role_node trn on t.cur_node_code=trn.node_code
+		SELECT count(1) FROM (SELECT distinct code
+		From tdq_credit t left join tsys_role_node trn on t.cur_node_code=trn.node_code) tb
 		<include refid="where_condition" />
 	</select>
 	

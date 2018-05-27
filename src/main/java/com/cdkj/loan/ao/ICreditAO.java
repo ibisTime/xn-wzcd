@@ -6,7 +6,6 @@ import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632114Req;
-import com.cdkj.loan.dto.req.XN632115Req;
 import com.cdkj.loan.dto.req.XN632116Req;
 
 /**
@@ -26,7 +25,8 @@ public interface ICreditAO {
     public void editCredit(XN632112Req req);
 
     // 征信分页查询 按角色权限
-    public Paginable<Credit> queryCreditPage(XN632115Req req);
+    public Paginable<Credit> queryCreditPageByRole(int start, int limit,
+            Credit condition);
 
     // 征信详情查询
     public Credit queryCreditDetail(String code);
