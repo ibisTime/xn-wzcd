@@ -69,14 +69,14 @@
 		)
 		VALUES(
 		#{code}
-		#{creditCode}
-		#{userName}
-		#{relation}
-		#{loanRole}
-		#{idNo}
-		#{mobile}
-		#{authPdf}
-		#{interviewPic}
+		,#{creditCode}
+		,#{userName}
+		,#{relation}
+		,#{loanRole}
+		,#{idNo}
+		,#{mobile}
+		,#{authPdf}
+		,#{interviewPic}
 		)
 	</insert>
 	
@@ -96,15 +96,15 @@
 		VALUES(
 		<foreach collection="list" item="creditUser" separator=",">
 			#{code}
-			#{creditCode}
+			,#{creditCode}
 			
-			#{userName}
-			#{relation}
-			#{loanRole}
-			#{idNo}
-			#{mobile}
-			#{authPdf}
-			#{interviewPic}
+			,#{userName}
+			,#{relation}
+			,#{loanRole}
+			,#{idNo}
+			,#{mobile}
+			,#{authPdf}
+			,#{interviewPic}
 		</foreach>
 		)
 	</insert>
