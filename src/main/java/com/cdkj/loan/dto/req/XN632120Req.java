@@ -6,11 +6,17 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class XN632120Req {
 
+    // 操作人
+    private String operator;
+
+    // 处理类型(0 保存 1 发送)
+    private String dealType;
+
+    // 征信单编号
+    private String creditCode;
+
     // 客户类型
     private String customerType;
-
-    // 客户姓名
-    private String customerName;
 
     // 汽车经销商编号
     private String carDealerCode;
@@ -269,6 +275,30 @@ public class XN632120Req {
     @NotEmpty
     private List<XN632120ReqIncome> creditUserIncomeList;
 
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public String getDealType() {
+        return dealType;
+    }
+
+    public void setDealType(String dealType) {
+        this.dealType = dealType;
+    }
+
+    public String getCreditCode() {
+        return creditCode;
+    }
+
+    public void setCreditCode(String creditCode) {
+        this.creditCode = creditCode;
+    }
+
     public List<String> getGpsList() {
         return gpsList;
     }
@@ -292,14 +322,6 @@ public class XN632120Req {
 
     public void setCustomerType(String customerType) {
         this.customerType = customerType;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
     }
 
     public String getCarDealerCode() {

@@ -33,7 +33,7 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
     }
 
     @Override
-    public void useGps(Gps data) {
+    public void refreshUseGps(Gps data) {
         if (data == null) {
             gpsDAO.updateUse(data);
         }
