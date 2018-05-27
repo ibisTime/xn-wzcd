@@ -61,10 +61,14 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     // 新增征信人员
     @Override
     public void addCreditUser(CreditUser creditUser) {
-        String code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER
-            .getCode());
-        creditUser.setCode(code);
-        creditUserDAO.insert(creditUser);
+        String code = null;
+        if (null != creditUser) {
+            code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER
+                .getCode());
+            creditUser.setCode(code);
+            creditUserDAO.insert(creditUser);
+        }
+
     }
 
     // 批量查询征信人员 根据征信单编号

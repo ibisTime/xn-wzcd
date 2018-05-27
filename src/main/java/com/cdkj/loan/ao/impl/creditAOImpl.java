@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,7 @@ public class creditAOImpl implements ICreditAO {
 
         // 新增征信单
         Credit credit = new Credit();
-        credit.setLoanBankCode(req.getLoanBank());
+        credit.setLoanBankCode(req.getLoanBankCode());
         credit.setShopWay(req.getShopWay());
         credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
         credit.setXszFront(req.getXszFront());
@@ -70,6 +71,10 @@ public class creditAOImpl implements ICreditAO {
 
         credit.setCurNodeCode(nodeBO.getNode(ECreditNode.START.getCode())
             .getNextNode());
+        // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        // sdf.parse(sdf.format(new Date()))
+
+        credit.setApplyDatetime(new Date());
 
         String creditCode = creditBO.addCredit(credit);
 
@@ -78,6 +83,7 @@ public class creditAOImpl implements ICreditAO {
         List<XN632110ReqChild> creditUserList = req.getCreditUserList();
         for (XN632110ReqChild child : creditUserList) {
             CreditUser creditUser = new CreditUser();
+            creditUser.setCreditCode(creditCode);
             creditUser.setUserName(child.getUserName());
             creditUser.setRelation(child.getRelation());
             creditUser.setLoanRole(child.getLoanRole());
@@ -89,7 +95,7 @@ public class creditAOImpl implements ICreditAO {
             creditUserBO.addCreditUser(creditUser);
         }
 
-        return credit.getCode();
+        return creditCode;
     }
 
     // 修改征信

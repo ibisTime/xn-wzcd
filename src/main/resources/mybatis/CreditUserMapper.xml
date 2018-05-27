@@ -56,7 +56,7 @@
 	
 	<insert id="insert_creditUser" parameterType="creditUser">
 		INSERT INTO 
-		stdq_credit_user(
+		tdq_credit_user(
 		code
 		,credit_code
 		,user_name
@@ -68,21 +68,21 @@
 		,interview_pic		
 		)
 		VALUES(
-			#{code}
-			#{creditCode}
-			#{userName}
-			#{relation}
-			#{loanRole}
-			#{idNo}
-			#{mobile}
-			#{authPdf}
-			#{interviewPic}
+		#{code}
+		#{creditCode}
+		#{userName}
+		#{relation}
+		#{loanRole}
+		#{idNo}
+		#{mobile}
+		#{authPdf}
+		#{interviewPic}
 		)
 	</insert>
 	
 	<insert id="insert_creditUserLsit" parameterType="List">
 		INSERT INTO 
-		stdq_credit_user(
+		tdq_credit_user(
 		code
 		,credit_code
 		,user_name
