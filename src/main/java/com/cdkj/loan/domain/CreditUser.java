@@ -31,7 +31,7 @@ public class CreditUser extends ABaseDO {
     private String loanRole;
 
     // 手机号
-    private Integer mobile;
+    private String mobile;
 
     // 身份证号
     private String idNo;
@@ -166,11 +166,11 @@ public class CreditUser extends ABaseDO {
         this.loanRole = loanRole;
     }
 
-    public Integer getMobile() {
+    public String getMobile() {
         return mobile;
     }
 
-    public void setMobile(Integer mobile) {
+    public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 
