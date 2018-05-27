@@ -53,7 +53,7 @@ public class DepartmentAOImpl implements IDepartmentAO {
     }
 
     @Override
-    public int editStatus(String code) {
+    public int dropDepartment(String code) {
         Department date = departmentBO.getDepartment(code);
         date.setStatus(EDepartmentStatus.UNAVAILABLE.getCode());
         return departmentBO.refreshStatus(date);

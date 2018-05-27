@@ -16,7 +16,7 @@ public interface IDepartmentAO {
 
     public String addDepartment(XN630100Req req);
 
-    public int editStatus(String code);
+    public int dropDepartment(String code);
 
     public int editDepartment(XN630102Req req);
 

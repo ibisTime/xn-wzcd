@@ -5,25 +5,18 @@ import java.util.List;
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CarDealer;
 
-
-
-
 public interface ICarDealerBO extends IPaginableBO<CarDealer> {
 
+    public String saveCarDealer(CarDealer data);
 
-	public String saveCarDealer(CarDealer data);
+    public int removeCarDealer(String code);
 
+    public int refreshCarDealer(CarDealer data);
 
-	public int removeCarDealer(String code);
+    public List<CarDealer> queryCarDealerList(CarDealer condition);
 
+    public CarDealer getCarDealer(String code);
 
-	public int refreshCarDealer(CarDealer data);
-
-
-	public List<CarDealer> queryCarDealerList(CarDealer condition);
-
-
-	public CarDealer getCarDealer(String code);
-
+    public int refreshCarDealerNode(CarDealer data);
 
 }

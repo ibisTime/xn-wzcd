@@ -75,6 +75,7 @@
 		
 		<!-- 经销商信息 -->
 		<typeAlias alias="carDealer" type="com.cdkj.loan.domain.CarDealer" />
+		<typeAlias alias="carDealerProtocol" type="com.cdkj.loan.domain.CarDealerProtocol" />
 
 		
 		<!-- 行政 -->

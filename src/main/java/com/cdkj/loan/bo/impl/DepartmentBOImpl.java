@@ -15,8 +15,8 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class DepartmentBOImpl extends PaginableBOImpl<Department>
-        implements IDepartmentBO {
+public class DepartmentBOImpl extends PaginableBOImpl<Department> implements
+        IDepartmentBO {
 
     @Autowired
     private IDepartmentDAO departmentDAO;
@@ -24,8 +24,8 @@ public class DepartmentBOImpl extends PaginableBOImpl<Department>
     public String saveDepartment(Department data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.DEPARTMENT.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.DEPARTMENT
+                .getCode());
             data.setCode(code);
             departmentDAO.insert(data);
         }
@@ -59,7 +59,7 @@ public class DepartmentBOImpl extends PaginableBOImpl<Department>
             condition.setCode(code);
             data = departmentDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException("xn0000", "编号不存在");
             }
         }
         return data;

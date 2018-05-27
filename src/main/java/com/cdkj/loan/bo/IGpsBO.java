@@ -11,7 +11,7 @@ public interface IGpsBO extends IPaginableBO<Gps> {
 
     public void applyGps(Gps code);
 
-    public void useGps(Gps data);
+    public void refreshUseGps(Gps data);
 
     public List<Gps> queryGpsList(Gps condition);
 

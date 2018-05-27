@@ -67,6 +67,7 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
         Credit condition = new Credit();
         condition.setCode(code);
         Credit result = creditDAO.select(condition);
+
         List<CreditUser> creditUserList = creditUserBO
             .queryCreditUserListByCreditCode(code);
         result.setCreditUserList(creditUserList);

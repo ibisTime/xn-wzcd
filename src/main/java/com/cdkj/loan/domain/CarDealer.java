@@ -60,6 +60,8 @@ public class CarDealer extends ABaseDO {
 
     private List<CollectBankcard> jxsCollectBankcardList;// 经销商收款账号列表
 
+    private List<CarDealerProtocol> CarDealerProtocolList;// 经销商协议表
+
     private List<CollectBankcard> gsCollectBankcardList;// 工商银行返点账号列表
 
     private List<CollectBankcard> zhCollectBankcardList;// 中行银行返点账号列表
@@ -73,6 +75,15 @@ public class CarDealer extends ABaseDO {
     public void setCollectBankcardList(
             List<CollectBankcard> collectBankcardList) {
         this.collectBankcardList = collectBankcardList;
+    }
+
+    public List<CarDealerProtocol> getCarDealerProtocolList() {
+        return CarDealerProtocolList;
+    }
+
+    public void setCarDealerProtocolList(
+            List<CarDealerProtocol> carDealerProtocolList) {
+        CarDealerProtocolList = carDealerProtocolList;
     }
 
     public List<CollectBankcard> getJxsCollectBankcardList() {

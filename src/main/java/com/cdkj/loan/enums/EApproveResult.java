@@ -14,7 +14,7 @@ package com.cdkj.loan.enums;
  * @history:
  */
 public enum EApproveResult {
-    PASS("0", "通过"), NOT_PASS("1", "不通过");
+    PASS("1", "通过"), NOT_PASS("0", "不通过");
 
     EApproveResult(String code, String value) {
         this.code = code;

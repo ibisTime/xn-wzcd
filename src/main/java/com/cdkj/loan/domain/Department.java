@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -30,6 +31,16 @@ public class Department extends ABaseDO {
     /*-----------辅助字段------------*/
 
     private String keyword;// 关键字
+
+    private List<String> typeList; // 类型列表
+
+    public List<String> getTypeList() {
+        return typeList;
+    }
+
+    public void setTypeList(List<String> typeList) {
+        this.typeList = typeList;
+    }
 
     public String getKeyword() {
         return keyword;

@@ -59,9 +59,6 @@ public class XN632062Req {
     @NotBlank
     private String belongBranchCompany;// 归属分公司
 
-    @NotBlank
-    private String curNodeCode;// 当前节点编号
-
     private String approveNote;// 审核说明
 
     private String policyNote;// 政策说明
@@ -69,6 +66,8 @@ public class XN632062Req {
     private String remark;// 备注
 
     private List<CollectBankcard> jxsCollectBankcardList;// 经销商收款账号列表
+
+    private List<XN632060ReqProtocol> CarDealerProtocolList;// 经销商协议表
 
     private List<CollectBankcard> gsCollectBankcardList;// 工商银行返点账号列表
 
@@ -220,14 +219,6 @@ public class XN632062Req {
         this.belongBranchCompany = belongBranchCompany;
     }
 
-    public String getCurNodeCode() {
-        return curNodeCode;
-    }
-
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
-    }
-
     public String getApproveNote() {
         return approveNote;
     }
@@ -242,6 +233,15 @@ public class XN632062Req {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public List<XN632060ReqProtocol> getCarDealerProtocolList() {
+        return CarDealerProtocolList;
+    }
+
+    public void setCarDealerProtocolList(
+            List<XN632060ReqProtocol> carDealerProtocolList) {
+        CarDealerProtocolList = carDealerProtocolList;
     }
 
     public List<CollectBankcard> getJxsCollectBankcardList() {

@@ -50,6 +50,15 @@ public class CarDealerBOImpl extends PaginableBOImpl<CarDealer>
     }
 
     @Override
+    public int refreshCarDealerNode(CarDealer data) {
+        int count = 0;
+        if (StringUtils.isNotBlank(data.getCode())) {
+            count = carDealerDAO.updateNode(data);
+        }
+        return count;
+    }
+
+    @Override
     public List<CarDealer> queryCarDealerList(CarDealer condition) {
         return carDealerDAO.selectList(condition);
     }
@@ -68,4 +77,5 @@ public class CarDealerBOImpl extends PaginableBOImpl<CarDealer>
         }
         return data;
     }
+
 }
