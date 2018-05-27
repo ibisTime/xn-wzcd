@@ -104,6 +104,29 @@
 			</if>
 		</trim>
 	</select>
+	
+
+	<select id="select_creditPageAll" parameterType="credit" resultMap="credit_DB_Result">
+		select 
+		t.code
+		,t.company_code
+		,t.loan_bank_code
+		,t.sale_user_id
+		,t.apply_datetime
+		
+		,t.cur_node_code		
+		,t.shop_way
+		,t.loan_amount
+		,t.xsz_front
+		,t.xsz_reverse
+		from tdq_credit t
+		<include refid="where_condition"/>
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
 
 	
 	<insert id="insert_credit" parameterType="credit">
