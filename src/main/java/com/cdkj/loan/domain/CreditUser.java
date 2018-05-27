@@ -25,11 +25,11 @@ public class CreditUser extends ABaseDO {
     // 贷款角色
     private String loanRole;
 
-    // 身份证号
-    private String idNo;
-
     // 手机号
     private Integer mobile;
+
+    // 身份证号
+    private String idNo;
 
     // 身份证正面
     private String idNoFront;
@@ -118,10 +118,21 @@ public class CreditUser extends ABaseDO {
     // 流水是否体现月收入
     private String jourShowIncome;
 
+    // 是否打件
+    private String isPrint;
+
     // ***********db properties****************
 
     public String getCode() {
         return code;
+    }
+
+    public String getIsPrint() {
+        return isPrint;
+    }
+
+    public void setIsPrint(String isPrint) {
+        this.isPrint = isPrint;
     }
 
     public void setCode(String code) {
