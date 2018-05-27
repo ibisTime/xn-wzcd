@@ -8,7 +8,10 @@ public class XN632063Req {
     private String code;// 编号
 
     @NotBlank
-    private String curNodeCode;// 当前节点编号
+    private String auditResult;// 审核结果
+
+    @NotBlank
+    private String auditor;// 审核人
 
     private String approveNote;// 审核说明
 
@@ -20,12 +23,20 @@ public class XN632063Req {
         this.code = code;
     }
 
-    public String getCurNodeCode() {
-        return curNodeCode;
+    public String getAuditor() {
+        return auditor;
     }
 
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
+    public void setAuditor(String auditor) {
+        this.auditor = auditor;
+    }
+
+    public String getAuditResult() {
+        return auditResult;
+    }
+
+    public void setAuditResult(String auditResult) {
+        this.auditResult = auditResult;
     }
 
     public String getApproveNote() {

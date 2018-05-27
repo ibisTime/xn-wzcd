@@ -150,6 +150,14 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_carDealer_node" parameterType="carDealer">
+		UPDATE tb_car_dealer
+		SET
+		cur_node_code = #{curNodeCode}
+		,approve_note = #{approveNote}
+		WHERE code = #{code}
+	</update>
 
 
 </mapper>

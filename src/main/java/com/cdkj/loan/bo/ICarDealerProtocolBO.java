@@ -4,10 +4,11 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CarDealerProtocol;
+import com.cdkj.loan.dto.req.XN632060ReqProtocol;
 
 public interface ICarDealerProtocolBO extends IPaginableBO<CarDealerProtocol> {
 
-    public void saveCarDealerProtocolList(List<CarDealerProtocol> list);
+    public void saveCarDealerProtocolList(List<XN632060ReqProtocol> list);
 
     public int saveCarDealerProtocol(CarDealerProtocol data);
 

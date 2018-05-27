@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ICarDealerAO;
 import com.cdkj.loan.bo.ICarDealerBO;
@@ -19,11 +20,14 @@ import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.dto.req.XN632060Req;
 import com.cdkj.loan.dto.req.XN632062Req;
+import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBankCode;
+import com.cdkj.loan.enums.ECarDealerNode;
 import com.cdkj.loan.enums.ECollectBankcard;
 import com.cdkj.loan.enums.EGeneratePrefix;
 
 @Service
+@Transactional
 public class CarDealerAOImpl implements ICarDealerAO {
 
     @Autowired
@@ -57,7 +61,7 @@ public class CarDealerAOImpl implements ICarDealerAO {
         data.setSettleWay(req.getSettleWay());
         data.setBusinessArea(req.getBusinessArea());
         data.setBelongBranchCompany(req.getBelongBranchCompany());
-        data.setCurNodeCode(req.getCurNodeCode());
+        data.setCurNodeCode(ECarDealerNode.TO_AUDIT.getCode());
         data.setApproveNote(req.getApproveNote());
         data.setPolicyNote(req.getPolicyNote());
         data.setRemark(req.getRemark());
@@ -104,7 +108,7 @@ public class CarDealerAOImpl implements ICarDealerAO {
         data.setSettleWay(req.getSettleWay());
         data.setBusinessArea(req.getBusinessArea());
         data.setBelongBranchCompany(req.getBelongBranchCompany());
-        data.setCurNodeCode(req.getCurNodeCode());
+
         data.setApproveNote(req.getApproveNote());
         data.setPolicyNote(req.getPolicyNote());
         data.setRemark(req.getRemark());
@@ -142,8 +146,16 @@ public class CarDealerAOImpl implements ICarDealerAO {
 
     // 审核
     @Override
-    public void audit(String code, String curNodeCode, String approveNote) {
-
+    public void audit(String code, String auditResult, String auditor,
+            String approveNote) {
+        CarDealer carDealer = carDealerBO.getCarDealer(code);
+        if (EApproveResult.PASS.getCode().equals(auditResult)) {
+            carDealer.setCurNodeCode(ECarDealerNode.AUDIT_PASS.getCode());
+        } else {
+            carDealer.setCurNodeCode(ECarDealerNode.AUDIT_NOT_PASS.getCode());
+        }
+        carDealer.setApproveNote(approveNote);
+        carDealerBO.refreshCarDealerNode(carDealer);
     }
 
     @Override

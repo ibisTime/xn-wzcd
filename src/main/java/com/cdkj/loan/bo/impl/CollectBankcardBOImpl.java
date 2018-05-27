@@ -126,9 +126,12 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
     @Override
     public void removeCollectBankcardByList(
             List<CollectBankcard> CollectBankcardList) {
-        for (CollectBankcard collectBankcard : CollectBankcardList) {
-            collectBankcardDAO.delete(collectBankcard);
+        if (CollectionUtils.isNotEmpty(CollectBankcardList)) {
+            for (CollectBankcard collectBankcard : CollectBankcardList) {
+                collectBankcardDAO.delete(collectBankcard);
+            }
         }
+
     }
 
 }

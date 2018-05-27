@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.domain.CollectBankcard;
 
 public class XN632060Req {
@@ -57,9 +56,6 @@ public class XN632060Req {
     @NotBlank
     private String belongBranchCompany;// 归属分公司
 
-    @NotBlank
-    private String curNodeCode;// 当前节点编号
-
     private String approveNote;// 审核说明
 
     private String policyNote;// 政策说明
@@ -68,7 +64,7 @@ public class XN632060Req {
 
     private List<CollectBankcard> jxsCollectBankcardList;// 经销商收款账号列表
 
-    private List<CarDealerProtocol> CarDealerProtocolList;// 经销商协议表
+    private List<XN632060ReqProtocol> CarDealerProtocolList;// 经销商协议表
 
     private List<CollectBankcard> gsCollectBankcardList;// 工商银行返点账号列表
 
@@ -89,12 +85,12 @@ public class XN632060Req {
         this.jxsCollectBankcardList = jxsCollectBankcardList;
     }
 
-    public List<CarDealerProtocol> getCarDealerProtocolList() {
+    public List<XN632060ReqProtocol> getCarDealerProtocolList() {
         return CarDealerProtocolList;
     }
 
     public void setCarDealerProtocolList(
-            List<CarDealerProtocol> carDealerProtocolList) {
+            List<XN632060ReqProtocol> carDealerProtocolList) {
         CarDealerProtocolList = carDealerProtocolList;
     }
 
@@ -247,14 +243,6 @@ public class XN632060Req {
 
     public void setBelongBranchCompany(String belongBranchCompany) {
         this.belongBranchCompany = belongBranchCompany;
-    }
-
-    public String getCurNodeCode() {
-        return curNodeCode;
-    }
-
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
     }
 
     public String getApproveNote() {

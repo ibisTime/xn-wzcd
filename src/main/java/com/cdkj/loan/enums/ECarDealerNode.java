@@ -8,8 +8,8 @@ package com.cdkj.loan.enums;
  */
 public enum ECarDealerNode {
 
-    TO_AUDIT("006_01", "开始节点"), AUDIT_PASS("006_02",
-            "提交请款预算单"), AUDIT_NOT_PASS("006_03", "财务经理审核");
+    TO_AUDIT("006_01", "待审核"), AUDIT_PASS("006_02",
+            "审核通过"), AUDIT_NOT_PASS("006_03", "审核不通过");
 
     ECarDealerNode(String code, String value) {
         this.code = code;

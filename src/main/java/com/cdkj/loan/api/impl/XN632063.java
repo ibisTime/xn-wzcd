@@ -24,7 +24,7 @@ public class XN632063 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        carDealerAO.audit(req.getCode(), req.getCurNodeCode(),
+        carDealerAO.audit(req.getCode(), req.getAuditResult(), req.getAuditor(),
             req.getApproveNote());
         return new BooleanRes(true);
     }
