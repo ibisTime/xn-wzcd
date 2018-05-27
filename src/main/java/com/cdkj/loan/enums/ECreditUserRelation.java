@@ -1,9 +1,10 @@
 package com.cdkj.loan.enums;
 
-public enum EDepartmentType {
-    SUBBRANCH_COMPANY("1", "子公司"), DEPARTMENT("2", "部门"), POSITION("3", "职位");
+public enum ECreditUserRelation {
 
-    EDepartmentType(String code, String value) {
+    APPLY_USER("1", "申请人"), GHR("2", "共还人"), GUARANTOR("3", "担保人");
+
+    ECreditUserRelation(String code, String value) {
         this.code = code;
         this.value = value;
     }
@@ -19,4 +20,5 @@ public enum EDepartmentType {
     public String getValue() {
         return value;
     }
+
 }

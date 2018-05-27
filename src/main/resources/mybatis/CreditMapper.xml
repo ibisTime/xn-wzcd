@@ -58,6 +58,15 @@
 			<if test="roleCode != null and roleCode != '' ">
 				AND t.cur_node_code = #{xszReverse}
 			</if>
+<!-- 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
+				AND t.apply_datetime &gt;= #{applyDatetimeStart}
+			</if>
+			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
+				AND t.apply_datetime &lt;= #{applyDatetimeEnd}
+			</if> -->
+			<if test="applyDatetime != null and applyDatetime != '' ">
+				AND t.apply_datetime = #{applyDatetime}
+			</if>
 		</trim>
 	</sql>
 	
@@ -104,32 +113,57 @@
 			</if>
 		</trim>
 	</select>
-
 	
+
+	<select id="select_creditPageAll" parameterType="credit" resultMap="credit_DB_Result">
+		select 
+		t.code
+		,t.company_code
+		,t.loan_bank_code
+		,t.sale_user_id
+		,t.apply_datetime
+		
+		,t.cur_node_code		
+		,t.shop_way
+		,t.loan_amount
+		,t.xsz_front
+		,t.xsz_reverse
+		from tdq_credit t
+		<include refid="where_condition"/>
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<!-- 征信新增 -->
 	<insert id="insert_credit" parameterType="credit">
 		INSERT INTO tdq_credit(
 		code
+		,apply_datetime
+		
 		,loan_bank_code
 		,shop_way
 		,loan_amount
 		,xsz_front
 		,xsz_reverse
 		,cur_node_code
-		,apply_datetime
 		)
 		VALUES(
 		#{code}
+		,#{applyDatetime}
+		
 		,#{loanBankCode}
 		,#{shopWay}
 		,#{loanAmount}
 		,#{xszFront}
 		,#{xszReverse}
 		,#{curNodeCode}
-		,#{applyDatetime}
 		)
 	</insert>
 	
-	
+	<!-- 征信修改 -->
 	<update id="update_credit" parameterType="credit">
 		UPDATE tdq_credit
 		SET
@@ -138,7 +172,6 @@
 		,loan_amount = #{loanAmount}
 		,xsz_front = #{xszFront}
 		,xsz_reverse = #{xszReverse}
-		,cur_node_code = #{curNodeCode}
 		,accessory = #{accessory}
 		WHERE
 		code = #{code}

@@ -1,37 +1,35 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.IDepartmentAO;
+import com.cdkj.loan.ao.ICarDealerAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN630101Req;
-import com.cdkj.loan.dto.res.BooleanRes;
+import com.cdkj.loan.dto.req.XN632066Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 删除部门
+ * 请款预算单详情
  * @author: CYL 
- * @since: 2018年5月22日 下午4:50:51 
+ * @since: 2018年5月24日 下午2:23:36 
  * @history:
  */
-public class XN630101 extends AProcessor {
-    private IDepartmentAO departmentAO = SpringContextHolder
-        .getBean(IDepartmentAO.class);
+public class XN632066 extends AProcessor {
+    private ICarDealerAO carDealerAO = SpringContextHolder
+        .getBean(ICarDealerAO.class);
 
-    private XN630101Req req = null;
+    private XN632066Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        departmentAO.dropDepartment(req.getCode());
-        return new BooleanRes(true);
+        return carDealerAO.getCarDealer(req.getCode());
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN630101Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632066Req.class);
         ObjValidater.validateReq(req);
     }
 

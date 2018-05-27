@@ -5,23 +5,29 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ICarDealerAO;
 import com.cdkj.loan.bo.ICarDealerBO;
+import com.cdkj.loan.bo.ICarDealerProtocolBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.CarDealer;
+import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.dto.req.XN632060Req;
 import com.cdkj.loan.dto.req.XN632062Req;
+import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBankCode;
+import com.cdkj.loan.enums.ECarDealerNode;
 import com.cdkj.loan.enums.ECollectBankcard;
 import com.cdkj.loan.enums.EGeneratePrefix;
 
 @Service
+@Transactional
 public class CarDealerAOImpl implements ICarDealerAO {
 
     @Autowired
@@ -29,6 +35,9 @@ public class CarDealerAOImpl implements ICarDealerAO {
 
     @Autowired
     ICollectBankcardBO collectBankcardBO;
+
+    @Autowired
+    ICarDealerProtocolBO carDealerProtocolBO;
 
     @Override
     public String addCarDealer(XN632060Req req) {
@@ -52,23 +61,33 @@ public class CarDealerAOImpl implements ICarDealerAO {
         data.setSettleWay(req.getSettleWay());
         data.setBusinessArea(req.getBusinessArea());
         data.setBelongBranchCompany(req.getBelongBranchCompany());
-        data.setCurNodeCode(req.getCurNodeCode());
+        data.setCurNodeCode(ECarDealerNode.TO_AUDIT.getCode());
         data.setApproveNote(req.getApproveNote());
         data.setPolicyNote(req.getPolicyNote());
         data.setRemark(req.getRemark());
         carDealerBO.saveCarDealer(data);
+        // 经销商收款账号
         collectBankcardBO.saveCollectBankcardList(
             req.getJxsCollectBankcardList(),
-            ECollectBankcard.DEALER_COLLECT.getCode());
+            ECollectBankcard.DEALER_COLLECT.getCode(), code);
+        // 协议
+        carDealerProtocolBO
+            .saveCarDealerProtocolList(req.getCarDealerProtocolList());
+        // 工行返点账号
         collectBankcardBO.saveCollectBankcardList(
             req.getGsCollectBankcardList(),
-            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.ICBC.getCode());
+            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.ICBC.getCode(),
+            code);
+        // 中行返点账号
         collectBankcardBO.saveCollectBankcardList(
             req.getZhCollectBankcardList(),
-            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.BOC.getCode());
+            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.BOC.getCode(),
+            code);
+        // 建行返点账号
         collectBankcardBO.saveCollectBankcardList(
             req.getJhCollectBankcardList(),
-            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.CCB.getCode());
+            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.CCB.getCode(),
+            code);
 
         return code;
     }
@@ -92,7 +111,7 @@ public class CarDealerAOImpl implements ICarDealerAO {
         data.setSettleWay(req.getSettleWay());
         data.setBusinessArea(req.getBusinessArea());
         data.setBelongBranchCompany(req.getBelongBranchCompany());
-        data.setCurNodeCode(req.getCurNodeCode());
+
         data.setApproveNote(req.getApproveNote());
         data.setPolicyNote(req.getPolicyNote());
         data.setRemark(req.getRemark());
@@ -109,16 +128,40 @@ public class CarDealerAOImpl implements ICarDealerAO {
         // 保存
         collectBankcardBO.saveCollectBankcardList(
             req.getJxsCollectBankcardList(),
-            ECollectBankcard.DEALER_COLLECT.getCode());
+            ECollectBankcard.DEALER_COLLECT.getCode(), req.getCode());
+
+        carDealerProtocolBO
+            .saveCarDealerProtocolList(req.getCarDealerProtocolList());
+
         collectBankcardBO.saveCollectBankcardList(
             req.getGsCollectBankcardList(),
-            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.ICBC.getCode());
+            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.ICBC.getCode(),
+            req.getCode());
+
         collectBankcardBO.saveCollectBankcardList(
             req.getZhCollectBankcardList(),
-            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.BOC.getCode());
+            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.BOC.getCode(),
+            req.getCode());
+
         collectBankcardBO.saveCollectBankcardList(
             req.getJhCollectBankcardList(),
-            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.CCB.getCode());
+            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.CCB.getCode(),
+            req.getCode());
+
+    }
+
+    // 审核
+    @Override
+    public void audit(String code, String auditResult, String auditor,
+            String approveNote) {
+        CarDealer carDealer = carDealerBO.getCarDealer(code);
+        if (EApproveResult.PASS.getCode().equals(auditResult)) {
+            carDealer.setCurNodeCode(ECarDealerNode.AUDIT_PASS.getCode());
+        } else {
+            carDealer.setCurNodeCode(ECarDealerNode.AUDIT_NOT_PASS.getCode());
+        }
+        carDealer.setApproveNote(approveNote);
+        carDealerBO.refreshCarDealerNode(carDealer);
     }
 
     @Override
@@ -144,33 +187,38 @@ public class CarDealerAOImpl implements ICarDealerAO {
                     .setType(ECollectBankcard.DEALER_REBATE.getCode());
                 List<CollectBankcard> queryCollectBankcardList = collectBankcardBO
                     .queryCollectBankcardList(collectBankcard);
+
+                // 协议
+                CarDealerProtocol carDealerProtocol = new CarDealerProtocol();
+                carDealerProtocol.setCarDealerCode(carDealer.getCode());
+                List<CarDealerProtocol> queryCarDealerProtocolList = carDealerProtocolBO
+                    .queryCarDealerProtocolList(carDealerProtocol);
+                carDealer.setCarDealerProtocolList(queryCarDealerProtocolList);
+
                 List<CollectBankcard> ghList = null;
                 List<CollectBankcard> zhList = null;
                 List<CollectBankcard> jhList = null;
-                // 工行
                 for (CollectBankcard collectBankcard2 : queryCollectBankcardList) {
+                    // 工行
                     if (collectBankcard2.getBankCode()
                         .equals(EBankCode.ICBC.getCode())) {
                         ghList.add(collectBankcard2);
                     }
-                }
-                carDealer.setGsCollectBankcardList(ghList);
-                // 中行
-                for (CollectBankcard collectBankcard2 : queryCollectBankcardList) {
+                    // 中行
                     if (collectBankcard2.getBankCode()
                         .equals(EBankCode.BOC.getCode())) {
                         zhList.add(collectBankcard2);
                     }
-                }
-                carDealer.setZhCollectBankcardList(zhList);
-                // 建行
-                for (CollectBankcard collectBankcard2 : queryCollectBankcardList) {
+                    // 建行
                     if (collectBankcard2.getBankCode()
                         .equals(EBankCode.CCB.getCode())) {
                         jhList.add(collectBankcard2);
                     }
                 }
+                carDealer.setGsCollectBankcardList(ghList);
+                carDealer.setZhCollectBankcardList(zhList);
                 carDealer.setJhCollectBankcardList(jhList);
+
             }
         }
 
@@ -191,32 +239,36 @@ public class CarDealerAOImpl implements ICarDealerAO {
             collectBankcard.setType(ECollectBankcard.DEALER_REBATE.getCode());
             List<CollectBankcard> queryCollectBankcardList = collectBankcardBO
                 .queryCollectBankcardList(collectBankcard);
+
+            // 协议
+            CarDealerProtocol carDealerProtocol = new CarDealerProtocol();
+            carDealerProtocol.setCarDealerCode(carDealer.getCode());
+            List<CarDealerProtocol> queryCarDealerProtocolList = carDealerProtocolBO
+                .queryCarDealerProtocolList(carDealerProtocol);
+            carDealer.setCarDealerProtocolList(queryCarDealerProtocolList);
+
             List<CollectBankcard> ghList = null;
             List<CollectBankcard> zhList = null;
             List<CollectBankcard> jhList = null;
-            // 工行
             for (CollectBankcard collectBankcard2 : queryCollectBankcardList) {
+                // 工行
                 if (collectBankcard2.getBankCode()
                     .equals(EBankCode.ICBC.getCode())) {
                     ghList.add(collectBankcard2);
                 }
-            }
-            carDealer.setGsCollectBankcardList(ghList);
-            // 中行
-            for (CollectBankcard collectBankcard2 : queryCollectBankcardList) {
+                // 中行
                 if (collectBankcard2.getBankCode()
                     .equals(EBankCode.BOC.getCode())) {
                     zhList.add(collectBankcard2);
                 }
-            }
-            carDealer.setZhCollectBankcardList(zhList);
-            // 建行
-            for (CollectBankcard collectBankcard2 : queryCollectBankcardList) {
+                // 建行
                 if (collectBankcard2.getBankCode()
                     .equals(EBankCode.CCB.getCode())) {
                     jhList.add(collectBankcard2);
                 }
             }
+            carDealer.setGsCollectBankcardList(ghList);
+            carDealer.setZhCollectBankcardList(zhList);
             carDealer.setJhCollectBankcardList(jhList);
         }
         return queryCarDealerList;
@@ -235,34 +287,39 @@ public class CarDealerAOImpl implements ICarDealerAO {
         collectBankcard.setType(ECollectBankcard.DEALER_REBATE.getCode());
         List<CollectBankcard> queryCollectBankcardList = collectBankcardBO
             .queryCollectBankcardList(collectBankcard);
+
+        // 协议
+        CarDealerProtocol carDealerProtocol = new CarDealerProtocol();
+        carDealerProtocol.setCarDealerCode(carDealer.getCode());
+        List<CarDealerProtocol> queryCarDealerProtocolList = carDealerProtocolBO
+            .queryCarDealerProtocolList(carDealerProtocol);
+        carDealer.setCarDealerProtocolList(queryCarDealerProtocolList);
+
         List<CollectBankcard> ghList = null;
         List<CollectBankcard> zhList = null;
         List<CollectBankcard> jhList = null;
-        // 工行
         for (CollectBankcard collectBankcard2 : queryCollectBankcardList) {
+            // 工行
             if (collectBankcard2.getBankCode()
                 .equals(EBankCode.ICBC.getCode())) {
                 ghList.add(collectBankcard2);
             }
-        }
-        carDealer.setGsCollectBankcardList(ghList);
-        // 中行
-        for (CollectBankcard collectBankcard2 : queryCollectBankcardList) {
+            // 中行
             if (collectBankcard2.getBankCode()
                 .equals(EBankCode.BOC.getCode())) {
                 zhList.add(collectBankcard2);
             }
-        }
-        carDealer.setZhCollectBankcardList(zhList);
-        // 建行
-        for (CollectBankcard collectBankcard2 : queryCollectBankcardList) {
+            // 建行
             if (collectBankcard2.getBankCode()
                 .equals(EBankCode.CCB.getCode())) {
                 jhList.add(collectBankcard2);
             }
         }
+        carDealer.setGsCollectBankcardList(ghList);
+        carDealer.setZhCollectBankcardList(zhList);
         carDealer.setJhCollectBankcardList(jhList);
 
         return carDealer;
     }
+
 }

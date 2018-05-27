@@ -10,6 +10,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICreditUserDAO;
 import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.enums.ECreditUserRelation;
 import com.cdkj.loan.enums.EGeneratePrefix;
 
 /**
@@ -59,6 +60,17 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         creditUser.setCreditCode(creditCode);
 
         return creditUserDAO.selectList(creditUser);
+    }
+
+    // 根据征信单编号和征信人员关系获取对应信息
+    @Override
+    public CreditUser getCreditUserByCreditCode(String creditCode,
+            ECreditUserRelation creditUserRelation) {
+        CreditUser condition = new CreditUser();
+        condition.setCreditCode(creditCode);
+        condition.setRelation(creditUserRelation.getCode());
+
+        return creditUserDAO.select(condition);
     }
 
     // 查看征信报告详情

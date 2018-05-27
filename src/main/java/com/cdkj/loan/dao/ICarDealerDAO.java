@@ -8,4 +8,6 @@ public interface ICarDealerDAO extends IBaseDAO<CarDealer> {
     String NAMESPACE = ICarDealerDAO.class.getName().concat(".");
 
     int update(CarDealer data);
+
+    int updateNode(CarDealer data);
 }

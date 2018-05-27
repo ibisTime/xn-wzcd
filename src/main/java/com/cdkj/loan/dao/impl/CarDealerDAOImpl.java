@@ -28,6 +28,11 @@ public class CarDealerDAOImpl extends AMybatisTemplate
     }
 
     @Override
+    public int updateNode(CarDealer data) {
+        return super.update(NAMESPACE.concat("update_carDealer_node"), data);
+    }
+
+    @Override
     public CarDealer select(CarDealer condition) {
         return super.select(NAMESPACE.concat("select_carDealer"), condition,
             CarDealer.class);

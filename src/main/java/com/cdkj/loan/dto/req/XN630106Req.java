@@ -1,10 +1,12 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 public class XN630106Req {
 
     private String parentCode;// 上级部门编号
 
-    private String type;// 类型
+    private List<String> typeList; // 类型列表
 
     private String status;// 状态
 
@@ -18,12 +20,12 @@ public class XN630106Req {
         this.parentCode = parentCode;
     }
 
-    public String getType() {
-        return type;
+    public List<String> getTypeList() {
+        return typeList;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTypeList(List<String> typeList) {
+        this.typeList = typeList;
     }
 
     public String getStatus() {

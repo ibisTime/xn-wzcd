@@ -26,7 +26,7 @@
 		<result column="hkxy_unsettle_count" property="hkxyUnsettleCount" />
 		<result column="hkxy_unsettle_amount" property="hkxyUnsettleAmount" />
 		<result column="hkxy_2year_over_times" property="hkxy2YearOverTimes" />
-		<result column="hkxy_monthmax_over_amount" property="hkxyMonthmaxOverAmount" />		
+		<result column="hkxy_monthmax_over_amount" property="hkxyMonthMaxOverAmount" />		
 		<result column="hkxy_current_over_amount" property="hkxyCurrentOverAmount" />
 		<result column="hkxy_6month_avg_amount" property="hkxy6MonthAvgAmount" />
 		
@@ -56,60 +56,76 @@
 			<if test="creditCode != null and creditCode != '' ">
 				AND t.credit_code = #{creditCode}
 			</if>
+			<if test="isRelation != null and isRelation != '' ">
+				AND t.is_relation = #{isRelation}
+			</if>
 		</trim>
 	</sql>
 	
+	<!-- 征信人员新增 -->
 	<insert id="insert_creditUser" parameterType="creditUser">
 		INSERT INTO 
 		tdq_credit_user(
 		code
 		,credit_code
-		,user_name
+		
 		,relation
+		,user_name		
 		,loan_role
-		,id_no
 		,mobile
+		,id_no
+		,id_no_front
+		,id_no_reverse
 		,auth_pdf
 		,interview_pic		
 		)
 		VALUES(
 		#{code}
 		,#{creditCode}
-		,#{userName}
+		
 		,#{relation}
+		,#{userName}
 		,#{loanRole}
-		,#{idNo}
 		,#{mobile}
+		,#{idNo}
+		,#{idNoFront}	
+		,#{idNoReverse}
 		,#{authPdf}
 		,#{interviewPic}
 		)
 	</insert>
 	
+	<!-- 批量新增征信人员 -->
 	<insert id="insert_creditUserLsit" parameterType="List">
 		INSERT INTO 
 		tdq_credit_user(
 		code
 		,credit_code
-		,user_name
+		
 		,relation
+		,user_name		
 		,loan_role
-		,id_no
 		,mobile
+		,id_no
+		,id_no_front
+		,id_no_reverse
 		,auth_pdf
-		,interview_pic		
+		,interview_pic			
 		)
 		VALUES(
 		<foreach collection="list" item="creditUser" separator=",">
-			#{code}
-			,#{creditCode}
-			
-			,#{userName}
-			,#{relation}
-			,#{loanRole}
-			,#{idNo}
-			,#{mobile}
-			,#{authPdf}
-			,#{interviewPic}
+		#{code}
+		,#{creditCode}
+		
+		,#{relation}
+		,#{userName}
+		,#{loanRole}
+		,#{mobile}
+		,#{idNo}
+		,#{idNoFront}	
+		,#{idNoReverse}
+		,#{authPdf}
+		,#{interviewPic}
 		</foreach>
 		)
 	</insert>
@@ -120,8 +136,8 @@
 		user_name=#{userName}
 		,relation=#{relation}
 		,loan_role=#{loanRole}
-		,id_no=#{idNo}
 		,mobile=#{mobile}
+		,id_no=#{idNo}
 		,id_no_front=#{idNoFront}
 		,id_no_reverse=#{idNoReverse}
 		,auth_pdf=#{authPdf}
@@ -146,7 +162,7 @@
 		,hkxy_unsettle_count=#{hkxyUnsettleCount}
 		,hkxy_unsettle_amount=#{hkxyUnsettleAmount}
 		,hkxy_2year_over_times=#{hkxy2YearOverTimes}
-		,hkxy_month_max_over_amount=#{hkxyMonthmaxOverAmount}
+		,hkxy_month_max_over_amount=#{hkxyMonthMaxOverAmount}
 		,hkxy_current_over_amount=#{hkxyCurrentOverAmount}
 		,hkxy_6month_avg_amount=#{hkxy6MonthAvgAmount}
 		
@@ -159,8 +175,9 @@
 		
 		,out_guarantees_count=#{outGuaranteesCount}
 		,out_guarantees_amount=#{outGuaranteesAmount}
-		,out_guarantees_remark#{outGuaranteesRemark}
-		WHERE
+		,out_guarantees_remark=#{outGuaranteesRemark}
+		
+		WHERE 
 		code = #{code}
 	</update>
 	

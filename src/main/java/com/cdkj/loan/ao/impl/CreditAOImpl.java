@@ -23,6 +23,7 @@ import com.cdkj.loan.dto.req.XN632112ReqChild;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632114Req;
 import com.cdkj.loan.dto.req.XN632115Req;
+import com.cdkj.loan.dto.req.XN632116Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ECreditNode;
@@ -63,6 +64,7 @@ public class CreditAOImpl implements ICreditAO {
 
         // 新增征信单
         Credit credit = new Credit();
+
         credit.setLoanBankCode(req.getLoanBankCode());
         credit.setShopWay(req.getShopWay());
         credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
@@ -80,12 +82,16 @@ public class CreditAOImpl implements ICreditAO {
         List<XN632110ReqChild> childList = req.getCreditUserList();
         for (XN632110ReqChild child : childList) {
             CreditUser creditUser = new CreditUser();
+
             creditUser.setCreditCode(creditCode);
-            creditUser.setUserName(child.getUserName());
+
             creditUser.setRelation(child.getRelation());
+            creditUser.setUserName(child.getUserName());
             creditUser.setLoanRole(child.getLoanRole());
+            creditUser.setMobile(child.getMobile());
             creditUser.setIdNo(child.getIdNo());
-            creditUser.setMobile(StringValidater.toInteger(child.getMobile()));
+            creditUser.setIdNoFront(child.getIdNoFront());
+            creditUser.setIdNoReverse(child.getIdNoReverse());
             creditUser.setAuthPdf(child.getAuthPdf());
             creditUser.setInterviewPic(child.getInterviewPic());
 
@@ -131,8 +137,7 @@ public class CreditAOImpl implements ICreditAO {
 
             creditUser.setRelation(reqChild.getRelation());
 
-            creditUser
-                .setMobile(StringValidater.toInteger(reqChild.getMobile()));
+            creditUser.setMobile(reqChild.getMobile());
 
             creditUser.setIdNo(reqChild.getIdNo());
 
@@ -156,7 +161,7 @@ public class CreditAOImpl implements ICreditAO {
 
     }
 
-    // 分页查询
+    // 分页查询 按角色权限
     @Override
     public Paginable<Credit> queryCreditPage(XN632115Req req) {
 
@@ -276,5 +281,52 @@ public class CreditAOImpl implements ICreditAO {
 
         creditBO.refreshCreditNode(credit);
 
+    }
+
+    // 分页查询
+    @Override
+    public Paginable<Credit> queryCreditPage(XN632116Req req) {
+
+        // 征信表分页查询结果
+        Credit condition = new Credit();
+
+        int start = StringValidater.toInteger(req.getStart());
+        int limit = StringValidater.toInteger(req.getLimit());
+
+        String Column = req.getOrderColumn();
+
+        condition.setOrder(Column, req.getOrderDir());
+
+        condition.setApplyDatetime(DateUtil.strToDate(req.getApplyDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+
+        condition.setLoanBankCode(req.getLoanBankCode());
+
+        condition.setSaleUserId(req.getSaleUserId());
+
+        condition.setCode(req.getCreditCode());
+
+        Paginable<Credit> result = creditBO.getPaginableAll(start, limit,
+            condition);
+
+        List<Credit> list = result.getList();
+
+        for (Credit credit : list) {
+
+            // 从征信人员表查申请人的客户姓名 手机号 身份证号
+            // credit.setLoanName(creditUserBO.queryCreditUserMain(credit.getCode()));
+            // 从部门表查业务公司名
+            // credit.setCompanyName((departmentBO.getDepartment(credit
+            // .getCompanyCode()).getName()));
+            // 从银行表查贷款银行名
+            // credit.setLoanBankName(bankBO.getName());
+
+            // 从业务员表查业务员姓名
+            // credit.setSalesmanName(saleUserBO.g);
+            // 从节点表查节点名称
+            credit.setStatus(nodeBO.getNode(credit.getCurNodeCode()).getName());
+        }
+
+        return result;
     }
 }
