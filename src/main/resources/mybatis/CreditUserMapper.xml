@@ -3,13 +3,12 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.ICreditUserDAO">
 	<resultMap id="creditUser_DB_Result" type="creditUser">
-	
 		<result column="code" property="code" />
 		<result column="credit_code" property="creditCode" />
-		
 		<result column="user_name" property="userName" />
 		<result column="relation" property="relation" />
 		<result column="loan_role" property="loanRole" />
+		
 		<result column="id_no" property="idNo" />
 		<result column="mobile" property="mobile" />
 		<result column="id_no_front" property="idNoFront" />
@@ -40,7 +39,13 @@
 		
 		<result column="out_guarantees_count" property="outGuaranteesCount" />
 		<result column="out_guarantees_amount" property="outGuaranteesAmount" />
-		<result column="out_guarantees_remark" property="outGuaranteesRemark" />		
+		<result column="out_guarantees_remark" property="outGuaranteesRemark" />	
+			
+		<result column="month_income" property="monthIncome" />		
+		<result column="settle_interest" property="settleInterest" />		
+		<result column="balance" property="balance" />		
+		<result column="jour_show_income" property="jourShowIncome" />		
+		<result column="is_print" property="isPrint" />		
 	</resultMap>
 	
 	<sql id="where_condition">
@@ -56,7 +61,7 @@
 	
 	<insert id="insert_creditUser" parameterType="creditUser">
 		INSERT INTO 
-		stdq_credit_user(
+		tdq_credit_user(
 		code
 		,credit_code
 		,user_name
@@ -68,21 +73,21 @@
 		,interview_pic		
 		)
 		VALUES(
-			#{code}
-			#{creditCode}
-			#{userName}
-			#{relation}
-			#{loanRole}
-			#{idNo}
-			#{mobile}
-			#{authPdf}
-			#{interviewPic}
+		#{code}
+		,#{creditCode}
+		,#{userName}
+		,#{relation}
+		,#{loanRole}
+		,#{idNo}
+		,#{mobile}
+		,#{authPdf}
+		,#{interviewPic}
 		)
 	</insert>
 	
 	<insert id="insert_creditUserLsit" parameterType="List">
 		INSERT INTO 
-		stdq_credit_user(
+		tdq_credit_user(
 		code
 		,credit_code
 		,user_name
@@ -96,15 +101,15 @@
 		VALUES(
 		<foreach collection="list" item="creditUser" separator=",">
 			#{code}
-			#{creditCode}
+			,#{creditCode}
 			
-			#{userName}
-			#{relation}
-			#{loanRole}
-			#{idNo}
-			#{mobile}
-			#{authPdf}
-			#{interviewPic}
+			,#{userName}
+			,#{relation}
+			,#{loanRole}
+			,#{idNo}
+			,#{mobile}
+			,#{authPdf}
+			,#{interviewPic}
 		</foreach>
 		)
 	</insert>
@@ -159,31 +164,32 @@
 		code = #{code}
 	</update>
 	
-	<select id="select_creditUserList" parameterType="creditUser" resultMap="creditUser_DB_Result">
+	<update id="update_creditUserIncome" parameterType="creditUser">
+		UPDATE tdq_credit_user
+		SET
+		month_income = monthIncome
+		,settle_interest = settleInterest
+		,balance = balance
+		,jour_show_income = jourShowIncome
+		,is_print = isPrint
+		WHERE
+		code = #{code}
+	</update>
+	
+	<select id="select_creditUser" parameterType="creditUser" resultMap="creditUser_DB_Result">
 		select 
 		t.user_name
 		,t.relation
 		,t.loan_role
 		,t.mobile
-		,t.idNo
-		,t.idNoFront
-		,t.idNoReverse
-		,t.authPdf
-		,t.interviewPic
-		from tdq_credit_User t
-		<include refid="where_condition"/>
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
-	</select>
-	
-	
-	<select id="select_creditUser" parameterType="creditUser" resultMap="creditUser_DB_Result">
-		select 
+		,t.id_no
 		
-		dkdy_count
+		,t.id_no_front
+		,t.id_no_reverse
+		,t.auth_pdf
+		,t.interview_pic
+		,t.dkdy_count
+		
 		,t.dkdy_amount
 		,t.dkdy_2year_over_times
 		,t.dkdy_max_over_amount
@@ -195,19 +201,25 @@
 		,t.hkxy_2year_over_times
 		,t.hkxy_monthmax_over_amount
 		,t.hkxy_current_over_amount
+		
 		,t.hkxy_6month_avg_amount
-				
 		,t.xyk_count
 		,t.xyk_credit_amount
 		,t.xyk_6month_use_amount
 		,t.xyk_2year_over_times
+		
 		,t.xyk_month_max_over_amount
 		,t.xyk_current_over_amount
-				
 		,t.out_guarantees_count
 		,t.out_guarantees_amount
 		,t.out_guarantees_remark
-			
+		
+		,t.month_income
+		,t.settle_interest
+		,t.balance
+		,t.jour_show_income
+		,t.is_print
+		
 		from tdq_credit_User t
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
@@ -216,8 +228,6 @@
 			</if>
 		</trim>
 	</select>
-	
-
 	
 	<select id="select_credit_countUser" parameterType="creditUser"
 		resultType="java.lang.Long">

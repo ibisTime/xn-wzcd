@@ -32,10 +32,12 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
 
     @Override
     public String addCredit(Credit data) {
-        String code = OrderNoGenerater.generate(EGeneratePrefix.CREDIT
-            .getCode());
-        data.setCode(code);
-        creditDAO.insert(data);
+        String code = null;
+        if (null != data) {
+            code = OrderNoGenerater.generate(EGeneratePrefix.CREDIT.getCode());
+            data.setCode(code);
+            creditDAO.insert(data);
+        }
 
         return code;
     }

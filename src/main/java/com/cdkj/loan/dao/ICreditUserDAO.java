@@ -19,4 +19,7 @@ public interface ICreditUserDAO extends IBaseDAO<CreditUser> {
     // 修改征信人员信息
     public void updateCreditUser(CreditUser creditUser);
 
+    // 修改征信人员收入情况
+    public void updateCreditUserIncome(CreditUser creditUser);
+
 }

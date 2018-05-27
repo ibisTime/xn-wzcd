@@ -48,7 +48,7 @@ public class CreditUserDAOImpl extends AMybatisTemplate implements
     // 批量查询征信人员 根据征信单编号
     @Override
     public List<CreditUser> selectList(CreditUser condition) {
-        return super.selectList(NAMESPACE.concat("select_creditUserList"),
+        return super.selectList(NAMESPACE.concat("select_creditUser"),
             condition, CreditUser.class);
     }
 
@@ -73,4 +73,8 @@ public class CreditUserDAOImpl extends AMybatisTemplate implements
 
     }
 
+    @Override
+    public void updateCreditUserIncome(CreditUser creditUser) {
+        super.update(NAMESPACE.concat("update_creditUserIncome"), creditUser);
+    }
 }

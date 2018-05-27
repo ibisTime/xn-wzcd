@@ -25,11 +25,11 @@ public class CreditUser extends ABaseDO {
     // 贷款角色
     private String loanRole;
 
-    // 身份证号
-    private String idNo;
-
     // 手机号
     private Integer mobile;
+
+    // 身份证号
+    private String idNo;
 
     // 身份证正面
     private String idNoFront;
@@ -106,10 +106,33 @@ public class CreditUser extends ABaseDO {
     // 对外担保备注
     private String outGuaranteesRemark;
 
+    // 月收入
+    private String monthIncome;
+
+    // 结息
+    private String settleInterest;
+
+    // 余额
+    private String balance;
+
+    // 流水是否体现月收入
+    private String jourShowIncome;
+
+    // 是否打件
+    private String isPrint;
+
     // ***********db properties****************
 
     public String getCode() {
         return code;
+    }
+
+    public String getIsPrint() {
+        return isPrint;
+    }
+
+    public void setIsPrint(String isPrint) {
+        this.isPrint = isPrint;
     }
 
     public void setCode(String code) {
@@ -362,6 +385,38 @@ public class CreditUser extends ABaseDO {
 
     public void setOutGuaranteesRemark(String outGuaranteesRemark) {
         this.outGuaranteesRemark = outGuaranteesRemark;
+    }
+
+    public String getMonthIncome() {
+        return monthIncome;
+    }
+
+    public void setMonthIncome(String monthIncome) {
+        this.monthIncome = monthIncome;
+    }
+
+    public String getSettleInterest() {
+        return settleInterest;
+    }
+
+    public void setSettleInterest(String settleInterest) {
+        this.settleInterest = settleInterest;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+    public String getJourShowIncome() {
+        return jourShowIncome;
+    }
+
+    public void setJourShowIncome(String jourShowIncome) {
+        this.jourShowIncome = jourShowIncome;
     }
 
 }

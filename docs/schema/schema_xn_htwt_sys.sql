@@ -101,7 +101,6 @@ CREATE TABLE `tsys_department` (
   `lead_name` VARCHAR(255) NULL COMMENT '负责人',
   `mobile` INT(11) NULL COMMENT '负责人手机号',
   `parent_code` VARCHAR(32) NULL COMMENT '上级部门编号',
-  `type` VARCHAR(4) NULL COMMENT '类型',
   `status` VARCHAR(4) NULL COMMENT '状态',
   `updater` VARCHAR(32) NULL COMMENT '更新人',
   `update_datetime` DATETIME NULL COMMENT '更新时间',

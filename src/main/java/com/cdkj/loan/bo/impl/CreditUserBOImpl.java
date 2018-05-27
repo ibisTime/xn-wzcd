@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.ICreditUserBO;
-import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICreditUserDAO;
@@ -24,31 +23,10 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
 
     private ICreditUserDAO creditUserDAO;
 
-    @Override
-    public long getTotalCount(CreditUser condition) {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public Paginable<CreditUser> getPaginable(int start, CreditUser condition) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Paginable<CreditUser> getPaginable(int start, int pageSize,
-            CreditUser condition) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
     // 修改征信人员
     @Override
     public void updateCreditUser(CreditUser creditUser) {
-
         creditUserDAO.updateCreditUser(creditUser);
-
     }
 
     // 录入银行征信结果
@@ -61,10 +39,14 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     // 新增征信人员
     @Override
     public void addCreditUser(CreditUser creditUser) {
-        String code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER
-            .getCode());
-        creditUser.setCode(code);
-        creditUserDAO.insert(creditUser);
+        String code = null;
+        if (null != creditUser) {
+            code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER
+                .getCode());
+            creditUser.setCode(code);
+            creditUserDAO.insert(creditUser);
+        }
+
     }
 
     // 批量查询征信人员 根据征信单编号
@@ -84,6 +66,12 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         CreditUser creditUser = new CreditUser();
         creditUser.setCode(code);
         return creditUserDAO.select(creditUser);
+    }
+
+    // 修改征信人员收入
+    @Override
+    public void refreshCreditUserIncome(CreditUser creditUser) {
+        creditUserDAO.updateCreditUserIncome(creditUser);
     }
 
 }

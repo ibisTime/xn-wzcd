@@ -62,7 +62,7 @@ public class CreditAOImpl implements ICreditAO {
 
         // 新增征信单
         Credit credit = new Credit();
-        credit.setLoanBankCode(req.getLoanBank());
+        credit.setLoanBankCode(req.getLoanBankCode());
         credit.setShopWay(req.getShopWay());
         credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
         credit.setXszFront(req.getXszFront());
@@ -74,10 +74,10 @@ public class CreditAOImpl implements ICreditAO {
         String creditCode = creditBO.addCredit(credit);
 
         // 新增征信人员
-
-        List<XN632110ReqChild> creditUserList = req.getCreditUserList();
-        for (XN632110ReqChild child : creditUserList) {
+        List<XN632110ReqChild> childList = req.getCreditUserList();
+        for (XN632110ReqChild child : childList) {
             CreditUser creditUser = new CreditUser();
+            creditUser.setCreditCode(creditCode);
             creditUser.setUserName(child.getUserName());
             creditUser.setRelation(child.getRelation());
             creditUser.setLoanRole(child.getLoanRole());
@@ -85,11 +85,11 @@ public class CreditAOImpl implements ICreditAO {
             creditUser.setMobile(StringValidater.toInteger(child.getMobile()));
             creditUser.setAuthPdf(child.getAuthPdf());
             creditUser.setInterviewPic(child.getInterviewPic());
-            creditUser.setCreditCode(creditCode);
+
             creditUserBO.addCreditUser(creditUser);
         }
 
-        return credit.getCode();
+        return creditCode;
     }
 
     // 修改征信

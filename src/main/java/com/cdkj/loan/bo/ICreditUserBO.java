@@ -16,6 +16,9 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     // 修改征信人员信息
     public void updateCreditUser(CreditUser creditUser);
 
+    // 修改征信人员信息收入
+    public void refreshCreditUserIncome(CreditUser creditUser);
+
     // 批量查询征信人员 根据征信单编号
     public List<CreditUser> queryCreditUserListByCreditCode(String creditCode);
 
