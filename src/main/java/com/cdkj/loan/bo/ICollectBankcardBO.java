@@ -19,11 +19,12 @@ public interface ICollectBankcardBO extends IPaginableBO<CollectBankcard> {
     public CollectBankcard getCollectBankcard(String code);
 
     public void saveCollectBankcardList(
-            List<CollectBankcard> CollectBankcardList, String type);
+            List<CollectBankcard> CollectBankcardList, String type,
+            String code);
 
     public void saveCollectBankcardList(
             List<CollectBankcard> gsCollectBankcardList, String type,
-            String bankCode);
+            String bankCode, String code);
 
     public void removeCollectBankcardByList(
             List<CollectBankcard> CollectBankcardList);

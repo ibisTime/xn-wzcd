@@ -69,22 +69,25 @@ public class CarDealerAOImpl implements ICarDealerAO {
         // 经销商收款账号
         collectBankcardBO.saveCollectBankcardList(
             req.getJxsCollectBankcardList(),
-            ECollectBankcard.DEALER_COLLECT.getCode());
+            ECollectBankcard.DEALER_COLLECT.getCode(), code);
         // 协议
         carDealerProtocolBO
             .saveCarDealerProtocolList(req.getCarDealerProtocolList());
         // 工行返点账号
         collectBankcardBO.saveCollectBankcardList(
             req.getGsCollectBankcardList(),
-            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.ICBC.getCode());
+            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.ICBC.getCode(),
+            code);
         // 中行返点账号
         collectBankcardBO.saveCollectBankcardList(
             req.getZhCollectBankcardList(),
-            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.BOC.getCode());
+            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.BOC.getCode(),
+            code);
         // 建行返点账号
         collectBankcardBO.saveCollectBankcardList(
             req.getJhCollectBankcardList(),
-            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.CCB.getCode());
+            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.CCB.getCode(),
+            code);
 
         return code;
     }
@@ -125,22 +128,25 @@ public class CarDealerAOImpl implements ICarDealerAO {
         // 保存
         collectBankcardBO.saveCollectBankcardList(
             req.getJxsCollectBankcardList(),
-            ECollectBankcard.DEALER_COLLECT.getCode());
+            ECollectBankcard.DEALER_COLLECT.getCode(), req.getCode());
 
         carDealerProtocolBO
             .saveCarDealerProtocolList(req.getCarDealerProtocolList());
 
         collectBankcardBO.saveCollectBankcardList(
             req.getGsCollectBankcardList(),
-            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.ICBC.getCode());
+            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.ICBC.getCode(),
+            req.getCode());
 
         collectBankcardBO.saveCollectBankcardList(
             req.getZhCollectBankcardList(),
-            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.BOC.getCode());
+            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.BOC.getCode(),
+            req.getCode());
 
         collectBankcardBO.saveCollectBankcardList(
             req.getJhCollectBankcardList(),
-            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.CCB.getCode());
+            ECollectBankcard.DEALER_REBATE.getCode(), EBankCode.CCB.getCode(),
+            req.getCode());
 
     }
 
