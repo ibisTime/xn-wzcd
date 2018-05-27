@@ -7,13 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICreditAO;
+import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.INodeBO;
+import com.cdkj.loan.bo.ISaleUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632110Req;
@@ -27,6 +30,7 @@ import com.cdkj.loan.dto.req.XN632116Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ECreditNode;
+import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -46,6 +50,12 @@ public class CreditAOImpl implements ICreditAO {
 
     @Autowired
     private INodeBO nodeBO;
+
+    @Autowired
+    private IBankBO bankBO;
+
+    @Autowired
+    private ISaleUserBO saleUserBO;
 
     /*
      * @Autowired private IBankBO bankBO;
@@ -192,15 +202,19 @@ public class CreditAOImpl implements ICreditAO {
         for (Credit credit : list) {
 
             // 从征信人员表查申请人的客户姓名 手机号 身份证号
-            // credit.setLoanName(creditUserBO.queryCreditUserMain(credit.getCode()));
-            // 从部门表查业务公司名
-            // credit.setCompanyName((departmentBO.getDepartment(credit
-            // .getCompanyCode()).getName()));
-            // 从银行表查贷款银行名
-            // credit.setLoanBankName(bankBO.getName());
+            credit.setCreditUser(creditUserBO.getCreditUserByCreditCode(
+                credit.getCode(), ELoanRole.APPLY_USER));
 
+            // 从部门表查业务公司名
+            credit.setCompanyName((departmentBO.getDepartment(credit
+                .getCompanyCode()).getName()));
+            // 从银行表查贷款银行名
+            Bank bank = new Bank();
+            bank.setBankCode(credit.getLoanBankCode());
+            credit.setLoanBankName((bankBO.getBank(bank)).getBankName());
             // 从业务员表查业务员姓名
-            // credit.setSalesmanName(saleUserBO.g);
+            credit.setSalesmanName((saleUserBO.getSaleUser(credit
+                .getSaleUserId())).getRealName());
             // 从节点表查节点名称
             credit.setStatus(nodeBO.getNode(credit.getCurNodeCode()).getName());
         }
@@ -314,15 +328,19 @@ public class CreditAOImpl implements ICreditAO {
         for (Credit credit : list) {
 
             // 从征信人员表查申请人的客户姓名 手机号 身份证号
-            // credit.setLoanName(creditUserBO.queryCreditUserMain(credit.getCode()));
-            // 从部门表查业务公司名
-            // credit.setCompanyName((departmentBO.getDepartment(credit
-            // .getCompanyCode()).getName()));
-            // 从银行表查贷款银行名
-            // credit.setLoanBankName(bankBO.getName());
+            credit.setCreditUser(creditUserBO.getCreditUserByCreditCode(
+                credit.getCode(), ELoanRole.APPLY_USER));
 
+            // 从部门表查业务公司名
+            credit.setCompanyName((departmentBO.getDepartment(credit
+                .getCompanyCode()).getName()));
+            // 从银行表查贷款银行名
+            Bank bank = new Bank();
+            bank.setBankCode(credit.getLoanBankCode());
+            credit.setLoanBankName((bankBO.getBank(bank)).getBankName());
             // 从业务员表查业务员姓名
-            // credit.setSalesmanName(saleUserBO.g);
+            credit.setSalesmanName((saleUserBO.getSaleUser(credit
+                .getSaleUserId())).getRealName());
             // 从节点表查节点名称
             credit.setStatus(nodeBO.getNode(credit.getCurNodeCode()).getName());
         }
