@@ -8,6 +8,7 @@ import com.cdkj.loan.dto.req.XN632111Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
+import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 录入银行征信结果
@@ -17,7 +18,8 @@ import com.cdkj.loan.exception.ParaException;
  */
 public class XN632111 extends AProcessor {
 
-    private ICreditUserAO creditUserAO;
+    private ICreditUserAO creditUserAO = SpringContextHolder
+        .getBean(ICreditUserAO.class);
 
     private XN632111Req req = null;;
 

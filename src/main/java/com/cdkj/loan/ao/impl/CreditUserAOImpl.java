@@ -61,7 +61,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
                 .getDkdyMaxOverAmount()));
             creditUser.setDkdyCurrentOverAmount(StringValidater.toLong(Child
                 .getDkdyCurrentOverAmount()));
-            creditUser.setDkdy6monthAvgAmount(StringValidater.toLong(Child
+            creditUser.setDkdy6MonthAvgAmount(StringValidater.toLong(Child
                 .getDkdy6monthAvgAmount()));
 
             creditUser.setHkxyUnsettleCount(StringValidater.toInteger(Child
@@ -102,7 +102,6 @@ public class CreditUserAOImpl implements ICreditUserAO {
         Credit credit = creditAO.queryCreditByCode(req.getCreditCode());
         credit.setCurNodeCode(nodeBO.getNode(ECreditNode.LRZXY.getCode())
             .getNextNode());
-
         creditBO.refreshCreditNode(credit);
 
     }

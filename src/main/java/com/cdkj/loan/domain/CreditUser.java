@@ -10,6 +10,11 @@ import com.cdkj.loan.dao.base.ABaseDO;
  */
 public class CreditUser extends ABaseDO {
 
+    /** 
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+     */
+    private static final long serialVersionUID = 1L;
+
     // 编号
     private String code;
 
@@ -59,7 +64,7 @@ public class CreditUser extends ABaseDO {
     private Long dkdyCurrentOverAmount;
 
     // 贷款抵押近6个月平均月还
-    private Long dkdy6monthAvgAmount;
+    private Long dkdy6MonthAvgAmount;
 
     // 贷款信用未结清贷款笔数
     private Integer hkxyUnsettleCount;
@@ -107,13 +112,13 @@ public class CreditUser extends ABaseDO {
     private String outGuaranteesRemark;
 
     // 月收入
-    private String monthIncome;
+    private Long monthIncome;
 
     // 结息
-    private String settleInterest;
+    private Double settleInterest;
 
     // 余额
-    private String balance;
+    private Long balance;
 
     // 流水是否体现月收入
     private String jourShowIncome;
@@ -121,18 +126,8 @@ public class CreditUser extends ABaseDO {
     // 是否打件
     private String isPrint;
 
-    // ***********db properties****************
-
     public String getCode() {
         return code;
-    }
-
-    public String getIsPrint() {
-        return isPrint;
-    }
-
-    public void setIsPrint(String isPrint) {
-        this.isPrint = isPrint;
     }
 
     public void setCode(String code) {
@@ -171,20 +166,20 @@ public class CreditUser extends ABaseDO {
         this.loanRole = loanRole;
     }
 
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
     public Integer getMobile() {
         return mobile;
     }
 
     public void setMobile(Integer mobile) {
         this.mobile = mobile;
+    }
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
     }
 
     public String getIdNoFront() {
@@ -259,12 +254,12 @@ public class CreditUser extends ABaseDO {
         this.dkdyCurrentOverAmount = dkdyCurrentOverAmount;
     }
 
-    public Long getDkdy6monthAvgAmount() {
-        return dkdy6monthAvgAmount;
+    public Long getDkdy6MonthAvgAmount() {
+        return dkdy6MonthAvgAmount;
     }
 
-    public void setDkdy6monthAvgAmount(Long dkdy6monthAvgAmount) {
-        this.dkdy6monthAvgAmount = dkdy6monthAvgAmount;
+    public void setDkdy6MonthAvgAmount(Long dkdy6MonthAvgAmount) {
+        this.dkdy6MonthAvgAmount = dkdy6MonthAvgAmount;
     }
 
     public Integer getHkxyUnsettleCount() {
@@ -387,27 +382,27 @@ public class CreditUser extends ABaseDO {
         this.outGuaranteesRemark = outGuaranteesRemark;
     }
 
-    public String getMonthIncome() {
+    public Long getMonthIncome() {
         return monthIncome;
     }
 
-    public void setMonthIncome(String monthIncome) {
+    public void setMonthIncome(Long monthIncome) {
         this.monthIncome = monthIncome;
     }
 
-    public String getSettleInterest() {
+    public Double getSettleInterest() {
         return settleInterest;
     }
 
-    public void setSettleInterest(String settleInterest) {
+    public void setSettleInterest(Double settleInterest) {
         this.settleInterest = settleInterest;
     }
 
-    public String getBalance() {
+    public Long getBalance() {
         return balance;
     }
 
-    public void setBalance(String balance) {
+    public void setBalance(Long balance) {
         this.balance = balance;
     }
 
@@ -418,5 +413,19 @@ public class CreditUser extends ABaseDO {
     public void setJourShowIncome(String jourShowIncome) {
         this.jourShowIncome = jourShowIncome;
     }
+
+    public String getIsPrint() {
+        return isPrint;
+    }
+
+    public void setIsPrint(String isPrint) {
+        this.isPrint = isPrint;
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    // ***********db properties****************
 
 }
