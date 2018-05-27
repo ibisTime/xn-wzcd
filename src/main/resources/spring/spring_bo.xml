@@ -191,4 +191,12 @@
 	<bean id="budgetOrderBO" class="com.cdkj.loan.bo.impl.BudgetOrderBOImpl">
 		<property name="paginableDAO" ref="budgetOrderDAOImpl"/>
 	</bean>
+	
+	<bean id="areaBO" class="com.cdkj.loan.bo.impl.AreaBOImpl">
+		<property name="paginableDAO" ref="areaDAOImpl"/>
+	</bean>
+	
+	<bean id="provinceBO" class="com.cdkj.loan.bo.impl.ProvinceBOImpl">
+		<property name="paginableDAO" ref="provinceDAOImpl"/>
+	</bean>
 </beans>

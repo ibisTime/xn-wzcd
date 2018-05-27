@@ -5,14 +5,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICreditBO;
+import com.cdkj.loan.bo.ICreditUserBO;
+import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.CreditUser;
+import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.dto.req.XN632120Req;
+import com.cdkj.loan.dto.req.XN632120ReqIncome;
 
 @Service
 public class BudgetOrderAOImpl implements IBudgetOrderAO {
@@ -23,7 +29,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Autowired
     private ICreditBO creditBO;
 
+    @Autowired
+    private ICreditUserBO creditUserBO;
+
+    @Autowired
+    private IGpsBO gpsBO;
+
     @Override
+    @Transactional
     public String addBudgetOrder(XN632120Req req) {
         BudgetOrder data = new BudgetOrder();
         data.setCustomerType(req.getCustomerType());
@@ -124,6 +137,27 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setOtherFilePdf(req.getOtherFilePdf());
         data.setOtherApplyNote(req.getOtherApplyNote());
         data.setApplyDatetime(new Date());
+
+        // 使用gps更新列表
+        for (String gpsCode : req.getGpsList()) {
+            Gps dataGps = new Gps();
+            dataGps.setCode(gpsCode);
+            gpsBO.useGps(dataGps);
+        }
+
+        // 更新征信人员信息
+        for (XN632120ReqIncome reqIncome : req.getCreditUserIncomeList()) {
+            CreditUser creditUser = new CreditUser();
+            creditUser.setCode(reqIncome.getCode());
+            creditUser.setMonthIncome(reqIncome.getMonthIncome());
+            creditUser.setSettleInterest(reqIncome.getSettleInterest());
+            creditUser.setBalance(reqIncome.getBalance());
+            creditUser.setJourShowIncome(reqIncome.getJourShowIncome());
+
+            creditUser.setIsPrint(reqIncome.getIsPrint());
+            creditUserBO.refreshCreditUserIncome(creditUser);
+        }
+
         return budgetOrderBO.saveBudgetOrder(data);
     }
 

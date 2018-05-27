@@ -28,9 +28,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     // 修改征信人员
     @Override
     public void updateCreditUser(CreditUser creditUser) {
-
         creditUserDAO.updateCreditUser(creditUser);
-
     }
 
     // 录入银行征信结果
@@ -70,6 +68,12 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         CreditUser creditUser = new CreditUser();
         creditUser.setCode(code);
         return creditUserDAO.select(creditUser);
+    }
+
+    // 修改征信人员收入
+    @Override
+    public void refreshCreditUserIncome(CreditUser creditUser) {
+        creditUserDAO.updateCreditUserIncome(creditUser);
     }
 
 }

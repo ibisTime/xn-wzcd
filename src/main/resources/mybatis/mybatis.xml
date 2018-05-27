@@ -70,6 +70,8 @@
 		<!-- 基础数据 -->
 		<typeAlias alias="insuranceCompany" type="com.cdkj.loan.domain.InsuranceCompany" />
 		<typeAlias alias="collectBankcard" type="com.cdkj.loan.domain.CollectBankcard" />
+		<typeAlias alias="area" type="com.cdkj.loan.domain.Area" />
+		<typeAlias alias="province" type="com.cdkj.loan.domain.Province" />
 		
 		<!-- 经销商信息 -->
 		<typeAlias alias="carDealer" type="com.cdkj.loan.domain.CarDealer" />
