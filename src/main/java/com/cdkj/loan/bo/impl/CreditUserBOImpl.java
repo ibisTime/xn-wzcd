@@ -2,10 +2,10 @@ package com.cdkj.loan.bo.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.ICreditUserBO;
-import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICreditUserDAO;
@@ -22,26 +22,8 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         ICreditUserBO {
 
+    @Autowired
     private ICreditUserDAO creditUserDAO;
-
-    @Override
-    public long getTotalCount(CreditUser condition) {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public Paginable<CreditUser> getPaginable(int start, CreditUser condition) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Paginable<CreditUser> getPaginable(int start, int pageSize,
-            CreditUser condition) {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     // 修改征信人员
     @Override
@@ -62,7 +44,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     @Override
     public void addCreditUser(CreditUser creditUser) {
         String code = null;
-        if (null != creditUser) {
+        if (creditUser != null) {
             code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER
                 .getCode());
             creditUser.setCode(code);
