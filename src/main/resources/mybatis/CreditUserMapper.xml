@@ -3,7 +3,6 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.ICreditUserDAO">
 	<resultMap id="creditUser_DB_Result" type="creditUser">
-	
 		<result column="code" property="code" />
 		<result column="credit_code" property="creditCode" />
 		<result column="user_name" property="userName" />
@@ -165,7 +164,19 @@
 		code = #{code}
 	</update>
 	
-	<select id="select_creditUserList" parameterType="creditUser" resultMap="creditUser_DB_Result">
+	<update id="update_creditUserIncome" parameterType="creditUser">
+		UPDATE tdq_credit_user
+		SET
+		month_income = monthIncome
+		,settle_interest = settleInterest
+		,balance = balance
+		,jour_show_income = jourShowIncome
+		,is_print = isPrint
+		WHERE
+		code = #{code}
+	</update>
+	
+	<select id="select_creditUser" parameterType="creditUser" resultMap="creditUser_DB_Result">
 		select 
 		t.user_name
 		,t.relation
@@ -217,22 +228,6 @@
 			</if>
 		</trim>
 	</select>
-	
-	
-	<select id="select_creditUser" parameterType="creditUser" resultMap="creditUser_DB_Result">
-		select 
-		
-		
-			
-		from tdq_credit_User t
-		<include refid="where_condition"/>
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
-	</select>
-	
 	
 	<select id="select_credit_countUser" parameterType="creditUser"
 		resultType="java.lang.Long">

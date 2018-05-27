@@ -2,7 +2,7 @@ package com.cdkj.loan.dto.req;
 
 import java.util.List;
 
-import com.cdkj.loan.domain.Gps;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class XN632120Req {
 
@@ -262,14 +262,28 @@ public class XN632120Req {
     private String applyDatetime;
 
     // gps列表编号
-    private List<Gps> gpsList;
+    @NotEmpty
+    private List<String> gpsList;
 
-    public List<Gps> getGpsList() {
+    // 征信人员收入
+    @NotEmpty
+    private List<XN632120ReqIncome> creditUserIncomeList;
+
+    public List<String> getGpsList() {
         return gpsList;
     }
 
-    public void setGpsList(List<Gps> gpsList) {
+    public void setGpsList(List<String> gpsList) {
         this.gpsList = gpsList;
+    }
+
+    public List<XN632120ReqIncome> getCreditUserIncomeList() {
+        return creditUserIncomeList;
+    }
+
+    public void setCreditUserIncomeList(
+            List<XN632120ReqIncome> creditUserIncomeList) {
+        this.creditUserIncomeList = creditUserIncomeList;
     }
 
     public String getCustomerType() {
