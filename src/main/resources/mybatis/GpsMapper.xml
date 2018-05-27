@@ -74,11 +74,15 @@
 		code
 		,gps_no
 		,gps_type
+		,apply_status
+		,use_status
 		)
 		VALUES(
 		#{code}
 		,#{gpsNo}
 		,#{gpsType}
+		,#{applyStatus}
+		,#{useStatus}
 		)
 	</insert>
 

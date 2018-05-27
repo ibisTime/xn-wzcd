@@ -1,6 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,10 +70,6 @@ public class creditAOImpl implements ICreditAO {
 
         credit.setCurNodeCode(nodeBO.getNode(ECreditNode.START.getCode())
             .getNextNode());
-        // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        // sdf.parse(sdf.format(new Date()))
-
-        credit.setApplyDatetime(new Date());
 
         String creditCode = creditBO.addCredit(credit);
 
@@ -83,7 +78,6 @@ public class creditAOImpl implements ICreditAO {
         List<XN632110ReqChild> creditUserList = req.getCreditUserList();
         for (XN632110ReqChild child : creditUserList) {
             CreditUser creditUser = new CreditUser();
-            creditUser.setCreditCode(creditCode);
             creditUser.setUserName(child.getUserName());
             creditUser.setRelation(child.getRelation());
             creditUser.setLoanRole(child.getLoanRole());
@@ -95,7 +89,7 @@ public class creditAOImpl implements ICreditAO {
             creditUserBO.addCreditUser(creditUser);
         }
 
-        return creditCode;
+        return credit.getCode();
     }
 
     // 修改征信
@@ -151,7 +145,7 @@ public class creditAOImpl implements ICreditAO {
 
         }
 
-        Credit creditCurrent = creditBO.queryCreditDetail(req.getCreditCode());
+        Credit creditCurrent = creditBO.getCredit(req.getCreditCode());
         creditCurrent.setCurNodeCode(nodeBO.getNode(
             ECreditNode.MODIFY.getCode()).getNextNode());
 
@@ -209,7 +203,7 @@ public class creditAOImpl implements ICreditAO {
     // 征信详情查询
     @Override
     public Credit queryCreditDetail(String code) {
-        Credit credit = creditBO.queryCreditDetail(code);
+        Credit credit = creditBO.getCredit(code);
 
         List<CreditUser> creditUserList = creditUserBO
             .queryCreditUserListByCreditCode(code);
@@ -222,7 +216,7 @@ public class creditAOImpl implements ICreditAO {
     // 查询征信单 根据征信单编号
     @Override
     public Credit queryCreditByCode(String creditCode) {
-        Credit credit = creditBO.queryCreditDetail(creditCode);
+        Credit credit = creditBO.getCredit(creditCode);
         return credit;
     }
 
@@ -230,7 +224,7 @@ public class creditAOImpl implements ICreditAO {
     @Override
     public void primaryAudit(XN632113Req req) {
 
-        Credit credit = creditBO.queryCreditDetail(req.getCode());
+        Credit credit = creditBO.getCredit(req.getCode());
 
         if (!ECreditNode.PRIMARYAUDIT.getCode().equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -260,7 +254,7 @@ public class creditAOImpl implements ICreditAO {
     @Override
     public void firstAudit(XN632114Req req) {
 
-        Credit credit = creditBO.queryCreditDetail(req.getCode());
+        Credit credit = creditBO.getCredit(req.getCode());
 
         if (!ECreditNode.FIRSTAUDIT.getCode().equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),

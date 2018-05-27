@@ -9,21 +9,27 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "InsuranceCompany";
+    private static String key = "carDealer";
 
     // 实体名称
-    private static String keyName = "保险公司信息表";
+    private static String keyName = "经销商信息表";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tb_insurance_company";
+    private static String dbname = "tb_car_dealer";
 
-    private static String[] DBwords = { "code", "name", "contact", "mobile",
-            "remark" };
+    private static String[] DBwords = { "code", "full_name", "abbr_name",
+            "is_self_develop", "address", "car_dealer_type", "main_contact",
+            "contact_phone", "main_brand", "parent_group", "agreement",
+            "agreement_valid_date", "agreement_status", "agreement_pic",
+            "settle_way", "business_area", "belong_branch_company",
+            "cur_node_code", "approve_note", "remark" };
 
-    private static String[] DBwordsName = { "编号", "名称", "联系人", "联系电话", "备注" };
+    private static String[] DBwordsName = { "编号", "全称", "简称", "是否自主开发", "地址",
+            "车行经营性质", "主要联系人", "联系人电话", "主营品牌", "所属集团", "协议", "合作协议有效期", "协议状态",
+            "车商合作协议", "结算方式", "业务区域", "归属分公司", "当前节点编号", "审核说明", "备注" };
 
     private static String[] DOwords = getDOwords();
 

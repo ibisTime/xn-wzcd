@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -27,8 +29,11 @@ public class BudgetOrder extends ABaseDO {
     // 贷款银行编号
     private String loanBankCode;
 
+    // 经办支行
+    private String loanBankSubbranch;
+
     // 厂商指导价
-    private String originalPrice;
+    private Long originalPrice;
 
     // 车辆型号
     private String carModel;
@@ -37,7 +42,7 @@ public class BudgetOrder extends ABaseDO {
     private String loanPeriods;
 
     // 发票价格
-    private String invoicePrice;
+    private Long invoicePrice;
 
     // 购车途径
     private String shopWay;
@@ -46,31 +51,31 @@ public class BudgetOrder extends ABaseDO {
     private String rateType;
 
     // 贷款金额
-    private String loanAmount;
+    private Long loanAmount;
 
     // 是否需要贷前调查
     private String isSurvey;
 
     // 银行利率
-    private String bankRate;
+    private double bankRate;
 
     // 我司贷款成数
-    private String companyLoanCs;
+    private double companyLoanCs;
 
     // 是否垫资
     private String isAdvanceFund;
 
     // 综合利率
-    private String globalRate;
+    private double globalRate;
 
     // 服务费
-    private String fee;
+    private Long fee;
 
     // 厂家贴息
-    private String carDealerSubsidy;
+    private double carDealerSubsidy;
 
     // 银行贷款成数
-    private String bankLoanCs;
+    private double bankLoanCs;
 
     // 业务公司编号
     private String companyCode;
@@ -78,11 +83,20 @@ public class BudgetOrder extends ABaseDO {
     // 业务员编号
     private String saleUserId;
 
-    // 车价
-    private String carPrice;
+    // 申请人就职单位
+    private String applyUserCompany;
 
-    // 经办支行
-    private String bankBranch;
+    // 申请人职位
+    private String applyUserDuty;
+
+    // 申请人与共还人关系
+    private String applyUserGhrRelation;
+
+    // 婚姻状况
+    private String marryState;
+
+    // 其他收入说明
+    private String otherIncomeNote;
 
     // 房产证情况
     private String isHouseProperty;
@@ -148,7 +162,7 @@ public class BudgetOrder extends ABaseDO {
     private String otherNote;
 
     // 油补
-    private String oilSubsidy;
+    private Long oilSubsidy;
 
     // 油补公里数
     private String oilSubsidyKil;
@@ -157,7 +171,7 @@ public class BudgetOrder extends ABaseDO {
     private String isPlatInsure;
 
     // GPS收费
-    private String gpsFee;
+    private Long gpsFee;
 
     // GPS提成
     private String gpsDeduct;
@@ -166,13 +180,13 @@ public class BudgetOrder extends ABaseDO {
     private String gpsFeeWay;
 
     // 履约保证金
-    private String lyAmount;
+    private Long lyAmount;
 
     // 担保风险金
-    private String fxAmount;
+    private Long fxAmount;
 
     // 杂费
-    private String otherFee;
+    private Long otherFee;
 
     // 手续费收取方式
     private String feeWay;
@@ -280,13 +294,13 @@ public class BudgetOrder extends ABaseDO {
     private String otherApplyNote;
 
     // 申请时间
-    private String applyDatetime;
+    private Date applyDatetime;
 
     // 撤销理由
     private String cancelReason;
 
     // 银行提交时间
-    private String bankCommitDatetime;
+    private Date bankCommitDatetime;
 
     // 银行提交说明
     private String bankCommitNote;
@@ -295,7 +309,7 @@ public class BudgetOrder extends ABaseDO {
     private String bankFkAmount;
 
     // 银行放款时间
-    private String bankFkDatetime;
+    private Date bankFkDatetime;
 
     // 收款银行
     private String bankReceiptCode;
@@ -310,7 +324,7 @@ public class BudgetOrder extends ABaseDO {
     private String bankReceiptNote;
 
     // 抵押提交时间
-    private String pledgeCommitDatetime;
+    private Date pledgeCommitDatetime;
 
     // 抵押提交说明
     private String pledgeCommitNote;
@@ -436,7 +450,7 @@ public class BudgetOrder extends ABaseDO {
     private String shouldBackAmount;
 
     // 付款时间
-    private String payDatetime;
+    private Date payDatetime;
 
     // 付款银行
     private String payBank;
@@ -463,7 +477,7 @@ public class BudgetOrder extends ABaseDO {
     private String zfSkBankcardNumber;
 
     // 作废收款时间
-    private String zfSkReceiptDatetime;
+    private Date zfSkReceiptDatetime;
 
     // 作废财务备注
     private String zfFinanceRemark;
@@ -471,1228 +485,1259 @@ public class BudgetOrder extends ABaseDO {
     // 节点编号
     private String curNodeCode;
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getCode() {
         return code;
     }
 
-    public void setCustomerType(String customerType) {
-        this.customerType = customerType;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getCustomerType() {
         return customerType;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setCustomerType(String customerType) {
+        this.customerType = customerType;
     }
 
     public String getCustomerName() {
         return customerName;
     }
 
-    public void setCarDealerCode(String carDealerCode) {
-        this.carDealerCode = carDealerCode;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getCarDealerCode() {
         return carDealerCode;
     }
 
-    public void setLoanBankCode(String loanBankCode) {
-        this.loanBankCode = loanBankCode;
+    public void setCarDealerCode(String carDealerCode) {
+        this.carDealerCode = carDealerCode;
     }
 
     public String getLoanBankCode() {
         return loanBankCode;
     }
 
-    public void setOriginalPrice(String originalPrice) {
-        this.originalPrice = originalPrice;
+    public void setLoanBankCode(String loanBankCode) {
+        this.loanBankCode = loanBankCode;
     }
 
-    public String getOriginalPrice() {
+    public String getLoanBankSubbranch() {
+        return loanBankSubbranch;
+    }
+
+    public void setLoanBankSubbranch(String loanBankSubbranch) {
+        this.loanBankSubbranch = loanBankSubbranch;
+    }
+
+    public Long getOriginalPrice() {
         return originalPrice;
     }
 
-    public void setCarModel(String carModel) {
-        this.carModel = carModel;
+    public void setOriginalPrice(Long originalPrice) {
+        this.originalPrice = originalPrice;
     }
 
     public String getCarModel() {
         return carModel;
     }
 
-    public void setLoanPeriods(String loanPeriods) {
-        this.loanPeriods = loanPeriods;
+    public void setCarModel(String carModel) {
+        this.carModel = carModel;
     }
 
     public String getLoanPeriods() {
         return loanPeriods;
     }
 
-    public void setInvoicePrice(String invoicePrice) {
-        this.invoicePrice = invoicePrice;
+    public void setLoanPeriods(String loanPeriods) {
+        this.loanPeriods = loanPeriods;
     }
 
-    public String getInvoicePrice() {
+    public Long getInvoicePrice() {
         return invoicePrice;
     }
 
-    public void setShopWay(String shopWay) {
-        this.shopWay = shopWay;
+    public void setInvoicePrice(Long invoicePrice) {
+        this.invoicePrice = invoicePrice;
     }
 
     public String getShopWay() {
         return shopWay;
     }
 
-    public void setRateType(String rateType) {
-        this.rateType = rateType;
+    public void setShopWay(String shopWay) {
+        this.shopWay = shopWay;
     }
 
     public String getRateType() {
         return rateType;
     }
 
-    public void setLoanAmount(String loanAmount) {
-        this.loanAmount = loanAmount;
+    public void setRateType(String rateType) {
+        this.rateType = rateType;
     }
 
-    public String getLoanAmount() {
+    public Long getLoanAmount() {
         return loanAmount;
     }
 
-    public void setIsSurvey(String isSurvey) {
-        this.isSurvey = isSurvey;
+    public void setLoanAmount(Long loanAmount) {
+        this.loanAmount = loanAmount;
     }
 
     public String getIsSurvey() {
         return isSurvey;
     }
 
-    public void setBankRate(String bankRate) {
-        this.bankRate = bankRate;
+    public void setIsSurvey(String isSurvey) {
+        this.isSurvey = isSurvey;
     }
 
-    public String getBankRate() {
+    public double getBankRate() {
         return bankRate;
     }
 
-    public void setCompanyLoanCs(String companyLoanCs) {
-        this.companyLoanCs = companyLoanCs;
+    public void setBankRate(double bankRate) {
+        this.bankRate = bankRate;
     }
 
-    public String getCompanyLoanCs() {
+    public double getCompanyLoanCs() {
         return companyLoanCs;
     }
 
-    public void setIsAdvanceFund(String isAdvanceFund) {
-        this.isAdvanceFund = isAdvanceFund;
+    public void setCompanyLoanCs(double companyLoanCs) {
+        this.companyLoanCs = companyLoanCs;
     }
 
     public String getIsAdvanceFund() {
         return isAdvanceFund;
     }
 
-    public void setGlobalRate(String globalRate) {
-        this.globalRate = globalRate;
+    public void setIsAdvanceFund(String isAdvanceFund) {
+        this.isAdvanceFund = isAdvanceFund;
     }
 
-    public String getGlobalRate() {
+    public double getGlobalRate() {
         return globalRate;
     }
 
-    public void setFee(String fee) {
-        this.fee = fee;
+    public void setGlobalRate(double globalRate) {
+        this.globalRate = globalRate;
     }
 
-    public String getFee() {
+    public Long getFee() {
         return fee;
     }
 
-    public void setCarDealerSubsidy(String carDealerSubsidy) {
-        this.carDealerSubsidy = carDealerSubsidy;
+    public void setFee(Long fee) {
+        this.fee = fee;
     }
 
-    public String getCarDealerSubsidy() {
+    public double getCarDealerSubsidy() {
         return carDealerSubsidy;
     }
 
-    public void setBankLoanCs(String bankLoanCs) {
-        this.bankLoanCs = bankLoanCs;
+    public void setCarDealerSubsidy(double carDealerSubsidy) {
+        this.carDealerSubsidy = carDealerSubsidy;
     }
 
-    public String getBankLoanCs() {
+    public double getBankLoanCs() {
         return bankLoanCs;
     }
 
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
+    public void setBankLoanCs(double bankLoanCs) {
+        this.bankLoanCs = bankLoanCs;
     }
 
     public String getCompanyCode() {
         return companyCode;
     }
 
-    public void setSaleUserId(String saleUserId) {
-        this.saleUserId = saleUserId;
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
     }
 
     public String getSaleUserId() {
         return saleUserId;
     }
 
-    public void setCarPrice(String carPrice) {
-        this.carPrice = carPrice;
+    public void setSaleUserId(String saleUserId) {
+        this.saleUserId = saleUserId;
     }
 
-    public String getCarPrice() {
-        return carPrice;
+    public String getApplyUserCompany() {
+        return applyUserCompany;
     }
 
-    public void setBankBranch(String bankBranch) {
-        this.bankBranch = bankBranch;
+    public void setApplyUserCompany(String applyUserCompany) {
+        this.applyUserCompany = applyUserCompany;
     }
 
-    public String getBankBranch() {
-        return bankBranch;
+    public String getApplyUserDuty() {
+        return applyUserDuty;
     }
 
-    public void setIsHouseProperty(String isHouseProperty) {
-        this.isHouseProperty = isHouseProperty;
+    public void setApplyUserDuty(String applyUserDuty) {
+        this.applyUserDuty = applyUserDuty;
+    }
+
+    public String getApplyUserGhrRelation() {
+        return applyUserGhrRelation;
+    }
+
+    public void setApplyUserGhrRelation(String applyUserGhrRelation) {
+        this.applyUserGhrRelation = applyUserGhrRelation;
+    }
+
+    public String getMarryState() {
+        return marryState;
+    }
+
+    public void setMarryState(String marryState) {
+        this.marryState = marryState;
+    }
+
+    public String getOtherIncomeNote() {
+        return otherIncomeNote;
+    }
+
+    public void setOtherIncomeNote(String otherIncomeNote) {
+        this.otherIncomeNote = otherIncomeNote;
     }
 
     public String getIsHouseProperty() {
         return isHouseProperty;
     }
 
-    public void setHouseProperty(String houseProperty) {
-        this.houseProperty = houseProperty;
+    public void setIsHouseProperty(String isHouseProperty) {
+        this.isHouseProperty = isHouseProperty;
     }
 
     public String getHouseProperty() {
         return houseProperty;
     }
 
-    public void setIsHouseContract(String isHouseContract) {
-        this.isHouseContract = isHouseContract;
+    public void setHouseProperty(String houseProperty) {
+        this.houseProperty = houseProperty;
     }
 
     public String getIsHouseContract() {
         return isHouseContract;
     }
 
-    public void setHouseContract(String houseContract) {
-        this.houseContract = houseContract;
+    public void setIsHouseContract(String isHouseContract) {
+        this.isHouseContract = isHouseContract;
     }
 
     public String getHouseContract() {
         return houseContract;
     }
 
-    public void setHouseInvoice(String houseInvoice) {
-        this.houseInvoice = houseInvoice;
+    public void setHouseContract(String houseContract) {
+        this.houseContract = houseContract;
     }
 
     public String getHouseInvoice() {
         return houseInvoice;
     }
 
-    public void setIsLicense(String isLicense) {
-        this.isLicense = isLicense;
+    public void setHouseInvoice(String houseInvoice) {
+        this.houseInvoice = houseInvoice;
     }
 
     public String getIsLicense() {
         return isLicense;
     }
 
-    public void setLicense(String license) {
-        this.license = license;
+    public void setIsLicense(String isLicense) {
+        this.isLicense = isLicense;
     }
 
     public String getLicense() {
         return license;
     }
 
-    public void setIsSiteProve(String isSiteProve) {
-        this.isSiteProve = isSiteProve;
+    public void setLicense(String license) {
+        this.license = license;
     }
 
     public String getIsSiteProve() {
         return isSiteProve;
     }
 
-    public void setSiteProve(String siteProve) {
-        this.siteProve = siteProve;
+    public void setIsSiteProve(String isSiteProve) {
+        this.isSiteProve = isSiteProve;
     }
 
     public String getSiteProve() {
         return siteProve;
     }
 
-    public void setSiteArea(String siteArea) {
-        this.siteArea = siteArea;
+    public void setSiteProve(String siteProve) {
+        this.siteProve = siteProve;
     }
 
     public String getSiteArea() {
         return siteArea;
     }
 
-    public void setCarType(String carType) {
-        this.carType = carType;
+    public void setSiteArea(String siteArea) {
+        this.siteArea = siteArea;
     }
 
     public String getCarType() {
         return carType;
     }
 
-    public void setIsDriceLicense(String isDriceLicense) {
-        this.isDriceLicense = isDriceLicense;
+    public void setCarType(String carType) {
+        this.carType = carType;
     }
 
     public String getIsDriceLicense() {
         return isDriceLicense;
     }
 
-    public void setDriceLicense(String driceLicense) {
-        this.driceLicense = driceLicense;
+    public void setIsDriceLicense(String isDriceLicense) {
+        this.isDriceLicense = isDriceLicense;
     }
 
     public String getDriceLicense() {
         return driceLicense;
     }
 
-    public void setOtherPropertyNote(String otherPropertyNote) {
-        this.otherPropertyNote = otherPropertyNote;
+    public void setDriceLicense(String driceLicense) {
+        this.driceLicense = driceLicense;
     }
 
     public String getOtherPropertyNote() {
         return otherPropertyNote;
     }
 
-    public void setApplyBirthAddress(String applyBirthAddress) {
-        this.applyBirthAddress = applyBirthAddress;
+    public void setOtherPropertyNote(String otherPropertyNote) {
+        this.otherPropertyNote = otherPropertyNote;
     }
 
     public String getApplyBirthAddress() {
         return applyBirthAddress;
     }
 
-    public void setApplyNowAddress(String applyNowAddress) {
-        this.applyNowAddress = applyNowAddress;
+    public void setApplyBirthAddress(String applyBirthAddress) {
+        this.applyBirthAddress = applyBirthAddress;
     }
 
     public String getApplyNowAddress() {
         return applyNowAddress;
     }
 
-    public void setHouseType(String houseType) {
-        this.houseType = houseType;
+    public void setApplyNowAddress(String applyNowAddress) {
+        this.applyNowAddress = applyNowAddress;
     }
 
     public String getHouseType() {
         return houseType;
     }
 
-    public void setGhBirthAddress(String ghBirthAddress) {
-        this.ghBirthAddress = ghBirthAddress;
+    public void setHouseType(String houseType) {
+        this.houseType = houseType;
     }
 
     public String getGhBirthAddress() {
         return ghBirthAddress;
     }
 
-    public void setGuarantor1BirthAddress(String guarantor1BirthAddress) {
-        this.guarantor1BirthAddress = guarantor1BirthAddress;
+    public void setGhBirthAddress(String ghBirthAddress) {
+        this.ghBirthAddress = ghBirthAddress;
     }
 
     public String getGuarantor1BirthAddress() {
         return guarantor1BirthAddress;
     }
 
-    public void setGuarantor2BirthAddress(String guarantor2BirthAddress) {
-        this.guarantor2BirthAddress = guarantor2BirthAddress;
+    public void setGuarantor1BirthAddress(String guarantor1BirthAddress) {
+        this.guarantor1BirthAddress = guarantor1BirthAddress;
     }
 
     public String getGuarantor2BirthAddress() {
         return guarantor2BirthAddress;
     }
 
-    public void setOtherNote(String otherNote) {
-        this.otherNote = otherNote;
+    public void setGuarantor2BirthAddress(String guarantor2BirthAddress) {
+        this.guarantor2BirthAddress = guarantor2BirthAddress;
     }
 
     public String getOtherNote() {
         return otherNote;
     }
 
-    public void setOilSubsidy(String oilSubsidy) {
-        this.oilSubsidy = oilSubsidy;
+    public void setOtherNote(String otherNote) {
+        this.otherNote = otherNote;
     }
 
-    public String getOilSubsidy() {
+    public Long getOilSubsidy() {
         return oilSubsidy;
     }
 
-    public void setOilSubsidyKil(String oilSubsidyKil) {
-        this.oilSubsidyKil = oilSubsidyKil;
+    public void setOilSubsidy(Long oilSubsidy) {
+        this.oilSubsidy = oilSubsidy;
     }
 
     public String getOilSubsidyKil() {
         return oilSubsidyKil;
     }
 
-    public void setIsPlatInsure(String isPlatInsure) {
-        this.isPlatInsure = isPlatInsure;
+    public void setOilSubsidyKil(String oilSubsidyKil) {
+        this.oilSubsidyKil = oilSubsidyKil;
     }
 
     public String getIsPlatInsure() {
         return isPlatInsure;
     }
 
-    public void setGpsFee(String gpsFee) {
-        this.gpsFee = gpsFee;
+    public void setIsPlatInsure(String isPlatInsure) {
+        this.isPlatInsure = isPlatInsure;
     }
 
-    public String getGpsFee() {
+    public Long getGpsFee() {
         return gpsFee;
     }
 
-    public void setGpsDeduct(String gpsDeduct) {
-        this.gpsDeduct = gpsDeduct;
+    public void setGpsFee(Long gpsFee) {
+        this.gpsFee = gpsFee;
     }
 
     public String getGpsDeduct() {
         return gpsDeduct;
     }
 
-    public void setGpsFeeWay(String gpsFeeWay) {
-        this.gpsFeeWay = gpsFeeWay;
+    public void setGpsDeduct(String gpsDeduct) {
+        this.gpsDeduct = gpsDeduct;
     }
 
     public String getGpsFeeWay() {
         return gpsFeeWay;
     }
 
-    public void setLyAmount(String lyAmount) {
-        this.lyAmount = lyAmount;
+    public void setGpsFeeWay(String gpsFeeWay) {
+        this.gpsFeeWay = gpsFeeWay;
     }
 
-    public String getLyAmount() {
+    public Long getLyAmount() {
         return lyAmount;
     }
 
-    public void setFxAmount(String fxAmount) {
-        this.fxAmount = fxAmount;
+    public void setLyAmount(Long lyAmount) {
+        this.lyAmount = lyAmount;
     }
 
-    public String getFxAmount() {
+    public Long getFxAmount() {
         return fxAmount;
     }
 
-    public void setOtherFee(String otherFee) {
-        this.otherFee = otherFee;
+    public void setFxAmount(Long fxAmount) {
+        this.fxAmount = fxAmount;
     }
 
-    public String getOtherFee() {
+    public Long getOtherFee() {
         return otherFee;
     }
 
-    public void setFeeWay(String feeWay) {
-        this.feeWay = feeWay;
+    public void setOtherFee(Long otherFee) {
+        this.otherFee = otherFee;
     }
 
     public String getFeeWay() {
         return feeWay;
     }
 
-    public void setMarryDivorce(String marryDivorce) {
-        this.marryDivorce = marryDivorce;
+    public void setFeeWay(String feeWay) {
+        this.feeWay = feeWay;
     }
 
     public String getMarryDivorce() {
         return marryDivorce;
     }
 
-    public void setApplyUserHkb(String applyUserHkb) {
-        this.applyUserHkb = applyUserHkb;
+    public void setMarryDivorce(String marryDivorce) {
+        this.marryDivorce = marryDivorce;
     }
 
     public String getApplyUserHkb() {
         return applyUserHkb;
     }
 
-    public void setBankBillPdf(String bankBillPdf) {
-        this.bankBillPdf = bankBillPdf;
+    public void setApplyUserHkb(String applyUserHkb) {
+        this.applyUserHkb = applyUserHkb;
     }
 
     public String getBankBillPdf() {
         return bankBillPdf;
     }
 
-    public void setSingleProvePdf(String singleProvePdf) {
-        this.singleProvePdf = singleProvePdf;
+    public void setBankBillPdf(String bankBillPdf) {
+        this.bankBillPdf = bankBillPdf;
     }
 
     public String getSingleProvePdf() {
         return singleProvePdf;
     }
 
-    public void setIncomeProvePdf(String incomeProvePdf) {
-        this.incomeProvePdf = incomeProvePdf;
+    public void setSingleProvePdf(String singleProvePdf) {
+        this.singleProvePdf = singleProvePdf;
     }
 
     public String getIncomeProvePdf() {
         return incomeProvePdf;
     }
 
-    public void setLiveProvePdf(String liveProvePdf) {
-        this.liveProvePdf = liveProvePdf;
+    public void setIncomeProvePdf(String incomeProvePdf) {
+        this.incomeProvePdf = incomeProvePdf;
     }
 
     public String getLiveProvePdf() {
         return liveProvePdf;
     }
 
-    public void setBuildProvePdf(String buildProvePdf) {
-        this.buildProvePdf = buildProvePdf;
+    public void setLiveProvePdf(String liveProvePdf) {
+        this.liveProvePdf = liveProvePdf;
     }
 
     public String getBuildProvePdf() {
         return buildProvePdf;
     }
 
-    public void setHkbFirstPage(String hkbFirstPage) {
-        this.hkbFirstPage = hkbFirstPage;
+    public void setBuildProvePdf(String buildProvePdf) {
+        this.buildProvePdf = buildProvePdf;
     }
 
     public String getHkbFirstPage() {
         return hkbFirstPage;
     }
 
-    public void setHkbMainPage(String hkbMainPage) {
-        this.hkbMainPage = hkbMainPage;
+    public void setHkbFirstPage(String hkbFirstPage) {
+        this.hkbFirstPage = hkbFirstPage;
     }
 
     public String getHkbMainPage() {
         return hkbMainPage;
     }
 
-    public void setGhHkb(String ghHkb) {
-        this.ghHkb = ghHkb;
+    public void setHkbMainPage(String hkbMainPage) {
+        this.hkbMainPage = hkbMainPage;
     }
 
     public String getGhHkb() {
         return ghHkb;
     }
 
-    public void setGuarantor1IdNo(String guarantor1IdNo) {
-        this.guarantor1IdNo = guarantor1IdNo;
+    public void setGhHkb(String ghHkb) {
+        this.ghHkb = ghHkb;
     }
 
     public String getGuarantor1IdNo() {
         return guarantor1IdNo;
     }
 
-    public void setGuarantor1Hkb(String guarantor1Hkb) {
-        this.guarantor1Hkb = guarantor1Hkb;
+    public void setGuarantor1IdNo(String guarantor1IdNo) {
+        this.guarantor1IdNo = guarantor1IdNo;
     }
 
     public String getGuarantor1Hkb() {
         return guarantor1Hkb;
     }
 
-    public void setGuarantor2IdNo(String guarantor2IdNo) {
-        this.guarantor2IdNo = guarantor2IdNo;
+    public void setGuarantor1Hkb(String guarantor1Hkb) {
+        this.guarantor1Hkb = guarantor1Hkb;
     }
 
     public String getGuarantor2IdNo() {
         return guarantor2IdNo;
     }
 
-    public void setGuarantor2Hkb(String guarantor2Hkb) {
-        this.guarantor2Hkb = guarantor2Hkb;
+    public void setGuarantor2IdNo(String guarantor2IdNo) {
+        this.guarantor2IdNo = guarantor2IdNo;
     }
 
     public String getGuarantor2Hkb() {
         return guarantor2Hkb;
     }
 
-    public void setHousePic(String housePic) {
-        this.housePic = housePic;
+    public void setGuarantor2Hkb(String guarantor2Hkb) {
+        this.guarantor2Hkb = guarantor2Hkb;
     }
 
     public String getHousePic() {
         return housePic;
     }
 
-    public void setHouseUnitPic(String houseUnitPic) {
-        this.houseUnitPic = houseUnitPic;
+    public void setHousePic(String housePic) {
+        this.housePic = housePic;
     }
 
     public String getHouseUnitPic() {
         return houseUnitPic;
     }
 
-    public void setHouseDoorPic(String houseDoorPic) {
-        this.houseDoorPic = houseDoorPic;
+    public void setHouseUnitPic(String houseUnitPic) {
+        this.houseUnitPic = houseUnitPic;
     }
 
     public String getHouseDoorPic() {
         return houseDoorPic;
     }
 
-    public void setHouseRoomPic(String houseRoomPic) {
-        this.houseRoomPic = houseRoomPic;
+    public void setHouseDoorPic(String houseDoorPic) {
+        this.houseDoorPic = houseDoorPic;
     }
 
     public String getHouseRoomPic() {
         return houseRoomPic;
     }
 
-    public void setHouseCustomerPic(String houseCustomerPic) {
-        this.houseCustomerPic = houseCustomerPic;
+    public void setHouseRoomPic(String houseRoomPic) {
+        this.houseRoomPic = houseRoomPic;
     }
 
     public String getHouseCustomerPic() {
         return houseCustomerPic;
     }
 
-    public void setHouseSaleCustomerPic(String houseSaleCustomerPic) {
-        this.houseSaleCustomerPic = houseSaleCustomerPic;
+    public void setHouseCustomerPic(String houseCustomerPic) {
+        this.houseCustomerPic = houseCustomerPic;
     }
 
     public String getHouseSaleCustomerPic() {
         return houseSaleCustomerPic;
     }
 
-    public void setCompanyNamePic(String companyNamePic) {
-        this.companyNamePic = companyNamePic;
+    public void setHouseSaleCustomerPic(String houseSaleCustomerPic) {
+        this.houseSaleCustomerPic = houseSaleCustomerPic;
     }
 
     public String getCompanyNamePic() {
         return companyNamePic;
     }
 
-    public void setCompanyPlacePic(String companyPlacePic) {
-        this.companyPlacePic = companyPlacePic;
+    public void setCompanyNamePic(String companyNamePic) {
+        this.companyNamePic = companyNamePic;
     }
 
     public String getCompanyPlacePic() {
         return companyPlacePic;
     }
 
-    public void setCompanyWorkshopPic(String companyWorkshopPic) {
-        this.companyWorkshopPic = companyWorkshopPic;
+    public void setCompanyPlacePic(String companyPlacePic) {
+        this.companyPlacePic = companyPlacePic;
     }
 
     public String getCompanyWorkshopPic() {
         return companyWorkshopPic;
     }
 
-    public void setCompanySaleCustomerPic(String companySaleCustomerPic) {
-        this.companySaleCustomerPic = companySaleCustomerPic;
+    public void setCompanyWorkshopPic(String companyWorkshopPic) {
+        this.companyWorkshopPic = companyWorkshopPic;
     }
 
     public String getCompanySaleCustomerPic() {
         return companySaleCustomerPic;
     }
 
-    public void setSecondHgz(String secondHgz) {
-        this.secondHgz = secondHgz;
+    public void setCompanySaleCustomerPic(String companySaleCustomerPic) {
+        this.companySaleCustomerPic = companySaleCustomerPic;
     }
 
     public String getSecondHgz() {
         return secondHgz;
     }
 
-    public void setSecondOdometer(String secondOdometer) {
-        this.secondOdometer = secondOdometer;
+    public void setSecondHgz(String secondHgz) {
+        this.secondHgz = secondHgz;
     }
 
     public String getSecondOdometer() {
         return secondOdometer;
     }
 
-    public void setSecondCarFrontPic(String secondCarFrontPic) {
-        this.secondCarFrontPic = secondCarFrontPic;
+    public void setSecondOdometer(String secondOdometer) {
+        this.secondOdometer = secondOdometer;
     }
 
     public String getSecondCarFrontPic() {
         return secondCarFrontPic;
     }
 
-    public void setSecondConsolePic(String secondConsolePic) {
-        this.secondConsolePic = secondConsolePic;
+    public void setSecondCarFrontPic(String secondCarFrontPic) {
+        this.secondCarFrontPic = secondCarFrontPic;
     }
 
     public String getSecondConsolePic() {
         return secondConsolePic;
     }
 
-    public void setSecond300Pdf(String second300Pdf) {
-        this.second300Pdf = second300Pdf;
+    public void setSecondConsolePic(String secondConsolePic) {
+        this.secondConsolePic = secondConsolePic;
     }
 
     public String getSecond300Pdf() {
         return second300Pdf;
     }
 
-    public void setSecondQxbPic(String secondQxbPic) {
-        this.secondQxbPic = secondQxbPic;
+    public void setSecond300Pdf(String second300Pdf) {
+        this.second300Pdf = second300Pdf;
     }
 
     public String getSecondQxbPic() {
         return secondQxbPic;
     }
 
-    public void setSecondCarInPic(String secondCarInPic) {
-        this.secondCarInPic = secondCarInPic;
+    public void setSecondQxbPic(String secondQxbPic) {
+        this.secondQxbPic = secondQxbPic;
     }
 
     public String getSecondCarInPic() {
         return secondCarInPic;
     }
 
-    public void setSecondNumber(String secondNumber) {
-        this.secondNumber = secondNumber;
+    public void setSecondCarInPic(String secondCarInPic) {
+        this.secondCarInPic = secondCarInPic;
     }
 
     public String getSecondNumber() {
         return secondNumber;
     }
 
-    public void setOtherFilePdf(String otherFilePdf) {
-        this.otherFilePdf = otherFilePdf;
+    public void setSecondNumber(String secondNumber) {
+        this.secondNumber = secondNumber;
     }
 
     public String getOtherFilePdf() {
         return otherFilePdf;
     }
 
-    public void setOtherApplyNote(String otherApplyNote) {
-        this.otherApplyNote = otherApplyNote;
+    public void setOtherFilePdf(String otherFilePdf) {
+        this.otherFilePdf = otherFilePdf;
     }
 
     public String getOtherApplyNote() {
         return otherApplyNote;
     }
 
-    public void setApplyDatetime(String applyDatetime) {
-        this.applyDatetime = applyDatetime;
+    public void setOtherApplyNote(String otherApplyNote) {
+        this.otherApplyNote = otherApplyNote;
     }
 
-    public String getApplyDatetime() {
+    public Date getApplyDatetime() {
         return applyDatetime;
     }
 
-    public void setCancelReason(String cancelReason) {
-        this.cancelReason = cancelReason;
+    public void setApplyDatetime(Date applyDatetime) {
+        this.applyDatetime = applyDatetime;
     }
 
     public String getCancelReason() {
         return cancelReason;
     }
 
-    public void setBankCommitDatetime(String bankCommitDatetime) {
-        this.bankCommitDatetime = bankCommitDatetime;
+    public void setCancelReason(String cancelReason) {
+        this.cancelReason = cancelReason;
     }
 
-    public String getBankCommitDatetime() {
+    public Date getBankCommitDatetime() {
         return bankCommitDatetime;
     }
 
-    public void setBankCommitNote(String bankCommitNote) {
-        this.bankCommitNote = bankCommitNote;
+    public void setBankCommitDatetime(Date bankCommitDatetime) {
+        this.bankCommitDatetime = bankCommitDatetime;
     }
 
     public String getBankCommitNote() {
         return bankCommitNote;
     }
 
-    public void setBankFkAmount(String bankFkAmount) {
-        this.bankFkAmount = bankFkAmount;
+    public void setBankCommitNote(String bankCommitNote) {
+        this.bankCommitNote = bankCommitNote;
     }
 
     public String getBankFkAmount() {
         return bankFkAmount;
     }
 
-    public void setBankFkDatetime(String bankFkDatetime) {
-        this.bankFkDatetime = bankFkDatetime;
+    public void setBankFkAmount(String bankFkAmount) {
+        this.bankFkAmount = bankFkAmount;
     }
 
-    public String getBankFkDatetime() {
+    public Date getBankFkDatetime() {
         return bankFkDatetime;
     }
 
-    public void setBankReceiptCode(String bankReceiptCode) {
-        this.bankReceiptCode = bankReceiptCode;
+    public void setBankFkDatetime(Date bankFkDatetime) {
+        this.bankFkDatetime = bankFkDatetime;
     }
 
     public String getBankReceiptCode() {
         return bankReceiptCode;
     }
 
-    public void setBankReceiptNumber(String bankReceiptNumber) {
-        this.bankReceiptNumber = bankReceiptNumber;
+    public void setBankReceiptCode(String bankReceiptCode) {
+        this.bankReceiptCode = bankReceiptCode;
     }
 
     public String getBankReceiptNumber() {
         return bankReceiptNumber;
     }
 
-    public void setBankReceiptPdf(String bankReceiptPdf) {
-        this.bankReceiptPdf = bankReceiptPdf;
+    public void setBankReceiptNumber(String bankReceiptNumber) {
+        this.bankReceiptNumber = bankReceiptNumber;
     }
 
     public String getBankReceiptPdf() {
         return bankReceiptPdf;
     }
 
-    public void setBankReceiptNote(String bankReceiptNote) {
-        this.bankReceiptNote = bankReceiptNote;
+    public void setBankReceiptPdf(String bankReceiptPdf) {
+        this.bankReceiptPdf = bankReceiptPdf;
     }
 
     public String getBankReceiptNote() {
         return bankReceiptNote;
     }
 
-    public void setPledgeCommitDatetime(String pledgeCommitDatetime) {
-        this.pledgeCommitDatetime = pledgeCommitDatetime;
+    public void setBankReceiptNote(String bankReceiptNote) {
+        this.bankReceiptNote = bankReceiptNote;
     }
 
-    public String getPledgeCommitDatetime() {
+    public Date getPledgeCommitDatetime() {
         return pledgeCommitDatetime;
     }
 
-    public void setPledgeCommitNote(String pledgeCommitNote) {
-        this.pledgeCommitNote = pledgeCommitNote;
+    public void setPledgeCommitDatetime(Date pledgeCommitDatetime) {
+        this.pledgeCommitDatetime = pledgeCommitDatetime;
     }
 
     public String getPledgeCommitNote() {
         return pledgeCommitNote;
     }
 
-    public void setPledgeContractCode(String pledgeContractCode) {
-        this.pledgeContractCode = pledgeContractCode;
+    public void setPledgeCommitNote(String pledgeCommitNote) {
+        this.pledgeCommitNote = pledgeCommitNote;
     }
 
     public String getPledgeContractCode() {
         return pledgeContractCode;
     }
 
-    public void setInsuranceCompanyCode(String insuranceCompanyCode) {
-        this.insuranceCompanyCode = insuranceCompanyCode;
+    public void setPledgeContractCode(String pledgeContractCode) {
+        this.pledgeContractCode = pledgeContractCode;
     }
 
     public String getInsuranceCompanyCode() {
         return insuranceCompanyCode;
     }
 
-    public void setCarColor(String carColor) {
-        this.carColor = carColor;
+    public void setInsuranceCompanyCode(String insuranceCompanyCode) {
+        this.insuranceCompanyCode = insuranceCompanyCode;
     }
 
     public String getCarColor() {
         return carColor;
     }
 
-    public void setCarBrand(String carBrand) {
-        this.carBrand = carBrand;
+    public void setCarColor(String carColor) {
+        this.carColor = carColor;
     }
 
     public String getCarBrand() {
         return carBrand;
     }
 
-    public void setFrameNo(String frameNo) {
-        this.frameNo = frameNo;
+    public void setCarBrand(String carBrand) {
+        this.carBrand = carBrand;
     }
 
     public String getFrameNo() {
         return frameNo;
     }
 
-    public void setEngineNo(String engineNo) {
-        this.engineNo = engineNo;
+    public void setFrameNo(String frameNo) {
+        this.frameNo = frameNo;
     }
 
     public String getEngineNo() {
         return engineNo;
     }
 
-    public void setCommerceInsurance(String commerceInsurance) {
-        this.commerceInsurance = commerceInsurance;
+    public void setEngineNo(String engineNo) {
+        this.engineNo = engineNo;
     }
 
     public String getCommerceInsurance() {
         return commerceInsurance;
     }
 
-    public void setInsuranceEffectDatetime(String insuranceEffectDatetime) {
-        this.insuranceEffectDatetime = insuranceEffectDatetime;
+    public void setCommerceInsurance(String commerceInsurance) {
+        this.commerceInsurance = commerceInsurance;
     }
 
     public String getInsuranceEffectDatetime() {
         return insuranceEffectDatetime;
     }
 
-    public void setInsuranceBank(String insuranceBank) {
-        this.insuranceBank = insuranceBank;
+    public void setInsuranceEffectDatetime(String insuranceEffectDatetime) {
+        this.insuranceEffectDatetime = insuranceEffectDatetime;
     }
 
     public String getInsuranceBank() {
         return insuranceBank;
     }
 
-    public void setGuaranteeContractCode(String guaranteeContractCode) {
-        this.guaranteeContractCode = guaranteeContractCode;
+    public void setInsuranceBank(String insuranceBank) {
+        this.insuranceBank = insuranceBank;
     }
 
     public String getGuaranteeContractCode() {
         return guaranteeContractCode;
     }
 
-    public void setRegCertificateCode(String regCertificateCode) {
-        this.regCertificateCode = regCertificateCode;
+    public void setGuaranteeContractCode(String guaranteeContractCode) {
+        this.guaranteeContractCode = guaranteeContractCode;
     }
 
     public String getRegCertificateCode() {
         return regCertificateCode;
     }
 
-    public void setOtherContact(String otherContact) {
-        this.otherContact = otherContact;
+    public void setRegCertificateCode(String regCertificateCode) {
+        this.regCertificateCode = regCertificateCode;
     }
 
     public String getOtherContact() {
         return otherContact;
     }
 
-    public void setContactMobile(String contactMobile) {
-        this.contactMobile = contactMobile;
+    public void setOtherContact(String otherContact) {
+        this.otherContact = otherContact;
     }
 
     public String getContactMobile() {
         return contactMobile;
     }
 
-    public void setGuarantorName(String guarantorName) {
-        this.guarantorName = guarantorName;
+    public void setContactMobile(String contactMobile) {
+        this.contactMobile = contactMobile;
     }
 
     public String getGuarantorName() {
         return guarantorName;
     }
 
-    public void setGuarantorMobile(String guarantorMobile) {
-        this.guarantorMobile = guarantorMobile;
+    public void setGuarantorName(String guarantorName) {
+        this.guarantorName = guarantorName;
     }
 
     public String getGuarantorMobile() {
         return guarantorMobile;
     }
 
-    public void setBankCardNumber(String bankCardNumber) {
-        this.bankCardNumber = bankCardNumber;
+    public void setGuarantorMobile(String guarantorMobile) {
+        this.guarantorMobile = guarantorMobile;
     }
 
     public String getBankCardNumber() {
         return bankCardNumber;
     }
 
-    public void setBillDatetime(String billDatetime) {
-        this.billDatetime = billDatetime;
+    public void setBankCardNumber(String bankCardNumber) {
+        this.bankCardNumber = bankCardNumber;
     }
 
     public String getBillDatetime() {
         return billDatetime;
     }
 
-    public void setMonthAmount(String monthAmount) {
-        this.monthAmount = monthAmount;
+    public void setBillDatetime(String billDatetime) {
+        this.billDatetime = billDatetime;
     }
 
     public String getMonthAmount() {
         return monthAmount;
     }
 
-    public void setIdNoPic(String idNoPic) {
-        this.idNoPic = idNoPic;
+    public void setMonthAmount(String monthAmount) {
+        this.monthAmount = monthAmount;
     }
 
     public String getIdNoPic() {
         return idNoPic;
     }
 
-    public void setFileList(String fileList) {
-        this.fileList = fileList;
+    public void setIdNoPic(String idNoPic) {
+        this.idNoPic = idNoPic;
     }
 
     public String getFileList() {
         return fileList;
     }
 
-    public void setIsComplete(String isComplete) {
-        this.isComplete = isComplete;
+    public void setFileList(String fileList) {
+        this.fileList = fileList;
     }
 
     public String getIsComplete() {
         return isComplete;
     }
 
-    public void setStorePlace(String storePlace) {
-        this.storePlace = storePlace;
+    public void setIsComplete(String isComplete) {
+        this.isComplete = isComplete;
     }
 
     public String getStorePlace() {
         return storePlace;
     }
 
-    public void setFileRemark(String fileRemark) {
-        this.fileRemark = fileRemark;
+    public void setStorePlace(String storePlace) {
+        this.storePlace = storePlace;
     }
 
     public String getFileRemark() {
         return fileRemark;
     }
 
-    public void setOperator(String operator) {
-        this.operator = operator;
+    public void setFileRemark(String fileRemark) {
+        this.fileRemark = fileRemark;
     }
 
     public String getOperator() {
         return operator;
     }
 
-    public void setOperateDatetime(String operateDatetime) {
-        this.operateDatetime = operateDatetime;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
     public String getOperateDatetime() {
         return operateDatetime;
     }
 
-    public void setOperateDepartment(String operateDepartment) {
-        this.operateDepartment = operateDepartment;
+    public void setOperateDatetime(String operateDatetime) {
+        this.operateDatetime = operateDatetime;
     }
 
     public String getOperateDepartment() {
         return operateDepartment;
     }
 
-    public void setMakecardRemark(String makecardRemark) {
-        this.makecardRemark = makecardRemark;
+    public void setOperateDepartment(String operateDepartment) {
+        this.operateDepartment = operateDepartment;
     }
 
     public String getMakecardRemark() {
         return makecardRemark;
     }
 
-    public void setDeliveryDatetime(String deliveryDatetime) {
-        this.deliveryDatetime = deliveryDatetime;
+    public void setMakecardRemark(String makecardRemark) {
+        this.makecardRemark = makecardRemark;
     }
 
     public String getDeliveryDatetime() {
         return deliveryDatetime;
     }
 
-    public void setIsRightInvoice(String isRightInvoice) {
-        this.isRightInvoice = isRightInvoice;
+    public void setDeliveryDatetime(String deliveryDatetime) {
+        this.deliveryDatetime = deliveryDatetime;
     }
 
     public String getIsRightInvoice() {
         return isRightInvoice;
     }
 
-    public void setCurrentInvoicePrice(String currentInvoicePrice) {
-        this.currentInvoicePrice = currentInvoicePrice;
+    public void setIsRightInvoice(String isRightInvoice) {
+        this.isRightInvoice = isRightInvoice;
     }
 
     public String getCurrentInvoicePrice() {
         return currentInvoicePrice;
     }
 
-    public void setInvoice(String invoice) {
-        this.invoice = invoice;
+    public void setCurrentInvoicePrice(String currentInvoicePrice) {
+        this.currentInvoicePrice = currentInvoicePrice;
     }
 
     public String getInvoice() {
         return invoice;
     }
 
-    public void setCertification(String certification) {
-        this.certification = certification;
+    public void setInvoice(String invoice) {
+        this.invoice = invoice;
     }
 
     public String getCertification() {
         return certification;
     }
 
-    public void setForceInsurance(String forceInsurance) {
-        this.forceInsurance = forceInsurance;
+    public void setCertification(String certification) {
+        this.certification = certification;
     }
 
     public String getForceInsurance() {
         return forceInsurance;
     }
 
-    public void setBusinessInsurance(String businessInsurance) {
-        this.businessInsurance = businessInsurance;
+    public void setForceInsurance(String forceInsurance) {
+        this.forceInsurance = forceInsurance;
     }
 
     public String getBusinessInsurance() {
         return businessInsurance;
     }
 
-    public void setMotorRegCertification(String motorRegCertification) {
-        this.motorRegCertification = motorRegCertification;
+    public void setBusinessInsurance(String businessInsurance) {
+        this.businessInsurance = businessInsurance;
     }
 
     public String getMotorRegCertification() {
         return motorRegCertification;
     }
 
-    public void setPdPdf(String pdPdf) {
-        this.pdPdf = pdPdf;
+    public void setMotorRegCertification(String motorRegCertification) {
+        this.motorRegCertification = motorRegCertification;
     }
 
     public String getPdPdf() {
         return pdPdf;
     }
 
-    public void setFbhRemark(String fbhRemark) {
-        this.fbhRemark = fbhRemark;
+    public void setPdPdf(String pdPdf) {
+        this.pdPdf = pdPdf;
     }
 
     public String getFbhRemark() {
         return fbhRemark;
     }
 
-    public void setFbhWarnDay(String fbhWarnDay) {
-        this.fbhWarnDay = fbhWarnDay;
+    public void setFbhRemark(String fbhRemark) {
+        this.fbhRemark = fbhRemark;
     }
 
     public String getFbhWarnDay() {
         return fbhWarnDay;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setFbhWarnDay(String fbhWarnDay) {
+        this.fbhWarnDay = fbhWarnDay;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setShouldBackAmount(String shouldBackAmount) {
-        this.shouldBackAmount = shouldBackAmount;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getShouldBackAmount() {
         return shouldBackAmount;
     }
 
-    public void setPayDatetime(String payDatetime) {
-        this.payDatetime = payDatetime;
+    public void setShouldBackAmount(String shouldBackAmount) {
+        this.shouldBackAmount = shouldBackAmount;
     }
 
-    public String getPayDatetime() {
+    public Date getPayDatetime() {
         return payDatetime;
     }
 
-    public void setPayBank(String payBank) {
-        this.payBank = payBank;
+    public void setPayDatetime(Date payDatetime) {
+        this.payDatetime = payDatetime;
     }
 
     public String getPayBank() {
         return payBank;
     }
 
-    public void setPayAccount(String payAccount) {
-        this.payAccount = payAccount;
+    public void setPayBank(String payBank) {
+        this.payBank = payBank;
     }
 
     public String getPayAccount() {
         return payAccount;
     }
 
-    public void setPayPdf(String payPdf) {
-        this.payPdf = payPdf;
+    public void setPayAccount(String payAccount) {
+        this.payAccount = payAccount;
     }
 
     public String getPayPdf() {
         return payPdf;
     }
 
-    public void setZfApplyDatetime(String zfApplyDatetime) {
-        this.zfApplyDatetime = zfApplyDatetime;
+    public void setPayPdf(String payPdf) {
+        this.payPdf = payPdf;
     }
 
     public String getZfApplyDatetime() {
         return zfApplyDatetime;
     }
 
-    public void setZfReason(String zfReason) {
-        this.zfReason = zfReason;
+    public void setZfApplyDatetime(String zfApplyDatetime) {
+        this.zfApplyDatetime = zfApplyDatetime;
     }
 
     public String getZfReason() {
         return zfReason;
     }
 
-    public void setZfSkAmount(String zfSkAmount) {
-        this.zfSkAmount = zfSkAmount;
+    public void setZfReason(String zfReason) {
+        this.zfReason = zfReason;
     }
 
     public String getZfSkAmount() {
         return zfSkAmount;
     }
 
-    public void setZfSkBank(String zfSkBank) {
-        this.zfSkBank = zfSkBank;
+    public void setZfSkAmount(String zfSkAmount) {
+        this.zfSkAmount = zfSkAmount;
     }
 
     public String getZfSkBank() {
         return zfSkBank;
     }
 
-    public void setZfSkBankcardNumber(String zfSkBankcardNumber) {
-        this.zfSkBankcardNumber = zfSkBankcardNumber;
+    public void setZfSkBank(String zfSkBank) {
+        this.zfSkBank = zfSkBank;
     }
 
     public String getZfSkBankcardNumber() {
         return zfSkBankcardNumber;
     }
 
-    public void setZfSkReceiptDatetime(String zfSkReceiptDatetime) {
-        this.zfSkReceiptDatetime = zfSkReceiptDatetime;
+    public void setZfSkBankcardNumber(String zfSkBankcardNumber) {
+        this.zfSkBankcardNumber = zfSkBankcardNumber;
     }
 
-    public String getZfSkReceiptDatetime() {
+    public Date getZfSkReceiptDatetime() {
         return zfSkReceiptDatetime;
     }
 
-    public void setZfFinanceRemark(String zfFinanceRemark) {
-        this.zfFinanceRemark = zfFinanceRemark;
+    public void setZfSkReceiptDatetime(Date zfSkReceiptDatetime) {
+        this.zfSkReceiptDatetime = zfSkReceiptDatetime;
     }
 
     public String getZfFinanceRemark() {
         return zfFinanceRemark;
     }
 
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
+    public void setZfFinanceRemark(String zfFinanceRemark) {
+        this.zfFinanceRemark = zfFinanceRemark;
     }
 
     public String getCurNodeCode() {
         return curNodeCode;
     }
 
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
 }

@@ -24,7 +24,7 @@ public class InsuranceCompanyDAOImpl extends AMybatisTemplate
 
     @Override
     public int update(InsuranceCompany data) {
-        return super.delete(NAMESPACE.concat("update_insuranceCompany"), data);
+        return super.update(NAMESPACE.concat("update_insuranceCompany"), data);
     }
 
     @Override
