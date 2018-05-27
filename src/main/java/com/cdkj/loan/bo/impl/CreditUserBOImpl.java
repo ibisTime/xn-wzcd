@@ -2,6 +2,7 @@ package com.cdkj.loan.bo.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.ICreditUserBO;
@@ -21,6 +22,7 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         ICreditUserBO {
 
+    @Autowired
     private ICreditUserDAO creditUserDAO;
 
     // 修改征信人员
@@ -40,7 +42,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     @Override
     public void addCreditUser(CreditUser creditUser) {
         String code = null;
-        if (null != creditUser) {
+        if (creditUser != null) {
             code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER
                 .getCode());
             creditUser.setCode(code);

@@ -16,7 +16,7 @@
 		<result column="xsz_reverse" property="xszReverse" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="accessory" property="accessory" />
-		<result column="apply_datetime" property="applyDatime" />
+		<result column="apply_datetime" property="applyDatetime" />
 		
 	</resultMap>
 	
@@ -56,7 +56,7 @@
 				AND t.cur_node_code = #{xszReverse}
 			</if>
 			<if test="roleCode != null and roleCode != '' ">
-				AND trn.role_code = #{roleCode}
+				AND t.cur_node_code = #{xszReverse}
 			</if>
 		</trim>
 	</sql>
@@ -64,12 +64,17 @@
 	<select id="select_credit" parameterType="credit" resultMap="credit_DB_Result">
 		select 
 		t.code
+		,t.company_code
 		,t.loan_bank_code
+		,t.sale_user_id
+		,t.apply_datetime
+		
+		,t.cur_node_code		
 		,t.shop_way
 		,t.loan_amount
 		,t.xsz_front
 		,t.xsz_reverse
-		from tdq_credit
+		from tdq_credit t
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -85,8 +90,13 @@
 		,t.loan_bank_code
 		,t.sale_user_id
 		,t.apply_datetime
-		,t.cur_node_code
-		from tdq_credit t inner join tsys_role_node trn on tc.cur_node_code=trn.node_code
+		
+		,t.cur_node_code		
+		,t.shop_way
+		,t.loan_amount
+		,t.xsz_front
+		,t.xsz_reverse
+		from tdq_credit t inner join tsys_role_node trn on t.cur_node_code=trn.node_code
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -123,7 +133,7 @@
 	<update id="update_credit" parameterType="credit">
 		UPDATE tdq_credit
 		SET
-		loan_bank_code = #{LoanBankCode}
+		loan_bank_code = #{loanBankCode}
 		,shop_way = #{shopWay}
 		,loan_amount = #{loanAmount}
 		,xsz_front = #{xszFront}

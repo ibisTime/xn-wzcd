@@ -13,6 +13,11 @@ import com.cdkj.loan.dao.base.ABaseDO;
  */
 public class Credit extends ABaseDO {
 
+    /** 
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+     */
+    private static final long serialVersionUID = 1L;
+
     // 编号
     private String code;
 
@@ -50,6 +55,9 @@ public class Credit extends ABaseDO {
     private String accessory;
 
     // ****************db properties*******************
+
+    // 角色编号
+    private String roleCode;
 
     // 业务公司
     private String companyName;
@@ -211,6 +219,14 @@ public class Credit extends ABaseDO {
 
     public void setCreditUserList(List<CreditUser> creditUserList) {
         this.creditUserList = creditUserList;
+    }
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
 
 }
