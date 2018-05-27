@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IProvinceAO;
 import com.cdkj.loan.bo.IProvinceBO;
@@ -25,7 +24,6 @@ public class ProvinceAOImpl implements IProvinceAO {
     private IProvinceBO provinceBO;
 
     @Override
-    @Transactional
     public int addProvince(String provinceNo, String name) {
         Province data = new Province();
         data.setProvinceNo(provinceNo);
