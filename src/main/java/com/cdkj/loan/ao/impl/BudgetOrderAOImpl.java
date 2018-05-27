@@ -154,10 +154,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         for (XN632120ReqIncome reqIncome : req.getCreditUserIncomeList()) {
             CreditUser creditUser = new CreditUser();
             creditUser.setCode(reqIncome.getCode());
-            creditUser.setMonthIncome(reqIncome.getMonthIncome());
-            creditUser.setSettleInterest(reqIncome.getSettleInterest());
-            creditUser.setBalance(reqIncome.getBalance());
+            creditUser.setMonthIncome(StringValidater.toLong(reqIncome
+                .getMonthIncome()));
+            creditUser.setSettleInterest(StringValidater.toDouble(reqIncome
+                .getSettleInterest()));
+            creditUser
+                .setBalance(StringValidater.toLong(reqIncome.getBalance()));
 
+            creditUser.setJourShowIncome(reqIncome.getJourShowIncome());
             creditUser.setJourShowIncome(reqIncome.getJourShowIncome());
             creditUser.setIsPrint(reqIncome.getIsPrint());
             creditUserBO.refreshCreditUserIncome(creditUser);

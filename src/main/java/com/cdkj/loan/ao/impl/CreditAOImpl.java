@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import com.cdkj.loan.dto.req.XN632112ReqChild;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632114Req;
 import com.cdkj.loan.dto.req.XN632115Req;
+import com.cdkj.loan.dto.req.XN632116Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ECreditNode;
@@ -67,6 +69,8 @@ public class CreditAOImpl implements ICreditAO {
         credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
         credit.setXszFront(req.getXszFront());
         credit.setXszReverse(req.getXszReverse());
+
+        credit.setApplyDatetime(new Date());
 
         credit.setCurNodeCode(nodeBO.getNode(ECreditNode.START.getCode())
             .getNextNode());
@@ -153,7 +157,7 @@ public class CreditAOImpl implements ICreditAO {
 
     }
 
-    // 分页查询
+    // 分页查询 按角色权限
     @Override
     public Paginable<Credit> queryCreditPage(XN632115Req req) {
 
@@ -186,8 +190,8 @@ public class CreditAOImpl implements ICreditAO {
             // 从征信人员表查申请人的客户姓名 手机号 身份证号
             // credit.setLoanName(creditUserBO.queryCreditUserMain(credit.getCode()));
             // 从部门表查业务公司名
-            credit.setCompanyName((departmentBO.getDepartment(credit
-                .getCompanyCode()).getName()));
+            // credit.setCompanyName((departmentBO.getDepartment(credit
+            // .getCompanyCode()).getName()));
             // 从银行表查贷款银行名
             // credit.setLoanBankName(bankBO.getName());
 
@@ -216,8 +220,7 @@ public class CreditAOImpl implements ICreditAO {
     // 查询征信单 根据征信单编号
     @Override
     public Credit queryCreditByCode(String creditCode) {
-        Credit credit = creditBO.getCredit(creditCode);
-        return credit;
+        return creditBO.getCredit(creditCode);
     }
 
     // 征信初审
@@ -233,8 +236,9 @@ public class CreditAOImpl implements ICreditAO {
 
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             // 审核通过，改变节点
-            credit.setCurNodeCode(nodeBO.getNode(
-                ECreditNode.PRIMARYAUDIT.getCode()).getNextNode());
+
+            credit.setCurNodeCode(nodeBO.getNode(credit.getCurNodeCode())
+                .getNextNode());
             // 审核通过并且选填了附件
             if (null != req.getAccessory() && !"".equals(req.getAccessory())) {
                 credit.setAccessory(req.getAccessory());
@@ -243,8 +247,8 @@ public class CreditAOImpl implements ICreditAO {
             }
 
         } else {
-            credit.setCurNodeCode(nodeBO.getNode(
-                ECreditNode.PRIMARYAUDIT.getCode()).getBackNode());
+            credit.setCurNodeCode(nodeBO.getNode(credit.getCurNodeCode())
+                .getBackNode());
         }
 
         creditBO.refreshCreditNode(credit);
@@ -273,5 +277,52 @@ public class CreditAOImpl implements ICreditAO {
 
         creditBO.refreshCreditNode(credit);
 
+    }
+
+    // 分页查询
+    @Override
+    public Paginable<Credit> queryCreditPage(XN632116Req req) {
+
+        // 征信表分页查询结果
+        Credit condition = new Credit();
+
+        int start = StringValidater.toInteger(req.getStart());
+        int limit = StringValidater.toInteger(req.getLimit());
+
+        String Column = req.getOrderColumn();
+
+        condition.setOrder(Column, req.getOrderDir());
+
+        condition.setApplyDatetime(DateUtil.strToDate(req.getApplyDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+
+        condition.setLoanBankCode(req.getLoanBankCode());
+
+        condition.setSaleUserId(req.getSaleUserId());
+
+        condition.setCode(req.getCreditCode());
+
+        Paginable<Credit> result = creditBO.getPaginableAll(start, limit,
+            condition);
+
+        List<Credit> list = result.getList();
+
+        for (Credit credit : list) {
+
+            // 从征信人员表查申请人的客户姓名 手机号 身份证号
+            // credit.setLoanName(creditUserBO.queryCreditUserMain(credit.getCode()));
+            // 从部门表查业务公司名
+            // credit.setCompanyName((departmentBO.getDepartment(credit
+            // .getCompanyCode()).getName()));
+            // 从银行表查贷款银行名
+            // credit.setLoanBankName(bankBO.getName());
+
+            // 从业务员表查业务员姓名
+            // credit.setSalesmanName(saleUserBO.g);
+            // 从节点表查节点名称
+            credit.setStatus(nodeBO.getNode(credit.getCurNodeCode()).getName());
+        }
+
+        return result;
     }
 }

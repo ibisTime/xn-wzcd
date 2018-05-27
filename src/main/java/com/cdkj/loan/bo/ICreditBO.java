@@ -1,6 +1,7 @@
 package com.cdkj.loan.bo;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Credit;
 
 /**
@@ -25,5 +26,9 @@ public interface ICreditBO extends IPaginableBO<Credit> {
 
     // 更新征信单节点
     public void refreshCreditNode(Credit credit);
+
+    // 征信分页查询 所有 不按角色权限
+    public Paginable<Credit> getPaginableAll(int start, int limit,
+            Credit condition);
 
 }

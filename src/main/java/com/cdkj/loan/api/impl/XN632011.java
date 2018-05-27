@@ -1,42 +1,37 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.ICreditUserAO;
+import com.cdkj.loan.ao.IAreaAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN632111Req;
-import com.cdkj.loan.dto.res.BooleanRes;
+import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.dto.req.XN632011Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 录入银行征信结果
- * @author: jiafr 
- * @since: 2018年5月25日 下午3:22:27 
+ * 删除身份证区域
+ * @author: silver 
+ * @since: 2018年5月27日 上午11:32:09 
  * @history:
  */
-public class XN632111 extends AProcessor {
+public class XN632011 extends AProcessor {
 
-    private ICreditUserAO creditUserAO = SpringContextHolder
-        .getBean(ICreditUserAO.class);
+    private IAreaAO areaAO = SpringContextHolder.getBean(IAreaAO.class);
 
-    private XN632111Req req = null;;
+    private XN632011Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-
-        creditUserAO.inputBankCreditResult(req);
-
-        return new BooleanRes(true);
+        return areaAO.dropArea(StringValidater.toInteger(req.getId()));
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632111Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632011Req.class);
         ObjValidater.validateReq(req);
-
     }
 
 }

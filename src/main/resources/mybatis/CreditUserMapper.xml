@@ -33,7 +33,7 @@
 		<result column="xyk_count" property="xykCount" />
 		<result column="xyk_credit_amount" property="xykCreditAmount" />
 		<result column="xyk_6month_use_amount" property="xyk6MonthUseAmount" />
-		<result column="xyk_2year_over_times" property="xykYearOverTimes" />
+		<result column="xyk_2year_over_times" property="xyk2YearOverTimes" />
 		<result column="xyk_month_max_over_amount" property="xykMonthMaxOverAmount" />
 		<result column="xyk_current_over_amount" property="xykCurrentOverAmount" />
 		
@@ -149,14 +149,14 @@
 		,hkxy_unsettle_count=#{hkxyUnsettleCount}
 		,hkxy_unsettle_amount=#{hkxyUnsettleAmount}
 		,hkxy_2year_over_times=#{hkxy2YearOverTimes}
-		,hkxy_monthmax_over_amount=#{hkxyMonthmaxOverAmount}
+		,hkxy_month_max_over_amount=#{hkxyMonthmaxOverAmount}
 		,hkxy_current_over_amount=#{hkxyCurrentOverAmount}
 		,hkxy_6month_avg_amount=#{hkxy6MonthAvgAmount}
 		
 		,xyk_count=#{xykCount}
 		,xyk_credit_amount=#{xykCreditAmount}
 		,xyk_6month_use_amount=#{xyk6MonthUseAmount}
-		,xyk_2year_over_times=#{xykYearOverTimes}
+		,xyk_2year_over_times=#{xyk2YearOverTimes}
 		,xyk_month_max_over_amount=#{xykMonthMaxOverAmount}
 		,xyk_current_over_amount=#{xykCurrentOverAmount}
 		
@@ -202,7 +202,7 @@
 		,t.hkxy_unsettle_count
 		,t.hkxy_unsettle_amount
 		,t.hkxy_2year_over_times
-		,t.hkxy_monthmax_over_amount
+		,t.hkxy_month_max_over_amount
 		,t.hkxy_current_over_amount
 		
 		,t.hkxy_6month_avg_amount

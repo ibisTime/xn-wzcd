@@ -7,6 +7,7 @@ import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632114Req;
 import com.cdkj.loan.dto.req.XN632115Req;
+import com.cdkj.loan.dto.req.XN632116Req;
 
 /**
  * 征信
@@ -24,7 +25,7 @@ public interface ICreditAO {
     // 修改征信信息 征信表和征信人员表
     public void editCredit(XN632112Req req);
 
-    // 征信分页查询
+    // 征信分页查询 按角色权限
     public Paginable<Credit> queryCreditPage(XN632115Req req);
 
     // 征信详情查询
@@ -38,5 +39,8 @@ public interface ICreditAO {
 
     // 征信一审
     public void firstAudit(XN632114Req req);
+
+    // 征信分页查询
+    public Paginable<Credit> queryCreditPage(XN632116Req req);
 
 }
