@@ -19,6 +19,7 @@ import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632120ReqIncome;
+import com.cdkj.loan.enums.ECreditUserRelation;
 
 @Service
 public class BudgetOrderAOImpl implements IBudgetOrderAO {
@@ -39,21 +40,24 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Transactional
     public String addBudgetOrder(XN632120Req req) {
         BudgetOrder data = new BudgetOrder();
+        CreditUser applyCreditUser = creditUserBO.getCreditUserByCreditCode(
+            req.getCreditCode(), ECreditUserRelation.APPLY_USER);
+        data.setCustomerName(applyCreditUser.getUserName());
         data.setCustomerType(req.getCustomerType());
-        data.setCustomerName(req.getCustomerName());
         data.setCarDealerCode(req.getCarDealerCode());
+
         data.setLoanBankCode(req.getLoanBankCode());
         data.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
         data.setCarModel(req.getCarModel());
-
         data.setLoanPeriods(req.getLoanPeriods());
         data.setInvoicePrice(StringValidater.toLong(req.getInvoicePrice()));
+
         data.setShopWay(req.getShopWay());
         data.setRateType(req.getRateType());
         data.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
         data.setIsSurvey(req.getIsSurvey());
-
         data.setBankRate(StringValidater.toDouble(req.getBankRate()));
+
         data.setCompanyLoanCs(StringValidater.toDouble(req.getCompanyLoanCs()));
         data.setIsAdvanceFund(req.getIsAdvanceFund());
         data.setGlobalRate(StringValidater.toDouble(req.getGlobalRate()));
@@ -66,73 +70,74 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setHouseProperty(req.getHouseProperty());
         data.setIsHouseContract(req.getIsHouseContract());
         data.setHouseInvoice(req.getHouseInvoice());
+
         data.setIsLicense(req.getIsLicense());
         data.setLicense(req.getLicense());
         data.setIsSiteProve(req.getIsSiteProve());
         data.setSiteProve(req.getSiteProve());
-
         data.setSiteArea(req.getSiteArea());
+
         data.setCarType(req.getCarType());
         data.setIsDriceLicense(req.getIsDriceLicense());
         data.setDriceLicense(req.getDriceLicense());
         data.setOtherPropertyNote(req.getOtherPropertyNote());
         data.setApplyBirthAddress(req.getApplyBirthAddress());
-        data.setApplyNowAddress(req.getApplyNowAddress());
 
+        data.setApplyNowAddress(req.getApplyNowAddress());
         data.setHouseType(req.getHouseType());
         data.setGhBirthAddress(req.getGhBirthAddress());
         data.setGuarantor1BirthAddress(req.getGuarantor1BirthAddress());
         data.setGuarantor2BirthAddress(req.getGuarantor2BirthAddress());
-        data.setOtherNote(req.getOtherNote());
 
+        data.setOtherNote(req.getOtherNote());
         data.setOilSubsidy(StringValidater.toLong(req.getOilSubsidy()));
         data.setOilSubsidyKil(req.getOilSubsidyKil());
         data.setIsPlatInsure(req.getIsPlatInsure());
         data.setGpsFee(StringValidater.toLong(req.getGpsFee()));
-        data.setGpsDeduct(req.getGpsDeduct());
 
+        data.setGpsDeduct(req.getGpsDeduct());
         data.setGpsFeeWay(req.getGpsFeeWay());
         data.setLyAmount(StringValidater.toLong(req.getLyAmount()));
         data.setFxAmount(StringValidater.toLong(req.getFxAmount()));
         data.setOtherFee(StringValidater.toLong(req.getOtherFee()));
-        data.setFeeWay(req.getFeeWay());
 
+        data.setFeeWay(req.getFeeWay());
         data.setMarryDivorce(req.getMarryDivorce());
         data.setApplyUserHkb(req.getApplyUserHkb());
         data.setBankBillPdf(req.getBankBillPdf());
         data.setSingleProvePdf(req.getSingleProvePdf());
-        data.setIncomeProvePdf(req.getIncomeProvePdf());
 
+        data.setIncomeProvePdf(req.getIncomeProvePdf());
         data.setLiveProvePdf(req.getLiveProvePdf());
         data.setBuildProvePdf(req.getBuildProvePdf());
         data.setHkbFirstPage(req.getHkbFirstPage());
         data.setHkbMainPage(req.getHkbMainPage());
-        data.setGhHkb(req.getGhHkb());
 
+        data.setGhHkb(req.getGhHkb());
         data.setGuarantor1IdNo(req.getGuarantor1IdNo());
         data.setGuarantor1Hkb(req.getGuarantor1Hkb());
         data.setGuarantor2IdNo(req.getGuarantor2IdNo());
         data.setGuarantor2Hkb(req.getGuarantor2Hkb());
-        data.setHousePic(req.getHousePic());
 
+        data.setHousePic(req.getHousePic());
         data.setHouseUnitPic(req.getHouseUnitPic());
         data.setHouseDoorPic(req.getHouseDoorPic());
         data.setHouseRoomPic(req.getHouseRoomPic());
         data.setHouseCustomerPic(req.getHouseCustomerPic());
-        data.setHouseSaleCustomerPic(req.getHouseSaleCustomerPic());
 
+        data.setHouseSaleCustomerPic(req.getHouseSaleCustomerPic());
         data.setCompanyNamePic(req.getCompanyNamePic());
         data.setCompanyPlacePic(req.getCompanyPlacePic());
         data.setCompanyWorkshopPic(req.getCompanyWorkshopPic());
         data.setCompanySaleCustomerPic(req.getCompanySaleCustomerPic());
-        data.setSecondHgz(req.getSecondHgz());
 
+        data.setSecondHgz(req.getSecondHgz());
         data.setSecondOdometer(req.getSecondOdometer());
         data.setSecondConsolePic(req.getSecondConsolePic());
         data.setSecond300Pdf(req.getSecond300Pdf());
         data.setSecondQxbPic(req.getSecondQxbPic());
-        data.setSecondCarInPic(req.getSecondCarInPic());
 
+        data.setSecondCarInPic(req.getSecondCarInPic());
         data.setSecondNumber(req.getSecondNumber());
         data.setOtherFilePdf(req.getOtherFilePdf());
         data.setOtherApplyNote(req.getOtherApplyNote());
@@ -142,7 +147,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         for (String gpsCode : req.getGpsList()) {
             Gps dataGps = new Gps();
             dataGps.setCode(gpsCode);
-            gpsBO.useGps(dataGps);
+            gpsBO.refreshUseGps(dataGps);
         }
 
         // 更新征信人员信息
@@ -152,8 +157,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             creditUser.setMonthIncome(reqIncome.getMonthIncome());
             creditUser.setSettleInterest(reqIncome.getSettleInterest());
             creditUser.setBalance(reqIncome.getBalance());
-            creditUser.setJourShowIncome(reqIncome.getJourShowIncome());
 
+            creditUser.setJourShowIncome(reqIncome.getJourShowIncome());
             creditUser.setIsPrint(reqIncome.getIsPrint());
             creditUserBO.refreshCreditUserIncome(creditUser);
         }
