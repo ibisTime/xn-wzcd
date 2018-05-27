@@ -72,4 +72,12 @@ public class CreditDAOImpl extends AMybatisTemplate implements ICreditDAO {
         return super.update(NAMESPACE.concat("update_node"), credit);
     }
 
+    // 征信分页查询 所有
+    @Override
+    public List<Credit> selecCreditPageAll(Credit condition, int start,
+            int pageSize) {
+        return super.selectList(NAMESPACE.concat("select_creditPageAll"),
+            start, pageSize, condition, Credit.class);
+    }
+
 }

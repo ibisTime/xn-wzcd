@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
+import com.cdkj.loan.bo.base.Page;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICreditDAO;
@@ -79,6 +81,24 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
             count = creditDAO.updateNode(credit);
         }
 
+    }
+
+    // 征信分页查询 所有 不按权限
+    @Override
+    public Paginable<Credit> getPaginableAll(int start, int limit,
+            Credit condition) {
+
+        prepare(condition);
+
+        long totalCount = creditDAO.selectTotalCount(condition);
+
+        Paginable<Credit> page = new Page<Credit>(start, limit, totalCount);
+
+        List<Credit> dataList = creditDAO.selecCreditPageAll(condition,
+            page.getStart(), page.getPageSize());
+
+        page.setList(dataList);
+        return page;
     }
 
 }
