@@ -28,7 +28,7 @@ public class XN630120 extends AProcessor {
 
         synchronized (XN630120.class) {
             String userId = saleUserAO.doRegister(req.getMobile(),
-                req.getLoginPwd(), req.getSmsCaptcha(), req.getType());
+                req.getLoginPwd(), req.getType());
 
             return new PKCodeRes(userId);
         }

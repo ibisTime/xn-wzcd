@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 征信新增 （征信人员）
  * @author: jiafr 
@@ -9,30 +11,39 @@ package com.cdkj.loan.dto.req;
 public class XN632110ReqChild {
 
     // 姓名
+    @NotBlank
     private String userName;
 
     // 与借款人关系
+    @NotBlank
     private String relation;
 
     // 贷款角色
+    @NotBlank
     private String loanRole;
 
     // 手机号
+    @NotBlank
     private String mobile;
 
     // 身份证号
+    @NotBlank
     private String idNo;
 
     // 身份证正面
+    @NotBlank
     private String idNoFront;
 
     // 身份证反面
+    @NotBlank
     private String idNoReverse;
 
     // 征信查询授权书
+    @NotBlank
     private String authPdf;
 
     // 面签照片
+    @NotBlank
     private String interviewPic;
 
     public String getUserName() {
@@ -59,14 +70,6 @@ public class XN632110ReqChild {
         this.loanRole = loanRole;
     }
 
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
     public String getMobile() {
         return mobile;
     }
@@ -75,20 +78,12 @@ public class XN632110ReqChild {
         this.mobile = mobile;
     }
 
-    public String getAuthPdf() {
-        return authPdf;
+    public String getIdNo() {
+        return idNo;
     }
 
-    public void setAuthPdf(String authPdf) {
-        this.authPdf = authPdf;
-    }
-
-    public String getInterviewPic() {
-        return interviewPic;
-    }
-
-    public void setInterviewPic(String interviewPic) {
-        this.interviewPic = interviewPic;
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
     }
 
     public String getIdNoFront() {
@@ -105,6 +100,22 @@ public class XN632110ReqChild {
 
     public void setIdNoReverse(String idNoReverse) {
         this.idNoReverse = idNoReverse;
+    }
+
+    public String getAuthPdf() {
+        return authPdf;
+    }
+
+    public void setAuthPdf(String authPdf) {
+        this.authPdf = authPdf;
+    }
+
+    public String getInterviewPic() {
+        return interviewPic;
+    }
+
+    public void setInterviewPic(String interviewPic) {
+        this.interviewPic = interviewPic;
     }
 
 }

@@ -11,9 +11,6 @@ public class XN630120Req {
     private String loginPwd; // 登录密码
 
     @NotBlank
-    private String smsCaptcha; // 手机验证码
-
-    @NotBlank
     private String type; // 用户类型
 
     public String getMobile() {
@@ -30,14 +27,6 @@ public class XN630120Req {
 
     public void setLoginPwd(String loginPwd) {
         this.loginPwd = loginPwd;
-    }
-
-    public String getSmsCaptcha() {
-        return smsCaptcha;
-    }
-
-    public void setSmsCaptcha(String smsCaptcha) {
-        this.smsCaptcha = smsCaptcha;
     }
 
     public String getType() {

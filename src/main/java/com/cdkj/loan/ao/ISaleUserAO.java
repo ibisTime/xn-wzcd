@@ -10,8 +10,7 @@ public interface ISaleUserAO {
     String DEFAULT_ORDER_COLUMN = "user_id";
 
     // 业务员注册
-    public String doRegister(String mobile, String loginPwd, String smsCaptcha,
-            String type);
+    public String doRegister(String mobile, String loginPwd, String type);
 
     // 验证码注册业务员
     public String doCaptchaLoginReg(String mobile, String smsCaptcha,

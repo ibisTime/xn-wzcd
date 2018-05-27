@@ -38,6 +38,7 @@ COMMENT = '省份编号表';
 /*银行信息表(确定)*/
 CREATE TABLE `tb_bank` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `bank_code` VARCHAR(32) NULL COMMENT '银行编号',
   `bank_name` VARCHAR(255) NULL COMMENT '银行名称',
   `rate12` DECIMAL NULL COMMENT '12期',
   `rate18` DECIMAL NULL COMMENT '18期',

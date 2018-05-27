@@ -54,15 +54,10 @@ public class SaleUserAOImpl implements ISaleUserAO {
 
     @Override
     @Transactional
-    public String doRegister(String mobile, String loginPwd, String smsCaptcha,
-            String type) {
+    public String doRegister(String mobile, String loginPwd, String type) {
 
         // 验证手机号是否存在
         saleUserBO.isMobileExist(mobile, type);
-
-        // 验证短信验证码
-        // smsOutBO.checkCaptcha(mobile, smsCaptcha,
-        // ECaptchaType.C_REG.getCode());
 
         // 注册业务员
         String userId = saleUserBO.doRegister(mobile, loginPwd, type);
