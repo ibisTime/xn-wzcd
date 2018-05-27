@@ -18,8 +18,8 @@ import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
-        implements ISYSUserBO {
+public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements
+        ISYSUserBO {
 
     @Autowired
     private ISYSUserDAO sysUserDAO;
@@ -56,8 +56,23 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
     }
 
     @Override
-    public void refreshStatus(String userId, EUserStatus status, String updater,
-            String remark) {
+    public void refreshDepartment(String userId, String departmentCode,
+            String companyCode, String updater, String remark) {
+        if (StringUtils.isNotBlank(userId)) {
+            SYSUser data = new SYSUser();
+            data.setUserId(userId);
+            data.setDepartmentCode(departmentCode);
+            data.setCompanyCode(companyCode);
+            data.setUpdater(updater);
+            data.setUpdateDatetime(new Date());
+            data.setRemark(remark);
+            sysUserDAO.updateDepartment(data);
+        }
+    }
+
+    @Override
+    public void refreshStatus(String userId, EUserStatus status,
+            String updater, String remark) {
         if (StringUtils.isNotBlank(userId)) {
             SYSUser data = new SYSUser();
             data.setUserId(userId);
@@ -149,8 +164,7 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
 
     @Override
     public void checkLoginPwd(String userId, String loginPwd) {
-        if (StringUtils.isNotBlank(userId)
-                && StringUtils.isNotBlank(loginPwd)) {
+        if (StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(loginPwd)) {
             SYSUser condition = new SYSUser();
             condition.setUserId(userId);
             condition.setLoginPwd(MD5Util.md5(loginPwd));
@@ -162,5 +176,4 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
             throw new BizException("jd00001", "原登录密码错误");
         }
     }
-
 }

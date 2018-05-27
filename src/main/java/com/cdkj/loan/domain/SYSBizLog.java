@@ -6,6 +6,11 @@ import com.cdkj.loan.dao.base.ABaseDO;
 
 public class SYSBizLog extends ABaseDO {
 
+    /** 
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+     */
+    private static final long serialVersionUID = 2099380862896285572L;
+
     private int id;// 序号
 
     private String parentOrder;// 上级订单编号
@@ -18,7 +23,7 @@ public class SYSBizLog extends ABaseDO {
 
     private String dealNote;// 处理说明
 
-    private String status;// 状态
+    private String status;// 状态(0 待处理 1 已处理)
 
     private String operateRole;// 操作角色
 
@@ -145,5 +150,4 @@ public class SYSBizLog extends ABaseDO {
     public void setSpeedTime(String speedTime) {
         this.speedTime = speedTime;
     }
-
 }

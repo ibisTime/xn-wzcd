@@ -170,20 +170,21 @@
 	<update id="update_role" parameterType="saleUser">
 		UPDATE tb_sale_user
 		SET
-		 role_code = #{roleCode}
-		 ,updater = #{updater}
-		 ,update_datetime = #{updateDatetime}
-		 ,remark = #{remark}
+		role_code = #{roleCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE
 		user_id = #{userId}	
 	</update>	
+	
 	<update id="update_department" parameterType="saleUser">
 		UPDATE tb_sale_user
 		SET
-		 department_code = #{departmentCode}
-		 ,updater = #{updater}
-		 ,update_datetime = #{updateDatetime}
-		 ,remark = #{remark}
+		department_code = #{departmentCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE
 		user_id = #{userId}	
 	</update>	

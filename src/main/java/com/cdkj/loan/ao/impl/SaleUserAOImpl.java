@@ -274,7 +274,7 @@ public class SaleUserAOImpl implements ISaleUserAO {
     }
 
     @Override
-    public void doDepartment(String userId, String departmentCode,
+    public void doSetDepartment(String userId, String departmentCode,
             String updater, String remark) {
         SaleUser user = saleUserBO.getSaleUser(userId);
         if (user == null) {

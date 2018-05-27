@@ -8,6 +8,7 @@ CREATE TABLE `tsys_user` (
   `login_pwd` varchar(32) DEFAULT NULL COMMENT '登录密码',
   `login_pwd_strength` char(1) DEFAULT NULL COMMENT '登录密码强度',
   `create_datetme` datetime DEFAULT NULL COMMENT '注册时间',
+  `company_code` varchar(32) DEFAULT NULL COMMENT '公司编号',
   `department_code` varchar(32) DEFAULT NULL COMMENT '部门编号',
   `role_code` varchar(32) DEFAULT NULL COMMENT '角色编号',
   `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
@@ -137,7 +138,7 @@ CREATE TABLE `tsys_biz_log` (
   `ref_type` varchar(32) NOT NULL COMMENT '关联订单类型',
   `ref_order` varchar(32) NOT NULL COMMENT '关联订单编号',
   `deal_node` varchar(32) NOT NULL COMMENT '处理节点',
-  `deal_note` varchar(32) NOT NULL COMMENT '处理说明',
+  `deal_note` varchar(255) NOT NULL COMMENT '处理说明',
   `status` varchar(32) NOT NULL COMMENT '状态(0 待处理 1 已完成)',
   `operate_role` varchar(32) NOT NULL COMMENT '操作角色',
   `operator` varchar(32) NOT NULL COMMENT '操作人',
@@ -149,8 +150,4 @@ CREATE TABLE `tsys_biz_log` (
   `speed_time` int(11) NULL COMMENT '花费时间(单位：秒)',
   PRIMARY KEY (`id`) COMMENT '业务日志跟踪表'
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8;
-
-
-
-
 

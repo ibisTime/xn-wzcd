@@ -22,6 +22,10 @@ public interface ISYSUserAO {
     public void doRoleUser(String userId, String roleCode, String updater,
             String remark);
 
+    // 设置部门岗位
+    public void doSetDepartment(String userId, String departmentCode,
+            String updater, String remark);
+
     // 重置登录密码
     public void resetAdminLoginPwd(String userId, String newLoginPwd);
 
@@ -56,5 +60,4 @@ public interface ISYSUserAO {
 
     public String doAddUser(String type, String loginName, String loginPwd,
             String mobile, String roleCode);
-
 }

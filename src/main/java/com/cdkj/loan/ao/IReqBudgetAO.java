@@ -17,9 +17,11 @@ public interface IReqBudgetAO {
 
     public String addReqBudget(XN632100Req req);
 
-    public int dropReqBudget(String code);
+    public void collectionReqBudget(XN632103Req req);
 
-    public int collectionReqBudget(XN632103Req req);
+    public void audit(XN632101Req req);
+
+    public void loan(XN632102Req req);
 
     public Paginable<ReqBudget> queryReqBudgetPage(int start, int limit,
             ReqBudget condition);
@@ -30,9 +32,4 @@ public interface IReqBudgetAO {
     public List<ReqBudget> queryReqBudgetList(ReqBudget condition);
 
     public ReqBudget getReqBudget(String code);
-
-    public int audit(XN632101Req req);
-
-    public int loan(XN632102Req req);
-
 }

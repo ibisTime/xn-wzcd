@@ -4,19 +4,20 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.SYSBizLog;
+import com.cdkj.loan.enums.EBizLogType;
 
 public interface ISYSBizLogBO extends IPaginableBO<SYSBizLog> {
 
-    public int saveSYSBizLog(SYSBizLog data);
+    // 流程第一步，执行当前方法
+    public void saveSYSBizLog(String parentOrder, EBizLogType refType,
+            String refOrder, String dealNode, String dealNote, String operator);
 
-    public int refreshSYSBizLog(SYSBizLog data);
+    // 不是流程第一步，执行当前方法
+    public void saveNewAndPreEndSYSBizLog(String parentOrder,
+            EBizLogType refType, String refOrder, String preDealNode,
+            String nowDealNode, String nowDealNote, String operator);
 
     public List<SYSBizLog> querySYSBizLogList(SYSBizLog condition);
 
     public SYSBizLog getSYSBizLog(int id);
-
-    public SYSBizLog getSYSBizLogByTime(SYSBizLog data);
-
-    public long getSYSBizLoglatest(SYSBizLog condition);
-
 }

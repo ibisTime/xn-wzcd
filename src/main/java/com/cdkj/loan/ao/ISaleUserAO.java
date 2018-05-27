@@ -29,7 +29,7 @@ public interface ISaleUserAO {
             String remark);
 
     // 设置部门
-    public void doDepartment(String userId, String departmentCode,
+    public void doSetDepartment(String userId, String departmentCode,
             String updater, String remark);
 
     // 重置登录密码

@@ -6,6 +6,11 @@ import com.cdkj.loan.dao.base.ABaseDO;
 
 public class ReqBudget extends ABaseDO {
 
+    /** 
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+     */
+    private static final long serialVersionUID = -1440806324346784462L;
+
     private String code;// 编号
 
     private String companyCode;// 业务公司编号

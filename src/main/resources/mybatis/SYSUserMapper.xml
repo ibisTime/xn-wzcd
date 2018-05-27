@@ -8,9 +8,13 @@
 		<result column="photo" property="photo" />
 		<result column="login_name" property="loginName" />
 		<result column="mobile" property="mobile" />
+		
 		<result column="login_pwd" property="loginPwd" />
 		<result column="login_pwd_strength" property="loginPwdStrength" />
 		<result column="create_datetime" property="createDatetime" />
+		<result column="company_code" property="companyCode" />
+		<result column="department_code" property="departmentCode" />
+		
 		<result column="role_code" property="roleCode" />
 		<result column="updater" property="updater" />
 		<result column="updateDatetime" property="update_datetime" />
@@ -35,14 +39,19 @@
 			<if test="loginPwd != null and loginPwd != '' ">
 				AND t.login_pwd = #{loginPwd}
 			</if>
+			<if test="companyCode != null and companyCode != '' ">
+				AND t.company_code = #{companyCode}
+			</if>
+			
+			<if test="departmentCode != null and departmentCode != '' ">
+				AND t.department_code = #{departmentCode}
+			</if>
 			<if test="roleCode != null and roleCode != '' ">
 				AND t.role_code = #{roleCode}
 			</if>
-			
 			<if test="keyword != null and keyword != '' ">
 				AND t.login_name like "%"#{keyword}"%" OR  t.mobile like "%"#{keyword}"%"
 			</if>
-			
 			<if test="createDatetimeStart != null and createDatetimeStart != '' ">
 				<![CDATA[AND t.create_datetime > #{createDatetimeStart}]]>
 			</if>
@@ -61,6 +70,8 @@
 		,t.mobile
 		,t.create_datetme
 		,t.role_code
+		,t.company_code
+		,t.department_code
 		,t.updater
 		,t.update_datetime
 		,t.status
@@ -156,15 +167,25 @@
 	<update id="update_role" parameterType="sysUser">
 		UPDATE tsys_user
 		SET
-		 role_code = #{roleCode}
-		 ,updater = #{updater}
-		 ,update_datetime = #{updateDatetime}
-		 ,remark = #{remark}
+		role_code = #{roleCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE user_id = #{userId}	
+	</update>	
+	
+	<update id="update_department" parameterType="sysUser">
+		UPDATE tsys_user
+		SET
+		department_code = #{departmentCode}
+		,company_code = #{companyCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE
 		user_id = #{userId}	
 	</update>	
 	
-		
 	<update id="update_mobile" parameterType="sysUser">
 		UPDATE tsys_user
 		SET
@@ -172,7 +193,6 @@
 		WHERE
 		user_id = #{userId}	
 	</update>
-
 
 	<update id="update_sysUser_photo" parameterType="sysUser">
 		UPDATE tsys_user

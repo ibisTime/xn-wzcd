@@ -9,8 +9,7 @@ import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.SYSBizLog;
 
 @Repository("sysBizLogDAOImpl")
-public class SYSBizLogDAOImpl extends AMybatisTemplate
-        implements ISYSBizLogDAO {
+public class SYSBizLogDAOImpl extends AMybatisTemplate implements ISYSBizLogDAO {
 
     @Override
     public int insert(SYSBizLog data) {
@@ -35,26 +34,25 @@ public class SYSBizLogDAOImpl extends AMybatisTemplate
     }
 
     @Override
-    public long selectSysBizLogLatest(SYSBizLog condition) {
-        return super.selectTotalCount(
-            NAMESPACE.concat("select_sysBizLog_latest"), condition);
+    public SYSBizLog selectSysBizLogLatest(SYSBizLog condition) {
+        return super.select(NAMESPACE.concat("select_sysBizLog_latest"),
+            condition, SYSBizLog.class);
     }
 
     @Override
     public List<SYSBizLog> selectList(SYSBizLog condition) {
-        return super.selectList(NAMESPACE.concat("select_sysBizLog"), condition,
-            SYSBizLog.class);
+        return super.selectList(NAMESPACE.concat("select_sysBizLog"),
+            condition, SYSBizLog.class);
     }
 
     @Override
-    public List<SYSBizLog> selectList(SYSBizLog condition, int start,
-            int count) {
+    public List<SYSBizLog> selectList(SYSBizLog condition, int start, int count) {
         return super.selectList(NAMESPACE.concat("select_sysBizLog"), start,
             count, condition, SYSBizLog.class);
     }
 
     @Override
-    public int updateDatetime(SYSBizLog condition) {
+    public int updateSpeedtime(SYSBizLog condition) {
         return super.update(NAMESPACE.concat("update_datetime"), condition);
     }
 

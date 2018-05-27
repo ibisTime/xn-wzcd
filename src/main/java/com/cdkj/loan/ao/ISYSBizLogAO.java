@@ -9,9 +9,7 @@ import com.cdkj.loan.domain.SYSBizLog;
 
 @Component
 public interface ISYSBizLogAO {
-    static final String DEFAULT_ORDER_COLUMN = "code";
-
-    public void addSYSBizLog(SYSBizLog data);
+    static final String DEFAULT_ORDER_COLUMN = "id";
 
     public Paginable<SYSBizLog> querySYSBizLogPage(int start, int limit,
             SYSBizLog condition);

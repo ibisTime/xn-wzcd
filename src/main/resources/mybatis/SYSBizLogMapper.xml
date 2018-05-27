@@ -91,10 +91,25 @@
 		<include refid="where_condition" />
 	</select>
 	
-	<select id="select_sysBizLog_latest" parameterType="sysBizLog"
-		resultType="java.lang.Integer">
-		SELECT max(id) FROM tsys_biz_log t
-		<include refid="where_condition" />
+	<select id="select_sysBizLog_latest" parameterType="sysBizLog" resultType="sysBizLog_DB_Result">
+		SELECT
+		t.id
+		,t.parent_order
+		,t.ref_type
+		,t.ref_order
+		,t.deal_node
+		,t.deal_note
+		,t.status
+		,t.operate_role
+		,t.operator
+		,t.operator_name
+		,t.operator_mobile
+		,t.start_datetime
+		,t.end_datetime
+		,t.speed_time
+		FROM
+		tsys_biz_log where id in (select max(id) FROM tsys_biz_log t
+		<include refid="where_condition" />)
 	</select>
 
 	<insert id="insert_sysBizLog" parameterType="sysBizLog" useGeneratedKeys="true">
@@ -159,6 +174,4 @@
 		,speed_time = #{speedTime}
 		WHERE id = #{id}
 	</update>
-
-
 </mapper>

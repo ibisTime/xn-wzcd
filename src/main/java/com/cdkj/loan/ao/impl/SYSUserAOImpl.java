@@ -10,12 +10,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ISYSUserAO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ISYSRoleBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.common.PwdUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSRole;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -32,6 +34,9 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
     @Autowired
     private ISYSRoleBO sysRoleBO;
+
+    @Autowired
+    private IDepartmentBO departmentBO;
 
     @Override
     public String doAddUser(String type, String loginName, String loginPwd,
@@ -180,6 +185,15 @@ public class SYSUserAOImpl implements ISYSUserAO {
     }
 
     @Override
+    public void doSetDepartment(String userId, String departmentCode,
+            String updater, String remark) {
+        SYSUser user = sysUserBO.getUser(userId);
+        Department department = departmentBO.getDepartment(departmentCode);
+        sysUserBO.refreshDepartment(user.getUserId(), department.getCode(),
+            department.getParentCode(), updater, remark);
+    }
+
+    @Override
     public void resetAdminLoginPwd(String userId, String newLoginPwd) {
         SYSUser user = sysUserBO.getUser(userId);
         sysUserBO.resetAdminLoginPwd(user, newLoginPwd);
@@ -197,9 +211,9 @@ public class SYSUserAOImpl implements ISYSUserAO {
                 || EUserStatus.Ren_Locked.getCode().equals(user.getStatus())
                 || EUserStatus.TO_APPROVE.getCode().equals(user.getStatus())
                 || EUserStatus.APPROVE_NO.getCode().equals(user.getStatus())) {
-            throw new BizException("xn805050",
-                "该账号" + EUserStatus.getMap().get(user.getStatus()).getValue()
-                        + "，请联系工作人员");
+            throw new BizException("xn805050", "该账号"
+                    + EUserStatus.getMap().get(user.getStatus()).getValue()
+                    + "，请联系工作人员");
         }
         // 短信验证码是否正确
         // smsOutBO.checkCaptcha(mobile, smsCaptcha, "805063");
@@ -221,8 +235,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
             SYSUser condition) {
         if (condition.getCreateDatetimeStart() != null
                 && condition.getCreateDatetimeEnd() != null
-                && condition.getCreateDatetimeEnd()
-                    .before(condition.getCreateDatetimeStart())) {
+                && condition.getCreateDatetimeEnd().before(
+                    condition.getCreateDatetimeStart())) {
             throw new BizException("xn0000", "开始时间不能大于结束时间");
         }
         return sysUserBO.getPaginable(start, limit, condition);
@@ -232,8 +246,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
     public List<SYSUser> queryUserList(SYSUser condition) {
         if (condition.getCreateDatetimeStart() != null
                 && condition.getCreateDatetimeEnd() != null
-                && condition.getCreateDatetimeEnd()
-                    .before(condition.getCreateDatetimeStart())) {
+                && condition.getCreateDatetimeEnd().before(
+                    condition.getCreateDatetimeStart())) {
             throw new BizException("xn0000", "开始时间不能大于结束时间");
         }
         return sysUserBO.queryUserList(condition);
@@ -243,5 +257,4 @@ public class SYSUserAOImpl implements ISYSUserAO {
     public SYSUser getUser(String userId) {
         return sysUserBO.getUser(userId);
     }
-
 }

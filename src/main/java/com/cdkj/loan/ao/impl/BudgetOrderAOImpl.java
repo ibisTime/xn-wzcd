@@ -19,7 +19,7 @@ import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632120ReqIncome;
-import com.cdkj.loan.enums.ECreditUserRelation;
+import com.cdkj.loan.enums.ELoanRole;
 
 @Service
 public class BudgetOrderAOImpl implements IBudgetOrderAO {
@@ -41,7 +41,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public String addBudgetOrder(XN632120Req req) {
         BudgetOrder data = new BudgetOrder();
         CreditUser applyCreditUser = creditUserBO.getCreditUserByCreditCode(
-            req.getCreditCode(), ECreditUserRelation.APPLY_USER);
+            req.getCreditCode(), ELoanRole.APPLY_USER);
         data.setCustomerName(applyCreditUser.getUserName());
         data.setCustomerType(req.getCustomerType());
         data.setCarDealerCode(req.getCarDealerCode());

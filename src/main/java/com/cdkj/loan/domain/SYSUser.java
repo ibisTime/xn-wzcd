@@ -38,6 +38,9 @@ public class SYSUser extends ABaseDO {
     // 注册时间
     private Date createDatetme;
 
+    // 公司编号
+    private String companyCode;
+
     // 部门编号
     private String departmentCode;
 
@@ -62,6 +65,14 @@ public class SYSUser extends ABaseDO {
     private Date createDatetimeEnd;
 
     private String keyword;
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
 
     public void setUserId(String userId) {
         this.userId = userId;

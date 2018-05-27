@@ -59,7 +59,7 @@ public class DepartmentBOImpl extends PaginableBOImpl<Department> implements
             condition.setCode(code);
             data = departmentDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "编号不存在");
+                throw new BizException("xn0000", "部门不存在");
             }
         }
         return data;

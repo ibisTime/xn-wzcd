@@ -17,11 +17,6 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
     private ISYSBizLogBO sysBizLogBO;
 
     @Override
-    public void addSYSBizLog(SYSBizLog data) {
-        sysBizLogBO.saveSYSBizLog(data);
-    }
-
-    @Override
     public List<SYSBizLog> querySYSBizLogList(SYSBizLog condition) {
         return sysBizLogBO.querySYSBizLogList(condition);
     }
@@ -34,7 +29,6 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
     @Override
     public Paginable<SYSBizLog> querySYSBizLogPage(int start, int limit,
             SYSBizLog condition) {
-
         return sysBizLogBO.getPaginable(start, limit, condition);
     }
 }

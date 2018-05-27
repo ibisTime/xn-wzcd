@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CreditUser;
-import com.cdkj.loan.enums.ECreditUserRelation;
+import com.cdkj.loan.enums.ELoanRole;
 
 public interface ICreditUserBO extends IPaginableBO<CreditUser> {
 
@@ -25,7 +25,7 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
 
     // 查询征信单工还人，担保人，本人
     public CreditUser getCreditUserByCreditCode(String creditCode,
-            ECreditUserRelation creditUserRelation);
+            ELoanRole creditUserRelation);
 
     // 查看征信报告详情
     public CreditUser queryCreditReportDetail(String code);

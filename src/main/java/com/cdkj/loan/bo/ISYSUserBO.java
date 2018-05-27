@@ -8,13 +8,16 @@ import com.cdkj.loan.enums.EUserStatus;
 
 public interface ISYSUserBO extends IPaginableBO<SYSUser> {
 
-    public void refreshStatus(String userId, EUserStatus status, String updater,
-            String remark);
+    public void refreshStatus(String userId, EUserStatus status,
+            String updater, String remark);
 
     public void refreshMobile(String userId, String mobile);
 
     public void refreshRole(String userId, String roleCode, String updater,
             String remark);
+
+    public void refreshDepartment(String userId, String departmentCode,
+            String companyCode, String updater, String remark);
 
     public void resetAdminLoginPwd(SYSUser user, String loginPwd);
 
@@ -37,5 +40,4 @@ public interface ISYSUserBO extends IPaginableBO<SYSUser> {
     public void refreshLoginPwd(String userId, String loginPwd);
 
     public void refreshPhoto(String userId, String photo);
-
 }
