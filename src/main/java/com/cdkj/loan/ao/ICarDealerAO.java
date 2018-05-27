@@ -26,4 +26,6 @@ public interface ICarDealerAO {
 
     public CarDealer getCarDealer(String code);
 
+    public void audit(String code, String curNodeCode, String approveNote);
+
 }

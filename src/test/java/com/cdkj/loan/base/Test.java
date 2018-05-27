@@ -9,27 +9,38 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "carDealer";
+    private static String key = "carDealerProtocol";
 
     // 实体名称
-    private static String keyName = "经销商信息表";
+    private static String keyName = "经销商协议表";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tb_car_dealer";
+    private static String dbname = "tb_car_dealer_protocol";
 
-    private static String[] DBwords = { "code", "full_name", "abbr_name",
-            "is_self_develop", "address", "car_dealer_type", "main_contact",
-            "contact_phone", "main_brand", "parent_group", "agreement",
-            "agreement_valid_date", "agreement_status", "agreement_pic",
-            "settle_way", "business_area", "belong_branch_company",
-            "cur_node_code", "approve_note", "remark" };
+    private static String[] DBwords = { "id", "car_dealer_code", "bank_code",
+            "plat_ct_rate12", "plat_ct_rate24", "plat_ct_rate36",
+            "plat_zk_rate12", "plat_zk_rate24", "plat_zk_rate36", "assure_type",
+            "assure_fee", "assure_rate", "dz_type", "dz_fee", "dz_rate",
+            "ly_amount_type", "ly_amount_fee", "ly_amount_rate", "gps_type",
+            "gps_fee", "gps_rate", "other_type", "other_fee", "other_rate",
+            "introduce_type", "introduce_fee", "introduce_rate",
+            "return_point_type", "return_point_fee", "return_point_rate",
+            "is_dz", "insu_agency_year1_type", "insu_agency_year1_fee",
+            "insu_agency_year2_type", "insu_agency_year2_fee",
+            "insu_agency_year3_type", "insu_agency_year3_fee" };
 
-    private static String[] DBwordsName = { "编号", "全称", "简称", "是否自主开发", "地址",
-            "车行经营性质", "主要联系人", "联系人电话", "主营品牌", "所属集团", "协议", "合作协议有效期", "协议状态",
-            "车商合作协议", "结算方式", "业务区域", "归属分公司", "当前节点编号", "审核说明", "备注" };
+    private static String[] DBwordsName = { "序号", "经销商编号", "银行编号", "我司12期基准利率",
+            "我司24期基准利率", "我司36期基准利率", "我司12期基准利率", "我司24期基准利率", "我司36期基准利率",
+            "担保费类型(1单笔/2贷款额百分比)", "单笔担保费", "担保费贷款额百分比", "垫资费类型(1单笔/2贷款额百分比)",
+            "单笔垫资费", "垫资费贷款额百分比", "履约保证金类型(1单笔/2贷款额百分比)", "单笔履约保证金",
+            "履约保证金贷款额百分比", "GPS类型(1单笔/2贷款额百分比)", "单笔GPS费", "GPS垫资费贷款额百分比",
+            "杂费类型(1单笔/2贷款额百分比)", "单笔杂费", "杂费贷款额百分比", "介绍费类型(1单笔/2贷款额百分比)",
+            "单笔介绍费", "介绍费贷款额百分比", "返点类型(1单笔/2贷款额百分比)", "单笔返点", "返点贷款额百分比",
+            "是否垫资(1 是 0 否)", "1年保险代理费类型(1平台/2车行)", "1年保险代理费",
+            "2年保险代理费类型(1平台/2车行)", "2年保险代理费", "3年保险代理费类型(1平台/2车行)", "3年保险代理费" };
 
     private static String[] DOwords = getDOwords();
 

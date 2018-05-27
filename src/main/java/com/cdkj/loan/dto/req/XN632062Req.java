@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.domain.CollectBankcard;
 
 public class XN632062Req {
@@ -69,6 +70,8 @@ public class XN632062Req {
     private String remark;// 备注
 
     private List<CollectBankcard> jxsCollectBankcardList;// 经销商收款账号列表
+
+    private List<CarDealerProtocol> CarDealerProtocolList;// 经销商协议表
 
     private List<CollectBankcard> gsCollectBankcardList;// 工商银行返点账号列表
 
@@ -242,6 +245,15 @@ public class XN632062Req {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public List<CarDealerProtocol> getCarDealerProtocolList() {
+        return CarDealerProtocolList;
+    }
+
+    public void setCarDealerProtocolList(
+            List<CarDealerProtocol> carDealerProtocolList) {
+        CarDealerProtocolList = carDealerProtocolList;
     }
 
     public List<CollectBankcard> getJxsCollectBankcardList() {

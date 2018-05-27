@@ -184,6 +184,10 @@
 		<property name="paginableDAO" ref="carDealerDAOImpl"/>
 	</bean>
 	
+	<bean id="carDealerProtocolBO" class="com.cdkj.loan.bo.impl.CarDealerProtocolBOImpl">
+		<property name="paginableDAO" ref="carDealerProtocolDAOImpl"/>
+	</bean>
+	
 	<bean id="gpsBO" class="com.cdkj.loan.bo.impl.GpsBOImpl">
 		<property name="paginableDAO" ref="gpsDAOImpl"/>
 	</bean>
