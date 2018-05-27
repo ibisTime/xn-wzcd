@@ -91,7 +91,7 @@
 		<include refid="where_condition" />
 	</select>
 	
-	<select id="select_sysBizLog_latest" parameterType="sysBizLog" resultType="sysBizLog_DB_Result">
+	<select id="select_sysBizLog_latest" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
 		SELECT
 		t.id
 		,t.parent_order
