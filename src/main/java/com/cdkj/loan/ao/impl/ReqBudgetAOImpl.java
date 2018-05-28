@@ -49,7 +49,6 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         data.setUseDatetime(DateUtil.strToDate(req.getUseDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
 
-        data.setBudgetAmount(StringValidater.toLong(req.getButtonCode()));
         data.setApplyUser(req.getApplyUser());
         data.setApplyDatetime(new Date());
 
