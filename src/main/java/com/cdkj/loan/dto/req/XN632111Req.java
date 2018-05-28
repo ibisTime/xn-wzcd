@@ -34,12 +34,12 @@ public class XN632111Req {
         this.bankCreditResultList = bankCreditResultList;
     }
 
-    public String getOprerator() {
+    public String getOperator() {
         return operator;
     }
 
-    public void setOprerator(String oprerator) {
-        this.operator = oprerator;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
     public String getCreditCode() {

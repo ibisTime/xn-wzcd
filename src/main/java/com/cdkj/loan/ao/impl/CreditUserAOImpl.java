@@ -9,14 +9,17 @@ import com.cdkj.loan.ao.ICreditAO;
 import com.cdkj.loan.ao.ICreditUserAO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
-import com.cdkj.loan.bo.INodeBO;
+import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632111Req;
 import com.cdkj.loan.dto.req.XN632111ReqChild;
-import com.cdkj.loan.dto.req.XN632118Req;
+import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.ECreditNode;
+import com.cdkj.loan.exception.BizException;
 
 /**
  * 
@@ -31,7 +34,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
     private ICreditUserBO creditUserBO;
 
     @Autowired
-    private INodeBO nodeBO;
+    private INodeFlowBO nodeFlowBO;
 
     @Autowired
     private ICreditAO creditAO;
@@ -39,18 +42,35 @@ public class CreditUserAOImpl implements ICreditUserAO {
     @Autowired
     private ICreditBO creditBO;
 
-    // 录入银行征信结果
+    @Autowired
+    private ISYSBizLogBO sysBizLogBO;
+
+    @Override
+    public CreditUser getCreditUserReport(String code) {
+
+        return creditUserBO.getCreditUser(code);
+
+    }
+
     @Override
     public void inputBankCreditResult(XN632111Req req) {
-        String operator = req.getOprerator();
+
+        Credit credit = creditAO.getCredit(req.getCreditCode());
+
+        if (credit == null) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "征信单不存在");
+        }
+
+        if (!ECreditNode.LRZXY.getCode().equals(credit.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是录入银行征信结果节点，不能操作");
+        }
 
         List<XN632111ReqChild> list = req.getBankCreditResultList();
 
         for (XN632111ReqChild Child : list) {
-            CreditUser creditUser = new CreditUser();
-
-            creditUser.setCode(Child.getCode());
-
+            String code = Child.getCode();
+            CreditUser creditUser = creditUserBO.getCreditUser(code);
             creditUser.setDkdyCount(StringValidater.toInteger(Child
                 .getDkdyCount()));
             creditUser.setDkdyAmount(StringValidater.toLong(Child
@@ -99,17 +119,18 @@ public class CreditUserAOImpl implements ICreditUserAO {
             creditUserBO.inputBankCreditResult(creditUser);
         }
 
-        Credit credit = creditAO.queryCreditByCode(req.getCreditCode());
-        credit.setCurNodeCode(nodeBO.getNode(ECreditNode.LRZXY.getCode())
+        // 之前节点
+        String preCurrentNode = credit.getCurNodeCode();
+        credit.setCurNodeCode(nodeFlowBO.getNodeFlow(credit.getCurNodeCode())
             .getNextNode());
         creditBO.refreshCreditNode(credit);
 
-    }
+        // 日志记录
+        ECreditNode currentNode = ECreditNode.getMap().get(
+            credit.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
+            EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), req.getOperator());
 
-    // 查看征信报告详情
-    @Override
-    public CreditUser queryCreditReportDetail(XN632118Req req) {
-
-        return creditUserBO.queryCreditReportDetail(req.getCode());
     }
 }

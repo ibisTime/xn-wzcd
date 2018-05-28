@@ -6,7 +6,6 @@ import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632114Req;
-import com.cdkj.loan.dto.req.XN632116Req;
 
 /**
  * 征信
@@ -21,26 +20,27 @@ public interface ICreditAO {
     // 新增征信 和 征信人员列表
     public String addCredit(XN632110Req req);
 
-    // 修改征信信息 征信表和征信人员表
+    // 修改征信信息 征信和征信人员
     public void editCredit(XN632112Req req);
 
-    // 征信分页查询 按角色权限
-    public Paginable<Credit> queryCreditPageByRole(int start, int limit,
+    // 查询征信单
+    public Credit getCredit(String Code);
+
+    // 查询征信详情 征信单和征信人员列表
+    public Credit getCreditAndCreditUser(String code);
+
+    // 征信分页查询
+    public Paginable<Credit> queryCreditPage(int start, int limit,
             Credit condition);
 
-    // 征信详情查询
-    public Credit queryCreditDetail(String code);
-
-    // 查询征信单 根据征信单编号
-    public Credit queryCreditByCode(String creditCode);
+    // 征信分页查询 按角色权限
+    public Paginable<Credit> queryCreditPageByRoleCode(int start, int limit,
+            Credit condition);
 
     // 征信初审
     public void primaryAudit(XN632113Req req);
 
     // 征信一审
     public void firstAudit(XN632114Req req);
-
-    // 征信分页查询
-    public Paginable<Credit> queryCreditPage(XN632116Req req);
 
 }

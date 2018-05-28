@@ -3,6 +3,7 @@ package com.cdkj.loan.api.impl;
 import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.ICreditAO;
+import com.cdkj.loan.ao.IReqBudgetAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
@@ -27,22 +28,26 @@ public class XN632115 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        // 征信表分页查询结果
         Credit condition = new Credit();
         condition.setCode(req.getCreditCode());
         condition.setLoanBankCode(req.getLoanBankCode());
         condition.setSaleUserId(req.getSaleUserId());
-        condition.setApplyDatetime(DateUtil.strToDate(req.getApplyDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-        String column = req.getOrderColumn();
-        if (StringUtils.isBlank(column)) {
-            column = ICreditAO.DEFAULT_ORDER_COLUMN;
+
+        condition.setApplyDatetimeStart(DateUtil.strToDate(
+            req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setApplyDatetimeEnd(DateUtil.strToDate(
+            req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+
+        condition.setRoleCode(req.getRoleCode());
+        String orderColumn = req.getOrderColumn();
+        if (StringUtils.isBlank(orderColumn)) {
+            orderColumn = IReqBudgetAO.DEFAULT_ORDER_COLUMN;
         }
-        condition.setOrder(column, req.getOrderDir());
+        condition.setOrder(orderColumn, req.getOrderDir());
         int start = Integer.valueOf(req.getStart());
         int limit = Integer.valueOf(req.getLimit());
 
-        return creditAO.queryCreditPageByRole(start, limit, condition);
+        return creditAO.queryCreditPageByRoleCode(start, limit, condition);
     }
 
     @Override

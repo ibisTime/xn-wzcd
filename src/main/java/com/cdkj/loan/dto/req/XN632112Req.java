@@ -8,6 +8,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class XN632112Req {
 
     @NotBlank
+    private String operator;
+
+    @NotBlank
     private String creditCode;
 
     @NotBlank
@@ -24,8 +27,6 @@ public class XN632112Req {
 
     @NotBlank
     private String xszReverse;
-
-    // **************db properties*******************
 
     @NotEmpty
     private List<XN632112ReqChild> creditUserList;
@@ -84,6 +85,14 @@ public class XN632112Req {
 
     public void setCreditCode(String creditCode) {
         this.creditCode = creditCode;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
 }

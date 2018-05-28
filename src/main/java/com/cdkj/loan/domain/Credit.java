@@ -56,6 +56,12 @@ public class Credit extends ABaseDO {
 
     // ****************db properties*******************
 
+    // 申请时间起
+    private Date applyDatetimeStart;
+
+    // 申请时间止
+    private Date applyDatetimeEnd;
+
     // 角色编号
     private String roleCode;
 
@@ -68,10 +74,7 @@ public class Credit extends ABaseDO {
     // 业务员
     private String salesmanName;
 
-    // 节点名称
-    private String status;
-
-    // 征信人员中的主申请人的信息 ： 客户姓名 手机号 身份证号
+    // 征信人员中的贷款角色为主申请人的信息 ： 客户姓名 手机号 身份证号...
     private CreditUser creditUser;
 
     // 征信人员信息
@@ -197,14 +200,6 @@ public class Credit extends ABaseDO {
         this.salesmanName = salesmanName;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public CreditUser getCreditUser() {
         return creditUser;
     }
@@ -227,6 +222,22 @@ public class Credit extends ABaseDO {
 
     public void setRoleCode(String roleCode) {
         this.roleCode = roleCode;
+    }
+
+    public Date getApplyDatetimeStart() {
+        return applyDatetimeStart;
+    }
+
+    public void setApplyDatetimeStart(Date applyDatetimeStart) {
+        this.applyDatetimeStart = applyDatetimeStart;
+    }
+
+    public Date getApplyDatetimeEnd() {
+        return applyDatetimeEnd;
+    }
+
+    public void setApplyDatetimeEnd(Date applyDatetimeEnd) {
+        this.applyDatetimeEnd = applyDatetimeEnd;
     }
 
 }

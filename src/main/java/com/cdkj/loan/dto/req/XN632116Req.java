@@ -8,8 +8,16 @@ package com.cdkj.loan.dto.req;
  */
 public class XN632116Req extends APageReq {
 
-    // 申请日期
-    private String applyDatetime;
+    /** 
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+     */
+    private static final long serialVersionUID = 1L;
+
+    // 申请日期开始
+    private String applyDatetimeStart;
+
+    // 申请日期结束
+    private String applyDatetimeEnd;
 
     // 贷款银行
     private String loanBankCode;
@@ -23,12 +31,20 @@ public class XN632116Req extends APageReq {
     // 征信单编号
     private String creditCode;
 
-    public String getApplyDatetime() {
-        return applyDatetime;
+    public String getApplyDatetimeStart() {
+        return applyDatetimeStart;
     }
 
-    public void setApplyDatetime(String applyDatetime) {
-        this.applyDatetime = applyDatetime;
+    public void setApplyDatetimeStart(String applyDatetimeStart) {
+        this.applyDatetimeStart = applyDatetimeStart;
+    }
+
+    public String getApplyDatetimeEnd() {
+        return applyDatetimeEnd;
+    }
+
+    public void setApplyDatetimeEnd(String applyDatetimeEnd) {
+        this.applyDatetimeEnd = applyDatetimeEnd;
     }
 
     public String getLoanBankCode() {

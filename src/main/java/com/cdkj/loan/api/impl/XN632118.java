@@ -23,7 +23,7 @@ public class XN632118 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return creditUserAO.queryCreditReportDetail(req);
+        return creditUserAO.getCreditUserReport(req.getCode());
     }
 
     @Override
