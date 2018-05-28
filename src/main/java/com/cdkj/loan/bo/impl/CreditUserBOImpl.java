@@ -2,6 +2,7 @@ package com.cdkj.loan.bo.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,8 +11,10 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICreditUserDAO;
 import com.cdkj.loan.domain.CreditUser;
-import com.cdkj.loan.enums.ELoanRole;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.ELoanRole;
+import com.cdkj.loan.exception.BizException;
 
 /**
  * 
@@ -26,22 +29,8 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     @Autowired
     private ICreditUserDAO creditUserDAO;
 
-    // 修改征信人员
     @Override
-    public void updateCreditUser(CreditUser creditUser) {
-        creditUserDAO.updateCreditUser(creditUser);
-    }
-
-    // 录入银行征信结果
-    @Override
-    public void inputBankCreditResult(CreditUser creditUser) {
-        creditUserDAO.inputBankCreditResult(creditUser);
-
-    }
-
-    // 新增征信人员
-    @Override
-    public void addCreditUser(CreditUser creditUser) {
+    public void saveCreditUser(CreditUser creditUser) {
         String code = null;
         if (creditUser != null) {
             code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER
@@ -52,17 +41,50 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
 
     }
 
-    // 批量查询征信人员 根据征信单编号
     @Override
-    public List<CreditUser> queryCreditUserListByCreditCode(String creditCode) {
+    public CreditUser getCreditUser(String code) {
 
-        CreditUser creditUser = new CreditUser();
-        creditUser.setCreditCode(creditCode);
-
-        return creditUserDAO.selectList(creditUser);
+        CreditUser data = null;
+        if (StringUtils.isNotBlank(code)) {
+            CreditUser creditUser = new CreditUser();
+            creditUser.setCode(code);
+            data = creditUserDAO.select(creditUser);
+            if (data == null) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "征信人员编号不存在!");
+            }
+        }
+        return data;
     }
 
-    // 根据征信单编号和征信人员关系获取对应信息
+    @Override
+    public void refreshCreditUser(CreditUser creditUser) {
+
+        if (StringUtils.isNotBlank(creditUser.getCode())) {
+            creditUserDAO.updateCreditUser(creditUser);
+        }
+
+    }
+
+    @Override
+    public void inputBankCreditResult(CreditUser creditUser) {
+        if (StringUtils.isNotBlank(creditUser.getCode())) {
+            creditUserDAO.inputBankCreditResult(creditUser);
+        }
+
+    }
+
+    @Override
+    public void refreshCreditUserIncome(CreditUser creditUser) {
+        creditUserDAO.updateCreditUserIncome(creditUser);
+    }
+
+    @Override
+    public List<CreditUser> queryCreditUserList(CreditUser condition) {
+
+        return creditUserDAO.selectList(condition);
+    }
+
     @Override
     public CreditUser getCreditUserByCreditCode(String creditCode,
             ELoanRole creditUserRelation) {
@@ -71,21 +93,6 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
         condition.setRelation(creditUserRelation.getCode());
 
         return creditUserDAO.select(condition);
-    }
-
-    // 查看征信报告详情
-    @Override
-    public CreditUser queryCreditReportDetail(String code) {
-
-        CreditUser creditUser = new CreditUser();
-        creditUser.setCode(code);
-        return creditUserDAO.select(creditUser);
-    }
-
-    // 修改征信人员收入
-    @Override
-    public void refreshCreditUserIncome(CreditUser creditUser) {
-        creditUserDAO.updateCreditUserIncome(creditUser);
     }
 
 }

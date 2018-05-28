@@ -21,8 +21,11 @@ public interface ICreditDAO extends IBaseDAO<Credit> {
     // 更新征信单节点
     public int updateNode(Credit credit);
 
-    // 征信分页查询 不按权限
-    public List<Credit> selecCreditPageAll(Credit condition, int start,
-            int pageSize);
+    // 查询总数 按权限 角色编号
+    public long selectTotalCountByRoleCode(Credit condition);
+
+    // 分页查询 按权限 角色编号
+    public List<Credit> selectReqBudgetByRoleCodeList(Credit condition,
+            int start, int pageSize);
 
 }

@@ -2,7 +2,6 @@ package com.cdkj.loan.bo.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +13,6 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICreditDAO;
 import com.cdkj.loan.domain.Credit;
-import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.enums.EGeneratePrefix;
 
 /**
@@ -33,7 +31,7 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
     private ICreditUserBO creditUserBO;
 
     @Override
-    public String addCredit(Credit data) {
+    public String saveCredit(Credit data) {
         String code = null;
         if (null != data) {
             code = OrderNoGenerater.generate(EGeneratePrefix.CREDIT.getCode());
@@ -44,13 +42,6 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
         return code;
     }
 
-    // 修改征信单
-    @Override
-    public void updateCredit(Credit credit) {
-        creditDAO.updateCredit(credit);
-    }
-
-    // 查询征信单详情
     @Override
     public Credit getCredit(String code) {
 
@@ -61,45 +52,32 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
         return creditDAO.select(condition);
     }
 
-    // 查询更多征信单详情，包含征信人员信息
     @Override
-    public Credit getMoreCredit(String code) {
-        Credit condition = new Credit();
-        condition.setCode(code);
-        Credit result = creditDAO.select(condition);
-
-        List<CreditUser> creditUserList = creditUserBO
-            .queryCreditUserListByCreditCode(code);
-        result.setCreditUserList(creditUserList);
-        return result;
+    public void refreshCredit(Credit data) {
+        creditDAO.updateCredit(data);
     }
 
-    // 更新征信单节点
     @Override
-    public void refreshCreditNode(Credit credit) {
-        int count = 0;
-        if (StringUtils.isNotBlank(credit.getCode())) {
-            count = creditDAO.updateNode(credit);
-        }
-
-    }
-
-    // 征信分页查询 所有 不按权限
-    @Override
-    public Paginable<Credit> getPaginableAll(int start, int limit,
+    public Paginable<Credit> getPaginableByRoleCode(int start, int limit,
             Credit condition) {
-
         prepare(condition);
 
-        long totalCount = creditDAO.selectTotalCount(condition);
+        long totalCount = creditDAO.selectTotalCountByRoleCode(condition);
 
         Paginable<Credit> page = new Page<Credit>(start, limit, totalCount);
 
-        List<Credit> dataList = creditDAO.selecCreditPageAll(condition,
-            page.getStart(), page.getPageSize());
+        List<Credit> dataList = creditDAO.selectReqBudgetByRoleCodeList(
+            condition, page.getStart(), page.getPageSize());
 
         page.setList(dataList);
         return page;
+    }
+
+    @Override
+    public void refreshCreditNode(Credit credit) {
+
+        creditDAO.updateNode(credit);
+
     }
 
 }

@@ -62,137 +62,6 @@
 		</trim>
 	</sql>
 	
-	<!-- 征信人员新增 -->
-	<insert id="insert_creditUser" parameterType="creditUser">
-		INSERT INTO 
-		tdq_credit_user(
-		code
-		,credit_code
-		
-		,relation
-		,user_name		
-		,loan_role
-		,mobile
-		,id_no
-		,id_no_front
-		,id_no_reverse
-		,auth_pdf
-		,interview_pic		
-		)
-		VALUES(
-		#{code}
-		,#{creditCode}
-		
-		,#{relation}
-		,#{userName}
-		,#{loanRole}
-		,#{mobile}
-		,#{idNo}
-		,#{idNoFront}	
-		,#{idNoReverse}
-		,#{authPdf}
-		,#{interviewPic}
-		)
-	</insert>
-	
-	<!-- 批量新增征信人员 -->
-	<insert id="insert_creditUserLsit" parameterType="List">
-		INSERT INTO 
-		tdq_credit_user(
-		code
-		,credit_code
-		
-		,relation
-		,user_name		
-		,loan_role
-		,mobile
-		,id_no
-		,id_no_front
-		,id_no_reverse
-		,auth_pdf
-		,interview_pic			
-		)
-		VALUES(
-		<foreach collection="list" item="creditUser" separator=",">
-		#{code}
-		,#{creditCode}
-		
-		,#{relation}
-		,#{userName}
-		,#{loanRole}
-		,#{mobile}
-		,#{idNo}
-		,#{idNoFront}	
-		,#{idNoReverse}
-		,#{authPdf}
-		,#{interviewPic}
-		</foreach>
-		)
-	</insert>
-	
-	<update id="update_creditUser" parameterType="creditUser">
-		UPDATE tdq_credit_user
-		SET
-		user_name=#{userName}
-		,relation=#{relation}
-		,loan_role=#{loanRole}
-		,mobile=#{mobile}
-		,id_no=#{idNo}
-		,id_no_front=#{idNoFront}
-		,id_no_reverse=#{idNoReverse}
-		,auth_pdf=#{authPdf}
-		,interview_pic=#{interviewPic}
-
-		WHERE
-		code = #{code}
-	</update>
-	
-		
-	<update id="input_bankCreditResult" parameterType="creditUser">
-		UPDATE tdq_credit_user
-		SET
-
-		dkdy_count=#{dkdyCount}
-		,dkdy_amount = #{dkdyAmount}
-		,dkdy_2year_over_times=#{dkdy2YearOverTimes}
-		,dkdy_max_over_amount=#{dkdyMaxOverAmount}
-		,dkdy_current_over_amount=#{dkdyCurrentOverAmount}
-		,dkdy_6month_avg_amount=#{dkdy6MonthAvgAmount}
-		
-		,hkxy_unsettle_count=#{hkxyUnsettleCount}
-		,hkxy_unsettle_amount=#{hkxyUnsettleAmount}
-		,hkxy_2year_over_times=#{hkxy2YearOverTimes}
-		,hkxy_month_max_over_amount=#{hkxyMonthMaxOverAmount}
-		,hkxy_current_over_amount=#{hkxyCurrentOverAmount}
-		,hkxy_6month_avg_amount=#{hkxy6MonthAvgAmount}
-		
-		,xyk_count=#{xykCount}
-		,xyk_credit_amount=#{xykCreditAmount}
-		,xyk_6month_use_amount=#{xyk6MonthUseAmount}
-		,xyk_2year_over_times=#{xyk2YearOverTimes}
-		,xyk_month_max_over_amount=#{xykMonthMaxOverAmount}
-		,xyk_current_over_amount=#{xykCurrentOverAmount}
-		
-		,out_guarantees_count=#{outGuaranteesCount}
-		,out_guarantees_amount=#{outGuaranteesAmount}
-		,out_guarantees_remark=#{outGuaranteesRemark}
-		
-		WHERE 
-		code = #{code}
-	</update>
-	
-	<update id="update_creditUserIncome" parameterType="creditUser">
-		UPDATE tdq_credit_user
-		SET
-		month_income = #{monthIncome}
-		,settle_interest = #{settleInterest}
-		,balance = #{balance}
-		,jour_show_income = #{jourShowIncome}
-		,is_print = #{isPrint}
-		WHERE
-		code = #{code}
-	</update>
-	
 	<select id="select_creditUser" parameterType="creditUser" resultMap="creditUser_DB_Result">
 		select 
 		t.user_name
@@ -246,10 +115,141 @@
 		</trim>
 	</select>
 	
-	<select id="select_credit_countUser" parameterType="creditUser"
+	<select id="select_creditUser_count" parameterType="creditUser"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tdq_credit_User t
 		<include refid="where_condition" />
 	</select>
+	
+	<insert id="insert_creditUser" parameterType="creditUser">
+		INSERT INTO 
+		tdq_credit_user(
+		code
+		,credit_code
+		,relation
+		,user_name		
+		,loan_role
+		
+		,mobile
+		,id_no
+		,id_no_front
+		,id_no_reverse
+		,auth_pdf
+		
+		,interview_pic		
+		)
+		VALUES(
+		#{code}
+		,#{creditCode}
+		,#{relation}
+		,#{userName}
+		,#{loanRole}
+		
+		,#{mobile}
+		,#{idNo}
+		,#{idNoFront}	
+		,#{idNoReverse}
+		,#{authPdf}
+		
+		,#{interviewPic}
+		)
+	</insert>
+	
+	<insert id="insert_creditUserList" parameterType="List">
+		INSERT INTO 
+		tdq_credit_user(
+		code
+		,credit_code
+		,relation
+		,user_name		
+		,loan_role
+		
+		,mobile
+		,id_no
+		,id_no_front
+		,id_no_reverse
+		,auth_pdf
+		
+		,interview_pic			
+		)
+		VALUES(
+		<foreach collection="list" item="creditUser" separator=",">
+			#{code}
+			,#{creditCode}
+			,#{relation}
+			,#{userName}
+			,#{loanRole}
+			
+			,#{mobile}
+			,#{idNo}
+			,#{idNoFront}	
+			,#{idNoReverse}
+			,#{authPdf}
+			
+			,#{interviewPic}
+		</foreach>
+		)
+	</insert>
+	
+	<update id="update_creditUser" parameterType="creditUser">
+		UPDATE tdq_credit_user
+		SET
+		user_name=#{userName}
+		,relation=#{relation}
+		,loan_role=#{loanRole}
+		,mobile=#{mobile}
+		,id_no=#{idNo}
+		
+		,id_no_front=#{idNoFront}
+		,id_no_reverse=#{idNoReverse}
+		,auth_pdf=#{authPdf}
+		,interview_pic=#{interviewPic}
+		WHERE
+		code = #{code}
+	</update>
+	
+		
+	<update id="update_bankCreditResult" parameterType="creditUser">
+		UPDATE tdq_credit_user
+		SET
+		dkdy_count=#{dkdyCount}
+		,dkdy_amount = #{dkdyAmount}
+		,dkdy_2year_over_times=#{dkdy2YearOverTimes}
+		,dkdy_max_over_amount=#{dkdyMaxOverAmount}
+		,dkdy_current_over_amount=#{dkdyCurrentOverAmount}
+		,dkdy_6month_avg_amount=#{dkdy6MonthAvgAmount}
+		
+		,hkxy_unsettle_count=#{hkxyUnsettleCount}
+		,hkxy_unsettle_amount=#{hkxyUnsettleAmount}
+		,hkxy_2year_over_times=#{hkxy2YearOverTimes}
+		,hkxy_month_max_over_amount=#{hkxyMonthMaxOverAmount}
+		,hkxy_current_over_amount=#{hkxyCurrentOverAmount}
+		,hkxy_6month_avg_amount=#{hkxy6MonthAvgAmount}
+		
+		,xyk_count=#{xykCount}
+		,xyk_credit_amount=#{xykCreditAmount}
+		,xyk_6month_use_amount=#{xyk6MonthUseAmount}
+		,xyk_2year_over_times=#{xyk2YearOverTimes}
+		,xyk_month_max_over_amount=#{xykMonthMaxOverAmount}
+		,xyk_current_over_amount=#{xykCurrentOverAmount}
+		
+		,out_guarantees_count=#{outGuaranteesCount}
+		,out_guarantees_amount=#{outGuaranteesAmount}
+		,out_guarantees_remark=#{outGuaranteesRemark}
+		WHERE 
+		code = #{code}
+	</update>
+	
+	<update id="update_creditUserIncome" parameterType="creditUser">
+		UPDATE tdq_credit_user
+		SET
+		month_income = #{monthIncome}
+		,settle_interest = #{settleInterest}
+		,balance = #{balance}
+		,jour_show_income = #{jourShowIncome}
+		,is_print = #{isPrint}
+		WHERE
+		code = #{code}
+	</update>
 	
 </mapper>

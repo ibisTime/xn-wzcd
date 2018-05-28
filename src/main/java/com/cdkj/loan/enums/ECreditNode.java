@@ -1,5 +1,8 @@
 package com.cdkj.loan.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 征信节点
  * @author: jiafr 
@@ -11,6 +14,14 @@ public enum ECreditNode {
     START("001_01", "填写征信单"), LRZXY("001_02", "录入征信源结果"), PRIMARYAUDIT(
             "001_03", "征信初审"), FIRSTAUDIT("001_04", "征信一审"), MODIFY("001_05",
             "修改征信单");
+
+    public static Map<String, ECreditNode> getMap() {
+        Map<String, ECreditNode> map = new HashMap<String, ECreditNode>();
+        for (ECreditNode node : ECreditNode.values()) {
+            map.put(node.getCode(), node);
+        }
+        return map;
+    }
 
     private ECreditNode(String code, String value) {
         this.code = code;

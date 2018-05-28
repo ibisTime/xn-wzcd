@@ -40,7 +40,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
     @Override
     public String doAddUser(String type, String loginName, String loginPwd,
-            String mobile, String roleCode) {
+            String mobile, String realName, String roleCode) {
         SYSUser data = new SYSUser();
         String userId = OrderNoGenerater.generate("U");
         data.setUserId(userId);
@@ -51,6 +51,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         }
         data.setLoginName(loginName);
         data.setMobile(mobile);
+        data.setRealName(realName);
         data.setLoginPwd(MD5Util.md5(loginPwd));
         data.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
 
@@ -118,7 +119,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         // 重置
         sysUserBO.refreshLoginPwd(userId, newLoginPwd);
         // 发送短信
-        SYSUser user = sysUserBO.getUser(userId);
+        // SYSUser user = sysUserBO.getUser(userId);
         // if (!EUserKind.Plat.getCode().equals(user.getKind())) {
         // smsOutBO.sendSmsOut(user.getMobile(),
         // "尊敬的" + PhoneUtil.hideMobile(user.getMobile())
@@ -131,7 +132,6 @@ public class SYSUserAOImpl implements ISYSUserAO {
     @Transactional
     public void doResetLoginPwdByOss(String userId, String loginPwd,
             String udpater, String remark) {
-
         SYSUser data = sysUserBO.getUser(userId);
         sysUserBO.refreshLoginPwd(data, loginPwd, udpater, remark);
     }

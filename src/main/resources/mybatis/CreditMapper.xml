@@ -8,7 +8,6 @@
 		<result column="budget_code" property="budgetCode" />
 		<result column="company_code" property="companyCode" />
 		<result column="sale_user_id" property="saleUserId" />
-		<result column="apply_datetime" property="applyDatetime" />
 		<result column="loan_bank_code" property="loanBankCode" />
 		<result column="shop_way" property="shopWay" />
 		<result column="loan_amount" property="loanAmount" />
@@ -17,6 +16,7 @@
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="accessory" property="accessory" />
 		<result column="apply_datetime" property="applyDatetime" />
+
 		
 	</resultMap>
 	
@@ -35,7 +35,7 @@
 				AND t.sale_user_id = #{saleUserId}
 			</if>
 			<if test="applyDatetime != null and applyDatetime != '' ">
-				AND t.apply_datetime = #{code}
+				AND t.apply_datetime = #{applyDatetime}
 			</if>
 			<if test="loanBankCode != null and loanBankCode != '' ">
 				AND t.loan_bank_code = #{loanBankCode}
@@ -53,19 +53,16 @@
 				AND t.xsz_reverse = #{xszReverse}
 			</if>
 			<if test="curNodeCode != null and curNodeCode != '' ">
-				AND t.cur_node_code = #{xszReverse}
+				AND t.cur_node_code = #{curNodeCode}
 			</if>
 			<if test="roleCode != null and roleCode != '' ">
-				AND t.cur_node_code = #{xszReverse}
+				AND t.cur_node_code = #{roleCode}
 			</if>
-<!-- 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
+			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
 				AND t.apply_datetime &gt;= #{applyDatetimeStart}
 			</if>
 			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
 				AND t.apply_datetime &lt;= #{applyDatetimeEnd}
-			</if> -->
-			<if test="applyDatetime != null and applyDatetime != '' ">
-				AND t.apply_datetime = #{applyDatetime}
 			</if>
 		</trim>
 	</sql>
@@ -74,15 +71,17 @@
 		select 
 		t.code
 		,t.company_code
-		,t.loan_bank_code
 		,t.sale_user_id
-		,t.apply_datetime
-		
-		,t.cur_node_code		
+		,t.loan_bank_code
 		,t.shop_way
+		
 		,t.loan_amount
 		,t.xsz_front
 		,t.xsz_reverse
+		,t.cur_node_code		
+		,t.apply_datetime
+		
+
 		from tdq_credit t
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
@@ -91,21 +90,26 @@
 			</if>
 		</trim>
 	</select>
+
+	<select id="select_credit_count" parameterType="credit" resultType="java.lang.Long">
+		select count(1) from tdq_credit t
+		<include refid="where_condition"/>
+	</select>
 	
-	<select id="select_credit_PagingQuery" parameterType="credit" resultMap="credit_DB_Result">
+	<select id="select_credit_byRoleCode" parameterType="credit" resultMap="credit_DB_Result">
 		select 
 		distinct
 		t.code
 		,t.company_code
-		,t.loan_bank_code
 		,t.sale_user_id
-		,t.apply_datetime
-		
-		,t.cur_node_code		
+		,t.loan_bank_code
 		,t.shop_way
+		
 		,t.loan_amount
 		,t.xsz_front
 		,t.xsz_reverse
+		,t.cur_node_code		
+		,t.apply_datetime
 		from tdq_credit t left join tsys_role_node trn on t.cur_node_code=trn.node_code
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
@@ -115,56 +119,42 @@
 		</trim>
 	</select>
 	
-
-	<select id="select_creditPageAll" parameterType="credit" resultMap="credit_DB_Result">
-		select 
-		t.code
-		,t.company_code
-		,t.loan_bank_code
-		,t.sale_user_id
-		,t.apply_datetime
-		
-		,t.cur_node_code		
-		,t.shop_way
-		,t.loan_amount
-		,t.xsz_front
-		,t.xsz_reverse
-		from tdq_credit t
-		<include refid="where_condition"/>
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
+	<select id="select_credit_count_byRoleCode" parameterType="credit"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM (SELECT distinct code
+		From tdq_credit t left join tsys_role_node trn on t.cur_node_code=trn.node_code
+		<include refid="where_condition" />) tb
 	</select>
 
-	<!-- 征信新增 -->
 	<insert id="insert_credit" parameterType="credit">
 		INSERT INTO tdq_credit(
 		code
-		,apply_datetime
-		
+		,company_code
+		,sale_user_id
 		,loan_bank_code
 		,shop_way
+		
 		,loan_amount
 		,xsz_front
 		,xsz_reverse
-		,cur_node_code
+		,cur_node_code		
+		,apply_datetime
 		)
 		VALUES(
 		#{code}
-		,#{applyDatetime}
-		
+		,#{companyCode}
+		,#{saleUserId}
 		,#{loanBankCode}
 		,#{shopWay}
+		
 		,#{loanAmount}
 		,#{xszFront}
 		,#{xszReverse}
 		,#{curNodeCode}
+		,#{applyDatetime}
 		)
 	</insert>
 	
-	<!-- 征信修改 -->
 	<update id="update_credit" parameterType="credit">
 		UPDATE tdq_credit
 		SET
@@ -177,13 +167,6 @@
 		WHERE
 		code = #{code}
 	</update>
-	
-	<select id="select_credit_count" parameterType="credit"
-		resultType="java.lang.Long">
-		SELECT count(1) FROM (SELECT distinct code
-		From tdq_credit t left join tsys_role_node trn on t.cur_node_code=trn.node_code) tb
-		<include refid="where_condition" />
-	</select>
 	
 	<update id="update_node" parameterType="credit">
 		UPDATE tdq_credit

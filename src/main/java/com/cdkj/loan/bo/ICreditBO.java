@@ -13,22 +13,19 @@ import com.cdkj.loan.domain.Credit;
 public interface ICreditBO extends IPaginableBO<Credit> {
 
     // 新增征信单
-    public String addCredit(Credit data);
+    public String saveCredit(Credit data);
 
     // 修改征信单
-    public void updateCredit(Credit credit);
+    public void refreshCredit(Credit data);
 
-    // 查询征信单详情
+    // 查询征信单
     public Credit getCredit(String code);
-
-    // 查询更多征信单详情，包含征信人员信息
-    public Credit getMoreCredit(String code);
 
     // 更新征信单节点
     public void refreshCreditNode(Credit credit);
 
-    // 征信分页查询 所有 不按角色权限
-    public Paginable<Credit> getPaginableAll(int start, int limit,
+    // 征信分页查询 按角色权限
+    public Paginable<Credit> getPaginableByRoleCode(int start, int limit,
             Credit condition);
 
 }

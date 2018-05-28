@@ -18,7 +18,6 @@ import com.cdkj.loan.domain.CreditUser;
 public class CreditUserDAOImpl extends AMybatisTemplate implements
         ICreditUserDAO {
 
-    // 新增征信人员
     @Override
     public int insert(CreditUser data) {
 
@@ -31,7 +30,6 @@ public class CreditUserDAOImpl extends AMybatisTemplate implements
         return 0;
     }
 
-    // 查看征信报告详情
     @Override
     public CreditUser select(CreditUser condition) {
 
@@ -45,7 +43,6 @@ public class CreditUserDAOImpl extends AMybatisTemplate implements
         return 0;
     }
 
-    // 批量查询征信人员 根据征信单编号
     @Override
     public List<CreditUser> selectList(CreditUser condition) {
         return super.selectList(NAMESPACE.concat("select_creditUser"),
@@ -59,14 +56,12 @@ public class CreditUserDAOImpl extends AMybatisTemplate implements
         return null;
     }
 
-    // 录入银行征信结果
     @Override
     public void inputBankCreditResult(CreditUser creditUser) {
-        super.update(NAMESPACE.concat("input_bankCreditResult"), creditUser);
+        super.update(NAMESPACE.concat("update_bankCreditResult"), creditUser);
 
     }
 
-    // 更新征信人员
     @Override
     public void updateCreditUser(CreditUser creditUser) {
         super.update(NAMESPACE.concat("update_creditUser"), creditUser);

@@ -1,21 +1,13 @@
-/**
- * @Title ECheckResult.java 
- * @Package com.ibis.account.enums 
- * @Description 
- * @author miyb  
- * @date 2015-2-26 下午2:58:54 
- * @version V1.0   
- */
 package com.cdkj.loan.enums;
 
 /**
  * 用户类型
- * @author: CYL 
- * @since: 2018年5月10日 下午2:38:37 
+ * @author: xieyj 
+ * @since: 2018年5月28日 下午9:45:41 
  * @history:
  */
 public enum ESysUserType {
-    Plat("P", "平台用户");
+    Plat("P", "平台用户"), Plat_Sale("PS", "平台用户-业务员");
 
     ESysUserType(String code, String value) {
         this.code = code;

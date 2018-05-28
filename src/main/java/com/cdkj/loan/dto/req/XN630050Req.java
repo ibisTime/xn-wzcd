@@ -21,6 +21,9 @@ public class XN630050Req {
     @NotBlank(message = "手机号不能为空")
     private String mobile;
 
+    // 真实姓名（必填）
+    private String realName;
+
     // 类型（必填）
     @NotBlank(message = "类型不能为空")
     private String type;
@@ -34,6 +37,14 @@ public class XN630050Req {
 
     // 备注（选填）
     private String remark;
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
 
     public String getLoginName() {
         return loginName;
