@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IReqBudgetAO;
-import com.cdkj.loan.bo.INodeBO;
+import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IReqBudgetBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
-import com.cdkj.loan.bo.ISYSRoleBO;
-import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
@@ -36,16 +34,10 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     private IReqBudgetBO reqBudgetBO;
 
     @Autowired
-    private INodeBO nodeBO;
+    private INodeFlowBO nodeFlowBO;
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
-
-    @Autowired
-    private ISYSUserBO sysUserBO;
-
-    @Autowired
-    private ISYSRoleBO sysRoleBO;
 
     @Override
     @Transactional
@@ -66,8 +58,10 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         data.setCurNodeCode(currentNode.getCode());
         if (EButtonCode.SEND.getCode().equals(req.getButtonCode())) {
             // 发送申请
-            currentNode = EReqBudgetNode.getMap().get(
-                nodeBO.getNode(EReqBudgetNode.APPLY.getCode()).getNextNode());
+            currentNode = EReqBudgetNode.getMap()
+                .get(nodeFlowBO
+                    .getNodeFlowByCurrentNode(EReqBudgetNode.APPLY.getCode())
+                    .getNextNode());
             data.setCurNodeCode(currentNode.getCode());
         }
         String code = reqBudgetBO.saveReqBudget(data);
@@ -95,8 +89,9 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
 
         // 之前节点
         String preCurrentNode = reqBudget.getCurNodeCode();
-        reqBudget.setCurNodeCode(nodeBO
-            .getNode(EReqBudgetNode.ALREADY_CREDIT.getCode()).getNextNode());
+        reqBudget.setCurNodeCode(nodeFlowBO
+            .getNodeFlowByCurrentNode(EReqBudgetNode.ALREADY_CREDIT.getCode())
+            .getNextNode());
         reqBudgetBO.collectionReqBudget(reqBudget);
 
         // 日志记录
@@ -121,11 +116,13 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         String preCurrentNode = reqBudget.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             // 审核通过，改变节点
-            reqBudget.setCurNodeCode(
-                nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getNextNode());
+            reqBudget.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(EReqBudgetNode.AUDIT.getCode())
+                .getNextNode());
         } else {
-            reqBudget.setCurNodeCode(
-                nodeBO.getNode(EReqBudgetNode.AUDIT.getCode()).getBackNode());
+            reqBudget.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(EReqBudgetNode.AUDIT.getCode())
+                .getBackNode());
         }
         reqBudgetBO.refreshReqBudgetNode(reqBudget);
 
@@ -155,7 +152,8 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
 
         String preNodeCode = reqBudget.getCurNodeCode();
         reqBudget.setCurNodeCode(
-            nodeBO.getNode(EReqBudgetNode.LOAN.getCode()).getNextNode());
+            nodeFlowBO.getNodeFlowByCurrentNode(EReqBudgetNode.LOAN.getCode())
+                .getNextNode());
         reqBudgetBO.loan(reqBudget);
 
         // 日志记录
