@@ -9,12 +9,13 @@
 		<result column="login_name" property="loginName" />
 		<result column="mobile" property="mobile" />
 		
+		<result column="real_name" property="realName" />
 		<result column="login_pwd" property="loginPwd" />
 		<result column="login_pwd_strength" property="loginPwdStrength" />
 		<result column="create_datetime" property="createDatetime" />
 		<result column="company_code" property="companyCode" />
-		<result column="department_code" property="departmentCode" />
 		
+		<result column="department_code" property="departmentCode" />
 		<result column="role_code" property="roleCode" />
 		<result column="updater" property="updater" />
 		<result column="updateDatetime" property="update_datetime" />
@@ -35,6 +36,9 @@
 			</if>
 			<if test="mobile != null and mobile != '' ">
 				AND t.mobile = #{mobile}
+			</if>
+			<if test="realName != null and realName != '' ">
+				AND t.realName = #{realName}
 			</if>
 			<if test="loginPwd != null and loginPwd != '' ">
 				AND t.login_pwd = #{loginPwd}
@@ -68,6 +72,7 @@
 		,t.photo
 		,t.login_name
 		,t.mobile
+		,t.real_name
 		,t.create_datetme
 		,t.role_code
 		,t.company_code
@@ -100,6 +105,7 @@
 		,photo
 		,login_name
 		,mobile
+		,real_name
 		,login_pwd
 		,login_pwd_strength
 		,create_datetme
@@ -115,6 +121,7 @@
 		,#{photo}
 		,#{loginName}
 		,#{mobile}
+		,#{realName}
 		,#{loginPwd}
 		,#{loginPwdStrength}
 		,#{createDatetme}
@@ -132,6 +139,7 @@
 		photo = #{photo}
 		,login_name = #{loginName}
 		,mobile = #{mobile}
+		,real_name = #{realName}
 		,login_pwd = #{loginPwd}
 		,login_pwd_strength = #{loginPwdStrength}
 		,create_datetme = #{createDatetme}

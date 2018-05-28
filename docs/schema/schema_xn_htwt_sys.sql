@@ -5,6 +5,7 @@ CREATE TABLE `tsys_user` (
   `photo` varchar(255) DEFAULT NULL COMMENT '头像',
   `login_name` varchar(64) DEFAULT NULL COMMENT '登录名',
   `mobile` varchar(16) DEFAULT NULL COMMENT '手机号',
+  `real_name` varchar(255) DEFAULT NULL COMMENT '真实姓名',
   `login_pwd` varchar(32) DEFAULT NULL COMMENT '登录密码',
   `login_pwd_strength` char(1) DEFAULT NULL COMMENT '登录密码强度',
   `create_datetme` datetime DEFAULT NULL COMMENT '注册时间',

@@ -5,11 +5,11 @@ import java.util.Date;
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
-* 平台用户
-* @author: chenshan 
-* @since: 2018-04-24 10:03:59
-* @history:
-*/
+ * 平台用户
+ * @author: xieyj 
+ * @since: 2018年5月28日 下午9:42:29 
+ * @history:
+ */
 public class SYSUser extends ABaseDO {
 
     private static final long serialVersionUID = 1L;
@@ -28,6 +28,9 @@ public class SYSUser extends ABaseDO {
 
     // 手机号
     private String mobile;
+
+    // 真实姓名
+    private String realName;
 
     // 登录密码
     private String loginPwd;
@@ -65,6 +68,14 @@ public class SYSUser extends ABaseDO {
     private Date createDatetimeEnd;
 
     private String keyword;
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
 
     public String getCompanyCode() {
         return companyCode;
