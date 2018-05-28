@@ -124,8 +124,8 @@
 	
 	<select id="select_reqBudget_count_byRoleCode" parameterType="reqBudget"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM (SELECT distinct code FROM tdq_req_budget t inner join tsys_role_node trn on t.cur_node_code = trn.node_code) tb
-		<include refid="where_condition" />
+		SELECT count(1) FROM (SELECT distinct code FROM tdq_req_budget t left join tsys_role_node trn on t.cur_node_code = trn.node_code
+		<include refid="where_condition" />) tb
 	</select>
 
 	<insert id="insert_reqBudget" parameterType="reqBudget">

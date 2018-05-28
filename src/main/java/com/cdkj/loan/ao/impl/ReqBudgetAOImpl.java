@@ -11,10 +11,12 @@ import com.cdkj.loan.ao.IReqBudgetAO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IReqBudgetBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.ReqBudget;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632100Req;
 import com.cdkj.loan.dto.req.XN632101Req;
 import com.cdkj.loan.dto.req.XN632102Req;
@@ -39,19 +41,23 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
 
+    @Autowired
+    private ISYSUserBO sysUserBO;
+
     @Override
     @Transactional
     public String addReqBudget(XN632100Req req) {
+        SYSUser user = sysUserBO.getUser(req.getApplyUser());
         ReqBudget data = new ReqBudget();
+        data.setCompanyCode(user.getCompanyCode());
         data.setReceiptBank(req.getReceiptBank());
         data.setReceiptAccount(req.getReceiptAccount());
         data.setBudgetAmount(StringValidater.toLong(req.getBudgetAmount()));
         data.setUseDatetime(DateUtil.strToDate(req.getUseDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
 
-        data.setApplyUser(req.getApplyUser());
+        data.setApplyUser(user.getUserId());
         data.setApplyDatetime(new Date());
-
         // 当前节点
         EReqBudgetNode currentNode = EReqBudgetNode.STARTNODE;
         data.setCurNodeCode(currentNode.getCode());
