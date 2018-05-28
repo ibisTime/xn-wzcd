@@ -244,12 +244,18 @@ public class SYSUserAOImpl implements ISYSUserAO {
             condition);
 
         for (SYSUser sysUser : page.getList()) {
-            sysUser.setPostName(departmentBO.getDepartment(
-                sysUser.getPostCode()).getName());
-            sysUser.setDepartmentName(departmentBO.getDepartment(
-                sysUser.getDepartmentCode()).getName());
-            sysUser.setCompanyName(departmentBO.getDepartment(
-                sysUser.getCompanyCode()).getName());
+            if (StringUtils.isNotBlank(sysUser.getPostCode())) {
+                sysUser.setPostName(departmentBO.getDepartment(
+                    sysUser.getPostCode()).getName());
+            }
+            if (StringUtils.isNotBlank(sysUser.getDepartmentCode())) {
+                sysUser.setDepartmentName(departmentBO.getDepartment(
+                    sysUser.getDepartmentCode()).getName());
+            }
+            if (StringUtils.isNotBlank(sysUser.getCompanyCode())) {
+                sysUser.setCompanyName(departmentBO.getDepartment(
+                    sysUser.getCompanyCode()).getName());
+            }
         }
         return page;
     }
@@ -268,12 +274,18 @@ public class SYSUserAOImpl implements ISYSUserAO {
     @Override
     public SYSUser getUser(String userId) {
         SYSUser sysUser = sysUserBO.getUser(userId);
-        sysUser.setPostName(departmentBO.getDepartment(sysUser.getPostCode())
-            .getName());
-        sysUser.setDepartmentName(departmentBO.getDepartment(
-            sysUser.getDepartmentCode()).getName());
-        sysUser.setCompanyName(departmentBO.getDepartment(
-            sysUser.getCompanyCode()).getName());
+        if (StringUtils.isNotBlank(sysUser.getPostCode())) {
+            sysUser.setPostName(departmentBO.getDepartment(
+                sysUser.getPostCode()).getName());
+        }
+        if (StringUtils.isNotBlank(sysUser.getDepartmentCode())) {
+            sysUser.setDepartmentName(departmentBO.getDepartment(
+                sysUser.getDepartmentCode()).getName());
+        }
+        if (StringUtils.isNotBlank(sysUser.getCompanyCode())) {
+            sysUser.setCompanyName(departmentBO.getDepartment(
+                sysUser.getCompanyCode()).getName());
+        }
         return sysUser;
     }
 }
