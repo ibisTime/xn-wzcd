@@ -33,7 +33,13 @@ public class ProvinceAOImpl implements IProvinceAO {
         }
 
         provinceBO.saveProvince(data);
-        return provinceBO.getProvince(data).getId();
+
+        // 获取新纪录id
+        Province province = provinceBO.getProvince(data);
+        if (null == province) {
+            throw new BizException("xn0000", "添加记录失败。");
+        }
+        return province.getId();
     }
 
     @Override

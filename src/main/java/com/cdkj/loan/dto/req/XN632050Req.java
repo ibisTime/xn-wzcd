@@ -9,11 +9,12 @@ import org.hibernate.validator.constraints.NotBlank;
  * @history:
  */
 public class XN632050Req {
-    // 银行编号
+    // 银行编号∑
     @NotBlank
     private String bankCode;
 
     // 简称
+    @NotBlank
     private String abbrName;
 
     // 全称
@@ -21,6 +22,7 @@ public class XN632050Req {
     private String fullName;
 
     // 开户行
+    @NotBlank
     private String openBank;
 
     // 银行地址
@@ -36,7 +38,7 @@ public class XN632050Req {
     private String bankClient;
 
     // 委托有效期
-    private String clientVolidDate;
+    private String clientValidDate;
 
     // 授权人姓名
     private String autherName;
@@ -45,16 +47,16 @@ public class XN632050Req {
     private String autherPhone;
 
     // 授权人身份证
-    private String authorIdNo;
+    private String autherIdNo;
 
     // 授权人地址
-    private String authorAddress;
+    private String autherAddress;
 
     // 信用卡类型
     private String creditCardType;
 
     // 信用卡名称
-    private String creaditCardName;
+    private String creditCardName;
 
     // 所属地区
     private String belongArea;
@@ -130,12 +132,12 @@ public class XN632050Req {
         this.bankClient = bankClient;
     }
 
-    public String getClientVolidDate() {
-        return clientVolidDate;
+    public String getClientValidDate() {
+        return clientValidDate;
     }
 
-    public void setClientVolidDate(String clientVolidDate) {
-        this.clientVolidDate = clientVolidDate;
+    public void setClientValidDate(String clientValidDate) {
+        this.clientValidDate = clientValidDate;
     }
 
     public String getAutherName() {
@@ -154,20 +156,20 @@ public class XN632050Req {
         this.autherPhone = autherPhone;
     }
 
-    public String getAuthorIdNo() {
-        return authorIdNo;
+    public String getAutherAddress() {
+        return autherAddress;
     }
 
-    public void setAuthorIdNo(String authorIdNo) {
-        this.authorIdNo = authorIdNo;
+    public void setAutherAddress(String autherAddress) {
+        this.autherAddress = autherAddress;
     }
 
-    public String getAuthorAddress() {
-        return authorAddress;
+    public String getAutherIdNo() {
+        return autherIdNo;
     }
 
-    public void setAuthorAddress(String authorAddress) {
-        this.authorAddress = authorAddress;
+    public void setAutherIdNo(String autherIdNo) {
+        this.autherIdNo = autherIdNo;
     }
 
     public String getCreditCardType() {
@@ -178,12 +180,12 @@ public class XN632050Req {
         this.creditCardType = creditCardType;
     }
 
-    public String getCreaditCardName() {
-        return creaditCardName;
+    public String getCreditCardName() {
+        return creditCardName;
     }
 
-    public void setCreaditCardName(String creaditCardName) {
-        this.creaditCardName = creaditCardName;
+    public void setCreditCardName(String creditCardName) {
+        this.creditCardName = creditCardName;
     }
 
     public String getBelongArea() {

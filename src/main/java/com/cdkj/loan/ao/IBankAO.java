@@ -18,7 +18,7 @@ public interface IBankAO {
 
     public String addBank(XN632030Req req);
 
-    public int dropBank(String code);
+    public void dropBank(String code);
 
     public int editBank(XN632032Req req);
 

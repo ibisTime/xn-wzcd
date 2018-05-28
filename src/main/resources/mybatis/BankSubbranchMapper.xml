@@ -16,7 +16,7 @@
 		<result column="client_valid_date" property="clientValidDate" />
 
 		<result column="auther_name" property="autherName" />
-		<result column="auther_phone_number" property="autherPhoneName" />
+		<result column="auther_phone_number" property="autherPhoneNumber" />
 		<result column="auther_id_no" property="autherIdNo" />
 		<result column="auther_address" property="autherAddress" />
 		<result column="credit_card_type" property="creditCardType" />
@@ -30,6 +30,9 @@
 
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">	
+			<if test="id != null and id != '' ">
+				AND t.id = #{id}
+			</if>
 			<if test="bankCode != null and bankCode != '' ">
 				AND t.bank_code = #{bankCode}
 			</if>
@@ -37,10 +40,16 @@
 				AND t.phone_number = #{phoneNumber}
 			</if>
 			<if test="abbrName != null and abbrName != '' ">
-				AND t.abbr_name = #{abbrName}
+				AND t.abbr_name like "%"#{abbrName}"%"
 			</if>
 			<if test="fullName != null and fullName != '' ">
-				AND t.full_name = #{fullName}
+				AND t.full_name like "%"#{fullName}"%"
+			</if>
+			<if test="openBank != null and openBank != '' ">
+				AND t.open_bank like "%"#{openBank}"%"
+			</if>
+			<if test="postCode != null and postCode != '' ">
+				AND t.post_code like "%"#{postCode}"%"
 			</if>
 		</trim>
 	</sql>
@@ -85,6 +94,11 @@
 		<include refid="where_condition"/>
 	</select>
 	
+	<select id="select_bankSubbranch_maxId" parameterType="bankSubbranch" resultType="java.lang.Long">
+		SELECT MAX(id) FROM tb_bank_subbranch t
+		<include refid="where_condition"/>
+	</select>
+	
 	<insert id="insert_bankSubbranch" parameterType="bankSubbranch">
 		INSERT INTO tb_bank_subbranch(
 		bank_code
@@ -123,7 +137,7 @@
 		,#{clientValidDate}
 		
 		,#{autherName}
-		,#{autherPhoneName}
+		,#{autherPhoneNumber}
 		,#{autherIdNo}
 		,#{autherAddress}
 		,#{creditCardType}
@@ -134,16 +148,12 @@
 		,#{updateDatetime}
 		,#{remark}
 		)
-		<selectKey resultType="java.lang.Integer" keyProperty="id">  
-      		CALL IDENTITY()  
-    	</selectKey>  
 	</insert>
 	
 	<update id="update_bankSubbranch" parameterType="bankSubbranch">
 		UPDATE tb_bank_subbranch t
 		SET
-		t.bank_code = #{bankCode}
-		,t.abbr_name = #{abbrName}
+		t.abbr_name = #{abbrName}
 		,t.full_name = #{fullName}
 		,t.open_bank = #{openBank}
 		,t.address = #{address}
@@ -154,7 +164,7 @@
 		,t.client_valid_date = #{clientValidDate}
 		,t.auther_name = #{autherName}
 		
-		,t.auther_phone_number = #{autherPhoneName}
+		,t.auther_phone_number = #{autherPhoneNumber}
 		,t.auther_id_no = #{autherIdNo}
 		,t.auther_address = #{autherAddress}
 		,t.credit_card_type = #{creditCardType}
@@ -168,7 +178,7 @@
 	</update>
 	
 	<delete id="delete_bankSubbranch" parameterType="bankSubbranch">
-		DELETE FROM bankSubbranch 
-		WHERE id = #{id}
+		DELETE FROM tb_bank_subbranch 
+		WHERE id = #{id} or bank_code = #{bankCode}
 	</delete>
 </mapper>
