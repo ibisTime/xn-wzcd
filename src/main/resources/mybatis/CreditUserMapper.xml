@@ -64,7 +64,8 @@
 	
 	<select id="select_creditUser" parameterType="creditUser" resultMap="creditUser_DB_Result">
 		select 
-		t.user_name
+		t.code
+		,t.user_name
 		,t.relation
 		,t.loan_role
 		,t.mobile
@@ -106,7 +107,7 @@
 		,t.jour_show_income
 		,t.is_print
 		
-		from tdq_credit_User t
+		from tdq_credit_user t
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -117,7 +118,7 @@
 	
 	<select id="select_creditUser_count" parameterType="creditUser"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tdq_credit_User t
+		SELECT count(1) FROM tdq_credit_user t
 		<include refid="where_condition" />
 	</select>
 	
