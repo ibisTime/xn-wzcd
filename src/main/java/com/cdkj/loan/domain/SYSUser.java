@@ -47,6 +47,9 @@ public class SYSUser extends ABaseDO {
     // 部门编号
     private String departmentCode;
 
+    // 岗位
+    private String postCode;
+
     // 角色编号
     private String roleCode;
 
@@ -68,6 +71,44 @@ public class SYSUser extends ABaseDO {
     private Date createDatetimeEnd;
 
     private String keyword;
+
+    private String postName;
+
+    private String departmentName;
+
+    private String companyName;
+
+    public String getPostName() {
+        return postName;
+    }
+
+    public void setPostName(String postName) {
+        this.postName = postName;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
 
     public String getRealName() {
         return realName;

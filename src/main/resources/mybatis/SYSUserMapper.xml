@@ -16,6 +16,7 @@
 		<result column="company_code" property="companyCode" />
 		
 		<result column="department_code" property="departmentCode" />
+		<result column="post_code" property="postCode" />
 		<result column="role_code" property="roleCode" />
 		<result column="updater" property="updater" />
 		<result column="updateDatetime" property="update_datetime" />
@@ -40,19 +41,23 @@
 			<if test="realName != null and realName != '' ">
 				AND t.realName = #{realName}
 			</if>
+			
 			<if test="loginPwd != null and loginPwd != '' ">
 				AND t.login_pwd = #{loginPwd}
 			</if>
 			<if test="companyCode != null and companyCode != '' ">
 				AND t.company_code = #{companyCode}
 			</if>
-			
 			<if test="departmentCode != null and departmentCode != '' ">
 				AND t.department_code = #{departmentCode}
+			</if>
+			<if test="postCode != null and postCode != '' ">
+				AND t.post_code = #{postCode}
 			</if>
 			<if test="roleCode != null and roleCode != '' ">
 				AND t.role_code = #{roleCode}
 			</if>
+			
 			<if test="keyword != null and keyword != '' ">
 				AND t.login_name like "%"#{keyword}"%" OR  t.mobile like "%"#{keyword}"%"
 			</if>
@@ -74,6 +79,9 @@
 		,t.mobile
 		,t.real_name
 		,t.create_datetme
+		,t.company_code
+		,t.department_code
+		,t.post_code
 		,t.role_code
 		,t.company_code
 		,t.department_code
@@ -105,13 +113,19 @@
 		,photo
 		,login_name
 		,mobile
+		
 		,real_name
 		,login_pwd
 		,login_pwd_strength
 		,create_datetme
+		,company_code
+		
+		,department_code
+		,post_code
 		,role_code
 		,updater
 		,update_datetime
+		
 		,status
 		,remark
 		)
@@ -121,13 +135,19 @@
 		,#{photo}
 		,#{loginName}
 		,#{mobile}
+		
 		,#{realName}
 		,#{loginPwd}
 		,#{loginPwdStrength}
 		,#{createDatetme}
+		,#{companyCode}
+		
+		,#{departmentCode}
+		,#{postCode}
 		,#{roleCode}
 		,#{updater}
 		,#{updateDatetime}
+		
 		,#{status}
 		,#{remark}
 		)
@@ -182,10 +202,11 @@
 		WHERE user_id = #{userId}	
 	</update>	
 	
-	<update id="update_department" parameterType="sysUser">
+	<update id="update_post" parameterType="sysUser">
 		UPDATE tsys_user
 		SET
-		department_code = #{departmentCode}
+		post_code = #{postCode}
+		,department_code = #{departmentCode}
 		,company_code = #{companyCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}

@@ -16,8 +16,9 @@ public interface ISYSUserBO extends IPaginableBO<SYSUser> {
     public void refreshRole(String userId, String roleCode, String updater,
             String remark);
 
-    public void refreshDepartment(String userId, String departmentCode,
-            String companyCode, String updater, String remark);
+    public void refreshPost(String userId, String postCode,
+            String departmentCode, String companyCode, String updater,
+            String remark);
 
     public void resetAdminLoginPwd(SYSUser user, String loginPwd);
 

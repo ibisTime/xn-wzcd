@@ -11,6 +11,7 @@ CREATE TABLE `tsys_user` (
   `create_datetme` datetime DEFAULT NULL COMMENT '注册时间',
   `company_code` varchar(32) DEFAULT NULL COMMENT '公司编号',
   `department_code` varchar(32) DEFAULT NULL COMMENT '部门编号',
+  `post_code` varchar(32) DEFAULT NULL COMMENT '岗位编号',
   `role_code` varchar(32) DEFAULT NULL COMMENT '角色编号',
   `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',

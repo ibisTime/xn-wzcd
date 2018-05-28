@@ -24,9 +24,8 @@ public class XN630058 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        userAO.doSetDepartment(req.getUserId(), req.getDepartmentCode(),
+        userAO.doModifyPost(req.getUserId(), req.getPostCode(),
             req.getUpdater(), req.getRemark());
-
         return new BooleanRes(true);
     }
 
@@ -35,7 +34,5 @@ public class XN630058 extends AProcessor {
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN630058Req.class);
         ObjValidater.validateReq(req);
-
     }
-
 }

@@ -23,8 +23,8 @@ public interface ISYSUserAO {
             String remark);
 
     // 设置部门岗位
-    public void doSetDepartment(String userId, String departmentCode,
-            String updater, String remark);
+    public void doModifyPost(String userId, String postCode, String updater,
+            String remark);
 
     // 重置登录密码
     public void resetAdminLoginPwd(String userId, String newLoginPwd);

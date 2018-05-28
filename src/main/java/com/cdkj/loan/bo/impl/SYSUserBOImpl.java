@@ -56,17 +56,19 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements
     }
 
     @Override
-    public void refreshDepartment(String userId, String departmentCode,
-            String companyCode, String updater, String remark) {
+    public void refreshPost(String userId, String postCode,
+            String departmentCode, String companyCode, String updater,
+            String remark) {
         if (StringUtils.isNotBlank(userId)) {
             SYSUser data = new SYSUser();
             data.setUserId(userId);
+            data.setPostCode(postCode);
             data.setDepartmentCode(departmentCode);
             data.setCompanyCode(companyCode);
             data.setUpdater(updater);
             data.setUpdateDatetime(new Date());
             data.setRemark(remark);
-            sysUserDAO.updateDepartment(data);
+            sysUserDAO.updatePost(data);
         }
     }
 

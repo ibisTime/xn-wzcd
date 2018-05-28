@@ -185,11 +185,12 @@ public class SYSUserAOImpl implements ISYSUserAO {
     }
 
     @Override
-    public void doSetDepartment(String userId, String departmentCode,
-            String updater, String remark) {
-        SYSUser user = sysUserBO.getUser(userId);
-        Department department = departmentBO.getDepartment(departmentCode);
-        sysUserBO.refreshDepartment(user.getUserId(), department.getCode(),
+    public void doModifyPost(String userId, String postCode, String updater,
+            String remark) {
+        Department post = departmentBO.getDepartment(postCode);// 岗位
+        Department department = departmentBO
+            .getDepartment(post.getParentCode());// 部门
+        sysUserBO.refreshPost(userId, postCode, department.getCode(),
             department.getParentCode(), updater, remark);
     }
 
@@ -239,7 +240,18 @@ public class SYSUserAOImpl implements ISYSUserAO {
                     condition.getCreateDatetimeStart())) {
             throw new BizException("xn0000", "开始时间不能大于结束时间");
         }
-        return sysUserBO.getPaginable(start, limit, condition);
+        Paginable<SYSUser> page = sysUserBO.getPaginable(start, limit,
+            condition);
+
+        for (SYSUser sysUser : page.getList()) {
+            sysUser.setPostName(departmentBO.getDepartment(
+                sysUser.getPostCode()).getName());
+            sysUser.setDepartmentName(departmentBO.getDepartment(
+                sysUser.getDepartmentCode()).getName());
+            sysUser.setCompanyName(departmentBO.getDepartment(
+                sysUser.getCompanyCode()).getName());
+        }
+        return page;
     }
 
     @Override
@@ -255,6 +267,13 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
     @Override
     public SYSUser getUser(String userId) {
-        return sysUserBO.getUser(userId);
+        SYSUser sysUser = sysUserBO.getUser(userId);
+        sysUser.setPostName(departmentBO.getDepartment(sysUser.getPostCode())
+            .getName());
+        sysUser.setDepartmentName(departmentBO.getDepartment(
+            sysUser.getDepartmentCode()).getName());
+        sysUser.setCompanyName(departmentBO.getDepartment(
+            sysUser.getCompanyCode()).getName());
+        return sysUser;
     }
 }

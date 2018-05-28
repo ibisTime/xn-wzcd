@@ -13,6 +13,12 @@ INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_d
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','credit_user_loan_role','2','共同还款人','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','credit_user_loan_role','3','担保人','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'node_type','支付类型','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','node_type','001','征信单','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','node_type','002','预算单','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','node_type','005','请款预算单','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','node_type','006','经销商审核','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+
 /* 首页导航 */
 INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201711271342486662078','banner1','2','','FpqRhLEfxuaHgpXuv6fVUZfLPbjV','1','0',1,'1','0','','1','CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201711271344255452496','banner2','2','','Fu7iYb62hGIeXCwX1JhsPkygoSC9','1','0',2,'1','0','','1','CD-HTWT000020','CD-HTWT000020');

@@ -10,7 +10,7 @@ public class XN630058Req {
 
     // 岗位编号(必填)
     @NotBlank
-    private String departmentCode;
+    private String postCode;
 
     // 更新人(必填)
     @NotBlank
@@ -27,12 +27,12 @@ public class XN630058Req {
         this.userId = userId;
     }
 
-    public String getDepartmentCode() {
-        return departmentCode;
+    public String getPostCode() {
+        return postCode;
     }
 
-    public void setDepartmentCode(String departmentCode) {
-        this.departmentCode = departmentCode;
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
     }
 
     public String getUpdater() {

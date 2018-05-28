@@ -14,7 +14,7 @@ public interface ISYSUserDAO extends IBaseDAO<SYSUser> {
     public void updateRole(SYSUser data);
 
     // 更新部门
-    public void updateDepartment(SYSUser data);
+    public void updatePost(SYSUser data);
 
     // 设置登录密码
     public void updateLoginPwd(SYSUser data);
