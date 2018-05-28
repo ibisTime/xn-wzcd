@@ -127,6 +127,11 @@ public class CreditAOImpl implements ICreditAO {
 
         Credit credit = creditBO.getCredit(req.getCreditCode());
 
+        if (null == credit) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "根据征信单编号查询不到征信单");
+        }
+
         if (!ECreditNode.MODIFY.getCode().equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是修改征信节点，不能操作");
@@ -174,7 +179,9 @@ public class CreditAOImpl implements ICreditAO {
 
     @Override
     public Credit getCredit(String creditCode) {
+
         return creditBO.getCredit(creditCode);
+
     }
 
     @Override
@@ -182,7 +189,7 @@ public class CreditAOImpl implements ICreditAO {
         Credit credit = creditBO.getCredit(code);
 
         CreditUser condition = new CreditUser();
-        condition.setCode(code);
+        condition.setCreditCode(credit.getCode());
         List<CreditUser> creditUserList = creditUserBO
             .queryCreditUserList(condition);
 
@@ -270,6 +277,11 @@ public class CreditAOImpl implements ICreditAO {
 
         Credit credit = creditBO.getCredit(req.getCode());
 
+        if (null == credit) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "根据征信单编号查询不到征信单");
+        }
+
         if (!ECreditNode.PRIMARYAUDIT.getCode().equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是业务员初审节点，不能操作");
@@ -305,6 +317,11 @@ public class CreditAOImpl implements ICreditAO {
     public void firstAudit(XN632114Req req) {
 
         Credit credit = creditBO.getCredit(req.getCode());
+
+        if (null == credit) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "根据征信单编号查询不到征信单");
+        }
 
         if (!ECreditNode.FIRSTAUDIT.getCode().equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),

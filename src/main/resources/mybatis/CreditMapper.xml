@@ -164,6 +164,7 @@
 		,xsz_front = #{xszFront}
 		,xsz_reverse = #{xszReverse}
 		,accessory = #{accessory}
+		,cur_node_code= #{curNodeCode}
 		WHERE
 		code = #{code}
 	</update>
