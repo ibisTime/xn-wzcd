@@ -16,7 +16,7 @@ public class XN632100Req {
     private String useDatetime;// 用款日期
 
     @NotBlank
-    private String applyUser;// 操作人
+    private String applyUser;// 申请人
 
     @NotBlank
     private String buttonCode;// 按钮标识
