@@ -2,6 +2,7 @@ package com.cdkj.loan.bo.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,7 @@ import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.IBankSubbranchDAO;
 import com.cdkj.loan.domain.BankSubbranch;
+import com.cdkj.loan.exception.BizException;
 
 /**
  * 支行信息
@@ -48,4 +50,14 @@ public class BankSubbranchBOImpl extends PaginableBOImpl<BankSubbranch>
         return bankSubbranchDAO.selectList(condition);
     }
 
+    @Override
+    public long getBankSubbranchMaxid(String bankCode) {
+        if (StringUtils.isBlank(bankCode)) {
+            throw new BizException("xn0000", "银行信息不存在。");
+        }
+
+        BankSubbranch condition = new BankSubbranch();
+        condition.setBankCode(bankCode);
+        return bankSubbranchDAO.selectBankSubbranchMaxid(condition);
+    }
 }

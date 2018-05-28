@@ -58,4 +58,9 @@ public class BankSubbranchDAOImpl extends AMybatisTemplate
         return super.update(NAMESPACE.concat("update_bankSubbranch"), data);
     }
 
+    @Override
+    public long selectBankSubbranchMaxid(BankSubbranch condition) {
+        return super.select(NAMESPACE.concat("select_bankSubbranch_maxId"),
+            condition, Long.class);
+    }
 }

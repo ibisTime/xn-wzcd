@@ -10,10 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.loan.ao.IBankAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankRateBO;
+import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankRate;
+import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.dto.req.XN632030Req;
 import com.cdkj.loan.dto.req.XN632032Req;
 import com.cdkj.loan.exception.BizException;
@@ -33,6 +35,9 @@ public class BankAOImpl implements IBankAO {
 
     @Autowired
     private IBankRateBO bankRateBO;
+
+    @Autowired
+    private IBankSubbranchBO bankSubbranchBO;
 
     @Override
     @Transactional
@@ -62,7 +67,7 @@ public class BankAOImpl implements IBankAO {
 
     @Override
     @Transactional
-    public int dropBank(String code) {
+    public void dropBank(String code) {
         Bank condition = new Bank();
         condition.setCode(code);
         bankBO.dropBank(condition);
@@ -70,7 +75,12 @@ public class BankAOImpl implements IBankAO {
         // 删除利率明细
         BankRate rateCondition = new BankRate();
         rateCondition.setBankCode(code);
-        return bankRateBO.dropBankRate(rateCondition);
+        bankRateBO.dropBankRate(rateCondition);
+
+        // 删除支行信息
+        BankSubbranch subCondition = new BankSubbranch();
+        subCondition.setBankCode(code);
+        bankSubbranchBO.dropBankSubbranch(subCondition);
     }
 
     @Override

@@ -13,4 +13,6 @@ public interface IBankSubbranchDAO extends IBaseDAO<BankSubbranch> {
     String NAMESPACE = IBankSubbranchDAO.class.getName().concat(".");
 
     public int updateBankSubbranch(BankSubbranch data);
+
+    public long selectBankSubbranchMaxid(BankSubbranch condition);
 }

@@ -45,25 +45,25 @@ public class BankSubbranch extends ABaseDO {
     private String bankClient;
 
     // 委托有效期
-    private Date clientVolidDate;
+    private Date clientValidDate;
 
     // 授权人姓名
     private String autherName;
 
     // 授权人电话
-    private String autherPhone;
+    private String autherPhoneNumber;
 
     // 授权人身份证
-    private String authorIdNo;
+    private String autherIdNo;
 
     // 授权人地址
-    private String authorAddress;
+    private String autherAddress;
 
     // 信用卡类型
     private String creditCardType;
 
     // 信用卡名称
-    private String creaditCardName;
+    private String creditCardName;
 
     // 所属地区
     private String belongArea;
@@ -149,12 +149,12 @@ public class BankSubbranch extends ABaseDO {
         this.bankClient = bankClient;
     }
 
-    public Date getClientVolidDate() {
-        return clientVolidDate;
+    public Date getClientValidDate() {
+        return clientValidDate;
     }
 
-    public void setClientVolidDate(Date clientVolidDate) {
-        this.clientVolidDate = clientVolidDate;
+    public void setClientValidDate(Date clientValidDate) {
+        this.clientValidDate = clientValidDate;
     }
 
     public String getAutherName() {
@@ -165,28 +165,28 @@ public class BankSubbranch extends ABaseDO {
         this.autherName = autherName;
     }
 
-    public String getAutherPhone() {
-        return autherPhone;
+    public String getAutherPhoneNumber() {
+        return autherPhoneNumber;
     }
 
-    public void setAutherPhone(String autherPhone) {
-        this.autherPhone = autherPhone;
+    public void setAutherPhoneNumber(String autherPhoneNumber) {
+        this.autherPhoneNumber = autherPhoneNumber;
     }
 
-    public String getAuthorIdNo() {
-        return authorIdNo;
+    public String getAutherIdNo() {
+        return autherIdNo;
     }
 
-    public void setAuthorIdNo(String authorIdNo) {
-        this.authorIdNo = authorIdNo;
+    public void setAutherIdNo(String autherIdNo) {
+        this.autherIdNo = autherIdNo;
     }
 
-    public String getAuthorAddress() {
-        return authorAddress;
+    public String getAutherAddress() {
+        return autherAddress;
     }
 
-    public void setAuthorAddress(String authorAddress) {
-        this.authorAddress = authorAddress;
+    public void setAutherAddress(String autherAddress) {
+        this.autherAddress = autherAddress;
     }
 
     public String getCreditCardType() {
@@ -197,12 +197,12 @@ public class BankSubbranch extends ABaseDO {
         this.creditCardType = creditCardType;
     }
 
-    public String getCreaditCardName() {
-        return creaditCardName;
+    public String getCreditCardName() {
+        return creditCardName;
     }
 
-    public void setCreaditCardName(String creaditCardName) {
-        this.creaditCardName = creaditCardName;
+    public void setCreditCardName(String creditCardName) {
+        this.creditCardName = creditCardName;
     }
 
     public String getBelongArea() {

@@ -33,7 +33,13 @@ public class AreaAOImpl implements IAreaAO {
         }
 
         areaBO.saveArea(data);
-        return areaBO.getArea(data).getId();
+
+        // 获取新纪录id
+        Area area = areaBO.getArea(data);
+        if (null == area) {
+            throw new BizException("xn0000", "添加记录失败。");
+        }
+        return area.getId();
     }
 
     @Override
