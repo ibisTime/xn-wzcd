@@ -485,6 +485,12 @@ public class BudgetOrder extends ABaseDO {
     // 节点编号
     private String curNodeCode;
 
+    /*-------辅助字段-------*/
+
+    private String applyDatetimeStart;// 申请时间起始
+
+    private String applyDatetimeEnd;// 申请时间结束
+
     public String getCode() {
         return code;
     }
@@ -1740,4 +1746,21 @@ public class BudgetOrder extends ABaseDO {
     public void setCurNodeCode(String curNodeCode) {
         this.curNodeCode = curNodeCode;
     }
+
+    public String getApplyDatetimeStart() {
+        return applyDatetimeStart;
+    }
+
+    public void setApplyDatetimeStart(String applyDatetimeStart) {
+        this.applyDatetimeStart = applyDatetimeStart;
+    }
+
+    public String getApplyDatetimeEnd() {
+        return applyDatetimeEnd;
+    }
+
+    public void setApplyDatetimeEnd(String applyDatetimeEnd) {
+        this.applyDatetimeEnd = applyDatetimeEnd;
+    }
+
 }

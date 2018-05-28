@@ -196,8 +196,23 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
-			<if test="curNodeCode != null and curNodeCode != '' ">
-				AND t.cur_node_code = #{curNodeCode}
+			<if test="customerName != null and customerName != '' ">
+				AND t.customer_name like "%"#{customerName}"%"
+			</if>
+			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
+				<![CDATA[AND t.apply_datetime > #{applyDatetimeStart}]]>
+			</if>
+			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
+				<![CDATA[AND t.apply_datetime < #{applyDatetimeEnd}]]>
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="carDealerCode != null and carDealerCode != '' ">
+				AND t.car_dealer_code = #{carDealerCode}
+			</if>
+			<if test="isAdvanceFund != null and isAdvanceFund != '' ">
+				AND t.is_advance_fund = #{isAdvanceFund}
 			</if>
 		</trim>
 	</sql>
