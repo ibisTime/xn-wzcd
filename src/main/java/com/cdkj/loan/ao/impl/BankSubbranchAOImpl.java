@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBankSubbranchAO;
 import com.cdkj.loan.bo.IBankSubbranchBO;
@@ -20,6 +21,7 @@ import com.cdkj.loan.dto.req.XN632052Req;
  * @since: 2018年5月28日 上午10:42:28 
  * @history:
  */
+@Service
 public class BankSubbranchAOImpl implements IBankSubbranchAO {
     @Autowired
     private IBankSubbranchBO bankSubbranchBO;
