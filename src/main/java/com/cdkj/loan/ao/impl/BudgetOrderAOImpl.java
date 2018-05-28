@@ -15,6 +15,7 @@ import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.dto.req.XN632120Req;
@@ -52,20 +53,25 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setLoanPeriods(req.getLoanPeriods());
         data.setInvoicePrice(StringValidater.toLong(req.getInvoicePrice()));
 
-        // data.setShopWay(req.getShopWay());
+        Credit credit = creditBO.getCredit(req.getCreditCode());
+        data.setShopWay(credit.getShopWay());
         data.setRateType(req.getRateType());
         data.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
         data.setIsSurvey(req.getIsSurvey());
         data.setBankRate(StringValidater.toDouble(req.getBankRate()));
 
-        // data.setCompanyLoanCs(StringValidater.toDouble(req.getCompanyLoanCs()));
+        Long loanAmount = StringValidater.toLong(req.getLoanAmount());
+        Long invoicePrice = StringValidater.toLong(req.getInvoicePrice());
+        data.setCompanyLoanCs((double) (loanAmount / invoicePrice));// 我司贷款成数
         data.setIsAdvanceFund(req.getIsAdvanceFund());
-        // data.setGlobalRate(StringValidater.toDouble(req.getGlobalRate()));
+        Long fee = StringValidater.toLong(req.getFee());
+        data.setGlobalRate((double) (fee / loanAmount)
+                + StringValidater.toDouble(req.getBankRate()));// 综合利率
         data.setFee(StringValidater.toLong(req.getFee()));
-        data.setCarDealerSubsidy(StringValidater.toDouble(req
-            .getCarDealerSubsidy()));
+        data.setCarDealerSubsidy(
+            StringValidater.toDouble(req.getCarDealerSubsidy()));
 
-        // data.setBankLoanCs(StringValidater.toDouble(req.getBankLoanCs()));
+        data.setBankLoanCs((double) (loanAmount + fee) / invoicePrice);// 银行贷款成数
         data.setIsHouseProperty(req.getIsHouseProperty());
         data.setHouseProperty(req.getHouseProperty());
         data.setIsHouseContract(req.getIsHouseContract());
@@ -154,10 +160,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         for (XN632120ReqIncome reqIncome : req.getCreditUserIncomeList()) {
             CreditUser creditUser = new CreditUser();
             creditUser.setCode(reqIncome.getCode());
-            creditUser.setMonthIncome(StringValidater.toLong(reqIncome
-                .getMonthIncome()));
-            creditUser.setSettleInterest(StringValidater.toDouble(reqIncome
-                .getSettleInterest()));
+            creditUser.setMonthIncome(
+                StringValidater.toLong(reqIncome.getMonthIncome()));
+            creditUser.setSettleInterest(
+                StringValidater.toDouble(reqIncome.getSettleInterest()));
             creditUser
                 .setBalance(StringValidater.toLong(reqIncome.getBalance()));
 
