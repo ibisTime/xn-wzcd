@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -195,9 +196,9 @@ public class CarDealerAOImpl implements ICarDealerAO {
                     .queryCarDealerProtocolList(carDealerProtocol);
                 carDealer.setCarDealerProtocolList(queryCarDealerProtocolList);
 
-                List<CollectBankcard> ghList = null;
-                List<CollectBankcard> zhList = null;
-                List<CollectBankcard> jhList = null;
+                List<CollectBankcard> ghList = new ArrayList<CollectBankcard>();
+                List<CollectBankcard> zhList = new ArrayList<CollectBankcard>();
+                List<CollectBankcard> jhList = new ArrayList<CollectBankcard>();
                 for (CollectBankcard collectBankcard2 : queryCollectBankcardList) {
                     // 工行
                     if (collectBankcard2.getBankCode()
@@ -247,9 +248,9 @@ public class CarDealerAOImpl implements ICarDealerAO {
                 .queryCarDealerProtocolList(carDealerProtocol);
             carDealer.setCarDealerProtocolList(queryCarDealerProtocolList);
 
-            List<CollectBankcard> ghList = null;
-            List<CollectBankcard> zhList = null;
-            List<CollectBankcard> jhList = null;
+            List<CollectBankcard> ghList = new ArrayList<CollectBankcard>();
+            List<CollectBankcard> zhList = new ArrayList<CollectBankcard>();
+            List<CollectBankcard> jhList = new ArrayList<CollectBankcard>();
             for (CollectBankcard collectBankcard2 : queryCollectBankcardList) {
                 // 工行
                 if (collectBankcard2.getBankCode()
@@ -295,9 +296,9 @@ public class CarDealerAOImpl implements ICarDealerAO {
             .queryCarDealerProtocolList(carDealerProtocol);
         carDealer.setCarDealerProtocolList(queryCarDealerProtocolList);
 
-        List<CollectBankcard> ghList = null;
-        List<CollectBankcard> zhList = null;
-        List<CollectBankcard> jhList = null;
+        List<CollectBankcard> ghList = new ArrayList<CollectBankcard>();
+        List<CollectBankcard> zhList = new ArrayList<CollectBankcard>();
+        List<CollectBankcard> jhList = new ArrayList<CollectBankcard>();
         for (CollectBankcard collectBankcard2 : queryCollectBankcardList) {
             // 工行
             if (collectBankcard2.getBankCode()
