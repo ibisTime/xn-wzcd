@@ -29,8 +29,6 @@ public class XN632110Req {
     @NotBlank
     private String operator;
 
-    // **************db properties*******************
-
     @NotEmpty
     private List<XN632110ReqChild> creditUserList;
 

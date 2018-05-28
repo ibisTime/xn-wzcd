@@ -24,6 +24,9 @@ public class XN632120Req {
     // 贷款银行编号
     private String loanBankCode;
 
+    // 贷款支行编号
+    private String loanBankSubbranch;
+
     // 厂商指导价
     private String originalPrice;
 
@@ -35,9 +38,6 @@ public class XN632120Req {
 
     // 发票价格
     private String invoicePrice;
-
-    // 购车途径
-    private String shopWay;
 
     // 利率类型
     private String rateType;
@@ -51,14 +51,8 @@ public class XN632120Req {
     // 银行利率
     private String bankRate;
 
-    // 我司贷款成数
-    private String companyLoanCs;
-
     // 是否垫资
     private String isAdvanceFund;
-
-    // 综合利率
-    private String globalRate;
 
     // 服务费
     private String fee;
@@ -66,8 +60,17 @@ public class XN632120Req {
     // 厂家贴息
     private String carDealerSubsidy;
 
-    // 银行贷款成数
-    private String bankLoanCs;
+    // 申请人就职单位
+    private String applyUserCompany;
+
+    // 申请人职位
+    private String applyUserDuty;
+
+    // 婚姻状况
+    private String marryState;
+
+    // 其他收入说明
+    private String otherIncomeNote;
 
     // 房产证情况
     private String isHouseProperty;
@@ -275,6 +278,38 @@ public class XN632120Req {
     @NotEmpty
     private List<XN632120ReqIncome> creditUserIncomeList;
 
+    public String getApplyUserCompany() {
+        return applyUserCompany;
+    }
+
+    public void setApplyUserCompany(String applyUserCompany) {
+        this.applyUserCompany = applyUserCompany;
+    }
+
+    public String getApplyUserDuty() {
+        return applyUserDuty;
+    }
+
+    public void setApplyUserDuty(String applyUserDuty) {
+        this.applyUserDuty = applyUserDuty;
+    }
+
+    public String getMarryState() {
+        return marryState;
+    }
+
+    public void setMarryState(String marryState) {
+        this.marryState = marryState;
+    }
+
+    public String getOtherIncomeNote() {
+        return otherIncomeNote;
+    }
+
+    public void setOtherIncomeNote(String otherIncomeNote) {
+        this.otherIncomeNote = otherIncomeNote;
+    }
+
     public String getOperator() {
         return operator;
     }
@@ -372,14 +407,6 @@ public class XN632120Req {
         this.invoicePrice = invoicePrice;
     }
 
-    public String getShopWay() {
-        return shopWay;
-    }
-
-    public void setShopWay(String shopWay) {
-        this.shopWay = shopWay;
-    }
-
     public String getRateType() {
         return rateType;
     }
@@ -412,28 +439,12 @@ public class XN632120Req {
         this.bankRate = bankRate;
     }
 
-    public String getCompanyLoanCs() {
-        return companyLoanCs;
-    }
-
-    public void setCompanyLoanCs(String companyLoanCs) {
-        this.companyLoanCs = companyLoanCs;
-    }
-
     public String getIsAdvanceFund() {
         return isAdvanceFund;
     }
 
     public void setIsAdvanceFund(String isAdvanceFund) {
         this.isAdvanceFund = isAdvanceFund;
-    }
-
-    public String getGlobalRate() {
-        return globalRate;
-    }
-
-    public void setGlobalRate(String globalRate) {
-        this.globalRate = globalRate;
     }
 
     public String getFee() {
@@ -450,14 +461,6 @@ public class XN632120Req {
 
     public void setCarDealerSubsidy(String carDealerSubsidy) {
         this.carDealerSubsidy = carDealerSubsidy;
-    }
-
-    public String getBankLoanCs() {
-        return bankLoanCs;
-    }
-
-    public void setBankLoanCs(String bankLoanCs) {
-        this.bankLoanCs = bankLoanCs;
     }
 
     public String getIsHouseProperty() {
@@ -562,6 +565,14 @@ public class XN632120Req {
 
     public void setDriceLicense(String driceLicense) {
         this.driceLicense = driceLicense;
+    }
+
+    public String getLoanBankSubbranch() {
+        return loanBankSubbranch;
+    }
+
+    public void setLoanBankSubbranch(String loanBankSubbranch) {
+        this.loanBankSubbranch = loanBankSubbranch;
     }
 
     public String getOtherPropertyNote() {

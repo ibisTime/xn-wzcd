@@ -52,20 +52,20 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setLoanPeriods(req.getLoanPeriods());
         data.setInvoicePrice(StringValidater.toLong(req.getInvoicePrice()));
 
-        data.setShopWay(req.getShopWay());
+        // data.setShopWay(req.getShopWay());
         data.setRateType(req.getRateType());
         data.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
         data.setIsSurvey(req.getIsSurvey());
         data.setBankRate(StringValidater.toDouble(req.getBankRate()));
 
-        data.setCompanyLoanCs(StringValidater.toDouble(req.getCompanyLoanCs()));
+        // data.setCompanyLoanCs(StringValidater.toDouble(req.getCompanyLoanCs()));
         data.setIsAdvanceFund(req.getIsAdvanceFund());
-        data.setGlobalRate(StringValidater.toDouble(req.getGlobalRate()));
+        // data.setGlobalRate(StringValidater.toDouble(req.getGlobalRate()));
         data.setFee(StringValidater.toLong(req.getFee()));
         data.setCarDealerSubsidy(StringValidater.toDouble(req
             .getCarDealerSubsidy()));
 
-        data.setBankLoanCs(StringValidater.toDouble(req.getBankLoanCs()));
+        // data.setBankLoanCs(StringValidater.toDouble(req.getBankLoanCs()));
         data.setIsHouseProperty(req.getIsHouseProperty());
         data.setHouseProperty(req.getHouseProperty());
         data.setIsHouseContract(req.getIsHouseContract());
