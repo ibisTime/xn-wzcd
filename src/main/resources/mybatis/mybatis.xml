@@ -75,6 +75,7 @@
 		<typeAlias alias="bank" type="com.cdkj.loan.domain.Bank" />
 		
 		<typeAlias alias="bankRate" type="com.cdkj.loan.domain.BankRate" />
+		<typeAlias alias="bankSubbranch" type="com.cdkj.loan.domain.BankSubbranch" />
 		
 		<!-- 经销商信息 -->
 		<typeAlias alias="carDealer" type="com.cdkj.loan.domain.CarDealer" />
