@@ -11,15 +11,6 @@ import com.cdkj.loan.domain.Node;
 public interface INodeAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    // 新增
-    public String addNode(Node data);
-
-    // 删除
-    public int dropNode(String code);
-
-    // 修改
-    public int editNode(Node data);
-
     // 分页查询
     public Paginable<Node> queryNodePage(int start, int limit, Node condition);
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IRoleNodeAO;
 import com.cdkj.loan.bo.INodeBO;
@@ -29,6 +30,7 @@ public class RoleNodeAOImpl implements IRoleNodeAO {
 
     // 批量分配节点
     @Override
+    @Transactional
     public void assignNodeForRole(String roleCode, List<String> nodeList) {
         // 批量删除节点
         roleNodeBO.deleteNodeByRole(roleCode);
@@ -52,12 +54,8 @@ public class RoleNodeAOImpl implements IRoleNodeAO {
 
     @Override
     public List<Node> queryNodeListIncludeCurRoleCode(String roleCode) {
-
         Node node = new Node();
-
         node.setRoleCode(roleCode);
-
         return nodeBO.queryNodeListIncludeCurRole(node);
     }
-
 }

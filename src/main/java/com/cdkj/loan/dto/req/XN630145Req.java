@@ -1,25 +1,25 @@
 package com.cdkj.loan.dto.req;
 
-public class XN630155Req extends APageReq {
+public class XN630145Req extends APageReq {
     /** 
      * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
      */
     private static final long serialVersionUID = 5780013307270124748L;
 
-    private String type;// 流程类型
+    private String name;// 节点名称
 
-    private String currentNode;// 当前节点
+    private String type;// 流程类型
 
     private String nextNode;// 下一个节点
 
     private String backNode;// 返回节点
 
-    public String getCurrentNode() {
-        return currentNode;
+    public String getName() {
+        return name;
     }
 
-    public void setCurrentNode(String currentNode) {
-        this.currentNode = currentNode;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getType() {

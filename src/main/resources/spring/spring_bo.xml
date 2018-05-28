@@ -159,6 +159,10 @@
 		<property name="paginableDAO" ref="nodeDAOImpl"/>
 	</bean>
 	
+	<bean id="nodeFlowBO" class="com.cdkj.loan.bo.impl.NodeFlowBOImpl">
+		<property name="paginableDAO" ref="nodeFlowDAOImpl"/>
+	</bean>
+	
 	<bean id="sysBizLogBO" class="com.cdkj.loan.bo.impl.SYSBizLogBOImpl">
 		<property name="paginableDAO" ref="sysBizLogDAOImpl"/>
 	</bean>

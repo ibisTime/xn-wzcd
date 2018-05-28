@@ -7,15 +7,6 @@ import com.cdkj.loan.domain.Node;
 
 public interface INodeBO extends IPaginableBO<Node> {
 
-    // 新增
-    public String saveNode(Node data);
-
-    // 删除
-    public int removeNode(String code);
-
-    // 修改
-    public int refreshNode(Node data);
-
     // 列表查询
     public List<Node> queryNodeList(Node condition);
 

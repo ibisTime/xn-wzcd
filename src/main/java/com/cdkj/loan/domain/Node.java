@@ -11,17 +11,13 @@ public class Node extends ABaseDO {
 
     private String type;// 类型
 
-    private String nextNode;// 下一个节点
-
-    private String backNode;// 返回节点
-
     private String remark;// 备注
 
     // **********db properties**********
 
     private String nameQuery;
 
-    private String roleCode; // 角色编号
+    private String roleCode;// 角色编号
 
     private String isChoice; // 当前角色是否拥有
 
@@ -39,15 +35,6 @@ public class Node extends ABaseDO {
 
     public void setIsChoice(String isChoice) {
         this.isChoice = isChoice;
-    }
-
-    public String getNameQuery() {
-        return nameQuery;
-    }
-
-    public void setNameQuery(String nameQuery) {
-        this.nameQuery = nameQuery;
-
     }
 
     public String getCode() {
@@ -74,28 +61,20 @@ public class Node extends ABaseDO {
         this.type = type;
     }
 
-    public String getNextNode() {
-        return nextNode;
-    }
-
-    public void setNextNode(String nextNode) {
-        this.nextNode = nextNode;
-    }
-
-    public String getBackNode() {
-        return backNode;
-    }
-
-    public void setBackNode(String backNode) {
-        this.backNode = backNode;
-    }
-
     public String getRemark() {
         return remark;
     }
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getNameQuery() {
+        return nameQuery;
+    }
+
+    public void setNameQuery(String nameQuery) {
+        this.nameQuery = nameQuery;
     }
 
 }

@@ -6,8 +6,6 @@
 		<result column="code" property="code" />
 		<result column="name" property="name" />
 		<result column="type" property="type" />
-		<result column="next_node" property="nextNode" />
-		<result column="back_node" property="backNode" />
 		<result column="remark" property="remark" />
 		<result column="isChoice" property="isChoice" />
 	</resultMap>
@@ -25,12 +23,6 @@
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
 			</if>
-			<if test="nextNode != null and nextNode != '' ">
-				AND t.next_node = #{nextNode}
-			</if>
-			<if test="backNode != null and backNode != '' ">
-				AND t.back_node = #{backNode}
-			</if>
 		</trim>
 	</sql>
 	<select id="select_node" parameterType="node" resultMap="node_DB_Result">
@@ -38,8 +30,6 @@
 		t.code
 		,t.name
 		,t.type
-		,t.next_node
-		,t.back_node
 		,t.remark
 		FROM
 		tsys_node t
@@ -63,16 +53,12 @@
 		code
 		,name
 		,type
-		,next_node
-		,back_node
 		,remark
 		)
 		VALUES(
 		#{code}
 		,#{name}
 		,#{type}
-		,#{nextNode}
-		,#{backNode}
 		,#{remark}
 		)
 	</insert>
@@ -81,9 +67,6 @@
 		UPDATE tsys_node
 		SET
 		name = #{name}
-		,next_node = #{nextNode}
-		,back_node = #{backNode}
-		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	

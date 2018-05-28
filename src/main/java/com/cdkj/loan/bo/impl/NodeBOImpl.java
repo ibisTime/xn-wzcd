@@ -20,21 +20,6 @@ public class NodeBOImpl extends PaginableBOImpl<Node> implements INodeBO {
     INodeDAO nodeDAO;
 
     @Override
-    public String saveNode(Node data) {
-        return null;
-    }
-
-    @Override
-    public int removeNode(String code) {
-        return 0;
-    }
-
-    @Override
-    public int refreshNode(Node data) {
-        return 0;
-    }
-
-    @Override
     public List<Node> queryNodeList(Node condition) {
         return nodeDAO.selectList(condition);
     }

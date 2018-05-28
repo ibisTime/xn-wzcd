@@ -17,21 +17,6 @@ public class NodeAOImpl implements INodeAO {
     private INodeBO nodeBO;
 
     @Override
-    public String addNode(Node data) {
-        return nodeBO.saveNode(data);
-    }
-
-    @Override
-    public int editNode(Node data) {
-        return nodeBO.refreshNode(data);
-    }
-
-    @Override
-    public int dropNode(String code) {
-        return nodeBO.removeNode(code);
-    }
-
-    @Override
     public Paginable<Node> queryNodePage(int start, int limit, Node condition) {
         return nodeBO.getPaginable(start, limit, condition);
     }

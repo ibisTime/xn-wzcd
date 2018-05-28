@@ -109,18 +109,6 @@ CREATE TABLE `tsys_department` (
   PRIMARY KEY (`code`)  COMMENT '部门表'
 )  ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
 
-/*节点表*/
-DROP TABLE IF EXISTS `tsys_node`;
-CREATE TABLE `tsys_node` (
-    `code` VARCHAR(32) NOT NULL COMMENT '节点编号',
-    `name` VARCHAR(255) DEFAULT NULL COMMENT '节点名称',
-    `type` VARCHAR(4) DEFAULT NULL COMMENT '类型',
-    `next_node` VARCHAR(32) DEFAULT NULL COMMENT '下一个节点',
-    `back_node` VARCHAR(32) DEFAULT NULL COMMENT '返回节点',
-    `remark` VARCHAR(255) DEFAULT NULL COMMENT '备注',
-    PRIMARY KEY (`code`) COMMENT '流程配置'
-)  ENGINE=INNODB DEFAULT CHARSET=UTF8;
-
 /*角色节点表*/
 DROP TABLE IF EXISTS `tsys_role_node`;
 CREATE TABLE `tsys_role_node` (
@@ -128,6 +116,28 @@ CREATE TABLE `tsys_role_node` (
     `role_code` VARCHAR(32) DEFAULT NULL COMMENT '角色编号',
 	`node_code` VARCHAR(32) DEFAULT NULL COMMENT '节点编号',
     PRIMARY KEY (`id`) COMMENT '角色节点'
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8;
+
+/*节点表*/
+DROP TABLE IF EXISTS `tsys_node`;
+CREATE TABLE `tsys_node` (
+    `code` VARCHAR(32) NOT NULL COMMENT '节点编号',
+    `name` VARCHAR(255) DEFAULT NULL COMMENT '节点名称',
+    `type` VARCHAR(4) DEFAULT NULL COMMENT '类型',
+    `remark` VARCHAR(255) DEFAULT NULL COMMENT '备注',
+    PRIMARY KEY (`code`) COMMENT '流程'
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8;
+
+/*节点流程表*/
+DROP TABLE IF EXISTS `tsys_node_flow`;
+CREATE TABLE `tsys_node_flow` (
+    `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '序号',
+    `type` VARCHAR(4) DEFAULT NULL COMMENT '类型',
+    `current_node` VARCHAR(32) NOT NULL COMMENT '当前节点',
+    `next_node` VARCHAR(32) DEFAULT NULL COMMENT '下一个节点',
+    `back_node` VARCHAR(32) DEFAULT NULL COMMENT '返回节点',
+    `remark` VARCHAR(255) DEFAULT NULL COMMENT '备注',
+    PRIMARY KEY (`id`) COMMENT '节点流程配置'
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8;
 
 /*业务日志跟踪表*/

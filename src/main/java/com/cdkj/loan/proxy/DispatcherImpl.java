@@ -23,7 +23,6 @@ public class DispatcherImpl implements IDispatcher {
              * "com.cdkj.coin.api.impl.XN" + transcode; } }
              */
             classname = "com.cdkj.loan.api.impl.XN" + transcode;
-            System.out.println(classname);
             IProcessor processor = (IProcessor) ReflectUtil
                 .getInstance(classname);
             // 接口调用

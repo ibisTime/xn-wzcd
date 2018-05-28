@@ -56,6 +56,7 @@
 		
 		<!-- 节点控制  -->
 		<typeAlias alias="node" type="com.cdkj.loan.domain.Node" />
+		<typeAlias alias="nodeFlow" type="com.cdkj.loan.domain.NodeFlow" />
 		<typeAlias alias="roleNode" type="com.cdkj.loan.domain.RoleNode" />
 		<typeAlias alias="reqBudget" type="com.cdkj.loan.domain.ReqBudget" />
 
