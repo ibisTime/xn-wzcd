@@ -9,8 +9,8 @@ import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.BudgetOrder;
 
 @Repository("budgetOrderDAOImpl")
-public class BudgetOrderDAOImpl extends AMybatisTemplate implements
-        IBudgetOrderDAO {
+public class BudgetOrderDAOImpl extends AMybatisTemplate
+        implements IBudgetOrderDAO {
 
     @Override
     public int insert(BudgetOrder data) {
@@ -24,8 +24,8 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
 
     @Override
     public int updateAreaManagerApprove(BudgetOrder data) {
-        return super
-            .update(NAMESPACE.concat("update_areaManagerApprove"), data);
+        return super.update(NAMESPACE.concat("update_areaManagerApprove"),
+            data);
     }
 
     @Override

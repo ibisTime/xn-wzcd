@@ -184,11 +184,11 @@
 	<update id="update_creditUserIncome" parameterType="creditUser">
 		UPDATE tdq_credit_user
 		SET
-		month_income = monthIncome
-		,settle_interest = settleInterest
-		,balance = balance
-		,jour_show_income = jourShowIncome
-		,is_print = isPrint
+		month_income = #{monthIncome}
+		,settle_interest = #{settleInterest}
+		,balance = #{balance}
+		,jour_show_income = #{jourShowIncome}
+		,is_print = #{isPrint}
 		WHERE
 		code = #{code}
 	</update>

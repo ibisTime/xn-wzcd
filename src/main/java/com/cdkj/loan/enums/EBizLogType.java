@@ -2,7 +2,7 @@ package com.cdkj.loan.enums;
 
 public enum EBizLogType {
 
-    REQ_BUDGET("005", "申请预算款");
+    REQ_BUDGET("005", "申请预算款"), BUDGET_ORDER("002", "申请预算单");
 
     EBizLogType(String code, String value) {
         this.code = code;

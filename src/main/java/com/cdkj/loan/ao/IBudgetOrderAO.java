@@ -14,15 +14,19 @@ public interface IBudgetOrderAO {
 
     public String addBudgetOrder(XN632120Req req);
 
+    // 区域总经理审核
     public void approveAreaManager(String code, String operator,
             String approveResult, String approveNote);
 
+    // 省分公司总经理审核
     public void approveBranchCompany(String code, String operator,
             String approveResult, String approveNote);
 
+    // 二审
     public void approveGlobalManager(String code, String operator,
             String approveResult, String approveNote);
 
+    // 申请撤销
     public void canceOrder(String code, String operator, String cancelNote);
 
     public Paginable<BudgetOrder> queryBudgetOrderPage(int start, int limit,
