@@ -1,25 +1,26 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * 业务总监审核
+ * 预算单-安装GPS
  * @author: xieyj 
- * @since: 2018年5月29日 下午10:29:59 
+ * @since: 2018年5月29日 下午10:31:16 
  * @history:
  */
-public class XN632124Req {
+public class XN632126Req {
 
     @NotBlank
     private String code;// 预算单编号
 
     @NotBlank
-    private String approveResult;// 审核结果
-
-    private String approveNote;// 审核说明
-
-    @NotBlank
     private String operator;// 操作人
+
+    @NotEmpty
+    private List<XN632126ReqGps> gpsAzList; // 安装gps列表
 
     public String getCode() {
         return code;
@@ -27,14 +28,6 @@ public class XN632124Req {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getApproveResult() {
-        return approveResult;
-    }
-
-    public void setApproveResult(String approveResult) {
-        this.approveResult = approveResult;
     }
 
     public String getOperator() {
@@ -45,12 +38,11 @@ public class XN632124Req {
         this.operator = operator;
     }
 
-    public String getApproveNote() {
-        return approveNote;
+    public List<XN632126ReqGps> getGpsAzList() {
+        return gpsAzList;
     }
 
-    public void setApproveNote(String approveNote) {
-        this.approveNote = approveNote;
+    public void setGpsAzList(List<XN632126ReqGps> gpsAzList) {
+        this.gpsAzList = gpsAzList;
     }
-
 }

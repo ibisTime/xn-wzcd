@@ -3,12 +3,12 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 预算单-录入抵押信息
+ * 预算单-确认提交银行
  * @author: xieyj 
  * @since: 2018年5月29日 下午10:31:16 
  * @history:
  */
-public class XN632131Req {
+public class XN632129Req {
 
     @NotBlank
     private String code;// 预算单编号
@@ -16,11 +16,11 @@ public class XN632131Req {
     @NotBlank
     private String operator;// 操作人
 
-    // 抵押日期
-    private String pledgeDatetime;
+    // 提交银行时间
+    private String bankCommitDatetime;
 
-    // 绿大本扫描件
-    private String greenBigSmj;
+    // 提交说明
+    private String bankCommitNote;
 
     public String getCode() {
         return code;
@@ -38,19 +38,19 @@ public class XN632131Req {
         this.operator = operator;
     }
 
-    public String getPledgeDatetime() {
-        return pledgeDatetime;
+    public String getBankCommitDatetime() {
+        return bankCommitDatetime;
     }
 
-    public void setPledgeDatetime(String pledgeDatetime) {
-        this.pledgeDatetime = pledgeDatetime;
+    public void setBankCommitDatetime(String bankCommitDatetime) {
+        this.bankCommitDatetime = bankCommitDatetime;
     }
 
-    public String getGreenBigSmj() {
-        return greenBigSmj;
+    public String getBankCommitNote() {
+        return bankCommitNote;
     }
 
-    public void setGreenBigSmj(String greenBigSmj) {
-        this.greenBigSmj = greenBigSmj;
+    public void setBankCommitNote(String bankCommitNote) {
+        this.bankCommitNote = bankCommitNote;
     }
 }

@@ -1,90 +1,89 @@
 package com.cdkj.loan.dto.req;
 
-public class XN632130Req extends APageReq {
+import org.hibernate.validator.constraints.NotBlank;
 
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
-     */
-    private static final long serialVersionUID = 1L;
+/**
+ * 预算单-确认收款
+ * @author: xieyj 
+ * @since: 2018年5月29日 下午10:31:16 
+ * @history:
+ */
+public class XN632130Req {
 
-    private String companyCode;// 业务公司
+    @NotBlank
+    private String code;// 预算单编号
 
-    private String customerName;// 客户姓名
+    @NotBlank
+    private String operator;// 操作人
 
-    private String carDealerCode;// 汽车经销商
+    // 收款银行
+    private String receiptBankCode;
 
-    private String applyDatetimeStart;// 申请时间起始
+    // 收款银行名称
+    private String receiptBankName;
 
-    private String applyDatetimeEnd;// 申请时间结束
+    // 收款银行卡号
+    private String receiptBankcardNumber;
 
-    private String status;// 办理状态
+    // 收款凭证
+    private String receiptPdf;
 
-    private String loanBankCode;// 贷款银行
+    // 收款备注
+    private String receiptRemark;
 
-    private String isAdvanceFund;// 是否垫资
-
-    public String getCompanyCode() {
-        return companyCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
-    public String getCarDealerCode() {
-        return carDealerCode;
+    public String getReceiptBankCode() {
+        return receiptBankCode;
     }
 
-    public void setCarDealerCode(String carDealerCode) {
-        this.carDealerCode = carDealerCode;
+    public void setReceiptBankCode(String receiptBankCode) {
+        this.receiptBankCode = receiptBankCode;
     }
 
-    public String getApplyDatetimeStart() {
-        return applyDatetimeStart;
+    public String getReceiptBankName() {
+        return receiptBankName;
     }
 
-    public void setApplyDatetimeStart(String applyDatetimeStart) {
-        this.applyDatetimeStart = applyDatetimeStart;
+    public void setReceiptBankName(String receiptBankName) {
+        this.receiptBankName = receiptBankName;
     }
 
-    public String getApplyDatetimeEnd() {
-        return applyDatetimeEnd;
+    public String getReceiptBankcardNumber() {
+        return receiptBankcardNumber;
     }
 
-    public void setApplyDatetimeEnd(String applyDatetimeEnd) {
-        this.applyDatetimeEnd = applyDatetimeEnd;
+    public void setReceiptBankcardNumber(String receiptBankcardNumber) {
+        this.receiptBankcardNumber = receiptBankcardNumber;
     }
 
-    public String getLoanBankCode() {
-        return loanBankCode;
+    public String getReceiptPdf() {
+        return receiptPdf;
     }
 
-    public void setLoanBankCode(String loanBankCode) {
-        this.loanBankCode = loanBankCode;
+    public void setReceiptPdf(String receiptPdf) {
+        this.receiptPdf = receiptPdf;
     }
 
-    public String getStatus() {
-        return status;
+    public String getReceiptRemark() {
+        return receiptRemark;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setReceiptRemark(String receiptRemark) {
+        this.receiptRemark = receiptRemark;
     }
-
-    public String getIsAdvanceFund() {
-        return isAdvanceFund;
-    }
-
-    public void setIsAdvanceFund(String isAdvanceFund) {
-        this.isAdvanceFund = isAdvanceFund;
-    }
-
 }

@@ -3,12 +3,12 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 业务总监审核
+ * 预算单-GPS管理员审核
  * @author: xieyj 
- * @since: 2018年5月29日 下午10:29:59 
+ * @since: 2018年5月29日 下午10:31:16 
  * @history:
  */
-public class XN632124Req {
+public class XN632127Req {
 
     @NotBlank
     private String code;// 预算单编号
@@ -37,14 +37,6 @@ public class XN632124Req {
         this.approveResult = approveResult;
     }
 
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
-    }
-
     public String getApproveNote() {
         return approveNote;
     }
@@ -53,4 +45,11 @@ public class XN632124Req {
         this.approveNote = approveNote;
     }
 
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
 }
