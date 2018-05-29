@@ -9,38 +9,62 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "carDealerProtocol";
+    private static String key = "budgetOrder";
 
     // 实体名称
-    private static String keyName = "经销商协议表";
+    private static String keyName = "预算单";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tb_car_dealer_protocol";
+    private static String dbname = "tdq_budget_order";
 
-    private static String[] DBwords = { "id", "car_dealer_code", "bank_code",
-            "plat_ct_rate12", "plat_ct_rate24", "plat_ct_rate36",
-            "plat_zk_rate12", "plat_zk_rate24", "plat_zk_rate36", "assure_type",
-            "assure_fee", "assure_rate", "dz_type", "dz_fee", "dz_rate",
-            "ly_amount_type", "ly_amount_fee", "ly_amount_rate", "gps_type",
-            "gps_fee", "gps_rate", "other_type", "other_fee", "other_rate",
-            "introduce_type", "introduce_fee", "introduce_rate",
-            "return_point_type", "return_point_fee", "return_point_rate",
-            "is_dz", "insu_agency_year1_type", "insu_agency_year1_fee",
-            "insu_agency_year2_type", "insu_agency_year2_fee",
-            "insu_agency_year3_type", "insu_agency_year3_fee" };
+    private static String[] DBwords = { "code", "loan_product_code",
+            "loan_product_name", "loan_bank", "gps_fee", "auth_fee", "fee",
+            "month_rate", "credit_code", "biz_type", "loan_period",
+            "invoice_company", "car_brand", "original_price", "invoice_price",
+            "car_color", "month_deposit", "first_amount", "first_rate",
+            "loan_amount", "settle_address", "apply_user_name", "gender",
+            "marry_state", "nation", "education", "id_no", "family_number",
+            "mobile", "now_address", "post_code1", "residence_address",
+            "post_code2", "family_main_asset", "main_asset_include",
+            "main_income", "work_company_name", "work_company_address",
+            "self_company_area", "employee_quantity", "enterprise_month_output",
+            "position", "post_title", "month_income", "mate_name",
+            "mate_mobile", "mate_id_no", "mate_education", "mate_company_name",
+            "mate_company_address", "mate_company_contact_no", "gua_name",
+            "gua_mobile", "gua_id_no", "gua_phone", "gua_company_name",
+            "gua_company_address", "gua_house_asset_address", "emergency_name1",
+            "emergency_relation1", "emergency_mobile1", "emergency_name2",
+            "emergency_relation2", "emergency_mobile2", "jour_datetime_start",
+            "jour_datetime_end", "jour_income", "jour_expend", "jour_balance",
+            "jour_month_income", "jour_month_expend", "jour_remark",
+            "house_contract", "house_picture", "is_advance_fund",
+            "sale_user_id", "company_code", "apply_datetime", "cur_node_code" };
 
-    private static String[] DBwordsName = { "序号", "经销商编号", "银行编号", "我司12期基准利率",
-            "我司24期基准利率", "我司36期基准利率", "我司12期基准利率", "我司24期基准利率", "我司36期基准利率",
-            "担保费类型(1单笔/2贷款额百分比)", "单笔担保费", "担保费贷款额百分比", "垫资费类型(1单笔/2贷款额百分比)",
-            "单笔垫资费", "垫资费贷款额百分比", "履约保证金类型(1单笔/2贷款额百分比)", "单笔履约保证金",
-            "履约保证金贷款额百分比", "GPS类型(1单笔/2贷款额百分比)", "单笔GPS费", "GPS垫资费贷款额百分比",
-            "杂费类型(1单笔/2贷款额百分比)", "单笔杂费", "杂费贷款额百分比", "介绍费类型(1单笔/2贷款额百分比)",
-            "单笔介绍费", "介绍费贷款额百分比", "返点类型(1单笔/2贷款额百分比)", "单笔返点", "返点贷款额百分比",
-            "是否垫资(1 是 0 否)", "1年保险代理费类型(1平台/2车行)", "1年保险代理费",
-            "2年保险代理费类型(1平台/2车行)", "2年保险代理费", "3年保险代理费类型(1平台/2车行)", "3年保险代理费" };
+    private static String[] DBwordsName = { "code", "loan_product_code",
+            "loan_product_name", "loan_bank", "gps_fee", "auth_fee", "fee",
+            "month_rate", "credit_code", "biz_type", "loan_period",
+            "invoice_company", "car_brand", "original_price", "invoice_price",
+            "car_color", "month_deposit", "first_amount", "first_rate",
+            "loan_amount", "settle_address", "apply_user_name", "gender",
+            "marry_state", "nation", "education", "id_no", "family_number",
+            "mobile", "now_address", "post_code1", "residence_address",
+            "post_code2", "family_main_asset", "main_asset_include",
+            "main_income", "work_company_name", "work_company_address",
+            "self_company_area", "employee_quantity", "enterprise_month_output",
+            "position", "post_title", "month_income", "mate_name",
+            "mate_mobile", "mate_id_no", "mate_education", "mate_company_name",
+            "mate_company_address", "mate_company_contact_no", "gua_name",
+            "gua_mobile", "gua_id_no", "gua_phone", "gua_company_name",
+            "gua_company_address", "gua_house_asset_address", "emergency_name1",
+            "emergency_relation1", "emergency_mobile1", "emergency_name2",
+            "emergency_relation2", "emergency_mobile2", "jour_datetime_start",
+            "jour_datetime_end", "jour_income", "jour_expend", "jour_balance",
+            "jour_month_income", "jour_month_expend", "jour_remark",
+            "house_contract", "house_picture", "is_advance_fund",
+            "sale_user_id", "company_code", "apply_datetime", "cur_node_code" };
 
     private static String[] DOwords = getDOwords();
 

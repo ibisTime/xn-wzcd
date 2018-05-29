@@ -23,27 +23,8 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
     }
 
     @Override
-    public int updateAreaManagerApprove(BudgetOrder data) {
-        return super.update(NAMESPACE.concat("update_areaManagerApprove"),
-            data);
-    }
-
-    @Override
-    public int updateBranchCompanyApprove(BudgetOrder data) {
-        return super.update(NAMESPACE.concat("update_branchCompanyApprove"),
-            data);
-
-    }
-
-    @Override
-    public int updateGlobalManagerApprove(BudgetOrder data) {
-        return super.update(NAMESPACE.concat("update_globalCompanyApprove"),
-            data);
-    }
-
-    @Override
-    public int updateCancelOrder(BudgetOrder data) {
-        return super.update(NAMESPACE.concat("update_cancelOrder"), data);
+    public int update(BudgetOrder data) {
+        return super.update(NAMESPACE.concat("update_budgetOrder"), data);
     }
 
     @Override

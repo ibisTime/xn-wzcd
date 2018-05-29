@@ -14,20 +14,9 @@ public interface IBudgetOrderAO {
 
     public String addBudgetOrder(XN632120Req req);
 
-    // 区域总经理审核
-    public void approveAreaManager(String code, String operator,
-            String approveResult, String approveNote);
+    public int dropBudgetOrder(String code);
 
-    // 省分公司总经理审核
-    public void approveBranchCompany(String code, String operator,
-            String approveResult, String approveNote);
-
-    // 二审
-    public void approveGlobalManager(String code, String operator,
-            String approveResult, String approveNote);
-
-    // 申请撤销
-    public void canceOrder(String code, String operator, String cancelNote);
+    public int editBudgetOrder(BudgetOrder data);
 
     public Paginable<BudgetOrder> queryBudgetOrderPage(int start, int limit,
             BudgetOrder condition);
@@ -35,5 +24,8 @@ public interface IBudgetOrderAO {
     public List<BudgetOrder> queryBudgetOrderList(BudgetOrder condition);
 
     public BudgetOrder getBudgetOrder(String code);
+
+    public String audit(String code, String approveResult, String approveNote,
+            String operator);
 
 }

@@ -11,7 +11,6 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBudgetOrderDAO;
 import com.cdkj.loan.domain.BudgetOrder;
-import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -22,11 +21,11 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
 
-    @Override
     public String saveBudgetOrder(BudgetOrder data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.BUDGET.getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.BUDGETORDER.getCode());
             data.setCode(code);
             budgetOrderDAO.insert(data);
         }
@@ -34,32 +33,23 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     }
 
     @Override
-    public void refreshAreaManagerApprove(BudgetOrder data) {
-        if (data != null) {
-            budgetOrderDAO.updateAreaManagerApprove(data);
+    public int removeBudgetOrder(String code) {
+        int count = 0;
+        if (StringUtils.isNotBlank(code)) {
+            BudgetOrder data = new BudgetOrder();
+            data.setCode(code);
+            count = budgetOrderDAO.delete(data);
         }
+        return count;
     }
 
     @Override
-    public void refreshBranchCompanyApprove(BudgetOrder data) {
-        if (data != null) {
-            budgetOrderDAO.updateBranchCompanyApprove(data);
+    public int refreshBudgetOrder(BudgetOrder data) {
+        int count = 0;
+        if (StringUtils.isNotBlank(data.getCode())) {
+            count = budgetOrderDAO.update(data);
         }
-    }
-
-    @Override
-    public void refreshGlobalManagerApprove(BudgetOrder data) {
-        if (data != null) {
-            budgetOrderDAO.updateGlobalManagerApprove(data);
-        }
-    }
-
-    @Override
-    public void refreshCanceOrder(BudgetOrder data) {
-        if (data != null) {
-            budgetOrderDAO.updateCancelOrder(data);
-        }
-
+        return count;
     }
 
     @Override
@@ -75,11 +65,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             condition.setCode(code);
             data = budgetOrderDAO.select(condition);
             if (data == null) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "预订单编号不存在");
+                throw new BizException("xn0000", "�� ��Ų�����");
             }
         }
         return data;
     }
-
 }

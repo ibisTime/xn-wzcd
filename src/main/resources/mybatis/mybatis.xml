@@ -85,6 +85,7 @@
 		
 		<!-- 行政 -->
 		<typeAlias alias="gps" type="com.cdkj.loan.domain.Gps" />
+		<typeAlias alias="budgetOrder" type="com.cdkj.loan.domain.BudgetOrder" />
 
 	</typeAliases>
 	

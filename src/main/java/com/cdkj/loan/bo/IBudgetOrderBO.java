@@ -5,20 +5,25 @@ import java.util.List;
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.BudgetOrder;
 
+
+
+
 public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
-    public String saveBudgetOrder(BudgetOrder data);
 
-    public void refreshAreaManagerApprove(BudgetOrder data);
+	public String saveBudgetOrder(BudgetOrder data);
 
-    public void refreshBranchCompanyApprove(BudgetOrder data);
 
-    public void refreshGlobalManagerApprove(BudgetOrder data);
+	public int removeBudgetOrder(String code);
 
-    public void refreshCanceOrder(BudgetOrder data);
 
-    public List<BudgetOrder> queryBudgetOrderList(BudgetOrder condition);
+	public int refreshBudgetOrder(BudgetOrder data);
 
-    public BudgetOrder getBudgetOrder(String code);
+
+	public List<BudgetOrder> queryBudgetOrderList(BudgetOrder condition);
+
+
+	public BudgetOrder getBudgetOrder(String code);
+
 
 }
