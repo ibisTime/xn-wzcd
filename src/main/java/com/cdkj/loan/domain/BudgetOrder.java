@@ -93,7 +93,7 @@ public class BudgetOrder extends ABaseDO {
     private String education;
 
     // 身份证号
-    private String idNO;
+    private String idNo;
 
     // 家庭人口
     private String familyNumber;
@@ -453,12 +453,12 @@ public class BudgetOrder extends ABaseDO {
         this.education = education;
     }
 
-    public String getIdNO() {
-        return idNO;
+    public String getIdNo() {
+        return idNo;
     }
 
-    public void setIdNO(String idNO) {
-        this.idNO = idNO;
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
     }
 
     public String getFamilyNumber() {
