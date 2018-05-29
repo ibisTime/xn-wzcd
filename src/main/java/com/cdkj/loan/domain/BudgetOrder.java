@@ -251,6 +251,8 @@ public class BudgetOrder extends ABaseDO {
     // 当前节点编号
     private String curNodeCode;
 
+    // 审核说明
+
     public String getCode() {
         return code;
     }
