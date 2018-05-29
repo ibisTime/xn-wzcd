@@ -12,6 +12,9 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN632112Req {
 
+    @NotBlank
+    private String creditCode;
+
     private String loanBank;
 
     private String loanAmount;
@@ -28,9 +31,6 @@ public class XN632112Req {
 
     @NotBlank
     private String operator;
-
-    @NotBlank
-    private String creditCode;
 
     public String getLoanBank() {
         return loanBank;

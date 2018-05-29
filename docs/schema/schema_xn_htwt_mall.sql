@@ -54,6 +54,7 @@ CREATE TABLE `tmall_product_specs` (
 CREATE TABLE `tmall_order` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',
+  `bankcard_code` varchar(32) DEFAULT NULL COMMENT '银行卡编号',
   `receiver` varchar(255) DEFAULT NULL COMMENT '收件人姓名',
   `re_mobile` varchar(32) DEFAULT NULL COMMENT '收件人电话',
   `re_address` varchar(255) DEFAULT NULL COMMENT '收货地址',

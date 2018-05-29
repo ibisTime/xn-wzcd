@@ -30,14 +30,12 @@ public class XN632116 extends AProcessor {
     public Object doBusiness() throws BizException {
 
         Credit condition = new Credit();
-        condition.setCode(req.getCreditCode());
-        condition.setLoanBankCode(req.getLoanBankCode());
-        condition.setSaleUserId(req.getSaleUserId());
-
+        condition.setSaleUserId(req.getUserId());
+        condition.setBudgetCode(req.getBudgetOrderCode());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setApplyDatetimeEnd(DateUtil.strToDate(
-            req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+            req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

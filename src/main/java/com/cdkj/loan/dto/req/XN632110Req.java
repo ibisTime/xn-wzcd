@@ -90,4 +90,12 @@ public class XN632110Req {
         this.creditUserList = creditUserList;
     }
 
+    public String getBizType() {
+        return bizType;
+    }
+
+    public void setBizType(String bizType) {
+        this.bizType = bizType;
+    }
+
 }

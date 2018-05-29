@@ -5,7 +5,6 @@ import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632113Req;
-import com.cdkj.loan.dto.req.XN632114Req;
 
 /**
  * 征信
@@ -39,8 +38,5 @@ public interface ICreditAO {
 
     // 征信初审
     public void primaryAudit(XN632113Req req);
-
-    // 征信一审
-    public void firstAudit(XN632114Req req);
 
 }
