@@ -1,85 +1,56 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+/**
+ * 预算单-抵押确认提交银行
+ * @author: xieyj 
+ * @since: 2018年5月29日 下午10:31:16 
+ * @history:
+ */
 public class XN632132Req {
 
-    private String companyCode;// 业务公司
+    @NotBlank
+    private String code;// 预算单编号
 
-    private String customerName;// 客户姓名
+    @NotBlank
+    private String operator;// 操作人
 
-    private String carDealerCode;// 汽车经销商
+    // 抵押提交银行时间
+    private String pledgeBankCommitDatetime;
 
-    private String applyDatetimeStart;// 申请时间起始
+    // 抵押提交说明
+    private String pledgeBankCommitNote;
 
-    private String applyDatetimeEnd;// 申请时间结束
-
-    private String status;// 办理状态
-
-    private String loanBankCode;// 贷款银行
-
-    private String isAdvanceFund;// 是否垫资
-
-    public String getCompanyCode() {
-        return companyCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
-    public String getCarDealerCode() {
-        return carDealerCode;
+    public String getPledgeBankCommitDatetime() {
+        return pledgeBankCommitDatetime;
     }
 
-    public void setCarDealerCode(String carDealerCode) {
-        this.carDealerCode = carDealerCode;
+    public void setPledgeBankCommitDatetime(String pledgeBankCommitDatetime) {
+        this.pledgeBankCommitDatetime = pledgeBankCommitDatetime;
     }
 
-    public String getApplyDatetimeStart() {
-        return applyDatetimeStart;
+    public String getPledgeBankCommitNote() {
+        return pledgeBankCommitNote;
     }
 
-    public void setApplyDatetimeStart(String applyDatetimeStart) {
-        this.applyDatetimeStart = applyDatetimeStart;
+    public void setPledgeBankCommitNote(String pledgeBankCommitNote) {
+        this.pledgeBankCommitNote = pledgeBankCommitNote;
     }
-
-    public String getApplyDatetimeEnd() {
-        return applyDatetimeEnd;
-    }
-
-    public void setApplyDatetimeEnd(String applyDatetimeEnd) {
-        this.applyDatetimeEnd = applyDatetimeEnd;
-    }
-
-    public String getLoanBankCode() {
-        return loanBankCode;
-    }
-
-    public void setLoanBankCode(String loanBankCode) {
-        this.loanBankCode = loanBankCode;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getIsAdvanceFund() {
-        return isAdvanceFund;
-    }
-
-    public void setIsAdvanceFund(String isAdvanceFund) {
-        this.isAdvanceFund = isAdvanceFund;
-    }
-
 }

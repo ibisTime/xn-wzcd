@@ -239,6 +239,90 @@ public class BudgetOrder extends ABaseDO {
     // 是否垫资
     private String isAdvanceFund;
 
+    // 面签视频
+    private String interviewVideo;
+
+    // 面签合同
+    private String interviewContract;
+
+    // 垫资日期
+    private Date advanceFundDatetime;
+
+    // 垫资金额
+    private Long advanceFundAmount;
+
+    // 水单
+    private String billPdf;
+
+    // 车辆落户日期
+    private Date carSettleDatetime;
+
+    // 车牌号
+    private String carNumber;
+
+    // 发票
+    private String carInvoice;
+
+    // 合格证
+    private String carHgz;
+
+    // 交强险
+    private String carJqx;
+
+    // 商业险
+    private String carSyx;
+
+    // 登记证书
+    private String carRegcerti;
+
+    // 车辆批单
+    private String carPd;
+
+    // 车钥匙
+    private String carKey;
+
+    // 大本扫描件
+    private String carBigSmj;
+
+    // 银行提交时间
+    private Date bankCommitDatetime;
+
+    // 银行提交说明
+    private String bankCommitNote;
+
+    // 银行放款时间
+    private Date bankLoanDatetime;
+
+    // 收款银行
+    private String receiptBankCode;
+
+    // 收款银行名称
+    private String receiptBankName;
+
+    // 收款银行卡号
+    private String receiptBankcardNumber;
+
+    // 收款凭证
+    private String receiptPdf;
+
+    // 收款备注
+    private String receiptRemark;
+
+    // 抵押日期
+    private Date pledgeDatetime;
+
+    // 绿大本扫描件
+    private String greenBigSmj;
+
+    // 抵押提交银行时间
+    private Date pledgeBankCommitDatetime;
+
+    // 抵押提交说明
+    private String pledgeBankCommitNote;
+
+    // 入档位置
+    private String enterLocation;
+
     // 业务员
     private String saleUserId;
 
@@ -251,7 +335,8 @@ public class BudgetOrder extends ABaseDO {
     // 当前节点编号
     private String curNodeCode;
 
-    // 审核说明
+    // 最新备注
+    private String remark;
 
     public String getCode() {
         return code;
@@ -411,6 +496,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setLoanAmount(Long loanAmount) {
         this.loanAmount = loanAmount;
+    }
+
+    public String getSettleAddress() {
+        return settleAddress;
+    }
+
+    public void setSettleAddress(String settleAddress) {
+        this.settleAddress = settleAddress;
     }
 
     public String getApplyUserName() {
@@ -845,6 +938,230 @@ public class BudgetOrder extends ABaseDO {
         this.isAdvanceFund = isAdvanceFund;
     }
 
+    public String getInterviewVideo() {
+        return interviewVideo;
+    }
+
+    public void setInterviewVideo(String interviewVideo) {
+        this.interviewVideo = interviewVideo;
+    }
+
+    public String getInterviewContract() {
+        return interviewContract;
+    }
+
+    public void setInterviewContract(String interviewContract) {
+        this.interviewContract = interviewContract;
+    }
+
+    public Date getAdvanceFundDatetime() {
+        return advanceFundDatetime;
+    }
+
+    public void setAdvanceFundDatetime(Date advanceFundDatetime) {
+        this.advanceFundDatetime = advanceFundDatetime;
+    }
+
+    public Long getAdvanceFundAmount() {
+        return advanceFundAmount;
+    }
+
+    public void setAdvanceFundAmount(Long advanceFundAmount) {
+        this.advanceFundAmount = advanceFundAmount;
+    }
+
+    public String getBillPdf() {
+        return billPdf;
+    }
+
+    public void setBillPdf(String billPdf) {
+        this.billPdf = billPdf;
+    }
+
+    public Date getCarSettleDatetime() {
+        return carSettleDatetime;
+    }
+
+    public void setCarSettleDatetime(Date carSettleDatetime) {
+        this.carSettleDatetime = carSettleDatetime;
+    }
+
+    public String getCarNumber() {
+        return carNumber;
+    }
+
+    public void setCarNumber(String carNumber) {
+        this.carNumber = carNumber;
+    }
+
+    public String getCarInvoice() {
+        return carInvoice;
+    }
+
+    public void setCarInvoice(String carInvoice) {
+        this.carInvoice = carInvoice;
+    }
+
+    public String getCarHgz() {
+        return carHgz;
+    }
+
+    public void setCarHgz(String carHgz) {
+        this.carHgz = carHgz;
+    }
+
+    public String getCarJqx() {
+        return carJqx;
+    }
+
+    public void setCarJqx(String carJqx) {
+        this.carJqx = carJqx;
+    }
+
+    public String getCarSyx() {
+        return carSyx;
+    }
+
+    public void setCarSyx(String carSyx) {
+        this.carSyx = carSyx;
+    }
+
+    public String getCarRegcerti() {
+        return carRegcerti;
+    }
+
+    public void setCarRegcerti(String carRegcerti) {
+        this.carRegcerti = carRegcerti;
+    }
+
+    public String getCarPd() {
+        return carPd;
+    }
+
+    public void setCarPd(String carPd) {
+        this.carPd = carPd;
+    }
+
+    public String getCarKey() {
+        return carKey;
+    }
+
+    public void setCarKey(String carKey) {
+        this.carKey = carKey;
+    }
+
+    public String getCarBigSmj() {
+        return carBigSmj;
+    }
+
+    public void setCarBigSmj(String carBigSmj) {
+        this.carBigSmj = carBigSmj;
+    }
+
+    public Date getBankCommitDatetime() {
+        return bankCommitDatetime;
+    }
+
+    public void setBankCommitDatetime(Date bankCommitDatetime) {
+        this.bankCommitDatetime = bankCommitDatetime;
+    }
+
+    public String getBankCommitNote() {
+        return bankCommitNote;
+    }
+
+    public void setBankCommitNote(String bankCommitNote) {
+        this.bankCommitNote = bankCommitNote;
+    }
+
+    public Date getBankLoanDatetime() {
+        return bankLoanDatetime;
+    }
+
+    public void setBankLoanDatetime(Date bankLoanDatetime) {
+        this.bankLoanDatetime = bankLoanDatetime;
+    }
+
+    public String getReceiptBankCode() {
+        return receiptBankCode;
+    }
+
+    public void setReceiptBankCode(String receiptBankCode) {
+        this.receiptBankCode = receiptBankCode;
+    }
+
+    public String getReceiptBankName() {
+        return receiptBankName;
+    }
+
+    public void setReceiptBankName(String receiptBankName) {
+        this.receiptBankName = receiptBankName;
+    }
+
+    public String getReceiptBankcardNumber() {
+        return receiptBankcardNumber;
+    }
+
+    public void setReceiptBankcardNumber(String receiptBankcardNumber) {
+        this.receiptBankcardNumber = receiptBankcardNumber;
+    }
+
+    public String getReceiptPdf() {
+        return receiptPdf;
+    }
+
+    public void setReceiptPdf(String receiptPdf) {
+        this.receiptPdf = receiptPdf;
+    }
+
+    public String getReceiptRemark() {
+        return receiptRemark;
+    }
+
+    public void setReceiptRemark(String receiptRemark) {
+        this.receiptRemark = receiptRemark;
+    }
+
+    public Date getPledgeDatetime() {
+        return pledgeDatetime;
+    }
+
+    public void setPledgeDatetime(Date pledgeDatetime) {
+        this.pledgeDatetime = pledgeDatetime;
+    }
+
+    public String getGreenBigSmj() {
+        return greenBigSmj;
+    }
+
+    public void setGreenBigSmj(String greenBigSmj) {
+        this.greenBigSmj = greenBigSmj;
+    }
+
+    public Date getPledgeBankCommitDatetime() {
+        return pledgeBankCommitDatetime;
+    }
+
+    public void setPledgeBankCommitDatetime(Date pledgeBankCommitDatetime) {
+        this.pledgeBankCommitDatetime = pledgeBankCommitDatetime;
+    }
+
+    public String getPledgeBankCommitNote() {
+        return pledgeBankCommitNote;
+    }
+
+    public void setPledgeBankCommitNote(String pledgeBankCommitNote) {
+        this.pledgeBankCommitNote = pledgeBankCommitNote;
+    }
+
+    public String getEnterLocation() {
+        return enterLocation;
+    }
+
+    public void setEnterLocation(String enterLocation) {
+        this.enterLocation = enterLocation;
+    }
+
     public String getSaleUserId() {
         return saleUserId;
     }
@@ -877,12 +1194,11 @@ public class BudgetOrder extends ABaseDO {
         this.curNodeCode = curNodeCode;
     }
 
-    public String getSettleAddress() {
-        return settleAddress;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setSettleAddress(String settleAddress) {
-        this.settleAddress = settleAddress;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
-
 }
