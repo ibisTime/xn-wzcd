@@ -7,5 +7,7 @@ import com.cdkj.loan.domain.BudgetOrder;
 public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     String NAMESPACE = IBudgetOrderDAO.class.getName().concat(".");
 
-    int update(BudgetOrder data);
+    void update(BudgetOrder data);
+
+    void updateriskApprove(BudgetOrder data);
 }

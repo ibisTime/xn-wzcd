@@ -78,10 +78,40 @@
 		<result column="house_contract" property="houseContract" />
 		<result column="house_picture" property="housePicture" />
 		<result column="is_advance_fund" property="isAdvanceFund" />
+		<result column="interview_video" property="interviewVideo" />
+		<result column="interview_contract" property="interviewContract" />
+		<result column="advance_fund_datetime" property="advanceFundDatetime" />
+		<result column="advance_fund_amount" property="advanceFundAmount" />
+		<result column="bill_pdf" property="billPdf" />
+		<result column="car_settle_datetime" property="carSettleDatetime" />
+		<result column="car_number" property="carNumber" />
+		<result column="car_invoice" property="carInvoice" />
+		<result column="car_hgz" property="carHgz" />
+		<result column="car_jqx" property="carJqx" />
+		<result column="car_syx" property="carSyx" />
+		<result column="car_regcerti" property="carRegcerti" />
+		<result column="car_pd" property="carPd" />
+		<result column="car_key" property="carKey" />
+		<result column="car_big_smj" property="carBigSmj" />
+		<result column="bank_commit_datetime" property="bankCommitDatetime" />
+		<result column="bank_commit_note" property="bankCommitNote" />
+		<result column="bankLoan_datetime" property="bankLoanDatetime" />
+		<result column="receipt_bank_code" property="receiptBankCode" />
+		<result column="receipt_bank_name" property="receiptBankName" />
+		<result column="receipt_bankcard_number" property="receiptBankcardNumber" />
+		<result column="receipt_pdf" property="receiptPdf" />
+		<result column="receipt_remark" property="receiptRemark" />
+		<result column="pledge_datetime" property="pledgeDatetime" />
+		<result column="green_big_smj" property="greenBigSmj" />
+		<result column="pledge_bank_commit_datetime" property="pledgeBankCommitDatetime" />
+		<result column="pledge_bank_commit_note" property="pledgeBankCommitNote" />
+		<result column="enter_location" property="enterLocation" />
+		<result column="is_advance_fund" property="isAdvanceFund" />
 		<result column="sale_user_id" property="saleUserId" />
 		<result column="company_code" property="companyCode" />
 		<result column="apply_datetime" property="applyDatetime" />
 		<result column="cur_node_code" property="curNodeCode" />
+		<result column="remark" property="remark" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -167,10 +197,39 @@
 		,t.house_contract
 		,t.house_picture
 		,t.is_advance_fund
+		,t.interview_video
+		,t.interview_contract
+		,t.advance_fund_datetime
+		,t.advance_fund_amount
+		,t.bill_pdf
+		,t.car_settle_datetime
+		,t.car_number
+		,t.car_invoice
+		,t.car_hgz
+		,t.car_jqx
+		,t.car_syx
+		,t.car_regcerti
+		,t.car_pd
+		,t.car_key
+		,t.car_big_smj
+		,t.bank_commit_datetime
+		,t.bank_commit_note
+		,t.bankLoan_datetime
+		,t.receipt_bank_code
+		,t.receipt_bank_name
+		,t.receipt_bankcard_number
+		,t.receipt_pdf
+		,t.receipt_remark
+		,t.pledge_datetime
+		,t.green_big_smj
+		,t.pledge_bank_commit_datetime
+		,t.pledge_bank_commit_note
+		,t.enter_location
 		,t.sale_user_id
 		,t.company_code
 		,t.apply_datetime
 		,t.cur_node_code
+		,t.remark
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -265,10 +324,39 @@
 		,house_contract
 		,house_picture
 		,is_advance_fund
+		,interview_video
+		,interview_contract
+		,advance_fund_datetime
+		,advance_fund_amount
+		,bill_pdf
+		,car_settle_datetime
+		,car_number
+		,car_invoice
+		,car_hgz
+		,car_jqx
+		,car_syx
+		,car_regcerti
+		,car_pd
+		,car_key
+		,car_big_smj
+		,bank_commit_datetime
+		,bank_commit_note
+		,bankLoan_datetime
+		,receipt_bank_code
+		,receipt_bank_name
+		,receipt_bankcard_number
+		,receipt_pdf
+		,receipt_remark
+		,pledge_datetime
+		,green_big_smj
+		,pledge_bank_commit_datetime
+		,pledge_bank_commit_note
+		,enter_location
 		,sale_user_id
 		,company_code
 		,apply_datetime
 		,cur_node_code
+		,remark
 		)
 		VALUES(
 		#{code}
@@ -346,10 +434,39 @@
 		,#{houseContract}
 		,#{housePicture}
 		,#{isAdvanceFund}
+		,#{interviewVideo}
+		,#{interviewContract}
+		,#{advanceFundDatetime}
+		,#{advanceFundAmount}
+		,#{billPdf}
+		,#{carSettleDatetime}
+		,#{carNumber}
+		,#{carInvoice}
+		,#{carHgz}
+		,#{carJqx}
+		,#{carSyx}
+		,#{carRegcerti}
+		,#{carPd}
+		,#{carKey}
+		,#{carBigSmj}
+		,#{bankCommitDatetime}
+		,#{bankCommitNote}
+		,#{bankLoanDatetime}
+		,#{receiptBankCode}
+		,#{receiptBankName}
+		,#{receiptBankcardNumber}
+		,#{receiptPdf}
+		,#{receiptRemark}
+		,#{pledgeDatetime}
+		,#{greenBigSmj}
+		,#{pledgeBankCommitDatetime}
+		,#{pledgeBankCommitNote}
+		,#{enterLocation}
 		,#{saleUserId}
 		,#{companyCode}
 		,#{applyDatetime}
 		,#{curNodeCode}
+		,#{remark}
 		)
 	</insert>
 
@@ -430,10 +547,47 @@
 		,house_contract = #{houseContract}
 		,house_picture = #{housePicture}
 		,is_advance_fund = #{isAdvanceFund}
+		,interview_video = #{interviewVideo}
+		,interview_contract = #{interviewContract}
+		,advance_fund_datetime = #{advanceFundDatetime}
+		,advance_fund_amount = #{advanceFundAmount}
+		,bill_pdf = #{billPdf}
+		,car_settle_datetime = #{carSettleDatetime}
+		,car_number = #{carNumber}
+		,car_invoice = #{carInvoice}
+		,car_hgz = #{carHgz}
+		,car_jqx = #{carJqx}
+		,car_syx = #{carSyx}
+		,car_regcerti = #{carRegcerti}
+		,car_pd = #{carPd}
+		,car_key = #{carKey}
+		,car_big_smj = #{carBigSmj}
+		,bank_commit_datetime = #{bankCommitDatetime}
+		,bank_commit_note = #{bankCommitNote}
+		,bankLoan_datetime = #{bankLoanDatetime}
+		,receipt_bank_code = #{receiptBankCode}
+		,receipt_bank_name = #{receiptBankName}
+		,receipt_bankcard_number = #{receiptBankcardNumber}
+		,receipt_pdf = #{receiptPdf}
+		,receipt_remark = #{receiptRemark}
+		,pledge_datetime = #{pledgeDatetime}
+		,green_big_smj = #{greenBigSmj}
+		,pledge_bank_commit_datetime = #{pledgeBankCommitDatetime}
+		,pledge_bank_commit_note = #{pledgeBankCommitNote}
+		,enter_location = #{enterLocation}
 		,sale_user_id = #{saleUserId}
 		,company_code = #{companyCode}
 		,apply_datetime = #{applyDatetime}
 		,cur_node_code = #{curNodeCode}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_riskApprove" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		remark = #{remark}
 		WHERE code = #{code}
 	</update>
 

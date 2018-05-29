@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 准入审核
+ * 风控专员审核
  * @author: CYL 
  * @since: 2018年5月30日 上午1:04:02 
  * @history:
@@ -24,7 +24,7 @@ public class XN632121 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        String code = budgetOrderAO.audit(req.getCode(), req.getApproveResult(),
+        budgetOrderAO.riskApprove(req.getCode(), req.getApproveResult(),
             req.getApproveNote(), req.getOperator());
         return new BooleanRes(true);
     }

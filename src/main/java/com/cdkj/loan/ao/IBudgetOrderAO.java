@@ -16,7 +16,7 @@ public interface IBudgetOrderAO {
 
     public int dropBudgetOrder(String code);
 
-    public int editBudgetOrder(BudgetOrder data);
+    public void editBudgetOrder(BudgetOrder data);
 
     public Paginable<BudgetOrder> queryBudgetOrderPage(int start, int limit,
             BudgetOrder condition);
@@ -25,7 +25,7 @@ public interface IBudgetOrderAO {
 
     public BudgetOrder getBudgetOrder(String code);
 
-    public String audit(String code, String approveResult, String approveNote,
-            String operator);
+    public void riskApprove(String code, String approveResult,
+            String approveNote, String operator);
 
 }

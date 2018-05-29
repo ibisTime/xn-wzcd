@@ -8,18 +8,31 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.enums.EApproveResult;
+import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBudgetOrderNode;
+import com.cdkj.loan.enums.EButtonCode;
+import com.cdkj.loan.exception.BizException;
 
 @Service
 public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private IBudgetOrderBO budgetOrderBO;
+
+    @Autowired
+    private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private INodeFlowBO nodeFlowBO;
 
     @Override
     public String addBudgetOrder(XN632120Req req) {
@@ -99,21 +112,59 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setSaleUserId(req.getOperator());
         data.setApplyDatetime(new Date());
         data.setCurNodeCode("");
-        return budgetOrderBO.saveBudgetOrder(data);
-    }
 
-    @Override
-    public String audit(String code, String approveResult, String approveNote,
-            String operator) {
-        if (EApproveResult.PASS.getCode().equals(approveResult)) {
-
+        EBudgetOrderNode node = EBudgetOrderNode.START_NODE;
+        data.setCurNodeCode(node.getCode());
+        if (EButtonCode.SEND.getCode().equals(req.getDealType())) {
+            node = EBudgetOrderNode.getMap()
+                .get(nodeFlowBO.getNodeFlowByCurrentNode(
+                    EBudgetOrderNode.AREA_AUDIT.getCode()));
+            data.setCurNodeCode(EBudgetOrderNode.AREA_AUDIT.getCode());
         }
-        return null;
+
+        String code = budgetOrderBO.saveBudgetOrder(data);
+        // 日志记录
+        sysBizLogBO.saveSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
+            node.getCode(), node.getValue(), req.getOperator());
+        return code;
     }
 
     @Override
-    public int editBudgetOrder(BudgetOrder data) {
-        return budgetOrderBO.refreshBudgetOrder(data);
+    public void riskApprove(String code, String approveResult,
+            String approveNote, String operator) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+
+        if (!EBudgetOrderNode.AREA_AUDIT.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是风控专员审核节点，不能操作");
+        }
+
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(EBudgetOrderNode.AREA_AUDIT.getCode())
+                .getNextNode());
+        } else {
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(EBudgetOrderNode.AREA_AUDIT.getCode())
+                .getBackNode());
+        }
+        budgetOrder.setRemark(approveNote);
+        budgetOrderBO.refreshriskApprove(budgetOrder);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), operator);
+    }
+
+    @Override
+    public void editBudgetOrder(BudgetOrder data) {
+        budgetOrderBO.refreshBudgetOrder(data);
     }
 
     @Override

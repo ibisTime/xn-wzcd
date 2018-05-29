@@ -11,6 +11,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBudgetOrderDAO;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -44,12 +45,17 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     }
 
     @Override
-    public int refreshBudgetOrder(BudgetOrder data) {
-        int count = 0;
+    public void refreshBudgetOrder(BudgetOrder data) {
         if (StringUtils.isNotBlank(data.getCode())) {
-            count = budgetOrderDAO.update(data);
+            budgetOrderDAO.update(data);
         }
-        return count;
+    }
+
+    @Override
+    public void refreshriskApprove(BudgetOrder data) {
+        if (StringUtils.isNotBlank(data.getCode())) {
+            budgetOrderDAO.updateriskApprove(data);
+        }
     }
 
     @Override
@@ -65,9 +71,11 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             condition.setCode(code);
             data = budgetOrderDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "预算单不存在！！");
             }
         }
         return data;
     }
+
 }

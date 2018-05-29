@@ -23,8 +23,13 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
     }
 
     @Override
-    public int update(BudgetOrder data) {
-        return super.update(NAMESPACE.concat("update_budgetOrder"), data);
+    public void update(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_budgetOrder"), data);
+    }
+
+    @Override
+    public void updateriskApprove(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_riskApprove"), data);
     }
 
     @Override
