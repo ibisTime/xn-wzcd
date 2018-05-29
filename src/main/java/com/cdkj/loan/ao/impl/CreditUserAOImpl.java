@@ -11,11 +11,10 @@ import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.dto.req.XN632111Req;
-import com.cdkj.loan.dto.req.XN632111ReqChild;
+import com.cdkj.loan.dto.req.XN632111ReqCreditUser;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.ECreditNode;
@@ -61,60 +60,19 @@ public class CreditUserAOImpl implements ICreditUserAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "征信单不存在");
         }
 
-        if (!ECreditNode.LRZXY.getCode().equals(credit.getCurNodeCode())) {
+        if (!ECreditNode.INPUT_CREDIT_RESULT.getCode().equals(
+            credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是录入银行征信结果节点，不能操作");
+                "当前节点不是录入征信结果节点，不能操作");
         }
 
-        List<XN632111ReqChild> list = req.getBankCreditResultList();
+        List<XN632111ReqCreditUser> list = req.getCreditResult();
 
-        for (XN632111ReqChild Child : list) {
-            String code = Child.getCode();
+        for (XN632111ReqCreditUser Child : list) {
+            String code = Child.getCreditUserCode();
+
             CreditUser creditUser = creditUserBO.getCreditUser(code);
-            creditUser.setDkdyCount(StringValidater.toInteger(Child
-                .getDkdyCount()));
-            creditUser.setDkdyAmount(StringValidater.toLong(Child
-                .getDkdyAmount()));
-            creditUser.setDkdy2YearOverTimes(StringValidater.toInteger(Child
-                .getDkdy2yearOverTimes()));
-            creditUser.setDkdyMaxOverAmount(StringValidater.toLong(Child
-                .getDkdyMaxOverAmount()));
-            creditUser.setDkdyCurrentOverAmount(StringValidater.toLong(Child
-                .getDkdyCurrentOverAmount()));
-            creditUser.setDkdy6MonthAvgAmount(StringValidater.toLong(Child
-                .getDkdy6monthAvgAmount()));
-
-            creditUser.setHkxyUnsettleCount(StringValidater.toInteger(Child
-                .getHkxyUnsettleCount()));
-            creditUser.setHkxyUnsettleAmount(StringValidater.toLong(Child
-                .getHkxyUnsettleAmount()));
-            creditUser.setHkxy2YearOverTimes(StringValidater.toInteger(Child
-                .getHkxy2yearOverTimes()));
-            creditUser.setHkxyMonthMaxOverAmount(StringValidater.toLong(Child
-                .getHkxyMonthMaxOverAmount()));
-            creditUser.setHkxy6MonthAvgAmount(StringValidater.toLong(Child
-                .getHkxy6monthAvgAmount()));
-            creditUser.setHkxyCurrentOverAmount(StringValidater.toLong(Child
-                .getHkxyCurrentOverAmount()));
-
-            creditUser.setXykCount(StringValidater.toInteger(Child
-                .getXykCount()));
-            creditUser.setXykCreditAmount(StringValidater.toLong(Child
-                .getXykCreditAmount()));
-            creditUser.setXyk6MonthUseAmount(StringValidater.toLong(Child
-                .getXyk6monthUseAmount()));
-            creditUser.setXyk2YearOverTimes(StringValidater.toInteger(Child
-                .getXyk2yearOverTimes()));
-            creditUser.setXykMonthMaxOverAmount(StringValidater.toLong(Child
-                .getXykMonthMaxOverAmount()));
-            creditUser.setXykCurrentOverAmount(StringValidater.toLong(Child
-                .getXykCurrentOverAmount()));
-
-            creditUser.setOutGuaranteesCount(StringValidater.toInteger(Child
-                .getOutGuaranteesCount()));
-            creditUser.setOutGuaranteesAmount(StringValidater.toLong(Child
-                .getOutGuaranteesAmount()));
-            creditUser.setOutGuaranteesRemark(Child.getOutGuaranteesRemark());
+            creditUser.setBankCreditResultPdf(Child.getBankCreditResultPdf());
 
             creditUserBO.inputBankCreditResult(creditUser);
         }

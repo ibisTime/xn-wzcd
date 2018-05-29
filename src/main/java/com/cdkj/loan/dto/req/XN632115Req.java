@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 征信分页查询 （按角色权限）
  * @author: jiafr 
@@ -26,6 +28,7 @@ public class XN632115Req extends APageReq {
     private String applyDatetimeEnd;
 
     // 角色编号
+    @NotBlank
     private String roleCode;
 
     public String getUserId() {

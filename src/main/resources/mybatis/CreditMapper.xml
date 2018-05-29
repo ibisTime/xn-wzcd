@@ -5,17 +5,19 @@
 	<resultMap id="credit_DB_Result" type="credit">
 	
 		<result column="code" property="code" />
+		<result column="loan_bank_code" property="loanBankCode" />
+		<result column="loan_amount" property="loanAmount" />
+		<result column="biz_type" property="bizType" />
+		<result column="second_car_report" property="secondCarReport" />
+		<result column="xsz_front" property="xszFront" />
+		<result column="xsz_reverse" property="xszReverse" />
 		<result column="budget_code" property="budgetCode" />
 		<result column="company_code" property="companyCode" />
 		<result column="sale_user_id" property="saleUserId" />
-		<result column="loan_bank_code" property="loanBankCode" />
-		<result column="shop_way" property="shopWay" />
-		<result column="loan_amount" property="loanAmount" />
-		<result column="xsz_front" property="xszFront" />
-		<result column="xsz_reverse" property="xszReverse" />
-		<result column="cur_node_code" property="curNodeCode" />
-		<result column="accessory" property="accessory" />
 		<result column="apply_datetime" property="applyDatetime" />
+		<result column="cur_node_code" property="curNodeCode" />
+
+		
 
 		
 	</resultMap>
@@ -40,8 +42,8 @@
 			<if test="loanBankCode != null and loanBankCode != '' ">
 				AND t.loan_bank_code = #{loanBankCode}
 			</if>
-			<if test="shopWay != null and shopWay != '' ">
-				AND t.shop_way = #{shopWay}
+			<if test="bizType != null and bizType != '' ">
+				AND t.biz_type = #{bizType}
 			</if>
 			<if test="loanAmount != null and loanAmount != '' ">
 				AND t.loan_amount = #{loanAmount}
@@ -70,18 +72,19 @@
 	<select id="select_credit" parameterType="credit" resultMap="credit_DB_Result">
 		select 
 		t.code
-		,t.company_code
-		,t.sale_user_id
 		,t.loan_bank_code
-		,t.shop_way
-		
 		,t.loan_amount
+		,t.biz_type
+		,t.second_car_report
+		
 		,t.xsz_front
 		,t.xsz_reverse
+		,t.budget_code		
+		,t.company_code
+		,t.sale_user_id
+
 		,t.cur_node_code		
 		,t.apply_datetime
-		
-
 		from tdq_credit t
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
@@ -100,14 +103,17 @@
 		select 
 		distinct
 		t.code
-		,t.company_code
-		,t.sale_user_id
 		,t.loan_bank_code
-		,t.shop_way
-		
 		,t.loan_amount
+		,t.biz_type
+		,t.second_car_report
+		
 		,t.xsz_front
 		,t.xsz_reverse
+		,t.budget_code		
+		,t.company_code
+		,t.sale_user_id
+
 		,t.cur_node_code		
 		,t.apply_datetime
 		from tdq_credit t left join tsys_role_node trn on t.cur_node_code=trn.node_code
@@ -129,28 +135,32 @@
 	<insert id="insert_credit" parameterType="credit">
 		INSERT INTO tdq_credit(
 		code
+		,loan_bank_code
+		,loan_amount
+		,biz_type
+		,second_car_report
+		
+		,xsz_front
+		,xsz_reverse	
 		,company_code
 		,sale_user_id
-		,loan_bank_code
-		,shop_way
-		
-		,loan_amount
-		,xsz_front
-		,xsz_reverse
-		,cur_node_code		
+		,cur_node_code	
+			
 		,apply_datetime
 		)
 		VALUES(
 		#{code}
-		,#{companyCode}
-		,#{saleUserId}
 		,#{loanBankCode}
-		,#{shopWay}
-		
 		,#{loanAmount}
+		,#{bizType}
+		,#{secondCarReport}
+		
 		,#{xszFront}
 		,#{xszReverse}
+		,#{companyCode}
+		,#{saleUserId}
 		,#{curNodeCode}
+		
 		,#{applyDatetime}
 		)
 	</insert>
@@ -159,11 +169,11 @@
 		UPDATE tdq_credit
 		SET
 		loan_bank_code = #{loanBankCode}
-		,shop_way = #{shopWay}
 		,loan_amount = #{loanAmount}
+		,biz_type = #{bizType}
+		,second_car_report = #{secondCarReport}
 		,xsz_front = #{xszFront}
 		,xsz_reverse = #{xszReverse}
-		,accessory = #{accessory}
 		,cur_node_code= #{curNodeCode}
 		WHERE
 		code = #{code}

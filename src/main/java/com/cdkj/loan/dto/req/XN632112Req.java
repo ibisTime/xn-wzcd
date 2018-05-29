@@ -12,23 +12,31 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN632112Req {
 
+    // 征信单编号
     @NotBlank
     private String creditCode;
 
+    // 贷款银行
     private String loanBank;
 
+    // 贷款金额
     private String loanAmount;
 
+    // 业务种类
     private String bizType;
 
+    // 二手车评估报告
     private String secondCarReport;
 
+    // 行驶证正面
     private String xszFront;
 
+    // 行驶证反面
     private String xszReverse;
 
     private List<XN632112ReqCreditUser> creditUserList;
 
+    // 操作人
     @NotBlank
     private String operator;
 

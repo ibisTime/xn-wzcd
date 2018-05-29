@@ -37,6 +37,6 @@ public interface ICreditAO {
             Credit condition);
 
     // 征信初审
-    public void primaryAudit(XN632113Req req);
+    public void audit(XN632113Req req);
 
 }
