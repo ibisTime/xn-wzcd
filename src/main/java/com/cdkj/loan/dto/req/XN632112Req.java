@@ -3,33 +3,34 @@ package com.cdkj.loan.dto.req;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
+/**
+ * 修改征信
+ * @author: jiafr 
+ * @since: 2018年5月29日 下午7:36:06 
+ * @history:
+ */
 public class XN632112Req {
+
+    private String loanBank;
+
+    private String loanAmount;
+
+    private String bizType;
+
+    private String secondCarReport;
+
+    private String xszFront;
+
+    private String xszReverse;
+
+    private List<XN632112ReqCreditUser> creditUserList;
 
     @NotBlank
     private String operator;
 
     @NotBlank
     private String creditCode;
-
-    @NotBlank
-    private String loanBank;
-
-    @NotBlank
-    private String shopWay;
-
-    @NotBlank
-    private String loanAmount;
-
-    @NotBlank
-    private String xszFront;
-
-    @NotBlank
-    private String xszReverse;
-
-    @NotEmpty
-    private List<XN632112ReqChild> creditUserList;
 
     public String getLoanBank() {
         return loanBank;
@@ -39,20 +40,28 @@ public class XN632112Req {
         this.loanBank = loanBank;
     }
 
-    public String getShopWay() {
-        return shopWay;
-    }
-
-    public void setShopWay(String shopWay) {
-        this.shopWay = shopWay;
-    }
-
     public String getLoanAmount() {
         return loanAmount;
     }
 
     public void setLoanAmount(String loanAmount) {
         this.loanAmount = loanAmount;
+    }
+
+    public String getBizType() {
+        return bizType;
+    }
+
+    public void setBizType(String bizType) {
+        this.bizType = bizType;
+    }
+
+    public String getSecondCarReport() {
+        return secondCarReport;
+    }
+
+    public void setSecondCarReport(String secondCarReport) {
+        this.secondCarReport = secondCarReport;
     }
 
     public String getXszFront() {
@@ -71,20 +80,12 @@ public class XN632112Req {
         this.xszReverse = xszReverse;
     }
 
-    public List<XN632112ReqChild> getCreditUserList() {
+    public List<XN632112ReqCreditUser> getCreditUserList() {
         return creditUserList;
     }
 
-    public void setCreditUserList(List<XN632112ReqChild> creditUserList) {
+    public void setCreditUserList(List<XN632112ReqCreditUser> creditUserList) {
         this.creditUserList = creditUserList;
-    }
-
-    public String getCreditCode() {
-        return creditCode;
-    }
-
-    public void setCreditCode(String creditCode) {
-        this.creditCode = creditCode;
     }
 
     public String getOperator() {
@@ -93,6 +94,14 @@ public class XN632112Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getCreditCode() {
+        return creditCode;
+    }
+
+    public void setCreditCode(String creditCode) {
+        this.creditCode = creditCode;
     }
 
 }

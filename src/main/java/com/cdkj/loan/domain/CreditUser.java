@@ -10,9 +10,6 @@ import com.cdkj.loan.dao.base.ABaseDO;
  */
 public class CreditUser extends ABaseDO {
 
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
-     */
     private static final long serialVersionUID = 1L;
 
     // 编号
@@ -48,83 +45,16 @@ public class CreditUser extends ABaseDO {
     // 面签照片
     private String interviewPic;
 
-    // 贷款抵押笔数
-    private Integer dkdyCount;
+    // 银行征信结果
+    private String bankCreditResultPdf;
 
-    // 贷款抵押贷款余额
-    private Long dkdyAmount;
+    public String getBankCreditResultPdf() {
+        return bankCreditResultPdf;
+    }
 
-    // 贷款抵押近两年逾期次数
-    private Integer dkdy2YearOverTimes;
-
-    // 贷款抵押最高逾期金额
-    private Long dkdyMaxOverAmount;
-
-    // 贷款抵押当前逾期金额
-    private Long dkdyCurrentOverAmount;
-
-    // 贷款抵押近6个月平均月还
-    private Long dkdy6MonthAvgAmount;
-
-    // 贷款信用未结清贷款笔数
-    private Integer hkxyUnsettleCount;
-
-    // 贷款信用未结清贷款余额
-    private Long hkxyUnsettleAmount;
-
-    // 贷款信用近两年逾期次数
-    private Integer hkxy2YearOverTimes;
-
-    // 贷款信用单月最高逾期金额
-    private Long hkxyMonthMaxOverAmount;
-
-    // 贷款信用当前逾期金额
-    private Long hkxyCurrentOverAmount;
-
-    // 贷款信用近6个月平均月还
-    private Long hkxy6MonthAvgAmount;
-
-    // 信用卡张数
-    private Integer xykCount;
-
-    // 信用卡授信总额
-    private Long xykCreditAmount;
-
-    // 信用卡近6个月使用额
-    private Long xyk6MonthUseAmount;
-
-    // 信用卡近两年逾期次数
-    private Integer xyk2YearOverTimes;
-
-    // 信用卡单月最高逾期金额
-    private Long xykMonthMaxOverAmount;
-
-    // 信用卡当前逾期金额
-    private Long xykCurrentOverAmount;
-
-    // 对外担保笔数
-    private Integer outGuaranteesCount;
-
-    // 对外担保余额
-    private Long outGuaranteesAmount;
-
-    // 对外担保备注
-    private String outGuaranteesRemark;
-
-    // 月收入
-    private Long monthIncome;
-
-    // 结息
-    private Double settleInterest;
-
-    // 余额
-    private Long balance;
-
-    // 流水是否体现月收入
-    private String jourShowIncome;
-
-    // 是否打件
-    private String isPrint;
+    public void setBankCreditResultPdf(String bankCreditResultPdf) {
+        this.bankCreditResultPdf = bankCreditResultPdf;
+    }
 
     public String getCode() {
         return code;
@@ -214,218 +144,10 @@ public class CreditUser extends ABaseDO {
         this.interviewPic = interviewPic;
     }
 
-    public Integer getDkdyCount() {
-        return dkdyCount;
-    }
-
-    public void setDkdyCount(Integer dkdyCount) {
-        this.dkdyCount = dkdyCount;
-    }
-
-    public Long getDkdyAmount() {
-        return dkdyAmount;
-    }
-
-    public void setDkdyAmount(Long dkdyAmount) {
-        this.dkdyAmount = dkdyAmount;
-    }
-
-    public Integer getDkdy2YearOverTimes() {
-        return dkdy2YearOverTimes;
-    }
-
-    public void setDkdy2YearOverTimes(Integer dkdy2YearOverTimes) {
-        this.dkdy2YearOverTimes = dkdy2YearOverTimes;
-    }
-
-    public Long getDkdyMaxOverAmount() {
-        return dkdyMaxOverAmount;
-    }
-
-    public void setDkdyMaxOverAmount(Long dkdyMaxOverAmount) {
-        this.dkdyMaxOverAmount = dkdyMaxOverAmount;
-    }
-
-    public Long getDkdyCurrentOverAmount() {
-        return dkdyCurrentOverAmount;
-    }
-
-    public void setDkdyCurrentOverAmount(Long dkdyCurrentOverAmount) {
-        this.dkdyCurrentOverAmount = dkdyCurrentOverAmount;
-    }
-
-    public Long getDkdy6MonthAvgAmount() {
-        return dkdy6MonthAvgAmount;
-    }
-
-    public void setDkdy6MonthAvgAmount(Long dkdy6MonthAvgAmount) {
-        this.dkdy6MonthAvgAmount = dkdy6MonthAvgAmount;
-    }
-
-    public Integer getHkxyUnsettleCount() {
-        return hkxyUnsettleCount;
-    }
-
-    public void setHkxyUnsettleCount(Integer hkxyUnsettleCount) {
-        this.hkxyUnsettleCount = hkxyUnsettleCount;
-    }
-
-    public Long getHkxyUnsettleAmount() {
-        return hkxyUnsettleAmount;
-    }
-
-    public void setHkxyUnsettleAmount(Long hkxyUnsettleAmount) {
-        this.hkxyUnsettleAmount = hkxyUnsettleAmount;
-    }
-
-    public Integer getHkxy2YearOverTimes() {
-        return hkxy2YearOverTimes;
-    }
-
-    public void setHkxy2YearOverTimes(Integer hkxy2YearOverTimes) {
-        this.hkxy2YearOverTimes = hkxy2YearOverTimes;
-    }
-
-    public Long getHkxyMonthMaxOverAmount() {
-        return hkxyMonthMaxOverAmount;
-    }
-
-    public void setHkxyMonthMaxOverAmount(Long hkxyMonthMaxOverAmount) {
-        this.hkxyMonthMaxOverAmount = hkxyMonthMaxOverAmount;
-    }
-
-    public Long getHkxyCurrentOverAmount() {
-        return hkxyCurrentOverAmount;
-    }
-
-    public void setHkxyCurrentOverAmount(Long hkxyCurrentOverAmount) {
-        this.hkxyCurrentOverAmount = hkxyCurrentOverAmount;
-    }
-
-    public Long getHkxy6MonthAvgAmount() {
-        return hkxy6MonthAvgAmount;
-    }
-
-    public void setHkxy6MonthAvgAmount(Long hkxy6MonthAvgAmount) {
-        this.hkxy6MonthAvgAmount = hkxy6MonthAvgAmount;
-    }
-
-    public Integer getXykCount() {
-        return xykCount;
-    }
-
-    public void setXykCount(Integer xykCount) {
-        this.xykCount = xykCount;
-    }
-
-    public Long getXykCreditAmount() {
-        return xykCreditAmount;
-    }
-
-    public void setXykCreditAmount(Long xykCreditAmount) {
-        this.xykCreditAmount = xykCreditAmount;
-    }
-
-    public Long getXyk6MonthUseAmount() {
-        return xyk6MonthUseAmount;
-    }
-
-    public void setXyk6MonthUseAmount(Long xyk6MonthUseAmount) {
-        this.xyk6MonthUseAmount = xyk6MonthUseAmount;
-    }
-
-    public Integer getXyk2YearOverTimes() {
-        return xyk2YearOverTimes;
-    }
-
-    public void setXyk2YearOverTimes(Integer xyk2YearOverTimes) {
-        this.xyk2YearOverTimes = xyk2YearOverTimes;
-    }
-
-    public Long getXykMonthMaxOverAmount() {
-        return xykMonthMaxOverAmount;
-    }
-
-    public void setXykMonthMaxOverAmount(Long xykMonthMaxOverAmount) {
-        this.xykMonthMaxOverAmount = xykMonthMaxOverAmount;
-    }
-
-    public Long getXykCurrentOverAmount() {
-        return xykCurrentOverAmount;
-    }
-
-    public void setXykCurrentOverAmount(Long xykCurrentOverAmount) {
-        this.xykCurrentOverAmount = xykCurrentOverAmount;
-    }
-
-    public Integer getOutGuaranteesCount() {
-        return outGuaranteesCount;
-    }
-
-    public void setOutGuaranteesCount(Integer outGuaranteesCount) {
-        this.outGuaranteesCount = outGuaranteesCount;
-    }
-
-    public Long getOutGuaranteesAmount() {
-        return outGuaranteesAmount;
-    }
-
-    public void setOutGuaranteesAmount(Long outGuaranteesAmount) {
-        this.outGuaranteesAmount = outGuaranteesAmount;
-    }
-
-    public String getOutGuaranteesRemark() {
-        return outGuaranteesRemark;
-    }
-
-    public void setOutGuaranteesRemark(String outGuaranteesRemark) {
-        this.outGuaranteesRemark = outGuaranteesRemark;
-    }
-
-    public Long getMonthIncome() {
-        return monthIncome;
-    }
-
-    public void setMonthIncome(Long monthIncome) {
-        this.monthIncome = monthIncome;
-    }
-
-    public Double getSettleInterest() {
-        return settleInterest;
-    }
-
-    public void setSettleInterest(Double settleInterest) {
-        this.settleInterest = settleInterest;
-    }
-
-    public Long getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Long balance) {
-        this.balance = balance;
-    }
-
-    public String getJourShowIncome() {
-        return jourShowIncome;
-    }
-
-    public void setJourShowIncome(String jourShowIncome) {
-        this.jourShowIncome = jourShowIncome;
-    }
-
-    public String getIsPrint() {
-        return isPrint;
-    }
-
-    public void setIsPrint(String isPrint) {
-        this.isPrint = isPrint;
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
-
-    // ***********db properties****************
+    /*
+     * // 月收入 private Long monthIncome; // 结息 private Double settleInterest; //
+     * 余额 private Long balance; // 流水是否体现月收入 private String jourShowIncome; //
+     * 是否打件 private String isPrint;
+     */
 
 }

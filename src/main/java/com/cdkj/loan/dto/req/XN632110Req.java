@@ -17,10 +17,12 @@ public class XN632110Req {
     private String loanBankCode;
 
     @NotBlank
-    private String shopWay;
+    private String loanAmount;
 
     @NotBlank
-    private String loanAmount;
+    private String bizType;
+
+    private String secondCarReport;
 
     private String xszFront;
 
@@ -30,7 +32,7 @@ public class XN632110Req {
     private String operator;
 
     @NotEmpty
-    private List<XN632110ReqChild> creditUserList;
+    private List<XN632110ReqCreditUser> creditUserList;
 
     public String getOperator() {
         return operator;
@@ -48,12 +50,12 @@ public class XN632110Req {
         this.loanBankCode = loanBankCode;
     }
 
-    public String getShopWay() {
-        return shopWay;
+    public String getSecondCarReport() {
+        return secondCarReport;
     }
 
-    public void setShopWay(String shopWay) {
-        this.shopWay = shopWay;
+    public void setSecondCarReport(String secondCarReport) {
+        this.secondCarReport = secondCarReport;
     }
 
     public String getLoanAmount() {
@@ -80,11 +82,11 @@ public class XN632110Req {
         this.xszReverse = xszReverse;
     }
 
-    public List<XN632110ReqChild> getCreditUserList() {
+    public List<XN632110ReqCreditUser> getCreditUserList() {
         return creditUserList;
     }
 
-    public void setCreditUserList(List<XN632110ReqChild> creditUserList) {
+    public void setCreditUserList(List<XN632110ReqCreditUser> creditUserList) {
         this.creditUserList = creditUserList;
     }
 

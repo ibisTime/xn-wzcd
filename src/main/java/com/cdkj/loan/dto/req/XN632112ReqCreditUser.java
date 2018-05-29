@@ -1,50 +1,47 @@
 package com.cdkj.loan.dto.req;
 
-import org.hibernate.validator.constraints.NotBlank;
+public class XN632112ReqCreditUser {
 
-/**
- * 征信新增 （征信人员）
- * @author: jiafr 
- * @since: 2018年5月25日 下午10:23:09 
- * @history:
- */
-public class XN632110ReqChild {
+    // 征信人员编号
+    private String creditUserCode;
 
     // 姓名
-    @NotBlank
     private String userName;
 
     // 与借款人关系
-    @NotBlank
     private String relation;
 
     // 贷款角色
-    @NotBlank
     private String loanRole;
 
-    // 手机号
-    @NotBlank
-    private String mobile;
-
     // 身份证号
-    @NotBlank
     private String idNo;
 
+    // 手机号
+    private String mobile;
+
     // 身份证正面
-    @NotBlank
     private String idNoFront;
 
     // 身份证反面
-    @NotBlank
     private String idNoReverse;
 
     // 征信查询授权书
-    @NotBlank
     private String authPdf;
 
     // 面签照片
-    @NotBlank
     private String interviewPic;
+
+    // 操作人
+    private String operator;
+
+    public String getCreditUserCode() {
+        return creditUserCode;
+    }
+
+    public void setCreditUserCode(String creditUserCode) {
+        this.creditUserCode = creditUserCode;
+    }
 
     public String getUserName() {
         return userName;
@@ -70,20 +67,20 @@ public class XN632110ReqChild {
         this.loanRole = loanRole;
     }
 
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
     public String getIdNo() {
         return idNo;
     }
 
     public void setIdNo(String idNo) {
         this.idNo = idNo;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getIdNoFront() {
@@ -116,6 +113,14 @@ public class XN632110ReqChild {
 
     public void setInterviewPic(String interviewPic) {
         this.interviewPic = interviewPic;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
 }

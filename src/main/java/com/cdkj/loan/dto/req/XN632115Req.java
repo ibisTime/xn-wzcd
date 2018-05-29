@@ -13,26 +13,36 @@ public class XN632115Req extends APageReq {
      */
     private static final long serialVersionUID = 1L;
 
+    // 客户姓名
+    private String userId;
+
+    // 预算单编号
+    private String budgetOrderCode;
+
     // 申请日期开始
     private String applyDatetimeStart;
 
     // 申请日期结束
     private String applyDatetimeEnd;
 
-    // 贷款银行
-    private String loanBankCode;
-
-    // 客户姓名
-    private String userName;
-
-    // 业务员
-    private String saleUserId;
-
-    // 征信单编号
-    private String creditCode;
-
     // 角色编号
     private String roleCode;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getBudgetOrderCode() {
+        return budgetOrderCode;
+    }
+
+    public void setBudgetOrderCode(String budgetOrderCode) {
+        this.budgetOrderCode = budgetOrderCode;
+    }
 
     public String getApplyDatetimeStart() {
         return applyDatetimeStart;
@@ -48,38 +58,6 @@ public class XN632115Req extends APageReq {
 
     public void setApplyDatetimeEnd(String applyDatetimeEnd) {
         this.applyDatetimeEnd = applyDatetimeEnd;
-    }
-
-    public String getLoanBankCode() {
-        return loanBankCode;
-    }
-
-    public void setLoanBankCode(String loanBankCode) {
-        this.loanBankCode = loanBankCode;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getSaleUserId() {
-        return saleUserId;
-    }
-
-    public void setSaleUserId(String saleUserId) {
-        this.saleUserId = saleUserId;
-    }
-
-    public String getCreditCode() {
-        return creditCode;
-    }
-
-    public void setCreditCode(String creditCode) {
-        this.creditCode = creditCode;
     }
 
     public String getRoleCode() {
