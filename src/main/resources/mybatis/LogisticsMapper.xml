@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.ILogisticsDAO">
+	<resultMap id="logistics_DB_result" type="logistics">
+		<result column="code" property="code" />
+		<result column="type" property="type" />
+		<result column="biz_code" property="bizCode" />
+		<result column="user_id" property="userId" />
+		<result column="biz_node_code" property="bizNodeCode" />
+		
+		<result column="ref_file_list" property="refFileList" />
+		<result column="send_file_list" property="sendFileList" />
+		<result column="send_type" property="sendType" />
+		<result column="logistics_company" property="logisticsCompany" />
+		<result column="logistics_code" property="logisticsCode" />
+		
+		<result column="send_datetime" property="sendDatetime" />
+		<result column="send_note" property="sendNote" />
+		<result column="receipt_datetime" property="receiptDatetime" />
+		<result column="status" property="status" />
+		<result column="remark" property="remark" />
+	</resultMap>
+
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">	
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="type != null and type != '' ">
+				AND t.type = #{type}
+			</if>
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
+			</if>
+			<if test="userId != null and userId != '' ">
+				AND t.user_id = #{userId}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="select_logistics" parameterType="logistics" resultMap="logistics_DB_result">
+		SELECT
+		t.code
+		,t.type
+		,t.biz_code
+		,t.user_id
+		,t.biz_node_code
+		
+		,t.ref_file_list
+		,t.send_file_list
+		,t.send_type
+		,t.logistics_company
+		,t.logistics_code
+		
+		,t.send_datetime
+		,t.send_note
+		,t.receipt_datetime
+		,t.status
+		,t.remark
+		FROM
+		tdq_logistics t
+		<include refid="where_condition"/>
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_logistics_count" parameterType="logistics" resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_logistics t 
+		<include refid="where_condition"/>
+	</select>
+	
+	<insert id="insert_logistics" parameterType="logistics">
+		INSERT INTO tdq_logistics(
+		t.code
+		,t.type
+		,t.biz_code
+		,t.user_id
+		,t.biz_node_code
+		
+		,t.ref_file_list
+		,t.status
+		)
+		VALUES(
+		#{code}
+		,#{type}
+		,#{bizCode}
+		,#{userId}
+		,#{bizNodeCode}
+		
+		,#{refFileList}
+		,#{status}
+		)
+	</insert>
+	
+	<update id="update_logistics_send" parameterType="logistics">
+		UPDATE tdq_logistics t
+		SET
+		t.send_file_list = #{sendFileList}
+		,t.send_type = #{sendType}
+		,t.logistics_company = #{logisticsCompany}
+		,t.logistics_code = #{logisticsCode}
+		,t.send_datetime = #{sendDatetime}
+		
+		,t.send_note = #{sendNote}
+		,t.status = #{status}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_logistics_receive" parameterType="logistics">
+		UPDATE tdq_logistics t
+		SET
+		t.receipt_datetime = #{receiptDatetime}
+		,t.status = #{status}
+		,t.remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_logistics_sendAgain" parameterType="logistics">
+		UPDATE tdq_logistics t
+		SET
+		t.send_datetime = #{sendDatetime}
+		,t.send_note = #{sendNote}
+		,t.status = #{status}
+		WHERE code = #{code}
+	</update>
+	
+	<delete id="delete_logistics" parameterType="logistics">
+		DELETE FROM logistics 
+		WHERE code = #{code}
+	</delete>
+</mapper>

@@ -27,7 +27,7 @@ public enum EGeneratePrefix {
                     "保险公司信息"), COLLECTBANKCARD("CB", "收款账号"), CARDEALER("CD",
                             "经销商信息表"), CARDEALERPROTOCOL("CDT", "经销商协议表"),
 
-    BUDGET("BG", "预订单"), GPS("G", "GPS"),BANK("BA","银行");
+    BUDGET("BG", "预订单"), GPS("G", "GPS"),BANK("BA","银行"), LOGISTICS("L","资料传递");
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();
         for (EGeneratePrefix orderType : EGeneratePrefix.values()) {
