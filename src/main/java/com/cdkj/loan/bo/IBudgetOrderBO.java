@@ -33,4 +33,10 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public void carSettle(BudgetOrder data);
 
+    public void refreshCommitBank(BudgetOrder budgetOrder);
+
+    public void refreshConfirmLoan(BudgetOrder budgetOrder);
+
+    public void refreshEntryLoan(BudgetOrder budgetOrder);
+
 }

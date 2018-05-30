@@ -9,6 +9,8 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632128Req;
+import com.cdkj.loan.dto.req.XN632130Req;
+import com.cdkj.loan.dto.req.XN632137Req;
 
 @Component
 public interface IBudgetOrderAO {
@@ -57,5 +59,11 @@ public interface IBudgetOrderAO {
     // 确认提交银行
     public void commitBank(String code, String operator,
             String bankCommitDatetime, String bankCommitNote);
+
+    // 确认收款
+    public void confirmLoan(XN632130Req req);
+
+    // 录入放款信息
+    public void entryLoan(XN632137Req req);
 
 }

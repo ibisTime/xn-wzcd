@@ -68,6 +68,21 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
     }
 
     @Override
+    public void updaterCommitBank(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_commit_bank"), data);
+    }
+
+    @Override
+    public void updaterConfirmLoan(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_confirm_loan"), data);
+    }
+
+    @Override
+    public void updaterEntryLoan(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_entry_loan"), data);
+    }
+
+    @Override
     public BudgetOrder select(BudgetOrder condition) {
         return super.select(NAMESPACE.concat("select_budgetOrder"), condition,
             BudgetOrder.class);

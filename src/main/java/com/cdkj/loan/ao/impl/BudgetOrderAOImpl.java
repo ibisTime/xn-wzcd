@@ -28,6 +28,8 @@ import com.cdkj.loan.domain.Product;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632128Req;
+import com.cdkj.loan.dto.req.XN632130Req;
+import com.cdkj.loan.dto.req.XN632137Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -437,6 +439,97 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     public void commitBank(String code, String operator,
             String bankCommitDatetime, String bankCommitNote) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+
+        if (!EBudgetOrderNode.COMMITBANK.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是确认提交银行节点，不能操作");
+        }
+
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        budgetOrder.setCurNodeCode(nodeFlowBO
+            .getNodeFlowByCurrentNode(EBudgetOrderNode.COMMITBANK.getCode())
+            .getNextNode());
+        budgetOrder.setRemark(bankCommitNote);
+        budgetOrderBO.refreshCommitBank(budgetOrder);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), operator);
+    }
+
+    @Override
+    public void confirmLoan(XN632130Req req) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+
+        if (!EBudgetOrderNode.CONFIRMLOAN.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是确认放款节点，不能操作");
+        }
+
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        budgetOrder.setReceiptBankCode(req.getReceiptBankCode());
+        budgetOrder.setReceiptBankName(req.getReceiptBankName());
+        budgetOrder.setReceiptBankcardNumber(req.getReceiptBankcardNumber());
+        budgetOrder.setReceiptPdf(req.getReceiptPdf());
+        budgetOrder.setReceiptRemark(req.getReceiptRemark());
+        budgetOrder.setCurNodeCode(nodeFlowBO
+            .getNodeFlowByCurrentNode(EBudgetOrderNode.CONFIRMLOAN.getCode())
+            .getNextNode());
+        budgetOrderBO.refreshConfirmLoan(budgetOrder);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+
+    }
+
+    @Override
+    public void entryLoan(XN632137Req req) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+
+        if (!EBudgetOrderNode.ENTRYLOAN.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是录入放款信息节点，不能操作");
+        }
+
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        budgetOrder.setRepayBankcardNumber(req.getRepayBankcardNumber());
+        budgetOrder.setRepayBillDate(DateUtil.strToDate(req.getRepayBillDate(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setRepayBankDate(DateUtil.strToDate(req.getRepayBankDate(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setRepayCompanyDate(DateUtil.strToDate(
+            req.getRepayCompanyDate(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setRepayFirstMonthAmount(
+            StringValidater.toLong(req.getRepayFirstMonthAmount()));
+        budgetOrder.setRepayMonthAmount(
+            StringValidater.toLong(req.getRepayMonthAmount()));
+        budgetOrder.setLoanDate(DateUtil.strToDate(req.getLoanDate(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setCurNodeCode(nodeFlowBO
+            .getNodeFlowByCurrentNode(EBudgetOrderNode.ENTRYLOAN.getCode())
+            .getNextNode());
+        budgetOrderBO.refreshEntryLoan(budgetOrder);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), req.getOperator());
 
     }
 

@@ -20,7 +20,12 @@ public enum EBudgetOrderNode {
     GPSAZ("002_09", "业务团队安装GPS"), GPSMANAGERAPPROVE("002_10",
             "GPS管理员审核"), AGAINGPSAZ("002_12", "业务团队重新安装GPS"), CARSETTLE(
                     "002_11", "业务团队车辆落户"), DHAPPROVEDATA("002_13",
-                            "业务贷后审核材料"), AGAINGPSA1Z("002_14", "业务团队重新安装GPS");
+                            "业务贷后审核材料"), COMMITBANK3("002_14",
+                                    "驻行人员审核放款材料"), COMMITBANK("002_15",
+                                            "驻行人员回录提交放款材料"), ENTRYLOAN("002_16",
+                                                    "录入放款信息"), CONFIRMLOAN(
+                                                            "002_17",
+                                                            "财务确认银行放款");
 
     public static Map<String, EBudgetOrderNode> getMap() {
         Map<String, EBudgetOrderNode> map = new HashMap<String, EBudgetOrderNode>();

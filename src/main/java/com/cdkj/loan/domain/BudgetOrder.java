@@ -309,6 +309,20 @@ public class BudgetOrder extends ABaseDO {
     // 收款备注
     private String receiptRemark;
 
+    private String repayBankcardNumber;// 卡号
+
+    private Date repayBillDate;// 账单还款日
+
+    private Date repayBankDate;// 银行还款日
+
+    private Date repayCompanyDate;// 公司还款日
+
+    private Long repayFirstMonthAmount;// 首期月供金额
+
+    private Long repayMonthAmount;// 每期月供金额
+
+    private Date loanDate;// 放款日期
+
     // 抵押日期
     private Date pledgeDatetime;
 
@@ -864,6 +878,62 @@ public class BudgetOrder extends ABaseDO {
 
     public String getEmergencyRelation2() {
         return emergencyRelation2;
+    }
+
+    public String getRepayBankcardNumber() {
+        return repayBankcardNumber;
+    }
+
+    public void setRepayBankcardNumber(String repayBankcardNumber) {
+        this.repayBankcardNumber = repayBankcardNumber;
+    }
+
+    public Date getRepayBillDate() {
+        return repayBillDate;
+    }
+
+    public void setRepayBillDate(Date repayBillDate) {
+        this.repayBillDate = repayBillDate;
+    }
+
+    public Date getRepayBankDate() {
+        return repayBankDate;
+    }
+
+    public void setRepayBankDate(Date repayBankDate) {
+        this.repayBankDate = repayBankDate;
+    }
+
+    public Date getRepayCompanyDate() {
+        return repayCompanyDate;
+    }
+
+    public void setRepayCompanyDate(Date repayCompanyDate) {
+        this.repayCompanyDate = repayCompanyDate;
+    }
+
+    public Long getRepayFirstMonthAmount() {
+        return repayFirstMonthAmount;
+    }
+
+    public void setRepayFirstMonthAmount(Long repayFirstMonthAmount) {
+        this.repayFirstMonthAmount = repayFirstMonthAmount;
+    }
+
+    public Long getRepayMonthAmount() {
+        return repayMonthAmount;
+    }
+
+    public void setRepayMonthAmount(Long repayMonthAmount) {
+        this.repayMonthAmount = repayMonthAmount;
+    }
+
+    public Date getLoanDate() {
+        return loanDate;
+    }
+
+    public void setLoanDate(Date loanDate) {
+        this.loanDate = loanDate;
     }
 
     public void setEmergencyRelation2(String emergencyRelation2) {
