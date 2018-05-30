@@ -19,7 +19,7 @@ public class Logistics extends ABaseDO {
     // 编号
     private String code;
 
-    // 类型(1 贷前)
+    // 类型(1 预算单 2 gps)
     private String type;
 
     // 业务编号
