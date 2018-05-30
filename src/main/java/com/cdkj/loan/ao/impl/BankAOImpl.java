@@ -68,9 +68,7 @@ public class BankAOImpl implements IBankAO {
     @Override
     @Transactional
     public void dropBank(String code) {
-        Bank condition = new Bank();
-        condition.setCode(code);
-        bankBO.dropBank(condition);
+        bankBO.dropBank(code);
 
         // 删除利率明细
         BankRate rateCondition = new BankRate();

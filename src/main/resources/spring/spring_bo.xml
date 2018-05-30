@@ -216,4 +216,8 @@
 		<property name="paginableDAO" ref="bankSubbranchDAOImpl"/>
 	</bean>
 	
+	<bean id="loanProductBO" class="com.cdkj.loan.bo.impl.LoanProductBOImpl">
+		<property name="paginableDAO" ref="loanProductDAOImpl"/>
+	</bean>
+	
 </beans>

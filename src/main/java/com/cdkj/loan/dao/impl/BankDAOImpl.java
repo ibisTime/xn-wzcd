@@ -9,7 +9,7 @@ import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.Bank;
 
 @Repository("bankDAOImpl")
-public class BankDAO extends AMybatisTemplate implements IBankDAO {
+public class BankDAOImpl extends AMybatisTemplate implements IBankDAO {
 
     @Override
     public int insert(Bank data) {

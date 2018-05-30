@@ -14,7 +14,7 @@ import com.cdkj.loan.domain.Bank;
 public interface IBankBO extends IPaginableBO<Bank> {
     public String saveBank(Bank data);
 
-    public int dropBank(Bank data);
+    public int dropBank(String code);
 
     public Bank getBank(Bank condition);
 

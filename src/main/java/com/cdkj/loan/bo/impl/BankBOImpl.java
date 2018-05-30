@@ -11,6 +11,7 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBankDAO;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.exception.BizException;
 
 @Component
 public class BankBOImpl extends PaginableBOImpl<Bank> implements IBankBO {
@@ -20,20 +21,22 @@ public class BankBOImpl extends PaginableBOImpl<Bank> implements IBankBO {
     @Override
     public String saveBank(Bank data) {
         String code = null;
-        if (data != null) {
-            if (data.getCode() == null) {
-                code = OrderNoGenerater
-                    .generate(EGeneratePrefix.BANK.getCode());
-                data.setCode(code);
-            }
+        if (data != null && data.getCode() == null) {
+            code = OrderNoGenerater.generate(EGeneratePrefix.BANK.getCode());
+            data.setCode(code);
             bankDAO.insert(data);
         }
         return code;
     }
 
     @Override
-    public int dropBank(Bank data) {
-        return bankDAO.delete(data);
+    public int dropBank(String code) {
+        if (null == code) {
+            throw new BizException("xn0000", "编号不能为空");
+        }
+        Bank condition = new Bank();
+        condition.setCode(code);
+        return bankDAO.delete(condition);
     }
 
     @Override
