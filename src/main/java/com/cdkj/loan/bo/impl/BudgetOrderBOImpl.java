@@ -87,6 +87,13 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     }
 
     @Override
+    public void refreshGpsManagerApprove(BudgetOrder data) {
+        if (StringUtils.isNotBlank(data.getCode())) {
+            budgetOrderDAO.updaterGpsManagerApprove(data);
+        }
+    }
+
+    @Override
     public List<BudgetOrder> queryBudgetOrderList(BudgetOrder condition) {
         return budgetOrderDAO.selectList(condition);
     }

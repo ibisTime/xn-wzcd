@@ -53,6 +53,11 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
     }
 
     @Override
+    public void updaterGpsManagerApprove(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_gps_manager_approve"), data);
+    }
+
+    @Override
     public BudgetOrder select(BudgetOrder condition) {
         return super.select(NAMESPACE.concat("select_budgetOrder"), condition,
             BudgetOrder.class);

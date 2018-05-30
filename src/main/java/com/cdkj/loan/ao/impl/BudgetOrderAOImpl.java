@@ -1,6 +1,7 @@
 package com.cdkj.loan.ao.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -15,6 +17,7 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632120Req;
+import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -34,6 +37,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private INodeFlowBO nodeFlowBO;
+
+    @Autowired
+    private IBudgetOrderGpsBO budgetOrderGpsBO;
 
     @Override
     public String addBudgetOrder(XN632120Req req) {
@@ -275,6 +281,52 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 日志记录
         sysBizLogBO.saveSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
             node.getCode(), node.getValue(), operator);
+    }
+
+    @Override
+    public void advancefund(String code, String operator,
+            List<XN632126ReqGps> gpsAzList) {
+        // 删除
+        budgetOrderGpsBO.removeBudgetOrderGpsList(code);
+
+        // 添加
+        budgetOrderGpsBO.saveBudgetOrderGpsList(code, gpsAzList);
+
+    }
+
+    @Override
+    public void gpsManagerApprove(String code, String operator,
+            String approveResult, String approveNote) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+
+        if (!EBudgetOrderNode.GPSMANAGERAPPROVE.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是GPS管理员审核节点，不能操作");
+        }
+
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(
+                    EBudgetOrderNode.GPSMANAGERAPPROVE.getCode())
+                .getNextNode());
+        } else {
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(
+                    EBudgetOrderNode.GPSMANAGERAPPROVE.getCode())
+                .getBackNode());
+        }
+        budgetOrder.setRemark(approveNote);
+        budgetOrderBO.refreshGpsManagerApprove(budgetOrder);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), operator);
     }
 
     @Override
