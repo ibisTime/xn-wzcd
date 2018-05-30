@@ -89,7 +89,8 @@
 	<update id="update_gps_apply" parameterType="gps">
 		UPDATE tb_gps
 		SET
-		company_code = #{companyCode}
+		apply_code = #{applyCode}
+		,company_code = #{companyCode}
 		,apply_user = #{applyUser}
 		,apply_status = #{applyStatus}
 		,apply_datetime = #{applyDatetime}

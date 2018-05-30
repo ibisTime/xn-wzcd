@@ -322,7 +322,7 @@ public class BudgetOrder extends ABaseDO {
     private Date repayCompanyDate;
 
     // 首期月供金额
-    private String repayFirstMonthAmount;
+    private Long repayFirstMonthAmount;
 
     // 首期还款日期
     private Date repayFirstMonthDatetime;
@@ -1210,11 +1210,11 @@ public class BudgetOrder extends ABaseDO {
         this.repayCompanyDate = repayCompanyDate;
     }
 
-    public String getRepayFirstMonthAmount() {
+    public Long getRepayFirstMonthAmount() {
         return repayFirstMonthAmount;
     }
 
-    public void setRepayFirstMonthAmount(String repayFirstMonthAmount) {
+    public void setRepayFirstMonthAmount(Long repayFirstMonthAmount) {
         this.repayFirstMonthAmount = repayFirstMonthAmount;
     }
 

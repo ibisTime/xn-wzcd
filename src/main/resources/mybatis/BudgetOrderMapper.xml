@@ -607,6 +607,14 @@
 		WHERE code = #{code}
 	</update>
 	
+	<update id="update_commit_bank" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
 	<update id="update_car_settle" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
@@ -614,6 +622,27 @@
 		,advance_fund_amount = #{advanceFundAmount}
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_confirm_loan" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		receipt_bank_code = #{receiptBankCode}
+		,receipt_bank_name = #{receiptBankName}
+		,receipt_bankcard_number = #{receiptBankcardNumber}
+		,receipt_pdf = #{receiptPdf}
+		,receipt_remark = #{receiptRemark}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_entry_loan" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		
+		
+		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 

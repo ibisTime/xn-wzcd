@@ -34,4 +34,13 @@ public class XN632134Req {
     public void setOperator(String operator) {
         this.operator = operator;
     }
+
+    public String getEnterLocation() {
+        return enterLocation;
+    }
+
+    public void setEnterLocation(String enterLocation) {
+        this.enterLocation = enterLocation;
+    }
+
 }
