@@ -18,14 +18,14 @@ public class BudgetOrder extends ABaseDO {
     // 编号
     private String code;
 
+    // 还款业务编号
+    private String repayBizCode;
+
     // 贷款产品编号
     private String loanProductCode;
 
     // 产品名称
     private String loanProductName;
-
-    // 贷款银行
-    private String loanBank;
 
     // GPS费用
     private Long gpsFee;
@@ -41,6 +41,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 征信单编号
     private String creditCode;
+
+    // 贷款银行
+    private String loanBank;
 
     // 业务种类
     private String bizType;
@@ -72,11 +75,14 @@ public class BudgetOrder extends ABaseDO {
     // 首付比例
     private Double firstRate;
 
-    // 贷款额
+    // 贷款金额
     private Long loanAmount;
 
     // 落户地点
     private String settleAddress;
+
+    // 申请人姓名
+    private String applyUserId;
 
     // 申请人姓名
     private String applyUserName;
@@ -92,6 +98,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 学历
     private String education;
+
+    // 证件类型
+    private String idKind;
 
     // 身份证号
     private String idNo;
@@ -292,7 +301,40 @@ public class BudgetOrder extends ABaseDO {
     private String bankCommitNote;
 
     // 银行放款时间
-    private Date bankLoanDatetime;
+    private Date bankFkDatetime;
+
+    // 还款卡银行行别
+    private String repayBankCode;
+
+    // 还款卡银行名称
+    private String repayBankName;
+
+    // 还款卡开户支行
+    private String repaySubbranch;
+
+    // 还款卡号
+    private String repayBankcardNumber;
+
+    // 银行账单日
+    private int repayBillDate;
+
+    // 银行还款日
+    private int repayBankDate;
+
+    // 公司还款日
+    private Date repayCompanyDate;
+
+    // 首期月供金额
+    private String repayFirstMonthAmount;
+
+    // 首期还款日期
+    private Date repayFirstMonthDatetime;
+
+    // 每期月供金额
+    private Long repayMonthAmount;
+
+    // 银行放款日期
+    private Date bankLoanDate;
 
     // 收款银行
     private String receiptBankCode;
@@ -390,12 +432,12 @@ public class BudgetOrder extends ABaseDO {
         this.loanProductName = loanProductName;
     }
 
-    public String getLoanBank() {
-        return loanBank;
+    public String getRepayBizCode() {
+        return repayBizCode;
     }
 
-    public void setLoanBank(String loanBank) {
-        this.loanBank = loanBank;
+    public void setRepayBizCode(String repayBizCode) {
+        this.repayBizCode = repayBizCode;
     }
 
     public Long getGpsFee() {
@@ -436,6 +478,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCreditCode(String creditCode) {
         this.creditCode = creditCode;
+    }
+
+    public String getLoanBank() {
+        return loanBank;
+    }
+
+    public void setLoanBank(String loanBank) {
+        this.loanBank = loanBank;
     }
 
     public String getBizType() {
@@ -534,6 +584,14 @@ public class BudgetOrder extends ABaseDO {
         this.settleAddress = settleAddress;
     }
 
+    public String getApplyUserId() {
+        return applyUserId;
+    }
+
+    public void setApplyUserId(String applyUserId) {
+        this.applyUserId = applyUserId;
+    }
+
     public String getApplyUserName() {
         return applyUserName;
     }
@@ -572,6 +630,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setEducation(String education) {
         this.education = education;
+    }
+
+    public String getIdKind() {
+        return idKind;
+    }
+
+    public void setIdKind(String idKind) {
+        this.idKind = idKind;
     }
 
     public String getIdNo() {
@@ -1102,12 +1168,100 @@ public class BudgetOrder extends ABaseDO {
         this.bankCommitNote = bankCommitNote;
     }
 
-    public Date getBankLoanDatetime() {
-        return bankLoanDatetime;
+    public Date getBankFkDatetime() {
+        return bankFkDatetime;
     }
 
-    public void setBankLoanDatetime(Date bankLoanDatetime) {
-        this.bankLoanDatetime = bankLoanDatetime;
+    public void setBankFkDatetime(Date bankFkDatetime) {
+        this.bankFkDatetime = bankFkDatetime;
+    }
+
+    public String getRepayBankCode() {
+        return repayBankCode;
+    }
+
+    public void setRepayBankCode(String repayBankCode) {
+        this.repayBankCode = repayBankCode;
+    }
+
+    public String getRepayBankName() {
+        return repayBankName;
+    }
+
+    public void setRepayBankName(String repayBankName) {
+        this.repayBankName = repayBankName;
+    }
+
+    public String getRepaySubbranch() {
+        return repaySubbranch;
+    }
+
+    public void setRepaySubbranch(String repaySubbranch) {
+        this.repaySubbranch = repaySubbranch;
+    }
+
+    public String getRepayBankcardNumber() {
+        return repayBankcardNumber;
+    }
+
+    public void setRepayBankcardNumber(String repayBankcardNumber) {
+        this.repayBankcardNumber = repayBankcardNumber;
+    }
+
+    public int getRepayBillDate() {
+        return repayBillDate;
+    }
+
+    public void setRepayBillDate(int repayBillDate) {
+        this.repayBillDate = repayBillDate;
+    }
+
+    public int getRepayBankDate() {
+        return repayBankDate;
+    }
+
+    public void setRepayBankDate(int repayBankDate) {
+        this.repayBankDate = repayBankDate;
+    }
+
+    public Date getRepayCompanyDate() {
+        return repayCompanyDate;
+    }
+
+    public void setRepayCompanyDate(Date repayCompanyDate) {
+        this.repayCompanyDate = repayCompanyDate;
+    }
+
+    public String getRepayFirstMonthAmount() {
+        return repayFirstMonthAmount;
+    }
+
+    public void setRepayFirstMonthAmount(String repayFirstMonthAmount) {
+        this.repayFirstMonthAmount = repayFirstMonthAmount;
+    }
+
+    public Date getRepayFirstMonthDatetime() {
+        return repayFirstMonthDatetime;
+    }
+
+    public void setRepayFirstMonthDatetime(Date repayFirstMonthDatetime) {
+        this.repayFirstMonthDatetime = repayFirstMonthDatetime;
+    }
+
+    public Long getRepayMonthAmount() {
+        return repayMonthAmount;
+    }
+
+    public void setRepayMonthAmount(Long repayMonthAmount) {
+        this.repayMonthAmount = repayMonthAmount;
+    }
+
+    public Date getBankLoanDate() {
+        return bankLoanDate;
+    }
+
+    public void setBankLoanDate(Date bankLoanDate) {
+        this.bankLoanDate = bankLoanDate;
     }
 
     public String getReceiptBankCode() {
@@ -1245,5 +1399,4 @@ public class BudgetOrder extends ABaseDO {
     public void setApplyDatetimeEnd(Date applyDatetimeEnd) {
         this.applyDatetimeEnd = applyDatetimeEnd;
     }
-
 }

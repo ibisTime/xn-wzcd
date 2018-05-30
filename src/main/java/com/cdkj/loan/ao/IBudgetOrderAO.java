@@ -35,8 +35,7 @@ public interface IBudgetOrderAO {
 
     // 财务确认垫资
     public void advanceFund(String code, String operator,
-            String advanceFundDatetime, String advanceFundAmount,
-            String billPdf);
+            String advanceFundDatetime, String advanceFundAmount, String billPdf);
 
     // 安装GPS
     public void installGps(String code, String operator,
@@ -57,5 +56,8 @@ public interface IBudgetOrderAO {
     // 确认提交银行
     public void commitBank(String code, String operator,
             String bankCommitDatetime, String bankCommitNote);
+
+    // 确定入档
+    public void archiveOrder(String code, String operator, String enterLocation);
 
 }

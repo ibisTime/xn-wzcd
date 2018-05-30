@@ -138,18 +138,16 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setEmergencyName2(req.getEmergencyName2());
         data.setEmergencyRelation2(req.getEmergencyRelation2());
         data.setEmergencyMobile2(req.getEmergencyMobile2());
-        data.setJourDatetimeStart(DateUtil.strToDate(req.getJourDatetimeStart(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setJourDatetimeStart(DateUtil.strToDate(
+            req.getJourDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setJourDatetimeEnd(DateUtil.strToDate(req.getJourDatetimeEnd(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
 
         data.setJourIncome(StringValidater.toLong(req.getJourIncome()));
         data.setJourExpend(StringValidater.toLong(req.getJourExpend()));
         data.setJourBalance(StringValidater.toLong(req.getJourBalance()));
-        data.setJourMonthIncome(
-            StringValidater.toLong(req.getJourMonthIncome()));
-        data.setJourMonthExpend(
-            StringValidater.toLong(req.getJourMonthExpend()));
+        data.setJourMonthIncome(StringValidater.toLong(req.getJourMonthIncome()));
+        data.setJourMonthExpend(StringValidater.toLong(req.getJourMonthExpend()));
 
         data.setJourRemark(req.getJourRemark());
         data.setHouseContract(req.getHouseContract());
@@ -162,10 +160,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         EBudgetOrderNode node = EBudgetOrderNode.WRITE_BUDGET_ORDER;
         if (EButtonCode.SEND.getCode().equals(req.getDealType())) {
             // 下一个节点
-            String nextNode = nodeFlowBO
-                .getNodeFlowByCurrentNode(
-                    EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode())
-                .getNextNode();
+            String nextNode = nodeFlowBO.getNodeFlowByCurrentNode(
+                EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode()).getNextNode();
             node = EBudgetOrderNode.getMap().get(nextNode);
         }
 
@@ -183,8 +179,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             String approveNote, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
-        if (!EBudgetOrderNode.RISK_APPROVE.getCode()
-            .equals(budgetOrder.getCurNodeCode())) {
+        if (!EBudgetOrderNode.RISK_APPROVE.getCode().equals(
+            budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是风控专员审核节点，不能操作");
         }
@@ -192,26 +188,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            budgetOrder
-                .setCurNodeCode(
-                    nodeFlowBO
-                        .getNodeFlowByCurrentNode(
-                            EBudgetOrderNode.RISK_APPROVE.getCode())
-                        .getNextNode());
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                EBudgetOrderNode.RISK_APPROVE.getCode()).getNextNode());
         } else {
-            budgetOrder
-                .setCurNodeCode(
-                    nodeFlowBO
-                        .getNodeFlowByCurrentNode(
-                            EBudgetOrderNode.RISK_APPROVE.getCode())
-                        .getBackNode());
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                EBudgetOrderNode.RISK_APPROVE.getCode()).getBackNode());
         }
         budgetOrder.setRemark(approveNote);
         budgetOrderBO.refreshriskApprove(budgetOrder);
 
         // 日志记录
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-            .get(budgetOrder.getCurNodeCode());
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+            budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), operator);
@@ -222,8 +210,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             String approveResult, String approveNote) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
-        if (!EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode()
-            .equals(budgetOrder.getCurNodeCode())) {
+        if (!EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode().equals(
+            budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是风控主管审核节点，不能操作");
         }
@@ -231,18 +219,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            budgetOrder.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(
-                    EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode())
-                .getNextNode());
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode()).getNextNode());
 
             // 生成 收回手续费
             BudgetOrderFee data = new BudgetOrderFee();
 
             data.setCompanyCode(budgetOrder.getCompanyCode());
             data.setUserId(budgetOrder.getApplyUserName());
-            data.setShouldAmount(budgetOrder.getFee() + budgetOrder.getAuthFee()
-                    + budgetOrder.getGpsFee() + budgetOrder.getMonthDeposit());
+            data.setShouldAmount(budgetOrder.getFee()
+                    + budgetOrder.getAuthFee() + budgetOrder.getGpsFee()
+                    + budgetOrder.getMonthDeposit());
             data.setIsSettled("0");
 
             if (null != sysUserBO.getUser(operator)) {
@@ -252,17 +239,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             data.setBudgetOrder(code);
             budgetOrderFeeBO.saveBudgetOrderFee(data);
         } else {
-            budgetOrder.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(
-                    EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode())
-                .getBackNode());
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode()).getBackNode());
         }
         budgetOrder.setRemark(approveNote);
         budgetOrderBO.refreshriskChargeApprove(budgetOrder);
 
         // 日志记录
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-            .get(budgetOrder.getCurNodeCode());
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+            budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), operator);
@@ -283,8 +268,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.interview(budgetOrder);
 
         // 日志记录
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-            .get(budgetOrder.getCurNodeCode());
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+            budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), operator);
@@ -295,26 +280,23 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             String approveResult, String approveNote) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
-        if (!EBudgetOrderNode.BIZ_CHARGE_APPROVE.getCode()
-            .equals(budgetOrder.getCurNodeCode())) {
+        if (!EBudgetOrderNode.BIZ_CHARGE_APPROVE.getCode().equals(
+            budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是业务总监审核节点，不能操作");
         }
 
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(
-            EBudgetOrderNode.BIZ_CHARGE_APPROVE.getCode());
+        NodeFlow nodeFlow = nodeFlowBO
+            .getNodeFlowByCurrentNode(EBudgetOrderNode.BIZ_CHARGE_APPROVE
+                .getCode());
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            budgetOrder.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(
-                    EBudgetOrderNode.BIZ_CHARGE_APPROVE.getCode())
-                .getNextNode());
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                EBudgetOrderNode.BIZ_CHARGE_APPROVE.getCode()).getNextNode());
         } else {
-            budgetOrder.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(
-                    EBudgetOrderNode.BIZ_CHARGE_APPROVE.getCode())
-                .getBackNode());
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                EBudgetOrderNode.BIZ_CHARGE_APPROVE.getCode()).getBackNode());
             budgetOrder.setCurNodeCode(nodeFlow.getBackNode());
         }
 
@@ -322,35 +304,34 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.refreshbizChargeApprove(budgetOrder);
 
         // 日志记录
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-            .get(budgetOrder.getCurNodeCode());
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+            budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), operator);
     }
 
     public void advanceFund(String code, String operator,
-            String advanceFundDatetime, String advanceFundAmount,
-            String billPdf) {
+            String advanceFundDatetime, String advanceFundAmount, String billPdf) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
-        budgetOrder.setAdvanceFundDatetime(DateUtil
-            .strToDate(advanceFundDatetime, DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder
-            .setAdvanceFundAmount(StringValidater.toLong(advanceFundAmount));
+        budgetOrder.setAdvanceFundDatetime(DateUtil.strToDate(
+            advanceFundDatetime, DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setAdvanceFundAmount(StringValidater
+            .toLong(advanceFundAmount));
 
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
-        budgetOrder.setAdvanceFundDatetime(DateUtil
-            .strToDate(advanceFundDatetime, DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder
-            .setAdvanceFundAmount(StringValidater.toLong(advanceFundAmount));
+        budgetOrder.setAdvanceFundDatetime(DateUtil.strToDate(
+            advanceFundDatetime, DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setAdvanceFundAmount(StringValidater
+            .toLong(advanceFundAmount));
         EBudgetOrderNode node = EBudgetOrderNode.ADVANCEFUND;
         budgetOrder.setCurNodeCode(node.getCode());
         budgetOrderBO.advancefund(budgetOrder);
 
         // 日志记录
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-            .get(budgetOrder.getCurNodeCode());
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+            budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), operator);
@@ -379,8 +360,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             String approveResult, String approveNote) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
-        if (!EBudgetOrderNode.GPSMANAGERAPPROVE.getCode()
-            .equals(budgetOrder.getCurNodeCode())) {
+        if (!EBudgetOrderNode.GPSMANAGERAPPROVE.getCode().equals(
+            budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是GPS管理员审核节点，不能操作");
         }
@@ -388,22 +369,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            budgetOrder.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(
-                    EBudgetOrderNode.GPSMANAGERAPPROVE.getCode())
-                .getNextNode());
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                EBudgetOrderNode.GPSMANAGERAPPROVE.getCode()).getNextNode());
         } else {
-            budgetOrder.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(
-                    EBudgetOrderNode.GPSMANAGERAPPROVE.getCode())
-                .getBackNode());
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                EBudgetOrderNode.GPSMANAGERAPPROVE.getCode()).getBackNode());
         }
         budgetOrder.setRemark(approveNote);
         budgetOrderBO.refreshGpsManagerApprove(budgetOrder);
 
         // 日志记录
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-            .get(budgetOrder.getCurNodeCode());
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+            budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), operator);
@@ -412,8 +389,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     public void carSettle(XN632128Req req) {
         BudgetOrder data = budgetOrderBO.getBudgetOrder(req.getCode());
-        data.setCarSettleDatetime(DateUtil.strToDate(req.getCarSettleDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setCarSettleDatetime(DateUtil.strToDate(
+            req.getCarSettleDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCarNumber(req.getCarNumber());
         data.setCarInvoice(req.getCarInvoice());
         data.setCarHgz(req.getCarHgz());
@@ -457,4 +434,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         return order;
     }
 
+    @Override
+    public void archiveOrder(String code, String operator, String enterLocation) {
+        BudgetOrder order = budgetOrderBO.getBudgetOrder(code);
+    }
 }
