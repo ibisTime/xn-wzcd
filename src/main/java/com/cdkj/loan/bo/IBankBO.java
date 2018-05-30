@@ -16,7 +16,7 @@ public interface IBankBO extends IPaginableBO<Bank> {
 
     public int dropBank(String code);
 
-    public Bank getBank(Bank condition);
+    public Bank getBank(String code);
 
     public int editBank(Bank data);
 
