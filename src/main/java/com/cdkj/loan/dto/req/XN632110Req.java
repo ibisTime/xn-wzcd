@@ -31,6 +31,17 @@ public class XN632110Req {
     @NotBlank
     private String operator;
 
+    @NotBlank
+    private String buttonCode;
+
+    public String getButtonCode() {
+        return buttonCode;
+    }
+
+    public void setButtonCode(String buttonCode) {
+        this.buttonCode = buttonCode;
+    }
+
     @NotEmpty
     private List<XN632110ReqCreditUser> creditUserList;
 

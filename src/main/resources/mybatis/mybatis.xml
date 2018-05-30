@@ -82,6 +82,8 @@
 		<typeAlias alias="carDealer" type="com.cdkj.loan.domain.CarDealer" />
 		<typeAlias alias="carDealerProtocol" type="com.cdkj.loan.domain.CarDealerProtocol" />
 
+		<!-- 资料传递 -->
+		<typeAlias alias="logistics" type="com.cdkj.loan.domain.Logistics" />
 		
 		<!-- 行政 -->
 		<typeAlias alias="gps" type="com.cdkj.loan.domain.Gps" />

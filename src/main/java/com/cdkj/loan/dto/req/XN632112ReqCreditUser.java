@@ -1,5 +1,11 @@
 package com.cdkj.loan.dto.req;
 
+/**
+ * 征信修改（征信人员）
+ * @author: jiafr 
+ * @since: 2018年5月29日 下午11:16:15 
+ * @history:
+ */
 public class XN632112ReqCreditUser {
 
     // 征信人员编号
@@ -31,9 +37,6 @@ public class XN632112ReqCreditUser {
 
     // 面签照片
     private String interviewPic;
-
-    // 操作人
-    private String operator;
 
     public String getCreditUserCode() {
         return creditUserCode;
@@ -113,14 +116,6 @@ public class XN632112ReqCreditUser {
 
     public void setInterviewPic(String interviewPic) {
         this.interviewPic = interviewPic;
-    }
-
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
     }
 
 }

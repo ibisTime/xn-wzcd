@@ -18,7 +18,7 @@ public class XN632122 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.approveAreaManager(req.getCode(), req.getOperator(),
+        budgetOrderAO.riskChargeApprove(req.getCode(), req.getOperator(),
             req.getApproveResult(), req.getApproveNote());
         return new BooleanRes(true);
     }

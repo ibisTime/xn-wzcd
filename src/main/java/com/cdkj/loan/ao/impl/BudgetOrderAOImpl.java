@@ -1,7 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -111,17 +110,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         data.setSaleUserId(req.getOperator());
         data.setApplyDatetime(new Date());
-        data.setCurNodeCode("");
 
-        EBudgetOrderNode node = EBudgetOrderNode.START_NODE;
-        data.setCurNodeCode(node.getCode());
+        EBudgetOrderNode node = EBudgetOrderNode.WRITE_BUDGET_ORDER;
         if (EButtonCode.SEND.getCode().equals(req.getDealType())) {
             node = EBudgetOrderNode.getMap()
                 .get(nodeFlowBO.getNodeFlowByCurrentNode(
-                    EBudgetOrderNode.AREA_AUDIT.getCode()));
-            data.setCurNodeCode(EBudgetOrderNode.AREA_AUDIT.getCode());
+                    EBudgetOrderNode.RISK_APPROVE.getCode()));
         }
 
+        data.setCurNodeCode(node.getCode());
         String code = budgetOrderBO.saveBudgetOrder(data);
         // 日志记录
         sysBizLogBO.saveSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
@@ -134,7 +131,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             String approveNote, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
-        if (!EBudgetOrderNode.AREA_AUDIT.getCode()
+        if (!EBudgetOrderNode.RISK_APPROVE.getCode()
             .equals(budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是风控专员审核节点，不能操作");
@@ -143,13 +140,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            budgetOrder.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(EBudgetOrderNode.AREA_AUDIT.getCode())
-                .getNextNode());
+            budgetOrder
+                .setCurNodeCode(
+                    nodeFlowBO
+                        .getNodeFlowByCurrentNode(
+                            EBudgetOrderNode.RISK_APPROVE.getCode())
+                        .getNextNode());
         } else {
-            budgetOrder.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(EBudgetOrderNode.AREA_AUDIT.getCode())
-                .getBackNode());
+            budgetOrder
+                .setCurNodeCode(
+                    nodeFlowBO
+                        .getNodeFlowByCurrentNode(
+                            EBudgetOrderNode.RISK_APPROVE.getCode())
+                        .getBackNode());
         }
         budgetOrder.setRemark(approveNote);
         budgetOrderBO.refreshriskApprove(budgetOrder);
@@ -163,24 +166,45 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public void editBudgetOrder(BudgetOrder data) {
-        budgetOrderBO.refreshBudgetOrder(data);
-    }
+    public void riskChargeApprove(String code, String operator,
+            String approveResult, String approveNote) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
-    @Override
-    public int dropBudgetOrder(String code) {
-        return budgetOrderBO.removeBudgetOrder(code);
+        if (!EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是风控主管审核节点，不能操作");
+        }
+
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(
+                    EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode())
+                .getNextNode());
+        } else {
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(
+                    EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode())
+                .getBackNode());
+        }
+        budgetOrder.setRemark(approveNote);
+        budgetOrderBO.refreshriskApprove(budgetOrder);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), operator);
+
     }
 
     @Override
     public Paginable<BudgetOrder> queryBudgetOrderPage(int start, int limit,
             BudgetOrder condition) {
         return budgetOrderBO.getPaginable(start, limit, condition);
-    }
-
-    @Override
-    public List<BudgetOrder> queryBudgetOrderList(BudgetOrder condition) {
-        return budgetOrderBO.queryBudgetOrderList(condition);
     }
 
     @Override

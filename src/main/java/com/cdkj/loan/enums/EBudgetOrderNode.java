@@ -10,9 +10,12 @@ import java.util.Map;
  * @history:
  */
 public enum EBudgetOrderNode {
-    START_NODE("002_01", "填写预算单"), AREA_AUDIT("002_02",
-            "区域总经理准入审核"), COMPANY_AUDIT("002_03", "省分公司总经理审核"), TWO_AUDIT(
-                    "002_04", "准入审核二审"), LOAN("002_05", "确认用款单");
+    WRITE_BUDGET_ORDER("002_01", "填写准入申请单"), RISK_APPROVE("002_02",
+            "风控专员审核"), RISK_CHARGE_APPROVE("002_03", "风控主管审核"), AGAIN_WRITE(
+                    "002_04",
+                    "重新填写准入申请单"), INTERVIEW("002_05", "面签"), BIZ_CHARGE_APPROVE(
+                            "002_06", "业务总监审核"), ADVANCEFUND("002_07",
+                                    "财务垫资"), AGAIN_INTERVIEW("002_08", "重新面签");
 
     public static Map<String, EBudgetOrderNode> getMap() {
         Map<String, EBudgetOrderNode> map = new HashMap<String, EBudgetOrderNode>();
