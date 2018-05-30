@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -346,6 +347,16 @@ public class BudgetOrder extends ABaseDO {
     private Date applyDatetimeStart;// 申请时间起始
 
     private Date applyDatetimeEnd;// 申请时间结束
+
+    private List<BudgetOrderGps> budgetOrderGpsList;// gps安装列表
+
+    public List<BudgetOrderGps> getBudgetOrderGpsList() {
+        return budgetOrderGpsList;
+    }
+
+    public void setBudgetOrderGpsList(List<BudgetOrderGps> budgetOrderGpsList) {
+        this.budgetOrderGpsList = budgetOrderGpsList;
+    }
 
     public String getApplyUser() {
         return applyUser;

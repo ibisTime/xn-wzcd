@@ -18,6 +18,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.Product;
@@ -380,6 +381,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     public BudgetOrder getBudgetOrder(String code) {
-        return budgetOrderBO.getBudgetOrder(code);
+        BudgetOrder order = budgetOrderBO.getBudgetOrder(code);
+        BudgetOrderGps budgetOrderGps = new BudgetOrderGps();
+        budgetOrderGps.setBudgetOrder(code);
+        List<BudgetOrderGps> budgetOrderGpsList = budgetOrderGpsBO
+            .queryBudgetOrderGpsList(budgetOrderGps);
+        order.setBudgetOrderGpsList(budgetOrderGpsList);
+        return order;
     }
 }
