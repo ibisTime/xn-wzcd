@@ -112,11 +112,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         data.setApplyDatetime(new Date());
 
+        // 当前节点
         EBudgetOrderNode node = EBudgetOrderNode.WRITE_BUDGET_ORDER;
         if (EButtonCode.SEND.getCode().equals(req.getDealType())) {
-            node = EBudgetOrderNode.getMap()
-                .get(nodeFlowBO.getNodeFlowByCurrentNode(
-                    EBudgetOrderNode.RISK_APPROVE.getCode()));
+            // 下一个节点
+            String nextNode = nodeFlowBO
+                .getNodeFlowByCurrentNode(
+                    EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode())
+                .getNextNode();
+            node = EBudgetOrderNode.getMap().get(nextNode);
         }
 
         data.setCurNodeCode(node.getCode());
