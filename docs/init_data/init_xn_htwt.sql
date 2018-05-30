@@ -166,6 +166,7 @@ insert into `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime
 insert into `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('exchange_rule','jf_exchange','100','admin','2018-05-21 14:08:46','积分兑换人民币比例','CD-CHTWT000020','CD-CHTWT000020');
 insert into `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('service_charge_rule','tq_service','10','admin','2018-05-21 14:08:46','提前还款服务费','CD-CHTWT000020','CD-CHTWT000020');
 
+insert into `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('back_rate','budget_back_rate','0.5','admin',now(),'返点比例','CD-CHTWT000020','CD-CHTWT000020');
 /*
 -- Query: SELECT code,name,type,url,order_no,'admin' updater, now() as update_datetime,remark,parent_code FROM tsys_menu
 -- Date: 2018-05-30 15:14

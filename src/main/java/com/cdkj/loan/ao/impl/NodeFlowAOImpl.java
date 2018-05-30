@@ -31,4 +31,10 @@ public class NodeFlowAOImpl implements INodeFlowAO {
     public NodeFlow getNodeFlow(String id) {
         return nodeFlowBO.getNodeFlow(id);
     }
+
+    @Override
+    public void doModifyFileList(String id, String fileList) {
+        nodeFlowBO.refreshNodeFlow(id, fileList);
+    }
+
 }

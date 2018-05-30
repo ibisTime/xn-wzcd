@@ -146,6 +146,7 @@ CREATE TABLE `tsys_node_flow` (
     `current_node` VARCHAR(32) NOT NULL COMMENT '当前节点',
     `next_node` VARCHAR(32) DEFAULT NULL COMMENT '下一个节点',
     `back_node` VARCHAR(32) DEFAULT NULL COMMENT '返回节点',
+    `file_list` text DEFAULT NULL COMMENT '参考清单',
     `remark` VARCHAR(255) DEFAULT NULL COMMENT '备注',
     PRIMARY KEY (`id`) COMMENT '节点流程配置'
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8;
