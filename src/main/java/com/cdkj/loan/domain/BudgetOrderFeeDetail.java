@@ -47,11 +47,7 @@ public class BudgetOrderFeeDetail extends ABaseDO {
     // 手续费编号
     private String feeCode;
 
-    // 汇入我司银行
-    private String remitCompanyBank;
-
-    // 汇入我司账号
-    private String remitCompanyAccount;
+    private CollectBankcard collectBankcard;
 
     public String getCode() {
         return code;
@@ -141,20 +137,12 @@ public class BudgetOrderFeeDetail extends ABaseDO {
         this.feeCode = feeCode;
     }
 
-    public String getRemitCompanyBank() {
-        return remitCompanyBank;
+    public CollectBankcard getCollectBankcard() {
+        return collectBankcard;
     }
 
-    public void setRemitCompanyBank(String remitCompanyBank) {
-        this.remitCompanyBank = remitCompanyBank;
-    }
-
-    public String getRemitCompanyAccount() {
-        return remitCompanyAccount;
-    }
-
-    public void setRemitCompanyAccount(String remitCompanyAccount) {
-        this.remitCompanyAccount = remitCompanyAccount;
+    public void setCollectBankcard(CollectBankcard collectBankcard) {
+        this.collectBankcard = collectBankcard;
     }
 
 }

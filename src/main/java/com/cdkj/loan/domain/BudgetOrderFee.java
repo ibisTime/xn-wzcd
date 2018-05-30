@@ -45,9 +45,6 @@ public class BudgetOrderFee extends ABaseDO {
     // 准入单编号
     private String budgetOrder;
 
-    // 汇入我司账号
-    private String remitCompanyAccount;
-
     /*-------辅助字段----------*/
 
     private List<BudgetOrderFeeDetail> BudgetOrderFeeDetailList;
@@ -161,14 +158,6 @@ public class BudgetOrderFee extends ABaseDO {
 
     public void setLoanAmount(Long loanAmount) {
         this.loanAmount = loanAmount;
-    }
-
-    public String getRemitCompanyAccount() {
-        return remitCompanyAccount;
-    }
-
-    public void setRemitCompanyAccount(String remitCompanyAccount) {
-        this.remitCompanyAccount = remitCompanyAccount;
     }
 
 }
