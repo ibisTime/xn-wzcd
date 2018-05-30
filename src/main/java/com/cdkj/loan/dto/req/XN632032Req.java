@@ -3,7 +3,6 @@ package com.cdkj.loan.dto.req;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 修改银行信息
@@ -24,6 +23,10 @@ public class XN632032Req {
     @NotBlank
     private String bankName;
 
+    // 支行名称
+    @NotBlank
+    private String subbranch;
+
     // 12期
     private String rate12;
 
@@ -37,19 +40,24 @@ public class XN632032Req {
     private String rate36;
 
     // 状态
-    @NotBlank
     private String status;
 
     // 更新人
-    @NotBlank
     private String updater;
 
     // 备注
     private String remark;
 
     // 利率列表
-    @NotEmpty
     private List<XN632030ReqRate> bankRateList;
+
+    public String getSubbranch() {
+        return subbranch;
+    }
+
+    public void setSubbranch(String subbranch) {
+        this.subbranch = subbranch;
+    }
 
     public String getCode() {
         return code;

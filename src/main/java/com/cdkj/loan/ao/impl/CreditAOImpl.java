@@ -87,10 +87,11 @@ public class CreditAOImpl implements ICreditAO {
         /*
          * if (null != sysUser.getCompanyCode() &&
          * !"".equals(sysUser.getCompanyCode())) { Department department =
-         * departmentBO.getDepartment(sysUser .getCompanyCode());
-         * credit.setCompanyName(department.getName()); }
+         * departmentBO.getDepartment(sysUser .getCompanyCode()); if (null !=
+         * department) { credit.setCompanyName(department.getName()); } }
          */
-        ECreditNode currentNode = ECreditNode.START;
+
+        ECreditNode currentNode = ECreditNode.FILLIN_CREDIT;
         credit.setCurNodeCode(currentNode.getCode());
         // 设置节点
         if (EButtonCode.SEND.getCode().equals(req.getButtonCode())) {
@@ -137,9 +138,10 @@ public class CreditAOImpl implements ICreditAO {
                 "根据征信单编号查询不到征信单");
         }
 
-        if (!ECreditNode.MODIFY.getCode().equals(credit.getCurNodeCode())) {
+        if (!ECreditNode.AUDIT_NO_PASS.getCode()
+            .equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是修改征信节点，不能操作");
+                "当前节点不是风控专员审核不通过，不能操作");
         }
 
         // 修改征信单

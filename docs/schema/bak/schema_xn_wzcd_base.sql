@@ -1,4 +1,5 @@
 /*收款账号表(确定)*/
+DROP TABLE IF EXISTS `tb_collect_bankcard`;
 CREATE TABLE `tb_collect_bankcard` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
   `type` VARCHAR(4) NULL COMMENT '类型(1 普通账户 2 经销商的收款账号 3 经销商返点账号)',
@@ -16,6 +17,7 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '收款账号表';
 
 /*身份证区域表(确定)*/
+DROP TABLE IF EXISTS `tb_id_no_area`;
 CREATE TABLE `tb_id_no_area` (
   `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '序号',
   `area_no` VARCHAR(32) NULL COMMENT '身份证区域号',
@@ -26,6 +28,7 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '身份证区域表';
 
 /*省份编号表(确定)*/
+DROP TABLE IF EXISTS `tb_province_no`;
 CREATE TABLE `tb_province_no` (
   `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '序号',
   `province_no` VARCHAR(32) NOT NULL COMMENT '省份编号',
@@ -36,10 +39,12 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '省份编号表';
 
 /*银行信息表(确定)*/
+DROP TABLE IF EXISTS `tb_bank`;
 CREATE TABLE `tb_bank` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
   `bank_code` VARCHAR(32) NULL COMMENT '银行编号',
   `bank_name` VARCHAR(255) NULL COMMENT '银行名称',
+  `subbranch` VARCHAR(255) NULL COMMENT '支行名称',
   `rate12` DECIMAL NULL COMMENT '12期',
   `rate18` DECIMAL NULL COMMENT '18期',
   `rate24` DECIMAL NULL COMMENT '24期',
@@ -51,9 +56,10 @@ CREATE TABLE `tb_bank` (
   PRIMARY KEY (`code`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
-COMMENT = '银行信息表';
+COMMENT = '平台银行信息表';
 
 /*银行利率明细表(确定)*/
+DROP TABLE IF EXISTS `tb_bank_rate`;
 CREATE TABLE `tb_bank_rate` (
   `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '序号',
   `bank_code` VARCHAR(32) NULL COMMENT '银行编号',
@@ -66,6 +72,7 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '银行利率明细表';
 
 /*支行信息表(确定)*/
+DROP TABLE IF EXISTS `tb_bank_subbranch`;
 CREATE TABLE `tb_bank_subbranch` (
   `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '序号',
   `bank_code` VARCHAR(255) NULL COMMENT '银行编号',
@@ -93,6 +100,7 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '银行支行信息表';
 
 /*经销商信息表(确定)*/
+DROP TABLE IF EXISTS `tb_car_dealer`;
 CREATE TABLE `tb_car_dealer` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
   `full_name` VARCHAR(255) NULL COMMENT '全称',
@@ -121,6 +129,7 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '经销商信息表';
 
 /*经销商协议表(确定)*/
+DROP TABLE IF EXISTS `tb_car_dealer_protocol`;
 CREATE TABLE `tb_car_dealer_protocol` (
   `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '序号',
   `car_dealer_code` VARCHAR(32) NULL COMMENT '经销商编号',

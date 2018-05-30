@@ -24,7 +24,7 @@ public interface ILogisticsAO {
     public Paginable<Logistics> queryLogisticsPage(int start, int limit,
             Logistics condition);
 
-    public List<Logistics> getLogisticsList(Logistics condition);
+    public List<Logistics> queryLogisticsList(Logistics condition);
 
     public Logistics getLogistics(String code);
 }
