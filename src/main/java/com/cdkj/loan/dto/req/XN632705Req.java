@@ -8,7 +8,7 @@ public class XN632705Req extends APageReq {
     private static final long serialVersionUID = 1L;
 
     // gps编号
-    private String gpsNo;
+    private String gpsDevNo;
 
     // gps类型
     private String gpsType;
@@ -25,12 +25,12 @@ public class XN632705Req extends APageReq {
     // 业务编号
     private String bizCode;
 
-    public String getGpsNo() {
-        return gpsNo;
+    public String getGpsDevNo() {
+        return gpsDevNo;
     }
 
-    public void setGpsNo(String gpsNo) {
-        this.gpsNo = gpsNo;
+    public void setGpsDevNo(String gpsDevNo) {
+        this.gpsDevNo = gpsDevNo;
     }
 
     public String getGpsType() {

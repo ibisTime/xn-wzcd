@@ -20,11 +20,11 @@ public class GpsAOImpl implements IGpsAO {
     private IGpsBO gpsBO;
 
     @Override
-    public String addGps(String gpsNo, String gpsType) {
+    public String addGps(String gpsDevNo, String gpsType) {
         Gps data = new Gps();
         String code = OrderNoGenerater.generate(EGeneratePrefix.GPS.getCode());
         data.setCode(code);
-        data.setGpsNo(gpsNo);
+        data.setGpsDevNo(gpsDevNo);
         data.setGpsType(gpsType);
         data.setApplyStatus(EBoolean.NO.getCode());
         data.setUseStatus(EBoolean.NO.getCode());
