@@ -5,4 +5,6 @@ import com.cdkj.loan.domain.NodeFlow;
 
 public interface INodeFlowDAO extends IBaseDAO<NodeFlow> {
     String NAMESPACE = INodeFlowDAO.class.getName().concat(".");
+
+    int updateFileList(NodeFlow data);
 }

@@ -18,4 +18,6 @@ public interface INodeFlowAO {
 
     public NodeFlow getNodeFlow(String id);
 
+    public void doModifyFileList(String id, String fileList);
+
 }

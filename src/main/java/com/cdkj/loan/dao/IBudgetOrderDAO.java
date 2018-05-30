@@ -30,4 +30,10 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     void updaterConfirmLoan(BudgetOrder data);
 
     void updaterEntryLoan(BudgetOrder data);
+
+    void updaterEntryMortgage(BudgetOrder data);
+
+    void updaterMortgageCommitBank(BudgetOrder data);
+
+    void updaterMortgageFinish(BudgetOrder data);
 }

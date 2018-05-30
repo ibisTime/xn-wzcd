@@ -21,7 +21,17 @@ public class NodeFlow extends ABaseDO {
 
     private String backNode;// 返回节点
 
+    private String fileList;// 材料清单
+
     private String remark;// 备注
+
+    public String getFileList() {
+        return fileList;
+    }
+
+    public void setFileList(String fileList) {
+        this.fileList = fileList;
+    }
 
     public String getId() {
         return id;

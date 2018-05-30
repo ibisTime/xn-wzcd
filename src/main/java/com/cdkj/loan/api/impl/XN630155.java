@@ -40,7 +40,7 @@ public class XN630155 extends AProcessor {
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = INodeFlowAO.DEFAULT_ORDER_COLUMN;
         }
-        condition.setOrder(orderColumn, req.getOrderDir());
+        condition.setOrder(orderColumn, "asc");
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
         return nodeFlowAO.queryNodeFlowPage(start, limit, condition);

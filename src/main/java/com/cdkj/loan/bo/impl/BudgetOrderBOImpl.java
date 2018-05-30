@@ -129,6 +129,27 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     }
 
     @Override
+    public void entryMortgage(BudgetOrder data) {
+        if (StringUtils.isNotBlank(data.getCode())) {
+            budgetOrderDAO.updaterEntryMortgage(data);
+        }
+    }
+
+    @Override
+    public void refreshMortgageCommitBank(BudgetOrder data) {
+        if (StringUtils.isNotBlank(data.getCode())) {
+            budgetOrderDAO.updaterMortgageCommitBank(data);
+        }
+    }
+
+    @Override
+    public void refreshMortgageFinish(BudgetOrder data) {
+        if (StringUtils.isNotBlank(data.getCode())) {
+            budgetOrderDAO.updaterMortgageFinish(data);
+        }
+    }
+
+    @Override
     public List<BudgetOrder> queryBudgetOrderList(BudgetOrder condition) {
         return budgetOrderDAO.selectList(condition);
     }

@@ -452,6 +452,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCurNodeCode(nodeFlowBO
             .getNodeFlowByCurrentNode(EBudgetOrderNode.COMMITBANK.getCode())
             .getNextNode());
+        budgetOrder.setBankCommitDatetime(DateUtil.strToDate(bankCommitDatetime,
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setRemark(bankCommitNote);
         budgetOrderBO.refreshCommitBank(budgetOrder);
 
@@ -507,17 +509,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         budgetOrder.setRepayBankcardNumber(req.getRepayBankcardNumber());
-        budgetOrder.setRepayBillDate(DateUtil.strToDate(req.getRepayBillDate(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder.setRepayBankDate(DateUtil.strToDate(req.getRepayBankDate(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setRepayBillDate(
+            StringValidater.toInteger(req.getRepayBillDate()));
+        budgetOrder.setRepayBankDate(
+            StringValidater.toInteger(req.getRepayBankDate()));
         budgetOrder.setRepayCompanyDate(DateUtil.strToDate(
             req.getRepayCompanyDate(), DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setRepayFirstMonthAmount(
             StringValidater.toLong(req.getRepayFirstMonthAmount()));
         budgetOrder.setRepayMonthAmount(
             StringValidater.toLong(req.getRepayMonthAmount()));
-        budgetOrder.setLoanDate(DateUtil.strToDate(req.getLoanDate(),
+        budgetOrder.setBankLoanDate(DateUtil.strToDate(req.getBankLoanDate(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setCurNodeCode(nodeFlowBO
             .getNodeFlowByCurrentNode(EBudgetOrderNode.ENTRYLOAN.getCode())
@@ -531,6 +533,75 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
 
+    }
+
+    @Override
+    public void mortgageCommitBank(String code, String operator,
+            String pledgeBankCommitDatetime, String pledgeBankCommitNote) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+        if (!EBudgetOrderNode.MORTGAGECOMMITBANK.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是确认提交银行节点，不能操作");
+        }
+
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        budgetOrder.setCurNodeCode(nodeFlowBO
+            .getNodeFlowByCurrentNode(EBudgetOrderNode.COMMITBANK.getCode())
+            .getNextNode());
+        budgetOrder.setPledgeBankCommitDatetime(DateUtil.strToDate(
+            pledgeBankCommitDatetime, DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setRemark(pledgeBankCommitNote);
+        budgetOrderBO.refreshMortgageCommitBank(budgetOrder);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), operator);
+    }
+
+    @Override
+    public void entryMortgage(String code, String operator,
+            String pledgeDatetime, String greenBigSmj) {
+        BudgetOrder data = budgetOrderBO.getBudgetOrder(code);
+        data.setPledgeDatetime(DateUtil.strToDate(pledgeDatetime,
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setGreenBigSmj(greenBigSmj);
+
+        EBudgetOrderNode node = EBudgetOrderNode.ENTRYMORTGAGE;
+        data.setCurNodeCode(node.getCode());
+        budgetOrderBO.entryMortgage(data);
+
+        // 日志记录
+        sysBizLogBO.saveSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
+            node.getCode(), node.getValue(), operator);
+    }
+
+    @Override
+    public void mortgageFinish(String code, String operator) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+        if (!EBudgetOrderNode.MORTGAGEFINISH.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是抵押完成节点，不能操作");
+        }
+
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        budgetOrder.setCurNodeCode(nodeFlowBO
+            .getNodeFlowByCurrentNode(EBudgetOrderNode.MORTGAGEFINISH.getCode())
+            .getNextNode());
+        budgetOrderBO.refreshMortgageFinish(budgetOrder);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), operator);
     }
 
     @Override
@@ -548,6 +619,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .queryBudgetOrderGpsList(budgetOrderGps);
         order.setBudgetOrderGpsList(budgetOrderGpsList);
         return order;
+    }
+
+    @Override
+    public void archiveOrder(String code, String operator,
+            String enterLocation) {
+        BudgetOrder order = budgetOrderBO.getBudgetOrder(code);
     }
 
 }

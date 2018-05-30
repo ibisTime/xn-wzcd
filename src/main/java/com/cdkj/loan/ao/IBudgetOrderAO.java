@@ -66,4 +66,19 @@ public interface IBudgetOrderAO {
     // 录入放款信息
     public void entryLoan(XN632137Req req);
 
+    // 确定入档
+    public void archiveOrder(String code, String operator,
+            String enterLocation);
+
+    // 录入抵押信息
+    public void entryMortgage(String code, String operator,
+            String pledgeDatetime, String greenBigSmj);
+
+    // 抵押确认提交银行
+    public void mortgageCommitBank(String code, String operator,
+            String pledgeBankCommitDatetime, String pledgeBankCommitNote);
+
+    // 抵押完成
+    public void mortgageFinish(String code, String operator);
+
 }
