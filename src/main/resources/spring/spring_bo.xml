@@ -115,10 +115,6 @@
 		<property name="paginableDAO" ref="productOrderDAOImpl"/>
 	</bean>
 	
-	<bean id="loanOrderBO" class="com.cdkj.loan.bo.impl.LoanOrderBOImpl">
-		<property name="paginableDAO" ref="loanOrderDAOImpl"/>
-	</bean>
-	
 	<bean id="repayBizBO" class="com.cdkj.loan.bo.impl.RepayBizBOImpl">
 		<property name="paginableDAO" ref="repayBizDAOImpl"/>
 	</bean>

@@ -92,4 +92,9 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
             count, condition, BudgetOrder.class);
     }
 
+    @Override
+    public int updateArchiveSuccess(BudgetOrder data) {
+        return super.update(NAMESPACE.concat("update_archiveSuccess"), data);
+    }
+
 }

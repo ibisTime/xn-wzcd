@@ -33,4 +33,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public void carSettle(BudgetOrder data);
 
+    public int archiveSuccess(BudgetOrder budgetOrder, String repayBizCode,
+            String userId);
+
 }

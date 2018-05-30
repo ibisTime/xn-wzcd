@@ -24,4 +24,6 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     void updaterInstallGps(BudgetOrder data);
 
     void updaterCarSettle(BudgetOrder data);
+
+    int updateArchiveSuccess(BudgetOrder data);
 }

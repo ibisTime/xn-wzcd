@@ -58,6 +58,6 @@ public interface IBudgetOrderAO {
             String bankCommitDatetime, String bankCommitNote);
 
     // 确定入档
-    public void archiveOrder(String code, String operator, String enterLocation);
+    public void archive(String code, String operator, String enterLocation);
 
 }

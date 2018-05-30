@@ -616,6 +616,10 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_archiveSuccess" parameterType="budgetOrder">
+		
+	</update>
 
 
 </mapper>

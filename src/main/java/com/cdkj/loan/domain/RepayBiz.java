@@ -126,10 +126,7 @@ public class RepayBiz extends ABaseDO {
     private User user;
 
     // 车贷订单
-    private LoanOrder loanOrder;
-
-    // 车贷订单列表
-    List<LoanOrder> loanOrderList;
+    private BudgetOrder budgetOrder;
 
     // 还款计划列表
     List<RepayPlan> repayPlanList;
@@ -447,12 +444,12 @@ public class RepayBiz extends ABaseDO {
         this.user = user;
     }
 
-    public LoanOrder getLoanOrder() {
-        return loanOrder;
+    public BudgetOrder getBudgetOrder() {
+        return budgetOrder;
     }
 
-    public void setLoanOrder(LoanOrder loanOrder) {
-        this.loanOrder = loanOrder;
+    public void setBudgetOrder(BudgetOrder budgetOrder) {
+        this.budgetOrder = budgetOrder;
     }
 
     public Order getMallOrder() {
@@ -461,14 +458,6 @@ public class RepayBiz extends ABaseDO {
 
     public void setMallOrder(Order mallOrder) {
         this.mallOrder = mallOrder;
-    }
-
-    public List<LoanOrder> getLoanOrderList() {
-        return loanOrderList;
-    }
-
-    public void setLoanOrderList(List<LoanOrder> loanOrderList) {
-        this.loanOrderList = loanOrderList;
     }
 
     public Long getActualRefunds() {

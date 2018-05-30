@@ -127,4 +127,20 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         return data;
     }
 
+    @Override
+    public int archiveSuccess(BudgetOrder budgetOrder, String repayBizCode,
+            String userId) {
+
+        int count = 0;
+
+        if (budgetOrder != null) {
+            budgetOrder.setRepayBizCode(repayBizCode);
+            budgetOrder.setApplyUserId(userId);
+            count = budgetOrderDAO.updateArchiveSuccess(budgetOrder);
+        }
+
+        return count;
+
+    }
+
 }
