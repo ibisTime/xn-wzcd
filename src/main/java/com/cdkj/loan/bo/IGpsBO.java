@@ -11,10 +11,12 @@ public interface IGpsBO extends IPaginableBO<Gps> {
 
     public void applyGps(Gps code);
 
-    public void refreshUseGps(Gps data);
+    public void refreshUseGps(String code, String budgetOrder);
 
     public List<Gps> queryGpsList(Gps condition);
 
     public Gps getGps(String code);
+
+    public Gps getGpsByDevNo(String gpsDevNo);
 
 }

@@ -19,11 +19,22 @@ public class XN632707Req extends AListReq {
     // 申请状态
     private String applyStatus;
 
+    // 申请人
+    private String applyUser;
+
     // 使用状态
     private String useStatus;
 
     // 业务编号
     private String bizCode;
+
+    public String getApplyUser() {
+        return applyUser;
+    }
+
+    public void setApplyUser(String applyUser) {
+        this.applyUser = applyUser;
+    }
 
     public String getGpsDevNo() {
         return gpsDevNo;

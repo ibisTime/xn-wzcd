@@ -47,10 +47,10 @@ public class BudgetOrder extends ABaseDO {
     // 征信单编号
     private String creditCode;
 
-    // 业务种类
+    // 业务种类(新车，二手车)
     private String bizType;
 
-    // 贷款期限
+    // 贷款期数
     private String loanPeriod;
 
     // 开票单位

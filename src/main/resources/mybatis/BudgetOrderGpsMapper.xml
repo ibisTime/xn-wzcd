@@ -81,6 +81,9 @@
 		,budget_order = #{budgetOrder}
 		WHERE code = #{code}
 	</update>
-
-
+	
+	<delete id="delete_budgetOrderGps" parameterType="budgetOrderGps">
+		DELETE FROM tdq_budget_order_gps
+		WHERE code = #{code}
+	</delete>
 </mapper>
