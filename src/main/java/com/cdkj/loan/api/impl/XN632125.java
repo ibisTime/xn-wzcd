@@ -24,7 +24,7 @@ public class XN632125 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.advancefund(req.getCode(), req.getOperator(),
+        budgetOrderAO.advanceFund(req.getCode(), req.getOperator(),
             req.getAdvanceFundDatetime(), req.getAdvanceFundAmount(),
             req.getBillPdf());
         return new BooleanRes(true);

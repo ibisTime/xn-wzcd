@@ -32,22 +32,21 @@ public interface IBudgetOrderAO {
     public void bizChargeApprove(String code, String operator,
             String approveResult, String approveNote);
 
-    public Paginable<BudgetOrder> queryBudgetOrderPage(int start, int limit,
-            BudgetOrder condition);
-
-    public BudgetOrder getBudgetOrder(String code);
-
     // 财务确认垫资
-    public void advancefund(String code, String operator,
-            String advanceFundDatetime, String advanceFundAmount,
-            String billPdf);
+    public void advanceFund(String code, String operator,
+            String advanceFundDatetime, String advanceFundAmount, String billPdf);
 
-    // 录入安装信息
-    public void advancefund(String code, String operator,
+    // 安装GPS
+    public void installGps(String code, String operator,
             List<XN632126ReqGps> gpsAzList);
 
     // GPS管理员审核
     public void gpsManagerApprove(String code, String operator,
             String approveResult, String approveNote);
+
+    public Paginable<BudgetOrder> queryBudgetOrderPage(int start, int limit,
+            BudgetOrder condition);
+
+    public BudgetOrder getBudgetOrder(String code);
 
 }

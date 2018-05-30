@@ -24,7 +24,7 @@ public class XN632126 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.advancefund(req.getCode(), req.getOperator(),
+        budgetOrderAO.installGps(req.getCode(), req.getOperator(),
             req.getGpsAzList());
         return new BooleanRes(true);
     }
