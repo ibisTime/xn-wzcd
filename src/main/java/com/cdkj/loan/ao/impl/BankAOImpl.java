@@ -39,20 +39,18 @@ public class BankAOImpl implements IBankAO {
     @Override
     @Transactional
     public String addBank(XN632030Req req) {
-        Bank data = new Bank();
-        data.setBankCode(req.getBankCode());
-        if (null != bankBO.getBank(data)) {
+        if (null != bankBO.getBank(req.getBankCode())) {
             throw new BizException("xn0000", "银行信息已存在，请勿重复添加。");
         }
+        Bank data = new Bank();
         data.setBankName(req.getBankName());
         data.setSubbranch(req.getSubbranch());
-
         data.setRate12(0.0d);
         data.setRate18(0.0d);
         data.setRate24(0.0d);
+
         data.setRate36(0.0d);
         data.setStatus(EBoolean.YES.getCode());
-
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());
@@ -111,9 +109,7 @@ public class BankAOImpl implements IBankAO {
 
     @Override
     public Bank getBank(String code) {
-        Bank condition = new Bank();
-        condition.setCode(code);
-        Bank data = bankBO.getBank(condition);
+        Bank data = bankBO.getBank(code);
         //
         // BankRate rateCondition = new BankRate();
         // rateCondition.setBankCode(code);
