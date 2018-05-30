@@ -606,6 +606,16 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_car_settle" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		advance_fund_datetime = #{advanceFundDatetime}
+		,advance_fund_amount = #{advanceFundAmount}
+		,cur_node_code = #{curNodeCode}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
 
 
 </mapper>

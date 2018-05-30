@@ -31,4 +31,6 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public void installGps(BudgetOrder budgetOrder);
 
+    public void carSettle(BudgetOrder data);
+
 }

@@ -24,6 +24,7 @@ import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.Product;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
+import com.cdkj.loan.dto.req.XN632128Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -374,6 +375,37 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    public void carSettle(XN632128Req req) {
+        BudgetOrder data = budgetOrderBO.getBudgetOrder(req.getCode());
+        data.setCarSettleDatetime(DateUtil.strToDate(req.getCarSettleDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setCarNumber(req.getCarNumber());
+        data.setCarInvoice(req.getCarInvoice());
+        data.setCarHgz(req.getCarHgz());
+        data.setCarJqx(req.getCarJqx());
+        data.setCarSyx(req.getCarSyx());
+        data.setCarRegcerti(req.getCarRegcerti());
+        data.setCarPd(req.getCarPd());
+        data.setCarKey(req.getCarKey());
+        data.setCarBigSmj(req.getCarBigSmj());
+
+        EBudgetOrderNode node = EBudgetOrderNode.CARSETTLE;
+        data.setCurNodeCode(node.getCode());
+        budgetOrderBO.carSettle(data);
+
+        // 日志记录
+        sysBizLogBO.saveSYSBizLog(req.getCode(), EBizLogType.BUDGET_ORDER,
+            req.getCode(), node.getCode(), node.getValue(), req.getOperator());
+
+    }
+
+    @Override
+    public void commitBank(String code, String operator,
+            String bankCommitDatetime, String bankCommitNote) {
+
+    }
+
+    @Override
     public Paginable<BudgetOrder> queryBudgetOrderPage(int start, int limit,
             BudgetOrder condition) {
         return budgetOrderBO.getPaginable(start, limit, condition);
@@ -389,4 +421,5 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         order.setBudgetOrderGpsList(budgetOrderGpsList);
         return order;
     }
+
 }
