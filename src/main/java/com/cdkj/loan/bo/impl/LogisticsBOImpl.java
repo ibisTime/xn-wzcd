@@ -7,6 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.ao.IBudgetOrderAO;
+import com.cdkj.loan.ao.IUserAO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
@@ -29,6 +31,12 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     @Autowired
     private ILogisticsDAO logisticsDAO;
 
+    @Autowired
+    private IBudgetOrderAO budgetOrderAO;
+
+    @Autowired
+    private IUserAO userAO;
+
     @Override
     public String saveLogistics(String type, String bizCode, String userId,
             String bizNodeCode, String refFileList) {
@@ -40,6 +48,13 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
         }
 
         // 判断预算单和用户是否存在
+        if (null == budgetOrderAO.getBudgetOrder(bizCode)) {
+            throw new BizException("xn0000", "业务编号不存在");
+        }
+        if (null == userAO.getUser(userId)) {
+            throw new BizException("xn0000", "用户不存在");
+        }
+
         String code = OrderNoGenerater
             .generate(EGeneratePrefix.LOGISTICS.getCode());
         Logistics data = new Logistics();
@@ -66,12 +81,17 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
             throw new BizException("xn0000", "请填写编号");
         }
 
-        Logistics data = new Logistics();
-        data.setCode(code);
-        data.setRemark(remark);
-        data.setReceiptDatetime(new Date());
-        data.setStatus(ELogisticsStatus.RECEIVED.getCode());
-        logisticsDAO.updateLogisticsReceive(data);
+        if (!ELogisticsStatus.TO_RECEIVE.getCode()
+            .equals(getLogistics(code).getStatus())) {
+            throw new BizException("xn0000", "资料不是待收件状态。");
+        }
+
+        Logistics condition = new Logistics();
+        condition.setCode(code);
+        condition.setRemark(remark);
+        condition.setReceiptDatetime(new Date());
+        condition.setStatus(ELogisticsStatus.RECEIVED.getCode());
+        logisticsDAO.updateLogisticsReceive(condition);
     }
 
     @Override
@@ -83,8 +103,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
         Logistics data = new Logistics();
         data.setCode(code);
         data.setRemark(remark);
-        data.setSendDatetime(new Date());
-        data.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
+        data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
         logisticsDAO.updateLogisticsReceive(data);
     }
 
