@@ -8,10 +8,18 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IBudgetOrderFeeDetailBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBudgetOrderFeeDetailDAO;
 import com.cdkj.loan.domain.BudgetOrderFeeDetail;
+import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
+/**
+ * 手续费明细
+ * @author: jiafr 
+ * @since: 2018年5月30日 下午9:15:17 
+ * @history:
+ */
 @Component
 public class BudgetOrderFeeDetailBOImpl extends
         PaginableBOImpl<BudgetOrderFeeDetail> implements
@@ -34,9 +42,10 @@ public class BudgetOrderFeeDetailBOImpl extends
     public String saveBudgetOrderFeeDetail(BudgetOrderFeeDetail data) {
         String code = null;
         if (data != null) {
-            // code = OrderNoGenerater.generateM(EGeneratePrefix.CT.getCode());
-            // data.setCode(code);
-            // budgetOrderFeeDetailDAO.insert(data);
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.BUDGET_ORDER_FEE_DETAIL.getCode());
+            data.setCode(code);
+            budgetOrderFeeDetailDAO.insert(data);
         }
         return code;
     }
