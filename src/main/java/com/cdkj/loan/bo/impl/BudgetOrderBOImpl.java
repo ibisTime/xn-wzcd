@@ -54,7 +54,35 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     @Override
     public void refreshriskApprove(BudgetOrder data) {
         if (StringUtils.isNotBlank(data.getCode())) {
-            budgetOrderDAO.updateriskApprove(data);
+            budgetOrderDAO.updaterIskApprove(data);
+        }
+    }
+
+    @Override
+    public void refreshriskChargeApprove(BudgetOrder data) {
+        if (StringUtils.isNotBlank(data.getCode())) {
+            budgetOrderDAO.updaterIskChargeApprove(data);
+        }
+    }
+
+    @Override
+    public void interview(BudgetOrder data) {
+        if (StringUtils.isNotBlank(data.getCode())) {
+            budgetOrderDAO.updaterInterview(data);
+        }
+    }
+
+    @Override
+    public void refreshbizChargeApprove(BudgetOrder data) {
+        if (StringUtils.isNotBlank(data.getCode())) {
+            budgetOrderDAO.updaterBizChargeApprove(data);
+        }
+    }
+
+    @Override
+    public void advancefund(BudgetOrder data) {
+        if (StringUtils.isNotBlank(data.getCode())) {
+            budgetOrderDAO.updaterAdvancefund(data);
         }
     }
 

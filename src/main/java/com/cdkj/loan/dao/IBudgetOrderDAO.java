@@ -9,5 +9,13 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     void update(BudgetOrder data);
 
-    void updateriskApprove(BudgetOrder data);
+    void updaterIskApprove(BudgetOrder data);
+
+    void updaterInterview(BudgetOrder data);
+
+    void updaterIskChargeApprove(BudgetOrder data);
+
+    void updaterBizChargeApprove(BudgetOrder data);
+
+    void updaterAdvancefund(BudgetOrder data);
 }

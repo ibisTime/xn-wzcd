@@ -10,6 +10,12 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
+/**
+ * 预算单-财务确认垫资
+ * @author: CYL 
+ * @since: 2018年5月30日 下午2:40:12 
+ * @history:
+ */
 public class XN632125 extends AProcessor {
     private IBudgetOrderAO budgetOrderAO = SpringContextHolder
         .getBean(IBudgetOrderAO.class);
@@ -18,8 +24,9 @@ public class XN632125 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.canceOrder(req.getCode(), req.getOperator(),
-            req.getCancelReason());
+        budgetOrderAO.advancefund(req.getCode(), req.getOperator(),
+            req.getAdvanceFundDatetime(), req.getAdvanceFundAmount(),
+            req.getBillPdf());
         return new BooleanRes(true);
     }
 

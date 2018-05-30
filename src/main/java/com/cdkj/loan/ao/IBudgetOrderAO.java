@@ -21,9 +21,22 @@ public interface IBudgetOrderAO {
     public void riskChargeApprove(String code, String operator,
             String approveResult, String approveNote);
 
+    // 面签
+    public void interview(String code, String interviewVideo,
+            String interviewContract, String operator);
+
+    // 业务总监审核
+    public void bizChargeApprove(String code, String operator,
+            String approveResult, String approveNote);
+
     public Paginable<BudgetOrder> queryBudgetOrderPage(int start, int limit,
             BudgetOrder condition);
 
     public BudgetOrder getBudgetOrder(String code);
+
+    // 财务确认垫资
+    public void advancefund(String code, String operator,
+            String advanceFundDatetime, String advanceFundAmount,
+            String billPdf);
 
 }

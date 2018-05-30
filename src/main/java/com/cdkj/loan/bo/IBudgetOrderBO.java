@@ -15,8 +15,16 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public void refreshriskApprove(BudgetOrder budgetOrder);
 
+    public void interview(BudgetOrder budgetOrder);
+
     public List<BudgetOrder> queryBudgetOrderList(BudgetOrder condition);
 
     public BudgetOrder getBudgetOrder(String code);
+
+    public void refreshriskChargeApprove(BudgetOrder budgetOrder);
+
+    public void refreshbizChargeApprove(BudgetOrder budgetOrder);
+
+    public void advancefund(BudgetOrder budgetOrder);
 
 }

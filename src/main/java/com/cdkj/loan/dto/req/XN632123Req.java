@@ -19,6 +19,9 @@ public class XN632123Req {
     @NotBlank
     private String interviewContract;// 面签合同
 
+    @NotBlank
+    private String operator;// 操作人
+
     public String getCode() {
         return code;
     }
@@ -42,4 +45,13 @@ public class XN632123Req {
     public void setInterviewContract(String interviewContract) {
         this.interviewContract = interviewContract;
     }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
 }

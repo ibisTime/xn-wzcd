@@ -587,7 +587,43 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
-		remark = #{remark}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_charge_riskApprove" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_interview" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,interview_video = #{interviewVideo}
+		,interview_contract = #{interviewContract}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_biz_charge_approve" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_advancefund" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		advance_fund_datetime = #{advanceFundDatetime}
+		,advance_fund_amount = #{advanceFundAmount}
+		,cur_node_code = #{curNodeCode}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 
