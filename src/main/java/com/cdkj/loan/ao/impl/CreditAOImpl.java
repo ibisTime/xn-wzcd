@@ -16,7 +16,6 @@ import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
-import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
@@ -123,7 +122,7 @@ public class CreditAOImpl implements ICreditAO {
 
         // 日志记录
         sysBizLogBO.saveSYSBizLog(creditCode, EBizLogType.CREDIT, creditCode,
-            currentNode.getCode(), null, req.getOperator());
+            currentNode.getCode(), currentNode.getValue(), req.getOperator());
 
         return creditCode;
     }
@@ -230,12 +229,12 @@ public class CreditAOImpl implements ICreditAO {
             }
 
             // 从银行表查贷款银行名
-            Bank bank = new Bank();
-            bank.setBankCode(credit.getLoanBankCode());
-            Bank bank2 = bankBO.getBank(bank);
-            if (null != bank2) {
-                credit.setLoanBankName(bank2.getBankName());
-            }
+            /*
+             * Bank bank = new Bank();
+             * bank.setBankCode(credit.getLoanBankCode()); Bank bank2 =
+             * bankBO.getBank(bank); if (null != bank2) {
+             * credit.setLoanBankName(bank2.getBankName()); }
+             */
             // 从用户表查业务员姓名
             SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
             if (null != user) {
@@ -266,12 +265,12 @@ public class CreditAOImpl implements ICreditAO {
             }
 
             // 从银行表查贷款银行名
-            Bank bank = new Bank();
-            bank.setBankCode(credit.getLoanBankCode());
-            Bank bank2 = bankBO.getBank(bank);
-            if (null != bank2) {
-                credit.setLoanBankName(bank2.getBankName());
-            }
+            /*
+             * Bank bank = new Bank();
+             * bank.setBankCode(credit.getLoanBankCode()); Bank bank2 =
+             * bankBO.getBank(bank); if (null != bank2) {
+             * credit.setLoanBankName(bank2.getBankName()); }
+             */
             // 从用户表查业务员姓名
             SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
             if (null != user) {
@@ -308,11 +307,10 @@ public class CreditAOImpl implements ICreditAO {
         }
         creditBO.refreshCreditNode(credit);
         // 日志记录
-        ECreditNode currentNode = ECreditNode.getMap().get(
-            credit.getCurNodeCode());
+
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
-            currentNode.getCode(), req.getApproveNote(), req.getOperator());
+            credit.getCode(), req.getApproveNote(), req.getOperator());
 
     }
 
@@ -332,12 +330,17 @@ public class CreditAOImpl implements ICreditAO {
         }
         String preCurNodeCode = credit.getCurNodeCode();
 
-        credit.setCurNodeCode((nodeFlowBO.getNodeFlowByCurrentNode(credit
-            .getCurNodeCode())).getNextNode());
+        ECreditNode creditNode = ECreditNode.getMap().get(
+            credit.getCurNodeCode());
+
+        credit.setCurNodeCode((nodeFlowBO.getNodeFlowByCurrentNode(creditNode
+            .getCode())).getNextNode());
 
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), preCurNodeCode,
-            credit.getCurNodeCode(), null, req.getOperator());
+            credit.getCurNodeCode(), creditNode.getValue(), req.getOperator());
+
+        creditBO.refreshCreditNode(credit);
 
         List<XN632111ReqCreditUser> creditResult = req.getCreditResult();
         for (XN632111ReqCreditUser xn632111ReqCreditUser : creditResult) {
