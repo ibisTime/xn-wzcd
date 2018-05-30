@@ -61,6 +61,12 @@ public class Logistics extends ABaseDO {
     // 备注
     private String remark;
 
+    // 用户姓名
+    private String userName;
+
+    // 业务名称
+    private String nodeName;
+
     public String getCode() {
         return code;
     }
@@ -179,6 +185,22 @@ public class Logistics extends ABaseDO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getNodeName() {
+        return nodeName;
+    }
+
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
     }
 
 }

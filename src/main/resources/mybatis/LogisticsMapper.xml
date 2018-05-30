@@ -33,6 +33,9 @@
 			<if test="bizCode != null and bizCode != '' ">
 				AND t.biz_code = #{bizCode}
 			</if>
+			<if test="bizNodeCode != null and bizNodeCode != '' ">
+				AND t.biz_node_code = #{bizNodeCode}
+			</if>
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
@@ -78,14 +81,14 @@
 	
 	<insert id="insert_logistics" parameterType="logistics">
 		INSERT INTO tdq_logistics(
-		t.code
-		,t.type
-		,t.biz_code
-		,t.user_id
-		,t.biz_node_code
+		code
+		,type
+		,biz_code
+		,user_id
+		,biz_node_code
 		
-		,t.ref_file_list
-		,t.status
+		,ref_file_list
+		,status
 		)
 		VALUES(
 		#{code}

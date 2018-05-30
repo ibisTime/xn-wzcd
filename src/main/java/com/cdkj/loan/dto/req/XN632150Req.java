@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 资料传递发送
  * @author: silver 
@@ -7,17 +9,29 @@ package com.cdkj.loan.dto.req;
  * @history:
  */
 public class XN632150Req {
+    // 编号
+    @NotBlank
+    private String code;
+
     // 寄送材料清单(逗号隔开)
+    @NotBlank
     private String sendFileList;
 
     // 寄送方式(1 线下 2 快递)
+    @NotBlank
     private String sendType;
 
     // 快递公司
+    @NotBlank
     private String logisticsCompany;
 
     // 快递单号
+    @NotBlank
     private String logisticsCode;
+
+    // 发货时间
+    @NotBlank
+    private String sendDatetime;
 
     // 发货说明
     private String sendNote;
@@ -60,6 +74,22 @@ public class XN632150Req {
 
     public void setSendNote(String sendNote) {
         this.sendNote = sendNote;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getSendDatetime() {
+        return sendDatetime;
+    }
+
+    public void setSendDatetime(String sendDatetime) {
+        this.sendDatetime = sendDatetime;
     }
 
 }

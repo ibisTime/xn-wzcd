@@ -38,7 +38,7 @@ public class LoanProduct extends ABaseDO {
     // 月供利率
     private Double monthRate;
 
-    // 状态(0 待上架 1已上架 2已下架)
+    // 状态
     private String status;
 
     // 更新人
