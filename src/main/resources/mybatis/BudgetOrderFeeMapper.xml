@@ -19,6 +19,15 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="userId != null and userId != '' ">
+				AND t.user_id = #{userId}
+			</if>
+			<if test="isSettled != null and isSettled != '' ">
+				AND t.is_settled = #{isSettled}
+			</if>
+			<if test="budgetOrder != null and budgetOrder != '' ">
+				AND t.budget_order = #{budgetOrder}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_budgetOrderFee" parameterType="budgetOrderFee" resultMap="budgetOrderFee_DB_Result">

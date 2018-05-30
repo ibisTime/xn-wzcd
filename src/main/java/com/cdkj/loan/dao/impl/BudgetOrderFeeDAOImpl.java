@@ -32,6 +32,7 @@ public class BudgetOrderFeeDAOImpl extends AMybatisTemplate implements
     public long selectTotalCount(BudgetOrderFee condition) {
         return super.selectTotalCount(
             NAMESPACE.concat("select_budgetOrderFee_count"), condition);
+
     }
 
     @Override

@@ -1,5 +1,8 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+import java.util.List;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -22,10 +25,10 @@ public class BudgetOrderFee extends ABaseDO {
     private String userId;
 
     // 应收手续费总额
-    private String shouldAmount;
+    private Long shouldAmount;
 
     // 实收手续费总额
-    private String realAmount;
+    private Long realAmount;
 
     // 是否已结清(0 待结清 1 已结清)
     private String isSettled;
@@ -34,13 +37,65 @@ public class BudgetOrderFee extends ABaseDO {
     private String updater;
 
     // 更新时间
-    private String updateDatetime;
+    private Date updateDatetime;
 
     // 备注
     private String remark;
 
     // 准入单编号
     private String budgetOrder;
+
+    /*-------辅助字段----------*/
+
+    private List<BudgetOrderFeeDetail> BudgetOrderFeeDetailList;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Long getShouldAmount() {
+        return shouldAmount;
+    }
+
+    public void setShouldAmount(Long shouldAmount) {
+        this.shouldAmount = shouldAmount;
+    }
+
+    public Long getRealAmount() {
+        return realAmount;
+    }
+
+    public void setRealAmount(Long realAmount) {
+        this.realAmount = realAmount;
+    }
+
+    public String getIsSettled() {
+        return isSettled;
+    }
+
+    public void setIsSettled(String isSettled) {
+        this.isSettled = isSettled;
+    }
 
     public String getUpdater() {
         return updater;
@@ -50,76 +105,37 @@ public class BudgetOrderFee extends ABaseDO {
         this.updater = updater;
     }
 
-    public String getUpdateDatetime() {
+    public Date getUpdateDatetime() {
         return updateDatetime;
     }
 
-    public void setUpdateDatetime(String updateDatetime) {
+    public void setUpdateDatetime(Date updateDatetime) {
         this.updateDatetime = updateDatetime;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setShouldAmount(String shouldAmount) {
-        this.shouldAmount = shouldAmount;
-    }
-
-    public String getShouldAmount() {
-        return shouldAmount;
-    }
-
-    public void setRealAmount(String realAmount) {
-        this.realAmount = realAmount;
-    }
-
-    public String getRealAmount() {
-        return realAmount;
-    }
-
-    public void setIsSettled(String isSettled) {
-        this.isSettled = isSettled;
-    }
-
-    public String getIsSettled() {
-        return isSettled;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
     }
 
     public String getRemark() {
         return remark;
     }
 
-    public void setBudgetOrder(String budgetOrder) {
-        this.budgetOrder = budgetOrder;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getBudgetOrder() {
         return budgetOrder;
+    }
+
+    public void setBudgetOrder(String budgetOrder) {
+        this.budgetOrder = budgetOrder;
+    }
+
+    public List<BudgetOrderFeeDetail> getBudgetOrderFeeDetailList() {
+        return BudgetOrderFeeDetailList;
+    }
+
+    public void setBudgetOrderFeeDetailList(
+            List<BudgetOrderFeeDetail> budgetOrderFeeDetailList) {
+        BudgetOrderFeeDetailList = budgetOrderFeeDetailList;
     }
 
 }

@@ -8,6 +8,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
+import com.cdkj.loan.dto.req.XN632128Req;
 
 @Component
 public interface IBudgetOrderAO {
@@ -34,7 +35,8 @@ public interface IBudgetOrderAO {
 
     // 财务确认垫资
     public void advanceFund(String code, String operator,
-            String advanceFundDatetime, String advanceFundAmount, String billPdf);
+            String advanceFundDatetime, String advanceFundAmount,
+            String billPdf);
 
     // 安装GPS
     public void installGps(String code, String operator,
@@ -48,5 +50,12 @@ public interface IBudgetOrderAO {
             BudgetOrder condition);
 
     public BudgetOrder getBudgetOrder(String code);
+
+    // 车辆落户
+    public void carSettle(XN632128Req req);
+
+    // 确认提交银行
+    public void commitBank(String code, String operator,
+            String bankCommitDatetime, String bankCommitNote);
 
 }

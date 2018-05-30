@@ -7,15 +7,26 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBudgetOrderFeeAO;
 import com.cdkj.loan.bo.IBudgetOrderFeeBO;
+import com.cdkj.loan.bo.IBudgetOrderFeeDetailBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrderFee;
+import com.cdkj.loan.domain.BudgetOrderFeeDetail;
 import com.cdkj.loan.exception.BizException;
 
+/**
+ * 准入单手续费
+ * @author: jiafr 
+ * @since: 2018年5月30日 下午9:46:40 
+ * @history:
+ */
 @Service
 public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
 
     @Autowired
     private IBudgetOrderFeeBO budgetOrderFeeBO;
+
+    @Autowired
+    private IBudgetOrderFeeDetailBO budgetOrderFeeDetailBO;
 
     @Override
     public String addBudgetOrderFee(BudgetOrderFee data) {
@@ -51,6 +62,33 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
 
     @Override
     public BudgetOrderFee getBudgetOrderFee(String code) {
-        return budgetOrderFeeBO.getBudgetOrderFee(code);
+        BudgetOrderFee budgetOrderFee = budgetOrderFeeBO
+            .getBudgetOrderFee(code);
+        if (null == budgetOrderFee) {
+            throw new BizException("xn0000", "手续费编号不存在");
+        }
+
+        BudgetOrderFeeDetail condition = new BudgetOrderFeeDetail();
+        condition.setFeeCode(code);
+        List<BudgetOrderFeeDetail> list = budgetOrderFeeDetailBO
+            .queryBudgetOrderFeeDetailList(condition);
+
+        Long realAmount = 0L;
+
+        for (BudgetOrderFeeDetail budgetOrderFeeDetail : list) {
+
+            Long amount = budgetOrderFeeDetail.getAmount();
+
+            amount += realAmount;
+
+        }
+        budgetOrderFee.setRealAmount(realAmount);
+        if (realAmount >= budgetOrderFee.getShouldAmount()) {
+            budgetOrderFee.setIsSettled("1");
+        }
+
+        budgetOrderFee.setBudgetOrderFeeDetailList(list);
+
+        return budgetOrderFee;
     }
 }
