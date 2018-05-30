@@ -22,7 +22,7 @@ public class XN632137Req {
 
     private String repayMonthAmount;// 每期月供金额
 
-    private String bankLoanDate;// 放款日期
+    private String bankFkDate;// 放款日期
 
     public String getCode() {
         return code;
@@ -80,12 +80,12 @@ public class XN632137Req {
         this.repayMonthAmount = repayMonthAmount;
     }
 
-    public String getBankLoanDate() {
-        return bankLoanDate;
+    public String getBankFkDate() {
+        return bankFkDate;
     }
 
-    public void setBankLoanDate(String bankLoanDate) {
-        this.bankLoanDate = bankLoanDate;
+    public void setBankFkDate(String bankFkDate) {
+        this.bankFkDate = bankFkDate;
     }
 
     public String getOperator() {

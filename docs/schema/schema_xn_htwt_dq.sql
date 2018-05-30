@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS `tdq_budget_order`;
 CREATE TABLE `tdq_budget_order` (
-  `code` varchar(32) NOT NULL DEFAULT COMMENT '编号',
+  `code` varchar(32) NOT NULL DEFAULT '' COMMENT '编号',
   `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',
   `loan_product_code` varchar(32) DEFAULT NULL COMMENT '贷款产品编号',
   `loan_product_name` varchar(255) DEFAULT NULL COMMENT '贷款产品名称',
@@ -127,7 +127,6 @@ CREATE TABLE `tdq_budget_order` (
   
   `repay_first_month_datetime` datetime DEFAULT NULL COMMENT '首期还款日期',
   `repay_month_amount` bigint(20) DEFAULT NULL COMMENT '每期月供金额',
-  `bank_fk_datetime` int(11) DEFAULT NULL COMMENT '银行放款日期',
   `receipt_bank_code` varchar(255) DEFAULT NULL COMMENT '收款银行编号',
   `receipt_bank_name` varchar(255) DEFAULT NULL COMMENT '收款银行名称',
   

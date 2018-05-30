@@ -66,7 +66,7 @@ public class BudgetOrder extends ABaseDO {
     // 颜色
     private String carColor;
 
-    // 月供保证金
+    // 月供保证金(履约保证金)
     private Long monthDeposit;
 
     // 首付金额
@@ -81,7 +81,7 @@ public class BudgetOrder extends ABaseDO {
     // 落户地点
     private String settleAddress;
 
-    // 申请人姓名
+    // 申请人编号(代注册回写)
     private String applyUserId;
 
     // 申请人姓名

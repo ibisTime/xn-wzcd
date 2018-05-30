@@ -10,7 +10,7 @@ import com.cdkj.loan.bo.ILoanProductBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.ILoanProductDAO;
 import com.cdkj.loan.domain.LoanProduct;
-import com.cdkj.loan.enums.EProductStatus;
+import com.cdkj.loan.enums.ELoanProductStatus;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -20,8 +20,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class LoanProductBOImpl extends PaginableBOImpl<LoanProduct>
-        implements ILoanProductBO {
+public class LoanProductBOImpl extends PaginableBOImpl<LoanProduct> implements
+        ILoanProductBO {
 
     @Autowired
     private ILoanProductDAO loanProductDAO;
@@ -54,7 +54,7 @@ public class LoanProductBOImpl extends PaginableBOImpl<LoanProduct>
 
         LoanProduct condition = new LoanProduct();
         condition.setCode(code);
-        condition.setStatus(EProductStatus.PUBLISH_YES.getCode());
+        condition.setStatus(ELoanProductStatus.PUBLISH_YES.getCode());
         condition.setUpdater(updater);
         condition.setUpdateDatetime(new Date());
         loanProductDAO.updateLoanProductPublish(condition);
@@ -68,7 +68,7 @@ public class LoanProductBOImpl extends PaginableBOImpl<LoanProduct>
 
         LoanProduct condition = new LoanProduct();
         condition.setCode(code);
-        condition.setStatus(EProductStatus.PUBLISH_NO.getCode());
+        condition.setStatus(ELoanProductStatus.PUBLISH_NO.getCode());
         condition.setUpdater(updater);
         condition.setUpdateDatetime(new Date());
         loanProductDAO.updateLoanProductPublish(condition);
