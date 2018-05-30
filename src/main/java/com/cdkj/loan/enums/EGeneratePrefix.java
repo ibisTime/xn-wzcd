@@ -30,8 +30,12 @@ public enum EGeneratePrefix {
             "经销商协议表"),
 
     BUDGET("BG", "预订单"), GPS("G", "GPS"), BANK("BA", "银行"), LOGISTICS("L",
+
             "资料传递"), BUDGETORDER("BO", "预算单"), LOAN_PRODUCT("LP", "贷款产品"), BUDGET_ORDER_FEE(
-            "BOF", "准入单手续费"), BUDGET_ORDER_FEE_DETAIL("BOFD", "准入单手续费明细");
+            "BOF", "准入单手续费"), BUDGET_ORDER_FEE_DETAIL("BOFD", "准入单手续费明细"),
+
+  GPSAZ("GPSAZ", "gps安装");
+
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();
         for (EGeneratePrefix orderType : EGeneratePrefix.values()) {

@@ -1,10 +1,13 @@
 package com.cdkj.loan.ao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632120Req;
+import com.cdkj.loan.dto.req.XN632126ReqGps;
 
 @Component
 public interface IBudgetOrderAO {
@@ -29,14 +32,21 @@ public interface IBudgetOrderAO {
     public void bizChargeApprove(String code, String operator,
             String approveResult, String approveNote);
 
+    // 财务确认垫资
+    public void advanceFund(String code, String operator,
+            String advanceFundDatetime, String advanceFundAmount, String billPdf);
+
+    // 安装GPS
+    public void installGps(String code, String operator,
+            List<XN632126ReqGps> gpsAzList);
+
+    // GPS管理员审核
+    public void gpsManagerApprove(String code, String operator,
+            String approveResult, String approveNote);
+
     public Paginable<BudgetOrder> queryBudgetOrderPage(int start, int limit,
             BudgetOrder condition);
 
     public BudgetOrder getBudgetOrder(String code);
-
-    // 财务确认垫资
-    public void advancefund(String code, String operator,
-            String advanceFundDatetime, String advanceFundAmount,
-            String billPdf);
 
 }

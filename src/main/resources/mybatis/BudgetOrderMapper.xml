@@ -617,6 +617,14 @@
 		WHERE code = #{code}
 	</update>
 	
+	<update id="update_gps_manager_approve" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
 	<update id="update_advancefund" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET

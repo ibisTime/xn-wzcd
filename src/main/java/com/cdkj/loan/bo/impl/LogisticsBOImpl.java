@@ -7,8 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.ao.IUserAO;
+import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
@@ -26,13 +26,13 @@ import com.cdkj.loan.exception.BizException;
  */
 
 @Component
-public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
-        implements ILogisticsBO {
+public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
+        ILogisticsBO {
     @Autowired
     private ILogisticsDAO logisticsDAO;
 
     @Autowired
-    private IBudgetOrderAO budgetOrderAO;
+    private IBudgetOrderBO budgetOrderBO;
 
     @Autowired
     private IUserAO userAO;
@@ -48,15 +48,15 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
         }
 
         // 判断预算单和用户是否存在
-        if (null == budgetOrderAO.getBudgetOrder(bizCode)) {
+        if (null == budgetOrderBO.getBudgetOrder(bizCode)) {
             throw new BizException("xn0000", "业务编号不存在");
         }
         if (null == userAO.getUser(userId)) {
             throw new BizException("xn0000", "用户不存在");
         }
 
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.LOGISTICS.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.LOGISTICS
+            .getCode());
         Logistics data = new Logistics();
         data.setCode(code);
         data.setType(type);
@@ -81,8 +81,8 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
             throw new BizException("xn0000", "请填写编号");
         }
 
-        if (!ELogisticsStatus.TO_RECEIVE.getCode()
-            .equals(getLogistics(code).getStatus())) {
+        if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(
+            getLogistics(code).getStatus())) {
             throw new BizException("xn0000", "资料不是待收件状态。");
         }
 
@@ -108,13 +108,6 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     }
 
     @Override
-    public void dropLogistics(String code) {
-        Logistics data = new Logistics();
-        data.setCode(code);
-        logisticsDAO.delete(data);
-    }
-
-    @Override
     public Logistics getLogistics(String code) {
         if (null == code) {
             throw new BizException("xn0000", "请填写编号");
@@ -126,7 +119,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     }
 
     @Override
-    public List<Logistics> getLogisticsList(Logistics condition) {
+    public List<Logistics> queryLogisticsList(Logistics condition) {
         return logisticsDAO.selectList(condition);
     }
 

@@ -1,104 +1,143 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN632120Req {
 
     // 操作人
+    @NotBlank
     private String operator;
 
     // 处理类型(0 保存 1 发送)
+    @NotBlank
     private String dealType;
 
     // 贷款产品编号
+    @NotBlank
     private String loanProductCode;
 
+    // 是否垫资
+    @NotBlank
+    private String isAdvanceFund;
+
     // 征信单编号
+    @NotBlank
     private String creditCode;
 
     // 业务种类
+    @NotBlank
     private String bizType;
 
     // 贷款期限
+    @NotBlank
     private String loanPeriod;
 
     // 开票单位
+    @NotBlank
     private String invoiceCompany;
 
     // 品牌
+    @NotBlank
     private String carBrand;
 
     // 市场指导价
+    @NotBlank
     private String originalPrice;
 
     // 开票价
+    @NotBlank
     private String invoicePrice;
 
     // 颜色
+    @NotBlank
     private String carColor;
 
     // 月供保证金
+    @NotBlank
     private String monthDeposit;
 
     // 首付金额
+    @NotBlank
     private String firstAmount;
 
     // 首付比例
+    @NotBlank
     private String firstRate;
 
     // 贷款额
+    @NotBlank
     private String loanAmount;
 
     // 落户地点
+    @NotBlank
     private String settleAddress;
 
     // 申请人姓名
+    @NotBlank
     private String applyUserName;
 
     // 性别
+    @NotBlank
     private String gender;
 
     // 婚姻状况
+    @NotBlank
     private String marryState;
 
     // 民族
+    @NotBlank
     private String nation;
 
     // 学历
+    @NotBlank
     private String education;
 
     // 身份证号
-    private String idNO;
+    @NotBlank
+    private String idNo;
 
     // 家庭人口
+    @NotBlank
     private String familyNumber;
 
     // 手机号
+    @NotBlank
     private String mobile;
 
     // 现居住地址
+    @NotBlank
     private String nowAddress;
 
     // 邮编1
+    @NotBlank
     private String postCode1;
 
     // 户口所在地
+    @NotBlank
     private String residenceAddress;
 
     // 邮编2
+    @NotBlank
     private String postCode2;
 
     // 家庭主要财产
+    @NotBlank
     private String familyMainAsset;
 
     // 主要财产包括
+    @NotBlank
     private String mainAssetInclude;
 
     // 主要收入来源
+    @NotBlank
     private String mainIncome;
 
     // 工作单位名称
+    @NotBlank
     private String workCompanyName;
 
     // 工作单位地址
+    @NotBlank
     private String workCompanyAddress;
 
     // 自营公司单位面积
@@ -180,27 +219,35 @@ public class XN632120Req {
     private String emergencyMobile2;
 
     // 流水时间起
+    @NotBlank
     private String jourDatetimeStart;
 
     // 流水时间止
+    @NotBlank
     private String jourDatetimeEnd;
 
     // 收入
+    @NotBlank
     private String jourIncome;
 
     // 支出
+    @NotBlank
     private String jourExpend;
 
     // 帐户余额
+    @NotBlank
     private String jourBalance;
 
     // 月均收入
+    @NotBlank
     private String jourMonthIncome;
 
     // 月均支出
+    @NotBlank
     private String jourMonthExpend;
 
     // 流水备注
+    @NotBlank
     private String jourRemark;
 
     // 购房合同
@@ -208,9 +255,6 @@ public class XN632120Req {
 
     // 房屋照片
     private String housePicture;
-
-    // 是否垫资
-    private String isAdvanceFund;
 
     public String getOperator() {
         return operator;
@@ -380,12 +424,12 @@ public class XN632120Req {
         this.education = education;
     }
 
-    public String getIdNO() {
-        return idNO;
+    public String getIdNo() {
+        return idNo;
     }
 
-    public void setIdNO(String idNO) {
-        this.idNO = idNO;
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
     }
 
     public String getFamilyNumber() {

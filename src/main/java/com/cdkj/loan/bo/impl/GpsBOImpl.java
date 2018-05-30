@@ -10,6 +10,7 @@ import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.IGpsDAO;
 import com.cdkj.loan.domain.Gps;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -52,7 +53,8 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
             condition.setCode(code);
             data = gpsDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "GPS编号不存在");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "GPS编号不存在");
             }
         }
         return data;

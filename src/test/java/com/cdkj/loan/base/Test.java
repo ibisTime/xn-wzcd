@@ -9,62 +9,22 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "budgetOrder";
+    private static String key = "budegetOrderGps";
 
     // 实体名称
-    private static String keyName = "预算单";
+    private static String keyName = "GPS安装";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdq_budget_order";
+    private static String dbname = "tdq_budeget_order_gps";
 
-    private static String[] DBwords = { "code", "loan_product_code",
-            "loan_product_name", "loan_bank", "gps_fee", "auth_fee", "fee",
-            "month_rate", "credit_code", "biz_type", "loan_period",
-            "invoice_company", "car_brand", "original_price", "invoice_price",
-            "car_color", "month_deposit", "first_amount", "first_rate",
-            "loan_amount", "settle_address", "apply_user_name", "gender",
-            "marry_state", "nation", "education", "id_no", "family_number",
-            "mobile", "now_address", "post_code1", "residence_address",
-            "post_code2", "family_main_asset", "main_asset_include",
-            "main_income", "work_company_name", "work_company_address",
-            "self_company_area", "employee_quantity", "enterprise_month_output",
-            "position", "post_title", "month_income", "mate_name",
-            "mate_mobile", "mate_id_no", "mate_education", "mate_company_name",
-            "mate_company_address", "mate_company_contact_no", "gua_name",
-            "gua_mobile", "gua_id_no", "gua_phone", "gua_company_name",
-            "gua_company_address", "gua_house_asset_address", "emergency_name1",
-            "emergency_relation1", "emergency_mobile1", "emergency_name2",
-            "emergency_relation2", "emergency_mobile2", "jour_datetime_start",
-            "jour_datetime_end", "jour_income", "jour_expend", "jour_balance",
-            "jour_month_income", "jour_month_expend", "jour_remark",
-            "house_contract", "house_picture", "is_advance_fund",
-            "sale_user_id", "company_code", "apply_datetime", "cur_node_code" };
+    private static String[] DBwords = { "code", "gps_dev_no", "gps_type",
+            "az_location", "az_datetime", "az_user", "remark", "budget_order" };
 
-    private static String[] DBwordsName = { "code", "loan_product_code",
-            "loan_product_name", "loan_bank", "gps_fee", "auth_fee", "fee",
-            "month_rate", "credit_code", "biz_type", "loan_period",
-            "invoice_company", "car_brand", "original_price", "invoice_price",
-            "car_color", "month_deposit", "first_amount", "first_rate",
-            "loan_amount", "settle_address", "apply_user_name", "gender",
-            "marry_state", "nation", "education", "id_no", "family_number",
-            "mobile", "now_address", "post_code1", "residence_address",
-            "post_code2", "family_main_asset", "main_asset_include",
-            "main_income", "work_company_name", "work_company_address",
-            "self_company_area", "employee_quantity", "enterprise_month_output",
-            "position", "post_title", "month_income", "mate_name",
-            "mate_mobile", "mate_id_no", "mate_education", "mate_company_name",
-            "mate_company_address", "mate_company_contact_no", "gua_name",
-            "gua_mobile", "gua_id_no", "gua_phone", "gua_company_name",
-            "gua_company_address", "gua_house_asset_address", "emergency_name1",
-            "emergency_relation1", "emergency_mobile1", "emergency_name2",
-            "emergency_relation2", "emergency_mobile2", "jour_datetime_start",
-            "jour_datetime_end", "jour_income", "jour_expend", "jour_balance",
-            "jour_month_income", "jour_month_expend", "jour_remark",
-            "house_contract", "house_picture", "is_advance_fund",
-            "sale_user_id", "company_code", "apply_datetime", "cur_node_code" };
+    private static String[] DBwordsName = { "编号", "gps设备号", "gps类型", "安装位置",
+            "安装时间", "安装人员", "备注", "预算单编号" };
 
     private static String[] DOwords = getDOwords();
 
@@ -73,7 +33,9 @@ public class Test {
 
     public static void main(String[] args) {
 
-        File DOMAINfile = new File("E:/Chengdai", Key + ".java");
+        File DOMAINfile = new File(
+            "C:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/domain",
+            Key + ".java");
 
         File Mapperfile = new File(
             "C:/Users/CYL/git/xn-htwt/src/main/resources/mybatis",
@@ -229,7 +191,7 @@ public class Test {
         String str = "";
         String str1 = "package " + packge + "domain;\n\n" + "import " + packge
                 + "dao.base.ABaseDO;\n\n" + "/**" + "\n* " + keyName
-                + "\n* @author: chenshan " + "\n* @since: "
+                + "\n* @author: CYunlai " + "\n* @since: "
                 + DateUtil.getToday(DateUtil.DATA_TIME_PATTERN_1) + ""
                 + "\n* @history:\n*/" + "\n" + "public class " + Key
                 + " extends ABaseDO {" + "\n\n\t"

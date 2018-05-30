@@ -18,4 +18,6 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     void updaterBizChargeApprove(BudgetOrder data);
 
     void updaterAdvancefund(BudgetOrder data);
+
+    void updaterGpsManagerApprove(BudgetOrder data);
 }

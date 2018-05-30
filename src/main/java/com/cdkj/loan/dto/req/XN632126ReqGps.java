@@ -1,7 +1,7 @@
 package com.cdkj.loan.dto.req;
 
 /**
- * 预算单-财务确认垫资
+ * 预算单-gps安装列表
  * @author: xieyj 
  * @since: 2018年5月29日 下午10:31:16 
  * @history:

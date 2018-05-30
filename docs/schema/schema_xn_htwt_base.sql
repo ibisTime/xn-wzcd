@@ -40,14 +40,16 @@ COMMENT = '平台银行信息表';
 DROP TABLE IF EXISTS `tb_gps`;
 CREATE TABLE `tb_gps` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
-  `gps_no` VARCHAR(32) NOT NULL COMMENT 'gps编号',
+  `gps_dev_no` VARCHAR(32) NOT NULL COMMENT 'gps编号',
   `gps_type` VARCHAR(32) NOT NULL COMMENT 'gps类型( 1 有线 0 无线)',
-  `company_code` VARCHAR(32) NULL COMMENT '公司编号',
-  `apply_user` VARCHAR(32) NULL COMMENT '申请人',
-  `apply_status` VARCHAR(32) NULL COMMENT '申请状态',
-  `apply_datetime` DATETIME NULL COMMENT '申请日期',
   
-  `use_status` VARCHAR(32) NULL COMMENT '使用状态',
+  `company_code` VARCHAR(32) NULL COMMENT '公司编号',
+  `apply_user` VARCHAR(32) NULL COMMENT '申领人',
+  `apply_status` VARCHAR(32) NULL COMMENT '申领状态(0 待申领 1 已申领)',
+  `apply_datetime` DATETIME NULL COMMENT '申领日期',
+  `apply_code` VARCHAR(32) NULL COMMENT '申领编号',
+  
+  `use_status` VARCHAR(32) NULL COMMENT '使用状态(0 待使用 1 已使用)',
   `use_datetime` DATETIME NULL COMMENT '使用日期',
   `biz_code` VARCHAR(32) NULL COMMENT '业务编号',
   PRIMARY KEY (`code`))
@@ -67,7 +69,7 @@ CREATE TABLE `tb_gps_apply` (
   `apply_count` int(11) NULL COMMENT '申请个数',
   `send_datetime` DATETIME NULL COMMENT '发货日期',
   `receive_datetime` DATETIME NULL COMMENT '收货日期',
-  `status` VARCHAR(32) NULL COMMENT '状态(1 0 待审核 1 审核通过,待发货 2 审核不通过 3 已发货,待收货 4 已收货)',
+  `status` VARCHAR(32) NULL COMMENT '状态(0 待审核 1 审核通过,待发货 2 审核不通过 3 已发货,待收货 4 已收货)',
   `remark` VARCHAR(255) NULL COMMENT '备注',
   PRIMARY KEY (`code`))
 ENGINE = InnoDB

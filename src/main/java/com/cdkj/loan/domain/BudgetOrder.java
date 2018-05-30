@@ -329,6 +329,9 @@ public class BudgetOrder extends ABaseDO {
     // 业务公司编号
     private String companyCode;
 
+    // 申请人
+    private String applyUser;
+
     // 申请时间
     private Date applyDatetime;
 
@@ -337,6 +340,14 @@ public class BudgetOrder extends ABaseDO {
 
     // 最新备注
     private String remark;
+
+    public String getApplyUser() {
+        return applyUser;
+    }
+
+    public void setApplyUser(String applyUser) {
+        this.applyUser = applyUser;
+    }
 
     public String getCode() {
         return code;

@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 添加预算单
+ * 准入单-填写准入单
  * @author: xieyj 
  * @since: 2018年5月26日 下午10:49:49 
  * @history:
