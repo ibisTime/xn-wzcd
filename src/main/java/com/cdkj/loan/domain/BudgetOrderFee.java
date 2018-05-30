@@ -45,9 +45,18 @@ public class BudgetOrderFee extends ABaseDO {
     // 准入单编号
     private String budgetOrder;
 
+    // 汇入我司账号
+    private String remitCompanyAccount;
+
     /*-------辅助字段----------*/
 
     private List<BudgetOrderFeeDetail> BudgetOrderFeeDetailList;
+
+    // 贷款银行
+    private String loanBankCode;
+
+    // 贷款金额
+    private Long loanAmount;
 
     public String getCode() {
         return code;
@@ -136,6 +145,30 @@ public class BudgetOrderFee extends ABaseDO {
     public void setBudgetOrderFeeDetailList(
             List<BudgetOrderFeeDetail> budgetOrderFeeDetailList) {
         BudgetOrderFeeDetailList = budgetOrderFeeDetailList;
+    }
+
+    public String getLoanBankCode() {
+        return loanBankCode;
+    }
+
+    public void setLoanBankCode(String loanBankCode) {
+        this.loanBankCode = loanBankCode;
+    }
+
+    public Long getLoanAmount() {
+        return loanAmount;
+    }
+
+    public void setLoanAmount(Long loanAmount) {
+        this.loanAmount = loanAmount;
+    }
+
+    public String getRemitCompanyAccount() {
+        return remitCompanyAccount;
+    }
+
+    public void setRemitCompanyAccount(String remitCompanyAccount) {
+        this.remitCompanyAccount = remitCompanyAccount;
     }
 
 }

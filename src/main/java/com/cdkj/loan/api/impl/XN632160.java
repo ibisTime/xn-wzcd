@@ -30,10 +30,10 @@ public class XN632160 extends AProcessor {
 
         BudgetOrderFeeDetail data = new BudgetOrderFeeDetail();
         data.setRemitType(req.getRemitType());
-        data.setRemitCompanyCode(req.getRemitCompanyCode());
+        data.setRemitCompanyBank(req.getRemitCompanyBank());
         data.setRemitProject(req.getRemitProject());
         data.setAmount(StringValidater.toLong(req.getAmount()));
-        data.setPlatBankcard(req.getPlatBankcard());
+        data.setRemitCompanyAccount(req.getRemitCompanyAccount());
         data.setRemitUser(req.getRemitUser());
         data.setReachDatetime(DateUtil.strToDate(req.getReachDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));

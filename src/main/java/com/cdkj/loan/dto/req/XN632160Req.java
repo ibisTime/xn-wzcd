@@ -14,10 +14,6 @@ public class XN632160Req {
     @NotBlank
     private String remitType;
 
-    // 交款业务公司编号
-    @NotBlank
-    private String remitCompanyCode;
-
     // 交款项目
     @NotBlank
     private String remitProject;
@@ -26,9 +22,13 @@ public class XN632160Req {
     @NotBlank
     private String amount;
 
-    // 平台银行卡
+    // 汇入我司账号
     @NotBlank
-    private String platBankcard;
+    private String remitCompanyAccount;
+
+    // 汇入我司银行
+    @NotBlank
+    private String remitCompanyBank;
 
     // 汇款人
     @NotBlank
@@ -53,14 +53,6 @@ public class XN632160Req {
         this.remitType = remitType;
     }
 
-    public String getRemitCompanyCode() {
-        return remitCompanyCode;
-    }
-
-    public void setRemitCompanyCode(String remitCompanyCode) {
-        this.remitCompanyCode = remitCompanyCode;
-    }
-
     public String getRemitProject() {
         return remitProject;
     }
@@ -75,14 +67,6 @@ public class XN632160Req {
 
     public void setAmount(String amount) {
         this.amount = amount;
-    }
-
-    public String getPlatBankcard() {
-        return platBankcard;
-    }
-
-    public void setPlatBankcard(String platBankcard) {
-        this.platBankcard = platBankcard;
     }
 
     public String getRemitUser() {
@@ -116,4 +100,21 @@ public class XN632160Req {
     public void setFeeCode(String feeCode) {
         this.feeCode = feeCode;
     }
+
+    public String getRemitCompanyAccount() {
+        return remitCompanyAccount;
+    }
+
+    public void setRemitCompanyAccount(String remitCompanyAccount) {
+        this.remitCompanyAccount = remitCompanyAccount;
+    }
+
+    public String getRemitCompanyBank() {
+        return remitCompanyBank;
+    }
+
+    public void setRemitCompanyBank(String remitCompanyBank) {
+        this.remitCompanyBank = remitCompanyBank;
+    }
+
 }

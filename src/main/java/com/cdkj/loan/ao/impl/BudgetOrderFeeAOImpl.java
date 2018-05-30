@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBudgetOrderFeeAO;
+import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IBudgetOrderFeeBO;
 import com.cdkj.loan.bo.IBudgetOrderFeeDetailBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.BudgetOrderFeeDetail;
 import com.cdkj.loan.exception.BizException;
@@ -27,6 +29,9 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
 
     @Autowired
     private IBudgetOrderFeeDetailBO budgetOrderFeeDetailBO;
+
+    @Autowired
+    private IBudgetOrderBO budgetOrderBO;
 
     @Override
     public String addBudgetOrderFee(BudgetOrderFee data) {
@@ -88,6 +93,16 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
         }
 
         budgetOrderFee.setBudgetOrderFeeDetailList(list);
+
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(budgetOrderFee
+            .getBudgetOrder());
+
+        if (null != budgetOrder) {
+
+            budgetOrderFee.setLoanBankCode(budgetOrder.getLoanBank());
+
+            budgetOrderFee.setLoanAmount(budgetOrder.getLoanAmount());
+        }
 
         return budgetOrderFee;
     }

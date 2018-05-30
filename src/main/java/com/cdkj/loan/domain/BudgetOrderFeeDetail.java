@@ -20,9 +20,6 @@ public class BudgetOrderFeeDetail extends ABaseDO {
     // 交款类型
     private String remitType;
 
-    // 交款业务公司编号
-    private String remitCompanyCode;
-
     // 交款项目
     private String remitProject;
 
@@ -50,6 +47,12 @@ public class BudgetOrderFeeDetail extends ABaseDO {
     // 手续费编号
     private String feeCode;
 
+    // 汇入我司银行
+    private String remitCompanyBank;
+
+    // 汇入我司账号
+    private String remitCompanyAccount;
+
     public String getCode() {
         return code;
     }
@@ -64,14 +67,6 @@ public class BudgetOrderFeeDetail extends ABaseDO {
 
     public void setRemitType(String remitType) {
         this.remitType = remitType;
-    }
-
-    public String getRemitCompanyCode() {
-        return remitCompanyCode;
-    }
-
-    public void setRemitCompanyCode(String remitCompanyCode) {
-        this.remitCompanyCode = remitCompanyCode;
     }
 
     public String getRemitProject() {
@@ -144,6 +139,22 @@ public class BudgetOrderFeeDetail extends ABaseDO {
 
     public void setFeeCode(String feeCode) {
         this.feeCode = feeCode;
+    }
+
+    public String getRemitCompanyBank() {
+        return remitCompanyBank;
+    }
+
+    public void setRemitCompanyBank(String remitCompanyBank) {
+        this.remitCompanyBank = remitCompanyBank;
+    }
+
+    public String getRemitCompanyAccount() {
+        return remitCompanyAccount;
+    }
+
+    public void setRemitCompanyAccount(String remitCompanyAccount) {
+        this.remitCompanyAccount = remitCompanyAccount;
     }
 
 }
