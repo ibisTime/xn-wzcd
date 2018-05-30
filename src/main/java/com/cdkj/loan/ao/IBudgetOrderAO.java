@@ -8,6 +8,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
+import com.cdkj.loan.dto.req.XN632128Req;
 
 @Component
 public interface IBudgetOrderAO {
@@ -48,5 +49,15 @@ public interface IBudgetOrderAO {
             BudgetOrder condition);
 
     public BudgetOrder getBudgetOrder(String code);
+
+    // 车辆落户
+    public void carSettle(XN632128Req req);
+
+    // 确认提交银行
+    public void commitBank(String code, String operator,
+            String bankCommitDatetime, String bankCommitNote);
+
+    // 确定入档
+    public void archiveOrder(String code, String operator, String enterLocation);
 
 }

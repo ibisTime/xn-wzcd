@@ -57,4 +57,14 @@ public class NodeFlowBOImpl extends PaginableBOImpl<NodeFlow> implements
         }
         return data;
     }
+
+    @Override
+    public void refreshNodeFlow(String id, String fileList) {
+        if (StringUtils.isNotBlank(id)) {
+            NodeFlow data = new NodeFlow();
+            data.setId(id);
+            data.setFileList(fileList);
+            nodeFlowDAO.updateFileList(data);
+        }
+    }
 }

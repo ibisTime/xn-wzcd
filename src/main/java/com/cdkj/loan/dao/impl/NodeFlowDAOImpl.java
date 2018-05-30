@@ -22,6 +22,11 @@ public class NodeFlowDAOImpl extends AMybatisTemplate implements INodeFlowDAO {
     }
 
     @Override
+    public int updateFileList(NodeFlow data) {
+        return super.update(NAMESPACE.concat("update_fileList"), data);
+    }
+
+    @Override
     public NodeFlow select(NodeFlow condition) {
         return super.select(NAMESPACE.concat("select_nodeFlow"), condition,
             NodeFlow.class);

@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -25,7 +27,7 @@ public class BudgetOrderFeeDetail extends ABaseDO {
     private String remitProject;
 
     // 金额
-    private String amount;
+    private Long amount;
 
     // 平台账户
     private String platBankcard;
@@ -34,13 +36,13 @@ public class BudgetOrderFeeDetail extends ABaseDO {
     private String remitUser;
 
     // 到账时间
-    private String reachDatetime;
+    private Date reachDatetime;
 
     // 更新人
     private String updater;
 
     // 更新时间
-    private String updateDatetime;
+    private Date updateDatetime;
 
     // 备注
     private String remark;
@@ -48,84 +50,68 @@ public class BudgetOrderFeeDetail extends ABaseDO {
     // 手续费编号
     private String feeCode;
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getCode() {
         return code;
     }
 
-    public void setRemitType(String remitType) {
-        this.remitType = remitType;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getRemitType() {
         return remitType;
     }
 
-    public void setRemitCompanyCode(String remitCompanyCode) {
-        this.remitCompanyCode = remitCompanyCode;
+    public void setRemitType(String remitType) {
+        this.remitType = remitType;
     }
 
     public String getRemitCompanyCode() {
         return remitCompanyCode;
     }
 
-    public void setRemitProject(String remitProject) {
-        this.remitProject = remitProject;
+    public void setRemitCompanyCode(String remitCompanyCode) {
+        this.remitCompanyCode = remitCompanyCode;
     }
 
     public String getRemitProject() {
         return remitProject;
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setRemitProject(String remitProject) {
+        this.remitProject = remitProject;
     }
 
-    public String getAmount() {
+    public Long getAmount() {
         return amount;
     }
 
-    public void setPlatBankcard(String platBankcard) {
-        this.platBankcard = platBankcard;
+    public void setAmount(Long amount) {
+        this.amount = amount;
     }
 
     public String getPlatBankcard() {
         return platBankcard;
     }
 
-    public void setRemitUser(String remitUser) {
-        this.remitUser = remitUser;
+    public void setPlatBankcard(String platBankcard) {
+        this.platBankcard = platBankcard;
     }
 
     public String getRemitUser() {
         return remitUser;
     }
 
-    public void setReachDatetime(String reachDatetime) {
-        this.reachDatetime = reachDatetime;
+    public void setRemitUser(String remitUser) {
+        this.remitUser = remitUser;
     }
 
-    public String getReachDatetime() {
+    public Date getReachDatetime() {
         return reachDatetime;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setFeeCode(String feeCode) {
-        this.feeCode = feeCode;
-    }
-
-    public String getFeeCode() {
-        return feeCode;
+    public void setReachDatetime(Date reachDatetime) {
+        this.reachDatetime = reachDatetime;
     }
 
     public String getUpdater() {
@@ -136,12 +122,28 @@ public class BudgetOrderFeeDetail extends ABaseDO {
         this.updater = updater;
     }
 
-    public String getUpdateDatetime() {
+    public Date getUpdateDatetime() {
         return updateDatetime;
     }
 
-    public void setUpdateDatetime(String updateDatetime) {
+    public void setUpdateDatetime(Date updateDatetime) {
         this.updateDatetime = updateDatetime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getFeeCode() {
+        return feeCode;
+    }
+
+    public void setFeeCode(String feeCode) {
+        this.feeCode = feeCode;
     }
 
 }
