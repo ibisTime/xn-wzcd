@@ -92,7 +92,9 @@
 		<typeAlias alias="logistics" type="com.cdkj.loan.domain.Logistics" />
 		<typeAlias alias="budgetOrderFee" type="com.cdkj.loan.domain.BudgetOrderFee" />
 		<typeAlias alias="budgetOrderFeeDetail" type="com.cdkj.loan.domain.BudgetOrderFeeDetail" />
+		
 		<typeAlias alias="budgetOrderGps" type="com.cdkj.loan.domain.BudgetOrderGps" />
+		<typeAlias alias="gpsApply" type="com.cdkj.loan.domain.GpsApply" />
 	</typeAliases>
 	
 </configuration>

@@ -29,7 +29,7 @@ public enum EGeneratePrefix {
 
     BUDGET("BG", "预订单"), GPS("G", "GPS"), BANK("BA", "银行"), LOGISTICS("L",
             "资料传递"), BUDGETORDER("BO",
-                    "预算单"), LOAN_PRODUCT("LP", "贷款产品"), GPSAZ("GPSAZ", "gps安装");
+                    "预算单"), LOAN_PRODUCT("LP", "贷款产品"), GPSAZ("GPSAZ", "gps安装"), GPS_APPLY("GA","GPS申领");
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();
         for (EGeneratePrefix orderType : EGeneratePrefix.values()) {

@@ -66,6 +66,7 @@ CREATE TABLE `tb_gps_apply` (
   `apply_user` VARCHAR(32) NULL COMMENT '申请人',
   `apply_datetime` DATETIME NULL COMMENT '申请日期',
   
+  `apply_reason` VARCHAR(255) NULL COMMENT '申请原因',
   `apply_count` int(11) NULL COMMENT '申请个数',
   `send_datetime` DATETIME NULL COMMENT '发货日期',
   `receive_datetime` DATETIME NULL COMMENT '收货日期',
