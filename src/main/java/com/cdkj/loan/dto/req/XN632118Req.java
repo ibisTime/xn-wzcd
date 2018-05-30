@@ -8,9 +8,9 @@ import org.hibernate.validator.constraints.NotBlank;
  * @since: 2018年5月26日 下午2:35:44 
  * @history:
  */
-public class XN632117Req {
+public class XN632118Req {
 
-    // 征信人员编号
+    // 征信单编号
     @NotBlank
     private String code;
 

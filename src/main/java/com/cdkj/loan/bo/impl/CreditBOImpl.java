@@ -76,7 +76,9 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
     @Override
     public void refreshCreditNode(Credit credit) {
 
-        creditDAO.updateNode(credit);
+        if (!"".equals(credit.getCurNodeCode())) {
+            creditDAO.updateNode(credit);
+        }
 
     }
 

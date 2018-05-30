@@ -36,7 +36,7 @@ public class XN632116 extends AProcessor {
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setApplyDatetimeEnd(DateUtil.strToDate(
             req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-
+        condition.setCurNodeCode(req.getCurNodeCode());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IReqBudgetAO.DEFAULT_ORDER_COLUMN;

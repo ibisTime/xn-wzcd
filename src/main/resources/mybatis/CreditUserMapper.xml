@@ -162,7 +162,6 @@
 		UPDATE tdq_credit_user
 		SET
 		bank_credit_result_pdf=#{bankCreditResultPdf}
-
 		WHERE 
 		code = #{code}
 	</update>

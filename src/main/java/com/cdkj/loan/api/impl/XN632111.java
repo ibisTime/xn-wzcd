@@ -4,38 +4,38 @@ import com.cdkj.loan.ao.ICreditAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN632112Req;
+import com.cdkj.loan.dto.req.XN632111Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 修改征信
+ * 录入银行征信结果
  * @author: jiafr 
- * @since: 2018年5月25日 下午9:46:37 
+ * @since: 2018年5月25日 下午3:03:53 
  * @history:
  */
-public class XN632112 extends AProcessor {
+public class XN632111 extends AProcessor {
 
     private ICreditAO creditAO = SpringContextHolder.getBean(ICreditAO.class);
 
-    private XN632112Req req = null;
+    private XN632111Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
 
-        creditAO.editCredit(req);
+        creditAO.inputBankCreditResult(req);
 
         return new BooleanRes(true);
-
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632112Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632111Req.class);
         ObjValidater.validateReq(req);
+
     }
 
 }

@@ -3,6 +3,7 @@ package com.cdkj.loan.ao;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.dto.req.XN632110Req;
+import com.cdkj.loan.dto.req.XN632111Req;
 import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632113Req;
 
@@ -38,5 +39,8 @@ public interface ICreditAO {
 
     // 征信初审
     public void audit(XN632113Req req);
+
+    // 录入银行征信结果
+    public void inputBankCreditResult(XN632111Req req);
 
 }
