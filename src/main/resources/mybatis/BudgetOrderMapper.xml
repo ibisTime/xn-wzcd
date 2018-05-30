@@ -602,7 +602,7 @@
 		,car_big_smj = #{carBigSmj}
 		,bank_commit_datetime = #{bankCommitDatetime}
 		,bank_commit_note = #{bankCommitNote}
-		,bankLoan_datetime = #{bankLoanDatetime}
+		,bank_fk_datetime = #{bankFkDatetime}
 		,receipt_bank_code = #{receiptBankCode}
 		,receipt_bank_name = #{receiptBankName}
 		,receipt_bankcard_number = #{receiptBankcardNumber}

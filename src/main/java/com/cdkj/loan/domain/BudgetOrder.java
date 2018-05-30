@@ -3,6 +3,8 @@ package com.cdkj.loan.domain;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -372,6 +374,10 @@ public class BudgetOrder extends ABaseDO {
     // 申请时间
     private Date applyDatetime;
 
+    // 角色编号
+    @NotBlank
+    private String roleCode;
+
     // 当前节点编号
     private String curNodeCode;
 
@@ -385,6 +391,14 @@ public class BudgetOrder extends ABaseDO {
     private Date applyDatetimeEnd;// 申请时间结束
 
     private List<BudgetOrderGps> budgetOrderGpsList;// gps安装列表
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
 
     public List<BudgetOrderGps> getBudgetOrderGpsList() {
         return budgetOrderGpsList;
