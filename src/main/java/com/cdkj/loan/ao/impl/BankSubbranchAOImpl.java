@@ -14,7 +14,6 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.PhoneUtil;
 import com.cdkj.loan.core.StringValidater;
-import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.dto.req.XN632050Req;
 import com.cdkj.loan.dto.req.XN632052Req;
@@ -36,9 +35,7 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
 
     @Override
     public long addBankSubbranch(XN632050Req req) {
-        Bank bank = new Bank();
-        bank.setCode(req.getBankCode());
-        if (null == bankBO.getBank(bank)) {
+        if (null == bankBO.getBank(req.getBankCode())) {
             throw new BizException("xn0000", "银行信息不存在。");
         }
 

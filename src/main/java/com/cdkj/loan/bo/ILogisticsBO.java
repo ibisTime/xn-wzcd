@@ -25,12 +25,9 @@ public interface ILogisticsBO extends IPaginableBO<Logistics> {
     // 补发
     public void sendAgainLogistics(String code, String remark);
 
-    // 删除
-    public void dropLogistics(String code);
-
     // 查询
     public Logistics getLogistics(String code);
 
     // 列表查
-    public List<Logistics> getLogisticsList(Logistics condition);
+    public List<Logistics> queryLogisticsList(Logistics condition);
 }
