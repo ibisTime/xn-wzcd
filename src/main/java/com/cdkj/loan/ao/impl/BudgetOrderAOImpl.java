@@ -9,15 +9,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.IBudgetOrderFeeBO;
 import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IProductBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.NodeFlow;
@@ -43,6 +46,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private INodeFlowBO nodeFlowBO;
+
+    @Autowired
+    private IBudgetOrderFeeBO budgetOrderFeeBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Autowired
     private IBudgetOrderGpsBO budgetOrderGpsBO;
@@ -226,6 +235,22 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 .getNodeFlowByCurrentNode(
                     EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode())
                 .getNextNode());
+
+            // 生成 收回手续费
+            BudgetOrderFee data = new BudgetOrderFee();
+
+            data.setCompanyCode(budgetOrder.getCompanyCode());
+            data.setUserId(budgetOrder.getApplyUserName());
+            data.setShouldAmount(budgetOrder.getFee() + budgetOrder.getAuthFee()
+                    + budgetOrder.getGpsFee() + budgetOrder.getMonthDeposit());
+            data.setIsSettled("0");
+
+            if (null != sysUserBO.getUser(operator)) {
+                data.setUpdater(sysUserBO.getUser(operator).getRealName());
+            }
+            data.setUpdateDatetime(new Date());
+            data.setBudgetOrder(code);
+            budgetOrderFeeBO.saveBudgetOrderFee(data);
         } else {
             budgetOrder.setCurNodeCode(nodeFlowBO
                 .getNodeFlowByCurrentNode(
@@ -241,7 +266,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), operator);
-
     }
 
     @Override
@@ -282,8 +306,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(
             EBudgetOrderNode.BIZ_CHARGE_APPROVE.getCode());
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(
+                    EBudgetOrderNode.BIZ_CHARGE_APPROVE.getCode())
+                .getNextNode());
         } else {
+            budgetOrder.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(
+                    EBudgetOrderNode.BIZ_CHARGE_APPROVE.getCode())
+                .getBackNode());
             budgetOrder.setCurNodeCode(nodeFlow.getBackNode());
         }
 
@@ -298,11 +329,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             currentNode.getCode(), currentNode.getValue(), operator);
     }
 
-    @Override
     public void advanceFund(String code, String operator,
             String advanceFundDatetime, String advanceFundAmount,
             String billPdf) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+        budgetOrder.setAdvanceFundDatetime(DateUtil
+            .strToDate(advanceFundDatetime, DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder
+            .setAdvanceFundAmount(StringValidater.toLong(advanceFundAmount));
+
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         budgetOrder.setAdvanceFundDatetime(DateUtil

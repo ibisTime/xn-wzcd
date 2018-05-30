@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 手续费明细录入
  * @author: xieyj 
@@ -9,30 +11,38 @@ package com.cdkj.loan.dto.req;
 public class XN632160Req {
 
     // 交款类型
+    @NotBlank
     private String remitType;
 
     // 交款业务公司编号
+    @NotBlank
     private String remitCompanyCode;
 
     // 交款项目
+    @NotBlank
     private String remitProject;
 
     // 金额
+    @NotBlank
     private String amount;
 
     // 平台银行卡
+    @NotBlank
     private String platBankcard;
 
     // 汇款人
+    @NotBlank
     private String remitUser;
 
     // 到账时间
+    @NotBlank
     private String reachDatetime;
 
     // 备注
     private String remark;
 
     // 手续费编号
+    @NotBlank
     private String feeCode;
 
     public String getRemitType() {

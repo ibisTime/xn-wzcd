@@ -18,7 +18,7 @@ public class Gps extends ABaseDO {
     private String code;
 
     // gps编号
-    private String gpsNo;
+    private String gpsDevNo;
 
     // gps类型
     private String gpsType;
@@ -60,12 +60,12 @@ public class Gps extends ABaseDO {
         return code;
     }
 
-    public void setGpsNo(String gpsNo) {
-        this.gpsNo = gpsNo;
+    public String getGpsDevNo() {
+        return gpsDevNo;
     }
 
-    public String getGpsNo() {
-        return gpsNo;
+    public void setGpsDevNo(String gpsDevNo) {
+        this.gpsDevNo = gpsDevNo;
     }
 
     public void setCompanyCode(String companyCode) {

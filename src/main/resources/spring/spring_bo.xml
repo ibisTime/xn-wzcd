@@ -224,4 +224,8 @@
 		<property name="paginableDAO" ref="logisticsDAOImpl"/>
 	</bean>
 	
+	<bean id="budgetOrderFeeBO" class="com.cdkj.loan.bo.impl.BudgetOrderFeeBOImpl">
+		<property name="paginableDAO" ref="budgetOrderFeeDAOImpl"/>
+	</bean>
+	
 </beans>

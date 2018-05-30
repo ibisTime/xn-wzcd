@@ -26,7 +26,7 @@ public class XN632707 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         Gps condition = new Gps();
-        condition.setGpsNo(req.getGpsNo());
+        condition.setGpsDevNo(req.getGpsDevNo());
         condition.setGpsType(req.getGpsType());
         condition.setCompanyCode(req.getCompanyCode());
         condition.setApplyStatus(req.getApplyStatus());
