@@ -1,41 +1,39 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.ICreditAO;
+import com.cdkj.loan.ao.ICreditUserAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN632112Req;
-import com.cdkj.loan.dto.res.BooleanRes;
+import com.cdkj.loan.dto.req.XN632118Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 修改征信
+ * 征信报告查看
  * @author: jiafr 
- * @since: 2018年5月25日 下午9:46:37 
+ * @since: 2018年5月26日 下午2:33:29 
  * @history:
  */
-public class XN632112 extends AProcessor {
+public class XN632118 extends AProcessor {
 
-    private ICreditAO creditAO = SpringContextHolder.getBean(ICreditAO.class);
+    private ICreditUserAO ICreditUserBO = SpringContextHolder
+        .getBean(ICreditUserAO.class);
 
-    private XN632112Req req = null;
+    private XN632118Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
 
-        creditAO.editCredit(req);
-
-        return new BooleanRes(true);
-
+        return ICreditUserBO.getCreditUserReport(req.getCode());
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632112Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632118Req.class);
         ObjValidater.validateReq(req);
+
     }
 
 }

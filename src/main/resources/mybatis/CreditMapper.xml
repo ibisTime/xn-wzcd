@@ -11,15 +11,13 @@
 		<result column="second_car_report" property="secondCarReport" />
 		<result column="xsz_front" property="xszFront" />
 		<result column="xsz_reverse" property="xszReverse" />
+		
 		<result column="budget_code" property="budgetCode" />
 		<result column="company_code" property="companyCode" />
 		<result column="sale_user_id" property="saleUserId" />
 		<result column="apply_datetime" property="applyDatetime" />
 		<result column="cur_node_code" property="curNodeCode" />
 
-		
-
-		
 	</resultMap>
 	
 	<sql id="where_condition">

@@ -23,6 +23,8 @@ import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632110ReqCreditUser;
+import com.cdkj.loan.dto.req.XN632111Req;
+import com.cdkj.loan.dto.req.XN632111ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632112ReqCreditUser;
 import com.cdkj.loan.dto.req.XN632113Req;
@@ -83,12 +85,12 @@ public class CreditAOImpl implements ICreditAO {
         credit.setSaleUserId(req.getOperator());
         credit.setApplyDatetime(new Date());
 
-        if (null != sysUser.getCompanyCode()
-                && !"".equals(sysUser.getCompanyCode())) {
-            Department department = departmentBO.getDepartment(sysUser
-                .getCompanyCode());
-            credit.setCompanyName(department.getName());
-        }
+        /*
+         * if (null != sysUser.getCompanyCode() &&
+         * !"".equals(sysUser.getCompanyCode())) { Department department =
+         * departmentBO.getDepartment(sysUser .getCompanyCode());
+         * credit.setCompanyName(department.getName()); }
+         */
         ECreditNode currentNode = ECreditNode.START;
         credit.setCurNodeCode(currentNode.getCode());
         // 设置节点
@@ -155,7 +157,7 @@ public class CreditAOImpl implements ICreditAO {
         String PrecurNodeCode = credit.getCurNodeCode();
         // 更新当前节点
         credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-            PrecurNodeCode).getNextNode());
+            credit.getCurNodeCode()).getNextNode());
         creditBO.refreshCredit(credit);
 
         // 修改征信人员
@@ -300,18 +302,55 @@ public class CreditAOImpl implements ICreditAO {
             // 审核通过，改变节点
             credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 credit.getCurNodeCode()).getNextNode());
+        } else {
+            credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                credit.getCurNodeCode()).getBackNode());
         }
-        credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-            credit.getCurNodeCode()).getBackNode());
         creditBO.refreshCreditNode(credit);
-
         // 日志记录
         ECreditNode currentNode = ECreditNode.getMap().get(
             credit.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            currentNode.getCode(), req.getApproveNote(), req.getOperator());
 
     }
 
+    @Override
+    public void inputBankCreditResult(XN632111Req req) {
+
+        Credit credit = creditBO.getCredit(req.getCreditCode());
+        if (null == credit) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "根据征信单编号查询不到征信单");
+        }
+
+        if (!ECreditNode.INPUT_CREDIT_RESULT.getCode().equals(
+            credit.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是录入银行征信结果节点，不能操作");
+        }
+        String preCurNodeCode = credit.getCurNodeCode();
+
+        credit.setCurNodeCode((nodeFlowBO.getNodeFlowByCurrentNode(credit
+            .getCurNodeCode())).getNextNode());
+
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
+            EBizLogType.CREDIT, credit.getCode(), preCurNodeCode,
+            credit.getCurNodeCode(), null, req.getOperator());
+
+        List<XN632111ReqCreditUser> creditResult = req.getCreditResult();
+        for (XN632111ReqCreditUser xn632111ReqCreditUser : creditResult) {
+
+            CreditUser creditUser = creditUserBO
+                .getCreditUser(xn632111ReqCreditUser.getCreditUserCode());
+            creditUser.setCode(xn632111ReqCreditUser.getCreditUserCode());
+            creditUser.setBankCreditResultPdf(xn632111ReqCreditUser
+                .getBankCreditResultPdf());
+
+            creditUserBO.inputBankCreditResult(creditUser);
+
+        }
+
+    }
 }

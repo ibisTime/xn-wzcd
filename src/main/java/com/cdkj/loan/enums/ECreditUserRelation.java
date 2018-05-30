@@ -1,5 +1,11 @@
 package com.cdkj.loan.enums;
 
+/**
+ * 征信人员表 与借款人关系
+ * @author: jiafr 
+ * @since: 2018年5月30日 下午1:26:59 
+ * @history:
+ */
 public enum ECreditUserRelation {
 
     SELF("1", "贷款人本人"), HUSBAND("2", "共还人"), WIFE("3", "担保人"), FATHER("4", "父亲"), MOTHER(
