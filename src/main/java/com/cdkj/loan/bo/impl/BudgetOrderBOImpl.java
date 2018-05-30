@@ -94,6 +94,13 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     }
 
     @Override
+    public void installGps(BudgetOrder data) {
+        if (StringUtils.isNotBlank(data.getCode())) {
+            budgetOrderDAO.updaterInstallGps(data);
+        }
+    }
+
+    @Override
     public List<BudgetOrder> queryBudgetOrderList(BudgetOrder condition) {
         return budgetOrderDAO.selectList(condition);
     }

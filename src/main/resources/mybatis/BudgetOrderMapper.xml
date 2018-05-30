@@ -106,9 +106,9 @@
 		<result column="pledge_bank_commit_datetime" property="pledgeBankCommitDatetime" />
 		<result column="pledge_bank_commit_note" property="pledgeBankCommitNote" />
 		<result column="enter_location" property="enterLocation" />
-		<result column="is_advance_fund" property="isAdvanceFund" />
 		<result column="sale_user_id" property="saleUserId" />
 		<result column="company_code" property="companyCode" />
+		<result column="apply_user" property="applyUser" />
 		<result column="apply_datetime" property="applyDatetime" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="remark" property="remark" />
@@ -117,6 +117,21 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
+			</if>
+			<if test="applyUser != null and applyUser != '' ">
+				AND t.apply_user = #{applyUser}
+			</if>
+			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
+				<![CDATA[AND t.apply_datetime > #{applyDatetimeStart}]]>
+			</if>
+			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
+				<![CDATA[AND t.apply_datetime < #{applyDatetimeEnd}]]>
+			</if>
+			<if test="is_advance_fund != null and isAdvanceFund != '' ">
+				AND t.isAdvanceFund = #{isAdvanceFund}
+			</if>
+			<if test="curNodeCode != null and curNodeCode != '' ">
+				AND t.cur_node_code = #{curNodeCode}
 			</if>
 		</trim>
 	</sql>
@@ -227,6 +242,7 @@
 		,t.enter_location
 		,t.sale_user_id
 		,t.company_code
+		,t.apply_user
 		,t.apply_datetime
 		,t.cur_node_code
 		,t.remark
@@ -324,36 +340,10 @@
 		,house_contract
 		,house_picture
 		,is_advance_fund
-		,interview_video
-		,interview_contract
-		,advance_fund_datetime
-		,advance_fund_amount
-		,bill_pdf
-		,car_settle_datetime
-		,car_number
-		,car_invoice
-		,car_hgz
-		,car_jqx
-		,car_syx
-		,car_regcerti
-		,car_pd
-		,car_key
-		,car_big_smj
-		,bank_commit_datetime
-		,bank_commit_note
-		,bankLoan_datetime
-		,receipt_bank_code
-		,receipt_bank_name
-		,receipt_bankcard_number
-		,receipt_pdf
-		,receipt_remark
-		,pledge_datetime
-		,green_big_smj
-		,pledge_bank_commit_datetime
-		,pledge_bank_commit_note
-		,enter_location
+		
 		,sale_user_id
 		,company_code
+		,apply_user
 		,apply_datetime
 		,cur_node_code
 		,remark
@@ -434,36 +424,10 @@
 		,#{houseContract}
 		,#{housePicture}
 		,#{isAdvanceFund}
-		,#{interviewVideo}
-		,#{interviewContract}
-		,#{advanceFundDatetime}
-		,#{advanceFundAmount}
-		,#{billPdf}
-		,#{carSettleDatetime}
-		,#{carNumber}
-		,#{carInvoice}
-		,#{carHgz}
-		,#{carJqx}
-		,#{carSyx}
-		,#{carRegcerti}
-		,#{carPd}
-		,#{carKey}
-		,#{carBigSmj}
-		,#{bankCommitDatetime}
-		,#{bankCommitNote}
-		,#{bankLoanDatetime}
-		,#{receiptBankCode}
-		,#{receiptBankName}
-		,#{receiptBankcardNumber}
-		,#{receiptPdf}
-		,#{receiptRemark}
-		,#{pledgeDatetime}
-		,#{greenBigSmj}
-		,#{pledgeBankCommitDatetime}
-		,#{pledgeBankCommitNote}
-		,#{enterLocation}
+		
 		,#{saleUserId}
 		,#{companyCode}
+		,#{applyUser}
 		,#{applyDatetime}
 		,#{curNodeCode}
 		,#{remark}
@@ -577,6 +541,7 @@
 		,enter_location = #{enterLocation}
 		,sale_user_id = #{saleUserId}
 		,company_code = #{companyCode}
+		,apply_user = #{applyUser}
 		,apply_datetime = #{applyDatetime}
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
@@ -622,6 +587,13 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_install_gps" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 	

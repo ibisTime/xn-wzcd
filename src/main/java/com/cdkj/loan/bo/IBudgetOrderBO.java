@@ -29,4 +29,6 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public void refreshGpsManagerApprove(BudgetOrder budgetOrder);
 
+    public void installGps(BudgetOrder budgetOrder);
+
 }
