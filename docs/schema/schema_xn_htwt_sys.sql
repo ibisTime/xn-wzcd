@@ -1,4 +1,5 @@
 /*系统*/
+DROP TABLE IF EXISTS `tsys_user`;
 CREATE TABLE `tsys_user` (
   `user_id` varchar(32) NOT NULL COMMENT '用户ID',
   `type` varchar(4) DEFAULT NULL COMMENT '类型',
@@ -20,6 +21,7 @@ CREATE TABLE `tsys_user` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `tsys_menu`;
 CREATE TABLE `tsys_menu` (
   `code` varchar(96) DEFAULT NULL,
   `name` varchar(96) DEFAULT NULL,
@@ -32,6 +34,7 @@ CREATE TABLE `tsys_menu` (
   `parent_code` varchar(96) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `tsys_role`;
 CREATE TABLE `tsys_role` (
   `code` varchar(96) DEFAULT NULL,
   `name` varchar(96) DEFAULT NULL,
@@ -41,6 +44,7 @@ CREATE TABLE `tsys_role` (
   `remark` varchar(765) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `tsys_menu_role`;
 CREATE TABLE `tsys_menu_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `role_code` varchar(96) DEFAULT NULL,
@@ -51,6 +55,7 @@ CREATE TABLE `tsys_menu_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `tsys_config`;
 CREATE TABLE `tsys_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(96) DEFAULT NULL,
@@ -64,7 +69,7 @@ CREATE TABLE `tsys_config` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+DROP TABLE IF EXISTS `tsys_dict`;
 CREATE TABLE `tsys_dict` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` char(3) DEFAULT NULL,
@@ -79,6 +84,7 @@ CREATE TABLE `tsys_dict` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `tstd_cnavigate`;
 CREATE TABLE `tstd_cnavigate` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
@@ -98,9 +104,11 @@ CREATE TABLE `tstd_cnavigate` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*部门表*/
+DROP TABLE IF EXISTS `tsys_department`;
 CREATE TABLE `tsys_department` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
   `name` VARCHAR(255) NULL COMMENT '部门名称',
+  `type` VARCHAR(32) NULL COMMENT '类型(1=子公司，2=部门，3=岗位)',
   `lead_name` VARCHAR(255) NULL COMMENT '负责人',
   `mobile` INT(11) NULL COMMENT '负责人手机号',
   `parent_code` VARCHAR(32) NULL COMMENT '上级部门编号',

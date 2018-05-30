@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IBudgetOrderFeeDAO">
+	<resultMap id="budgetOrderFee_DB_Result" type="budgetOrderFee">
+		<result column="code" property="code" />
+		<result column="company_code" property="companyCode" />
+		<result column="user_id" property="userId" />
+		<result column="should_amount" property="shouldAmount" />
+		<result column="real_amount" property="realAmount" />
+		<result column="is_settled" property="isSettled" />
+		<result column="updater" property="updater" />
+		<result column="update_datetime" property="updateDatetime" />
+		<result column="remark" property="remark" />
+		<result column="budget_order" property="budgetOrder" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_budgetOrderFee" parameterType="budgetOrderFee" resultMap="budgetOrderFee_DB_Result">
+		SELECT
+		t.code
+		,t.company_code
+		,t.user_id
+		,t.should_amount
+		,t.real_amount
+		,t.is_settled
+		,t.updater
+		,t.update_datetime
+		,t.remark
+		,t.budget_order
+		FROM
+		tdq_budget_order_fee t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_budgetOrderFee_count" parameterType="budgetOrderFee"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_budget_order_fee t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_budgetOrderFee" parameterType="budgetOrderFee">
+		INSERT INTO
+		tdq_budget_order_fee(
+		code
+		,company_code
+		,user_id
+		,should_amount
+		,real_amount
+		,is_settled
+		,updater
+		,update_datetime
+		,remark
+		,budget_order
+		)
+		VALUES(
+		#{code}
+		,#{companyCode}
+		,#{userId}
+		,#{shouldAmount}
+		,#{realAmount}
+		,#{isSettled}
+		,#{updater}
+		,#{updateDatetime}
+		,#{remark}
+		,#{budgetOrder}
+		)
+	</insert>
+
+	<update id="update_budgetOrderFee" parameterType="budgetOrderFee">
+		UPDATE tdq_budget_order_fee
+		SET
+		company_code = #{companyCode}
+		,user_id = #{userId}
+		,should_amount = #{shouldAmount}
+		,real_amount = #{realAmount}
+		,is_settled = #{isSettled}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		,budget_order = #{budgetOrder}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>

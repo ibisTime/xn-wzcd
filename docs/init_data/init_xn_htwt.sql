@@ -1,3 +1,8 @@
+/*
+-- Query: SELECT `code`,`name`,`lead_name`,`mobile`,`parent_code`,`type`,`status`,`updater`,`update_datetime`,`remark` FROM tsys_department where code ='DP201800000000000000001'
+-- Date: 2018-05-30 19:13
+*/
+INSERT INTO `tsys_department` (`code`,`name`,`lead_name`,`mobile`,`parent_code`,`type`,`status`,`updater`,`update_datetime`,`remark`) VALUES ('DP201800000000000000001','乌鲁木齐华途威通汽车销售有限公司','wlq','18868824532',NULL,'1','1','admin',NULL,'');
 
 /* 首页导航 */
 INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201711271342486662078','banner1','2','','FpqRhLEfxuaHgpXuv6fVUZfLPbjV','1','0',1,'1','0','','1','CD-HTWT000020','CD-HTWT000020');
