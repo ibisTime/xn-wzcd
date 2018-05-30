@@ -11,12 +11,12 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 抵押确认提交银行
+ * 抵押完成
  * @author: CYL 
  * @since: 2018年5月31日 上午3:35:03 
  * @history:
  */
-public class XN632132 extends AProcessor {
+public class XN632133 extends AProcessor {
     private IBudgetOrderAO budgetOrderAO = SpringContextHolder
         .getBean(IBudgetOrderAO.class);
 
@@ -24,8 +24,7 @@ public class XN632132 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.mortgageCommitBank(req.getCode(), req.getOperator(),
-            req.getPledgeBankCommitDatetime(), req.getPledgeBankCommitNote());
+        budgetOrderAO.mortgageFinish(req.getCode(), req.getOperator());
         return new BooleanRes(true);
     }
 

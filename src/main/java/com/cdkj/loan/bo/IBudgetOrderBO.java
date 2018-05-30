@@ -36,4 +36,16 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     public int archiveSuccess(BudgetOrder budgetOrder, String repayBizCode,
             String userId);
 
+    public void refreshCommitBank(BudgetOrder budgetOrder);
+
+    public void refreshConfirmLoan(BudgetOrder budgetOrder);
+
+    public void refreshEntryLoan(BudgetOrder budgetOrder);
+
+    public void entryMortgage(BudgetOrder data);
+
+    public void refreshMortgageCommitBank(BudgetOrder budgetOrder);
+
+    public void refreshMortgageFinish(BudgetOrder budgetOrder);
+
 }

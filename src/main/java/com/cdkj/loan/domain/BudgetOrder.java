@@ -27,6 +27,9 @@ public class BudgetOrder extends ABaseDO {
     // 产品名称
     private String loanProductName;
 
+    // 贷款银行
+    private String loanBank;
+
     // GPS费用
     private Long gpsFee;
 
@@ -41,9 +44,6 @@ public class BudgetOrder extends ABaseDO {
 
     // 征信单编号
     private String creditCode;
-
-    // 贷款银行
-    private String loanBank;
 
     // 业务种类
     private String bizType;
@@ -300,9 +300,6 @@ public class BudgetOrder extends ABaseDO {
     // 银行提交说明
     private String bankCommitNote;
 
-    // 银行放款时间
-    private Date bankFkDatetime;
-
     // 还款卡银行行别
     private String repayBankCode;
 
@@ -325,7 +322,7 @@ public class BudgetOrder extends ABaseDO {
     private Date repayCompanyDate;
 
     // 首期月供金额
-    private String repayFirstMonthAmount;
+    private Long repayFirstMonthAmount;
 
     // 首期还款日期
     private Date repayFirstMonthDatetime;
@@ -334,7 +331,7 @@ public class BudgetOrder extends ABaseDO {
     private Long repayMonthAmount;
 
     // 银行放款日期
-    private Date bankLoanDate;
+    private Date bankFkDatetime;
 
     // 收款银行
     private String receiptBankCode;
@@ -372,9 +369,6 @@ public class BudgetOrder extends ABaseDO {
     // 业务公司编号
     private String companyCode;
 
-    // 申请人
-    private String applyUser;
-
     // 申请时间
     private Date applyDatetime;
 
@@ -400,20 +394,20 @@ public class BudgetOrder extends ABaseDO {
         this.budgetOrderGpsList = budgetOrderGpsList;
     }
 
-    public String getApplyUser() {
-        return applyUser;
-    }
-
-    public void setApplyUser(String applyUser) {
-        this.applyUser = applyUser;
-    }
-
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getRepayBizCode() {
+        return repayBizCode;
+    }
+
+    public void setRepayBizCode(String repayBizCode) {
+        this.repayBizCode = repayBizCode;
     }
 
     public String getLoanProductCode() {
@@ -432,12 +426,12 @@ public class BudgetOrder extends ABaseDO {
         this.loanProductName = loanProductName;
     }
 
-    public String getRepayBizCode() {
-        return repayBizCode;
+    public String getLoanBank() {
+        return loanBank;
     }
 
-    public void setRepayBizCode(String repayBizCode) {
-        this.repayBizCode = repayBizCode;
+    public void setLoanBank(String loanBank) {
+        this.loanBank = loanBank;
     }
 
     public Long getGpsFee() {
@@ -478,14 +472,6 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCreditCode(String creditCode) {
         this.creditCode = creditCode;
-    }
-
-    public String getLoanBank() {
-        return loanBank;
-    }
-
-    public void setLoanBank(String loanBank) {
-        this.loanBank = loanBank;
     }
 
     public String getBizType() {
@@ -1168,14 +1154,6 @@ public class BudgetOrder extends ABaseDO {
         this.bankCommitNote = bankCommitNote;
     }
 
-    public Date getBankFkDatetime() {
-        return bankFkDatetime;
-    }
-
-    public void setBankFkDatetime(Date bankFkDatetime) {
-        this.bankFkDatetime = bankFkDatetime;
-    }
-
     public String getRepayBankCode() {
         return repayBankCode;
     }
@@ -1232,11 +1210,11 @@ public class BudgetOrder extends ABaseDO {
         this.repayCompanyDate = repayCompanyDate;
     }
 
-    public String getRepayFirstMonthAmount() {
+    public Long getRepayFirstMonthAmount() {
         return repayFirstMonthAmount;
     }
 
-    public void setRepayFirstMonthAmount(String repayFirstMonthAmount) {
+    public void setRepayFirstMonthAmount(Long repayFirstMonthAmount) {
         this.repayFirstMonthAmount = repayFirstMonthAmount;
     }
 
@@ -1256,12 +1234,12 @@ public class BudgetOrder extends ABaseDO {
         this.repayMonthAmount = repayMonthAmount;
     }
 
-    public Date getBankLoanDate() {
-        return bankLoanDate;
+    public Date getBankFkDatetime() {
+        return bankFkDatetime;
     }
 
-    public void setBankLoanDate(Date bankLoanDate) {
-        this.bankLoanDate = bankLoanDate;
+    public void setBankFkDatetime(Date bankFkDatetime) {
+        this.bankFkDatetime = bankFkDatetime;
     }
 
     public String getReceiptBankCode() {

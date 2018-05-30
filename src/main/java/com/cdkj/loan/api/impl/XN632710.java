@@ -1,38 +1,36 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.IBudgetOrderAO;
+import com.cdkj.loan.ao.IGpsApplyAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN632130Req;
-import com.cdkj.loan.dto.res.BooleanRes;
+import com.cdkj.loan.dto.req.XN632710Req;
+import com.cdkj.loan.dto.res.PKCodeRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 预算单-确认收款
- * @author: CYL 
- * @since: 2018年5月31日 上午2:19:08 
+ * GPS申领
+ * @author: silver 
+ * @since: 2018年5月30日 下午11:45:04 
  * @history:
  */
-public class XN632130 extends AProcessor {
-    private IBudgetOrderAO budgetOrderAO = SpringContextHolder
-        .getBean(IBudgetOrderAO.class);
+public class XN632710 extends AProcessor {
+    private IGpsApplyAO gpsApplyAO = SpringContextHolder
+        .getBean(IGpsApplyAO.class);
 
-    private XN632130Req req = null;
+    private XN632710Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.confirmLoan(req);
-        return new BooleanRes(true);
+        return new PKCodeRes(gpsApplyAO.addGpsApply(req));
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632130Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632710Req.class);
         ObjValidater.validateReq(req);
     }
-
 }
