@@ -27,6 +27,7 @@ public class XN632037 extends AProcessor {
         Bank condition = new Bank();
         condition.setBankCode(req.getBankCode());
         condition.setBankName(req.getBankName());
+        condition.setSubbranch(req.getSubbranch());
         condition.setStatus(req.getStatus());
         return bankAO.queryBankList(condition);
     }

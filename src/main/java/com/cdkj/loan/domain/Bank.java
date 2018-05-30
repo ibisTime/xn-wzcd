@@ -27,6 +27,9 @@ public class Bank extends ABaseDO {
     // 银行名称
     private String bankName;
 
+    // 支行名称
+    private String subbranch;
+
     // 12期
     private Double rate12;
 
@@ -52,6 +55,14 @@ public class Bank extends ABaseDO {
     private String remark;
 
     private List<BankRate> bankRateList;
+
+    public String getSubbranch() {
+        return subbranch;
+    }
+
+    public void setSubbranch(String subbranch) {
+        this.subbranch = subbranch;
+    }
 
     public String getCode() {
         return code;

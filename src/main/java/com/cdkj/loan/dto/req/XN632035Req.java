@@ -22,6 +22,17 @@ public class XN632035Req extends APageReq {
     // 状态
     private String status;
 
+    // 分支
+    private String subbranch;
+
+    public String getSubbranch() {
+        return subbranch;
+    }
+
+    public void setSubbranch(String subbranch) {
+        this.subbranch = subbranch;
+    }
+
     public String getBankCode() {
         return bankCode;
     }

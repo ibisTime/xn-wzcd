@@ -30,6 +30,7 @@ public class XN632035 extends AProcessor {
         Bank condition = new Bank();
         condition.setBankCode(req.getBankCode());
         condition.setBankName(req.getBankName());
+        condition.setSubbranch(req.getSubbranch());
         condition.setStatus(req.getStatus());
 
         String orderColumn = req.getOrderColumn();

@@ -6,6 +6,7 @@
 		<result column="code" property="code" />
 		<result column="bank_code" property="bankCode" />
 		<result column="bank_name" property="bankName" />
+		<result column="subbranch" property="subbranch" />
 		<result column="rate12" property="rate12" />
 		<result column="rate18" property="rate18" />
 		
@@ -29,6 +30,9 @@
 			<if test="bankName != null and bankName != '' ">
 				AND t.bank_name = #{bankName}
 			</if>
+			<if test="subbranch != null and subbranch != '' ">
+				AND t.subbranch = #{subbranch}
+			</if>
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
@@ -40,6 +44,7 @@
 		t.code
 		,t.bank_code
 		,t.bank_name
+		,t.subbranch
 		,t.rate12
 		,t.rate18
 		
@@ -70,6 +75,7 @@
 		code
 		,bank_code
 		,bank_name
+		,subbranch
 		,rate12
 		,rate18
 		
@@ -85,6 +91,7 @@
 		#{code}
 		,#{bankCode}
 		,#{bankName}
+		,#{subbranch}
 		,#{rate12}
 		,#{rate18}
 		
@@ -103,6 +110,7 @@
 		SET
 		t.bank_code = #{bankCode}
 		,t.bank_name = #{bankName}
+		,t.subbranch = #{subbranch}
 		,t.rate12 = #{rate12}
 		,t.rate18 = #{rate18}
 		,t.rate24 = #{rate24}
