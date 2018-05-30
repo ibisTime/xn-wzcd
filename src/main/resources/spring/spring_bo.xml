@@ -226,7 +226,8 @@
 	
 	<bean id="gpsApplyBO" class="com.cdkj.loan.bo.impl.GpsApplyBOImpl">
 		<property name="paginableDAO" ref="gpsApplyDAOImpl"/>
-		
+	</bean>
+	
 	<bean id="budgetOrderFeeBO" class="com.cdkj.loan.bo.impl.BudgetOrderFeeBOImpl">
 		<property name="paginableDAO" ref="budgetOrderFeeDAOImpl"/>
 	</bean>
