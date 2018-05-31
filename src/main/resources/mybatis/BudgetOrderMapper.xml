@@ -684,7 +684,8 @@
 	<update id="update_commit_bank" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		cur_node_code = #{curNodeCode}
+		bank_commit_datetime = #{bankCommitDatetime}
+		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
@@ -692,8 +693,16 @@
 	<update id="update_car_settle" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		advance_fund_datetime = #{advanceFundDatetime}
-		,advance_fund_amount = #{advanceFundAmount}
+		car_settle_datetime = #{carSettleDatetime}
+		,car_number = #{carNumber}
+		,car_invoice = #{carInvoice}
+		,car_hgz = #{carHgz}
+		,car_jqx = #{carJqx}
+		,car_syx = #{carSyx}
+		,car_regcerti = #{carRegcerti}
+		,car_pd = #{carPd}
+		,car_key = #{carKey}
+		,car_big_smj = #{carBigSmj}
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}
@@ -712,6 +721,14 @@
 	</update>
 
 	<update id="update_entry_loan" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_logic_node" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}

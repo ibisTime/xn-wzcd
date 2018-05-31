@@ -30,7 +30,7 @@ import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
-import com.cdkj.loan.enums.EButtonCode;
+import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.ECreditNode;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.exception.BizException;
@@ -94,7 +94,7 @@ public class CreditAOImpl implements ICreditAO {
         ECreditNode currentNode = ECreditNode.FILLIN_CREDIT;
         credit.setCurNodeCode(currentNode.getCode());
         // 设置节点
-        if (EButtonCode.SEND.getCode().equals(req.getButtonCode())) {
+        if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
             currentNode = ECreditNode.getMap().get(
                 nodeFlowBO.getNodeFlowByCurrentNode(
                     ECreditNode.FILLIN_CREDIT.getCode()).getNextNode());

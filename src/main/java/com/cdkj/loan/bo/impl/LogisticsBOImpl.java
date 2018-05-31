@@ -3,7 +3,6 @@ package com.cdkj.loan.bo.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,22 +38,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
 
     @Override
     public String saveLogistics(String type, String bizCode, String userId,
-            String bizNodeCode, String refFileList) {
-        if (StringUtils.isBlank(type) || StringUtils.isBlank(bizCode)
-                || StringUtils.isBlank(userId)
-                || StringUtils.isBlank(bizNodeCode)
-                || StringUtils.isBlank(refFileList)) {
-            throw new BizException("xn0000", "请填写必填项。");
-        }
-
-        // 判断预算单和用户是否存在
-        if (null == budgetOrderBO.getBudgetOrder(bizCode)) {
-            throw new BizException("xn0000", "业务编号不存在");
-        }
-        if (null == userAO.getUser(userId)) {
-            throw new BizException("xn0000", "用户不存在");
-        }
-
+            String fromNodeCode, String toNodeCode, String refFileList) {
         String code = OrderNoGenerater.generate(EGeneratePrefix.LOGISTICS
             .getCode());
         Logistics data = new Logistics();
@@ -62,8 +46,9 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
         data.setType(type);
         data.setBizCode(bizCode);
         data.setUserId(userId);
-        data.setBizNodeCode(bizNodeCode);
 
+        data.setFromNodeCode(fromNodeCode);
+        data.setToNodeCode(toNodeCode);
         data.setRefFileList(refFileList);
         data.setStatus(ELogisticsStatus.TO_SEND.getCode());
         logisticsDAO.insert(data);

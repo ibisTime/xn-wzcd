@@ -24,7 +24,7 @@ import com.cdkj.loan.dto.req.XN632103Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
-import com.cdkj.loan.enums.EButtonCode;
+import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EReqBudgetNode;
 import com.cdkj.loan.exception.BizException;
 
@@ -61,7 +61,7 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         // 当前节点
         EReqBudgetNode currentNode = EReqBudgetNode.STARTNODE;
         data.setCurNodeCode(currentNode.getCode());
-        if (EButtonCode.SEND.getCode().equals(req.getButtonCode())) {
+        if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
             // 发送申请
             currentNode = EReqBudgetNode.getMap()
                 .get(nodeFlowBO

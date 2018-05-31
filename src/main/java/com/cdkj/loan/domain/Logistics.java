@@ -28,8 +28,11 @@ public class Logistics extends ABaseDO {
     // 用户编号
     private String userId;
 
-    // 业务节点
-    private String bizNodeCode;
+    // 业务节点1
+    private String fromNodeCode;
+
+    // 业务节点2
+    private String toNodeCode;
 
     // 参考材料清单(逗号隔开)
     private String refFileList;
@@ -98,12 +101,20 @@ public class Logistics extends ABaseDO {
         this.userId = userId;
     }
 
-    public String getBizNodeCode() {
-        return bizNodeCode;
+    public String getFromNodeCode() {
+        return fromNodeCode;
     }
 
-    public void setBizNodeCode(String bizNodeCode) {
-        this.bizNodeCode = bizNodeCode;
+    public void setFromNodeCode(String fromNodeCode) {
+        this.fromNodeCode = fromNodeCode;
+    }
+
+    public String getToNodeCode() {
+        return toNodeCode;
+    }
+
+    public void setToNodeCode(String toNodeCode) {
+        this.toNodeCode = toNodeCode;
     }
 
     public String getRefFileList() {
