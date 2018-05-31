@@ -3,8 +3,6 @@ package com.cdkj.loan.domain;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -374,10 +372,6 @@ public class BudgetOrder extends ABaseDO {
     // 申请时间
     private Date applyDatetime;
 
-    // 角色编号
-    @NotBlank
-    private String roleCode;
-
     // 当前节点编号
     private String curNodeCode;
 
@@ -385,12 +379,50 @@ public class BudgetOrder extends ABaseDO {
     private String remark;
 
     /*---------辅助字段----------*/
+    // 申请时间起始
+    private Date applyDatetimeStart;
 
-    private Date applyDatetimeStart;// 申请时间起始
+    // 申请时间结束
+    private Date applyDatetimeEnd;
 
-    private Date applyDatetimeEnd;// 申请时间结束
+    // 角色编号
+    private String roleCode;
 
-    private List<BudgetOrderGps> budgetOrderGpsList;// gps安装列表
+    // gps安装列表
+    private List<BudgetOrderGps> budgetOrderGpsList;
+
+    // 公司名称
+    private String companyName;
+
+    // 业务员姓名
+    private String saleUserName;
+
+    // 贷款银行名称
+    private String loanBankName;
+
+    public String getLoanBankName() {
+        return loanBankName;
+    }
+
+    public void setLoanBankName(String loanBankName) {
+        this.loanBankName = loanBankName;
+    }
+
+    public String getSaleUserName() {
+        return saleUserName;
+    }
+
+    public void setSaleUserName(String saleUserName) {
+        this.saleUserName = saleUserName;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
     public String getRoleCode() {
         return roleCode;

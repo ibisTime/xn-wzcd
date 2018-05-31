@@ -43,6 +43,7 @@ public class BankAOImpl implements IBankAO {
             throw new BizException("xn0000", "银行信息已存在，请勿重复添加。");
         }
         Bank data = new Bank();
+        data.setBankCode(req.getBankCode());
         data.setBankName(req.getBankName());
         data.setSubbranch(req.getSubbranch());
         data.setRate12(0.0d);

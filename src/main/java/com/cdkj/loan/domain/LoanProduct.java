@@ -50,6 +50,8 @@ public class LoanProduct extends ABaseDO {
     // 备注
     private String remark;
 
+    // ************db properties************
+
     // 贷款银行名称
     private String loanBankName;
 
