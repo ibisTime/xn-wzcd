@@ -931,6 +931,8 @@ INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_01','填写
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_02','录入征信结果','001',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_03','风控专员审核','001',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_04','风控专员审核不通过','001',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_09','征信单入档','001',NULL);
+
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_01','填写准入申请单','002',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_02','风控专员审核','002',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_03','风控主管审核','002',NULL);
