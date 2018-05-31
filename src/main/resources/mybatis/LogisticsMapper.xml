@@ -7,8 +7,9 @@
 		<result column="type" property="type" />
 		<result column="biz_code" property="bizCode" />
 		<result column="user_id" property="userId" />
-		<result column="biz_node_code" property="bizNodeCode" />
+		<result column="from_node_code" property="fromNodeCode" />
 		
+		<result column="to_node_code" property="toNodeCode" />
 		<result column="ref_file_list" property="refFileList" />
 		<result column="send_file_list" property="sendFileList" />
 		<result column="send_type" property="sendType" />
@@ -33,8 +34,11 @@
 			<if test="bizCode != null and bizCode != '' ">
 				AND t.biz_code = #{bizCode}
 			</if>
-			<if test="bizNodeCode != null and bizNodeCode != '' ">
-				AND t.biz_node_code = #{bizNodeCode}
+			<if test="fromNodeCode != null and fromNodeCode != '' ">
+				AND t.from_node_code = #{fromNodeCode}
+			</if>
+			<if test="toNodeCode != null and toNodeCode != '' ">
+				AND t.to_node_code = #{toNodeCode}
 			</if>
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
@@ -51,7 +55,8 @@
 		,t.type
 		,t.biz_code
 		,t.user_id
-		,t.biz_node_code
+		,t.from_node_code
+		,t.to_node_code
 		
 		,t.ref_file_list
 		,t.send_file_list
@@ -85,8 +90,9 @@
 		,type
 		,biz_code
 		,user_id
-		,biz_node_code
+		,from_node_code
 		
+		,to_node_code
 		,ref_file_list
 		,status
 		)
@@ -95,8 +101,9 @@
 		,#{type}
 		,#{bizCode}
 		,#{userId}
-		,#{bizNodeCode}
+		,#{fromNodeCode}
 		
+		,#{toNodeCode}
 		,#{refFileList}
 		,#{status}
 		)

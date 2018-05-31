@@ -45,7 +45,6 @@
 		<typeAlias alias="productSpecs" type="com.cdkj.loan.domain.ProductSpecs" />
 		
 		<!-- 车贷业务+分期业务  -->
-		<typeAlias alias="loanOrder" type="com.cdkj.loan.domain.LoanOrder" />
 		<typeAlias alias="repayBiz" type="com.cdkj.loan.domain.RepayBiz" />
 		<typeAlias alias="repayPlan" type="com.cdkj.loan.domain.RepayPlan" />
 		<typeAlias alias="cost" type="com.cdkj.loan.domain.Cost" />
@@ -92,7 +91,9 @@
 		<typeAlias alias="logistics" type="com.cdkj.loan.domain.Logistics" />
 		<typeAlias alias="budgetOrderFee" type="com.cdkj.loan.domain.BudgetOrderFee" />
 		<typeAlias alias="budgetOrderFeeDetail" type="com.cdkj.loan.domain.BudgetOrderFeeDetail" />
+		
 		<typeAlias alias="budgetOrderGps" type="com.cdkj.loan.domain.BudgetOrderGps" />
+		<typeAlias alias="gpsApply" type="com.cdkj.loan.domain.GpsApply" />
 	</typeAliases>
 	
 </configuration>

@@ -16,6 +16,17 @@ public class XN632151Req {
     // 备注
     private String remark;
 
+    // 操作人
+    private String operater;
+
+    public String getOperater() {
+        return operater;
+    }
+
+    public void setOperater(String operater) {
+        this.operater = operater;
+    }
+
     public String getCode() {
         return code;
     }

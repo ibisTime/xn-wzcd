@@ -83,48 +83,6 @@ CREATE TABLE `tht_car_order` (
   PRIMARY KEY (`code`) COMMENT '购车意向'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-
-
-/*车贷分期*/
-CREATE TABLE `tht_loan_order` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',
-  `user_id` varchar(32) DEFAULT NULL COMMENT '申请人编号',
-  `mobile` varchar(16) DEFAULT NULL COMMENT '手机号',
-  `id_kind` varchar(4) DEFAULT NULL COMMENT '证件类型',
-  `id_no` varchar(64) DEFAULT NULL COMMENT '证件号',
-  `real_name` varchar(255) DEFAULT NULL COMMENT '真实姓名',
-  `bank_code` varchar(32) DEFAULT NULL COMMENT '银行行别',
-  `bank_name` varchar(255) DEFAULT NULL COMMENT '银行名称',
-  `subbranch` varchar(255) DEFAULT NULL COMMENT '开户支行',
-  `bankcard_number` varchar(64) DEFAULT NULL COMMENT '银行卡号',
-  `car_code` varchar(32) DEFAULT NULL COMMENT '车型编号',
-  `car_price` bigint(20) DEFAULT NULL COMMENT '车辆总价',
-  `sf_rate` decimal(18,8) DEFAULT NULL COMMENT '首付比例',
-  `sf_amount` bigint(20) DEFAULT NULL COMMENT '首付金额',
-  `loan_bank` varchar(32) DEFAULT NULL COMMENT '贷款银行',
-  `loan_amount` bigint(20) DEFAULT NULL COMMENT '贷款金额',
-  `periods` int(11) DEFAULT NULL COMMENT '总期数',
-  `bank_rate` decimal(18,8) DEFAULT NULL COMMENT '银行利率',
-  `loan_start_datetime` datetime DEFAULT NULL COMMENT '贷款时间起点',
-  `loan_end_datetime` datetime DEFAULT NULL COMMENT '贷款时间终点',
-  `fk_datetime` datetime DEFAULT NULL COMMENT '放款日期',
-  `fx_deposit` bigint(20) DEFAULT NULL COMMENT '风险保证金',
-  `other_fee` bigint(20) DEFAULT NULL COMMENT '杂费',
-  `gps_fee` bigint(20) DEFAULT NULL COMMENT 'GPS收费',
-  `first_repay_datetime` datetime DEFAULT NULL COMMENT '首期还款日期',
-  `first_repay_amount` bigint(20) DEFAULT NULL COMMENT '首期月供金额',
-  `month_datetime` int(11) DEFAULT NULL COMMENT '每期还款日期',
-  `month_amount` bigint(20) DEFAULT NULL COMMENT '每期月供金额',
-  `ly_deposit` bigint(20) DEFAULT NULL COMMENT '履约保证金',
-  `status` varchar(4) DEFAULT NULL COMMENT '状态',
-  `updater` varchar(32) DEFAULT NULL COMMENT '最近修改人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '最近修改时间',
-  `remark` varchar(32) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 /*还款业务 */
 CREATE TABLE `tht_repay_biz` (
   `code` varchar(32) NOT NULL COMMENT '编号',

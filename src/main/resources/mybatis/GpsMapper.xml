@@ -4,12 +4,12 @@
 <mapper namespace="com.cdkj.loan.dao.IGpsDAO">
 	<resultMap id="gps_DB_Result" type="gps">
 		<result column="code" property="code" />
-		<result column="gps_no" property="gpsNo" />
+		<result column="gps_dev_no" property="gpsDevNo" />
 		<result column="gps_type" property="gpsType" />
 		<result column="company_code" property="companyCode" />
 		<result column="apply_user" property="applyUser" />
-		<result column="apply_status" property="applyStatus" />
 		
+		<result column="apply_status" property="applyStatus" />
 		<result column="apply_datetime" property="applyDatetime" />
 		<result column="use_status" property="useStatus" />
 		<result column="use_datetime" property="useDatetime" />
@@ -20,14 +20,17 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
-			<if test="gpsNo != null and gpsNo != '' ">
-				AND t.gps_no = #{gpsNo}
+			<if test="gpsDevNo != null and gpsDevNo != '' ">
+				AND t.gps_dev_no = #{gpsDevNo}
 			</if>
 			<if test="gpsType != null and gpsType != '' ">
 				AND t.gps_type = #{gpsType}
 			</if>
 			<if test="companyCode != null and companyCode != '' ">
 				AND t.company_code = #{companyCode}
+			</if>
+			<if test="applyUser != null and applyUser != '' ">
+				AND t.apply_user = #{applyUser}
 			</if>
 			<if test="applyStatus != null and applyStatus != '' ">
 				AND t.apply_status = #{applyStatus}
@@ -43,7 +46,7 @@
 	<select id="select_gps" parameterType="gps" resultMap="gps_DB_Result">
 		SELECT
 		t.code
-		,t.gps_no
+		,t.gps_dev_no
 		,t.gps_type
 		,t.company_code
 		,t.apply_user
@@ -72,14 +75,14 @@
 		INSERT INTO
 		tb_gps(
 		code
-		,gps_no
+		,gps_dev_no
 		,gps_type
 		,apply_status
 		,use_status
 		)
 		VALUES(
 		#{code}
-		,#{gpsNo}
+		,#{gpsDevNo}
 		,#{gpsType}
 		,#{applyStatus}
 		,#{useStatus}
@@ -89,10 +92,18 @@
 	<update id="update_gps_apply" parameterType="gps">
 		UPDATE tb_gps
 		SET
-		company_code = #{companyCode}
+		apply_code = #{applyCode}
+		,company_code = #{companyCode}
 		,apply_user = #{applyUser}
 		,apply_status = #{applyStatus}
 		,apply_datetime = #{applyDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_gps_applyStatus" parameterType="gps">
+		UPDATE tb_gps
+		SET
+		apply_status = #{applyStatus}
 		WHERE code = #{code}
 	</update>
 	

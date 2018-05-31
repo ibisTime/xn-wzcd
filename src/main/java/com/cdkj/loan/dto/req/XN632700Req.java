@@ -5,18 +5,18 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN632700Req {
     // gps编号
     @NotBlank
-    private String gpsNo;
+    private String gpsDevNo;
 
     // gps类型
     @NotBlank
     private String gpsType;
 
-    public String getGpsNo() {
-        return gpsNo;
+    public String getGpsDevNo() {
+        return gpsDevNo;
     }
 
-    public void setGpsNo(String gpsNo) {
-        this.gpsNo = gpsNo;
+    public void setGpsDevNo(String gpsDevNo) {
+        this.gpsDevNo = gpsDevNo;
     }
 
     public String getGpsType() {

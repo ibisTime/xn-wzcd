@@ -3,7 +3,7 @@ package com.cdkj.loan.bo;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
-import com.cdkj.loan.domain.LoanOrder;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.RepayBiz;
 
@@ -19,8 +19,8 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
     public RepayBiz getRepayBiz(String code);
 
-    public RepayBiz genereateNewCarLoanRepayBiz(LoanOrder data, String userId,
-            String bankcardCode);
+    public RepayBiz genereateNewCarLoanRepayBiz(BudgetOrder budgetOrder,
+            String userId, String bankcardCode, String operator);
 
     public void repaySuccessNormal(String repayBizCode);
 

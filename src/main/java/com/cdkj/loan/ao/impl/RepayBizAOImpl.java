@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cdkj.loan.ao.ILoanOrderAO;
+import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.bo.IBankcardBO;
@@ -45,7 +45,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     private IUserBO userBO;
 
     @Autowired
-    private ILoanOrderAO loanOrderAO;
+    private IBudgetOrderAO budgetOrderAO;
 
     @Autowired
     private IOrderAO orderAO;
@@ -117,8 +117,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setRepayPlanList(repayPlanList);
 
         if (ERepayBizType.CAR.getCode().equals(repayBiz.getRefType())) {
-            repayBiz
-                .setLoanOrder(loanOrderAO.getLoanOrder(repayBiz.getRefCode()));
+            repayBiz.setBudgetOrder(
+                budgetOrderAO.getBudgetOrder(repayBiz.getRefCode()));
         } else {
             repayBiz.setMallOrder(orderAO.getOrder(repayBiz.getRefCode()));
         }

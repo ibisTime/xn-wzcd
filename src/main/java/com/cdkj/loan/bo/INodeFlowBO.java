@@ -13,6 +13,9 @@ public interface INodeFlowBO extends IPaginableBO<NodeFlow> {
     // 详情查询
     public NodeFlow getNodeFlow(String id);
 
+    // 条件查询
+    public NodeFlow getNodeFlow(String currentNode, String nextNode);
+
     // 根据当前节点获取节点流程
     public NodeFlow getNodeFlowByCurrentNode(String currentNode);
 

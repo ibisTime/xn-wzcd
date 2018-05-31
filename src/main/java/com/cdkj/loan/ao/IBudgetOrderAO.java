@@ -9,6 +9,8 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632128Req;
+import com.cdkj.loan.dto.req.XN632130Req;
+import com.cdkj.loan.dto.req.XN632135Req;
 
 @Component
 public interface IBudgetOrderAO {
@@ -57,7 +59,27 @@ public interface IBudgetOrderAO {
     public void commitBank(String code, String operator,
             String bankCommitDatetime, String bankCommitNote);
 
+    // 确认收款
+    public void confirmLoan(XN632130Req req);
+
+    // 录入放款信息
+    public void entryLoan(XN632135Req req);
+
     // 确定入档
-    public void archiveOrder(String code, String operator, String enterLocation);
+    public void archive(String code, String operator, String enterLocation);
+
+    // 录入抵押信息
+    public void entryMortgage(String code, String operator,
+            String pledgeDatetime, String greenBigSmj);
+
+    // 抵押确认提交银行
+    public void mortgageCommitBank(String code, String operator,
+            String pledgeBankCommitDatetime, String pledgeBankCommitNote);
+
+    // 抵押完成
+    public void mortgageFinish(String code, String operator);
+
+    public Paginable<BudgetOrder> queryBudgetOrderPageByRoleCode(int start,
+            int limit, BudgetOrder condition);
 
 }

@@ -30,7 +30,7 @@ public class XN632157 extends AProcessor {
         Logistics condition = new Logistics();
         condition.setBizCode(req.getBizCode());
         condition.setUserId(req.getUserId());
-        condition.setBizNodeCode(req.getBizNodeCode());
+        // condition.setBizNodeCode(req.getBizNodeCode());
         condition.setStatus(req.getStatus());
 
         String column = req.getOrderColumn();

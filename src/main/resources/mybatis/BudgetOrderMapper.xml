@@ -4,111 +4,145 @@
 <mapper namespace="com.cdkj.loan.dao.IBudgetOrderDAO">
 	<resultMap id="budgetOrder_DB_Result" type="budgetOrder">
 		<result column="code" property="code" />
+		<result column="repay_biz_code" property="repayBizCode" />
 		<result column="loan_product_code" property="loanProductCode" />
 		<result column="loan_product_name" property="loanProductName" />
 		<result column="loan_bank" property="loanBank" />
+		
 		<result column="gps_fee" property="gpsFee" />
 		<result column="auth_fee" property="authFee" />
 		<result column="fee" property="fee" />
 		<result column="month_rate" property="monthRate" />
 		<result column="credit_code" property="creditCode" />
+		
 		<result column="biz_type" property="bizType" />
 		<result column="loan_period" property="loanPeriod" />
 		<result column="invoice_company" property="invoiceCompany" />
 		<result column="car_brand" property="carBrand" />
 		<result column="original_price" property="originalPrice" />
+		
 		<result column="invoice_price" property="invoicePrice" />
 		<result column="car_color" property="carColor" />
 		<result column="month_deposit" property="monthDeposit" />
 		<result column="first_amount" property="firstAmount" />
 		<result column="first_rate" property="firstRate" />
+		
 		<result column="loan_amount" property="loanAmount" />
 		<result column="settle_address" property="settleAddress" />
+		<result column="apply_user_id" property="applyUserId" />
 		<result column="apply_user_name" property="applyUserName" />
 		<result column="gender" property="gender" />
+		
 		<result column="marry_state" property="marryState" />
 		<result column="nation" property="nation" />
 		<result column="education" property="education" />
+		<result column="id_kind" property="idKind" />
 		<result column="id_no" property="idNo" />
+		
 		<result column="family_number" property="familyNumber" />
 		<result column="mobile" property="mobile" />
 		<result column="now_address" property="nowAddress" />
 		<result column="post_code1" property="postCode1" />
 		<result column="residence_address" property="residenceAddress" />
 		<result column="post_code2" property="postCode2" />
+		
 		<result column="family_main_asset" property="familyMainAsset" />
 		<result column="main_asset_include" property="mainAssetInclude" />
 		<result column="main_income" property="mainIncome" />
 		<result column="work_company_name" property="workCompanyName" />
 		<result column="work_company_address" property="workCompanyAddress" />
+		
 		<result column="self_company_area" property="selfCompanyArea" />
 		<result column="employee_quantity" property="employeeQuantity" />
 		<result column="enterprise_month_output" property="enterpriseMonthOutput" />
 		<result column="position" property="position" />
 		<result column="post_title" property="postTitle" />
+		
 		<result column="month_income" property="monthIncome" />
 		<result column="mate_name" property="mateName" />
 		<result column="mate_mobile" property="mateMobile" />
 		<result column="mate_id_no" property="mateIdNo" />
 		<result column="mate_education" property="mateEducation" />
+		
 		<result column="mate_company_name" property="mateCompanyName" />
 		<result column="mate_company_address" property="mateCompanyAddress" />
 		<result column="mate_company_contact_no" property="mateCompanyContactNo" />
 		<result column="gua_name" property="guaName" />
 		<result column="gua_mobile" property="guaMobile" />
+		
 		<result column="gua_id_no" property="guaIdNo" />
 		<result column="gua_phone" property="guaPhone" />
 		<result column="gua_company_name" property="guaCompanyName" />
 		<result column="gua_company_address" property="guaCompanyAddress" />
 		<result column="gua_house_asset_address" property="guaHouseAssetAddress" />
+		
 		<result column="emergency_name1" property="emergencyName1" />
 		<result column="emergency_relation1" property="emergencyRelation1" />
 		<result column="emergency_mobile1" property="emergencyMobile1" />
 		<result column="emergency_name2" property="emergencyName2" />
 		<result column="emergency_relation2" property="emergencyRelation2" />
+		
 		<result column="emergency_mobile2" property="emergencyMobile2" />
 		<result column="jour_datetime_start" property="jourDatetimeStart" />
 		<result column="jour_datetime_end" property="jourDatetimeEnd" />
 		<result column="jour_income" property="jourIncome" />
 		<result column="jour_expend" property="jourExpend" />
+		
 		<result column="jour_balance" property="jourBalance" />
 		<result column="jour_month_income" property="jourMonthIncome" />
 		<result column="jour_month_expend" property="jourMonthExpend" />
 		<result column="jour_remark" property="jourRemark" />
 		<result column="house_contract" property="houseContract" />
+		
 		<result column="house_picture" property="housePicture" />
 		<result column="is_advance_fund" property="isAdvanceFund" />
 		<result column="interview_video" property="interviewVideo" />
 		<result column="interview_contract" property="interviewContract" />
 		<result column="advance_fund_datetime" property="advanceFundDatetime" />
+		
 		<result column="advance_fund_amount" property="advanceFundAmount" />
 		<result column="bill_pdf" property="billPdf" />
 		<result column="car_settle_datetime" property="carSettleDatetime" />
 		<result column="car_number" property="carNumber" />
 		<result column="car_invoice" property="carInvoice" />
+		
 		<result column="car_hgz" property="carHgz" />
 		<result column="car_jqx" property="carJqx" />
 		<result column="car_syx" property="carSyx" />
 		<result column="car_regcerti" property="carRegcerti" />
 		<result column="car_pd" property="carPd" />
+		
 		<result column="car_key" property="carKey" />
 		<result column="car_big_smj" property="carBigSmj" />
 		<result column="bank_commit_datetime" property="bankCommitDatetime" />
 		<result column="bank_commit_note" property="bankCommitNote" />
-		<result column="bankLoan_datetime" property="bankLoanDatetime" />
+		<result column="repay_bank_code" property="repayBankCode" />
+		
+		<result column="repay_bank_name" property="repayBankName" />
+		<result column="repay_subbranch" property="repaySubbranch" />
+		<result column="repay_bankcard_number" property="repayBankcardNumber" />
+		<result column="repay_bill_date" property="repayBillDate" />
+		<result column="repay_bank_date" property="repayBankDate" />
+		<result column="repay_company_date" property="repayCompanyDate" />
+
+		<result column="repay_first_month_amount" property="repayFirstMonthAmount" />
+		<result column="repay_first_month_datetime" property="repayFirstMonthDatetime" />
+		<result column="repay_month_amount" property="repayMonthAmount" />
+		<result column="bank_fk_datetime" property="bankFkDatetime" />
 		<result column="receipt_bank_code" property="receiptBankCode" />
+		
 		<result column="receipt_bank_name" property="receiptBankName" />
 		<result column="receipt_bankcard_number" property="receiptBankcardNumber" />
 		<result column="receipt_pdf" property="receiptPdf" />
 		<result column="receipt_remark" property="receiptRemark" />
 		<result column="pledge_datetime" property="pledgeDatetime" />
+		
 		<result column="green_big_smj" property="greenBigSmj" />
 		<result column="pledge_bank_commit_datetime" property="pledgeBankCommitDatetime" />
 		<result column="pledge_bank_commit_note" property="pledgeBankCommitNote" />
 		<result column="enter_location" property="enterLocation" />
 		<result column="sale_user_id" property="saleUserId" />
 		<result column="company_code" property="companyCode" />
-		<result column="apply_user" property="applyUser" />
 		<result column="apply_datetime" property="applyDatetime" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="remark" property="remark" />
@@ -118,8 +152,17 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
-			<if test="applyUser != null and applyUser != '' ">
-				AND t.apply_user = #{applyUser}
+			<if test="repayBizCode != null and repayBizCode != '' ">
+				AND t.repay_biz_code = #{repayBizCode}
+			</if>
+			<if test="roleCode != null and roleCode != '' ">
+				AND trn.role_code = #{roleCode}
+			</if>
+			<if test="loanProductCode != null and loanProductCode != '' ">
+				AND t.loan_product_code = #{loanProductCode}
+			</if>
+			<if test="applyUserId != null and applyUserId != '' ">
+				AND t.apply_user_id = #{applyUserId}
 			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
 				<![CDATA[AND t.apply_datetime > #{applyDatetimeStart}]]>
@@ -127,8 +170,8 @@
 			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
 				<![CDATA[AND t.apply_datetime < #{applyDatetimeEnd}]]>
 			</if>
-			<if test="is_advance_fund != null and isAdvanceFund != '' ">
-				AND t.isAdvanceFund = #{isAdvanceFund}
+			<if test="isAdvanceFund != null and isAdvanceFund != '' ">
+				AND t.is_advance_fund = #{isAdvanceFund}
 			</if>
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
@@ -138,112 +181,215 @@
 	<select id="select_budgetOrder" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
 		SELECT
 		t.code
+		,t.repay_biz_code
 		,t.loan_product_code
 		,t.loan_product_name
 		,t.loan_bank
+		
 		,t.gps_fee
 		,t.auth_fee
 		,t.fee
 		,t.month_rate
 		,t.credit_code
+		
 		,t.biz_type
 		,t.loan_period
 		,t.invoice_company
 		,t.car_brand
 		,t.original_price
+		
 		,t.invoice_price
 		,t.car_color
 		,t.month_deposit
 		,t.first_amount
 		,t.first_rate
+		
 		,t.loan_amount
 		,t.settle_address
+		,t.apply_user_id
 		,t.apply_user_name
 		,t.gender
+		
 		,t.marry_state
 		,t.nation
 		,t.education
+		,t.id_kind
 		,t.id_no
+		
 		,t.family_number
 		,t.mobile
 		,t.now_address
 		,t.post_code1
 		,t.residence_address
+		
 		,t.post_code2
 		,t.family_main_asset
 		,t.main_asset_include
 		,t.main_income
 		,t.work_company_name
+		
 		,t.work_company_address
 		,t.self_company_area
 		,t.employee_quantity
 		,t.enterprise_month_output
 		,t.position
+		
 		,t.post_title
 		,t.month_income
 		,t.mate_name
 		,t.mate_mobile
 		,t.mate_id_no
+		
 		,t.mate_education
 		,t.mate_company_name
 		,t.mate_company_address
 		,t.mate_company_contact_no
 		,t.gua_name
+		
 		,t.gua_mobile
 		,t.gua_id_no
 		,t.gua_phone
 		,t.gua_company_name
 		,t.gua_company_address
+		
 		,t.gua_house_asset_address
 		,t.emergency_name1
 		,t.emergency_relation1
 		,t.emergency_mobile1
 		,t.emergency_name2
+		
 		,t.emergency_relation2
 		,t.emergency_mobile2
 		,t.jour_datetime_start
 		,t.jour_datetime_end
 		,t.jour_income
+		
 		,t.jour_expend
 		,t.jour_balance
 		,t.jour_month_income
 		,t.jour_month_expend
 		,t.jour_remark
+		
 		,t.house_contract
 		,t.house_picture
 		,t.is_advance_fund
 		,t.interview_video
 		,t.interview_contract
+		
 		,t.advance_fund_datetime
 		,t.advance_fund_amount
 		,t.bill_pdf
 		,t.car_settle_datetime
 		,t.car_number
+		
 		,t.car_invoice
 		,t.car_hgz
 		,t.car_jqx
 		,t.car_syx
 		,t.car_regcerti
+		
 		,t.car_pd
 		,t.car_key
 		,t.car_big_smj
 		,t.bank_commit_datetime
 		,t.bank_commit_note
-		,t.bankLoan_datetime
+		
+		,t.repay_bank_code
+		,t.repay_bank_name
+		,t.repay_subbranch
+		,t.repay_bankcard_number
+		,t.repay_bill_date
+		
+		,t.repay_bank_date
+		,t.repay_company_date
+		,t.repay_first_month_amount
+		,t.repay_first_month_datetime
+		,t.repay_month_amount
+		
+		,t.bank_fk_datetime
 		,t.receipt_bank_code
 		,t.receipt_bank_name
 		,t.receipt_bankcard_number
 		,t.receipt_pdf
+		
 		,t.receipt_remark
 		,t.pledge_datetime
 		,t.green_big_smj
 		,t.pledge_bank_commit_datetime
 		,t.pledge_bank_commit_note
+		
 		,t.enter_location
 		,t.sale_user_id
 		,t.company_code
-		,t.apply_user
 		,t.apply_datetime
+		,t.cur_node_code
+		
+		,t.remark
+		FROM
+		tdq_budget_order t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="select_budgetOrderList" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
+		SELECT
+		t.code
+		,t.repay_biz_code
+		,t.loan_product_code
+		,t.loan_product_name
+		,t.loan_bank
+		
+		,t.gps_fee
+		,t.auth_fee
+		,t.fee
+		,t.month_rate
+		,t.credit_code
+		
+		,t.biz_type
+		,t.loan_period
+		,t.invoice_company
+		,t.car_brand
+		,t.original_price
+		
+		,t.invoice_price
+		,t.car_color
+		,t.month_deposit
+		,t.first_amount
+		,t.first_rate
+		
+		,t.loan_amount
+		,t.settle_address
+		,t.apply_user_id
+		,t.apply_user_name
+		,t.gender
+		
+		,t.id_kind
+		,t.id_no
+		,t.mobile
+		,t.car_number
+		,t.car_invoice
+		
+		,t.repay_bank_code
+		,t.repay_bank_name
+		,t.repay_subbranch
+		,t.repay_bankcard_number
+		,t.repay_bill_date
+		
+		,t.repay_bank_date
+		,t.repay_company_date
+		,t.repay_first_month_amount
+		,t.repay_first_month_datetime
+		,t.repay_month_amount
+		
+		,t.bank_fk_datetime
+		,t.sale_user_id
+		,t.company_code
+		,t.apply_datetime
+		
 		,t.cur_node_code
 		,t.remark
 		FROM
@@ -260,6 +406,80 @@
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tdq_budget_order t
 		<include refid="where_condition" />
+	</select>
+	
+	<select id="select_budgetOrder_byRoleCode" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
+		SELECT
+		distinct
+		t.code
+		,t.repay_biz_code
+		,t.loan_product_code
+		,t.loan_product_name
+		,t.loan_bank
+		
+		,t.gps_fee
+		,t.auth_fee
+		,t.fee
+		,t.month_rate
+		,t.credit_code
+		
+		,t.biz_type
+		,t.loan_period
+		,t.invoice_company
+		,t.car_brand
+		,t.original_price
+		
+		,t.invoice_price
+		,t.car_color
+		,t.month_deposit
+		,t.first_amount
+		,t.first_rate
+		
+		,t.loan_amount
+		,t.settle_address
+		,t.apply_user_id
+		,t.apply_user_name
+		,t.gender
+		
+		,t.id_kind
+		,t.id_no
+		,t.mobile
+		,t.car_number
+		,t.car_invoice
+		
+		,t.repay_bank_code
+		,t.repay_bank_name
+		,t.repay_subbranch
+		,t.repay_bankcard_number
+		,t.repay_bill_date
+		
+		,t.repay_bank_date
+		,t.repay_company_date
+		,t.repay_first_month_amount
+		,t.repay_first_month_datetime
+		,t.repay_month_amount
+		
+		,t.bank_fk_datetime
+		,t.sale_user_id
+		,t.company_code
+		,t.apply_datetime
+		
+		,t.cur_node_code
+		,t.remark
+		FROM
+		tdq_budget_order t inner join tsys_role_node trn on t.cur_node_code = trn.node_code
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_budgetOrder_count_byRoleCode" parameterType="budgetOrder"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM (SELECT distinct code FROM tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
+		<include refid="where_condition" />) tb
 	</select>
 
 	<insert id="insert_budgetOrder" parameterType="budgetOrder">
@@ -343,8 +563,8 @@
 		
 		,sale_user_id
 		,company_code
-		,apply_user
 		,apply_datetime
+		,role_code
 		,cur_node_code
 		,remark
 		)
@@ -427,14 +647,14 @@
 		
 		,#{saleUserId}
 		,#{companyCode}
-		,#{applyUser}
 		,#{applyDatetime}
+		,#{roleCode}
 		,#{curNodeCode}
 		,#{remark}
 		)
 	</insert>
 
-	<update id="update_budgetOrder" parameterType="budgetOrder">
+	<!-- <update id="update_budgetOrder" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
 		loan_product_code = #{loanProductCode}
@@ -528,7 +748,7 @@
 		,car_big_smj = #{carBigSmj}
 		,bank_commit_datetime = #{bankCommitDatetime}
 		,bank_commit_note = #{bankCommitNote}
-		,bankLoan_datetime = #{bankLoanDatetime}
+		,bank_fk_datetime = #{bankFkDatetime}
 		,receipt_bank_code = #{receiptBankCode}
 		,receipt_bank_name = #{receiptBankName}
 		,receipt_bankcard_number = #{receiptBankcardNumber}
@@ -546,7 +766,7 @@
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}
-	</update>
+	</update> -->
 	
 	<update id="update_riskApprove" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
@@ -607,15 +827,102 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_car_settle" parameterType="budgetOrder">
+	<update id="update_commit_bank" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		advance_fund_datetime = #{advanceFundDatetime}
-		,advance_fund_amount = #{advanceFundAmount}
+		bank_commit_datetime = #{bankCommitDatetime}
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
-
-
+	
+	<update id="update_car_settle" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		car_settle_datetime = #{carSettleDatetime}
+		,car_number = #{carNumber}
+		,car_invoice = #{carInvoice}
+		,car_hgz = #{carHgz}
+		,car_jqx = #{carJqx}
+		,car_syx = #{carSyx}
+		,car_regcerti = #{carRegcerti}
+		,car_pd = #{carPd}
+		,car_key = #{carKey}
+		,car_big_smj = #{carBigSmj}
+		,cur_node_code = #{curNodeCode}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_entry_fk" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		repay_bank_code = #{repayBankCode}
+		,repay_bank_name = #{repayBankName}
+		,repay_subbranch = #{repaySubbranch}
+		,repay_bankcard_number = #{repayBankcardNumber}
+		,repay_bill_date = #{repayBillDate}
+		,repay_bank_date = #{repayBankDate}
+		,repay_company_date = #{repayCompanyDate}
+		,repay_first_month_amount = #{repayFirstMonthAmount}
+		,repay_month_amount = #{repayMonthAmount}
+		,cur_node_code = #{curNodeCode}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_confirm_receipt" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		receipt_bank_code = #{receiptBankCode}
+		,receipt_bank_name = #{receiptBankName}
+		,receipt_bankcard_number = #{receiptBankcardNumber}
+		,receipt_pdf = #{receiptPdf}
+		,receipt_remark = #{receiptRemark}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_logic_node" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_entry_mortgage" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		pledge_datetime = #{pledgeDatetime}
+		,green_big_smj = #{greenBigSmj}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_mortgage_commit_bank" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		pledge_bank_commit_datetime = #{pledgeBankCommitDatetime}
+		,pledge_bank_commit_note = #{pledgeBankCommitNote}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_mortgage_finish" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_archiveSuccess" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		enter_location = #{enterLocation}
+		,cur_node_code = #{curNodeCode}
+		,repay_biz_code = #{repayBizCode}
+		,apply_user_id = #{applyUserId}
+		WHERE code = #{code}
+	</update>
 </mapper>

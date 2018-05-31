@@ -42,19 +42,19 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
     public void saveBudgetOrderGpsList(String code,
             List<XN632126ReqGps> gpsAzList) {
         if (CollectionUtils.isNotEmpty(gpsAzList)) {
-            for (XN632126ReqGps ReqGps : gpsAzList) {
-                String psCode = OrderNoGenerater
-                    .generate(EGeneratePrefix.GPSAZ.getCode());
+            for (XN632126ReqGps reqGps : gpsAzList) {
+                String psCode = OrderNoGenerater.generate(EGeneratePrefix.GPSAZ
+                    .getCode());
                 BudgetOrderGps data = new BudgetOrderGps();
                 data.setCode(psCode);
-                data.setGpsDevNo(ReqGps.getGpsDevNo());
-                String gpsType = gpsBO.getGps(ReqGps.getGpsDevNo())
+                data.setGpsDevNo(reqGps.getGpsDevNo());
+                String gpsType = gpsBO.getGpsByDevNo(reqGps.getGpsDevNo())
                     .getGpsType();
                 data.setGpsType(gpsType);
-                data.setAzLocation(ReqGps.getAzLocation());
-                data.setAzDatetime(ReqGps.getAzDatetime());
-                data.setAzUser(ReqGps.getAzUser());
-                data.setRemark(ReqGps.getRemark());
+                data.setAzLocation(reqGps.getAzLocation());
+                data.setAzDatetime(reqGps.getAzDatetime());
+                data.setAzUser(reqGps.getAzUser());
+                data.setRemark(reqGps.getRemark());
                 data.setBudgetOrder(code);
                 saveBudgetOrderGps(data);
             }
@@ -79,8 +79,7 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
     public void removeBudgetOrderGpsList(String code) {
         BudgetOrderGps condition = new BudgetOrderGps();
         condition.setBudgetOrder(code);
-        List<BudgetOrderGps> queryBudgetOrderGpsList = queryBudgetOrderGpsList(
-            condition);
+        List<BudgetOrderGps> queryBudgetOrderGpsList = queryBudgetOrderGpsList(condition);
         for (BudgetOrderGps budgetOrderGps : queryBudgetOrderGpsList) {
             budgetOrderGpsDAO.delete(budgetOrderGps);
         }
@@ -96,8 +95,14 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
     }
 
     @Override
-    public List<BudgetOrderGps> queryBudgetOrderGpsList(
-            BudgetOrderGps condition) {
+    public List<BudgetOrderGps> queryBudgetOrderGpsList(String budgetOrder) {
+        BudgetOrderGps condition = new BudgetOrderGps();
+        condition.setBudgetOrder(budgetOrder);
+        return budgetOrderGpsDAO.selectList(condition);
+    }
+
+    @Override
+    public List<BudgetOrderGps> queryBudgetOrderGpsList(BudgetOrderGps condition) {
         return budgetOrderGpsDAO.selectList(condition);
     }
 

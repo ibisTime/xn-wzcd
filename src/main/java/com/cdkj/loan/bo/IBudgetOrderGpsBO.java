@@ -19,8 +19,9 @@ public interface IBudgetOrderGpsBO extends IPaginableBO<BudgetOrderGps> {
 
     public int refreshBudgetOrderGps(BudgetOrderGps data);
 
-    public List<BudgetOrderGps> queryBudgetOrderGpsList(
-            BudgetOrderGps condition);
+    public List<BudgetOrderGps> queryBudgetOrderGpsList(String budgetCode);
+
+    public List<BudgetOrderGps> queryBudgetOrderGpsList(BudgetOrderGps condition);
 
     public BudgetOrderGps getBudgetOrderGps(String code);
 

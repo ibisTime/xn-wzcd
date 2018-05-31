@@ -3,6 +3,7 @@ package com.cdkj.loan.bo;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 
 public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
@@ -33,4 +34,31 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public void carSettle(BudgetOrder data);
 
+    // 确认提交银行
+    public void refreshCommitBank(BudgetOrder budgetOrder);
+
+    // 录入放款信息
+    public void refreshEntryFk(BudgetOrder budgetOrder);
+
+    // 确认放款
+    public void refreshConfirmReceipt(BudgetOrder budgetOrder);
+
+    // 录入抵押信息(寄送材料)
+    public void entryMortgage(BudgetOrder data);
+
+    // 抵押确认提交银行
+    public void refreshMortgageCommitBank(BudgetOrder budgetOrder);
+
+    // 抵押完成
+    public void refreshMortgageFinish(BudgetOrder budgetOrder);
+
+    // 确认入档
+    public int archiveSuccess(BudgetOrder budgetOrder, String repayBizCode,
+            String userId);
+
+    // 物流流转
+    public void logicOrder(String code, String operator);
+
+    public Paginable<BudgetOrder> getPaginableByRoleCode(int start,
+            int pageSize, BudgetOrder condition);
 }

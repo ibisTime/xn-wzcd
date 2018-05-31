@@ -26,6 +26,9 @@ public class Gps extends ABaseDO {
     // 公司编号
     private String companyCode;
 
+    // 申请单号
+    private String applyCode;
+
     // 申请人
     private String applyUser;
 
@@ -123,4 +126,13 @@ public class Gps extends ABaseDO {
     public void setUseDatetime(Date useDatetime) {
         this.useDatetime = useDatetime;
     }
+
+    public String getApplyCode() {
+        return applyCode;
+    }
+
+    public void setApplyCode(String applyCode) {
+        this.applyCode = applyCode;
+    }
+
 }

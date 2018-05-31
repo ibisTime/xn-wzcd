@@ -15,8 +15,9 @@ import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.IRepayBizDAO;
-import com.cdkj.loan.domain.LoanOrder;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -57,51 +58,49 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
-    public RepayBiz genereateNewCarLoanRepayBiz(LoanOrder loanOrder,
-            String userId, String bankcardCode) {
+    public RepayBiz genereateNewCarLoanRepayBiz(BudgetOrder budgetOrder,
+            String userId, String bankcardCode, String operator) {
 
         RepayBiz repayBiz = new RepayBiz();
         String code = OrderNoGenerater.generate("RB");
 
         repayBiz.setCode(code);
         repayBiz.setRefType(ERepayBizType.CAR.getCode());
-        repayBiz.setRefCode(loanOrder.getCode());
+        repayBiz.setRefCode(budgetOrder.getCode());
         repayBiz.setUserId(userId);
         repayBiz.setBankcardCode(bankcardCode);
 
-        repayBiz.setBizPrice(loanOrder.getCarPrice());
-        repayBiz.setSfRate(loanOrder.getSfRate());
-        repayBiz.setSfAmount(loanOrder.getSfAmount());
-        repayBiz.setLoanBank(loanOrder.getLoanBank());
-        repayBiz.setLoanAmount(loanOrder.getLoanAmount());
+        repayBiz.setBizPrice(budgetOrder.getInvoicePrice());
+        repayBiz.setSfRate(budgetOrder.getFirstRate());
+        repayBiz.setSfAmount(budgetOrder.getFirstAmount());
+        repayBiz.setLoanBank(budgetOrder.getLoanBank());
+        repayBiz.setLoanAmount(budgetOrder.getLoanAmount());
 
-        repayBiz.setPeriods(loanOrder.getPeriods());
-        repayBiz.setRestPeriods(loanOrder.getPeriods());
-        repayBiz.setBankRate(loanOrder.getBankRate());
-        repayBiz.setLoanStartDatetime(loanOrder.getLoanStartDatetime());
-        repayBiz.setLoanEndDatetime(loanOrder.getLoanEndDatetime());
+        repayBiz
+            .setPeriods(StringValidater.toInteger(budgetOrder.getLoanPeriod()));
+        repayBiz.setRestPeriods(repayBiz.getPeriods());
+        repayBiz.setBankRate(budgetOrder.getMonthRate());
+        repayBiz
+            .setFirstRepayDatetime(budgetOrder.getRepayFirstMonthDatetime());
+        repayBiz.setFirstRepayAmount(budgetOrder.getRepayFirstMonthAmount());
 
-        repayBiz.setFxDeposit(loanOrder.getFxDeposit());
-        repayBiz.setFirstRepayDatetime(loanOrder.getFirstRepayDatetime());
-        repayBiz.setFirstRepayAmount(loanOrder.getFirstRepayAmount());
-        repayBiz.setMonthDatetime(loanOrder.getMonthDatetime());
-        repayBiz.setMonthAmount(loanOrder.getMonthAmount());
-
-        repayBiz.setLyDeposit(loanOrder.getLyDeposit());
+        repayBiz.setMonthDatetime(budgetOrder.getRepayBankDate());
+        repayBiz.setMonthAmount(budgetOrder.getRepayMonthAmount());
+        repayBiz.setLyDeposit(budgetOrder.getMonthDeposit());
         repayBiz.setCutLyDeposit(0L);
         repayBiz.setStatus(ERepayPlanStatus.TO_REPAYMENTS.getCode());
-        repayBiz.setRestAmount(loanOrder.getLoanAmount());
-        repayBiz.setRestTotalCost(0L);
 
+        repayBiz.setRestAmount(budgetOrder.getLoanAmount());
+        repayBiz.setRestTotalCost(0L);
         repayBiz.setTotalInDeposit(0L);
         repayBiz.setOverdueAmount(0L);
         repayBiz.setTotalOverdueCount(0);
+
         repayBiz.setCurOverdueCount(0);
         repayBiz.setBlackHandleNote("暂无");
-
-        repayBiz.setUpdater(loanOrder.getUpdater());
+        repayBiz.setUpdater(operator);
         repayBiz.setUpdateDatetime(new Date());
-        repayBiz.setRemark(loanOrder.getRemark());
+        repayBiz.setRemark(budgetOrder.getRemark());
 
         repayBizDAO.insert(repayBiz);
         return repayBiz;
