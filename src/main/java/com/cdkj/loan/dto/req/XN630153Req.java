@@ -5,19 +5,21 @@ import java.util.List;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.cdkj.loan.domain.FileList;
+
 public class XN630153Req {
 
     @NotBlank
     private String id;// 序号
 
     @NotEmpty
-    private List<String> fileStrs;// 材料清单
+    private List<FileList> fileStrs;// 材料清单
 
-    public List<String> getFileStrs() {
+    public List<FileList> getFileStrs() {
         return fileStrs;
     }
 
-    public void setFileStrs(List<String> fileStrs) {
+    public void setFileStrs(List<FileList> fileStrs) {
         this.fileStrs = fileStrs;
     }
 

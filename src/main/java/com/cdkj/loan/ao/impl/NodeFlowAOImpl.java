@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.INodeFlowAO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.domain.FileList;
 import com.cdkj.loan.domain.NodeFlow;
 
 @Service
@@ -50,10 +51,12 @@ public class NodeFlowAOImpl implements INodeFlowAO {
         if (StringUtils.isNotBlank(nodeFlow.getFileList())) {
             String fileList = nodeFlow.getFileList();
             String[] fileArr = fileList.split(",");
-            List<String> fileStrs = new ArrayList<String>();
+            List<FileList> fileStrs = new ArrayList<FileList>();
             if (fileArr != null) {
                 for (int i = 0; i < fileArr.length; i++) {
-                    fileStrs.add(fileArr[i]);
+                    FileList file = new FileList();
+                    file.setContent(fileArr[i]);
+                    fileStrs.add(file);
                 }
             }
             nodeFlow.setFileStrs(fileStrs);
@@ -61,11 +64,11 @@ public class NodeFlowAOImpl implements INodeFlowAO {
     }
 
     @Override
-    public void doModifyFileList(String id, List<String> fileStrs) {
+    public void doModifyFileList(String id, List<FileList> filelist) {
         String fileList = "";
-        if (CollectionUtils.isNotEmpty(fileStrs)) {
-            for (String file : fileStrs) {
-                fileList += file + ",";
+        if (CollectionUtils.isNotEmpty(filelist)) {
+            for (FileList file : filelist) {
+                fileList += file.getContent() + ",";
             }
             if (StringUtils.isNotBlank(fileList)) {
                 fileList = fileList.substring(0, fileList.length() - 1);
