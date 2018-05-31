@@ -144,6 +144,7 @@
 		<result column="sale_user_id" property="saleUserId" />
 		<result column="company_code" property="companyCode" />
 		<result column="apply_datetime" property="applyDatetime" />
+		<result column="role_code" property="roleCode" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="remark" property="remark" />
 	</resultMap>
@@ -169,6 +170,9 @@
 			</if>
 			<if test="isAdvanceFund != null and isAdvanceFund != '' ">
 				AND t.is_advance_fund = #{isAdvanceFund}
+			</if>
+			<if test="roleCode != null and roleCode != '' ">
+				AND t.role_code = #{roleCode}
 			</if>
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
@@ -319,8 +323,9 @@
 		,t.sale_user_id
 		,t.company_code
 		,t.apply_datetime
-		,t.cur_node_code
+		,t.role_code
 		
+		,t.cur_node_code
 		,t.remark
 		FROM
 		tdq_budget_order t
@@ -420,6 +425,7 @@
 		,sale_user_id
 		,company_code
 		,apply_datetime
+		,role_code
 		,cur_node_code
 		,remark
 		)
@@ -503,6 +509,7 @@
 		,#{saleUserId}
 		,#{companyCode}
 		,#{applyDatetime}
+		,#{roleCode}
 		,#{curNodeCode}
 		,#{remark}
 		)
