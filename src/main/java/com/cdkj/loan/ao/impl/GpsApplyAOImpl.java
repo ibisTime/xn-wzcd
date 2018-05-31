@@ -3,7 +3,6 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,11 +72,6 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         if (!EGpsApplyStatus.TO_APPROVE.getCode().equals(data.getStatus())) {
             throw new BizException("xn0000", "GPS申领单不在待审核状态");
         }
-
-        if (CollectionUtils.isEmpty(req.getGpsList())) {
-            throw new BizException("xn0000", "GPS情况不能为空");
-        }
-
         gpsApplyBO.approveGpsApply(req.getCode(), EGpsApplyStatus.APPROVE_YES,
             req.getRemark());
 
@@ -91,10 +85,9 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             gps.setApplyDatetime(data.getApplyDatetime());
             gpsBO.applyGps(gps);
         }
-
+        // 产生物流单
         logisticsBO.saveLogistics(ELogisticsType.GPS.getCode(), data.getCode(),
             data.getApplyUser(), null, null, "GPS物流传递");
-
     }
 
     @Override

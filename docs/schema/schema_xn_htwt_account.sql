@@ -152,4 +152,5 @@ CREATE TABLE `tstd_bankcard` (
   `updater` varchar(255) DEFAULT NULL COMMENT '更新人',
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注'
+  PRIMARY KEY (`code`) COMMENT '编号'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

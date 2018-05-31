@@ -48,6 +48,7 @@ import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ECreditNode;
 import com.cdkj.loan.enums.EDealType;
@@ -183,6 +184,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setMateMobile(req.getMateMobile());
         data.setMateIdNo(req.getMateIdNo());
         data.setMateEducation(req.getMateEducation());
+        data.setMateCompanyName(req.getMateCompanyName());
         data.setMateCompanyAddress(req.getMateCompanyAddress());
         data.setMateCompanyContactNo(req.getMateCompanyContactNo());
 
@@ -276,6 +278,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void riskChargeApprove(String code, String operator,
             String approveResult, String approveNote) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
@@ -291,28 +294,26 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode()).getNextNode());
-
             // 生成 收回手续费
             BudgetOrderFee data = new BudgetOrderFee();
 
             data.setCompanyCode(budgetOrder.getCompanyCode());
-            data.setUserId(budgetOrder.getApplyUserName());
+            data.setUserId(budgetOrder.getSaleUserId());
             data.setShouldAmount(budgetOrder.getFee()
                     + budgetOrder.getAuthFee() + budgetOrder.getGpsFee()
                     + budgetOrder.getMonthDeposit());
-            data.setIsSettled("0");
+            data.setRealAmount(0L);
+            data.setIsSettled(EBoolean.NO.getCode());
 
-            if (null != sysUserBO.getUser(operator)) {
-                data.setUpdater(sysUserBO.getUser(operator).getRealName());
-            }
+            data.setUpdater(operator);
             data.setUpdateDatetime(new Date());
             data.setBudgetOrder(code);
             budgetOrderFeeBO.saveBudgetOrderFee(data);
+
             // 征信单回写准入单编号
             Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
             credit.setBudgetCode(budgetOrder.getCode());
             creditBO.refreshCredit(credit);
-
         } else {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode()).getBackNode());
@@ -506,7 +507,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         String fileList = nodeFlow.getFileList();
         if (StringUtils.isNotBlank(fileList)) {
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-                budgetOrder.getCode(), null,
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                 EBudgetOrderNode.CARSETTLE.getCode(), nodeFlow.getNextNode(),
                 fileList);
         } else {
@@ -581,9 +582,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public void entryLoan(XN632135Req req) {
+    public void entryFk(XN632135Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
-
         if (!EBudgetOrderNode.ENTRYLOAN.getCode().equals(
             budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -615,8 +615,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         String fileList = nodeFlow.getFileList();
         if (StringUtils.isNotBlank(fileList)) {
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-                budgetOrder.getCode(), null, preCurrentNode,
-                nodeFlow.getNextNode(), fileList);
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                preCurrentNode, nodeFlow.getNextNode(), fileList);
         } else {
             throw new BizException("xn0000", "当前节点材料清单不存在");
         }
@@ -633,11 +633,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public void entryMortgage(String code, String operator,
             String pledgeDatetime, String greenBigSmj) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
-
+        if (!EBudgetOrderNode.ENTRYMORTGAGE.getCode().equals(
+            budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是录入抵押信息节点，不能操作");
+        }
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-            EBudgetOrderNode.MORTGAGEFINISH.getCode()).getNextNode());
+            EBudgetOrderNode.ENTRYMORTGAGE.getCode()).getNextNode());
         budgetOrder.setPledgeDatetime(DateUtil.strToDate(pledgeDatetime,
             DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setGreenBigSmj(greenBigSmj);
@@ -655,7 +659,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public void mortgageCommitBank(String code, String operator,
             String pledgeBankCommitDatetime, String pledgeBankCommitNote) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
-        if (!EBudgetOrderNode.MORTGAGECOMMITBANK.getCode().equals(
+        if (!EBudgetOrderNode.ENTRYCOMMITBANK.getCode().equals(
             budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是确认提交银行节点，不能操作");
@@ -664,7 +668,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-            EBudgetOrderNode.COMMITBANK.getCode()).getNextNode());
+            EBudgetOrderNode.ENTRYCOMMITBANK.getCode()).getNextNode());
         budgetOrder.setPledgeBankCommitDatetime(DateUtil.strToDate(
             pledgeBankCommitDatetime, DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setRemark(pledgeBankCommitNote);
