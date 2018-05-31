@@ -139,16 +139,7 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
         List<BudgetOrderFeeDetail> list = budgetOrderFeeDetailBO
             .queryBudgetOrderFeeDetailList(condition);
 
-        /*
-         * Long realAmount = 0L; for (BudgetOrderFeeDetail budgetOrderFeeDetail
-         * : list) { Long amount = budgetOrderFeeDetail.getAmount(); amount +=
-         * realAmount; } budgetOrderFee.setRealAmount(realAmount); if
-         * (realAmount >= budgetOrderFee.getShouldAmount()) {
-         * budgetOrderFee.setIsSettled("1"); }
-         */
-
         budgetOrderFee.setCompanyName(department.getName());
-
         // 设置银行对象（汇入我司账号和银行名）
         for (BudgetOrderFeeDetail budgetOrderFeeDetail : list) {
             String platBankcard = budgetOrderFeeDetail.getPlatBankcard();
