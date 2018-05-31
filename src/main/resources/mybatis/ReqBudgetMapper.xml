@@ -113,7 +113,7 @@
 		,t.collection_remark
 		,t.cur_node_code
 		FROM
-		tdq_req_budget t inner join tsys_role_node trn on t.cur_node_code = trn.node_code
+		tdq_req_budget t left join tsys_role_node trn on t.cur_node_code = trn.node_code
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">

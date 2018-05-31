@@ -3,17 +3,20 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
+import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IBudgetOrderFeeBO;
 import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.ICreditBO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILoanProductBO;
 import com.cdkj.loan.bo.ILogisticsBO;
@@ -26,14 +29,17 @@ import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.Credit;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.LoanProduct;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632128Req;
@@ -43,6 +49,7 @@ import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBudgetOrderNode;
+import com.cdkj.loan.enums.ECreditNode;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.ELoanProductStatus;
@@ -54,6 +61,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private IBudgetOrderBO budgetOrderBO;
+
+    @Autowired
+    private IDepartmentBO departmentBO;
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
@@ -93,6 +103,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private IRepayPlanBO repayPlanBO;
+
+    @Autowired
+    private IBankBO bankBO;
 
     @Override
     @Transactional
@@ -219,6 +232,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setCurNodeCode(node.getCode());
         String code = budgetOrderBO.saveBudgetOrder(data);
 
+        // 修改征信单节点为 征信单入档
+        if (null != credit) {
+            credit.setCurNodeCode(ECreditNode.ACHIEVE.getCode());
+            creditBO.refreshCreditNode(credit);
+        }
+
         // 日志记录
         sysBizLogBO.saveSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
             node.getCode(), node.getValue(), req.getOperator());
@@ -289,6 +308,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             data.setUpdateDatetime(new Date());
             data.setBudgetOrder(code);
             budgetOrderFeeBO.saveBudgetOrderFee(data);
+            // 征信单回写准入单编号
+            Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
+            credit.setBudgetCode(budgetOrder.getCode());
+            creditBO.refreshCredit(credit);
+
         } else {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode()).getBackNode());
@@ -678,23 +702,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public Paginable<BudgetOrder> queryBudgetOrderPage(int start, int limit,
-            BudgetOrder condition) {
-        return budgetOrderBO.getPaginable(start, limit, condition);
-    }
-
-    @Override
-    public BudgetOrder getBudgetOrder(String code) {
-        BudgetOrder order = budgetOrderBO.getBudgetOrder(code);
-        BudgetOrderGps budgetOrderGps = new BudgetOrderGps();
-        budgetOrderGps.setBudgetOrder(code);
-        List<BudgetOrderGps> budgetOrderGpsList = budgetOrderGpsBO
-            .queryBudgetOrderGpsList(budgetOrderGps);
-        order.setBudgetOrderGpsList(budgetOrderGpsList);
-        return order;
-    }
-
-    @Override
     @Transactional
     public void archive(String code, String operator, String enterLocation) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
@@ -746,9 +753,57 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    public Paginable<BudgetOrder> queryBudgetOrderPage(int start, int limit,
+            BudgetOrder condition) {
+        Paginable<BudgetOrder> page = budgetOrderBO.getPaginable(start, limit,
+            condition);
+        if (page != null && CollectionUtils.isNotEmpty(page.getList())) {
+            for (BudgetOrder budgetOrder : page.getList()) {
+                initBudgetOrder(budgetOrder);
+            }
+        }
+        return page;
+    }
+
+    // 初始化预算单数据，包含公司名称
+    private void initBudgetOrder(BudgetOrder budgetOrder) {
+        // 业务公司名称
+        if (StringUtils.isNotBlank(budgetOrder.getCompanyCode())) {
+            Department department = departmentBO.getDepartment(budgetOrder
+                .getCompanyCode());
+            budgetOrder.setCompanyName(department.getName());
+        }
+
+        // 业务员姓名
+        SYSUser sysUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
+        budgetOrder.setSaleUserName(sysUser.getRealName());
+
+        // 贷款银行
+        Bank loanBank = bankBO.getBank(budgetOrder.getLoanBank());
+        budgetOrder.setLoanBankName(loanBank.getBankName());
+    }
+
+    @Override
+    public BudgetOrder getBudgetOrder(String code) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+        initBudgetOrder(budgetOrder);
+        List<BudgetOrderGps> budgetOrderGpsList = budgetOrderGpsBO
+            .queryBudgetOrderGpsList(code);
+        budgetOrder.setBudgetOrderGpsList(budgetOrderGpsList);
+        return budgetOrder;
+    }
+
+    @Override
     public Paginable<BudgetOrder> queryBudgetOrderPageByRoleCode(int start,
             int limit, BudgetOrder condition) {
-        return budgetOrderBO.getPaginableByRoleCode(start, limit, condition);
+        Paginable<BudgetOrder> page = budgetOrderBO.getPaginableByRoleCode(
+            start, limit, condition);
+        if (page != null && CollectionUtils.isNotEmpty(page.getList())) {
+            for (BudgetOrder budgetOrder : page.getList()) {
+                initBudgetOrder(budgetOrder);
+            }
+        }
+        return page;
     }
 
 }

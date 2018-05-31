@@ -30,8 +30,8 @@ import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
-import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.ECreditNode;
+import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.exception.BizException;
 
@@ -71,6 +71,19 @@ public class CreditAOImpl implements ICreditAO {
         // 操作人编号
         SYSUser sysUser = sysUserBO.getUser(req.getOperator());
 
+        if (null == sysUser) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前操作人不存在");
+        }
+
+        if (null == sysUser.getDepartmentCode()
+                || "".equals(sysUser.getDepartmentCode())
+                || null == sysUser.getCompanyCode()
+                || "".equals(sysUser.getCompanyCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "请设置用户职位或设置所属部门及业务公司");
+
+        }
+
         // 新增征信单
         Credit credit = new Credit();
         credit.setLoanBankCode(req.getLoanBankCode());
@@ -78,11 +91,12 @@ public class CreditAOImpl implements ICreditAO {
         credit.setBizType(req.getBizType());
         credit.setSecondCarReport(req.getSecondCarReport());
         credit.setXszFront(req.getXszFront());
-        credit.setXszReverse(req.getXszReverse());
 
+        credit.setXszReverse(req.getXszReverse());
         credit.setCompanyCode(sysUser.getCompanyCode());
         credit.setSaleUserId(req.getOperator());
         credit.setApplyDatetime(new Date());
+        credit.setSaleUserName(sysUser.getRealName());
 
         /*
          * if (null != sysUser.getCompanyCode() &&
@@ -198,6 +212,17 @@ public class CreditAOImpl implements ICreditAO {
     @Override
     public Credit getCreditAndCreditUser(String code) {
         Credit credit = creditBO.getCredit(code);
+
+        if (null == credit) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "根据征信单编号查询不到征信单");
+        }
+
+        Department department = departmentBO.getDepartment(credit
+            .getCompanyCode());
+        if (null != department) {
+            credit.setCompanyName(department.getName());
+        }
 
         CreditUser condition = new CreditUser();
         condition.setCreditCode(credit.getCode());
