@@ -12,12 +12,14 @@ import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.dto.req.XN802010Req;
 import com.cdkj.loan.dto.req.XN802012Req;
 import com.cdkj.loan.dto.req.XN802013Req;
 import com.cdkj.loan.enums.EBankcard;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -39,19 +41,25 @@ public class BankcardAOImpl implements IBankcardAO {
         // 判断卡号是否重复
         List<Bankcard> list = bankcardBO.queryBankcardList(req.getUserId());
         if (CollectionUtils.isNotEmpty(list)) {
-            throw new BizException("xn0000", "您已绑定银行卡,无需绑定多张");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "您已绑定银行卡,无需绑定多张");
         }
 
         Bankcard data = new Bankcard();
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.BANKCARD.getCode());
+        data.setCode(code);
         data.setUserId(req.getUserId());
         data.setRealName(req.getRealName());
         data.setBankCode(req.getBankCode());
         data.setBankName(req.getBankName());
+
         data.setSubbranch(req.getSubbranch());
         data.setBankcardNumber(req.getBankcardNumber());
         data.setBindMobile(req.getBindMobile());
         data.setCreateDatetime(new Date());
         data.setStatus(EBankcard.NORMAL.getCode());
+
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());
