@@ -24,8 +24,8 @@ public class XN632134 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        // budgetOrderAO.putInFile(req.getCode(), req.getOperator(),
-        // req.getEnterLocation());
+        budgetOrderAO.archive(req.getCode(), req.getOperator(),
+            req.getEnterLocation());
         return new BooleanRes(true);
     }
 

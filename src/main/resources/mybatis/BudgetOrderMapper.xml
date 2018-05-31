@@ -751,4 +751,37 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_entry_mortgage" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		pledge_datetime = #{pledgeDatetime}
+		,green_big_smj = #{greenBigSmj}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_mortgage_commit_bank" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		pledge_bank_commit_datetime = #{pledgeBankCommitDatetime}
+		,pledge_bank_commit_note = #{pledgeBankCommitNote}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_mortgage_finish" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_archiveSuccess" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		enter_location = #{enterLocation}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
 </mapper>
