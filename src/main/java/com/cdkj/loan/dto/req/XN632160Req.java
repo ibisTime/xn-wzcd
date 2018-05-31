@@ -14,10 +14,6 @@ public class XN632160Req {
     @NotBlank
     private String remitType;
 
-    // 交款业务公司编号
-    @NotBlank
-    private String remitCompanyCode;
-
     // 交款项目
     @NotBlank
     private String remitProject;
@@ -26,7 +22,7 @@ public class XN632160Req {
     @NotBlank
     private String amount;
 
-    // 平台银行卡
+    // 平台账户
     @NotBlank
     private String platBankcard;
 
@@ -38,8 +34,15 @@ public class XN632160Req {
     @NotBlank
     private String reachDatetime;
 
+    // 是否已结清(0 待结清 1 已结清)
+    private String isSettled;
+
     // 备注
     private String remark;
+
+    // 操作人
+    @NotBlank
+    private String operator;
 
     // 手续费编号
     @NotBlank
@@ -51,14 +54,6 @@ public class XN632160Req {
 
     public void setRemitType(String remitType) {
         this.remitType = remitType;
-    }
-
-    public String getRemitCompanyCode() {
-        return remitCompanyCode;
-    }
-
-    public void setRemitCompanyCode(String remitCompanyCode) {
-        this.remitCompanyCode = remitCompanyCode;
     }
 
     public String getRemitProject() {
@@ -101,12 +96,28 @@ public class XN632160Req {
         this.reachDatetime = reachDatetime;
     }
 
+    public String getIsSettled() {
+        return isSettled;
+    }
+
+    public void setIsSettled(String isSettled) {
+        this.isSettled = isSettled;
+    }
+
     public String getRemark() {
         return remark;
     }
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
     public String getFeeCode() {
@@ -116,4 +127,5 @@ public class XN632160Req {
     public void setFeeCode(String feeCode) {
         this.feeCode = feeCode;
     }
+
 }

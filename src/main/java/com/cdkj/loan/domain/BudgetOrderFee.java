@@ -49,6 +49,17 @@ public class BudgetOrderFee extends ABaseDO {
 
     private List<BudgetOrderFeeDetail> BudgetOrderFeeDetailList;
 
+    // 业务公司名
+    private String companyName;
+
+    // 贷款银行
+    private String loanBankName;
+
+    // 贷款金额
+    private Long loanAmount;
+
+    private String updaterRealName;
+
     public String getCode() {
         return code;
     }
@@ -136,6 +147,38 @@ public class BudgetOrderFee extends ABaseDO {
     public void setBudgetOrderFeeDetailList(
             List<BudgetOrderFeeDetail> budgetOrderFeeDetailList) {
         BudgetOrderFeeDetailList = budgetOrderFeeDetailList;
+    }
+
+    public String getLoanBankName() {
+        return loanBankName;
+    }
+
+    public void setLoanBankName(String loanBankName) {
+        this.loanBankName = loanBankName;
+    }
+
+    public Long getLoanAmount() {
+        return loanAmount;
+    }
+
+    public void setLoanAmount(Long loanAmount) {
+        this.loanAmount = loanAmount;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getUpdaterRealName() {
+        return updaterRealName;
+    }
+
+    public void setUpdaterRealName(String updaterRealName) {
+        this.updaterRealName = updaterRealName;
     }
 
 }

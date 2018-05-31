@@ -20,9 +20,6 @@ public class BudgetOrderFeeDetail extends ABaseDO {
     // 交款类型
     private String remitType;
 
-    // 交款业务公司编号
-    private String remitCompanyCode;
-
     // 交款项目
     private String remitProject;
 
@@ -50,6 +47,16 @@ public class BudgetOrderFeeDetail extends ABaseDO {
     // 手续费编号
     private String feeCode;
 
+    /**************辅助字段****************/
+
+    private CollectBankcard collectBankcard;
+
+    // 是否结清
+    private String isSettled;
+
+    // 更新人
+    private String updaterRealName;
+
     public String getCode() {
         return code;
     }
@@ -64,14 +71,6 @@ public class BudgetOrderFeeDetail extends ABaseDO {
 
     public void setRemitType(String remitType) {
         this.remitType = remitType;
-    }
-
-    public String getRemitCompanyCode() {
-        return remitCompanyCode;
-    }
-
-    public void setRemitCompanyCode(String remitCompanyCode) {
-        this.remitCompanyCode = remitCompanyCode;
     }
 
     public String getRemitProject() {
@@ -144,6 +143,30 @@ public class BudgetOrderFeeDetail extends ABaseDO {
 
     public void setFeeCode(String feeCode) {
         this.feeCode = feeCode;
+    }
+
+    public CollectBankcard getCollectBankcard() {
+        return collectBankcard;
+    }
+
+    public void setCollectBankcard(CollectBankcard collectBankcard) {
+        this.collectBankcard = collectBankcard;
+    }
+
+    public String getIsSettled() {
+        return isSettled;
+    }
+
+    public void setIsSettled(String isSettled) {
+        this.isSettled = isSettled;
+    }
+
+    public String getUpdaterRealName() {
+        return updaterRealName;
+    }
+
+    public void setUpdaterRealName(String updaterRealName) {
+        this.updaterRealName = updaterRealName;
     }
 
 }

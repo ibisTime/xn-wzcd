@@ -17,9 +17,9 @@ public interface ILogisticsAO {
 
     public void sendLogistics(XN632150Req req);
 
-    public void receiveLogistics(String code, String remark);
+    public void receiveLogistics(String code, String operator, String remark);
 
-    public void sendAgainLogistics(String code, String remark);
+    public void sendAgainLogistics(String code, String operator, String remark);
 
     public Paginable<Logistics> queryLogisticsPage(int start, int limit,
             Logistics condition);

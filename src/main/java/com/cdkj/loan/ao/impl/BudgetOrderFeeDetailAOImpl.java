@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBudgetOrderFeeDetailAO;
+import com.cdkj.loan.bo.IBudgetOrderFeeBO;
 import com.cdkj.loan.bo.IBudgetOrderFeeDetailBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.BudgetOrderFeeDetail;
 import com.cdkj.loan.exception.BizException;
 
@@ -23,8 +25,31 @@ public class BudgetOrderFeeDetailAOImpl implements IBudgetOrderFeeDetailAO {
     @Autowired
     private IBudgetOrderFeeDetailBO budgetOrderFeeDetailBO;
 
+    @Autowired
+    private IBudgetOrderFeeBO budgetOrderFeeBO;
+
     @Override
     public String addBudgetOrderFeeDetail(BudgetOrderFeeDetail data) {
+
+        BudgetOrderFee budgetOrderFee = budgetOrderFeeBO.getBudgetOrderFee(data
+            .getFeeCode());
+        if (null == budgetOrderFee) {
+            throw new BizException("xn0000", "手续费数据不存在");
+        }
+        if (!"".equals(data.getIsSettled()) && "1".equals(data.getIsSettled())) {
+            if (data.getAmount() >= budgetOrderFee.getShouldAmount()) {
+                budgetOrderFee.setIsSettled("1");
+            }
+        }
+        if ((budgetOrderFee.getRealAmount() + data.getAmount()) >= budgetOrderFee
+            .getShouldAmount()) {
+            budgetOrderFee.setIsSettled("1");
+        }
+        budgetOrderFee.setRealAmount(budgetOrderFee.getRealAmount()
+                + data.getAmount());
+
+        budgetOrderFeeBO.refreshBudgetOrderFee(budgetOrderFee);
+
         return budgetOrderFeeDetailBO.saveBudgetOrderFeeDetail(data);
     }
 
