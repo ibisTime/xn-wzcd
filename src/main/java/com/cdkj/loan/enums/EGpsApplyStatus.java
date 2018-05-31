@@ -7,8 +7,8 @@ package com.cdkj.loan.enums;
  * @history:
  */
 public enum EGpsApplyStatus {
-    TO_APPROVE("0", "待审核"), APPROVE_YES("1", "审核通过"), APPROVE_NO("2",
-            "审核不通过"), TO_RECEIVE("3", "待收货"), RECEIVED("4", "已收货");
+    TO_APPROVE("0", "待审核"), APPROVE_YES("1", "审核通过,待发货"), APPROVE_NO("2",
+            "审核不通过"), TO_RECEIVE("3", "已发货,待收货"), RECEIVED("4", "已收货");
 
     EGpsApplyStatus(String code, String value) {
         this.code = code;

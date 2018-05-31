@@ -47,40 +47,33 @@ public class GpsAOImpl implements IGpsAO {
 
     @Override
     public Paginable<Gps> queryGpsPage(int start, int limit, Gps condition) {
-
-        Paginable<Gps> paginable = gpsBO.getPaginable(start, limit, condition);
-        List<Gps> list = paginable.getList();
-
-        if (paginable != null
-                && CollectionUtils.isNotEmpty(paginable.getList())) {
+        Paginable<Gps> page = gpsBO.getPaginable(start, limit, condition);
+        List<Gps> list = page.getList();
+        if (CollectionUtils.isNotEmpty(list)) {
             for (Gps gps : list) {
                 initGps(gps);
             }
         }
-        return paginable;
+        return page;
     }
 
     @Override
     public List<Gps> queryGpsList(Gps condition) {
-
         List<Gps> list = gpsBO.queryGpsList(condition);
-        if (null != list && CollectionUtils.isNotEmpty(list)) {
+        if (CollectionUtils.isNotEmpty(list)) {
             for (Gps gps : list) {
                 initGps(gps);
             }
         }
-
         return list;
     }
 
     @Override
     public Gps getGps(String code) {
-
         Gps gps = gpsBO.getGps(code);
         if (null != gps) {
             initGps(gps);
         }
-
         return gps;
     }
 
@@ -90,21 +83,14 @@ public class GpsAOImpl implements IGpsAO {
         if (StringUtils.isNotBlank(gps.getCompanyCode())) {
             Department department = departmentBO.getDepartment(gps
                 .getCompanyCode());
-            if (null != department) {
-                gps.setCompanyName(department.getName());
-            }
-
+            gps.setCompanyName(department.getName());
         }
 
         // 业务员姓名
         if (StringUtils.isNotBlank(gps.getApplyUser())) {
             SYSUser sysUser = sysUserBO.getUser(gps.getApplyUser());
-            if (null != sysUser) {
-                gps.setApplyUserName(sysUser.getRealName());
-            }
-
+            gps.setApplyUserName(sysUser.getRealName());
         }
-
     }
 
 }

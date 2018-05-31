@@ -13,6 +13,8 @@ public interface IGpsBO extends IPaginableBO<Gps> {
 
     public void applyLqGps(String code);
 
+    public void refreshApplyGps(String code);
+
     public void refreshUseGps(String code, String budgetOrder);
 
     public List<Gps> queryGpsList(Gps condition);
