@@ -868,17 +868,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
         List<BudgetOrderGps> budgetOrderGpsList = budgetOrderGpsBO
             .queryBudgetOrderGpsList(code);
+
         budgetOrder.setBudgetOrderGpsList(budgetOrderGpsList);
 
         Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
-
         CreditUser creditUser = new CreditUser();
         creditUser.setCreditCode(credit.getCode());
         List<CreditUser> queryCreditUserList = creditUserBO
             .queryCreditUserList(creditUser);
-        creditUser.setCreditUserList(queryCreditUserList);
+        credit.setCreditUserList(queryCreditUserList);
+
         budgetOrder.setCredit(credit);
         return budgetOrder;
     }
-
 }
