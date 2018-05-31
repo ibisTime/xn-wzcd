@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -7,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IGpsApplyBO;
+import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IGpsApplyDAO;
+import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.GpsApply;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.EGpsApplyStatus;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -21,11 +25,14 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply>
-        implements IGpsApplyBO {
+public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply> implements
+        IGpsApplyBO {
 
     @Autowired
     private IGpsApplyDAO gpsApplyDAO;
+
+    @Autowired
+    private IGpsBO gpsBO;
 
     @Override
     public boolean isGpsApplyExist(String code) {
@@ -41,8 +48,8 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply>
     public String saveGpsApply(GpsApply data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.GPS_APPLY.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.GPS_APPLY
+                .getCode());
             data.setCode(code);
             gpsApplyDAO.insert(data);
         }
@@ -50,9 +57,41 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply>
     }
 
     @Override
-    public void approveGpsApply(GpsApply data) {
-        if (StringUtils.isNotBlank(data.getCode())) {
-            gpsApplyDAO.updateGpsApplyApprove(data);
+    public void approveGpsApply(String code, EGpsApplyStatus eGpsApplyStatus,
+            String remark) {
+        if (StringUtils.isNotBlank(code)) {
+            GpsApply gpsApply = new GpsApply();
+            gpsApply.setCode(code);
+            gpsApply.setStatus(eGpsApplyStatus.getCode());
+            gpsApply.setRemark(remark);
+            gpsApplyDAO.updateGpsApplyApprove(gpsApply);
+        }
+    }
+
+    @Override
+    public void sendGps(String code, Date sendDatetime) {
+        GpsApply data = new GpsApply();
+        data.setCode(code);
+        data.setStatus(EGpsApplyStatus.TO_RECEIVE.getCode());
+        data.setSendDatetime(sendDatetime);
+        gpsApplyDAO.updateGpsApplySend(data);
+    }
+
+    @Override
+    public void receiveGps(String code) {
+        // 更新申请单，状态更新已收件
+        GpsApply data = new GpsApply();
+        data.setCode(code);
+        data.setStatus(EGpsApplyStatus.RECEIVED.getCode());
+        data.setReceiveDatetime(new Date());
+        gpsApplyDAO.updateGpsApplyReceive(data);
+
+        // gps领用状态更改
+        Gps condition = new Gps();
+        condition.setApplyCode(code);
+        List<Gps> gpsList = gpsBO.queryGpsList(condition);
+        for (Gps gps : gpsList) {
+            gpsBO.refreshApplyGps(gps.getCode());
         }
     }
 
@@ -69,7 +108,7 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply>
             condition.setCode(code);
             data = gpsApplyDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "GPS申领记录不存在");
+                throw new BizException("xn0000", "GPS申领不存在");
             }
         }
         return data;

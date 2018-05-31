@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ILogisticsAO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.IGpsApplyBO;
 import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeBO;
@@ -48,19 +49,25 @@ public class LogisticsAOImpl implements ILogisticsAO {
     private IBudgetOrderBO budgetOrderBO;
 
     @Autowired
+    private IGpsApplyBO gpsApplyBO;
+
+    @Autowired
     private IGpsBO gpsBO;
 
     @Autowired
     private ISYSUserBO sysUserBO;
 
     @Override
+    @Transactional
     public void sendLogistics(XN632150Req req) {
         Logistics data = logisticsBO.getLogistics(req.getCode());
-        if (!(ELogisticsStatus.TO_SEND.getCode().equals(data.getStatus()) || ELogisticsStatus.TO_SEND_AGAIN
-            .getCode().equals(data.getStatus()))) {
+        if (!ELogisticsStatus.TO_SEND.getCode().equals(data.getStatus())
+                && !ELogisticsStatus.TO_SEND_AGAIN.getCode().equals(
+                    data.getStatus())) {
             throw new BizException("xn0000", "资料不是待发货状态!");
         }
 
+        // 发件
         Logistics logistics = new Logistics();
         logistics.setCode(req.getCode());
         logistics.setSendFileList(req.getSendFileList());
@@ -73,6 +80,10 @@ public class LogisticsAOImpl implements ILogisticsAO {
         logistics.setSendNote(req.getSendNote());
         logistics.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
         logisticsBO.sendLogistics(logistics);
+
+        if (ELogisticsType.GPS.getCode().equals(data.getType())) {
+            gpsApplyBO.sendGps(data.getBizCode(), logistics.getSendDatetime());
+        }
     }
 
     @Override
@@ -86,7 +97,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
             budgetOrderBO.logicOrder(data.getBizCode(), operator);
         } else if (ELogisticsType.GPS.getCode().equals(data.getType())) {
-            gpsBO.applyLqGps(data.getBizCode());
+            gpsApplyBO.receiveGps(data.getBizCode());
         }
     }
 

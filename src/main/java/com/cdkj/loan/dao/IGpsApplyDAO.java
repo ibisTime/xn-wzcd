@@ -13,4 +13,9 @@ public interface IGpsApplyDAO extends IBaseDAO<GpsApply> {
     String NAMESPACE = IGpsApplyDAO.class.getName().concat(".");
 
     public void updateGpsApplyApprove(GpsApply data);
+
+    public void updateGpsApplySend(GpsApply data);
+
+    public void updateGpsApplyReceive(GpsApply data);
+
 }

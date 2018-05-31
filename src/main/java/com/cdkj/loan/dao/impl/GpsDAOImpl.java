@@ -32,8 +32,8 @@ public class GpsDAOImpl extends AMybatisTemplate implements IGpsDAO {
     }
 
     @Override
-    public int updateUse(Gps data) {
-        return super.insert(NAMESPACE.concat("update_gps_use"), data);
+    public int updateUseStatus(Gps data) {
+        return super.insert(NAMESPACE.concat("update_gps_useStatus"), data);
     }
 
     @Override

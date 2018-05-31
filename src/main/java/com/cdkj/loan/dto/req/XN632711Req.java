@@ -3,6 +3,7 @@ package com.cdkj.loan.dto.req;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * GPS申领审核
@@ -19,6 +20,7 @@ public class XN632711Req {
     private String remark;
 
     // GPS列表
+    @NotEmpty
     private List<XN632711ReqChild> gpsList;
 
     public String getCode() {
