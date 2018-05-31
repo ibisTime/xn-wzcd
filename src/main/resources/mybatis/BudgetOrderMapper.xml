@@ -386,6 +386,7 @@
 		,t.repay_month_amount
 		
 		,t.bank_fk_datetime
+		,t.is_advance_fund
 		,t.sale_user_id
 		,t.company_code
 		,t.apply_datetime

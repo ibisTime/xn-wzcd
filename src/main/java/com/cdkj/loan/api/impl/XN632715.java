@@ -2,7 +2,6 @@ package com.cdkj.loan.api.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.cdkj.loan.ao.IGpsAO;
 import com.cdkj.loan.ao.IGpsApplyAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
@@ -34,7 +33,7 @@ public class XN632715 extends AProcessor {
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
-            column = IGpsAO.DEFAULT_ORDER_COLUMN;
+            column = IGpsApplyAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(column, req.getOrderDir());
         int start = Integer.valueOf(req.getStart());

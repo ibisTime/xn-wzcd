@@ -183,6 +183,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setMateMobile(req.getMateMobile());
         data.setMateIdNo(req.getMateIdNo());
         data.setMateEducation(req.getMateEducation());
+        data.setMateCompanyName(req.getMateCompanyName());
         data.setMateCompanyAddress(req.getMateCompanyAddress());
         data.setMateCompanyContactNo(req.getMateCompanyContactNo());
 

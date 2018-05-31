@@ -106,6 +106,9 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             gpsBO.applyGps(gps);
         }
         gpsApplyBO.approveGpsApply(gpsApply);
+
+        // 产生物流单
+
     }
 
     @Override
