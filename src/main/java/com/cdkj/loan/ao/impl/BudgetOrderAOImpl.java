@@ -247,6 +247,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void riskApprove(String code, String approveResult,
             String approveNote, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
@@ -330,6 +331,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void interview(String code, String interviewVideo,
             String interviewContract, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
@@ -350,6 +352,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void bizChargeApprove(String code, String operator,
             String approveResult, String approveNote) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
@@ -385,6 +388,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void advanceFund(String code, String operator,
             String advanceFundDatetime, String advanceFundAmount, String billPdf) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
@@ -524,6 +528,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void commitBank(String code, String operator,
             String bankCommitDatetime, String bankCommitNote) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
@@ -552,6 +557,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void confirmLoan(XN632130Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
 
@@ -582,6 +588,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void entryFk(XN632135Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         if (!EBudgetOrderNode.ENTRYLOAN.getCode().equals(
@@ -599,6 +606,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .getRepayBankDate()));
         budgetOrder.setRepayCompanyDate(DateUtil.strToDate(
             req.getRepayCompanyDate(), DateUtil.FRONT_DATE_FORMAT_STRING));
+
+        budgetOrder
+            .setRepayFirstMonthDatetime(DateUtil.strToDate(
+                req.getRepayFirstMonthDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setRepayFirstMonthAmount(StringValidater.toLong(req
             .getRepayFirstMonthAmount()));
         budgetOrder.setRepayMonthAmount(StringValidater.toLong(req
@@ -609,19 +621,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             EBudgetOrderNode.ENTRYLOAN.getCode()).getNextNode());
         budgetOrderBO.refreshEntryFk(budgetOrder);
 
-        // 获取参考材料
-        // NodeFlow nodeFlow =
-        // nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
-        // budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
-        // String fileList = nodeFlow.getFileList();
-        // if (StringUtils.isNotBlank(fileList)) {
-        // logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-        // budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-        // preCurrentNode, nodeFlow.getNextNode(), fileList);
-        // } else {
-        // throw new BizException("xn0000", "当前节点材料清单不存在");
-        // }
-
         // 日志记录
         EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
             budgetOrder.getCurNodeCode());
@@ -631,6 +630,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void entryMortgage(String code, String operator,
             String pledgeDatetime, String greenBigSmj) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
@@ -642,11 +642,23 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-            EBudgetOrderNode.ENTRYMORTGAGE.getCode()).getNextNode());
+            preCurrentNode).getNextNode());
         budgetOrder.setPledgeDatetime(DateUtil.strToDate(pledgeDatetime,
             DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setGreenBigSmj(greenBigSmj);
         budgetOrderBO.entryMortgage(budgetOrder);
+
+        // 获取参考材料
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
+        budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+        String fileList = nodeFlow.getFileList();
+        if (StringUtils.isNotBlank(fileList)) {
+            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                preCurrentNode, nodeFlow.getNextNode(), fileList);
+        } else {
+            throw new BizException("xn0000", "当前节点材料清单不存在");
+        }
 
         // 日志记录
         EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
@@ -676,18 +688,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setRemark(pledgeBankCommitNote);
         budgetOrderBO.refreshMortgageCommitBank(budgetOrder);
 
-        // 获取参考材料
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
-        budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
-        String fileList = nodeFlow.getFileList();
-        if (StringUtils.isNotBlank(fileList)) {
-            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                preCurrentNode, nodeFlow.getNextNode(), fileList);
-        } else {
-            throw new BizException("xn0000", "当前节点材料清单不存在");
-        }
-
         // 日志记录
         EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
             budgetOrder.getCurNodeCode());
@@ -697,6 +697,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void mortgageFinish(String code, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
         if (!EBudgetOrderNode.MORTGAGEFINISH.getCode().equals(

@@ -10,19 +10,37 @@ public class XN632135Req {
     @NotBlank
     private String operator;// 操作人
 
+    @NotBlank
     private String repayBankcardNumber;// 卡号
 
+    @NotBlank
     private String repayBillDate;// 账单还款日
 
+    @NotBlank
     private String repayBankDate;// 银行还款日
 
+    @NotBlank
     private String repayCompanyDate;// 公司还款日
 
+    @NotBlank
+    private String repayFirstMonthDatetime; // 首期还款日期
+
+    @NotBlank
     private String repayFirstMonthAmount;// 首期月供金额
 
+    @NotBlank
     private String repayMonthAmount;// 每期月供金额
 
+    @NotBlank
     private String bankFkDate;// 放款日期
+
+    public String getRepayFirstMonthDatetime() {
+        return repayFirstMonthDatetime;
+    }
+
+    public void setRepayFirstMonthDatetime(String repayFirstMonthDatetime) {
+        this.repayFirstMonthDatetime = repayFirstMonthDatetime;
+    }
 
     public String getCode() {
         return code;
