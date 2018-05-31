@@ -10,7 +10,7 @@ import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632128Req;
 import com.cdkj.loan.dto.req.XN632130Req;
-import com.cdkj.loan.dto.req.XN632137Req;
+import com.cdkj.loan.dto.req.XN632135Req;
 
 @Component
 public interface IBudgetOrderAO {
@@ -64,7 +64,7 @@ public interface IBudgetOrderAO {
     public void confirmLoan(XN632130Req req);
 
     // 录入放款信息
-    public void entryLoan(XN632137Req req);
+    public void entryLoan(XN632135Req req);
 
     // 确定入档
     public void archive(String code, String operator, String enterLocation);

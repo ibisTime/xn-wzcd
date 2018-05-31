@@ -1,10 +1,10 @@
 package com.cdkj.loan.dto.req;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.validator.constraints.NotBlank;
 
-public class XN632136Req {
+public class XN632146Req {
 
-    @Autowired
+    @NotBlank
     private String code;// 编号
 
     public String getCode() {

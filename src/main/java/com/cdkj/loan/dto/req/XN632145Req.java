@@ -1,6 +1,6 @@
 package com.cdkj.loan.dto.req;
 
-public class XN632138Req extends APageReq {
+public class XN632145Req extends APageReq {
 
     /** 
      * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
@@ -18,8 +18,6 @@ public class XN632138Req extends APageReq {
     private String curNodeCode;// 当前节点编号
 
     private String isAdvanceFund;// 是否垫资
-
-    private String roleCode;// 角色编号
 
     public String getCustomerName() {
         return customerName;
@@ -67,14 +65,6 @@ public class XN632138Req extends APageReq {
 
     public void setIsAdvanceFund(String isAdvanceFund) {
         this.isAdvanceFund = isAdvanceFund;
-    }
-
-    public String getRoleCode() {
-        return roleCode;
-    }
-
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode;
     }
 
 }

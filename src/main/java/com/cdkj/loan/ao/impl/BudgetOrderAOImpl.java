@@ -38,7 +38,7 @@ import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632128Req;
 import com.cdkj.loan.dto.req.XN632130Req;
-import com.cdkj.loan.dto.req.XN632137Req;
+import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -557,7 +557,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public void entryLoan(XN632137Req req) {
+    public void entryLoan(XN632135Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
 
         if (!EBudgetOrderNode.ENTRYLOAN.getCode().equals(
