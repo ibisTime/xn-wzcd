@@ -16,6 +16,7 @@ import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.enums.EBankcard;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -143,7 +144,8 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
 
         Bankcard data = new Bankcard();
 
-        String code = OrderNoGenerater.generate("BC");
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.BANKCARD.getCode());
 
         data.setCode(code);
         data.setUserId(userId);

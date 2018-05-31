@@ -84,6 +84,18 @@ public class UserAOImpl implements IUserAO {
         creditscoreBO.changeCreditscore(xyfAccount, initialScore, userId,
             "注册获取初始信用分");
 
+        // 获取积分账户
+        Account jfAccount = accountBO.getAccountByUser(userId,
+            ECurrency.JF.getCode());
+
+        // 获取注册送积分配置
+        // BigDecimal initialScore = sysConfigBO
+        // .getBigDecimalValue(SysConstants.re);
+
+        // 加上信用分
+        // creditscoreBO.changeCreditscore(xyfAccount, initialScore, userId,
+        // "注册获取初始信用分");
+
         return userId;
     }
 

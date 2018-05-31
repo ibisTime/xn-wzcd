@@ -48,6 +48,7 @@ public class BankcardAOImpl implements IBankcardAO {
         Bankcard data = new Bankcard();
         String code = OrderNoGenerater
             .generate(EGeneratePrefix.BANKCARD.getCode());
+
         data.setCode(code);
         data.setUserId(req.getUserId());
         data.setRealName(req.getRealName());
