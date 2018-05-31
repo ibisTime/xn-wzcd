@@ -582,7 +582,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public void entryLoan(XN632135Req req) {
+    public void entryFk(XN632135Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         if (!EBudgetOrderNode.ENTRYLOAN.getCode().equals(
             budgetOrder.getCurNodeCode())) {

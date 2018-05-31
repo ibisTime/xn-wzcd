@@ -107,7 +107,7 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_gps_use" parameterType="gps">
+	<update id="update_gps_useStatus" parameterType="gps">
 		UPDATE tb_gps
 		SET
 		use_status = #{useStatus}

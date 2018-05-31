@@ -22,12 +22,15 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
-			<if test="applyUser != null and applyUser != '' ">
-				AND t.apply_user = #{applyUser}
+			<if test="type != null and type != '' ">
+				AND t.type = #{type}
 			</if>
 			<if test="companyCode != null and companyCode != '' ">
 				AND t.company_code = #{companyCode}
-			</if>	
+			</if>
+			<if test="applyUser != null and applyUser != '' ">
+				AND t.apply_user = #{applyUser}
+			</if>
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
@@ -97,6 +100,22 @@
 		SET
 		status = #{status}
 		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_gpsApply_send" parameterType="gpsApply">
+		UPDATE tb_gps_apply
+		SET
+		status = #{status}
+		,send_datetime = #{sendDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_gpsApply_receive" parameterType="gpsApply">
+		UPDATE tb_gps_apply
+		SET
+		status = #{status}
+		,receive_datetime = #{receiveDatetime}
 		WHERE code = #{code}
 	</update>
 </mapper>

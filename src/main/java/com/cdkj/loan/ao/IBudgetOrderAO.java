@@ -63,7 +63,7 @@ public interface IBudgetOrderAO {
     public void confirmLoan(XN632130Req req);
 
     // 录入放款信息
-    public void entryLoan(XN632135Req req);
+    public void entryFk(XN632135Req req);
 
     // 确定入档
     public void archive(String code, String operator, String enterLocation);
