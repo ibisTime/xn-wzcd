@@ -782,6 +782,8 @@
 		SET
 		enter_location = #{enterLocation}
 		,cur_node_code = #{curNodeCode}
+		,repay_biz_code = #{repayBizCode}
+		,apply_user_id = #{applyUserId}
 		WHERE code = #{code}
 	</update>
 </mapper>
