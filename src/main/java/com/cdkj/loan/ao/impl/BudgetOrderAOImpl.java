@@ -48,6 +48,7 @@ import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ECreditNode;
 import com.cdkj.loan.enums.EDealType;
@@ -183,6 +184,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setMateMobile(req.getMateMobile());
         data.setMateIdNo(req.getMateIdNo());
         data.setMateEducation(req.getMateEducation());
+        data.setMateCompanyName(req.getMateCompanyName());
         data.setMateCompanyAddress(req.getMateCompanyAddress());
         data.setMateCompanyContactNo(req.getMateCompanyContactNo());
 
@@ -276,6 +278,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void riskChargeApprove(String code, String operator,
             String approveResult, String approveNote) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
@@ -291,28 +294,26 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode()).getNextNode());
-
             // 生成 收回手续费
             BudgetOrderFee data = new BudgetOrderFee();
 
             data.setCompanyCode(budgetOrder.getCompanyCode());
-            data.setUserId(budgetOrder.getApplyUserName());
+            data.setUserId(budgetOrder.getSaleUserId());
             data.setShouldAmount(budgetOrder.getFee()
                     + budgetOrder.getAuthFee() + budgetOrder.getGpsFee()
                     + budgetOrder.getMonthDeposit());
-            data.setIsSettled("0");
+            data.setRealAmount(0L);
+            data.setIsSettled(EBoolean.NO.getCode());
 
-            if (null != sysUserBO.getUser(operator)) {
-                data.setUpdater(sysUserBO.getUser(operator).getRealName());
-            }
+            data.setUpdater(operator);
             data.setUpdateDatetime(new Date());
             data.setBudgetOrder(code);
             budgetOrderFeeBO.saveBudgetOrderFee(data);
+
             // 征信单回写准入单编号
             Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
             credit.setBudgetCode(budgetOrder.getCode());
             creditBO.refreshCredit(credit);
-
         } else {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode()).getBackNode());

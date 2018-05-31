@@ -47,6 +47,13 @@ public class Gps extends ABaseDO {
     // 业务编号
     private String bizCode;
 
+    /*****************/
+    // 公司编号
+    private String companyName;
+
+    // 申请人姓名
+    private String applyUserName;
+
     public String getGpsType() {
         return gpsType;
     }
@@ -133,6 +140,22 @@ public class Gps extends ABaseDO {
 
     public void setApplyCode(String applyCode) {
         this.applyCode = applyCode;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getApplyUserName() {
+        return applyUserName;
+    }
+
+    public void setApplyUserName(String applyUserName) {
+        this.applyUserName = applyUserName;
     }
 
 }
