@@ -2,6 +2,7 @@ package com.cdkj.loan.ao.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,11 +13,12 @@ import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.Logistics;
-import com.cdkj.loan.domain.User;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632150Req;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
@@ -28,7 +30,6 @@ import com.cdkj.loan.exception.BizException;
  * @since: 2018年5月29日 下午11:05:24 
  * @history:
  */
-
 @Service
 public class LogisticsAOImpl implements ILogisticsAO {
     @Autowired
@@ -48,6 +49,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Autowired
     private IGpsBO gpsBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     public void sendLogistics(XN632150Req req) {
@@ -102,12 +106,16 @@ public class LogisticsAOImpl implements ILogisticsAO {
             condition);
         List<Logistics> logisticsList = page.getList();
         for (Logistics logistics : logisticsList) {
-            User user = userBO.getUser(logistics.getUserId());
-            if (user != null) {
-                logistics.setUserName(user.getRealName());
-            }
+            initLogistics(logistics);
         }
         return page;
+    }
+
+    private void initLogistics(Logistics logistics) {
+        if (StringUtils.isNotBlank(logistics.getUserId())) {
+            SYSUser sysUser = sysUserBO.getUser(logistics.getUserId());
+            logistics.setUserName(sysUser.getRealName());
+        }
     }
 
     @Override
@@ -115,10 +123,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
         List<Logistics> logisticsList = logisticsBO
             .queryLogisticsList(condition);
         for (Logistics logistics : logisticsList) {
-            User user = userBO.getUser(logistics.getUserId());
-            if (user != null) {
-                logistics.setUserName(user.getRealName());
-            }
+            initLogistics(logistics);
         }
         return logisticsList;
     }
@@ -126,10 +131,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
     @Override
     public Logistics getLogistics(String code) {
         Logistics logistics = logisticsBO.getLogistics(code);
-        User user = userBO.getUser(logistics.getUserId());
-        if (user != null) {
-            logistics.setUserName(user.getRealName());
-        }
+        initLogistics(logistics);
 
         return logistics;
     }
