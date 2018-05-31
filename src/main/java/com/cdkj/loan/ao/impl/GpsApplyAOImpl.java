@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import com.cdkj.loan.ao.IGpsApplyAO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IGpsApplyBO;
 import com.cdkj.loan.bo.IGpsBO;
+import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.OrderNoGenerater;
@@ -47,6 +49,9 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
     @Autowired
     private IDepartmentBO departmentBO;
 
+    @Autowired
+    private ILogisticsBO logisticsBO;
+
     @Override
     public String addGpsApply(XN632710Req req) {
         GpsApply data = new GpsApply();
@@ -54,8 +59,8 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         if (null != sysUser) {
             data.setCompanyCode(sysUser.getCompanyCode());
         }
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.GPS_APPLY.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.GPS_APPLY
+            .getCode());
         data.setCode(code);
 
         data.setApplyUser(req.getApplyUser());
@@ -81,7 +86,7 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             throw new BizException("xn0000", "申领单不在待审核状态");
         }
 
-        if (null == req.getGpsList()) {
+        if (CollectionUtils.isEmpty(req.getGpsList())) {
             throw new BizException("xn0000", "GPS列表不能为空");
         }
 
@@ -133,8 +138,8 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
                 gpsApply.setUserName(sysUser.getRealName());
             }
 
-            Department department = departmentBO
-                .getDepartment(gpsApply.getCompanyCode());
+            Department department = departmentBO.getDepartment(gpsApply
+                .getCompanyCode());
             if (null != department) {
                 gpsApply.setCompanyName(department.getName());
             }
@@ -151,8 +156,8 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
                 gpsApply.setUserName(sysUser.getRealName());
             }
 
-            Department department = departmentBO
-                .getDepartment(gpsApply.getCompanyCode());
+            Department department = departmentBO.getDepartment(gpsApply
+                .getCompanyCode());
             if (null != department) {
                 gpsApply.setCompanyName(department.getName());
             }
@@ -168,8 +173,8 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             data.setUserName(sysUser.getRealName());
         }
 
-        Department department = departmentBO
-            .getDepartment(data.getCompanyCode());
+        Department department = departmentBO.getDepartment(data
+            .getCompanyCode());
         if (null != department) {
             data.setCompanyName(department.getName());
         }

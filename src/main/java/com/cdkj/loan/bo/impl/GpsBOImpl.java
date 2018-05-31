@@ -13,6 +13,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.IGpsDAO;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGpsUseStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -83,5 +84,16 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
             }
         }
         return data;
+    }
+
+    /** 
+     * @see com.cdkj.loan.bo.IGpsBO#applyLqGps(com.cdkj.loan.domain.Gps)
+     */
+    @Override
+    public void applyLqGps(String code) {
+        Gps data = new Gps();
+        data.setCode(code);
+        data.setApplyStatus(EBoolean.YES.getCode());
+        gpsDAO.updateApplyStatus(data);
     }
 }

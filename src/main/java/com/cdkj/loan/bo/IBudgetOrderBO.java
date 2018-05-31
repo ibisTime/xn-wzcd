@@ -33,19 +33,28 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public void carSettle(BudgetOrder data);
 
+    // 确认提交银行
+    public void refreshCommitBank(BudgetOrder budgetOrder);
+
+    // 录入放款信息
+    public void refreshEntryLoan(BudgetOrder budgetOrder);
+
+    // 确认放款
+    public void refreshConfirmLoan(BudgetOrder budgetOrder);
+
+    // 录入抵押信息(寄送材料)
+    public void entryMortgage(BudgetOrder data);
+
+    // 抵押确认提交银行
+    public void refreshMortgageCommitBank(BudgetOrder budgetOrder);
+
+    // 抵押完成
+    public void refreshMortgageFinish(BudgetOrder budgetOrder);
+
+    // 确认入档
     public int archiveSuccess(BudgetOrder budgetOrder, String repayBizCode,
             String userId);
 
-    public void refreshCommitBank(BudgetOrder budgetOrder);
-
-    public void refreshConfirmLoan(BudgetOrder budgetOrder);
-
-    public void refreshEntryLoan(BudgetOrder budgetOrder);
-
-    public void entryMortgage(BudgetOrder data);
-
-    public void refreshMortgageCommitBank(BudgetOrder budgetOrder);
-
-    public void refreshMortgageFinish(BudgetOrder budgetOrder);
-
+    // 物流流转
+    public void logicOrder(String code);
 }

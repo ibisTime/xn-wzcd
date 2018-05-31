@@ -10,7 +10,7 @@ import java.util.Map;
  * @history:
  */
 public enum ELogisticsType {
-    BEFORE_LOAN("1", "贷前"), AFTER_LOAN("2", "贷后");
+    BUDGET("1", "预算单"), GPS("2", "gps");
 
     public static Map<String, ELogisticsType> getAccountTypeResultMap() {
         Map<String, ELogisticsType> map = new HashMap<String, ELogisticsType>();

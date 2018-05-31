@@ -13,10 +13,10 @@ package com.cdkj.loan.enums;
  * @since: 2015-2-26 下午2:58:54 
  * @history:
  */
-public enum EButtonCode {
+public enum EDealType {
     SAVE("0", "保存"), SEND("1", "发送");
 
-    EButtonCode(String code, String value) {
+    EDealType(String code, String value) {
         this.code = code;
         this.value = value;
     }

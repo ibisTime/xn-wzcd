@@ -42,6 +42,22 @@ public class NodeFlowBOImpl extends PaginableBOImpl<NodeFlow> implements
     }
 
     @Override
+    public NodeFlow getNodeFlow(String currentNode, String nextNode) {
+        NodeFlow data = null;
+        if (StringUtils.isNotBlank(currentNode)
+                && StringUtils.isNotBlank(nextNode)) {
+            NodeFlow condition = new NodeFlow();
+            condition.setCurrentNode(currentNode);
+            condition.setNextNode(nextNode);
+            List<NodeFlow> dataList = nodeFlowDAO.selectList(condition);
+            if (CollectionUtils.isNotEmpty(dataList)) {
+                data = dataList.get(0);
+            }
+        }
+        return data;
+    }
+
+    @Override
     public NodeFlow getNodeFlowByCurrentNode(String currentNode) {
         NodeFlow data = null;
         if (StringUtils.isNotBlank(currentNode)) {

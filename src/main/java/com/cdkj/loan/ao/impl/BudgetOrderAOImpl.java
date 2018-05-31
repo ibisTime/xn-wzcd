@@ -16,6 +16,7 @@ import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILoanProductBO;
+import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
@@ -42,9 +43,10 @@ import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBudgetOrderNode;
-import com.cdkj.loan.enums.EButtonCode;
+import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.ELoanProductStatus;
+import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -70,6 +72,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private IGpsBO gpsBO;
+
+    @Autowired
+    private ILogisticsBO logisticsBO;
 
     @Autowired
     private ILoanProductBO loanProductBO;
@@ -206,7 +211,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         // 当前节点
         EBudgetOrderNode node = EBudgetOrderNode.WRITE_BUDGET_ORDER;
-        if (EButtonCode.SEND.getCode().equals(req.getDealType())) {
+        if (EDealType.SEND.getCode().equals(req.getDealType())) {
             // 下一个节点
             String nextNode = nodeFlowBO
                 .getNodeFlowByCurrentNode(
@@ -474,27 +479,47 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void carSettle(XN632128Req req) {
-        BudgetOrder data = budgetOrderBO.getBudgetOrder(req.getCode());
-        data.setCarSettleDatetime(DateUtil.strToDate(req.getCarSettleDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setCarNumber(req.getCarNumber());
-        data.setCarInvoice(req.getCarInvoice());
-        data.setCarHgz(req.getCarHgz());
-        data.setCarJqx(req.getCarJqx());
-        data.setCarSyx(req.getCarSyx());
-        data.setCarRegcerti(req.getCarRegcerti());
-        data.setCarPd(req.getCarPd());
-        data.setCarKey(req.getCarKey());
-        data.setCarBigSmj(req.getCarBigSmj());
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
 
-        EBudgetOrderNode node = EBudgetOrderNode.CARSETTLE;
-        data.setCurNodeCode(node.getCode());
-        budgetOrderBO.carSettle(data);
+        budgetOrder.setCarSettleDatetime(DateUtil.strToDate(
+            req.getCarSettleDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setCarNumber(req.getCarNumber());
+        budgetOrder.setCarInvoice(req.getCarInvoice());
+        budgetOrder.setCarHgz(req.getCarHgz());
+        budgetOrder.setCarJqx(req.getCarJqx());
+        budgetOrder.setCarSyx(req.getCarSyx());
+        budgetOrder.setCarRegcerti(req.getCarRegcerti());
+        budgetOrder.setCarPd(req.getCarPd());
+        budgetOrder.setCarKey(req.getCarKey());
+        budgetOrder.setCarBigSmj(req.getCarBigSmj());
+
+        NodeFlow nodeFlow = nodeFlowBO
+            .getNodeFlowByCurrentNode(EBudgetOrderNode.CARSETTLE.getCode());
+        budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+
+        // 车辆信息落户
+        budgetOrderBO.carSettle(budgetOrder);
+        // 获取参考材料
+        String fileList = nodeFlow.getFileList();
+        if (StringUtils.isNotBlank(fileList)) {
+            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                budgetOrder.getCode(), null,
+                EBudgetOrderNode.CARSETTLE.getCode(), nodeFlow.getNextNode(),
+                fileList);
+        } else {
+            throw new BizException("xn0000", "当前节点材料清单不存在");
+        }
 
         // 日志记录
-        sysBizLogBO.saveSYSBizLog(req.getCode(), EBizLogType.BUDGET_ORDER,
-            req.getCode(), node.getCode(), node.getValue(), req.getOperator());
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), req.getOperator());
 
     }
 
