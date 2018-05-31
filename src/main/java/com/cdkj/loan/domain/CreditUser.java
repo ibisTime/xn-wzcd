@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.List;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -47,6 +49,17 @@ public class CreditUser extends ABaseDO {
 
     // 银行征信结果
     private String bankCreditResultPdf;
+
+    // 征信人员列表
+    private List<CreditUser> creditUserList;
+
+    public List<CreditUser> getCreditUserList() {
+        return creditUserList;
+    }
+
+    public void setCreditUserList(List<CreditUser> creditUserList) {
+        this.creditUserList = creditUserList;
+    }
 
     public String getBankCreditResultPdf() {
         return bankCreditResultPdf;

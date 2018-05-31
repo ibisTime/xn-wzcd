@@ -16,6 +16,7 @@ import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IBudgetOrderFeeBO;
 import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.ICreditBO;
+import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILoanProductBO;
@@ -34,6 +35,7 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.Credit;
+import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.LoanProduct;
@@ -107,6 +109,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private IBankBO bankBO;
+
+    @Autowired
+    private ICreditUserBO creditUserBO;
 
     @Override
     @Transactional
@@ -615,6 +620,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .getRepayFirstMonthAmount()));
         budgetOrder.setRepayMonthAmount(StringValidater.toLong(req
             .getRepayMonthAmount()));
+
         budgetOrder.setBankFkDatetime(DateUtil.strToDate(req.getBankFkDate(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
@@ -643,6 +649,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         String preCurrentNode = budgetOrder.getCurNodeCode();
         budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
             preCurrentNode).getNextNode());
+
         budgetOrder.setPledgeDatetime(DateUtil.strToDate(pledgeDatetime,
             DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setGreenBigSmj(greenBigSmj);
@@ -825,4 +832,22 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         return page;
     }
 
+    @Override
+    public BudgetOrder getMoreBudget(String code) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+        List<BudgetOrderGps> budgetOrderGpsList = budgetOrderGpsBO
+            .queryBudgetOrderGpsList(code);
+
+        budgetOrder.setBudgetOrderGpsList(budgetOrderGpsList);
+
+        Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
+        CreditUser creditUser = new CreditUser();
+        creditUser.setCreditCode(credit.getCode());
+        List<CreditUser> queryCreditUserList = creditUserBO
+            .queryCreditUserList(creditUser);
+        credit.setCreditUserList(queryCreditUserList);
+
+        budgetOrder.setCredit(credit);
+        return budgetOrder;
+    }
 }

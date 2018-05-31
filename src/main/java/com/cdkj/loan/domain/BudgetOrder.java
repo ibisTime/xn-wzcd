@@ -391,6 +391,9 @@ public class BudgetOrder extends ABaseDO {
     // gps安装列表
     private List<BudgetOrderGps> budgetOrderGpsList;
 
+    // 征信列表
+    private Credit credit;
+
     // 公司名称
     private String companyName;
 
@@ -406,6 +409,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setLoanBankName(String loanBankName) {
         this.loanBankName = loanBankName;
+    }
+
+    public Credit getCredit() {
+        return credit;
+    }
+
+    public void setCredit(Credit credit) {
+        this.credit = credit;
     }
 
     public String getSaleUserName() {
