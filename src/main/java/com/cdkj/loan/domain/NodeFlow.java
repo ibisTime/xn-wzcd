@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.List;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -24,6 +26,17 @@ public class NodeFlow extends ABaseDO {
     private String fileList;// 材料清单
 
     private String remark;// 备注
+
+    // ****************db properties****************
+    private List<String> fileStrs;// 材料清单
+
+    public List<String> getFileStrs() {
+        return fileStrs;
+    }
+
+    public void setFileStrs(List<String> fileStrs) {
+        this.fileStrs = fileStrs;
+    }
 
     public String getFileList() {
         return fileList;

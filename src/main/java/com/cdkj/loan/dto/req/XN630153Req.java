@@ -1,21 +1,24 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class XN630153Req {
 
     @NotBlank
     private String id;// 序号
 
-    @NotBlank
-    private String fileList;// 材料清单
+    @NotEmpty
+    private List<String> fileStrs;// 材料清单
 
-    public String getFileList() {
-        return fileList;
+    public List<String> getFileStrs() {
+        return fileStrs;
     }
 
-    public void setFileList(String fileList) {
-        this.fileList = fileList;
+    public void setFileStrs(List<String> fileStrs) {
+        this.fileStrs = fileStrs;
     }
 
     public String getId() {
