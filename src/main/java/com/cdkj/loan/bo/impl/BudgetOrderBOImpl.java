@@ -126,16 +126,16 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     }
 
     @Override
-    public void refreshConfirmLoan(BudgetOrder data) {
+    public void refreshEntryFk(BudgetOrder data) {
         if (StringUtils.isNotBlank(data.getCode())) {
-            budgetOrderDAO.updaterConfirmLoan(data);
+            budgetOrderDAO.updaterEntryFk(data);
         }
     }
 
     @Override
-    public void refreshEntryLoan(BudgetOrder data) {
+    public void refreshConfirmReceipt(BudgetOrder data) {
         if (StringUtils.isNotBlank(data.getCode())) {
-            budgetOrderDAO.updaterEntryLoan(data);
+            budgetOrderDAO.updaterConfirmReceipt(data);
         }
     }
 

@@ -37,10 +37,10 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     public void refreshCommitBank(BudgetOrder budgetOrder);
 
     // 录入放款信息
-    public void refreshEntryLoan(BudgetOrder budgetOrder);
+    public void refreshEntryFk(BudgetOrder budgetOrder);
 
     // 确认放款
-    public void refreshConfirmLoan(BudgetOrder budgetOrder);
+    public void refreshConfirmReceipt(BudgetOrder budgetOrder);
 
     // 录入抵押信息(寄送材料)
     public void entryMortgage(BudgetOrder data);

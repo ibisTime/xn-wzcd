@@ -715,7 +715,24 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_confirm_loan" parameterType="budgetOrder">
+	<update id="update_entry_fk" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		repay_bank_code = #{repayBankCode}
+		,repay_bank_name = #{repayBankName}
+		,repay_subbranch = #{repaySubbranch}
+		,repay_bankcard_number = #{repayBankcardNumber}
+		,repay_bill_date = #{repayBillDate}
+		,repay_bank_date = #{repayBankDate}
+		,repay_company_date = #{repayCompanyDate}
+		,repay_first_month_amount = #{repayFirstMonthAmount}
+		,repay_month_amount = #{repayMonthAmount}
+		,cur_node_code = #{curNodeCode}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_confirm_receipt" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
 		receipt_bank_code = #{receiptBankCode}
@@ -724,14 +741,6 @@
 		,receipt_pdf = #{receiptPdf}
 		,receipt_remark = #{receiptRemark}
 		,cur_node_code = #{curNodeCode}
-		WHERE code = #{code}
-	</update>
-
-	<update id="update_entry_loan" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		cur_node_code = #{curNodeCode}
-		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	

@@ -29,9 +29,9 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     void updaterCommitBank(BudgetOrder data);
 
-    void updaterConfirmLoan(BudgetOrder data);
+    void updaterEntryFk(BudgetOrder data);
 
-    void updaterEntryLoan(BudgetOrder data);
+    void updaterConfirmReceipt(BudgetOrder data);
 
     void updaterEntryMortgage(BudgetOrder data);
 

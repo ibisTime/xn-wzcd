@@ -73,13 +73,13 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
     }
 
     @Override
-    public void updaterConfirmLoan(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_confirm_loan"), data);
+    public void updaterEntryFk(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_entry_fk"), data);
     }
 
     @Override
-    public void updaterEntryLoan(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_entry_loan"), data);
+    public void updaterConfirmReceipt(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_confirm_receipt"), data);
     }
 
     @Override

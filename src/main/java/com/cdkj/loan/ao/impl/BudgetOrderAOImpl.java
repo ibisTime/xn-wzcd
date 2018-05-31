@@ -545,7 +545,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setReceiptRemark(req.getReceiptRemark());
         budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
             EBudgetOrderNode.CONFIRMLOAN.getCode()).getNextNode());
-        budgetOrderBO.refreshConfirmLoan(budgetOrder);
+        budgetOrderBO.refreshConfirmReceipt(budgetOrder);
 
         // 日志记录
         EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
@@ -583,7 +583,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
             EBudgetOrderNode.ENTRYLOAN.getCode()).getNextNode());
-        budgetOrderBO.refreshEntryLoan(budgetOrder);
+        budgetOrderBO.refreshEntryFk(budgetOrder);
 
         // 日志记录
         EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
