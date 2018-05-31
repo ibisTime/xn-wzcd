@@ -566,7 +566,6 @@
 		,sale_user_id
 		,company_code
 		,apply_datetime
-		,role_code
 		,cur_node_code
 		,remark
 		)
@@ -650,7 +649,6 @@
 		,#{saleUserId}
 		,#{companyCode}
 		,#{applyDatetime}
-		,#{roleCode}
 		,#{curNodeCode}
 		,#{remark}
 		)
