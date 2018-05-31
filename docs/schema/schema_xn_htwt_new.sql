@@ -261,6 +261,7 @@ CREATE TABLE `tdq_budget_order` (
 `sale_user_id` varchar(32) DEFAULT NULL COMMENT '业务员',
 `company_code` varchar(32) DEFAULT NULL COMMENT '业务公司编号',
 `apply_datetime` DATETIME DEFAULT NULL COMMENT '申请时间',
+`role_code` varchar(32) DEFAULT NULL COMMENT '角色编号',
 `cur_node_code` varchar(32) DEFAULT NULL COMMENT '当前节点编号',
 `remark` varchar(32) DEFAULT NULL COMMENT '备注',
 PRIMARY KEY (`code`))
