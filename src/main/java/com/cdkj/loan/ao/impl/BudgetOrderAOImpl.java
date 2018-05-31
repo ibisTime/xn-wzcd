@@ -610,16 +610,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.refreshEntryFk(budgetOrder);
 
         // 获取参考材料
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
-        budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
-        String fileList = nodeFlow.getFileList();
-        if (StringUtils.isNotBlank(fileList)) {
-            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                preCurrentNode, nodeFlow.getNextNode(), fileList);
-        } else {
-            throw new BizException("xn0000", "当前节点材料清单不存在");
-        }
+        // NodeFlow nodeFlow =
+        // nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
+        // budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+        // String fileList = nodeFlow.getFileList();
+        // if (StringUtils.isNotBlank(fileList)) {
+        // logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+        // budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+        // preCurrentNode, nodeFlow.getNextNode(), fileList);
+        // } else {
+        // throw new BizException("xn0000", "当前节点材料清单不存在");
+        // }
 
         // 日志记录
         EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
@@ -656,6 +657,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void mortgageCommitBank(String code, String operator,
             String pledgeBankCommitDatetime, String pledgeBankCommitNote) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
@@ -673,6 +675,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             pledgeBankCommitDatetime, DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setRemark(pledgeBankCommitNote);
         budgetOrderBO.refreshMortgageCommitBank(budgetOrder);
+
+        // 获取参考材料
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
+        budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+        String fileList = nodeFlow.getFileList();
+        if (StringUtils.isNotBlank(fileList)) {
+            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                preCurrentNode, nodeFlow.getNextNode(), fileList);
+        } else {
+            throw new BizException("xn0000", "当前节点材料清单不存在");
+        }
 
         // 日志记录
         EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
