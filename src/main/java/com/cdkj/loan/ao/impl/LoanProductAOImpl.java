@@ -6,20 +6,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cdkj.loan.ao.IChannelBankAO;
 import com.cdkj.loan.ao.ILoanProductAO;
+import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.ILoanProductBO;
 import com.cdkj.loan.bo.base.Paginable;
-import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
-import com.cdkj.loan.domain.ChannelBank;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.LoanProduct;
 import com.cdkj.loan.dto.req.XN632170Req;
 import com.cdkj.loan.dto.req.XN632172Req;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EProductStatus;
-import com.cdkj.loan.exception.BizException;
 
 /**
  * 贷款产品
@@ -33,35 +31,27 @@ public class LoanProductAOImpl implements ILoanProductAO {
     private ILoanProductBO loanProductBO;
 
     @Autowired
-    private IChannelBankAO channelBankAOImpl;
+    private IBankBO bankBO;
 
     @Override
     public String saveLoanProduct(XN632170Req req) {
-        ChannelBank channelBank = channelBankAOImpl
-            .getChannelBank(StringValidater.toLong(req.getLoanBank()));
-        if (null == channelBank) {
-            throw new BizException("xn0000", "银行信息不存在。");
-        }
-
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.LOAN_PRODUCT.getCode());
+        // 验证产品名称是否重复
+        String code = OrderNoGenerater.generate(EGeneratePrefix.LOAN_PRODUCT
+            .getCode());
         LoanProduct data = new LoanProduct();
         data.setCode(code);
         data.setName(req.getName());
         data.setLoanBank(req.getLoanBank());
-        data.setGpsFee(
-            AmountUtil.mul(StringValidater.toLong(req.getGpsFee()), 1000L));
-        data.setAuthFee(
-            AmountUtil.mul(StringValidater.toLong(req.getAuthFee()), 1000L));
+        data.setGpsFee(StringValidater.toLong(req.getGpsFee()));
+        data.setAuthFee(StringValidater.toLong(req.getAuthFee()));
 
-        data.setFee(
-            AmountUtil.mul(StringValidater.toLong(req.getFee()), 1000L));
+        data.setFee(StringValidater.toLong(req.getFee()));
         data.setMonthRate(StringValidater.toDouble(req.getMonthRate()));
+        data.setStatus(EProductStatus.TO_PUBLISH.getCode());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
-        data.setStatus(EProductStatus.TO_PUBLISH.getCode());
-        loanProductBO.saveLoanProduct(data);
 
+        loanProductBO.saveLoanProduct(data);
         return code;
     }
 
@@ -72,23 +62,16 @@ public class LoanProductAOImpl implements ILoanProductAO {
 
     @Override
     public void editLoanProduct(XN632172Req req) {
-        ChannelBank channelBank = channelBankAOImpl
-            .getChannelBank(StringValidater.toLong(req.getLoanBank()));
-        if (null == channelBank) {
-            throw new BizException("xn0000", "银行信息不存在。");
-        }
+        // 验证产品名称是否重复
 
         LoanProduct data = new LoanProduct();
         data.setCode(req.getCode());
         data.setName(req.getName());
         data.setLoanBank(req.getLoanBank());
-        data.setGpsFee(
-            AmountUtil.mul(StringValidater.toLong(req.getGpsFee()), 1000L));
-        data.setAuthFee(
-            AmountUtil.mul(StringValidater.toLong(req.getAuthFee()), 1000L));
+        data.setGpsFee(StringValidater.toLong(req.getGpsFee()));
+        data.setAuthFee(StringValidater.toLong(req.getAuthFee()));
 
-        data.setFee(
-            AmountUtil.mul(StringValidater.toLong(req.getFee()), 1000L));
+        data.setFee(StringValidater.toLong(req.getFee()));
         data.setMonthRate(StringValidater.toDouble(req.getMonthRate()));
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
@@ -111,11 +94,9 @@ public class LoanProductAOImpl implements ILoanProductAO {
         Paginable<LoanProduct> page = loanProductBO.getPaginable(start, limit,
             condition);
         List<LoanProduct> loanProductList = page.getList();
-        ChannelBank channelBank = null;
         for (LoanProduct loanProduct : loanProductList) {
-            channelBank = channelBankAOImpl.getChannelBank(
-                StringValidater.toLong(loanProduct.getLoanBank()));
-            loanProduct.setLoanBankName(channelBank.getBankName());
+            Bank bank = bankBO.getBank(loanProduct.getLoanBank());
+            loanProduct.setLoanBankName(bank.getBankName());
         }
 
         return page;
@@ -125,12 +106,9 @@ public class LoanProductAOImpl implements ILoanProductAO {
     public List<LoanProduct> queryLoanProductList(LoanProduct condition) {
         List<LoanProduct> loanProductList = loanProductBO
             .queryLoanProductList(condition);
-        ChannelBank channelBank = null;
-
         for (LoanProduct loanProduct : loanProductList) {
-            channelBank = channelBankAOImpl.getChannelBank(
-                StringValidater.toLong(loanProduct.getLoanBank()));
-            loanProduct.setLoanBankName(channelBank.getBankName());
+            Bank bank = bankBO.getBank(loanProduct.getLoanBank());
+            loanProduct.setLoanBankName(bank.getBankName());
         }
 
         return loanProductList;
@@ -139,9 +117,8 @@ public class LoanProductAOImpl implements ILoanProductAO {
     @Override
     public LoanProduct getLoanProduct(String code) {
         LoanProduct loanProduct = loanProductBO.getLoanProduct(code);
-        ChannelBank channelBank = channelBankAOImpl
-            .getChannelBank(StringValidater.toLong(loanProduct.getLoanBank()));
-        loanProduct.setLoanBankName(channelBank.getBankName());
+        Bank bank = bankBO.getBank(loanProduct.getLoanBank());
+        loanProduct.setLoanBankName(bank.getBankName());
         return loanProduct;
     }
 }

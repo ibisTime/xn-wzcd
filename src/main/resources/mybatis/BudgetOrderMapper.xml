@@ -386,6 +386,7 @@
 		,t.repay_month_amount
 		
 		,t.bank_fk_datetime
+		,t.is_advance_fund
 		,t.sale_user_id
 		,t.company_code
 		,t.apply_datetime
@@ -467,7 +468,7 @@
 		,t.cur_node_code
 		,t.remark
 		FROM
-		tdq_budget_order t inner join tsys_role_node trn on t.cur_node_code = trn.node_code
+		tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
