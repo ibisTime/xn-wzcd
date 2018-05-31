@@ -28,13 +28,13 @@ public class NodeFlow extends ABaseDO {
     private String remark;// 备注
 
     // ****************db properties****************
-    private List<String> fileStrs;// 材料清单
+    private List<FileList> fileStrs;// 材料清单
 
-    public List<String> getFileStrs() {
+    public List<FileList> getFileStrs() {
         return fileStrs;
     }
 
-    public void setFileStrs(List<String> fileStrs) {
+    public void setFileStrs(List<FileList> fileStrs) {
         this.fileStrs = fileStrs;
     }
 

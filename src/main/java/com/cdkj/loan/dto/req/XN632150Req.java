@@ -22,11 +22,9 @@ public class XN632150Req {
     private String sendType;
 
     // 快递公司
-    @NotBlank
     private String logisticsCompany;
 
     // 快递单号
-    @NotBlank
     private String logisticsCode;
 
     // 发货时间
