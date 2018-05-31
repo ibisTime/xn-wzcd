@@ -1,31 +1,28 @@
 package com.cdkj.loan.dto.req;
 
-public class XN632135Req extends APageReq {
+import org.hibernate.validator.constraints.NotBlank;
 
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
-     */
-    private static final long serialVersionUID = 1L;
+public class XN632135Req {
 
-    private String code;// 业务编号
+    @NotBlank
+    private String code;// 编号
 
-    private String customerName;// 客户姓名
+    @NotBlank
+    private String operator;// 操作人
 
-    private String applyDatetimeStart;// 申请时间起始
+    private String repayBankcardNumber;// 卡号
 
-    private String applyDatetimeEnd;// 申请时间结束
+    private String repayBillDate;// 账单还款日
 
-    private String curNodeCode;// 当前节点编号
+    private String repayBankDate;// 银行还款日
 
-    private String isAdvanceFund;// 是否垫资
+    private String repayCompanyDate;// 公司还款日
 
-    public String getCustomerName() {
-        return customerName;
-    }
+    private String repayFirstMonthAmount;// 首期月供金额
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
+    private String repayMonthAmount;// 每期月供金额
+
+    private String bankFkDate;// 放款日期
 
     public String getCode() {
         return code;
@@ -35,36 +32,68 @@ public class XN632135Req extends APageReq {
         this.code = code;
     }
 
-    public String getCurNodeCode() {
-        return curNodeCode;
+    public String getRepayBankcardNumber() {
+        return repayBankcardNumber;
     }
 
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
+    public void setRepayBankcardNumber(String repayBankcardNumber) {
+        this.repayBankcardNumber = repayBankcardNumber;
     }
 
-    public String getApplyDatetimeStart() {
-        return applyDatetimeStart;
+    public String getRepayBillDate() {
+        return repayBillDate;
     }
 
-    public void setApplyDatetimeStart(String applyDatetimeStart) {
-        this.applyDatetimeStart = applyDatetimeStart;
+    public void setRepayBillDate(String repayBillDate) {
+        this.repayBillDate = repayBillDate;
     }
 
-    public String getApplyDatetimeEnd() {
-        return applyDatetimeEnd;
+    public String getRepayBankDate() {
+        return repayBankDate;
     }
 
-    public void setApplyDatetimeEnd(String applyDatetimeEnd) {
-        this.applyDatetimeEnd = applyDatetimeEnd;
+    public void setRepayBankDate(String repayBankDate) {
+        this.repayBankDate = repayBankDate;
     }
 
-    public String getIsAdvanceFund() {
-        return isAdvanceFund;
+    public String getRepayCompanyDate() {
+        return repayCompanyDate;
     }
 
-    public void setIsAdvanceFund(String isAdvanceFund) {
-        this.isAdvanceFund = isAdvanceFund;
+    public void setRepayCompanyDate(String repayCompanyDate) {
+        this.repayCompanyDate = repayCompanyDate;
+    }
+
+    public String getRepayFirstMonthAmount() {
+        return repayFirstMonthAmount;
+    }
+
+    public void setRepayFirstMonthAmount(String repayFirstMonthAmount) {
+        this.repayFirstMonthAmount = repayFirstMonthAmount;
+    }
+
+    public String getRepayMonthAmount() {
+        return repayMonthAmount;
+    }
+
+    public void setRepayMonthAmount(String repayMonthAmount) {
+        this.repayMonthAmount = repayMonthAmount;
+    }
+
+    public String getBankFkDate() {
+        return bankFkDate;
+    }
+
+    public void setBankFkDate(String bankFkDate) {
+        this.bankFkDate = bankFkDate;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
 }
