@@ -43,6 +43,7 @@ import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBudgetOrderNode;
+import com.cdkj.loan.enums.ECreditNode;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.ELoanProductStatus;
@@ -219,6 +220,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setCurNodeCode(node.getCode());
         String code = budgetOrderBO.saveBudgetOrder(data);
 
+        // 修改征信单节点为 征信单入档
+        if (null != credit) {
+            credit.setCurNodeCode(ECreditNode.ACHIEVE.getCode());
+            creditBO.refreshCreditNode(credit);
+        }
+
         // 日志记录
         sysBizLogBO.saveSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
             node.getCode(), node.getValue(), req.getOperator());
@@ -289,6 +296,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             data.setUpdateDatetime(new Date());
             data.setBudgetOrder(code);
             budgetOrderFeeBO.saveBudgetOrderFee(data);
+            // 征信单回写准入单编号
+            Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
+            credit.setBudgetCode(budgetOrder.getCode());
+            creditBO.refreshCredit(credit);
+
         } else {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode()).getBackNode());
