@@ -5,14 +5,16 @@
 	<resultMap id="budgetOrderFeeDetail_DB_Result" type="budgetOrderFeeDetail">
 		<result column="code" property="code" />
 		<result column="remit_type" property="remitType" />
-		<result column="remit_company_code" property="remitCompanyCode" />
 		<result column="remit_project" property="remitProject" />
 		<result column="amount" property="amount" />
-		<result column="plat_bankcard" property="platBankcard" />
+		<result column="plat_bank_card" property="platBankcard" />
+		
 		<result column="remit_user" property="remitUser" />
-		<result column="reach_datetime" property="reachDatetime" />
+		<result column="reach_datetime" property="reachDatetime" />	
 		<result column="remark" property="remark" />
 		<result column="fee_code" property="feeCode" />
+		<result column="updater" property="updater" />
+		<result column="update_datetime" property="updateDatetime" />	
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -25,14 +27,17 @@
 		SELECT
 		t.code
 		,t.remit_type
-		,t.remit_company_code
 		,t.remit_project
 		,t.amount
 		,t.plat_bankcard
+		
 		,t.remit_user
 		,t.reach_datetime
 		,t.remark
 		,t.fee_code
+		,t.updater
+		,t.update_datetime
+		
 		FROM
 		tdq_budget_order_fee_detail t
 		<include refid="where_condition" />
@@ -54,26 +59,30 @@
 		tdq_budget_order_fee_detail(
 		code
 		,remit_type
-		,remit_company_code
 		,remit_project
 		,amount
 		,plat_bankcard
+		
 		,remit_user
 		,reach_datetime
 		,remark
 		,fee_code
+		,updater
+		,update_datetime
 		)
 		VALUES(
 		#{code}
 		,#{remitType}
-		,#{remitCompanyCode}
 		,#{remitProject}
 		,#{amount}
 		,#{platBankcard}
+		
 		,#{remitUser}
 		,#{reachDatetime}
 		,#{remark}
 		,#{feeCode}
+		,#{updater}
+		,#{updateDatetime}
 		)
 	</insert>
 
@@ -85,10 +94,13 @@
 		,remit_project = #{remitProject}
 		,amount = #{amount}
 		,plat_bankcard = #{platBankcard}
+		
 		,remit_user = #{remitUser}
 		,reach_datetime = #{reachDatetime}
 		,remark = #{remark}
 		,fee_code = #{feeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>
 

@@ -47,7 +47,15 @@ public class BudgetOrderFeeDetail extends ABaseDO {
     // 手续费编号
     private String feeCode;
 
+    /**************辅助字段****************/
+
     private CollectBankcard collectBankcard;
+
+    // 是否结清
+    private String isSettled;
+
+    // 更新人
+    private String updaterRealName;
 
     public String getCode() {
         return code;
@@ -143,6 +151,22 @@ public class BudgetOrderFeeDetail extends ABaseDO {
 
     public void setCollectBankcard(CollectBankcard collectBankcard) {
         this.collectBankcard = collectBankcard;
+    }
+
+    public String getIsSettled() {
+        return isSettled;
+    }
+
+    public void setIsSettled(String isSettled) {
+        this.isSettled = isSettled;
+    }
+
+    public String getUpdaterRealName() {
+        return updaterRealName;
+    }
+
+    public void setUpdaterRealName(String updaterRealName) {
+        this.updaterRealName = updaterRealName;
     }
 
 }

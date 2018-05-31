@@ -1,5 +1,7 @@
 package com.cdkj.loan.api.impl;
 
+import java.util.Date;
+
 import com.cdkj.loan.ao.IBudgetOrderFeeDetailAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
@@ -30,15 +32,18 @@ public class XN632160 extends AProcessor {
 
         BudgetOrderFeeDetail data = new BudgetOrderFeeDetail();
         data.setRemitType(req.getRemitType());
-        data.setRemitCompanyBank(req.getRemitCompanyBank());
         data.setRemitProject(req.getRemitProject());
         data.setAmount(StringValidater.toLong(req.getAmount()));
-        data.setRemitCompanyAccount(req.getRemitCompanyAccount());
+        data.setPlatBankcard(req.getPlatBankcard());
         data.setRemitUser(req.getRemitUser());
         data.setReachDatetime(DateUtil.strToDate(req.getReachDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setRemark(req.getRemark());
         data.setFeeCode(req.getFeeCode());
+        data.setUpdater(req.getOperator());
+        data.setUpdateDatetime(new Date());
+        data.setFeeCode(req.getFeeCode());
+        data.setIsSettled(req.getIsSettled());
 
         String code = budgetOrderFeeDetailAO.addBudgetOrderFeeDetail(data);
         return new PKCodeRes(code);

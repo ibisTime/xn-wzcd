@@ -22,13 +22,9 @@ public class XN632160Req {
     @NotBlank
     private String amount;
 
-    // 汇入我司账号
+    // 平台账户
     @NotBlank
-    private String remitCompanyAccount;
-
-    // 汇入我司银行
-    @NotBlank
-    private String remitCompanyBank;
+    private String platBankcard;
 
     // 汇款人
     @NotBlank
@@ -38,8 +34,15 @@ public class XN632160Req {
     @NotBlank
     private String reachDatetime;
 
+    // 是否已结清(0 待结清 1 已结清)
+    private String isSettled;
+
     // 备注
     private String remark;
+
+    // 操作人
+    @NotBlank
+    private String operator;
 
     // 手续费编号
     @NotBlank
@@ -69,6 +72,14 @@ public class XN632160Req {
         this.amount = amount;
     }
 
+    public String getPlatBankcard() {
+        return platBankcard;
+    }
+
+    public void setPlatBankcard(String platBankcard) {
+        this.platBankcard = platBankcard;
+    }
+
     public String getRemitUser() {
         return remitUser;
     }
@@ -85,6 +96,14 @@ public class XN632160Req {
         this.reachDatetime = reachDatetime;
     }
 
+    public String getIsSettled() {
+        return isSettled;
+    }
+
+    public void setIsSettled(String isSettled) {
+        this.isSettled = isSettled;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -93,28 +112,20 @@ public class XN632160Req {
         this.remark = remark;
     }
 
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
     public String getFeeCode() {
         return feeCode;
     }
 
     public void setFeeCode(String feeCode) {
         this.feeCode = feeCode;
-    }
-
-    public String getRemitCompanyAccount() {
-        return remitCompanyAccount;
-    }
-
-    public void setRemitCompanyAccount(String remitCompanyAccount) {
-        this.remitCompanyAccount = remitCompanyAccount;
-    }
-
-    public String getRemitCompanyBank() {
-        return remitCompanyBank;
-    }
-
-    public void setRemitCompanyBank(String remitCompanyBank) {
-        this.remitCompanyBank = remitCompanyBank;
     }
 
 }
