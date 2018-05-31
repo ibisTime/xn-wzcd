@@ -35,6 +35,7 @@ public class LoanProductAOImpl implements ILoanProductAO {
 
     @Override
     public String saveLoanProduct(XN632170Req req) {
+        // 验证产品名称是否重复
         String code = OrderNoGenerater.generate(EGeneratePrefix.LOAN_PRODUCT
             .getCode());
         LoanProduct data = new LoanProduct();
@@ -61,6 +62,8 @@ public class LoanProductAOImpl implements ILoanProductAO {
 
     @Override
     public void editLoanProduct(XN632172Req req) {
+        // 验证产品名称是否重复
+
         LoanProduct data = new LoanProduct();
         data.setCode(req.getCode());
         data.setName(req.getName());
