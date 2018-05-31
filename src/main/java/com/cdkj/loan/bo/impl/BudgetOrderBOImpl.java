@@ -18,7 +18,6 @@ import com.cdkj.loan.dao.IBudgetOrderDAO;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.enums.EBizErrorCode;
-import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELogisticsType;
@@ -214,7 +213,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
 
         if (EBudgetOrderNode.DHAPPROVEDATA.getCode().equals(
-            nodeFlow.getNextNode())) {
+            nodeFlow.getCurrentNode())) {
             if (StringUtils.isNotBlank(nodeFlow.getFileList())) {
                 logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                     budgetOrder.getCode(), null, nodeFlow.getCurrentNode(),
@@ -225,11 +224,11 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         }
         budgetOrderDAO.updaterLogicNode(budgetOrder);
         // 日志记录
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
-            budgetOrder.getCurNodeCode());
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), operator);
+        // EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+        // budgetOrder.getCurNodeCode());
+        // sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+        // EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+        // currentNode.getCode(), currentNode.getValue(), operator);
     }
 
     @Override

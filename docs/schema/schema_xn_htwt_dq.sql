@@ -214,7 +214,7 @@ CREATE TABLE `tdq_budget_order_fee` (
   `is_settled` varchar(32) DEFAULT NULL COMMENT '是否已结清(0 待结清 1 已结清)',  
   `updater` varchar(255) DEFAULT NULL COMMENT '更新人',  
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(32) NOT NULL COMMENT '备注',
+  `remark` varchar(32) DEFAULT NULL COMMENT '备注',
   `budget_order` varchar(32) NOT NULL COMMENT '预算单编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
