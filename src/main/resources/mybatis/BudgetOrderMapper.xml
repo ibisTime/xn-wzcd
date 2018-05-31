@@ -144,7 +144,6 @@
 		<result column="sale_user_id" property="saleUserId" />
 		<result column="company_code" property="companyCode" />
 		<result column="apply_datetime" property="applyDatetime" />
-		<result column="role_code" property="roleCode" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="remark" property="remark" />
 	</resultMap>
@@ -155,6 +154,9 @@
 			</if>
 			<if test="repayBizCode != null and repayBizCode != '' ">
 				AND t.repay_biz_code = #{repayBizCode}
+			</if>
+			<if test="roleCode != null and roleCode != '' ">
+				AND trn.role_code = #{roleCode}
 			</if>
 			<if test="loanProductCode != null and loanProductCode != '' ">
 				AND t.loan_product_code = #{loanProductCode}
@@ -170,9 +172,6 @@
 			</if>
 			<if test="isAdvanceFund != null and isAdvanceFund != '' ">
 				AND t.is_advance_fund = #{isAdvanceFund}
-			</if>
-			<if test="roleCode != null and roleCode != '' ">
-				AND t.role_code = #{roleCode}
 			</if>
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
@@ -323,7 +322,73 @@
 		,t.sale_user_id
 		,t.company_code
 		,t.apply_datetime
-		,t.role_code
+		,t.cur_node_code
+		
+		,t.remark
+		FROM
+		tdq_budget_order t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="select_budgetOrderList" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
+		SELECT
+		t.code
+		,t.repay_biz_code
+		,t.loan_product_code
+		,t.loan_product_name
+		,t.loan_bank
+		
+		,t.gps_fee
+		,t.auth_fee
+		,t.fee
+		,t.month_rate
+		,t.credit_code
+		
+		,t.biz_type
+		,t.loan_period
+		,t.invoice_company
+		,t.car_brand
+		,t.original_price
+		
+		,t.invoice_price
+		,t.car_color
+		,t.month_deposit
+		,t.first_amount
+		,t.first_rate
+		
+		,t.loan_amount
+		,t.settle_address
+		,t.apply_user_id
+		,t.apply_user_name
+		,t.gender
+		
+		,t.id_kind
+		,t.id_no
+		,t.mobile
+		,t.car_number
+		,t.car_invoice
+		
+		,t.repay_bank_code
+		,t.repay_bank_name
+		,t.repay_subbranch
+		,t.repay_bankcard_number
+		,t.repay_bill_date
+		
+		,t.repay_bank_date
+		,t.repay_company_date
+		,t.repay_first_month_amount
+		,t.repay_first_month_datetime
+		,t.repay_month_amount
+		
+		,t.bank_fk_datetime
+		,t.sale_user_id
+		,t.company_code
+		,t.apply_datetime
 		
 		,t.cur_node_code
 		,t.remark
@@ -341,6 +406,80 @@
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tdq_budget_order t
 		<include refid="where_condition" />
+	</select>
+	
+	<select id="select_budgetOrder_byRoleCode" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
+		SELECT
+		distinct
+		t.code
+		,t.repay_biz_code
+		,t.loan_product_code
+		,t.loan_product_name
+		,t.loan_bank
+		
+		,t.gps_fee
+		,t.auth_fee
+		,t.fee
+		,t.month_rate
+		,t.credit_code
+		
+		,t.biz_type
+		,t.loan_period
+		,t.invoice_company
+		,t.car_brand
+		,t.original_price
+		
+		,t.invoice_price
+		,t.car_color
+		,t.month_deposit
+		,t.first_amount
+		,t.first_rate
+		
+		,t.loan_amount
+		,t.settle_address
+		,t.apply_user_id
+		,t.apply_user_name
+		,t.gender
+		
+		,t.id_kind
+		,t.id_no
+		,t.mobile
+		,t.car_number
+		,t.car_invoice
+		
+		,t.repay_bank_code
+		,t.repay_bank_name
+		,t.repay_subbranch
+		,t.repay_bankcard_number
+		,t.repay_bill_date
+		
+		,t.repay_bank_date
+		,t.repay_company_date
+		,t.repay_first_month_amount
+		,t.repay_first_month_datetime
+		,t.repay_month_amount
+		
+		,t.bank_fk_datetime
+		,t.sale_user_id
+		,t.company_code
+		,t.apply_datetime
+		
+		,t.cur_node_code
+		,t.remark
+		FROM
+		tdq_budget_order t inner join tsys_role_node trn on t.cur_node_code = trn.node_code
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_budgetOrder_count_byRoleCode" parameterType="budgetOrder"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM (SELECT distinct code FROM tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
+		<include refid="where_condition" />) tb
 	</select>
 
 	<insert id="insert_budgetOrder" parameterType="budgetOrder">

@@ -37,8 +37,7 @@ public interface IBudgetOrderAO {
 
     // 财务确认垫资
     public void advanceFund(String code, String operator,
-            String advanceFundDatetime, String advanceFundAmount,
-            String billPdf);
+            String advanceFundDatetime, String advanceFundAmount, String billPdf);
 
     // 安装GPS
     public void installGps(String code, String operator,
@@ -79,5 +78,8 @@ public interface IBudgetOrderAO {
 
     // 抵押完成
     public void mortgageFinish(String code, String operator);
+
+    public Paginable<BudgetOrder> queryBudgetOrderPageByRoleCode(int start,
+            int limit, BudgetOrder condition);
 
 }

@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN632148Req extends APageReq {
 
     /** 
@@ -19,6 +21,7 @@ public class XN632148Req extends APageReq {
 
     private String isAdvanceFund;// 是否垫资
 
+    @NotBlank
     private String roleCode;// 角色编号
 
     public String getCustomerName() {

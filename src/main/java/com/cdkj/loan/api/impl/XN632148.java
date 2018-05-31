@@ -46,7 +46,8 @@ public class XN632148 extends AProcessor {
         condition.setOrder(orderColumn, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
-        return budgetOrderAO.queryBudgetOrderPage(start, limit, condition);
+        return budgetOrderAO.queryBudgetOrderPageByRoleCode(start, limit,
+            condition);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.cdkj.loan.bo;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 
 public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
@@ -56,5 +57,8 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
             String userId);
 
     // 物流流转
-    public void logicOrder(String code);
+    public void logicOrder(String code, String operator);
+
+    public Paginable<BudgetOrder> getPaginableByRoleCode(int start,
+            int pageSize, BudgetOrder condition);
 }

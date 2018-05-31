@@ -585,6 +585,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             EBudgetOrderNode.ENTRYLOAN.getCode()).getNextNode());
         budgetOrderBO.refreshEntryFk(budgetOrder);
 
+        // 获取参考材料
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
+        budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+        String fileList = nodeFlow.getFileList();
+        if (StringUtils.isNotBlank(fileList)) {
+            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                budgetOrder.getCode(), null, preCurrentNode,
+                nodeFlow.getNextNode(), fileList);
+        } else {
+            throw new BizException("xn0000", "当前节点材料清单不存在");
+        }
+
         // 日志记录
         EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
             budgetOrder.getCurNodeCode());
@@ -731,6 +743,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), operator);
+    }
+
+    @Override
+    public Paginable<BudgetOrder> queryBudgetOrderPageByRoleCode(int start,
+            int limit, BudgetOrder condition) {
+        return budgetOrderBO.getPaginableByRoleCode(start, limit, condition);
     }
 
 }

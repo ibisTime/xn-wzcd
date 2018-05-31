@@ -73,24 +73,24 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Override
     @Transactional
-    public void receiveLogistics(String code, String remark) {
+    public void receiveLogistics(String code, String operator, String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
-            throw new BizException("xn0000", "资料不是待收件状态。");
+            throw new BizException("xn0000", "资料不是待收件状态!");
         }
         logisticsBO.receiveLogistics(code, remark);
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
-            budgetOrderBO.logicOrder(data.getBizCode());
+            budgetOrderBO.logicOrder(data.getBizCode(), operator);
         } else if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             gpsBO.applyLqGps(data.getBizCode());
         }
     }
 
     @Override
-    public void sendAgainLogistics(String code, String remark) {
+    public void sendAgainLogistics(String code, String operator, String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
-            throw new BizException("xn0000", "资料不是待收件状态。");
+            throw new BizException("xn0000", "资料不是待收件状态!");
         }
         logisticsBO.sendAgainLogistics(code, remark);
     }

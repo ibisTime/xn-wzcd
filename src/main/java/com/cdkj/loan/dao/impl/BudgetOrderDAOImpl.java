@@ -111,15 +111,15 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
 
     @Override
     public List<BudgetOrder> selectList(BudgetOrder condition) {
-        return super.selectList(NAMESPACE.concat("select_budgetOrder"),
+        return super.selectList(NAMESPACE.concat("select_budgetOrderList"),
             condition, BudgetOrder.class);
     }
 
     @Override
     public List<BudgetOrder> selectList(BudgetOrder condition, int start,
             int count) {
-        return super.selectList(NAMESPACE.concat("select_budgetOrder"), start,
-            count, condition, BudgetOrder.class);
+        return super.selectList(NAMESPACE.concat("select_budgetOrderList"),
+            start, count, condition, BudgetOrder.class);
     }
 
     @Override
@@ -130,6 +130,22 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
     @Override
     public void updaterLogicNode(BudgetOrder data) {
         super.update(NAMESPACE.concat("update_logic_node"), data);
+    }
+
+    @Override
+    public List<BudgetOrder> selectBudgetOrderByRoleCodeList(
+            BudgetOrder condition, int start, int count) {
+        return super.selectList(
+            NAMESPACE.concat("select_budgetOrder_byRoleCode"), start, count,
+            condition, BudgetOrder.class);
+
+    }
+
+    @Override
+    public long selectTotalCountByRoleCode(BudgetOrder condition) {
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_budgetOrder_count_byRoleCode"), condition);
+
     }
 
 }
