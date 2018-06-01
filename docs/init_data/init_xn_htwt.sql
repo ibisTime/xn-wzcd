@@ -85,7 +85,7 @@ INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`locatio
 INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201711271344255452497','banner3','2','','FjBmqZAnp0H25x5eYOclk70iI-tW','1','0',3,'1','0','','1','CD-HTWT000020','CD-HTWT000020');
 
 /* 最高权限用户admin */
-INSERT INTO `tsys_user` (`user_id`,`type`,`photo`,`login_name`,`mobile`,`login_pwd`,`login_pwd_strength`,`create_datetme`,`role_code`,`updater`,`update_datetime`,`status`,`remark`) VALUES ('USYS201800000000001','P',NULL,'admin',NULL,'21218cca77804d2ba1922c33e0151105','1',now(),'RO201800000000000001','admin',now(),'0','超级用户');
+INSERT INTO `tsys_user` (`user_id`,`type`,`photo`,`login_name`,`mobile`,`login_pwd`,`login_pwd_strength`,`create_datetme`,`role_code`,`updater`,`update_datetime`,`status`,`remark`) VALUES ('USYS201800000000001','P',NULL,'admin',NULL,'fb62579e990da4e2a8f15c3d1e123438','1',now(),'RO201800000000000001','admin',now(),'0','超级用户');
 
 /* 超级用户角色 */
 INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','超级管理员','1','admin',now(),NULL);
