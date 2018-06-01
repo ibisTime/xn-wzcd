@@ -275,7 +275,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         user.setKind(EUserKind.Customer.getCode());
         user.setMobile(mobile);
         user.setLoginName(mobile);
-        user.setLoginPwd(loginPwd);
+        user.setLoginPwd(MD5Util.md5(loginPwd));
         user.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
         user.setIdKind(idKind);
         user.setIdNo(idNo);
