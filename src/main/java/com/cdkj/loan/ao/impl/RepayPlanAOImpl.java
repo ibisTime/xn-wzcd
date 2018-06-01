@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ICostAO;
+import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.ao.IRepayPlanAO;
 import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IBankcardBO;
@@ -47,6 +48,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     @Autowired
     private IRepayBizBO repayBizBO;
+
+    @Autowired
+    private IRepayBizAO repayBizAO;
 
     @Autowired
     private ICostAO costAO;
@@ -98,7 +102,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         for (RepayPlan repayPlan : results.getList()) {
             repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
             repayPlan.setRepayBiz(
-                repayBizBO.getRepayBiz(repayPlan.getRepayBizCode()));
+                repayBizAO.getRepayBiz(repayPlan.getRepayBizCode()));
 
         }
 
