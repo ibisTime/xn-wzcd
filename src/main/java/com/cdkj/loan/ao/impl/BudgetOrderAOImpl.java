@@ -835,9 +835,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     public BudgetOrder getMoreBudget(String code) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+        initBudgetOrder(budgetOrder);
+
         List<BudgetOrderGps> budgetOrderGpsList = budgetOrderGpsBO
             .queryBudgetOrderGpsList(code);
-
         budgetOrder.setBudgetOrderGpsList(budgetOrderGpsList);
 
         Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
