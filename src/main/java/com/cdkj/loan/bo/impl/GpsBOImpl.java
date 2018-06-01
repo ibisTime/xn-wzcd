@@ -12,6 +12,7 @@ import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.IGpsDAO;
 import com.cdkj.loan.domain.Gps;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGpsApplyStatus;
@@ -39,12 +40,15 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
     }
 
     @Override
-    public void refreshApplyGps(String code, String applyUser) {
+    public void refreshApplyGps(String code, SYSUser user, String applyCode) {
         if (StringUtils.isNotBlank(code)) {
             Gps data = new Gps();
             data.setCode(code);
-            data.setApplyUser(applyUser);
+            data.setApplyCode(applyCode);
+            data.setCompanyCode(user.getCompanyCode());
+            data.setApplyUser(user.getUserId());
             data.setApplyStatus(EBoolean.YES.getCode());
+            data.setApplyDatetime(new Date());
             gpsDAO.updateApplyStatus(data);
         }
     }

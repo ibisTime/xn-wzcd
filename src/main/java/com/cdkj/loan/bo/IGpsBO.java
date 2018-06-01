@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.Gps;
+import com.cdkj.loan.domain.SYSUser;
 
 public interface IGpsBO extends IPaginableBO<Gps> {
 
@@ -13,7 +14,7 @@ public interface IGpsBO extends IPaginableBO<Gps> {
 
     public void applyLqGps(String code);
 
-    public void refreshApplyGps(String code, String applyUser);
+    public void refreshApplyGps(String code, SYSUser user, String applyCode);
 
     public void refreshUseGps(String code, String budgetOrder);
 

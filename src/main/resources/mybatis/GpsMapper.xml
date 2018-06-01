@@ -103,8 +103,11 @@
 	<update id="update_gps_applyStatus" parameterType="gps">
 		UPDATE tb_gps
 		SET
-		apply_user = #{applyUser}
+		apply_code = #{applyCode}
+		,company_code = #{companyCode}
+		,apply_user = #{applyUser}
 		,apply_status = #{applyStatus}
+		,apply_datetime = #{applyDatetime}
 		WHERE code = #{code}
 	</update>
 	

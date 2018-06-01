@@ -9,11 +9,13 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IGpsApplyBO;
 import com.cdkj.loan.bo.IGpsBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IGpsApplyDAO;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.GpsApply;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EGpsApplyStatus;
 import com.cdkj.loan.exception.BizException;
@@ -33,6 +35,9 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply> implements
 
     @Autowired
     private IGpsBO gpsBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     public boolean isGpsApplyExist(String code) {
@@ -90,7 +95,8 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply> implements
         condition.setApplyCode(code);
         List<Gps> gpsList = gpsBO.queryGpsList(condition);
         for (Gps gps : gpsList) {
-            gpsBO.refreshApplyGps(gps.getCode(), data.getApplyUser());
+            SYSUser user = sysUserBO.getUser(data.getApplyUser());
+            gpsBO.refreshApplyGps(gps.getCode(), user, code);
         }
     }
 
