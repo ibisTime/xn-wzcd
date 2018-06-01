@@ -80,8 +80,7 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply> implements
     @Override
     public void receiveGps(String code) {
         // 更新申请单，状态更新已收件
-        GpsApply data = new GpsApply();
-        data.setCode(code);
+        GpsApply data = getGpsApply(code);
         data.setStatus(EGpsApplyStatus.RECEIVED.getCode());
         data.setReceiveDatetime(new Date());
         gpsApplyDAO.updateGpsApplyReceive(data);
@@ -91,7 +90,7 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply> implements
         condition.setApplyCode(code);
         List<Gps> gpsList = gpsBO.queryGpsList(condition);
         for (Gps gps : gpsList) {
-            gpsBO.refreshApplyGps(gps.getCode());
+            gpsBO.refreshApplyGps(gps.getCode(), data.getApplyUser());
         }
     }
 

@@ -39,10 +39,11 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
     }
 
     @Override
-    public void refreshApplyGps(String code) {
+    public void refreshApplyGps(String code, String applyUser) {
         if (StringUtils.isNotBlank(code)) {
             Gps data = new Gps();
             data.setCode(code);
+            data.setApplyUser(applyUser);
             data.setApplyStatus(EBoolean.YES.getCode());
             gpsDAO.updateApplyStatus(data);
         }
