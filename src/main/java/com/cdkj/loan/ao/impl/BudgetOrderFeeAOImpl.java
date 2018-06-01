@@ -94,6 +94,8 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
                 budgetOrderFee.setUpdater(user.getRealName());
             }
 
+            SYSUser saleUser = sysUserBO.getUser(budgetOrderFee.getUserId());
+            budgetOrderFee.setUserName(saleUser.getRealName());
         }
 
         return paginable;
@@ -123,6 +125,9 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
             .getCompanyCode());
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(budgetOrderFee
             .getBudgetOrder());
+        SYSUser saleUser = sysUserBO.getUser(budgetOrderFee.getUserId());
+        budgetOrderFee.setUserName(saleUser.getRealName());
+
         // 设置贷款银行和贷款金额
         if (null != budgetOrder) {
 

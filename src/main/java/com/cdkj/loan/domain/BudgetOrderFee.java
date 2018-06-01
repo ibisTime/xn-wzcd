@@ -60,6 +60,16 @@ public class BudgetOrderFee extends ABaseDO {
 
     private String updaterRealName;
 
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getCode() {
         return code;
     }
