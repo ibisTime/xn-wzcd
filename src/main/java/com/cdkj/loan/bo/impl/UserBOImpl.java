@@ -16,6 +16,7 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IUserDAO;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -271,6 +272,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         String loginPwd = "888888";
         User user = new User();
         user.setUserId(userId);
+        user.setKind(EUserKind.Customer.getCode());
         user.setMobile(mobile);
         user.setLoginName(mobile);
         user.setLoginPwd(loginPwd);
