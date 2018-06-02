@@ -17,51 +17,56 @@ public class OverdueMenu extends ABaseDO {
     // 编号
     private String code;
 
-    // 导入日期
-    private Date importDatetime;
-
     // 客户姓名
     private String realName;
 
     // 证件号
     private String IdNo;
 
-    // 贷款银行
-    private String loanBank;
+    // 贷款银行名称
+    private String loanBankName;
 
     // 贷款金额
     private Long loanAmount;
 
     // 总期数
-    private String periods;
+    private int periods;
 
     // 剩余金额
     private Long remainAmount;
 
     // 放款日期
-    private Date loanDatetime;
+    private Date fkDatetime;
 
     // 逾期金额
     private Long overdueAmount;
 
-    // 准入单编号
-    private String budgetOrder;
-
     // 逾期日期
     private Date overdueDatetime;
 
-    // 状态
+    // 导入日期
+    private Date importDatetime;
+
+    // 导入说明
+    private String importNote;
+
+    // 状态(0 待处理 1 已处理)
     private String status;
 
-    // 垫资日期
-    private Date advanceFundDatetime;
+    // 处理说明
+    private String handleNote;
 
-    public String getCode() {
-        return code;
+    // 准入单编号
+    private String budgetOrderCode;
+
+    // ********** db properties **********
+
+    public String getHandleNote() {
+        return handleNote;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setHandleNote(String handleNote) {
+        this.handleNote = handleNote;
     }
 
     public Date getImportDatetime() {
@@ -70,6 +75,22 @@ public class OverdueMenu extends ABaseDO {
 
     public void setImportDatetime(Date importDatetime) {
         this.importDatetime = importDatetime;
+    }
+
+    public String getImportNote() {
+        return importNote;
+    }
+
+    public void setImportNote(String importNote) {
+        this.importNote = importNote;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getRealName() {
@@ -88,12 +109,12 @@ public class OverdueMenu extends ABaseDO {
         IdNo = idNo;
     }
 
-    public String getLoanBank() {
-        return loanBank;
+    public String getLoanBankName() {
+        return loanBankName;
     }
 
-    public void setLoanBank(String loanBank) {
-        this.loanBank = loanBank;
+    public void setLoanBankName(String loanBankName) {
+        this.loanBankName = loanBankName;
     }
 
     public Long getLoanAmount() {
@@ -104,11 +125,11 @@ public class OverdueMenu extends ABaseDO {
         this.loanAmount = loanAmount;
     }
 
-    public String getPeriods() {
+    public int getPeriods() {
         return periods;
     }
 
-    public void setPeriods(String periods) {
+    public void setPeriods(int periods) {
         this.periods = periods;
     }
 
@@ -120,12 +141,12 @@ public class OverdueMenu extends ABaseDO {
         this.remainAmount = remainAmount;
     }
 
-    public Date getLoanDatetime() {
-        return loanDatetime;
+    public Date getFkDatetime() {
+        return fkDatetime;
     }
 
-    public void setLoanDatetime(Date loanDatetime) {
-        this.loanDatetime = loanDatetime;
+    public void setFkDatetime(Date fkDatetime) {
+        this.fkDatetime = fkDatetime;
     }
 
     public Long getOverdueAmount() {
@@ -136,16 +157,12 @@ public class OverdueMenu extends ABaseDO {
         this.overdueAmount = overdueAmount;
     }
 
-    public String getBudgetOrder() {
-        return budgetOrder;
-    }
-
-    public void setBudgetOrder(String budgetOrder) {
-        this.budgetOrder = budgetOrder;
-    }
-
     public Date getOverdueDatetime() {
         return overdueDatetime;
+    }
+
+    public void setOverdueDatetime(Date overdueDatetime) {
+        this.overdueDatetime = overdueDatetime;
     }
 
     public String getStatus() {
@@ -156,16 +173,11 @@ public class OverdueMenu extends ABaseDO {
         this.status = status;
     }
 
-    public Date getAdvanceFundDatetime() {
-        return advanceFundDatetime;
+    public String getBudgetOrderCode() {
+        return budgetOrderCode;
     }
 
-    public void setAdvanceFundDatetime(Date advanceFundDatetime) {
-        this.advanceFundDatetime = advanceFundDatetime;
+    public void setBudgetOrderCode(String budgetOrderCode) {
+        this.budgetOrderCode = budgetOrderCode;
     }
-
-    public void setOverdueDatetime(Date overdueDatetime) {
-        this.overdueDatetime = overdueDatetime;
-    }
-
 }
