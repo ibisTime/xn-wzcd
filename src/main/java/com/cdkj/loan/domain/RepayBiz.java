@@ -140,6 +140,17 @@ public class RepayBiz extends ABaseDO {
     // 借款余额
     private Long loanBalance;
 
+    // 银行名称
+    private String loanBankName;
+
+    public String getLoanBankName() {
+        return loanBankName;
+    }
+
+    public void setLoanBankName(String loanBankName) {
+        this.loanBankName = loanBankName;
+    }
+
     public Long getLoanBalance() {
         return loanBalance;
     }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.ao.IRepayBizAO;
+import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
@@ -52,6 +53,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     @Autowired
     private ISYSConfigBO sysConfigBO;
+
+    @Autowired
+    private IBankBO bankBO;
 
     // 变更银行卡
     @Override
@@ -136,6 +140,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         }
         repayBiz.setActualRefunds(deposit);
         repayBiz.setLoanBalance(amount);
+        String bankName = bankBO.getBank(repayBiz.getLoanBank()).getBankName();
+        repayBiz.setLoanBankName(bankName);
     }
 
     // 提前还款
