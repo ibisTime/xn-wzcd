@@ -5,11 +5,11 @@ import java.util.Date;
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
- * 逾期名单
- * @author: jiafr 
- * @since: 2018年5月31日 上午1:42:41 
- * @history:
- */
+* 导入逾期名单
+* @author: CYunlai 
+* @since: 2018-06-02 17:37:07
+* @history:
+*/
 public class OverdueMenu extends ABaseDO {
 
     private static final long serialVersionUID = 1L;
@@ -21,10 +21,10 @@ public class OverdueMenu extends ABaseDO {
     private String realName;
 
     // 证件号
-    private String IdNo;
+    private String idNo;
 
-    // 贷款银行名称
-    private String loanBankName;
+    // 贷款银行
+    private String loanBankCode;
 
     // 贷款金额
     private Long loanAmount;
@@ -59,62 +59,58 @@ public class OverdueMenu extends ABaseDO {
     // 准入单编号
     private String budgetOrderCode;
 
-    // ********** db properties **********
+    /*--------辅助字段----------*/
 
-    public String getHandleNote() {
-        return handleNote;
+    private Date advanceFundDatetimeStart;// 垫资日期始
+
+    private Date advanceFundDatetimeEnd;// 垫资日期止
+
+    public Date getAdvanceFundDatetimeStart() {
+        return advanceFundDatetimeStart;
     }
 
-    public void setHandleNote(String handleNote) {
-        this.handleNote = handleNote;
+    public void setAdvanceFundDatetimeStart(Date advanceFundDatetimeStart) {
+        this.advanceFundDatetimeStart = advanceFundDatetimeStart;
     }
 
-    public Date getImportDatetime() {
-        return importDatetime;
+    public Date getAdvanceFundDatetimeEnd() {
+        return advanceFundDatetimeEnd;
     }
 
-    public void setImportDatetime(Date importDatetime) {
-        this.importDatetime = importDatetime;
-    }
-
-    public String getImportNote() {
-        return importNote;
-    }
-
-    public void setImportNote(String importNote) {
-        this.importNote = importNote;
-    }
-
-    public String getCode() {
-        return code;
+    public void setAdvanceFundDatetimeEnd(Date advanceFundDatetimeEnd) {
+        this.advanceFundDatetimeEnd = advanceFundDatetimeEnd;
     }
 
     public void setCode(String code) {
         this.code = code;
     }
 
-    public String getRealName() {
-        return realName;
+    public String getCode() {
+        return code;
     }
 
     public void setRealName(String realName) {
         this.realName = realName;
     }
 
-    public String getIdNo() {
-        return IdNo;
+    public String getRealName() {
+        return realName;
     }
 
     public void setIdNo(String idNo) {
-        IdNo = idNo;
+        this.idNo = idNo;
     }
 
-    public String getLoanBankName() {
-        return loanBankName;
+    public String getIdNo() {
+        return idNo;
     }
 
-    public void setLoanBankName(String loanBankName) {
-        this.loanBankName = loanBankName;
+    public String getLoanBankCode() {
+        return loanBankCode;
+    }
+
+    public void setLoanBankCode(String loanBankCode) {
+        this.loanBankCode = loanBankCode;
     }
 
     public Long getLoanAmount() {
@@ -165,19 +161,44 @@ public class OverdueMenu extends ABaseDO {
         this.overdueDatetime = overdueDatetime;
     }
 
-    public String getStatus() {
-        return status;
+    public Date getImportDatetime() {
+        return importDatetime;
+    }
+
+    public void setImportDatetime(Date importDatetime) {
+        this.importDatetime = importDatetime;
+    }
+
+    public void setImportNote(String importNote) {
+        this.importNote = importNote;
+    }
+
+    public String getImportNote() {
+        return importNote;
     }
 
     public void setStatus(String status) {
         this.status = status;
     }
 
-    public String getBudgetOrderCode() {
-        return budgetOrderCode;
+    public String getStatus() {
+        return status;
+    }
+
+    public void setHandleNote(String handleNote) {
+        this.handleNote = handleNote;
+    }
+
+    public String getHandleNote() {
+        return handleNote;
     }
 
     public void setBudgetOrderCode(String budgetOrderCode) {
         this.budgetOrderCode = budgetOrderCode;
     }
+
+    public String getBudgetOrderCode() {
+        return budgetOrderCode;
+    }
+
 }

@@ -228,4 +228,8 @@
 		<property name="paginableDAO" ref="budgetOrderFeeDAOImpl"/>
 	</bean>
 	
+	<bean id="overdueMenuBO" class="com.cdkj.loan.bo.impl.OverdueMenuBOImpl">
+		<property name="paginableDAO" ref="overdueMenuDAOImpl"/>
+	</bean>
+	
 </beans>

@@ -9,22 +9,26 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "budegetOrderGps";
+    private static String key = "overdueMenu";
 
     // 实体名称
-    private static String keyName = "GPS安装";
+    private static String keyName = "导入逾期名单";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdq_budeget_order_gps";
+    private static String dbname = "tdh_overdue_menu";
 
-    private static String[] DBwords = { "code", "gps_dev_no", "gps_type",
-            "az_location", "az_datetime", "az_user", "remark", "budget_order" };
+    private static String[] DBwords = { "code", "real_name", "id_no",
+            "loan_bank_name", "loan_amount", "periods", "remain_amount",
+            "fk_datetime", "overdue_amount", "overdue_datetime",
+            "import_datetime", "import_note", "status", "handle_note",
+            "budget_order_code" };
 
-    private static String[] DBwordsName = { "编号", "gps设备号", "gps类型", "安装位置",
-            "安装时间", "安装人员", "备注", "预算单编号" };
+    private static String[] DBwordsName = { "编号", "客户姓名", "证件号", "贷款银行名称",
+            "贷款金额", "总期数", "剩余金额", "放款日期", "逾期金额", "逾期日期", "导入日期", "导入说明",
+            "状态(0 待处理 1 已处理)", "处理说明", "准入单编号" };
 
     private static String[] DOwords = getDOwords();
 

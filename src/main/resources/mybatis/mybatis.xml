@@ -94,6 +94,10 @@
 		
 		<typeAlias alias="budgetOrderGps" type="com.cdkj.loan.domain.BudgetOrderGps" />
 		<typeAlias alias="gpsApply" type="com.cdkj.loan.domain.GpsApply" />
+		
+		<!-- 贷后 -->
+		<typeAlias alias="overdueMenu" type="com.cdkj.loan.domain.OverdueMenu" />
+		
 	</typeAliases>
 	
 </configuration>

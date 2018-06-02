@@ -82,6 +82,15 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         return repayPlanDAO.selectList(condition);
     }
 
+    // 当月
+    @Override
+    public RepayPlan getRepayPlanLast(RepayPlan condition) {
+        condition.setRepayStartDatetime(DateUtil.getFirstDay());
+        condition.setRepayEndDatetime(DateUtil.getLastDay());
+        return repayPlanDAO.select(condition);
+
+    }
+
     @Override
     public RepayPlan getRepayPlan(String code) {
         RepayPlan data = null;

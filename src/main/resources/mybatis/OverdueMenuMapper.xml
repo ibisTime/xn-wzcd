@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IOverdueMenuDAO">
+	<resultMap id="overdueMenu_DB_Result" type="overdueMenu">
+		<result column="code" property="code" />
+		<result column="real_name" property="realName" />
+		<result column="id_no" property="idNo" />
+		<result column="loan_bank_name" property="loanBankName" />
+		<result column="loan_amount" property="loanAmount" />
+		<result column="periods" property="periods" />
+		<result column="remain_amount" property="remainAmount" />
+		<result column="fk_datetime" property="fkDatetime" />
+		<result column="overdue_amount" property="overdueAmount" />
+		<result column="overdue_datetime" property="overdueDatetime" />
+		<result column="import_datetime" property="importDatetime" />
+		<result column="import_note" property="importNote" />
+		<result column="status" property="status" />
+		<result column="handle_note" property="handleNote" />
+		<result column="budget_order_code" property="budgetOrderCode" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_overdueMenu" parameterType="overdueMenu" resultMap="overdueMenu_DB_Result">
+		SELECT
+		t.code
+		,t.real_name
+		,t.id_no
+		,t.loan_bank_name
+		,t.loan_amount
+		,t.periods
+		,t.remain_amount
+		,t.fk_datetime
+		,t.overdue_amount
+		,t.overdue_datetime
+		,t.import_datetime
+		,t.import_note
+		,t.status
+		,t.handle_note
+		,t.budget_order_code
+		FROM
+		tdh_overdue_menu t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_overdueMenu_count" parameterType="overdueMenu"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdh_overdue_menu t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_overdueMenu" parameterType="overdueMenu">
+		INSERT INTO
+		tdh_overdue_menu(
+		code
+		,real_name
+		,id_no
+		,loan_bank_name
+		,loan_amount
+		,periods
+		,remain_amount
+		,fk_datetime
+		,overdue_amount
+		,overdue_datetime
+		,import_datetime
+		,import_note
+		,status
+		,handle_note
+		,budget_order_code
+		)
+		VALUES(
+		#{code}
+		,#{realName}
+		,#{idNo}
+		,#{loanBankName}
+		,#{loanAmount}
+		,#{periods}
+		,#{remainAmount}
+		,#{fkDatetime}
+		,#{overdueAmount}
+		,#{overdueDatetime}
+		,#{importDatetime}
+		,#{importNote}
+		,#{status}
+		,#{handleNote}
+		,#{budgetOrderCode}
+		)
+	</insert>
+
+	<update id="update_overdueMenu" parameterType="overdueMenu">
+		UPDATE tdh_overdue_menu
+		SET
+		real_name = #{realName}
+		,id_no = #{idNo}
+		,loan_bank_name = #{loanBankName}
+		,loan_amount = #{loanAmount}
+		,periods = #{periods}
+		,remain_amount = #{remainAmount}
+		,fk_datetime = #{fkDatetime}
+		,overdue_amount = #{overdueAmount}
+		,overdue_datetime = #{overdueDatetime}
+		,import_datetime = #{importDatetime}
+		,import_note = #{importNote}
+		,status = #{status}
+		,handle_note = #{handleNote}
+		,budget_order_code = #{budgetOrderCode}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>
