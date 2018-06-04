@@ -98,6 +98,7 @@
 		<typeAlias alias="regime" type="com.cdkj.loan.domain.Regime" />
 		<typeAlias alias="compCategory" type="com.cdkj.loan.domain.CompCategory" />
 		<typeAlias alias="compProduct" type="com.cdkj.loan.domain.CompProduct" />
+	    <typeAlias alias="recruitApply" type="com.cdkj.loan.domain.RecruitApply" />
 		
 		<!-- 贷后 -->
 		<typeAlias alias="overdueMenu" type="com.cdkj.loan.domain.OverdueMenu" />

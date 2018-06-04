@@ -148,3 +148,97 @@ CREATE TABLE `tp_social_relation` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '社会关系';
+
+DROP TABLE IF EXISTS `tp_recruit_apply`;
+CREATE TABLE `tp_recruit_apply` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `department_code` VARCHAR(32) NULL COMMENT '申请部门编号',
+  `position` VARCHAR(255) NULL COMMENT '招聘岗位',
+  `establish_quantity` int(11) NULL COMMENT '编制人数',
+  `now_quantity` int(11) NULL COMMENT '现有人数',
+  
+  `apply_quantity` int(11) NULL COMMENT '申请补充人数',
+  `apply_datetime` DATETIME NULL COMMENT '申请时间',
+  `require_datetime` DATETIME NULL COMMENT '需要到岗时间',
+  `replace_position` VARCHAR(255) NULL COMMENT '被替代职位',
+  `replace_real_name` VARCHAR(255) NULL COMMENT '被替代者姓名',
+  
+  `new_apply_reason` VARCHAR(255) NULL COMMENT '新申请职位原因',
+  `position_now_quantity` int(11) NULL COMMENT '该职位现有人数',
+  `position_add_reason` VARCHAR(255) NULL COMMENT '该职位增加原因',
+  `temp_start_datetime` DATETIME NULL COMMENT '临时聘用开始时间',
+  `temp_end_datetime` DATETIME NULL COMMENT '临时聘用结束时间',
+
+  `gender` VARCHAR(32) NULL COMMENT '性别',
+  `age` VARCHAR(255) NULL COMMENT '年龄',
+  `marry_state` VARCHAR(255) NULL COMMENT '婚育情况',
+  `education` VARCHAR(255) NULL COMMENT '文化程度',
+  `major` VARCHAR(255) NULL COMMENT '专业',
+  
+  `major_require` VARCHAR(255) NULL COMMENT '专业资格',
+  `ability_require` VARCHAR(255) NULL COMMENT '能力要求',
+  `experience` VARCHAR(255) NULL COMMENT '相关工作经验',
+  `status` VARCHAR(32) NULL COMMENT '状态',
+  `updater` VARCHAR(255) NULL COMMENT '更新人',
+  
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '用人申请';
+
+DROP TABLE IF EXISTS `tp_employ_apply`;
+CREATE TABLE `tp_employ_apply` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `real_name` VARCHAR(255) NULL COMMENT '姓名',
+  `gender` VARCHAR(32) NULL COMMENT '性别',
+  `birthday` VARCHAR(255) NULL COMMENT '出生年月',
+  `native_place` VARCHAR(255) NULL COMMENT '籍贯',
+  
+  `nation` VARCHAR(255) NULL COMMENT '民族',
+  `position` VARCHAR(255) NULL COMMENT '应聘岗位',
+  `education` VARCHAR(255) NULL COMMENT '文化程度',
+  `id_no` VARCHAR(255) NULL COMMENT '身份证号码',
+  `contact_mobile` VARCHAR(255) NULL COMMENT '联系电话',
+  
+  `residence_address` VARCHAR(255) NULL COMMENT '户籍所在地',
+  `speciality` VARCHAR(255) NULL COMMENT '特长技能',
+  `expect_salary` VARCHAR(255) NULL COMMENT '期望薪资',
+  `now_address` VARCHAR(255) NULL COMMENT '现居住地址',
+  `emergency_contact` VARCHAR(255) NULL COMMENT '紧急联系人',
+  
+  `emergency_contact_mobile` VARCHAR(255) NULL COMMENT '紧急联系号码',
+  `postcode` VARCHAR(255) NULL COMMENT '邮编',
+  `award` VARCHAR(255) NULL COMMENT '受过何种奖励或专业训练',
+  `is_out` char(1) NULL COMMENT '能否出差',
+  `is_adjust_work` char(1) NULL COMMENT '能否接受工作调动',
+  
+  `is_once_recruited` VARCHAR(255) NULL COMMENT '是否曾在我公司应聘',
+  `is_friend_work` VARCHAR(255) NULL COMMENT '是否有亲属或朋友在我司工作',
+  `updater` VARCHAR(255) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '应聘岗位';
+
+DROP TABLE IF EXISTS `tp_word_experience`;
+CREATE TABLE `tp_word_experience` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `parent_code` VARCHAR(32) NULL COMMENT '父级编号',
+  `start_datetime` DATETIME NULL COMMENT '起始时间',
+  `end_datetime` DATETIME NULL COMMENT '截止时间',
+  `company_name` VARCHAR(255) NULL COMMENT '工作单位',
+  
+  `position` VARCHAR(255) NULL COMMENT '职位',
+  `leave_reason` VARCHAR(255) NULL COMMENT '离职原因',
+  `prover` VARCHAR(255) NULL COMMENT '证明人',
+  `prover_mobile` VARCHAR(255) NULL COMMENT '证明人联系电话',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '工作经历';
+
+
