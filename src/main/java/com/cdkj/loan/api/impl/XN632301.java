@@ -4,7 +4,7 @@ import com.cdkj.loan.ao.IOverdueMenuAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN632300Req;
+import com.cdkj.loan.dto.req.XN632301Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
@@ -20,18 +20,19 @@ public class XN632301 extends AProcessor {
     private IOverdueMenuAO overdueMenuAO = SpringContextHolder
         .getBean(IOverdueMenuAO.class);
 
-    private XN632300Req req = null;
+    private XN632301Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-
+        overdueMenuAO.handleOverdueMenu(req.getCode(),
+            req.getBudgetOrderCode());
         return new BooleanRes(true);
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632300Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632301Req.class);
         ObjValidater.validateReq(req);
     }
 

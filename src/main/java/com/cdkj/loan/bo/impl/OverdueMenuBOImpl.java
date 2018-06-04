@@ -11,6 +11,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IOverdueMenuDAO;
 import com.cdkj.loan.domain.OverdueMenu;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -65,7 +66,8 @@ public class OverdueMenuBOImpl extends PaginableBOImpl<OverdueMenu>
             condition.setCode(code);
             data = overdueMenuDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "逾期名单编号不存在!");
             }
         }
         return data;

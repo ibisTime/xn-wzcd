@@ -164,6 +164,24 @@
 			<if test="applyUserId != null and applyUserId != '' ">
 				AND t.apply_user_id = #{applyUserId}
 			</if>
+			<if test="applyUserName != null and applyUserName != '' ">
+				AND t.apply_user_name = #{applyUserName}
+			</if>
+			<if test="idNo != null and idNo != '' ">
+				AND t.id_no = #{idNo}
+			</if>
+			<if test="loanBank != null and loanBank != '' ">
+				AND t.loan_bank = #{loanBank}
+			</if>
+			<if test="loanAmount != null and loanAmount != '' ">
+				AND t.loan_amount = #{loanAmount}
+			</if>
+			<if test="loanPeriod != null and loanPeriod != '' ">
+				AND t.loan_period = #{loanPeriod}
+			</if>
+			<if test="bankFkDatetime != null and bankFkDatetime != '' ">
+				AND t.bank_fk_datetime = #{bankFkDatetime}
+			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
 				<![CDATA[AND t.apply_datetime > #{applyDatetimeStart}]]>
 			</if>
