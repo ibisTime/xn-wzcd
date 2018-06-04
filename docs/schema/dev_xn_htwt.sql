@@ -215,7 +215,7 @@ CREATE TABLE `tdq_budget_order` (
   `mate_zfb_jour_balance` bigint(20) DEFAULT NULL COMMENT '配偶支付宝帐户余额',
   `mate_zfb_jour_month_income` bigint(20) DEFAULT NULL COMMENT '配偶支付宝月均收入',
   `mate_zfb_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '配偶支付宝月均支出',
-  `mate_zfb_jour_pic` text DEFAULT NULL COMMENT '配偶支付宝流水图片',
+  `mate_zfb_jour_pic` text  COMMENT '配偶支付宝流水图片',
   `mate_zfb_jour_remark` varchar(255) DEFAULT NULL COMMENT '配偶支付宝流水备注',
   
   `mate_wx_jour_datetime_start` datetime DEFAULT NULL COMMENT '配偶微信流水时间起',
@@ -225,7 +225,7 @@ CREATE TABLE `tdq_budget_order` (
   `mate_wx_jour_balance` bigint(20) DEFAULT NULL COMMENT '配偶微信帐户余额',
   `mate_wx_jour_month_income` bigint(20) DEFAULT NULL COMMENT '配偶微信月均收入',
   `mate_wx_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '配偶微信月均支出',
-  `mate_wx_jour_pic` text DEFAULT NULL COMMENT '配偶微信流水图片',
+  `mate_wx_jour_pic` text  COMMENT '配偶微信流水图片',
   `mate_wx_jour_remark` varchar(255) DEFAULT NULL COMMENT '配偶微信流水备注',
   
   `mate_jour_datetime_start` datetime DEFAULT NULL COMMENT '配偶流水时间起',
@@ -235,9 +235,9 @@ CREATE TABLE `tdq_budget_order` (
   `mate_jour_balance` bigint(20) DEFAULT NULL COMMENT '配偶帐户余额',
   `mate_jour_month_income` bigint(20) DEFAULT NULL COMMENT '配偶月均收入',
   `mate_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '配偶月均支出',
-  `mate_jour_pic` text DEFAULT NULL COMMENT '配偶流水图片',
+  `mate_jour_pic` text  COMMENT '配偶流水图片',
   `mate_jour_remark` varchar(255) DEFAULT NULL COMMENT '配偶流水备注',
-  `mate_asset_pdf` text DEFAULT NULL COMMENT '配偶资产资料pdf',
+  `mate_asset_pdf` text  COMMENT '配偶资产资料pdf',
   
   `gua_name` varchar(255) DEFAULT NULL COMMENT '担保人姓名',
   `gua_mobile` varchar(255) DEFAULT NULL COMMENT '担保人手机号',
@@ -254,7 +254,7 @@ CREATE TABLE `tdq_budget_order` (
   `gua_zfb_jour_balance` bigint(20) DEFAULT NULL COMMENT '担保人支付宝帐户余额',
   `gua_zfb_jour_month_income` bigint(20) DEFAULT NULL COMMENT '担保人支付宝月均收入',
   `gua_zfb_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '担保人支付宝月均支出',
-  `gua_zfb_jour_pic` text DEFAULT NULL COMMENT '担保人支付宝流水图片',
+  `gua_zfb_jour_pic` text  COMMENT '担保人支付宝流水图片',
   `gua_zfb_jour_remark` varchar(255) DEFAULT NULL COMMENT '担保人支付宝流水备注',
   
   `gua_wx_jour_datetime_start` datetime DEFAULT NULL COMMENT '担保人微信流水时间起',
@@ -264,7 +264,7 @@ CREATE TABLE `tdq_budget_order` (
   `gua_wx_jour_balance` bigint(20) DEFAULT NULL COMMENT '担保人微信帐户余额',
   `gua_wx_jour_month_income` bigint(20) DEFAULT NULL COMMENT '担保人微信月均收入',
   `gua_wx_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '担保人微信月均支出',
-  `gua_wx_jour_pic` text DEFAULT NULL COMMENT '担保人微信流水图片',
+  `gua_wx_jour_pic` text  COMMENT '担保人微信流水图片',
   `gua_wx_jour_remark` varchar(255) DEFAULT NULL COMMENT '担保人微信流水备注',
   
   `gua_jour_datetime_start` datetime DEFAULT NULL COMMENT '担保人流水时间起',
@@ -274,9 +274,9 @@ CREATE TABLE `tdq_budget_order` (
   `gua_jour_balance` bigint(20) DEFAULT NULL COMMENT '担保人帐户余额',
   `gua_jour_month_income` bigint(20) DEFAULT NULL COMMENT '担保人月均收入',
   `gua_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '担保人月均支出',
-  `gua_jour_pic` text DEFAULT NULL COMMENT '担保人流水图片',
+  `gua_jour_pic` text  COMMENT '担保人流水图片',
   `gua_jour_remark` varchar(255) DEFAULT NULL COMMENT '担保人流水备注',
-  `gua_asset_pdf` text DEFAULT NULL COMMENT '担保人资产资料pdf',
+  `gua_asset_pdf` text  COMMENT '担保人资产资料pdf',
   
   `emergency_name1` varchar(255) DEFAULT NULL COMMENT '家庭紧急联系人信息1 姓名',
   `emergency_relation1` varchar(255) DEFAULT NULL COMMENT '家庭紧急联系人信息1 与申请人关系',
@@ -292,7 +292,7 @@ CREATE TABLE `tdq_budget_order` (
   `zfb_jour_balance` bigint(20) DEFAULT NULL COMMENT '支付宝帐户余额',
   `zfb_jour_month_income` bigint(20) DEFAULT NULL COMMENT '支付宝月均收入',
   `zfb_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '支付宝月均支出',
-  `zfb_jour_pic` text DEFAULT NULL COMMENT '支付宝流水图片',
+  `zfb_jour_pic` text  COMMENT '支付宝流水图片',
   `zfb_jour_remark` varchar(255) DEFAULT NULL COMMENT '支付宝流水备注',
   
   `wx_jour_datetime_start` datetime DEFAULT NULL COMMENT '微信流水时间起',
@@ -302,7 +302,7 @@ CREATE TABLE `tdq_budget_order` (
   `wx_jour_balance` bigint(20) DEFAULT NULL COMMENT '微信帐户余额',
   `wx_jour_month_income` bigint(20) DEFAULT NULL COMMENT '微信月均收入',
   `wx_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '微信月均支出',
-  `wx_jour_pic` text DEFAULT NULL COMMENT '微信流水图片',
+  `wx_jour_pic` text  COMMENT '微信流水图片',
   `wx_jour_remark` varchar(255) DEFAULT NULL COMMENT '微信流水备注',
   
   `jour_datetime_start` datetime DEFAULT NULL COMMENT '流水时间起',
@@ -312,9 +312,9 @@ CREATE TABLE `tdq_budget_order` (
   `jour_balance` bigint(20) DEFAULT NULL COMMENT '帐户余额',
   `jour_month_income` bigint(20) DEFAULT NULL COMMENT '月均收入',
   `jour_month_expend` bigint(20) DEFAULT NULL COMMENT '月均支出',
-  `jour_pic` text DEFAULT NULL COMMENT '流水图片',
+  `jour_pic` text  COMMENT '流水图片',
   `jour_remark` varchar(255) DEFAULT NULL COMMENT '流水备注',
-  `asset_pdf` text DEFAULT NULL COMMENT '资产资料pdf',
+  `asset_pdf` text COMMENT '资产资料pdf',
   
   `house_contract` varchar(255) DEFAULT NULL COMMENT '购房合同',
   `house_picture` varchar(255) DEFAULT NULL COMMENT '房屋照片',
