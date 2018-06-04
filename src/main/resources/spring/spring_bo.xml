@@ -244,4 +244,8 @@
 		<property name="paginableDAO" ref="compCategoryDAOImpl"/>
 	</bean>
 	
+	<bean id="compProductBO" class="com.cdkj.loan.bo.impl.CompProductBOImpl">
+		<property name="paginableDAO" ref="compProductDAOImpl"/>
+	</bean>
+	
 </beans>
