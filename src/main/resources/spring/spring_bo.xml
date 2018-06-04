@@ -248,4 +248,8 @@
 		<property name="paginableDAO" ref="compProductDAOImpl"/>
 	</bean>
 	
+	<bean id="recruitApplyBO" class="com.cdkj.loan.bo.impl.RecruitApplyBOImpl">
+		<property name="paginableDAO" ref="recruitApplyDAOImpl"/>
+	</bean>
+	
 </beans>

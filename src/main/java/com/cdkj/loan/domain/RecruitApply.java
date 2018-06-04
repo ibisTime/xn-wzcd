@@ -95,6 +95,28 @@ public class RecruitApply extends ABaseDO {
     // 备注
     private String remark;
 
+    /**-----辅助字段------**/
+
+    private Date applyDatetimeStart;// 申请时间起
+
+    private Date applyDatetimeEnd;// 申请时间止
+
+    public Date getApplyDatetimeStart() {
+        return applyDatetimeStart;
+    }
+
+    public void setApplyDatetimeStart(Date applyDatetimeStart) {
+        this.applyDatetimeStart = applyDatetimeStart;
+    }
+
+    public Date getApplyDatetimeEnd() {
+        return applyDatetimeEnd;
+    }
+
+    public void setApplyDatetimeEnd(Date applyDatetimeEnd) {
+        this.applyDatetimeEnd = applyDatetimeEnd;
+    }
+
     public String getCode() {
         return code;
     }

@@ -4,33 +4,35 @@ import com.cdkj.loan.ao.IRecruitApplyAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN632480Req;
-import com.cdkj.loan.dto.res.PKCodeRes;
+import com.cdkj.loan.dto.req.XN632481Req;
+import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 用人申请
+ * 用人审核
  * @author: CYL 
  * @since: 2018年6月5日 上午12:27:48 
  * @history:
  */
-public class XN632480 extends AProcessor {
+public class XN632481 extends AProcessor {
     private IRecruitApplyAO recruitApplyAO = SpringContextHolder
         .getBean(IRecruitApplyAO.class);
 
-    private XN632480Req req = null;
+    private XN632481Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        return new PKCodeRes(recruitApplyAO.addRecruitApply(req));
+        recruitApplyAO.auditRecruitApply(req.getCode(), req.getApproveResult(),
+            req.getUpdater(), req.getRemark());
+        return new BooleanRes(true);
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632480Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632481Req.class);
         ObjValidater.validateReq(req);
     }
 

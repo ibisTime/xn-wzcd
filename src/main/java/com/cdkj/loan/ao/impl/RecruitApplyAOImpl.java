@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,8 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.RecruitApply;
 import com.cdkj.loan.dto.req.XN632480Req;
-import com.cdkj.loan.exception.BizException;
+import com.cdkj.loan.enums.EApproveResult;
+import com.cdkj.loan.enums.ERecruitApplyStatus;
 
 @Service
 public class RecruitApplyAOImpl implements IRecruitApplyAO {
@@ -34,28 +36,44 @@ public class RecruitApplyAOImpl implements IRecruitApplyAO {
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setRequireDatetime(DateUtil.strToDate(req.getRequireDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setReplacePosition(req.getReplacePosition());
         data.setReplaceRealName(req.getReplaceRealName());
         data.setNewApplyReason(req.getNewApplyReason());
         data.setPositionNowQuantity(
             StringValidater.toInteger(req.getPositionNowQuantity()));
         data.setPositionAddReason(req.getPositionAddReason());
+        data.setTempStartDatetime(DateUtil.strToDate(req.getTempStartDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setTempEndDatetime(DateUtil.strToDate(req.getTempEndDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setGender(req.getGender());
+        data.setAge(req.getAge());
+        data.setMarryState(req.getMarryState());
+        data.setEducation(req.getEducation());
+        data.setMajor(req.getMajor());
+        data.setMajorRequire(req.getMajorRequire());
+        data.setAbilityRequire(req.getAbilityRequire());
+        data.setExperience(req.getExperience());
+        data.setStatus(ERecruitApplyStatus.STAY_AUDIT.getCode());
+        data.setUpdater(req.getUpdater());
+        data.setUpdateDatetime(new Date());
+        data.setRemark(req.getRemark());
         return recruitApplyBO.saveRecruitApply(data);
     }
 
     @Override
-    public int editRecruitApply(RecruitApply data) {
-        if (!recruitApplyBO.isRecruitApplyExist(data.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+    public void auditRecruitApply(String code, String approveResult,
+            String updater, String remark) {
+        RecruitApply condition = recruitApplyBO.getRecruitApply(code);
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            condition.setStatus(ERecruitApplyStatus.AUDIT_PASS.getCode());
+        } else {
+            condition.setStatus(ERecruitApplyStatus.AUDIT_NOT_PASS.getCode());
         }
-        return recruitApplyBO.refreshRecruitApply(data);
-    }
-
-    @Override
-    public int dropRecruitApply(String code) {
-        if (!recruitApplyBO.isRecruitApplyExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
-        }
-        return recruitApplyBO.removeRecruitApply(code);
+        condition.setUpdater(updater);
+        condition.setUpdateDatetime(new Date());
+        condition.setRemark(remark);
+        recruitApplyBO.auditRecruitApply(condition);
     }
 
     @Override
@@ -73,4 +91,5 @@ public class RecruitApplyAOImpl implements IRecruitApplyAO {
     public RecruitApply getRecruitApply(String code) {
         return recruitApplyBO.getRecruitApply(code);
     }
+
 }

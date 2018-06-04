@@ -76,9 +76,6 @@ public class XN632480Req {
     // 相关工作经验
     private String experience;
 
-    // 状态
-    private String status;
-
     // 更新人
     private String updater;
 
@@ -259,14 +256,6 @@ public class XN632480Req {
 
     public void setExperience(String experience) {
         this.experience = experience;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getUpdater() {

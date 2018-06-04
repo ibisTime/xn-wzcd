@@ -103,6 +103,7 @@
 		<!-- 贷后 -->
 		<typeAlias alias="overdueMenu" type="com.cdkj.loan.domain.OverdueMenu" />
 		
+		<typeAlias alias="recruitApply" type="com.cdkj.loan.domain.RecruitApply" />
 	</typeAliases>
 	
 </configuration>
