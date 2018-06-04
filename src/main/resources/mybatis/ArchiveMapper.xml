@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IArchiveDAO">
+	<resultMap id="Archive_DB_Result" type="Archive">
+		<result column="code" property="code" />
+		<result column="realName" property="realName" />
+		<result column="idNo" property="idNo" />
+		<result column="mobile" property="mobile" />
+		<result column="jobNo" property="jobNo" />
+		<result column="entryDatetime" property="entryDatetime" />
+		<result column="departmentCode" property="departmentCode" />
+		<result column="postCode" property="postCode" />
+		<result column="jobClasses" property="jobClasses" />
+		<result column="birthday" property="birthday" />
+		<result column="gender" property="gender" />
+		<result column="nation" property="nation" />
+		<result column="nativePlace" property="nativePlace" />
+		<result column="marryStatus" property="marryStatus" />
+		<result column="politics" property="politics" />
+		<result column="major" property="major" />
+		<result column="education" property="education" />
+		<result column="workStatus" property="workStatus" />
+		<result column="health" property="health" />
+		<result column="salaryCard" property="salaryCard" />
+		<result column="bankName" property="bankName" />
+		<result column="subbranch" property="subbranch" />
+		<result column="fiveInsuranceInfo" property="fiveInsuranceInfo" />
+		<result column="residenceAddress" property="residenceAddress" />
+		<result column="residenceProperty" property="residenceProperty" />
+		<result column="socialSecurityRegDatetime" property="socialSecurityRegDatetime" />
+		<result column="currentAddress" property="currentAddress" />
+		<result column="emergencyContact" property="emergencyContact" />
+		<result column="emergencyContactMobile" property="emergencyContactMobile" />
+		<result column="contractDeadline" property="contractDeadline" />
+		<result column="contractType" property="contractType" />
+		<result column="probationTime" property="probationTime" />
+		<result column="convertDatetime" property="convertDatetime" />
+		<result column="leaveDatetime" property="leaveDatetime" />
+		<result column="leaveReason" property="leaveReason" />
+		<result column="heirPeople" property="heirPeople" />
+		<result column="entranceNo" property="entranceNo" />
+		<result column="checkNo" property="checkNo" />
+		<result column="carNo" property="carNo" />
+		<result column="idNoPdf" property="idNoPdf" />
+		<result column="photo" property="photo" />
+		<result column="wechat" property="wechat" />
+		<result column="qq" property="qq" />
+		<result column="performSalaryStandard" property="performSalaryStandard" />
+		<result column="quarterlyAwardStandard" property="quarterlyAwardStandard" />
+		<result column="commumicationFeeStandard" property="commumicationFeeStandard" />
+		<result column="provincialBedStandard" property="provincialBedStandard" />
+		<result column="noProvincialBedStandard" property="noProvincialBedStandard" />
+		<result column="trafficAward" property="trafficAward" />
+		<result column="mobileAward" property="mobileAward" />
+		<result column="taxiWard" property="taxiWard" />
+		<result column="mealAward" property="mealAward" />
+		<result column="workingYears" property="workingYears" />
+		<result column="status" property="status" />
+		<result column="updater" property="updater" />
+		<result column="updateDatetime" property="updateDatetime" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="realName != null and realName != '' ">
+				AND t.real_name = #{realName}
+			</if>
+			<if test="departmentCode != null and departmentCode != '' ">
+				AND t.department_code = #{departmentCode}
+			</if>
+			<if test="postCode != null and postCode != '' ">
+				AND t.post_code = #{postCode}
+			</if>
+			<if test="workStatus != null and workStatus != '' ">
+				AND t.work_status = #{workStatus}
+			</if>
+			<if test="entryDatetimeStart != null and entryDatetimeStart != '' ">
+				AND t.entryDatetime &gt;= #{entryDatetimeStart}
+			</if>
+			<if test="entryDatetimeEnd != null and entryDatetimeEnd != '' ">
+				AND t.entryDatetime &lt;= #{entryDatetimeEnd}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_archive" parameterType="Archive" resultMap="Archive_DB_Result">
+		SELECT
+		t.code
+		,t.realName
+		,t.idNo
+		,t.mobile
+		,t.jobNo
+		,t.entryDatetime
+		,t.departmentCode
+		,t.postCode
+		,t.jobClasses
+		,t.birthday
+		,t.gender
+		,t.nation
+		,t.nativePlace
+		,t.marryStatus
+		,t.politics
+		,t.major
+		,t.education
+		,t.workStatus
+		,t.health
+		,t.salaryCard
+		,t.bankName
+		,t.subbranch
+		,t.fiveInsuranceInfo
+		,t.residenceAddress
+		,t.residenceProperty
+		,t.socialSecurityRegDatetime
+		,t.currentAddress
+		,t.emergencyContact
+		,t.emergencyContactMobile
+		,t.contractDeadline
+		,t.contractType
+		,t.probationTime
+		,t.convertDatetime
+		,t.leaveDatetime
+		,t.leaveReason
+		,t.heirPeople
+		,t.entranceNo
+		,t.checkNo
+		,t.carNo
+		,t.idNoPdf
+		,t.photo
+		,t.wechat
+		,t.qq
+		,t.performSalaryStandard
+		,t.quarterlyAwardStandard
+		,t.commumicationFeeStandard
+		,t.provincialBedStandard
+		,t.noProvincialBedStandard
+		,t.trafficAward
+		,t.mobileAward
+		,t.taxiWard
+		,t.mealAward
+		,t.workingYears
+		,t.status
+		,t.updater
+		,t.updateDatetime
+		,t.remark
+		FROM
+		tp_archive t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_archive_count" parameterType="Archive"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tp_archive t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_archive" parameterType="Archive">
+		INSERT INTO
+		tp_archive(
+		code
+		,realName
+		,idNo
+		,mobile
+		,jobNo
+		,entryDatetime
+		,departmentCode
+		,postCode
+		,jobClasses
+		,birthday
+		,gender
+		,nation
+		,nativePlace
+		,marryStatus
+		,politics
+		,major
+		,education
+		,workStatus
+		,health
+		,salaryCard
+		,bankName
+		,subbranch
+		,fiveInsuranceInfo
+		,residenceAddress
+		,residenceProperty
+		,socialSecurityRegDatetime
+		,currentAddress
+		,emergencyContact
+		,emergencyContactMobile
+		,contractDeadline
+		,contractType
+		,probationTime
+		,convertDatetime
+		,leaveDatetime
+		,leaveReason
+		,heirPeople
+		,entranceNo
+		,checkNo
+		,carNo
+		,idNoPdf
+		,photo
+		,wechat
+		,qq
+		,performSalaryStandard
+		,quarterlyAwardStandard
+		,commumicationFeeStandard
+		,provincialBedStandard
+		,noProvincialBedStandard
+		,trafficAward
+		,mobileAward
+		,taxiWard
+		,mealAward
+		,workingYears
+		,status
+		,updater
+		,updateDatetime
+		,remark
+		)
+		VALUES(
+		#{code}
+		,#{realName}
+		,#{idNo}
+		,#{mobile}
+		,#{jobNo}
+		,#{entryDatetime}
+		,#{departmentCode}
+		,#{postCode}
+		,#{jobClasses}
+		,#{birthday}
+		,#{gender}
+		,#{nation}
+		,#{nativePlace}
+		,#{marryStatus}
+		,#{politics}
+		,#{major}
+		,#{education}
+		,#{workStatus}
+		,#{health}
+		,#{salaryCard}
+		,#{bankName}
+		,#{subbranch}
+		,#{fiveInsuranceInfo}
+		,#{residenceAddress}
+		,#{residenceProperty}
+		,#{socialSecurityRegDatetime}
+		,#{currentAddress}
+		,#{emergencyContact}
+		,#{emergencyContactMobile}
+		,#{contractDeadline}
+		,#{contractType}
+		,#{probationTime}
+		,#{convertDatetime}
+		,#{leaveDatetime}
+		,#{leaveReason}
+		,#{heirPeople}
+		,#{entranceNo}
+		,#{checkNo}
+		,#{carNo}
+		,#{idNoPdf}
+		,#{photo}
+		,#{wechat}
+		,#{qq}
+		,#{performSalaryStandard}
+		,#{quarterlyAwardStandard}
+		,#{commumicationFeeStandard}
+		,#{provincialBedStandard}
+		,#{noProvincialBedStandard}
+		,#{trafficAward}
+		,#{mobileAward}
+		,#{taxiWard}
+		,#{mealAward}
+		,#{workingYears}
+		,#{status}
+		,#{updater}
+		,#{updateDatetime}
+		,#{remark}
+		)
+	</insert>
+
+	<update id="update_archive" parameterType="Archive">
+		UPDATE tp_archive
+		SET
+		realName = #{realName}
+		,idNo = #{idNo}
+		,mobile = #{mobile}
+		,jobNo = #{jobNo}
+		,entryDatetime = #{entryDatetime}
+		,departmentCode = #{departmentCode}
+		,postCode = #{postCode}
+		,jobClasses = #{jobClasses}
+		,birthday = #{birthday}
+		,gender = #{gender}
+		,nation = #{nation}
+		,nativePlace = #{nativePlace}
+		,marryStatus = #{marryStatus}
+		,politics = #{politics}
+		,major = #{major}
+		,education = #{education}
+		,workStatus = #{workStatus}
+		,health = #{health}
+		,salaryCard = #{salaryCard}
+		,bankName = #{bankName}
+		,subbranch = #{subbranch}
+		,fiveInsuranceInfo = #{fiveInsuranceInfo}
+		,residenceAddress = #{residenceAddress}
+		,residenceProperty = #{residenceProperty}
+		,socialSecurityRegDatetime = #{socialSecurityRegDatetime}
+		,currentAddress = #{currentAddress}
+		,emergencyContact = #{emergencyContact}
+		,emergencyContactMobile = #{emergencyContactMobile}
+		,contractDeadline = #{contractDeadline}
+		,contractType = #{contractType}
+		,probationTime = #{probationTime}
+		,convertDatetime = #{convertDatetime}
+		,leaveDatetime = #{leaveDatetime}
+		,leaveReason = #{leaveReason}
+		,heirPeople = #{heirPeople}
+		,entranceNo = #{entranceNo}
+		,checkNo = #{checkNo}
+		,carNo = #{carNo}
+		,idNoPdf = #{idNoPdf}
+		,photo = #{photo}
+		,wechat = #{wechat}
+		,qq = #{qq}
+		,performSalaryStandard = #{performSalaryStandard}
+		,quarterlyAwardStandard = #{quarterlyAwardStandard}
+		,commumicationFeeStandard = #{commumicationFeeStandard}
+		,provincialBedStandard = #{provincialBedStandard}
+		,noProvincialBedStandard = #{noProvincialBedStandard}
+		,trafficAward = #{trafficAward}
+		,mobileAward = #{mobileAward}
+		,taxiWard = #{taxiWard}
+		,mealAward = #{mealAward}
+		,workingYears = #{workingYears}
+		,status = #{status}
+		,updater = #{updater}
+		,updateDatetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	
+	
+	<update id="update_leave_archive" parameterType="Archive">
+		UPDATE tp_archive
+		SET
+		realName = #{realName}
+		,leaveDatetime = #{leaveDatetime}
+		,heirPeople = #{heirPeople}
+		,leaveReason = #{leaveReason}
+		,remark = #{remark}
+
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>
