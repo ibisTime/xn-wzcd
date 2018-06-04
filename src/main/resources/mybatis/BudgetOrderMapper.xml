@@ -303,7 +303,7 @@
 		,t.invoice_company
 		,t.car_brand
 		,t.car_series
-		,t.car_car_model
+		,t.car_model
 		,t.car_pic
 		,t.car_hgz_pic
 		,t.car_hgz_no
@@ -544,7 +544,7 @@
 		,t.invoice_company
 		,t.car_brand
 		,t.car_series
-		,t.car_car_model
+		,t.car_model
 		,t.car_pic
 		,t.car_hgz_pic
 		,t.car_hgz_no
@@ -627,7 +627,7 @@
 		,t.invoice_company
 		,t.car_brand
 		,t.car_series
-		,t.car_car_model
+		,t.car_model
 		,t.car_pic
 		,t.car_hgz_pic
 		,t.car_hgz_no
@@ -707,7 +707,7 @@
 		,invoice_company
 		,car_brand
 		,car_series
-		,car_car_model
+		,car_model
 		,car_pic
 		,car_hgz_pic
 		,car_hgz_no
