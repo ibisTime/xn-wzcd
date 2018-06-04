@@ -9,7 +9,7 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "gps";
+    private static String key = "Gps";
 
     // 实体名称
     private static String keyName = "gps";
@@ -38,29 +38,23 @@ public class SCDM_IDAO {
     public static void main(String[] args) {
 
         System.out.println("*********开始打印*********");
+        String path = "/Users/xieyj/Desktop/temp";
 
-        File DOMAINfile = new File("/Users/xieyj/Desktop/temp", Key + ".java");
+        File DOMAINfile = new File(path, Key + ".java");
 
-        File Mapperfile = new File("/Users/xieyj/Desktop/temp", Key
-                + "Mapper.xml");
+        File Mapperfile = new File(path, Key + "Mapper.xml");
 
-        File IDAOfile = new File("/Users/xieyj/Desktop/temp", "I" + Key
-                + "DAO.java");
+        File IDAOfile = new File(path, "I" + Key + "DAO.java");
 
-        File DAOImplfile = new File("/Users/xieyj/Desktop/temp", Key
-                + "DAOImpl.java");
+        File DAOImplfile = new File(path, Key + "DAOImpl.java");
 
-        File IBOfile = new File("/Users/xieyj/Desktop/temp", "I" + Key
-                + "BO.java");
+        File IBOfile = new File(path, "I" + Key + "BO.java");
 
-        File BOImplfile = new File("/Users/xieyj/Desktop/temp", Key
-                + "BOImpl.java");
+        File BOImplfile = new File(path, Key + "BOImpl.java");
 
-        File IAOfile = new File("/Users/xieyj/Desktop/temp", "I" + Key
-                + "AO.java");
+        File IAOfile = new File(path, "I" + Key + "AO.java");
 
-        File AOImplfile = new File("/Users/xieyj/Desktop/temp", Key
-                + "AOImpl.java");
+        File AOImplfile = new File(path, Key + "AOImpl.java");
         try {
             DOMAINfile.createNewFile();
 

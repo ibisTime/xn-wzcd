@@ -232,4 +232,8 @@
 		<property name="paginableDAO" ref="overdueMenuDAOImpl"/>
 	</bean>
 	
+	<bean id="noticeBO" class="com.cdkj.loan.bo.impl.NoticeBOImpl">
+		<property name="paginableDAO" ref="noticeDAOImpl"/>
+	</bean>
+	
 </beans>

@@ -77,6 +77,7 @@ insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'enter_location','存放位置','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','enter_location','01','保险柜','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 
+<<<<<<< HEAD
 
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', NULL,'work_company_property', '单位经济性质', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_company_property', '1', '国有经济', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
@@ -117,6 +118,16 @@ INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'position', '3', '科级/部门经理', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'position', '4', '科员级/职员', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'position', '5', '其他', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+=======
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'notice_type','公告类型','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','notice_type','1','公司动态','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','notice_type','2','公司文件','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','notice_type','3','培训说明','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'notice_urgent_status','公告紧急类型','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','notice_urgent_status','1','普通','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','notice_urgent_status','2','紧急','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+>>>>>>> refs/remotes/origin/branch_htwt_v1.1.0
 
 /*
 -- Query: SELECT `code`,`name`,`lead_name`,`mobile`,`parent_code`,`type`,`status`,`updater`,`update_datetime`,`remark` FROM tsys_department where code ='DP201800000000000000001'
