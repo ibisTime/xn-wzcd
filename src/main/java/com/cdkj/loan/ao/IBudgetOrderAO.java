@@ -10,6 +10,7 @@ import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632128Req;
 import com.cdkj.loan.dto.req.XN632130Req;
+import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632135Req;
 
 @Component
@@ -78,7 +79,7 @@ public interface IBudgetOrderAO {
             String pledgeBankCommitDatetime, String pledgeBankCommitNote);
 
     // 抵押完成
-    public void mortgageFinish(String code, String operator);
+    public void mortgageFinish(XN632133Req req);
 
     public Paginable<BudgetOrder> queryBudgetOrderPageByRoleCode(int start,
             int limit, BudgetOrder condition);

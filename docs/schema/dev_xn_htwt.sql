@@ -155,6 +155,7 @@ CREATE TABLE `tdq_budget_order` (
   `invoice_company` varchar(255) DEFAULT NULL COMMENT '开票单位',
   `car_brand` varchar(255) DEFAULT NULL COMMENT '品牌',
  
+  `car_series` varchar(255) DEFAULT NULL COMMENT '车系',
   `car_model` varchar(255) DEFAULT NULL COMMENT '车型',
   `car_pic` varchar(255) DEFAULT NULL COMMENT '车辆照片',
   `car_hgz_pic` varchar(255) DEFAULT NULL COMMENT '合格证',
@@ -316,8 +317,8 @@ CREATE TABLE `tdq_budget_order` (
   `jour_remark` varchar(255) DEFAULT NULL COMMENT '流水备注',
   `asset_pdf` text DEFAULT NULL COMMENT '资产资料pdf',
   
-  `house_contract` varchar(255) DEFAULT NULL COMMENT '购房合同',
-  `house_picture` varchar(255) DEFAULT NULL COMMENT '房屋照片',
+  `house_contract` text DEFAULT NULL COMMENT '购房合同',
+  `house_picture` text DEFAULT NULL COMMENT '房屋照片',
   `is_advance_fund` varchar(255) DEFAULT NULL COMMENT '是否垫资',
   `interview_video` varchar(255) DEFAULT NULL COMMENT '面签视频',
   `interview_contract` varchar(255) DEFAULT NULL COMMENT '面签合同',
