@@ -37,7 +37,8 @@ public enum EGeneratePrefix {
                                     "准入单手续费"), BUDGET_ORDER_FEE_DETAIL("BOFD",
                                             "准入单手续费明细"),
 
-    OVERDUEMENU("OM", "导入逾期名单"), NOTICE("N", "通知公告");
+    OVERDUEMENU("OM", "导入逾期名单"), NOTICE("N", "通知公告"), REGIME("R",
+            "公司制度"), CompCategory("CC", "库存类别");
 
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();

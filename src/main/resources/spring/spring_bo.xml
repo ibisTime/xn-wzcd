@@ -236,4 +236,12 @@
 		<property name="paginableDAO" ref="noticeDAOImpl"/>
 	</bean>
 	
+	<bean id="regimeBO" class="com.cdkj.loan.bo.impl.RegimeBOImpl">
+		<property name="paginableDAO" ref="regimeDAOImpl"/>
+	</bean>
+	
+	<bean id="compCategoryBO" class="com.cdkj.loan.bo.impl.CompCategoryBOImpl">
+		<property name="paginableDAO" ref="compCategoryDAOImpl"/>
+	</bean>
+	
 </beans>
