@@ -3,7 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,15 +57,15 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         GpsApply data = new GpsApply();
         data.setType(req.getType());
         SYSUser sysUser = sysUserBO.getUser(req.getApplyUser());
-        if (CollectionUtils.sizeIsEmpty(sysUser.getPostCode())) {
+        if (StringUtils.isBlank(sysUser.getPostCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "申请人岗位为空，请先设置岗位");
         }
-        if (CollectionUtils.sizeIsEmpty(sysUser.getDepartmentCode())) {
+        if (StringUtils.isBlank(sysUser.getDepartmentCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "申请人部门为空，请先设置部门");
         }
-        if (CollectionUtils.sizeIsEmpty(sysUser.getCompanyCode())) {
+        if (StringUtils.isBlank(sysUser.getCompanyCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "申请人公司为空，请先设置公司");
         }
@@ -127,8 +127,8 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
     private void initGpsApply(GpsApply gpsApply) {
         SYSUser sysUser = sysUserBO.getUser(gpsApply.getApplyUser());
         gpsApply.setApplyUserName(sysUser.getRealName());
-        Department department = departmentBO
-            .getDepartment(gpsApply.getCompanyCode());
+        Department department = departmentBO.getDepartment(gpsApply
+            .getCompanyCode());
         if (department != null) {
             gpsApply.setCompanyName(department.getName());
         }
