@@ -13,6 +13,18 @@ public class XN632133Req {
     @NotBlank
     private String code;// 预算单编号
 
+    // 登记证书
+    private String carRegcerti;
+
+    // 车辆批单
+    private String carPd;
+
+    // 车钥匙
+    private String carKey;
+
+    // 大本扫描件
+    private String carBigSmj;
+
     @NotBlank
     private String operator;// 操作人
 
@@ -31,4 +43,37 @@ public class XN632133Req {
     public void setOperator(String operator) {
         this.operator = operator;
     }
+
+    public String getCarRegcerti() {
+        return carRegcerti;
+    }
+
+    public void setCarRegcerti(String carRegcerti) {
+        this.carRegcerti = carRegcerti;
+    }
+
+    public String getCarPd() {
+        return carPd;
+    }
+
+    public void setCarPd(String carPd) {
+        this.carPd = carPd;
+    }
+
+    public String getCarKey() {
+        return carKey;
+    }
+
+    public void setCarKey(String carKey) {
+        this.carKey = carKey;
+    }
+
+    public String getCarBigSmj() {
+        return carBigSmj;
+    }
+
+    public void setCarBigSmj(String carBigSmj) {
+        this.carBigSmj = carBigSmj;
+    }
+
 }

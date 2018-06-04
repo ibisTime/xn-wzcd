@@ -13,7 +13,9 @@ public enum EGeneratePrefix {
     ADVERTISE("AD", "广告"), DH("DH", "导航"), TRADE_ORDER("JY",
             "交易订单"), ARBITRATE("ZC", "仲裁工单")
 
-    , Account("A", "账户"), AJour("AJ", "账户流水"), EXCHANGE_CURRENCY("EC", "币种兑换"), HLORDER("HL", "红蓝订单"), Charge("CZ", "充值订单"), Withdraw("QX", "取现订单"), BAOFOO_PAY_ORDER("BFDF", "宝付代付订单"),
+    , Account("A", "账户"), AJour("AJ", "账户流水"), EXCHANGE_CURRENCY("EC",
+            "币种兑换"), HLORDER("HL", "红蓝订单"), Charge("CZ", "充值订单"), Withdraw("QX",
+                    "取现订单"), BAOFOO_PAY_ORDER("BFDF", "宝付代付订单"),
 
     Brand("B", "品牌"), Series("S", "车系"), Car("C", "车型"), Car_Order("COD",
             "购买意向"),
@@ -35,7 +37,8 @@ public enum EGeneratePrefix {
                                     "准入单手续费"), BUDGET_ORDER_FEE_DETAIL("BOFD",
                                             "准入单手续费明细"),
 
-    OVERDUEMENU("OM", "导入逾期名单");
+    OVERDUEMENU("OM", "导入逾期名单"), NOTICE("N", "通知公告"), REGIME("R",
+            "公司制度"), CompCategory("CC", "库存类别");
 
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();

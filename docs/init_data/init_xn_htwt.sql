@@ -7,6 +7,10 @@ INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_d
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','credit_user_relation','6','岳父','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','credit_user_relation','7','岳母','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','credit_user_relation','8','朋友','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','credit_user_relation','9','同事', 'admin', now(),NULL, 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','credit_user_relation','10','兄弟姐妹', 'admin', now(),NULL, 'CD-HTWT000020', 'CD-HTWT000020');
+
+
 
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'credit_user_loan_role','贷款角色','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','credit_user_loan_role','1','申请人','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
@@ -33,30 +37,30 @@ INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_d
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','kd_company','YSKD','优速快递','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','kd_company','QTKD','其他','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
 
-INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'marry_state', '婚姻状况', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0',NULL, 'marry_state', '婚姻状况', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'marry_state', '1', '未婚', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'marry_state', '2', '已婚', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'marry_state', '3', '离异', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'marry_state', '4', '丧偶', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 
-INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'education', '学历', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0',NULL, 'education', '学历', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'education', '1', '大学', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'education', '2', '高中', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'education', '3', '初中', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'education', '4', '小学', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 
-INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'main_income', '主要收入来源', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0',NULL, 'main_income', '主要收入来源', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'main_income', '1', '工资', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'main_income', '2', '分红', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'main_income', '3', '销售佣金', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'main_income', '4', '自营收入', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'main_income', '5', '租金', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'main_income', '6', '其他', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
-INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'gender', '性别', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0',NULL, 'gender', '性别', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'gender', '1', '男', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'gender', '2', '女', 'admin', now(), 'CD-HTWT000020', 'CD-HTWT000020');
 
-insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0','NULL','loan_period','贷款期限','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'loan_period','贷款期限','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','loan_period','12','一年','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','loan_period','24','两年','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','loan_period','36','三年','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
@@ -72,6 +76,65 @@ insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'enter_location','存放位置','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','enter_location','01','保险柜','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+
+<<<<<<< HEAD
+
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', NULL,'work_company_property', '单位经济性质', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_company_property', '1', '国有经济', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_company_property', '2', '集体经济', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_company_property', '3', '私营', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_company_property', '4', '民营', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_company_property', '5', '股份合作', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_company_property', '6', '其他股份制', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_company_property', '7', '三资', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_company_property', '8', '其他', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', NULL,'work_belong_industry', '所属行业', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_belong_industry', '1', '农林牧渔', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_belong_industry', '2', '邮电通讯', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_belong_industry', '3', '房地产', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_belong_industry', '4', '科教文卫', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_belong_industry', '5', '工业', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_belong_industry', '6', '银行', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_belong_industry', '7', '证券', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_belong_industry', '8', '保险', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_belong_industry', '9', '商业', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_belong_industry', '10', '机关团体', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_belong_industry', '11', '其他', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', NULL,'work_profession', '职业', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_profession', '1', '业务员', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_profession', '2', '事业单位员工', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_profession', '3', '工人', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_profession', '4', '农民', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_profession', '5', '军人', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_profession', '6', '职员', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_profession', '7', '私人业主', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_profession', '8', '学生', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_profession', '9', '自由职业者', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'work_profession', '10', '无', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', NULL, '职位', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'position', '1', '厅局级及以上/企业负责人', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'position', '2', '县处级/总经理', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'position', '3', '科级/部门经理', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'position', '4', '科员级/职员', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'position', '5', '其他', 'admin', '2018-05-30 12:00:09', 'CD-HTWT000020', 'CD-HTWT000020');
+=======
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'notice_type','公告类型','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','notice_type','1','公司动态','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','notice_type','2','公司文件','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','notice_type','3','培训说明','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'notice_urgent_status','公告紧急类型','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','notice_urgent_status','1','普通','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','notice_urgent_status','2','紧急','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+>>>>>>> refs/remotes/origin/branch_htwt_v1.1.0
+
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'regime_status','公告紧急类型','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','regime_status','1','行政事务类','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','regime_status','2','人力资源管理类','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','regime_status','3','财务管理类','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','regime_status','4','营销管理类','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','regime_status','5','生产管理类','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 
 /*
 -- Query: SELECT `code`,`name`,`lead_name`,`mobile`,`parent_code`,`type`,`status`,`updater`,`update_datetime`,`remark` FROM tsys_department where code ='DP201800000000000000001'

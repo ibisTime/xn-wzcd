@@ -11,7 +11,8 @@
 		
 		<result column="gps_fee" property="gpsFee" />
 		<result column="auth_fee" property="authFee" />
-		<result column="fee" property="fee" />
+		<result column="bank_fee" property="bankFee" />
+		<result column="company_fee" property="companyFee" />
 		<result column="month_rate" property="monthRate" />
 		<result column="credit_code" property="creditCode" />
 		
@@ -19,6 +20,14 @@
 		<result column="loan_period" property="loanPeriod" />
 		<result column="invoice_company" property="invoiceCompany" />
 		<result column="car_brand" property="carBrand" />
+		<result column="car_series" property="carSeries" />
+		<result column="car_model" property="carModel" />
+		
+		<result column="car_pic" property="carPic" />
+		<result column="car_hgz_pic" property="carHgzPic" />
+		<result column="car_hgz_no" property="carHgzNo" />
+		<result column="car_frame_no" property="carFrameNo" />
+		<result column="car_engine_no" property="carEngineNo" />
 		<result column="original_price" property="originalPrice" />
 		
 		<result column="invoice_price" property="invoicePrice" />
@@ -67,6 +76,36 @@
 		<result column="mate_company_name" property="mateCompanyName" />
 		<result column="mate_company_address" property="mateCompanyAddress" />
 		<result column="mate_company_contact_no" property="mateCompanyContactNo" />
+		
+		<result column="mate_zfb_jour_datetime_start" property="mateZfbJourDatetimeStart" />
+		<result column="mate_zfb_jour_datetime_end" property="mateZfbJourDatetimeEnd" />
+		<result column="mate_zfb_jour_income" property="mateZfbJourIncome" />
+		<result column="mate_zfb_jour_expend" property="mateZfbJourExpend" />
+		
+		<result column="mate_zfb_jour_balance" property="mateZfbJourBalance" />
+		<result column="mate_zfb_jour_month_income" property="mateZfbJourMonthIncome" />
+		<result column="mate_zfb_jour_month_expend" property="mateZfbJourMonthExpend" />
+		<result column="mate_zfb_jour_remark" property="mateZfbJourRemark" />
+		<result column="mate_wx_jour_datetime_start" property="mateWxJourDatetimeStart" />
+		<result column="mate_wx_jour_datetime_end" property="mateWxJourDatetimeEnd" />
+		<result column="mate_wx_jour_income" property="mateWxJourIncome" />
+		<result column="mate_wx_jour_expend" property="mateWxJourExpend" />
+		
+		<result column="mate_wx_jour_balance" property="mateWxJourBalance" />
+		<result column="mate_wx_jour_month_income" property="mateWxJourMonthIncome" />
+		<result column="mate_wx_jour_month_expend" property="mateWxJourMonthExpend" />
+		<result column="mate_wx_jour_remark" property="mateWxJourRemark" />
+		<result column="mate_jour_datetime_start" property="mateJourDatetimeStart" />
+		<result column="mate_jour_datetime_end" property="mateJourDatetimeEnd" />
+		<result column="mate_jour_income" property="mateJourIncome" />
+		<result column="mate_jour_expend" property="mateJourExpend" />
+		
+		<result column="mate_jour_balance" property="mateJourBalance" />
+		<result column="mate_jour_month_income" property="mateJourMonthIncome" />
+		<result column="mate_jour_month_expend" property="mateJourMonthExpend" />
+		<result column="mate_jour_remark" property="mateJourRemark" />
+		<result column="mate_asset_pdf" property="mateAssetPdf" />
+		
 		<result column="gua_name" property="guaName" />
 		<result column="gua_mobile" property="guaMobile" />
 		
@@ -76,6 +115,35 @@
 		<result column="gua_company_address" property="guaCompanyAddress" />
 		<result column="gua_house_asset_address" property="guaHouseAssetAddress" />
 		
+		<result column="gua_zfb_jour_datetime_start" property="guaZfbJourDatetimeStart" />
+		<result column="gua_zfb_jour_datetime_end" property="guaZfbJourDatetimeEnd" />
+		<result column="gua_zfb_jour_income" property="guaZfbJourIncome" />
+		<result column="gua_zfb_jour_expend" property="guaZfbJourExpend" />
+		
+		<result column="gua_zfb_jour_balance" property="guaZfbJourBalance" />
+		<result column="gua_zfb_jour_month_income" property="guaZfbJourMonthIncome" />
+		<result column="gua_zfb_jour_month_expend" property="guaZfbJourMonthExpend" />
+		<result column="gua_zfb_jour_remark" property="guaZfbJourRemark" />
+		<result column="gua_wx_jour_datetime_start" property="guaWxJourDatetimeStart" />
+		<result column="gua_wx_jour_datetime_end" property="guaWxJourDatetimeEnd" />
+		<result column="gua_wx_jour_income" property="guaWxJourIncome" />
+		<result column="gua_wx_jour_expend" property="guaWxJourExpend" />
+		
+		<result column="gua_wx_jour_balance" property="guaWxJourBalance" />
+		<result column="gua_wx_jour_month_income" property="guaWxJourMonthIncome" />
+		<result column="gua_wx_jour_month_expend" property="guaWxJourMonthExpend" />
+		<result column="gua_wx_jour_remark" property="guaWxJourRemark" />
+		<result column="gua_jour_datetime_start" property="guaJourDatetimeStart" />
+		<result column="gua_jour_datetime_end" property="guaJourDatetimeEnd" />
+		<result column="gua_jour_income" property="guaJourIncome" />
+		<result column="gua_jour_expend" property="guaJourExpend" />
+		
+		<result column="gua_jour_balance" property="guaJourBalance" />
+		<result column="gua_jour_month_income" property="guaJourMonthIncome" />
+		<result column="gua_jour_month_expend" property="guaJourMonthExpend" />
+		<result column="gua_jour_remark" property="guaJourRemark" />
+		<result column="gua_asset_pdf" property="guaAssetPdf" />
+		
 		<result column="emergency_name1" property="emergencyName1" />
 		<result column="emergency_relation1" property="emergencyRelation1" />
 		<result column="emergency_mobile1" property="emergencyMobile1" />
@@ -83,6 +151,24 @@
 		<result column="emergency_relation2" property="emergencyRelation2" />
 		
 		<result column="emergency_mobile2" property="emergencyMobile2" />
+		<result column="zfb_jour_datetime_start" property="zfbJourDatetimeStart" />
+		<result column="zfb_jour_datetime_end" property="zfbJourDatetimeEnd" />
+		<result column="zfb_jour_income" property="zfbJourIncome" />
+		<result column="zfb_jour_expend" property="zfbJourExpend" />
+		
+		<result column="zfb_jour_balance" property="zfbJourBalance" />
+		<result column="zfb_jour_month_income" property="zfbJourMonthIncome" />
+		<result column="zfb_jour_month_expend" property="zfbJourMonthExpend" />
+		<result column="zfb_jour_remark" property="zfbJourRemark" />
+		<result column="wx_jour_datetime_start" property="wxJourDatetimeStart" />
+		<result column="wx_jour_datetime_end" property="wxJourDatetimeEnd" />
+		<result column="wx_jour_income" property="wxJourIncome" />
+		<result column="wx_jour_expend" property="wxJourExpend" />
+		
+		<result column="wx_jour_balance" property="wxJourBalance" />
+		<result column="wx_jour_month_income" property="wxJourMonthIncome" />
+		<result column="wx_jour_month_expend" property="wxJourMonthExpend" />
+		<result column="wx_jour_remark" property="wxJourRemark" />
 		<result column="jour_datetime_start" property="jourDatetimeStart" />
 		<result column="jour_datetime_end" property="jourDatetimeEnd" />
 		<result column="jour_income" property="jourIncome" />
@@ -92,6 +178,7 @@
 		<result column="jour_month_income" property="jourMonthIncome" />
 		<result column="jour_month_expend" property="jourMonthExpend" />
 		<result column="jour_remark" property="jourRemark" />
+		<result column="asset_pdf" property="assetPdf" />
 		<result column="house_contract" property="houseContract" />
 		
 		<result column="house_picture" property="housePicture" />
@@ -206,7 +293,8 @@
 		
 		,t.gps_fee
 		,t.auth_fee
-		,t.fee
+		,t.bank_fee
+		,t.company_fee
 		,t.month_rate
 		,t.credit_code
 		
@@ -214,6 +302,13 @@
 		,t.loan_period
 		,t.invoice_company
 		,t.car_brand
+		,t.car_series
+		,t.car_car_model
+		,t.car_pic
+		,t.car_hgz_pic
+		,t.car_hgz_no
+		,t.car_frame_no
+		,t.car_engine_no
 		,t.original_price
 		
 		,t.invoice_price
@@ -254,6 +349,35 @@
 		
 		,t.post_title
 		,t.month_income
+		
+		,t.mate_zfb_jour_datetime_start
+		,t.mate_zfb_jour_datetime_end
+		,t.mate_zfb_jour_income
+		,t.mate_zfb_jour_expend
+		,t.mate_zfb_jour_balance
+		,t.mate_zfb_jour_month_income
+		,t.mate_zfb_jour_month_expend
+		,t.mate_zfb_jour_remark
+		
+		,t.mate_wx_jour_datetime_start
+		,t.mate_wx_jour_datetime_end
+		,t.mate_wx_jour_income
+		,t.mate_wx_jour_expend
+		,t.mate_wx_jour_balance
+		,t.mate_wx_jour_month_income
+		,t.mate_wx_jour_month_expend
+		,t.mate_wx_jour_remark
+		
+		,t.mate_jour_datetime_start
+		,t.mate_jour_datetime_end
+		,t.mate_jour_income
+		,t.mate_jour_expend
+		,t.mate_jour_balance
+		,t.mate_jour_month_income
+		,t.mate_jour_month_expend
+		,t.mate_jour_remark
+		,t.mate_asset_pdf
+		
 		,t.mate_name
 		,t.mate_mobile
 		,t.mate_id_no
@@ -269,8 +393,36 @@
 		,t.gua_phone
 		,t.gua_company_name
 		,t.gua_company_address
-		
 		,t.gua_house_asset_address
+		
+		,t.gua_zfb_jour_datetime_start
+		,t.gua_zfb_jour_datetime_end
+		,t.gua_zfb_jour_income
+		,t.gua_zfb_jour_expend
+		,t.gua_zfb_jour_balance
+		,t.gua_zfb_jour_month_income
+		,t.gua_zfb_jour_month_expend
+		,t.gua_zfb_jour_remark
+		
+		,t.gua_wx_jour_datetime_start
+		,t.gua_wx_jour_datetime_end
+		,t.gua_wx_jour_income
+		,t.gua_wx_jour_expend
+		,t.gua_wx_jour_balance
+		,t.gua_wx_jour_month_income
+		,t.gua_wx_jour_month_expend
+		,t.gua_wx_jour_remark
+		
+		,t.gua_jour_datetime_start
+		,t.gua_jour_datetime_end
+		,t.gua_jour_income
+		,t.gua_jour_expend
+		,t.gua_jour_balance
+		,t.gua_jour_month_income
+		,t.gua_jour_month_expend
+		,t.gua_jour_remark
+		,t.gua_asset_pdf
+		
 		,t.emergency_name1
 		,t.emergency_relation1
 		,t.emergency_mobile1
@@ -278,15 +430,34 @@
 		
 		,t.emergency_relation2
 		,t.emergency_mobile2
+		
+		,t.zfb_jour_datetime_start
+		,t.zfb_jour_datetime_end
+		,t.zfb_jour_income
+		,t.zfb_jour_expend
+		,t.zfb_jour_balance
+		,t.zfb_jour_month_income
+		,t.zfb_jour_month_expend
+		,t.zfb_jour_remark
+		
+		,t.wx_jour_datetime_start
+		,t.wx_jour_datetime_end
+		,t.wx_jour_income
+		,t.wx_jour_expend
+		,t.wx_jour_balance
+		,t.wx_jour_month_income
+		,t.wx_jour_month_expend
+		,t.wx_jour_remark
+		
 		,t.jour_datetime_start
 		,t.jour_datetime_end
 		,t.jour_income
-		
 		,t.jour_expend
 		,t.jour_balance
 		,t.jour_month_income
 		,t.jour_month_expend
 		,t.jour_remark
+		,t.asset_pdf
 		
 		,t.house_contract
 		,t.house_picture
@@ -363,7 +534,8 @@
 		
 		,t.gps_fee
 		,t.auth_fee
-		,t.fee
+		,t.bank_fee
+		,t.company_fee
 		,t.month_rate
 		,t.credit_code
 		
@@ -371,6 +543,13 @@
 		,t.loan_period
 		,t.invoice_company
 		,t.car_brand
+		,t.car_series
+		,t.car_car_model
+		,t.car_pic
+		,t.car_hgz_pic
+		,t.car_hgz_no
+		,t.car_frame_no
+		,t.car_engine_no
 		,t.original_price
 		
 		,t.invoice_price
@@ -438,7 +617,8 @@
 		
 		,t.gps_fee
 		,t.auth_fee
-		,t.fee
+		,t.bank_fee
+		,t.company_fee
 		,t.month_rate
 		,t.credit_code
 		
@@ -446,6 +626,13 @@
 		,t.loan_period
 		,t.invoice_company
 		,t.car_brand
+		,t.car_series
+		,t.car_car_model
+		,t.car_pic
+		,t.car_hgz_pic
+		,t.car_hgz_no
+		,t.car_frame_no
+		,t.car_engine_no
 		,t.original_price
 		
 		,t.invoice_price
@@ -511,13 +698,21 @@
 		,loan_bank
 		,gps_fee
 		,auth_fee
-		,fee
+		,bank_fee
+		,company_fee
 		,month_rate
 		,credit_code
 		,biz_type
 		,loan_period
 		,invoice_company
 		,car_brand
+		,car_series
+		,car_car_model
+		,car_pic
+		,car_hgz_pic
+		,car_hgz_no
+		,car_frame_no
+		,car_engine_no
 		,original_price
 		,invoice_price
 		,car_color
@@ -549,26 +744,105 @@
 		,position
 		,post_title
 		,month_income
+		,mate_zfb_jour_datetime_start
+		,mate_zfb_jour_datetime_end
+		,mate_zfb_jour_income
+		,mate_zfb_jour_expend
+		,mate_zfb_jour_balance
+		,mate_zfb_jour_month_income
+		,mate_zfb_jour_month_expend
+		,mate_zfb_jour_remark
+		
+		,mate_wx_jour_datetime_start
+		,mate_wx_jour_datetime_end
+		,mate_wx_jour_income
+		,mate_wx_jour_expend
+		,mate_wx_jour_balance
+		,mate_wx_jour_month_income
+		,mate_wx_jour_month_expend
+		,mate_wx_jour_remark
+		
+		,mate_jour_datetime_start
+		,mate_jour_datetime_end
+		,mate_jour_income
+		,mate_jour_expend
+		,mate_jour_balance
+		,mate_jour_month_income
+		,mate_jour_month_expend
+		,mate_jour_remark
+		,mate_asset_pdf
+		
 		,mate_name
 		,mate_mobile
 		,mate_id_no
+		
 		,mate_education
 		,mate_company_name
 		,mate_company_address
 		,mate_company_contact_no
 		,gua_name
+		
 		,gua_mobile
 		,gua_id_no
 		,gua_phone
 		,gua_company_name
 		,gua_company_address
 		,gua_house_asset_address
+		
+		,gua_zfb_jour_datetime_start
+		,gua_zfb_jour_datetime_end
+		,gua_zfb_jour_income
+		,gua_zfb_jour_expend
+		,gua_zfb_jour_balance
+		,gua_zfb_jour_month_income
+		,gua_zfb_jour_month_expend
+		,gua_zfb_jour_remark
+		
+		,gua_wx_jour_datetime_start
+		,gua_wx_jour_datetime_end
+		,gua_wx_jour_income
+		,gua_wx_jour_expend
+		,gua_wx_jour_balance
+		,gua_wx_jour_month_income
+		,gua_wx_jour_month_expend
+		,gua_wx_jour_remark
+		
+		,gua_jour_datetime_start
+		,gua_jour_datetime_end
+		,gua_jour_income
+		,gua_jour_expend
+		,gua_jour_balance
+		,gua_jour_month_income
+		,gua_jour_month_expend
+		,gua_jour_remark
+		,gua_asset_pdf
+		
 		,emergency_name1
 		,emergency_relation1
 		,emergency_mobile1
 		,emergency_name2
+		
 		,emergency_relation2
 		,emergency_mobile2
+		
+		,zfb_jour_datetime_start
+		,zfb_jour_datetime_end
+		,zfb_jour_income
+		,zfb_jour_expend
+		,zfb_jour_balance
+		,zfb_jour_month_income
+		,zfb_jour_month_expend
+		,zfb_jour_remark
+		
+		,wx_jour_datetime_start
+		,wx_jour_datetime_end
+		,wx_jour_income
+		,wx_jour_expend
+		,wx_jour_balance
+		,wx_jour_month_income
+		,wx_jour_month_expend
+		,wx_jour_remark
+		
 		,jour_datetime_start
 		,jour_datetime_end
 		,jour_income
@@ -577,6 +851,8 @@
 		,jour_month_income
 		,jour_month_expend
 		,jour_remark
+		,asset_pdf
+		
 		,house_contract
 		,house_picture
 		,is_advance_fund
@@ -594,13 +870,21 @@
 		,#{loanBank}
 		,#{gpsFee}
 		,#{authFee}
-		,#{fee}
+		,#{bankFee}
+		,#{companyFee}
 		,#{monthRate}
 		,#{creditCode}
 		,#{bizType}
 		,#{loanPeriod}
 		,#{invoiceCompany}
 		,#{carBrand}
+		,#{carSeries}
+		,#{carModel}
+		,#{carPic}
+		,#{carHgzPic}
+		,#{carHgzNo}
+		,#{carFrameNo}
+		,#{carEngineNo}
 		,#{originalPrice}
 		,#{invoicePrice}
 		,#{carColor}
@@ -632,34 +916,114 @@
 		,#{position}
 		,#{postTitle}
 		,#{monthIncome}
-		,#{mateName}
-		,#{mateMobile}
-		,#{mateIdNo}
-		,#{mateEducation}
-		,#{mateCompanyName}
-		,#{mateCompanyAddress}
-		,#{mateCompanyContactNo}
-		,#{guaName}
-		,#{guaMobile}
-		,#{guaIdNo}
-		,#{guaPhone}
-		,#{guaCompanyName}
-		,#{guaCompanyAddress}
-		,#{guaHouseAssetAddress}
-		,#{emergencyName1}
-		,#{emergencyRelation1}
-		,#{emergencyMobile1}
-		,#{emergencyName2}
-		,#{emergencyRelation2}
-		,#{emergencyMobile2}
-		,#{jourDatetimeStart}
-		,#{jourDatetimeEnd}
-		,#{jourIncome}
-		,#{jourExpend}
-		,#{jourBalance}
-		,#{jourMonthIncome}
-		,#{jourMonthExpend}
-		,#{jourRemark}
+		,#{mate_zfb_jour_datetime_start}
+		,#{mate_zfb_jour_datetime_end}
+		,#{mate_zfb_jour_income}
+		,#{mate_zfb_jour_expend}
+		,#{mate_zfb_jour_balance}
+		,#{mate_zfb_jour_month_income}
+		,#{mate_zfb_jour_month_expend}
+		,#{mate_zfb_jour_remark}
+		 
+		,#{mate_wx_jour_datetime_start}
+		,#{mate_wx_jour_datetime_end}
+		,#{mate_wx_jour_income}
+		,#{mate_wx_jour_expend}
+		,#{mate_wx_jour_balance}
+		,#{mate_wx_jour_month_income}
+		,#{mate_wx_jour_month_expend}
+		,#{mate_wx_jour_remark}
+		
+		,#{mate_jour_datetime_start}
+		,#{mate_jour_datetime_end}
+		,#{mate_jour_income}
+		,#{mate_jour_expend}
+		,#{mate_jour_balance}
+		,#{mate_jour_month_income}
+		,#{mate_jour_month_expend}
+		,#{mate_jour_remark}
+		,#{mate_asset_pdf}
+		 
+		,#{mate_name}
+		,#{mate_mobile}
+		,#{mate_id_no}
+		 
+		,#{mate_education}
+		,#{mate_company_name}
+		,#{mate_company_address}
+		,#{mate_company_contact_no}
+		,#{gua_name}
+		
+		,#{gua_mobile}
+		,#{gua_id_no}
+		,#{gua_phone}
+		,#{gua_company_name}
+		,#{gua_company_address}
+		,#{gua_house_asset_address}
+		
+		,#{gua_zfb_jour_datetime_start}
+		,#{gua_zfb_jour_datetime_end}
+		,#{gua_zfb_jour_income}
+		,#{gua_zfb_jour_expend}
+		,#{gua_zfb_jour_balance}
+		,#{gua_zfb_jour_month_income}
+		,#{gua_zfb_jour_month_expend}
+		,#{gua_zfb_jour_remark}
+		
+		,#{gua_wx_jour_datetime_start}
+		,#{gua_wx_jour_datetime_end}
+		,#{gua_wx_jour_income}
+		,#{gua_wx_jour_expend}
+		,#{gua_wx_jour_balance}
+		,#{gua_wx_jour_month_income}
+		,#{gua_wx_jour_month_expend}
+		,#{gua_wx_jour_remark}
+		
+		,#{gua_jour_datetime_start}
+		,#{gua_jour_datetime_end}
+		,#{gua_jour_income}
+		,#{gua_jour_expend}
+		,#{gua_jour_balance}
+		,#{gua_jour_month_income}
+		,#{gua_jour_month_expend}
+		,#{gua_jour_remark}
+		,#{gua_asset_pdf}
+		
+		,#{emergency_name1}
+		,#{emergency_relation1}
+		,#{emergency_mobile1}
+		,#{emergency_name2}
+		
+		,#{emergency_relation2}
+		,#{emergency_mobile2}
+		
+		,#{zfb_jour_datetime_start}
+		,#{zfb_jour_datetime_end}
+		,#{zfb_jour_income}
+		,#{zfb_jour_expend}
+		,#{zfb_jour_balance}
+		,#{zfb_jour_month_income}
+		,#{zfb_jour_month_expend}
+		,#{zfb_jour_remark}
+		
+		,#{wx_jour_datetime_start}
+		,#{wx_jour_datetime_end}
+		,#{wx_jour_income}
+		,#{wx_jour_expend}
+		,#{wx_jour_balance}
+		,#{wx_jour_month_income}
+		,#{wx_jour_month_expend}
+		,#{wx_jour_remark}
+		 
+		,#{jour_datetime_start}
+		,#{jour_datetime_end}
+		,#{jour_income}
+		,#{jour_expend}
+		,#{jour_balance}
+		,#{jour_month_income}
+		,#{jour_month_expend}
+		,#{jour_remark}
+		,#{asset_pdf}
 		,#{houseContract}
 		,#{housePicture}
 		,#{isAdvanceFund}

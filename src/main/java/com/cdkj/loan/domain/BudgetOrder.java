@@ -36,8 +36,11 @@ public class BudgetOrder extends ABaseDO {
     // 公证费
     private Long authFee;
 
-    // 服务费
-    private Long fee;
+    // 银行服务费
+    private Long bankFee;
+
+    // 公司服务费
+    private Long companyFee;
 
     // 月供利率(%)
     private Double monthRate;
@@ -56,6 +59,27 @@ public class BudgetOrder extends ABaseDO {
 
     // 品牌
     private String carBrand;
+
+    // 车系
+    private String carSeries;
+
+    // 车型
+    private String carModel;
+
+    // 车辆照片
+    private String carPic;
+
+    // 合格证
+    private String carHgzPic;
+
+    // 合格证号
+    private String carHgzNo;
+
+    // 车架号
+    private String carFrameNo;
+
+    // 发动机号
+    private String carEngineNo;
 
     // 市场指导价
     private Long originalPrice;
@@ -138,6 +162,18 @@ public class BudgetOrder extends ABaseDO {
     // 工作单位地址
     private String workCompanyAddress;
 
+    // 单位性质
+    private String workCompanyProperty;
+
+    // 所属行业
+    private String workBelongIndustry;
+
+    // 职业
+    private String workProfession;
+
+    // 何时进入现单位工作
+    private Date workDatetime;
+
     // 自营公司单位面积
     private String selfCompanyArea;
 
@@ -177,6 +213,90 @@ public class BudgetOrder extends ABaseDO {
     // 配偶工作单位联系电话
     private String mateCompanyContactNo;
 
+    // 配偶支付宝流水时间起
+    private Date mateZfbJourDatetimeStart;
+
+    // 配偶支付宝流水时间止
+    private Date mateZfbJourDatetimeEnd;
+
+    // 配偶支付宝收入
+    private Long mateZfbJourIncome;
+
+    // 配偶支付宝支出
+    private Long mateZfbJourExpend;
+
+    // 配偶支付宝帐户余额
+    private Long mateZfbJourBalance;
+
+    // 配偶支付宝月均收入
+    private Long mateZfbJourMonthIncome;
+
+    // 配偶支付宝月均支出
+    private Long mateZfbJourMonthExpend;
+
+    // 配偶支付宝流水图片
+    private String mateZfbJourPic;
+
+    // 配偶支付宝流水备注
+    private String mateZfbJourRemark;
+
+    // 配偶微信流水时间起
+    private Date mateWxJourDatetimeStart;
+
+    // 配偶微信流水时间止
+    private Date mateWxJourDatetimeEnd;
+
+    // 配偶微信收入
+    private Long mateWxJourIncome;
+
+    // 配偶微信支出
+    private Long mateWxJourExpend;
+
+    // 配偶微信帐户余额
+    private Long mateWxJourBalance;
+
+    // 配偶微信月均收入
+    private Long mateWxJourMonthIncome;
+
+    // 配偶微信月均支出
+    private Long mateWxJourMonthExpend;
+
+    // 配偶微信流水图片
+    private String mateWxJourPic;
+
+    // 配偶微信流水备注
+    private String mateWxJourRemark;
+
+    // 配偶流水时间起
+    private Date mateJourDatetimeStart;
+
+    // 配偶流水时间止
+    private Date mateJourDatetimeEnd;
+
+    // 配偶收入
+    private Long mateJourIncome;
+
+    // 配偶支出
+    private Long mateJourExpend;
+
+    // 配偶帐户余额
+    private Long mateJourBalance;
+
+    // 配偶月均收入
+    private Long mateJourMonthIncome;
+
+    // 配偶月均支出
+    private Long mateJourMonthExpend;
+
+    // 配偶流水图片
+    private String mateJourPic;
+
+    // 配偶流水备注
+    private String mateJourRemark;
+
+    // 配偶资产资料pdf
+    private String mateAssetPdf;
+
     // 担保人姓名
     private String guaName;
 
@@ -198,6 +318,90 @@ public class BudgetOrder extends ABaseDO {
     // 担保人房产地址
     private String guaHouseAssetAddress;
 
+    // 担保人支付宝流水时间起
+    private Date guaZfbJourDatetimeStart;
+
+    // 担保人支付宝流水时间止
+    private Date guaZfbJourDatetimeEnd;
+
+    // 担保人支付宝收入
+    private Long guaZfbJourIncome;
+
+    // 担保人支付宝支出
+    private Long guaZfbJourExpend;
+
+    // 担保人支付宝帐户余额
+    private Long guaZfbJourBalance;
+
+    // 担保人支付宝月均收入
+    private Long guaZfbJourMonthIncome;
+
+    // 担保人支付宝月均支出
+    private Long guaZfbJourMonthExpend;
+
+    // 担保人支付宝流水图片
+    private String guaZfbJourPic;
+
+    // 担保人支付宝流水备注
+    private String guaZfbJourRemark;
+
+    // 担保人微信流水时间起
+    private Date guaWxJourDatetimeStart;
+
+    // 担保人微信流水时间止
+    private Date guaWxJourDatetimeEnd;
+
+    // 担保人微信收入
+    private Long guaWxJourIncome;
+
+    // 担保人微信支出
+    private Long guaWxJourExpend;
+
+    // 担保人微信帐户余额
+    private Long guaWxJourBalance;
+
+    // 担保人微信月均收入
+    private Long guaWxJourMonthIncome;
+
+    // 担保人微信月均支出
+    private Long guaWxJourMonthExpend;
+
+    // 担保人微信流水图片
+    private String guaWxJourPic;
+
+    // 担保人微信流水备注
+    private String guaWxJourRemark;
+
+    // 担保人流水时间起
+    private Date guaJourDatetimeStart;
+
+    // 担保人流水时间止
+    private Date guaJourDatetimeEnd;
+
+    // 担保人收入
+    private Long guaJourIncome;
+
+    // 担保人支出
+    private Long guaJourExpend;
+
+    // 担保人帐户余额
+    private Long guaJourBalance;
+
+    // 担保人月均收入
+    private Long guaJourMonthIncome;
+
+    // 担保人月均支出
+    private Long guaJourMonthExpend;
+
+    // 担保人流水图片
+    private String guaJourPic;
+
+    // 担保人流水备注
+    private String guaJourRemark;
+
+    // 担保人资产资料pdf
+    private String guaAssetPdf;
+
     // 家庭紧急联系人信息1 姓名
     private String emergencyName1;
 
@@ -215,6 +419,60 @@ public class BudgetOrder extends ABaseDO {
 
     // 家庭紧急联系人信息2 手机号码
     private String emergencyMobile2;
+
+    // 支付宝流水时间起
+    private Date zfbJourDatetimeStart;
+
+    // 支付宝流水时间止
+    private Date zfbJourDatetimeEnd;
+
+    // 支付宝收入
+    private Long zfbJourIncome;
+
+    // 支付宝支出
+    private Long zfbJourExpend;
+
+    // 支付宝帐户余额
+    private Long zfbJourBalance;
+
+    // 支付宝月均收入
+    private Long zfbJourMonthIncome;
+
+    // 支付宝月均支出
+    private Long zfbJourMonthExpend;
+
+    // 支付宝流水图片
+    private String zfbJourPic;
+
+    // 支付宝流水备注
+    private String zfbJourRemark;
+
+    // 微信流水时间起
+    private Date wxJourDatetimeStart;
+
+    // 微信流水时间止
+    private Date wxJourDatetimeEnd;
+
+    // 微信收入
+    private Long wxJourIncome;
+
+    // 微信支出
+    private Long wxJourExpend;
+
+    // 微信帐户余额
+    private Long wxJourBalance;
+
+    // 微信月均收入
+    private Long wxJourMonthIncome;
+
+    // 微信月均支出
+    private Long wxJourMonthExpend;
+
+    // 微信流水图片
+    private String wxJourPic;
+
+    // 微信流水备注
+    private String wxJourRemark;
 
     // 流水时间起
     private Date jourDatetimeStart;
@@ -237,8 +495,14 @@ public class BudgetOrder extends ABaseDO {
     // 月均支出
     private Long jourMonthExpend;
 
-    // 备注
+    // 流水图片
+    private String jourPic;
+
+    // 流水备注
     private String jourRemark;
+
+    // 资产资料pdf
+    private String assetPdf;
 
     // 购房合同
     private String houseContract;
@@ -507,12 +771,20 @@ public class BudgetOrder extends ABaseDO {
         this.authFee = authFee;
     }
 
-    public Long getFee() {
-        return fee;
+    public Long getBankFee() {
+        return bankFee;
     }
 
-    public void setFee(Long fee) {
-        this.fee = fee;
+    public void setBankFee(Long bankFee) {
+        this.bankFee = bankFee;
+    }
+
+    public Long getCompanyFee() {
+        return companyFee;
+    }
+
+    public void setCompanyFee(Long companyFee) {
+        this.companyFee = companyFee;
     }
 
     public Double getMonthRate() {
@@ -1103,6 +1375,14 @@ public class BudgetOrder extends ABaseDO {
         return advanceFundAmount;
     }
 
+    public String getCarSeries() {
+        return carSeries;
+    }
+
+    public void setCarSeries(String carSeries) {
+        this.carSeries = carSeries;
+    }
+
     public void setAdvanceFundAmount(Long advanceFundAmount) {
         this.advanceFundAmount = advanceFundAmount;
     }
@@ -1434,4 +1714,693 @@ public class BudgetOrder extends ABaseDO {
     public void setApplyDatetimeEnd(Date applyDatetimeEnd) {
         this.applyDatetimeEnd = applyDatetimeEnd;
     }
+
+    public String getCarModel() {
+        return carModel;
+    }
+
+    public void setCarModel(String carModel) {
+        this.carModel = carModel;
+    }
+
+    public String getCarPic() {
+        return carPic;
+    }
+
+    public void setCarPic(String carPic) {
+        this.carPic = carPic;
+    }
+
+    public String getCarHgzPic() {
+        return carHgzPic;
+    }
+
+    public void setCarHgzPic(String carHgzPic) {
+        this.carHgzPic = carHgzPic;
+    }
+
+    public String getCarHgzNo() {
+        return carHgzNo;
+    }
+
+    public void setCarHgzNo(String carHgzNo) {
+        this.carHgzNo = carHgzNo;
+    }
+
+    public String getCarFrameNo() {
+        return carFrameNo;
+    }
+
+    public void setCarFrameNo(String carFrameNo) {
+        this.carFrameNo = carFrameNo;
+    }
+
+    public String getCarEngineNo() {
+        return carEngineNo;
+    }
+
+    public void setCarEngineNo(String carEngineNo) {
+        this.carEngineNo = carEngineNo;
+    }
+
+    public Date getMateZfbJourDatetimeStart() {
+        return mateZfbJourDatetimeStart;
+    }
+
+    public void setMateZfbJourDatetimeStart(Date mateZfbJourDatetimeStart) {
+        this.mateZfbJourDatetimeStart = mateZfbJourDatetimeStart;
+    }
+
+    public Date getMateZfbJourDatetimeEnd() {
+        return mateZfbJourDatetimeEnd;
+    }
+
+    public void setMateZfbJourDatetimeEnd(Date mateZfbJourDatetimeEnd) {
+        this.mateZfbJourDatetimeEnd = mateZfbJourDatetimeEnd;
+    }
+
+    public Long getMateZfbJourIncome() {
+        return mateZfbJourIncome;
+    }
+
+    public void setMateZfbJourIncome(Long mateZfbJourIncome) {
+        this.mateZfbJourIncome = mateZfbJourIncome;
+    }
+
+    public Long getMateZfbJourExpend() {
+        return mateZfbJourExpend;
+    }
+
+    public void setMateZfbJourExpend(Long mateZfbJourExpend) {
+        this.mateZfbJourExpend = mateZfbJourExpend;
+    }
+
+    public Long getMateZfbJourBalance() {
+        return mateZfbJourBalance;
+    }
+
+    public void setMateZfbJourBalance(Long mateZfbJourBalance) {
+        this.mateZfbJourBalance = mateZfbJourBalance;
+    }
+
+    public Long getMateZfbJourMonthIncome() {
+        return mateZfbJourMonthIncome;
+    }
+
+    public void setMateZfbJourMonthIncome(Long mateZfbJourMonthIncome) {
+        this.mateZfbJourMonthIncome = mateZfbJourMonthIncome;
+    }
+
+    public Long getMateZfbJourMonthExpend() {
+        return mateZfbJourMonthExpend;
+    }
+
+    public void setMateZfbJourMonthExpend(Long mateZfbJourMonthExpend) {
+        this.mateZfbJourMonthExpend = mateZfbJourMonthExpend;
+    }
+
+    public String getMateZfbJourPic() {
+        return mateZfbJourPic;
+    }
+
+    public void setMateZfbJourPic(String mateZfbJourPic) {
+        this.mateZfbJourPic = mateZfbJourPic;
+    }
+
+    public String getMateZfbJourRemark() {
+        return mateZfbJourRemark;
+    }
+
+    public void setMateZfbJourRemark(String mateZfbJourRemark) {
+        this.mateZfbJourRemark = mateZfbJourRemark;
+    }
+
+    public Date getMateWxJourDatetimeStart() {
+        return mateWxJourDatetimeStart;
+    }
+
+    public void setMateWxJourDatetimeStart(Date mateWxJourDatetimeStart) {
+        this.mateWxJourDatetimeStart = mateWxJourDatetimeStart;
+    }
+
+    public Date getMateWxJourDatetimeEnd() {
+        return mateWxJourDatetimeEnd;
+    }
+
+    public void setMateWxJourDatetimeEnd(Date mateWxJourDatetimeEnd) {
+        this.mateWxJourDatetimeEnd = mateWxJourDatetimeEnd;
+    }
+
+    public Long getMateWxJourIncome() {
+        return mateWxJourIncome;
+    }
+
+    public void setMateWxJourIncome(Long mateWxJourIncome) {
+        this.mateWxJourIncome = mateWxJourIncome;
+    }
+
+    public Long getMateWxJourExpend() {
+        return mateWxJourExpend;
+    }
+
+    public void setMateWxJourExpend(Long mateWxJourExpend) {
+        this.mateWxJourExpend = mateWxJourExpend;
+    }
+
+    public Long getMateWxJourBalance() {
+        return mateWxJourBalance;
+    }
+
+    public void setMateWxJourBalance(Long mateWxJourBalance) {
+        this.mateWxJourBalance = mateWxJourBalance;
+    }
+
+    public Long getMateWxJourMonthIncome() {
+        return mateWxJourMonthIncome;
+    }
+
+    public void setMateWxJourMonthIncome(Long mateWxJourMonthIncome) {
+        this.mateWxJourMonthIncome = mateWxJourMonthIncome;
+    }
+
+    public Long getMateWxJourMonthExpend() {
+        return mateWxJourMonthExpend;
+    }
+
+    public void setMateWxJourMonthExpend(Long mateWxJourMonthExpend) {
+        this.mateWxJourMonthExpend = mateWxJourMonthExpend;
+    }
+
+    public String getMateWxJourPic() {
+        return mateWxJourPic;
+    }
+
+    public void setMateWxJourPic(String mateWxJourPic) {
+        this.mateWxJourPic = mateWxJourPic;
+    }
+
+    public String getMateWxJourRemark() {
+        return mateWxJourRemark;
+    }
+
+    public void setMateWxJourRemark(String mateWxJourRemark) {
+        this.mateWxJourRemark = mateWxJourRemark;
+    }
+
+    public Date getMateJourDatetimeStart() {
+        return mateJourDatetimeStart;
+    }
+
+    public void setMateJourDatetimeStart(Date mateJourDatetimeStart) {
+        this.mateJourDatetimeStart = mateJourDatetimeStart;
+    }
+
+    public Date getMateJourDatetimeEnd() {
+        return mateJourDatetimeEnd;
+    }
+
+    public void setMateJourDatetimeEnd(Date mateJourDatetimeEnd) {
+        this.mateJourDatetimeEnd = mateJourDatetimeEnd;
+    }
+
+    public Long getMateJourIncome() {
+        return mateJourIncome;
+    }
+
+    public void setMateJourIncome(Long mateJourIncome) {
+        this.mateJourIncome = mateJourIncome;
+    }
+
+    public Long getMateJourExpend() {
+        return mateJourExpend;
+    }
+
+    public void setMateJourExpend(Long mateJourExpend) {
+        this.mateJourExpend = mateJourExpend;
+    }
+
+    public Long getMateJourBalance() {
+        return mateJourBalance;
+    }
+
+    public void setMateJourBalance(Long mateJourBalance) {
+        this.mateJourBalance = mateJourBalance;
+    }
+
+    public Long getMateJourMonthIncome() {
+        return mateJourMonthIncome;
+    }
+
+    public void setMateJourMonthIncome(Long mateJourMonthIncome) {
+        this.mateJourMonthIncome = mateJourMonthIncome;
+    }
+
+    public Long getMateJourMonthExpend() {
+        return mateJourMonthExpend;
+    }
+
+    public void setMateJourMonthExpend(Long mateJourMonthExpend) {
+        this.mateJourMonthExpend = mateJourMonthExpend;
+    }
+
+    public String getMateJourPic() {
+        return mateJourPic;
+    }
+
+    public void setMateJourPic(String mateJourPic) {
+        this.mateJourPic = mateJourPic;
+    }
+
+    public String getMateJourRemark() {
+        return mateJourRemark;
+    }
+
+    public void setMateJourRemark(String mateJourRemark) {
+        this.mateJourRemark = mateJourRemark;
+    }
+
+    public String getMateAssetPdf() {
+        return mateAssetPdf;
+    }
+
+    public void setMateAssetPdf(String mateAssetPdf) {
+        this.mateAssetPdf = mateAssetPdf;
+    }
+
+    public Date getGuaZfbJourDatetimeStart() {
+        return guaZfbJourDatetimeStart;
+    }
+
+    public void setGuaZfbJourDatetimeStart(Date guaZfbJourDatetimeStart) {
+        this.guaZfbJourDatetimeStart = guaZfbJourDatetimeStart;
+    }
+
+    public Date getGuaZfbJourDatetimeEnd() {
+        return guaZfbJourDatetimeEnd;
+    }
+
+    public void setGuaZfbJourDatetimeEnd(Date guaZfbJourDatetimeEnd) {
+        this.guaZfbJourDatetimeEnd = guaZfbJourDatetimeEnd;
+    }
+
+    public Long getGuaZfbJourIncome() {
+        return guaZfbJourIncome;
+    }
+
+    public void setGuaZfbJourIncome(Long guaZfbJourIncome) {
+        this.guaZfbJourIncome = guaZfbJourIncome;
+    }
+
+    public Long getGuaZfbJourExpend() {
+        return guaZfbJourExpend;
+    }
+
+    public void setGuaZfbJourExpend(Long guaZfbJourExpend) {
+        this.guaZfbJourExpend = guaZfbJourExpend;
+    }
+
+    public Long getGuaZfbJourBalance() {
+        return guaZfbJourBalance;
+    }
+
+    public void setGuaZfbJourBalance(Long guaZfbJourBalance) {
+        this.guaZfbJourBalance = guaZfbJourBalance;
+    }
+
+    public Long getGuaZfbJourMonthIncome() {
+        return guaZfbJourMonthIncome;
+    }
+
+    public void setGuaZfbJourMonthIncome(Long guaZfbJourMonthIncome) {
+        this.guaZfbJourMonthIncome = guaZfbJourMonthIncome;
+    }
+
+    public Long getGuaZfbJourMonthExpend() {
+        return guaZfbJourMonthExpend;
+    }
+
+    public void setGuaZfbJourMonthExpend(Long guaZfbJourMonthExpend) {
+        this.guaZfbJourMonthExpend = guaZfbJourMonthExpend;
+    }
+
+    public String getGuaZfbJourPic() {
+        return guaZfbJourPic;
+    }
+
+    public void setGuaZfbJourPic(String guaZfbJourPic) {
+        this.guaZfbJourPic = guaZfbJourPic;
+    }
+
+    public String getGuaZfbJourRemark() {
+        return guaZfbJourRemark;
+    }
+
+    public void setGuaZfbJourRemark(String guaZfbJourRemark) {
+        this.guaZfbJourRemark = guaZfbJourRemark;
+    }
+
+    public Date getGuaWxJourDatetimeStart() {
+        return guaWxJourDatetimeStart;
+    }
+
+    public void setGuaWxJourDatetimeStart(Date guaWxJourDatetimeStart) {
+        this.guaWxJourDatetimeStart = guaWxJourDatetimeStart;
+    }
+
+    public Date getGuaWxJourDatetimeEnd() {
+        return guaWxJourDatetimeEnd;
+    }
+
+    public void setGuaWxJourDatetimeEnd(Date guaWxJourDatetimeEnd) {
+        this.guaWxJourDatetimeEnd = guaWxJourDatetimeEnd;
+    }
+
+    public Long getGuaWxJourIncome() {
+        return guaWxJourIncome;
+    }
+
+    public void setGuaWxJourIncome(Long guaWxJourIncome) {
+        this.guaWxJourIncome = guaWxJourIncome;
+    }
+
+    public Long getGuaWxJourExpend() {
+        return guaWxJourExpend;
+    }
+
+    public void setGuaWxJourExpend(Long guaWxJourExpend) {
+        this.guaWxJourExpend = guaWxJourExpend;
+    }
+
+    public Long getGuaWxJourBalance() {
+        return guaWxJourBalance;
+    }
+
+    public void setGuaWxJourBalance(Long guaWxJourBalance) {
+        this.guaWxJourBalance = guaWxJourBalance;
+    }
+
+    public Long getGuaWxJourMonthIncome() {
+        return guaWxJourMonthIncome;
+    }
+
+    public void setGuaWxJourMonthIncome(Long guaWxJourMonthIncome) {
+        this.guaWxJourMonthIncome = guaWxJourMonthIncome;
+    }
+
+    public Long getGuaWxJourMonthExpend() {
+        return guaWxJourMonthExpend;
+    }
+
+    public void setGuaWxJourMonthExpend(Long guaWxJourMonthExpend) {
+        this.guaWxJourMonthExpend = guaWxJourMonthExpend;
+    }
+
+    public String getGuaWxJourPic() {
+        return guaWxJourPic;
+    }
+
+    public void setGuaWxJourPic(String guaWxJourPic) {
+        this.guaWxJourPic = guaWxJourPic;
+    }
+
+    public String getGuaWxJourRemark() {
+        return guaWxJourRemark;
+    }
+
+    public void setGuaWxJourRemark(String guaWxJourRemark) {
+        this.guaWxJourRemark = guaWxJourRemark;
+    }
+
+    public Date getGuaJourDatetimeStart() {
+        return guaJourDatetimeStart;
+    }
+
+    public void setGuaJourDatetimeStart(Date guaJourDatetimeStart) {
+        this.guaJourDatetimeStart = guaJourDatetimeStart;
+    }
+
+    public Date getGuaJourDatetimeEnd() {
+        return guaJourDatetimeEnd;
+    }
+
+    public void setGuaJourDatetimeEnd(Date guaJourDatetimeEnd) {
+        this.guaJourDatetimeEnd = guaJourDatetimeEnd;
+    }
+
+    public Long getGuaJourIncome() {
+        return guaJourIncome;
+    }
+
+    public void setGuaJourIncome(Long guaJourIncome) {
+        this.guaJourIncome = guaJourIncome;
+    }
+
+    public Long getGuaJourExpend() {
+        return guaJourExpend;
+    }
+
+    public void setGuaJourExpend(Long guaJourExpend) {
+        this.guaJourExpend = guaJourExpend;
+    }
+
+    public Long getGuaJourBalance() {
+        return guaJourBalance;
+    }
+
+    public void setGuaJourBalance(Long guaJourBalance) {
+        this.guaJourBalance = guaJourBalance;
+    }
+
+    public Long getGuaJourMonthIncome() {
+        return guaJourMonthIncome;
+    }
+
+    public void setGuaJourMonthIncome(Long guaJourMonthIncome) {
+        this.guaJourMonthIncome = guaJourMonthIncome;
+    }
+
+    public Long getGuaJourMonthExpend() {
+        return guaJourMonthExpend;
+    }
+
+    public void setGuaJourMonthExpend(Long guaJourMonthExpend) {
+        this.guaJourMonthExpend = guaJourMonthExpend;
+    }
+
+    public String getGuaJourPic() {
+        return guaJourPic;
+    }
+
+    public void setGuaJourPic(String guaJourPic) {
+        this.guaJourPic = guaJourPic;
+    }
+
+    public String getGuaJourRemark() {
+        return guaJourRemark;
+    }
+
+    public void setGuaJourRemark(String guaJourRemark) {
+        this.guaJourRemark = guaJourRemark;
+    }
+
+    public String getGuaAssetPdf() {
+        return guaAssetPdf;
+    }
+
+    public void setGuaAssetPdf(String guaAssetPdf) {
+        this.guaAssetPdf = guaAssetPdf;
+    }
+
+    public Date getZfbJourDatetimeStart() {
+        return zfbJourDatetimeStart;
+    }
+
+    public void setZfbJourDatetimeStart(Date zfbJourDatetimeStart) {
+        this.zfbJourDatetimeStart = zfbJourDatetimeStart;
+    }
+
+    public Date getZfbJourDatetimeEnd() {
+        return zfbJourDatetimeEnd;
+    }
+
+    public void setZfbJourDatetimeEnd(Date zfbJourDatetimeEnd) {
+        this.zfbJourDatetimeEnd = zfbJourDatetimeEnd;
+    }
+
+    public Long getZfbJourIncome() {
+        return zfbJourIncome;
+    }
+
+    public void setZfbJourIncome(Long zfbJourIncome) {
+        this.zfbJourIncome = zfbJourIncome;
+    }
+
+    public Long getZfbJourExpend() {
+        return zfbJourExpend;
+    }
+
+    public void setZfbJourExpend(Long zfbJourExpend) {
+        this.zfbJourExpend = zfbJourExpend;
+    }
+
+    public Long getZfbJourBalance() {
+        return zfbJourBalance;
+    }
+
+    public void setZfbJourBalance(Long zfbJourBalance) {
+        this.zfbJourBalance = zfbJourBalance;
+    }
+
+    public Long getZfbJourMonthIncome() {
+        return zfbJourMonthIncome;
+    }
+
+    public void setZfbJourMonthIncome(Long zfbJourMonthIncome) {
+        this.zfbJourMonthIncome = zfbJourMonthIncome;
+    }
+
+    public Long getZfbJourMonthExpend() {
+        return zfbJourMonthExpend;
+    }
+
+    public void setZfbJourMonthExpend(Long zfbJourMonthExpend) {
+        this.zfbJourMonthExpend = zfbJourMonthExpend;
+    }
+
+    public String getZfbJourPic() {
+        return zfbJourPic;
+    }
+
+    public void setZfbJourPic(String zfbJourPic) {
+        this.zfbJourPic = zfbJourPic;
+    }
+
+    public String getZfbJourRemark() {
+        return zfbJourRemark;
+    }
+
+    public void setZfbJourRemark(String zfbJourRemark) {
+        this.zfbJourRemark = zfbJourRemark;
+    }
+
+    public Date getWxJourDatetimeStart() {
+        return wxJourDatetimeStart;
+    }
+
+    public void setWxJourDatetimeStart(Date wxJourDatetimeStart) {
+        this.wxJourDatetimeStart = wxJourDatetimeStart;
+    }
+
+    public Date getWxJourDatetimeEnd() {
+        return wxJourDatetimeEnd;
+    }
+
+    public void setWxJourDatetimeEnd(Date wxJourDatetimeEnd) {
+        this.wxJourDatetimeEnd = wxJourDatetimeEnd;
+    }
+
+    public Long getWxJourIncome() {
+        return wxJourIncome;
+    }
+
+    public void setWxJourIncome(Long wxJourIncome) {
+        this.wxJourIncome = wxJourIncome;
+    }
+
+    public Long getWxJourExpend() {
+        return wxJourExpend;
+    }
+
+    public void setWxJourExpend(Long wxJourExpend) {
+        this.wxJourExpend = wxJourExpend;
+    }
+
+    public Long getWxJourBalance() {
+        return wxJourBalance;
+    }
+
+    public void setWxJourBalance(Long wxJourBalance) {
+        this.wxJourBalance = wxJourBalance;
+    }
+
+    public Long getWxJourMonthIncome() {
+        return wxJourMonthIncome;
+    }
+
+    public void setWxJourMonthIncome(Long wxJourMonthIncome) {
+        this.wxJourMonthIncome = wxJourMonthIncome;
+    }
+
+    public Long getWxJourMonthExpend() {
+        return wxJourMonthExpend;
+    }
+
+    public void setWxJourMonthExpend(Long wxJourMonthExpend) {
+        this.wxJourMonthExpend = wxJourMonthExpend;
+    }
+
+    public String getWxJourPic() {
+        return wxJourPic;
+    }
+
+    public void setWxJourPic(String wxJourPic) {
+        this.wxJourPic = wxJourPic;
+    }
+
+    public String getWxJourRemark() {
+        return wxJourRemark;
+    }
+
+    public void setWxJourRemark(String wxJourRemark) {
+        this.wxJourRemark = wxJourRemark;
+    }
+
+    public String getJourPic() {
+        return jourPic;
+    }
+
+    public void setJourPic(String jourPic) {
+        this.jourPic = jourPic;
+    }
+
+    public String getAssetPdf() {
+        return assetPdf;
+    }
+
+    public void setAssetPdf(String assetPdf) {
+        this.assetPdf = assetPdf;
+    }
+
+    public String getWorkCompanyProperty() {
+        return workCompanyProperty;
+    }
+
+    public void setWorkCompanyProperty(String workCompanyProperty) {
+        this.workCompanyProperty = workCompanyProperty;
+    }
+
+    public String getWorkBelongIndustry() {
+        return workBelongIndustry;
+    }
+
+    public void setWorkBelongIndustry(String workBelongIndustry) {
+        this.workBelongIndustry = workBelongIndustry;
+    }
+
+    public String getWorkProfession() {
+        return workProfession;
+    }
+
+    public void setWorkProfession(String workProfession) {
+        this.workProfession = workProfession;
+    }
+
+    public Date getWorkDatetime() {
+        return workDatetime;
+    }
+
+    public void setWorkDatetime(Date workDatetime) {
+        this.workDatetime = workDatetime;
+    }
+
 }
