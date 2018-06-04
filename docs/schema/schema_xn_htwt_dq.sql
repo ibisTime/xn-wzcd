@@ -142,6 +142,13 @@ CREATE TABLE `tdq_budget_order` (
   `sale_user_id` varchar(32) DEFAULT NULL COMMENT '业务员编号',
   `company_code` varchar(32) DEFAULT NULL COMMENT '业务公司编号',
   
+  `refund_amount` bigint(20) DEFAULT NULL COMMENT '退款金额',
+  `refund_bankcard` varchar(255) DEFAULT NULL COMMENT '退款银行卡',
+  `refund_bank` varchar(255) DEFAULT NULL COMMENT '退款开户行',
+  `refund_subbranch` varchar(255) DEFAULT NULL COMMENT '退款开户支行',
+  `refund_bill` varchar(255) DEFAULT NULL COMMENT '退款水单',
+  
+  `refund_node_code` varchar(32) DEFAULT NULL COMMENT '退款节点编号(0/待退款 1/已退款)',
   `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
   `cur_node_code` varchar(32) DEFAULT NULL COMMENT '当前节点编号',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',

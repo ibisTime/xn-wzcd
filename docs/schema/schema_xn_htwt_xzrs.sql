@@ -201,19 +201,21 @@ CREATE TABLE `tp_employ_apply` (
   `education` VARCHAR(255) NULL COMMENT '文化程度',
   `id_no` VARCHAR(255) NULL COMMENT '身份证号码',
   `contact_mobile` VARCHAR(255) NULL COMMENT '联系电话',
+  
   `residence_address` VARCHAR(255) NULL COMMENT '户籍所在地',
   `speciality` VARCHAR(255) NULL COMMENT '特长技能',
-    `expect_salary` VARCHAR(255) NULL COMMENT '期望薪资',
+  `expect_salary` VARCHAR(255) NULL COMMENT '期望薪资',
   `now_address` VARCHAR(255) NULL COMMENT '现居住地址',
   `emergency_contact` VARCHAR(255) NULL COMMENT '紧急联系人',
+  
   `emergency_contact_mobile` VARCHAR(255) NULL COMMENT '紧急联系号码',
   `postcode` VARCHAR(255) NULL COMMENT '邮编',
   `award` VARCHAR(255) NULL COMMENT '受过何种奖励或专业训练',
   `is_out` char(1) NULL COMMENT '能否出差',
   `is_adjust_work` char(1) NULL COMMENT '能否接受工作调动',
+  
   `is_once_recruited` VARCHAR(255) NULL COMMENT '是否曾在我公司应聘',
   `is_friend_work` VARCHAR(255) NULL COMMENT '是否有亲属或朋友在我司工作',
-  
   `updater` VARCHAR(255) NULL COMMENT '更新人',
   `update_datetime` DATETIME NULL COMMENT '更新时间',
   `remark` VARCHAR(255) NULL COMMENT '备注',
