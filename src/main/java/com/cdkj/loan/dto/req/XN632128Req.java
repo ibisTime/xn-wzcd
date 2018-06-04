@@ -34,18 +34,6 @@ public class XN632128Req {
     // 商业险
     private String carSyx;
 
-    // 登记证书
-    private String carRegcerti;
-
-    // 车辆批单
-    private String carPd;
-
-    // 车钥匙
-    private String carKey;
-
-    // 大本扫描件
-    private String carBigSmj;
-
     public String getCode() {
         return code;
     }
@@ -110,35 +98,4 @@ public class XN632128Req {
         this.carSyx = carSyx;
     }
 
-    public String getCarRegcerti() {
-        return carRegcerti;
-    }
-
-    public void setCarRegcerti(String carRegcerti) {
-        this.carRegcerti = carRegcerti;
-    }
-
-    public String getCarPd() {
-        return carPd;
-    }
-
-    public void setCarPd(String carPd) {
-        this.carPd = carPd;
-    }
-
-    public String getCarKey() {
-        return carKey;
-    }
-
-    public void setCarKey(String carKey) {
-        this.carKey = carKey;
-    }
-
-    public String getCarBigSmj() {
-        return carBigSmj;
-    }
-
-    public void setCarBigSmj(String carBigSmj) {
-        this.carBigSmj = carBigSmj;
-    }
 }

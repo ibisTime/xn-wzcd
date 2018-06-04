@@ -18,6 +18,10 @@ public class XN632111ReqCreditUser {
     @NotBlank
     private String bankCreditResultPdf;
 
+    // 银行征信结果说明
+    @NotBlank
+    private String bankCreditResultRemark;
+
     public String getCreditUserCode() {
         return creditUserCode;
     }
@@ -32,6 +36,14 @@ public class XN632111ReqCreditUser {
 
     public void setBankCreditResultPdf(String bankCreditResultPdf) {
         this.bankCreditResultPdf = bankCreditResultPdf;
+    }
+
+    public String getBankCreditResultRemark() {
+        return bankCreditResultRemark;
+    }
+
+    public void setBankCreditResultRemark(String bankCreditResultRemark) {
+        this.bankCreditResultRemark = bankCreditResultRemark;
     }
 
 }

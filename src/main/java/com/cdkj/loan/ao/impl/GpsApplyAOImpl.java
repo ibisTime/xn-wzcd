@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632710Req;
 import com.cdkj.loan.dto.req.XN632711Req;
 import com.cdkj.loan.dto.req.XN632711ReqChild;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGpsApplyStatus;
 import com.cdkj.loan.enums.ELogisticsType;
@@ -55,9 +57,20 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         GpsApply data = new GpsApply();
         data.setType(req.getType());
         SYSUser sysUser = sysUserBO.getUser(req.getApplyUser());
+        if (CollectionUtils.sizeIsEmpty(sysUser.getPostCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "申请人岗位为空，请先设置岗位");
+        }
+        if (CollectionUtils.sizeIsEmpty(sysUser.getDepartmentCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "申请人部门为空，请先设置部门");
+        }
+        if (CollectionUtils.sizeIsEmpty(sysUser.getCompanyCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "申请人公司为空，请先设置公司");
+        }
         data.setCompanyCode(sysUser.getCompanyCode());
         data.setApplyUser(req.getApplyUser());
-
         data.setApplyReason(req.getApplyReason());
         data.setApplyCount(StringValidater.toInteger(req.getApplyCount()));
         data.setApplyDatetime(new Date());
@@ -114,9 +127,11 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
     private void initGpsApply(GpsApply gpsApply) {
         SYSUser sysUser = sysUserBO.getUser(gpsApply.getApplyUser());
         gpsApply.setApplyUserName(sysUser.getRealName());
-        Department department = departmentBO.getDepartment(gpsApply
-            .getCompanyCode());
-        gpsApply.setCompanyName(department.getName());
+        Department department = departmentBO
+            .getDepartment(gpsApply.getCompanyCode());
+        if (department != null) {
+            gpsApply.setCompanyName(department.getName());
+        }
     }
 
     @Override
