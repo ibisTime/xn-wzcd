@@ -3,7 +3,7 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 新增库存类别
+ * 修改库存类别
  * @author: silver 
  * @since: 2018年6月4日 下午9:57:07 
  * @history:
