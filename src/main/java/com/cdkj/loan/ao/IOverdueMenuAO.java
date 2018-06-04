@@ -17,7 +17,7 @@ public interface IOverdueMenuAO {
             List<XN632300ReqOverdue> list);
 
     // 处理
-    public void handleOverdueMenu(OverdueMenu data);
+    public void handleOverdueMenu(String code, String budgetOrderCode);
 
     public Paginable<OverdueMenu> queryOverdueMenuPage(int start, int limit,
             OverdueMenu condition);

@@ -59,11 +59,43 @@ public class OverdueMenu extends ABaseDO {
     // 准入单编号
     private String budgetOrderCode;
 
+    // 还款业务
+    private String repayBizCode;
+
+    // 还款计划
+    private String repayPlanCode;
+
     /*--------辅助字段----------*/
 
     private Date advanceFundDatetimeStart;// 垫资日期始
 
     private Date advanceFundDatetimeEnd;// 垫资日期止
+
+    private String loanBankName;// 贷款银行名称
+
+    public String getLoanBankName() {
+        return loanBankName;
+    }
+
+    public void setLoanBankName(String loanBankName) {
+        this.loanBankName = loanBankName;
+    }
+
+    public String getRepayBizCode() {
+        return repayBizCode;
+    }
+
+    public void setRepayBizCode(String repayBizCode) {
+        this.repayBizCode = repayBizCode;
+    }
+
+    public String getRepayPlanCode() {
+        return repayPlanCode;
+    }
+
+    public void setRepayPlanCode(String repayPlanCode) {
+        this.repayPlanCode = repayPlanCode;
+    }
 
     public Date getAdvanceFundDatetimeStart() {
         return advanceFundDatetimeStart;
