@@ -82,6 +82,13 @@ insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','notice_urgent_status','1','普通','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','notice_urgent_status','2','紧急','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'regime_status','公告紧急类型','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','regime_status','1','行政事务类','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','regime_status','2','人力资源管理类','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','regime_status','3','财务管理类','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','regime_status','4','营销管理类','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','regime_status','5','生产管理类','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+
 /*
 -- Query: SELECT `code`,`name`,`lead_name`,`mobile`,`parent_code`,`type`,`status`,`updater`,`update_datetime`,`remark` FROM tsys_department where code ='DP201800000000000000001'
 -- Date: 2018-06-01 07:28
