@@ -11,6 +11,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IEntryApplyDAO;
 import com.cdkj.loan.domain.EntryApply;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -33,6 +34,11 @@ public class EntryApplyBOImpl extends PaginableBOImpl<EntryApply>
     }
 
     @Override
+    public void updateEntryApplyStatus(EntryApply entryApply) {
+        entryApplyDAO.updateEntryApplyStatus(entryApply);
+    }
+
+    @Override
     public List<EntryApply> queryEntryApplyList(EntryApply condition) {
         return entryApplyDAO.selectList(condition);
     }
@@ -45,9 +51,11 @@ public class EntryApplyBOImpl extends PaginableBOImpl<EntryApply>
             condition.setCode(code);
             data = entryApplyDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "申请编号不存在！");
             }
         }
         return data;
     }
+
 }

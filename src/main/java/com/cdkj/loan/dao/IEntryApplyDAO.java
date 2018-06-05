@@ -5,5 +5,7 @@ import com.cdkj.loan.domain.EntryApply;
 
 //dao层 
 public interface IEntryApplyDAO extends IBaseDAO<EntryApply> {
-	String NAMESPACE = IEntryApplyDAO.class.getName().concat(".");
+    String NAMESPACE = IEntryApplyDAO.class.getName().concat(".");
+
+    void updateEntryApplyStatus(EntryApply entryApply);
 }

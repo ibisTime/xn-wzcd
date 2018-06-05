@@ -257,9 +257,9 @@
 		<property name="paginableDAO" ref="socialRelationDAOImpl"/>
 	</bean>
 	
-	<bean id="archiveLocationBO" class="com.cdkj.loan.bo.impl.ArchiveLocationBOImpl">
+	<!-- <bean id="archiveLocationBO" class="com.cdkj.loan.bo.impl.ArchiveLocationBOImpl">
 		<property name="paginableDAO" ref="archiveLocationDAOImpl"/>
-	</bean>
+	</bean> -->
 
 	<bean id="recruitApplyBO" class="com.cdkj.loan.bo.impl.RecruitApplyBOImpl">
 		<property name="paginableDAO" ref="recruitApplyDAOImpl"/>

@@ -13,4 +13,6 @@ public interface IEntryApplyBO extends IPaginableBO<EntryApply> {
 
     public EntryApply getEntryApply(String code);
 
+    public void updateEntryApplyStatus(EntryApply entryApply);
+
 }

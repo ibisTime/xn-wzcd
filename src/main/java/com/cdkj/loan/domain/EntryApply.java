@@ -1,11 +1,14 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+import java.util.List;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
 * 入职申请
 * @author: CYunlai 
-* @since: 2018-06-05 17:09:07
+* @since: 2018-06-05 17:42:15
 * @history:
 */
 public class EntryApply extends ABaseDO {
@@ -19,7 +22,7 @@ public class EntryApply extends ABaseDO {
     private String position;
 
     // 入职时间
-    private String entryDatetime;
+    private Date entryDatetime;
 
     // 姓名
     private String realName;
@@ -28,7 +31,7 @@ public class EntryApply extends ABaseDO {
     private String gender;
 
     // 出生年月
-    private String birthday;
+    private Date birthday;
 
     // 文化程度
     private String education;
@@ -43,7 +46,7 @@ public class EntryApply extends ABaseDO {
     private String health;
 
     // 婚姻状况
-    private String marryState;
+    private String marryStatus;
 
     // 身份证号码
     private String idNo;
@@ -58,91 +61,105 @@ public class EntryApply extends ABaseDO {
     private String emergencyContactMobile;
 
     // 户籍性质
-    private String photo;
+    private String residenceProperty;
 
     // 照片
-    private String residenceAddress;
+    private String photo;
 
     // 户籍所在地
-    private String nowAddress;
+    private String residenceAddress;
 
     // 现居住地址
-    private String isOtherCompanyRelation;
+    private String nowAddress;
 
     // 是否与其他单位存在劳动关系
-    private String relativeName;
+    private String isOtherCompanyRelation;
 
     // 亲属从事本行姓名
-    private String relativeRelation;
+    private String relativeName;
 
     // 亲属与本人关系
-    private String relativePosition;
+    private String relativeRelation;
 
     // 亲属职务
-    private String mainPerform;
+    private String relativePosition;
 
     // 主要业绩及工作能力简述
-    private String probationStartDatetime;
+    private String mainPerform;
 
     // 试用期期限开始
-    private String probationEndDatetime;
+    private Date probationStartDatetime;
 
     // 试用期期限结束
-    private String probationSalary;
+    private Date probationEndDatetime;
 
     // 试用期工资
-    private String baseSalary;
+    private Long probationSalary;
 
     // 转正后基本工资
-    private String performSalary;
+    private Long baseSalary;
 
     // 转正后绩效工资
-    private String performSalaryStandard;
+    private Long performSalary;
 
     // 绩效工资考核标准
-    private String quarterlyAwardStandard;
+    private String performSalaryStandard;
 
     // 季度奖考核标准
-    private String communicatePayStandard;
+    private String quarterlyAwardStandard;
 
     // 通讯费报销标准
-    private String provincialBedStandard;
+    private String communicatePayStandard;
 
     // 省会住宿报销标准
-    private String nonProvincialBedStandard;
+    private String provincialBedStandard;
 
     // 非省会住宿报销标准
-    private String trafficStandard;
+    private String nonProvincialBedStandard;
 
     // 市内交通现金补助
-    private String mobileStandard;
+    private Long trafficStandard;
 
     // 电话现金补贴
-    private String taxiStandard;
+    private Long mobileStandard;
 
     // 出租车
-    private String mealStandard;
+    private Long taxiStandard;
 
     // 餐补
-    private String salaryCardNo;
+    private Long mealStandard;
 
     // 工资卡账号
-    private String bank;
+    private String salaryCardNo;
 
     // 开户行
-    private String bankCode;
+    private String bank;
 
     // 开户行行号
-    private String status;
+    private String bankCode;
 
     // 状态
-    private String updater;
+    private String status;
 
     // 更新人
-    private String updateDatetime;
+    private String updater;
 
     // 更新时间
+    private Date updateDatetime;
+
+    // 备注
     private String remark;
+
+    // 工作经历
+    private List<WorkExperience> workExperienceList;
+
+    public List<WorkExperience> getWorkExperienceList() {
+        return workExperienceList;
+    }
+
+    public void setWorkExperienceList(List<WorkExperience> workExperienceList) {
+        this.workExperienceList = workExperienceList;
+    }
 
     public void setCode(String code) {
         this.code = code;
@@ -160,14 +177,6 @@ public class EntryApply extends ABaseDO {
         return position;
     }
 
-    public void setEntryDatetime(String entryDatetime) {
-        this.entryDatetime = entryDatetime;
-    }
-
-    public String getEntryDatetime() {
-        return entryDatetime;
-    }
-
     public void setRealName(String realName) {
         this.realName = realName;
     }
@@ -182,14 +191,6 @@ public class EntryApply extends ABaseDO {
 
     public String getGender() {
         return gender;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getBirthday() {
-        return birthday;
     }
 
     public void setEducation(String education) {
@@ -224,12 +225,12 @@ public class EntryApply extends ABaseDO {
         return health;
     }
 
-    public void setMarryState(String marryState) {
-        this.marryState = marryState;
+    public void setMarryStatus(String marryStatus) {
+        this.marryStatus = marryStatus;
     }
 
-    public String getMarryState() {
-        return marryState;
+    public String getMarryStatus() {
+        return marryStatus;
     }
 
     public void setIdNo(String idNo) {
@@ -262,6 +263,14 @@ public class EntryApply extends ABaseDO {
 
     public String getEmergencyContactMobile() {
         return emergencyContactMobile;
+    }
+
+    public void setResidenceProperty(String residenceProperty) {
+        this.residenceProperty = residenceProperty;
+    }
+
+    public String getResidenceProperty() {
+        return residenceProperty;
     }
 
     public void setPhoto(String photo) {
@@ -320,46 +329,6 @@ public class EntryApply extends ABaseDO {
         return relativePosition;
     }
 
-    public void setProbationStartDatetime(String probationStartDatetime) {
-        this.probationStartDatetime = probationStartDatetime;
-    }
-
-    public String getProbationStartDatetime() {
-        return probationStartDatetime;
-    }
-
-    public void setProbationEndDatetime(String probationEndDatetime) {
-        this.probationEndDatetime = probationEndDatetime;
-    }
-
-    public String getProbationEndDatetime() {
-        return probationEndDatetime;
-    }
-
-    public void setProbationSalary(String probationSalary) {
-        this.probationSalary = probationSalary;
-    }
-
-    public String getProbationSalary() {
-        return probationSalary;
-    }
-
-    public void setBaseSalary(String baseSalary) {
-        this.baseSalary = baseSalary;
-    }
-
-    public String getBaseSalary() {
-        return baseSalary;
-    }
-
-    public void setPerformSalary(String performSalary) {
-        this.performSalary = performSalary;
-    }
-
-    public String getPerformSalary() {
-        return performSalary;
-    }
-
     public void setPerformSalaryStandard(String performSalaryStandard) {
         this.performSalaryStandard = performSalaryStandard;
     }
@@ -400,38 +369,6 @@ public class EntryApply extends ABaseDO {
         return nonProvincialBedStandard;
     }
 
-    public void setTrafficStandard(String trafficStandard) {
-        this.trafficStandard = trafficStandard;
-    }
-
-    public String getTrafficStandard() {
-        return trafficStandard;
-    }
-
-    public void setMobileStandard(String mobileStandard) {
-        this.mobileStandard = mobileStandard;
-    }
-
-    public String getMobileStandard() {
-        return mobileStandard;
-    }
-
-    public void setTaxiStandard(String taxiStandard) {
-        this.taxiStandard = taxiStandard;
-    }
-
-    public String getTaxiStandard() {
-        return taxiStandard;
-    }
-
-    public void setMealStandard(String mealStandard) {
-        this.mealStandard = mealStandard;
-    }
-
-    public String getMealStandard() {
-        return mealStandard;
-    }
-
     public void setSalaryCardNo(String salaryCardNo) {
         this.salaryCardNo = salaryCardNo;
     }
@@ -456,14 +393,6 @@ public class EntryApply extends ABaseDO {
         return bankCode;
     }
 
-    public String getMainPerform() {
-        return mainPerform;
-    }
-
-    public void setMainPerform(String mainPerform) {
-        this.mainPerform = mainPerform;
-    }
-
     public void setStatus(String status) {
         this.status = status;
     }
@@ -480,12 +409,108 @@ public class EntryApply extends ABaseDO {
         return updater;
     }
 
-    public void setUpdateDatetime(String updateDatetime) {
-        this.updateDatetime = updateDatetime;
+    public Date getEntryDatetime() {
+        return entryDatetime;
     }
 
-    public String getUpdateDatetime() {
+    public void setEntryDatetime(Date entryDatetime) {
+        this.entryDatetime = entryDatetime;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getMainPerform() {
+        return mainPerform;
+    }
+
+    public void setMainPerform(String mainPerform) {
+        this.mainPerform = mainPerform;
+    }
+
+    public Date getProbationStartDatetime() {
+        return probationStartDatetime;
+    }
+
+    public void setProbationStartDatetime(Date probationStartDatetime) {
+        this.probationStartDatetime = probationStartDatetime;
+    }
+
+    public Date getProbationEndDatetime() {
+        return probationEndDatetime;
+    }
+
+    public void setProbationEndDatetime(Date probationEndDatetime) {
+        this.probationEndDatetime = probationEndDatetime;
+    }
+
+    public Long getProbationSalary() {
+        return probationSalary;
+    }
+
+    public void setProbationSalary(Long probationSalary) {
+        this.probationSalary = probationSalary;
+    }
+
+    public Long getBaseSalary() {
+        return baseSalary;
+    }
+
+    public void setBaseSalary(Long baseSalary) {
+        this.baseSalary = baseSalary;
+    }
+
+    public Long getPerformSalary() {
+        return performSalary;
+    }
+
+    public void setPerformSalary(Long performSalary) {
+        this.performSalary = performSalary;
+    }
+
+    public Long getTrafficStandard() {
+        return trafficStandard;
+    }
+
+    public void setTrafficStandard(Long trafficStandard) {
+        this.trafficStandard = trafficStandard;
+    }
+
+    public Long getMobileStandard() {
+        return mobileStandard;
+    }
+
+    public void setMobileStandard(Long mobileStandard) {
+        this.mobileStandard = mobileStandard;
+    }
+
+    public Long getTaxiStandard() {
+        return taxiStandard;
+    }
+
+    public void setTaxiStandard(Long taxiStandard) {
+        this.taxiStandard = taxiStandard;
+    }
+
+    public Long getMealStandard() {
+        return mealStandard;
+    }
+
+    public void setMealStandard(Long mealStandard) {
+        this.mealStandard = mealStandard;
+    }
+
+    public Date getUpdateDatetime() {
         return updateDatetime;
+    }
+
+    public void setUpdateDatetime(Date updateDatetime) {
+        this.updateDatetime = updateDatetime;
     }
 
     public void setRemark(String remark) {

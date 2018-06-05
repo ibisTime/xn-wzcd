@@ -13,11 +13,12 @@
 		<result column="nation" property="nation" />
 		<result column="native_place" property="nativePlace" />
 		<result column="health" property="health" />
-		<result column="marry_state" property="marryState" />
+		<result column="marry_status" property="marryStatus" />
 		<result column="id_no" property="idNo" />
 		<result column="mobile" property="mobile" />
 		<result column="emergency_contact" property="emergencyContact" />
 		<result column="emergency_contact_mobile" property="emergencyContactMobile" />
+		<result column="residence_property" property="residenceProperty" />
 		<result column="photo" property="photo" />
 		<result column="residence_address" property="residenceAddress" />
 		<result column="now_address" property="nowAddress" />
@@ -25,7 +26,7 @@
 		<result column="relative_name" property="relativeName" />
 		<result column="relative_relation" property="relativeRelation" />
 		<result column="relative_position" property="relativePosition" />
-		<result column="main_perform" property="mainPerform" />
+		<result column=" main_perform" property=" mainPerform" />
 		<result column="probation_start_datetime" property="probationStartDatetime" />
 		<result column="probation_end_datetime" property="probationEndDatetime" />
 		<result column="probation_salary" property="probationSalary" />
@@ -67,11 +68,12 @@
 		,t.nation
 		,t.native_place
 		,t.health
-		,t.marry_state
+		,t.marry_status
 		,t.id_no
 		,t.mobile
 		,t.emergency_contact
 		,t.emergency_contact_mobile
+		,t.residence_property
 		,t.photo
 		,t.residence_address
 		,t.now_address
@@ -79,7 +81,7 @@
 		,t.relative_name
 		,t.relative_relation
 		,t.relative_position
-		,t.main_perform
+		,t. main_perform
 		,t.probation_start_datetime
 		,t.probation_end_datetime
 		,t.probation_salary
@@ -130,11 +132,12 @@
 		,nation
 		,native_place
 		,health
-		,marry_state
+		,marry_status
 		,id_no
 		,mobile
 		,emergency_contact
 		,emergency_contact_mobile
+		,residence_property
 		,photo
 		,residence_address
 		,now_address
@@ -142,7 +145,7 @@
 		,relative_name
 		,relative_relation
 		,relative_position
-		,main_perform
+		, main_perform
 		,probation_start_datetime
 		,probation_end_datetime
 		,probation_salary
@@ -176,11 +179,12 @@
 		,#{nation}
 		,#{nativePlace}
 		,#{health}
-		,#{marryState}
+		,#{marryStatus}
 		,#{idNo}
 		,#{mobile}
 		,#{emergencyContact}
 		,#{emergencyContactMobile}
+		,#{residenceProperty}
 		,#{photo}
 		,#{residenceAddress}
 		,#{nowAddress}
@@ -188,7 +192,7 @@
 		,#{relativeName}
 		,#{relativeRelation}
 		,#{relativePosition}
-		,#{mainPerform}
+		,#{ mainPerform}
 		,#{probationStartDatetime}
 		,#{probationEndDatetime}
 		,#{probationSalary}
@@ -225,11 +229,12 @@
 		,nation = #{nation}
 		,native_place = #{nativePlace}
 		,health = #{health}
-		,marry_state = #{marryState}
+		,marry_status = #{marryStatus}
 		,id_no = #{idNo}
 		,mobile = #{mobile}
 		,emergency_contact = #{emergencyContact}
 		,emergency_contact_mobile = #{emergencyContactMobile}
+		,residence_property = #{residenceProperty}
 		,photo = #{photo}
 		,residence_address = #{residenceAddress}
 		,now_address = #{nowAddress}
@@ -237,7 +242,7 @@
 		,relative_name = #{relativeName}
 		,relative_relation = #{relativeRelation}
 		,relative_position = #{relativePosition}
-		,main_perform = #{mainPerform}
+		, main_perform = #{ mainPerform}
 		,probation_start_datetime = #{probationStartDatetime}
 		,probation_end_datetime = #{probationEndDatetime}
 		,probation_salary = #{probationSalary}
@@ -256,6 +261,16 @@
 		,bank = #{bank}
 		,bank_code = #{bankCode}
 		,status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_entryApply_status" parameterType="entryApply">
+		UPDATE tp_entry_apply
+		SET
+		status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
