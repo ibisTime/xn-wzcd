@@ -5,28 +5,16 @@ import java.util.List;
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.RecruitApply;
 
-
-
-//CHECK ��鲢��ע�� 
 public interface IRecruitApplyBO extends IPaginableBO<RecruitApply> {
 
+    public boolean isRecruitApplyExist(String code);
 
-	public boolean isRecruitApplyExist(String code);
+    public String saveRecruitApply(RecruitApply data);
 
+    public void auditRecruitApply(RecruitApply condition);
 
-	public String saveRecruitApply(RecruitApply data);
+    public List<RecruitApply> queryRecruitApplyList(RecruitApply condition);
 
-
-	public int removeRecruitApply(String code);
-
-
-	public int refreshRecruitApply(RecruitApply data);
-
-
-	public List<RecruitApply> queryRecruitApplyList(RecruitApply condition);
-
-
-	public RecruitApply getRecruitApply(String code);
-
+    public RecruitApply getRecruitApply(String code);
 
 }

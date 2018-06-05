@@ -21,8 +21,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
-        IArchiveBO {
+public class ArchiveBOImpl extends PaginableBOImpl<Archive>
+        implements IArchiveBO {
 
     @Autowired
     private IArchiveDAO archiveDAO;
@@ -41,7 +41,8 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
     public String saveArchive(Archive data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.ARCHIVE.getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.RECRUITAPPLY.getCode());
             data.setCode(code);
             archiveDAO.insert(data);
         }

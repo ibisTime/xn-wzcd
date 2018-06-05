@@ -82,7 +82,7 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
             condition.setCode(code);
             data = socialRelationDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException("xn0000", "编号不存在");
             }
         }
         return data;

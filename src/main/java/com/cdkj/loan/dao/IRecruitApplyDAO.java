@@ -8,4 +8,6 @@ public interface IRecruitApplyDAO extends IBaseDAO<RecruitApply> {
     String NAMESPACE = IRecruitApplyDAO.class.getName().concat(".");
 
     public int updateApprove(RecruitApply data);
+
+    public void auditRecruitApply(RecruitApply condition);
 }

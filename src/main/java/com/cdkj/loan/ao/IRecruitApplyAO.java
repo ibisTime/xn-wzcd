@@ -6,16 +6,16 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RecruitApply;
+import com.cdkj.loan.dto.req.XN632480Req;
 
 @Component
 public interface IRecruitApplyAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addRecruitApply(RecruitApply data);
+    public String addRecruitApply(XN632480Req req);
 
-    public int dropRecruitApply(String code);
-
-    public int editRecruitApply(RecruitApply data);
+    public void auditRecruitApply(String code, String updater, String remark,
+            String approveResult);
 
     public Paginable<RecruitApply> queryRecruitApplyPage(int start, int limit,
             RecruitApply condition);

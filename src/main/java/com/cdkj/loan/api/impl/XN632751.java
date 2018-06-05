@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 修改库存类别
+ * 修改品名
  * @author: silver 
  * @since: 2018年6月4日 下午10:02:08 
  * @history:

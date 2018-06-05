@@ -37,7 +37,9 @@ public enum EGeneratePrefix {
 
     OVERDUEMENU("OM", "导入逾期名单"), NOTICE("N", "通知公告"), REGIME("R", "公司制度"), CompCategory(
             "CC", "库存类别"), CompProduct("COP", "品名"), ARCHIVE("AR", "人事档案"), SOCIAL_RELATION(
-            "SR", "社会关系"), ARCHIVE_LOCATION("AL", "档案存放位置");
+            "SR", "社会关系"), ARCHIVE_LOCATION("AL", "档案存放位置"), RECRUITAPPLY("RA",
+            "用人申请"), SOCIALRELATION("SR", "社会关系"), EmployApply("EA", "应聘登记"), WORK_EXPERIENCE(
+            "WE", "工作经历"), CHECK_PROJECT("CP", "考核项目"), STORAGE_IN("SI", "入库");
 
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();
