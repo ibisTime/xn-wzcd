@@ -89,9 +89,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             }
 
             if (guaCreditUser != null) {
-                data.setApplyUserName(guaCreditUser.getUserName());
-                data.setMobile(guaCreditUser.getMobile());
-                data.setIdNo(guaCreditUser.getIdNo());
+                data.setGuaName(guaCreditUser.getUserName());
+                data.setGuaMobile(guaCreditUser.getMobile());
+                data.setGuaIdNo(guaCreditUser.getIdNo());
             }
 
             data.setApplyDatetime(new Date());
