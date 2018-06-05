@@ -97,16 +97,24 @@
 		<typeAlias alias="notice" type="com.cdkj.loan.domain.Notice" />
 		<typeAlias alias="regime" type="com.cdkj.loan.domain.Regime" />
 		<typeAlias alias="compCategory" type="com.cdkj.loan.domain.CompCategory" />
+		
 		<typeAlias alias="compProduct" type="com.cdkj.loan.domain.CompProduct" />
 	    <typeAlias alias="recruitApply" type="com.cdkj.loan.domain.RecruitApply" />
 	    <typeAlias alias="employApply" type="com.cdkj.loan.domain.EmployApply" />
 		<typeAlias alias="workExperience" type="com.cdkj.loan.domain.WorkExperience" />
 		<typeAlias alias="checkProject" type="com.cdkj.loan.domain.CheckProject" />
 		
+		<typeAlias alias="storageIn" type="com.cdkj.loan.domain.StorageIn" />
+		<typeAlias alias="storageOut" type="com.cdkj.loan.domain.StorageOut" />
+		
 		<!-- 贷后 -->
 		<typeAlias alias="overdueMenu" type="com.cdkj.loan.domain.OverdueMenu" />
+		<typeAlias alias="archive" type="com.cdkj.loan.domain.Archive" />
+		<typeAlias alias="archiveLocation" type="com.cdkj.loan.domain.ArchiveLocation" />
+		<typeAlias alias="socialRelation" type="com.cdkj.loan.domain.SocialRelation" />
 		
 		<typeAlias alias="recruitApply" type="com.cdkj.loan.domain.RecruitApply" />
+		<typeAlias alias="entryApply" type="com.cdkj.loan.domain.EntryApply" />
 	</typeAliases>
 	
 </configuration>

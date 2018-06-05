@@ -270,6 +270,59 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '考核项目';
 
+DROP TABLE IF EXISTS `tp_entry_apply`;
+CREATE TABLE `tp_entry_apply` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `position` VARCHAR(255) NULL COMMENT '入职岗位',
+  `entry_datetime` DATETIME NULL COMMENT '入职时间',
+  `real_name` VARCHAR(255) NULL COMMENT '姓名',
+  `gender` VARCHAR(4) NULL COMMENT '性别',
+  `birthday` DATETIME NULL COMMENT '出生年月',
+  `education` VARCHAR(255) NULL COMMENT '文化程度',
+  `nation` VARCHAR(255) NULL COMMENT '民族',
+  `native_place` VARCHAR(255) NULL COMMENT '籍贯',
+  `health` VARCHAR(32) NULL COMMENT '健康状况',
+  `marry_status` VARCHAR(32) NULL COMMENT '婚姻状况',
+  `id_no` VARCHAR(32) NULL COMMENT '身份证号码',
+  `mobile` VARCHAR(32) NULL COMMENT '手机号码',
+  `emergency_contact` VARCHAR(255) NULL COMMENT '紧急联系人',
+  `emergency_contact_mobile` VARCHAR(32) NULL COMMENT '紧急联系号码',
+  `residence_property` VARCHAR(255) NULL COMMENT '户籍性质',
+  `photo` VARCHAR(255) NULL COMMENT '照片',
+  `residence_address` VARCHAR(255) NULL COMMENT '户籍所在地',
+  `now_address` VARCHAR(255) NULL COMMENT '现居住地址',
+  `is_other_company_relation` VARCHAR(32) NULL COMMENT '是否与其他单位存在劳动关系',
+  `relative_name` VARCHAR(255) NULL COMMENT '亲属从事本行姓名',
+  `relative_relation` VARCHAR(255) NULL COMMENT '亲属与本人关系',
+  `relative_position` VARCHAR(255) NULL COMMENT '亲属职务',
+  `main_perform` VARCHAR(255) NULL COMMENT '主要业绩及工作能力简述',
+  `probation_start_datetime` DATETIME NULL COMMENT '试用期期限开始',
+  `probation_end_datetime` DATETIME NULL COMMENT '试用期期限结束',
+  `probation_salary` bigint(20) NULL COMMENT '试用期工资',
+  `base_salary` bigint(20) NULL COMMENT '转正后基本工资',
+  `perform_salary` bigint(20) NULL COMMENT '转正后绩效工资',
+  `perform_salary_standard` VARCHAR(255) NULL COMMENT '绩效工资考核标准',
+  `quarterly_award_standard` VARCHAR(255) NULL COMMENT '季度奖考核标准',
+  `communicate_pay_standard` VARCHAR(255) NULL COMMENT '通讯费报销标准',
+  `provincial_bed_standard` VARCHAR(255) NULL COMMENT '省会住宿报销标准',
+  `non_provincial_bed_standard` VARCHAR(255) NULL COMMENT '非省会住宿报销标准',
+  `traffic_standard` bigint(20) NULL COMMENT '市内交通现金补助',
+  `mobile_standard` bigint(20) NULL COMMENT '电话现金补贴',
+  `taxi_standard` bigint(20) NULL COMMENT '出租车',
+  `meal_standard` bigint(20) NULL COMMENT '餐补',
+  `salary_card_no` VARCHAR(32) NULL COMMENT '工资卡账号',
+  `bank` VARCHAR(32) NULL COMMENT '工资卡账号',
+  `bank_code` VARCHAR(32) NULL COMMENT '开户行行号',
+  `status` VARCHAR(4) NULL COMMENT '状态',
+  `updater` VARCHAR(255) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '入职申请';
+
+
 --入职申请（编号，入职岗位，入职时间，姓名，性别，出生年月，文化程度，民族，籍贯，健康状况，婚姻状况，身份证号码，联系电话，紧急联系人，紧急联系号码，户籍所在地，户籍性质，照片，现居住地址，是否与其他单位存在劳动关系，是否有亲属从事本行业工作，姓名，与本人关系，职务，主要业绩及工作能力简述，试用期期限开始，试用期期限结束，试用期工资，转正后基本工资，转正后绩效工资，绩效工资考核标准，季度奖考核标准，通讯费报销标准，省会住宿报销标准，非省会住宿报销标准，出租车，市内交通现金补助，电话现金补贴，餐补，工资卡账号，开户行，开户行行号）
 --entry_apply(code,position,entry_datetime,name,gender,birthday,education_status,nation,native_place,health_status,marriage_status,idcard_no,mobile,emergency_contact,emergency_contact_mobile,residence_address,photo,current_address,is_exist_labor_relation,is_relatives_here,relative_name,relative_relation,relative_position,award_training,probation_start_datetime,probation_end_datetime,probation_salary,base_salary,perform_salary,perform_salary_assess,quarterly_award_assess,communicate_reimburse,provincial_bed_reimburse,non_provincial_bed_reimburse,taxi_reimburse,traffic_reimburse,mobile_reimburse,meal_reimburse,salary_card_no,bank,bank_code)
 --

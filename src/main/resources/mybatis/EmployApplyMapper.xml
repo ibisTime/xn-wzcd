@@ -192,21 +192,21 @@
 		)
 	</insert>
 	
-	<update id="update_employApply_interview" parameterType="employApply">
+	<update id="update_employApplyInterview" parameterType="employApply">
 		UPDATE tp_employ_apply SET
-		composite=${composite}
-		,quality=${quality}
-		,interview_record=${interviewRecord}
-		,employ_result=${employResult}
-		,probation=${probation}
+		composite=#{composite}
+		,quality=#{quality}
+		,interview_record=#{interviewRecord}
+		,employ_result=#{employResult}
+		,probation=#{probation}
 		
-		,employ_salary=${employSalary}
-		,employ_department_code=${employDepartmentCode}
-		,employ_position_code=${employPositionCode}
-		,employ_approve_user=${employApproveUser}
-		,employ_approve_datetime=${employApproveDatetime}
+		,employ_salary=#{employSalary}
+		,employ_department_code=#{employDepartmentCode}
+		,employ_position_code=#{employPositionCode}
+		,employ_approve_user=#{employApproveUser}
+		,employ_approve_datetime=#{employApproveDatetime}
 		
-		,employ_approve_note=${employApproveNote}
+		,employ_approve_note=#{employApproveNote}
 		,status = #{status}
 		,remark = #{remark}
 		WHERE code = #{code}

@@ -217,6 +217,7 @@ public class ArchiveAOImpl implements IArchiveAO {
             throw new BizException("xn0000", "记录编号不存在");
         }
         archiveBO.removeArchive(code);
+        socialRelationBO.removeSocialRelation(code);
     }
 
     @Override
@@ -232,7 +233,14 @@ public class ArchiveAOImpl implements IArchiveAO {
 
     @Override
     public Archive getArchive(String code) {
-        return archiveBO.getArchive(code);
+
+        SocialRelation condition = new SocialRelation();
+        condition.setArchiveCode(code);
+        List<SocialRelation> list = socialRelationBO
+            .querySocialRelationList(condition);
+        Archive archive = archiveBO.getArchive(code);
+        archive.setSocialRelationList(list);
+        return archive;
     }
 
     @Override

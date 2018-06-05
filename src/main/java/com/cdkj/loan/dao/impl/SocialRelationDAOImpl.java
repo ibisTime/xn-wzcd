@@ -20,43 +20,43 @@ public class SocialRelationDAOImpl extends AMybatisTemplate implements
 
     @Override
     public int insert(SocialRelation data) {
-        return super.insert(NAMESPACE.concat("insert_SocialRelation"), data);
+        return super.insert(NAMESPACE.concat("insert_socialRelation"), data);
     }
 
     @Override
     public int delete(SocialRelation data) {
-        return super.delete(NAMESPACE.concat("delete_SocialRelation"), data);
+        return super.delete(NAMESPACE.concat("delete_socialRelation"), data);
     }
 
     @Override
     public SocialRelation select(SocialRelation condition) {
-        return super.select(NAMESPACE.concat("select_SocialRelation"),
+        return super.select(NAMESPACE.concat("select_socialRelation"),
             condition, SocialRelation.class);
     }
 
     @Override
     public long selectTotalCount(SocialRelation condition) {
         return super.selectTotalCount(
-            NAMESPACE.concat("select_SocialRelation_count"), condition);
+            NAMESPACE.concat("select_socialRelation_count"), condition);
     }
 
     @Override
     public List<SocialRelation> selectList(SocialRelation condition) {
-        return super.selectList(NAMESPACE.concat("select_SocialRelation"),
+        return super.selectList(NAMESPACE.concat("select_socialRelation"),
             condition, SocialRelation.class);
     }
 
     @Override
     public List<SocialRelation> selectList(SocialRelation condition, int start,
             int count) {
-        return super.selectList(NAMESPACE.concat("select_SocialRelation"),
+        return super.selectList(NAMESPACE.concat("select_socialRelation"),
             start, count, condition, SocialRelation.class);
     }
 
     @Override
     public int update(SocialRelation data) {
 
-        return super.update(NAMESPACE.concat("update_SocialRelation"), data);
+        return super.update(NAMESPACE.concat("update_socialRelation"), data);
     }
 
 }

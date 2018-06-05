@@ -25,13 +25,13 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
         implements IArchiveBO {
 
     @Autowired
-    private IArchiveDAO ArchiveDAO;
+    private IArchiveDAO archiveDAO;
 
     @Override
     public boolean isArchiveExist(String code) {
         Archive condition = new Archive();
         condition.setCode(code);
-        if (ArchiveDAO.selectTotalCount(condition) > 0) {
+        if (archiveDAO.selectTotalCount(condition) > 0) {
             return true;
         }
         return false;
@@ -44,7 +44,7 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
             code = OrderNoGenerater
                 .generate(EGeneratePrefix.RECRUITAPPLY.getCode());
             data.setCode(code);
-            ArchiveDAO.insert(data);
+            archiveDAO.insert(data);
         }
         return code;
     }
@@ -55,7 +55,7 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
         if (StringUtils.isNotBlank(code)) {
             Archive data = new Archive();
             data.setCode(code);
-            count = ArchiveDAO.delete(data);
+            count = archiveDAO.delete(data);
         }
     }
 
@@ -63,13 +63,13 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
     public void refreshArchive(Archive data) {
 
         if (StringUtils.isNotBlank(data.getCode())) {
-            ArchiveDAO.update(data);
+            archiveDAO.update(data);
         }
     }
 
     @Override
     public List<Archive> queryArchiveList(Archive condition) {
-        return ArchiveDAO.selectList(condition);
+        return archiveDAO.selectList(condition);
     }
 
     @Override
@@ -78,9 +78,9 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
         if (StringUtils.isNotBlank(code)) {
             Archive condition = new Archive();
             condition.setCode(code);
-            data = ArchiveDAO.select(condition);
+            data = archiveDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException("xn0000", "编号不存在");
             }
         }
         return data;
@@ -90,7 +90,7 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
     public void refreshLeaveArchive(Archive data) {
 
         if (StringUtils.isNotBlank(data.getCode())) {
-            ArchiveDAO.updateLeaveArchive(data);
+            archiveDAO.updateLeaveArchive(data);
         }
     }
 }
