@@ -109,6 +109,9 @@
 		
 		<!-- 贷后 -->
 		<typeAlias alias="overdueMenu" type="com.cdkj.loan.domain.OverdueMenu" />
+		<typeAlias alias="archive" type="com.cdkj.loan.domain.Archive" />
+		<typeAlias alias="archiveLocation" type="com.cdkj.loan.domain.ArchiveLocation" />
+		<typeAlias alias="socialRelation" type="com.cdkj.loan.domain.SocialRelation" />
 		
 		<typeAlias alias="recruitApply" type="com.cdkj.loan.domain.RecruitApply" />
 	</typeAliases>

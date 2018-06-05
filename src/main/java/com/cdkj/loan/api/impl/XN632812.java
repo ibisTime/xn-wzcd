@@ -13,7 +13,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 新增离职档案
+ * 修改离职档案
  * @author: jiafr 
  * @since: 2018年6月4日 下午9:51:37 
  * @history:

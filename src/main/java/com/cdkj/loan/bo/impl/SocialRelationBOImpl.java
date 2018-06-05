@@ -25,13 +25,13 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
         implements ISocialRelationBO {
 
     @Autowired
-    private ISocialRelationDAO SocialRelationDAO;
+    private ISocialRelationDAO socialRelationDAO;
 
     @Override
     public boolean isSocialRelationExist(String code) {
         SocialRelation condition = new SocialRelation();
         condition.setCode(code);
-        if (SocialRelationDAO.selectTotalCount(condition) > 0) {
+        if (socialRelationDAO.selectTotalCount(condition) > 0) {
             return true;
         }
         return false;
@@ -41,10 +41,10 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
     public String saveSocialRelation(SocialRelation data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.SOCIALRELATION.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.SOCIAL_RELATION
+                .getCode());
             data.setCode(code);
-            SocialRelationDAO.insert(data);
+            socialRelationDAO.insert(data);
         }
         return code;
     }
@@ -54,8 +54,8 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
         int count = 0;
         if (StringUtils.isNotBlank(code)) {
             SocialRelation data = new SocialRelation();
-            data.setCode(code);
-            count = SocialRelationDAO.delete(data);
+            data.setArchiveCode(code);
+            count = socialRelationDAO.delete(data);
         }
         return count;
     }
@@ -64,15 +64,14 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
     public int refreshSocialRelation(SocialRelation data) {
         int count = 0;
         if (StringUtils.isNotBlank(data.getCode())) {
-            count = SocialRelationDAO.update(data);
+            count = socialRelationDAO.update(data);
         }
         return count;
     }
 
     @Override
-    public List<SocialRelation> querySocialRelationList(
-            SocialRelation condition) {
-        return SocialRelationDAO.selectList(condition);
+    public List<SocialRelation> querySocialRelationList(SocialRelation condition) {
+        return socialRelationDAO.selectList(condition);
     }
 
     @Override
@@ -81,9 +80,9 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
         if (StringUtils.isNotBlank(code)) {
             SocialRelation condition = new SocialRelation();
             condition.setCode(code);
-            data = SocialRelationDAO.select(condition);
+            data = socialRelationDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException("xn0000", "编号不存在");
             }
         }
         return data;

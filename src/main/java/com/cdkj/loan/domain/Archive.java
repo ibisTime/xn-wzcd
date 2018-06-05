@@ -1,15 +1,16 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
-* 人事档案
-* @author: xieyj 
-* @since: 2018-06-04 17:24:57
-* @history:
-*/
+ * 人事档案
+ * @author: jiafr 
+ * @since: 2018年6月5日 下午1:10:28 
+ * @history:
+ */
 public class Archive extends ABaseDO {
 
     private static final long serialVersionUID = 1L;
@@ -192,6 +193,16 @@ public class Archive extends ABaseDO {
 
     // 入职时间止
     private String entryDatetimeEnd;
+
+    private List<SocialRelation> socialRelationList;
+
+    public List<SocialRelation> getSocialRelationList() {
+        return socialRelationList;
+    }
+
+    public void setSocialRelationList(List<SocialRelation> socialRelationList) {
+        this.socialRelationList = socialRelationList;
+    }
 
     public void setCode(String code) {
         this.code = code;
