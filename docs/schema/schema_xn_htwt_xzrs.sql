@@ -191,7 +191,7 @@ COMMENT = '用人申请';
 DROP TABLE IF EXISTS `tp_employ_apply`;
 CREATE TABLE `tp_employ_apply` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
-  `real_name` VARCHAR(255) NULL COMMENT '姓名',
+  `real_name` VARCHAR(255) NULL COMMENT '真实姓名',
   `gender` VARCHAR(32) NULL COMMENT '性别',
   `birthday` VARCHAR(255) NULL COMMENT '出生年月',
   `native_place` VARCHAR(255) NULL COMMENT '籍贯',
@@ -204,7 +204,7 @@ CREATE TABLE `tp_employ_apply` (
   
   `residence_address` VARCHAR(255) NULL COMMENT '户籍所在地',
   `speciality` VARCHAR(255) NULL COMMENT '特长技能',
-  `expect_salary` VARCHAR(255) NULL COMMENT '期望薪资',
+  `expect_salary` bigint(20) NULL COMMENT '期望薪资',
   `now_address` VARCHAR(255) NULL COMMENT '现居住地址',
   `emergency_contact` VARCHAR(255) NULL COMMENT '紧急联系人',
   
@@ -216,7 +216,22 @@ CREATE TABLE `tp_employ_apply` (
   
   `is_once_recruited` VARCHAR(255) NULL COMMENT '是否曾在我公司应聘',
   `is_friend_work` VARCHAR(255) NULL COMMENT '是否有亲属或朋友在我司工作',
-  `updater` VARCHAR(255) NULL COMMENT '更新人',
+  `composite` VARCHAR(255) NULL COMMENT '综合',
+  `quality` VARCHAR(255) NULL COMMENT '素质',
+  `interview_record` VARCHAR(255) NULL COMMENT '面试记录',
+  
+  `employ_result` VARCHAR(255) NULL COMMENT '录用结果',
+  `probation` VARCHAR(255) NULL COMMENT '试用期',
+  `employ_salary` bigint(20) NULL COMMENT '薪资',
+  `employ_department_code` VARCHAR(255) NULL COMMENT '入职部门',
+  `employ_position_code` VARCHAR(255) NULL COMMENT '入职职务',
+  
+  `employ_approve_user` VARCHAR(255) NULL COMMENT '审核人',
+  `employ_approve_datetime` DATETIME NULL COMMENT '审核时间',
+  `employ_approve_note` VARCHAR(255) NULL COMMENT '审核说明',
+  `status` VARCHAR(32) NULL COMMENT '状态(0=待面试 1=已面试通过 2已面试不通过)',
+  
+  `updater` VARCHAR(32) NULL COMMENT '更新人',
   `update_datetime` DATETIME NULL COMMENT '更新时间',
   `remark` VARCHAR(255) NULL COMMENT '备注',
   PRIMARY KEY (`code`))
@@ -224,8 +239,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '应聘岗位';
 
-DROP TABLE IF EXISTS `tp_word_experience`;
-CREATE TABLE `tp_word_experience` (
+DROP TABLE IF EXISTS `tp_work_experience`;
+CREATE TABLE `tp_work_experience` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
   `parent_code` VARCHAR(32) NULL COMMENT '父级编号',
   `start_datetime` DATETIME NULL COMMENT '起始时间',
@@ -241,4 +256,28 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '工作经历';
 
+DROP TABLE IF EXISTS `tp_check_project`;
+CREATE TABLE `tp_check_project` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `name` VARCHAR(255) NULL COMMENT '项目名称',
+  `check_result` VARCHAR(255) NULL COMMENT '考核指标',
+  `check_user` VARCHAR(255) NULL COMMENT '考核人',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  
+  `employ_apply_code` VARCHAR(32) NOT NULL COMMENT '应聘岗位编号',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '考核项目';
 
+--入职申请（编号，入职岗位，入职时间，姓名，性别，出生年月，文化程度，民族，籍贯，健康状况，婚姻状况，身份证号码，联系电话，紧急联系人，紧急联系号码，户籍所在地，户籍性质，照片，现居住地址，是否与其他单位存在劳动关系，是否有亲属从事本行业工作，姓名，与本人关系，职务，主要业绩及工作能力简述，试用期期限开始，试用期期限结束，试用期工资，转正后基本工资，转正后绩效工资，绩效工资考核标准，季度奖考核标准，通讯费报销标准，省会住宿报销标准，非省会住宿报销标准，出租车，市内交通现金补助，电话现金补贴，餐补，工资卡账号，开户行，开户行行号）
+--entry_apply(code,position,entry_datetime,name,gender,birthday,education_status,nation,native_place,health_status,marriage_status,idcard_no,mobile,emergency_contact,emergency_contact_mobile,residence_address,photo,current_address,is_exist_labor_relation,is_relatives_here,relative_name,relative_relation,relative_position,award_training,probation_start_datetime,probation_end_datetime,probation_salary,base_salary,perform_salary,perform_salary_assess,quarterly_award_assess,communicate_reimburse,provincial_bed_reimburse,non_provincial_bed_reimburse,taxi_reimburse,traffic_reimburse,mobile_reimburse,meal_reimburse,salary_card_no,bank,bank_code)
+--
+--转正申请（编号，入职编号，申请人，申请时间，工作总结，总体评价，是否转正，生效日期，备注）
+--conversion_apply(code,entry_code,apply_user_code,apply_datetime,work_summary,over_evaluation,is_conversion,effect_datetime,remark)
+--
+--试用期评估（编号，转正申请编号，评估项目，评估分数）
+--probation_assess(code,conversion_code,assess_item,assess_grade)
+--
+--调岗申请（编号，申请人档案编号，新部门，新岗位，开始日期，结束日期，缘由，备注，更新人，更新时间）
+--transfer_position_apply(code,archive_code,new_position,start_datetime,end_datetime,reason,remark,updater,update_datetime)
