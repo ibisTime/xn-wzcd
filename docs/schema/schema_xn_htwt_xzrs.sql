@@ -281,3 +281,94 @@ COMMENT = '考核项目';
 --
 --调岗申请（编号，申请人档案编号，新部门，新岗位，开始日期，结束日期，缘由，备注，更新人，更新时间）
 --transfer_position_apply(code,archive_code,new_position,start_datetime,end_datetime,reason,remark,updater,update_datetime)
+
+/*入库管理(确定)*/
+DROP TABLE IF EXISTS `tp_storage_in`;
+CREATE TABLE `tp_storage_in` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `category_code` VARCHAR(32) NULL COMMENT '类别编号',
+  `product_code` VARCHAR(255) NULL COMMENT '产品编号',
+  `quantity` int(11) NULL COMMENT '数量',
+  `price` DECIMAL(18,8) NULL COMMENT '单价',
+  
+  `total_price` DECIMAL(18,8) NULL COMMENT '总价',
+  `valid_date_start` DATETIME NULL COMMENT '有效期起',
+  `valid_date_end` DATETIME NULL COMMENT '有效期止',
+  `updater` VARCHAR(32) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '入库管理';
+
+/*出库管理(确定)*/
+DROP TABLE IF EXISTS `tp_storage_out`;
+CREATE TABLE `tp_storage_out` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `category_code` VARCHAR(32) NULL COMMENT '类别编号',
+  `product_code` VARCHAR(255) NULL COMMENT '产品编号',
+  `quantity` int(11) NULL COMMENT '数量',
+  `price` DECIMAL(18,8) NULL COMMENT '单价',
+  
+  `total_price` DECIMAL(18,8) NULL COMMENT '总价',
+  `storage_in_code` VARCHAR(32) NULL COMMENT '入库编号',
+  `updater` VARCHAR(32) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '出库管理';
+
+/*请假申请(确定)*/
+DROP TABLE IF EXISTS `tp_leave_apply`;
+CREATE TABLE `tp_leave_apply` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `apply_user` VARCHAR(32) NULL COMMENT '申请人编号',
+  `apply_datetime` DATETIME NULL COMMENT '申请时间',
+  `type` VARCHAR(4) NULL COMMENT '请假类别',
+  `reason` VARCHAR(255) NULL COMMENT '事由',
+  
+  `start_datetime` DATETIME NULL COMMENT '开始时间',
+  `end_datetime` DATETIME NULL COMMENT '结束时间',
+  `total_hour` int(11) NULL COMMENT '时长',
+  `pdf` VARCHAR(32) NULL COMMENT '附件',
+  `status` VARCHAR(4) NULL COMMENT '状态',
+  
+  `updater` VARCHAR(32) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '请假申请';
+
+/*补签申请(确定)*/
+DROP TABLE IF EXISTS `tp_supple_sign_apply`;
+CREATE TABLE `tp_supple_sign_apply` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `apply_user` VARCHAR(32) NULL COMMENT '申请人编号',
+  `apply_datetime` DATETIME NULL COMMENT '申请时间',
+  `reason` VARCHAR(255) NULL COMMENT '事由',
+  `status` VARCHAR(4) NULL COMMENT '状态',
+  
+  `updater` VARCHAR(32) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '补签申请';
+
+/*补签申请明细(确定)*/
+DROP TABLE IF EXISTS `tp_supple_sign_apply_detail`;
+CREATE TABLE `tp_supple_sign_apply_detail` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `supply_sign_apply_code` VARCHAR(32) NULL COMMENT '补签申请编号',
+  `supple_datetime` DATETIME NULL COMMENT '漏签日期',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '补签申请明细';
