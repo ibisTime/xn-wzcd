@@ -105,6 +105,16 @@
 		,budget_order = #{budgetOrder}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_budgetOrderFeeRealAmount" parameterType="budgetOrderFee">
+		UPDATE tdq_budget_order_fee
+		SET
+		real_amount = #{realAmount}
+		,is_settled = #{isSettled}
+		WHERE code = #{code}
+	</update>
+	
+	
 
 
 </mapper>

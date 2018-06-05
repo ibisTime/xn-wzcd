@@ -54,27 +54,6 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
     private IBankBO bankBO;
 
     @Override
-    public String addBudgetOrderFee(BudgetOrderFee data) {
-        return budgetOrderFeeBO.saveBudgetOrderFee(data);
-    }
-
-    @Override
-    public int editBudgetOrderFee(BudgetOrderFee data) {
-        if (!budgetOrderFeeBO.isBudgetOrderFeeExist(data.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
-        }
-        return budgetOrderFeeBO.refreshBudgetOrderFee(data);
-    }
-
-    @Override
-    public int dropBudgetOrderFee(String code) {
-        if (!budgetOrderFeeBO.isBudgetOrderFeeExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
-        }
-        return budgetOrderFeeBO.removeBudgetOrderFee(code);
-    }
-
-    @Override
     public Paginable<BudgetOrderFee> queryBudgetOrderFeePage(int start,
             int limit, BudgetOrderFee condition) {
 

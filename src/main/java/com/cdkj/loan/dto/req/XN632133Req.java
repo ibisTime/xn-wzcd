@@ -13,6 +13,9 @@ public class XN632133Req {
     @NotBlank
     private String code;// 预算单编号
 
+    // 车牌号
+    private String carNumber;
+
     // 登记证书
     private String carRegcerti;
 
@@ -27,6 +30,14 @@ public class XN632133Req {
 
     @NotBlank
     private String operator;// 操作人
+
+    public String getCarNumber() {
+        return carNumber;
+    }
+
+    public void setCarNumber(String carNumber) {
+        this.carNumber = carNumber;
+    }
 
     public String getCode() {
         return code;

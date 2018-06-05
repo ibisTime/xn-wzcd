@@ -19,9 +19,6 @@ public class XN632128Req {
     // 车辆落户日期
     private String carSettleDatetime;
 
-    // 车牌号
-    private String carNumber;
-
     // 发票
     private String carInvoice;
 
@@ -56,14 +53,6 @@ public class XN632128Req {
 
     public void setCarSettleDatetime(String carSettleDatetime) {
         this.carSettleDatetime = carSettleDatetime;
-    }
-
-    public String getCarNumber() {
-        return carNumber;
-    }
-
-    public void setCarNumber(String carNumber) {
-        this.carNumber = carNumber;
     }
 
     public String getCarInvoice() {

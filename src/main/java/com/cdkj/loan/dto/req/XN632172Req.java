@@ -13,6 +13,10 @@ public class XN632172Req {
     @NotBlank
     private String code;
 
+    // 类型
+    @NotBlank
+    private String type;
+
     // 名称
     @NotBlank
     private String name;
@@ -21,21 +25,29 @@ public class XN632172Req {
     @NotBlank
     private String loanBank;
 
+    // 万元系数
+    @NotBlank
+    private String wanFactor;
+
+    // 年利率
+    @NotBlank
+    private String yearRate;
+
     // GPS费用
     @NotBlank
     private String gpsFee;
 
-    // 公证费
+    // 公证费利率
     @NotBlank
-    private String authFee;
+    private String authRate;
 
-    // 服务费
+    // 返点利率
     @NotBlank
-    private String fee;
+    private String backRate;
 
-    // 月供利率
+    // 前置利率
     @NotBlank
-    private String monthRate;
+    private String preRate;
 
     // 更新人
     @NotBlank
@@ -47,6 +59,14 @@ public class XN632172Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getName() {
@@ -65,6 +85,22 @@ public class XN632172Req {
         this.loanBank = loanBank;
     }
 
+    public String getWanFactor() {
+        return wanFactor;
+    }
+
+    public void setWanFactor(String wanFactor) {
+        this.wanFactor = wanFactor;
+    }
+
+    public String getYearRate() {
+        return yearRate;
+    }
+
+    public void setYearRate(String yearRate) {
+        this.yearRate = yearRate;
+    }
+
     public String getGpsFee() {
         return gpsFee;
     }
@@ -73,28 +109,28 @@ public class XN632172Req {
         this.gpsFee = gpsFee;
     }
 
-    public String getAuthFee() {
-        return authFee;
+    public String getAuthRate() {
+        return authRate;
     }
 
-    public void setAuthFee(String authFee) {
-        this.authFee = authFee;
+    public void setAuthRate(String authRate) {
+        this.authRate = authRate;
     }
 
-    public String getFee() {
-        return fee;
+    public String getBackRate() {
+        return backRate;
     }
 
-    public void setFee(String fee) {
-        this.fee = fee;
+    public void setBackRate(String backRate) {
+        this.backRate = backRate;
     }
 
-    public String getMonthRate() {
-        return monthRate;
+    public String getPreRate() {
+        return preRate;
     }
 
-    public void setMonthRate(String monthRate) {
-        this.monthRate = monthRate;
+    public void setPreRate(String preRate) {
+        this.preRate = preRate;
     }
 
     public String getUpdater() {
@@ -104,4 +140,5 @@ public class XN632172Req {
     public void setUpdater(String updater) {
         this.updater = updater;
     }
+
 }

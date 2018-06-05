@@ -51,7 +51,7 @@ public class RepayBiz extends ABaseDO {
     // 剩余期数
     private int restPeriods;
 
-    // 银行利率
+    // 银行利率(作废)
     private double bankRate;
 
     // 贷款时间起点
@@ -110,6 +110,7 @@ public class RepayBiz extends ABaseDO {
 
     // 结清时间
     private Date closeDatetime;//
+
     // 最近修改人
 
     private String updater;

@@ -23,6 +23,12 @@ public class BudgetOrderFeeDAOImpl extends AMybatisTemplate implements
     }
 
     @Override
+    public int updateBudgetOrderFeeRealAmount(BudgetOrderFee data) {
+        return super.update(
+            NAMESPACE.concat("update_budgetOrderFeeRealAmount"), data);
+    }
+
+    @Override
     public BudgetOrderFee select(BudgetOrderFee condition) {
         return super.select(NAMESPACE.concat("select_budgetOrderFee"),
             condition, BudgetOrderFee.class);

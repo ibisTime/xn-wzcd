@@ -183,11 +183,14 @@ CREATE TABLE `tdq_loan_product` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `name` varchar(32) DEFAULT NULL COMMENT '名称',
   `loan_bank` varchar(255) DEFAULT NULL COMMENT '贷款银行',
+  `wan_factor` bigint(20) DEFAULT NULL COMMENT '万元系数',
+  `year_rate` decimal(18,8) DEFAULT NULL COMMENT '年利率',
+    
   `gps_fee` bigint(20) DEFAULT NULL COMMENT 'GPS费用',
-  `auth_fee` bigint(20) DEFAULT NULL COMMENT '公证费',
-  
-  `fee` bigint(20) DEFAULT NULL COMMENT '服务费',
-  `month_rate` decimal(18,8) DEFAULT NULL COMMENT '月供利率',
+  `auth_rate` decimal(18,8) DEFAULT NULL COMMENT '公证费比率',
+  `back_rate` decimal(18,8) DEFAULT NULL COMMENT '返点利率',
+  `pre_rate` decimal(18,8) DEFAULT NULL COMMENT '前置利率',
+
   `status` varchar(32) DEFAULT NULL COMMENT '状态(0 待上架 1已上架 2已下架)',
   `updater` varchar(255) DEFAULT NULL COMMENT '更新人',
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',

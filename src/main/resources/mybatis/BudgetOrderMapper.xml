@@ -13,7 +13,6 @@
 		<result column="auth_fee" property="authFee" />
 		<result column="bank_fee" property="bankFee" />
 		<result column="company_fee" property="companyFee" />
-		<result column="month_rate" property="monthRate" />
 		<result column="credit_code" property="creditCode" />
 		
 		<result column="biz_type" property="bizType" />
@@ -295,7 +294,6 @@
 		,t.auth_fee
 		,t.bank_fee
 		,t.company_fee
-		,t.month_rate
 		,t.credit_code
 		
 		,t.biz_type
@@ -536,7 +534,6 @@
 		,t.auth_fee
 		,t.bank_fee
 		,t.company_fee
-		,t.month_rate
 		,t.credit_code
 		
 		,t.biz_type
@@ -619,7 +616,6 @@
 		,t.auth_fee
 		,t.bank_fee
 		,t.company_fee
-		,t.month_rate
 		,t.credit_code
 		
 		,t.biz_type
@@ -700,7 +696,6 @@
 		,auth_fee
 		,bank_fee
 		,company_fee
-		,month_rate
 		,credit_code
 		,biz_type
 		,loan_period
@@ -1222,7 +1217,6 @@
 		UPDATE tdq_budget_order
 		SET
 		car_settle_datetime = #{carSettleDatetime}
-		,car_number = #{carNumber}
 		,car_invoice = #{carInvoice}
 		,car_hgz = #{carHgz}
 		,car_jqx = #{carJqx}
@@ -1296,6 +1290,11 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
+		,car_number = #{carNumber}
+		,car_regcerti = #{carRegcerti}
+		,car_pd = #{carPd}
+		,car_key = #{carKey}
+		,car_big_smj = #{carBigSmj}
 		WHERE code = #{code}
 	</update>
 	

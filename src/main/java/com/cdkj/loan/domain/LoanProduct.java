@@ -20,23 +20,32 @@ public class LoanProduct extends ABaseDO {
     // 编号
     private String code;
 
+    // 类型
+    private String type;
+
     // 名称
     private String name;
 
     // 贷款银行(编号)
     private String loanBank;
 
+    // 万元系数
+    private Long wanFactor;
+
+    // 年利率
+    private double yearRate;
+
     // GPS费用
     private Long gpsFee;
 
-    // 公证费
-    private Long authFee;
+    // 公证费利率
+    private double authRate;
 
-    // 服务费
-    private Long fee;
+    // 返点利率
+    private double backRate;
 
-    // 月供利率
-    private Double monthRate;
+    // 前置利率
+    private double preRate;
 
     // 状态
     private String status;
@@ -63,6 +72,14 @@ public class LoanProduct extends ABaseDO {
         this.code = code;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getName() {
         return name;
     }
@@ -79,6 +96,22 @@ public class LoanProduct extends ABaseDO {
         this.loanBank = loanBank;
     }
 
+    public Long getWanFactor() {
+        return wanFactor;
+    }
+
+    public void setWanFactor(Long wanFactor) {
+        this.wanFactor = wanFactor;
+    }
+
+    public double getYearRate() {
+        return yearRate;
+    }
+
+    public void setYearRate(double yearRate) {
+        this.yearRate = yearRate;
+    }
+
     public Long getGpsFee() {
         return gpsFee;
     }
@@ -87,28 +120,28 @@ public class LoanProduct extends ABaseDO {
         this.gpsFee = gpsFee;
     }
 
-    public Long getAuthFee() {
-        return authFee;
+    public double getAuthRate() {
+        return authRate;
     }
 
-    public void setAuthFee(Long authFee) {
-        this.authFee = authFee;
+    public void setAuthRate(double authRate) {
+        this.authRate = authRate;
     }
 
-    public Long getFee() {
-        return fee;
+    public double getBackRate() {
+        return backRate;
     }
 
-    public void setFee(Long fee) {
-        this.fee = fee;
+    public void setBackRate(double backRate) {
+        this.backRate = backRate;
     }
 
-    public Double getMonthRate() {
-        return monthRate;
+    public double getPreRate() {
+        return preRate;
     }
 
-    public void setMonthRate(Double monthRate) {
-        this.monthRate = monthRate;
+    public void setPreRate(double preRate) {
+        this.preRate = preRate;
     }
 
     public String getStatus() {

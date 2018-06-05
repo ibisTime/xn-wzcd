@@ -42,9 +42,6 @@ public class BudgetOrder extends ABaseDO {
     // 公司服务费
     private Long companyFee;
 
-    // 月供利率(%)
-    private Double monthRate;
-
     // 征信单编号
     private String creditCode;
 
@@ -785,14 +782,6 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCompanyFee(Long companyFee) {
         this.companyFee = companyFee;
-    }
-
-    public Double getMonthRate() {
-        return monthRate;
-    }
-
-    public void setMonthRate(Double monthRate) {
-        this.monthRate = monthRate;
     }
 
     public String getCreditCode() {

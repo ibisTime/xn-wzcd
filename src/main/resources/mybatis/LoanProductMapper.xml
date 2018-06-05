@@ -4,17 +4,20 @@
 <mapper namespace="com.cdkj.loan.dao.ILoanProductDAO">
 	<resultMap id="loanProduct_DB_result" type="loanProduct">
 		<result column="code" property="code" />
+		<result column="type" property="type" />
 		<result column="name" property="name" />
 		<result column="loan_bank" property="loanBank" />
-		<result column="gps_fee" property="gpsFee" />
-		<result column="auth_fee" property="authFee" />
+		<result column="wan_factor" property="wanFactor" />
 		
-		<result column="fee" property="fee" />
-		<result column="month_rate" property="monthRate" />
+	    <result column="year_rate" property="yearRate" />
+		<result column="gps_fee" property="gpsFee" />
+		<result column="auth_rate" property="authRate" />
+		<result column="back_rate" property="backRate" />
+		<result column="pre_rate" property="preRate" />
+		
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
-		
 		<result column="remark" property="remark" />
 	</resultMap>
 
@@ -23,14 +26,17 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="type != null and type != '' ">
+				AND t.type = #{type}
+			</if>
+			<if test="name != null and name != '' ">
+				AND t.name like "%"#{name}"%"
+			</if>
 			<if test="loanBank != null and loanBank != '' ">
 				AND t.loan_bank = #{loanBank}
 			</if>
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
-			</if>
-			<if test="name != null and name != '' ">
-				AND t.name like "%"#{name}"%"
 			</if>
 		</trim>
 	</sql>
@@ -38,17 +44,20 @@
 	<select id="select_loanProduct" parameterType="loanProduct" resultMap="loanProduct_DB_result">
 		SELECT
 		t.code
+		,t.type
 		,t.name
 		,t.loan_bank
-		,t.gps_fee
-		,t.auth_fee
+		,t.wan_factor
 		
-		,t.fee
-		,t.month_rate
+		,t.year_rate
+		,t.gps_fee
+		,t.auth_rate
+		,t.back_rate
+		,t.pre_rate
+		
 		,t.status
 		,t.updater
 		,t.update_datetime
-		
 		,t.remark
 		FROM
 		tdq_loan_product t
@@ -68,32 +77,38 @@
 	<insert id="insert_loanProduct" parameterType="loanProduct">
 		INSERT INTO tdq_loan_product(
 		code
+		,type
 		,name
 		,loan_bank
-		,gps_fee
-		,auth_fee
+		,wan_factor
 		
-		,fee
-		,month_rate
+		,year_rate
+		,gps_fee
+		,auth_rate
+		,back_rate
+		,pre_rate
+		
 		,status
 		,updater
 		,update_datetime
-		
 		,remark
 		)
 		VALUES(
 		#{code}
+		,#{type}
 		,#{name}
 		,#{loanBank}
-		,#{gpsFee}
-		,#{authFee}
+		,#{wanFactor}
 		
-		,#{fee}
-		,#{monthRate}
+		,#{yearRate}
+		,#{gpsFee}
+		,#{authRate}
+		,#{backRate}
+		,#{preRate}
+		
 		,#{status}
 		,#{updater}
 		,#{updateDatetime}
-		
 		,#{remark}
 		)
 	</insert>
@@ -101,15 +116,19 @@
 	<update id="update_loanProduct" parameterType="loanProduct">
 		UPDATE tdq_loan_product t
 		SET
-		t.name = #{name}
+		t.type = #{type}
+		,t.name = #{name}
 		,t.loan_bank = #{loanBank}
+		,t.wan_factor =#{wanFactor}
+		,t.year_rate =#{yearRate}
 		,t.gps_fee = #{gpsFee}
-		,t.auth_fee = #{authFee}
-		,t.fee = #{fee}
 		
-		,t.month_rate = #{monthRate}
+		,t.auth_rate = #{authRate}
+		,t.back_rate = #{backRate}
+		,t.pre_rate = #{preRate}
 		,t.updater = #{updater}
 		,t.update_datetime = #{updateDatetime}
+		
 		,t.remark = #{remark}
 		WHERE code = #{code}
 	</update>

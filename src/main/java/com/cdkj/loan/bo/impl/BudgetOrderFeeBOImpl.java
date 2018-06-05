@@ -22,16 +22,6 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
     private IBudgetOrderFeeDAO budgetOrderFeeDAO;
 
     @Override
-    public boolean isBudgetOrderFeeExist(String code) {
-        BudgetOrderFee condition = new BudgetOrderFee();
-        condition.setCode(code);
-        if (budgetOrderFeeDAO.selectTotalCount(condition) > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public String saveBudgetOrderFee(BudgetOrderFee data) {
         String code = null;
         if (data != null) {
@@ -41,26 +31,6 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
             budgetOrderFeeDAO.insert(data);
         }
         return code;
-    }
-
-    @Override
-    public int removeBudgetOrderFee(String code) {
-        int count = 0;
-        if (StringUtils.isNotBlank(code)) {
-            BudgetOrderFee data = new BudgetOrderFee();
-            data.setCode(code);
-            count = budgetOrderFeeDAO.delete(data);
-        }
-        return count;
-    }
-
-    @Override
-    public int refreshBudgetOrderFee(BudgetOrderFee data) {
-        int count = 0;
-        if (StringUtils.isNotBlank(data.getCode())) {
-            // count = budgetOrderFeeDAO.update(data);
-        }
-        return count;
     }
 
     @Override
@@ -76,9 +46,16 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
             condition.setCode(code);
             data = budgetOrderFeeDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "");
+                throw new BizException("xn0000", "手续费不存在");
             }
         }
         return data;
+    }
+
+    @Override
+    public void refreshBudgetOrderFee(BudgetOrderFee budgetOrderFee) {
+        if (null != budgetOrderFee) {
+            budgetOrderFeeDAO.updateBudgetOrderFeeRealAmount(budgetOrderFee);
+        }
     }
 }
