@@ -32,10 +32,10 @@ public class XN632865 extends AProcessor {
         EntryApply condition = new EntryApply();
         condition.setPosition(req.getPosition());
         condition.setRealName(req.getRealName());
-        condition.setProbationStartDatetime(DateUtil.strToDate(
-            req.getCreateDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setProbationEndDatetime(DateUtil.strToDate(
-            req.getCreateDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setEntryDatetimeStart(DateUtil.strToDate(
+            req.getEntryDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setEntryDatetimeEnd(DateUtil.strToDate(
+            req.getEntryDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setStatus(req.getStatus());
 
         String orderColumn = req.getOrderColumn();

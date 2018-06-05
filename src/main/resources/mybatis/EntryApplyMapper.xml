@@ -54,6 +54,21 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="position != null and position != '' ">
+				AND t.position = #{position}
+			</if>
+			<if test="realName != null and realName != '' ">
+				AND t.real_name = #{realName}
+			</if>
+			<if test="entryDatetimeStart != null and entryDatetimeStart != '' ">
+				<![CDATA[AND t.entry_datetime > #{entryDatetimeEnd}]]>
+			</if>
+			<if test="createDatetimeEnd != null and createDatetimeEnd != '' ">
+				<![CDATA[AND t.entry_datetime < #{entryDatetimeEnd}]]>
+			</if>
 		</trim>
 	</sql>
 	<select id="select_entryApply" parameterType="entryApply" resultMap="entryApply_DB_Result">

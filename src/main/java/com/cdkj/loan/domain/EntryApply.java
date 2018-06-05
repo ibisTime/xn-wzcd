@@ -153,6 +153,28 @@ public class EntryApply extends ABaseDO {
     // 工作经历
     private List<WorkExperience> workExperienceList;
 
+    // 入职时间起
+    private Date entryDatetimeStart;
+
+    // 入职时间止
+    private Date entryDatetimeEnd;
+
+    public Date getEntryDatetimeStart() {
+        return entryDatetimeStart;
+    }
+
+    public void setEntryDatetimeStart(Date entryDatetimeStart) {
+        this.entryDatetimeStart = entryDatetimeStart;
+    }
+
+    public Date getEntryDatetimeEnd() {
+        return entryDatetimeEnd;
+    }
+
+    public void setEntryDatetimeEnd(Date entryDatetimeEnd) {
+        this.entryDatetimeEnd = entryDatetimeEnd;
+    }
+
     public List<WorkExperience> getWorkExperienceList() {
         return workExperienceList;
     }
