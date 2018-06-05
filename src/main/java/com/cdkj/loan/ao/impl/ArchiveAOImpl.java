@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IArchiveAO;
+import com.cdkj.loan.ao.ISYSUserAO;
 import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.ISocialRelationBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -18,6 +19,7 @@ import com.cdkj.loan.dto.req.XN632800Req;
 import com.cdkj.loan.dto.req.XN632800ReqChild;
 import com.cdkj.loan.dto.req.XN632802Req;
 import com.cdkj.loan.dto.req.XN632802ReqChild;
+import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -34,6 +36,9 @@ public class ArchiveAOImpl implements IArchiveAO {
 
     @Autowired
     private ISocialRelationBO socialRelationBO;
+
+    @Autowired
+    private ISYSUserAO sysUserAO;
 
     @Override
     public String addArchive(XN632800Req req) {
@@ -106,6 +111,12 @@ public class ArchiveAOImpl implements IArchiveAO {
             String workingYears = num / 365 + "";
             data.setWorkingYears(workingYears);
         }
+
+        String userId = sysUserAO
+            .doAddUser(ESysUserType.Plat.getCode(), req.getMobile(), "888888",
+                req.getMobile(), req.getRealName(), null);
+
+        data.setUserId(userId);
 
         String archiveCode = archiveBO.saveArchive(data);
 

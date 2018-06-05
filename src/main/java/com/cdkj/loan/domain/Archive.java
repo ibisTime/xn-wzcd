@@ -186,6 +186,9 @@ public class Archive extends ABaseDO {
     // 备注
     private String remark;
 
+    // 用户编号
+    private String userId;
+
     /*************db properties*************/
 
     // 入职时间起
@@ -195,6 +198,14 @@ public class Archive extends ABaseDO {
     private String entryDatetimeEnd;
 
     private List<SocialRelation> socialRelationList;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public List<SocialRelation> getSocialRelationList() {
         return socialRelationList;
