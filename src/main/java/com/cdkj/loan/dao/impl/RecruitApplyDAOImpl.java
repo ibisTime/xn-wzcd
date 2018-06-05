@@ -9,8 +9,8 @@ import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.RecruitApply;
 
 @Repository("recruitApplyDAOImpl")
-public class RecruitApplyDAOImpl extends AMybatisTemplate implements
-        IRecruitApplyDAO {
+public class RecruitApplyDAOImpl extends AMybatisTemplate
+        implements IRecruitApplyDAO {
 
     @Override
     public int insert(RecruitApply data) {
@@ -18,8 +18,8 @@ public class RecruitApplyDAOImpl extends AMybatisTemplate implements
     }
 
     @Override
-    public int delete(RecruitApply data) {
-        return super.delete(NAMESPACE.concat("delete_recruitApply"), data);
+    public void auditRecruitApply(RecruitApply data) {
+        super.insert(NAMESPACE.concat("audit_recruitApply"), data);
     }
 
     @Override
@@ -54,6 +54,11 @@ public class RecruitApplyDAOImpl extends AMybatisTemplate implements
     public int updateApprove(RecruitApply data) {
         return super.insert(NAMESPACE.concat("update_approve_recruitApply"),
             data);
+    }
+
+    @Override
+    public int delete(RecruitApply data) {
+        return 0;
     }
 
 }

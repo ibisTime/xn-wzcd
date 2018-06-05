@@ -14,9 +14,8 @@ public interface IRecruitApplyAO {
 
     public String addRecruitApply(XN632480Req req);
 
-    public int dropRecruitApply(String code);
-
-    public int editRecruitApply(RecruitApply data);
+    public void auditRecruitApply(String code, String updater, String remark,
+            String approveResult);
 
     public Paginable<RecruitApply> queryRecruitApplyPage(int start, int limit,
             RecruitApply condition);

@@ -8,13 +8,16 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IRecruitApplyBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IRecruitApplyDAO;
 import com.cdkj.loan.domain.RecruitApply;
+import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class RecruitApplyBOImpl extends PaginableBOImpl<RecruitApply> implements
-        IRecruitApplyBO {
+public class RecruitApplyBOImpl extends PaginableBOImpl<RecruitApply>
+        implements IRecruitApplyBO {
 
     @Autowired
     private IRecruitApplyDAO recruitApplyDAO;
@@ -33,7 +36,8 @@ public class RecruitApplyBOImpl extends PaginableBOImpl<RecruitApply> implements
     public String saveRecruitApply(RecruitApply data) {
         String code = null;
         if (data != null) {
-            // code = OrderNoGenerater.generateM(EGeneratePrefix.CT.getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.RECRUITAPPLY.getCode());
             data.setCode(code);
             recruitApplyDAO.insert(data);
         }
@@ -41,23 +45,8 @@ public class RecruitApplyBOImpl extends PaginableBOImpl<RecruitApply> implements
     }
 
     @Override
-    public int removeRecruitApply(String code) {
-        int count = 0;
-        if (StringUtils.isNotBlank(code)) {
-            RecruitApply data = new RecruitApply();
-            data.setCode(code);
-            count = recruitApplyDAO.delete(data);
-        }
-        return count;
-    }
-
-    @Override
-    public int refreshRecruitApply(RecruitApply data) {
-        int count = 0;
-        if (StringUtils.isNotBlank(data.getCode())) {
-            // count = recruitApplyDAO.update(data);
-        }
-        return count;
+    public void auditRecruitApply(RecruitApply condition) {
+        recruitApplyDAO.auditRecruitApply(condition);
     }
 
     @Override
@@ -73,9 +62,11 @@ public class RecruitApplyBOImpl extends PaginableBOImpl<RecruitApply> implements
             condition.setCode(code);
             data = recruitApplyDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "用人申请编号不存在！");
             }
         }
         return data;
     }
+
 }
