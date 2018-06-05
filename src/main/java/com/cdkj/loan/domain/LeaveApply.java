@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -54,7 +55,7 @@ public class LeaveApply extends ABaseDO {
     private String remark;
 
     // 申请人档案
-    private Archive applyUserArchive;
+    private List<Archive> applyUserArchive;
 
     public String getCode() {
         return code;
@@ -160,11 +161,11 @@ public class LeaveApply extends ABaseDO {
         this.remark = remark;
     }
 
-    public Archive getApplyUserArchive() {
+    public List<Archive> getApplyUserArchive() {
         return applyUserArchive;
     }
 
-    public void setApplyUserArchive(Archive applyUserArchive) {
+    public void setApplyUserArchive(List<Archive> applyUserArchive) {
         this.applyUserArchive = applyUserArchive;
     }
 

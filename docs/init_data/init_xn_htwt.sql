@@ -318,8 +318,7 @@ INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'employ_apply_status', '1', '已面试通过', 'admin', '2018-06-05 15:39:08', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'employ_apply_status', '2', '面试不通过', 'admin', '2018-06-05 15:39:08', 'CD-HTWT000020', 'CD-HTWT000020');
 
-
-INSERT INTO `tsys_dict` (`type`, `parent_key`,`dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', NULL,'leave_apply_type', '性别', 'admin', '2018-06-05 15:39:08', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`,`dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', NULL,'leave_apply_type', '请假类型', 'admin', '2018-06-05 15:39:08', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'leave_apply_type', '1', '事假', 'admin', '2018-06-05 15:39:08', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'leave_apply_type', '2', '调休', 'admin', '2018-06-05 15:39:08', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'leave_apply_type', '3', '年休假', 'admin', '2018-06-05 15:39:08', 'CD-HTWT000020', 'CD-HTWT000020');
@@ -333,6 +332,12 @@ INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'leave_apply_type', '11', '公假', 'admin', '2018-06-05 15:39:08', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'leave_apply_type', '12', '工伤假', 'admin', '2018-06-05 15:39:08', 'CD-HTWT000020', 'CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'leave_apply_type', '13', '其他', 'admin', '2018-06-05 15:39:08', 'CD-HTWT000020', 'CD-HTWT000020');
+
+INSERT INTO `tsys_dict` (`type`, `parent_key`,`dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0',NULL, 'leave_apply_status', '请假状态', 'admin', '2018-06-05 15:39:08', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'leave_apply_status', '0', '待审核', 'admin', '2018-06-05 15:39:08', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'leave_apply_status', '1', '审核通过', 'admin', '2018-06-05 15:39:08', 'CD-HTWT000020', 'CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'leave_apply_status', '2', '审核不通过', 'admin', '2018-06-05 15:39:08', 'CD-HTWT000020', 'CD-HTWT000020');
+
 
 /*
 -- Query: select `type`,`ckey`,`cvalue`,`updater`,now() as `update_datetime`,`remark`,`company_code`,`system_code` from tsys_config
