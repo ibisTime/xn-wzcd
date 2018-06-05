@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class XN632851Req {
 
     // 编号
-    @NotEmpty
+    @NotBlank
     private String code;
 
     // 综合
@@ -45,7 +45,7 @@ public class XN632851Req {
     private String employApproveNote;
 
     // 考核项目
-    @NotBlank
+    @NotEmpty
     private List<XN632851ReqCheckPro> checkProjectList;
 
     public String getEmployApproveResult() {
@@ -60,7 +60,8 @@ public class XN632851Req {
         return checkProjectList;
     }
 
-    public void setCheckProjectList(List<XN632851ReqCheckPro> checkProjectList) {
+    public void setCheckProjectList(
+            List<XN632851ReqCheckPro> checkProjectList) {
         this.checkProjectList = checkProjectList;
     }
 
