@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.ISocialRelationDAO">
-	<resultMap id="SocialRelation_DB_Result" type="SocialRelation">
+	<resultMap id="SocialRelation_DB_Result" type="socialRelation">
 		<result column="code" property="code" />
 		<result column="archive_code" property="archiveCode" />
 		<result column="real_name" property="realName" />
@@ -18,7 +18,7 @@
 			</if>
 		</trim>
 	</sql>
-	<select id="select_SocialRelation" parameterType="SocialRelation" resultMap="SocialRelation_DB_Result">
+	<select id="select_socialRelation" parameterType="socialRelation" resultMap="SocialRelation_DB_Result">
 		SELECT
 		t.code
 		,t.archive_code
@@ -37,13 +37,13 @@
 		</trim>
 	</select>
 
-	<select id="select_SocialRelation_count" parameterType="SocialRelation"
+	<select id="select_socialRelation_count" parameterType="socialRelation"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tp_social_relation t
 		<include refid="where_condition" />
 	</select>
 
-	<insert id="insert_SocialRelation" parameterType="SocialRelation">
+	<insert id="insert_socialRelation" parameterType="socialRelation">
 		INSERT INTO
 		tp_social_relation(
 		code
@@ -65,7 +65,7 @@
 		)
 	</insert>
 
-	<update id="update_SocialRelation" parameterType="SocialRelation">
+	<update id="update_socialRelation" parameterType="socialRelation">
 		UPDATE tp_social_relation
 		SET
 		archive_code = #{archiveCode}
@@ -76,6 +76,14 @@
 		,contact = #{contact}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="delete_socialRelation" parameterType="socialRelation">
+		UPDATE tp_social_relation
+		SET
+		is_delete = '0' 
+		WHERE archive_code = #{archiveCode}
+	</update>
+	
 
 
 </mapper>

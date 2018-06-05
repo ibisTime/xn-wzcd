@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 修改离职档案
  * @author: jiafr 
@@ -8,6 +10,7 @@ package com.cdkj.loan.dto.req;
  */
 public class XN632812Req {
 
+    @NotBlank
     private String code;
 
     private String realName;

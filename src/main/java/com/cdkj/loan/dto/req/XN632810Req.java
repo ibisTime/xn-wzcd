@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 新增离职档案
  * @author: jiafr 
@@ -8,25 +10,22 @@ package com.cdkj.loan.dto.req;
  */
 public class XN632810Req {
 
+    @NotBlank
     private String code;
 
+    @NotBlank
     private String realName;
 
+    @NotBlank
     private String leaveDatetime;
 
+    @NotBlank
     private String heirPeople;
 
+    @NotBlank
     private String leaveReason;
 
     private String remark;
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public String getRealName() {
         return realName;
@@ -34,6 +33,14 @@ public class XN632810Req {
 
     public void setRealName(String realName) {
         this.realName = realName;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getLeaveDatetime() {

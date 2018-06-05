@@ -21,42 +21,42 @@ import com.cdkj.loan.exception.BizException;
 public class SocialRelationAOImpl implements ISocialRelationAO {
 
     @Autowired
-    private ISocialRelationBO SocialRelationBO;
+    private ISocialRelationBO socialRelationBO;
 
     @Override
     public String addSocialRelation(SocialRelation data) {
-        return SocialRelationBO.saveSocialRelation(data);
+        return socialRelationBO.saveSocialRelation(data);
     }
 
     @Override
     public int editSocialRelation(SocialRelation data) {
-        if (!SocialRelationBO.isSocialRelationExist(data.getCode())) {
+        if (!socialRelationBO.isSocialRelationExist(data.getCode())) {
             throw new BizException("xn0000", "记录编号不存在");
         }
-        return SocialRelationBO.refreshSocialRelation(data);
+        return socialRelationBO.refreshSocialRelation(data);
     }
 
     @Override
     public int dropSocialRelation(String code) {
-        if (!SocialRelationBO.isSocialRelationExist(code)) {
+        if (!socialRelationBO.isSocialRelationExist(code)) {
             throw new BizException("xn0000", "记录编号不存在");
         }
-        return SocialRelationBO.removeSocialRelation(code);
+        return socialRelationBO.removeSocialRelation(code);
     }
 
     @Override
     public Paginable<SocialRelation> querySocialRelationPage(int start,
             int limit, SocialRelation condition) {
-        return SocialRelationBO.getPaginable(start, limit, condition);
+        return socialRelationBO.getPaginable(start, limit, condition);
     }
 
     @Override
     public List<SocialRelation> querySocialRelationList(SocialRelation condition) {
-        return SocialRelationBO.querySocialRelationList(condition);
+        return socialRelationBO.querySocialRelationList(condition);
     }
 
     @Override
     public SocialRelation getSocialRelation(String code) {
-        return SocialRelationBO.getSocialRelation(code);
+        return socialRelationBO.getSocialRelation(code);
     }
 }

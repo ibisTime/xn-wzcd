@@ -248,4 +248,16 @@
 		<property name="paginableDAO" ref="compProductDAOImpl"/>
 	</bean>
 	
+	<bean id="archiveBO" class="com.cdkj.loan.bo.impl.ArchiveBOImpl">
+		<property name="paginableDAO" ref="archiveDAOImpl"/>
+	</bean>
+	
+	<bean id="socialRelationBO" class="com.cdkj.loan.bo.impl.SocialRelationBOImpl">
+		<property name="paginableDAO" ref="socialRelationDAOImpl"/>
+	</bean>
+	
+	<bean id="archiveLocationBO" class="com.cdkj.loan.bo.impl.ArchiveLocationBOImpl">
+		<property name="paginableDAO" ref="archiveLocationDAOImpl"/>
+	</bean>
+	
 </beans>
