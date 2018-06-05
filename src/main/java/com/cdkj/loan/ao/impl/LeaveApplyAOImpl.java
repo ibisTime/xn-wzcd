@@ -88,8 +88,8 @@ public class LeaveApplyAOImpl implements ILeaveApplyAO {
         List<LeaveApply> leaveApplyList = page.getList();
         for (LeaveApply leaveApply : leaveApplyList) {
             Archive archive = new Archive();
-            leaveApply.setApplyUserArchive(
-                archiveBO.getArchive(leaveApply.getApplyUser()));
+            archive.setUserId(leaveApply.getApplyUser());
+            leaveApply.setApplyUserArchive(archiveBO.queryArchiveList(archive));
         }
         return page;
     }
@@ -101,9 +101,10 @@ public class LeaveApplyAOImpl implements ILeaveApplyAO {
 
     @Override
     public LeaveApply getLeaveApply(String code) {
+        Archive archive = new Archive();
         LeaveApply leaveApply = leaveApplyBO.getLeaveApply(code);
-        leaveApply.setApplyUserArchive(
-            archiveBO.getArchive(leaveApply.getApplyUser()));
+        archive.setUserId(leaveApply.getApplyUser());
+        leaveApply.setApplyUserArchive(archiveBO.queryArchiveList(archive));
         return leaveApply;
     }
 }

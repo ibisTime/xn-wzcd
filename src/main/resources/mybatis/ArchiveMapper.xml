@@ -86,7 +86,7 @@
 				AND t.entry_datetime &lt;= #{entryDatetimeEnd}
 			</if>
 			<if test="userId != null and userId != '' ">
-				AND t.user_id &lt;= #{userId}
+				AND t.user_id = #{userId}
 			</if>
 		</trim>
 	</sql>
