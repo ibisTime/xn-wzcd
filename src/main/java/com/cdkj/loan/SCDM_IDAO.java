@@ -9,23 +9,22 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "Gps";
+    private static String key = "contract";
 
     // 实体名称
-    private static String keyName = "gps";
+    private static String keyName = "合同管理";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tb_gps";
+    private static String dbname = "tb_contract";
 
-    private static String[] DBwords = { "code", "gps_no", "company_code",
-            "apply_user", "apply_status", "apply_datetime", "use_status",
-            "use_datetime", "biz_code" };
+    private static String[] DBwords = { "code", "type", "archive_code",
+            "contract_no", "start_datetime", "end_datetime", "pdf", "remark" };
 
-    private static String[] DBwordsName = { "编号", "gps编号", "公司编号", "申请人",
-            "申请状态", "申请日期", "使用状态", "使用日期", "业务编号" };
+    private static String[] DBwordsName = { "编号", "合同类型", "档案编号", "合同编号",
+            "开始日期", "结束日期", "合同附件", "说明" };
 
     public void testname() throws Exception {
     }
@@ -38,7 +37,7 @@ public class SCDM_IDAO {
     public static void main(String[] args) {
 
         System.out.println("*********开始打印*********");
-        String path = "/Users/xieyj/Desktop/temp";
+        String path = "/Users/hp/Desktop/temp";
 
         File DOMAINfile = new File(path, Key + ".java");
 
@@ -183,7 +182,7 @@ public class SCDM_IDAO {
         String str = "";
         String str1 = "package " + packge + "domain;\n\n" + "import " + packge
                 + "dao.base.ABaseDO;\n\n" + "/**" + "\n* " + keyName
-                + "\n* @author: xieyj " + "\n* @since: "
+                + "\n* @author: jiafr " + "\n* @since: "
                 + DateUtil.getToday(DateUtil.DATA_TIME_PATTERN_1) + ""
                 + "\n* @history:\n*/" + "\n" + "public class " + Key
                 + " extends ABaseDO {" + "\n\n\t"

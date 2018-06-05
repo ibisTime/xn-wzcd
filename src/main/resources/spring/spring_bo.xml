@@ -257,9 +257,9 @@
 		<property name="paginableDAO" ref="socialRelationDAOImpl"/>
 	</bean>
 	
-	<bean id="archiveLocationBO" class="com.cdkj.loan.bo.impl.ArchiveLocationBOImpl">
+	<!-- <bean id="archiveLocationBO" class="com.cdkj.loan.bo.impl.ArchiveLocationBOImpl">
 		<property name="paginableDAO" ref="archiveLocationDAOImpl"/>
-	</bean>
+	</bean> -->
 
 	<bean id="recruitApplyBO" class="com.cdkj.loan.bo.impl.RecruitApplyBOImpl">
 		<property name="paginableDAO" ref="recruitApplyDAOImpl"/>
@@ -267,6 +267,10 @@
 	
 	<bean id="employApplyBO" class="com.cdkj.loan.bo.impl.EmployApplyBOImpl">
 		<property name="paginableDAO" ref="employApplyDAOImpl"/>
+	</bean>
+	
+	<bean id="entryApplyBO" class="com.cdkj.loan.bo.impl.EntryApplyBOImpl">
+		<property name="paginableDAO" ref="entryApplyDAOImpl"/>
 	</bean>
 	
 	<bean id="storageInBO" class="com.cdkj.loan.bo.impl.StorageInBOImpl">
@@ -280,6 +284,10 @@
 	
 	<bean id="leaveApplyBO" class="com.cdkj.loan.bo.impl.LeaveApplyBOImpl">
 		<property name="paginableDAO" ref="leaveApplyDAOImpl"/>
+	</bean>
+		
+	<bean id="contractBO" class="com.cdkj.loan.bo.impl.ContractBOImpl">
+		<property name="paginableDAO" ref="contractDAOImpl"/>
 	</bean>
 	
 </beans>
