@@ -1,38 +1,37 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.ICompProductAO;
+import com.cdkj.loan.ao.IStorageInAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN632751Req;
-import com.cdkj.loan.dto.res.BooleanRes;
+import com.cdkj.loan.dto.req.XN632760Req;
+import com.cdkj.loan.dto.res.PKCodeRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 修改品名
+ * 入库
  * @author: silver 
- * @since: 2018年6月4日 下午10:02:08 
+ * @since: 2018年6月5日 下午2:29:14 
  * @history:
  */
-public class XN632751 extends AProcessor {
+public class XN632760 extends AProcessor {
 
-    private ICompProductAO compProductAO = SpringContextHolder
-        .getBean(ICompProductAO.class);
+    private IStorageInAO storageInAO = SpringContextHolder
+        .getBean(IStorageInAO.class);
 
-    private XN632751Req req = null;
+    private XN632760Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        compProductAO.editCompProduct(req);
-        return new BooleanRes(true);
+        return new PKCodeRes(storageInAO.addStorageIn(req));
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632751Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632760Req.class);
         ObjValidater.validateReq(req);
     }
 }
