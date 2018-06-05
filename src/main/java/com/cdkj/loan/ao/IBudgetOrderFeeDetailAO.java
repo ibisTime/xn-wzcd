@@ -20,10 +20,6 @@ public interface IBudgetOrderFeeDetailAO {
     // 新增手续费明细
     public String addBudgetOrderFeeDetail(BudgetOrderFeeDetail data);
 
-    public int dropBudgetOrderFeeDetail(String code);
-
-    public int editBudgetOrderFeeDetail(BudgetOrderFeeDetail data);
-
     public Paginable<BudgetOrderFeeDetail> queryBudgetOrderFeeDetailPage(
             int start, int limit, BudgetOrderFeeDetail condition);
 

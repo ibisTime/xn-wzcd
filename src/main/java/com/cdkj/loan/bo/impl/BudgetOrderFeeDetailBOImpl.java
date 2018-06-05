@@ -29,16 +29,6 @@ public class BudgetOrderFeeDetailBOImpl extends
     private IBudgetOrderFeeDetailDAO budgetOrderFeeDetailDAO;
 
     @Override
-    public boolean isBudgetOrderFeeDetailExist(String code) {
-        BudgetOrderFeeDetail condition = new BudgetOrderFeeDetail();
-        condition.setCode(code);
-        if (budgetOrderFeeDetailDAO.selectTotalCount(condition) > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public String saveBudgetOrderFeeDetail(BudgetOrderFeeDetail data) {
         String code = null;
         if (data != null) {
@@ -48,26 +38,6 @@ public class BudgetOrderFeeDetailBOImpl extends
             budgetOrderFeeDetailDAO.insert(data);
         }
         return code;
-    }
-
-    @Override
-    public int removeBudgetOrderFeeDetail(String code) {
-        int count = 0;
-        if (StringUtils.isNotBlank(code)) {
-            BudgetOrderFeeDetail data = new BudgetOrderFeeDetail();
-            data.setCode(code);
-            count = budgetOrderFeeDetailDAO.delete(data);
-        }
-        return count;
-    }
-
-    @Override
-    public int refreshBudgetOrderFeeDetail(BudgetOrderFeeDetail data) {
-        int count = 0;
-        if (StringUtils.isNotBlank(data.getCode())) {
-            // count = budgetOrderFeeDetailDAO.update(data);
-        }
-        return count;
     }
 
     @Override
@@ -84,7 +54,7 @@ public class BudgetOrderFeeDetailBOImpl extends
             condition.setCode(code);
             data = budgetOrderFeeDetailDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException("xn0000", "手续费明细不存在");
             }
         }
         return data;

@@ -13,7 +13,6 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.BudgetOrderFeeDetail;
 import com.cdkj.loan.enums.EBoolean;
-import com.cdkj.loan.exception.BizException;
 
 /**
  * 手续费明细
@@ -46,22 +45,6 @@ public class BudgetOrderFeeDetailAOImpl implements IBudgetOrderFeeDetailAO {
         }
         budgetOrderFeeBO.refreshBudgetOrderFee(budgetOrderFee);
         return budgetOrderFeeDetailBO.saveBudgetOrderFeeDetail(data);
-    }
-
-    @Override
-    public int editBudgetOrderFeeDetail(BudgetOrderFeeDetail data) {
-        if (!budgetOrderFeeDetailBO.isBudgetOrderFeeDetailExist(data.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
-        }
-        return budgetOrderFeeDetailBO.refreshBudgetOrderFeeDetail(data);
-    }
-
-    @Override
-    public int dropBudgetOrderFeeDetail(String code) {
-        if (!budgetOrderFeeDetailBO.isBudgetOrderFeeDetailExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
-        }
-        return budgetOrderFeeDetailBO.removeBudgetOrderFeeDetail(code);
     }
 
     @Override

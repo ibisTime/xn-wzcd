@@ -7,7 +7,7 @@
 		<result column="remit_type" property="remitType" />
 		<result column="remit_project" property="remitProject" />
 		<result column="amount" property="amount" />
-		<result column="plat_bank_card" property="platBankcard" />
+		<result column="plat_bankcard" property="platBankcard" />
 		
 		<result column="remit_user" property="remitUser" />
 		<result column="reach_datetime" property="reachDatetime" />	
@@ -20,6 +20,9 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
+			</if>
+			<if test="feeCode != null and feeCode != '' ">
+				AND t.fee_code = #{feeCode}
 			</if>
 		</trim>
 	</sql>
@@ -85,24 +88,4 @@
 		,#{updateDatetime}
 		)
 	</insert>
-
-	<update id="update_budgetOrderFeeDetail" parameterType="budgetOrderFeeDetail">
-		UPDATE tdq_budget_order_fee_detail
-		SET
-		remit_type = #{remitType}
-		,remit_company_code = #{remitCompanyCode}
-		,remit_project = #{remitProject}
-		,amount = #{amount}
-		,plat_bankcard = #{platBankcard}
-		
-		,remit_user = #{remitUser}
-		,reach_datetime = #{reachDatetime}
-		,remark = #{remark}
-		,fee_code = #{feeCode}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		WHERE code = #{code}
-	</update>
-
-
 </mapper>

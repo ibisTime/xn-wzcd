@@ -14,14 +14,8 @@ import com.cdkj.loan.domain.BudgetOrderFeeDetail;
 public interface IBudgetOrderFeeDetailBO extends
         IPaginableBO<BudgetOrderFeeDetail> {
 
-    public boolean isBudgetOrderFeeDetailExist(String code);
-
     // 新增手续费明细
     public String saveBudgetOrderFeeDetail(BudgetOrderFeeDetail data);
-
-    public int removeBudgetOrderFeeDetail(String code);
-
-    public int refreshBudgetOrderFeeDetail(BudgetOrderFeeDetail data);
 
     public List<BudgetOrderFeeDetail> queryBudgetOrderFeeDetailList(
             BudgetOrderFeeDetail condition);
