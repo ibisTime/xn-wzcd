@@ -13,7 +13,7 @@ public enum ECreditNode {
 
     FILLIN_CREDIT("001_01", "填写征信单"), INPUT_CREDIT_RESULT("001_02", "录入征信结果"), AUDIT(
             "001_03", "风控专员审核"), AUDIT_NO_PASS("001_04", "风控专员审核不通过"), ACHIEVE(
-            "001_09", "征信单入档");
+            "001_09", "征信单完成");
 
     public static Map<String, ECreditNode> getMap() {
         Map<String, ECreditNode> map = new HashMap<String, ECreditNode>();

@@ -54,7 +54,6 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
-import com.cdkj.loan.enums.ECreditNode;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.ELoanProductStatus;
@@ -117,8 +116,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public String addBudgetOrder(XN632120Req req) {
-        BudgetOrder data = new BudgetOrder();
+    public void editBudgetOrder(XN632120Req req) {
+        BudgetOrder data = budgetOrderBO.getBudgetOrder(req.getCode());
 
         // 上架贷款产品信息
         LoanProduct loanProduct = loanProductBO.getLoanProduct(req
@@ -139,22 +138,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             AmountUtil.mul(loanAmount, loanProduct.getPreRate()),
             (1.0 + loanProduct.getPreRate())));
 
-        // 征信
-        Credit credit = creditBO.getCredit(req.getCreditCode());
-        if (!EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode().equals(
-            credit.getCurNodeCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "征信单还未到达填写准入单节点");
-        }
-        data.setCreditCode(req.getCreditCode());
         data.setBizType(req.getBizType());
-
         data.setLoanPeriod(req.getLoanPeriod());
         data.setInvoiceCompany(req.getInvoiceCompany());
         data.setCarBrand(req.getCarBrand());
         data.setCarSeries(req.getCarSeries());
-        data.setCarModel(req.getCarModel());
 
+        data.setCarModel(req.getCarModel());
         data.setCarPic(req.getCarPic());
         data.setCarHgzPic(req.getCarHgzPic());
         data.setCarHgzNo(req.getCarHgzNo());
@@ -374,9 +364,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setHouseContract(req.getHouseContract());
         data.setHousePicture(req.getHousePicture());
         data.setIsAdvanceFund(req.getIsAdvanceFund());
-        data.setSaleUserId(credit.getSaleUserId());
-        data.setCompanyCode(credit.getCompanyCode());
-        data.setApplyDatetime(new Date());
 
         // 当前节点
         EBudgetOrderNode node = EBudgetOrderNode.WRITE_BUDGET_ORDER;
@@ -388,18 +375,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
 
         data.setCurNodeCode(node.getCode());
-        String code = budgetOrderBO.saveBudgetOrder(data);
-
-        // 修改征信单节点为 征信单入档
-        if (null != credit) {
-            credit.setCurNodeCode(ECreditNode.ACHIEVE.getCode());
-            creditBO.refreshCreditNode(credit);
-        }
+        budgetOrderBO.refreshBudgetOrder(data);
 
         // 日志记录
-        sysBizLogBO.saveSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
-            node.getCode(), node.getValue(), req.getOperator());
-        return code;
+        sysBizLogBO.saveSYSBizLog(data.getCode(), EBizLogType.BUDGET_ORDER,
+            data.getCode(), node.getCode(), node.getValue(), req.getOperator());
     }
 
     @Override

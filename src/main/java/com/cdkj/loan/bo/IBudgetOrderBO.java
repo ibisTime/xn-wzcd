@@ -5,12 +5,13 @@ import java.util.List;
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.Credit;
 
 public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
-    public String saveBudgetOrder(BudgetOrder data);
+    public String saveBudgetOrder(Credit credit);
 
-    public int removeBudgetOrder(String code);
+    public String saveBudgetOrder(BudgetOrder data);
 
     public void refreshBudgetOrder(BudgetOrder data);
 

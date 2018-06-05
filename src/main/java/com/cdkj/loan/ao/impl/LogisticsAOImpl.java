@@ -84,6 +84,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
         if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             gpsApplyBO.sendGps(data.getBizCode(), logistics.getSendDatetime());
         }
+
+        // 操作人
     }
 
     @Override

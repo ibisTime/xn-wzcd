@@ -4,6 +4,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class XN632120Req {
 
+    // 编号
+    @NotBlank
+    private String code;
+
     // 操作人
     @NotBlank
     private String operator;
@@ -515,6 +519,14 @@ public class XN632120Req {
 
     // 房屋照片
     private String housePicture;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getOperator() {
         return operator;
