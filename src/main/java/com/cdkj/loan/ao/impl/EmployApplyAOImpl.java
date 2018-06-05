@@ -17,7 +17,6 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.CheckProject;
 import com.cdkj.loan.domain.EmployApply;
-import com.cdkj.loan.domain.SocialRelation;
 import com.cdkj.loan.domain.WorkExperience;
 import com.cdkj.loan.dto.req.XN632850Req;
 import com.cdkj.loan.dto.req.XN632850ReqExp;
@@ -111,7 +110,8 @@ public class EmployApplyAOImpl implements IEmployApplyAO {
     @Transactional
     public void interviewEmployApply(XN632851Req req) {
         EmployApply data = employApplyBO.getEmployApply(req.getCode());
-        if (!EEmployApplyStatus.TO_INTERVIEW.getCode().equals(data.getStatus())) {
+        if (!EEmployApplyStatus.TO_INTERVIEW.getCode()
+            .equals(data.getStatus())) {
             throw new BizException("xn0000", "当前应聘记录不是待面试状态");
         }
         // 保存面试信息
@@ -124,6 +124,7 @@ public class EmployApplyAOImpl implements IEmployApplyAO {
         data.setEmployDepartmentCode(req.getEmployDepartmentCode());
         data.setEmployPositionCode(req.getEmployPositionCode());
         data.setEmployApproveUser(req.getEmployApproveUser());
+        data.setEmployApproveDatetime(new Date());
         data.setEmployApproveNote(req.getEmployApproveNote());
 
         data.setStatus(EEmployApplyStatus.INTERVIEW_NO.getCode());
@@ -137,6 +138,7 @@ public class EmployApplyAOImpl implements IEmployApplyAO {
             checkProject.setCheckResult(checkProjectReq.getCheckResult());
             checkProject.setCheckUser(checkProjectReq.getCheckUser());
             checkProject.setRemark(checkProjectReq.getRemark());
+            checkProject.setEmployApplyCode(req.getCode());
             checkProjectBO.saveCheckProject(checkProject);
         }
     }
@@ -173,17 +175,17 @@ public class EmployApplyAOImpl implements IEmployApplyAO {
     private void initEmployApply(EmployApply data) {
         WorkExperience wECondition = new WorkExperience();
         wECondition.setParentCode(data.getCode());
-        data.setWorkExperienceList(workExperienceBO
-            .queryWorkExperienceList(wECondition));
+        data.setWorkExperienceList(
+            workExperienceBO.queryWorkExperienceList(wECondition));
 
-        SocialRelation sRCondition = new SocialRelation();
-        sRCondition.setArchiveCode(data.getCode());
-        data.setSocialRelationList(socialRelationBO
-            .querySocialRelationList(sRCondition));
+        // SocialRelation sRCondition = new SocialRelation();
+        // sRCondition.setArchiveCode(data.getCode());
+        // data.setSocialRelationList(
+        // socialRelationBO.querySocialRelationList(sRCondition));
 
         CheckProject cpCondition = new CheckProject();
         cpCondition.setEmployApplyCode(data.getCode());
-        data.setCheckProjectList(checkProjectBO
-            .queryCheckProjectList(cpCondition));
+        data.setCheckProjectList(
+            checkProjectBO.queryCheckProjectList(cpCondition));
     }
 }
