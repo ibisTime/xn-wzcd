@@ -269,6 +269,10 @@
 		<property name="paginableDAO" ref="employApplyDAOImpl"/>
 	</bean>
 	
+	<bean id="entryApplyBO" class="com.cdkj.loan.bo.impl.EntryApplyBOImpl">
+		<property name="paginableDAO" ref="entryApplyDAOImpl"/>
+	</bean>
+	
 	<bean id="storageInBO" class="com.cdkj.loan.bo.impl.StorageInBOImpl">
 		<property name="paginableDAO" ref="storageInDAOImpl"/>
 

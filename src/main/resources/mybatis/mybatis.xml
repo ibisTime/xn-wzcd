@@ -113,6 +113,7 @@
 		<typeAlias alias="socialRelation" type="com.cdkj.loan.domain.SocialRelation" />
 		
 		<typeAlias alias="recruitApply" type="com.cdkj.loan.domain.RecruitApply" />
+		<typeAlias alias="entryApply" type="com.cdkj.loan.domain.EntryApply" />
 	</typeAliases>
 	
 </configuration>
