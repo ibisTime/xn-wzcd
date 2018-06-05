@@ -324,6 +324,7 @@ public class DateUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(getIntervalDate(new Date(), 10, 20));
+        System.out.println(
+            strToDate("2018-06-29", DateUtil.FRONT_DATE_FORMAT_STRING));
     }
 }
