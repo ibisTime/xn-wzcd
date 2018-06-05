@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cdkj.loan.dao.IStorageInDAO">
-	<resultMap id="StorageIn_DB_Result" type="storageIn">
+<mapper namespace="com.cdkj.loan.dao.IStorageOutDAO">
+	<resultMap id="StorageOut_DB_Result" type="storageOut">
 		<result column="code" property="code" />
 		<result column="category_code" property="categoryCode" />
 		<result column="product_code" property="productCode" />
@@ -10,8 +10,7 @@
 		<result column="price" property="price" />
 		
 		<result column="total_price" property="totalPrice" />
-		<result column="valid_date_start" property="validDateStart" />
-		<result column="valid_date_end" property="validDateEnd" />
+		<result column="storage_in_code" property="storageInCode" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
 		<result column="remark" property="remark" />
@@ -31,7 +30,7 @@
 		</trim>
 	</sql>
 	
-	<select id="select_StorageIn" parameterType="storageIn" resultMap="StorageIn_DB_Result">
+	<select id="select_StorageOut" parameterType="storageOut" resultMap="StorageOut_DB_Result">
 		SELECT
 		t.code
 		,t.category_code
@@ -40,13 +39,12 @@
 		,t.price
 		
 		,t.total_price
-		,t.valid_date_start
-		,t.valid_date_end
+		,t.storage_in_code
 		,t.updater
 		,t.update_datetime
 		,t.remark
 		FROM
-		tp_storage_in t
+		tp_storage_out t
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -55,15 +53,15 @@
 		</trim>
 	</select>
 
-	<select id="select_StorageIn_count" parameterType="storageIn"
+	<select id="select_StorageOut_count" parameterType="storageOut"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tp_storage_in t
+		SELECT count(1) FROM tp_storage_out t
 		<include refid="where_condition" />
 	</select>
 
-	<insert id="insert_StorageIn" parameterType="storageIn">
+	<insert id="insert_StorageOut" parameterType="storageOut">
 		INSERT INTO
-		tp_storage_in(
+		tp_storage_out(
 		code
 		,category_code
 		,product_code
@@ -71,8 +69,7 @@
 		,price
 		
 		,total_price
-		,valid_date_start
-		,valid_date_end
+		,storage_in_code
 		,updater
 		,update_datetime
 		,remark
@@ -85,20 +82,10 @@
 		,#{price}
 		
 		,#{totalPrice}
-		,#{validDateStart}
-		,#{validDateEnd}
+		,#{storageInCode}
 		,#{updater}
 		,#{updateDatetime}
 		,#{remark}
 		)
 	</insert>
-	
-	<update id="update_StorageIn" parameterType="StorageIn">
-		UPDATE tp_storage_in
-		SET
-		quantity = #{quantity}
-		,total_price = #{totalPrice}
-		,update_datetime = #{updateDatetime}
-		WHERE code = #{code}
-	</update>
 </mapper>
