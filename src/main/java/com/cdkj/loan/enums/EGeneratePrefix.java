@@ -41,8 +41,9 @@ public enum EGeneratePrefix {
             "AL", "档案存放位置"),
 
     SOCIALRELATION("SR", "社会关系"), EmployApply("EA", "应聘登记"), WORK_EXPERIENCE(
-            "WE", "工作经历"), CHECK_PROJECT("CP", "考核项目"), STORAGE_IN("SI", "入库"), STORAGE_OUT(
-            "SO", "出库"), CONTRACT("HT", "合同管理");
+
+    "WE", "工作经历"), CHECK_PROJECT("CP", "考核项目"), STORAGE_IN("SI", "入库"), STORAGE_OUT(
+            "SO", "出库"), CONTRACT("HT", "合同管理"), ENTRYAPPLY("EA", "入职申请");
 
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();
