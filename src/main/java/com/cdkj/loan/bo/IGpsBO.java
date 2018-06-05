@@ -12,8 +12,6 @@ public interface IGpsBO extends IPaginableBO<Gps> {
 
     public void applyGps(Gps code);
 
-    public void applyLqGps(String code);
-
     public void refreshApplyGps(String code, SYSUser user, String applyCode);
 
     public void refreshUseGps(String code, String budgetOrder);

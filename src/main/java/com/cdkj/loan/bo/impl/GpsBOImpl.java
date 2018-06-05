@@ -15,7 +15,6 @@ import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
-import com.cdkj.loan.enums.EGpsApplyStatus;
 import com.cdkj.loan.enums.EGpsUseStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -100,16 +99,5 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
             }
         }
         return data;
-    }
-
-    /** 
-     * @see com.cdkj.loan.bo.IGpsBO#applyLqGps(com.cdkj.loan.domain.Gps)
-     */
-    @Override
-    public void applyLqGps(String code) {
-        Gps data = new Gps();
-        data.setCode(code);
-        data.setApplyStatus(EGpsApplyStatus.RECEIVED.getCode());
-        gpsDAO.updateApplyStatus(data);
     }
 }
