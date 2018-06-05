@@ -105,6 +105,7 @@
 		<typeAlias alias="checkProject" type="com.cdkj.loan.domain.CheckProject" />
 		
 		<typeAlias alias="storageIn" type="com.cdkj.loan.domain.StorageIn" />
+		<typeAlias alias="storageOut" type="com.cdkj.loan.domain.StorageOut" />
 		
 		<!-- 贷后 -->
 		<typeAlias alias="overdueMenu" type="com.cdkj.loan.domain.OverdueMenu" />

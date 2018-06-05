@@ -260,4 +260,8 @@
 		<property name="paginableDAO" ref="storageInDAOImpl"/>
 	</bean>
 	
+	<bean id="storageOutBO" class="com.cdkj.loan.bo.impl.StorageOutBOImpl">
+		<property name="paginableDAO" ref="storageOutDAOImpl"/>
+	</bean>
+	
 </beans>
