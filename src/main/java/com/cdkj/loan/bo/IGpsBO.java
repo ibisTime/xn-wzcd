@@ -8,6 +8,8 @@ import com.cdkj.loan.domain.SYSUser;
 
 public interface IGpsBO extends IPaginableBO<Gps> {
 
+    public void checkGpsDevNo(String gpsDevNo);
+
     public void saveGps(Gps data);
 
     public void applyGps(Gps code);

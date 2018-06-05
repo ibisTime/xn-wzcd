@@ -20,6 +20,9 @@ public class XN632120Req {
     @NotBlank
     private String loanProductCode;
 
+    // 公司手续费
+    private String companyFee;
+
     // 是否垫资
     @NotBlank
     private String isAdvanceFund;
@@ -519,6 +522,14 @@ public class XN632120Req {
 
     // 房屋照片
     private String housePicture;
+
+    public String getCompanyFee() {
+        return companyFee;
+    }
+
+    public void setCompanyFee(String companyFee) {
+        this.companyFee = companyFee;
+    }
 
     public String getCode() {
         return code;

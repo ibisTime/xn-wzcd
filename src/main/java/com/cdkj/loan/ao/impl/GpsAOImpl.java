@@ -34,6 +34,9 @@ public class GpsAOImpl implements IGpsAO {
 
     @Override
     public String addGps(String gpsDevNo, String gpsType) {
+        // 验证gps设备号是否唯一
+        gpsBO.checkGpsDevNo(gpsDevNo);
+
         Gps data = new Gps();
         String code = OrderNoGenerater.generate(EGeneratePrefix.GPS.getCode());
         data.setCode(code);
@@ -92,5 +95,4 @@ public class GpsAOImpl implements IGpsAO {
             gps.setApplyUserName(sysUser.getRealName());
         }
     }
-
 }

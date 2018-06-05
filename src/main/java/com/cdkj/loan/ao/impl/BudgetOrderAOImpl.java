@@ -134,9 +134,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         Long loanAmount = StringValidater.toLong(req.getLoanAmount());
         data.setAuthFee(AmountUtil.mul(loanAmount, loanProduct.getAuthRate()));
         // 银行服务费=前置*贷款额/（1+前置）
-        data.setBankFee((long) AmountUtil.div(
-            AmountUtil.mul(loanAmount, loanProduct.getPreRate()),
-            (1.0 + loanProduct.getPreRate())));
+        Long amount = AmountUtil.mul(loanAmount, loanProduct.getPreRate());
+        data.setBankFee(AmountUtil.div(amount, (1.0 + loanProduct.getPreRate())));
+        data.setCompanyFee(StringValidater.toLong(req.getCompanyFee()));
 
         data.setBizType(req.getBizType());
         data.setLoanPeriod(req.getLoanPeriod());
@@ -603,7 +603,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             List<BudgetOrderGps> gpslist = budgetOrderGpsBO
                 .queryBudgetOrderGpsList(budgetOrder.getCode());
             for (BudgetOrderGps budgetOrderGps : gpslist) {
-                Gps gps = gpsBO.getGpsByDevNo(budgetOrderGps.getGpsDevNo());
+                Gps gps = gpsBO.getGps(budgetOrderGps.getCode());
                 gpsBO.refreshUseGps(gps.getCode(), budgetOrder.getCode());
             }
         } else {

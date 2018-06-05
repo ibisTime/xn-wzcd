@@ -17,7 +17,7 @@ public class XN632112Req {
     private String creditCode;
 
     // 贷款银行
-    private String loanBank;
+    private String loanBankCode;
 
     // 贷款金额
     private String loanAmount;
@@ -36,16 +36,28 @@ public class XN632112Req {
 
     private List<XN632112ReqCreditUser> creditUserList;
 
+    // 操作按钮
+    @NotBlank
+    private String buttonCode;
+
     // 操作人
     @NotBlank
     private String operator;
 
-    public String getLoanBank() {
-        return loanBank;
+    public String getButtonCode() {
+        return buttonCode;
     }
 
-    public void setLoanBank(String loanBank) {
-        this.loanBank = loanBank;
+    public void setButtonCode(String buttonCode) {
+        this.buttonCode = buttonCode;
+    }
+
+    public String getLoanBankCode() {
+        return loanBankCode;
+    }
+
+    public void setLoanBankCode(String loanBankCode) {
+        this.loanBankCode = loanBankCode;
     }
 
     public String getLoanAmount() {

@@ -25,6 +25,16 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
     private IGpsDAO gpsDAO;
 
     @Override
+    public void checkGpsDevNo(String gpsDevNo) {
+        Gps condition = new Gps();
+        condition.setGpsDevNo(gpsDevNo);
+        long count = gpsDAO.selectTotalCount(condition);
+        if (count > 0) {
+            throw new BizException("xn0000", "当前GPS设备号已存在");
+        }
+    }
+
+    @Override
     public void saveGps(Gps data) {
         if (data != null) {
             gpsDAO.insert(data);

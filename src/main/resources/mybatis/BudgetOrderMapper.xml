@@ -1223,6 +1223,7 @@
 		
 		,house_picture = #{housePicture}
 		,is_advance_fund = #{isAdvanceFund}
+		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>

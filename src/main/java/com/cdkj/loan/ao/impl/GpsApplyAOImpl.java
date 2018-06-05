@@ -54,20 +54,13 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
 
     @Override
     public String addGpsApply(XN632710Req req) {
+        // undo 待验证库存数量和申请数量
         GpsApply data = new GpsApply();
         data.setType(req.getType());
         SYSUser sysUser = sysUserBO.getUser(req.getApplyUser());
         if (StringUtils.isBlank(sysUser.getPostCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "申请人岗位为空，请先设置岗位");
-        }
-        if (StringUtils.isBlank(sysUser.getDepartmentCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "申请人部门为空，请先设置部门");
-        }
-        if (StringUtils.isBlank(sysUser.getCompanyCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "申请人公司为空，请先设置公司");
         }
         data.setCompanyCode(sysUser.getCompanyCode());
         data.setApplyUser(req.getApplyUser());
@@ -89,12 +82,15 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             req.getRemark());
 
         for (XN632711ReqChild childReq : req.getGpsList()) {
+            if (StringUtils.isBlank(childReq.getCode())) {
+                throw new BizException("xn0000", "GPS编号不能为空");
+            }
             Gps gps = new Gps();
             gps.setCode(childReq.getCode());
             gps.setApplyCode(data.getCode());
             gps.setCompanyCode(data.getCompanyCode());
             gps.setApplyUser(data.getApplyUser());
-            gps.setApplyStatus(EBoolean.YES.getCode());
+            gps.setApplyStatus(EBoolean.NO.getCode());
             gps.setApplyDatetime(data.getApplyDatetime());
             gpsBO.applyGps(gps);
         }
