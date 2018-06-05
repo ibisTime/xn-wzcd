@@ -940,8 +940,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setSaleUserName(sysUser.getRealName());
 
         // 贷款银行
-        Bank loanBank = bankBO.getBank(budgetOrder.getLoanBank());
-        budgetOrder.setLoanBankName(loanBank.getBankName());
+        if (StringUtils.isNotBlank(budgetOrder.getLoanBank())) {
+            Bank loanBank = bankBO.getBank(budgetOrder.getLoanBank());
+            budgetOrder.setLoanBankName(loanBank.getBankName());
+        }
     }
 
     @Override

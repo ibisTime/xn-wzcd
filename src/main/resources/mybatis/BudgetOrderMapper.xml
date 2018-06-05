@@ -867,7 +867,6 @@
 		,#{authFee}
 		,#{bankFee}
 		,#{companyFee}
-		,#{monthRate}
 		,#{creditCode}
 		,#{bizType}
 		,#{loanPeriod}
