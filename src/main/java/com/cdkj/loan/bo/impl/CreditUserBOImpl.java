@@ -2,6 +2,7 @@ package com.cdkj.loan.bo.impl;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -88,11 +89,16 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     @Override
     public CreditUser getCreditUserByCreditCode(String creditCode,
             ELoanRole creditUserRelation) {
+        CreditUser creditUser = null;
         CreditUser condition = new CreditUser();
         condition.setCreditCode(creditCode);
         condition.setRelation(creditUserRelation.getCode());
 
-        return creditUserDAO.select(condition);
+        List<CreditUser> list = creditUserDAO.selectList(condition);
+        if (CollectionUtils.isNotEmpty(list)) {
+            creditUser = list.get(0);
+        }
+        return creditUser;
     }
 
 }

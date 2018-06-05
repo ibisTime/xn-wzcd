@@ -4,8 +4,8 @@ import com.cdkj.loan.ao.IEmployApplyAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN632850Req;
-import com.cdkj.loan.dto.res.PKCodeRes;
+import com.cdkj.loan.dto.req.XN632851Req;
+import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -20,18 +20,18 @@ public class XN632851 extends AProcessor {
     private IEmployApplyAO employApplyAO = SpringContextHolder
         .getBean(IEmployApplyAO.class);
 
-    private XN632850Req req = null;
+    private XN632851Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        String code = employApplyAO.addEmployApply(req);
-        return new PKCodeRes(code);
+        employApplyAO.interviewEmployApply(req);
+        return new BooleanRes(true);
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632850Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632851Req.class);
         ObjValidater.validateReq(req);
     }
 

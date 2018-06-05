@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -124,6 +125,40 @@ public class EmployApply extends ABaseDO {
 
     // 备注
     private String remark;
+
+    // **********db properties**********
+    // 工作经历
+    private List<WorkExperience> workExperienceList;
+
+    // 家庭成员
+    private List<SocialRelation> socialRelationList;
+
+    // 考核项目
+    private List<CheckProject> checkProjectList;
+
+    public List<WorkExperience> getWorkExperienceList() {
+        return workExperienceList;
+    }
+
+    public void setWorkExperienceList(List<WorkExperience> workExperienceList) {
+        this.workExperienceList = workExperienceList;
+    }
+
+    public List<SocialRelation> getSocialRelationList() {
+        return socialRelationList;
+    }
+
+    public void setSocialRelationList(List<SocialRelation> socialRelationList) {
+        this.socialRelationList = socialRelationList;
+    }
+
+    public List<CheckProject> getCheckProjectList() {
+        return checkProjectList;
+    }
+
+    public void setCheckProjectList(List<CheckProject> checkProjectList) {
+        this.checkProjectList = checkProjectList;
+    }
 
     public String getUpdater() {
         return updater;

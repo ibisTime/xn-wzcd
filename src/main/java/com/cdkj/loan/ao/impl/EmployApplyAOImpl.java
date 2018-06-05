@@ -5,19 +5,27 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IEmployApplyAO;
+import com.cdkj.loan.bo.ICheckProjectBO;
 import com.cdkj.loan.bo.IEmployApplyBO;
 import com.cdkj.loan.bo.ISocialRelationBO;
 import com.cdkj.loan.bo.IWorkExperienceBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.CheckProject;
 import com.cdkj.loan.domain.EmployApply;
+import com.cdkj.loan.domain.SocialRelation;
 import com.cdkj.loan.domain.WorkExperience;
 import com.cdkj.loan.dto.req.XN632850Req;
 import com.cdkj.loan.dto.req.XN632850ReqExp;
+import com.cdkj.loan.dto.req.XN632851Req;
+import com.cdkj.loan.dto.req.XN632851ReqCheckPro;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EEmployApplyStatus;
+import com.cdkj.loan.exception.BizException;
 
 @Service
 public class EmployApplyAOImpl implements IEmployApplyAO {
@@ -30,6 +38,9 @@ public class EmployApplyAOImpl implements IEmployApplyAO {
 
     @Autowired
     private ISocialRelationBO socialRelationBO;
+
+    @Autowired
+    private ICheckProjectBO checkProjectBO;
 
     @Override
     public String addEmployApply(XN632850Req req) {
@@ -97,22 +108,82 @@ public class EmployApplyAOImpl implements IEmployApplyAO {
     }
 
     @Override
-    public void interviewEmployApply(EmployApply data) {
+    @Transactional
+    public void interviewEmployApply(XN632851Req req) {
+        EmployApply data = employApplyBO.getEmployApply(req.getCode());
+        if (!EEmployApplyStatus.TO_INTERVIEW.getCode().equals(data.getStatus())) {
+            throw new BizException("xn0000", "当前应聘记录不是待面试状态");
+        }
+        // 保存面试信息
+        data.setComposite(req.getComposite());
+        data.setQuality(req.getQuality());
+        data.setInterviewRecord(req.getInterviewRecord());
+        data.setEmployResult(req.getEmployResult());
+        data.setProbation(req.getProbation());
+        data.setEmploySalary(StringValidater.toLong(req.getEmploySalary()));
+        data.setEmployDepartmentCode(req.getEmployDepartmentCode());
+        data.setEmployPositionCode(req.getEmployPositionCode());
+        data.setEmployApproveUser(req.getEmployApproveUser());
+        data.setEmployApproveNote(req.getEmployApproveNote());
+
+        data.setStatus(EEmployApplyStatus.INTERVIEW_NO.getCode());
+        if (EBoolean.YES.getCode().equals(req.getEmployApproveResult())) {
+            data.setStatus(EEmployApplyStatus.INTERVIEW_YES.getCode());
+        }
+        employApplyBO.interview(data);
+        for (XN632851ReqCheckPro checkProjectReq : req.getCheckProjectList()) {
+            CheckProject checkProject = new CheckProject();
+            checkProject.setName(checkProjectReq.getName());
+            checkProject.setCheckResult(checkProjectReq.getCheckResult());
+            checkProject.setCheckUser(checkProjectReq.getCheckUser());
+            checkProject.setRemark(checkProjectReq.getRemark());
+            checkProjectBO.saveCheckProject(checkProject);
+        }
     }
 
     @Override
     public Paginable<EmployApply> queryEmployApplyPage(int start, int limit,
             EmployApply condition) {
-        return employApplyBO.getPaginable(start, limit, condition);
+        Paginable<EmployApply> page = employApplyBO.getPaginable(start, limit,
+            condition);
+        if (page != null) {
+            for (EmployApply employApply : page.getList()) {
+                initEmployApply(employApply);
+            }
+        }
+        return page;
     }
 
     @Override
     public List<EmployApply> queryEmployApplyList(EmployApply condition) {
-        return employApplyBO.queryEmployApplyList(condition);
+        List<EmployApply> list = employApplyBO.queryEmployApplyList(condition);
+        for (EmployApply employApply : list) {
+            initEmployApply(employApply);
+        }
+        return list;
     }
 
     @Override
     public EmployApply getEmployApply(String code) {
-        return employApplyBO.getEmployApply(code);
+        EmployApply data = employApplyBO.getEmployApply(code);
+        initEmployApply(data);
+        return data;
+    }
+
+    private void initEmployApply(EmployApply data) {
+        WorkExperience wECondition = new WorkExperience();
+        wECondition.setParentCode(data.getCode());
+        data.setWorkExperienceList(workExperienceBO
+            .queryWorkExperienceList(wECondition));
+
+        SocialRelation sRCondition = new SocialRelation();
+        sRCondition.setArchiveCode(data.getCode());
+        data.setSocialRelationList(socialRelationBO
+            .querySocialRelationList(sRCondition));
+
+        CheckProject cpCondition = new CheckProject();
+        cpCondition.setEmployApplyCode(data.getCode());
+        data.setCheckProjectList(checkProjectBO
+            .queryCheckProjectList(cpCondition));
     }
 }
