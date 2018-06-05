@@ -60,6 +60,7 @@
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
 		<result column="remark" property="remark" />
+		<result column="user_id" property="userId" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -83,6 +84,9 @@
 			</if>
 			<if test="entryDatetimeEnd != null and entryDatetimeEnd != '' ">
 				AND t.entry_datetime &lt;= #{entryDatetimeEnd}
+			</if>
+			<if test="userId != null and userId != '' ">
+				AND t.user_id &lt;= #{userId}
 			</if>
 		</trim>
 	</sql>
@@ -145,6 +149,7 @@
 		,t.updater
 		,t.update_datetime
 		,t.remark
+		,t.user_id
 		FROM
 		tp_archive t
 		<include refid="where_condition" />
@@ -221,6 +226,7 @@
 		,updater
 		,update_datetime
 		,remark
+		,user_id
 		)
 		VALUES(
 		#{code}
@@ -280,6 +286,7 @@
 		,#{updater}
 		,#{updateDatetime}
 		,#{remark}
+		,#{userId}
 		)
 	</insert>
 

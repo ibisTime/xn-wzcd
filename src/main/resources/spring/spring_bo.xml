@@ -282,4 +282,12 @@
 		<property name="paginableDAO" ref="storageOutDAOImpl"/>
 	</bean>
 	
+	<bean id="leaveApplyBO" class="com.cdkj.loan.bo.impl.LeaveApplyBOImpl">
+		<property name="paginableDAO" ref="leaveApplyDAOImpl"/>
+	</bean>
+		
+	<bean id="contractBO" class="com.cdkj.loan.bo.impl.ContractBOImpl">
+		<property name="paginableDAO" ref="contractDAOImpl"/>
+	</bean>
+	
 </beans>
