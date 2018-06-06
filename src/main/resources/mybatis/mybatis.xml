@@ -130,7 +130,8 @@
 		<typeAlias alias="probationAssess" type="com.cdkj.loan.domain.ProbationAssess" />
 		<typeAlias alias="transferPositionApply" type="com.cdkj.loan.domain.TransferPositionApply" />
 		<typeAlias alias="carBreak" type="com.cdkj.loan.domain.CarBreak" />
-		
+		<typeAlias alias="welfareApply" type="com.cdkj.loan.domain.WelfareApply" />
+		<typeAlias alias="welfareUser" type="com.cdkj.loan.domain.WelfareUser" />
 	</typeAliases>
 </configuration>
 
