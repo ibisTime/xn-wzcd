@@ -44,6 +44,38 @@ public class AssertApply extends ABaseDO {
     // 备注
     private String remark;
 
+    /***************db properties*************/
+
+    private String departmentCode;
+
+    private String startApplyDatetime;
+
+    private String endApplyDatetime;
+
+    public String getDepartmentCode() {
+        return departmentCode;
+    }
+
+    public void setDepartmentCode(String departmentCode) {
+        this.departmentCode = departmentCode;
+    }
+
+    public String getStartApplyDatetime() {
+        return startApplyDatetime;
+    }
+
+    public void setStartApplyDatetime(String startApplyDatetime) {
+        this.startApplyDatetime = startApplyDatetime;
+    }
+
+    public String getEndApplyDatetime() {
+        return endApplyDatetime;
+    }
+
+    public void setEndApplyDatetime(String endApplyDatetime) {
+        this.endApplyDatetime = endApplyDatetime;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }

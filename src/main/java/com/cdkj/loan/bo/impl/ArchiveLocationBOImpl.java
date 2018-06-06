@@ -83,7 +83,7 @@ public class ArchiveLocationBOImpl extends PaginableBOImpl<ArchiveLocation>
             condition.setCode(code);
             data = archiveLocationDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException("xn0000", "编号不存在");
             }
         }
         return data;

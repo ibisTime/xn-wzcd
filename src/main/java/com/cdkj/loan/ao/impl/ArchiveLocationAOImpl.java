@@ -71,7 +71,10 @@ public class ArchiveLocationAOImpl implements IArchiveLocationAO {
 
     @Override
     public ArchiveLocation getArchiveLocation(String code) {
-        return archiveLocationBO.getArchiveLocation(code);
+        ArchiveLocation archiveLocation = archiveLocationBO
+            .getArchiveLocation(code);
+        init(archiveLocation);
+        return archiveLocation;
     }
 
     // 初始化数据

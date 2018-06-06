@@ -13,11 +13,21 @@
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
 		<result column="remark" property="remark" />
+		<result column="apply_datetime" property="applyDatetime" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
+			</if>
+			<if test="startApplyDatetime != null and startApplyDatetime != '' ">
+				AND t.apply_datetime &gt;= #{startApplyDatetime}
+			</if>
+			<if test="endApplyDatetime != null and endApplyDatetime != '' ">
+				AND t.apply_datetime &lt;= #{endApplyDatetime}
+			</if>
+			<if test="departmentCode != null and departmentCode != '' ">
+				AND t.apply_datetime = #{departmentCode}
 			</if>
 		</trim>
 	</sql>
@@ -34,7 +44,7 @@
 		,t.update_datetime
 		,t.remark
 		FROM
-		tp_assert_apply t
+		tp_assert_apply t 
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -80,12 +90,7 @@
 	<update id="update_assertApply" parameterType="assertApply">
 		UPDATE tp_assert_apply
 		SET
-		type = #{type}
-		,apply_user = #{applyUser}
-		,apply_note = #{applyNote}
-		,is_print = #{isPrint}
-		,pdf = #{pdf}
-		,status = #{status}
+		status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}

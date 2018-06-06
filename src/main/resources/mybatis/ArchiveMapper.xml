@@ -88,6 +88,9 @@
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
+			<if test="isDelete != null and isDelete != '' ">
+				AND t.is_delete = #{isDelete}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_archive" parameterType="archive" resultMap="Archive_DB_Result">
@@ -153,7 +156,6 @@
 		FROM
 		tp_archive t
 		<include refid="where_condition" />
-		and is_delete='1'
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
 				t.${order}
@@ -163,7 +165,7 @@
 
 	<select id="select_archive_count" parameterType="archive"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tp_archive t where is_delete='1'
+		SELECT count(1) FROM tp_archive t 
 		<include refid="where_condition" />
 	</select>
 
