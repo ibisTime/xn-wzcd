@@ -19,7 +19,7 @@ public class XN632661Req {
 
     // 审核结果(1 通过 2 不通过)
     @NotBlank
-    private String result;
+    private String approveResult;
 
     // 备注
     private String remark;
@@ -48,12 +48,12 @@ public class XN632661Req {
         this.remark = remark;
     }
 
-    public String getResult() {
-        return result;
+    public String getApproveResult() {
+        return approveResult;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setApproveResult(String approveResult) {
+        this.approveResult = approveResult;
     }
 
 }

@@ -77,9 +77,10 @@ public class WelfareApplyAOImpl implements IWelfareApplyAO {
         data.setRemark(req.getRemark());
         data.setUpdateDatetime(new Date());
 
-        if (req.getResult().equals(ECarBreakStatus.APPROVE_PASS.getCode())) {
+        if (req.getApproveResult()
+            .equals(ECarBreakStatus.APPROVE_PASS.getCode())) {
             data.setStatus(ECarBreakStatus.APPROVE_PASS.getCode());
-        } else if (req.getResult()
+        } else if (req.getApproveResult()
             .equals(ECarBreakStatus.APPROVE_FAIL.getCode())) {
             data.setStatus(ECarBreakStatus.APPROVE_FAIL.getCode());
         }
