@@ -44,7 +44,7 @@ public enum EGeneratePrefix {
             "WE", "工作经历"), CHECK_PROJECT("CP", "考核项目"), STORAGE_IN("SI", "入库"), STORAGE_OUT(
             "SO", "出库"), CONTRACT("HT", "合同管理"), ENTRYAPPLY("EA", "入职申请"),
     
-    LEAVE_APPLY("LA", "请假申请"), CONVERTAPPLY("CA", "转正申请"), SUPPLE_SIGN_APPLY("SSA", "补签");
+    LEAVE_APPLY("LA", "请假申请"), CONVERTAPPLY("CA", "转正申请"),TRANSFERPOSITIONAPPLY("TPA","调岗申请"), SUPPLE_SIGN_APPLY("SSA", "补签");
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();
         for (EGeneratePrefix orderType : EGeneratePrefix.values()) {

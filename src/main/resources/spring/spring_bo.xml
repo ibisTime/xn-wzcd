@@ -298,4 +298,8 @@
 		<property name="paginableDAO" ref="probationAssessDAOImpl"/>
 	</bean>
 	
+	<bean id="transferPositionApplyBO" class="com.cdkj.loan.bo.impl.TransferPositionApplyBOImpl">
+		<property name="paginableDAO" ref="transferPositionApplyDAOImpl"/>
+	</bean>
+	
 </beans>

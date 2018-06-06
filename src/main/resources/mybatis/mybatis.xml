@@ -121,8 +121,9 @@
 		<typeAlias alias="entryApply" type="com.cdkj.loan.domain.EntryApply" />
 		<typeAlias alias="convertApply" type="com.cdkj.loan.domain.ConvertApply" />
 		
-		<typeAlias alias="suppleSignApply" type="com.cdkj.loan.domain.SuppleSignApply" />
+		<!-- <typeAlias alias="suppleSignApply" type="com.cdkj.loan.domain.SuppleSignApply" /> -->
 		<typeAlias alias="probationAssess" type="com.cdkj.loan.domain.ProbationAssess" />
+		<typeAlias alias="transferPositionApply" type="com.cdkj.loan.domain.TransferPositionApply" />
 		
 	</typeAliases>
 </configuration>
