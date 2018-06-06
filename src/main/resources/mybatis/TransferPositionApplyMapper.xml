@@ -4,7 +4,8 @@
 <mapper namespace="com.cdkj.loan.dao.ITransferPositionApplyDAO">
 	<resultMap id="transferPositionApply_DB_Result" type="transferPositionApply">
 		<result column="code" property="code" />
-		<result column="archieve_code" property="archieveCode" />
+		<result column="apply_user" property="applyUser" />
+		<result column="apply_datetime" property="applyDatetime" />
 		<result column="new_department" property="newDepartment" />
 		<result column="new_position" property="newPosition" />
 		<result column="start_datetime" property="startDatetime" />
@@ -20,8 +21,8 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
-			<if test="archieveCode != null and archieveCode != '' ">
-				AND t.archieve_code = #{archieveCode}
+			<if test="applyUser != null and applyUser != '' ">
+				AND t.apply_user = #{applyUser}
 			</if>
 			<if test="newDepartment != null and newDepartment != '' ">
 				AND t.new_department = #{newDepartment}
@@ -30,17 +31,18 @@
 				AND t.status = #{status}
 			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
-				<![CDATA[AND t.start_datetime > #{applyDatetimeStart}]]>
+				<![CDATA[AND t.apply_datetime > #{applyDatetimeStart}]]>
 			</if>
 			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
-				<![CDATA[AND t.end_datetime < #{applyDatetimeEnd}]]>
+				<![CDATA[AND t.apply_datetime < #{applyDatetimeEnd}]]>
 			</if>
 		</trim>
 	</sql>
 	<select id="select_transferPositionApply" parameterType="transferPositionApply" resultMap="transferPositionApply_DB_Result">
 		SELECT
 		t.code
-		,t.archieve_code
+		,t.apply_user
+		,t.apply_datetime
 		,t.new_department
 		,t.new_position
 		,t.start_datetime
@@ -70,7 +72,8 @@
 		INSERT INTO
 		tp_transfer_position_apply(
 		code
-		,archieve_code
+		,apply_user
+		,apply_datetime
 		,new_department
 		,new_position
 		,start_datetime
@@ -83,7 +86,8 @@
 		)
 		VALUES(
 		#{code}
-		,#{archieveCode}
+		,#{applyUser}
+		,#{applyDatetime}
 		,#{newDepartment}
 		,#{newPosition}
 		,#{startDatetime}
@@ -99,7 +103,8 @@
 	<update id="update_transferPositionApply" parameterType="transferPositionApply">
 		UPDATE tp_transfer_position_apply
 		SET
-		archieve_code = #{archieveCode}
+		apply_user = #{applyUser}
+		,apply_datetime = #{applyDatetime}
 		,new_department = #{newDepartment}
 		,new_position = #{newPosition}
 		,start_datetime = #{startDatetime}

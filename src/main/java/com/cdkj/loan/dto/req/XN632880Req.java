@@ -4,9 +4,11 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class XN632880Req {
 
-    // 申请人档案编号
-    @NotBlank
-    private String archieveCode;
+    // 申请人
+    private String applyUser;
+
+    // 申请时间
+    private String applyDatetime;
 
     // 新部门
     @NotBlank
@@ -27,12 +29,20 @@ public class XN632880Req {
     // 缘由
     private String reason;
 
-    public String getArchieveCode() {
-        return archieveCode;
+    public String getApplyUser() {
+        return applyUser;
     }
 
-    public void setArchieveCode(String archieveCode) {
-        this.archieveCode = archieveCode;
+    public void setApplyUser(String applyUser) {
+        this.applyUser = applyUser;
+    }
+
+    public String getApplyDatetime() {
+        return applyDatetime;
+    }
+
+    public void setApplyDatetime(String applyDatetime) {
+        this.applyDatetime = applyDatetime;
     }
 
     public String getNewDepartment() {
