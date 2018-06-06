@@ -34,6 +34,17 @@ public class XN632150Req {
     // 发货说明
     private String sendNote;
 
+    // 操作人
+    private String operater;
+
+    public String getOperater() {
+        return operater;
+    }
+
+    public void setOperater(String operater) {
+        this.operater = operater;
+    }
+
     public String getSendFileList() {
         return sendFileList;
     }

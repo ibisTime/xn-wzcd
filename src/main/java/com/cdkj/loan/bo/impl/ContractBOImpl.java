@@ -82,7 +82,7 @@ public class ContractBOImpl extends PaginableBOImpl<Contract> implements
             condition.setCode(code);
             data = contractDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException("xn0000", "编号不存在");
             }
         }
         return data;

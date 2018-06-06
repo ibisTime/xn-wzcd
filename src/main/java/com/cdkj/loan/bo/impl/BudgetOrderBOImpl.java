@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -16,10 +17,14 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBudgetOrderDAO;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.Credit;
+import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.EIDKind;
+import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
@@ -39,6 +44,66 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
 
+    @Override
+    public String saveBudgetOrder(Credit credit) {
+        List<CreditUser> creditUserList = credit.getCreditUserList();
+        CreditUser applyCreditUser = null;
+        CreditUser ghrCreditUser = null;
+        CreditUser guaCreditUser = null;
+        for (CreditUser creditUser : creditUserList) {
+            if (applyCreditUser == null
+                    && ELoanRole.APPLY_USER.getCode().equals(
+                        creditUser.getLoanRole())) {
+                applyCreditUser = creditUser;
+            }
+            if (ghrCreditUser == null
+                    && ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
+                ghrCreditUser = creditUser;
+            }
+            if (guaCreditUser == null
+                    && ELoanRole.GUARANTOR.getCode().equals(
+                        creditUser.getLoanRole())) {
+                guaCreditUser = creditUser;
+            }
+        }
+
+        String code = null;
+        if (credit != null) {
+            BudgetOrder data = new BudgetOrder();
+            code = OrderNoGenerater.generate(EGeneratePrefix.BUDGETORDER
+                .getCode());
+            data.setCode(code);
+            data.setCreditCode(credit.getCode());
+            data.setBizType(credit.getBizType());
+            data.setLoanAmount(credit.getLoanAmount());
+            data.setApplyUserName(applyCreditUser.getUserName());
+            data.setMobile(applyCreditUser.getMobile());
+            data.setIdNo(applyCreditUser.getIdNo());
+            data.setIdKind(EIDKind.IDCard.getCode());
+
+            // 共还人=配偶
+            if (ghrCreditUser != null) {
+                data.setMateName(ghrCreditUser.getUserName());
+                data.setMateMobile(ghrCreditUser.getMobile());
+                data.setMateIdNo(ghrCreditUser.getIdNo());
+            }
+
+            if (guaCreditUser != null) {
+                data.setGuaName(guaCreditUser.getUserName());
+                data.setGuaMobile(guaCreditUser.getMobile());
+                data.setGuaIdNo(guaCreditUser.getIdNo());
+            }
+
+            data.setApplyDatetime(new Date());
+            data.setCompanyCode(credit.getCompanyCode());
+            data.setSaleUserId(credit.getSaleUserId());
+            data.setCurNodeCode(EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
+            budgetOrderDAO.insert(data);
+        }
+        return code;
+    }
+
+    @Override
     public String saveBudgetOrder(BudgetOrder data) {
         String code = null;
         if (data != null) {
@@ -48,17 +113,6 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             budgetOrderDAO.insert(data);
         }
         return code;
-    }
-
-    @Override
-    public int removeBudgetOrder(String code) {
-        int count = 0;
-        if (StringUtils.isNotBlank(code)) {
-            BudgetOrder data = new BudgetOrder();
-            data.setCode(code);
-            count = budgetOrderDAO.delete(data);
-        }
-        return count;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.cdkj.loan.common;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import com.cdkj.loan.core.CalculationUtil;
 
@@ -30,10 +31,10 @@ public class AmountUtil {
         return a.divide(b).doubleValue();
     }
 
-    public static double div(Long amount, double rate) {
-        BigDecimal a = new BigDecimal(Double.toString(amount));
-        BigDecimal b = new BigDecimal(Double.toString(rate));
-        return a.divide(b).doubleValue();
+    public static long div(Long amount, double rate) {
+        BigDecimal a = new BigDecimal(amount);
+        BigDecimal b = new BigDecimal(rate);
+        return a.divide(b, 2, RoundingMode.DOWN).longValue();
     }
 
     // 保留两位小数，末尾数不管是几，前一位都加1

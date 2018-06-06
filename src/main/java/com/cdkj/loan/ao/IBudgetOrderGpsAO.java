@@ -11,17 +11,10 @@ import com.cdkj.loan.domain.BudgetOrderGps;
 public interface IBudgetOrderGpsAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addBudgetOrderGps(BudgetOrderGps data);
-
-    public int dropBudgetOrderGps(String code);
-
-    public int editBudgetOrderGps(BudgetOrderGps data);
-
     public Paginable<BudgetOrderGps> queryBudgetOrderGpsPage(int start,
             int limit, BudgetOrderGps condition);
 
-    public List<BudgetOrderGps> queryBudgetOrderGpsList(
-            BudgetOrderGps condition);
+    public List<BudgetOrderGps> queryBudgetOrderGpsList(BudgetOrderGps condition);
 
     public BudgetOrderGps getBudgetOrderGps(String code);
 

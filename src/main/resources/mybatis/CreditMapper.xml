@@ -181,6 +181,7 @@
 		UPDATE tdq_credit
 		SET
 		cur_node_code = #{curNodeCode}
+		,budget_code = #{budgetCode}
 		WHERE code = #{code}
 	</update>
 	

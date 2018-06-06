@@ -4,6 +4,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class XN632120Req {
 
+    // 编号
+    @NotBlank
+    private String code;
+
     // 操作人
     @NotBlank
     private String operator;
@@ -15,6 +19,9 @@ public class XN632120Req {
     // 贷款产品编号
     @NotBlank
     private String loanProductCode;
+
+    // 公司手续费
+    private String companyFee;
 
     // 是否垫资
     @NotBlank
@@ -515,6 +522,22 @@ public class XN632120Req {
 
     // 房屋照片
     private String housePicture;
+
+    public String getCompanyFee() {
+        return companyFee;
+    }
+
+    public void setCompanyFee(String companyFee) {
+        this.companyFee = companyFee;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getOperator() {
         return operator;

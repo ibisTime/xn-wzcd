@@ -5,13 +5,13 @@ import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN632120Req;
-import com.cdkj.loan.dto.res.PKCodeRes;
+import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 准入单-填写准入单
+ * 准入单-修改准入单
  * @author: xieyj 
  * @since: 2018年5月26日 下午10:49:49 
  * @history:
@@ -24,8 +24,8 @@ public class XN632120 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        String code = budgetOrderAO.addBudgetOrder(req);
-        return new PKCodeRes(code);
+        budgetOrderAO.editBudgetOrder(req);
+        return new BooleanRes(true);
     }
 
     @Override

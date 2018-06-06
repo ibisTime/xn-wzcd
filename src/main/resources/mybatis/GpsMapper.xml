@@ -7,6 +7,7 @@
 		<result column="gps_dev_no" property="gpsDevNo" />
 		<result column="gps_type" property="gpsType" />
 		<result column="company_code" property="companyCode" />
+		<result column="apply_code" property="applyCode" />
 		<result column="apply_user" property="applyUser" />
 		
 		<result column="apply_status" property="applyStatus" />
@@ -28,6 +29,9 @@
 			</if>
 			<if test="companyCode != null and companyCode != '' ">
 				AND t.company_code = #{companyCode}
+			</if>
+			<if test="applyCode != null and applyCode != '' ">
+				AND t.apply_code = #{applyCode}
 			</if>
 			<if test="applyUser != null and applyUser != '' ">
 				AND t.apply_user = #{applyUser}

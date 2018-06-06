@@ -17,29 +17,13 @@ public class BudgetOrderGpsAOImpl implements IBudgetOrderGpsAO {
     private IBudgetOrderGpsBO budgetOrderGpsBO;
 
     @Override
-    public String addBudgetOrderGps(BudgetOrderGps data) {
-        return budgetOrderGpsBO.saveBudgetOrderGps(data);
-    }
-
-    @Override
-    public int editBudgetOrderGps(BudgetOrderGps data) {
-        return budgetOrderGpsBO.refreshBudgetOrderGps(data);
-    }
-
-    @Override
-    public int dropBudgetOrderGps(String code) {
-        return budgetOrderGpsBO.removeBudgetOrderGps(code);
-    }
-
-    @Override
     public Paginable<BudgetOrderGps> queryBudgetOrderGpsPage(int start,
             int limit, BudgetOrderGps condition) {
         return budgetOrderGpsBO.getPaginable(start, limit, condition);
     }
 
     @Override
-    public List<BudgetOrderGps> queryBudgetOrderGpsList(
-            BudgetOrderGps condition) {
+    public List<BudgetOrderGps> queryBudgetOrderGpsList(BudgetOrderGps condition) {
         return budgetOrderGpsBO.queryBudgetOrderGpsList(condition);
     }
 
