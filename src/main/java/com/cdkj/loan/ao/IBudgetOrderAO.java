@@ -18,7 +18,7 @@ public interface IBudgetOrderAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
     // 填写准入申请单
-    public String addBudgetOrder(XN632120Req req);
+    public void editBudgetOrder(XN632120Req req);
 
     // 风控专员审核
     public void riskApprove(String code, String approveResult,
@@ -38,12 +38,11 @@ public interface IBudgetOrderAO {
 
     // 财务确认垫资
     public void advanceFund(String code, String operator,
-            String advanceFundDatetime, String advanceFundAmount,
-            String billPdf);
+            String advanceFundDatetime, String advanceFundAmount, String billPdf);
 
     // 安装GPS
     public void installGps(String code, String operator,
-            List<XN632126ReqGps> gpsAzList);
+            List<XN632126ReqGps> budgetOrderGpsList);
 
     // GPS管理员审核
     public void gpsManagerApprove(String code, String operator,

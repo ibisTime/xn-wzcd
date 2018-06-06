@@ -2,6 +2,7 @@ package com.cdkj.loan.bo.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,8 +32,8 @@ public class BankBOImpl extends PaginableBOImpl<Bank> implements IBankBO {
 
     @Override
     public int dropBank(String code) {
-        if (null == code) {
-            throw new BizException("xn0000", "编号不能为空");
+        if (StringUtils.isBlank(code)) {
+            throw new BizException("xn0000", "贷款银行不能为空");
         }
         Bank condition = new Bank();
         condition.setCode(code);
@@ -41,8 +42,8 @@ public class BankBOImpl extends PaginableBOImpl<Bank> implements IBankBO {
 
     @Override
     public Bank getBank(String code) {
-        if (null == code) {
-            throw new BizException("xn0000", "编号不能为空！");
+        if (StringUtils.isBlank(code)) {
+            throw new BizException("xn0000", "贷款银行不能为空！");
         }
         Bank condition = new Bank();
         condition.setCode(code);

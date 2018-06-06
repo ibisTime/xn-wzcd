@@ -59,7 +59,6 @@ public class CreditDAOImpl extends AMybatisTemplate implements ICreditDAO {
 
     @Override
     public int updateNode(Credit credit) {
-
         return super.update(NAMESPACE.concat("update_node"), credit);
     }
 

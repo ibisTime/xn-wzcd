@@ -14,17 +14,11 @@
 		<result column="id_no_front" property="idNoFront" />
 		<result column="id_no_reverse" property="idNoReverse" />
 		<result column="auth_pdf" property="authPdf" />
-		<result column="interview_pic" property="interviewPic" />
 		
+		<result column="interview_pic" property="interviewPic" />
         <result column="bank_credit_result_pdf" property="bankCreditResultPdf" />
-			
-<!-- 		<result column="month_income" property="monthIncome" />		
-		<result column="settle_interest" property="settleInterest" />		
-		<result column="balance" property="balance" />		
-		<result column="jour_show_income" property="jourShowIncome" />		
-		<result column="is_print" property="isPrint" />		 -->
+        <result column="bank_credit_result_remark" property="bankCreditResultRemark" />
 	</resultMap>
-	
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">	
 			<if test="code != null and code != '' ">
@@ -38,7 +32,6 @@
 			</if>
 		</trim>
 	</sql>
-	
 	<select id="select_creditUser" parameterType="creditUser" resultMap="creditUser_DB_Result">
 		select 
 		t.code
@@ -46,15 +39,16 @@
 		,t.user_name
 		,t.relation
 		,t.loan_role
-		,t.mobile
 		
+		,t.mobile
 		,t.id_no
 		,t.id_no_front
 		,t.id_no_reverse
 		,t.auth_pdf
-		,t.interview_pic
 		
+		,t.interview_pic
 		,t.bank_credit_result_pdf
+		,t.bank_credit_result_remark
 		from tdq_credit_user t
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
@@ -157,25 +151,12 @@
 		code = #{code}
 	</update>
 	
-		
 	<update id="update_bankCreditResult" parameterType="creditUser">
 		UPDATE tdq_credit_user
 		SET
-		bank_credit_result_pdf=#{bankCreditResultPdf}
+		bank_credit_result_pdf = #{bankCreditResultPdf}
+		,bank_credit_result_remark = #{bankCreditResultRemark}
 		WHERE 
 		code = #{code}
 	</update>
-	
-	<update id="update_creditUserIncome" parameterType="creditUser">
-		UPDATE tdq_credit_user
-		SET
-		month_income = #{monthIncome}
-		,settle_interest = #{settleInterest}
-		,balance = #{balance}
-		,jour_show_income = #{jourShowIncome}
-		,is_print = #{isPrint}
-		WHERE
-		code = #{code}
-	</update>
-	
 </mapper>

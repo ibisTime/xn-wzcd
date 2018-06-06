@@ -867,7 +867,6 @@
 		,#{authFee}
 		,#{bankFee}
 		,#{companyFee}
-		,#{monthRate}
 		,#{creditCode}
 		,#{bizType}
 		,#{loanPeriod}
@@ -1031,7 +1030,7 @@
 		)
 	</insert>
 
-	<!-- <update id="update_budgetOrder" parameterType="budgetOrder">
+	<update id="update_budgetOrder" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
 		loan_product_code = #{loanProductCode}
@@ -1039,111 +1038,195 @@
 		,loan_bank = #{loanBank}
 		,gps_fee = #{gpsFee}
 		,auth_fee = #{authFee}
-		,fee = #{fee}
-		,month_rate = #{monthRate}
+		
+		,bank_fee = #{bankFee}
+		,company_fee = #{companyFee}
 		,credit_code = #{creditCode}
 		,biz_type = #{bizType}
 		,loan_period = #{loanPeriod}
+		
 		,invoice_company = #{invoiceCompany}
 		,car_brand = #{carBrand}
+		,car_series = #{carSeries}
+		,car_model = #{carModel}
+		,car_pic = #{carPic}
+		
+		,car_hgz_pic = #{carHgzPic}
+		,car_hgz_no = #{carHgzNo}
+		,car_frame_no = #{carFrameNo}
+		,car_engine_no = #{carEngineNo}
 		,original_price = #{originalPrice}
+		
 		,invoice_price = #{invoicePrice}
 		,car_color = #{carColor}
 		,month_deposit = #{monthDeposit}
 		,first_amount = #{firstAmount}
 		,first_rate = #{firstRate}
+		
 		,loan_amount = #{loanAmount}
 		,settle_address = #{settleAddress}
 		,apply_user_name = #{applyUserName}
 		,gender = #{gender}
 		,marry_state = #{marryState}
+		
 		,nation = #{nation}
 		,education = #{education}
-		,id_no = #{idNo}
 		,family_number = #{familyNumber}
-		,mobile = #{mobile}
 		,now_address = #{nowAddress}
 		,post_code1 = #{postCode1}
+		
 		,residence_address = #{residenceAddress}
 		,post_code2 = #{postCode2}
 		,family_main_asset = #{familyMainAsset}
 		,main_asset_include = #{mainAssetInclude}
 		,main_income = #{mainIncome}
+		
 		,work_company_name = #{workCompanyName}
 		,work_company_address = #{workCompanyAddress}
+		,work_company_property = #{workCompanyProperty}
+		,work_belong_industry = #{workBelongIndustry}
+		,work_profession = #{workProfession}
+		
+		,work_datetime = #{workDatetime}
 		,self_company_area = #{selfCompanyArea}
 		,employee_quantity = #{employeeQuantity}
 		,enterprise_month_output = #{enterpriseMonthOutput}
 		,position = #{position}
+		
 		,post_title = #{postTitle}
 		,month_income = #{monthIncome}
 		,mate_name = #{mateName}
 		,mate_mobile = #{mateMobile}
 		,mate_id_no = #{mateIdNo}
+		
 		,mate_education = #{mateEducation}
 		,mate_company_name = #{mateCompanyName}
 		,mate_company_address = #{mateCompanyAddress}
 		,mate_company_contact_no = #{mateCompanyContactNo}
+		,mate_zfb_jour_datetime_start = #{mateZfbJourDatetimeStart}
+		
+		,mate_zfb_jour_datetime_end = #{mateZfbJourDatetimeEnd}
+		,mate_zfb_jour_income = #{mateZfbJourIncome}
+		,mate_zfb_jour_expend = #{mateZfbJourExpend}
+		,mate_zfb_jour_balance = #{mateZfbJourBalance}
+		,mate_zfb_jour_month_income = #{mateZfbJourMonthIncome}
+		
+		,mate_zfb_jour_month_expend = #{mateZfbJourMonthExpend}
+		,mate_zfb_jour_pic = #{mateZfbJourPic}
+		,mate_zfb_jour_remark = #{mateZfbJourRemark}
+		,mate_wx_jour_datetime_start = #{mateWxJourDatetimeStart}
+		,mate_wx_jour_datetime_end = #{mateWxJourDatetimeEnd}
+		
+		,mate_wx_jour_income = #{mateWxJourIncome}
+		,mate_wx_jour_expend = #{mateWxJourExpend}
+		,mate_wx_jour_balance = #{mateWxJourBalance}
+		,mate_wx_jour_month_income = #{mateWxJourMonthIncome}
+		,mate_wx_jour_month_expend = #{mateWxJourMonthExpend}
+		
+		,mate_wx_jour_pic = #{mateWxJourPic}
+		,mate_wx_jour_remark = #{mateWxJourRemark}
+		,mate_jour_datetime_start = #{mateJourDatetimeStart}
+		,mate_jour_datetime_end = #{mateJourDatetimeEnd}
+		,mate_jour_income = #{mateJourIncome}
+		
+		,mate_jour_expend = #{mateJourExpend}
+		,mate_jour_balance = #{mateJourBalance}
+		,mate_jour_month_income = #{mateJourMonthIncome}
+		,mate_jour_month_expend = #{mateJourMonthExpend}
+		,mate_jour_pic = #{mateJourPic}
+		
+		,mate_jour_remark = #{mateJourRemark}
+		,mate_asset_pdf = #{mateAssetPdf}
 		,gua_name = #{guaName}
 		,gua_mobile = #{guaMobile}
 		,gua_id_no = #{guaIdNo}
+		
 		,gua_phone = #{guaPhone}
 		,gua_company_name = #{guaCompanyName}
 		,gua_company_address = #{guaCompanyAddress}
 		,gua_house_asset_address = #{guaHouseAssetAddress}
+		,gua_zfb_jour_datetime_start = #{guaZfbJourDatetimeStart}
+		
+		,gua_zfb_jour_datetime_end = #{guaZfbJourDatetimeEnd}
+		,gua_zfb_jour_income = #{guaZfbJourIncome}
+		,gua_zfb_jour_expend = #{guaZfbJourExpend}
+		,gua_zfb_jour_balance = #{guaZfbJourBalance}
+		,gua_zfb_jour_month_income = #{guaZfbJourMonthIncome}
+		
+		,gua_zfb_jour_month_expend = #{guaZfbJourMonthExpend}
+		,gua_zfb_jour_pic = #{guaZfbJourPic}
+		,gua_zfb_jour_remark = #{guaZfbJourRemark}
+		,gua_wx_jour_datetime_start = #{guaWxJourDatetimeStart}
+		,gua_wx_jour_datetime_end = #{guaWxJourDatetimeEnd}
+		,gua_wx_jour_income = #{guaWxJourIncome}
+		
+		,gua_wx_jour_expend = #{guaWxJourExpend}
+		,gua_wx_jour_balance = #{guaWxJourBalance}
+		,gua_wx_jour_month_income = #{guaWxJourMonthIncome}
+		,gua_wx_jour_month_expend = #{guaWxJourMonthExpend}
+		,gua_wx_jour_pic = #{guaWxJourPic}
+		
+		,gua_wx_jour_remark = #{guaWxJourRemark}
+		,gua_jour_datetime_start = #{guaJourDatetimeStart}
+		,gua_jour_datetime_end = #{guaJourDatetimeEnd}
+		,gua_jour_income = #{guaJourIncome}
+		,gua_jour_expend = #{guaJourExpend}
+		
+		,gua_jour_balance = #{guaJourBalance}
+		,gua_jour_month_income = #{guaJourMonthIncome}
+		,gua_jour_month_expend = #{guaJourMonthExpend}
+		,gua_jour_pic = #{guaJourPic}
+		,gua_jour_remark = #{guaJourRemark}
+		,gua_asset_pdf = #{guaAssetPdf}
+		
 		,emergency_name1 = #{emergencyName1}
 		,emergency_relation1 = #{emergencyRelation1}
 		,emergency_mobile1 = #{emergencyMobile1}
 		,emergency_name2 = #{emergencyName2}
 		,emergency_relation2 = #{emergencyRelation2}
+		
 		,emergency_mobile2 = #{emergencyMobile2}
+		,zfb_jour_datetime_start = #{zfbJourDatetimeStart}
+		,zfb_jour_datetime_end = #{zfbJourDatetimeEnd}
+		,zfb_jour_income = #{zfbJourIncome}
+		,zfb_jour_expend = #{zfbJourExpend}
+		
+		,zfb_jour_balance = #{zfbJourBalance}
+		,zfb_jour_month_income = #{zfbJourMonthIncome}
+		,zfb_jour_month_expend = #{zfbJourMonthExpend}
+		,zfb_jour_pic = #{zfbJourPic}
+		,zfb_jour_remark = #{zfbJourRemark}
+		
+		,wx_jour_datetime_start = #{wxJourDatetimeStart}
+		,wx_jour_datetime_end = #{wxJourDatetimeEnd}
+		,wx_jour_income = #{wxJourIncome}
+		,wx_jour_expend = #{wxJourExpend}
+		,wx_jour_balance = #{wxJourBalance}
+		
+		,wx_jour_month_income = #{wxJourMonthIncome}
+		,wx_jour_month_expend = #{wxJourMonthExpend}
+		,wx_jour_pic = #{wxJourPic}
+		,wx_jour_remark = #{wxJourRemark}
 		,jour_datetime_start = #{jourDatetimeStart}
+		
 		,jour_datetime_end = #{jourDatetimeEnd}
 		,jour_income = #{jourIncome}
 		,jour_expend = #{jourExpend}
 		,jour_balance = #{jourBalance}
 		,jour_month_income = #{jourMonthIncome}
+		
 		,jour_month_expend = #{jourMonthExpend}
+		,jour_pic = #{jourPic}
 		,jour_remark = #{jourRemark}
+		,asset_pdf = #{assetPdf}
 		,house_contract = #{houseContract}
+		
 		,house_picture = #{housePicture}
 		,is_advance_fund = #{isAdvanceFund}
-		,interview_video = #{interviewVideo}
-		,interview_contract = #{interviewContract}
-		,advance_fund_datetime = #{advanceFundDatetime}
-		,advance_fund_amount = #{advanceFundAmount}
-		,bill_pdf = #{billPdf}
-		,car_settle_datetime = #{carSettleDatetime}
-		,car_number = #{carNumber}
-		,car_invoice = #{carInvoice}
-		,car_hgz = #{carHgz}
-		,car_jqx = #{carJqx}
-		,car_syx = #{carSyx}
-		,car_regcerti = #{carRegcerti}
-		,car_pd = #{carPd}
-		,car_key = #{carKey}
-		,car_big_smj = #{carBigSmj}
-		,bank_commit_datetime = #{bankCommitDatetime}
-		,bank_commit_note = #{bankCommitNote}
-		,bank_fk_datetime = #{bankFkDatetime}
-		,receipt_bank_code = #{receiptBankCode}
-		,receipt_bank_name = #{receiptBankName}
-		,receipt_bankcard_number = #{receiptBankcardNumber}
-		,receipt_pdf = #{receiptPdf}
-		,receipt_remark = #{receiptRemark}
-		,pledge_datetime = #{pledgeDatetime}
-		,green_big_smj = #{greenBigSmj}
-		,pledge_bank_commit_datetime = #{pledgeBankCommitDatetime}
-		,pledge_bank_commit_note = #{pledgeBankCommitNote}
-		,enter_location = #{enterLocation}
-		,sale_user_id = #{saleUserId}
-		,company_code = #{companyCode}
-		,apply_user = #{applyUser}
-		,apply_datetime = #{applyDatetime}
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}
-	</update> -->
+	</update>
 	
 	<update id="update_riskApprove" parameterType="budgetOrder">
 		UPDATE tdq_budget_order

@@ -114,7 +114,6 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
             if (null != bank) {
                 budgetOrderFee.setLoanBankName(bank.getBankName());
             }
-
             budgetOrderFee.setLoanAmount(budgetOrder.getLoanAmount());
         }
 
@@ -122,20 +121,17 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
         condition.setFeeCode(code);
         List<BudgetOrderFeeDetail> list = budgetOrderFeeDetailBO
             .queryBudgetOrderFeeDetailList(condition);
-
         budgetOrderFee.setCompanyName(department.getName());
         // 设置银行对象（汇入我司账号和银行名）
         for (BudgetOrderFeeDetail budgetOrderFeeDetail : list) {
             String platBankcard = budgetOrderFeeDetail.getPlatBankcard();
             CollectBankcard collectBankcard = collectBankcardBO
                 .getCollectBankcard(platBankcard);
-
             budgetOrderFeeDetail.setCollectBankcard(collectBankcard);
-
-            SYSUser user1 = sysUserBO
-                .getUser(budgetOrderFeeDetail.getUpdater());
-            if (null != user1) {
-                budgetOrderFeeDetail.setUpdater(user1.getRealName());
+            SYSUser updateUser = sysUserBO.getUser(budgetOrderFeeDetail
+                .getUpdater());
+            if (null != updateUser) {
+                budgetOrderFeeDetail.setUpdater(updateUser.getRealName());
             }
 
         }

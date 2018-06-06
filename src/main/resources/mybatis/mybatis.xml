@@ -85,7 +85,7 @@
 		<!-- 资料传递 -->
 		<typeAlias alias="logistics" type="com.cdkj.loan.domain.Logistics" />
 		
-		<!-- 行政 -->
+		<!-- 贷前 -->
 		<typeAlias alias="gps" type="com.cdkj.loan.domain.Gps" />
 		<typeAlias alias="budgetOrder" type="com.cdkj.loan.domain.BudgetOrder" />
 		<typeAlias alias="logistics" type="com.cdkj.loan.domain.Logistics" />
@@ -93,6 +93,11 @@
 		<typeAlias alias="budgetOrderFeeDetail" type="com.cdkj.loan.domain.BudgetOrderFeeDetail" />
 		
 		<typeAlias alias="budgetOrderGps" type="com.cdkj.loan.domain.BudgetOrderGps" />
+		
+		<!-- 贷后 -->
+		<typeAlias alias="overdueMenu" type="com.cdkj.loan.domain.OverdueMenu" />
+		
+		<!-- 行政人事 -->
 		<typeAlias alias="gpsApply" type="com.cdkj.loan.domain.GpsApply" />
 		<typeAlias alias="notice" type="com.cdkj.loan.domain.Notice" />
 		<typeAlias alias="regime" type="com.cdkj.loan.domain.Regime" />
@@ -106,9 +111,6 @@
 		
 		<typeAlias alias="storageIn" type="com.cdkj.loan.domain.StorageIn" />
 		<typeAlias alias="storageOut" type="com.cdkj.loan.domain.StorageOut" />
-		
-		<!-- 贷后 -->
-		<typeAlias alias="overdueMenu" type="com.cdkj.loan.domain.OverdueMenu" />
 		<typeAlias alias="archive" type="com.cdkj.loan.domain.Archive" />
 		<typeAlias alias="archiveLocation" type="com.cdkj.loan.domain.ArchiveLocation" />
 		<typeAlias alias="socialRelation" type="com.cdkj.loan.domain.SocialRelation" />
@@ -117,11 +119,18 @@
 		<typeAlias alias="leaveApply" type="com.cdkj.loan.domain.LeaveApply" />
 		<typeAlias alias="contract" type="com.cdkj.loan.domain.Contract" />
 		<typeAlias alias="entryApply" type="com.cdkj.loan.domain.EntryApply" />
+
 		<typeAlias alias="overtimeApply" type="com.cdkj.loan.domain.OvertimeApply" />
 		<typeAlias alias="travelApply" type="com.cdkj.loan.domain.TravelApply" />
 		<typeAlias alias="travelApplyDetail" type="com.cdkj.loan.domain.TravelApplyDetail" />
+
+		<typeAlias alias="convertApply" type="com.cdkj.loan.domain.ConvertApply" />
+		
+		<typeAlias alias="suppleSignApply" type="com.cdkj.loan.domain.SuppleSignApply" />
+		<typeAlias alias="probationAssess" type="com.cdkj.loan.domain.ProbationAssess" />
+		
+
 	</typeAliases>
-	
 </configuration>
 
 

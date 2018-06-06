@@ -13,7 +13,10 @@ import com.cdkj.loan.dao.base.ABaseDO;
 */
 public class EntryApply extends ABaseDO {
 
-    private static final long serialVersionUID = 1L;
+    /** 
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+     */
+    private static final long serialVersionUID = 539588895789973725L;
 
     // 编号
     private String code;

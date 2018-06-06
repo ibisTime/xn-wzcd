@@ -10,12 +10,11 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
-import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBudgetOrderGpsDAO;
 import com.cdkj.loan.domain.BudgetOrderGps;
+import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.enums.EBizErrorCode;
-import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -31,8 +30,6 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
     public String saveBudgetOrderGps(BudgetOrderGps data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.GPSAZ.getCode());
-            data.setCode(code);
             budgetOrderGpsDAO.insert(data);
         }
         return code;
@@ -43,14 +40,11 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
             List<XN632126ReqGps> gpsAzList) {
         if (CollectionUtils.isNotEmpty(gpsAzList)) {
             for (XN632126ReqGps reqGps : gpsAzList) {
-                String psCode = OrderNoGenerater.generate(EGeneratePrefix.GPSAZ
-                    .getCode());
                 BudgetOrderGps data = new BudgetOrderGps();
-                data.setCode(psCode);
-                data.setGpsDevNo(reqGps.getGpsDevNo());
-                String gpsType = gpsBO.getGpsByDevNo(reqGps.getGpsDevNo())
-                    .getGpsType();
-                data.setGpsType(gpsType);
+                Gps gps = gpsBO.getGps(reqGps.getCode());
+                data.setCode(reqGps.getCode());
+                data.setGpsDevNo(gps.getGpsDevNo());
+                data.setGpsType(gps.getGpsType());
                 data.setAzLocation(reqGps.getAzLocation());
                 data.setAzDatetime(reqGps.getAzDatetime());
                 data.setAzUser(reqGps.getAzUser());

@@ -15,7 +15,6 @@ import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
-import com.cdkj.loan.enums.EGpsApplyStatus;
 import com.cdkj.loan.enums.EGpsUseStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -24,6 +23,16 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
 
     @Autowired
     private IGpsDAO gpsDAO;
+
+    @Override
+    public void checkGpsDevNo(String gpsDevNo) {
+        Gps condition = new Gps();
+        condition.setGpsDevNo(gpsDevNo);
+        long count = gpsDAO.selectTotalCount(condition);
+        if (count > 0) {
+            throw new BizException("xn0000", "当前GPS设备号已存在");
+        }
+    }
 
     @Override
     public void saveGps(Gps data) {
@@ -100,16 +109,5 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
             }
         }
         return data;
-    }
-
-    /** 
-     * @see com.cdkj.loan.bo.IGpsBO#applyLqGps(com.cdkj.loan.domain.Gps)
-     */
-    @Override
-    public void applyLqGps(String code) {
-        Gps data = new Gps();
-        data.setCode(code);
-        data.setApplyStatus(EGpsApplyStatus.RECEIVED.getCode());
-        gpsDAO.updateApplyStatus(data);
     }
 }
