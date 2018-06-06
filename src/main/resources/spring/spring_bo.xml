@@ -323,4 +323,7 @@
 		<property name="paginableDAO" ref="suppleSignApplyDetailDAOImpl"/>
 	</bean>
 	
+	<bean id="feeAdvanceApplyBO" class="com.cdkj.loan.bo.impl.FeeAdvanceApplyBOImpl">
+		<property name="paginableDAO" ref="feeAdvanceApplyDAOImpl"/>
+	</bean>
 </beans>
