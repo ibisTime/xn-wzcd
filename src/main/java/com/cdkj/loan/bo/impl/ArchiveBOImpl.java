@@ -104,4 +104,18 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
             archiveDAO.updateLeaveArchive(data);
         }
     }
+
+    @Override
+    public Archive getArchiveByUserid(String userId) {
+        Archive data = null;
+        if (StringUtils.isNotBlank(userId)) {
+            Archive condition = new Archive();
+            condition.setUserId(userId);
+            data = archiveDAO.select(condition);
+            if (data == null) {
+                throw new BizException("xn0000", "编号不存在");
+            }
+        }
+        return data;
+    }
 }

@@ -49,7 +49,8 @@ public enum EGeneratePrefix {
     LEAVE_APPLY("LA", "请假申请"), TRAVEL_APPLY("TA", "出差/公出申请"), CONVERTAPPLY(
             "CA", "转正申请"),TRANSFERPOSITIONAPPLY("TPA","调岗申请"), SUPPLE_SIGN_APPLY("SSA", "补签"),
     
-    ASKFORAPPLY("AFA","领导请示申请");
+    ASKFORAPPLY("AFA","领导请示申请"),
+    CAR_BREAK("CAB","车辆违章处理");
 
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();
