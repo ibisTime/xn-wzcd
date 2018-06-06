@@ -119,12 +119,18 @@
 		<typeAlias alias="leaveApply" type="com.cdkj.loan.domain.LeaveApply" />
 		<typeAlias alias="contract" type="com.cdkj.loan.domain.Contract" />
 		<typeAlias alias="entryApply" type="com.cdkj.loan.domain.EntryApply" />
+
+		<typeAlias alias="overtimeApply" type="com.cdkj.loan.domain.OvertimeApply" />
+		<typeAlias alias="travelApply" type="com.cdkj.loan.domain.TravelApply" />
+		<typeAlias alias="travelApplyDetail" type="com.cdkj.loan.domain.TravelApplyDetail" />
+
 		<typeAlias alias="convertApply" type="com.cdkj.loan.domain.ConvertApply" />
 		
 		<!-- <typeAlias alias="suppleSignApply" type="com.cdkj.loan.domain.SuppleSignApply" /> -->
 		<typeAlias alias="probationAssess" type="com.cdkj.loan.domain.ProbationAssess" />
 		<typeAlias alias="transferPositionApply" type="com.cdkj.loan.domain.TransferPositionApply" />
 		
+
 	</typeAliases>
 </configuration>
 

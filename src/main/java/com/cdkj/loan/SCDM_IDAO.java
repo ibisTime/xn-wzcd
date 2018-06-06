@@ -9,22 +9,22 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "contract";
+    private static String key = "travelApplyDetail";
 
     // 实体名称
-    private static String keyName = "合同管理";
+    private static String keyName = "出差/公出申请明细";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tb_contract";
+    private static String dbname = "tp_travel_apply_detail";
 
-    private static String[] DBwords = { "code", "type", "archive_code",
-            "contract_no", "start_datetime", "end_datetime", "pdf", "remark" };
+    private static String[] DBwords = { "travel_apply_code", "start_datetime",
+            "end_datetime", "total_hour", "remark" };
 
-    private static String[] DBwordsName = { "编号", "合同类型", "档案编号", "合同编号",
-            "开始日期", "结束日期", "合同附件", "说明" };
+    private static String[] DBwordsName = { "出差申请编号", "开始时间", "结束时间", "时长",
+            "备注" };
 
     public void testname() throws Exception {
     }
