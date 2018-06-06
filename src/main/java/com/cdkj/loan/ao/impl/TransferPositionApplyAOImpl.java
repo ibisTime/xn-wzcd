@@ -13,7 +13,6 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.TransferPositionApply;
 import com.cdkj.loan.dto.req.XN632880Req;
 import com.cdkj.loan.enums.EApproveResult;
-import com.cdkj.loan.enums.EEntryApplyStatus;
 import com.cdkj.loan.enums.ETransferPositionApplyStatus;
 
 @Service
@@ -45,10 +44,10 @@ public class TransferPositionApplyAOImpl implements ITransferPositionApplyAO {
             .getTransferPositionApply(code);
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             transferPositionApply
-                .setStatus(EEntryApplyStatus.AUDIT_PASS.getCode());
+                .setStatus(ETransferPositionApplyStatus.AUDIT_PASS.getCode());
         } else {
-            transferPositionApply
-                .setStatus(EEntryApplyStatus.AUDIT_NOT_PASS.getCode());
+            transferPositionApply.setStatus(
+                ETransferPositionApplyStatus.AUDIT_NOT_PASS.getCode());
         }
         transferPositionApply.setUpdater(updater);
         transferPositionApply.setUpdateDatetime(new Date());
