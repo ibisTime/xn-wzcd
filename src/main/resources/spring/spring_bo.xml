@@ -257,9 +257,9 @@
 		<property name="paginableDAO" ref="socialRelationDAOImpl"/>
 	</bean>
 	
-	<!-- <bean id="archiveLocationBO" class="com.cdkj.loan.bo.impl.ArchiveLocationBOImpl">
+	<bean id="archiveLocationBO" class="com.cdkj.loan.bo.impl.ArchiveLocationBOImpl">
 		<property name="paginableDAO" ref="archiveLocationDAOImpl"/>
-	</bean> -->
+	</bean>
 
 	<bean id="recruitApplyBO" class="com.cdkj.loan.bo.impl.RecruitApplyBOImpl">
 		<property name="paginableDAO" ref="recruitApplyDAOImpl"/>
@@ -290,12 +290,29 @@
 		<property name="paginableDAO" ref="contractDAOImpl"/>
 	</bean>
 	
+
+	<bean id="overtimeApplyBO" class="com.cdkj.loan.bo.impl.OvertimeApplyBOImpl">
+		<property name="paginableDAO" ref="overtimeApplyDAOImpl"/>
+	</bean>
+	
+	<bean id="travelApplyBO" class="com.cdkj.loan.bo.impl.TravelApplyBOImpl">
+		<property name="paginableDAO" ref="travelApplyDAOImpl"/>
+	</bean>
+	
+	<bean id="travelApplyDetailBO" class="com.cdkj.loan.bo.impl.TravelApplyDetailBOImpl">
+		<property name="paginableDAO" ref="travelApplyDetailDAOImpl"/>
+	</bean>
 	<bean id="convertApplyBO" class="com.cdkj.loan.bo.impl.ConvertApplyBOImpl">
 		<property name="paginableDAO" ref="convertApplyDAOImpl"/>
 	</bean>
 	
 	<bean id="probationAssessBO" class="com.cdkj.loan.bo.impl.ProbationAssessBOImpl">
 		<property name="paginableDAO" ref="probationAssessDAOImpl"/>
+
+	</bean>
+	
+	<bean id="transferPositionApplyBO" class="com.cdkj.loan.bo.impl.TransferPositionApplyBOImpl">
+		<property name="paginableDAO" ref="transferPositionApplyDAOImpl"/>
 	</bean>
 	
 	<bean id="suppleSignApplyBO" class="com.cdkj.loan.bo.impl.SuppleSignApplyBOImpl">

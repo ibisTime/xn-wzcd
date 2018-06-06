@@ -9,39 +9,23 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "entryApply";
+    private static String key = "transferPositionApply";
 
     // 实体名称
-    private static String keyName = "入职申请";
+    private static String keyName = "调岗申请";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tp_entry_apply";
+    private static String dbname = "tp_transfer_position_apply";
 
-    private static String[] DBwords = { "code", "position", "entry_datetime",
-            "real_name", "gender", "birthday", "education", "nation",
-            "native_place", "health", "marry_status", "id_no", "mobile",
-            "emergency_contact", "emergency_contact_mobile",
-            "residence_property", "photo", "residence_address", "now_address",
-            "is_other_company_relation", "relative_name", "relative_relation",
-            "relative_position", " main_perform", "probation_start_datetime",
-            "probation_end_datetime", "probation_salary", "base_salary",
-            "perform_salary", "perform_salary_standard",
-            "quarterly_award_standard", "communicate_pay_standard",
-            "provincial_bed_standard", "non_provincial_bed_standard",
-            "traffic_standard", "mobile_standard", "taxi_standard",
-            "meal_standard", "salary_card_no", "bank", "bank_code", "status",
-            "updater", "update_datetime", "remark" };
+    private static String[] DBwords = { "code", "archieve_code",
+            "new_department", "new_position", "start_datetime", "end_datetime",
+            "reason", "status", "updater", "update_datetime", "remark" };
 
-    private static String[] DBwordsName = { "编号", "入职岗位", "入职时间", "姓名", "性别",
-            "出生年月", "文化程度", "民族", "籍贯", "健康状况", "婚姻状况", "身份证号码", "手机号码",
-            "紧急联系人", "紧急联系号码", "户籍性质", "照片", "户籍所在地", "现居住地址", "是否与其他单位存在劳动关系",
-            "亲属从事本行姓名", "亲属与本人关系", "亲属职务", "主要业绩及工作能力简述", "试用期期限开始", "试用期期限结束",
-            "试用期工资", "转正后基本工资", "转正后绩效工资", "绩效工资考核标准", "季度奖考核标准", " 通讯费报销标准",
-            "省会住宿报销标准", "非省会住宿报销标准", "市内交通现金补助", "电话现金补贴", "出租车", "餐补", "工资卡账号",
-            "开户行", "开户行行号", "状态", "更新人", "更新时间", "备注" };
+    private static String[] DBwordsName = { "编号", "申请人档案编号", "新部门", "新岗位",
+            "开始日期", "结束日期", "缘由", "状态", "更新人", "更新时间", "备注" };
 
     private static String[] DOwords = getDOwords();
 
