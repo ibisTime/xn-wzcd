@@ -28,4 +28,5 @@ public interface IArchiveBO extends IPaginableBO<Archive> {
     // 新增离职档案
     public void refreshLeaveArchive(Archive data);
 
+    public Archive getArchiveByUserid(String userId);
 }
