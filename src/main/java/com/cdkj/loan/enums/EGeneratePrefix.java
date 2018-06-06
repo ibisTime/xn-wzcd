@@ -48,7 +48,7 @@ public enum EGeneratePrefix {
                     "入库"), STORAGE_OUT("SO", "出库"), CONTRACT("HT",
                             "合同管理"), ENTRYAPPLY("EA", "入职申请"),
 
-    LEAVE_APPLY("LA", "请假申请");
+    LEAVE_APPLY("LA", "请假申请"), SUPPLE_SIGN_APPLY("SSA", "补签");
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();
         for (EGeneratePrefix orderType : EGeneratePrefix.values()) {

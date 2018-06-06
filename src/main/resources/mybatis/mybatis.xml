@@ -117,6 +117,8 @@
 		<typeAlias alias="leaveApply" type="com.cdkj.loan.domain.LeaveApply" />
 		<typeAlias alias="contract" type="com.cdkj.loan.domain.Contract" />
 		<typeAlias alias="entryApply" type="com.cdkj.loan.domain.EntryApply" />
+		<typeAlias alias="suppleSignApply" type="com.cdkj.loan.domain.SuppleSignApply" />
+		
 	</typeAliases>
 	
 </configuration>
