@@ -124,25 +124,21 @@
 		<typeAlias alias="travelApply" type="com.cdkj.loan.domain.TravelApply" />
 		<typeAlias alias="travelApplyDetail" type="com.cdkj.loan.domain.TravelApplyDetail" />
 		<typeAlias alias="convertApply" type="com.cdkj.loan.domain.ConvertApply" />
-
 		<typeAlias alias="probationAssess" type="com.cdkj.loan.domain.ProbationAssess" />
-
 		<typeAlias alias="suppleSignApply" type="com.cdkj.loan.domain.SuppleSignApply" />
-		<typeAlias alias="suppleSignApplyDetail" type="com.cdkj.loan.domain.SuppleSignApplyDetail" />
-
 		
-
+		<typeAlias alias="suppleSignApplyDetail" type="com.cdkj.loan.domain.SuppleSignApplyDetail" />
 		<typeAlias alias="assertApply" type="com.cdkj.loan.domain.AssertApply" />
 		<typeAlias alias="assertGoods" type="com.cdkj.loan.domain.AssertGoods" />
 		<typeAlias alias="assertUser" type="com.cdkj.loan.domain.AssertUser" />
-		
-
 
 		<typeAlias alias="probationAssess" type="com.cdkj.loan.domain.ProbationAssess" />
 		<typeAlias alias="transferPositionApply" type="com.cdkj.loan.domain.TransferPositionApply" />
 		<typeAlias alias="askForApply" type="com.cdkj.loan.domain.AskForApply" />
 		<typeAlias alias="carBreak" type="com.cdkj.loan.domain.CarBreak" />
-
+		<typeAlias alias="welfareApply" type="com.cdkj.loan.domain.WelfareApply" />
+		
+		<typeAlias alias="welfareUser" type="com.cdkj.loan.domain.WelfareUser" />
 	</typeAliases>
 </configuration>
 

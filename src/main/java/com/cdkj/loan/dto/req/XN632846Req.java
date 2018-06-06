@@ -2,7 +2,7 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class XN632486Req {
+public class XN632846Req {
 
     @NotBlank
     private String code;// 编号

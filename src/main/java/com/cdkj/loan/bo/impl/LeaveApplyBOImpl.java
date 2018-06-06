@@ -73,4 +73,11 @@ public class LeaveApplyBOImpl extends PaginableBOImpl<LeaveApply>
         }
         return data;
     }
+
+    @Override
+    public Long getTotalHour(String applyUser) {
+        LeaveApply data = new LeaveApply();
+        data.setApplyUser(applyUser);
+        return leaveApplyDAO.selectTotalHour(data);
+    }
 }

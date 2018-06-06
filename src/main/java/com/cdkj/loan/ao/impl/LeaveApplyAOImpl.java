@@ -9,13 +9,17 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.ILeaveApplyAO;
 import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.ILeaveApplyBO;
+import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.LeaveApply;
+import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.dto.req.XN632890Req;
 import com.cdkj.loan.dto.req.XN632891Req;
+import com.cdkj.loan.dto.res.XN632892Res;
 import com.cdkj.loan.enums.ELeaveApplyStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -33,6 +37,9 @@ public class LeaveApplyAOImpl implements ILeaveApplyAO {
     @Autowired
     private IArchiveBO archiveBO;
 
+    @Autowired
+    private ISYSConfigBO sysConfigBO;
+
     @Override
     public String addLeaveApply(XN632890Req req) {
         LeaveApply data = new LeaveApply();
@@ -41,9 +48,9 @@ public class LeaveApplyAOImpl implements ILeaveApplyAO {
         data.setType(req.getType());
         data.setReason(req.getReason());
         data.setStartDatetime(DateUtil.strToDate(req.getStartDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+            DateUtil.DATA_TIME_PATTERN_2));
         data.setEndDatetime(DateUtil.strToDate(req.getEndDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+            DateUtil.DATA_TIME_PATTERN_2));
 
         data.setTotalHour(StringValidater.toInteger(req.getTotalHour()));
         data.setPdf(req.getPdf());
@@ -106,5 +113,20 @@ public class LeaveApplyAOImpl implements ILeaveApplyAO {
         archive.setUserId(leaveApply.getApplyUser());
         leaveApply.setApplyUserArchive(archiveBO.queryArchiveList(archive));
         return leaveApply;
+    }
+
+    @Override
+    public XN632892Res getLeavedHour(String applyUser) {
+        SYSConfig sysConfig = sysConfigBO
+            .getSYSConfig(SysConstants.LEAVE_YEAR_HOUR);
+        Long leavedHore = leaveApplyBO.getTotalHour(applyUser);
+        Long totalHour = StringValidater.toLong(sysConfig.getCvalue());
+        Long remainHour = totalHour - leavedHore;
+
+        XN632892Res res = new XN632892Res();
+        res.setLeavedHour(leavedHore);
+        res.setTotalHour(totalHour);
+        res.setRemainHour(remainHour);
+        return res;
     }
 }
