@@ -308,7 +308,18 @@
 	
 	<bean id="probationAssessBO" class="com.cdkj.loan.bo.impl.ProbationAssessBOImpl">
 		<property name="paginableDAO" ref="probationAssessDAOImpl"/>
-
+	</bean>
+	
+	<bean id="assertApplyBO" class="com.cdkj.loan.bo.impl.AssertApplyBOImpl">
+		<property name="paginableDAO" ref="assertApplyDAOImpl"/>
+	</bean>
+	
+	<bean id="assertGoodsBO" class="com.cdkj.loan.bo.impl.AssertGoodsBOImpl">
+		<property name="paginableDAO" ref="assertGoodsDAOImpl"/>
+	</bean>
+	
+	<bean id="assertUserBO" class="com.cdkj.loan.bo.impl.AssertUserBOImpl">
+		<property name="paginableDAO" ref="assertUserDAOImpl"/>
 	</bean>
 	
 	<bean id="transferPositionApplyBO" class="com.cdkj.loan.bo.impl.TransferPositionApplyBOImpl">
@@ -329,6 +340,10 @@
 	
 	<bean id="carBreakBO" class="com.cdkj.loan.bo.impl.CarBreakBOImpl">
 		<property name="paginableDAO" ref="carBreakDAOImpl"/>
+	</bean>
+	
+	<bean id="welfareApplyBO" class="com.cdkj.loan.bo.impl.WelfareApplyBOImpl">
+		<property name="paginableDAO" ref="welfareApplyDAOImpl"/>
 	</bean>
 	
 </beans>
