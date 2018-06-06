@@ -117,6 +117,9 @@
 		<typeAlias alias="leaveApply" type="com.cdkj.loan.domain.LeaveApply" />
 		<typeAlias alias="contract" type="com.cdkj.loan.domain.Contract" />
 		<typeAlias alias="entryApply" type="com.cdkj.loan.domain.EntryApply" />
+		<typeAlias alias="overtimeApply" type="com.cdkj.loan.domain.OvertimeApply" />
+		<typeAlias alias="travelApply" type="com.cdkj.loan.domain.TravelApply" />
+		<typeAlias alias="travelApplyDetail" type="com.cdkj.loan.domain.TravelApplyDetail" />
 	</typeAliases>
 	
 </configuration>

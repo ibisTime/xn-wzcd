@@ -290,4 +290,16 @@
 		<property name="paginableDAO" ref="contractDAOImpl"/>
 	</bean>
 	
+	<bean id="overtimeApplyBO" class="com.cdkj.loan.bo.impl.OvertimeApplyBOImpl">
+		<property name="paginableDAO" ref="overtimeApplyDAOImpl"/>
+	</bean>
+	
+	<bean id="travelApplyBO" class="com.cdkj.loan.bo.impl.TravelApplyBOImpl">
+		<property name="paginableDAO" ref="travelApplyDAOImpl"/>
+	</bean>
+	
+	<bean id="travelApplyDetailBO" class="com.cdkj.loan.bo.impl.TravelApplyDetailBOImpl">
+		<property name="paginableDAO" ref="travelApplyDetailDAOImpl"/>
+	</bean>
+	
 </beans>
