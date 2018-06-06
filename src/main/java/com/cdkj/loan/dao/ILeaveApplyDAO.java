@@ -9,4 +9,5 @@ public interface ILeaveApplyDAO extends IBaseDAO<LeaveApply> {
 
     public void update(LeaveApply data);
 
+    public Long selectTotalHour(LeaveApply data);
 }

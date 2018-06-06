@@ -23,4 +23,5 @@ public interface ILeaveApplyBO extends IPaginableBO<LeaveApply> {
 
     public LeaveApply getLeaveApply(String code);
 
+    public Long getTotalHour(String applyUser);
 }

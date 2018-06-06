@@ -72,6 +72,12 @@
 		SELECT count(1) FROM tp_leave_apply t
 		<include refid="where_condition" />
 	</select>
+	
+	<select id="select_LeaveApply_totalHour" parameterType="leaveApply"
+		resultType="java.lang.Long">
+		SELECT sum(t.total_hour) FROM tp_leave_apply t
+		<include refid="where_condition" />
+	</select>
 
 	<insert id="insert_LeaveApply" parameterType="leaveApply">
 		INSERT INTO
