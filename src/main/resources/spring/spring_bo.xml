@@ -325,6 +325,8 @@
 	
 	<bean id="askForApplyBO" class="com.cdkj.loan.bo.impl.AskForApplyBOImpl">
 		<property name="paginableDAO" ref="askForApplyDAOImpl"/>
+	</bean>
+	
 	<bean id="carBreakBO" class="com.cdkj.loan.bo.impl.CarBreakBOImpl">
 		<property name="paginableDAO" ref="carBreakDAOImpl"/>
 	</bean>
