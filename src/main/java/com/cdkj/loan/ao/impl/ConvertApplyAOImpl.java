@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.IConvertApplyAO;
 import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IConvertApplyBO;
+import com.cdkj.loan.bo.IEntryApplyBO;
 import com.cdkj.loan.bo.IProbationAssessBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -16,6 +17,7 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.ConvertApply;
+import com.cdkj.loan.domain.EntryApply;
 import com.cdkj.loan.domain.ProbationAssess;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632870Req;
@@ -40,6 +42,9 @@ public class ConvertApplyAOImpl implements IConvertApplyAO {
     @Autowired
     private IArchiveBO archiveBO;
 
+    @Autowired
+    private IEntryApplyBO entryApplyBO;
+
     @Override
     public String addConvertApply(XN632870Req req) {
         ConvertApply data = new ConvertApply();
@@ -49,6 +54,12 @@ public class ConvertApplyAOImpl implements IConvertApplyAO {
         data.setEntryCode(req.getEntryCode());
         data.setApplyUser(req.getApplyUser());
         data.setApplyDatetime(new Date());
+
+        EntryApply entryApply = entryApplyBO.getEntryApply(req.getEntryCode());
+        data.setEntryDatetime(entryApply.getEntryDatetime());
+        data.setProbationStartDatetime(entryApply.getProbationStartDatetime());
+        data.setProbationEndDatetime(entryApply.getProbationEndDatetime());
+
         data.setWorkSummary(req.getWorkSummary());
         data.setAllEvaluation(req.getAllEvaluation());
         data.setIsFullWorker(req.getIsFullWorker());

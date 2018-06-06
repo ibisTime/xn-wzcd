@@ -27,6 +27,15 @@ public class ConvertApply extends ABaseDO {
     // 申请时间
     private Date applyDatetime;
 
+    // 入职时间
+    private Date entryDatetime;
+
+    // 试用期期限开始
+    private Date probationStartDatetime;
+
+    // 试用期期限结束
+    private Date probationEndDatetime;
+
     // 工作总结
     private String workSummary;
 
@@ -67,6 +76,30 @@ public class ConvertApply extends ABaseDO {
 
     // 试用期评估列表
     private List<ProbationAssess> probationAssessesList;
+
+    public Date getEntryDatetime() {
+        return entryDatetime;
+    }
+
+    public void setEntryDatetime(Date entryDatetime) {
+        this.entryDatetime = entryDatetime;
+    }
+
+    public Date getProbationStartDatetime() {
+        return probationStartDatetime;
+    }
+
+    public void setProbationStartDatetime(Date probationStartDatetime) {
+        this.probationStartDatetime = probationStartDatetime;
+    }
+
+    public Date getProbationEndDatetime() {
+        return probationEndDatetime;
+    }
+
+    public void setProbationEndDatetime(Date probationEndDatetime) {
+        this.probationEndDatetime = probationEndDatetime;
+    }
 
     public Archive getArchice() {
         return archice;
