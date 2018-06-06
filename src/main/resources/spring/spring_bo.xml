@@ -257,9 +257,9 @@
 		<property name="paginableDAO" ref="socialRelationDAOImpl"/>
 	</bean>
 	
-	<!-- <bean id="archiveLocationBO" class="com.cdkj.loan.bo.impl.ArchiveLocationBOImpl">
+	<bean id="archiveLocationBO" class="com.cdkj.loan.bo.impl.ArchiveLocationBOImpl">
 		<property name="paginableDAO" ref="archiveLocationDAOImpl"/>
-	</bean> -->
+	</bean>
 
 	<bean id="recruitApplyBO" class="com.cdkj.loan.bo.impl.RecruitApplyBOImpl">
 		<property name="paginableDAO" ref="recruitApplyDAOImpl"/>
@@ -320,6 +320,26 @@
 	
 	<bean id="assertUserBO" class="com.cdkj.loan.bo.impl.AssertUserBOImpl">
 		<property name="paginableDAO" ref="assertUserDAOImpl"/>
+	</bean>
+	
+	<bean id="transferPositionApplyBO" class="com.cdkj.loan.bo.impl.TransferPositionApplyBOImpl">
+		<property name="paginableDAO" ref="transferPositionApplyDAOImpl"/>
+	</bean>
+	
+	<bean id="suppleSignApplyBO" class="com.cdkj.loan.bo.impl.SuppleSignApplyBOImpl">
+		<property name="paginableDAO" ref="suppleSignApplyDAOImpl"/>
+	</bean>
+	
+	<bean id="suppleSignApplyDetailBO" class="com.cdkj.loan.bo.impl.SuppleSignApplyDetailBOImpl">
+		<property name="paginableDAO" ref="suppleSignApplyDetailDAOImpl"/>
+	</bean>
+	
+	<bean id="askForApplyBO" class="com.cdkj.loan.bo.impl.AskForApplyBOImpl">
+		<property name="paginableDAO" ref="askForApplyDAOImpl"/>
+	</bean>
+	
+	<bean id="carBreakBO" class="com.cdkj.loan.bo.impl.CarBreakBOImpl">
+		<property name="paginableDAO" ref="carBreakDAOImpl"/>
 	</bean>
 	
 </beans>

@@ -2,7 +2,6 @@ package com.cdkj.loan.api.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.cdkj.loan.ao.IBankAO;
 import com.cdkj.loan.ao.IStorageOutAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
@@ -34,7 +33,7 @@ public class XN632775 extends AProcessor {
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
-            orderColumn = IBankAO.DEFAULT_ORDER_COLUMN;
+            orderColumn = IStorageOutAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(orderColumn, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());

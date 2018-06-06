@@ -59,8 +59,30 @@ public class ConvertApply extends ABaseDO {
     // 申请时间止
     private Date applyDatetimeEnd;
 
+    // 用户
+    private SYSUser user;
+
+    // 人事档案
+    private Archive archice;
+
     // 试用期评估列表
     private List<ProbationAssess> probationAssessesList;
+
+    public Archive getArchice() {
+        return archice;
+    }
+
+    public void setArchice(Archive archice) {
+        this.archice = archice;
+    }
+
+    public SYSUser getUser() {
+        return user;
+    }
+
+    public void setUser(SYSUser user) {
+        this.user = user;
+    }
 
     public List<ProbationAssess> getProbationAssessesList() {
         return probationAssessesList;

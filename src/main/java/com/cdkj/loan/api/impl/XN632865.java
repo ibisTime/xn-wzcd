@@ -2,7 +2,6 @@ package com.cdkj.loan.api.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.cdkj.loan.ao.IEmployApplyAO;
 import com.cdkj.loan.ao.IEntryApplyAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
@@ -40,7 +39,7 @@ public class XN632865 extends AProcessor {
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
-            orderColumn = IEmployApplyAO.DEFAULT_ORDER_COLUMN;
+            orderColumn = IEntryApplyAO.DEFAULT_ORDER_COLUMN;
         }
 
         condition.setOrder(orderColumn, req.getOrderDir());
