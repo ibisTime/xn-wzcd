@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RecruitApply;
-import com.cdkj.loan.dto.req.XN632480Req;
+import com.cdkj.loan.dto.req.XN632840Req;
 
 @Component
 public interface IRecruitApplyAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addRecruitApply(XN632480Req req);
+    public String addRecruitApply(XN632840Req req);
 
     public void auditRecruitApply(String code, String updater, String remark,
             String approveResult);

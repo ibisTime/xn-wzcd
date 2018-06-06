@@ -1,6 +1,11 @@
 package com.cdkj.loan.dto.req;
 
-public class XN632487Req {
+public class XN632845Req extends APageReq {
+
+    /** 
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+     */
+    private static final long serialVersionUID = 1L;
 
     private String departmentCode;// 申请部门编号
 

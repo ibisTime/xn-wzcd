@@ -2,7 +2,7 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class XN632480Req {
+public class XN632840Req {
 
     // 申请部门编号
     private String departmentCode;
