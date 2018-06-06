@@ -28,7 +28,7 @@ public class WelfareUserBOImpl extends PaginableBOImpl<WelfareUser>
     private IWelfareUserDAO WelfareUserDAO;
 
     @Autowired
-    private ISYSUserBO sysuserBO;
+    private ISYSUserBO sysUserBO;
 
     @Override
     public boolean isWelfareUserExist(String code) {
@@ -61,7 +61,7 @@ public class WelfareUserBOImpl extends PaginableBOImpl<WelfareUser>
             .selectList(condition);
         for (WelfareUser welfareUser : welfareUserList) {
             welfareUser.setUserName(
-                sysuserBO.getUser(welfareUser.getUserId()).getRealName());
+                sysUserBO.getUser(welfareUser.getUserId()).getRealName());
         }
         return welfareUserList;
     }
