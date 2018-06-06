@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ITransferPositionApplyAO;
+import com.cdkj.loan.bo.IArchiveBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ITransferPositionApplyBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.domain.Archive;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.TransferPositionApply;
 import com.cdkj.loan.dto.req.XN632880Req;
 import com.cdkj.loan.enums.EApproveResult;
@@ -20,6 +24,12 @@ public class TransferPositionApplyAOImpl implements ITransferPositionApplyAO {
 
     @Autowired
     private ITransferPositionApplyBO transferPositionApplyBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
+
+    @Autowired
+    private IArchiveBO archiveBO;
 
     @Override
     public String addTransferPositionApply(XN632880Req req) {
@@ -59,7 +69,20 @@ public class TransferPositionApplyAOImpl implements ITransferPositionApplyAO {
     @Override
     public Paginable<TransferPositionApply> queryTransferPositionApplyPage(
             int start, int limit, TransferPositionApply condition) {
-        return transferPositionApplyBO.getPaginable(start, limit, condition);
+        Paginable<TransferPositionApply> paginable = transferPositionApplyBO
+            .getPaginable(start, limit, condition);
+        if (paginable != null) {
+            for (TransferPositionApply transferPositionApply : paginable
+                .getList()) {
+                SYSUser user = sysUserBO
+                    .getUser(transferPositionApply.getApplyUser());
+                transferPositionApply.setUser(user);
+                Archive archive = archiveBO
+                    .getArchiveByUserid(transferPositionApply.getApplyUser());
+                transferPositionApply.setArchice(archive);
+            }
+        }
+        return paginable;
     }
 
     @Override
@@ -71,7 +94,13 @@ public class TransferPositionApplyAOImpl implements ITransferPositionApplyAO {
 
     @Override
     public TransferPositionApply getTransferPositionApply(String code) {
-        return transferPositionApplyBO.getTransferPositionApply(code);
+        TransferPositionApply transferPositionApply = transferPositionApplyBO
+            .getTransferPositionApply(code);
+        SYSUser user = sysUserBO.getUser(transferPositionApply.getApplyUser());
+        transferPositionApply.setUser(user);
+        Archive archive = archiveBO
+            .getArchiveByUserid(transferPositionApply.getApplyUser());
+        transferPositionApply.setArchice(archive);
+        return transferPositionApply;
     }
-
 }
