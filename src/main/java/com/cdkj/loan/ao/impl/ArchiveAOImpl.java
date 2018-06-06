@@ -108,7 +108,7 @@ public class ArchiveAOImpl implements IArchiveAO {
                 && !"".equals(req.getEntryDatetime())) {
             int num = DateUtil.daysBetween(req.getEntryDatetime(),
                 req.getLeaveDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING);
-            String workingYears = num / 365 + "";
+            String workingYears = String.valueOf(((int) (num / 365)));
             data.setWorkingYears(workingYears);
         }
 

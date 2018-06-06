@@ -7,13 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IConvertApplyAO;
+import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IConvertApplyBO;
 import com.cdkj.loan.bo.IProbationAssessBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
+import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.ConvertApply;
 import com.cdkj.loan.domain.ProbationAssess;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632870Req;
 import com.cdkj.loan.dto.req.XN632870ReqProbationAssess;
 import com.cdkj.loan.enums.EApproveResult;
@@ -30,13 +34,21 @@ public class ConvertApplyAOImpl implements IConvertApplyAO {
     @Autowired
     private IProbationAssessBO probationAssessBO;
 
+    @Autowired
+    private ISYSUserBO sysUserBO;
+
+    @Autowired
+    private IArchiveBO archiveBO;
+
     @Override
     public String addConvertApply(XN632870Req req) {
         ConvertApply data = new ConvertApply();
-        String code = OrderNoGenerater.generate(EGeneratePrefix.CONVERTAPPLY
-            .getCode());
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.CONVERTAPPLY.getCode());
         data.setCode(code);
         data.setEntryCode(req.getEntryCode());
+        data.setApplyUser(req.getApplyUser());
+        data.setApplyDatetime(new Date());
         data.setWorkSummary(req.getWorkSummary());
         data.setAllEvaluation(req.getAllEvaluation());
         data.setIsFullWorker(req.getIsFullWorker());
@@ -87,6 +99,11 @@ public class ConvertApplyAOImpl implements IConvertApplyAO {
                 probationAssess.setConvertCode(convertApply.getCode());
                 convertApply.setProbationAssessesList(probationAssessBO
                     .queryProbationAssessList(probationAssess));
+                SYSUser user = sysUserBO.getUser(convertApply.getApplyUser());
+                convertApply.setUser(user);
+                Archive archive = archiveBO
+                    .getArchiveByUserid(convertApply.getApplyUser());
+                convertApply.setArchice(archive);
             }
         }
         return paginable;
@@ -102,8 +119,13 @@ public class ConvertApplyAOImpl implements IConvertApplyAO {
         ConvertApply convertApply = convertApplyBO.getConvertApply(code);
         ProbationAssess probationAssess = new ProbationAssess();
         probationAssess.setConvertCode(convertApply.getCode());
-        convertApply.setProbationAssessesList(probationAssessBO
-            .queryProbationAssessList(probationAssess));
+        convertApply.setProbationAssessesList(
+            probationAssessBO.queryProbationAssessList(probationAssess));
+        SYSUser user = sysUserBO.getUser(convertApply.getApplyUser());
+        convertApply.setUser(user);
+        Archive archive = archiveBO
+            .getArchiveByUserid(convertApply.getApplyUser());
+        convertApply.setArchice(archive);
         return convertApply;
     }
 

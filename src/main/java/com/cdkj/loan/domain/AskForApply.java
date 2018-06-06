@@ -1,25 +1,21 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
-import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
-* 转正申请
+* 领导请示申请
 * @author: CYunlai 
-* @since: 2018-06-05 21:32:23
+* @since: 2018-06-06 16:46:09
 * @history:
 */
-public class ConvertApply extends ABaseDO {
+public class AskForApply extends ABaseDO {
 
     private static final long serialVersionUID = 1L;
 
     // 编号
     private String code;
-
-    // 入职编号
-    private String entryCode;
 
     // 申请人
     private String applyUser;
@@ -27,17 +23,11 @@ public class ConvertApply extends ABaseDO {
     // 申请时间
     private Date applyDatetime;
 
-    // 工作总结
-    private String workSummary;
+    // 请示领导
+    private String leadUserId;
 
-    // 总体评价
-    private String allEvaluation;
-
-    // 是否转正
-    private String isFullWorker;
-
-    // 生效日期
-    private Date effectDatetime;
+    // 请示内容
+    private String content;
 
     // 状态
     private String status;
@@ -51,47 +41,13 @@ public class ConvertApply extends ABaseDO {
     // 备注
     private String remark;
 
-    /*------辅助字段-------*/
+    /*------辅助字段------*/
 
     // 申请时间起
     private Date applyDatetimeStart;
 
     // 申请时间止
     private Date applyDatetimeEnd;
-
-    // 用户
-    private SYSUser user;
-
-    // 人事档案
-    private Archive archice;
-
-    // 试用期评估列表
-    private List<ProbationAssess> probationAssessesList;
-
-    public Archive getArchice() {
-        return archice;
-    }
-
-    public void setArchice(Archive archice) {
-        this.archice = archice;
-    }
-
-    public SYSUser getUser() {
-        return user;
-    }
-
-    public void setUser(SYSUser user) {
-        this.user = user;
-    }
-
-    public List<ProbationAssess> getProbationAssessesList() {
-        return probationAssessesList;
-    }
-
-    public void setProbationAssessesList(
-            List<ProbationAssess> probationAssessesList) {
-        this.probationAssessesList = probationAssessesList;
-    }
 
     public Date getApplyDatetimeStart() {
         return applyDatetimeStart;
@@ -117,14 +73,6 @@ public class ConvertApply extends ABaseDO {
         return code;
     }
 
-    public void setEntryCode(String entryCode) {
-        this.entryCode = entryCode;
-    }
-
-    public String getEntryCode() {
-        return entryCode;
-    }
-
     public void setApplyUser(String applyUser) {
         this.applyUser = applyUser;
     }
@@ -133,28 +81,20 @@ public class ConvertApply extends ABaseDO {
         return applyUser;
     }
 
-    public void setWorkSummary(String workSummary) {
-        this.workSummary = workSummary;
+    public void setLeadUserId(String leadUserId) {
+        this.leadUserId = leadUserId;
     }
 
-    public String getWorkSummary() {
-        return workSummary;
+    public String getLeadUserId() {
+        return leadUserId;
     }
 
-    public void setAllEvaluation(String allEvaluation) {
-        this.allEvaluation = allEvaluation;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getAllEvaluation() {
-        return allEvaluation;
-    }
-
-    public void setIsFullWorker(String isFullWorker) {
-        this.isFullWorker = isFullWorker;
-    }
-
-    public String getIsFullWorker() {
-        return isFullWorker;
+    public String getContent() {
+        return content;
     }
 
     public void setStatus(String status) {
@@ -179,14 +119,6 @@ public class ConvertApply extends ABaseDO {
 
     public void setApplyDatetime(Date applyDatetime) {
         this.applyDatetime = applyDatetime;
-    }
-
-    public Date getEffectDatetime() {
-        return effectDatetime;
-    }
-
-    public void setEffectDatetime(Date effectDatetime) {
-        this.effectDatetime = effectDatetime;
     }
 
     public Date getUpdateDatetime() {
