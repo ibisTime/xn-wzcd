@@ -62,6 +62,9 @@ public class ConvertApply extends ABaseDO {
 
     /*------辅助字段-------*/
 
+    // 总分数
+    private Integer totalGrade;
+
     // 申请时间起
     private Date applyDatetimeStart;
 
@@ -76,6 +79,14 @@ public class ConvertApply extends ABaseDO {
 
     // 试用期评估列表
     private List<ProbationAssess> probationAssessesList;
+
+    public Integer getTotalGrade() {
+        return totalGrade;
+    }
+
+    public void setTotalGrade(Integer totalGrade) {
+        this.totalGrade = totalGrade;
+    }
 
     public Date getEntryDatetime() {
         return entryDatetime;

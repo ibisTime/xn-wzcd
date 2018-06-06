@@ -22,7 +22,7 @@ public class ProbationAssess extends ABaseDO {
     private String evalItem;
 
     // 评估分数
-    private String grade;
+    private Integer grade;
 
     public int getId() {
         return id;
@@ -48,12 +48,12 @@ public class ProbationAssess extends ABaseDO {
         return evalItem;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public Integer getGrade() {
+        return grade;
     }
 
-    public String getGrade() {
-        return grade;
+    public void setGrade(Integer grade) {
+        this.grade = grade;
     }
 
 }

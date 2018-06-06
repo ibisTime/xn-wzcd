@@ -15,6 +15,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.ConvertApply;
 import com.cdkj.loan.domain.EntryApply;
@@ -67,15 +68,20 @@ public class ConvertApplyAOImpl implements IConvertApplyAO {
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setStatus(EConvertApplyStatus.STAY_AUDIT.getCode());
         data.setRemark(req.getRemark());
-        convertApplyBO.saveConvertApply(data);
+
         List<XN632870ReqProbationAssess> list = req.getProbationAssessList();
+        int number = 0;
         for (XN632870ReqProbationAssess reqpa : list) {
             ProbationAssess probationAssess = new ProbationAssess();
             probationAssess.setConvertCode(code);
             probationAssess.setEvalItem(reqpa.getEvalItem());
-            probationAssess.setGrade(reqpa.getGrade());
+            Integer grade = StringValidater.toInteger(reqpa.getGrade());
+            probationAssess.setGrade(grade);
+            number = number + grade;
             probationAssessBO.saveProbationAssess(probationAssess);
         }
+        data.setTotalGrade(number);
+        convertApplyBO.saveConvertApply(data);
         return code;
     }
 
