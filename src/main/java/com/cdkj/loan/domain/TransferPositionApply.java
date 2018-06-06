@@ -58,6 +58,28 @@ public class TransferPositionApply extends ABaseDO {
 
     private Date applyDatetimeEnd;// 申请时间止
 
+    // 用户
+    private SYSUser user;
+
+    // 人事档案
+    private Archive archice;
+
+    public SYSUser getUser() {
+        return user;
+    }
+
+    public void setUser(SYSUser user) {
+        this.user = user;
+    }
+
+    public Archive getArchice() {
+        return archice;
+    }
+
+    public void setArchice(Archive archice) {
+        this.archice = archice;
+    }
+
     public Date getApplyDatetimeStart() {
         return applyDatetimeStart;
     }

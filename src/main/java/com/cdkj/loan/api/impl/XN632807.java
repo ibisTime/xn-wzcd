@@ -30,6 +30,7 @@ public class XN632807 extends AProcessor {
         condition.setEntryDatetimeStart(req.getEntryDatetimeStart());
         condition.setEntryDatetimeEnd(req.getEntryDatetimeEnd());
         condition.setWorkStatus(req.getWorkStatus());
+        condition.setIsDelete("1");
         return archiveAO.queryArchiveList(condition);
     }
 

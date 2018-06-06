@@ -11,6 +11,10 @@ public class XN632870Req {
     @NotBlank
     private String entryCode;
 
+    // 申请人
+    @NotBlank
+    private String applyUser;
+
     // 工作总结
     private String workSummary;
 
@@ -39,6 +43,14 @@ public class XN632870Req {
     public void setProbationAssessList(
             List<XN632870ReqProbationAssess> probationAssessList) {
         this.probationAssessList = probationAssessList;
+    }
+
+    public String getApplyUser() {
+        return applyUser;
+    }
+
+    public void setApplyUser(String applyUser) {
+        this.applyUser = applyUser;
     }
 
     public String getEntryCode() {

@@ -58,4 +58,9 @@ public class LeaveApplyDAOImpl extends AMybatisTemplate
             count, condition, LeaveApply.class);
     }
 
+    @Override
+    public Long selectTotalHour(LeaveApply data) {
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_LeaveApply_totalHour"), data);
+    }
 }

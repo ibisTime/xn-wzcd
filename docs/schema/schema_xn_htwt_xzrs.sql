@@ -432,6 +432,56 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '补签申请明细';
 
+/*车辆违章处理(确定)*/
+DROP TABLE IF EXISTS `tp_car_break`;
+CREATE TABLE `tp_car_break` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `user_id` VARCHAR(32) NULL COMMENT '违章人编号',
+  `car_no` VARCHAR(32) NULL COMMENT '车牌号',
+  `happen_datetime` DATETIME NULL COMMENT '违章时间',
+  `address` VARCHAR(255) NULL COMMENT '违章地点',
+  
+  `action` VARCHAR(255) NULL COMMENT '违章行为',
+  `score` int(11) NULL COMMENT '记分',
+  `punish_amount` DECIMAL(18,8) NULL COMMENT '罚款金额',
+  `handle_note` VARCHAR(255) NULL COMMENT '处理情况',
+  `status` VARCHAR(32) NULL COMMENT '状态',
+  `updater` VARCHAR(32) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '车辆违章处理';
+
+/*福利发放申请(确定)*/
+DROP TABLE IF EXISTS `tp_welfare_apply`;
+CREATE TABLE `tp_welfare_apply` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `apply_user` VARCHAR(32) NULL COMMENT '申请人',
+  `apply_datetime` DATETIME NULL COMMENT '申请时间',
+  `apply_note` VARCHAR(255) NULL COMMENT '申请说明',
+  `status` VARCHAR(32) NULL COMMENT '状态',
+  `updater` VARCHAR(32) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '福利发放申请';
+
+/*福利关联人员(确定)*/
+DROP TABLE IF EXISTS `tp_welfare_user`;
+CREATE TABLE `tp_welfare_user` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `welfare_code` VARCHAR(255) NULL COMMENT '福利编号',
+  `user_id` VARCHAR(32) NULL COMMENT '用户编号',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '福利关联人员';
+
 DROP TABLE IF EXISTS `tp_ask_for_apply`;
 CREATE TABLE `tp_ask_for_apply` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',

@@ -12,7 +12,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.RecruitApply;
-import com.cdkj.loan.dto.req.XN632480Req;
+import com.cdkj.loan.dto.req.XN632840Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.ERecruitApplyStatus;
 
@@ -23,7 +23,7 @@ public class RecruitApplyAOImpl implements IRecruitApplyAO {
     private IRecruitApplyBO recruitApplyBO;
 
     @Override
-    public String addRecruitApply(XN632480Req req) {
+    public String addRecruitApply(XN632840Req req) {
         RecruitApply data = new RecruitApply();
         data.setDepartmentCode(req.getDepartmentCode());
         data.setPosition(req.getPosition());

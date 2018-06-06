@@ -8,6 +8,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.LeaveApply;
 import com.cdkj.loan.dto.req.XN632890Req;
 import com.cdkj.loan.dto.req.XN632891Req;
+import com.cdkj.loan.dto.res.XN632892Res;
 
 /**
  * 请假管理
@@ -29,5 +30,7 @@ public interface ILeaveApplyAO {
     public List<LeaveApply> queryLeaveApplyList(LeaveApply condition);
 
     public LeaveApply getLeaveApply(String code);
+
+    public XN632892Res getLeavedHour(String applyUser);
 
 }

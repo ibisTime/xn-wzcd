@@ -35,6 +35,7 @@ public class XN632805 extends AProcessor {
         condition.setEntryDatetimeStart(req.getEntryDatetimeStart());
         condition.setEntryDatetimeEnd(req.getEntryDatetimeEnd());
         condition.setWorkStatus(req.getWorkStatus());
+        condition.setIsDelete("1");
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
             column = IArchiveAO.DEFAULT_ORDER_COLUMN;

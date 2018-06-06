@@ -48,7 +48,7 @@ public class RecruitApply extends ABaseDO {
     private String newApplyReason;
 
     // 该职位现有人数
-    private int positionNowQuantity;
+    private Integer positionNowQuantity;
 
     // 职位增加原因
     private String positionAddReason;
@@ -205,11 +205,11 @@ public class RecruitApply extends ABaseDO {
         this.newApplyReason = newApplyReason;
     }
 
-    public int getPositionNowQuantity() {
+    public Integer getPositionNowQuantity() {
         return positionNowQuantity;
     }
 
-    public void setPositionNowQuantity(int positionNowQuantity) {
+    public void setPositionNowQuantity(Integer positionNowQuantity) {
         this.positionNowQuantity = positionNowQuantity;
     }
 
