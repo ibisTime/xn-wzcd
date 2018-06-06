@@ -9,7 +9,7 @@ INSERT INTO `tb_collect_bankcard` (`code`,`type`,`company_code`,`real_name`,`ban
 -- Query: SELECT * FROM xn_htwt_online.tb_bank
 -- Date: 2018-06-06 06:18
 */
-INSERT INTO `tb_bank` (`code`,`bank_code`,`bank_name`,`subbranch`,`rate12`,`rate18`,`rate24`,`rate36`,`status`,`updater`,`update_datetime`,`remark`) VALUES ('BA201806011006085041799','ICBC','中国工商银行','新疆工商银行',0,0,0,0,NULL,'hrf','2018-06-06 01:00:08',NULL);
+INSERT INTO `tb_bank` (`code`,`bank_code`,`bank_name`,`subbranch`,`rate12`,`rate18`,`rate24`,`rate36`,`status`,`updater`,`update_datetime`,`remark`) VALUES ('BA201806011006085041799','ICBC','中国工商银行','新疆工商银行',0,0,0,0,NULL,'admin','2018-06-06 01:00:08',NULL);
 
 /*
 -- Query: SELECT `code`,`name`,`lead_name`,`mobile`,`parent_code`,`type`,`status`,`updater`,`update_datetime`,`remark` FROM tsys_department where code ='DP201800000000000000001'
@@ -31,34 +31,44 @@ INSERT INTO `tsys_user` (`user_id`,`type`,`photo`,`login_name`,`mobile`,`login_p
 -- Date: 2018-06-06 04:51
 */
 INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','超级管理员','1','admin',now(),NULL);
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805291328573573955','内勤主管','2','hrf',now(),'业务部');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805291831307966076','区域经理','2','hrf',now(),'业务部');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300223484146418','市场总监','2','hrf',now(),'业务部');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300229316028333','GPS主管','2','hrf',now(),'业务部-gps管理');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300230062905523','业务贷后管理','2','hrf',now(),'业务部');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300230275841975','副总经理','2','hrf',now(),'总经办');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300230427742722','总经理','2','hrf',now(),'总经办');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300235262364592','行政主管','2','hrf',now(),'行政部');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300235563074136','业务员','2','hrf',now(),'业务部');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300236166965813','财务总监','2','hrf',now(),'财务部');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300236306565414','出纳','2','hrf',now(),'财务部');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300236423885841','会计','2','hrf',now(),'财务部');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300238013014682','风控专员','2','hrf',now(),'风控部');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300238283754511','风控主管','2','hrf',now(),'风控部');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301244280427951','区域经理','2','hrf',now(),'业务部');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301314445524572','内勤专员','2','hrf',now(),'业务部');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301316161456204','清欠主管','2','hrf',now(),'清欠部');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301316432211100','清欠专员','2','hrf',now(),'清欠部');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301328556783270','催收专员','2','hrf',now(),'清欠部');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301329400862085','征信查询','2','hrf',now(),'驻行组');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301330264127077','工行审核','2','hrf',now(),'驻行组');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301330468769509','工行归档','2','hrf',now(),'驻行组');
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301451155408105','测试','2','hrf',now(),'测试账号');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201800000000000000YWY','业务员','2','admin',now(),'业务部');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR20180000000000000NQZY','内勤专员','2','admin',now(),'业务部');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR20180000000000000ZHRY','驻行人员','2','admin',now(),'业务部');
+
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805291328573573955','内勤主管','2','admin',now(),'业务部');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805291831307966076','区域经理','2','admin',now(),'业务部');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300223484146418','市场总监','2','admin',now(),'业务部');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300229316028333','GPS主管','2','admin',now(),'业务部-gps管理');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300230062905523','业务贷后管理','2','admin',now(),'业务部');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300230275841975','副总经理','2','admin',now(),'总经办');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300230427742722','总经理','2','admin',now(),'总经办');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300235262364592','行政主管','2','admin',now(),'行政部');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300236166965813','财务总监','2','admin',now(),'财务部');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300236306565414','出纳','2','admin',now(),'财务部');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300236423885841','会计','2','admin',now(),'财务部');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300238013014682','风控专员','2','admin',now(),'风控部');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805300238283754511','风控主管','2','admin',now(),'风控部');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301244280427951','区域经理','2','admin',now(),'业务部');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301316161456204','清欠主管','2','admin',now(),'清欠部');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301316432211100','清欠专员','2','admin',now(),'清欠部');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301328556783270','催收专员','2','admin',now(),'清欠部');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301329400862085','征信查询','2','admin',now(),'驻行组');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301330264127077','工行审核','2','admin',now(),'驻行组');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805301330468769509','工行归档','2','admin',now(),'驻行组');
 
 /*
 -- Query: SELECT `type`, `parent_key`, `dkey`, `dvalue`,'admin' `updater`, now() `update_datetime`, `remark`, `company_code`, `system_code` FROM tsys_dict
 -- Date: 2018-06-06 16:18
 */
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'fee_advance_apply_type','费用预支申请类型','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','fee_advance_apply_type','01','采购固定资产','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','fee_advance_apply_type','02','采购办公用品','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','fee_advance_apply_type','03','出差费用','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','fee_advance_apply_type','04','公关费用','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','fee_advance_apply_type','05','采购GPS','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','fee_advance_apply_type','06','贷后催收费用','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','fee_advance_apply_type','07','其他','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'kd_company','物流公司','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','kd_company','EMS','邮政EMS','admin',now(),'','CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','kd_company','STO','申通快递','admin',now(),'','CD-HTWT000020','CD-HTWT000020');

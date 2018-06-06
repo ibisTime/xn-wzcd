@@ -9,22 +9,21 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "travelApplyDetail";
+    private static String key = "assertUser";
 
     // 实体名称
-    private static String keyName = "出差/公出申请明细";
+    private static String keyName = "办公用户列表";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tp_travel_apply_detail";
+    private static String dbname = "tp_assert_user";
 
-    private static String[] DBwords = { "travel_apply_code", "start_datetime",
-            "end_datetime", "total_hour", "remark" };
+    private static String[] DBwords = { "code", "assert_code", "user_id",
+            "print_quantity" };
 
-    private static String[] DBwordsName = { "出差申请编号", "开始时间", "结束时间", "时长",
-            "备注" };
+    private static String[] DBwordsName = { "编号", "办公用品编号", "用户编号  ", "印刷数量" };
 
     public void testname() throws Exception {
     }

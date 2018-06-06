@@ -138,6 +138,7 @@
 		<typeAlias alias="carBreak" type="com.cdkj.loan.domain.CarBreak" />
 		<typeAlias alias="welfareApply" type="com.cdkj.loan.domain.WelfareApply" />
 		
+		<typeAlias alias="feeAdvanceApply" type="com.cdkj.loan.domain.FeeAdvanceApply" />
 		<typeAlias alias="welfareUser" type="com.cdkj.loan.domain.WelfareUser" />
 	</typeAliases>
 </configuration>

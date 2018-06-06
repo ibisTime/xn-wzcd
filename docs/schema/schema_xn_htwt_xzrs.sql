@@ -341,19 +341,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '调岗申请';
 
-
---入职申请（编号，入职岗位，入职时间，姓名，性别，出生年月，文化程度，民族，籍贯，健康状况，婚姻状况，身份证号码，联系电话，紧急联系人，紧急联系号码，户籍所在地，户籍性质，照片，现居住地址，是否与其他单位存在劳动关系，是否有亲属从事本行业工作，姓名，与本人关系，职务，主要业绩及工作能力简述，试用期期限开始，试用期期限结束，试用期工资，转正后基本工资，转正后绩效工资，绩效工资考核标准，季度奖考核标准，通讯费报销标准，省会住宿报销标准，非省会住宿报销标准，出租车，市内交通现金补助，电话现金补贴，餐补，工资卡账号，开户行，开户行行号）
---entry_apply(code,position,entry_datetime,name,gender,birthday,education_status,nation,native_place,health_status,marriage_status,idcard_no,mobile,emergency_contact,emergency_contact_mobile,residence_address,photo,current_address,is_exist_labor_relation,is_relatives_here,relative_name,relative_relation,relative_position,award_training,probation_start_datetime,probation_end_datetime,probation_salary,base_salary,perform_salary,perform_salary_assess,quarterly_award_assess,communicate_reimburse,provincial_bed_reimburse,non_provincial_bed_reimburse,taxi_reimburse,traffic_reimburse,mobile_reimburse,meal_reimburse,salary_card_no,bank,bank_code)
---
---转正申请（编号，入职编号，申请人，申请时间，工作总结，总体评价，是否转正，生效日期，备注）
---conversion_apply(code,entry_code,apply_user_code,apply_datetime,work_summary,over_evaluation,is_conversion,effect_datetime,remark)
---
---试用期评估（编号，转正申请编号，评估项目，评估分数）
---probation_assess(code,conversion_code,assess_item,assess_grade)
---
---调岗申请（编号，申请人档案编号，新部门，新岗位，开始日期，结束日期，缘由，备注，更新人，更新时间）
---transfer_position_apply(code,archive_code,new_position,start_datetime,end_datetime,reason,remark,updater,update_datetime)
-
 /*入库管理(确定)*/
 DROP TABLE IF EXISTS `tp_storage_in`;
 CREATE TABLE `tp_storage_in` (
@@ -510,3 +497,32 @@ CREATE TABLE `tp_ask_for_apply` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '领导请示申请';
+
+DROP TABLE IF EXISTS `tp_fee_advance_apply`;
+CREATE TABLE `tp_fee_advance_apply` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `type` VARCHAR(32) NULL COMMENT '类型',
+  `ref_assert_code` VARCHAR(32) NULL COMMENT '关联资产审批编号',
+  `ref_budget_order_code` VARCHAR(32) NULL COMMENT '关联车贷业务编号',
+  `amount` bigint(20) NULL COMMENT '预支金额',
+  
+  `subbranch` VARCHAR(255) NULL COMMENT '开户银行',
+  `bankcard_number` VARCHAR(255) NULL COMMENT '银行账号',
+  `account_name` VARCHAR(255) NULL COMMENT '账户名',
+  `apply_user` VARCHAR(32) NULL COMMENT '申请人',
+  `apply_datetime` DATETIME NULL COMMENT '申请时间',
+  
+  `apply_note` VARCHAR(255) NULL COMMENT '申请说明',
+  `pay_datetime` DATETIME NULL COMMENT '付款时间',
+  `pay_bank` VARCHAR(32) NULL COMMENT '付款银行',
+  `pay_bankcard` VARCHAR(255) NULL COMMENT '付款账号',
+  `pay_pdf` VARCHAR(255) NULL COMMENT '付款凭证',
+  
+  `status` VARCHAR(32) NULL COMMENT '状态(0=待审核 1=审核通过 2=审核不通过 3=财务审核通过 4=财务审核不通过 5=确认放款)',
+  `updater` VARCHAR(32) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '费用预支申请';

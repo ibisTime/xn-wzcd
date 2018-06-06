@@ -189,6 +189,8 @@ public class Archive extends ABaseDO {
     // 用户编号
     private String userId;
 
+    private String isDelete;
+
     /*************db properties*************/
 
     // 入职时间起
@@ -204,6 +206,14 @@ public class Archive extends ABaseDO {
 
     // 职务岗位名称
     private String postName;
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
+    }
 
     public String getUserId() {
         return userId;

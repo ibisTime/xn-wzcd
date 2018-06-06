@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 新增档案存放位置
  * @author: jiafr 
@@ -9,9 +11,11 @@ package com.cdkj.loan.dto.req;
 public class XN632820Req {
 
     // 位置名称
+    @NotBlank
     private String name;
 
     // 更新人(选填)
+    @NotBlank
     private String updater;
 
     public String getName() {

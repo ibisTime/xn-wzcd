@@ -8,6 +8,7 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630066Req;
+import com.cdkj.loan.enums.ESYSUserStatus;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -27,11 +28,12 @@ public class XN630066 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         SYSUser condition = new SYSUser();
+        condition.setStatus(ESYSUserStatus.NORMAL.getCode());
         condition.setKeyword(req.getKeyword());
-        condition.setCreateDatetimeStart(
-            DateUtil.getFrontDate(req.getCreateDatetimeStart(), false));
-        condition.setCreateDatetimeEnd(
-            DateUtil.getFrontDate(req.getCreateDatetimeEnd(), true));
+        condition.setCreateDatetimeStart(DateUtil.getFrontDate(
+            req.getCreateDatetimeStart(), false));
+        condition.setCreateDatetimeEnd(DateUtil.getFrontDate(
+            req.getCreateDatetimeEnd(), true));
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {

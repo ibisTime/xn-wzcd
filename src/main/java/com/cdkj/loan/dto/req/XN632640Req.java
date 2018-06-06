@@ -24,24 +24,24 @@ public class XN632640Req {
 
     private String updater;
 
-    private List<XN632640ReqChild1> list1;
+    private List<XN632640ReqChild1> assertGoodsList;
 
-    private List<XN632640ReqChild2> list2;
+    private List<XN632640ReqChild2> assertUserList;
 
-    public List<XN632640ReqChild1> getList1() {
-        return list1;
+    public List<XN632640ReqChild1> getAssertGoodsList() {
+        return assertGoodsList;
     }
 
-    public void setList1(List<XN632640ReqChild1> list1) {
-        this.list1 = list1;
+    public void setAssertGoodsList(List<XN632640ReqChild1> assertGoodsList) {
+        this.assertGoodsList = assertGoodsList;
     }
 
-    public List<XN632640ReqChild2> getList2() {
-        return list2;
+    public List<XN632640ReqChild2> getAssertUserList() {
+        return assertUserList;
     }
 
-    public void setList2(List<XN632640ReqChild2> list2) {
-        this.list2 = list2;
+    public void setAssertUserList(List<XN632640ReqChild2> assertUserList) {
+        this.assertUserList = assertUserList;
     }
 
     public String getApplyNote() {

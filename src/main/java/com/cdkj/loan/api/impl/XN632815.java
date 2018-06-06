@@ -32,6 +32,7 @@ public class XN632815 extends AProcessor {
         condition.setRealName(req.getRealName());
         condition.setDepartmentCode(req.getDepartmentCode());
         condition.setPostCode(req.getPostCode());
+        condition.setIsDelete("1");
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
             column = IArchiveAO.DEFAULT_ORDER_COLUMN;
