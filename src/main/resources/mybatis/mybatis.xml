@@ -122,6 +122,7 @@
 		<typeAlias alias="convertApply" type="com.cdkj.loan.domain.ConvertApply" />
 		
 		<typeAlias alias="suppleSignApply" type="com.cdkj.loan.domain.SuppleSignApply" />
+		<typeAlias alias="suppleSignApplyDetail" type="com.cdkj.loan.domain.SuppleSignApplyDetail" />
 		<typeAlias alias="probationAssess" type="com.cdkj.loan.domain.ProbationAssess" />
 		
 	</typeAliases>

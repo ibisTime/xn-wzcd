@@ -298,4 +298,12 @@
 		<property name="paginableDAO" ref="probationAssessDAOImpl"/>
 	</bean>
 	
+	<bean id="suppleSignApplyBO" class="com.cdkj.loan.bo.impl.SuppleSignApplyBOImpl">
+		<property name="paginableDAO" ref="suppleSignApplyDAOImpl"/>
+	</bean>
+	
+	<bean id="suppleSignApplyDetailBO" class="com.cdkj.loan.bo.impl.SuppleSignApplyDetailBOImpl">
+		<property name="paginableDAO" ref="suppleSignApplyDetailDAOImpl"/>
+	</bean>
+	
 </beans>
