@@ -126,8 +126,12 @@
 
 		<typeAlias alias="convertApply" type="com.cdkj.loan.domain.ConvertApply" />
 		
-		<typeAlias alias="suppleSignApply" type="com.cdkj.loan.domain.SuppleSignApply" />
+		<!-- <typeAlias alias="suppleSignApply" type="com.cdkj.loan.domain.SuppleSignApply" /> -->
 		<typeAlias alias="probationAssess" type="com.cdkj.loan.domain.ProbationAssess" />
+		
+		<typeAlias alias="assertApply" type="com.cdkj.loan.domain.AssertApply" />
+		<typeAlias alias="assertGoods" type="com.cdkj.loan.domain.AssertGoods" />
+		<typeAlias alias="assertUser" type="com.cdkj.loan.domain.AssertUser" />
 		
 
 	</typeAliases>
