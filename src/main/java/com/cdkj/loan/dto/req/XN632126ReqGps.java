@@ -8,8 +8,8 @@ package com.cdkj.loan.dto.req;
  */
 public class XN632126ReqGps {
 
-    // gps设备号
-    private String gpsDevNo;
+    // gps编号
+    private String code;
 
     // gps安装位置
     private String azLocation;
@@ -23,12 +23,12 @@ public class XN632126ReqGps {
     // 备注
     private String remark;
 
-    public String getGpsDevNo() {
-        return gpsDevNo;
+    public String getCode() {
+        return code;
     }
 
-    public void setGpsDevNo(String gpsDevNo) {
-        this.gpsDevNo = gpsDevNo;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getAzLocation() {

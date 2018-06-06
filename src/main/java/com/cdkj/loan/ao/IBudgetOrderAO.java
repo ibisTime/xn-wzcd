@@ -42,7 +42,7 @@ public interface IBudgetOrderAO {
 
     // 安装GPS
     public void installGps(String code, String operator,
-            List<XN632126ReqGps> gpsAzList);
+            List<XN632126ReqGps> budgetOrderGpsList);
 
     // GPS管理员审核
     public void gpsManagerApprove(String code, String operator,

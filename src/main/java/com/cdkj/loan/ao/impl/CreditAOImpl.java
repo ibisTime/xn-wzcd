@@ -19,6 +19,7 @@ import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
@@ -144,6 +145,7 @@ public class CreditAOImpl implements ICreditAO {
     }
 
     @Override
+    @Transactional
     public void editCredit(XN632112Req req) {
         Credit credit = creditBO.getCredit(req.getCreditCode());
         if (null == credit) {
@@ -151,14 +153,19 @@ public class CreditAOImpl implements ICreditAO {
                 "根据征信单编号查询不到征信单");
         }
 
-        if (!ECreditNode.AUDIT_NO_PASS.getCode()
-            .equals(credit.getCurNodeCode())) {
+        if (ECreditNode.ACHIEVE.getCode().equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是风控专员审核不通过，不能操作");
+                "当前征信申请已审核通过，不能操作");
+        }
+
+        if (ECreditNode.INPUT_CREDIT_RESULT.getCode().equals(
+            credit.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前征信节点处于征信结果录入，不能修改");
         }
 
         // 修改征信单
-        credit.setLoanBankCode(req.getLoanBank());
+        credit.setLoanBankCode(req.getLoanBankCode());
         credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
         credit.setBizType(req.getBizType());
         credit.setSecondCarReport(req.getSecondCarReport());
@@ -168,10 +175,12 @@ public class CreditAOImpl implements ICreditAO {
         credit.setSaleUserId(req.getOperator());
 
         // 之前节点
-        String PrecurNodeCode = credit.getCurNodeCode();
+        String precurNodeCode = credit.getCurNodeCode();
         // 更新当前节点
-        credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-            credit.getCurNodeCode()).getNextNode());
+        if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
+            credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                credit.getCurNodeCode()).getNextNode());
+        }
         creditBO.refreshCredit(credit);
 
         // 修改征信人员
@@ -185,8 +194,7 @@ public class CreditAOImpl implements ICreditAO {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "征信申请人只能填写一条数据");
             }
-            CreditUser creditUser = creditUserBO.getCreditUser(child
-                .getCreditUserCode());
+            CreditUser creditUser = new CreditUser();
             creditUser.setUserName(child.getUserName());
             creditUser.setLoanRole(child.getLoanRole());
             creditUser.setRelation(child.getRelation());
@@ -208,9 +216,8 @@ public class CreditAOImpl implements ICreditAO {
         ECreditNode currentNode = ECreditNode.getMap().get(
             credit.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
-            EBizLogType.CREDIT, credit.getCode(), PrecurNodeCode,
+            EBizLogType.CREDIT, credit.getCode(), precurNodeCode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
-
     }
 
     @Override
@@ -229,9 +236,11 @@ public class CreditAOImpl implements ICreditAO {
 
         Department department = departmentBO.getDepartment(credit
             .getCompanyCode());
-        if (null != department) {
-            credit.setCompanyName(department.getName());
-        }
+        credit.setCompanyName(department.getName());
+
+        // 获取银行信息
+        Bank bank = bankBO.getBank(credit.getLoanBankCode());
+        credit.setLoanBankName(bank.getBankName());
 
         CreditUser condition = new CreditUser();
         condition.setCreditCode(credit.getCode());

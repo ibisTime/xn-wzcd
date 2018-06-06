@@ -60,11 +60,9 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
 
     @Override
     public void refreshCreditUser(CreditUser creditUser) {
-
         if (StringUtils.isNotBlank(creditUser.getCode())) {
             creditUserDAO.updateCreditUser(creditUser);
         }
-
     }
 
     @Override
