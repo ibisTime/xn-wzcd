@@ -30,7 +30,7 @@ public class XN632885 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         TransferPositionApply condition = new TransferPositionApply();
-        condition.setArchieveCode(req.getArchieveCode());
+        condition.setApplyUser(req.getApplyUser());
         condition.setNewDepartment(req.getNewDepartment());
         condition.setStatus(req.getStatus());
         condition.setApplyDatetimeStart(DateUtil.strToDate(

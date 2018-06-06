@@ -9,23 +9,23 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "transferPositionApply";
+    private static String key = "askForApply";
 
     // 实体名称
-    private static String keyName = "调岗申请";
+    private static String keyName = "领导请示申请";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tp_transfer_position_apply";
+    private static String dbname = "tp_ask_for_apply";
 
-    private static String[] DBwords = { "code", "archieve_code",
-            "new_department", "new_position", "start_datetime", "end_datetime",
-            "reason", "status", "updater", "update_datetime", "remark" };
+    private static String[] DBwords = { "code", "apply_user", "apply_datetime",
+            "lead_user_id", "content", "status", "updater", "update_datetime",
+            "remark" };
 
-    private static String[] DBwordsName = { "编号", "申请人档案编号", "新部门", "新岗位",
-            "开始日期", "结束日期", "缘由", "状态", "更新人", "更新时间", "备注" };
+    private static String[] DBwordsName = { "编号", "申请人", "申请时间", "请示领导", "请示内容",
+            " 状态", "更新人", "更新时间", "备注" };
 
     private static String[] DOwords = getDOwords();
 

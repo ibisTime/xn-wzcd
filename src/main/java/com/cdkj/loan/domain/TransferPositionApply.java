@@ -20,8 +20,11 @@ public class TransferPositionApply extends ABaseDO {
     // 编号
     private String code;
 
-    // 申请人档案编号
-    private String archieveCode;
+    // 申请人
+    private String applyUser;
+
+    // 申请时间
+    private Date applyDatetime;
 
     // 新部门
     private String newDepartment;
@@ -79,12 +82,20 @@ public class TransferPositionApply extends ABaseDO {
         return code;
     }
 
-    public void setArchieveCode(String archieveCode) {
-        this.archieveCode = archieveCode;
+    public String getApplyUser() {
+        return applyUser;
     }
 
-    public String getArchieveCode() {
-        return archieveCode;
+    public void setApplyUser(String applyUser) {
+        this.applyUser = applyUser;
+    }
+
+    public Date getApplyDatetime() {
+        return applyDatetime;
+    }
+
+    public void setApplyDatetime(Date applyDatetime) {
+        this.applyDatetime = applyDatetime;
     }
 
     public void setNewDepartment(String newDepartment) {

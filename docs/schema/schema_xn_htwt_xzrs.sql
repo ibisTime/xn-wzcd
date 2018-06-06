@@ -325,7 +325,8 @@ COMMENT = '入职申请';
 DROP TABLE IF EXISTS `tp_transfer_position_apply`;
 CREATE TABLE `tp_transfer_position_apply` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
-  `archieve_code` VARCHAR(32) NULL COMMENT '申请人档案编号',
+  `apply_user` VARCHAR(32) NULL COMMENT '申请人',
+  `apply_datetime`DATETIME NULL COMMENT '申请时间',
   `new_department` VARCHAR(255) NULL COMMENT '新部门',
   `new_position` VARCHAR(255) NULL COMMENT '新岗位',
   `start_datetime` DATETIME NULL COMMENT '开始日期',
@@ -493,3 +494,19 @@ CREATE TABLE `tp_welfare_user` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '福利关联人员';
+
+DROP TABLE IF EXISTS `tp_ask_for_apply`;
+CREATE TABLE `tp_ask_for_apply` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `apply_user` VARCHAR(32) NULL COMMENT '申请人',
+  `apply_datetime` DATETIME NULL COMMENT '申请时间',
+  `lead_user_id` VARCHAR(255) NULL COMMENT '请示领导',
+  `content` VARCHAR(255) NULL COMMENT '请示内容',
+  `status` VARCHAR(4) NULL COMMENT '状态',
+  `updater` VARCHAR(255) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '领导请示申请';

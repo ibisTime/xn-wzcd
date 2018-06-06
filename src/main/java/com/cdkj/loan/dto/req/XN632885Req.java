@@ -7,8 +7,8 @@ public class XN632885Req extends APageReq {
      */
     private static final long serialVersionUID = -7543802108244979634L;
 
-    // 申请人档案编号
-    private String archieveCode;
+    // 申请人
+    private String applyUser;
 
     // 新部门
     private String newDepartment;
@@ -36,12 +36,12 @@ public class XN632885Req extends APageReq {
         this.applyDatetimeEnd = applyDatetimeEnd;
     }
 
-    public String getArchieveCode() {
-        return archieveCode;
+    public String getApplyUser() {
+        return applyUser;
     }
 
-    public void setArchieveCode(String archieveCode) {
-        this.archieveCode = archieveCode;
+    public void setApplyUser(String applyUser) {
+        this.applyUser = applyUser;
     }
 
     public String getNewDepartment() {

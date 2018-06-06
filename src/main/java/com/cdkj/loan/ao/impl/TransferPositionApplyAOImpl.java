@@ -14,6 +14,7 @@ import com.cdkj.loan.domain.TransferPositionApply;
 import com.cdkj.loan.dto.req.XN632880Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EEntryApplyStatus;
+import com.cdkj.loan.enums.ETransferPositionApplyStatus;
 
 @Service
 public class TransferPositionApplyAOImpl implements ITransferPositionApplyAO {
@@ -24,7 +25,8 @@ public class TransferPositionApplyAOImpl implements ITransferPositionApplyAO {
     @Override
     public String addTransferPositionApply(XN632880Req req) {
         TransferPositionApply data = new TransferPositionApply();
-        data.setArchieveCode(req.getArchieveCode());
+        data.setApplyUser(req.getApplyUser());
+        data.setApplyDatetime(new Date());
         data.setNewDepartment(req.getNewDepartment());
         data.setNewPosition(req.getNewPosition());
         data.setStartDatetime(DateUtil.strToDate(req.getStartDatetime(),
@@ -32,6 +34,7 @@ public class TransferPositionApplyAOImpl implements ITransferPositionApplyAO {
         data.setEndDatetime(DateUtil.strToDate(req.getEndDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setReason(req.getReason());
+        data.setStatus(ETransferPositionApplyStatus.STAY_AUDIT.getCode());
         return transferPositionApplyBO.saveTransferPositionApply(data);
     }
 
