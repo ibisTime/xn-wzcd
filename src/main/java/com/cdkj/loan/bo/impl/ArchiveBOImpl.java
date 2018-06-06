@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IArchiveBO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IArchiveDAO;
@@ -26,6 +27,9 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
 
     @Autowired
     private IArchiveDAO archiveDAO;
+
+    @Autowired
+    private IDepartmentBO departmentBO;
 
     @Override
     public boolean isArchiveExist(String code) {
@@ -69,7 +73,14 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
 
     @Override
     public List<Archive> queryArchiveList(Archive condition) {
-        return archiveDAO.selectList(condition);
+        List<Archive> archiveList = archiveDAO.selectList(condition);
+        for (Archive archive : archiveList) {
+            archive.setDepartmentName(departmentBO
+                .getDepartment(archive.getDepartmentCode()).getName());
+            archive.setPostName(
+                departmentBO.getDepartment(archive.getPostCode()).getName());
+        }
+        return archiveList;
     }
 
     @Override

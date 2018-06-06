@@ -322,6 +322,25 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '入职申请';
 
+DROP TABLE IF EXISTS `tp_transfer_position_apply`;
+CREATE TABLE `tp_transfer_position_apply` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `apply_user` VARCHAR(32) NULL COMMENT '申请人',
+  `apply_datetime`DATETIME NULL COMMENT '申请时间',
+  `new_department` VARCHAR(255) NULL COMMENT '新部门',
+  `new_position` VARCHAR(255) NULL COMMENT '新岗位',
+  `start_datetime` DATETIME NULL COMMENT '开始日期',
+  `end_datetime` DATETIME NULL COMMENT '结束日期',
+  `reason` VARCHAR(255) NULL COMMENT '缘由',
+  `status` VARCHAR(4) NULL COMMENT '状态',
+  `updater` VARCHAR(255) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '调岗申请';
+
 
 --入职申请（编号，入职岗位，入职时间，姓名，性别，出生年月，文化程度，民族，籍贯，健康状况，婚姻状况，身份证号码，联系电话，紧急联系人，紧急联系号码，户籍所在地，户籍性质，照片，现居住地址，是否与其他单位存在劳动关系，是否有亲属从事本行业工作，姓名，与本人关系，职务，主要业绩及工作能力简述，试用期期限开始，试用期期限结束，试用期工资，转正后基本工资，转正后绩效工资，绩效工资考核标准，季度奖考核标准，通讯费报销标准，省会住宿报销标准，非省会住宿报销标准，出租车，市内交通现金补助，电话现金补贴，餐补，工资卡账号，开户行，开户行行号）
 --entry_apply(code,position,entry_datetime,name,gender,birthday,education_status,nation,native_place,health_status,marriage_status,idcard_no,mobile,emergency_contact,emergency_contact_mobile,residence_address,photo,current_address,is_exist_labor_relation,is_relatives_here,relative_name,relative_relation,relative_position,award_training,probation_start_datetime,probation_end_datetime,probation_salary,base_salary,perform_salary,perform_salary_assess,quarterly_award_assess,communicate_reimburse,provincial_bed_reimburse,non_provincial_bed_reimburse,taxi_reimburse,traffic_reimburse,mobile_reimburse,meal_reimburse,salary_card_no,bank,bank_code)
@@ -425,3 +444,19 @@ CREATE TABLE `tp_supple_sign_apply_detail` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '补签申请明细';
+
+DROP TABLE IF EXISTS `tp_ask_for_apply`;
+CREATE TABLE `tp_ask_for_apply` (
+  `code` VARCHAR(32) NOT NULL COMMENT '编号',
+  `apply_user` VARCHAR(32) NULL COMMENT '申请人',
+  `apply_datetime` DATETIME NULL COMMENT '申请时间',
+  `lead_user_id` VARCHAR(255) NULL COMMENT '请示领导',
+  `content` VARCHAR(255) NULL COMMENT '请示内容',
+  `status` VARCHAR(4) NULL COMMENT '状态',
+  `updater` VARCHAR(255) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `remark` VARCHAR(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '领导请示申请';

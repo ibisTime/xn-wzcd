@@ -13,6 +13,9 @@
 			<if test="id != null and id != '' ">
 				AND t.id = #{id}
 			</if>
+			<if test="convertCode != null and convertCode != '' ">
+				AND t.convert_code = #{convertCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_probationAssess" parameterType="probationAssess" resultMap="probationAssess_DB_Result">
