@@ -199,6 +199,12 @@ public class Archive extends ABaseDO {
 
     private List<SocialRelation> socialRelationList;
 
+    // 部门名称
+    private String departmentName;
+
+    // 职务岗位名称
+    private String postName;
+
     public String getUserId() {
         return userId;
     }
@@ -685,6 +691,22 @@ public class Archive extends ABaseDO {
 
     public void setEntryDatetimeEnd(String entryDatetimeEnd) {
         this.entryDatetimeEnd = entryDatetimeEnd;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public String getPostName() {
+        return postName;
+    }
+
+    public void setPostName(String postName) {
+        this.postName = postName;
     }
 
 }
