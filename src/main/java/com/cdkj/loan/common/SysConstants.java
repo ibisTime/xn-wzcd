@@ -49,4 +49,7 @@ public class SysConstants {
 
     public static String QX_SMS_NOTICE = "qx_sms_notice";// 取现短信通知
 
+    // 年假天数
+    public static String LEAVE_YEAR_HOUR = "leave_year_hour";// 年假天数
+
 }
