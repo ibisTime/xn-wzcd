@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IEntryApplyAO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IEntryApplyBO;
 import com.cdkj.loan.bo.IWorkExperienceBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.EntryApply;
 import com.cdkj.loan.domain.WorkExperience;
 import com.cdkj.loan.dto.req.XN632850ReqExp;
@@ -28,12 +30,18 @@ public class EntryApplyAOImpl implements IEntryApplyAO {
     @Autowired
     private IWorkExperienceBO workExperienceBO;
 
+    @Autowired
+    private IDepartmentBO departmentBO;
+
     @Override
     public String addEntryApply(XN632860Req req) {
         EntryApply data = new EntryApply();
         data.setPosition(req.getPosition());
+        Department department = departmentBO.getDepartment(req.getPosition());
+        data.setDepartmentCode(department.getParentCode());
         data.setEntryDatetime(DateUtil.strToDate(req.getEntryDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setApplyDatetime(new Date());
         data.setRealName(req.getRealName());
         data.setGender(req.getGender());
         data.setBirthday(DateUtil.strToDate(req.getBirthday(),

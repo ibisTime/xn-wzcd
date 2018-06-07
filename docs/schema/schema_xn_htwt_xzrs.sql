@@ -296,7 +296,9 @@ DROP TABLE IF EXISTS `tp_entry_apply`;
 CREATE TABLE `tp_entry_apply` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
   `position` VARCHAR(255) NULL COMMENT '入职岗位',
+  `department_code` VARCHAR(32) NULL COMMENT '部门编号',
   `entry_datetime` DATETIME NULL COMMENT '入职时间',
+  `apply_datetime` DATETIME NULL COMMENT '申请时间',
   `real_name` VARCHAR(255) NULL COMMENT '姓名',
   `gender` VARCHAR(4) NULL COMMENT '性别',
   `birthday` DATETIME NULL COMMENT '出生年月',
