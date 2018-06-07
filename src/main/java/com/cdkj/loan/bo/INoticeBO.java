@@ -22,7 +22,7 @@ public interface INoticeBO extends IPaginableBO<Notice> {
 
     public void editNotice(Notice data);
 
-    public void putUpNotice(String code, String updater, String remark);
+    public void publishNotice(String code, String updater, String remark);
 
-    public void putDownNotice(String code, String updater, String remark);
+    public void removeNotice(String code, String updater, String remark);
 }

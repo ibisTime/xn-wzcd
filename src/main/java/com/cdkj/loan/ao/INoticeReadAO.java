@@ -18,7 +18,7 @@ public interface INoticeReadAO {
     static final String DEFAULT_ORDER_COLUMN = "id";
 
     public Paginable<NoticeRead> queryNoticeReadPage(int start, int limit,
-            NoticeRead condition);
+            NoticeRead condition, String refType);
 
     public List<NoticeRead> queryNoticeReadList(NoticeRead condition);
 

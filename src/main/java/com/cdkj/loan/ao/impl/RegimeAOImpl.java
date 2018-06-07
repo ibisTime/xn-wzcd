@@ -13,6 +13,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Regime;
 import com.cdkj.loan.domain.ScopePeople;
 import com.cdkj.loan.dto.req.XN632730Req;
+import com.cdkj.loan.enums.ENoticeRegime;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -50,7 +51,8 @@ public class RegimeAOImpl implements IRegimeAO {
         String regimeCode = regimeBO.saveRegime(data);
 
         // 添加制度范围
-        scopePeopleBO.saveScopePeople(regimeCode, req.getScopePeopleList());
+        scopePeopleBO.saveScopePeople(regimeCode,
+            ENoticeRegime.REMIGE.getCode(), req.getScopePeopleList());
         return regimeCode;
     }
 

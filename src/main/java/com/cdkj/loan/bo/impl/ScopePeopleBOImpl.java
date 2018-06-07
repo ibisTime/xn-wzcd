@@ -44,7 +44,7 @@ public class ScopePeopleBOImpl extends PaginableBOImpl<ScopePeople>
 
     @Override
     @Transactional
-    public void saveScopePeople(String refCode,
+    public void saveScopePeople(String refCode, String refType,
             List<XN632720ReqScope> dataList) {
         List<ScopePeople> scopePeopleList = new ArrayList<ScopePeople>();
         for (XN632720ReqScope data : dataList) {
@@ -63,10 +63,10 @@ public class ScopePeopleBOImpl extends PaginableBOImpl<ScopePeople>
         scopePeopleDAO.insertScopePeopleList(scopePeopleList);
 
         // 添加阅读记录
-        saveNoticeRead(refCode, scopePeopleList);
+        saveNoticeRead(refCode, refType, scopePeopleList);
     }
 
-    private void saveNoticeRead(String refCode,
+    private void saveNoticeRead(String refCode, String refType,
             List<ScopePeople> scopePeopleList) {
         List<NoticeRead> noticeReadList = new ArrayList<NoticeRead>();
         SYSUser condition = new SYSUser();
@@ -78,6 +78,7 @@ public class ScopePeopleBOImpl extends PaginableBOImpl<ScopePeople>
                     noticeRead.setNoticeCode(refCode);
                     noticeRead.setStatus(ENoticeReadStatus.NO.getCode());
                     noticeRead.setUserId(sysuser.getUserId());
+                    noticeRead.setRefType(refType);
                     noticeReadList.add(noticeRead);
                 }
             } else if (EScopeType.PEOPLE.getCode()// 具体人
@@ -86,6 +87,7 @@ public class ScopePeopleBOImpl extends PaginableBOImpl<ScopePeople>
                 noticeRead.setNoticeCode(refCode);
                 noticeRead.setStatus(ENoticeReadStatus.NO.getCode());
                 noticeRead.setUserId(scopePeople.getPeopleCode());
+                noticeRead.setRefType(refType);
                 noticeReadList.add(noticeRead);
             } else {
                 if (EScopeType.SUB_COMPANY.getCode()// 分公司
@@ -105,6 +107,7 @@ public class ScopePeopleBOImpl extends PaginableBOImpl<ScopePeople>
                     noticeRead.setNoticeCode(refCode);
                     noticeRead.setStatus(ENoticeReadStatus.NO.getCode());
                     noticeRead.setUserId(sysuser.getUserId());
+                    noticeRead.setRefType(refType);
                     noticeReadList.add(noticeRead);
                 }
             }

@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.INoticeReadAO;
 import com.cdkj.loan.bo.INoticeBO;
 import com.cdkj.loan.bo.INoticeReadBO;
+import com.cdkj.loan.bo.IRegimeBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.NoticeRead;
+import com.cdkj.loan.enums.ENoticeRegime;
 
 /**
  * 公告阅读记录
@@ -25,18 +27,29 @@ public class NoticeReadAOImpl implements INoticeReadAO {
     @Autowired
     private INoticeBO noticeBO;
 
+    @Autowired
+    private IRegimeBO regimeBO;
+
     @Override
     public Paginable<NoticeRead> queryNoticeReadPage(int start, int limit,
-            NoticeRead condition) {
+            NoticeRead condition, String refType) {
         Paginable<NoticeRead> page = noticeReadBO.getPaginable(start, limit,
             condition);
         List<NoticeRead> noticeReadList = page.getList();
         for (NoticeRead noticeRead : noticeReadList) {
+            assemble(refType, noticeRead);
+        }
+        return page;
+    }
+
+    private void assemble(String refType, NoticeRead noticeRead) {
+        if (refType.equals(ENoticeRegime.NOTICE.getCode())) {
             noticeRead
                 .setNotice(noticeBO.getNotice(noticeRead.getNoticeCode()));
+        } else if (refType.equals(ENoticeRegime.REMIGE.getCode())) {
+            noticeRead
+                .setRegime(regimeBO.getRegime(noticeRead.getNoticeCode()));
         }
-
-        return page;
     }
 
     @Override

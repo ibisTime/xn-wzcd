@@ -14,7 +14,7 @@ import com.cdkj.loan.dto.req.XN632720ReqScope;
  */
 public interface IScopePeopleBO extends IPaginableBO<ScopePeople> {
 
-    public void saveScopePeople(String refCode,
+    public void saveScopePeople(String refCode, String refType,
             List<XN632720ReqScope> scopePeople);
 
     public List<ScopePeople> queryScopePeopleList(ScopePeople condition);

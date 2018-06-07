@@ -16,6 +16,8 @@ import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Notice;
 import com.cdkj.loan.domain.ScopePeople;
 import com.cdkj.loan.dto.req.XN632720Req;
+import com.cdkj.loan.enums.ENoticeRegime;
+import com.cdkj.loan.enums.ENoticeStatus;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -53,6 +55,7 @@ public class NoticeAOImpl implements INoticeAO {
         data.setUrgentStatus(req.getUrgentStatus());
         data.setPublishDepartmentCode(req.getPublishDepartmentCode());
         data.setScope(req.getScope());
+        data.setStatus(ENoticeStatus.TO_PUBLISH.getCode());
 
         data.setContent(req.getContent());
         data.setRemark(req.getRemark());
@@ -61,7 +64,8 @@ public class NoticeAOImpl implements INoticeAO {
         String noticeCode = noticeBO.saveNotice(data);
 
         // 添加公告范围
-        scopePeopleBO.saveScopePeople(noticeCode, req.getScopePeopleList());
+        scopePeopleBO.saveScopePeople(noticeCode,
+            ENoticeRegime.NOTICE.getCode(), req.getScopePeopleList());
         return noticeCode;
     }
 

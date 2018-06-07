@@ -7,6 +7,7 @@
 		<result column="user_id" property="userId" />
 		<result column="status" property="status" />
 		<result column="notice_code" property="noticeCode" />
+		<result column="ref_type" property="refType" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -15,6 +16,9 @@
 			</if>
 			<if test="id != null and id != '' ">
 				AND t.id = #{id}
+			</if>
+			<if test="refType != null and refType != '' ">
+				AND t.ref_type = #{refType}
 			</if>
 		</trim>
 	</sql>
@@ -47,11 +51,13 @@
 		user_id
 		,status
 		,notice_code
+		,ref_type
 		)
 		VALUES(
 		#{userId}
 		,#{status}
 		,#{noticeCode}
+		,#{refType}
 		)
 	</insert>
 
@@ -61,6 +67,7 @@
 		user_id
 		,status
 		,notice_code
+		,ref_type
 		)
 		VALUES
 		<foreach collection="list" item="noticeRead" separator=",">
@@ -68,6 +75,7 @@
 			#{noticeRead.userId}
 			,#{noticeRead.status}
 			,#{noticeRead.noticeCode}
+			,#{noticeRead.refType}
 			)
 		</foreach>
 	</insert>

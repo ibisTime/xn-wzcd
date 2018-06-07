@@ -24,8 +24,14 @@ public class NoticeRead extends ABaseDO {
     // 公告编号
     private String noticeCode;
 
+    // 类型（1 公告 2 制度）
+    private String refType;
+
     // 公告
     private Notice notice;
+
+    // 制度
+    private Regime regime;
 
     public void setId(Integer id) {
         this.id = id;
@@ -65,6 +71,22 @@ public class NoticeRead extends ABaseDO {
 
     public void setNotice(Notice notice) {
         this.notice = notice;
+    }
+
+    public String getRefType() {
+        return refType;
+    }
+
+    public void setRefType(String refType) {
+        this.refType = refType;
+    }
+
+    public Regime getRegime() {
+        return regime;
+    }
+
+    public void setRegime(Regime regime) {
+        this.regime = regime;
     }
 
 }
