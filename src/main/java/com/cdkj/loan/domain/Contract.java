@@ -38,6 +38,19 @@ public class Contract extends ABaseDO {
     // 说明
     private String remark;
 
+    /*-------辅助字段-------*/
+
+    // 人事档案
+    private Archive archive;
+
+    public Archive getArchive() {
+        return archive;
+    }
+
+    public void setArchive(Archive archive) {
+        this.archive = archive;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }

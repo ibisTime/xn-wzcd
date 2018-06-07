@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IContractAO;
+import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IContractBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.Contract;
 import com.cdkj.loan.exception.BizException;
 
@@ -22,6 +24,9 @@ public class ContractAOImpl implements IContractAO {
 
     @Autowired
     private IContractBO contractBO;
+
+    @Autowired
+    private IArchiveBO archiveBO;
 
     @Override
     public String addContract(Contract data) {
@@ -47,16 +52,31 @@ public class ContractAOImpl implements IContractAO {
     @Override
     public Paginable<Contract> queryContractPage(int start, int limit,
             Contract condition) {
-        return contractBO.getPaginable(start, limit, condition);
+        Paginable<Contract> paginable = contractBO.getPaginable(start, limit,
+            condition);
+        for (Contract contract : paginable.getList()) {
+            Archive archive = archiveBO.getArchive(contract.getArchiveCode());
+            contract.setArchive(archive);
+        }
+        return paginable;
     }
 
     @Override
     public List<Contract> queryContractList(Contract condition) {
-        return contractBO.queryContractList(condition);
+        List<Contract> queryContractList = contractBO
+            .queryContractList(condition);
+        for (Contract contract : queryContractList) {
+            Archive archive = archiveBO.getArchive(contract.getArchiveCode());
+            contract.setArchive(archive);
+        }
+        return queryContractList;
     }
 
     @Override
     public Contract getContract(String code) {
-        return contractBO.getContract(code);
+        Contract contract = contractBO.getContract(code);
+        Archive archive = archiveBO.getArchive(contract.getArchiveCode());
+        contract.setArchive(archive);
+        return contract;
     }
 }
