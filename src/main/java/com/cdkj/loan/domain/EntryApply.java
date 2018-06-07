@@ -159,6 +159,9 @@ public class EntryApply extends ABaseDO {
     // 备注
     private String remark;
 
+    // 用户编号
+    private String userId;
+
     /******db properties ******/
 
     // 工作经历
@@ -169,6 +172,14 @@ public class EntryApply extends ABaseDO {
 
     // 入职时间止
     private Date entryDatetimeEnd;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getDepartmentCode() {
         return departmentCode;

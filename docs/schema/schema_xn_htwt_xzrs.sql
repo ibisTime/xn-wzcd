@@ -319,6 +319,7 @@ CREATE TABLE `tp_entry_apply` (
   `updater` VARCHAR(255) NULL COMMENT '更新人',
   `update_datetime` DATETIME NULL COMMENT '更新时间',
   `remark` VARCHAR(255) NULL COMMENT '备注',
+  `user_id` VARCHAR(32) NULL COMMENT '用户编号',
   PRIMARY KEY (`code`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
