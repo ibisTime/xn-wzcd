@@ -24,8 +24,14 @@ public class EntryApply extends ABaseDO {
     // 入职岗位
     private String position;
 
+    // 部门编号
+    private String departmentCode;
+
     // 入职时间
     private Date entryDatetime;
+
+    // 申请时间
+    private Date applyDatetime;
 
     // 姓名
     private String realName;
@@ -153,6 +159,8 @@ public class EntryApply extends ABaseDO {
     // 备注
     private String remark;
 
+    /******db properties ******/
+
     // 工作经历
     private List<WorkExperience> workExperienceList;
 
@@ -161,6 +169,14 @@ public class EntryApply extends ABaseDO {
 
     // 入职时间止
     private Date entryDatetimeEnd;
+
+    public String getDepartmentCode() {
+        return departmentCode;
+    }
+
+    public void setDepartmentCode(String departmentCode) {
+        this.departmentCode = departmentCode;
+    }
 
     public Date getEntryDatetimeStart() {
         return entryDatetimeStart;
@@ -184,6 +200,14 @@ public class EntryApply extends ABaseDO {
 
     public void setWorkExperienceList(List<WorkExperience> workExperienceList) {
         this.workExperienceList = workExperienceList;
+    }
+
+    public Date getApplyDatetime() {
+        return applyDatetime;
+    }
+
+    public void setApplyDatetime(Date applyDatetime) {
+        this.applyDatetime = applyDatetime;
     }
 
     public void setCode(String code) {
