@@ -20,7 +20,6 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSRole;
 import com.cdkj.loan.domain.SYSUser;
-import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.enums.EUser;
 import com.cdkj.loan.enums.EUserStatus;
@@ -40,15 +39,12 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
     @Override
     public String doAddUser(String type, String loginName, String loginPwd,
-            String mobile, String realName, String roleCode) {
+            String mobile, String realName, String roleCode,
+            String companyCode, String departmentCode, String postCode) {
         SYSUser data = new SYSUser();
         String userId = OrderNoGenerater.generate("U");
         data.setUserId(userId);
-        if (type.equals("P")) {
-            data.setType(ESysUserType.Plat.getCode());
-        } else {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "暂无别的类别");
-        }
+        data.setType(ESysUserType.Plat.getCode());
         data.setLoginName(loginName);
         data.setMobile(mobile);
         data.setRealName(realName);
@@ -57,6 +53,9 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
         data.setCreateDatetme(new Date());
         data.setRoleCode(roleCode);
+        data.setCompanyCode(companyCode);
+        data.setDepartmentCode(departmentCode);
+        data.setPostCode(postCode);
         data.setStatus(EUserStatus.NORMAL.getCode());
         sysUserBO.saveUser(data);
         return userId;

@@ -7,12 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IEntryApplyAO;
+import com.cdkj.loan.ao.ISYSUserAO;
+import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IEntryApplyBO;
 import com.cdkj.loan.bo.IWorkExperienceBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.EntryApply;
 import com.cdkj.loan.domain.WorkExperience;
@@ -20,6 +24,7 @@ import com.cdkj.loan.dto.req.XN632850ReqExp;
 import com.cdkj.loan.dto.req.XN632860Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EEntryApplyStatus;
+import com.cdkj.loan.enums.ESysUserType;
 
 @Service
 public class EntryApplyAOImpl implements IEntryApplyAO {
@@ -32,6 +37,12 @@ public class EntryApplyAOImpl implements IEntryApplyAO {
 
     @Autowired
     private IDepartmentBO departmentBO;
+
+    @Autowired
+    private IArchiveBO archiveBO;
+
+    @Autowired
+    private ISYSUserAO sysUserAO;
 
     @Override
     public String addEntryApply(XN632860Req req) {
@@ -113,6 +124,55 @@ public class EntryApplyAOImpl implements IEntryApplyAO {
         EntryApply entryApply = entryApplyBO.getEntryApply(code);
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             entryApply.setStatus(EEntryApplyStatus.AUDIT_PASS.getCode());
+            // 新增人事档案
+            Archive archive = new Archive();
+            archive.setRealName(entryApply.getRealName());
+            archive.setIdNo(entryApply.getIdNo());
+            archive.setMobile(entryApply.getMobile());
+            archive.setEntryDatetime(entryApply.getEntryDatetime());
+            archive.setDepartmentCode(entryApply.getDepartmentCode());
+            archive.setPostCode(entryApply.getPosition());
+            archive.setBirthday(entryApply.getBirthday());
+            archive.setGender(entryApply.getGender());
+            archive.setNation(entryApply.getNation());
+            archive.setNativePlace(entryApply.getNativePlace());
+            archive.setMarryStatus(entryApply.getMarryStatus());
+            archive.setHealth(entryApply.getHealth());
+            archive.setEducation(entryApply.getEducation());
+            archive.setSalaryCard(entryApply.getSalaryCardNo());
+            archive.setBankName(entryApply.getBank());
+            archive.setResidenceAddress(entryApply.getResidenceAddress());
+            archive.setResidenceProperty(entryApply.getResidenceProperty());
+            archive.setCurrentAddress(entryApply.getNowAddress());
+            archive.setEmergencyContact(entryApply.getEmergencyContact());
+            archive.setEmergencyContactMobile(
+                entryApply.getEmergencyContactMobile());
+            archive.setPhoto(entryApply.getPhoto());
+            archive.setPerformSalaryStandard(
+                entryApply.getPerformSalaryStandard());
+            archive.setQuarterlyAwardStandard(
+                entryApply.getQuarterlyAwardStandard());
+            archive.setCommumicationFeeStandard(
+                entryApply.getCommunicatePayStandard());
+            archive.setProvincialBedStandard(
+                entryApply.getProvincialBedStandard());
+            archive.setNoProvincialBedStandard(
+                entryApply.getNonProvincialBedStandard());
+            archive.setTrafficAward(entryApply.getTrafficStandard());
+            archive.setMobileAward(entryApply.getMobileStandard());
+            archive.setTaxiWard(entryApply.getTaxiStandard());
+
+            Department department = departmentBO
+                .getDepartment(entryApply.getDepartmentCode());
+            String userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
+                entryApply.getMobile(), "888888", entryApply.getMobile(),
+                entryApply.getRealName(), SysConstants.COMMON_ROLE,
+                department.getParentCode(), department.getCode(),
+                entryApply.getPosition());
+            archive.setUserId(userId);
+            archiveBO.saveArchive(archive);
+
+            entryApply.setUserId(userId);
         } else {
             entryApply.setStatus(EEntryApplyStatus.AUDIT_NOT_PASS.getCode());
         }

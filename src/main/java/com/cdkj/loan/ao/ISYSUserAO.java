@@ -59,5 +59,6 @@ public interface ISYSUserAO {
     public SYSUser getUser(String code);
 
     public String doAddUser(String type, String loginName, String loginPwd,
-            String mobile, String realName, String roleCode);
+            String mobile, String realName, String roleCode,
+            String companyCode, String departmentCode, String postCode);
 }

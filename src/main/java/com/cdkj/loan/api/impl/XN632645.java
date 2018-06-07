@@ -41,7 +41,8 @@ public class XN632645 extends AProcessor {
         condition.setOrder(column, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
-        return assertApplyAO.queryAssertApplyPage(start, limit, condition);
+        return assertApplyAO.queryAssertApplyPageByDepartmentCode(start, limit,
+            condition);
     }
 
     @Override

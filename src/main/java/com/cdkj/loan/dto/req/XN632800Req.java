@@ -2,8 +2,10 @@ package com.cdkj.loan.dto.req;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
- * 新增认识档案
+ * 新增人事档案
  * @author: jiafr 
  * @since: 2018年6月4日 下午5:49:31 
  * @history:
@@ -11,57 +13,75 @@ import java.util.List;
 public class XN632800Req {
 
     // 姓名
+    @NotBlank
     private String realName;
 
     // 身份证号码
+    @NotBlank
     private String idNo;
 
     // 手机号码
+    @NotBlank
     private String mobile;
 
     // 工号
+    @NotBlank
     private String jobNo;
 
     // 入职时间
+    @NotBlank
     private String entryDatetime;
 
     // 部门编号
+    @NotBlank
     private String departmentCode;
 
     // 职务岗位编号
+    @NotBlank
     private String postCode;
 
     // 上班班次
+    @NotBlank
     private String jobClasses;
 
     // 出生年月
+    @NotBlank
     private String birthday;
 
     // 性别
+    @NotBlank
     private String gender;
 
     // 民族
+    @NotBlank
     private String nation;
 
     // 籍贯
+    @NotBlank
     private String nativePlace;
 
     // 婚姻状况
+    @NotBlank
     private String marryStatus;
 
     // 政治面貌
+    @NotBlank
     private String politics;
 
     // 专业
+    @NotBlank
     private String major;
 
     // 学历
+    @NotBlank
     private String education;
 
     // 状态
+    @NotBlank
     private String workStatus;
 
     // 健康状况
+    @NotBlank
     private String health;
 
     // 工资卡账号
@@ -77,9 +97,11 @@ public class XN632800Req {
     private String fiveInsuranceInfo;
 
     // 户籍地址
+    @NotBlank
     private String residenceAddress;
 
     // 户籍性质
+    @NotBlank
     private String residenceProperty;
 
     // 社保登记日期
@@ -101,6 +123,7 @@ public class XN632800Req {
     private String contractType;
 
     // 试用期时间
+    @NotBlank
     private String probationTime;
 
     // 转正日期

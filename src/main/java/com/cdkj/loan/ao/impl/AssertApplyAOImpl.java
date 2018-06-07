@@ -109,4 +109,11 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
         return assertApplyBO.getAssertApply(code);
     }
 
+    @Override
+    public Paginable<AssertApply> queryAssertApplyPageByDepartmentCode(
+            int start, int limit, AssertApply condition) {
+        return assertApplyBO.getPaginableByDepartmentCode(start, limit,
+            condition);
+    }
+
 }

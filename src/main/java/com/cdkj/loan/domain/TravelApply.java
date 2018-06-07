@@ -53,7 +53,7 @@ public class TravelApply extends ABaseDO {
 
     private String endDatetime;
 
-    private String ApplyUserName;
+    private String applyUserName;
 
     private String departmentName;
 
@@ -62,11 +62,11 @@ public class TravelApply extends ABaseDO {
     private String jobNo;
 
     public String getApplyUserName() {
-        return ApplyUserName;
+        return applyUserName;
     }
 
     public void setApplyUserName(String applyUserName) {
-        ApplyUserName = applyUserName;
+        this.applyUserName = applyUserName;
     }
 
     public String getDepartmentName() {

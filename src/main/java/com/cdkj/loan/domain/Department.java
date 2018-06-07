@@ -18,7 +18,7 @@ public class Department extends ABaseDO {
 
     private String parentCode;// 上级部门编号
 
-    private String type;// 类型
+    private String type;// 类型(1=子公司，2=部门，3=职位)
 
     private String status;// 状态
 
