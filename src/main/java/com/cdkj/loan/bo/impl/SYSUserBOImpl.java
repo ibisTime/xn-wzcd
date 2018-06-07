@@ -7,12 +7,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.common.PhoneUtil;
 import com.cdkj.loan.common.PwdUtil;
 import com.cdkj.loan.dao.ISYSUserDAO;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
@@ -23,6 +25,9 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements
 
     @Autowired
     private ISYSUserDAO sysUserDAO;
+
+    @Autowired
+    private IDepartmentBO departmentBO;
 
     @Override
     public void resetAdminLoginPwd(SYSUser user, String loginPwd) {
@@ -160,6 +165,33 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements
             if (data == null) {
                 throw new BizException("xn0000", "用户不存在");
             }
+        }
+        return data;
+    }
+
+    @Override
+    public SYSUser getMoreUser(String userId) {
+        SYSUser data = null;
+        if (StringUtils.isNotBlank(userId)) {
+            SYSUser condition = new SYSUser();
+            condition.setUserId(userId);
+            data = sysUserDAO.select(condition);
+            if (data == null) {
+                throw new BizException("xn0000", "用户不存在");
+            }
+            // 获取岗位
+            Department post = departmentBO.getDepartment(data.getPostCode());
+            data.setPostName(post.getName());
+
+            // 获取部门
+            Department department = departmentBO.getDepartment(data
+                .getDepartmentCode());
+            data.setDepartmentName(department.getName());
+
+            // 获取分公司
+            Department company = departmentBO.getDepartment(data
+                .getCompanyCode());
+            data.setCompanyName(company.getName());
         }
         return data;
     }
