@@ -5,7 +5,9 @@
 	<resultMap id="entryApply_DB_Result" type="entryApply">
 		<result column="code" property="code" />
 		<result column="position" property="position" />
+		<result column="department_code" property="departmentCode" />
 		<result column="entry_datetime" property="entryDatetime" />
+		<result column="apply_datetime" property="applyDatetime" />
 		<result column="real_name" property="realName" />
 		<result column="gender" property="gender" />
 		<result column="birthday" property="birthday" />
@@ -75,7 +77,9 @@
 		SELECT
 		t.code
 		,t.position
+		,t.department_code
 		,t.entry_datetime
+		,t.apply_datetime
 		,t.real_name
 		,t.gender
 		,t.birthday
@@ -139,7 +143,9 @@
 		tp_entry_apply(
 		code
 		,position
+		,department_code
 		,entry_datetime
+		,apply_datetime
 		,real_name
 		,gender
 		,birthday
@@ -186,7 +192,9 @@
 		VALUES(
 		#{code}
 		,#{position}
+		,#{departmentCode}
 		,#{entryDatetime}
+		,#{applyDatetime}
 		,#{realName}
 		,#{gender}
 		,#{birthday}
@@ -236,7 +244,9 @@
 		UPDATE tp_entry_apply
 		SET
 		position = #{position}
+		,department_code = #{departmentCode}
 		,entry_datetime = #{entryDatetime}
+		,apply_datetime = #{applyDatetime}
 		,real_name = #{realName}
 		,gender = #{gender}
 		,birthday = #{birthday}
