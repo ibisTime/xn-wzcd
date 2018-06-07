@@ -85,6 +85,12 @@
 			<if test="entryDatetimeEnd != null and entryDatetimeEnd != '' ">
 				AND t.entry_datetime &lt;= #{entryDatetimeEnd}
 			</if>
+			<if test="ageStart != null and ageStart != '' ">
+				<![CDATA[AND TIMESTAMPDIFF(YEAR, birthday, CURDATE()) > #{ageStart}]]>
+			</if>
+			<if test="ageEnd != null and ageEnd != '' ">
+				<![CDATA[AND TIMESTAMPDIFF(YEAR, birthday, CURDATE()) < #{ageEnd}]]>
+			</if>
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>

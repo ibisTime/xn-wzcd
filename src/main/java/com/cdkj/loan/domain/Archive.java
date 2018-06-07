@@ -207,6 +207,83 @@ public class Archive extends ABaseDO {
     // 职务岗位名称
     private String postName;
 
+    // 年龄起
+    private Integer ageStart;
+
+    // 年龄止
+    private Integer ageEnd;
+
+    // 20岁以下
+    private Integer age1to20;
+
+    // 20至30岁
+    private Integer age20to30;
+
+    // 30至40岁
+    private Integer age30to40;
+
+    // 40至50岁
+    private Integer age40to50;
+
+    // 50岁以上
+    private Integer age50to100;
+
+    public Integer getAgeStart() {
+        return ageStart;
+    }
+
+    public void setAgeStart(Integer ageStart) {
+        this.ageStart = ageStart;
+    }
+
+    public Integer getAgeEnd() {
+        return ageEnd;
+    }
+
+    public void setAgeEnd(Integer ageEnd) {
+        this.ageEnd = ageEnd;
+    }
+
+    public Integer getAge1to20() {
+        return age1to20;
+    }
+
+    public void setAge1to20(Integer age1to20) {
+        this.age1to20 = age1to20;
+    }
+
+    public Integer getAge20to30() {
+        return age20to30;
+    }
+
+    public void setAge20to30(Integer age20to30) {
+        this.age20to30 = age20to30;
+    }
+
+    public Integer getAge30to40() {
+        return age30to40;
+    }
+
+    public void setAge30to40(Integer age30to40) {
+        this.age30to40 = age30to40;
+    }
+
+    public Integer getAge40to50() {
+        return age40to50;
+    }
+
+    public void setAge40to50(Integer age40to50) {
+        this.age40to50 = age40to50;
+    }
+
+    public Integer getAge50to100() {
+        return age50to100;
+    }
+
+    public void setAge50to100(Integer age50to100) {
+        this.age50to100 = age50to100;
+    }
+
     public String getIsDelete() {
         return isDelete;
     }

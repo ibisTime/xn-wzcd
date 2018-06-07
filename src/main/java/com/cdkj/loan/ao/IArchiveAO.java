@@ -35,4 +35,9 @@ public interface IArchiveAO {
     // 新增离职档案
     public void editLeaveArchive(Archive data);
 
+    // 按年龄统计分析
+    public void statisticsAge(Archive condition);
+
+    public long getTotal(String ageStart, String ageEnd);
+
 }

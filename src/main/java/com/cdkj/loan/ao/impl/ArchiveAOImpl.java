@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -75,9 +76,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
-            req.getSocialSecurityRegDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(
+            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -107,8 +108,7 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
 
-        if (null != req.getLeaveDatetime()
-                && !"".equals(req.getLeaveDatetime())
+        if (null != req.getLeaveDatetime() && !"".equals(req.getLeaveDatetime())
                 && null != req.getEntryDatetime()
                 && !"".equals(req.getEntryDatetime())) {
             int num = DateUtil.daysBetween(req.getEntryDatetime(),
@@ -116,8 +116,8 @@ public class ArchiveAOImpl implements IArchiveAO {
             String workingYears = String.valueOf(((int) (num / 365)));
             data.setWorkingYears(workingYears);
         }
-        Department department = departmentBO.getDepartment(req
-            .getDepartmentCode());
+        Department department = departmentBO
+            .getDepartment(req.getDepartmentCode());
         String userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
             req.getMobile(), "888888", req.getMobile(), req.getRealName(),
             SysConstants.COMMON_ROLE, department.getParentCode(),
@@ -172,9 +172,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
-            req.getSocialSecurityRegDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(
+            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -264,8 +264,46 @@ public class ArchiveAOImpl implements IArchiveAO {
         if (!archiveBO.isArchiveExist(data.getCode())) {
             throw new BizException("xn0000", "记录编号不存在");
         }
-
         archiveBO.refreshLeaveArchive(data);
     }
 
+    @Override
+    public void statisticsAge(Archive condition) {
+        int age1to20 = 0;
+        int age20to30 = 0;
+        int age30to40 = 0;
+        int age40to50 = 0;
+        int age50to100 = 0;
+        List<Archive> archiveList = archiveBO.queryArchiveList(condition);
+        for (Archive archive : archiveList) {
+            // 当前年
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            int year = calendar.get(Calendar.YEAR);
+            // 出生年
+            calendar.setTime(archive.getBirthday());
+            int birthday = calendar.get(Calendar.YEAR);
+            // 年龄
+            int age = year - birthday;
+            if (age > 0 && age < 20) {
+                age1to20 = age1to20 + 1;
+            } else if (age >= 20 && age < 30) {
+                age20to30 = age20to30 + 1;
+            } else if (age >= 30 && age < 40) {
+                age30to40 = age30to40 + 1;
+            } else if (age >= 40 && age < 50) {
+                age40to50 = age40to50 + 1;
+            } else if (age >= 50 && age < 100) {
+                age50to100 = age50to100 + 1;
+            }
+        }
+    }
+
+    @Override
+    public long getTotal(String ageStart, String ageEnd) {
+        Archive condition = new Archive();
+        condition.setAgeStart(StringValidater.toInteger(ageStart));
+        condition.setAgeEnd(StringValidater.toInteger(ageEnd));
+        return archiveBO.getTotalCount(condition);
+    }
 }
