@@ -350,4 +350,12 @@
 		<property name="paginableDAO" ref="welfareApplyDAOImpl"/>
 	</bean>
 	
+	<bean id="scopePeopleBO" class="com.cdkj.loan.bo.impl.ScopePeopleBOImpl">
+		<property name="paginableDAO" ref="scopePeopleDAOImpl"/>
+	</bean>
+	
+	<bean id="noticeReadBO" class="com.cdkj.loan.bo.impl.NoticeReadBOImpl">
+		<property name="paginableDAO" ref="noticeReadDAOImpl"/>
+	</bean>
+	
 </beans>
