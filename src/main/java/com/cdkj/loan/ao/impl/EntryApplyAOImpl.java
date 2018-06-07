@@ -14,6 +14,7 @@ import com.cdkj.loan.bo.IEntryApplyBO;
 import com.cdkj.loan.bo.IWorkExperienceBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.Department;
@@ -160,9 +161,14 @@ public class EntryApplyAOImpl implements IEntryApplyAO {
             archive.setTrafficAward(entryApply.getTrafficStandard());
             archive.setMobileAward(entryApply.getMobileStandard());
             archive.setTaxiWard(entryApply.getTaxiStandard());
+
+            Department department = departmentBO
+                .getDepartment(entryApply.getDepartmentCode());
             String userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
                 entryApply.getMobile(), "888888", entryApply.getMobile(),
-                entryApply.getRealName(), null);
+                entryApply.getRealName(), SysConstants.COMMON_ROLE,
+                department.getParentCode(), department.getCode(),
+                entryApply.getPosition());
             archive.setUserId(userId);
             archiveBO.saveArchive(archive);
 
