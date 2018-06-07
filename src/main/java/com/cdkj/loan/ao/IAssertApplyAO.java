@@ -21,6 +21,9 @@ public interface IAssertApplyAO {
     public Paginable<AssertApply> queryAssertApplyPage(int start, int limit,
             AssertApply condition);
 
+    public Paginable<AssertApply> queryAssertApplyPageByDepartmentCode(
+            int start, int limit, AssertApply condition);
+
     public List<AssertApply> queryAssertApplyList(AssertApply condition);
 
     public AssertApply getAssertApply(String code);
