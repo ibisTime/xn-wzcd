@@ -171,9 +171,9 @@
 		UPDATE tp_fee_advance_apply
 		SET
 		pay_datetime = #{payDatetime}
-		,pay_bank =#{payBank}
-		,pay_bankcard#{payBankcard}
-		,pay_pdf#{payPdf}
+		,pay_bank = #{payBank}
+		,pay_bankcard = #{payBankcard}
+		,pay_pdf = #{payPdf}
 		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}

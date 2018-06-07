@@ -82,28 +82,59 @@ public class FeeAdvanceApply extends ABaseDO {
     // 申请时间止
     private Date applyDateEnd;
 
-    // 系统用户
-    private SYSUser sysUser;
+    // 申请用户
+    private SYSUser applySysUser;
+
+    // 更新用户
+    private SYSUser updateSysUser;
 
     // 资产实体
+    private AssertApply refAssertApply;
 
     // 预算单
-    private BudgetOrder budgetOrder;
+    private BudgetOrder refBudgetOrder;
 
-    public SYSUser getSysUser() {
-        return sysUser;
+    // 付款银行
+    private Bank payBankInfo;
+
+    public Bank getPayBankInfo() {
+        return payBankInfo;
     }
 
-    public void setSysUser(SYSUser sysUser) {
-        this.sysUser = sysUser;
+    public void setPayBankInfo(Bank payBankInfo) {
+        this.payBankInfo = payBankInfo;
     }
 
-    public BudgetOrder getBudgetOrder() {
-        return budgetOrder;
+    public SYSUser getApplySysUser() {
+        return applySysUser;
     }
 
-    public void setBudgetOrder(BudgetOrder budgetOrder) {
-        this.budgetOrder = budgetOrder;
+    public void setApplySysUser(SYSUser applySysUser) {
+        this.applySysUser = applySysUser;
+    }
+
+    public SYSUser getUpdateSysUser() {
+        return updateSysUser;
+    }
+
+    public void setUpdateSysUser(SYSUser updateSysUser) {
+        this.updateSysUser = updateSysUser;
+    }
+
+    public AssertApply getRefAssertApply() {
+        return refAssertApply;
+    }
+
+    public void setRefAssertApply(AssertApply refAssertApply) {
+        this.refAssertApply = refAssertApply;
+    }
+
+    public BudgetOrder getRefBudgetOrder() {
+        return refBudgetOrder;
+    }
+
+    public void setRefBudgetOrder(BudgetOrder refBudgetOrder) {
+        this.refBudgetOrder = refBudgetOrder;
     }
 
     public Date getApplyDateStart() {
