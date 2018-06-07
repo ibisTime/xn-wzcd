@@ -50,6 +50,7 @@
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
 		<result column="remark" property="remark" />
+		<result column="user_id" property="userId" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -122,6 +123,7 @@
 		,t.updater
 		,t.update_datetime
 		,t.remark
+		,t.user_id
 		FROM
 		tp_entry_apply t
 		<include refid="where_condition" />
@@ -188,6 +190,7 @@
 		,updater
 		,update_datetime
 		,remark
+		,user_id
 		)
 		VALUES(
 		#{code}
@@ -237,6 +240,7 @@
 		,#{updater}
 		,#{updateDatetime}
 		,#{remark}
+		,#{userId}
 		)
 	</insert>
 
@@ -289,13 +293,15 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
+		,user_id = #{userId}
 		WHERE code = #{code}
 	</update>
 	
 	<update id="update_entryApply_status" parameterType="entryApply">
 		UPDATE tp_entry_apply
 		SET
-		status = #{status}
+		user_id = #{userId}
+		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
