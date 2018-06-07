@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -26,7 +28,6 @@ public class XN632720Req {
     private String publishDepartmentCode;
 
     // 范围
-    @NotBlank
     private String scope;
 
     // 内容
@@ -40,6 +41,9 @@ public class XN632720Req {
     // 更新人
     @NotBlank
     private String updater;
+
+    // 范围
+    private List<XN632720ReqScope> scopePeopleList;
 
     public String getTitle() {
         return title;
@@ -103,6 +107,14 @@ public class XN632720Req {
 
     public void setUpdater(String updater) {
         this.updater = updater;
+    }
+
+    public List<XN632720ReqScope> getScopePeopleList() {
+        return scopePeopleList;
+    }
+
+    public void setScopePeopleList(List<XN632720ReqScope> scopePeopleList) {
+        this.scopePeopleList = scopePeopleList;
     }
 
 }

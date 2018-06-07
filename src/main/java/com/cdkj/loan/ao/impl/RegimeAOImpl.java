@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IRegimeAO;
 import com.cdkj.loan.bo.IRegimeBO;
+import com.cdkj.loan.bo.IScopePeopleBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Regime;
+import com.cdkj.loan.domain.ScopePeople;
 import com.cdkj.loan.dto.req.XN632730Req;
 import com.cdkj.loan.exception.BizException;
 
@@ -21,9 +23,11 @@ import com.cdkj.loan.exception.BizException;
  */
 @Service
 public class RegimeAOImpl implements IRegimeAO {
-
     @Autowired
     private IRegimeBO regimeBO;
+
+    @Autowired
+    private IScopePeopleBO scopePeopleBO;
 
     @Override
     public String addRegime(XN632730Req req) {
@@ -43,7 +47,11 @@ public class RegimeAOImpl implements IRegimeAO {
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());
-        return regimeBO.saveRegime(data);
+        String regimeCode = regimeBO.saveRegime(data);
+
+        // 添加制度范围
+        scopePeopleBO.saveScopePeople(regimeCode, req.getScopePeopleList());
+        return regimeCode;
     }
 
     @Override
@@ -59,6 +67,12 @@ public class RegimeAOImpl implements IRegimeAO {
 
     @Override
     public Regime getRegime(String code) {
-        return regimeBO.getRegime(code);
+        Regime regime = regimeBO.getRegime(code);
+        ScopePeople scopePeople = new ScopePeople();
+        scopePeople.setRefCode(code);
+        regime.setScopePeopleList(
+            scopePeopleBO.queryScopePeopleList(scopePeople));
+
+        return regime;
     }
 }

@@ -65,4 +65,22 @@ public class NoticeBOImpl extends PaginableBOImpl<Notice> implements INoticeBO {
         }
         return data;
     }
+
+    @Override
+    public void editNotice(Notice data) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void putUpNotice(String code, String updater, String remark) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void putDownNotice(String code, String updater, String remark) {
+        // TODO Auto-generated method stub
+
+    }
 }

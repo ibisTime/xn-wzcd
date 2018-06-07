@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -43,6 +44,9 @@ public class Regime extends ABaseDO {
 
     // 备注
     private String remark;
+
+    // 范围列表
+    private List<ScopePeople> scopePeopleList;
 
     public void setCode(String code) {
         this.code = code;
@@ -122,6 +126,14 @@ public class Regime extends ABaseDO {
 
     public String getRemark() {
         return remark;
+    }
+
+    public List<ScopePeople> getScopePeopleList() {
+        return scopePeopleList;
+    }
+
+    public void setScopePeopleList(List<ScopePeople> scopePeopleList) {
+        this.scopePeopleList = scopePeopleList;
     }
 
 }
