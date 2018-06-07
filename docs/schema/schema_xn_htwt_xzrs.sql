@@ -19,6 +19,17 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '公告管理';
 
+DROP TABLE IF EXISTS `tp_notice_read`;
+CREATE TABLE `tp_notice_read` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `user_id` VARCHAR(32) NULL COMMENT '用户编号',
+  `status` VARCHAR(32) NULL COMMENT '状态(0=未读，1=已读)',
+  `notice_code` VARCHAR(32) NULL COMMENT '公告编号',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '公告阅读记录';
+
 /*公司制度(确定)*/
 DROP TABLE IF EXISTS `tp_comp_regime`;
 CREATE TABLE `tp_comp_regime` (
@@ -37,6 +48,17 @@ CREATE TABLE `tp_comp_regime` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '公司制度';
+
+DROP TABLE IF EXISTS `tp_scope_people`;
+CREATE TABLE `tp_scope_people` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `type` VARCHAR(32) NOT NULL COMMENT '类型(所有人员=-1,分公司=1，部门=2,职位=3，具体人=4)',
+  `people_code` VARCHAR(32) NULL COMMENT '具体类型人员编号',
+  `ref_code` VARCHAR(32) NULL COMMENT '参考编号',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '公告或制度人员范围';
 
 /*类别管理(确定)*/
 DROP TABLE IF EXISTS `tp_comp_category`;
@@ -74,7 +96,7 @@ COMMENT = '品名管理';
 DROP TABLE IF EXISTS `tp_archive`;
 CREATE TABLE `tp_archive` (
   `code` VARCHAR(32) NOT NULL COMMENT '编号',
-  `real_name` VARCHAR(255) NULL COMMENT '姓名',
+  `real_name` VARCHAR(255) NULL COMMENT '姓名',f
   `id_no` VARCHAR(18) NULL COMMENT '身份证号码',
   `mobile` VARCHAR(11) NULL COMMENT '手机号码',
   `job_no` VARCHAR(32) NULL COMMENT '工号',
