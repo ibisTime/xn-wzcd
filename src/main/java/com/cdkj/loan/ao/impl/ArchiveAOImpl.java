@@ -100,10 +100,10 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setCommumicationFeeStandard(req.getCommumicationFeeStandard());
         data.setProvincialBedStandard(req.getProvincialBedStandard());
         data.setNoProvincialBedStandard(req.getNoProvincialBedStandard());
-        data.setTrafficAward(StringValidater.toDouble(req.getTrafficAward()));
-        data.setMobileAward(StringValidater.toDouble(req.getMobileAward()));
-        data.setTaxiWard(StringValidater.toDouble(req.getTaxiWard()));
-        data.setMealAward(StringValidater.toDouble(req.getMealAward()));
+        data.setTrafficAward(StringValidater.toLong(req.getTrafficAward()));
+        data.setMobileAward(StringValidater.toLong(req.getMobileAward()));
+        data.setTaxiWard(StringValidater.toLong(req.getTaxiWard()));
+        data.setMealAward(StringValidater.toLong(req.getMealAward()));
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
 
@@ -197,10 +197,10 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setCommumicationFeeStandard(req.getCommumicationFeeStandard());
         data.setProvincialBedStandard(req.getProvincialBedStandard());
         data.setNoProvincialBedStandard(req.getNoProvincialBedStandard());
-        data.setTrafficAward(StringValidater.toDouble(req.getTrafficAward()));
-        data.setMobileAward(StringValidater.toDouble(req.getMobileAward()));
-        data.setTaxiWard(StringValidater.toDouble(req.getTaxiWard()));
-        data.setMealAward(StringValidater.toDouble(req.getMealAward()));
+        data.setTrafficAward(StringValidater.toLong(req.getTrafficAward()));
+        data.setMobileAward(StringValidater.toLong(req.getMobileAward()));
+        data.setTaxiWard(StringValidater.toLong(req.getTaxiWard()));
+        data.setMealAward(StringValidater.toLong(req.getMealAward()));
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         data.setWorkingYears(req.getWorkingYears());
