@@ -59,4 +59,21 @@ public class AssertApplyDAOImpl extends AMybatisTemplate implements
         return super.update(NAMESPACE.concat("update_assertApply"), data);
     }
 
+    @Override
+    public long selectTotalCountByDepartmentCode(AssertApply condition) {
+
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_assertApply_count_byDepartmentCode"),
+            condition);
+    }
+
+    @Override
+    public List<AssertApply> selectListByDepartmentCode(AssertApply condition,
+            int start, int pageSize) {
+
+        return super.selectList(
+            NAMESPACE.concat("select_assertApply_byDepartmentCode"), start,
+            pageSize, condition, AssertApply.class);
+    }
+
 }

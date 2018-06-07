@@ -26,8 +26,11 @@
 			<if test="endApplyDatetime != null and endApplyDatetime != '' ">
 				AND t.apply_datetime &lt;= #{endApplyDatetime}
 			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
 			<if test="departmentCode != null and departmentCode != '' ">
-				AND t.apply_datetime = #{departmentCode}
+				AND tu.department_code = #{departmentCode}
 			</if>
 		</trim>
 	</sql>
@@ -96,6 +99,35 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
+	
+	<select id="select_assertApply_byDepartmentCode" parameterType="assertApply" resultMap="assertApply_DB_Result">
+		SELECT
+		t.code
+		,t.type
+		,t.apply_user
+		,t.apply_note
+		,t.is_print
+		,t.pdf
+		,t.status
+		,t.updater
+		,t.update_datetime
+		,t.remark
+		FROM
+		tp_assert_apply t left join tsys_user tu on t.apply_user=tu.user_id 
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_assertApply_count_byDepartmentCode" parameterType="assertApply"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM (SELECT  code
+		FROM tp_assert_apply t left join tsys_user tu on t.apply_user=tu.user_id 
+		<include refid="where_condition" />) tb
+	</select>
 
 
 </mapper>

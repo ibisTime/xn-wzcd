@@ -9,11 +9,14 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.IArchiveAO;
 import com.cdkj.loan.ao.ISYSUserAO;
 import com.cdkj.loan.bo.IArchiveBO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ISocialRelationBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SocialRelation;
 import com.cdkj.loan.dto.req.XN632800Req;
 import com.cdkj.loan.dto.req.XN632800ReqChild;
@@ -40,9 +43,11 @@ public class ArchiveAOImpl implements IArchiveAO {
     @Autowired
     private ISYSUserAO sysUserAO;
 
+    @Autowired
+    private IDepartmentBO departmentBO;
+
     @Override
     public String addArchive(XN632800Req req) {
-
         Archive data = new Archive();
         data.setRealName(req.getRealName());
         data.setIdNo(req.getIdNo());
@@ -95,10 +100,10 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setCommumicationFeeStandard(req.getCommumicationFeeStandard());
         data.setProvincialBedStandard(req.getProvincialBedStandard());
         data.setNoProvincialBedStandard(req.getNoProvincialBedStandard());
-        data.setTrafficAward(StringValidater.toDouble(req.getTrafficAward()));
-        data.setMobileAward(StringValidater.toDouble(req.getMobileAward()));
-        data.setTaxiWard(StringValidater.toDouble(req.getTaxiWard()));
-        data.setMealAward(StringValidater.toDouble(req.getMealAward()));
+        data.setTrafficAward(StringValidater.toLong(req.getTrafficAward()));
+        data.setMobileAward(StringValidater.toLong(req.getMobileAward()));
+        data.setTaxiWard(StringValidater.toLong(req.getTaxiWard()));
+        data.setMealAward(StringValidater.toLong(req.getMealAward()));
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
 
@@ -111,13 +116,13 @@ public class ArchiveAOImpl implements IArchiveAO {
             String workingYears = String.valueOf(((int) (num / 365)));
             data.setWorkingYears(workingYears);
         }
-
-        String userId = sysUserAO
-            .doAddUser(ESysUserType.Plat.getCode(), req.getMobile(), "888888",
-                req.getMobile(), req.getRealName(), null);
-
+        Department department = departmentBO.getDepartment(req
+            .getDepartmentCode());
+        String userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
+            req.getMobile(), "888888", req.getMobile(), req.getRealName(),
+            SysConstants.COMMON_ROLE, department.getParentCode(),
+            department.getCode(), req.getPostCode());
         data.setUserId(userId);
-
         String archiveCode = archiveBO.saveArchive(data);
 
         List<XN632800ReqChild> socialRelationList = req.getSocialRelationList();
@@ -192,10 +197,10 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setCommumicationFeeStandard(req.getCommumicationFeeStandard());
         data.setProvincialBedStandard(req.getProvincialBedStandard());
         data.setNoProvincialBedStandard(req.getNoProvincialBedStandard());
-        data.setTrafficAward(StringValidater.toDouble(req.getTrafficAward()));
-        data.setMobileAward(StringValidater.toDouble(req.getMobileAward()));
-        data.setTaxiWard(StringValidater.toDouble(req.getTaxiWard()));
-        data.setMealAward(StringValidater.toDouble(req.getMealAward()));
+        data.setTrafficAward(StringValidater.toLong(req.getTrafficAward()));
+        data.setMobileAward(StringValidater.toLong(req.getMobileAward()));
+        data.setTaxiWard(StringValidater.toLong(req.getTaxiWard()));
+        data.setMealAward(StringValidater.toLong(req.getMealAward()));
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         data.setWorkingYears(req.getWorkingYears());

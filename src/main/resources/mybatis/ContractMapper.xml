@@ -14,6 +14,7 @@
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			1=1
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
@@ -26,6 +27,7 @@
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
 			</if>
+			AND t.is_delete='1'
 		</trim>
 	</sql>
 	<select id="select_contract" parameterType="contract" resultMap="contract_DB_Result">
@@ -65,6 +67,7 @@
 		,end_datetime
 		,pdf
 		,remark
+		,is_delete
 		)
 		VALUES(
 		#{code}
@@ -75,6 +78,7 @@
 		,#{endDatetime}
 		,#{pdf}
 		,#{remark}
+		,'1'
 		)
 	</insert>
 

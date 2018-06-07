@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IAssertApplyBO;
+import com.cdkj.loan.bo.base.Page;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IAssertApplyDAO;
@@ -86,5 +88,22 @@ public class AssertApplyBOImpl extends PaginableBOImpl<AssertApply> implements
             }
         }
         return data;
+    }
+
+    @Override
+    public Paginable<AssertApply> getPaginableByDepartmentCode(int start,
+            int pageSize, AssertApply condition) {
+
+        long totalCount = assertApplyDAO
+            .selectTotalCountByDepartmentCode(condition);
+
+        Paginable<AssertApply> page = new Page<AssertApply>(start, pageSize,
+            totalCount);
+
+        List<AssertApply> dataList = assertApplyDAO.selectListByDepartmentCode(
+            condition, page.getStart(), page.getPageSize());
+
+        page.setList(dataList);
+        return page;
     }
 }

@@ -160,16 +160,16 @@ public class Archive extends ABaseDO {
     private String noProvincialBedStandard;
 
     // 市内交通现金补助
-    private Double trafficAward;
+    private Long trafficAward;
 
     // 电话现金补贴
-    private Double mobileAward;
+    private Long mobileAward;
 
     // 出租车
-    private Double taxiWard;
+    private Long taxiWard;
 
     // 餐补
-    private Double mealAward;
+    private Long mealAward;
 
     // 工龄
     private String workingYears;
@@ -647,35 +647,35 @@ public class Archive extends ABaseDO {
         this.leaveDatetime = leaveDatetime;
     }
 
-    public Double getTrafficAward() {
+    public Long getTrafficAward() {
         return trafficAward;
     }
 
-    public void setTrafficAward(Double trafficAward) {
+    public void setTrafficAward(Long trafficAward) {
         this.trafficAward = trafficAward;
     }
 
-    public Double getMobileAward() {
+    public Long getMobileAward() {
         return mobileAward;
     }
 
-    public void setMobileAward(Double mobileAward) {
+    public void setMobileAward(Long mobileAward) {
         this.mobileAward = mobileAward;
     }
 
-    public Double getTaxiWard() {
+    public Long getTaxiWard() {
         return taxiWard;
     }
 
-    public void setTaxiWard(Double taxiWard) {
+    public void setTaxiWard(Long taxiWard) {
         this.taxiWard = taxiWard;
     }
 
-    public Double getMealAward() {
+    public Long getMealAward() {
         return mealAward;
     }
 
-    public void setMealAward(Double mealAward) {
+    public void setMealAward(Long mealAward) {
         this.mealAward = mealAward;
     }
 

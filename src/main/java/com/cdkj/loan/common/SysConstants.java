@@ -4,6 +4,8 @@ public class SysConstants {
 
     public static final String admin = "admin";
 
+    public static final String COMMON_ROLE = "SR20180000000000000PTYG"; // 普通员工角色编号
+
     public static final String WITHDRAW_FEE = "withdraw_fee"; // 提现手续费
 
     // 信用分配置
