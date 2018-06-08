@@ -30,10 +30,10 @@ public class XN632145 extends AProcessor {
     public Object doBusiness() throws BizException {
         BudgetOrder condition = new BudgetOrder();
         condition.setCode(req.getCode());
-        condition.setSaleUserId(req.getSalesUserId());
+        condition.setSaleUserId(req.getSaleUserId());
         condition.setApplyUserName(req.getCustomerName());
         condition.setApplyDatetimeStart(DateUtil.getFrontDate(
-            req.getApplyDatetimeStart(), true));
+            req.getApplyDatetimeStart(), false));
         condition.setApplyDatetimeEnd(DateUtil.getFrontDate(
             req.getApplyDatetimeEnd(), true));
         condition.setCurNodeCode(req.getCurNodeCode());
