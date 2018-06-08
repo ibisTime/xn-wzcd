@@ -60,7 +60,7 @@
 		<result column="work_company_name" property="workCompanyName" />
 		<result column="work_company_address" property="workCompanyAddress" />
 		<result column="work_company_property" property="workCompanyProperty" />
-		<result column="work_belong_industry" property="workCompanyIndustry" />
+		<result column="work_belong_industry" property="workBelongIndustry" />
 		<result column="work_profession" property="workProfession" />
 		<result column="work_datetime" property="workDatetime" />
 		
