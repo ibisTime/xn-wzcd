@@ -336,6 +336,7 @@ CREATE TABLE `tp_entry_apply` (
   `salary_card_no` VARCHAR(32) NULL COMMENT '工资卡账号',
   `bank` VARCHAR(32) NULL COMMENT '工资卡账号',
   `bank_code` VARCHAR(32) NULL COMMENT '开户行行号',
+  `subbranch` VARCHAR(255) NULL COMMENT '开户支行',
   `status` VARCHAR(4) NULL COMMENT '状态',
   `updater` VARCHAR(255) NULL COMMENT '更新人',
   `update_datetime` DATETIME NULL COMMENT '更新时间',

@@ -352,7 +352,7 @@
 		,provincial_bed_standard = #{provincialBedStandard}
 		,no_provincial_bed_standard = #{noProvincialBedStandard}
 		,traffic_award = #{trafficAward}
-		,mobileAward = #{mobileAward}
+		,mobile_award = #{mobileAward}
 		,taxi_ward = #{taxiWard}
 		,meal_award = #{mealAward}
 		,working_years = #{workingYears}
