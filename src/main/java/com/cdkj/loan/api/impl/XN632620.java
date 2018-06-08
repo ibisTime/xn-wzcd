@@ -24,7 +24,6 @@ public class XN632620 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-
         return new PKCodeRes(travelApplyAO.addTravelApply(req));
     }
 

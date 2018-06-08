@@ -13,17 +13,11 @@ import com.cdkj.loan.domain.TravelApplyDetail;
  */
 public interface ITravelApplyDetailBO extends IPaginableBO<TravelApplyDetail> {
 
-    public boolean isTravelApplyDetailExist(String code);
-
     public void saveTravelApplyDetail(TravelApplyDetail data);
-
-    public int removeTravelApplyDetail(String code);
-
-    public int refreshTravelApplyDetail(TravelApplyDetail data);
 
     public List<TravelApplyDetail> queryTravelApplyDetailList(
             TravelApplyDetail condition);
 
-    public TravelApplyDetail getTravelApplyDetail(String code);
-
+    public List<TravelApplyDetail> queryTravelApplyDetailList(
+            String travelApplyCode);
 }

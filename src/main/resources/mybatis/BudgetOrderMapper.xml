@@ -59,6 +59,10 @@
 		<result column="main_income" property="mainIncome" />
 		<result column="work_company_name" property="workCompanyName" />
 		<result column="work_company_address" property="workCompanyAddress" />
+		<result column="work_company_property" property="workCompanyProperty" />
+		<result column="work_belong_industry" property="workCompanyIndustry" />
+		<result column="work_profession" property="workProfession" />
+		<result column="work_datetime" property="workDatetime" />
 		
 		<result column="self_company_area" property="selfCompanyArea" />
 		<result column="employee_quantity" property="employeeQuantity" />
@@ -84,6 +88,7 @@
 		<result column="mate_zfb_jour_balance" property="mateZfbJourBalance" />
 		<result column="mate_zfb_jour_month_income" property="mateZfbJourMonthIncome" />
 		<result column="mate_zfb_jour_month_expend" property="mateZfbJourMonthExpend" />
+		<result column="mate_zfb_jour_pic" property="mateZfbJourPic" />
 		<result column="mate_zfb_jour_remark" property="mateZfbJourRemark" />
 		<result column="mate_wx_jour_datetime_start" property="mateWxJourDatetimeStart" />
 		<result column="mate_wx_jour_datetime_end" property="mateWxJourDatetimeEnd" />
@@ -93,6 +98,7 @@
 		<result column="mate_wx_jour_balance" property="mateWxJourBalance" />
 		<result column="mate_wx_jour_month_income" property="mateWxJourMonthIncome" />
 		<result column="mate_wx_jour_month_expend" property="mateWxJourMonthExpend" />
+		<result column="mate_wx_jour_pic" property="mateWxJourPic" />
 		<result column="mate_wx_jour_remark" property="mateWxJourRemark" />
 		<result column="mate_jour_datetime_start" property="mateJourDatetimeStart" />
 		<result column="mate_jour_datetime_end" property="mateJourDatetimeEnd" />
@@ -102,6 +108,7 @@
 		<result column="mate_jour_balance" property="mateJourBalance" />
 		<result column="mate_jour_month_income" property="mateJourMonthIncome" />
 		<result column="mate_jour_month_expend" property="mateJourMonthExpend" />
+		<result column="mate_jour_pic" property="mateJourPic" />
 		<result column="mate_jour_remark" property="mateJourRemark" />
 		<result column="mate_asset_pdf" property="mateAssetPdf" />
 		
@@ -122,6 +129,7 @@
 		<result column="gua_zfb_jour_balance" property="guaZfbJourBalance" />
 		<result column="gua_zfb_jour_month_income" property="guaZfbJourMonthIncome" />
 		<result column="gua_zfb_jour_month_expend" property="guaZfbJourMonthExpend" />
+		<result column="gua_zfb_jour_pic" property="guaZfbJourPic" />
 		<result column="gua_zfb_jour_remark" property="guaZfbJourRemark" />
 		<result column="gua_wx_jour_datetime_start" property="guaWxJourDatetimeStart" />
 		<result column="gua_wx_jour_datetime_end" property="guaWxJourDatetimeEnd" />
@@ -131,6 +139,7 @@
 		<result column="gua_wx_jour_balance" property="guaWxJourBalance" />
 		<result column="gua_wx_jour_month_income" property="guaWxJourMonthIncome" />
 		<result column="gua_wx_jour_month_expend" property="guaWxJourMonthExpend" />
+		<result column="gua_wx_jour_pic" property="guaWxJourPic" />
 		<result column="gua_wx_jour_remark" property="guaWxJourRemark" />
 		<result column="gua_jour_datetime_start" property="guaJourDatetimeStart" />
 		<result column="gua_jour_datetime_end" property="guaJourDatetimeEnd" />
@@ -140,6 +149,7 @@
 		<result column="gua_jour_balance" property="guaJourBalance" />
 		<result column="gua_jour_month_income" property="guaJourMonthIncome" />
 		<result column="gua_jour_month_expend" property="guaJourMonthExpend" />
+		<result column="gua_jour_pic" property="guaJourPic" />
 		<result column="gua_jour_remark" property="guaJourRemark" />
 		<result column="gua_asset_pdf" property="guaAssetPdf" />
 		
@@ -158,6 +168,7 @@
 		<result column="zfb_jour_balance" property="zfbJourBalance" />
 		<result column="zfb_jour_month_income" property="zfbJourMonthIncome" />
 		<result column="zfb_jour_month_expend" property="zfbJourMonthExpend" />
+		<result column="zfb_jour_pic" property="zfbJourPic" />
 		<result column="zfb_jour_remark" property="zfbJourRemark" />
 		<result column="wx_jour_datetime_start" property="wxJourDatetimeStart" />
 		<result column="wx_jour_datetime_end" property="wxJourDatetimeEnd" />
@@ -167,6 +178,7 @@
 		<result column="wx_jour_balance" property="wxJourBalance" />
 		<result column="wx_jour_month_income" property="wxJourMonthIncome" />
 		<result column="wx_jour_month_expend" property="wxJourMonthExpend" />
+		<result column="wx_jour_pic" property="wxJourPic" />
 		<result column="wx_jour_remark" property="wxJourRemark" />
 		<result column="jour_datetime_start" property="jourDatetimeStart" />
 		<result column="jour_datetime_end" property="jourDatetimeEnd" />
@@ -176,6 +188,7 @@
 		<result column="jour_balance" property="jourBalance" />
 		<result column="jour_month_income" property="jourMonthIncome" />
 		<result column="jour_month_expend" property="jourMonthExpend" />
+		<result column="jour_pic" property="jourPic" />
 		<result column="jour_remark" property="jourRemark" />
 		<result column="asset_pdf" property="assetPdf" />
 		<result column="house_contract" property="houseContract" />
@@ -344,6 +357,10 @@
 		,t.work_company_name
 		
 		,t.work_company_address
+		,t.work_company_property
+		,t.work_belong_industry
+		,t.work_profession
+		,t.work_datetime
 		,t.self_company_area
 		,t.employee_quantity
 		,t.enterprise_month_output
@@ -359,6 +376,8 @@
 		,t.mate_zfb_jour_balance
 		,t.mate_zfb_jour_month_income
 		,t.mate_zfb_jour_month_expend
+		,t.mate_zfb_jour_month_expend
+		,t.mate_zfb_jour_pic
 		,t.mate_zfb_jour_remark
 		
 		,t.mate_wx_jour_datetime_start
@@ -368,6 +387,7 @@
 		,t.mate_wx_jour_balance
 		,t.mate_wx_jour_month_income
 		,t.mate_wx_jour_month_expend
+		,t.mate_wx_jour_pic
 		,t.mate_wx_jour_remark
 		
 		,t.mate_jour_datetime_start
@@ -377,6 +397,7 @@
 		,t.mate_jour_balance
 		,t.mate_jour_month_income
 		,t.mate_jour_month_expend
+		,t.mate_jour_pic
 		,t.mate_jour_remark
 		,t.mate_asset_pdf
 		
@@ -404,6 +425,7 @@
 		,t.gua_zfb_jour_balance
 		,t.gua_zfb_jour_month_income
 		,t.gua_zfb_jour_month_expend
+		,t.gua_zfb_jour_pic
 		,t.gua_zfb_jour_remark
 		
 		,t.gua_wx_jour_datetime_start
@@ -413,6 +435,7 @@
 		,t.gua_wx_jour_balance
 		,t.gua_wx_jour_month_income
 		,t.gua_wx_jour_month_expend
+		,t.gua_wx_jour_pic
 		,t.gua_wx_jour_remark
 		
 		,t.gua_jour_datetime_start
@@ -422,6 +445,7 @@
 		,t.gua_jour_balance
 		,t.gua_jour_month_income
 		,t.gua_jour_month_expend
+		,t.gua_jour_pic
 		,t.gua_jour_remark
 		,t.gua_asset_pdf
 		
@@ -440,6 +464,7 @@
 		,t.zfb_jour_balance
 		,t.zfb_jour_month_income
 		,t.zfb_jour_month_expend
+		,t.zfb_jour_pic
 		,t.zfb_jour_remark
 		
 		,t.wx_jour_datetime_start
@@ -449,6 +474,7 @@
 		,t.wx_jour_balance
 		,t.wx_jour_month_income
 		,t.wx_jour_month_expend
+		,t.wx_jour_pic
 		,t.wx_jour_remark
 		
 		,t.jour_datetime_start
@@ -458,6 +484,7 @@
 		,t.jour_balance
 		,t.jour_month_income
 		,t.jour_month_expend
+		,t.jour_pic
 		,t.jour_remark
 		,t.asset_pdf
 		
@@ -737,6 +764,10 @@
 		,main_income
 		,work_company_name
 		,work_company_address
+		,work_company_property
+		,work_belong_industry
+		,work_profession
+		,work_datetime
 		,self_company_area
 		,employee_quantity
 		,enterprise_month_output
@@ -750,6 +781,7 @@
 		,mate_zfb_jour_balance
 		,mate_zfb_jour_month_income
 		,mate_zfb_jour_month_expend
+		,mate_zfb_jour_pic
 		,mate_zfb_jour_remark
 		
 		,mate_wx_jour_datetime_start
@@ -759,6 +791,7 @@
 		,mate_wx_jour_balance
 		,mate_wx_jour_month_income
 		,mate_wx_jour_month_expend
+		,mate_wx_jour_pic
 		,mate_wx_jour_remark
 		
 		,mate_jour_datetime_start
@@ -768,6 +801,7 @@
 		,mate_jour_balance
 		,mate_jour_month_income
 		,mate_jour_month_expend
+		,mate_jour_pic
 		,mate_jour_remark
 		,mate_asset_pdf
 		
@@ -795,6 +829,7 @@
 		,gua_zfb_jour_balance
 		,gua_zfb_jour_month_income
 		,gua_zfb_jour_month_expend
+		,gua_zfb_jour_pic
 		,gua_zfb_jour_remark
 		
 		,gua_wx_jour_datetime_start
@@ -804,6 +839,7 @@
 		,gua_wx_jour_balance
 		,gua_wx_jour_month_income
 		,gua_wx_jour_month_expend
+		,gua_wx_jour_pic
 		,gua_wx_jour_remark
 		
 		,gua_jour_datetime_start
@@ -813,6 +849,7 @@
 		,gua_jour_balance
 		,gua_jour_month_income
 		,gua_jour_month_expend
+		,gua_jour_pic
 		,gua_jour_remark
 		,gua_asset_pdf
 		
@@ -831,6 +868,7 @@
 		,zfb_jour_balance
 		,zfb_jour_month_income
 		,zfb_jour_month_expend
+		,zfb_jour_pic
 		,zfb_jour_remark
 		
 		,wx_jour_datetime_start
@@ -840,6 +878,7 @@
 		,wx_jour_balance
 		,wx_jour_month_income
 		,wx_jour_month_expend
+		,wx_jour_pic
 		,wx_jour_remark
 		
 		,jour_datetime_start
@@ -849,6 +888,7 @@
 		,jour_balance
 		,jour_month_income
 		,jour_month_expend
+		,jour_pic
 		,jour_remark
 		,asset_pdf
 		
@@ -908,6 +948,10 @@
 		,#{mainIncome}
 		,#{workCompanyName}
 		,#{workCompanyAddress}
+		,#{workCompanyProperty}
+		,#{workBelongIndustry}
+		,#{workProfession}
+		,#{workDatetime}
 		,#{selfCompanyArea}
 		,#{employeeQuantity}
 		,#{enterpriseMonthOutput}
@@ -921,6 +965,7 @@
 		,#{mateZfbJourBalance}
 		,#{mateZfbJourMonthIncome}
 		,#{mateZfbJourMonthExpend}
+		,#{mateZfbJourPic}
 		,#{mateZfbJourRemark}
 		 
 		,#{mateWxJourDatetimeStart}
@@ -930,6 +975,7 @@
 		,#{mateWxJourBalance}
 		,#{mateWxJourMonthIncome}
 		,#{mateWxJourMonthExpend}
+		,#{mateWxJourPic}
 		,#{mateWxJourRemark}
 		
 		,#{mateJourDatetimeStart}
@@ -939,6 +985,7 @@
 		,#{mateJourBalance}
 		,#{mateJourMonthIncome}
 		,#{mateJourMonthExpend}
+		,#{mateJourPic}
 		,#{mateJourRemark}
 		,#{mateAssetPdf}
 		 
@@ -966,6 +1013,7 @@
 		,#{guaZfbJourBalance}
 		,#{guaZfbJourMonthIncome}
 		,#{guaZfbJourMonthExpend}
+		,#{guaZfbJourPic}
 		,#{guaZfbJourRemark}
 		
 		,#{guaWxJourDatetimeStart}
@@ -975,6 +1023,7 @@
 		,#{guaWxJourBalance}
 		,#{guaWxJourMonthIncome}
 		,#{guaWxJourMonthExpend}
+		,#{guaWxJourPic}
 		,#{guaWxJourRemark}
 		
 		,#{guaJourDatetimeStart}
@@ -984,6 +1033,7 @@
 		,#{guaJourBalance}
 		,#{guaJourMonthIncome}
 		,#{guaJourMonthExpend}
+		,#{guaJourPic}
 		,#{guaJourRemark}
 		,#{guaAssetPdf}
 		
@@ -1002,6 +1052,7 @@
 		,#{zfbJourBalance}
 		,#{zfbJourMonthIncome}
 		,#{zfbJourMonthExpend}
+		,#{zfbJourPic}
 		,#{zfbJourRemark}
 		
 		,#{wxJourDatetimeStart}
@@ -1011,6 +1062,7 @@
 		,#{wxJourBalance}
 		,#{wxJourMonthIncome}
 		,#{wxJourMonthExpend}
+		,#{wxJourPic}
 		,#{wxJourRemark}
 		 
 		,#{jourDatetimeStart}
@@ -1020,6 +1072,7 @@
 		,#{jourBalance}
 		,#{jourMonthIncome}
 		,#{jourMonthExpend}
+		,#{jourPic}
 		,#{jourRemark}
 		,#{assetPdf}
 		,#{houseContract}

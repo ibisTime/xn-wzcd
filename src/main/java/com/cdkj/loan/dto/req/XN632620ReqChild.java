@@ -3,7 +3,6 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /***
- * 
  * @author: jiafr 
  * @since: 2018年6月6日 下午12:59:55 
  * @history:

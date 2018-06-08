@@ -12,6 +12,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IArchiveDAO;
 import com.cdkj.loan.domain.Archive;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -127,6 +128,17 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
         condition.setAgeEnd(ageEnd);
         return (int) archiveDAO.selectTotalCount(condition);
 
+    }
+
+    @Override
+    public void doCheck(String userId) {
+        Archive condition = new Archive();
+        condition.setUserId(userId);
+        long count = archiveDAO.selectTotalCount(condition);
+        if (count == 0) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "该申请人不在人事档案中！");
+        }
     }
 
 }

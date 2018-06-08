@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -60,6 +61,17 @@ public class TravelApply extends ABaseDO {
     private String postName;
 
     private String jobNo;
+
+    private List<TravelApplyDetail> travelApplyDetailList;// 出差明细
+
+    public List<TravelApplyDetail> getTravelApplyDetailList() {
+        return travelApplyDetailList;
+    }
+
+    public void setTravelApplyDetailList(
+            List<TravelApplyDetail> travelApplyDetailList) {
+        this.travelApplyDetailList = travelApplyDetailList;
+    }
 
     public String getApplyUserName() {
         return applyUserName;

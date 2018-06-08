@@ -59,6 +59,9 @@ public class RecruitApply extends ABaseDO {
     // 临时聘用时间结束
     private Date tempEndDatetime;
 
+    // 说明
+    private String note;
+
     // 性别
     private String gender;
 
@@ -111,6 +114,14 @@ public class RecruitApply extends ABaseDO {
 
     public Date getApplyDatetimeEnd() {
         return applyDatetimeEnd;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public void setApplyDatetimeEnd(Date applyDatetimeEnd) {

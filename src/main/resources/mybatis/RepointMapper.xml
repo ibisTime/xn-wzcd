@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IRepointDAO">
+	<resultMap id="repoint_DB_Result" type="repoint">
+		<result column="code" property="code" />
+		<result column="team_code" property="teamCode" />
+		<result column="biz_code" property="bizCode" />
+		<result column="should_amount" property="shouldAmount" />
+		<result column="actual_amount" property="actualAmount" />
+		<result column="water_bill" property="waterBill" />
+		<result column="remark" property="remark" />
+		<result column="status" property="status" />
+		<result column="updater" property="updater" />
+		<result column="update_datetime" property="updateDatetime" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_repoint" parameterType="repoint" resultMap="repoint_DB_Result">
+		SELECT
+		t.code
+		,t.team_code
+		,t.biz_code
+		,t.should_amount
+		,t.actual_amount
+		,t.water_bill
+		,t.remark
+		,t.status
+		,t.updater
+		,t.update_datetime
+		FROM
+		tht_repoint t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_repoint_count" parameterType="repoint"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tht_repoint t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_repoint" parameterType="repoint">
+		INSERT INTO
+		tht_repoint(
+		code
+		,team_code
+		,biz_code
+		,should_amount
+		,actual_amount
+		,water_bill
+		,remark
+		,status
+		,updater
+		,update_datetime
+		)
+		VALUES(
+		#{code}
+		,#{teamCode}
+		,#{bizCode}
+		,#{shouldAmount}
+		,#{actualAmount}
+		,#{waterBill}
+		,#{remark}
+		,#{status}
+		,#{updater}
+		,#{updateDatetime}
+		)
+	</insert>
+
+	<update id="update_repoint" parameterType="repoint">
+		UPDATE tht_repoint
+		SET
+		team_code = #{teamCode}
+		,biz_code = #{bizCode}
+		,should_amount = #{shouldAmount}
+		,actual_amount = #{actualAmount}
+		,water_bill = #{waterBill}
+		,remark = #{remark}
+		,status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>

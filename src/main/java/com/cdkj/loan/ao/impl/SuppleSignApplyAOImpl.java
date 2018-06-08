@@ -40,6 +40,9 @@ public class SuppleSignApplyAOImpl implements ISuppleSignApplyAO {
 
     @Override
     public String addSuppleSignApply(XN632600Req req) {
+        // 判断人事档案中是否存在
+        archiveBO.doCheck(req.getApplyUser());
+
         if (null == req.getDetailList()) {
             throw new BizException("xn0000", "请填写漏签明细！");
         }

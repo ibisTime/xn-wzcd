@@ -42,6 +42,9 @@ public class LeaveApplyAOImpl implements ILeaveApplyAO {
 
     @Override
     public String addLeaveApply(XN632890Req req) {
+        // 判断人事档案中是否存在
+        archiveBO.doCheck(req.getApplyUser());
+
         LeaveApply data = new LeaveApply();
         data.setApplyUser(req.getApplyUser());
         data.setApplyDatetime(new Date());

@@ -31,4 +31,7 @@ public interface IArchiveBO extends IPaginableBO<Archive> {
     public Archive getArchiveByUserid(String userId);
 
     public int getTotalCount(int ageStart, int agetEnd);
+
+    // 判断是否存在
+    public void doCheck(String userId);
 }
