@@ -45,8 +45,8 @@ public class WelfareApply extends ABaseDO {
     // 申请结束时间
     private Date endDatetime;
 
-    // 申请人档案
-    private Archive applyUserArchive;
+    // 申请人信息
+    private SYSUser applyUserArchive;
 
     private List<WelfareUser> welfareUserList;
 
@@ -130,11 +130,11 @@ public class WelfareApply extends ABaseDO {
         this.endDatetime = endDatetime;
     }
 
-    public Archive getApplyUserArchive() {
+    public SYSUser getApplyUserArchive() {
         return applyUserArchive;
     }
 
-    public void setApplyUserArchive(Archive applyUserArchive) {
+    public void setApplyUserArchive(SYSUser applyUserArchive) {
         this.applyUserArchive = applyUserArchive;
     }
 

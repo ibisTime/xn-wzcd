@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IWelfareApplyAO;
-import com.cdkj.loan.bo.IArchiveBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IWelfareApplyBO;
 import com.cdkj.loan.bo.IWelfareUserBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -32,10 +32,10 @@ public class WelfareApplyAOImpl implements IWelfareApplyAO {
     private IWelfareApplyBO welfareApplyBO;
 
     @Autowired
-    private IArchiveBO archiveBO;
+    private IWelfareUserBO welfareUserBO;
 
     @Autowired
-    private IWelfareUserBO welfareUserBO;
+    private ISYSUserBO sysUserBO;
 
     @Override
     public String addWelfareApply(XN632660Req req) {
@@ -124,6 +124,6 @@ public class WelfareApplyAOImpl implements IWelfareApplyAO {
 
     private void init(WelfareApply welfareApply) {
         welfareApply.setApplyUserArchive(
-            archiveBO.getArchiveByUserid(welfareApply.getApplyUser()));
+            sysUserBO.getUser(welfareApply.getApplyUser()));
     }
 }
