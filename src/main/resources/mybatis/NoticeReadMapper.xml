@@ -87,4 +87,9 @@
 		status = #{status}
 		WHERE id = #{id}
 	</update>
+	
+	<delete id="delete_noticeRead_ByRef" parameterType="noticeRead">
+		DELETE FROM tp_notice_read where notice_code = #{noticeCode}
+	</delete>
+	
 </mapper>

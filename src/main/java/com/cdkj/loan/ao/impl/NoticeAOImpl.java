@@ -16,6 +16,7 @@ import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Notice;
 import com.cdkj.loan.domain.ScopePeople;
 import com.cdkj.loan.dto.req.XN632720Req;
+import com.cdkj.loan.dto.req.XN632722Req;
 import com.cdkj.loan.enums.ENoticeRegime;
 import com.cdkj.loan.enums.ENoticeStatus;
 import com.cdkj.loan.exception.BizException;
@@ -45,16 +46,12 @@ public class NoticeAOImpl implements INoticeAO {
         if (null == department) {
             throw new BizException("xn0000", "部门不存在！");
         }
-        if (null == req.getScopePeopleList()) {
-            throw new BizException("xn0000", "范围不能为空！");
-        }
 
         Notice data = new Notice();
         data.setTitle(req.getTitle());
         data.setType(req.getType());
         data.setUrgentStatus(req.getUrgentStatus());
         data.setPublishDepartmentCode(req.getPublishDepartmentCode());
-        data.setScope(req.getScope());
         data.setStatus(ENoticeStatus.TO_PUBLISH.getCode());
 
         data.setContent(req.getContent());
@@ -104,5 +101,61 @@ public class NoticeAOImpl implements INoticeAO {
         notice.setScopePeopleList(
             scopePeopleBO.queryScopePeopleList(scopePeople));
         return notice;
+    }
+
+    @Override
+    @Transactional
+    public void editNotice(XN632722Req req) {
+        Department department = departmentBO
+            .getDepartment(req.getPublishDepartmentCode());
+        if (null == department) {
+            throw new BizException("xn0000", "部门不存在！");
+        }
+        Notice notice = noticeBO.getNotice(req.getCode());
+        if (ENoticeStatus.REMOVED.getCode().equals(notice.getStatus())) {
+            throw new BizException("xn0000", "公告已撤下，不能再修改！");
+        }
+
+        Notice data = new Notice();
+        data.setCode(req.getCode());
+        data.setTitle(req.getTitle());
+        data.setType(req.getType());
+        data.setUrgentStatus(req.getUrgentStatus());
+        data.setPublishDepartmentCode(req.getPublishDepartmentCode());
+
+        data.setStatus(ENoticeStatus.TO_PUBLISH.getCode());
+        data.setContent(req.getContent());
+        data.setRemark(req.getRemark());
+        data.setUpdater(req.getUpdater());
+
+        data.setUpdateDatetime(new Date());
+        noticeBO.editNotice(data);
+
+        // 添加公告范围
+        scopePeopleBO.dropScopePeopleByRef(req.getCode());
+        scopePeopleBO.saveScopePeople(req.getCode(),
+            ENoticeRegime.NOTICE.getCode(), req.getScopePeopleList());
+    }
+
+    @Override
+    public void publishNotice(String code, String updater, String remark) {
+        Notice notice = noticeBO.getNotice(code);
+        if (ENoticeStatus.REMOVED.getCode().equals(notice.getStatus())) {
+            throw new BizException("xn0000", "公告已撤下，不能再发布！");
+        }
+        if (ENoticeStatus.PUBLISHED.getCode().equals(notice.getStatus())) {
+            throw new BizException("xn0000", "公告已发布，请勿重复操作！");
+        }
+
+        noticeBO.publishNotice(code, updater, remark);
+    }
+
+    @Override
+    public void removeNotice(String code, String updater, String remark) {
+        Notice notice = noticeBO.getNotice(code);
+        if (ENoticeStatus.REMOVED.getCode().equals(notice.getStatus())) {
+            throw new BizException("xn0000", "公告已撤下，请勿重复操作！");
+        }
+        noticeBO.removeNotice(code, updater, remark);
     }
 }

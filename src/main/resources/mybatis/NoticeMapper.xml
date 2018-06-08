@@ -9,7 +9,6 @@
 		<result column="urgent_status" property="urgentStatus" />
 		<result column="publish_department_code" property="publishDepartmentCode" />
 		
-		<result column="scope" property="scope" />
 		<result column="content" property="content" />
 		<result column="publish_datetime" property="publishDatetime" />
 		<result column="status" property="status" />
@@ -44,7 +43,6 @@
 		,t.urgent_status
 		,t.publish_department_code
 		
-		,t.scope
 		,t.content
 		,t.publish_datetime
 		,t.status
@@ -77,7 +75,6 @@
 		,urgent_status
 		,publish_department_code
 		
-		,scope
 		,content
 		,publish_datetime
 		,status
@@ -93,7 +90,6 @@
 		,#{urgentStatus}
 		,#{publishDepartmentCode}
 		
-		,#{scope}
 		,#{content}
 		,#{publishDatetime}
 		,#{status}
@@ -111,13 +107,20 @@
 		,type = #{type}
 		,urgent_status = #{urgentStatus}
 		,publish_department_code = #{publishDepartmentCode}
-		
-		,scope = #{scope}
 		,content = #{content}
-		,publish_datetime = #{publishDatetime}
-		,status = #{status}
-		,updater = #{updater}
 		
+		,publish_datetime = #{publishDatetime}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_notice_publishRemove" parameterType="notice">
+		UPDATE tp_notice
+		SET
+		status = #{status}
+		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
 		WHERE code = #{code}

@@ -17,6 +17,8 @@ public interface IScopePeopleBO extends IPaginableBO<ScopePeople> {
     public void saveScopePeople(String refCode, String refType,
             List<XN632720ReqScope> scopePeople);
 
+    public void dropScopePeopleByRef(String refCode);
+
     public List<ScopePeople> queryScopePeopleList(ScopePeople condition);
 
 }

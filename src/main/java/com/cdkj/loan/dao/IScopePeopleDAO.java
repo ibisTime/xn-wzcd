@@ -11,4 +11,5 @@ public interface IScopePeopleDAO extends IBaseDAO<ScopePeople> {
 
     public void insertScopePeopleList(List<ScopePeople> dataList);
 
+    public void deleteScopePeopleByRef(ScopePeople condition);
 }

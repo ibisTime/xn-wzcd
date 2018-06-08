@@ -6,12 +6,16 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * 新增公告
+ * 修改公告
  * @author: silver 
- * @since: 2018年6月4日 下午7:22:53 
+ * @since: 2018年6月8日 上午10:18:00 
  * @history:
  */
-public class XN632720Req {
+public class XN632722Req {
+    // 编号
+    @NotBlank
+    private String code;
+
     // 标题
     @NotBlank
     private String title;
@@ -27,6 +31,9 @@ public class XN632720Req {
     // 发布部门
     @NotBlank
     private String publishDepartmentCode;
+
+    // 范围
+    private String scope;
 
     // 内容
     @NotBlank
@@ -76,6 +83,14 @@ public class XN632720Req {
         this.publishDepartmentCode = publishDepartmentCode;
     }
 
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
+    }
+
     public String getContent() {
         return content;
     }
@@ -106,6 +121,14 @@ public class XN632720Req {
 
     public void setScopePeopleList(List<XN632720ReqScope> scopePeopleList) {
         this.scopePeopleList = scopePeopleList;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
 }

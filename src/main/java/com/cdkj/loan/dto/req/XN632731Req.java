@@ -6,12 +6,16 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * 新增公司制度
+ * 修改制度
  * @author: silver 
- * @since: 2018年6月4日 下午8:37:14 
+ * @since: 2018年6月8日 上午10:18:00 
  * @history:
  */
-public class XN632730Req {
+public class XN632731Req {
+    // 编号
+    @NotBlank
+    private String code;
+
     // 制度编号
     private String regimeCode;
 
@@ -25,6 +29,13 @@ public class XN632730Req {
     // 内容
     private String content;
 
+    // 更新人
+    @NotBlank
+    private String updater;
+
+    // 备注
+    private String remark;
+
     // 范围
     @NotEmpty
     private List<XN632720ReqScope> scopePeopleList;
@@ -35,6 +46,14 @@ public class XN632730Req {
 
     public void setRegimeCode(String regimeCode) {
         this.regimeCode = regimeCode;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getType() {
@@ -53,12 +72,20 @@ public class XN632730Req {
         this.content = content;
     }
 
-    public String getName() {
-        return name;
+    public String getUpdater() {
+        return updater;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public List<XN632720ReqScope> getScopePeopleList() {
@@ -67,6 +94,14 @@ public class XN632730Req {
 
     public void setScopePeopleList(List<XN632720ReqScope> scopePeopleList) {
         this.scopePeopleList = scopePeopleList;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
 }

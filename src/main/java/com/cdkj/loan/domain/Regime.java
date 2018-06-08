@@ -27,9 +27,6 @@ public class Regime extends ABaseDO {
     // 名称
     private String name;
 
-    // 授权查看范围
-    private String scope;
-
     // 内容
     private String content;
 
@@ -78,14 +75,6 @@ public class Regime extends ABaseDO {
 
     public String getName() {
         return name;
-    }
-
-    public void setScope(String scope) {
-        this.scope = scope;
-    }
-
-    public String getScope() {
-        return scope;
     }
 
     public void setContent(String content) {

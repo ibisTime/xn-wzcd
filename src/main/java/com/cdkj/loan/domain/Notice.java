@@ -30,9 +30,6 @@ public class Notice extends ABaseDO {
     // 发布部门
     private String publishDepartmentCode;
 
-    // 公告范围
-    private String scope;
-
     // 公告内容
     private String content;
 
@@ -95,14 +92,6 @@ public class Notice extends ABaseDO {
 
     public String getPublishDepartmentCode() {
         return publishDepartmentCode;
-    }
-
-    public void setScope(String scope) {
-        this.scope = scope;
-    }
-
-    public String getScope() {
-        return scope;
     }
 
     public void setContent(String content) {
