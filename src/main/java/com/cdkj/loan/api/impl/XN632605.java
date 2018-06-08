@@ -30,10 +30,11 @@ public class XN632605 extends AProcessor {
     public Object doBusiness() throws BizException {
         SuppleSignApply condition = new SuppleSignApply();
         condition.setApplyUser(req.getApplyUser());
-        condition.setStartDatetime(DateUtil.strToDate(req.getStartDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setEndDatetime(DateUtil.strToDate(req.getEndDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setStatus(req.getStatus());
+        condition.setApplyDatetimeStart(
+            DateUtil.getFrontDate(req.getApplyDatetimeStart(), false));
+        condition.setApplyDatetimeEnd(
+            DateUtil.getFrontDate(req.getApplyDatetimeEnd(), true));
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

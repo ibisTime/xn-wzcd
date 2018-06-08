@@ -51,6 +51,28 @@ public class SuppleSignApply extends ABaseDO {
     // 补签明细
     private List<SuppleSignApplyDetail> detailList;
 
+    // 开始时间
+    private Date applyDatetimeStart;
+
+    // 结束时间
+    private Date applyDatetimeEnd;
+
+    public Date getApplyDatetimeStart() {
+        return applyDatetimeStart;
+    }
+
+    public void setApplyDatetimeStart(Date applyDatetimeStart) {
+        this.applyDatetimeStart = applyDatetimeStart;
+    }
+
+    public Date getApplyDatetimeEnd() {
+        return applyDatetimeEnd;
+    }
+
+    public void setApplyDatetimeEnd(Date applyDatetimeEnd) {
+        this.applyDatetimeEnd = applyDatetimeEnd;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }

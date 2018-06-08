@@ -15,33 +15,45 @@ public class XN632605Req extends APageReq {
     // 申请人编号
     private String applyUser;
 
+    // 状态
+    private String status;
+
     // 开始时间
-    private String startDatetime;
+    private String applyDatetimeStart;
 
     // 结束时间
-    private String endDatetime;
+    private String applyDatetimeEnd;
 
     public String getApplyUser() {
         return applyUser;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setApplyUser(String applyUser) {
         this.applyUser = applyUser;
     }
 
-    public String getStartDatetime() {
-        return startDatetime;
+    public String getApplyDatetimeStart() {
+        return applyDatetimeStart;
     }
 
-    public void setStartDatetime(String startDatetime) {
-        this.startDatetime = startDatetime;
+    public void setApplyDatetimeStart(String applyDatetimeStart) {
+        this.applyDatetimeStart = applyDatetimeStart;
     }
 
-    public String getEndDatetime() {
-        return endDatetime;
+    public String getApplyDatetimeEnd() {
+        return applyDatetimeEnd;
     }
 
-    public void setEndDatetime(String endDatetime) {
-        this.endDatetime = endDatetime;
+    public void setApplyDatetimeEnd(String applyDatetimeEnd) {
+        this.applyDatetimeEnd = applyDatetimeEnd;
     }
+
 }
