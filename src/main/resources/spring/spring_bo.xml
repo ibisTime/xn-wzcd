@@ -350,4 +350,8 @@
 		<property name="paginableDAO" ref="welfareApplyDAOImpl"/>
 	</bean>
 	
+	<bean id="bizTeamBO" class="com.cdkj.loan.bo.impl.BizTeamBOImpl">
+		<property name="paginableDAO" ref="bizTeamDAOImpl"/>
+	</bean>
+	
 </beans>
