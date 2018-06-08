@@ -14,8 +14,6 @@ import com.cdkj.loan.domain.CompProduct;
 
 public interface ICompProductBO extends IPaginableBO<CompProduct> {
 
-    public boolean isCompProductExist(String code);
-
     public String saveCompProduct(CompProduct data);
 
     public void refreshCompProduct(CompProduct data);

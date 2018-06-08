@@ -41,8 +41,21 @@ public class CompProduct extends ABaseDO {
     // 备注
     private String remark;
 
+    // **************db propertis**************
+
     // 类型
     private CompCategory compCategory;
+
+    // 系统用户
+    private SYSUser updateUser;
+
+    public SYSUser getUpdateUser() {
+        return updateUser;
+    }
+
+    public void setUpdateUser(SYSUser updateUser) {
+        this.updateUser = updateUser;
+    }
 
     public void setCode(String code) {
         this.code = code;
