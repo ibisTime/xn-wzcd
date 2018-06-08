@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Contract;
+import com.cdkj.loan.dto.res.XN632833Res;
 
 /**
  * 
@@ -30,5 +31,7 @@ public interface IContractAO {
     public List<Contract> queryContractList(Contract condition);
 
     public Contract getContract(String code);
+
+    public List<XN632833Res> getEarlyWarning(String year, String month);
 
 }

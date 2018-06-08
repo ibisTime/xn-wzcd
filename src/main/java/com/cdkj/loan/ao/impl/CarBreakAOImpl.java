@@ -46,6 +46,7 @@ public class CarBreakAOImpl implements ICarBreakAO {
         data.setAction(req.getAction());
         data.setScore(StringValidater.toInteger(req.getScore()));
         data.setPunishAmount(StringValidater.toLong(req.getPunishAmount()));
+        data.setApplyDatetime(new Date());
         data.setStatus(ECarBreakStatus.TO_APPROVE.getCode());
         return carBreakBO.saveCarBreak(data);
     }

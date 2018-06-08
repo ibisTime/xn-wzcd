@@ -1,5 +1,7 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +24,7 @@ import com.cdkj.loan.dto.req.XN632800Req;
 import com.cdkj.loan.dto.req.XN632800ReqChild;
 import com.cdkj.loan.dto.req.XN632802Req;
 import com.cdkj.loan.dto.req.XN632802ReqChild;
+import com.cdkj.loan.dto.res.XN632803Res;
 import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.exception.BizException;
 
@@ -75,9 +78,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
-            req.getSocialSecurityRegDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(
+            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -107,8 +110,7 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
 
-        if (null != req.getLeaveDatetime()
-                && !"".equals(req.getLeaveDatetime())
+        if (null != req.getLeaveDatetime() && !"".equals(req.getLeaveDatetime())
                 && null != req.getEntryDatetime()
                 && !"".equals(req.getEntryDatetime())) {
             int num = DateUtil.daysBetween(req.getEntryDatetime(),
@@ -116,8 +118,8 @@ public class ArchiveAOImpl implements IArchiveAO {
             String workingYears = String.valueOf(((int) (num / 365)));
             data.setWorkingYears(workingYears);
         }
-        Department department = departmentBO.getDepartment(req
-            .getDepartmentCode());
+        Department department = departmentBO
+            .getDepartment(req.getDepartmentCode());
         String userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
             req.getMobile(), "888888", req.getMobile(), req.getRealName(),
             SysConstants.COMMON_ROLE, department.getParentCode(),
@@ -146,6 +148,7 @@ public class ArchiveAOImpl implements IArchiveAO {
             throw new BizException("xn0000", "记录编号不存在");
         }
         Archive data = new Archive();
+        data.setCode(req.getCode());
         data.setRealName(req.getRealName());
         data.setIdNo(req.getIdNo());
         data.setMobile(req.getMobile());
@@ -172,9 +175,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
-            req.getSocialSecurityRegDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(
+            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -264,8 +267,74 @@ public class ArchiveAOImpl implements IArchiveAO {
         if (!archiveBO.isArchiveExist(data.getCode())) {
             throw new BizException("xn0000", "记录编号不存在");
         }
-
         archiveBO.refreshLeaveArchive(data);
     }
 
+    @Override
+    public void statisticsAge(Archive condition) {
+        int age1to20 = 0;
+        int age20to30 = 0;
+        int age30to40 = 0;
+        int age40to50 = 0;
+        int age50to100 = 0;
+        List<Archive> archiveList = archiveBO.queryArchiveList(condition);
+        for (Archive archive : archiveList) {
+            // 当前年
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            int year = calendar.get(Calendar.YEAR);
+            // 出生年
+            calendar.setTime(archive.getBirthday());
+            int birthday = calendar.get(Calendar.YEAR);
+            // 年龄
+            int age = year - birthday;
+            if (age > 0 && age < 20) {
+                age1to20 = age1to20 + 1;
+            } else if (age >= 20 && age < 30) {
+                age20to30 = age20to30 + 1;
+            } else if (age >= 30 && age < 40) {
+                age30to40 = age30to40 + 1;
+            } else if (age >= 40 && age < 50) {
+                age40to50 = age40to50 + 1;
+            } else if (age >= 50 && age < 100) {
+                age50to100 = age50to100 + 1;
+            }
+        }
+    }
+
+    @Override
+    public List<XN632803Res> getTotal() {
+        List<XN632803Res> list = new ArrayList<XN632803Res>();
+
+        XN632803Res res1 = new XN632803Res();
+        res1.setAge(0 + "至" + 20);
+        int count1 = archiveBO.getTotalCount(0, 20);
+        res1.setCount(count1);
+        list.add(res1);
+
+        XN632803Res res2 = new XN632803Res();
+        res2.setAge(20 + "至" + 30);
+        int count2 = archiveBO.getTotalCount(20, 30);
+        res2.setCount(count2);
+        list.add(res2);
+
+        XN632803Res res3 = new XN632803Res();
+        res3.setAge(30 + "至" + 40);
+        int count3 = archiveBO.getTotalCount(30, 40);
+        res3.setCount(count3);
+        list.add(res3);
+
+        XN632803Res res4 = new XN632803Res();
+        res4.setAge(40 + "至" + 50);
+        int count4 = archiveBO.getTotalCount(40, 50);
+        res4.setCount(count4);
+        list.add(res4);
+
+        XN632803Res res5 = new XN632803Res();
+        res5.setAge(50 + "至" + 100);
+        int count5 = archiveBO.getTotalCount(50, 100);
+        res5.setCount(count5);
+        list.add(res5);
+        return list;
+    }
 }

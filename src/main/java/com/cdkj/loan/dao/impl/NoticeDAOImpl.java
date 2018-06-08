@@ -51,4 +51,13 @@ public class NoticeDAOImpl extends AMybatisTemplate implements INoticeDAO {
             condition, Notice.class);
     }
 
+    @Override
+    public void update(Notice data) {
+        super.update(NAMESPACE.concat("update_notice"), data);
+    }
+
+    @Override
+    public void publishRemoveNotice(Notice data) {
+        super.update(NAMESPACE.concat("update_notice_publishRemove"), data);
+    }
 }

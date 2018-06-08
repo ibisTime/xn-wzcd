@@ -24,4 +24,7 @@ public interface ISYSUserDAO extends IBaseDAO<SYSUser> {
 
     // 更新头像
     public void updatePhoto(SYSUser data);
+
+    // 更新团队
+    public void updateTeam(SYSUser data);
 }

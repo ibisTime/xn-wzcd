@@ -31,6 +31,7 @@ public class XN632895 extends AProcessor {
         LeaveApply condition = new LeaveApply();
         condition.setApplyUser(req.getApplyUser());
         condition.setType(req.getType());
+        condition.setStatus(req.getStatus());
         condition.setStartDatetime(DateUtil.strToDate(req.getStartDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setEndDatetime(DateUtil.strToDate(req.getEndDatetime(),

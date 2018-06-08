@@ -207,6 +207,28 @@ public class Archive extends ABaseDO {
     // 职务岗位名称
     private String postName;
 
+    // 年龄起
+    private Integer ageStart;
+
+    // 年龄止
+    private Integer ageEnd;
+
+    public Integer getAgeStart() {
+        return ageStart;
+    }
+
+    public void setAgeStart(Integer ageStart) {
+        this.ageStart = ageStart;
+    }
+
+    public Integer getAgeEnd() {
+        return ageEnd;
+    }
+
+    public void setAgeEnd(Integer ageEnd) {
+        this.ageEnd = ageEnd;
+    }
+
     public String getIsDelete() {
         return isDelete;
     }

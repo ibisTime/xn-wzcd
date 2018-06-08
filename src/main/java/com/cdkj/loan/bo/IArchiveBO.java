@@ -29,4 +29,6 @@ public interface IArchiveBO extends IPaginableBO<Archive> {
     public void refreshLeaveArchive(Archive data);
 
     public Archive getArchiveByUserid(String userId);
+
+    public int getTotalCount(int ageStart, int agetEnd);
 }

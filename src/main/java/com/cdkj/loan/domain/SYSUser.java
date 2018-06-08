@@ -65,6 +65,9 @@ public class SYSUser extends ABaseDO {
     // 备注
     private String remark;
 
+    // 团队编号
+    private String teamCode;
+
     // **************db**********
     private Date createDatetimeStart;
 
@@ -77,6 +80,24 @@ public class SYSUser extends ABaseDO {
     private String departmentName;
 
     private String companyName;
+
+    private String teamName;
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public String getTeamCode() {
+        return teamCode;
+    }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
+    }
 
     public String getPostName() {
         return postName;

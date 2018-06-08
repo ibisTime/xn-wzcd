@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN632880Req {
 
     // 申请人
+    @NotBlank
     private String applyUser;
 
     // 申请时间

@@ -66,6 +66,7 @@ public class EmployApplyAOImpl implements IEmployApplyAO {
         data.setPostcode(req.getPostcode());
         data.setAward(req.getAward());
         data.setIsOut(req.getIsOut());
+        data.setIsOverTime(req.getIsOverTime());
         data.setIsAdjustWork(req.getIsAdjustWork());
 
         data.setIsOnceRecruited(req.getIsOnceRecruited());

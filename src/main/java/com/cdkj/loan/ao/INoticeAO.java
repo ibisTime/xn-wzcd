@@ -5,6 +5,7 @@ import java.util.List;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Notice;
 import com.cdkj.loan.dto.req.XN632720Req;
+import com.cdkj.loan.dto.req.XN632722Req;
 
 /**
  * 公告管理
@@ -23,4 +24,10 @@ public interface INoticeAO {
     public List<Notice> queryNoticeList(Notice condition);
 
     public Notice getNotice(String code);
+
+    public void editNotice(XN632722Req req);
+
+    public void publishNotice(String code, String updater, String remark);
+
+    public void removeNotice(String code, String updater, String remark);
 }

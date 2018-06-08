@@ -5,12 +5,18 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IRegimeAO;
 import com.cdkj.loan.bo.IRegimeBO;
+import com.cdkj.loan.bo.IScopePeopleBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Regime;
+import com.cdkj.loan.domain.ScopePeople;
 import com.cdkj.loan.dto.req.XN632730Req;
+import com.cdkj.loan.dto.req.XN632731Req;
+import com.cdkj.loan.enums.ENoticeRegime;
+import com.cdkj.loan.enums.ERegimeStatus;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -21,11 +27,14 @@ import com.cdkj.loan.exception.BizException;
  */
 @Service
 public class RegimeAOImpl implements IRegimeAO {
-
     @Autowired
     private IRegimeBO regimeBO;
 
+    @Autowired
+    private IScopePeopleBO scopePeopleBO;
+
     @Override
+    @Transactional
     public String addRegime(XN632730Req req) {
         Regime condition = new Regime();
         condition.setRegimeCode(req.getRegimeCode());
@@ -37,13 +46,14 @@ public class RegimeAOImpl implements IRegimeAO {
         data.setName(req.getName());
         data.setRegimeCode(req.getRegimeCode());
         data.setType(req.getType());
-        data.setScope(req.getScope());
         data.setContent(req.getContent());
-
-        data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
-        data.setRemark(req.getRemark());
-        return regimeBO.saveRegime(data);
+        String regimeCode = regimeBO.saveRegime(data);
+
+        // 添加制度范围
+        scopePeopleBO.saveScopePeople(regimeCode,
+            ENoticeRegime.REMIGE.getCode(), req.getScopePeopleList());
+        return regimeCode;
     }
 
     @Override
@@ -59,6 +69,50 @@ public class RegimeAOImpl implements IRegimeAO {
 
     @Override
     public Regime getRegime(String code) {
-        return regimeBO.getRegime(code);
+        Regime regime = regimeBO.getRegime(code);
+        ScopePeople scopePeople = new ScopePeople();
+        scopePeople.setRefCode(code);
+        regime.setScopePeopleList(
+            scopePeopleBO.queryScopePeopleList(scopePeople));
+
+        return regime;
+    }
+
+    @Override
+    @Transactional
+    public void editRegime(XN632731Req req) {
+        Regime data = new Regime();
+        data.setCode(req.getCode());
+        data.setName(req.getName());
+        data.setRegimeCode(req.getRegimeCode());
+        data.setType(req.getType());
+        data.setContent(req.getContent());
+
+        data.setUpdateDatetime(new Date());
+        data.setRemark(req.getRemark());
+        regimeBO.editRegime(data);
+
+        // 添加制度范围
+        scopePeopleBO.dropScopePeopleByRef(req.getCode());
+        scopePeopleBO.saveScopePeople(req.getCode(),
+            ENoticeRegime.REMIGE.getCode(), req.getScopePeopleList());
+    }
+
+    @Override
+    public void publishRegime(String code, String updater, String remark) {
+        Regime regime = regimeBO.getRegime(code);
+        if (!ERegimeStatus.TO_PUBLISH.getCode().equals(regime.getStatus())) {
+            throw new BizException("xn0000", "制度不在待发布状态！");
+        }
+        regimeBO.publishRegime(code, updater, remark);
+    }
+
+    @Override
+    public void removeRegime(String code, String updater, String remark) {
+        Regime regime = regimeBO.getRegime(code);
+        if (!ERegimeStatus.PUBLISHED.getCode().equals(regime.getStatus())) {
+            throw new BizException("xn0000", "制度不在待发布状态！");
+        }
+        regimeBO.removeRegime(code, updater, remark);
     }
 }

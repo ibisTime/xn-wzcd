@@ -147,6 +147,9 @@ public class EntryApply extends ABaseDO {
     // 开户行行号
     private String bankCode;
 
+    // 开户支行
+    private String subbranch;
+
     // 状态
     private String status;
 
@@ -172,6 +175,14 @@ public class EntryApply extends ABaseDO {
 
     // 入职时间止
     private Date entryDatetimeEnd;
+
+    public String getSubbranch() {
+        return subbranch;
+    }
+
+    public void setSubbranch(String subbranch) {
+        this.subbranch = subbranch;
+    }
 
     public String getUserId() {
         return userId;

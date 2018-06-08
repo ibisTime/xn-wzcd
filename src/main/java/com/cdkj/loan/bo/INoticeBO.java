@@ -20,4 +20,9 @@ public interface INoticeBO extends IPaginableBO<Notice> {
 
     public Notice getNotice(String code);
 
+    public void editNotice(Notice data);
+
+    public void publishNotice(String code, String updater, String remark);
+
+    public void removeNotice(String code, String updater, String remark);
 }

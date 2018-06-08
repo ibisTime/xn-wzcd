@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -29,9 +30,6 @@ public class Notice extends ABaseDO {
     // 发布部门
     private String publishDepartmentCode;
 
-    // 公告范围
-    private String scope;
-
     // 公告内容
     private String content;
 
@@ -52,6 +50,9 @@ public class Notice extends ABaseDO {
 
     // 发布部门
     private String publishDepartmentName;
+
+    // 公告范围
+    private List<ScopePeople> scopePeopleList;
 
     public void setCode(String code) {
         this.code = code;
@@ -91,14 +92,6 @@ public class Notice extends ABaseDO {
 
     public String getPublishDepartmentCode() {
         return publishDepartmentCode;
-    }
-
-    public void setScope(String scope) {
-        this.scope = scope;
-    }
-
-    public String getScope() {
-        return scope;
     }
 
     public void setContent(String content) {
@@ -155,6 +148,14 @@ public class Notice extends ABaseDO {
 
     public void setPublishDepartmentName(String publishDepartmentName) {
         this.publishDepartmentName = publishDepartmentName;
+    }
+
+    public List<ScopePeople> getScopePeopleList() {
+        return scopePeopleList;
+    }
+
+    public void setScopePeopleList(List<ScopePeople> scopePeopleList) {
+        this.scopePeopleList = scopePeopleList;
     }
 
 }

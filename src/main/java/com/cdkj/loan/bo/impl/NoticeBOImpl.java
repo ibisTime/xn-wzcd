@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +13,7 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.INoticeDAO;
 import com.cdkj.loan.domain.Notice;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.ENoticeStatus;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -64,5 +66,32 @@ public class NoticeBOImpl extends PaginableBOImpl<Notice> implements INoticeBO {
             }
         }
         return data;
+    }
+
+    @Override
+    public void editNotice(Notice data) {
+        noticeDAO.update(data);
+    }
+
+    @Override
+    public void publishNotice(String code, String updater, String remark) {
+        Notice condition = new Notice();
+        condition.setCode(code);
+        condition.setUpdater(updater);
+        condition.setRemark(remark);
+        condition.setUpdateDatetime(new Date());
+        condition.setStatus(ENoticeStatus.PUBLISHED.getCode());
+        noticeDAO.publishRemoveNotice(condition);
+    }
+
+    @Override
+    public void removeNotice(String code, String updater, String remark) {
+        Notice condition = new Notice();
+        condition.setCode(code);
+        condition.setUpdater(updater);
+        condition.setRemark(remark);
+        condition.setUpdateDatetime(new Date());
+        condition.setStatus(ENoticeStatus.REMOVED.getCode());
+        noticeDAO.publishRemoveNotice(condition);
     }
 }

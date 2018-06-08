@@ -22,6 +22,7 @@
 		<result column="updateDatetime" property="update_datetime" />
 		<result column="status" property="status" />
 		<result column="remark" property="remark" />
+		<result column="team_code" property="teamCode" />
 	</resultMap>
 	
 	<sql id="where_condition">
@@ -67,6 +68,9 @@
 			<if test="createDatetimeEnd != null and createDatetimeEnd != '' ">
 				<![CDATA[AND t.create_datetime < #{createDatetimeEnd}]]>
 			</if>
+			<if test="teamCode != null and teamCode != '' ">
+				AND t.team_code = #{teamCode}
+			</if>
 		</trim>
 	</sql>
 	
@@ -89,6 +93,7 @@
 		,t.update_datetime
 		,t.status
 		,t.remark
+		,t.team_code
 		FROM
 		tsys_user t
 		<include refid="where_condition" />
@@ -229,5 +234,15 @@
 		photo = #{photo}
 		WHERE user_id = #{userId}
 	</update>
+	
+	<update id="update_team" parameterType="sysUser">
+		UPDATE tsys_user
+		SET
+		team_code = #{teamCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE
+		user_id = #{userId}	
+	</update>	
 
 </mapper>
