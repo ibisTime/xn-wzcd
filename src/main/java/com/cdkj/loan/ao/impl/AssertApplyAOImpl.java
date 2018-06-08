@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IAssertApplyAO;
+import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IAssertApplyBO;
 import com.cdkj.loan.bo.IAssertGoodsBO;
 import com.cdkj.loan.bo.IAssertUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.AssertApply;
 import com.cdkj.loan.domain.AssertGoods;
 import com.cdkj.loan.domain.AssertUser;
@@ -36,6 +38,9 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
 
     @Autowired
     private IAssertUserBO assertUserBO;
+
+    @Autowired
+    private IArchiveBO archiveBO;
 
     @Override
     public String addAssertApply(XN632640Req req) {
@@ -106,7 +111,33 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
 
     @Override
     public AssertApply getAssertApply(String code) {
-        return assertApplyBO.getAssertApply(code);
+
+        AssertApply assertApply = assertApplyBO.getAssertApply(code);
+
+        if ("2".equals(assertApply.getIsPrint())) {
+            AssertGoods condition = new AssertGoods();
+            condition.setAssertCode(assertApply.getCode());
+            List<AssertGoods> assertGoodsList = assertGoodsBO
+                .queryAssertGoodsList(condition);
+            assertApply.setAssertGoodsList(assertGoodsList);
+        }
+        if ("1".equals(assertApply.getIsPrint())) {
+            AssertUser condition2 = new AssertUser();
+            condition2.setAssertCode(assertApply.getCode());
+            List<AssertUser> assertUserList = assertUserBO
+                .queryAssertUserList(condition2);
+
+            for (AssertUser assertUser : assertUserList) {
+                Archive archive = archiveBO.getArchiveByUserid(assertUser
+                    .getUserId());
+                assertUser.setArchive(archive);
+
+            }
+
+            assertApply.setAssertUserList(assertUserList);
+        }
+
+        return assertApply;
     }
 
     @Override

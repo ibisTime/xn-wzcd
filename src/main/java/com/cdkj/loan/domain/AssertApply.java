@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -51,6 +52,26 @@ public class AssertApply extends ABaseDO {
     private String startApplyDatetime;
 
     private String endApplyDatetime;
+
+    private List<AssertGoods> assertGoodsList;
+
+    private List<AssertUser> assertUserList;
+
+    public List<AssertGoods> getAssertGoodsList() {
+        return assertGoodsList;
+    }
+
+    public void setAssertGoodsList(List<AssertGoods> assertGoodsList) {
+        this.assertGoodsList = assertGoodsList;
+    }
+
+    public List<AssertUser> getAssertUserList() {
+        return assertUserList;
+    }
+
+    public void setAssertUserList(List<AssertUser> assertUserList) {
+        this.assertUserList = assertUserList;
+    }
 
     public String getDepartmentCode() {
         return departmentCode;
