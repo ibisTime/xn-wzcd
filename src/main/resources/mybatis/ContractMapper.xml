@@ -24,6 +24,12 @@
 			<if test="contractNo != null and contractNo != '' ">
 				AND t.contract_no = #{contractNo}
 			</if>
+			<if test="warnDatetimeStart != null and warnDatetimeStart != '' ">
+				<![CDATA[AND t.end_datetime >= #{warnDatetimeStart}]]>
+			</if>
+			<if test="warnDatetimeEnd != null and warnDatetimeEnd != '' ">
+				<![CDATA[AND t.end_datetime <= #{warnDatetimeEnd}]]>
+			</if>
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
 			</if>

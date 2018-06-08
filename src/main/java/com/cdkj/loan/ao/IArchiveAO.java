@@ -39,6 +39,7 @@ public interface IArchiveAO {
     // 按年龄统计分析
     public void statisticsAge(Archive condition);
 
+    // 合同到期预警
     public List<XN632803Res> getTotal();
 
 }

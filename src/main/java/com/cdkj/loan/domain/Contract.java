@@ -43,6 +43,28 @@ public class Contract extends ABaseDO {
     // 人事档案
     private Archive archive;
 
+    // 预警开始时间
+    private Date warnDatetimeStart;
+
+    // 结束时间
+    private Date warnDatetimeEnd;
+
+    public Date getWarnDatetimeStart() {
+        return warnDatetimeStart;
+    }
+
+    public void setWarnDatetimeStart(Date warnDatetimeStart) {
+        this.warnDatetimeStart = warnDatetimeStart;
+    }
+
+    public Date getWarnDatetimeEnd() {
+        return warnDatetimeEnd;
+    }
+
+    public void setWarnDatetimeEnd(Date warnDatetimeEnd) {
+        this.warnDatetimeEnd = warnDatetimeEnd;
+    }
+
     public Archive getArchive() {
         return archive;
     }
