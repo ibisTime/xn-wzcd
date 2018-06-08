@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.IStorageInAO;
 import com.cdkj.loan.bo.ICompCategoryBO;
 import com.cdkj.loan.bo.ICompProductBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IStorageInBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.CompCategory;
 import com.cdkj.loan.domain.CompProduct;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.StorageIn;
 import com.cdkj.loan.dto.req.XN632760Req;
 import com.cdkj.loan.exception.BizException;
@@ -36,10 +38,13 @@ public class StorageInAOImpl implements IStorageInAO {
     @Autowired
     private ICompCategoryBO compCategoryBO;
 
+    @Autowired
+    private ISYSUserBO sysUserBO;
+
     @Override
     public String addStorageIn(XN632760Req req) {
-        CompProduct compProduct = compProductBO
-            .getCompProduct(req.getProductCode());
+        CompProduct compProduct = compProductBO.getCompProduct(req
+            .getProductCode());
         if (null == compProduct) {
             throw new BizException("xn0000", "品名不存在！");
         }
@@ -68,7 +73,7 @@ public class StorageInAOImpl implements IStorageInAO {
             condition);
         List<StorageIn> storageInList = page.getList();
         for (StorageIn storageIn : storageInList) {
-            assemble(storageIn);
+            initStorageIn(storageIn);
         }
 
         return page;
@@ -79,7 +84,7 @@ public class StorageInAOImpl implements IStorageInAO {
         List<StorageIn> storageInList = storageInBO
             .queryStorageInList(condition);
         for (StorageIn storageIn : storageInList) {
-            assemble(storageIn);
+            initStorageIn(storageIn);
         }
         return storageInList;
     }
@@ -87,21 +92,21 @@ public class StorageInAOImpl implements IStorageInAO {
     @Override
     public StorageIn getStorageIn(String code) {
         StorageIn storageIn = storageInBO.getStorageIn(code);
-        assemble(storageIn);
+        initStorageIn(storageIn);
         return storageIn;
     }
 
-    private void assemble(StorageIn storageIn) {
-        CompProduct compProduct = compProductBO
-            .getCompProduct(storageIn.getProductCode());
-        if (null != compProduct) {
-            storageIn.setProductName(compProduct.getName());
-        }
+    private void initStorageIn(StorageIn storageIn) {
+        CompProduct compProduct = compProductBO.getCompProduct(storageIn
+            .getProductCode());
+        storageIn.setProductName(compProduct.getName());
 
-        CompCategory compCategory = compCategoryBO
-            .getCompCategory(storageIn.getCategoryCode());
-        if (null != compCategory) {
-            storageIn.setCategoryName(compCategory.getName());
-        }
+        CompCategory compCategory = compCategoryBO.getCompCategory(storageIn
+            .getCategoryCode());
+        storageIn.setCategoryName(compCategory.getName());
+
+        // 更新人转义
+        SYSUser updateUser = sysUserBO.getUser(compProduct.getUpdater());
+        storageIn.setUpdateUser(updateUser);
     }
 }

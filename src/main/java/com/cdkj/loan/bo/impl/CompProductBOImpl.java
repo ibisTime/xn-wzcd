@@ -21,28 +21,18 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class CompProductBOImpl extends PaginableBOImpl<CompProduct>
-        implements ICompProductBO {
+public class CompProductBOImpl extends PaginableBOImpl<CompProduct> implements
+        ICompProductBO {
 
     @Autowired
     private ICompProductDAO CompProductDAO;
 
     @Override
-    public boolean isCompProductExist(String code) {
-        CompProduct condition = new CompProduct();
-        condition.setCode(code);
-        if (CompProductDAO.selectTotalCount(condition) > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public String saveCompProduct(CompProduct data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.CompProduct.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.CompProduct
+                .getCode());
             data.setCode(code);
             CompProductDAO.insert(data);
         }

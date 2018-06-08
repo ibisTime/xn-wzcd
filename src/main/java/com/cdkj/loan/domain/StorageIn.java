@@ -47,11 +47,24 @@ public class StorageIn extends ABaseDO {
     // 备注
     private String remark;
 
+    // **********db properties**********
+
     // 类型名
     private String categoryName;
 
     // 产品名
     private String productName;
+
+    // 系统用户
+    private SYSUser updateUser;
+
+    public SYSUser getUpdateUser() {
+        return updateUser;
+    }
+
+    public void setUpdateUser(SYSUser updateUser) {
+        this.updateUser = updateUser;
+    }
 
     public void setCode(String code) {
         this.code = code;

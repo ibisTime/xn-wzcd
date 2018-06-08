@@ -9,12 +9,13 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.ICompProductAO;
 import com.cdkj.loan.bo.ICompCategoryBO;
 import com.cdkj.loan.bo.ICompProductBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.CompCategory;
 import com.cdkj.loan.domain.CompProduct;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632750Req;
 import com.cdkj.loan.dto.req.XN632751Req;
-import com.cdkj.loan.exception.BizException;
 
 /**
  * 品名管理
@@ -30,12 +31,11 @@ public class CompProductAOImpl implements ICompProductAO {
     @Autowired
     private ICompCategoryBO compCategoryBO;
 
+    @Autowired
+    private ISYSUserBO sysUserBO;
+
     @Override
     public String addCompProduct(XN632750Req req) {
-        if (null == compCategoryBO.getCompCategory(req.getCategoryCode())) {
-            throw new BizException("xn0000", "类型不存在！");
-        }
-
         CompProduct data = new CompProduct();
         data.setName(req.getName());
         data.setCategoryCode(req.getCategoryCode());
@@ -50,13 +50,6 @@ public class CompProductAOImpl implements ICompProductAO {
 
     @Override
     public void editCompProduct(XN632751Req req) {
-        if (!compProductBO.isCompProductExist(req.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
-        }
-        if (null == compCategoryBO.getCompCategory(req.getCategoryCode())) {
-            throw new BizException("xn0000", "类型不存在！");
-        }
-
         CompProduct data = new CompProduct();
         data.setCode(req.getCode());
         data.setName(req.getName());
@@ -67,6 +60,7 @@ public class CompProductAOImpl implements ICompProductAO {
         data.setRemark(req.getRemark());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
+        compProductBO.refreshCompProduct(data);
     }
 
     @Override
@@ -74,11 +68,11 @@ public class CompProductAOImpl implements ICompProductAO {
             CompProduct condition) {
         Paginable<CompProduct> page = compProductBO.getPaginable(start, limit,
             condition);
-        List<CompProduct> list = page.getList();
-        for (CompProduct compProduct : list) {
-            CompCategory compCategory = compCategoryBO
-                .getCompCategory(compProduct.getCategoryCode());
-            compProduct.setCompCategory(compCategory);
+        if (page != null) {
+            List<CompProduct> list = page.getList();
+            for (CompProduct compProduct : list) {
+                initCompProduct(compProduct);
+            }
         }
         return page;
     }
@@ -87,9 +81,7 @@ public class CompProductAOImpl implements ICompProductAO {
     public List<CompProduct> queryCompProductList(CompProduct condition) {
         List<CompProduct> list = compProductBO.queryCompProductList(condition);
         for (CompProduct compProduct : list) {
-            CompCategory compCategory = compCategoryBO
-                .getCompCategory(compProduct.getCategoryCode());
-            compProduct.setCompCategory(compCategory);
+            initCompProduct(compProduct);
         }
         return list;
     }
@@ -97,9 +89,18 @@ public class CompProductAOImpl implements ICompProductAO {
     @Override
     public CompProduct getCompProduct(String code) {
         CompProduct compProduct = compProductBO.getCompProduct(code);
-        CompCategory compCategory = compCategoryBO
-            .getCompCategory(compProduct.getCategoryCode());
-        compProduct.setCompCategory(compCategory);
+        initCompProduct(compProduct);
         return compProduct;
+    }
+
+    private void initCompProduct(CompProduct compProduct) {
+        // 类别
+        CompCategory compCategory = compCategoryBO.getCompCategory(compProduct
+            .getCategoryCode());
+        compProduct.setCompCategory(compCategory);
+
+        // 更新人转义
+        SYSUser updateUser = sysUserBO.getUser(compProduct.getUpdater());
+        compProduct.setUpdateUser(updateUser);
     }
 }

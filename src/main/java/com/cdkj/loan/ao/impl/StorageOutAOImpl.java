@@ -10,12 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.loan.ao.IStorageOutAO;
 import com.cdkj.loan.bo.ICompCategoryBO;
 import com.cdkj.loan.bo.ICompProductBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IStorageInBO;
 import com.cdkj.loan.bo.IStorageOutBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.CompCategory;
 import com.cdkj.loan.domain.CompProduct;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.StorageIn;
 import com.cdkj.loan.domain.StorageOut;
 import com.cdkj.loan.dto.req.XN632770Req;
@@ -41,12 +43,15 @@ public class StorageOutAOImpl implements IStorageOutAO {
     @Autowired
     private ICompCategoryBO compCategoryBO;
 
+    @Autowired
+    private ISYSUserBO sysUserBO;
+
     @Override
     @Transactional
     public String addStorageOut(XN632770Req req) {
         StorageIn storageIn = storageInBO.getStorageIn(req.getStorageInCode());
-        if (storageIn.getQuantity() < StringValidater
-            .toInteger(req.getQuantity())) {
+        if (storageIn.getQuantity() < StringValidater.toInteger(req
+            .getQuantity())) {
             throw new BizException("xn0000", "库存数量不足！");
         }
 
@@ -84,7 +89,7 @@ public class StorageOutAOImpl implements IStorageOutAO {
 
         List<StorageOut> storageOutList = page.getList();
         for (StorageOut storageOut : storageOutList) {
-            assemble(storageOut);
+            initStorageOut(storageOut);
         }
 
         return page;
@@ -95,7 +100,7 @@ public class StorageOutAOImpl implements IStorageOutAO {
         List<StorageOut> storageOutList = storageOutBO
             .queryStorageOutList(condition);
         for (StorageOut storageOut : storageOutList) {
-            assemble(storageOut);
+            initStorageOut(storageOut);
         }
         return storageOutList;
     }
@@ -103,21 +108,21 @@ public class StorageOutAOImpl implements IStorageOutAO {
     @Override
     public StorageOut getStorageOut(String code) {
         StorageOut storageOut = storageOutBO.getStorageOut(code);
-        assemble(storageOut);
+        initStorageOut(storageOut);
         return storageOut;
     }
 
-    private void assemble(StorageOut storageOut) {
-        CompProduct compProduct = compProductBO
-            .getCompProduct(storageOut.getProductCode());
-        if (null != compProduct) {
-            storageOut.setProductName(compProduct.getName());
-        }
+    private void initStorageOut(StorageOut storageOut) {
+        CompProduct compProduct = compProductBO.getCompProduct(storageOut
+            .getProductCode());
+        storageOut.setProductName(compProduct.getName());
 
-        CompCategory compCategory = compCategoryBO
-            .getCompCategory(storageOut.getCategoryCode());
-        if (null != compCategory) {
-            storageOut.setCategoryName(compCategory.getName());
-        }
+        CompCategory compCategory = compCategoryBO.getCompCategory(storageOut
+            .getCategoryCode());
+        storageOut.setCategoryName(compCategory.getName());
+
+        // 更新人转义
+        SYSUser updateUser = sysUserBO.getUser(compProduct.getUpdater());
+        storageOut.setUpdateUser(updateUser);
     }
 }
