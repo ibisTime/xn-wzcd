@@ -9,21 +9,23 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "assertUser";
+    private static String key = "bizTeam";
 
     // 实体名称
-    private static String keyName = "办公用户列表";
+    private static String keyName = "业务团队";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tp_assert_user";
+    private static String dbname = "tsys_biz_team";
 
-    private static String[] DBwords = { "code", "assert_code", "user_id",
-            "print_quantity" };
+    private static String[] DBwords = { "code", "name", "captain",
+            "company_code", "status", "updater", "update_datetime",
+            "account_code" };
 
-    private static String[] DBwordsName = { "编号", "办公用品编号", "用户编号  ", "印刷数量" };
+    private static String[] DBwordsName = { "编号", "团队名称", "团队长", "所属公司编号",
+            "状态（1正常0删除）", "更新人", "更新时间", "账户编号" };
 
     public void testname() throws Exception {
     }
