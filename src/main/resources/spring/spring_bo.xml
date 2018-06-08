@@ -358,4 +358,8 @@
 		<property name="paginableDAO" ref="noticeReadDAOImpl"/>
 	</bean>
 	
+	<bean id="dayRestBO" class="com.cdkj.loan.bo.impl.DayRestBOImpl">
+		<property name="paginableDAO" ref="dayRestDAOImpl"/>
+	</bean>
+	
 </beans>

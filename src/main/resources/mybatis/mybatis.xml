@@ -142,6 +142,7 @@
 		<typeAlias alias="welfareUser" type="com.cdkj.loan.domain.WelfareUser" />
 		<typeAlias alias="scopePeople" type="com.cdkj.loan.domain.ScopePeople" />
 		<typeAlias alias="noticeRead" type="com.cdkj.loan.domain.NoticeRead" />
+		<typeAlias alias="dayRest" type="com.cdkj.loan.domain.DayRest" />
 		
 	</typeAliases>
 </configuration>
