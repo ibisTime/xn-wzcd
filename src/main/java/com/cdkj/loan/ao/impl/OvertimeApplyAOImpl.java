@@ -113,12 +113,10 @@ public class OvertimeApplyAOImpl implements IOvertimeApplyAO {
             String applyUserCode = overtimeApply.getApplyUser();
             user = sysUserBO.getUser(applyUserCode);
             overtimeApply.setApplyUserName(user.getRealName());
-        }
-        if (StringUtils.isNotBlank(overtimeApply.getDepartmentName())) {
             Department department = departmentBO
                 .getDepartment(user.getDepartmentCode());
-            Department post = departmentBO.getDepartment(user.getPostCode());
             overtimeApply.setDepartmentName(department.getName());
+            Department post = departmentBO.getDepartment(user.getPostCode());
             overtimeApply.setPostName(post.getName());
         }
 

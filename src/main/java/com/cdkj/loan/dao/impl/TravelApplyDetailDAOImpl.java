@@ -15,8 +15,8 @@ import com.cdkj.loan.domain.TravelApplyDetail;
  * @history:
  */
 @Repository("travelApplyDetailDAOImpl")
-public class TravelApplyDetailDAOImpl extends AMybatisTemplate implements
-        ITravelApplyDetailDAO {
+public class TravelApplyDetailDAOImpl extends AMybatisTemplate
+        implements ITravelApplyDetailDAO {
 
     @Override
     public int insert(TravelApplyDetail data) {
@@ -25,7 +25,7 @@ public class TravelApplyDetailDAOImpl extends AMybatisTemplate implements
 
     @Override
     public int delete(TravelApplyDetail data) {
-        return super.delete(NAMESPACE.concat("delete_travelApplyDetail"), data);
+        return 0;
     }
 
     @Override

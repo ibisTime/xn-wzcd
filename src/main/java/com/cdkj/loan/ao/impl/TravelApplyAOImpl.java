@@ -103,19 +103,11 @@ public class TravelApplyAOImpl implements ITravelApplyAO {
     }
 
     @Override
-    public int editTravelApply(TravelApply data) {
+    public void editTravelApply(TravelApply data) {
         if (!travelApplyBO.isTravelApplyExist(data.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "出差申请不存在");
         }
-        return travelApplyBO.refreshTravelApply(data);
-    }
-
-    @Override
-    public int dropTravelApply(String code) {
-        if (!travelApplyBO.isTravelApplyExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
-        }
-        return travelApplyBO.removeTravelApply(code);
+        travelApplyBO.refreshTravelApply(data);
     }
 
     @Override
@@ -125,10 +117,8 @@ public class TravelApplyAOImpl implements ITravelApplyAO {
             limit, condition);
         List<TravelApply> list = paginable.getList();
         for (TravelApply travelApply : list) {
-            init(travelApply);
-
+            initTravelApply(travelApply);
         }
-
         return paginable;
     }
 
@@ -139,38 +129,35 @@ public class TravelApplyAOImpl implements ITravelApplyAO {
 
     @Override
     public TravelApply getTravelApply(String code) {
-
         TravelApply data = travelApplyBO.getTravelApply(code);
-        init(data);
+        initTravelApply(data);
         return data;
     }
 
-    private void init(TravelApply travelApply) {
+    private void initTravelApply(TravelApply travelApply) {
+        // 申请人名称初始化
+        String applyUser = travelApply.getApplyUser();
+        SYSUser user = sysUserBO.getUser(applyUser);
+        travelApply.setApplyUserName(user.getRealName());
 
-        SYSUser user = null;
-        if (null != travelApply && null != travelApply.getApplyUser()
-                && !"".equals(travelApply.getApplyUser())) {
-            String applyUserCode = travelApply.getApplyUser();
-            user = sysUserBO.getUser(applyUserCode);
-            travelApply.setApplyUserName(user.getRealName());
-        }
+        // 部门.岗位初始化
+        Department department = departmentBO
+            .getDepartment(user.getDepartmentCode());
+        travelApply.setDepartmentName(department.getName());
+        Department post = departmentBO.getDepartment(user.getPostCode());
+        travelApply.setPostName(post.getName());
 
-        if (null != travelApply && null != travelApply.getDepartmentName()
-                && !"".equals(travelApply.getDepartmentName())) {
-            Department department = departmentBO
-                .getDepartment(user.getDepartmentCode());
-            Department post = departmentBO.getDepartment(user.getPostCode());
-            travelApply.setDepartmentName(department.getName());
-            travelApply.setPostName(post.getName());
-        }
-
-        Archive archiveConditon = new Archive();
-        archiveConditon.setUserId(user.getUserId());
-        List<Archive> archiveList = archiveBO.queryArchiveList(archiveConditon);
+        Archive conditon = new Archive();
+        conditon.setUserId(user.getUserId());
+        List<Archive> archiveList = archiveBO.queryArchiveList(conditon);
         if (!archiveList.isEmpty()) {
             Archive archive = archiveList.get(0);
             travelApply.setJobNo(archive.getJobNo());
         }
 
+        // 查询明细
+        List<TravelApplyDetail> travelApplyDetailList = travelApplyDetailBO
+            .queryTravelApplyDetailList(travelApply.getCode());
+        travelApply.setTravelApplyDetailList(travelApplyDetailList);
     }
 }

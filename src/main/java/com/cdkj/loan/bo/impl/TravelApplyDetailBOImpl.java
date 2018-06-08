@@ -2,7 +2,6 @@ package com.cdkj.loan.bo.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,28 +24,10 @@ public class TravelApplyDetailBOImpl extends PaginableBOImpl<TravelApplyDetail>
     private ITravelApplyDetailDAO travelApplyDetailDAO;
 
     @Override
-    public boolean isTravelApplyDetailExist(String code) {
-
-        return false;
-    }
-
-    @Override
     public void saveTravelApplyDetail(TravelApplyDetail data) {
-
         if (data != null) {
             travelApplyDetailDAO.insert(data);
         }
-    }
-
-    @Override
-    public int removeTravelApplyDetail(String code) {
-        int count = 0;
-        if (StringUtils.isNotBlank(code)) {
-            TravelApplyDetail data = new TravelApplyDetail();
-            data.setTravelApplyCode(code);
-            count = travelApplyDetailDAO.delete(data);
-        }
-        return count;
     }
 
     @Override
@@ -56,15 +37,11 @@ public class TravelApplyDetailBOImpl extends PaginableBOImpl<TravelApplyDetail>
     }
 
     @Override
-    public int refreshTravelApplyDetail(TravelApplyDetail data) {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public TravelApplyDetail getTravelApplyDetail(String code) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<TravelApplyDetail> queryTravelApplyDetailList(
+            String travelApplyCode) {
+        TravelApplyDetail condition = new TravelApplyDetail();
+        condition.setTravelApplyCode(travelApplyCode);
+        return travelApplyDetailDAO.selectList(condition);
     }
 
 }

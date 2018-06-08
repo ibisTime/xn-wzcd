@@ -20,9 +20,7 @@ public interface ITravelApplyAO {
 
     public String addTravelApply(XN632620Req req);
 
-    public int dropTravelApply(String code);
-
-    public int editTravelApply(TravelApply data);
+    public void editTravelApply(TravelApply data);
 
     public Paginable<TravelApply> queryTravelApplyPage(int start, int limit,
             TravelApply condition);

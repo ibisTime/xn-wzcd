@@ -11,8 +11,8 @@
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
+			<if test="travelApplyCode != null and travelApplyCode != '' ">
+				AND t.travel_apply_code = #{travelApplyCode}
 			</if>
 		</trim>
 	</sql>
@@ -56,16 +56,4 @@
 		,#{remark}
 		)
 	</insert>
-
-	<update id="update_travelApplyDetail" parameterType="travelApplyDetail">
-		UPDATE tp_travel_apply_detail
-		SET
-		start_datetime = #{startDatetime}
-		,end_datetime = #{endDatetime}
-		,total_hour = #{totalHour}
-		,remark = #{remark}
-		WHERE code = #{code}
-	</update>
-
-
 </mapper>
