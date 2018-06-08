@@ -26,14 +26,15 @@ public class XN632620Req {
     private String updater;
 
     @NotEmpty
-    private List<XN632620ReqChild> detailList;
+    private List<XN632620ReqChild> travelApplyDetailList;
 
-    public List<XN632620ReqChild> getDetailList() {
-        return detailList;
+    public List<XN632620ReqChild> getTravelApplyDetailList() {
+        return travelApplyDetailList;
     }
 
-    public void setDetailList(List<XN632620ReqChild> detailList) {
-        this.detailList = detailList;
+    public void setTravelApplyDetailList(
+            List<XN632620ReqChild> travelApplyDetailList) {
+        this.travelApplyDetailList = travelApplyDetailList;
     }
 
     public String getReason() {
