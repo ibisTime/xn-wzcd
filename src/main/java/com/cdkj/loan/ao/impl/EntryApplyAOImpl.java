@@ -47,6 +47,7 @@ public class EntryApplyAOImpl implements IEntryApplyAO {
     @Override
     public String addEntryApply(XN632860Req req) {
         EntryApply data = new EntryApply();
+        data.setRelativeRelation(req.getRelativeRelation());
         data.setPosition(req.getPosition());
         Department department = departmentBO.getDepartment(req.getPosition());
         data.setDepartmentCode(department.getParentCode());
