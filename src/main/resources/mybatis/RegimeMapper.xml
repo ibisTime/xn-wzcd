@@ -20,6 +20,9 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
 			<if test="regimeCode != null and regimeCode != '' ">
 				AND t.regime_code = #{regimeCode}
 			</if>

@@ -47,6 +47,7 @@ public class RegimeAOImpl implements IRegimeAO {
         data.setRegimeCode(req.getRegimeCode());
         data.setType(req.getType());
         data.setContent(req.getContent());
+        data.setStatus(ERegimeStatus.TO_PUBLISH.getCode());
         data.setUpdateDatetime(new Date());
         String regimeCode = regimeBO.saveRegime(data);
 
