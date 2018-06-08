@@ -232,10 +232,11 @@ CREATE TABLE `tp_employ_apply` (
   `postcode` VARCHAR(255) NULL COMMENT '邮编',
   `award` VARCHAR(255) NULL COMMENT '受过何种奖励或专业训练',
   `is_out` char(1) NULL COMMENT '能否出差',
+  `is_over_time` char(1) NULL COMMENT '能否加班',
   `is_adjust_work` char(1) NULL COMMENT '能否接受工作调动',
   
-  `is_once_recruited` VARCHAR(255) NULL COMMENT '是否曾在我公司应聘',
-  `is_friend_work` VARCHAR(255) NULL COMMENT '是否有亲属或朋友在我司工作',
+  `is_once_recruited`char(1) NULL COMMENT '是否曾在我公司应聘',
+  `is_friend_work` char(1) NULL COMMENT '是否有亲属或朋友在我司工作',
   `composite` VARCHAR(255) NULL COMMENT '综合',
   `quality` VARCHAR(255) NULL COMMENT '素质',
   `interview_record` VARCHAR(255) NULL COMMENT '面试记录',
