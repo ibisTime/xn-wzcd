@@ -24,7 +24,7 @@ public class XN632803 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
 
-        return archiveAO.getTotal(req.getAgeStart(), req.getAgeEnd());
+        return archiveAO.getTotal();
     }
 
     @Override

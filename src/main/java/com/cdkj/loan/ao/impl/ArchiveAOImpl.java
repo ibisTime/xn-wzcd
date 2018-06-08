@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,7 @@ import com.cdkj.loan.dto.req.XN632800Req;
 import com.cdkj.loan.dto.req.XN632800ReqChild;
 import com.cdkj.loan.dto.req.XN632802Req;
 import com.cdkj.loan.dto.req.XN632802ReqChild;
+import com.cdkj.loan.dto.res.XN632803Res;
 import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.exception.BizException;
 
@@ -300,10 +302,38 @@ public class ArchiveAOImpl implements IArchiveAO {
     }
 
     @Override
-    public long getTotal(String ageStart, String ageEnd) {
-        Archive condition = new Archive();
-        condition.setAgeStart(StringValidater.toInteger(ageStart));
-        condition.setAgeEnd(StringValidater.toInteger(ageEnd));
-        return archiveBO.getTotalCount(condition);
+    public List<XN632803Res> getTotal() {
+        List<XN632803Res> list = new ArrayList<XN632803Res>();
+
+        XN632803Res res1 = new XN632803Res();
+        res1.setAge(0 + "至" + 20);
+        int count1 = archiveBO.getTotalCount(0, 20);
+        res1.setCount(count1);
+        list.add(res1);
+
+        XN632803Res res2 = new XN632803Res();
+        res2.setAge(20 + "至" + 30);
+        int count2 = archiveBO.getTotalCount(20, 30);
+        res2.setCount(count2);
+        list.add(res2);
+
+        XN632803Res res3 = new XN632803Res();
+        res3.setAge(30 + "至" + 40);
+        int count3 = archiveBO.getTotalCount(30, 40);
+        res3.setCount(count3);
+        list.add(res3);
+
+        XN632803Res res4 = new XN632803Res();
+        res4.setAge(40 + "至" + 50);
+        int count4 = archiveBO.getTotalCount(40, 50);
+        res4.setCount(count4);
+        list.add(res4);
+
+        XN632803Res res5 = new XN632803Res();
+        res5.setAge(50 + "至" + 100);
+        int count5 = archiveBO.getTotalCount(50, 100);
+        res5.setCount(count5);
+        list.add(res5);
+        return list;
     }
 }
