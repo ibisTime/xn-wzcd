@@ -32,8 +32,7 @@ public class RecruitApplyAOImpl implements IRecruitApplyAO {
         data.setNowQuantity(StringValidater.toInteger(req.getNowQuantity()));
         data.setApplyQuantity(
             StringValidater.toInteger(req.getApplyQuantity()));
-        data.setApplyDatetime(DateUtil.strToDate(req.getApplyDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setApplyDatetime(new Date());
         data.setRequireDatetime(DateUtil.strToDate(req.getRequireDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setReplacePosition(req.getReplacePosition());
@@ -46,6 +45,7 @@ public class RecruitApplyAOImpl implements IRecruitApplyAO {
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setTempEndDatetime(DateUtil.strToDate(req.getTempEndDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setNote(req.getNote());
         data.setGender(req.getGender());
         data.setAge(req.getAge());
         data.setMarryState(req.getMarryState());

@@ -51,6 +51,9 @@ public class XN632840Req {
     // 临时聘用时间结束
     private String tempEndDatetime;
 
+    // 说明
+    private String note;
+
     // 性别
     @NotBlank
     private String gender;
@@ -192,6 +195,14 @@ public class XN632840Req {
 
     public void setTempEndDatetime(String tempEndDatetime) {
         this.tempEndDatetime = tempEndDatetime;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public String getGender() {

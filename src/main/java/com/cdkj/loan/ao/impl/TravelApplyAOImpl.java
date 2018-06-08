@@ -49,6 +49,8 @@ public class TravelApplyAOImpl implements ITravelApplyAO {
 
     @Override
     public String addTravelApply(XN632620Req req) {
+        // 判断人事档案中是否存在
+        archiveBO.doCheck(req.getApplyUser());
 
         TravelApply data = new TravelApply();
         data.setApplyUser(req.getApplyUser());
@@ -87,8 +89,8 @@ public class TravelApplyAOImpl implements ITravelApplyAO {
                 DateUtil.DATA_TIME_PATTERN_2);
             Date end = DateUtil.strToDate(child.getEndDatetime(),
                 DateUtil.DATA_TIME_PATTERN_2);
-            String time = String.valueOf((end.getTime() - start.getTime())
-                    / (1000 * 60 * 60));
+            String time = String
+                .valueOf((end.getTime() - start.getTime()) / (1000 * 60 * 60));
 
             detail.setTotalHour(time);
             detail.setRemark(child.getRemark());
@@ -155,8 +157,8 @@ public class TravelApplyAOImpl implements ITravelApplyAO {
 
         if (null != travelApply && null != travelApply.getDepartmentName()
                 && !"".equals(travelApply.getDepartmentName())) {
-            Department department = departmentBO.getDepartment(user
-                .getDepartmentCode());
+            Department department = departmentBO
+                .getDepartment(user.getDepartmentCode());
             Department post = departmentBO.getDepartment(user.getPostCode());
             travelApply.setDepartmentName(department.getName());
             travelApply.setPostName(post.getName());

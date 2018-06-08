@@ -20,6 +20,7 @@
 		<result column="position_add_reason" property="positionAddReason" />
 		<result column="temp_start_datetime" property="tempStartDatetime" />
 		<result column="temp_end_datetime" property="tempEndDatetime" />
+		<result column="note" property="note" />
 		
 		<result column="gender" property="gender" />
 		<result column="age" property="age" />
@@ -78,6 +79,7 @@
 		,t.position_add_reason
 		,t.temp_start_datetime
 		,t.temp_end_datetime
+		,t.note
 		
 		,t.gender
 		,t.age
@@ -129,6 +131,7 @@
 		,position_add_reason
 		,temp_start_datetime
 		,temp_end_datetime
+		,note
 		
 		,gender
 		,age
@@ -163,6 +166,7 @@
 		,#{positionAddReason}
 		,#{tempStartDatetime}
 		,#{tempEndDatetime}
+		,#{note}
 		
 		,#{gender}
 		,#{age}
