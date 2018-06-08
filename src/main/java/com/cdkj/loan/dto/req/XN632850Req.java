@@ -91,7 +91,6 @@ public class XN632850Req {
     private List<XN632850ReqExp> workExperienceList;
 
     // 家庭成员列表
-    @NotEmpty
     private List<XN632850ReqSocial> socialRelationList;
 
     public String getUpdater() {
