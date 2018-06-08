@@ -17,9 +17,6 @@ public class XN630190Req {
     private String captain;
 
     @NotBlank
-    private String accountCode;
-
-    @NotBlank
     private String updater;
 
     public String getName() {
@@ -36,14 +33,6 @@ public class XN630190Req {
 
     public void setCaptain(String captain) {
         this.captain = captain;
-    }
-
-    public String getAccountCode() {
-        return accountCode;
-    }
-
-    public void setAccountCode(String accountCode) {
-        this.accountCode = accountCode;
     }
 
     public String getUpdater() {

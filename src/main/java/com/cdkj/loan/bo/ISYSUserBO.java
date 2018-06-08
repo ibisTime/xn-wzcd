@@ -43,4 +43,6 @@ public interface ISYSUserBO extends IPaginableBO<SYSUser> {
     public void refreshLoginPwd(String userId, String loginPwd);
 
     public void refreshPhoto(String userId, String photo);
+
+    public void refreshTeam(String userId, String teamCode, String updater);
 }

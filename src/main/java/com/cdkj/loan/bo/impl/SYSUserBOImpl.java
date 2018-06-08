@@ -210,4 +210,16 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements
             throw new BizException("jd00001", "原登录密码错误");
         }
     }
+
+    @Override
+    public void refreshTeam(String userId, String teamCode, String updater) {
+        if (StringUtils.isNotBlank(userId)) {
+            SYSUser data = new SYSUser();
+            data.setUserId(userId);
+            data.setTeamCode(teamCode);
+            data.setUpdater(updater);
+            data.setUpdateDatetime(new Date());
+            sysUserDAO.updateTeam(data);
+        }
+    }
 }

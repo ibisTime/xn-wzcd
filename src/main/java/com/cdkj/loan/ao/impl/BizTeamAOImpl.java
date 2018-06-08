@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBizTeamAO;
+import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.enums.EAccountType;
+import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -28,11 +31,25 @@ public class BizTeamAOImpl implements IBizTeamAO {
     @Autowired
     private ISYSUserBO sysUserBO;
 
+    @Autowired
+    private IAccountBO accountBO;
+
     @Override
     public String addBizTeam(BizTeam data) {
         SYSUser user = sysUserBO.getUser(data.getCaptain());
         data.setCompanyCode(user.getCompanyCode());
-        return bizTeamBO.saveBizTeam(data);
+        String bizTeamCode = bizTeamBO.saveBizTeam(data);
+
+        BizTeam bizTeam = bizTeamBO.getBizTeam(bizTeamCode);
+
+        String account = accountBO.distributeAccount(bizTeamCode,
+            bizTeam.getName(),
+            EAccountType.getAccountType(EAccountType.Plat.getCode()),
+            ECurrency.CNY.getCode());
+        bizTeam.setAccountCode(account);
+        bizTeamBO.refreshBizTeam(bizTeam);
+
+        return bizTeamCode;
     }
 
     @Override
@@ -66,6 +83,13 @@ public class BizTeamAOImpl implements IBizTeamAO {
 
     @Override
     public BizTeam getBizTeam(String code) {
-        return bizTeamBO.getBizTeam(code);
+
+        BizTeam bizTeam = bizTeamBO.getBizTeam(code);
+        SYSUser condition = new SYSUser();
+        condition.setTeamCode(bizTeam.getCode());
+        List<SYSUser> userList = sysUserBO.queryUserList(condition);
+        bizTeam.setUserList(userList);
+
+        return bizTeam;
     }
 }

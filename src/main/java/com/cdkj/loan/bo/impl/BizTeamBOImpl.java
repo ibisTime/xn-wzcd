@@ -55,6 +55,7 @@ public class BizTeamBOImpl extends PaginableBOImpl<BizTeam> implements
         if (StringUtils.isNotBlank(code)) {
             BizTeam data = new BizTeam();
             data.setCode(code);
+            data.setStatus("0");
             count = bizTeamDAO.delete(data);
         }
         return count;
@@ -80,9 +81,10 @@ public class BizTeamBOImpl extends PaginableBOImpl<BizTeam> implements
         if (StringUtils.isNotBlank(code)) {
             BizTeam condition = new BizTeam();
             condition.setCode(code);
+            condition.setStatus("1");
             data = bizTeamDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException("xn0000", "编号不存在");
             }
         }
         return data;

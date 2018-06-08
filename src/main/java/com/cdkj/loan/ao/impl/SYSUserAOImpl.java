@@ -287,4 +287,12 @@ public class SYSUserAOImpl implements ISYSUserAO {
         }
         return sysUser;
     }
+
+    @Override
+    public void doModifyTeam(String userId, String teamCode, String updater) {
+
+        sysUserBO.refreshTeam(userId, teamCode, updater);
+
+    }
+
 }

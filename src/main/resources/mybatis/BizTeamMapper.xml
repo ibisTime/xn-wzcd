@@ -14,11 +14,15 @@
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			1=1
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
-			and status='1'
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="companyCode != null and companyCode != '' ">
+				AND t.company_code = #{companyCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_bizTeam" parameterType="bizTeam" resultMap="bizTeam_DB_Result">
@@ -58,7 +62,6 @@
 		,updater
 		,update_datetime
 		,account_code
-		,status
 		)
 		VALUES(
 		#{code}
@@ -69,7 +72,6 @@
 		,#{updater}
 		,#{updateDatetime}
 		,#{accountCode}
-		,'1'
 		)
 	</insert>
 
@@ -87,7 +89,7 @@
 	<update id="delete_bizTeam">
 		UPDATE tsys_biz_team
 		SET
-		status = '0'
+		status = #{status}
 		WHERE code = #{code}
 	</update>
 

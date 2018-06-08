@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -37,6 +38,28 @@ public class BizTeam extends ABaseDO {
 
     // 账户编号
     private String accountCode;
+
+    /***************db  peoperties***************/
+
+    private SYSUser user;
+
+    private List<SYSUser> userList;
+
+    public List<SYSUser> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<SYSUser> userList) {
+        this.userList = userList;
+    }
+
+    public SYSUser getUser() {
+        return user;
+    }
+
+    public void setUser(SYSUser user) {
+        this.user = user;
+    }
 
     public void setCode(String code) {
         this.code = code;
