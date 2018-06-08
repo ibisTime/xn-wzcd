@@ -65,4 +65,9 @@ public class NoticeReadDAOImpl extends AMybatisTemplate
         super.update(NAMESPACE.concat("update_noticeRead"), data);
     }
 
+    @Override
+    public void deleteNoticeReadByRef(NoticeRead condition) {
+        super.delete(NAMESPACE.concat("delete_noticeRead_ByRef"), condition);
+    }
+
 }

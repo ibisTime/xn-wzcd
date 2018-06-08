@@ -20,4 +20,10 @@ public interface IRegimeBO extends IPaginableBO<Regime> {
     public List<Regime> queryRegimeList(Regime condition);
 
     public Regime getRegime(String code);
+
+    public void editRegime(Regime data);
+
+    public void publishRegime(String code, String updater, String remark);
+
+    public void removeRegime(String code, String updater, String remark);
 }

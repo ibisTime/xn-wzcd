@@ -81,6 +81,7 @@ public class NoticeBOImpl extends PaginableBOImpl<Notice> implements INoticeBO {
         condition.setRemark(remark);
         condition.setUpdateDatetime(new Date());
         condition.setStatus(ENoticeStatus.PUBLISHED.getCode());
+        noticeDAO.publishRemoveNotice(condition);
     }
 
     @Override
@@ -91,5 +92,6 @@ public class NoticeBOImpl extends PaginableBOImpl<Notice> implements INoticeBO {
         condition.setRemark(remark);
         condition.setUpdateDatetime(new Date());
         condition.setStatus(ENoticeStatus.REMOVED.getCode());
+        noticeDAO.publishRemoveNotice(condition);
     }
 }

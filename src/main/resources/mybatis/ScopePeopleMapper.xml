@@ -73,4 +73,8 @@
 		</foreach>
 	</insert>
 	
+	<delete id="delete_scopePeople_ByRef" parameterType="scopePeople">
+		DELETE FROM tp_scope_people where ref_code = #{refCode}
+	</delete>
+	
 </mapper>

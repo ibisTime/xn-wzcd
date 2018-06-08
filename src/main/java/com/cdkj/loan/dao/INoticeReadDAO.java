@@ -12,4 +12,6 @@ public interface INoticeReadDAO extends IBaseDAO<NoticeRead> {
     public void update(NoticeRead data);
 
     public void insertNoticeReadList(List<NoticeRead> dataList);
+
+    public void deleteNoticeReadByRef(NoticeRead condition);
 }

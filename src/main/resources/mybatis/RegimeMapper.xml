@@ -7,15 +7,14 @@
 		<result column="type" property="type" />
 		<result column="regime_code" property="regimeCode" />
 		<result column="name" property="name" />
-		<result column="scope" property="scope" />
-		
+
 		<result column="content" property="content" />
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
 		<result column="remark" property="remark" />
 	</resultMap>
-	
+
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
@@ -32,15 +31,15 @@
 			</if>
 		</trim>
 	</sql>
-	
-	<select id="select_Regime" parameterType="Regime" resultMap="Regime_DB_Result">
+
+	<select id="select_Regime" parameterType="Regime"
+		resultMap="Regime_DB_Result">
 		SELECT
 		t.code
 		,t.type
 		,t.regime_code
 		,t.name
-		,t.scope
-		
+
 		,t.content
 		,t.status
 		,t.updater
@@ -69,8 +68,7 @@
 		,type
 		,regime_code
 		,name
-		,scope
-		
+
 		,content
 		,status
 		,updater
@@ -82,8 +80,7 @@
 		,#{type}
 		,#{regimeCode}
 		,#{name}
-		,#{scope}
-		
+
 		,#{content}
 		,#{status}
 		,#{updater}
@@ -98,10 +95,18 @@
 		type = #{type}
 		,regime_code = #{regimeCode}
 		,name = #{name}
-		,scope = #{scope}
 		,content = #{content}
-		
-		,status = #{status}
+
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_Regime_publishRemove" parameterType="Regime">
+		UPDATE tp_comp_regime
+		SET
+		status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}

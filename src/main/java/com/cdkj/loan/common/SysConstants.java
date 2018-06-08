@@ -54,4 +54,7 @@ public class SysConstants {
     // 年假天数
     public static String LEAVE_YEAR_HOUR = "leave_year_hour";// 年假天数
 
+    // 公告范围类型
+    public static String SCOPE_PEOPLE_TYPE = "scope_people_type";// 公告范围类型
+
 }

@@ -8,12 +8,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.bo.IDepartmentBO;
+import com.cdkj.loan.bo.ISYSDictBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IScopePeopleBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.dao.INoticeReadDAO;
 import com.cdkj.loan.dao.IScopePeopleDAO;
 import com.cdkj.loan.domain.NoticeRead;
+import com.cdkj.loan.domain.SYSDict;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.ScopePeople;
 import com.cdkj.loan.dto.req.XN632720ReqScope;
@@ -41,6 +44,9 @@ public class ScopePeopleBOImpl extends PaginableBOImpl<ScopePeople>
 
     @Autowired
     private IDepartmentBO departmentBO;
+
+    @Autowired
+    private ISYSDictBO sysDictBO;
 
     @Override
     @Transactional
@@ -132,7 +138,30 @@ public class ScopePeopleBOImpl extends PaginableBOImpl<ScopePeople>
                 scopePeople.setPeopleName(sysUserBO
                     .getUser(scopePeople.getPeopleCode()).getRealName());
             }
+
+            // 转义类型名称
+            SYSDict dictCondition = new SYSDict();
+            dictCondition.setParentKey(SysConstants.SCOPE_PEOPLE_TYPE);
+            List<SYSDict> scopeDicts = sysDictBO
+                .querySYSDictList(dictCondition);
+            for (SYSDict sysDict : scopeDicts) {
+                if (sysDict.getDkey().equals(scopePeople.getType())) {
+                    scopePeople.setTypeName(sysDict.getDvalue());
+                }
+            }
         }
         return scopePeopleList;
+    }
+
+    @Override
+    @Transactional
+    public void dropScopePeopleByRef(String refCode) {
+        ScopePeople scopeCondition = new ScopePeople();
+        scopeCondition.setRefCode(refCode);
+        scopePeopleDAO.deleteScopePeopleByRef(scopeCondition);
+
+        NoticeRead readCondition = new NoticeRead();
+        readCondition.setNoticeCode(refCode);
+        noticeReadDAO.deleteNoticeReadByRef(readCondition);
     }
 }

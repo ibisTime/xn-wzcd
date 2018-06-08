@@ -6,7 +6,6 @@ CREATE TABLE `tp_notice` (
   `title` VARCHAR(255) NOT NULL COMMENT '公告标题',
   `urgent_status` VARCHAR(4) NOT NULL COMMENT '紧急程度（1 普通 2 紧急）',
   `publish_department_code` VARCHAR(32) NOT NULL COMMENT '发布部门',
-  `scope` VARCHAR(32) NULL COMMENT '公告范围',
   
   `content` VARCHAR(255) NOT NULL COMMENT '公告内容',
   `publish_datetime` DATETIME NULL COMMENT '发布时间',
@@ -37,7 +36,6 @@ CREATE TABLE `tp_comp_regime` (
   `type` VARCHAR(4) NOT NULL COMMENT '类型(1行政事务类 2 人力资源管理类 3 财务管理类 4 营销管理类 5 生产管理类)',
   `regime_code` VARCHAR(32) NULL COMMENT '制度编号',
   `name` VARCHAR(32) NULL COMMENT '名称',
-  `scope` VARCHAR(32) NOT NULL COMMENT '授权查看范围',
   
   `content` VARCHAR(255) NULL COMMENT '内容',
   `status` VARCHAR(32) NULL COMMENT '状态',

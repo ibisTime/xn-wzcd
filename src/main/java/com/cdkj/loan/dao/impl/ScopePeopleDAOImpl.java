@@ -59,4 +59,9 @@ public class ScopePeopleDAOImpl extends AMybatisTemplate
         super.insertBatch(NAMESPACE.concat("insert_scopePeopleList"),
             (List) dataList);
     }
+
+    @Override
+    public void deleteScopePeopleByRef(ScopePeople condition) {
+        super.delete(NAMESPACE.concat("delete_scopePeople_ByRef"), condition);
+    }
 }

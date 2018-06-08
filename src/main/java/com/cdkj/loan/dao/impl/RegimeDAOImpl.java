@@ -51,4 +51,14 @@ public class RegimeDAOImpl extends AMybatisTemplate implements IRegimeDAO {
             condition, Regime.class);
     }
 
+    @Override
+    public void update(Regime data) {
+        super.update(NAMESPACE.concat("update_Regime"), data);
+    }
+
+    @Override
+    public void publishRemoveRegime(Regime data) {
+        super.update(NAMESPACE.concat("update_Regime_publishRemove"), data);
+    }
+
 }

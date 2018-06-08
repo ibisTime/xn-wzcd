@@ -9,4 +9,5 @@ public interface INoticeDAO extends IBaseDAO<Notice> {
 
     public void update(Notice data);
 
+    public void publishRemoveNotice(Notice data);
 }
