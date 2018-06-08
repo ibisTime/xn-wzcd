@@ -8,6 +8,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.dto.req.XN632800Req;
 import com.cdkj.loan.dto.req.XN632802Req;
+import com.cdkj.loan.dto.res.XN632803Res;
 
 /**
  * 人事档案
@@ -38,6 +39,6 @@ public interface IArchiveAO {
     // 按年龄统计分析
     public void statisticsAge(Archive condition);
 
-    public long getTotal(String ageStart, String ageEnd);
+    public List<XN632803Res> getTotal();
 
 }

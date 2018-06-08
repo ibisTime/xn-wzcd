@@ -22,8 +22,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
-        IArchiveBO {
+public class ArchiveBOImpl extends PaginableBOImpl<Archive>
+        implements IArchiveBO {
 
     @Autowired
     private IArchiveDAO archiveDAO;
@@ -45,8 +45,8 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
     public String saveArchive(Archive data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.RECRUITAPPLY
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.RECRUITAPPLY.getCode());
             data.setCode(code);
             archiveDAO.insert(data);
         }
@@ -75,10 +75,10 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
     public List<Archive> queryArchiveList(Archive condition) {
         List<Archive> archiveList = archiveDAO.selectList(condition);
         for (Archive archive : archiveList) {
-            archive.setDepartmentName(departmentBO.getDepartment(
-                archive.getDepartmentCode()).getName());
-            archive.setPostName(departmentBO.getDepartment(
-                archive.getPostCode()).getName());
+            archive.setDepartmentName(departmentBO
+                .getDepartment(archive.getDepartmentCode()).getName());
+            archive.setPostName(
+                departmentBO.getDepartment(archive.getPostCode()).getName());
         }
         return archiveList;
     }
@@ -119,4 +119,14 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
         }
         return data;
     }
+
+    @Override
+    public int getTotalCount(int ageStart, int ageEnd) {
+        Archive condition = new Archive();
+        condition.setAgeStart(ageStart);
+        condition.setAgeEnd(ageEnd);
+        return (int) archiveDAO.selectTotalCount(condition);
+
+    }
+
 }
