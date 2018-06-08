@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICarAO;
 import com.cdkj.loan.bo.ICarBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Car;
@@ -21,6 +22,9 @@ public class CarAOImpl implements ICarAO {
 
     @Autowired
     private ICarBO carBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     public String addCar(XN630420Req req) {
@@ -97,17 +101,30 @@ public class CarAOImpl implements ICarAO {
 
     @Override
     public Paginable<Car> queryCarPage(int start, int limit, Car condition) {
-        return carBO.getPaginable(start, limit, condition);
+        Paginable<Car> paginable = carBO.getPaginable(start, limit, condition);
+        for (Car car : paginable.getList()) {
+            String realName = sysUserBO.getUser(car.getUpdater()).getRealName();
+            car.setUpdaterName(realName);
+        }
+        return paginable;
     }
 
     @Override
     public Car getCar(String code) {
-        return carBO.getCar(code);
+        Car car = carBO.getCar(code);
+        String realName = sysUserBO.getUser(car.getUpdater()).getRealName();
+        car.setUpdaterName(realName);
+        return car;
     }
 
     @Override
     public List<Car> queryCarList(Car condition) {
-        return carBO.queryCar(condition);
+        List<Car> queryCar = carBO.queryCar(condition);
+        for (Car car : queryCar) {
+            String realName = sysUserBO.getUser(car.getUpdater()).getRealName();
+            car.setUpdaterName(realName);
+        }
+        return queryCar;
     }
 
 }

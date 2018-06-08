@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ISeriesAO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
@@ -21,6 +22,9 @@ public class SeriesAOImpl implements ISeriesAO {
 
     @Autowired
     private ISeriesBO seriesBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     public String addSeries(XN630410Req req) {
@@ -80,17 +84,33 @@ public class SeriesAOImpl implements ISeriesAO {
     @Override
     public Paginable<Series> querySeriesPage(int start, int limit,
             Series condition) {
-        return seriesBO.getPaginable(start, limit, condition);
+        Paginable<Series> paginable = seriesBO.getPaginable(start, limit,
+            condition);
+        for (Series series : paginable.getList()) {
+            String realName = sysUserBO.getUser(series.getUpdater())
+                .getRealName();
+            series.setUpdaterName(realName);
+        }
+        return paginable;
     }
 
     @Override
     public Series getSeries(String code) {
-        return seriesBO.getSeries(code);
+        Series series = seriesBO.getSeries(code);
+        String realName = sysUserBO.getUser(series.getUpdater()).getRealName();
+        series.setUpdaterName(realName);
+        return series;
     }
 
     @Override
     public List<Series> querySeriesList(Series condition) {
-        return seriesBO.querySeries(condition);
+        List<Series> querySeries = seriesBO.querySeries(condition);
+        for (Series series : querySeries) {
+            String realName = sysUserBO.getUser(series.getUpdater())
+                .getRealName();
+            series.setUpdaterName(realName);
+        }
+        return querySeries;
     }
 
 }

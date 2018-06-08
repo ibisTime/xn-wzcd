@@ -44,6 +44,19 @@ public class Car extends ABaseDO {
 
     private String remark;// 备注
 
+    /*---------辅助字段----------*/
+
+    // 最新修改人姓名
+    private String updaterName;
+
+    public String getUpdaterName() {
+        return updaterName;
+    }
+
+    public void setUpdaterName(String updaterName) {
+        this.updaterName = updaterName;
+    }
+
     public String getCode() {
         return code;
     }

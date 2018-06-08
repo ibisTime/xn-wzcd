@@ -49,6 +49,17 @@ public class AskForApply extends ABaseDO {
     // 申请时间止
     private Date applyDatetimeEnd;
 
+    // 申请人姓名
+    private String applyUserName;
+
+    public String getApplyUserName() {
+        return applyUserName;
+    }
+
+    public void setApplyUserName(String applyUserName) {
+        this.applyUserName = applyUserName;
+    }
+
     public Date getApplyDatetimeStart() {
         return applyDatetimeStart;
     }

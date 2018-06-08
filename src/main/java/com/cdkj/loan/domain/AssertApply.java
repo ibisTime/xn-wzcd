@@ -60,6 +60,17 @@ public class AssertApply extends ABaseDO {
 
     private List<AssertUser> assertUserList;
 
+    // 申请人姓名
+    private String applyUserName;
+
+    public String getApplyUserName() {
+        return applyUserName;
+    }
+
+    public void setApplyUserName(String applyUserName) {
+        this.applyUserName = applyUserName;
+    }
+
     public List<AssertGoods> getAssertGoodsList() {
         return assertGoodsList;
     }

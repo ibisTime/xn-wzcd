@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IAskForApplyAO;
+import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IAskForApplyBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.AskForApply;
@@ -19,6 +20,9 @@ public class AskForApplyAOImpl implements IAskForApplyAO {
 
     @Autowired
     private IAskForApplyBO askForApplyBO;
+
+    @Autowired
+    private IArchiveBO archiveBO;
 
     @Override
     public String addAskForApply(XN632650Req req) {
@@ -49,7 +53,14 @@ public class AskForApplyAOImpl implements IAskForApplyAO {
     @Override
     public Paginable<AskForApply> queryAskForApplyPage(int start, int limit,
             AskForApply condition) {
-        return askForApplyBO.getPaginable(start, limit, condition);
+        Paginable<AskForApply> paginable = askForApplyBO.getPaginable(start,
+            limit, condition);
+        for (AskForApply askForApply : paginable.getList()) {
+            String realName = archiveBO
+                .getArchiveByUserid(askForApply.getApplyUser()).getRealName();
+            askForApply.setApplyUserName(realName);
+        }
+        return paginable;
     }
 
     @Override
@@ -59,7 +70,11 @@ public class AskForApplyAOImpl implements IAskForApplyAO {
 
     @Override
     public AskForApply getAskForApply(String code) {
-        return askForApplyBO.getAskForApply(code);
+        AskForApply askForApply = askForApplyBO.getAskForApply(code);
+        String realName = archiveBO
+            .getArchiveByUserid(askForApply.getApplyUser()).getRealName();
+        askForApply.setApplyUserName(realName);
+        return askForApply;
     }
 
 }

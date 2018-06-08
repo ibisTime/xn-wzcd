@@ -101,7 +101,14 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
     @Override
     public Paginable<AssertApply> queryAssertApplyPage(int start, int limit,
             AssertApply condition) {
-        return assertApplyBO.getPaginable(start, limit, condition);
+        Paginable<AssertApply> paginable = assertApplyBO.getPaginable(start,
+            limit, condition);
+        for (AssertApply assertApply : paginable.getList()) {
+            String realName = archiveBO
+                .getArchiveByUserid(assertApply.getApplyUser()).getRealName();
+            assertApply.setApplyUserName(realName);
+        }
+        return paginable;
     }
 
     @Override
@@ -137,14 +144,24 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
             assertApply.setAssertUserList(assertUserList);
         }
 
+        String realName = archiveBO
+            .getArchiveByUserid(assertApply.getApplyUser()).getRealName();
+        assertApply.setApplyUserName(realName);
+
         return assertApply;
     }
 
     @Override
     public Paginable<AssertApply> queryAssertApplyPageByDepartmentCode(
             int start, int limit, AssertApply condition) {
-        return assertApplyBO.getPaginableByDepartmentCode(start, limit,
-            condition);
+        Paginable<AssertApply> paginable = assertApplyBO
+            .getPaginableByDepartmentCode(start, limit, condition);
+        for (AssertApply assertApply : paginable.getList()) {
+            String realName = archiveBO
+                .getArchiveByUserid(assertApply.getApplyUser()).getRealName();
+            assertApply.setApplyUserName(realName);
+        }
+        return paginable;
     }
 
 }
