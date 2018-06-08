@@ -52,6 +52,17 @@ public class AskForApply extends ABaseDO {
     // 申请人姓名
     private String applyUserName;
 
+    // 请示领导姓名
+    private String leadUserName;
+
+    public String getLeadUserName() {
+        return leadUserName;
+    }
+
+    public void setLeadUserName(String leadUserName) {
+        this.leadUserName = leadUserName;
+    }
+
     public String getApplyUserName() {
         return applyUserName;
     }

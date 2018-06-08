@@ -59,6 +59,9 @@ public class AskForApplyAOImpl implements IAskForApplyAO {
             String realName = archiveBO
                 .getArchiveByUserid(askForApply.getApplyUser()).getRealName();
             askForApply.setApplyUserName(realName);
+            String leadUserName = archiveBO
+                .getArchiveByUserid(askForApply.getLeadUserId()).getRealName();
+            askForApply.setLeadUserName(leadUserName);
         }
         return paginable;
     }
@@ -74,6 +77,9 @@ public class AskForApplyAOImpl implements IAskForApplyAO {
         String realName = archiveBO
             .getArchiveByUserid(askForApply.getApplyUser()).getRealName();
         askForApply.setApplyUserName(realName);
+        String leadUserName = archiveBO
+            .getArchiveByUserid(askForApply.getLeadUserId()).getRealName();
+        askForApply.setLeadUserName(leadUserName);
         return askForApply;
     }
 
