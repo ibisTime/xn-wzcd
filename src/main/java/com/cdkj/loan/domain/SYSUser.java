@@ -81,16 +81,6 @@ public class SYSUser extends ABaseDO {
 
     private String companyName;
 
-    private String teamName;
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
-
     public String getTeamCode() {
         return teamCode;
     }

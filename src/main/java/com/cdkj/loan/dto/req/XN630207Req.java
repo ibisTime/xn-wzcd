@@ -10,14 +10,14 @@ public class XN630207Req extends APageReq {
 
     private static final long serialVersionUID = 1L;
 
-    private String companyCode;
+    private String teamCode;
 
-    public String getCompanyCode() {
-        return companyCode;
+    public String getTeamCode() {
+        return teamCode;
     }
 
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
     }
 
 }

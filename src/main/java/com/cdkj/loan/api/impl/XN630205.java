@@ -29,8 +29,7 @@ public class XN630205 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         SYSUser condition = new SYSUser();
-        condition.setCompanyCode(req.getCompanyCode());
-        condition.setTeamName("业务团队成员查询");
+        condition.setTeamCode(req.getTeamCode());
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
             column = ISYSUserAO.DEFAULT_ORDER_COLUMN;

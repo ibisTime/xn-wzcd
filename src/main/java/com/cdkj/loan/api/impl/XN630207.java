@@ -26,8 +26,7 @@ public class XN630207 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         SYSUser condition = new SYSUser();
-        condition.setCompanyCode(req.getCompanyCode());
-        condition.setTeamName("业务团队成员查询");
+        condition.setTeamCode(req.getTeamCode());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

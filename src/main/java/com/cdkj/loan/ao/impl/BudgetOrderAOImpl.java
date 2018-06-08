@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankcardBO;
+import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IBudgetOrderFeeBO;
 import com.cdkj.loan.bo.IBudgetOrderGpsBO;
@@ -24,6 +25,7 @@ import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
+import com.cdkj.loan.bo.IRepointBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
@@ -42,6 +44,7 @@ import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.LoanProduct;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
+import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
@@ -113,6 +116,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private ICreditUserBO creditUserBO;
+
+    @Autowired
+    private IRepointBO repointBO;
+
+    @Autowired
+    private IBizTeamBO bizTeamBO;
 
     @Override
     @Transactional
@@ -454,6 +463,24 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
             credit.setBudgetCode(budgetOrder.getCode());
             creditBO.refreshCredit(credit);
+
+            // 生成返点金额
+            // 准入单的贷款金额 乘以 准入单的贷款产品的返点比例 等于应返金额
+            Long loanAmount = budgetOrder.getLoanAmount();
+            LoanProduct loanProduct = loanProductBO.getLoanProduct(budgetOrder
+                .getLoanProductCode());
+            double backRate = loanProduct.getBackRate();
+            long shouldAmount = Math.round(loanAmount * backRate);
+            Repoint repoint = new Repoint();
+            SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
+            repoint.setTeamCode(saleUser.getTeamCode());
+            repoint.setBizCode(budgetOrder.getCode());
+            repoint.setShouldAmount(shouldAmount);
+            repoint.setStatus("0");
+            repoint.setUpdater(operator);
+            repoint.setUpdateDatetime(new Date());
+            repointBO.saveRepoint(repoint);
+
         } else {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.RISK_CHARGE_APPROVE.getCode()).getBackNode());
