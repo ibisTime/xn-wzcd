@@ -39,7 +39,7 @@ public class WelfareApplyAOImpl implements IWelfareApplyAO {
 
     @Override
     public String addWelfareApply(XN632660Req req) {
-        if (req.getUserList() == null) {
+        if (req.getWelfareUserList() == null) {
             throw new BizException("xn0000", "请填写发放人员！");
         }
 
@@ -51,7 +51,7 @@ public class WelfareApplyAOImpl implements IWelfareApplyAO {
         data.setStatus(EWelfareApplyStatus.TO_APPROVE.getCode());
 
         String welfareApplyCpde = welfareApplyBO.saveWelfareApply(data);
-        for (XN632660ReqDetail user : req.getUserList()) {
+        for (XN632660ReqDetail user : req.getWelfareUserList()) {
             welfareUserBO.saveWelfareUser(welfareApplyCpde, user.getUserId(),
                 user.getRemark());
         }

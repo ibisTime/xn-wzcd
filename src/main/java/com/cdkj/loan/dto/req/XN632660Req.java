@@ -23,7 +23,7 @@ public class XN632660Req {
     @NotBlank
     private String remark;
 
-    List<XN632660ReqDetail> userList;
+    List<XN632660ReqDetail> welfareUserList;
 
     public String getApplyUser() {
         return applyUser;
@@ -49,12 +49,12 @@ public class XN632660Req {
         this.remark = remark;
     }
 
-    public List<XN632660ReqDetail> getUserList() {
-        return userList;
+    public List<XN632660ReqDetail> getWelfareUserList() {
+        return welfareUserList;
     }
 
-    public void setUserList(List<XN632660ReqDetail> userList) {
-        this.userList = userList;
+    public void setWelfareUserList(List<XN632660ReqDetail> welfareUserList) {
+        this.welfareUserList = welfareUserList;
     }
 
 }
