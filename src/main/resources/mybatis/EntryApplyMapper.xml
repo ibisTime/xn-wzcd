@@ -67,10 +67,10 @@
 				AND t.real_name = #{realName}
 			</if>
 			<if test="entryDatetimeStart != null and entryDatetimeStart != '' ">
-				<![CDATA[AND t.entry_datetime > #{entryDatetimeEnd}]]>
+				<![CDATA[AND t.entry_datetime >= #{entryDatetimeEnd}]]>
 			</if>
 			<if test="entryDatetimeEnd != null and entryDatetimeEnd != '' ">
-				<![CDATA[AND t.entry_datetime < #{entryDatetimeEnd}]]>
+				<![CDATA[AND t.entry_datetime <= #{entryDatetimeEnd}]]>
 			</if>
 		</trim>
 	</sql>

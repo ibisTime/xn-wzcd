@@ -67,6 +67,9 @@ public class XN632850Req {
     // 能否出差
     private String isOut;
 
+    // 能否加班
+    private String isOverTime;
+
     // 能否接受工作调动
     private String isAdjustWork;
 
@@ -97,6 +100,14 @@ public class XN632850Req {
 
     public void setUpdater(String updater) {
         this.updater = updater;
+    }
+
+    public String getIsOverTime() {
+        return isOverTime;
+    }
+
+    public void setIsOverTime(String isOverTime) {
+        this.isOverTime = isOverTime;
     }
 
     public String getRealName() {
@@ -287,7 +298,8 @@ public class XN632850Req {
         return socialRelationList;
     }
 
-    public void setSocialRelationList(List<XN632850ReqSocial> socialRelationList) {
+    public void setSocialRelationList(
+            List<XN632850ReqSocial> socialRelationList) {
         this.socialRelationList = socialRelationList;
     }
 }

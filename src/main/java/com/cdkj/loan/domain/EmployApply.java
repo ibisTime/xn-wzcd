@@ -72,6 +72,9 @@ public class EmployApply extends ABaseDO {
     // 能否出差
     private String isOut;
 
+    // 能否加班
+    private String isOverTime;
+
     // 能否接受工作调动
     private String isAdjustWork;
 
@@ -158,6 +161,14 @@ public class EmployApply extends ABaseDO {
 
     public void setCheckProjectList(List<CheckProject> checkProjectList) {
         this.checkProjectList = checkProjectList;
+    }
+
+    public String getIsOverTime() {
+        return isOverTime;
+    }
+
+    public void setIsOverTime(String isOverTime) {
+        this.isOverTime = isOverTime;
     }
 
     public String getUpdater() {
