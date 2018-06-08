@@ -28,7 +28,7 @@
 		<result column="relative_name" property="relativeName" />
 		<result column="relative_relation" property="relativeRelation" />
 		<result column="relative_position" property="relativePosition" />
-		<result column=" main_perform" property=" mainPerform" />
+		<result column="main_perform" property="mainPerform" />
 		<result column="probation_start_datetime" property="probationStartDatetime" />
 		<result column="probation_end_datetime" property="probationEndDatetime" />
 		<result column="probation_salary" property="probationSalary" />
@@ -101,7 +101,7 @@
 		,t.relative_name
 		,t.relative_relation
 		,t.relative_position
-		,t. main_perform
+		,t.main_perform
 		,t.probation_start_datetime
 		,t.probation_end_datetime
 		,t.probation_salary
@@ -168,7 +168,7 @@
 		,relative_name
 		,relative_relation
 		,relative_position
-		, main_perform
+		,main_perform
 		,probation_start_datetime
 		,probation_end_datetime
 		,probation_salary
@@ -218,7 +218,7 @@
 		,#{relativeName}
 		,#{relativeRelation}
 		,#{relativePosition}
-		,#{ mainPerform}
+		,#{mainPerform}
 		,#{probationStartDatetime}
 		,#{probationEndDatetime}
 		,#{probationSalary}
@@ -271,7 +271,7 @@
 		,relative_name = #{relativeName}
 		,relative_relation = #{relativeRelation}
 		,relative_position = #{relativePosition}
-		, main_perform = #{ mainPerform}
+		,main_perform = #{mainPerform}
 		,probation_start_datetime = #{probationStartDatetime}
 		,probation_end_datetime = #{probationEndDatetime}
 		,probation_salary = #{probationSalary}
