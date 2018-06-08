@@ -16,6 +16,7 @@ import com.cdkj.loan.domain.ScopePeople;
 import com.cdkj.loan.dto.req.XN632730Req;
 import com.cdkj.loan.dto.req.XN632731Req;
 import com.cdkj.loan.enums.ENoticeRegime;
+import com.cdkj.loan.enums.ERegimeStatus;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -99,11 +100,19 @@ public class RegimeAOImpl implements IRegimeAO {
 
     @Override
     public void publishRegime(String code, String updater, String remark) {
+        Regime regime = regimeBO.getRegime(code);
+        if (!ERegimeStatus.TO_PUBLISH.getCode().equals(regime.getStatus())) {
+            throw new BizException("xn0000", "制度不在待发布状态！");
+        }
         regimeBO.publishRegime(code, updater, remark);
     }
 
     @Override
     public void removeRegime(String code, String updater, String remark) {
+        Regime regime = regimeBO.getRegime(code);
+        if (!ERegimeStatus.PUBLISHED.getCode().equals(regime.getStatus())) {
+            throw new BizException("xn0000", "制度不在待发布状态！");
+        }
         regimeBO.removeRegime(code, updater, remark);
     }
 }
