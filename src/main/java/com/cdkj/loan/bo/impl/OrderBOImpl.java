@@ -95,7 +95,7 @@ public class OrderBOImpl extends PaginableBOImpl<Order> implements IOrderBO {
             condition.setCode(code);
             data = orderDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "订单编号不存在");
+                throw new BizException("xn0000", "订单不存在");
             }
             ProductOrder imCondition = new ProductOrder();
             imCondition.setOrderCode(code);

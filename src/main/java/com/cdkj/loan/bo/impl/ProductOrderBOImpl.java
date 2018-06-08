@@ -69,7 +69,7 @@ public class ProductOrderBOImpl extends PaginableBOImpl<ProductOrder>
             condition.setCode(code);
             data = productOrderDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "产品订单关联编号不存在");
+                throw new BizException("xn0000", "产品关联订单不存在");
             }
         }
         return data;

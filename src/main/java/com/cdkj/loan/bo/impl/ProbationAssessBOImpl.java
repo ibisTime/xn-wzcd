@@ -61,7 +61,7 @@ public class ProbationAssessBOImpl extends PaginableBOImpl<ProbationAssess>
             data = probationAssessDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "评估编号不存在！");
+                    "试用期评估不存在！");
             }
         }
         return data;

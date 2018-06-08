@@ -23,8 +23,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class AssertApplyBOImpl extends PaginableBOImpl<AssertApply> implements
-        IAssertApplyBO {
+public class AssertApplyBOImpl extends PaginableBOImpl<AssertApply>
+        implements IAssertApplyBO {
 
     @Autowired
     private IAssertApplyDAO assertApplyDAO;
@@ -43,8 +43,8 @@ public class AssertApplyBOImpl extends PaginableBOImpl<AssertApply> implements
     public String saveAssertApply(AssertApply data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.ASSERT_APPLY
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.ASSERT_APPLY.getCode());
             data.setCode(code);
             assertApplyDAO.insert(data);
         }
@@ -84,7 +84,7 @@ public class AssertApplyBOImpl extends PaginableBOImpl<AssertApply> implements
             condition.setCode(code);
             data = assertApplyDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "编号不存在");
+                throw new BizException("xn0000", "办公用品不存在");
             }
         }
         return data;

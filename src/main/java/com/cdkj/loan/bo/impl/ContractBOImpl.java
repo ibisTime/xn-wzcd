@@ -21,8 +21,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class ContractBOImpl extends PaginableBOImpl<Contract> implements
-        IContractBO {
+public class ContractBOImpl extends PaginableBOImpl<Contract>
+        implements IContractBO {
 
     @Autowired
     private IContractDAO contractDAO;
@@ -82,7 +82,7 @@ public class ContractBOImpl extends PaginableBOImpl<Contract> implements
             condition.setCode(code);
             data = contractDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "编号不存在");
+                throw new BizException("xn0000", "合同管理不存在");
             }
         }
         return data;

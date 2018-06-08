@@ -15,8 +15,8 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class CheckProjectBOImpl extends PaginableBOImpl<CheckProject> implements
-        ICheckProjectBO {
+public class CheckProjectBOImpl extends PaginableBOImpl<CheckProject>
+        implements ICheckProjectBO {
 
     @Autowired
     private ICheckProjectDAO checkProjectDAO;
@@ -25,8 +25,8 @@ public class CheckProjectBOImpl extends PaginableBOImpl<CheckProject> implements
     public String saveCheckProject(CheckProject data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.CHECK_PROJECT
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.CHECK_PROJECT.getCode());
             data.setCode(code);
             checkProjectDAO.insert(data);
         }
@@ -46,7 +46,7 @@ public class CheckProjectBOImpl extends PaginableBOImpl<CheckProject> implements
             condition.setCode(code);
             data = checkProjectDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "考核项目编号不存在");
+                throw new BizException("xn0000", "考核项目不存在");
             }
         }
         return data;

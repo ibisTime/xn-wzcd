@@ -87,7 +87,7 @@ public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget>
             data = reqBudgetDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "预算单编号不存在!");
+                    "预算单不存在!");
             }
         }
         return data;

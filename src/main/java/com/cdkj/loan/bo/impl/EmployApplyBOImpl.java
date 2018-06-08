@@ -15,8 +15,8 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class EmployApplyBOImpl extends PaginableBOImpl<EmployApply> implements
-        IEmployApplyBO {
+public class EmployApplyBOImpl extends PaginableBOImpl<EmployApply>
+        implements IEmployApplyBO {
 
     @Autowired
     private IEmployApplyDAO employApplyDAO;
@@ -25,8 +25,8 @@ public class EmployApplyBOImpl extends PaginableBOImpl<EmployApply> implements
     public String saveEmployApply(EmployApply data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.EmployApply
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.EmployApply.getCode());
             data.setCode(code);
             employApplyDAO.insert(data);
         }
@@ -53,7 +53,7 @@ public class EmployApplyBOImpl extends PaginableBOImpl<EmployApply> implements
             condition.setCode(code);
             data = employApplyDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "应聘申请编号不存在");
+                throw new BizException("xn0000", "应聘申请不存在");
             }
         }
         return data;

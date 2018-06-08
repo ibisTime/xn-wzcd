@@ -25,8 +25,8 @@ public class WorkExperienceBOImpl extends PaginableBOImpl<WorkExperience>
     public String saveWorkExperience(WorkExperience data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.WORK_EXPERIENCE
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.WORK_EXPERIENCE.getCode());
             data.setCode(code);
             workExperienceDAO.insert(data);
         }
@@ -34,7 +34,8 @@ public class WorkExperienceBOImpl extends PaginableBOImpl<WorkExperience>
     }
 
     @Override
-    public List<WorkExperience> queryWorkExperienceList(WorkExperience condition) {
+    public List<WorkExperience> queryWorkExperienceList(
+            WorkExperience condition) {
         return workExperienceDAO.selectList(condition);
     }
 
@@ -46,7 +47,7 @@ public class WorkExperienceBOImpl extends PaginableBOImpl<WorkExperience>
             condition.setCode(code);
             data = workExperienceDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "工作经历编号不存在");
+                throw new BizException("xn0000", "工作经历不存在");
             }
         }
         return data;

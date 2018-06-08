@@ -41,8 +41,8 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
     public String saveSocialRelation(SocialRelation data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.SOCIAL_RELATION
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.SOCIAL_RELATION.getCode());
             data.setCode(code);
             socialRelationDAO.insert(data);
         }
@@ -70,7 +70,8 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
     }
 
     @Override
-    public List<SocialRelation> querySocialRelationList(SocialRelation condition) {
+    public List<SocialRelation> querySocialRelationList(
+            SocialRelation condition) {
         return socialRelationDAO.selectList(condition);
     }
 
@@ -82,7 +83,7 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
             condition.setCode(code);
             data = socialRelationDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "编号不存在");
+                throw new BizException("xn0000", "社会关系不存在");
             }
         }
         return data;

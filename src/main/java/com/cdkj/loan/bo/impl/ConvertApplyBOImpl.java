@@ -54,7 +54,7 @@ public class ConvertApplyBOImpl extends PaginableBOImpl<ConvertApply>
             condition.setCode(code);
             data = convertApplyDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "申请编号不存在！");
+                throw new BizException("xn0000", "转正申请不存在！");
             }
         }
         return data;

@@ -93,7 +93,7 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
             condition.setIsDelete("1");
             data = archiveDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "编号不存在");
+                throw new BizException("xn0000", "人事档案不存在");
             }
         }
         return data;
@@ -115,7 +115,7 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
             condition.setUserId(userId);
             data = archiveDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "编号不存在");
+                throw new BizException("xn0000", "人事档案不存在");
             }
         }
         return data;

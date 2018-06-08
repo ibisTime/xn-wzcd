@@ -41,8 +41,8 @@ public class ArchiveLocationBOImpl extends PaginableBOImpl<ArchiveLocation>
     public String saveArchiveLocation(ArchiveLocation data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.ARCHIVE_LOCATION
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.ARCHIVE_LOCATION.getCode());
             data.setCode(code);
             archiveLocationDAO.insert(data);
         }
@@ -83,7 +83,7 @@ public class ArchiveLocationBOImpl extends PaginableBOImpl<ArchiveLocation>
             condition.setCode(code);
             data = archiveLocationDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "编号不存在");
+                throw new BizException("xn0000", "档案存放位置不存在");
             }
         }
         return data;

@@ -15,8 +15,8 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class CNavigateBOImpl extends PaginableBOImpl<CNavigate> implements
-        ICNavigateBO {
+public class CNavigateBOImpl extends PaginableBOImpl<CNavigate>
+        implements ICNavigateBO {
 
     @Autowired
     private ICNavigateDAO cNavigateDAO;
@@ -77,7 +77,7 @@ public class CNavigateBOImpl extends PaginableBOImpl<CNavigate> implements
             condition.setCode(code);
             data = cNavigateDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "该编号不存在");
+                throw new BizException("xn0000", "导航不存在");
             }
         }
         return data;

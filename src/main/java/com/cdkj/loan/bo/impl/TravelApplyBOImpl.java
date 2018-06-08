@@ -21,8 +21,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class TravelApplyBOImpl extends PaginableBOImpl<TravelApply> implements
-        ITravelApplyBO {
+public class TravelApplyBOImpl extends PaginableBOImpl<TravelApply>
+        implements ITravelApplyBO {
 
     @Autowired
     private ITravelApplyDAO travelApplyDAO;
@@ -41,8 +41,8 @@ public class TravelApplyBOImpl extends PaginableBOImpl<TravelApply> implements
     public String saveTravelApply(TravelApply data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.TRAVEL_APPLY
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.TRAVEL_APPLY.getCode());
             data.setCode(code);
             travelApplyDAO.insert(data);
         }
@@ -82,7 +82,7 @@ public class TravelApplyBOImpl extends PaginableBOImpl<TravelApply> implements
             condition.setCode(code);
             data = travelApplyDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "编号不存在");
+                throw new BizException("xn0000", "出差不存在");
             }
         }
         return data;

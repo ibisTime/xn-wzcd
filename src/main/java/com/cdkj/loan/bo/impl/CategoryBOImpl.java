@@ -80,7 +80,7 @@ public class CategoryBOImpl extends PaginableBOImpl<Category>
             condition.setCode(code);
             data = categoryDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "该分类编号不存在");
+                throw new BizException("xn0000", "该分类不存在");
             }
         }
         return data;

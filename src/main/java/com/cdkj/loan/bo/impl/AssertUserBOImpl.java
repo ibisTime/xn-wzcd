@@ -21,8 +21,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class AssertUserBOImpl extends PaginableBOImpl<AssertUser> implements
-        IAssertUserBO {
+public class AssertUserBOImpl extends PaginableBOImpl<AssertUser>
+        implements IAssertUserBO {
 
     @Autowired
     private IAssertUserDAO assertUserDAO;
@@ -41,8 +41,8 @@ public class AssertUserBOImpl extends PaginableBOImpl<AssertUser> implements
     public String saveAssertUser(AssertUser data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.ASSERT_USER
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.ASSERT_USER.getCode());
             data.setCode(code);
             assertUserDAO.insert(data);
         }
@@ -82,7 +82,7 @@ public class AssertUserBOImpl extends PaginableBOImpl<AssertUser> implements
             condition.setCode(code);
             data = assertUserDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "编号不存在");
+                throw new BizException("xn0000", "办公用户列表不存在");
             }
         }
         return data;

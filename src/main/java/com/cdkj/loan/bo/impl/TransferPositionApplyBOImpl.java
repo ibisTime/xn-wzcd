@@ -54,7 +54,7 @@ public class TransferPositionApplyBOImpl
             data = transferPositionApplyDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "申请编号不存在！");
+                    "调岗申请不存在！");
             }
         }
         return data;

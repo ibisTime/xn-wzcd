@@ -88,7 +88,7 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
             data = gpsDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "GPS编号不存在");
+                    "GPS不存在");
             }
         }
         return data;
@@ -105,7 +105,7 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
                 data = gpsList.get(0);
             } else {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "GPS编号不存在");
+                    "GPS不存在");
             }
         }
         return data;

@@ -68,7 +68,7 @@ public class InsuranceCompanyBOImpl extends PaginableBOImpl<InsuranceCompany>
             data = insuranceCompanyDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "公司编号不存在");
+                    "公司不存在");
             }
         }
         return data;

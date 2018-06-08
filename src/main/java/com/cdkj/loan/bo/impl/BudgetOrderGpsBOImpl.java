@@ -73,7 +73,8 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
     public void removeBudgetOrderGpsList(String code) {
         BudgetOrderGps condition = new BudgetOrderGps();
         condition.setBudgetOrder(code);
-        List<BudgetOrderGps> queryBudgetOrderGpsList = queryBudgetOrderGpsList(condition);
+        List<BudgetOrderGps> queryBudgetOrderGpsList = queryBudgetOrderGpsList(
+            condition);
         for (BudgetOrderGps budgetOrderGps : queryBudgetOrderGpsList) {
             budgetOrderGpsDAO.delete(budgetOrderGps);
         }
@@ -96,7 +97,8 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
     }
 
     @Override
-    public List<BudgetOrderGps> queryBudgetOrderGpsList(BudgetOrderGps condition) {
+    public List<BudgetOrderGps> queryBudgetOrderGpsList(
+            BudgetOrderGps condition) {
         return budgetOrderGpsDAO.selectList(condition);
     }
 
@@ -109,7 +111,7 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
             data = budgetOrderGpsDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "gps安装编号不存在");
+                    "gps安装不存在");
             }
         }
         return data;

@@ -67,7 +67,7 @@ public class OverdueMenuBOImpl extends PaginableBOImpl<OverdueMenu>
             data = overdueMenuDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "逾期名单编号不存在!");
+                    "逾期名单不存在!");
             }
         }
         return data;

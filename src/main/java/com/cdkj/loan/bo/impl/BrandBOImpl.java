@@ -53,7 +53,7 @@ public class BrandBOImpl extends PaginableBOImpl<Brand> implements IBrandBO {
             condition.setCode(code);
             data = brandDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "该编号不存在");
+                throw new BizException("xn0000", "品牌不存在");
             }
         }
         return data;

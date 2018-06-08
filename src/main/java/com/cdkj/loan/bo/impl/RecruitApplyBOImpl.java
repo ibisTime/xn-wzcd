@@ -63,7 +63,7 @@ public class RecruitApplyBOImpl extends PaginableBOImpl<RecruitApply>
             data = recruitApplyDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "用人申请编号不存在！");
+                    "用人申请不存在！");
             }
         }
         return data;

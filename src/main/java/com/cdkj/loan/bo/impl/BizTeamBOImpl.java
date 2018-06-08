@@ -21,8 +21,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class BizTeamBOImpl extends PaginableBOImpl<BizTeam> implements
-        IBizTeamBO {
+public class BizTeamBOImpl extends PaginableBOImpl<BizTeam>
+        implements IBizTeamBO {
 
     @Autowired
     private IBizTeamDAO bizTeamDAO;
@@ -84,7 +84,7 @@ public class BizTeamBOImpl extends PaginableBOImpl<BizTeam> implements
             condition.setStatus("1");
             data = bizTeamDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "编号不存在");
+                throw new BizException("xn0000", "业务团队不存在");
             }
         }
         return data;

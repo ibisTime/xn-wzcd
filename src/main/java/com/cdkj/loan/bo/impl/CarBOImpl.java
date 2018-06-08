@@ -52,7 +52,7 @@ public class CarBOImpl extends PaginableBOImpl<Car> implements ICarBO {
             condition.setCode(code);
             data = carDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "该编号不存在");
+                throw new BizException("xn0000", "车型不存在");
             }
         }
         return data;
