@@ -13,6 +13,12 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="assertCode != null and assertCode != '' ">
+				AND t.assert_code = #{assertCode}
+			</if>
+			<if test="userId != null and userId != '' ">
+				AND t.user_id = #{userId}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_assertUser" parameterType="assertUser" resultMap="assertUser_DB_Result">
