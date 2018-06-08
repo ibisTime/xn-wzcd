@@ -39,6 +39,7 @@
 		t.code
 		,t.type
 		,t.apply_user
+		,t.apply_datetime
 		,t.apply_note
 		,t.is_print
 		,t.pdf
@@ -68,6 +69,7 @@
 		code
 		,type
 		,apply_user
+		,apply_datetime
 		,apply_note
 		,is_print
 		,pdf
@@ -80,6 +82,7 @@
 		#{code}
 		,#{type}
 		,#{applyUser}
+		,#{applyDatetime}
 		,#{applyNote}
 		,#{isPrint}
 		,#{pdf}
@@ -105,6 +108,7 @@
 		t.code
 		,t.type
 		,t.apply_user
+		,t.apply_datetime
 		,t.apply_note
 		,t.is_print
 		,t.pdf

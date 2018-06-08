@@ -2,6 +2,7 @@ package com.cdkj.loan.api.impl;
 
 import com.cdkj.loan.ao.IAssertApplyAO;
 import com.cdkj.loan.api.AProcessor;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.domain.AssertApply;
@@ -27,8 +28,10 @@ public class XN632647 extends AProcessor {
     public Object doBusiness() throws BizException {
         AssertApply condition = new AssertApply();
         condition.setApplyUser(req.getApplyUser());
-        condition.setStartApplyDatetime(req.getStartApplyDatetime());
-        condition.setEndApplyDatetime(req.getEndApplyDatetime());
+        condition.setStartApplyDatetime(
+            DateUtil.getFrontDate(req.getStartApplyDatetime(), false));
+        condition.setEndApplyDatetime(
+            DateUtil.getFrontDate(req.getEndApplyDatetime(), true));
         condition.setStatus(req.getStatus());
         condition.setDepartmentCode(req.getDepartmentCode());
 

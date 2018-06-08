@@ -20,6 +20,9 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
 			<if test="startDatetime != null and startDatetime != '' ">
 				AND t.apply_datetime &gt;= #{startDatetime}
 			</if>

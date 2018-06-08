@@ -24,6 +24,9 @@ public class AssertApply extends ABaseDO {
     // 申请人
     private String applyUser;
 
+    // 申请时间
+    private Date applyDatetime;
+
     // 申请说明
     private String applyNote;
 
@@ -49,9 +52,9 @@ public class AssertApply extends ABaseDO {
 
     private String departmentCode;
 
-    private String startApplyDatetime;
+    private Date startApplyDatetime;
 
-    private String endApplyDatetime;
+    private Date endApplyDatetime;
 
     private List<AssertGoods> assertGoodsList;
 
@@ -59,6 +62,14 @@ public class AssertApply extends ABaseDO {
 
     public List<AssertGoods> getAssertGoodsList() {
         return assertGoodsList;
+    }
+
+    public Date getApplyDatetime() {
+        return applyDatetime;
+    }
+
+    public void setApplyDatetime(Date applyDatetime) {
+        this.applyDatetime = applyDatetime;
     }
 
     public void setAssertGoodsList(List<AssertGoods> assertGoodsList) {
@@ -81,19 +92,19 @@ public class AssertApply extends ABaseDO {
         this.departmentCode = departmentCode;
     }
 
-    public String getStartApplyDatetime() {
+    public Date getStartApplyDatetime() {
         return startApplyDatetime;
     }
 
-    public void setStartApplyDatetime(String startApplyDatetime) {
+    public void setStartApplyDatetime(Date startApplyDatetime) {
         this.startApplyDatetime = startApplyDatetime;
     }
 
-    public String getEndApplyDatetime() {
+    public Date getEndApplyDatetime() {
         return endApplyDatetime;
     }
 
-    public void setEndApplyDatetime(String endApplyDatetime) {
+    public void setEndApplyDatetime(Date endApplyDatetime) {
         this.endApplyDatetime = endApplyDatetime;
     }
 
