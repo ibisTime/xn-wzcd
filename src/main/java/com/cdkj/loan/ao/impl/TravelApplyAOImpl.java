@@ -56,7 +56,7 @@ public class TravelApplyAOImpl implements ITravelApplyAO {
         data.setApplyUser(req.getApplyUser());
         data.setApplyDatetime(new Date());
         long totalHour = 0;
-        List<XN632620ReqChild> detailList = req.getDetailList();
+        List<XN632620ReqChild> detailList = req.getTravelApplyDetailList();
         for (XN632620ReqChild child : detailList) {
             Date start = DateUtil.strToDate(child.getStartDatetime(),
                 DateUtil.DATA_TIME_PATTERN_2);
