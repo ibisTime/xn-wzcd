@@ -37,7 +37,7 @@ public class ArchiveLocationAOImpl implements IArchiveLocationAO {
     @Override
     public int editArchiveLocation(ArchiveLocation data) {
         if (!archiveLocationBO.isArchiveLocationExist(data.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "人事档案位置不存在");
         }
         return archiveLocationBO.refreshArchiveLocation(data);
     }
@@ -45,7 +45,7 @@ public class ArchiveLocationAOImpl implements IArchiveLocationAO {
     @Override
     public int dropArchiveLocation(String code) {
         if (!archiveLocationBO.isArchiveLocationExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "人事档案位置不存在");
         }
         return archiveLocationBO.removeArchiveLocation(code);
     }
@@ -53,8 +53,8 @@ public class ArchiveLocationAOImpl implements IArchiveLocationAO {
     @Override
     public Paginable<ArchiveLocation> queryArchiveLocationPage(int start,
             int limit, ArchiveLocation condition) {
-        Paginable<ArchiveLocation> paginable = archiveLocationBO.getPaginable(
-            start, limit, condition);
+        Paginable<ArchiveLocation> paginable = archiveLocationBO
+            .getPaginable(start, limit, condition);
         List<ArchiveLocation> list = paginable.getList();
         for (ArchiveLocation archiveLocation : list) {
             init(archiveLocation);

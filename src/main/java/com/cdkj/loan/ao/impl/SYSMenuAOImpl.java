@@ -23,7 +23,7 @@ public class SYSMenuAOImpl implements ISYSMenuAO {
             // 判断父编号是否存在
             if (!"0".equalsIgnoreCase(data.getParentCode())
                     && !sysMenuBO.isSYSMenuExist(data.getParentCode())) {
-                throw new BizException("lh0000", "父节点菜单编号不存在！");
+                throw new BizException("lh0000", "父节点菜单不存在！");
             }
             sysMenuBO.saveSYSMenu(data);
         } else {
@@ -46,7 +46,7 @@ public class SYSMenuAOImpl implements ISYSMenuAO {
         if (data != null && sysMenuBO.isSYSMenuExist(data.getCode())) {
             sysMenuBO.refreshSYSMenu(data);
         } else {
-            throw new BizException("lh0000", "菜单编号不存在！");
+            throw new BizException("lh0000", "菜单不存在！");
         }
         return true;
     }
@@ -65,7 +65,7 @@ public class SYSMenuAOImpl implements ISYSMenuAO {
     @Override
     public SYSMenu getSYSMenu(String code) {
         if (!sysMenuBO.isSYSMenuExist(code)) {
-            throw new BizException("lh0000", "菜单编号不存在！");
+            throw new BizException("lh0000", "菜单不存在！");
         }
         SYSMenu condition = new SYSMenu();
         condition.setCode(code);

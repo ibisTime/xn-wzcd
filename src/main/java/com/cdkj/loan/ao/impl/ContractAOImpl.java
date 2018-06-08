@@ -44,7 +44,7 @@ public class ContractAOImpl implements IContractAO {
     @Override
     public int editContract(Contract data) {
         if (!contractBO.isContractExist(data.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "合同不存在");
         }
         return contractBO.refreshContract(data);
     }
@@ -52,7 +52,7 @@ public class ContractAOImpl implements IContractAO {
     @Override
     public int dropContract(String code) {
         if (!contractBO.isContractExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "合同不存在");
         }
         return contractBO.removeContract(code);
     }

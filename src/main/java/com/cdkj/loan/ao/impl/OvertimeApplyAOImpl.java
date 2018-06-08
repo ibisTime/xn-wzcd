@@ -70,7 +70,7 @@ public class OvertimeApplyAOImpl implements IOvertimeApplyAO {
     @Override
     public int editOvertimeApply(OvertimeApply data) {
         if (!overtimeApplyBO.isOvertimeApplyExist(data.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "加班申请不存在");
         }
         return overtimeApplyBO.refreshOvertimeApply(data);
     }
@@ -78,7 +78,7 @@ public class OvertimeApplyAOImpl implements IOvertimeApplyAO {
     @Override
     public int dropOvertimeApply(String code) {
         if (!overtimeApplyBO.isOvertimeApplyExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "加班申请不存在");
         }
         return overtimeApplyBO.removeOvertimeApply(code);
     }

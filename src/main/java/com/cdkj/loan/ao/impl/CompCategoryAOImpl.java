@@ -38,7 +38,7 @@ public class CompCategoryAOImpl implements ICompCategoryAO {
     @Override
     public void editCompCategory(XN632741Req req) {
         if (!compCategoryBO.isCompCategoryExist(req.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "库存不存在");
         }
         CompCategory data = new CompCategory();
         data.setCode(req.getCode());

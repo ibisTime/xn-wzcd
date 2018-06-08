@@ -42,7 +42,7 @@ public class SYSRoleAOImpl implements ISYSRoleAO {
     @Transactional
     public boolean dropSYSRole(String roleCode) {
         if (!sysRoleBO.isSYSRoleExist(roleCode)) {
-            throw new BizException("lh4000", "角色编号不存在！");
+            throw new BizException("lh4000", "角色不存在！");
         }
         SYSUser condition = new SYSUser();
         condition.setRoleCode(roleCode);
@@ -61,7 +61,7 @@ public class SYSRoleAOImpl implements ISYSRoleAO {
         if (data != null && sysRoleBO.isSYSRoleExist(data.getCode())) {
             sysRoleBO.refreshSYSRole(data);
         } else {
-            throw new BizException("lh4000", "角色编号不存在！");
+            throw new BizException("lh4000", "角色不存在！");
         }
         return true;
     }
@@ -83,7 +83,7 @@ public class SYSRoleAOImpl implements ISYSRoleAO {
     @Override
     public SYSRole getSYSRole(String code) {
         if (!sysRoleBO.isSYSRoleExist(code)) {
-            throw new BizException("lh4000", "角色编号不存在！");
+            throw new BizException("lh4000", "角色不存在！");
         }
         return sysRoleBO.getSYSRole(code);
     }

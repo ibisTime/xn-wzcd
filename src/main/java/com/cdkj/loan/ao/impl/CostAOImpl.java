@@ -37,7 +37,7 @@ public class CostAOImpl implements ICostAO {
     @Override
     public int editCost(Cost data) {
         if (!costBO.isCostExist(data.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "清收费用不存在");
         }
         return costBO.refreshCost(data);
     }

@@ -31,7 +31,7 @@ public class SocialRelationAOImpl implements ISocialRelationAO {
     @Override
     public int editSocialRelation(SocialRelation data) {
         if (!socialRelationBO.isSocialRelationExist(data.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "社会关系不存在");
         }
         return socialRelationBO.refreshSocialRelation(data);
     }
@@ -39,7 +39,7 @@ public class SocialRelationAOImpl implements ISocialRelationAO {
     @Override
     public int dropSocialRelation(String code) {
         if (!socialRelationBO.isSocialRelationExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "社会关系不存在");
         }
         return socialRelationBO.removeSocialRelation(code);
     }
@@ -51,7 +51,8 @@ public class SocialRelationAOImpl implements ISocialRelationAO {
     }
 
     @Override
-    public List<SocialRelation> querySocialRelationList(SocialRelation condition) {
+    public List<SocialRelation> querySocialRelationList(
+            SocialRelation condition) {
         return socialRelationBO.querySocialRelationList(condition);
     }
 

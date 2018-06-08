@@ -40,7 +40,7 @@ public class RemindLogAOImpl implements IRemindLogAO {
     @Override
     public int editRemindLog(RemindLog data) {
         if (!remindLogBO.isRemindLogExist(data.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "催收记录不存在");
         }
         return remindLogBO.refreshRemindLog(data);
     }
@@ -48,7 +48,7 @@ public class RemindLogAOImpl implements IRemindLogAO {
     @Override
     public int dropRemindLog(String code) {
         if (!remindLogBO.isRemindLogExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "催收记录不存在");
         }
         return remindLogBO.removeRemindLog(code);
     }

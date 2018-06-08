@@ -85,7 +85,7 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
     @Override
     public int editAssertApply(AssertApply data) {
         if (!assertApplyBO.isAssertApplyExist(data.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "办公用品不存在");
         }
         return assertApplyBO.refreshAssertApply(data);
     }
@@ -93,7 +93,7 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
     @Override
     public int dropAssertApply(String code) {
         if (!assertApplyBO.isAssertApplyExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "办公用品不存在");
         }
         return assertApplyBO.removeAssertApply(code);
     }
@@ -128,8 +128,8 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
                 .queryAssertUserList(condition2);
 
             for (AssertUser assertUser : assertUserList) {
-                Archive archive = archiveBO.getArchiveByUserid(assertUser
-                    .getUserId());
+                Archive archive = archiveBO
+                    .getArchiveByUserid(assertUser.getUserId());
                 assertUser.setArchive(archive);
 
             }

@@ -28,7 +28,7 @@ public class BlacklistAOImpl implements IBlacklistAO {
             String remark) {
         User user = userBO.getUser(userId);
         if (user == null) {
-            throw new BizException("xn000000", "用户编号不存在");
+            throw new BizException("xn000000", "黑名单不存在");
         }
         Blacklist condition = new Blacklist();
         condition.setUserId(userId);

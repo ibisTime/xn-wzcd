@@ -57,8 +57,8 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
     public Paginable<BudgetOrderFee> queryBudgetOrderFeePage(int start,
             int limit, BudgetOrderFee condition) {
 
-        Paginable<BudgetOrderFee> paginable = budgetOrderFeeBO.getPaginable(
-            start, limit, condition);
+        Paginable<BudgetOrderFee> paginable = budgetOrderFeeBO
+            .getPaginable(start, limit, condition);
 
         List<BudgetOrderFee> list = paginable.getList();
 
@@ -81,7 +81,8 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
     }
 
     @Override
-    public List<BudgetOrderFee> queryBudgetOrderFeeList(BudgetOrderFee condition) {
+    public List<BudgetOrderFee> queryBudgetOrderFeeList(
+            BudgetOrderFee condition) {
         return budgetOrderFeeBO.queryBudgetOrderFeeList(condition);
     }
 
@@ -90,7 +91,7 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
         BudgetOrderFee budgetOrderFee = budgetOrderFeeBO
             .getBudgetOrderFee(code);
         if (null == budgetOrderFee) {
-            throw new BizException("xn0000", "手续费编号不存在");
+            throw new BizException("xn0000", "手续费不存在");
         }
 
         // 设置操作人真实姓名
@@ -100,10 +101,10 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
         }
 
         // 设置业务公司真实姓名
-        Department department = departmentBO.getDepartment(budgetOrderFee
-            .getCompanyCode());
-        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(budgetOrderFee
-            .getBudgetOrder());
+        Department department = departmentBO
+            .getDepartment(budgetOrderFee.getCompanyCode());
+        BudgetOrder budgetOrder = budgetOrderBO
+            .getBudgetOrder(budgetOrderFee.getBudgetOrder());
         SYSUser saleUser = sysUserBO.getUser(budgetOrderFee.getUserId());
         budgetOrderFee.setUserName(saleUser.getRealName());
 
@@ -128,8 +129,8 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
             CollectBankcard collectBankcard = collectBankcardBO
                 .getCollectBankcard(platBankcard);
             budgetOrderFeeDetail.setCollectBankcard(collectBankcard);
-            SYSUser updateUser = sysUserBO.getUser(budgetOrderFeeDetail
-                .getUpdater());
+            SYSUser updateUser = sysUserBO
+                .getUser(budgetOrderFeeDetail.getUpdater());
             if (null != updateUser) {
                 budgetOrderFeeDetail.setUpdater(updateUser.getRealName());
             }

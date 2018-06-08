@@ -69,7 +69,7 @@ public class SuppleSignApplyAOImpl implements ISuppleSignApplyAO {
     @Override
     public void approveSuppleSignApply(XN632601Req req) {
         if (!suppleSignApplyBO.isSuppleSignApplyExist(req.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "补签不存在");
         }
         SuppleSignApply suppleSignApply = suppleSignApplyBO
             .getSuppleSignApply(req.getCode());

@@ -62,7 +62,7 @@ public class WelfareApplyAOImpl implements IWelfareApplyAO {
     @Override
     public void approveWelfareApply(XN632661Req req) {
         if (!welfareApplyBO.isWelfareApplyExist(req.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "福利申请不存在");
         }
         WelfareApply welfareApply = welfareApplyBO
             .getWelfareApply(req.getCode());

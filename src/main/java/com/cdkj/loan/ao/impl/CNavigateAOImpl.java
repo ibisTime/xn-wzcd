@@ -29,7 +29,7 @@ public class CNavigateAOImpl implements ICNavigateAO {
     @Override
     public void dropCNavigate(String code) {
         if (!cNavigateBO.isCNavigateExist(code)) {
-            throw new BizException("xn0000", "该编号不存在");
+            throw new BizException("xn0000", "导航不存在");
         }
         cNavigateBO.removeCNavigate(code);
     }
@@ -45,8 +45,8 @@ public class CNavigateAOImpl implements ICNavigateAO {
                 // 为指定新增特殊前缀格式
                 String oldCode = data.getCode();
                 if (!data.getCode().contains(EGeneratePrefix.DH.getCode())) {
-                    navigate.setCode(OrderNoGenerater.generate(oldCode
-                        .substring(0, 3)));
+                    navigate.setCode(
+                        OrderNoGenerater.generate(oldCode.substring(0, 3)));
                 } else {
                     navigate.setCode(null);
                 }

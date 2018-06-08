@@ -11,49 +11,47 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.exception.BizException;
 
-
-
 //CHECK ��鲢��ע�� 
 @Service
 public class RepointAOImpl implements IRepointAO {
 
-	@Autowired
-	private IRepointBO repointBO;
+    @Autowired
+    private IRepointBO repointBO;
 
-	@Override
-	public String addRepoint(Repoint data) {
-		return repointBO.saveRepoint(data);
-	}
+    @Override
+    public String addRepoint(Repoint data) {
+        return repointBO.saveRepoint(data);
+    }
 
-	@Override
-	public int editRepoint(Repoint data) {
-		if (!repointBO.isRepointExist(data.getCode())) {
-			throw new BizException("xn0000", "记录编号不存在");
-		}
-		return repointBO.refreshRepoint(data);
-	}
+    @Override
+    public int editRepoint(Repoint data) {
+        if (!repointBO.isRepointExist(data.getCode())) {
+            throw new BizException("xn0000", "返点表不存在");
+        }
+        return repointBO.refreshRepoint(data);
+    }
 
-	@Override
-	public int dropRepoint(String code) {
-		if (!repointBO.isRepointExist(code)) {
-			throw new BizException("xn0000", "记录编号不存在");
-		}
-		return repointBO.removeRepoint(code);
-	}
+    @Override
+    public int dropRepoint(String code) {
+        if (!repointBO.isRepointExist(code)) {
+            throw new BizException("xn0000", "返点表不存在");
+        }
+        return repointBO.removeRepoint(code);
+    }
 
-	@Override
-	public Paginable<Repoint> queryRepointPage(int start, int limit,
-			Repoint condition) {
-		return repointBO.getPaginable(start, limit, condition);
-	}
+    @Override
+    public Paginable<Repoint> queryRepointPage(int start, int limit,
+            Repoint condition) {
+        return repointBO.getPaginable(start, limit, condition);
+    }
 
-	@Override
-	public List<Repoint> queryRepointList(Repoint condition) {
-		return repointBO.queryRepointList(condition);
-	}
+    @Override
+    public List<Repoint> queryRepointList(Repoint condition) {
+        return repointBO.queryRepointList(condition);
+    }
 
-	@Override
-	public Repoint getRepoint(String code) {
-		return repointBO.getRepoint(code);
-	}
+    @Override
+    public Repoint getRepoint(String code) {
+        return repointBO.getRepoint(code);
+    }
 }

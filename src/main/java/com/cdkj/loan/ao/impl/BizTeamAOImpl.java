@@ -55,7 +55,7 @@ public class BizTeamAOImpl implements IBizTeamAO {
     @Override
     public int editBizTeam(BizTeam data) {
         if (!bizTeamBO.isBizTeamExist(data.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "业务团队不存在");
         }
         SYSUser user = sysUserBO.getUser(data.getCaptain());
         data.setCompanyCode(user.getCompanyCode());
@@ -65,7 +65,7 @@ public class BizTeamAOImpl implements IBizTeamAO {
     @Override
     public int dropBizTeam(String code) {
         if (!bizTeamBO.isBizTeamExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "业务团队不存在");
         }
         return bizTeamBO.removeBizTeam(code);
     }

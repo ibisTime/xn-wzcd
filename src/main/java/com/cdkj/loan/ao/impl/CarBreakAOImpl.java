@@ -54,7 +54,7 @@ public class CarBreakAOImpl implements ICarBreakAO {
     @Override
     public void approveCarBreak(XN632631Req req) {
         if (!carBreakBO.isCarBreakExist(req.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "违章处理不存在");
         }
         CarBreak carBreak = carBreakBO.getCarBreak(req.getCode());
         if (!ECarBreakStatus.TO_APPROVE.getCode()

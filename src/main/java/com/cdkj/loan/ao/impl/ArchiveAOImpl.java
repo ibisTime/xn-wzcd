@@ -145,7 +145,7 @@ public class ArchiveAOImpl implements IArchiveAO {
     @Override
     public void editArchive(XN632802Req req) {
         if (!archiveBO.isArchiveExist(req.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "人事档案不存在");
         }
         Archive data = new Archive();
         data.setCode(req.getCode());
@@ -233,7 +233,7 @@ public class ArchiveAOImpl implements IArchiveAO {
     @Override
     public void dropArchive(String code) {
         if (!archiveBO.isArchiveExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "人事档案不存在");
         }
         archiveBO.removeArchive(code);
         socialRelationBO.removeSocialRelation(code);
@@ -265,7 +265,7 @@ public class ArchiveAOImpl implements IArchiveAO {
     @Override
     public void editLeaveArchive(Archive data) {
         if (!archiveBO.isArchiveExist(data.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "人事档案不存在");
         }
         archiveBO.refreshLeaveArchive(data);
     }

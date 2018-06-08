@@ -33,7 +33,7 @@ public class SYSMenuRoleAOImpl implements ISYSMenuRoleAO {
     public int addSYSMenuRole(SYSMenuRole data) {
         int count = 0;
         if (!sysRoleBO.isSYSRoleExist(data.getRoleCode())) {
-            throw new BizException("lh0000", "角色编号不存在！");
+            throw new BizException("lh0000", "角色不存在！");
         }
         // 删除角色所关联的菜单
         sysMenuRoleBO.removeSYSMenuList(data.getRoleCode());
@@ -41,7 +41,7 @@ public class SYSMenuRoleAOImpl implements ISYSMenuRoleAO {
         if (CollectionUtils.isNotEmpty(data.getMenuCodeList())) {
             for (String sysMenuCode : data.getMenuCodeList()) {
                 if (!sysMenuBO.isSYSMenuExist(sysMenuCode)) {
-                    throw new BizException("lh0000", "菜单编号不存在！");
+                    throw new BizException("lh0000", "菜单不存在！");
                 }
                 SYSMenuRole sysMenuRole = new SYSMenuRole();
                 sysMenuRole.setMenuCode(sysMenuCode);

@@ -67,7 +67,7 @@ public class LeaveApplyAOImpl implements ILeaveApplyAO {
     @Override
     public void approveLeaveApply(XN632891Req req) {
         if (!leaveApplyBO.isLeaveApplyExist(req.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "请假申请不存在");
         }
         LeaveApply leaveApply = leaveApplyBO.getLeaveApply(req.getCode());
         if (!ELeaveApplyStatus.TO_APPROVE.getCode()
