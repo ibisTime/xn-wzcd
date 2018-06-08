@@ -18,10 +18,10 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
-/** 
- * 催款
- * @author: CYL 
- * @since: 2018年5月9日 上午10:10:14 
+/**
+ * 逾期处理
+ * @author: xieyj 
+ * @since: 2018年6月8日 上午1:04:02 
  * @history:
  */
 public class XN630532 extends AProcessor {
@@ -36,7 +36,7 @@ public class XN630532 extends AProcessor {
      */
     @Override
     public Object doBusiness() throws BizException {
-        repayPlanAO.OverdueHandle(req);
+        repayPlanAO.overdueHandle(req);
         return new BooleanRes(true);
     }
 

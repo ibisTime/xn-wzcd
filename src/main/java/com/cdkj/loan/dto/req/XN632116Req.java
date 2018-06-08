@@ -13,8 +13,8 @@ public class XN632116Req extends APageReq {
      */
     private static final long serialVersionUID = 1L;
 
-    // 客户姓名
-    private String userId;
+    // 业务员编号
+    private String saleUserId;
 
     // 预算单编号
     private String budgetOrderCode;
@@ -28,12 +28,12 @@ public class XN632116Req extends APageReq {
     // 节点编号
     private String curNodeCode;
 
-    public String getUserId() {
-        return userId;
+    public String getSaleUserId() {
+        return saleUserId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setSaleUserId(String saleUserId) {
+        this.saleUserId = saleUserId;
     }
 
     public String getBudgetOrderCode() {

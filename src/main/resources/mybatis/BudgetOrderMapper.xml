@@ -260,6 +260,10 @@
 			<if test="loanProductCode != null and loanProductCode != '' ">
 				AND t.loan_product_code = #{loanProductCode}
 			</if>
+			<if test="saleUserId != null and saleUserId != '' ">
+				AND t.sale_user_id = #{saleUserId}
+			</if>
+			
 			<if test="applyUserId != null and applyUserId != '' ">
 				AND t.apply_user_id = #{applyUserId}
 			</if>

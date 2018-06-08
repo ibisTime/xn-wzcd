@@ -121,6 +121,10 @@ public class RepayBiz extends ABaseDO {
     // 备注
     private String remark;
 
+    // 最近逾期红名单还款计划
+
+    // 最近逾期红名单还款计划
+
     // ****** 辅助字段 ******
 
     // 用户信息

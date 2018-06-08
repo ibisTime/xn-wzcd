@@ -22,9 +22,9 @@ public interface IRepayBizAO {
 
     public RepayBiz getRepayBiz(String code);
 
-    public void EarlyRepayment(String code, String updater, String remark);
+    public void advanceRepay(String code, String updater, String remark);
 
-    public void EnterBlackList(String code, String blackHandleNote,
+    public void enterBlackList(String code, String blackHandleNote,
             String updater, String remark);
 
     public void confirmClose(XN630513Req req);

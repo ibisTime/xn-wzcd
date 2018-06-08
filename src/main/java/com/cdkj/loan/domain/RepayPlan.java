@@ -78,6 +78,69 @@ public class RepayPlan extends ABaseDO {
     // 已催款次数
     private int remindCount;
 
+    // 拖车申请金额
+    private Long tsCarAmount;
+
+    // 拖车收款账号
+    private String tsBankcardNumber;
+
+    // 拖车开户行
+    private String tsBankName;
+
+    // 拖车开户支行
+    private String tsSubbranch;
+
+    // 拖车申请说明
+    private String tcApplyNote;
+
+    // 打款金额
+    private Long remitAmount;
+
+    // 打款水单
+    private String remitBillPdf;
+
+    // 收车地点
+    private String takeCarAddress;
+
+    // 拖车时间
+    private Date takeDatetime;
+
+    // 拖车人员
+    private String takeName;
+
+    // 拖车停放位置
+    private String takeLocation;
+
+    // 拖车说明
+    private String takeNote;
+
+    // 流水
+    private String jourPdf;
+
+    // 房产
+    private String housePdf;
+
+    // 担保人姓名
+    private String guaName;
+
+    // 担保人身份证号
+    private String guaIdNo;
+
+    // 担保人手机号
+    private String guaMobile;
+
+    // 担保人现居住地址
+    private String guaNowAddress;
+
+    // 担保赎回说明
+    private String guaNote;
+
+    // 建议(1=6个月保证金/2=已结清)
+    private String suggest;
+
+    // 建议说明
+    private String suggestNote;
+
     // ****** 辅助字段 ******
     // 还款计划开始时间
     private Date repayStartDatetime;
@@ -108,6 +171,174 @@ public class RepayPlan extends ABaseDO {
 
     // 还款卡号
     private String bankcardNumber;
+
+    public Long getRemitAmount() {
+        return remitAmount;
+    }
+
+    public void setRemitAmount(Long remitAmount) {
+        this.remitAmount = remitAmount;
+    }
+
+    public String getRemitBillPdf() {
+        return remitBillPdf;
+    }
+
+    public void setRemitBillPdf(String remitBillPdf) {
+        this.remitBillPdf = remitBillPdf;
+    }
+
+    public String getTakeCarAddress() {
+        return takeCarAddress;
+    }
+
+    public void setTakeCarAddress(String takeCarAddress) {
+        this.takeCarAddress = takeCarAddress;
+    }
+
+    public Date getTakeDatetime() {
+        return takeDatetime;
+    }
+
+    public void setTakeDatetime(Date takeDatetime) {
+        this.takeDatetime = takeDatetime;
+    }
+
+    public String getTakeName() {
+        return takeName;
+    }
+
+    public void setTakeName(String takeName) {
+        this.takeName = takeName;
+    }
+
+    public String getTakeLocation() {
+        return takeLocation;
+    }
+
+    public void setTakeLocation(String takeLocation) {
+        this.takeLocation = takeLocation;
+    }
+
+    public String getTakeNote() {
+        return takeNote;
+    }
+
+    public void setTakeNote(String takeNote) {
+        this.takeNote = takeNote;
+    }
+
+    public String getJourPdf() {
+        return jourPdf;
+    }
+
+    public void setJourPdf(String jourPdf) {
+        this.jourPdf = jourPdf;
+    }
+
+    public String getHousePdf() {
+        return housePdf;
+    }
+
+    public void setHousePdf(String housePdf) {
+        this.housePdf = housePdf;
+    }
+
+    public String getGuaName() {
+        return guaName;
+    }
+
+    public void setGuaName(String guaName) {
+        this.guaName = guaName;
+    }
+
+    public String getGuaIdNo() {
+        return guaIdNo;
+    }
+
+    public void setGuaIdNo(String guaIdNo) {
+        this.guaIdNo = guaIdNo;
+    }
+
+    public String getGuaMobile() {
+        return guaMobile;
+    }
+
+    public void setGuaMobile(String guaMobile) {
+        this.guaMobile = guaMobile;
+    }
+
+    public String getGuaNowAddress() {
+        return guaNowAddress;
+    }
+
+    public void setGuaNowAddress(String guaNowAddress) {
+        this.guaNowAddress = guaNowAddress;
+    }
+
+    public String getGuaNote() {
+        return guaNote;
+    }
+
+    public void setGuaNote(String guaNote) {
+        this.guaNote = guaNote;
+    }
+
+    public String getSuggest() {
+        return suggest;
+    }
+
+    public void setSuggest(String suggest) {
+        this.suggest = suggest;
+    }
+
+    public String getSuggestNote() {
+        return suggestNote;
+    }
+
+    public void setSuggestNote(String suggestNote) {
+        this.suggestNote = suggestNote;
+    }
+
+    public String getTcApplyNote() {
+        return tcApplyNote;
+    }
+
+    public void setTcApplyNote(String tcApplyNote) {
+        this.tcApplyNote = tcApplyNote;
+    }
+
+    public Long getTsCarAmount() {
+        return tsCarAmount;
+    }
+
+    public void setTsCarAmount(Long tsCarAmount) {
+        this.tsCarAmount = tsCarAmount;
+    }
+
+    public String getTsBankcardNumber() {
+        return tsBankcardNumber;
+    }
+
+    public void setTsBankcardNumber(String tsBankcardNumber) {
+        this.tsBankcardNumber = tsBankcardNumber;
+    }
+
+    public String getTsBankName() {
+        return tsBankName;
+    }
+
+    public void setTsBankName(String tsBankName) {
+        this.tsBankName = tsBankName;
+    }
+
+    public String getTsSubbranch() {
+        return tsSubbranch;
+    }
+
+    public void setTsSubbranch(String tsSubbranch) {
+        this.tsSubbranch = tsSubbranch;
+    }
 
     public String getBankcardNumber() {
         return bankcardNumber;
