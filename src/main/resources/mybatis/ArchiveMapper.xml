@@ -94,9 +94,7 @@
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
-			<if test="isDelete != null and isDelete != '' ">
-				AND t.is_delete = #{isDelete}
-			</if>
+			AND t.is_delete = '1'
 		</trim>
 	</sql>
 	<select id="select_archive" parameterType="archive" resultMap="Archive_DB_Result">

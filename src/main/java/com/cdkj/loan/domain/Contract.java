@@ -20,6 +20,9 @@ public class Contract extends ABaseDO {
     // 合同类型
     private String type;
 
+    // 用户编号
+    private String userId;
+
     // 档案编号
     private String archiveCode;
 
@@ -48,6 +51,14 @@ public class Contract extends ABaseDO {
 
     // 结束时间
     private Date warnDatetimeEnd;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public Date getWarnDatetimeStart() {
         return warnDatetimeStart;

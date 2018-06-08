@@ -5,6 +5,7 @@
 	<resultMap id="contract_DB_Result" type="contract">
 		<result column="code" property="code" />
 		<result column="type" property="type" />
+		<result column="user_id" property="userId" />
 		<result column="archive_code" property="archiveCode" />
 		<result column="contract_no" property="contractNo" />
 		<result column="start_datetime" property="startDatetime" />
@@ -18,8 +19,8 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
-			<if test="archiveCode != null and archiveCode != '' ">
-				AND t.archive_code = #{archiveCode}
+			<if test="userId != null and userId != '' ">
+				AND t.user_id = #{userId}
 			</if>
 			<if test="contractNo != null and contractNo != '' ">
 				AND t.contract_no = #{contractNo}
@@ -40,6 +41,7 @@
 		SELECT
 		t.code
 		,t.type
+		,t.user_id
 		,t.archive_code
 		,t.contract_no
 		,t.start_datetime
@@ -67,6 +69,7 @@
 		tp_contract(
 		code
 		,type
+		,user_id
 		,archive_code
 		,contract_no
 		,start_datetime
@@ -78,6 +81,7 @@
 		VALUES(
 		#{code}
 		,#{type}
+		,#{userId}
 		,#{archiveCode}
 		,#{contractNo}
 		,#{startDatetime}

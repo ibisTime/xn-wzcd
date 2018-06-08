@@ -30,7 +30,7 @@ public class XN632835 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         Contract condition = new Contract();
-        condition.setArchiveCode(req.getArchiveCode());
+        condition.setUserId(req.getUserId());
         condition.setContractNo(req.getContractNo());
         condition.setType(req.getType());
         String column = req.getOrderColumn();
