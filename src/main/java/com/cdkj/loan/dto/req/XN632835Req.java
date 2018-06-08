@@ -10,18 +10,18 @@ public class XN632835Req extends APageReq {
 
     private static final long serialVersionUID = 1L;
 
-    private String archiveCode;
-
     private String contractNo;
 
     private String type;
 
-    public String getArchiveCode() {
-        return archiveCode;
+    private String userId;
+
+    public String getUserId() {
+        return userId;
     }
 
-    public void setArchiveCode(String archiveCode) {
-        this.archiveCode = archiveCode;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getContractNo() {
