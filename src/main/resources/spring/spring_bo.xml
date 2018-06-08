@@ -367,4 +367,8 @@
 		<property name="paginableDAO" ref="dayRestDAOImpl"/>
 	</bean>
 	
+	<bean id="repointBO" class="com.cdkj.loan.bo.impl.RepointBOImpl">
+		<property name="paginableDAO" ref="repointDAOImpl"/>
+	</bean>
+	
 </beans>

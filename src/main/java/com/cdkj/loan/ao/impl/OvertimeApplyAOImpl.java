@@ -125,7 +125,7 @@ public class OvertimeApplyAOImpl implements IOvertimeApplyAO {
         Archive archiveConditon = new Archive();
         archiveConditon.setUserId(user.getUserId());
         List<Archive> archiveList = archiveBO.queryArchiveList(archiveConditon);
-        if (null != archiveList) {
+        if (!archiveList.isEmpty()) {
             Archive archive = archiveList.get(0);
             overtimeApply.setJobNo(archive.getJobNo());
         }
