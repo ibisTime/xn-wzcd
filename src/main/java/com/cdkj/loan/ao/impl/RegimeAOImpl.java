@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IRegimeAO;
+import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IRegimeBO;
 import com.cdkj.loan.bo.IScopePeopleBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -32,6 +33,9 @@ public class RegimeAOImpl implements IRegimeAO {
 
     @Autowired
     private IScopePeopleBO scopePeopleBO;
+
+    @Autowired
+    private IArchiveBO archiveBO;
 
     @Override
     @Transactional
@@ -60,12 +64,25 @@ public class RegimeAOImpl implements IRegimeAO {
     @Override
     public Paginable<Regime> queryRegimePage(int start, int limit,
             Regime condition) {
-        return regimeBO.getPaginable(start, limit, condition);
+        Paginable<Regime> paginable = regimeBO.getPaginable(start, limit,
+            condition);
+        for (Regime regime : paginable.getList()) {
+            String realName = archiveBO.getArchiveByUserid(regime.getUpdater())
+                .getRealName();
+            regime.setUpdaterName(realName);
+        }
+        return paginable;
     }
 
     @Override
     public List<Regime> queryRegimeList(Regime condition) {
-        return regimeBO.queryRegimeList(condition);
+        List<Regime> queryRegimeList = regimeBO.queryRegimeList(condition);
+        for (Regime regime : queryRegimeList) {
+            String realName = archiveBO.getArchiveByUserid(regime.getUpdater())
+                .getRealName();
+            regime.setUpdaterName(realName);
+        }
+        return queryRegimeList;
     }
 
     @Override
@@ -75,7 +92,9 @@ public class RegimeAOImpl implements IRegimeAO {
         scopePeople.setRefCode(code);
         regime.setScopePeopleList(
             scopePeopleBO.queryScopePeopleList(scopePeople));
-
+        String realName = archiveBO.getArchiveByUserid(regime.getUpdater())
+            .getRealName();
+        regime.setUpdaterName(realName);
         return regime;
     }
 

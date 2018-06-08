@@ -45,6 +45,19 @@ public class Regime extends ABaseDO {
     // 范围列表
     private List<ScopePeople> scopePeopleList;
 
+    /*--------辅助字段----------*/
+
+    // 更新人姓名
+    private String updaterName;
+
+    public String getUpdaterName() {
+        return updaterName;
+    }
+
+    public void setUpdaterName(String updaterName) {
+        this.updaterName = updaterName;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }

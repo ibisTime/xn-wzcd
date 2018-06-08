@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICompCategoryAO;
+import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.ICompCategoryBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.CompCategory;
@@ -22,8 +23,12 @@ import com.cdkj.loan.exception.BizException;
  */
 @Service
 public class CompCategoryAOImpl implements ICompCategoryAO {
+
     @Autowired
     private ICompCategoryBO compCategoryBO;
+
+    @Autowired
+    private IArchiveBO archiveBO;
 
     @Override
     public String addCompCategory(XN632740Req req) {
@@ -53,16 +58,34 @@ public class CompCategoryAOImpl implements ICompCategoryAO {
     @Override
     public Paginable<CompCategory> queryCompCategoryPage(int start, int limit,
             CompCategory condition) {
-        return compCategoryBO.getPaginable(start, limit, condition);
+        Paginable<CompCategory> paginable = compCategoryBO.getPaginable(start,
+            limit, condition);
+        for (CompCategory compCategory : paginable.getList()) {
+            String realName = archiveBO
+                .getArchiveByUserid(compCategory.getUpdater()).getRealName();
+            compCategory.setUpdaterName(realName);
+        }
+        return paginable;
     }
 
     @Override
     public List<CompCategory> queryCompCategoryList(CompCategory condition) {
-        return compCategoryBO.queryCompCategoryList(condition);
+        List<CompCategory> compCategoryList = compCategoryBO
+            .queryCompCategoryList(condition);
+        for (CompCategory compCategory : compCategoryList) {
+            String realName = archiveBO
+                .getArchiveByUserid(compCategory.getUpdater()).getRealName();
+            compCategory.setUpdaterName(realName);
+        }
+        return compCategoryList;
     }
 
     @Override
     public CompCategory getCompCategory(String code) {
-        return compCategoryBO.getCompCategory(code);
+        CompCategory compCategory = compCategoryBO.getCompCategory(code);
+        String realName = archiveBO
+            .getArchiveByUserid(compCategory.getUpdater()).getRealName();
+        compCategory.setUpdaterName(realName);
+        return compCategory;
     }
 }
