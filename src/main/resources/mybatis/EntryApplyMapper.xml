@@ -28,7 +28,7 @@
 		<result column="relative_name" property="relativeName" />
 		<result column="relative_relation" property="relativeRelation" />
 		<result column="relative_position" property="relativePosition" />
-		<result column=" main_perform" property=" mainPerform" />
+		<result column="main_perform" property="mainPerform" />
 		<result column="probation_start_datetime" property="probationStartDatetime" />
 		<result column="probation_end_datetime" property="probationEndDatetime" />
 		<result column="probation_salary" property="probationSalary" />
@@ -46,6 +46,7 @@
 		<result column="salary_card_no" property="salaryCardNo" />
 		<result column="bank" property="bank" />
 		<result column="bank_code" property="bankCode" />
+		<result column="subbranch" property="subbranch" />
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
@@ -67,10 +68,10 @@
 				AND t.real_name = #{realName}
 			</if>
 			<if test="entryDatetimeStart != null and entryDatetimeStart != '' ">
-				<![CDATA[AND t.entry_datetime > #{entryDatetimeEnd}]]>
+				<![CDATA[AND t.entry_datetime >= #{entryDatetimeEnd}]]>
 			</if>
 			<if test="entryDatetimeEnd != null and entryDatetimeEnd != '' ">
-				<![CDATA[AND t.entry_datetime < #{entryDatetimeEnd}]]>
+				<![CDATA[AND t.entry_datetime <= #{entryDatetimeEnd}]]>
 			</if>
 		</trim>
 	</sql>
@@ -101,7 +102,7 @@
 		,t.relative_name
 		,t.relative_relation
 		,t.relative_position
-		,t. main_perform
+		,t.main_perform
 		,t.probation_start_datetime
 		,t.probation_end_datetime
 		,t.probation_salary
@@ -119,6 +120,7 @@
 		,t.salary_card_no
 		,t.bank
 		,t.bank_code
+		,t.subbranch
 		,t.status
 		,t.updater
 		,t.update_datetime
@@ -168,7 +170,7 @@
 		,relative_name
 		,relative_relation
 		,relative_position
-		, main_perform
+		,main_perform
 		,probation_start_datetime
 		,probation_end_datetime
 		,probation_salary
@@ -186,6 +188,7 @@
 		,salary_card_no
 		,bank
 		,bank_code
+		,subbranch
 		,status
 		,updater
 		,update_datetime
@@ -218,7 +221,7 @@
 		,#{relativeName}
 		,#{relativeRelation}
 		,#{relativePosition}
-		,#{ mainPerform}
+		,#{mainPerform}
 		,#{probationStartDatetime}
 		,#{probationEndDatetime}
 		,#{probationSalary}
@@ -236,6 +239,7 @@
 		,#{salaryCardNo}
 		,#{bank}
 		,#{bankCode}
+		,#{subbranch}
 		,#{status}
 		,#{updater}
 		,#{updateDatetime}
@@ -271,7 +275,7 @@
 		,relative_name = #{relativeName}
 		,relative_relation = #{relativeRelation}
 		,relative_position = #{relativePosition}
-		, main_perform = #{ mainPerform}
+		,main_perform = #{mainPerform}
 		,probation_start_datetime = #{probationStartDatetime}
 		,probation_end_datetime = #{probationEndDatetime}
 		,probation_salary = #{probationSalary}
@@ -289,6 +293,7 @@
 		,salary_card_no = #{salaryCardNo}
 		,bank = #{bank}
 		,bank_code = #{bankCode}
+		,subbranch = #{subbranch}
 		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}

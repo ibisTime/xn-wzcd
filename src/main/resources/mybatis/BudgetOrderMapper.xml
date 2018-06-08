@@ -269,10 +269,10 @@
 				AND t.bank_fk_datetime = #{bankFkDatetime}
 			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
-				<![CDATA[AND t.apply_datetime > #{applyDatetimeStart}]]>
+				<![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
 			</if>
 			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
-				<![CDATA[AND t.apply_datetime < #{applyDatetimeEnd}]]>
+				<![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
 			</if>
 			<if test="isAdvanceFund != null and isAdvanceFund != '' ">
 				AND t.is_advance_fund = #{isAdvanceFund}

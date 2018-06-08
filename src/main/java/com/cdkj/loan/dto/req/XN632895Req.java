@@ -18,6 +18,9 @@ public class XN632895Req extends APageReq {
     // 请假类别
     private String type;
 
+    // 状态
+    private String status;
+
     // 开始时间
     private String startDatetime;
 
@@ -54,5 +57,13 @@ public class XN632895Req extends APageReq {
 
     public void setEndDatetime(String endDatetime) {
         this.endDatetime = endDatetime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

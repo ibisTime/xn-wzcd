@@ -232,10 +232,11 @@ CREATE TABLE `tp_employ_apply` (
   `postcode` VARCHAR(255) NULL COMMENT '邮编',
   `award` VARCHAR(255) NULL COMMENT '受过何种奖励或专业训练',
   `is_out` char(1) NULL COMMENT '能否出差',
+  `is_over_time` char(1) NULL COMMENT '能否加班',
   `is_adjust_work` char(1) NULL COMMENT '能否接受工作调动',
   
-  `is_once_recruited` VARCHAR(255) NULL COMMENT '是否曾在我公司应聘',
-  `is_friend_work` VARCHAR(255) NULL COMMENT '是否有亲属或朋友在我司工作',
+  `is_once_recruited`char(1) NULL COMMENT '是否曾在我公司应聘',
+  `is_friend_work` char(1) NULL COMMENT '是否有亲属或朋友在我司工作',
   `composite` VARCHAR(255) NULL COMMENT '综合',
   `quality` VARCHAR(255) NULL COMMENT '素质',
   `interview_record` VARCHAR(255) NULL COMMENT '面试记录',
@@ -335,6 +336,7 @@ CREATE TABLE `tp_entry_apply` (
   `salary_card_no` VARCHAR(32) NULL COMMENT '工资卡账号',
   `bank` VARCHAR(32) NULL COMMENT '工资卡账号',
   `bank_code` VARCHAR(32) NULL COMMENT '开户行行号',
+  `subbranch` VARCHAR(255) NULL COMMENT '开户支行',
   `status` VARCHAR(4) NULL COMMENT '状态',
   `updater` VARCHAR(255) NULL COMMENT '更新人',
   `update_datetime` DATETIME NULL COMMENT '更新时间',
@@ -572,3 +574,29 @@ CREATE TABLE `tp_notice_read` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '公告阅读记录';
+
+DROP TABLE IF EXISTS `tp_notice_read`;
+CREATE TABLE `tp_notice_read` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `user_id` VARCHAR(32) NULL COMMENT '用户编号',
+  `status` VARCHAR(32) NULL COMMENT '状态(0=未读，1=已读)',
+  `notice_code` VARCHAR(32) NULL COMMENT '公告编号',
+  `ref_type` VARCHAR(4) NULL COMMENT '关联类型（1 公告 2 制度）',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '公告阅读记录';
+
+DROP TABLE IF EXISTS `tp_day_rest`;
+CREATE TABLE `tp_day_rest` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `date` DATETIME NULL COMMENT '日期',
+  `is_rest` VARCHAR(4) NULL COMMENT '是否休息',
+  `updater` VARCHAR(32) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `company_code` VARCHAR(32) NULL COMMENT '公司编号',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '休息日记录';
+

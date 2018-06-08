@@ -86,10 +86,10 @@
 				AND t.entry_datetime &lt;= #{entryDatetimeEnd}
 			</if>
 			<if test="ageStart != null and ageStart != '' ">
-				<![CDATA[AND TIMESTAMPDIFF(YEAR, birthday, CURDATE()) > #{ageStart}]]>
+				<![CDATA[AND TIMESTAMPDIFF(YEAR, birthday, CURDATE()) >= #{ageStart}]]>
 			</if>
 			<if test="ageEnd != null and ageEnd != '' ">
-				<![CDATA[AND TIMESTAMPDIFF(YEAR, birthday, CURDATE()) < #{ageEnd}]]>
+				<![CDATA[AND TIMESTAMPDIFF(YEAR, birthday, CURDATE()) <= #{ageEnd}]]>
 			</if>
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
@@ -352,7 +352,7 @@
 		,provincial_bed_standard = #{provincialBedStandard}
 		,no_provincial_bed_standard = #{noProvincialBedStandard}
 		,traffic_award = #{trafficAward}
-		,mobileAward = #{mobileAward}
+		,mobile_award = #{mobileAward}
 		,taxi_ward = #{taxiWard}
 		,meal_award = #{mealAward}
 		,working_years = #{workingYears}

@@ -31,6 +31,9 @@
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
 			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
 			<if test="startDatetime != null and startDatetime != '' ">
 				<![CDATA[AND t.start_datetime <= #{startDatetime}]]>
 			</if>

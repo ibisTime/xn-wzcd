@@ -31,10 +31,10 @@ public class XN632145 extends AProcessor {
         BudgetOrder condition = new BudgetOrder();
         condition.setCode(req.getCode());
         condition.setApplyUserName(req.getCustomerName());
-        condition.setApplyDatetimeStart(DateUtil.strToDate(
-            req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setApplyDatetimeEnd(DateUtil.strToDate(
-            req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setApplyDatetimeStart(
+            DateUtil.getFrontDate(req.getApplyDatetimeStart(), true));
+        condition.setApplyDatetimeEnd(
+            DateUtil.getFrontDate(req.getApplyDatetimeEnd(), true));
         condition.setCurNodeCode(req.getCurNodeCode());
         condition.setIsAdvanceFund(req.getIsAdvanceFund());
 

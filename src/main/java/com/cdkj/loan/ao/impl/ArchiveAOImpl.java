@@ -148,6 +148,7 @@ public class ArchiveAOImpl implements IArchiveAO {
             throw new BizException("xn0000", "记录编号不存在");
         }
         Archive data = new Archive();
+        data.setCode(req.getCode());
         data.setRealName(req.getRealName());
         data.setIdNo(req.getIdNo());
         data.setMobile(req.getMobile());

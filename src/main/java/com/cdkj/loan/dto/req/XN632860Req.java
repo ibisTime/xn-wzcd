@@ -149,9 +149,20 @@ public class XN632860Req {
     // 开户行行号
     private String bankCode;
 
+    // 开户支行
+    private String subbranch;
+
     // 工作经历列表
     @NotEmpty
     private List<XN632850ReqExp> workExperienceList;
+
+    public String getSubbranch() {
+        return subbranch;
+    }
+
+    public void setSubbranch(String subbranch) {
+        this.subbranch = subbranch;
+    }
 
     public String getPosition() {
         return position;
