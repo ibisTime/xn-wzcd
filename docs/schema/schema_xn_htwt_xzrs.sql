@@ -572,3 +572,29 @@ CREATE TABLE `tp_notice_read` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '公告阅读记录';
+
+DROP TABLE IF EXISTS `tp_notice_read`;
+CREATE TABLE `tp_notice_read` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `user_id` VARCHAR(32) NULL COMMENT '用户编号',
+  `status` VARCHAR(32) NULL COMMENT '状态(0=未读，1=已读)',
+  `notice_code` VARCHAR(32) NULL COMMENT '公告编号',
+  `ref_type` VARCHAR(4) NULL COMMENT '关联类型（1 公告 2 制度）',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '公告阅读记录';
+
+DROP TABLE IF EXISTS `tp_day_rest`;
+CREATE TABLE `tp_day_rest` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `date` DATETIME NULL COMMENT '日期',
+  `is_rest` VARCHAR(4) NULL COMMENT '是否休息',
+  `updater` VARCHAR(32) NULL COMMENT '更新人',
+  `update_datetime` DATETIME NULL COMMENT '更新时间',
+  `company_code` VARCHAR(32) NULL COMMENT '公司编号',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '休息日记录';
+
