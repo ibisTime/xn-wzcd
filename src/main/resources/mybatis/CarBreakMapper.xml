@@ -13,6 +13,7 @@
 		<result column="score" property="score" />
 		<result column="punish_amount" property="punishAmount" />
 		<result column="handle_note" property="handleNote" />
+		<result column="apply_datetime" property="applyDatetime" />
 		<result column="status" property="status" />
 		
 		<result column="updater" property="updater" />
@@ -43,6 +44,7 @@
 		,t.score
 		,t.punish_amount
 		,t.handle_note
+		,t.apply_datetime
 		,t.status
 		
 		,t.updater
@@ -77,6 +79,7 @@
 		,score
 		,punish_amount
 		,handle_note
+		,apply_datetime
 		,status
 		
 		,updater
@@ -94,6 +97,7 @@
 		,#{score}
 		,#{punishAmount}
 		,#{handleNote}
+		,#{applyDatetime}
 		,#{status}
 		
 		,#{updater}

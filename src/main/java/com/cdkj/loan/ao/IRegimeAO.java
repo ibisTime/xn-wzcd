@@ -5,6 +5,7 @@ import java.util.List;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Regime;
 import com.cdkj.loan.dto.req.XN632730Req;
+import com.cdkj.loan.dto.req.XN632731Req;
 
 /**
  * 公司制度
@@ -24,4 +25,9 @@ public interface IRegimeAO {
 
     public Regime getRegime(String code);
 
+    public void editRegime(XN632731Req req);
+
+    public void publishRegime(String code, String updater, String remark);
+
+    public void removeRegime(String code, String updater, String remark);
 }

@@ -6,7 +6,6 @@ CREATE TABLE `tp_notice` (
   `title` VARCHAR(255) NOT NULL COMMENT '公告标题',
   `urgent_status` VARCHAR(4) NOT NULL COMMENT '紧急程度（1 普通 2 紧急）',
   `publish_department_code` VARCHAR(32) NOT NULL COMMENT '发布部门',
-  `scope` VARCHAR(32) NOT NULL COMMENT '公告范围',
   
   `content` VARCHAR(255) NOT NULL COMMENT '公告内容',
   `publish_datetime` DATETIME NULL COMMENT '发布时间',
@@ -37,7 +36,6 @@ CREATE TABLE `tp_comp_regime` (
   `type` VARCHAR(4) NOT NULL COMMENT '类型(1行政事务类 2 人力资源管理类 3 财务管理类 4 营销管理类 5 生产管理类)',
   `regime_code` VARCHAR(32) NULL COMMENT '制度编号',
   `name` VARCHAR(32) NULL COMMENT '名称',
-  `scope` VARCHAR(32) NOT NULL COMMENT '授权查看范围',
   
   `content` VARCHAR(255) NULL COMMENT '内容',
   `status` VARCHAR(32) NULL COMMENT '状态',
@@ -341,6 +339,7 @@ CREATE TABLE `tp_entry_apply` (
   `updater` VARCHAR(255) NULL COMMENT '更新人',
   `update_datetime` DATETIME NULL COMMENT '更新时间',
   `remark` VARCHAR(255) NULL COMMENT '备注',
+  `user_id` VARCHAR(32) NULL COMMENT '用户编号',
   PRIMARY KEY (`code`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -550,3 +549,26 @@ CREATE TABLE `tp_fee_advance_apply` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '费用预支申请';
+
+DROP TABLE IF EXISTS `tp_scope_people`;
+CREATE TABLE `tp_scope_people` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `type` VARCHAR(32) NOT NULL COMMENT '类型(所有人员=-1,分公司=1，部门=2,职位=3，具体人=4)',
+  `people_code` VARCHAR(32) NULL COMMENT '具体类型人员编号',
+  `ref_code` VARCHAR(32) NULL COMMENT '参考编号',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '公告或制度人员范围';
+
+DROP TABLE IF EXISTS `tp_notice_read`;
+CREATE TABLE `tp_notice_read` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `user_id` VARCHAR(32) NULL COMMENT '用户编号',
+  `status` VARCHAR(32) NULL COMMENT '状态(0=未读，1=已读)',
+  `notice_code` VARCHAR(32) NULL COMMENT '公告编号',
+  `ref_type` VARCHAR(4) NULL COMMENT '关联类型（1 公告 2 制度）',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '公告阅读记录';

@@ -5,5 +5,9 @@ import com.cdkj.loan.domain.Regime;
 
 //dao层 
 public interface IRegimeDAO extends IBaseDAO<Regime> {
-	String NAMESPACE = IRegimeDAO.class.getName().concat(".");
+    String NAMESPACE = IRegimeDAO.class.getName().concat(".");
+
+    public void update(Regime data);
+
+    public void publishRemoveRegime(Regime data);
 }

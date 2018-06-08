@@ -8,6 +8,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.dto.req.XN632800Req;
 import com.cdkj.loan.dto.req.XN632802Req;
+import com.cdkj.loan.dto.res.XN632803Res;
 
 /**
  * 人事档案
@@ -34,5 +35,11 @@ public interface IArchiveAO {
 
     // 新增离职档案
     public void editLeaveArchive(Archive data);
+
+    // 按年龄统计分析
+    public void statisticsAge(Archive condition);
+
+    // 合同到期预警
+    public List<XN632803Res> getTotal();
 
 }

@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +13,7 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IRegimeDAO;
 import com.cdkj.loan.domain.Regime;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.ERegimeStatus;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -64,5 +66,32 @@ public class RegimeBOImpl extends PaginableBOImpl<Regime> implements IRegimeBO {
             }
         }
         return data;
+    }
+
+    @Override
+    public void editRegime(Regime data) {
+        regimeDAO.update(data);
+    }
+
+    @Override
+    public void publishRegime(String code, String updater, String remark) {
+        Regime regime = new Regime();
+        regime.setCode(code);
+        regime.setUpdateDatetime(new Date());
+        regime.setUpdater(updater);
+        regime.setRemark(remark);
+        regime.setStatus(ERegimeStatus.PUBLISHED.getCode());
+        regimeDAO.publishRemoveRegime(regime);
+    }
+
+    @Override
+    public void removeRegime(String code, String updater, String remark) {
+        Regime regime = new Regime();
+        regime.setCode(code);
+        regime.setUpdateDatetime(new Date());
+        regime.setUpdater(updater);
+        regime.setRemark(remark);
+        regime.setStatus(ERegimeStatus.REMOVED.getCode());
+        regimeDAO.publishRemoveRegime(regime);
     }
 }

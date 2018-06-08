@@ -41,6 +41,9 @@ public class CarBreak extends ABaseDO {
     // 处理情况
     private String handleNote;
 
+    // 申请时间
+    private Date applyDatetime;
+
     // 状态
     private String status;
 
@@ -55,6 +58,14 @@ public class CarBreak extends ABaseDO {
 
     // 违章人档案
     private Archive applyUserArchive;
+
+    public Date getApplyDatetime() {
+        return applyDatetime;
+    }
+
+    public void setApplyDatetime(Date applyDatetime) {
+        this.applyDatetime = applyDatetime;
+    }
 
     public String getCode() {
         return code;

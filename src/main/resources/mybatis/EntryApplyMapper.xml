@@ -5,7 +5,9 @@
 	<resultMap id="entryApply_DB_Result" type="entryApply">
 		<result column="code" property="code" />
 		<result column="position" property="position" />
+		<result column="department_code" property="departmentCode" />
 		<result column="entry_datetime" property="entryDatetime" />
+		<result column="apply_datetime" property="applyDatetime" />
 		<result column="real_name" property="realName" />
 		<result column="gender" property="gender" />
 		<result column="birthday" property="birthday" />
@@ -48,6 +50,7 @@
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
 		<result column="remark" property="remark" />
+		<result column="user_id" property="userId" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -75,7 +78,9 @@
 		SELECT
 		t.code
 		,t.position
+		,t.department_code
 		,t.entry_datetime
+		,t.apply_datetime
 		,t.real_name
 		,t.gender
 		,t.birthday
@@ -118,6 +123,7 @@
 		,t.updater
 		,t.update_datetime
 		,t.remark
+		,t.user_id
 		FROM
 		tp_entry_apply t
 		<include refid="where_condition" />
@@ -139,7 +145,9 @@
 		tp_entry_apply(
 		code
 		,position
+		,department_code
 		,entry_datetime
+		,apply_datetime
 		,real_name
 		,gender
 		,birthday
@@ -182,11 +190,14 @@
 		,updater
 		,update_datetime
 		,remark
+		,user_id
 		)
 		VALUES(
 		#{code}
 		,#{position}
+		,#{departmentCode}
 		,#{entryDatetime}
+		,#{applyDatetime}
 		,#{realName}
 		,#{gender}
 		,#{birthday}
@@ -229,6 +240,7 @@
 		,#{updater}
 		,#{updateDatetime}
 		,#{remark}
+		,#{userId}
 		)
 	</insert>
 
@@ -236,7 +248,9 @@
 		UPDATE tp_entry_apply
 		SET
 		position = #{position}
+		,department_code = #{departmentCode}
 		,entry_datetime = #{entryDatetime}
+		,apply_datetime = #{applyDatetime}
 		,real_name = #{realName}
 		,gender = #{gender}
 		,birthday = #{birthday}
@@ -279,13 +293,15 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
+		,user_id = #{userId}
 		WHERE code = #{code}
 	</update>
 	
 	<update id="update_entryApply_status" parameterType="entryApply">
 		UPDATE tp_entry_apply
 		SET
-		status = #{status}
+		user_id = #{userId}
+		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
