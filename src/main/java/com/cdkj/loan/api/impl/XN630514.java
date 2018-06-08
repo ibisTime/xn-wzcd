@@ -10,6 +10,12 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
+/**
+ * 录入黑名单处理结果
+ * @author: xieyj 
+ * @since: 2018年6月7日 下午5:40:12 
+ * @history:
+ */
 public class XN630514 extends AProcessor {
     private IRepayBizAO repaybizAO = SpringContextHolder
         .getBean(IRepayBizAO.class);
@@ -18,7 +24,7 @@ public class XN630514 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repaybizAO.EnterBlackList(req.getCode(), req.getBlackHandleNote(),
+        repaybizAO.enterBlackList(req.getCode(), req.getBlackHandleNote(),
             req.getUpdater(), req.getRemark());
         return new BooleanRes(true);
     }

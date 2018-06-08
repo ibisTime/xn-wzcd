@@ -24,7 +24,7 @@ public class XN630512 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repayBizBO.EarlyRepayment(req.getCode(), req.getUpdater(),
+        repayBizBO.advanceRepay(req.getCode(), req.getUpdater(),
             req.getRemark());
         return new BooleanRes(true);
     }

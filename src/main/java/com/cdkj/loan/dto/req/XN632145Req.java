@@ -15,9 +15,19 @@ public class XN632145Req extends APageReq {
 
     private String applyDatetimeEnd;// 申请时间结束
 
+    private String salesUserId;// 业务员用户编号
+
     private String curNodeCode;// 当前节点编号
 
     private String isAdvanceFund;// 是否垫资
+
+    public String getSalesUserId() {
+        return salesUserId;
+    }
+
+    public void setSalesUserId(String salesUserId) {
+        this.salesUserId = salesUserId;
+    }
 
     public String getCustomerName() {
         return customerName;

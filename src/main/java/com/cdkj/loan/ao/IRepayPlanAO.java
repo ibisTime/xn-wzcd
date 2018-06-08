@@ -10,12 +10,6 @@ public interface IRepayPlanAO {
 
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addRepayPlan(RepayPlan data);
-
-    public int dropRepayPlan(String code);
-
-    public int editRepayPlan(RepayPlan data);
-
     public Paginable<RepayPlan> queryRepayPlanPage(int start, int limit,
             RepayPlan condition);
 
@@ -27,10 +21,10 @@ public interface IRepayPlanAO {
     public void repayMonthly(String code);
 
     // 当月还款名单
-    public Object dyRepayment(int start, int limit, RepayPlan condition);
+    public Object queryCurrentMonthRepayPage(int start, int limit, RepayPlan condition);
 
     // 逾期处理
-    public void OverdueHandle(XN630532Req req);
+    public void overdueHandle(XN630532Req req);
 
     // 记绿名单
     public void ToGreen(String code, String overdueDeposit);

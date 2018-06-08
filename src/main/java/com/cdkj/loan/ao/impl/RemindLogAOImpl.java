@@ -77,7 +77,7 @@ public class RemindLogAOImpl implements IRemindLogAO {
         }
         String userId = repayPlanBO.getRepayPlan(code).getUserId();
         String mobile = userBO.getUser(userId).getMobile();
-        smsOutBO.sendSmsOut(mobile, "短信催收！！！");
+        smsOutBO.sendSmsOut(mobile, "您好，请及时还清本月本息，以免逾期给您造成不必要的麻烦");
         RemindLog remindLog = new RemindLog();
         remindLog.setRepayPlanCode(code);
         remindLog.setWay(way);

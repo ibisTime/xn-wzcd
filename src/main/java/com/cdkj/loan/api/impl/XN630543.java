@@ -34,7 +34,7 @@ public class XN630543 extends AProcessor {
 
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
-        return repayPlanAO.dyRepayment(start, limit, condition);
+        return repayPlanAO.queryCurrentMonthRepayPage(start, limit, condition);
     }
 
     @Override

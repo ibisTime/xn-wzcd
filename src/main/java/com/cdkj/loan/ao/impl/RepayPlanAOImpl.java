@@ -74,27 +74,6 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     IBankcardBO bankcardBO;
 
     @Override
-    public String addRepayPlan(RepayPlan data) {
-        return repayPlanBO.saveRepayPlan(data);
-    }
-
-    @Override
-    public int editRepayPlan(RepayPlan data) {
-        if (!repayPlanBO.isRepayPlanExist(data.getCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "记录编号不存在");
-        }
-        return repayPlanBO.refreshRepayPlan(data);
-    }
-
-    @Override
-    public int dropRepayPlan(String code) {
-        if (!repayPlanBO.isRepayPlanExist(code)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "记录编号不存在");
-        }
-        return repayPlanBO.removeRepayPlan(code);
-    }
-
-    @Override
     public Paginable<RepayPlan> queryRepayPlanPage(int start, int limit,
             RepayPlan condition) {
         Paginable<RepayPlan> results = repayPlanBO.getPaginable(start, limit,
@@ -252,9 +231,10 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         return successAmount;
     }
 
-    // 当月还款名单
+    // 当月还款名单查询
     @Override
-    public Object dyRepayment(int start, int limit, RepayPlan condition) {
+    public Object queryCurrentMonthRepayPage(int start, int limit,
+            RepayPlan condition) {
         condition.setRepayStartDatetime(DateUtil.getFirstDay());
         condition.setRepayEndDatetime(DateUtil.getLastDay());
         Paginable<RepayPlan> results = repayPlanBO.getPaginable(start, limit,
@@ -273,7 +253,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     // 逾期处理
     @Override
     @Transactional
-    public void OverdueHandle(XN630532Req req) {
+    public void overdueHandle(XN630532Req req) {
 
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(req.getCode());
 
@@ -305,7 +285,6 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
                 ToGreen(req.getCode(), req.getOverdueDeposit());
             }
         }
-
     }
 
     @Override

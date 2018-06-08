@@ -146,7 +146,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     // 提前还款
     @Override
-    public void EarlyRepayment(String code, String updater, String remark) {
+    public void advanceRepay(String code, String updater, String remark) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
         if (!ERepayBizStatus.TO_REPAYMENTS.getCode()
             .equals(repayBiz.getStatus())) {
@@ -213,7 +213,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     // }
 
     @Override
-    public void EnterBlackList(String code, String blackHandleNote,
+    public void enterBlackList(String code, String blackHandleNote,
             String updater, String remark) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
         repayBiz.setBlackHandleNote(blackHandleNote);
