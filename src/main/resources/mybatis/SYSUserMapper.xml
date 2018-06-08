@@ -22,6 +22,7 @@
 		<result column="updateDatetime" property="update_datetime" />
 		<result column="status" property="status" />
 		<result column="remark" property="remark" />
+		<result column="team_code" property="teamCode" />
 	</resultMap>
 	
 	<sql id="where_condition">
@@ -70,9 +71,6 @@
 			<if test="teamCode != null and teamCode != '' ">
 				AND t.team_code = #{teamCode}
 			</if>
-			<if test="teamName != null and teamName != '' and  teamName='业务团队成员查询'">
-				AND t.team_code is not null
-			</if>
 		</trim>
 	</sql>
 	
@@ -95,6 +93,7 @@
 		,t.update_datetime
 		,t.status
 		,t.remark
+		,t.team_code
 		FROM
 		tsys_user t
 		<include refid="where_condition" />
