@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -41,8 +42,8 @@ public class OvertimeApplyBOImpl extends PaginableBOImpl<OvertimeApply>
     public String saveOvertimeApply(OvertimeApply data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.OVERTIME_APPLY
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.OVERTIME_APPLY.getCode());
             data.setCode(code);
             overtimeApplyDAO.insert(data);
         }
@@ -86,5 +87,16 @@ public class OvertimeApplyBOImpl extends PaginableBOImpl<OvertimeApply>
             }
         }
         return data;
+    }
+
+    @Override
+    public Long getOvertimeTotalHour(String applyUser, Date startDatetime,
+            Date endDatetime) {
+        OvertimeApply condition = new OvertimeApply();
+        condition.setApplyUser(applyUser);
+        condition.setStartDatetime(startDatetime);
+        condition.setEndDatetime(endDatetime);
+        condition.setStatus("1");
+        return overtimeApplyDAO.selectTotalHour(condition);
     }
 }

@@ -13,4 +13,7 @@ public interface ITravelApplyDAO extends IBaseDAO<TravelApply> {
     String NAMESPACE = ITravelApplyDAO.class.getName().concat(".");
 
     public int update(TravelApply data);
+
+    public Long selectTotalHour(TravelApply condition);
+
 }

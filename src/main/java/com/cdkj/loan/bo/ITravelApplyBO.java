@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo;
 
+import java.util.Date;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
@@ -24,5 +25,8 @@ public interface ITravelApplyBO extends IPaginableBO<TravelApply> {
     public List<TravelApply> queryTravelApplyList(TravelApply condition);
 
     public TravelApply getTravelApply(String code);
+
+    public Long getTravelApplyTotalHour(String applyUser, String type,
+            Date startDatetime, Date endDatetime);
 
 }

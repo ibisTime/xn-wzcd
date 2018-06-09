@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.ITravelApplyBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ITravelApplyDAO;
 import com.cdkj.loan.domain.TravelApply;
@@ -86,5 +88,19 @@ public class TravelApplyBOImpl extends PaginableBOImpl<TravelApply>
             }
         }
         return data;
+    }
+
+    @Override
+    public Long getTravelApplyTotalHour(String applyUser, String type,
+            Date startDatetime, Date endDatetime) {
+        TravelApply condition = new TravelApply();
+        condition.setApplyUser(applyUser);
+        condition.setType(type);
+        condition.setStartDatetime(
+            DateUtil.dateToStr(startDatetime, DateUtil.DATA_TIME_PATTERN_1));
+        condition.setEndDatetime(
+            DateUtil.dateToStr(endDatetime, DateUtil.DATA_TIME_PATTERN_1));
+        condition.setStatus("1");
+        return travelApplyDAO.selectTotalHour(condition);
     }
 }

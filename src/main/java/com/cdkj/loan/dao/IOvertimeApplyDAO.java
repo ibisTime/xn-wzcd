@@ -13,4 +13,7 @@ public interface IOvertimeApplyDAO extends IBaseDAO<OvertimeApply> {
     String NAMESPACE = IOvertimeApplyDAO.class.getName().concat(".");
 
     public int update(OvertimeApply data);
+
+    public Long selectTotalHour(OvertimeApply condition);
+
 }

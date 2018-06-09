@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo;
 
+import java.util.Date;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
@@ -24,4 +25,7 @@ public interface ILeaveApplyBO extends IPaginableBO<LeaveApply> {
     public LeaveApply getLeaveApply(String code);
 
     public Long getTotalHour(String applyUser);
+
+    public Long getTotalHour(String applyUser, String type, Date startDatetime,
+            Date endDatetime);
 }

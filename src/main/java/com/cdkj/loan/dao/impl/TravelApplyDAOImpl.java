@@ -15,8 +15,8 @@ import com.cdkj.loan.domain.TravelApply;
  * @history:
  */
 @Repository("travelApplyDAOImpl")
-public class TravelApplyDAOImpl extends AMybatisTemplate implements
-        ITravelApplyDAO {
+public class TravelApplyDAOImpl extends AMybatisTemplate
+        implements ITravelApplyDAO {
 
     @Override
     public int insert(TravelApply data) {
@@ -57,6 +57,12 @@ public class TravelApplyDAOImpl extends AMybatisTemplate implements
     public int update(TravelApply data) {
 
         return super.update(NAMESPACE.concat("update_travelApply"), data);
+    }
+
+    @Override
+    public Long selectTotalHour(TravelApply condition) {
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_travelApply_totalHour"), condition);
     }
 
 }

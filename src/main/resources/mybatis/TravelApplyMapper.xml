@@ -23,6 +23,12 @@
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
+			<if test="type != null and type != '' ">
+				AND t.type = #{type}
+			</if>
+			<if test="applyUser != null and applyUser != '' ">
+				AND t.apply_user = #{applyUser}
+			</if>
 			<if test="startDatetime != null and startDatetime != '' ">
 				AND t.apply_datetime &gt;= #{startDatetime}
 			</if>
@@ -60,6 +66,12 @@
 		<include refid="where_condition" />
 	</select>
 
+	<select id="select_travelApply_totalHour" parameterType="travelApply"
+		resultType="java.lang.Long">
+		SELECT IFNULL(SUM(t.total_hour),0) FROM tp_travel_apply t
+		<include refid="where_condition" />
+	</select>
+	
 	<insert id="insert_travelApply" parameterType="travelApply">
 		INSERT INTO
 		tp_travel_apply(
