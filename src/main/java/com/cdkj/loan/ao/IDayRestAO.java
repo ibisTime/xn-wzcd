@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.DayRest;
 import com.cdkj.loan.dto.req.XN632680Req;
 import com.cdkj.loan.dto.res.XN632685Res;
@@ -25,5 +26,5 @@ public interface IDayRestAO {
     public List<XN632685Res> queryDayRestList(DayRest condition);
 
     public Paginable<XN632686Res> queryCheckingPage(int start, int limit,
-            DayRest condition);
+            DayRest restCondition, Archive archiveCondition);
 }

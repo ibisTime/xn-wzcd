@@ -18,12 +18,23 @@ public class XN632686Req extends APageReq {
     @NotBlank
     private String date;
 
+    // 部门
+    private String departmentCode;
+
     public String getDate() {
         return date;
     }
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getDepartmentCode() {
+        return departmentCode;
+    }
+
+    public void setDepartmentCode(String departmentCode) {
+        this.departmentCode = departmentCode;
     }
 
 }

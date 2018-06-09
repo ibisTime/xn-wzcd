@@ -4,11 +4,13 @@ import java.util.Calendar;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.cdkj.loan.ao.IArchiveAO;
 import com.cdkj.loan.ao.IDayRestAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
+import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.DayRest;
 import com.cdkj.loan.dto.req.XN632686Req;
 import com.cdkj.loan.enums.EBoolean;
@@ -31,25 +33,28 @@ public class XN632686 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        DayRest condition = new DayRest();
+        DayRest restCondition = new DayRest();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(DateUtil.strToDate(req.getDate(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
 
-        condition.setStartDatetime(DateUtil.getBeginTime(year, month));
-        condition.setEndDatetime(DateUtil.getEndTime(year, month));
-        condition.setIsRest(EBoolean.NO.getCode());
+        restCondition.setStartDatetime(DateUtil.getBeginTime(year, month));
+        restCondition.setEndDatetime(DateUtil.getEndTime(year, month));
+        restCondition.setIsRest(EBoolean.NO.getCode());
 
+        Archive archiveCondition = new Archive();
+        archiveCondition.setDepartmentCode(req.getDepartmentCode());
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
-            column = IDayRestAO.DEFAULT_ORDER_COLUMN;
+            column = IArchiveAO.DEFAULT_ORDER_COLUMN;
         }
-        condition.setOrder(column, req.getOrderDir());
+        archiveCondition.setOrder(column, req.getOrderDir());
         int start = Integer.valueOf(req.getStart());
         int limit = Integer.valueOf(req.getLimit());
-        return dayRestAO.queryCheckingPage(start, limit, condition);
+        return dayRestAO.queryCheckingPage(start, limit, restCondition,
+            archiveCondition);
     }
 
     @Override

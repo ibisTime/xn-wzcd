@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.IDayRestAO;
 import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IDayRestBO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ILeaveApplyBO;
 import com.cdkj.loan.bo.IOvertimeApplyBO;
 import com.cdkj.loan.bo.ISYSUserBO;
@@ -58,6 +59,9 @@ public class DayRestAOImpl implements IDayRestAO {
     @Autowired
     private IOvertimeApplyBO overtimeApplyBO;
 
+    @Autowired
+    private IDepartmentBO departmentBO;
+
     @Override
     public void addDayRest(XN632680Req req) {
         // 删除之前的记录
@@ -99,13 +103,12 @@ public class DayRestAOImpl implements IDayRestAO {
 
     @Override
     public Paginable<XN632686Res> queryCheckingPage(int start, int limit,
-            DayRest condition) {
-        Archive archiveCondition = new Archive();
+            DayRest restCondition, Archive archiveCondition) {
         Paginable<Archive> page = archiveBO.getPaginable(start, limit,
             archiveCondition);
         List<Archive> archiveList = page.getList();
         // 应出勤天数
-        Long shouldCheckingDays = dayRestBO.getTotalCount(condition);
+        Long shouldCheckingDays = dayRestBO.getTotalCount(restCondition);
 
         Paginable<XN632686Res> resPage = new Page<XN632686Res>(start, limit,
             archiveBO.getTotalCount(archiveCondition));
@@ -113,7 +116,8 @@ public class DayRestAOImpl implements IDayRestAO {
 
         for (Archive archive : archiveList) {
             XN632686Res res = new XN632686Res();
-            res.setDepartmentName(archive.getDepartmentName());
+            res.setDepartmentName(departmentBO
+                .getDepartment(archive.getDepartmentCode()).getName());
             res.setRealName(archive.getRealName());
             res.setJobNo(archive.getJobNo());
             // 应出勤天数
@@ -121,8 +125,9 @@ public class DayRestAOImpl implements IDayRestAO {
 
             // 请假小时,type:1
             Long leaveHours = leaveApplyBO.getTotalHour(archive.getUserId(),
-                ELeaveApplyType.SHIJIA.getCode(), condition.getStartDatetime(),
-                condition.getStartDatetime());
+                ELeaveApplyType.SHIJIA.getCode(),
+                restCondition.getStartDatetime(),
+                restCondition.getStartDatetime());
             res.setLeaveHours(leaveHours);
 
             // 请假天数
@@ -143,27 +148,29 @@ public class DayRestAOImpl implements IDayRestAO {
                 suppleSignApplyBO.getTotalCount(suppleCondition));
 
             // 出差、公出小时
-            res.setTravelHours(
-                travelApplyBO.getTravelApplyTotalHour(archive.getUserId(), "1",
-                    condition.getStartDatetime(), condition.getEndDatetime()));
-            res.setOfficeTravelHours(
-                travelApplyBO.getTravelApplyTotalHour(archive.getUserId(), "2",
-                    condition.getStartDatetime(), condition.getEndDatetime()));
+            res.setTravelHours(travelApplyBO.getTravelApplyTotalHour(
+                archive.getUserId(), "1", restCondition.getStartDatetime(),
+                restCondition.getEndDatetime()));
+            res.setOfficeTravelHours(travelApplyBO.getTravelApplyTotalHour(
+                archive.getUserId(), "2", restCondition.getStartDatetime(),
+                restCondition.getEndDatetime()));
 
             // 加班小时
-            res.setOvertimeHours(
-                overtimeApplyBO.getOvertimeTotalHour(archive.getUserId(),
-                    condition.getStartDatetime(), condition.getEndDatetime()));
+            res.setOvertimeHours(overtimeApplyBO.getOvertimeTotalHour(
+                archive.getUserId(), restCondition.getStartDatetime(),
+                restCondition.getEndDatetime()));
 
             // 调休小时
             res.setDayOffHours(leaveApplyBO.getTotalHour(archive.getUserId(),
-                ELeaveApplyType.TIAOXIU.getCode(), condition.getStartDatetime(),
-                condition.getStartDatetime()));
+                ELeaveApplyType.TIAOXIU.getCode(),
+                restCondition.getStartDatetime(),
+                restCondition.getStartDatetime()));
 
             // 年休小时
             res.setDayOffHours(leaveApplyBO.getTotalHour(archive.getUserId(),
                 ELeaveApplyType.NIANXIUJIA.getCode(),
-                condition.getStartDatetime(), condition.getStartDatetime()));
+                restCondition.getStartDatetime(),
+                restCondition.getStartDatetime()));
             resList.add(res);
         }
         resPage.setList(resList);
