@@ -1,12 +1,9 @@
 package com.cdkj.loan.api.impl;
 
-import java.util.Date;
-
 import com.cdkj.loan.ao.IBizTeamAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.dto.req.XN630192Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
@@ -27,14 +24,7 @@ public class XN630192 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        BizTeam data = new BizTeam();
-        data.setCode(req.getCode());
-        data.setName(req.getName());
-        data.setCaptain(req.getCaptain());
-        data.setAccountCode(req.getAccountCode());
-        data.setUpdater(req.getUpdater());
-        data.setUpdateDatetime(new Date());
-        bizTeamAO.editBizTeam(data);
+        bizTeamAO.editBizTeam(req);
         return new BooleanRes(true);
     }
 

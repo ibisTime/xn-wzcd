@@ -639,6 +639,12 @@ public class BudgetOrder extends ABaseDO {
     // 最新备注
     private String remark;
 
+    // 团队编号
+    private String teamCode;
+
+    // 退客户垫资款状态
+    private String backAdvanceStatus;
+
     /*---------辅助字段----------*/
     // 申请时间起始
     private Date applyDatetimeStart;
@@ -663,6 +669,14 @@ public class BudgetOrder extends ABaseDO {
 
     // 贷款银行名称
     private String loanBankName;
+
+    public String getBackAdvanceStatus() {
+        return backAdvanceStatus;
+    }
+
+    public void setBackAdvanceStatus(String backAdvanceStatus) {
+        this.backAdvanceStatus = backAdvanceStatus;
+    }
 
     public String getLoanBankName() {
         return loanBankName;
@@ -2390,6 +2404,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setWorkDatetime(Date workDatetime) {
         this.workDatetime = workDatetime;
+    }
+
+    public String getTeamCode() {
+        return teamCode;
+    }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
     }
 
 }

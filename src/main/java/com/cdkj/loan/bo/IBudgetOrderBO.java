@@ -62,4 +62,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public Paginable<BudgetOrder> getPaginableByRoleCode(int start,
             int pageSize, BudgetOrder condition);
+
+    // 生成退客户垫资款数据
+    public void saveBackAdvanceFund(BudgetOrder budgetOrder);
 }

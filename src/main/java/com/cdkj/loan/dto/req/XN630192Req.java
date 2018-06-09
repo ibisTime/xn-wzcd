@@ -3,27 +3,38 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 
+ * 修改业务团队
  * @author: jiafr 
  * @since: 2018年6月8日 下午2:13:48 
  * @history:
  */
 public class XN630192Req {
 
+    // 编号
     @NotBlank
     private String code;
 
-    @NotBlank
+    // 团队名称
     private String name;
 
-    @NotBlank
+    // 团队长
     private String captain;
 
-    @NotBlank
-    private String accountCode;
-
+    // 更新人
     @NotBlank
     private String updater;
+
+    // 收款账号
+    private String accountNo;
+
+    // 收款银行
+    private String bank;
+
+    // 收款支行
+    private String subbranch;
+
+    // 水单
+    private String waterBill;
 
     public String getCode() {
         return code;
@@ -49,20 +60,44 @@ public class XN630192Req {
         this.captain = captain;
     }
 
-    public String getAccountCode() {
-        return accountCode;
-    }
-
-    public void setAccountCode(String accountCode) {
-        this.accountCode = accountCode;
-    }
-
     public String getUpdater() {
         return updater;
     }
 
     public void setUpdater(String updater) {
         this.updater = updater;
+    }
+
+    public String getAccountNo() {
+        return accountNo;
+    }
+
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+
+    public String getSubbranch() {
+        return subbranch;
+    }
+
+    public void setSubbranch(String subbranch) {
+        this.subbranch = subbranch;
+    }
+
+    public String getWaterBill() {
+        return waterBill;
+    }
+
+    public void setWaterBill(String waterBill) {
+        this.waterBill = waterBill;
     }
 
 }
