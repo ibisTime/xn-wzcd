@@ -67,10 +67,10 @@
 		,status
 		,updater
 		,update_datetime
-		,t.account_no
-		,t.bank
-		,t.subbranch
-		,t.water_bill
+		,account_no
+		,bank
+		,subbranch
+		,water_bill
 		)
 		VALUES(
 		#{code}
