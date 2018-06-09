@@ -11,7 +11,12 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.exception.BizException;
 
-//CHECK ��鲢��ע�� 
+/**
+ * 
+ * @author: jiafr 
+ * @since: 2018年6月9日 下午2:19:32 
+ * @history:
+ */
 @Service
 public class RepointAOImpl implements IRepointAO {
 
@@ -26,7 +31,7 @@ public class RepointAOImpl implements IRepointAO {
     @Override
     public int editRepoint(Repoint data) {
         if (!repointBO.isRepointExist(data.getCode())) {
-            throw new BizException("xn0000", "返点表不存在");
+            throw new BizException("xn0000", "返点数据不存在");
         }
         return repointBO.refreshRepoint(data);
     }
@@ -34,7 +39,7 @@ public class RepointAOImpl implements IRepointAO {
     @Override
     public int dropRepoint(String code) {
         if (!repointBO.isRepointExist(code)) {
-            throw new BizException("xn0000", "返点表不存在");
+            throw new BizException("xn0000", "返点数据不存在");
         }
         return repointBO.removeRepoint(code);
     }

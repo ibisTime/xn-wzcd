@@ -8,7 +8,12 @@ import com.cdkj.loan.dao.IRepointDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.Repoint;
 
-//CHECK 。。。 
+/**
+ * 
+ * @author: jiafr 
+ * @since: 2018年6月9日 下午2:20:35 
+ * @history:
+ */
 @Repository("repointDAOImpl")
 public class RepointDAOImpl extends AMybatisTemplate implements IRepointDAO {
 
@@ -48,8 +53,8 @@ public class RepointDAOImpl extends AMybatisTemplate implements IRepointDAO {
 
     @Override
     public int update(Repoint data) {
-        // TODO Auto-generated method stub
-        return 0;
+
+        return super.update(NAMESPACE.concat("update_repoint"), data);
     }
 
 }
