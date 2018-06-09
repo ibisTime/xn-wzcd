@@ -52,7 +52,9 @@ public class RegimeAOImpl implements IRegimeAO {
         data.setType(req.getType());
         data.setContent(req.getContent());
         data.setStatus(ERegimeStatus.TO_PUBLISH.getCode());
+        data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
+        data.setRemark(req.getRemark());
         String regimeCode = regimeBO.saveRegime(data);
 
         // 添加制度范围
@@ -108,6 +110,7 @@ public class RegimeAOImpl implements IRegimeAO {
         data.setType(req.getType());
         data.setContent(req.getContent());
 
+        data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());
         regimeBO.editRegime(data);

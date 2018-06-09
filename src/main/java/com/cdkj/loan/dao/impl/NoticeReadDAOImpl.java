@@ -2,6 +2,7 @@ package com.cdkj.loan.dao.impl;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import com.cdkj.loan.dao.INoticeReadDAO;
@@ -26,8 +27,9 @@ public class NoticeReadDAOImpl extends AMybatisTemplate
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void insertNoticeReadList(List<NoticeRead> dataList) {
-        super.insertBatch(NAMESPACE.concat("insert_noticeReadList"),
-            (List) dataList);
+        if (CollectionUtils.isNotEmpty(dataList))
+            super.insertBatch(NAMESPACE.concat("insert_noticeReadList"),
+                (List) dataList);
     }
 
     @Override

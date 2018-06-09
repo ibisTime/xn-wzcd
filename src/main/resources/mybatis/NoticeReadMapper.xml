@@ -11,11 +11,17 @@
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="id != null and id != '' ">
+				AND t.id = #{id}
+			</if>
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
-			<if test="id != null and id != '' ">
-				AND t.id = #{id}
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="noticeCode != null and noticeCode != '' ">
+				AND t.notice_code = #{noticeCode}
 			</if>
 			<if test="refType != null and refType != '' ">
 				AND t.ref_type = #{refType}
@@ -60,7 +66,7 @@
 		,#{refType}
 		)
 	</insert>
-
+	
 	<insert id="insert_noticeReadList" parameterType="List">
 		INSERT INTO
 		tp_notice_read(
@@ -79,7 +85,7 @@
 			)
 		</foreach>
 	</insert>
-
+	
 	<update id="update_noticeRead" parameterType="noticeRead">
 		UPDATE
 		tp_notice_read

@@ -25,9 +25,31 @@ public class XN632730Req {
     // 内容
     private String content;
 
+    // 更新人
+    private String updater;
+
+    // 备注
+    private String remark;
+
     // 范围
     @NotEmpty
     private List<XN632720ReqScope> scopePeopleList;
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
 
     public String getRegimeCode() {
         return regimeCode;
