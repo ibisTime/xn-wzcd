@@ -22,8 +22,8 @@ import com.cdkj.loan.enums.ERepayPlanNode;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
-        IRepayPlanBO {
+public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
+        implements IRepayPlanBO {
 
     @Autowired
     private IRepayPlanDAO repayPlanDAO;
@@ -34,7 +34,8 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     }
 
     @Override
-    public List<RepayPlan> queryRepayPlanListByRepayBizCode(String repayBizCode) {
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
+            String repayBizCode) {
         RepayPlan condition = new RepayPlan();
         condition.setRepayBizCode(repayBizCode);
         return repayPlanDAO.selectList(condition);
@@ -104,8 +105,8 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
             repayPlan.setOverdueAmount(0L);
             if (ERepayBizType.CAR.getCode().equals(repayBiz.getCurNodeCode())) {
                 repayPlan.setCurNodeCode(ERepayPlanNode.TO_REPAY.getCode());
-            } else if (ERepayBizType.PRODUCT.getCode().equals(
-                repayBiz.getCurNodeCode())) {
+            } else if (ERepayBizType.PRODUCT.getCode()
+                .equals(repayBiz.getCurNodeCode())) {
                 repayPlan.setCurNodeCode(ERepayPlanNode.PRD_TO_REPAY.getCode());
             }
             repayPlan.setTotalFee(0L);
@@ -123,11 +124,11 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     @Override
     public void repaySuccess(RepayPlan repayPlan, Long realWithholdAmount) {
 
-        repayPlan.setPayedAmount(repayPlan.getPayedAmount()
-                + realWithholdAmount);
+        repayPlan
+            .setPayedAmount(repayPlan.getPayedAmount() + realWithholdAmount);
 
-        repayPlan.setOverplusAmount(repayPlan.getOverplusAmount()
-                - realWithholdAmount);
+        repayPlan.setOverplusAmount(
+            repayPlan.getOverplusAmount() - realWithholdAmount);
 
         // repayPlan.setStatus(ERepayBizStatus.YET_REPAYMENTS.getCode());
 
@@ -138,11 +139,11 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     @Override
     public void repayPartSuccess(RepayPlan repayPlan, Long realWithholdAmount) {
 
-        repayPlan.setPayedAmount(repayPlan.getPayedAmount()
-                + realWithholdAmount);
+        repayPlan
+            .setPayedAmount(repayPlan.getPayedAmount() + realWithholdAmount);
 
-        repayPlan.setOverplusAmount(repayPlan.getOverplusAmount()
-                - realWithholdAmount);
+        repayPlan.setOverplusAmount(
+            repayPlan.getOverplusAmount() - realWithholdAmount);
 
         repayPlanDAO.repayPartSuccess(repayPlan);
     }
@@ -231,18 +232,18 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     }
 
     @Override
-    public int refreshRepayPlanOverdue(RepayPlan repayPlan) {
-        return repayPlanDAO.OverdueHandle(repayPlan);
+    public void refreshRepayPlanOverdue(RepayPlan repayPlan) {
+        repayPlanDAO.OverdueHandle(repayPlan);
     }
 
     @Override
-    public int refreshToGreen(RepayPlan repayPlan) {
-        return repayPlanDAO.OverdueHandle(repayPlan);
+    public void refreshToGreen(RepayPlan repayPlan) {
+        repayPlanDAO.OverdueHandle(repayPlan);
     }
 
     @Override
-    public int refreshToBlackProduct(RepayPlan repayPlan) {
-        return repayPlanDAO.OverdueHandle(repayPlan);
+    public void refreshToBlackProduct(RepayPlan repayPlan) {
+        repayPlanDAO.OverdueHandle(repayPlan);
     }
 
 }

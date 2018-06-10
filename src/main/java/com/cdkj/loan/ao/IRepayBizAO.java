@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.Paginable;
@@ -7,6 +8,7 @@ import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.dto.req.XN630511Req;
 import com.cdkj.loan.dto.req.XN630513Req;
+import com.cdkj.loan.dto.req.XN630551Req;
 
 public interface IRepayBizAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
@@ -21,9 +23,23 @@ public interface IRepayBizAO {
     // ********************************car********************************
 
     // 清欠催收部审核
-    public void approveByQkcsDepartment(String code, String curNodeCode,
-            Long cutLyDeposit, String updater, String remark);
+    public void approveByQkcsDepartment(String code, Long cutLyDeposit,
+            String updater, String remark);
 
+    // 驻行人员审核
+    public void approveByBankCheck(XN630551Req req);
+
+    // 总经理审核
+    public void approveByManager(String code, String approveResult,
+            String updater, String remark);
+
+    // 财务审核
+    public void approveByFinance(String code, String approveResult,
+            String updater, String remark);
+
+    // 业务团队解除抵押
+    public void releaseMortgage(String code, Date releaseDatetime,
+            String updater);
     // ********************************car********************************
 
     // ********************************product********************************
