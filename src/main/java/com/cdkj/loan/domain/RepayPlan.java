@@ -78,6 +78,9 @@ public class RepayPlan extends ABaseDO {
     // 已催款次数
     private int remindCount;
 
+    // 实际代偿金额
+    private Long realRepayAmount;
+
     // 拖车申请金额
     private Long tsCarAmount;
 
@@ -141,6 +144,9 @@ public class RepayPlan extends ABaseDO {
     // 建议说明
     private String suggestNote;
 
+    // 团队买断扣除金额
+    private Long buyOutAmount;
+
     // ****** 辅助字段 ******
     // 还款计划开始时间
     private Date repayStartDatetime;
@@ -171,6 +177,22 @@ public class RepayPlan extends ABaseDO {
 
     // 还款卡号
     private String bankcardNumber;
+
+    public Long getRealRepayAmount() {
+        return realRepayAmount;
+    }
+
+    public void setRealRepayAmount(Long realRepayAmount) {
+        this.realRepayAmount = realRepayAmount;
+    }
+
+    public Long getBuyOutAmount() {
+        return buyOutAmount;
+    }
+
+    public void setBuyOutAmount(Long buyOutAmount) {
+        this.buyOutAmount = buyOutAmount;
+    }
 
     public Long getRemitAmount() {
         return remitAmount;
