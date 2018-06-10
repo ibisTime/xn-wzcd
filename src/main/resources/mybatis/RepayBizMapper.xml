@@ -8,31 +8,43 @@
 		<result column="bankcard_code" property="bankcardCode" />
 		<result column="ref_type" property="refType" />
 		<result column="ref_code" property="refCode" />
+		
 		<result column="biz_price" property="bizPrice" />
 		<result column="sf_rate" property="sfRate" />
 		<result column="sf_amount" property="sfAmount" />
 		<result column="loan_bank" property="loanBank" />
 		<result column="loan_amount" property="loanAmount" />
+		
 		<result column="periods" property="periods" />
 		<result column="rest_periods" property="restPeriods" />
 		<result column="bank_rate" property="bankRate" />
 		<result column="loan_start_datetime" property="loanStartDatetime" />
 		<result column="loan_end_datetime" property="loanEndDatetime" />
+		
 		<result column="fx_deposit" property="fxDeposit" />
 		<result column="first_repay_datetime" property="firstRepayDatetime" />
 		<result column="first_repay_amount" property="firstRepayAmount" />
 		<result column="month_datetime" property="monthDatetime" />
 		<result column="month_amount" property="monthAmount" />
+		
 		<result column="ly_deposit" property="lyDeposit" />
 		<result column="cut_ly_deposit" property="cutLyDeposit" />
-		<result column="status" property="status" />
+		<result column="cur_node_code" property="curNodeCode" />
 		<result column="rest_amount" property="restAmount" />
 		<result column="rest_total_cost" property="restTotalCost" />
+		
+		<result column="overdue_total_deposit" property="overdueTotalDeposit" />
+		<result column="overdue_total_deposit_income" property="overdueTotalDepositIncome" />
 		<result column="total_in_deposit" property="totalInDeposit" />
 		<result column="overdue_amount" property="overdueAmount" />
 		<result column="total_overdue_count" property="totalOverdueCount" />
+		
 		<result column="cur_overdue_count" property="curOverdueCount" />
 		<result column="black_handle_note" property="blackHandleNote" />
+		<result column="is_advance_settled" property="isAdvanceSettled" />
+		<result column="settle_attach" property="settleAttach" />
+		<result column="settle_datetime" property="settleDatetime" />
+		
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
 		<result column="remark" property="remark" />
@@ -45,11 +57,18 @@
 			<if test="refType != null and refType != '' ">
 				AND t.ref_type = #{refType}
 			</if>
+			<if test="roleCode != null and roleCode != '' ">
+				AND trn.role_code = #{roleCode}
+			</if>
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
-			<if test="status != null and status != '' ">
-				AND t.status = #{status}
+			
+			<if test="curNodeCode != null and curNodeCode != '' ">
+				AND t.cur_node_code = #{curNodeCode}
+			</if>
+			<if test="isAdvanceSettled != null and isAdvanceSettled != '' ">
+				AND t.is_advance_settled = #{isAdvanceSettled}
 			</if>
 		</trim>
 	</sql>
@@ -60,31 +79,42 @@
 		,t.bankcard_code
 		,t.ref_type
 		,t.ref_code
+		
 		,t.biz_price
 		,t.sf_rate
 		,t.sf_amount
 		,t.loan_bank
 		,t.loan_amount
+		
 		,t.periods
 		,t.rest_periods
 		,t.bank_rate
 		,t.loan_start_datetime
 		,t.loan_end_datetime
 		,t.fx_deposit
+		
 		,t.first_repay_datetime
 		,t.first_repay_amount
 		,t.month_datetime
 		,t.month_amount
 		,t.ly_deposit
+		
 		,t.cut_ly_deposit
-		,t.status
+		,t.cur_node_code
 		,t.rest_amount
 		,t.rest_total_cost
+		,t.overdue_total_deposit
+		,t.overdue_total_deposit_income
 		,t.total_in_deposit
+		
 		,t.overdue_amount
 		,t.total_overdue_count
 		,t.cur_overdue_count
 		,t.black_handle_note
+		,t.is_advance_settled
+		
+		,t.settle_attach
+		,t.settle_datetime
 		,t.updater
 		,t.update_datetime
 		,t.remark
@@ -112,31 +142,39 @@
 		,bankcard_code
 		,ref_type
 		,ref_code
+		
 		,biz_price
 		,sf_rate
 		,sf_amount
 		,loan_bank
 		,loan_amount
+		
 		,periods
 		,rest_periods
 		,bank_rate
 		,loan_start_datetime
 		,loan_end_datetime
+		
 		,fx_deposit
 		,first_repay_datetime
 		,first_repay_amount
 		,month_datetime
 		,month_amount
+		
 		,ly_deposit
 		,cut_ly_deposit
-		,status
+		,cur_node_code
 		,rest_amount
 		,rest_total_cost
+		
+		,overdue_total_deposit
+		,overdue_total_deposit_income
 		,total_in_deposit
 		,overdue_amount
 		,total_overdue_count
 		,cur_overdue_count
 		,black_handle_note
+		
 		,updater
 		,update_datetime
 		,remark
@@ -147,50 +185,48 @@
 		,#{bankcardCode}
 		,#{refType}
 		,#{refCode}
+		
 		,#{bizPrice}
 		,#{sfRate}
 		,#{sfAmount}
 		,#{loanBank}
 		,#{loanAmount}
+		
 		,#{periods}
 		,#{restPeriods}
 		,#{bankRate}
 		,#{loanStartDatetime}
 		,#{loanEndDatetime}
+		
 		,#{fxDeposit}
 		,#{firstRepayDatetime}
 		,#{firstRepayAmount}
 		,#{monthDatetime}
 		,#{monthAmount}
+		
 		,#{lyDeposit}
 		,#{cutLyDeposit}
-		,#{status}
+		,#{curNodeCode}
 		,#{restAmount}
 		,#{restTotalCost}
+		
+		,#{overdueTotalDeposit}
+		,#{overdueTotalDepositIncome}
 		,#{totalInDeposit}
 		,#{overdueAmount}
 		,#{totalOverdueCount}
 		,#{curOverdueCount}
 		,#{blackHandleNote}
+		
 		,#{updater}
 		,#{updateDatetime}
 		,#{remark}
 		)
 	</insert>
 
-	<update id="update_repayComplete" parameterType="repayBiz">
-		UPDATE tht_repay_biz
-		SET
-		status = #{status}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		,remark = #{remark}
-		WHERE code = #{code}
-	</update>
-
 	<update id="update_repayBiz_bankcard" parameterType="repayBiz">
 		UPDATE tht_repay_biz
-			SET
+		SET
 		bankcard_code = #{bankcardCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
@@ -198,21 +234,11 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_repayBiz_status" parameterType="repayBiz">
+	<update id="enter_black_list_prd" parameterType="repayBiz">
 		UPDATE tht_repay_biz
-			SET
-		status = #{status}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		,remark = #{remark}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="enter_black_list" parameterType="repayBiz">
-		UPDATE tht_repay_biz
-			SET
-		black_handle_note = #{blackHandleNote}
-		,status = #{status}
+		SET
+		cur_node_code = #{curNodeCode}
+		,black_handle_note = #{blackHandleNote}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
@@ -221,30 +247,44 @@
 	
 	<update id="update_repayBiz_restAmount" parameterType="repayBiz">
 		UPDATE tht_repay_biz
-			SET
-			rest_amount = #{restAmount}
+		SET
+		rest_amount = #{restAmount}
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_repayEarlySuccess" parameterType="repayBiz">
+	<update id="update_repayAllAdvance" parameterType="repayBiz">
 		UPDATE tht_repay_biz
-			SET
-		status = #{status}
+		SET
+		cur_node_code = #{curNodeCode}
 		,rest_amount = #{restAmount}
-		,update_datetime = #{updateDatetime}
-		,remark = #{remark}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="confirm_close" parameterType="repayBiz">
-		UPDATE tht_repay_biz
-			SET
-		close_attach=#{closeAttach}
-		,close_datetime=#{closeDatetime}
-		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_repayAll" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,rest_amount = #{restAmount}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="confirm_settle" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,settle_attach = #{settleAttach}
+		,settle_datetime = #{settleDatetime}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	
 </mapper>
