@@ -24,6 +24,7 @@ public class XN630551 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
+        repayBizAO.approveByBankCheck(req);
         return new BooleanRes(true);
     }
 
