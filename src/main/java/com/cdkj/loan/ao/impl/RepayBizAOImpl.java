@@ -84,8 +84,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setRepayPlanList(repayPlanList);
 
         if (ERepayBizType.CAR.getCode().equals(repayBiz.getRefType())) {
-            repayBiz.setBudgetOrder(budgetOrderAO.getBudgetOrder(repayBiz
-                .getRefCode()));
+            repayBiz.setBudgetOrder(
+                budgetOrderAO.getBudgetOrder(repayBiz.getRefCode()));
         } else {
             repayBiz.setMallOrder(orderAO.getOrder(repayBiz.getRefCode()));
         }
@@ -111,7 +111,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Override
     public void advanceRepay(String code, String updater, String remark) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-        if (!ERepayBizNode.TO_REPAY.getCode().equals(repayBiz.getCurNodeCode())) {
+        if (!ERepayBizNode.TO_REPAY.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前还款业务不处于还款中");
         }
@@ -183,7 +184,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         condition.setRepayBizCode(code);
         List<RepayPlan> planList = repayPlanBO.queryRepayPlanList(condition);
         for (RepayPlan repayPlan : planList) {
-            repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_BLACK.getCode());
+            repayPlan
+                .setCurNodeCode(ERepayPlanNode.PRD_HANDLER_TO_BLACK.getCode());
             repayPlanBO.refreshToBlackProduct(repayPlan);
         }
     }
@@ -192,8 +194,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Transactional
     public void confirmSettledProduct(XN630513Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        if (!ERepayBizNode.PRO_SETTLED.getCode().equals(
-            repayBiz.getCurNodeCode())) {
+        if (!ERepayBizNode.PRO_SETTLED.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前产品状态不是已还款，不能确认结清！");
         }
