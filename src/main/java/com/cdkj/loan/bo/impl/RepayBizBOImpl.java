@@ -21,8 +21,6 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.enums.EBizErrorCode;
-import com.cdkj.loan.enums.EBoolean;
-import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayBizStatus;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayPlanStatus;
@@ -259,13 +257,13 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
-    public void approveByQkcsDepart(String code, Long cutLyDeposit,
-            String operator, String remark) {
+    public void approveByQkcsDepart(String code, String curNodeCode,
+            Long cutLyDeposit, String updater, String remark) {
         RepayBiz repayBiz = new RepayBiz();
         repayBiz.setCode(code);
-        repayBiz.setCurNodeCode(ERepayBizNode.BANK_CHECK.getCode());
+        repayBiz.setCurNodeCode(curNodeCode);
         repayBiz.setCutLyDeposit(cutLyDeposit);
-        repayBiz.setUpdater(operator);
+        repayBiz.setUpdater(updater);
 
         repayBiz.setUpdateDatetime(new Date());
         repayBiz.setRemark(remark);
@@ -273,36 +271,28 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
-    public void approveByBankCheck(String approveResult, String code,
-            String operator, String remark, Date settleDatetime,
-            String settlePdf) {
+    public void approveByBankCheck(String code, String curNodeCode,
+            Date settleDatetime, String settleAttach, String updater,
+            String remark) {
         RepayBiz repayBiz = new RepayBiz();
         repayBiz.setCode(code);
-        if (EBoolean.YES.getCode().equals(approveResult)) {
-            repayBiz.setCurNodeCode(ERepayBizNode.MANAGER_CHECK.getCode());
-        } else if (EBoolean.NO.getCode().equals(approveResult)) {
-            repayBiz.setCurNodeCode(ERepayBizNode.QKCS_DEPART_CHECK.getCode());
-        }
-        repayBiz.setUpdater(operator);
-        repayBiz.setUpdateDatetime(new Date());
-
-        repayBiz.setRemark(remark);
+        repayBiz.setCurNodeCode(curNodeCode);
         repayBiz.setSettleDatetime(settleDatetime);
-        repayBiz.setSettleAttach(settlePdf);
+        repayBiz.setSettleAttach(settleAttach);
+
+        repayBiz.setUpdater(updater);
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(remark);
         repayBizDAO.approveByBankCheck(repayBiz);
     }
 
     @Override
-    public void approveByManager(String approveResult, String code,
-            String operator, String remark) {
+    public void approveByManager(String code, String curNodeCode,
+            String updater, String remark) {
         RepayBiz repayBiz = new RepayBiz();
         repayBiz.setCode(code);
-        if (EBoolean.YES.getCode().equals(approveResult)) {
-            repayBiz.setCurNodeCode(ERepayBizNode.FINANCE_CHECK.getCode());
-        } else if (EBoolean.NO.getCode().equals(approveResult)) {
-            repayBiz.setCurNodeCode(ERepayBizNode.BANK_CHECK.getCode());
-        }
-        repayBiz.setUpdater(operator);
+        repayBiz.setCurNodeCode(curNodeCode);
+        repayBiz.setUpdater(updater);
         repayBiz.setUpdateDatetime(new Date());
         repayBiz.setRemark(remark);
 
@@ -310,33 +300,29 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
-    public void approveByFinance(String approveResult, String code,
-            String operator, String remark) {
+    public void approveByFinance(String code, String curNodeCode,
+            String updater, String remark) {
         RepayBiz repayBiz = new RepayBiz();
         repayBiz.setCode(code);
-        if (EBoolean.YES.getCode().equals(approveResult)) {
-            repayBiz.setCurNodeCode(ERepayBizNode.RELEASE_MORTGAGE.getCode());
-        } else if (EBoolean.NO.getCode().equals(approveResult)) {
-            repayBiz.setCurNodeCode(ERepayBizNode.MANAGER_CHECK.getCode());
-        }
-        repayBiz.setUpdater(operator);
+        repayBiz.setCurNodeCode(curNodeCode);
+        repayBiz.setUpdater(updater);
         repayBiz.setUpdateDatetime(new Date());
         repayBiz.setRemark(remark);
 
-        repayBizDAO.approveByManager(repayBiz);
+        repayBizDAO.approveByFinance(repayBiz);
     }
 
     @Override
-    public void releaseMortgage(String code, String operator,
-            Date releaseDatetime) {
+    public void releaseMortgage(String code, String curNodeCode,
+            Date releaseDatetime, String updater) {
         RepayBiz repayBiz = new RepayBiz();
         repayBiz.setCode(code);
-        repayBiz.setCurNodeCode(ERepayBizNode.SETTLED.getCode());
-        repayBiz.setUpdater(operator);
-        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setCurNodeCode(curNodeCode);
         repayBiz.setReleaseDatetime(releaseDatetime);
+        repayBiz.setUpdater(updater);
+        repayBiz.setUpdateDatetime(new Date());
 
-        repayBizDAO.approveByManager(repayBiz);
+        repayBizDAO.releaseMortgage(repayBiz);
     }
 
 }
