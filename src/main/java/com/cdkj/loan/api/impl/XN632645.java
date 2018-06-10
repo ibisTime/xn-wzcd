@@ -30,16 +30,17 @@ public class XN632645 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         AssertApply condition = new AssertApply();
+        condition.setType(req.getType());
         condition.setApplyUser(req.getApplyUser());
-        condition.setStartApplyDatetime(
-            DateUtil.getFrontDate(req.getStartApplyDatetime(), false));
-        condition.setEndApplyDatetime(
-            DateUtil.getFrontDate(req.getEndApplyDatetime(), true));
-        condition.setStatus(req.getStatus());
         condition.setDepartmentCode(req.getDepartmentCode());
+        condition.setStartApplyDatetime(DateUtil.getFrontDate(
+            req.getStartApplyDatetime(), false));
+        condition.setEndApplyDatetime(DateUtil.getFrontDate(
+            req.getEndApplyDatetime(), true));
+        condition.setStatus(req.getStatus());
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
-            column = assertApplyAO.DEFAULT_ORDER_COLUMN;
+            column = IAssertApplyAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(column, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());
