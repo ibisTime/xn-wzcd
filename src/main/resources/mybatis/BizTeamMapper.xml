@@ -95,7 +95,7 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,account_no = #{accountNo}
-		,bank = # {bank}
+		,bank = #{bank}
 		,subbranch = #{subbranch}
 		,water_bill = #{waterBill}
 		,company_code = #{companyCode}

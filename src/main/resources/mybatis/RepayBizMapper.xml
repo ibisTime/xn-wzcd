@@ -338,5 +338,77 @@
 		WHERE code = #{code}
 	</update>
 	
+	<update id="update_applyTrailer" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_financialMoney" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_trailerEntry" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_judicialLitigationEntry" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_trailerManage" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_qkcsbRedeemApply" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_riskManagerCheck" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_financeApprove" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+	
 	
 </mapper>

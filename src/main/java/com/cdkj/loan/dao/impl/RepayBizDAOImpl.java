@@ -29,8 +29,8 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
 
     @Override
     public long selectTotalCount(RepayBiz condition) {
-        return super.selectTotalCount(
-            NAMESPACE.concat("select_repayBiz_count"), condition);
+        return super.selectTotalCount(NAMESPACE.concat("select_repayBiz_count"),
+            condition);
     }
 
     @Override
@@ -100,6 +100,47 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
     @Override
     public void releaseMortgage(RepayBiz data) {
         super.update(NAMESPACE.concat("update_releaseMortgage"), data);
+    }
+
+    @Override
+    public void applyTrailer(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_applyTrailer"), data);
+    }
+
+    @Override
+    public void financialMoney(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_financialMoney"), data);
+    }
+
+    @Override
+    public void trailerEntry(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_trailerEntry"), data);
+
+    }
+
+    @Override
+    public void judicialLitigationEntry(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_judicialLitigationEntry"), data);
+    }
+
+    @Override
+    public void trailerManage(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_trailerManage"), data);
+    }
+
+    @Override
+    public void qkcsbRedeemApply(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_qkcsbRedeemApply"), data);
+    }
+
+    @Override
+    public void riskManagerCheck(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_riskManagerCheck"), data);
+    }
+
+    @Override
+    public void financeApprove(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_financeApprove"), data);
     }
 
 }

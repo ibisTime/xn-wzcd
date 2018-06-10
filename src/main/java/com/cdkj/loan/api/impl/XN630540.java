@@ -29,7 +29,7 @@ public class XN630540 extends AProcessor {
         RepayPlan condition = new RepayPlan();
         condition.setUserId(req.getUserId());
         condition.setRepayBizCode(req.getRepayBizCode());
-        condition.setStatus(req.getStatus());
+        condition.setCurNodeCode(req.getStatus());
         condition.setOverdueHandler(req.getOverdueHandler());
         condition.setStatusList(req.getStatusList());
 

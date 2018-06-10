@@ -29,7 +29,7 @@ public class XN630543 extends AProcessor {
     public Object doBusiness() throws BizException {
         RepayPlan condition = new RepayPlan();
         condition.setUserId(req.getUserId());
-        condition.setStatus(ERepayPlanStatus.TO_REPAYMENTS.getCode());
+        condition.setCurNodeCode(ERepayPlanStatus.TO_REPAYMENTS.getCode());
         condition.setOrder("cur_periods", true);
 
         int start = StringValidater.toInteger(req.getStart());

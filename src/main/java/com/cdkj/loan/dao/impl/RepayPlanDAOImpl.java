@@ -79,4 +79,35 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
         return super.update(NAMESPACE.concat("overdue_handle"), data);
     }
 
+    @Override
+    public int applyTrailer(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_applyTrailer"), data);
+    }
+
+    @Override
+    public int financialMoney(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_financialMoney"), data);
+    }
+
+    @Override
+    public int trailerEntry(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_trailerEntry"), data);
+    }
+
+    @Override
+    public int judicialLitigationEntry(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_judicialLitigationEntry"),
+            data);
+    }
+
+    @Override
+    public int qkcsbRedeemApply(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_qkcsbRedeemApply"), data);
+    }
+
+    @Override
+    public int financeApprove(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_financeApprove"), data);
+    }
+
 }

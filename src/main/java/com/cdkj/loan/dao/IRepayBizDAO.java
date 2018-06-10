@@ -33,4 +33,28 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
     // 业务团队解除抵押
     public void releaseMortgage(RepayBiz data);
 
+    // 申请拖车
+    public void applyTrailer(RepayBiz repayBiz);
+
+    // 财务打款
+    public void financialMoney(RepayBiz repayBiz);
+
+    // 清款催收部拖车录入
+    public void trailerEntry(RepayBiz repayBiz);
+
+    // 司法诉讼结果录入
+    public void judicialLitigationEntry(RepayBiz repayBiz);
+
+    // 拖车管理
+    public void trailerManage(RepayBiz repayBiz);
+
+    // 清款催收部申请赎回
+    public void qkcsbRedeemApply(RepayBiz repayBiz);
+
+    // 风控主管审核
+    public void riskManagerCheck(RepayBiz repayBiz);
+
+    // 财务主管审核
+    public void financeApprove(RepayBiz repayBiz);
+
 }

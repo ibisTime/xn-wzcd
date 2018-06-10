@@ -246,4 +246,34 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         repayPlanDAO.OverdueHandle(repayPlan);
     }
 
+    @Override
+    public void applyTrailer(RepayPlan repayPlan) {
+        repayPlanDAO.applyTrailer(repayPlan);
+    }
+
+    @Override
+    public void financialMoney(RepayPlan repayPlan) {
+        repayPlanDAO.financialMoney(repayPlan);
+    }
+
+    @Override
+    public void trailerEntry(RepayPlan repayPlan) {
+        repayPlanDAO.trailerEntry(repayPlan);
+    }
+
+    @Override
+    public void judicialLitigationEntry(RepayPlan repayPlan) {
+        repayPlanDAO.judicialLitigationEntry(repayPlan);
+    }
+
+    @Override
+    public void qkcsbRedeemApply(RepayPlan repayPlan) {
+        repayPlanDAO.qkcsbRedeemApply(repayPlan);
+    }
+
+    @Override
+    public void financeApprove(RepayPlan repayPlan) {
+        repayPlanDAO.financeApprove(repayPlan);
+    }
+
 }

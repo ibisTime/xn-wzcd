@@ -14,7 +14,7 @@
 		<result column="payed_amount" property="payedAmount" />
 		<result column="overplus_amount" property="overplusAmount" />
 		<result column="overdue_amount" property="overdueAmount" />
-		<result column="status" property="status" />
+		<result column="cur_node_code" property="curNodeCode" />
 		<result column="overdue_handler" property="overdueHandler" />
 		<result column="overdue_handle_datetime" property="overdueHandleDatetime" />
 		<result column="overdue_handle_note" property="overdueHandleNote" />
@@ -24,6 +24,29 @@
 		<result column="deposit_way" property="depositWay" />
 		<result column="should_deposit" property="shouldDeposit" />
 		<result column="remind_count" property="remindCount" />
+		<result column="real_repay_amount" property="realRepayAmount" />
+		<result column="ts_car_amount" property="tsCarAmount" />
+		<result column="ts_bankcard_number" property="tsBankcardNumber" />
+		<result column="ts_bank_name" property="tsBankName" />
+		<result column="ts_subbranch" property="tsSubbranch" />
+		<result column="tc_apply_note" property="tcApplyNote" />
+		<result column="remit_amount" property="remitAmount" />
+		<result column="remit_bill_pdf" property="remitBillPdf" />
+		<result column="take_car_address" property="takeCarAddress" />
+		<result column="take_datetime" property="takeDatetime" />
+		<result column="take_name" property="takeName" />
+		<result column="take_location" property="takeLocation" />
+		<result column="take_note" property="takeNote" />
+		<result column="jour_pdf" property="jourPdf" />
+		<result column="house_pdf" property="housePdf" />
+		<result column="gua_name" property="guaName" />
+		<result column="gua_id_no" property="guaIdNo" />
+		<result column="gua_mobile" property="guaMobile" />
+		<result column="gua_now_address" property="guaNowAddress" />
+		<result column="gua_note" property="guaNote" />
+		<result column="suggest" property="suggest" />
+		<result column="suggest_note" property="suggestNote" />
+		<result column="buy_out_amount" property="buyOutAmount" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -72,7 +95,7 @@
 		,t.payed_amount
 		,t.overplus_amount
 		,t.overdue_amount
-		,t.status
+		,t.cur_node_code
 		,t.overdue_handler
 		,t.overdue_handle_datetime
 		,t.overdue_handle_note
@@ -82,6 +105,29 @@
 		,t.deposit_way
 		,t.should_deposit
 		,t.remind_count
+		,t.real_repay_amount
+		,t.ts_car_amount
+		,t.ts_bankcard_number
+		,t.ts_bank_name
+		,t.ts_subbranch
+		,t.tc_apply_note
+		,t.remit_amount
+		,t.remit_bill_pdf
+		,t.take_car_address
+		,t.take_datetime
+		,t.take_name
+		,t.take_location
+		,t.take_note
+		,t.jour_pdf
+		,t.house_pdf
+		,t.gua_name
+		,t.gua_id_no
+		,t.gua_mobile
+		,t.gua_now_address
+		,t.gua_note
+		,t.suggest
+		,t.suggest_note
+		,t.buy_out_amount
 		FROM
 		tht_repay_plan t
 		<include refid="where_condition" />
@@ -265,6 +311,66 @@
 		,overdue_deposit = #{overdueDeposit}
 		,deposit_way = #{depositWay}
 		,overdue_handle_note = #{overdueHandleNote}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_applyTrailer" parameterType="repayPlan">
+		UPDATE tht_repay_plan
+		SET
+		cur_node_code = #{curNodeCode}
+		,ts_car_amount = #{tsCarAmount}
+		,ts_bankcard_number = #{tsBankcardNumber}
+		,ts_bank_name  = #{tsBankName}
+		,ts_subbranch = #{tsSubbranch}
+		,tc_apply_note = #{tcApplyNote}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_financialMoney" parameterType="repayPlan">
+		UPDATE tht_repay_plan
+		SET
+		remit_amount = #{remitAmount}
+		,remit_pdf = #{remitPdf}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_trailerEntry" parameterType="repayPlan">
+		UPDATE tht_repay_plan
+		SET
+		take_car_address = #{takeCarAddress}
+		,take_datetime = #{takeDatetime}
+		,take_location = #{takeLocation}
+		,take_name = #{takeName}
+		,take_note = #{takeNote}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_judicialLitigationEntry" parameterType="repayPlan">
+		UPDATE tht_repay_plan
+		SET
+		cur_node_code = #{curNodeCode}
+		,buy_out_amount = #{buyOutAmount}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_qkcsbRedeemApply" parameterType="repayPlan">
+		UPDATE tht_repay_plan
+		SET
+		jour_pdf = #{jourPdf}
+		,house_pdf = #{housePdf}
+		,gua_name = #{guaName}
+		,gua_id_no = #{guaIdNo}
+		,gua_mobile = #{guaMobile}
+		,gua_now_address = #{guaNowAddress}
+		,gua_note = #{guaNote}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_financeApprove" parameterType="repayPlan">
+		UPDATE tht_repay_plan
+		SET
+		suggest = #{suggest}
+		,suggest_note = #{suggestNote}
 		WHERE code = #{code}
 	</update>
 </mapper>
