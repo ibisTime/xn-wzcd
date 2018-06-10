@@ -10,11 +10,11 @@ public class XN630540Req extends APageReq {
 
     private String repayBizCode;// 关联业务编号
 
-    private String status;// 状态
+    private String curNodeCode;// 状态
 
     private String overdueHandler;// 逾期处理人
 
-    private List<String> statusList; // 状态List
+    private List<String> curNodeCodeList; // 状态List
 
     public String getOverdueHandler() {
         return overdueHandler;
@@ -40,20 +40,20 @@ public class XN630540Req extends APageReq {
         this.userId = userId;
     }
 
-    public String getStatus() {
-        return status;
+    public String getCurNodeCode() {
+        return curNodeCode;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
     }
 
-    public List<String> getStatusList() {
-        return statusList;
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
     }
 
-    public void setStatusList(List<String> statusList) {
-        this.statusList = statusList;
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
     }
 
 }

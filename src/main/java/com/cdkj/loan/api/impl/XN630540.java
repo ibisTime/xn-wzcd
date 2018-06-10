@@ -29,12 +29,11 @@ public class XN630540 extends AProcessor {
         RepayPlan condition = new RepayPlan();
         condition.setUserId(req.getUserId());
         condition.setRepayBizCode(req.getRepayBizCode());
-        condition.setCurNodeCode(req.getStatus());
+        condition.setCurNodeCode(req.getCurNodeCode());
+        condition.setCurNodeCodeList(req.getCurNodeCodeList());
         condition.setOverdueHandler(req.getOverdueHandler());
-        condition.setStatusList(req.getStatusList());
 
         condition.setOrder("cur_periods", true);
-
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
         return repayPlanAO.queryRepayPlanPage(start, limit, condition);
