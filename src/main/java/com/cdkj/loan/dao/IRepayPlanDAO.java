@@ -30,4 +30,9 @@ public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
 
     public int riskManagerCheck(RepayPlan repayPlan);
 
+    public long selectTotalCountByRoleCode(RepayPlan condition);
+
+    public List<RepayPlan> selectRepayPlanByRoleCode(RepayPlan condition,
+            int start, int pageSize);
+
 }

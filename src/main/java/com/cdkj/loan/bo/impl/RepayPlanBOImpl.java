@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IRepayPlanBO;
+import com.cdkj.loan.bo.base.Page;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
@@ -22,8 +24,8 @@ import com.cdkj.loan.enums.ERepayPlanNode;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
-        IRepayPlanBO {
+public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
+        implements IRepayPlanBO {
 
     @Autowired
     private IRepayPlanDAO repayPlanDAO;
@@ -34,7 +36,8 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     }
 
     @Override
-    public List<RepayPlan> queryRepayPlanListByRepayBizCode(String repayBizCode) {
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
+            String repayBizCode) {
         RepayPlan condition = new RepayPlan();
         condition.setRepayBizCode(repayBizCode);
         return repayPlanDAO.selectList(condition);
@@ -104,8 +107,8 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
             repayPlan.setOverdueAmount(0L);
             if (ERepayBizType.CAR.getCode().equals(repayBiz.getCurNodeCode())) {
                 repayPlan.setCurNodeCode(ERepayPlanNode.TO_REPAY.getCode());
-            } else if (ERepayBizType.PRODUCT.getCode().equals(
-                repayBiz.getCurNodeCode())) {
+            } else if (ERepayBizType.PRODUCT.getCode()
+                .equals(repayBiz.getCurNodeCode())) {
                 repayPlan.setCurNodeCode(ERepayPlanNode.PRD_TO_REPAY.getCode());
             }
             repayPlan.setTotalFee(0L);
@@ -123,11 +126,11 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     @Override
     public void repaySuccess(RepayPlan repayPlan, Long realWithholdAmount) {
 
-        repayPlan.setPayedAmount(repayPlan.getPayedAmount()
-                + realWithholdAmount);
+        repayPlan
+            .setPayedAmount(repayPlan.getPayedAmount() + realWithholdAmount);
 
-        repayPlan.setOverplusAmount(repayPlan.getOverplusAmount()
-                - realWithholdAmount);
+        repayPlan.setOverplusAmount(
+            repayPlan.getOverplusAmount() - realWithholdAmount);
 
         // repayPlan.setStatus(ERepayBizStatus.YET_REPAYMENTS.getCode());
 
@@ -138,11 +141,11 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     @Override
     public void repayPartSuccess(RepayPlan repayPlan, Long realWithholdAmount) {
 
-        repayPlan.setPayedAmount(repayPlan.getPayedAmount()
-                + realWithholdAmount);
+        repayPlan
+            .setPayedAmount(repayPlan.getPayedAmount() + realWithholdAmount);
 
-        repayPlan.setOverplusAmount(repayPlan.getOverplusAmount()
-                - realWithholdAmount);
+        repayPlan.setOverplusAmount(
+            repayPlan.getOverplusAmount() - realWithholdAmount);
 
         repayPlanDAO.repayPartSuccess(repayPlan);
     }
@@ -275,22 +278,20 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
         repayPlanDAO.riskManagerCheck(repayPlan);
     }
 
-    /** 
-     * @see com.cdkj.loan.bo.IRepayPlanBO#financeApprove(com.cdkj.loan.domain.RepayPlan)
-     */
     @Override
-    public void financeApprove(RepayPlan repayPlan) {
-        // TODO Auto-generated method stub
-
+    public Paginable<RepayPlan> getPaginableByRoleCode(int start, int limit,
+            RepayPlan condition) {
+        prepare(condition);
+        long totalCount = repayPlanDAO.selectTotalCountByRoleCode(condition);
+        Page<RepayPlan> page = new Page<RepayPlan>(start, limit, totalCount);
+        List<RepayPlan> dataList = repayPlanDAO.selectRepayPlanByRoleCode(
+            condition, page.getStart(), page.getPageSize());
+        page.setList(dataList);
+        return page;
     }
 
-    /** 
-     * @see com.cdkj.loan.bo.IRepayPlanBO#refreshRepayPlanCurNodeCode(com.cdkj.loan.domain.RepayPlan)
-     */
     @Override
-    public void refreshRepayPlanCurNodeCode(RepayPlan data) {
-        // TODO Auto-generated method stub
-
+    public void refreshRepayPlanCurNodeCode(RepayPlan repayPlan) {
     }
 
 }

@@ -17,11 +17,15 @@ public interface IRepayPlanAO {
 
     public RepayPlan getRepayPlan(String code);
 
+    public Paginable<RepayPlan> queryRepayPlanPageByRoleCode(int start,
+            int limit, RepayPlan condition);
+
     // 按月还款
     public void repayMonthly(String code);
 
     // 当月还款名单
-    public Object queryCurrentMonthRepayPage(int start, int limit, RepayPlan condition);
+    public Object queryCurrentMonthRepayPage(int start, int limit,
+            RepayPlan condition);
 
     // 逾期处理
     public void overdueHandle(XN630532Req req);

@@ -321,4 +321,18 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         return unsettledLoan;
     }
 
+    @Override
+    public Paginable<RepayPlan> queryRepayPlanPageByRoleCode(int start,
+            int limit, RepayPlan condition) {
+        Paginable<RepayPlan> paginable = repayPlanBO
+            .getPaginableByRoleCode(start, limit, condition);
+        for (RepayPlan repayPlan : paginable.getList()) {
+            repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
+            repayPlan.setRepayBiz(
+                repayBizAO.getRepayBiz(repayPlan.getRepayBizCode()));
+
+        }
+        return paginable;
+    }
+
 }

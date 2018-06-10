@@ -438,7 +438,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 "当前节点不是清款催收部拖车录入节点，不能操作！");
         }
         if (EtrailerManageResult.USER_REDEEM.getCode().equals(appoveResult)) {
-            repayBiz.setCurNodeCode(ERepayBizNode.USER_REDEEM.getCode());
+            repayBiz.setCurNodeCode(ERepayBizNode.QKCSB_REDEEM_APPLY.getCode());
         } else {
             repayBiz.setCurNodeCode(ERepayBizNode.JUDICIAL_LAWSUIT.getCode());
         }
@@ -487,7 +487,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Override
     public void qkcsbRedeemApply(XN630561Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        if (!ERepayBizNode.USER_REDEEM.getCode().equals(
+        if (!ERepayBizNode.QKCSB_REDEEM_APPLY.getCode().equals(
             repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是待用户赎回节点，不能操作！");
@@ -549,14 +549,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
             repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是风控主管审核节点，不能操作！");
-        }
-        List<RepayPlan> repayPlans = repayPlanBO
-            .queryRepayPlanListByRepayBizCode(req.getCode());
-        for (RepayPlan repayPlan : repayPlans) {
-            if (ERepayPlanNode.QKCSB_APPLY_TC.getCode().equals(
-                repayPlan.getCurNodeCode())) {
-                repayPlanBO.financeApprove(repayPlan);
-            }
         }
 
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
