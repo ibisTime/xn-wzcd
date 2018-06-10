@@ -657,6 +657,12 @@ public class BudgetOrder extends ABaseDO {
     // 当前节点编号
     private String curNodeCode;
 
+    // 客户申请作废时的节点编号
+    private String cancelNodeCode;
+
+    // 冻结状态
+    private String frozenStatus;
+
     // 最新备注
     private String remark;
 
@@ -684,6 +690,44 @@ public class BudgetOrder extends ABaseDO {
 
     // 贷款银行名称
     private String loanBankName;
+
+    // 申请时间起始
+    private Date advanceFundDatetimeStart;
+
+    // 申请时间结束
+    private Date advanceFundDatetimeEnd;
+
+    public Date getAdvanceFundDatetimeStart() {
+        return advanceFundDatetimeStart;
+    }
+
+    public void setAdvanceFundDatetimeStart(Date advanceFundDatetimeStart) {
+        this.advanceFundDatetimeStart = advanceFundDatetimeStart;
+    }
+
+    public Date getAdvanceFundDatetimeEnd() {
+        return advanceFundDatetimeEnd;
+    }
+
+    public void setAdvanceFundDatetimeEnd(Date advanceFundDatetimeEnd) {
+        this.advanceFundDatetimeEnd = advanceFundDatetimeEnd;
+    }
+
+    public String getCancelNodeCode() {
+        return cancelNodeCode;
+    }
+
+    public void setCancelNodeCode(String cancelNodeCode) {
+        this.cancelNodeCode = cancelNodeCode;
+    }
+
+    public String getFrozenStatus() {
+        return frozenStatus;
+    }
+
+    public void setFrozenStatus(String frozenStatus) {
+        this.frozenStatus = frozenStatus;
+    }
 
     public String getBackAdvanceStatus() {
         return backAdvanceStatus;

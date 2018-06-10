@@ -51,4 +51,12 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     void insertBackAdvanceFund(BudgetOrder data);
 
     void confirmBackAdvanceFund(BudgetOrder data);
+
+    // 客户申请作废
+    void applyCancel(BudgetOrder data);
+
+    // 客户作废 业务总监审核
+    void cancelBizAudit(BudgetOrder data);
+
+    void cancelFinanceAudit(BudgetOrder data);
 }

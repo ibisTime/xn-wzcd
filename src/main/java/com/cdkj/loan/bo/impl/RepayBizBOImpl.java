@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.bo.IRepayBizBO;
+import com.cdkj.loan.bo.base.Page;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
@@ -381,5 +383,17 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     @Override
     public void financeApprove(RepayBiz repayBiz) {
         repayBizDAO.financeApprove(repayBiz);
+    }
+
+    @Override
+    public Paginable<RepayBiz> getPaginableByRoleCode(int start, int limit,
+            RepayBiz condition) {
+        prepare(condition);
+        long totalCount = repayBizDAO.selectTotalCountByRoleCode(condition);
+        Page<RepayBiz> page = new Page<RepayBiz>(start, limit, totalCount);
+        List<RepayBiz> dataList = repayBizDAO.selectRepayBizByRoleCode(
+            condition, page.getStart(), page.getPageSize());
+        page.setList(dataList);
+        return page;
     }
 }

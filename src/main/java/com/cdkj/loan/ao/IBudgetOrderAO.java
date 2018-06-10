@@ -13,6 +13,9 @@ import com.cdkj.loan.dto.req.XN632130Req;
 import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.dto.req.XN632180Req;
+import com.cdkj.loan.dto.req.XN632190Req;
+import com.cdkj.loan.dto.req.XN632191Req;
+import com.cdkj.loan.dto.req.XN632192Req;
 
 @Component
 public interface IBudgetOrderAO {
@@ -88,5 +91,14 @@ public interface IBudgetOrderAO {
 
     // 财务确认退垫资款
     public void confirmBackAdvanceFund(XN632180Req req);
+
+    // 客户申请作废
+    public void applyCancel(XN632190Req req);
+
+    // 客户作废 业务总监审核
+    public void cancelBizAudit(XN632191Req req);
+
+    // 客户作废 财务总监审核
+    public void cancelFinanceAudit(XN632192Req req);
 
 }

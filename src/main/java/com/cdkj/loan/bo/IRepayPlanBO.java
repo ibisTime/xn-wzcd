@@ -57,4 +57,6 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
     public void financeApprove(RepayPlan repayPlan);
 
     public void refreshRepayPlanCurNodeCode(RepayPlan data);
+
+    public void riskManagerCheck(RepayPlan repayPlan);
 }

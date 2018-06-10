@@ -178,6 +178,17 @@ public class RepayPlan extends ABaseDO {
     // 还款卡号
     private String bankcardNumber;
 
+    // 角色编号
+    private String roleCode;
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
+
     public Long getRealRepayAmount() {
         return realRepayAmount;
     }

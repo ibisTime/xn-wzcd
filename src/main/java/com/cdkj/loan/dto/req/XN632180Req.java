@@ -14,9 +14,9 @@ public class XN632180Req {
     @NotBlank
     private String code;
 
-    // 更新人
+    // 操作人
     @NotBlank
-    private String updater;
+    private String operator;
 
     // 退款金额
     @NotBlank
@@ -46,12 +46,12 @@ public class XN632180Req {
         this.code = code;
     }
 
-    public String getUpdater() {
-        return updater;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setUpdater(String updater) {
-        this.updater = updater;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
     public String getBackAdvanceAmount() {
