@@ -8,39 +8,33 @@ import com.cdkj.loan.domain.RepayPlan;
 
 public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
-    public boolean isRepayPlanExist(String code);
+    public boolean checkRepayComplete(String repayBizCode);
 
-    public String saveRepayPlan(RepayPlan data);
-
-    public int removeRepayPlan(String code);
-
-    public int refreshRepayPlan(RepayPlan data);
-
-    public int refreshRepayPlanStatus(RepayPlan data);
+    public boolean checkPreUnpay(String repayBizCode, int curPeriod);
 
     public List<RepayPlan> queryRepayPlanList(RepayPlan condition);
 
     public RepayPlan getRepayPlanLast(RepayPlan condition);
 
-    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
-            String repayBizCode);
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(String repayBizCode);
 
     public RepayPlan getRepayPlan(String code);
 
+    // 产生还款计划
     public void genereateNewRapayPlan(RepayBiz repayBiz);
 
+    // 支付成功更新
     public void repaySuccess(RepayPlan repayPlan, Long realWithholdAmount);
 
-    public boolean checkRepayComplete(String repayBizCode);
+    // 逾期更新
+    public void refreshRepayPlanOverdue(RepayPlan repayPlan);
 
-    public boolean checkPreUnpay(String repayBizCode, int curPeriod);
+    // 进入绿名单
+    public void refreshToGreen(RepayPlan repayPlan);
 
-    public int refreshRepayPlanOverdue(RepayPlan repayPlan);
+    // 产品进入黑名单
+    public void refreshToBlackProduct(RepayPlan repayPlan);
 
-    public int refreshToGreen(RepayPlan repayPlan);
-
-    public int refreshToBlack(RepayPlan repayPlan);
-
+    // 部分支付方法
     public void repayPartSuccess(RepayPlan repayPlan, Long realWithholdAmount);
-
 }

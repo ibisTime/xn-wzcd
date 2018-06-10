@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 录入黑名单处理结果
+ * 录入黑名单处理结果(商品分期)
  * @author: xieyj 
  * @since: 2018年6月7日 下午5:40:12 
  * @history:
@@ -24,7 +24,7 @@ public class XN630514 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repaybizAO.enterBlackList(req.getCode(), req.getBlackHandleNote(),
+        repaybizAO.enterBlackListProduct(req.getCode(), req.getBlackHandleNote(),
             req.getUpdater(), req.getRemark());
         return new BooleanRes(true);
     }

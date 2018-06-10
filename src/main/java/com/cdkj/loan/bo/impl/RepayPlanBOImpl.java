@@ -17,57 +17,16 @@ import com.cdkj.loan.dao.IRepayPlanDAO;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.enums.EBizErrorCode;
-import com.cdkj.loan.enums.ERepayBizStatus;
-import com.cdkj.loan.enums.ERepayPlanStatus;
+import com.cdkj.loan.enums.ERepayBizType;
+import com.cdkj.loan.enums.ERepayPlanNode;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
-        implements IRepayPlanBO {
+public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
+        IRepayPlanBO {
 
     @Autowired
     private IRepayPlanDAO repayPlanDAO;
-
-    @Override
-    public boolean isRepayPlanExist(String code) {
-        RepayPlan condition = new RepayPlan();
-        condition.setCode(code);
-        if (repayPlanDAO.selectTotalCount(condition) > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public String saveRepayPlan(RepayPlan data) {
-        String code = null;
-        if (data != null) {
-            code = OrderNoGenerater.generate("RP");
-            data.setCode(code);
-            repayPlanDAO.insert(data);
-        }
-        return code;
-    }
-
-    @Override
-    public int removeRepayPlan(String code) {
-        int count = 0;
-        if (StringUtils.isNotBlank(code)) {
-            RepayPlan data = new RepayPlan();
-            data.setCode(code);
-            count = repayPlanDAO.delete(data);
-        }
-        return count;
-    }
-
-    @Override
-    public int refreshRepayPlan(RepayPlan data) {
-        int count = 0;
-        if (StringUtils.isNotBlank(data.getCode())) {
-            count = repayPlanDAO.update(data);
-        }
-        return count;
-    }
 
     @Override
     public List<RepayPlan> queryRepayPlanList(RepayPlan condition) {
@@ -75,8 +34,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
     }
 
     @Override
-    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
-            String repayBizCode) {
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(String repayBizCode) {
         RepayPlan condition = new RepayPlan();
         condition.setRepayBizCode(repayBizCode);
         return repayPlanDAO.selectList(condition);
@@ -99,7 +57,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             condition.setCode(code);
             data = repayPlanDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "记录不存在");
+                throw new BizException("xn0000", "还款计划不存在");
             }
         }
         return data;
@@ -116,7 +74,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
 
             int curPeriod = i + 1;
 
-            String code = OrderNoGenerater.generate("RP");
+            String code = OrderNoGenerater.generate("RP") + curPeriod;
 
             Long repayCapital = repayBiz.getMonthAmount();
             if (i == 0) {
@@ -144,14 +102,18 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             repayPlan.setOverplusAmount(shouldRepayAmount);
 
             repayPlan.setOverdueAmount(0L);
-            repayPlan.setStatus(ERepayBizStatus.TO_REPAYMENTS.getCode());
+            if (ERepayBizType.CAR.getCode().equals(repayBiz.getCurNodeCode())) {
+                repayPlan.setCurNodeCode(ERepayPlanNode.TO_REPAY.getCode());
+            } else if (ERepayBizType.PRODUCT.getCode().equals(
+                repayBiz.getCurNodeCode())) {
+                repayPlan.setCurNodeCode(ERepayPlanNode.PRD_TO_REPAY.getCode());
+            }
             repayPlan.setTotalFee(0L);
             repayPlan.setPayedFee(0L);
-            repayPlan.setOverdueDeposit(0L);
 
+            repayPlan.setOverdueDeposit(0L);
             repayPlan.setShouldDeposit(0L);
             repayPlan.setRemindCount(0);
-
             repayPlanList.add(repayPlan);
         }
 
@@ -161,13 +123,13 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
     @Override
     public void repaySuccess(RepayPlan repayPlan, Long realWithholdAmount) {
 
-        repayPlan
-            .setPayedAmount(repayPlan.getPayedAmount() + realWithholdAmount);
+        repayPlan.setPayedAmount(repayPlan.getPayedAmount()
+                + realWithholdAmount);
 
-        repayPlan.setOverplusAmount(
-            repayPlan.getOverplusAmount() - realWithholdAmount);
+        repayPlan.setOverplusAmount(repayPlan.getOverplusAmount()
+                - realWithholdAmount);
 
-        repayPlan.setStatus(ERepayBizStatus.YET_REPAYMENTS.getCode());
+        // repayPlan.setStatus(ERepayBizStatus.YET_REPAYMENTS.getCode());
 
         repayPlanDAO.repaySuccess(repayPlan);
 
@@ -176,11 +138,11 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
     @Override
     public void repayPartSuccess(RepayPlan repayPlan, Long realWithholdAmount) {
 
-        repayPlan
-            .setPayedAmount(repayPlan.getPayedAmount() + realWithholdAmount);
+        repayPlan.setPayedAmount(repayPlan.getPayedAmount()
+                + realWithholdAmount);
 
-        repayPlan.setOverplusAmount(
-            repayPlan.getOverplusAmount() - realWithholdAmount);
+        repayPlan.setOverplusAmount(repayPlan.getOverplusAmount()
+                - realWithholdAmount);
 
         repayPlanDAO.repayPartSuccess(repayPlan);
     }
@@ -221,15 +183,15 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
 
         if (CollectionUtils.isNotEmpty(repayPlans)) {
 
-            for (RepayPlan repayPlan : repayPlans) {
-                if (!ERepayPlanStatus.YET_REPAYMENTS.getCode()
-                    .equals(repayPlan.getStatus())
-                        && !ERepayPlanStatus.HESUAN_TO_GREEN.getCode()
-                            .equals(repayPlan.getStatus())) {
-                    isComplete = false;
-                    break;
-                }
-            }
+            // for (RepayPlan repayPlan : repayPlans) {
+            // if (!ERepayPlanStatus.YET_REPAYMENTS.getCode().equals(
+            // repayPlan.getStatus())
+            // && !ERepayPlanStatus.HESUAN_TO_GREEN.getCode().equals(
+            // repayPlan.getStatus())) {
+            // isComplete = false;
+            // break;
+            // }
+            // }
 
         }
 
@@ -253,28 +215,19 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
                 if (repayPlan.getCurPeriods() >= curPeriod) {
                     break;
                 }
-                if (!ERepayPlanStatus.YET_REPAYMENTS.getCode()
-                    .equals(repayPlan.getStatus())
-                        && !ERepayPlanStatus.HESUAN_TO_GREEN.getCode()
-                            .equals(repayPlan.getStatus())) {
-                    flag = true;
-                    break;
-                }
+                // if (!ERepayPlanStatus.YET_REPAYMENTS.getCode().equals(
+                // repayPlan.getStatus())
+                // && !ERepayPlanStatus.HESUAN_TO_GREEN.getCode().equals(
+                // repayPlan.getStatus())) {
+                // flag = true;
+                // break;
+                // }
             }
 
         }
 
         return flag;
 
-    }
-
-    @Override
-    public int refreshRepayPlanStatus(RepayPlan data) {
-        int count = 0;
-        if (StringUtils.isNotBlank(data.getCode())) {
-            count = repayPlanDAO.updateStatus(data);
-        }
-        return count;
     }
 
     @Override
@@ -288,7 +241,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
     }
 
     @Override
-    public int refreshToBlack(RepayPlan repayPlan) {
+    public int refreshToBlackProduct(RepayPlan repayPlan) {
         return repayPlanDAO.OverdueHandle(repayPlan);
     }
 

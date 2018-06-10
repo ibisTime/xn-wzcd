@@ -10,83 +10,96 @@ import com.cdkj.loan.dao.base.ABaseDO;
 */
 public class AssertGoods extends ABaseDO {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	// 编号
-	private String code;
+    // 编号
+    private String code;
 
-	// 办公用品编号
-	private String assertCode;
+    // 办公用品编号
+    private String assertCode;
 
-	// 品名
-	private String productCode;
+    // 品名
+    private String productCode;
 
-	// 规格
-	private String mode;
+    // 规格
+    private String mode;
 
-	// 申请数量
-	private String quantity;
+    // 申请数量
+    private String quantity;
 
-	// 出库价格
-	private String price;
+    // 出库价格
+    private String price;
 
-	// 备注
-	private String remark;
+    // 备注
+    private String remark;
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    // ***********db properties***********
 
-	public String getCode() {
-		return code;
-	}
+    // 产品名称
+    private String productName;
 
-	public void setAssertCode(String assertCode) {
-		this.assertCode = assertCode;
-	}
+    public String getProductName() {
+        return productName;
+    }
 
-	public String getAssertCode() {
-		return assertCode;
-	}
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
-	public void setProductCode(String productCode) {
-		this.productCode = productCode;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public String getProductCode() {
-		return productCode;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public void setMode(String mode) {
-		this.mode = mode;
-	}
+    public void setAssertCode(String assertCode) {
+        this.assertCode = assertCode;
+    }
 
-	public String getMode() {
-		return mode;
-	}
+    public String getAssertCode() {
+        return assertCode;
+    }
 
-	public void setQuantity(String quantity) {
-		this.quantity = quantity;
-	}
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
 
-	public String getQuantity() {
-		return quantity;
-	}
+    public String getProductCode() {
+        return productCode;
+    }
 
-	public void setPrice(String price) {
-		this.price = price;
-	}
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
 
-	public String getPrice() {
-		return price;
-	}
+    public String getMode() {
+        return mode;
+    }
 
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
 
-	public String getRemark() {
-		return remark;
-	}
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
 
 }

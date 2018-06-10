@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 确认结清
+ * 产品确认结清
  * @author: xieyj 
  * @since: 2018年6月7日 下午5:39:47 
  * @history:
@@ -24,7 +24,7 @@ public class XN630513 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repaybizAO.confirmClose(req);
+        repaybizAO.confirmSettledProduct(req);
         return new BooleanRes(true);
     }
 

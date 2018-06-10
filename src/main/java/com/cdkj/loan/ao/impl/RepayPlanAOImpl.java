@@ -34,6 +34,7 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.ERepayBizType;
+import com.cdkj.loan.enums.ERepayPlanNode;
 import com.cdkj.loan.enums.ERepayPlanStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -139,8 +140,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
 
         // 校验是否是可还款状态
-        if (!ERepayPlanStatus.TO_REPAYMENTS.getCode().equals(
-            repayPlan.getStatus())) {
+        if (!ERepayPlanNode.TO_REPAY.getCode().equals(
+            repayPlan.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "本期还款计划不处于待还款状态");
         }
@@ -196,7 +197,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
         // 检查是否已经全部正常还款
         if (repayPlanBO.checkRepayComplete(repayPlan.getRepayBizCode())) {
-            repayBizBO.repaySuccessNormal(repayPlan.getRepayBizCode());
+            repayBizBO.refreshRepayAllCarLoan(repayPlan.getRepayBizCode());
         }
 
         // 增加信用分
@@ -299,7 +300,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     public void ToBlack(String code) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
         repayPlan.setStatus(ERepayPlanStatus.HESUANNOT_TO_BLACK.getCode());
-        repayPlanBO.refreshToBlack(repayPlan);
+        repayPlanBO.refreshToBlackProduct(repayPlan);
     }
 
     @Override

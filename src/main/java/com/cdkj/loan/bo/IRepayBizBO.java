@@ -34,7 +34,28 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     public void refreshRepayAllCarLoan(String repayBizCode);
 
     // 车贷确认结算
-    public void confirmSettledCarLoan(RepayBiz repayBiz);
+    public void confirmSettledProduct(RepayBiz repayBiz);
+
+    // 清欠催收部审核
+    public void approveByQkcsDepart(String code, String curNodeCode,
+            Long cutLyDeposit, String updater, String remark);
+
+    // 驻行人员审核
+    public void approveByBankCheck(String code, String curNodeCode,
+            Date settleDatetime, String settleAttach, String updater,
+            String remark);
+
+    // 总经理审核
+    public void approveByManager(String code, String curNodeCode,
+            String updater, String remark);
+
+    // 财务审核
+    public void approveByFinance(String code, String curNodeCode,
+            String updater, String remark);
+
+    // 业务团队解除抵押
+    public void releaseMortgage(String code, String curNodeCode,
+            Date releaseDatetime, String updater);
 
     // ********************************car********************************
 
@@ -57,27 +78,10 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
     // ********************************product********************************
 
+    // ********************************common********************************
+
     // 部分还款更新还款金额
     public void refreshRestAmount(RepayBiz repayBiz, Long realWithholdAmount);
 
-    // 清欠催收部审核
-    public void approveByQkcsDepart(String code, String curNodeCode,
-            Long cutLyDeposit, String updater, String remark);
-
-    // 驻行人员审核
-    public void approveByBankCheck(String code, String curNodeCode,
-            Date settleDatetime, String settleAttach, String updater,
-            String remark);
-
-    // 总经理审核
-    public void approveByManager(String code, String curNodeCode,
-            String updater, String remark);
-
-    // 财务审核
-    public void approveByFinance(String code, String curNodeCode,
-            String updater, String remark);
-
-    // 业务团队解除抵押
-    public void releaseMortgage(String code, String curNodeCode,
-            Date releaseDatetime, String updater);
+    // ********************************common********************************
 }
