@@ -124,6 +124,7 @@ CREATE TABLE `tht_repay_biz` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*还款计划 */
+DROP TABLE IF EXISTS `tht_repay_plan`;
 CREATE TABLE `tht_repay_plan` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',
@@ -136,7 +137,7 @@ CREATE TABLE `tht_repay_plan` (
   `payed_amount` bigint(20) DEFAULT NULL COMMENT '已还金额',
   `overplus_amount` bigint(20) DEFAULT NULL COMMENT '剩余欠款',
   `overdue_amount` bigint(20) DEFAULT NULL COMMENT '逾期金额',
-  `status` varchar(4) DEFAULT NULL COMMENT '状态',
+  `cur_node_code` varchar(4) DEFAULT NULL COMMENT '节点',
   `overdue_handler` varchar(255) DEFAULT NULL COMMENT '逾期处理人',
   `overdue_handle_datetime` datetime DEFAULT NULL COMMENT '逾期处理时间',
   `overdue_handle_note` text COMMENT '逾期处理说明',
@@ -146,6 +147,29 @@ CREATE TABLE `tht_repay_plan` (
   `deposit_way` varchar(255) DEFAULT NULL COMMENT '再次逾期保证金收取方式',
   `should_deposit` bigint(20) DEFAULT NULL COMMENT '实际可退的再次逾期保证金',
   `remind_count` int(11) DEFAULT NULL COMMENT '已催款次数',
+  `real_repay_amount` bigint(20) DEFAULT NULL COMMENT '实际代偿金额',
+  `ts_car_amount` bigint(20) DEFAULT NULL COMMENT '拖车申请金额',
+  `ts_bankcard_number` varchar(255) DEFAULT NULL COMMENT '拖车收款账号',
+  `ts_bank_name` varchar(255) DEFAULT NULL COMMENT '拖车开户行',
+  `ts_subbranch` varchar(255) DEFAULT NULL COMMENT '拖车开户支行',
+  `tc_apply_note` varchar(255) DEFAULT NULL COMMENT '拖车申请说明',
+  `remit_amount` bigint(20) DEFAULT NULL COMMENT '打款金额',
+  `remit_bill_pdf` varchar(255) DEFAULT NULL COMMENT '打款水单',
+  `take_car_address` varchar(255) DEFAULT NULL COMMENT '收车地点',
+  `take_datetime` datetime DEFAULT NULL COMMENT '拖车时间',
+  `take_name` varchar(255) DEFAULT NULL COMMENT '拖车人员',
+  `take_location` varchar(255) DEFAULT NULL COMMENT '拖车停放位置',
+  `take_note` varchar(255) DEFAULT NULL COMMENT '拖车说明',
+  `jour_pdf` varchar(255) DEFAULT NULL COMMENT '流水',
+  `house_pdf` varchar(255) DEFAULT NULL COMMENT '房产',
+  `gua_name` varchar(255) DEFAULT NULL COMMENT '担保人姓名',
+  `gua_id_no` varchar(255) DEFAULT NULL COMMENT '担保人身份证号',
+  `gua_mobile` varchar(255) DEFAULT NULL COMMENT '担保人手机号',
+  `gua_now_address` varchar(255) DEFAULT NULL COMMENT '担保人现居住地址',
+  `gua_note` varchar(255) DEFAULT NULL COMMENT '担保赎回说明',
+  `suggest` varchar(255) DEFAULT NULL COMMENT '建议(1=6个月保证金/2=已结清)',
+  `suggest_note` varchar(255) DEFAULT NULL COMMENT '建议说明',
+  `buy_out_amount` bigint(20) DEFAULT NULL COMMENT '团队买断扣除金额',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

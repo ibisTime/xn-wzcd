@@ -48,6 +48,7 @@ public class RepayPlan extends ABaseDO {
     // 逾期金额
     private Long overdueAmount;
 
+    // 节点
     private String curNodeCode;
 
     // 逾期处理人

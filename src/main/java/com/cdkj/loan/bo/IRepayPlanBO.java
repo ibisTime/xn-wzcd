@@ -16,7 +16,8 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     public RepayPlan getRepayPlanLast(RepayPlan condition);
 
-    public List<RepayPlan> queryRepayPlanListByRepayBizCode(String repayBizCode);
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
+            String repayBizCode);
 
     public RepayPlan getRepayPlan(String code);
 
@@ -37,4 +38,22 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     // 部分支付方法
     public void repayPartSuccess(RepayPlan repayPlan, Long realWithholdAmount);
+
+    // 拖车申请
+    public void applyTrailer(RepayPlan repayPlan);
+
+    // 财务打款
+    public void financialMoney(RepayPlan repayPlan);
+
+    // 清款催收部拖车录入
+    public void trailerEntry(RepayPlan repayPlan);
+
+    // 司法诉讼结果录入
+    public void judicialLitigationEntry(RepayPlan repayPlan);
+
+    // 清款催收部申请赎回
+    public void qkcsbRedeemApply(RepayPlan repayPlan);
+
+    // 财务主管审核
+    public void financeApprove(RepayPlan repayPlan);
 }

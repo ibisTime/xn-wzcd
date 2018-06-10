@@ -20,4 +20,16 @@ public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
 
     public int repayPartSuccess(RepayPlan repayPlan);
 
+    public int applyTrailer(RepayPlan repayPlan);
+
+    public int financialMoney(RepayPlan repayPlan);
+
+    public int trailerEntry(RepayPlan repayPlan);
+
+    public int judicialLitigationEntry(RepayPlan repayPlan);
+
+    public int qkcsbRedeemApply(RepayPlan repayPlan);
+
+    public int financeApprove(RepayPlan repayPlan);
+
 }
