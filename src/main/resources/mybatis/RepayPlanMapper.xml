@@ -62,6 +62,12 @@
 			<if test="repayBizCode != null and repayBizCode != '' ">
 				AND t.repay_biz_code = #{repayBizCode}
 			</if>
+			<if test="roleCode != null and roleCode != '' ">
+				AND t.role_code = #{roleCode}
+			</if>
+			<if test="curNodeCode != null and curNodeCode != '' ">
+				AND t.cur_node_code = #{curNodeCode}
+			</if>
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
@@ -138,11 +144,73 @@
 		</trim>
 	</select>
 	
+	<select id="select_repayPlan_byRoleCode" parameterType="repayPlan" resultMap="repayPlan_DB_Result">
+		SELECT
+		t.code
+		,t.repay_biz_code
+		,t.user_id
+		,t.periods
+		,t.cur_periods
+		,t.repay_datetime
+		,t.repay_capital
+		,t.repay_interest
+		,t.payed_amount
+		,t.overplus_amount
+		,t.overdue_amount
+		,t.cur_node_code
+		,t.overdue_handler
+		,t.overdue_handle_datetime
+		,t.overdue_handle_note
+		,t.total_fee
+		,t.payed_fee
+		,t.overdue_deposit
+		,t.deposit_way
+		,t.should_deposit
+		,t.remind_count
+		,t.real_repay_amount
+		,t.ts_car_amount
+		,t.ts_bankcard_number
+		,t.ts_bank_name
+		,t.ts_subbranch
+		,t.tc_apply_note
+		,t.remit_amount
+		,t.remit_bill_pdf
+		,t.take_car_address
+		,t.take_datetime
+		,t.take_name
+		,t.take_location
+		,t.take_note
+		,t.jour_pdf
+		,t.house_pdf
+		,t.gua_name
+		,t.gua_id_no
+		,t.gua_mobile
+		,t.gua_now_address
+		,t.gua_note
+		,t.suggest
+		,t.suggest_note
+		,t.buy_out_amount
+		FROM
+		tht_repay_plan t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	
 
 	<select id="select_repayPlan_count" parameterType="repayPlan"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tht_repay_plan t
 		<include refid="where_condition" />
+	</select>
+	
+	<select id="select_repayPlan_count_byRoleCode" parameterType="repayPlan"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM (SELECT distinct code FROM tht_repay_plan t left join tsys_role_node r on t.cur_node_code = r.node_code
+		<include refid="where_condition" />) tb
 	</select>
 
 	<insert id="insert_repayPlan" parameterType="repayPlan">
@@ -366,7 +434,7 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_financeApprove" parameterType="repayPlan">
+	<update id="update_riskManagerCheck" parameterType="repayPlan">
 		UPDATE tht_repay_plan
 		SET
 		suggest = #{suggest}

@@ -1,5 +1,7 @@
 package com.cdkj.loan.dao;
 
+import java.util.List;
+
 import com.cdkj.loan.dao.base.IBaseDAO;
 import com.cdkj.loan.domain.RepayBiz;
 
@@ -56,5 +58,12 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
 
     // 财务主管审核
     public void financeApprove(RepayBiz repayBiz);
+
+    // 根据角色查条数
+    public long selectTotalCountByRoleCode(RepayBiz condition);
+
+    // 根据角色查集合
+    public List<RepayBiz> selectRepayBizByRoleCode(RepayBiz condition,
+            int start, int pageSize);
 
 }

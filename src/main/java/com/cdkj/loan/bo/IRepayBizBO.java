@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.RepayBiz;
@@ -15,6 +16,10 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
     public void refreshBankcardModify(String code, String bankcardCode,
             String updater, String remark);
+
+    // 根据角色编号查询
+    public Paginable<RepayBiz> getPaginableByRoleCode(int start, int limit,
+            RepayBiz condition);
 
     public List<RepayBiz> queryRepayBizList(RepayBiz condition);
 

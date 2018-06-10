@@ -55,5 +55,5 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
     public void qkcsbRedeemApply(RepayPlan repayPlan);
 
     // 财务主管审核
-    public void financeApprove(RepayPlan repayPlan);
+    public void riskManagerCheck(RepayPlan repayPlan);
 }

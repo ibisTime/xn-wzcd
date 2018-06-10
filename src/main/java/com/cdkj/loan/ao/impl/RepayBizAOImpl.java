@@ -334,6 +334,17 @@ public class RepayBizAOImpl implements IRepayBizAO {
     }
 
     @Override
+    public Paginable<RepayBiz> queryRepayBizPageByRoleCode(int start, int limit,
+            RepayBiz condition) {
+        Paginable<RepayBiz> paginable = repayBizBO.getPaginableByRoleCode(start,
+            limit, condition);
+        for (RepayBiz repayBiz : paginable.getList()) {
+            setRefInfo(repayBiz);
+        }
+        return paginable;
+    }
+
+    @Override
     public List<RepayBiz> queryRepayBizList(RepayBiz condition) {
         return repayBizBO.queryRepayBizList(condition);
     }
@@ -518,6 +529,16 @@ public class RepayBizAOImpl implements IRepayBizAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是清款催收部申请赎回节点，不能操作！");
         }
+        List<RepayPlan> repayPlans = repayPlanBO
+            .queryRepayPlanListByRepayBizCode(req.getCode());
+        for (RepayPlan repayPlan : repayPlans) {
+            if (ERepayPlanNode.QKCSB_APPLY_TC.getCode()
+                .equals(repayPlan.getCurNodeCode())) {
+                repayPlan.setSuggest(req.getSuggest());
+                repayPlan.setSuggestNote(req.getSuggestNote());
+                repayPlanBO.riskManagerCheck(repayPlan);
+            }
+        }
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             repayBiz.setCurNodeCode(ERepayBizNode.RISK_MANAGER_CHECK.getCode());
         } else {
@@ -537,16 +558,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是风控主管审核节点，不能操作！");
         }
-        List<RepayPlan> repayPlans = repayPlanBO
-            .queryRepayPlanListByRepayBizCode(req.getCode());
-        for (RepayPlan repayPlan : repayPlans) {
-            if (ERepayPlanNode.QKCSB_APPLY_TC.getCode()
-                .equals(repayPlan.getCurNodeCode())) {
-                repayPlan.setSuggest(req.getSuggest());
-                repayPlan.setSuggestNote(req.getSuggestNote());
-                repayPlanBO.financeApprove(repayPlan);
-            }
-        }
+
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             repayBiz
                 .setCurNodeCode(ERepayBizNode.FINANCE_MANAGER_CHECK.getCode());
