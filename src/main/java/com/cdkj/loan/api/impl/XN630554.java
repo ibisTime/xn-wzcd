@@ -2,6 +2,7 @@ package com.cdkj.loan.api.impl;
 
 import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.api.AProcessor;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN630554Req;
@@ -24,6 +25,9 @@ public class XN630554 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
+        repayBizAO.releaseMortgage(req.getCode(), DateUtil
+            .strToDate(req.getReleaseDatetime(), DateUtil.DATA_TIME_PATTERN_1),
+            req.getOperator());
         return new BooleanRes(true);
     }
 

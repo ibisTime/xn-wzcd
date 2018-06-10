@@ -166,6 +166,9 @@ public class RepayPlan extends ABaseDO {
     // 催收记录
     private List<RemindLog> remindLogList;
 
+    // 状态
+    private String status;
+
     // 状态list
     private List<String> statusList;
 
@@ -608,6 +611,14 @@ public class RepayPlan extends ABaseDO {
 
     public void setRemindLogList(List<RemindLog> remindLogList) {
         this.remindLogList = remindLogList;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

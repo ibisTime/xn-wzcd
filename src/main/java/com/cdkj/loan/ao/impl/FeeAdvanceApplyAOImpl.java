@@ -65,7 +65,7 @@ public class FeeAdvanceApplyAOImpl implements IFeeAdvanceApplyAO {
         }
         data.setRefAssertCode(req.getRefAssertCode());
         if (EFeeAdvanceApplyType.DH_RECEIPT.getCode().equals(req.getType())) {
-            if (StringUtils.isBlank(req.getRefAssertCode())) {
+            if (StringUtils.isBlank(req.getRefBudgetOrderCode())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "贷后催收费用请选择关联车贷业务列表");
             }
@@ -202,7 +202,9 @@ public class FeeAdvanceApplyAOImpl implements IFeeAdvanceApplyAO {
         data.setUpdateSysUser(updateSysUser);
 
         // 付款银行
-        Bank payBankInfo = bankBO.getBank(data.getPayBank());
-        data.setPayBankInfo(payBankInfo);
+        if (StringUtils.isNotBlank(data.getPayBank())) {
+            Bank payBankInfo = bankBO.getBank(data.getPayBank());
+            data.setPayBankInfo(payBankInfo);
+        }
     }
 }

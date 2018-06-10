@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.IBizTeamAO;
 import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IBizTeamBO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BizTeam;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630190Req;
 import com.cdkj.loan.dto.req.XN630192Req;
@@ -34,6 +36,9 @@ public class BizTeamAOImpl implements IBizTeamAO {
 
     @Autowired
     private IAccountBO accountBO;
+
+    @Autowired
+    private IDepartmentBO departmentBO;
 
     @Override
     public String addBizTeam(XN630190Req req) {
@@ -85,23 +90,57 @@ public class BizTeamAOImpl implements IBizTeamAO {
     @Override
     public Paginable<BizTeam> queryBizTeamPage(int start, int limit,
             BizTeam condition) {
-        return bizTeamBO.getPaginable(start, limit, condition);
+        Paginable<BizTeam> paginable = bizTeamBO.getPaginable(start, limit,
+            condition);
+        List<BizTeam> list = paginable.getList();
+        for (BizTeam bizTeam : list) {
+            init(bizTeam);
+        }
+
+        return paginable;
     }
 
     @Override
     public List<BizTeam> queryBizTeamList(BizTeam condition) {
-        return bizTeamBO.queryBizTeamList(condition);
+        List<BizTeam> list = bizTeamBO.queryBizTeamList(condition);
+        for (BizTeam bizTeam : list) {
+            init(bizTeam);
+        }
+
+        return list;
     }
 
     @Override
     public BizTeam getBizTeam(String code) {
 
         BizTeam bizTeam = bizTeamBO.getBizTeam(code);
+        init(bizTeam);
         SYSUser condition = new SYSUser();
         condition.setTeamCode(bizTeam.getCode());
         List<SYSUser> userList = sysUserBO.queryUserList(condition);
+        for (SYSUser sysUser : userList) {
+            Department department = departmentBO.getDepartment(sysUser
+                .getCompanyCode());
+            sysUser.setCompanyName(department.getName());
+        }
         bizTeam.setUserList(userList);
 
         return bizTeam;
+    }
+
+    private void init(BizTeam bizTeam) {
+
+        String captain = bizTeam.getCaptain();
+        SYSUser user = sysUserBO.getUser(captain);
+        bizTeam.setCaptainName(user.getRealName());
+
+        String companyCode = bizTeam.getCompanyCode();
+        Department department = departmentBO.getDepartment(companyCode);
+        bizTeam.setCompanyName(department.getName());
+
+        String updater = bizTeam.getUpdater();
+        SYSUser user2 = sysUserBO.getUser(updater);
+        bizTeam.setUpdaterName(user2.getRealName());
+
     }
 }

@@ -274,7 +274,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
-    public void approveByQkcsDepart(String code, String curNodeCode,
+    public void approveByQkcsDepartment(String code, String curNodeCode,
             Long cutLyDeposit, String updater, String remark) {
         RepayBiz repayBiz = new RepayBiz();
         repayBiz.setCode(code);

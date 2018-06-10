@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.Paginable;
@@ -7,6 +8,7 @@ import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.dto.req.XN630511Req;
 import com.cdkj.loan.dto.req.XN630513Req;
+import com.cdkj.loan.dto.req.XN630551Req;
 import com.cdkj.loan.dto.req.XN630555Req;
 import com.cdkj.loan.dto.req.XN630557Req;
 import com.cdkj.loan.dto.req.XN630561Req;
@@ -25,10 +27,24 @@ public interface IRepayBizAO {
 
     // ********************************car********************************
 
-    public void enterBlackListProduct(String code, String blackHandleNote,
+    // 清欠催收部审核
+    public void approveByQkcsDepartment(String code, Long cutLyDeposit,
             String updater, String remark);
 
-    public void confirmSettledProduct(XN630513Req req);
+    // 驻行人员审核
+    public void approveByBankCheck(XN630551Req req);
+
+    // 总经理审核
+    public void approveByManager(String code, String approveResult,
+            String updater, String remark);
+
+    // 财务审核
+    public void approveByFinance(String code, String approveResult,
+            String updater, String remark);
+
+    // 业务团队解除抵押
+    public void releaseMortgage(String code, Date releaseDatetime,
+            String updater);
 
     // 清欠催收部申请拖车
     public void applyTrailer(XN630555Req req);
@@ -56,8 +72,16 @@ public interface IRepayBizAO {
 
     // 风控主管审核
     public void riskManagerCheck(XN630563Req req);
-
     // ********************************car********************************
+
+    // ********************************product********************************
+
+    public void enterBlackListProduct(String code, String blackHandleNote,
+            String updater, String remark);
+
+    public void confirmSettledProduct(XN630513Req req);
+
+    // ********************************product********************************
 
     public Paginable<RepayBiz> queryRepayBizPage(int start, int limit,
             RepayBiz condition);

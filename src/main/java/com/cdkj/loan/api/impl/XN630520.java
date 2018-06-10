@@ -26,7 +26,7 @@ public class XN630520 extends AProcessor {
         condition.setCode(req.getCode());
         condition.setUserId(req.getUserId());
         condition.setRefType(req.getRefType());
-        condition.setCurNodeCode(req.getStatus());
+        condition.setCurNodeCode(req.getCurNodeCode());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

@@ -12,6 +12,7 @@ import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankcardBO;
+import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
@@ -21,11 +22,13 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bankcard;
+import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.dto.req.XN630511Req;
 import com.cdkj.loan.dto.req.XN630513Req;
+import com.cdkj.loan.dto.req.XN630551Req;
 import com.cdkj.loan.dto.req.XN630555Req;
 import com.cdkj.loan.dto.req.XN630557Req;
 import com.cdkj.loan.dto.req.XN630561Req;
@@ -33,6 +36,7 @@ import com.cdkj.loan.dto.req.XN630562Req;
 import com.cdkj.loan.dto.req.XN630563Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EJudicialLitigationEntryWay;
 import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayBizType;
@@ -66,6 +70,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     @Autowired
     private IBankBO bankBO;
+
+    @Autowired
+    private INodeFlowBO nodeFlowBO;
 
     // 变更银行卡
     @Override
@@ -227,6 +234,87 @@ public class RepayBizAOImpl implements IRepayBizAO {
         // repayPlan.setCurNodeCode(ERepayPlanNode.PRD_REPAY_YES.getCode());
         // repayPlanBO.refreshRepayPlanNode(repayPlan);
         // }
+    }
+
+    @Override
+    public void approveByQkcsDepartment(String code, Long cutLyDeposit,
+            String updater, String remark) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizNode.QKCS_DEPART_CHECK.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不处于清款催收部审核中");
+        }
+
+        String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
+            EBoolean.YES.getCode());
+
+        repayBizBO.approveByQkcsDepartment(code, nextNodeCode, cutLyDeposit,
+            updater, remark);
+    }
+
+    @Override
+    public void approveByBankCheck(XN630551Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
+        if (!ERepayBizNode.BANK_CHECK.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不处于驻行人员审核中");
+        }
+
+        String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
+            req.getApproveResult());
+
+        repayBizBO.approveByBankCheck(req.getCode(), nextNodeCode,
+            DateUtil.strToDate(req.getSettleDatetime(),
+                DateUtil.DATA_TIME_PATTERN_1),
+            req.getSettlePdf(), req.getOperator(), req.getRemark());
+    }
+
+    @Override
+    public void approveByManager(String code, String approveResult,
+            String updater, String remark) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizNode.MANAGER_CHECK.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不处于总经理审核中");
+        }
+
+        String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
+            approveResult);
+        repayBizBO.approveByManager(code, nextNodeCode, updater, remark);
+    }
+
+    @Override
+    public void approveByFinance(String code, String approveResult,
+            String updater, String remark) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizNode.FINANCE_CHECK.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不处于财务审核中");
+        }
+
+        String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
+            approveResult);
+        repayBizBO.approveByFinance(code, nextNodeCode, updater, remark);
+    }
+
+    @Override
+    public void releaseMortgage(String code, Date releaseDatetime,
+            String updater) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizNode.RELEASE_MORTGAGE.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不处于解除抵押中");
+        }
+
+        String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
+            EBoolean.YES.getCode());
+        repayBizBO.releaseMortgage(code, nextNodeCode, releaseDatetime,
+            updater);
     }
 
     @Override
@@ -469,6 +557,17 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setUpdater(req.getOperator());
         repayBiz.setUpdateDatetime(new Date());
         repayBizBO.financeApprove(repayBiz);
+    }
+
+    private String getNextNodeCode(String curNodeCode, String approveResult) {
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
+        String nextNodeCode = null;
+        if (EBoolean.YES.getCode().equals(approveResult)) {
+            nextNodeCode = nodeFlow.getNextNode();
+        } else if (EBoolean.NO.getCode().equals(approveResult)) {
+            nextNodeCode = nodeFlow.getBackNode();
+        }
+        return nextNodeCode;
     }
 
 }
