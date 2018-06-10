@@ -79,6 +79,10 @@ public class CreditAOImpl implements ICreditAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "您还未设置职位，暂无法使用征信申请");
         }
+        // if (StringUtils.isBlank(sysUser.getTeamCode())) {
+        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+        // "您还未设置团队，暂无法申请!");
+        // }
 
         // 新增征信单
         Credit credit = new Credit();

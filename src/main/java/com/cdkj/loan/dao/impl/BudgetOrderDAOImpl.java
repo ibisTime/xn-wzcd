@@ -138,14 +138,12 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
         return super.selectList(
             NAMESPACE.concat("select_budgetOrder_byRoleCode"), start, count,
             condition, BudgetOrder.class);
-
     }
 
     @Override
     public long selectTotalCountByRoleCode(BudgetOrder condition) {
         return super.selectTotalCount(
             NAMESPACE.concat("select_budgetOrder_count_byRoleCode"), condition);
-
     }
 
     @Override
