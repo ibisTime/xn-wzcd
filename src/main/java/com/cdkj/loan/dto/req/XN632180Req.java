@@ -3,12 +3,20 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 财务确认客户垫资款
+ * 财务确认退客户垫资款
  * @author: jiafr 
  * @since: 2018年6月9日 下午4:11:16 
  * @history:
  */
 public class XN632180Req {
+
+    // 编号
+    @NotBlank
+    private String code;
+
+    // 更新人
+    @NotBlank
+    private String updater;
 
     // 退款金额
     @NotBlank
@@ -29,6 +37,22 @@ public class XN632180Req {
     // 水单
     @NotBlank
     private String backAdvanceWaterBill;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
 
     public String getBackAdvanceAmount() {
         return backAdvanceAmount;

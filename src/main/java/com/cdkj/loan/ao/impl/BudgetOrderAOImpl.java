@@ -34,6 +34,7 @@ import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
+import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.BudgetOrderGps;
@@ -52,15 +53,19 @@ import com.cdkj.loan.dto.req.XN632128Req;
 import com.cdkj.loan.dto.req.XN632130Req;
 import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632135Req;
+import com.cdkj.loan.dto.req.XN632180Req;
 import com.cdkj.loan.enums.EApproveResult;
+import com.cdkj.loan.enums.EBackAdvanceStatus;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EIDKind;
+import com.cdkj.loan.enums.EIsAdvanceFund;
 import com.cdkj.loan.enums.ELoanProductStatus;
 import com.cdkj.loan.enums.ELogisticsType;
+import com.cdkj.loan.enums.ERepointStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -473,19 +478,22 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             credit.setBudgetCode(budgetOrder.getCode());
             creditBO.refreshCredit(credit);
 
-            // 生成返点金额
+            // 生成返点支付数据
+            Repoint repoint = new Repoint();
             // 准入单的贷款金额 乘以 准入单的贷款产品的返点比例 等于应返金额
             Long loanAmount = budgetOrder.getLoanAmount();
             LoanProduct loanProduct = loanProductBO.getLoanProduct(budgetOrder
                 .getLoanProductCode());
             double backRate = loanProduct.getBackRate();
             long shouldAmount = Math.round(loanAmount * backRate);
-            Repoint repoint = new Repoint();
-            SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
-            repoint.setTeamCode(saleUser.getTeamCode());
+            BizTeam bizTeam = bizTeamBO.getBizTeam(budgetOrder.getTeamCode());
+            repoint.setTeamCode(budgetOrder.getTeamCode());
             repoint.setBizCode(budgetOrder.getCode());
+            repoint.setAccountNo(bizTeam.getAccountNo());
+            repoint.setBank(bizTeam.getBank());
+            repoint.setSubbranch(bizTeam.getSubbranch());
             repoint.setShouldAmount(shouldAmount);
-            repoint.setStatus("0");
+            repoint.setStatus(ERepointStatus.TODO.getCode());
             repoint.setUpdater(operator);
             repoint.setUpdateDatetime(new Date());
             repointBO.saveRepoint(repoint);
@@ -757,11 +765,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
 
         // 银行已放款待财务退款 生成退客户垫资款数据
-        if ("0".equals(budgetOrder.getIsAdvanceFund())) {
-            budgetOrder.setBackAdvanceStatus("1");
+        if (EIsAdvanceFund.YES.getCode().equals(budgetOrder.getIsAdvanceFund())) {
+            budgetOrder.setBackAdvanceStatus(EBackAdvanceStatus.NONEED_BACK
+                .getCode());
+
         }
-        if ("1".equals(budgetOrder.getIsAdvanceFund())) {
-            budgetOrder.setBackAdvanceStatus("0");
+        if (EIsAdvanceFund.NO.getCode().equals(budgetOrder.getIsAdvanceFund())) {
+            budgetOrder.setBackAdvanceStatus(EBackAdvanceStatus.TODO_BACK
+                .getCode());
         }
         budgetOrderBO.saveBackAdvanceFund(budgetOrder);
 
@@ -1032,5 +1043,20 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         budgetOrder.setCredit(credit);
         return budgetOrder;
+    }
+
+    @Override
+    public void confirmBackAdvanceFund(XN632180Req req) {
+
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+
+        budgetOrder.setBackAdvanceAmount(req.getBackAdvanceAmount());
+        budgetOrder.setBackAdvanceAccount(req.getBackAdvanceAccount());
+        budgetOrder.setBackAdvanceOpenBank(req.getBackAdvanceOpenBank());
+        budgetOrder.setBackAdvanceSubbranch(req.getBackAdvanceSubbranch());
+        budgetOrder.setBackAdvanceWaterBill(req.getBackAdvanceWaterBill());
+
+        budgetOrderBO.confirmBackAdvanceFund(budgetOrder);
+
     }
 }

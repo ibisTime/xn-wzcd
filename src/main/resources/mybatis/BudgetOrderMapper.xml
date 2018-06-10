@@ -241,12 +241,22 @@
 		<result column="pledge_bank_commit_note" property="pledgeBankCommitNote" />
 		<result column="enter_location" property="enterLocation" />
 		<result column="sale_user_id" property="saleUserId" />
+		
+		<result column="team_code" property="teamCode" />
 		<result column="company_code" property="companyCode" />
 		<result column="apply_datetime" property="applyDatetime" />
-		<result column="cur_node_code" property="curNodeCode" />
-		<result column="remark" property="remark" />
 		<result column="back_advance_status" property="backAdvanceStatus" />
-		<result column="team_code" property="teamCode" />
+		<result column="back_advance_amount" property="backAdvanceAmount" />
+		
+		<result column="back_advance_account" property="backAdvanceAccount" />
+		<result column="back_advance_open_bank" property="backAdvanceOpenBank" />
+		<result column="back_advance_subbranch" property="backAdvanceSubbranch" />
+		<result column="back_advance_water_bill" property="backAdvanceWaterBill" />
+		<result column="cur_node_code" property="curNodeCode" />
+		
+		<result column="remark" property="remark" />
+
+
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -265,7 +275,6 @@
 			<if test="saleUserId != null and saleUserId != '' ">
 				AND t.sale_user_id = #{saleUserId}
 			</if>
-			
 			<if test="applyUserId != null and applyUserId != '' ">
 				AND t.apply_user_id = #{applyUserId}
 			</if>
@@ -304,6 +313,9 @@
 			</if>
 			<if test="teamCode != null and teamCode != ''">
 				AND t.team_code = #{teamCode}
+			</if>
+			<if test="applyUserName != null and applyUserName != ''">
+				AND t.apply_user_name like "%"#{applyUserName}"%"
 			</if>
 		</trim>
 	</sql>
@@ -1471,6 +1483,17 @@
 		UPDATE tdq_budget_order
 		SET
 		back_advance_status = #{backAdvanceStatus}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="confirm_back_advance_fund">
+		UPDATE tdq_budget_order
+		SET
+		back_advance_amount = #{backAdvanceAmount}
+		,back_advance_account = #{backAdvanceAccount}
+		,back_advance_open_bank	 = #{backAdvanceOpenBank}
+		,back_advance_subbranch = #{backAdvanceSubbranch}
+		,back_advance_water_bill = #{backAdvanceWaterBill}
 		WHERE code = #{code}
 	</update>
 </mapper>

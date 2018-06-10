@@ -13,6 +13,10 @@
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
+		<result column="account_no" property="accountNo" />
+		<result column="bank" property="bank" />
+		<result column="subbranch" property="subbranch" />
+		
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -39,6 +43,9 @@
 		,t.status
 		,t.updater
 		,t.update_datetime
+		,t.account_no
+		,t.bank
+		,t.subbranch
 		FROM
 		tht_repoint t
 		<include refid="where_condition" />
@@ -68,6 +75,9 @@
 		,status
 		,updater
 		,update_datetime
+		,t.account_no
+		,t.bank
+		,t.subbranch
 		)
 		VALUES(
 		#{code}
@@ -80,6 +90,9 @@
 		,#{status}
 		,#{updater}
 		,#{updateDatetime}
+		,#{accountNo}
+		,#{bank}
+		,#{subbranch}
 		)
 	</insert>
 
@@ -95,6 +108,9 @@
 		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,account_no = #{accountNo}
+		,bank = #{bank}
+		,subbranch = #{subbranch}
 		WHERE code = #{code}
 	</update>
 

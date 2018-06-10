@@ -65,4 +65,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     // 生成退客户垫资款数据
     public void saveBackAdvanceFund(BudgetOrder budgetOrder);
+
+    // 财务确认退客户垫资款
+    public void confirmBackAdvanceFund(BudgetOrder budgetOrder);
 }

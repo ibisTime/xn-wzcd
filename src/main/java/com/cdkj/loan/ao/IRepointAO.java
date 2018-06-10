@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Repoint;
+import com.cdkj.loan.dto.req.XN632310Req;
 
 /**
  * 
@@ -21,7 +22,8 @@ public interface IRepointAO {
 
     public int dropRepoint(String code);
 
-    public int editRepoint(Repoint data);
+    // 确认返点支付
+    public void confirmRepoint(XN632310Req req);
 
     public Paginable<Repoint> queryRepointPage(int start, int limit,
             Repoint condition);

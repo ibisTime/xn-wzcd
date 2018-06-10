@@ -1,6 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-
 /**
  * 确认返点支付
  * @author: jiafr 
@@ -11,15 +10,9 @@ public class XN632310Req {
 
     private String actualAmount;
 
-    private String bizCode;
-
     private String code;
 
     private String remark;
-
-    private String shouldAmount;
-
-    private String teamCode;
 
     private String updateDatetime;
 
@@ -33,14 +26,6 @@ public class XN632310Req {
 
     public void setActualAmount(String actualAmount) {
         this.actualAmount = actualAmount;
-    }
-
-    public String getBizCode() {
-        return bizCode;
-    }
-
-    public void setBizCode(String bizCode) {
-        this.bizCode = bizCode;
     }
 
     public String getCode() {
@@ -57,22 +42,6 @@ public class XN632310Req {
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    public String getShouldAmount() {
-        return shouldAmount;
-    }
-
-    public void setShouldAmount(String shouldAmount) {
-        this.shouldAmount = shouldAmount;
-    }
-
-    public String getTeamCode() {
-        return teamCode;
-    }
-
-    public void setTeamCode(String teamCode) {
-        this.teamCode = teamCode;
     }
 
     public String getUpdateDatetime() {

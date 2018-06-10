@@ -48,5 +48,7 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     long selectTotalCountByRoleCode(BudgetOrder condition);
 
-    int insertBackAdvanceFund(BudgetOrder data);
+    void insertBackAdvanceFund(BudgetOrder data);
+
+    void confirmBackAdvanceFund(BudgetOrder data);
 }

@@ -36,7 +36,7 @@ public class BizTeam extends ABaseDO {
     // 更新时间
     private Date updateDatetime;
 
-    // 账户编号
+    // 收款账号
     private String accountNo;
 
     // 收款银行
