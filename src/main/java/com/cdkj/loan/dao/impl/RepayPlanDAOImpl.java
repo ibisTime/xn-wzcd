@@ -106,8 +106,8 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
     }
 
     @Override
-    public int financeApprove(RepayPlan data) {
-        return super.update(NAMESPACE.concat("update_financeApprove"), data);
+    public int riskManagerCheck(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_riskManagerCheck"), data);
     }
 
 }

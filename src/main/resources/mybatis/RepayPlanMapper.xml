@@ -366,7 +366,7 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_financeApprove" parameterType="repayPlan">
+	<update id="update_riskManagerCheck" parameterType="repayPlan">
 		UPDATE tht_repay_plan
 		SET
 		suggest = #{suggest}

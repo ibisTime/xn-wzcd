@@ -11,11 +11,6 @@ public class XN630562Req {
     private String approveResult;// 审核结果
 
     @NotBlank
-    private String suggest;// 建议
-
-    private String suggestNote;// 建议说明
-
-    @NotBlank
     private String operator;// 操作人
 
     public String getCode() {
@@ -32,22 +27,6 @@ public class XN630562Req {
 
     public void setApproveResult(String approveResult) {
         this.approveResult = approveResult;
-    }
-
-    public String getSuggest() {
-        return suggest;
-    }
-
-    public void setSuggest(String suggest) {
-        this.suggest = suggest;
-    }
-
-    public String getSuggestNote() {
-        return suggestNote;
-    }
-
-    public void setSuggestNote(String suggestNote) {
-        this.suggestNote = suggestNote;
     }
 
     public String getOperator() {

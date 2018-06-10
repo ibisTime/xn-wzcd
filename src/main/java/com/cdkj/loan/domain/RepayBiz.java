@@ -137,6 +137,17 @@ public class RepayBiz extends ABaseDO {
     // 用户信息
     private User user;
 
+    // 角色编号
+    private String roleCode;
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
+
     public Long getOverdueTotalDeposit() {
         return overdueTotalDeposit;
     }

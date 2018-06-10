@@ -61,6 +61,9 @@
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
+			<if test="roleCode != null and roleCode != '' ">
+				AND t.role_code = #{roleCode}
+			</if>
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
 			</if>
@@ -126,11 +129,75 @@
 			</if>
 		</trim>
 	</select>
-
+	
+	<select id="select_repayBiz_byRoleCode" parameterType="repayBiz" resultMap="repayBiz_DB_Result">
+		SELECT
+		t.code
+		,t.user_id
+		,t.bankcard_code
+		,t.ref_type
+		,t.ref_code
+		
+		,t.biz_price
+		,t.sf_rate
+		,t.sf_amount
+		,t.loan_bank
+		,t.loan_amount
+		
+		,t.periods
+		,t.rest_periods
+		,t.bank_rate
+		,t.loan_start_datetime
+		,t.loan_end_datetime
+		,t.fx_deposit
+		
+		,t.first_repay_datetime
+		,t.first_repay_amount
+		,t.month_datetime
+		,t.month_amount
+		,t.ly_deposit
+		
+		,t.cut_ly_deposit
+		,t.cur_node_code
+		,t.rest_amount
+		,t.rest_total_cost
+		,t.overdue_total_deposit
+		,t.overdue_total_deposit_income
+		,t.total_in_deposit
+		
+		,t.overdue_amount
+		,t.total_overdue_count
+		,t.cur_overdue_count
+		,t.black_handle_note
+		,t.is_advance_settled
+		
+		,t.settle_attach
+		,t.settle_datetime
+		,t.release_datetime
+		,t.updater
+		,t.update_datetime
+		
+		,t.remark
+		FROM
+		tht_repay_biz t left join tsys_role_node r on t.cur_node_code = r.node_code
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	
 	<select id="select_repayBiz_count" parameterType="repayBiz"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tht_repay_biz t
 		<include refid="where_condition" />
+	</select>
+
+	<select id="select_repayBiz_count_byRoleCode" parameterType="repayBiz"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM (SELECT distinct code FROM tht_repay_biz t left join tsys_role_node r on t.cur_node_code = r.node_code
+		<include refid="where_condition" />) tb
 	</select>
 
 	<insert id="insert_repayBiz" parameterType="repayBiz">

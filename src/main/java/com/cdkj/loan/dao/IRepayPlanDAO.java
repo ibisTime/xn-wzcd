@@ -30,6 +30,6 @@ public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
 
     public int qkcsbRedeemApply(RepayPlan repayPlan);
 
-    public int financeApprove(RepayPlan repayPlan);
+    public int riskManagerCheck(RepayPlan repayPlan);
 
 }

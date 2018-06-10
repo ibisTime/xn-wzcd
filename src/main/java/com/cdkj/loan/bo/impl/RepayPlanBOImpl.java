@@ -272,8 +272,8 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
     }
 
     @Override
-    public void financeApprove(RepayPlan repayPlan) {
-        repayPlanDAO.financeApprove(repayPlan);
+    public void riskManagerCheck(RepayPlan repayPlan) {
+        repayPlanDAO.riskManagerCheck(repayPlan);
     }
 
 }

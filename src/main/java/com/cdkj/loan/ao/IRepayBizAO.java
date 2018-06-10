@@ -90,4 +90,7 @@ public interface IRepayBizAO {
 
     public RepayBiz getRepayBiz(String code);
 
+    public Paginable<RepayBiz> queryRepayBizPageByRoleCode(int start, int limit,
+            RepayBiz condition);
+
 }

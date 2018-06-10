@@ -143,4 +143,17 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
         super.update(NAMESPACE.concat("update_financeApprove"), data);
     }
 
+    @Override
+    public long selectTotalCountByRoleCode(RepayBiz condition) {
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_repayBiz_count_byRoleCode"), condition);
+    }
+
+    @Override
+    public List<RepayBiz> selectRepayBizByRoleCode(RepayBiz condition,
+            int start, int pageSize) {
+        return super.selectList(NAMESPACE.concat("select_repayBiz_byRoleCode"),
+            condition, RepayBiz.class);
+    }
+
 }
