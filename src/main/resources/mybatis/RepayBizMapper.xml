@@ -61,7 +61,6 @@
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
-			
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
 			</if>

@@ -10,7 +10,7 @@ public class XN630520Req extends APageReq {
 
     private String refType;// 关联类型
 
-    private String status;// 状态
+    private String curNodeCode;// 节点
 
     public String getCode() {
         return code;
@@ -36,12 +36,12 @@ public class XN630520Req extends APageReq {
         this.refType = refType;
     }
 
-    public String getStatus() {
-        return status;
+    public String getCurNodeCode() {
+        return curNodeCode;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
     }
 
 }
