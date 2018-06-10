@@ -44,6 +44,39 @@ public class Repoint extends ABaseDO {
     // 更新时间
     private Date updateDatetime;
 
+    // 收款账号
+    private String accountNo;
+
+    // 收款银行
+    private String bank;
+
+    // 收款支行
+    private String subbranch;
+
+    public String getAccountNo() {
+        return accountNo;
+    }
+
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+
+    public String getSubbranch() {
+        return subbranch;
+    }
+
+    public void setSubbranch(String subbranch) {
+        this.subbranch = subbranch;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }

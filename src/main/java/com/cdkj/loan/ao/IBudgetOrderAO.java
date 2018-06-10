@@ -12,6 +12,7 @@ import com.cdkj.loan.dto.req.XN632128Req;
 import com.cdkj.loan.dto.req.XN632130Req;
 import com.cdkj.loan.dto.req.XN632133Req;
 import com.cdkj.loan.dto.req.XN632135Req;
+import com.cdkj.loan.dto.req.XN632180Req;
 
 @Component
 public interface IBudgetOrderAO {
@@ -84,5 +85,8 @@ public interface IBudgetOrderAO {
             int limit, BudgetOrder condition);
 
     public BudgetOrder getMoreBudget(String code);
+
+    // 财务确认退垫资款
+    public void confirmBackAdvanceFund(XN632180Req req);
 
 }

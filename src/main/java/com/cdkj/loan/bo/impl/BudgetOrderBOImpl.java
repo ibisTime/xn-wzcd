@@ -315,4 +315,11 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         budgetOrderDAO.insertBackAdvanceFund(budgetOrder);
 
     }
+
+    @Override
+    public void confirmBackAdvanceFund(BudgetOrder budgetOrder) {
+
+        budgetOrderDAO.confirmBackAdvanceFund(budgetOrder);
+
+    }
 }

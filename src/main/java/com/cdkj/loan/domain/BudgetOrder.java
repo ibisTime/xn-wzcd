@@ -627,23 +627,38 @@ public class BudgetOrder extends ABaseDO {
     // 业务员
     private String saleUserId;
 
+    // 团队编号
+    private String teamCode;
+
     // 业务公司编号
     private String companyCode;
 
     // 申请时间
     private Date applyDatetime;
 
+    // 退客户垫资款状态
+    private String backAdvanceStatus;
+
+    // 退客户垫资款 退款金额
+    private String backAdvanceAmount;
+
+    // 退客户垫资款 收款账号
+    private String backAdvanceAccount;
+
+    // 退客户垫资款 开户行
+    private String backAdvanceOpenBank;
+
+    // 退客户垫资款 开户支行
+    private String backAdvanceSubbranch;
+
+    // 退客户垫资款 水单
+    private String backAdvanceWaterBill;
+
     // 当前节点编号
     private String curNodeCode;
 
     // 最新备注
     private String remark;
-
-    // 团队编号
-    private String teamCode;
-
-    // 退客户垫资款状态
-    private String backAdvanceStatus;
 
     /*---------辅助字段----------*/
     // 申请时间起始
@@ -2412,6 +2427,46 @@ public class BudgetOrder extends ABaseDO {
 
     public void setTeamCode(String teamCode) {
         this.teamCode = teamCode;
+    }
+
+    public String getBackAdvanceAmount() {
+        return backAdvanceAmount;
+    }
+
+    public void setBackAdvanceAmount(String backAdvanceAmount) {
+        this.backAdvanceAmount = backAdvanceAmount;
+    }
+
+    public String getBackAdvanceAccount() {
+        return backAdvanceAccount;
+    }
+
+    public void setBackAdvanceAccount(String backAdvanceAccount) {
+        this.backAdvanceAccount = backAdvanceAccount;
+    }
+
+    public String getBackAdvanceOpenBank() {
+        return backAdvanceOpenBank;
+    }
+
+    public void setBackAdvanceOpenBank(String backAdvanceOpenBank) {
+        this.backAdvanceOpenBank = backAdvanceOpenBank;
+    }
+
+    public String getBackAdvanceSubbranch() {
+        return backAdvanceSubbranch;
+    }
+
+    public void setBackAdvanceSubbranch(String backAdvanceSubbranch) {
+        this.backAdvanceSubbranch = backAdvanceSubbranch;
+    }
+
+    public String getBackAdvanceWaterBill() {
+        return backAdvanceWaterBill;
+    }
+
+    public void setBackAdvanceWaterBill(String backAdvanceWaterBill) {
+        this.backAdvanceWaterBill = backAdvanceWaterBill;
     }
 
 }
