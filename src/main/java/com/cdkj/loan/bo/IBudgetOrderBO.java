@@ -68,4 +68,14 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     // 财务确认退客户垫资款
     public void confirmBackAdvanceFund(BudgetOrder budgetOrder);
+
+    // 客户申请作废
+    public void applyCancel(BudgetOrder budgetOrder);
+
+    // 客户作废 业务总监审核
+    public void cancelBizAudit(BudgetOrder budgetOrder);
+
+    // 客户作废 财务总监审核
+    public void cancelFinanceAudit(BudgetOrder budgetOrder);
+
 }

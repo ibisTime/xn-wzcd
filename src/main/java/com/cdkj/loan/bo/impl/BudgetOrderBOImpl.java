@@ -322,4 +322,23 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         budgetOrderDAO.confirmBackAdvanceFund(budgetOrder);
 
     }
+
+    @Override
+    public void applyCancel(BudgetOrder budgetOrder) {
+
+        budgetOrderDAO.applyCancel(budgetOrder);
+
+    }
+
+    @Override
+    public void cancelBizAudit(BudgetOrder budgetOrder) {
+        budgetOrderDAO.cancelBizAudit(budgetOrder);
+
+    }
+
+    @Override
+    public void cancelFinanceAudit(BudgetOrder budgetOrder) {
+
+        budgetOrderDAO.cancelFinanceAudit(budgetOrder);
+    }
 }

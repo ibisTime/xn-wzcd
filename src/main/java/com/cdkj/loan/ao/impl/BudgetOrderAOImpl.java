@@ -1086,16 +1086,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public void applyCancel(XN632190Req req) {
 
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
-
         budgetOrder.setRemark(req.getRemark());
         budgetOrder.setFrozenStatus(EBudgetFrozenStatus.FROZEN.getCode());
         budgetOrder.setCancelNodeCode(budgetOrder.getCurNodeCode());
+        // 节点
         EBudgetOrderNode currentNode = EBudgetOrderNode.CANCEL_START;
         String nextNode = nodeFlowBO.getNodeFlowByCurrentNode(
             currentNode.getCode()).getNextNode();
         currentNode = EBudgetOrderNode.getMap().get(nextNode);
-
         budgetOrder.setCurNodeCode(currentNode.getCode());
+
+        budgetOrderBO.applyCancel(budgetOrder);
 
         // 写日志
         sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
@@ -1117,10 +1118,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             // 判断是否已垫资 如果已经垫资 下一个节点是财务审核节点 未垫资 下一个节点时废流程结束节点
             if (null == budgetOrder.getAdvanceFundAmount()
-                    && null == budgetOrder.getAdvanceFundDatetime()) {
+                    && null == budgetOrder.getAdvanceFundDatetime()) {// 没垫资情况
                 budgetOrder.setCurNodeCode(EBudgetOrderNode.CANCEL_END
                     .getCode());
-            } else {
+                budgetOrder.setFrozenStatus(EBudgetFrozenStatus.NORMAL
+                    .getCode());
+            } else {// 垫资情况
                 String currentNode = nodeFlowBO.getNodeFlowByCurrentNode(
                     budgetOrder.getCurNodeCode()).getNextNode();
                 budgetOrder.setCurNodeCode(currentNode);
@@ -1132,7 +1135,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setFrozenStatus(EBudgetFrozenStatus.NORMAL.getCode());
         }
 
-        budgetOrderBO.refreshriskApprove(budgetOrder);
+        budgetOrderBO.cancelBizAudit(budgetOrder);
         // 写日志
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_CANCEL, budgetOrder.getCode(), preCurrentNode,
@@ -1155,6 +1158,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             String currentNode = nodeFlowBO.getNodeFlowByCurrentNode(
                 budgetOrder.getCurNodeCode()).getNextNode();
             budgetOrder.setCurNodeCode(currentNode);
+            budgetOrder.setFrozenStatus(EBudgetFrozenStatus.NORMAL.getCode());
 
         } else if (EApproveResult.NOT_PASS.getCode().equals(
             req.getApproveResult())) {
@@ -1162,7 +1166,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setFrozenStatus(EBudgetFrozenStatus.NORMAL.getCode());
         }
 
-        budgetOrderBO.refreshriskApprove(budgetOrder);
+        budgetOrderBO.cancelFinanceAudit(budgetOrder);
         // 写日志
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_CANCEL, budgetOrder.getCode(), preCurrentNode,
@@ -1171,10 +1175,4 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     }
 
-    @Override
-    public Object queryBudgetOrderPageCancel(int start, int limit,
-            BudgetOrder condition) {
-
-        return null;
-    }
 }
