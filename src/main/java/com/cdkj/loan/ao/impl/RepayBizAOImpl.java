@@ -373,7 +373,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 repayPlanBO.applyTrailer(repayPlan);
             }
         }
-        repayBiz.setCurNodeCode(ERepayBizNode.QKCSB_APPLY_TC.getCode());
+        repayBiz.setCurNodeCode(ERepayBizNode.FINANCE_REMIT.getCode());
         repayBiz.setUpdater(req.getOperator());
         repayBiz.setUpdateDatetime(new Date());
         repayBizBO.applyTrailer(repayBiz);
