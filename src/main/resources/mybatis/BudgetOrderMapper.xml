@@ -927,8 +927,8 @@
 		,apply_datetime
 		,cur_node_code
 		,remark
-		,t.team_code
-		,t.back_advance_status
+		,team_code
+		,back_advance_status
 		)
 		VALUES(
 		#{code}
