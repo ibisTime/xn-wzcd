@@ -310,4 +310,9 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     public void refreshRepayPlanCurNodeCode(RepayPlan repayPlan) {
     }
 
+    @Override
+    public void financeApprove(RepayPlan repayPlan) {
+        repayPlanDAO.financeApprove(repayPlan);
+    }
+
 }

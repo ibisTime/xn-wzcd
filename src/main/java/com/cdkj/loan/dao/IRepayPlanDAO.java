@@ -35,4 +35,6 @@ public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
     public List<RepayPlan> selectRepayPlanByRoleCode(RepayPlan condition,
             int start, int pageSize);
 
+    public int financeApprove(RepayPlan repayPlan);
+
 }
