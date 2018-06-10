@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo;
 
+import java.util.Date;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
@@ -36,4 +37,24 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
     public int repayEarlySuccess(RepayBiz repayBiz, Long realWithholdAmount);
 
+    // 清欠催收部审核
+    public void approveByQkcsDepart(String code, Long cutLyDeposit,
+            String operator, String remark);
+
+    // 驻行人员审核
+    public void approveByBankCheck(String approveResult, String code,
+            String operator, String remark, Date settleDatetime,
+            String settlePdf);
+
+    // 总经理审核
+    public void approveByManager(String approveResult, String code,
+            String operator, String remark);
+
+    // 财务审核
+    public void approveByFinance(String approveResult, String code,
+            String operator, String remark);
+
+    // 业务团队解除抵押
+    public void releaseMortgage(String code, String operator,
+            Date releaseDatetime);
 }

@@ -21,6 +21,8 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
+import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayBizStatus;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayPlanStatus;
@@ -28,8 +30,8 @@ import com.cdkj.loan.enums.ESysUser;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
-        IRepayBizBO {
+public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
+        implements IRepayBizBO {
 
     @Autowired
     private IRepayBizDAO repayBizDAO;
@@ -76,8 +78,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBiz.setLoanBank(budgetOrder.getLoanBank());
         repayBiz.setLoanAmount(budgetOrder.getLoanAmount());
 
-        repayBiz.setPeriods(StringValidater.toInteger(budgetOrder
-            .getLoanPeriod()));
+        repayBiz
+            .setPeriods(StringValidater.toInteger(budgetOrder.getLoanPeriod()));
         repayBiz.setRestPeriods(repayBiz.getPeriods());
         repayBiz.setBankRate(0.0);// 作废
         repayBiz
@@ -136,8 +138,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBiz.setFxDeposit(0L);
         Date date = DateUtils.addMonths(order.getApplyDatetime(), 1);
         repayBiz.setFirstRepayDatetime(date);
-        Long monthlyAmount = new BigDecimal(order.getLoanAmount()).divide(
-            new BigDecimal(order.getPeriods()), 0, RoundingMode.DOWN)
+        Long monthlyAmount = new BigDecimal(order.getLoanAmount())
+            .divide(new BigDecimal(order.getPeriods()), 0, RoundingMode.DOWN)
             .longValue();
         // long long3 = (long) (long2 * order.getBankRate());
         repayBiz.setFirstRepayAmount(monthlyAmount);
@@ -200,8 +202,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBiz.setCode(code);
         String bankcardCodelist = repayBiz.getBankcardCode();
         if (!bankcardCode.equals(bankcardCodelist)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "还款卡编号"
-                    + bankcardCode + "不存在，请重新添加！！！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "还款卡编号" + bankcardCode + "不存在，请重新添加！！！");
         }
         repayBiz.setBankcardCode(bankcardCode);
         repayBiz.setUpdater(updater);
@@ -231,8 +233,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         int count = 0;
 
         if (repayBiz != null && realWithholdAmount != null) {
-            repayBiz.setRestAmount(repayBiz.getRestAmount()
-                    - realWithholdAmount);
+            repayBiz
+                .setRestAmount(repayBiz.getRestAmount() - realWithholdAmount);
             count = repayBizDAO.updateRepayBizRestAmount(repayBiz);
         }
 
@@ -254,6 +256,87 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         }
 
         return count;
+    }
+
+    @Override
+    public void approveByQkcsDepart(String code, Long cutLyDeposit,
+            String operator, String remark) {
+        RepayBiz repayBiz = new RepayBiz();
+        repayBiz.setCode(code);
+        repayBiz.setCurNodeCode(ERepayBizNode.BANK_CHECK.getCode());
+        repayBiz.setCutLyDeposit(cutLyDeposit);
+        repayBiz.setUpdater(operator);
+
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(remark);
+        repayBizDAO.approveByQkcsDepart(repayBiz);
+    }
+
+    @Override
+    public void approveByBankCheck(String approveResult, String code,
+            String operator, String remark, Date settleDatetime,
+            String settlePdf) {
+        RepayBiz repayBiz = new RepayBiz();
+        repayBiz.setCode(code);
+        if (EBoolean.YES.getCode().equals(approveResult)) {
+            repayBiz.setCurNodeCode(ERepayBizNode.MANAGER_CHECK.getCode());
+        } else if (EBoolean.NO.getCode().equals(approveResult)) {
+            repayBiz.setCurNodeCode(ERepayBizNode.QKCS_DEPART_CHECK.getCode());
+        }
+        repayBiz.setUpdater(operator);
+        repayBiz.setUpdateDatetime(new Date());
+
+        repayBiz.setRemark(remark);
+        repayBiz.setSettleDatetime(settleDatetime);
+        repayBiz.setSettleAttach(settlePdf);
+        repayBizDAO.approveByBankCheck(repayBiz);
+    }
+
+    @Override
+    public void approveByManager(String approveResult, String code,
+            String operator, String remark) {
+        RepayBiz repayBiz = new RepayBiz();
+        repayBiz.setCode(code);
+        if (EBoolean.YES.getCode().equals(approveResult)) {
+            repayBiz.setCurNodeCode(ERepayBizNode.FINANCE_CHECK.getCode());
+        } else if (EBoolean.NO.getCode().equals(approveResult)) {
+            repayBiz.setCurNodeCode(ERepayBizNode.BANK_CHECK.getCode());
+        }
+        repayBiz.setUpdater(operator);
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(remark);
+
+        repayBizDAO.approveByManager(repayBiz);
+    }
+
+    @Override
+    public void approveByFinance(String approveResult, String code,
+            String operator, String remark) {
+        RepayBiz repayBiz = new RepayBiz();
+        repayBiz.setCode(code);
+        if (EBoolean.YES.getCode().equals(approveResult)) {
+            repayBiz.setCurNodeCode(ERepayBizNode.RELEASE_MORTGAGE.getCode());
+        } else if (EBoolean.NO.getCode().equals(approveResult)) {
+            repayBiz.setCurNodeCode(ERepayBizNode.MANAGER_CHECK.getCode());
+        }
+        repayBiz.setUpdater(operator);
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(remark);
+
+        repayBizDAO.approveByManager(repayBiz);
+    }
+
+    @Override
+    public void releaseMortgage(String code, String operator,
+            Date releaseDatetime) {
+        RepayBiz repayBiz = new RepayBiz();
+        repayBiz.setCode(code);
+        repayBiz.setCurNodeCode(ERepayBizNode.SETTLED.getCode());
+        repayBiz.setUpdater(operator);
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setReleaseDatetime(releaseDatetime);
+
+        repayBizDAO.approveByManager(repayBiz);
     }
 
 }
