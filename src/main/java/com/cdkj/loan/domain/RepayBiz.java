@@ -120,6 +120,9 @@ public class RepayBiz extends ABaseDO {
     // 结清时间
     private Date settleDatetime;
 
+    // 解除抵押时间
+    private Date releaseDatetime;
+
     // 最近修改人
     private String updater;
 
@@ -510,6 +513,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setActualRefunds(Long actualRefunds) {
         this.actualRefunds = actualRefunds;
+    }
+
+    public Date getReleaseDatetime() {
+        return releaseDatetime;
+    }
+
+    public void setReleaseDatetime(Date releaseDatetime) {
+        this.releaseDatetime = releaseDatetime;
     }
 
 }
