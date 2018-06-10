@@ -1,7 +1,5 @@
 package com.cdkj.loan.dto.res;
 
-import java.util.List;
-
 /**
  * 休息日
  * @author: silver 
@@ -10,14 +8,25 @@ import java.util.List;
  */
 public class XN632685Res {
     // 日期
-    private List<String> date;
+    private String date;
 
-    public List<String> getDate() {
+    // 是否休息
+    private String isRest;
+
+    public String getDate() {
         return date;
     }
 
-    public void setDate(List<String> date) {
+    public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getIsRest() {
+        return isRest;
+    }
+
+    public void setIsRest(String isRest) {
+        this.isRest = isRest;
     }
 
 }

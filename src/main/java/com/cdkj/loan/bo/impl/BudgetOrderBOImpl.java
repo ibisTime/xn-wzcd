@@ -11,6 +11,7 @@ import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
@@ -20,6 +21,7 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.NodeFlow;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EGeneratePrefix;
@@ -43,6 +45,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     public String saveBudgetOrder(Credit credit) {
@@ -98,6 +103,10 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             data.setCompanyCode(credit.getCompanyCode());
             data.setSaleUserId(credit.getSaleUserId());
             data.setCurNodeCode(EBudgetOrderNode.WRITE_BUDGET_ORDER.getCode());
+            // 准入单插入团队编号 来自业务员的所属团队
+            SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
+            data.setTeamCode(user.getTeamCode());
+
             budgetOrderDAO.insert(data);
         }
         return code;
@@ -298,5 +307,12 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
                 page.getPageSize());
         page.setList(dataList);
         return page;
+    }
+
+    @Override
+    public void saveBackAdvanceFund(BudgetOrder budgetOrder) {
+
+        budgetOrderDAO.insertBackAdvanceFund(budgetOrder);
+
     }
 }

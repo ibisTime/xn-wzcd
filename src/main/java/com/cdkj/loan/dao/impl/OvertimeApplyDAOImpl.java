@@ -15,8 +15,8 @@ import com.cdkj.loan.domain.OvertimeApply;
  * @history:
  */
 @Repository("overtimeApplyDAOImpl")
-public class OvertimeApplyDAOImpl extends AMybatisTemplate implements
-        IOvertimeApplyDAO {
+public class OvertimeApplyDAOImpl extends AMybatisTemplate
+        implements IOvertimeApplyDAO {
 
     @Override
     public int insert(OvertimeApply data) {
@@ -30,8 +30,8 @@ public class OvertimeApplyDAOImpl extends AMybatisTemplate implements
 
     @Override
     public OvertimeApply select(OvertimeApply condition) {
-        return super.select(NAMESPACE.concat("select_overtimeApply"),
-            condition, OvertimeApply.class);
+        return super.select(NAMESPACE.concat("select_overtimeApply"), condition,
+            OvertimeApply.class);
     }
 
     @Override
@@ -49,14 +49,20 @@ public class OvertimeApplyDAOImpl extends AMybatisTemplate implements
     @Override
     public List<OvertimeApply> selectList(OvertimeApply condition, int start,
             int count) {
-        return super.selectList(NAMESPACE.concat("select_overtimeApply"),
-            start, count, condition, OvertimeApply.class);
+        return super.selectList(NAMESPACE.concat("select_overtimeApply"), start,
+            count, condition, OvertimeApply.class);
     }
 
     @Override
     public int update(OvertimeApply data) {
 
         return super.update(NAMESPACE.concat("update_overtimeApply"), data);
+    }
+
+    @Override
+    public Long selectTotalHour(OvertimeApply condition) {
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_overtimeApply_totalHour"), condition);
     }
 
 }

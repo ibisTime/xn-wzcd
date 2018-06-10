@@ -245,6 +245,8 @@
 		<result column="apply_datetime" property="applyDatetime" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="remark" property="remark" />
+		<result column="back_advance_status" property="backAdvanceStatus" />
+		<result column="team_code" property="teamCode" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -296,6 +298,12 @@
 			</if>
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
+			</if>
+			<if test="backAdvanceStatus != null and backAdvanceStatus != ''">
+				AND t.back_advance_status = #{backAdvanceStatus}
+			</if>
+			<if test="teamCode != null and teamCode != ''">
+				AND t.team_code = #{teamCode}
 			</if>
 		</trim>
 	</sql>
@@ -543,6 +551,8 @@
 		,t.cur_node_code
 		
 		,t.remark
+		,t.team_code
+		,t.back_advance_status
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -618,6 +628,8 @@
 		
 		,t.cur_node_code
 		,t.remark
+		,t.team_code
+		,t.back_advance_status
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -700,6 +712,8 @@
 		
 		,t.cur_node_code
 		,t.remark
+		,t.team_code
+		,t.back_advance_status
 		FROM
 		tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
 		<include refid="where_condition" />
@@ -901,6 +915,8 @@
 		,apply_datetime
 		,cur_node_code
 		,remark
+		,t.team_code
+		,t.back_advance_status
 		)
 		VALUES(
 		#{code}
@@ -1084,6 +1100,8 @@
 		,#{applyDatetime}
 		,#{curNodeCode}
 		,#{remark}
+		,#{teamCode}
+		,#{backAdvanceStatus}
 		)
 	</insert>
 
@@ -1282,6 +1300,7 @@
 		,is_advance_fund = #{isAdvanceFund}
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
+		,team_code = #{teamCode}
 		WHERE code = #{code}
 	</update>
 	
@@ -1445,6 +1464,13 @@
 		,cur_node_code = #{curNodeCode}
 		,repay_biz_code = #{repayBizCode}
 		,apply_user_id = #{applyUserId}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="insert_back_advance_fund" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		back_advance_status = #{backAdvanceStatus}
 		WHERE code = #{code}
 	</update>
 </mapper>

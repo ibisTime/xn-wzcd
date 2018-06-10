@@ -37,7 +37,16 @@ public class BizTeam extends ABaseDO {
     private Date updateDatetime;
 
     // 账户编号
-    private String accountCode;
+    private String accountNo;
+
+    // 收款银行
+    private String bank;
+
+    // 收款支行
+    private String subbranch;
+
+    // 水单
+    private String waterBill;
 
     /***************db  peoperties***************/
 
@@ -117,12 +126,36 @@ public class BizTeam extends ABaseDO {
         this.updateDatetime = updateDatetime;
     }
 
-    public void setAccountCode(String accountCode) {
-        this.accountCode = accountCode;
+    public String getAccountNo() {
+        return accountNo;
     }
 
-    public String getAccountCode() {
-        return accountCode;
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+
+    public String getSubbranch() {
+        return subbranch;
+    }
+
+    public void setSubbranch(String subbranch) {
+        this.subbranch = subbranch;
+    }
+
+    public String getWaterBill() {
+        return waterBill;
+    }
+
+    public void setWaterBill(String waterBill) {
+        this.waterBill = waterBill;
     }
 
 }

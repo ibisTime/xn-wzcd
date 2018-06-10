@@ -10,7 +10,10 @@
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
-		<result column="account_code" property="accountCode" />
+		<result column="account_no" property="accountNo" />
+		<result column="bank" property="bank" />
+		<result column="subbranch" property="subbranch" />
+		<result column="water_bill" property="waterBill" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -34,7 +37,10 @@
 		,t.status
 		,t.updater
 		,t.update_datetime
-		,t.account_code
+		,t.account_no
+		,t.bank
+		,t.subbranch
+		,t.water_bill
 		FROM
 		tsys_biz_team t
 		<include refid="where_condition" />
@@ -61,7 +67,10 @@
 		,status
 		,updater
 		,update_datetime
-		,account_code
+		,account_no
+		,bank
+		,subbranch
+		,water_bill
 		)
 		VALUES(
 		#{code}
@@ -71,7 +80,10 @@
 		,#{status}
 		,#{updater}
 		,#{updateDatetime}
-		,#{accountCode}
+		,#{accountNo}
+		,#{bank}
+		,#{subbranch}
+		,#{waterBill}
 		)
 	</insert>
 
@@ -80,9 +92,13 @@
 		SET
 		name = #{name}
 		,captain = #{captain}
-		,account_code = #{accountCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,account_no = #{accountNo}
+		,bank = # {bank}
+		,subbranch = #{subbranch}
+		,water_bill = #{waterBill}
+		,company_code = #{companyCode}
 		WHERE code = #{code}
 	</update>
 	

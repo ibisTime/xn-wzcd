@@ -78,7 +78,7 @@
 	
 	<select id="select_LeaveApply_totalHour" parameterType="leaveApply"
 		resultType="java.lang.Long">
-		SELECT sum(t.total_hour) FROM tp_leave_apply t
+		SELECT IFNULL(SUM(t.total_hour),0) FROM tp_leave_apply t
 		<include refid="where_condition" />
 	</select>
 

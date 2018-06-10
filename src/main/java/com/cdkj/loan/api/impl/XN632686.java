@@ -2,13 +2,18 @@ package com.cdkj.loan.api.impl;
 
 import java.util.Calendar;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.cdkj.loan.ao.IArchiveAO;
 import com.cdkj.loan.ao.IDayRestAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
+import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.DayRest;
 import com.cdkj.loan.dto.req.XN632686Req;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -28,16 +33,28 @@ public class XN632686 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        DayRest condition = new DayRest();
+        DayRest restCondition = new DayRest();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(DateUtil.strToDate(req.getDate(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
 
-        condition.setStartDatetime(DateUtil.getBeginTime(year, month));
-        condition.setEndDatetime(DateUtil.getEndTime(year, month));
-        return dayRestAO.queryDayRestList(condition);
+        restCondition.setStartDatetime(DateUtil.getBeginTime(year, month));
+        restCondition.setEndDatetime(DateUtil.getEndTime(year, month));
+        restCondition.setIsRest(EBoolean.NO.getCode());
+
+        Archive archiveCondition = new Archive();
+        archiveCondition.setDepartmentCode(req.getDepartmentCode());
+        String column = req.getOrderColumn();
+        if (StringUtils.isBlank(column)) {
+            column = IArchiveAO.DEFAULT_ORDER_COLUMN;
+        }
+        archiveCondition.setOrder(column, req.getOrderDir());
+        int start = Integer.valueOf(req.getStart());
+        int limit = Integer.valueOf(req.getLimit());
+        return dayRestAO.queryCheckingPage(start, limit, restCondition,
+            archiveCondition);
     }
 
     @Override
@@ -46,5 +63,4 @@ public class XN632686 extends AProcessor {
         req = JsonUtil.json2Bean(inputparams, XN632686Req.class);
         ObjValidater.validateReq(req);
     }
-
 }

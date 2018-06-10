@@ -325,6 +325,7 @@ public class CreditAOImpl implements ICreditAO {
                 credit.getCurNodeCode()).getNextNode());
             // 保存准入单
             String budgetCode = budgetOrderBO.saveBudgetOrder(credit);
+
             // 准入单编号回写征信单
             credit.setBudgetCode(budgetCode);
 

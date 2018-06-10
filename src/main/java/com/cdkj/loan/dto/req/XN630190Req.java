@@ -19,6 +19,50 @@ public class XN630190Req {
     @NotBlank
     private String updater;
 
+    @NotBlank
+    private String accountNo;
+
+    @NotBlank
+    private String bank;
+
+    @NotBlank
+    private String subbranch;
+
+    @NotBlank
+    private String waterBill;
+
+    public String getAccountNo() {
+        return accountNo;
+    }
+
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+
+    public String getSubbranch() {
+        return subbranch;
+    }
+
+    public void setSubbranch(String subbranch) {
+        this.subbranch = subbranch;
+    }
+
+    public String getWaterBill() {
+        return waterBill;
+    }
+
+    public void setWaterBill(String waterBill) {
+        this.waterBill = waterBill;
+    }
+
     public String getName() {
         return name;
     }

@@ -81,7 +81,7 @@ public class RepointBOImpl extends PaginableBOImpl<Repoint> implements
             condition.setCode(code);
             data = repointDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "�� ��Ų�����");
+                throw new BizException("xn0000", "返点支付数据不存在");
             }
         }
         return data;

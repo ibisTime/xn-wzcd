@@ -3,6 +3,7 @@ package com.cdkj.loan.dto.req;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 休息日记录
@@ -20,6 +21,7 @@ public class XN632680Req {
     private String operateDate;
 
     // 日期列表
+    @NotEmpty
     private List<XN632680ReqDate> dateList;
 
     public String getUpdater() {

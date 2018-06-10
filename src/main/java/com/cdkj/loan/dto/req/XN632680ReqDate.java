@@ -10,12 +10,23 @@ public class XN632680ReqDate {
     // 日期
     private String restDate;
 
+    // 是否休息
+    private String isRest;
+
     public String getRestDate() {
         return restDate;
     }
 
     public void setRestDate(String restDate) {
         this.restDate = restDate;
+    }
+
+    public String getIsRest() {
+        return isRest;
+    }
+
+    public void setIsRest(String isRest) {
+        this.isRest = isRest;
     }
 
 }

@@ -24,6 +24,9 @@
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
+			<if test="applyUser != null and applyUser != '' ">
+				AND t.apply_user = #{applyUser}
+			</if>
 			<if test="startApplyDatetime != null and startApplyDatetime != '' ">
 				AND t.apply_datetime &gt;= #{startApplyDatetime}
 			</if>
@@ -59,6 +62,12 @@
 	<select id="select_overtimeApply_count" parameterType="overtimeApply"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tp_overtime_apply t
+		<include refid="where_condition" />
+	</select>
+	
+	<select id="select_overtimeApply_totalHour" parameterType="overtimeApply"
+		resultType="java.lang.Long">
+		SELECT IFNULL(SUM(t.total_hour),0) FROM tp_overtime_apply t
 		<include refid="where_condition" />
 	</select>
 
@@ -104,10 +113,5 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
-	
-
-	
-	
-
 
 </mapper>

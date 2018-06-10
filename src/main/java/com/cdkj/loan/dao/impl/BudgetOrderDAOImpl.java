@@ -148,4 +148,11 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
 
     }
 
+    @Override
+    public int insertBackAdvanceFund(BudgetOrder data) {
+
+        return super.update(NAMESPACE.concat("insert_back_advance_fund"), data);
+
+    }
+
 }

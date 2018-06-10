@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,8 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.SYSUser;
-import com.cdkj.loan.enums.EAccountType;
-import com.cdkj.loan.enums.ECurrency;
+import com.cdkj.loan.dto.req.XN630190Req;
+import com.cdkj.loan.dto.req.XN630192Req;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -35,31 +36,42 @@ public class BizTeamAOImpl implements IBizTeamAO {
     private IAccountBO accountBO;
 
     @Override
-    public String addBizTeam(BizTeam data) {
+    public String addBizTeam(XN630190Req req) {
+
+        BizTeam data = new BizTeam();
+        data.setName(req.getName());
+        data.setCaptain(req.getCaptain());
+        data.setUpdater(req.getUpdater());
+        data.setUpdateDatetime(new Date());
+        data.setStatus("1");
+        data.setAccountNo(req.getAccountNo());
+        data.setBank(req.getBank());
+        data.setSubbranch(req.getSubbranch());
+        data.setWaterBill(req.getWaterBill());
+
         SYSUser user = sysUserBO.getUser(data.getCaptain());
         data.setCompanyCode(user.getCompanyCode());
         String bizTeamCode = bizTeamBO.saveBizTeam(data);
-
-        BizTeam bizTeam = bizTeamBO.getBizTeam(bizTeamCode);
-
-        String account = accountBO.distributeAccount(bizTeamCode,
-            bizTeam.getName(),
-            EAccountType.getAccountType(EAccountType.Plat.getCode()),
-            ECurrency.CNY.getCode());
-        bizTeam.setAccountCode(account);
-        bizTeamBO.refreshBizTeam(bizTeam);
-
         return bizTeamCode;
     }
 
     @Override
-    public int editBizTeam(BizTeam data) {
-        if (!bizTeamBO.isBizTeamExist(data.getCode())) {
+    public void editBizTeam(XN630192Req req) {
+        if (!bizTeamBO.isBizTeamExist(req.getCode())) {
             throw new BizException("xn0000", "业务团队不存在");
         }
-        SYSUser user = sysUserBO.getUser(data.getCaptain());
+        BizTeam data = bizTeamBO.getBizTeam(req.getCode());
+        data.setName(req.getName());
+        data.setCaptain(req.getCaptain());
+        data.setUpdater(req.getUpdater());
+        data.setUpdateDatetime(new Date());
+        data.setAccountNo(req.getAccountNo());
+        data.setBank(req.getBank());
+        data.setSubbranch(req.getSubbranch());
+        data.setWaterBill(req.getWaterBill());
+        SYSUser user = sysUserBO.getUser(req.getCaptain());
         data.setCompanyCode(user.getCompanyCode());
-        return bizTeamBO.refreshBizTeam(data);
+        bizTeamBO.refreshBizTeam(data);
     }
 
     @Override

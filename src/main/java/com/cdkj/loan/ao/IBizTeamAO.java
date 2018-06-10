@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BizTeam;
+import com.cdkj.loan.dto.req.XN630190Req;
+import com.cdkj.loan.dto.req.XN630192Req;
 
 /**
  * 
@@ -17,11 +19,11 @@ import com.cdkj.loan.domain.BizTeam;
 public interface IBizTeamAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addBizTeam(BizTeam data);
+    public String addBizTeam(XN630190Req data);
 
     public int dropBizTeam(String code);
 
-    public int editBizTeam(BizTeam data);
+    public void editBizTeam(XN630192Req req);
 
     public Paginable<BizTeam> queryBizTeamPage(int start, int limit,
             BizTeam condition);

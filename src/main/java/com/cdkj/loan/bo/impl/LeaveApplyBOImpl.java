@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -78,6 +79,17 @@ public class LeaveApplyBOImpl extends PaginableBOImpl<LeaveApply>
     public Long getTotalHour(String applyUser) {
         LeaveApply data = new LeaveApply();
         data.setApplyUser(applyUser);
+        return leaveApplyDAO.selectTotalHour(data);
+    }
+
+    @Override
+    public Long getTotalHour(String applyUser, String type, Date startDatetime,
+            Date endDatetime) {
+        LeaveApply data = new LeaveApply();
+        data.setApplyUser(applyUser);
+        data.setStartDatetime(startDatetime);
+        data.setEndDatetime(endDatetime);
+        data.setType(type);
         return leaveApplyDAO.selectTotalHour(data);
     }
 }
