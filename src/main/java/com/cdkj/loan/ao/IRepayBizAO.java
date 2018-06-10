@@ -15,18 +15,23 @@ public interface IRepayBizAO {
 
     public void editBankcardModify(XN630511Req req);
 
+    // 提前还款，车贷和商品分期都有
+    public void advanceRepay(String code, String updater, String remark);
+
+    // ********************************car********************************
+
+    public void enterBlackListProduct(String code, String blackHandleNote,
+            String updater, String remark);
+
+    public void confirmSettledProduct(XN630513Req req);
+
+    // ********************************car********************************
+
     public Paginable<RepayBiz> queryRepayBizPage(int start, int limit,
             RepayBiz condition);
 
     public List<RepayBiz> queryRepayBizList(RepayBiz condition);
 
     public RepayBiz getRepayBiz(String code);
-
-    public void advanceRepay(String code, String updater, String remark);
-
-    public void enterBlackList(String code, String blackHandleNote,
-            String updater, String remark);
-
-    public void confirmClose(XN630513Req req);
 
 }
