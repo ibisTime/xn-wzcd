@@ -32,6 +32,9 @@
 			<if test="departmentCode != null and departmentCode != '' ">
 				AND tu.department_code = #{departmentCode}
 			</if>
+			<if test="type != null and type != '' ">
+				AND t.type = #{type}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_assertApply" parameterType="assertApply" resultMap="assertApply_DB_Result">

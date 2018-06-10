@@ -163,6 +163,15 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     }
 
+    @Override
+    public void approveByQkcsDepartment(String code, String approveResult,
+            Long cutLyDeposit, String updater, String remark) {
+        // 1、审核前提：判断当前节点是否在请款催收部审核节点
+        // QKCS_DEPART_CHECK
+        if (EBoolean.YES.getCode().equals(approveResult)) {
+        }
+    }
+
     private Long baofuWithhold(Bankcard bankcard, Long amount) {
         Long successAmount = 0L;
         // TODO 宝付代扣逻辑
@@ -192,7 +201,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         condition.setRepayBizCode(code);
         List<RepayPlan> planList = repayPlanBO.queryRepayPlanList(condition);
         for (RepayPlan repayPlan : planList) {
-            repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_BLACK.getCode());
+            repayPlan.setCurNodeCode(ERepayPlanNode.PRD_HANDLER_TO_BLACK
+                .getCode());
             repayPlanBO.refreshToBlackProduct(repayPlan);
         }
     }

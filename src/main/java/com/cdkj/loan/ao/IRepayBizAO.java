@@ -40,12 +40,20 @@ public interface IRepayBizAO {
             String updater);
     // ********************************car********************************
 
+    // 清欠催收部审核
+    public void approveByQkcsDepartment(String code, String curNodeCode,
+            Long cutLyDeposit, String updater, String remark);
+
+    // ********************************car********************************
+
+    // ********************************product********************************
+
     public void enterBlackListProduct(String code, String blackHandleNote,
             String updater, String remark);
 
     public void confirmSettledProduct(XN630513Req req);
 
-    // ********************************car********************************
+    // ********************************product********************************
 
     public Paginable<RepayBiz> queryRepayBizPage(int start, int limit,
             RepayBiz condition);
