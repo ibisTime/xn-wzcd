@@ -54,6 +54,36 @@ public class BizTeam extends ABaseDO {
 
     private List<SYSUser> userList;
 
+    private String captainName;
+
+    private String companyName;
+
+    private String updaterName;
+
+    public String getCaptainName() {
+        return captainName;
+    }
+
+    public void setCaptainName(String captainName) {
+        this.captainName = captainName;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getUpdaterName() {
+        return updaterName;
+    }
+
+    public void setUpdaterName(String updaterName) {
+        this.updaterName = updaterName;
+    }
+
     public List<SYSUser> getUserList() {
         return userList;
     }
