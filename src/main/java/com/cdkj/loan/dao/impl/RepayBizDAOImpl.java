@@ -77,4 +77,29 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
         return super.update(NAMESPACE.concat("update_repayEarlySuccess"), data);
     }
 
+    @Override
+    public void approveByQkcsDepart(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_approveByQkcsDepart"), data);
+    }
+
+    @Override
+    public void approveByBankCheck(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_approveByBankCheck"), data);
+    }
+
+    @Override
+    public void approveByManager(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_approveByManager"), data);
+    }
+
+    @Override
+    public void approveByFinance(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_approveByFinance"), data);
+    }
+
+    @Override
+    public void releaseMortgage(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_releaseMortgage"), data);
+    }
+
 }

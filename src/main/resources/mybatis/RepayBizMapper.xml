@@ -45,6 +45,7 @@
 		<result column="settle_attach" property="settleAttach" />
 		<result column="settle_datetime" property="settleDatetime" />
 		
+		<result column="release_datetime" property="releaseDatetime" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
 		<result column="remark" property="remark" />
@@ -115,8 +116,10 @@
 		
 		,t.settle_attach
 		,t.settle_datetime
+		,t.releaseDatetime
 		,t.updater
 		,t.update_datetime
+		
 		,t.remark
 		FROM
 		tht_repay_biz t
@@ -283,6 +286,59 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_approveByQkcsDepart" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,cut_ly_deposit = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_approveByBankCheck" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,settle_attach = #{settleAttach}
+		,settle_datetime = #{settleDatetime}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_approveByManager" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_approveByFinance" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_releaseMortgage" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,release_datetime = #{releaseDatetime}
 		WHERE code = #{code}
 	</update>
 	

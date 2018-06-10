@@ -148,8 +148,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     }
 
     @Override
-    public void confirmSettledCarLoan(RepayBiz data) {
-        repayBizDAO.updateConfirmSettled(data);
+    public void confirmSettledProduct(RepayBiz data) {
+        repayBizDAO.updateConfirmSettledProduct(data);
     }
 
     @Override
@@ -230,6 +230,9 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
             repayBiz.setRestAmount(repayBiz.getRestAmount()
                     - realWithholdAmount);
             repayBizDAO.updateRepayBizRestAmount(repayBiz);
+            repayBiz.setRestAmount(repayBiz.getRestAmount()
+                    - realWithholdAmount);
+            repayBizDAO.updateRepayBizRestAmount(repayBiz);
         }
     }
 
@@ -268,5 +271,74 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     public void refreshEnterBlackList(RepayBiz data) {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public void approveByQkcsDepart(String code, String curNodeCode,
+            Long cutLyDeposit, String updater, String remark) {
+        RepayBiz repayBiz = new RepayBiz();
+        repayBiz.setCode(code);
+        repayBiz.setCurNodeCode(curNodeCode);
+        repayBiz.setCutLyDeposit(cutLyDeposit);
+        repayBiz.setUpdater(updater);
+
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(remark);
+        repayBizDAO.approveByQkcsDepart(repayBiz);
+    }
+
+    @Override
+    public void approveByBankCheck(String code, String curNodeCode,
+            Date settleDatetime, String settleAttach, String updater,
+            String remark) {
+        RepayBiz repayBiz = new RepayBiz();
+        repayBiz.setCode(code);
+        repayBiz.setCurNodeCode(curNodeCode);
+        repayBiz.setSettleDatetime(settleDatetime);
+        repayBiz.setSettleAttach(settleAttach);
+
+        repayBiz.setUpdater(updater);
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(remark);
+        repayBizDAO.approveByBankCheck(repayBiz);
+    }
+
+    @Override
+    public void approveByManager(String code, String curNodeCode,
+            String updater, String remark) {
+        RepayBiz repayBiz = new RepayBiz();
+        repayBiz.setCode(code);
+        repayBiz.setCurNodeCode(curNodeCode);
+        repayBiz.setUpdater(updater);
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(remark);
+
+        repayBizDAO.approveByManager(repayBiz);
+    }
+
+    @Override
+    public void approveByFinance(String code, String curNodeCode,
+            String updater, String remark) {
+        RepayBiz repayBiz = new RepayBiz();
+        repayBiz.setCode(code);
+        repayBiz.setCurNodeCode(curNodeCode);
+        repayBiz.setUpdater(updater);
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(remark);
+
+        repayBizDAO.approveByFinance(repayBiz);
+    }
+
+    @Override
+    public void releaseMortgage(String code, String curNodeCode,
+            Date releaseDatetime, String updater) {
+        RepayBiz repayBiz = new RepayBiz();
+        repayBiz.setCode(code);
+        repayBiz.setCurNodeCode(curNodeCode);
+        repayBiz.setReleaseDatetime(releaseDatetime);
+        repayBiz.setUpdater(updater);
+        repayBiz.setUpdateDatetime(new Date());
+
+        repayBizDAO.releaseMortgage(repayBiz);
     }
 }
