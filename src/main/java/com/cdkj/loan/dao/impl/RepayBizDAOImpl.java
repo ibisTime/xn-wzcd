@@ -18,7 +18,7 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
 
     @Override
     public int delete(RepayBiz data) {
-        return super.delete(NAMESPACE.concat("delete_repayBiz"), data);
+        return 0;
     }
 
     @Override
@@ -29,8 +29,8 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
 
     @Override
     public long selectTotalCount(RepayBiz condition) {
-        return super.selectTotalCount(NAMESPACE.concat("select_repayBiz_count"),
-            condition);
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_repayBiz_count"), condition);
     }
 
     @Override
@@ -51,22 +51,17 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
     }
 
     @Override
-    public int repayComplete(RepayBiz data) {
+    public int updateRepayAll(RepayBiz data) {
         return super.update(NAMESPACE.concat("update_repayComplete"), data);
     }
 
     @Override
-    public int updateRepayBizStatus(RepayBiz data) {
-        return super.update(NAMESPACE.concat("update_repayBiz_status"), data);
-    }
-
-    @Override
-    public int EnterBlackList(RepayBiz data) {
+    public int updateEnterBlackList(RepayBiz data) {
         return super.update(NAMESPACE.concat("enter_black_list"), data);
     }
 
     @Override
-    public int confirmClose(RepayBiz data) {
+    public int updateConfirmSettled(RepayBiz data) {
         return super.update(NAMESPACE.concat("confirm_close"), data);
     }
 
@@ -76,9 +71,35 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
             data);
     }
 
+    // update_repayAllAdvance
     @Override
-    public int updateRepayEarlySuccess(RepayBiz data) {
+    public int updateRepayAllAdvance(RepayBiz data) {
         return super.update(NAMESPACE.concat("update_repayEarlySuccess"), data);
+    }
+
+    @Override
+    public void approveByQkcsDepart(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_approveByQkcsDepart"), data);
+    }
+
+    @Override
+    public void approveByBankCheck(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_approveByBankCheck"), data);
+    }
+
+    @Override
+    public void approveByManager(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_approveByManager"), data);
+    }
+
+    @Override
+    public void approveByFinance(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_approveByFinance"), data);
+    }
+
+    @Override
+    public void releaseMortgage(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_releaseMortgage"), data);
     }
 
 }

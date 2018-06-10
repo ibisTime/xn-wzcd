@@ -81,16 +81,22 @@ public class RepayBiz extends ABaseDO {
     // 扣除的履约保证金
     private Long cutLyDeposit;
 
-    // 状态
-    private String status;
+    // 节点
+    private String curNodeCode;
 
-    // 剩余欠款
+    // 剩余欠款(剩余本金，缺少利息)
     private Long restAmount;
 
     // 未还清收总成本
     private Long restTotalCost;
 
-    // 额外保证金收入
+    // 再次逾期保证金总额
+    private Long overdueTotalDeposit;
+
+    // 再次逾期保证金总收入
+    private Long overdueTotalDepositIncome;
+
+    // 额外保证金收入(作废)
     private Long totalInDeposit;
 
     // 逾期总金额
@@ -102,17 +108,22 @@ public class RepayBiz extends ABaseDO {
     // 实际逾期期数
     private int curOverdueCount;
 
-    // 黑名单处理结果备案
+    // 黑名单处理结果备案(商品分期)
     private String blackHandleNote;
 
+    // 是否提前结清(0=正常结清 1=提前结清)
+    private String isAdvanceSettled;
+
     // 结清证明
-    private String closeAttach;//
+    private String settleAttach;
 
     // 结清时间
-    private Date closeDatetime;//
+    private Date settleDatetime;
+
+    // 解除抵押时间
+    private Date releaseDatetime;
 
     // 最近修改人
-
     private String updater;
 
     // 最近修改时间
@@ -121,14 +132,34 @@ public class RepayBiz extends ABaseDO {
     // 备注
     private String remark;
 
-    // 最近逾期红名单还款计划
-
-    // 最近逾期红名单还款计划
-
     // ****** 辅助字段 ******
 
     // 用户信息
     private User user;
+
+    public Long getOverdueTotalDeposit() {
+        return overdueTotalDeposit;
+    }
+
+    public void setOverdueTotalDeposit(Long overdueTotalDeposit) {
+        this.overdueTotalDeposit = overdueTotalDeposit;
+    }
+
+    public Long getOverdueTotalDepositIncome() {
+        return overdueTotalDepositIncome;
+    }
+
+    public void setOverdueTotalDepositIncome(Long overdueTotalDepositIncome) {
+        this.overdueTotalDepositIncome = overdueTotalDepositIncome;
+    }
+
+    public String getIsAdvanceSettled() {
+        return isAdvanceSettled;
+    }
+
+    public void setIsAdvanceSettled(String isAdvanceSettled) {
+        this.isAdvanceSettled = isAdvanceSettled;
+    }
 
     // 车贷订单
     private BudgetOrder budgetOrder;
@@ -147,6 +178,14 @@ public class RepayBiz extends ABaseDO {
 
     // 银行名称
     private String loanBankName;
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
 
     public String getLoanBankName() {
         return loanBankName;
@@ -348,14 +387,6 @@ public class RepayBiz extends ABaseDO {
         this.cutLyDeposit = cutLyDeposit;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public Long getRestAmount() {
         return restAmount;
     }
@@ -412,20 +443,20 @@ public class RepayBiz extends ABaseDO {
         this.blackHandleNote = blackHandleNote;
     }
 
-    public String getCloseAttach() {
-        return closeAttach;
+    public String getSettleAttach() {
+        return settleAttach;
     }
 
-    public void setCloseAttach(String closeAttach) {
-        this.closeAttach = closeAttach;
+    public void setSettleAttach(String settleAttach) {
+        this.settleAttach = settleAttach;
     }
 
-    public Date getCloseDatetime() {
-        return closeDatetime;
+    public Date getSettleDatetime() {
+        return settleDatetime;
     }
 
-    public void setCloseDatetime(Date closeDatetime) {
-        this.closeDatetime = closeDatetime;
+    public void setSettleDatetime(Date settleDatetime) {
+        this.settleDatetime = settleDatetime;
     }
 
     public String getUpdater() {
@@ -482,6 +513,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setActualRefunds(Long actualRefunds) {
         this.actualRefunds = actualRefunds;
+    }
+
+    public Date getReleaseDatetime() {
+        return releaseDatetime;
+    }
+
+    public void setReleaseDatetime(Date releaseDatetime) {
+        this.releaseDatetime = releaseDatetime;
     }
 
 }

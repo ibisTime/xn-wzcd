@@ -8,16 +8,29 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
 
     public int updateBankcard(RepayBiz data);
 
-    public int updateRepayBizStatus(RepayBiz repayBiz);
+    public int updateRepayAllAdvance(RepayBiz data);
 
-    public int repayComplete(RepayBiz data);
+    public int updateRepayAll(RepayBiz data);
 
-    public int EnterBlackList(RepayBiz repayBiz);
+    public int updateEnterBlackList(RepayBiz data);
 
-    public int confirmClose(RepayBiz repayBiz);
+    public int updateConfirmSettled(RepayBiz data);
 
-    public int updateRepayBizRestAmount(RepayBiz repayBiz);
+    public int updateRepayBizRestAmount(RepayBiz data);
 
-    public int updateRepayEarlySuccess(RepayBiz data);
+    // 清欠催收部审核
+    public void approveByQkcsDepart(RepayBiz data);
+
+    // 驻行人员审核
+    public void approveByBankCheck(RepayBiz data);
+
+    // 总经理审核
+    public void approveByManager(RepayBiz data);
+
+    // 财务审核
+    public void approveByFinance(RepayBiz data);
+
+    // 业务团队解除抵押
+    public void releaseMortgage(RepayBiz data);
 
 }
