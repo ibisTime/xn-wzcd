@@ -21,7 +21,7 @@ public interface IRepayPlanAO {
             int limit, RepayPlan condition);
 
     // 按月还款
-    public void repayMonthly(String code);
+    public void repayMonthly(String code, String operator);
 
     // 当月还款名单
     public Object queryCurrentMonthRepayPage(int start, int limit,
