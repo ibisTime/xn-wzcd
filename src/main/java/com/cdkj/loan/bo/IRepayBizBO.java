@@ -37,7 +37,7 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     public void confirmSettledProduct(RepayBiz repayBiz);
 
     // 清欠催收部审核
-    public void approveByQkcsDepart(String code, String curNodeCode,
+    public void approveByQkcsDepartment(String code, String curNodeCode,
             Long cutLyDeposit, String updater, String remark);
 
     // 驻行人员审核
