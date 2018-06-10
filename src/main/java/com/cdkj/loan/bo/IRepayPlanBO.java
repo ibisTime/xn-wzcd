@@ -16,8 +16,7 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     public RepayPlan getRepayPlanLast(RepayPlan condition);
 
-    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
-            String repayBizCode);
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(String repayBizCode);
 
     public RepayPlan getRepayPlan(String code);
 
@@ -56,4 +55,6 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     // 财务主管审核
     public void financeApprove(RepayPlan repayPlan);
+
+    public void refreshRepayPlanCurNodeCode(RepayPlan data);
 }

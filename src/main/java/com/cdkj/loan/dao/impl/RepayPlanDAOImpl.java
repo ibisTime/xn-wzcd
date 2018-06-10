@@ -9,8 +9,7 @@ import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.RepayPlan;
 
 @Repository("repayPlanDAOImpl")
-public class RepayPlanDAOImpl extends AMybatisTemplate
-        implements IRepayPlanDAO {
+public class RepayPlanDAOImpl extends AMybatisTemplate implements IRepayPlanDAO {
 
     @Override
     public int insert(RepayPlan data) {
@@ -36,13 +35,12 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
 
     @Override
     public List<RepayPlan> selectList(RepayPlan condition) {
-        return super.selectList(NAMESPACE.concat("select_repayPlan"), condition,
-            RepayPlan.class);
+        return super.selectList(NAMESPACE.concat("select_repayPlan"),
+            condition, RepayPlan.class);
     }
 
     @Override
-    public List<RepayPlan> selectList(RepayPlan condition, int start,
-            int count) {
+    public List<RepayPlan> selectList(RepayPlan condition, int start, int count) {
         return super.selectList(NAMESPACE.concat("select_repayPlan"), start,
             count, condition, RepayPlan.class);
     }
@@ -50,11 +48,6 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
     @Override
     public int update(RepayPlan data) {
         return 0;
-    }
-
-    @Override
-    public int updateStatus(RepayPlan data) {
-        return super.update(NAMESPACE.concat("update_repayplan_status"), data);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

@@ -8,41 +8,49 @@
 		<result column="user_id" property="userId" />
 		<result column="periods" property="periods" />
 		<result column="cur_periods" property="curPeriods" />
+		
 		<result column="repay_datetime" property="repayDatetime" />
 		<result column="repay_capital" property="repayCapital" />
 		<result column="repay_interest" property="repayInterest" />
 		<result column="payed_amount" property="payedAmount" />
 		<result column="overplus_amount" property="overplusAmount" />
+		
 		<result column="overdue_amount" property="overdueAmount" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="overdue_handler" property="overdueHandler" />
 		<result column="overdue_handle_datetime" property="overdueHandleDatetime" />
 		<result column="overdue_handle_note" property="overdueHandleNote" />
+		
 		<result column="total_fee" property="totalFee" />
 		<result column="payed_fee" property="payedFee" />
 		<result column="overdue_deposit" property="overdueDeposit" />
 		<result column="deposit_way" property="depositWay" />
 		<result column="should_deposit" property="shouldDeposit" />
+		
 		<result column="remind_count" property="remindCount" />
 		<result column="real_repay_amount" property="realRepayAmount" />
 		<result column="ts_car_amount" property="tsCarAmount" />
 		<result column="ts_bankcard_number" property="tsBankcardNumber" />
 		<result column="ts_bank_name" property="tsBankName" />
+		
 		<result column="ts_subbranch" property="tsSubbranch" />
 		<result column="tc_apply_note" property="tcApplyNote" />
 		<result column="remit_amount" property="remitAmount" />
 		<result column="remit_bill_pdf" property="remitBillPdf" />
 		<result column="take_car_address" property="takeCarAddress" />
+		
 		<result column="take_datetime" property="takeDatetime" />
 		<result column="take_name" property="takeName" />
 		<result column="take_location" property="takeLocation" />
 		<result column="take_note" property="takeNote" />
 		<result column="jour_pdf" property="jourPdf" />
+		
 		<result column="house_pdf" property="housePdf" />
 		<result column="gua_name" property="guaName" />
 		<result column="gua_id_no" property="guaIdNo" />
 		<result column="gua_mobile" property="guaMobile" />
 		<result column="gua_now_address" property="guaNowAddress" />
+		
 		<result column="gua_note" property="guaNote" />
 		<result column="suggest" property="suggest" />
 		<result column="suggest_note" property="suggestNote" />
@@ -62,8 +70,8 @@
 			<if test="repayBizCode != null and repayBizCode != '' ">
 				AND t.repay_biz_code = #{repayBizCode}
 			</if>
-			<if test="status != null and status != '' ">
-				AND t.status = #{status}
+			<if test="curNodeCode != null and curNodeCode != '' ">
+				AND t.cur_node_code = #{curNodeCode}
 			</if>
 			<if test="overdueHandler != null and overdueHandler != '' ">
 				AND t.codoverdue_handlere = #{overdueHandler}
@@ -74,9 +82,9 @@
 			<if test="repayEndDatetime != null and repayEndDatetime != '' ">
 				<![CDATA[AND t.repay_datetime <= #{repayEndDatetime}]]>
 			</if>
-			<if test="statusList != null and statusList.size() != 0 ">
-				AND t.status in 
-                <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
+			<if test="curNodeCodeList != null and curNodeCodeList.size() != 0 ">
+				AND t.cur_node_code in 
+                <foreach item="item" index="index" collection="curNodeCodeList" open="(" separator="," close=")">
 	            	#{item}
                 </foreach> 
 			</if>
@@ -159,7 +167,7 @@
 		,payed_amount
 		,overplus_amount
 		,overdue_amount
-		,status
+		,cur_node_code
 		,overdue_handler
 		,overdue_handle_datetime
 		,overdue_handle_note
@@ -182,7 +190,7 @@
 		,#{payedAmount}
 		,#{overplusAmount}
 		,#{overdueAmount}
-		,#{status}
+		,#{curNodeCode}
 		,#{overdueHandler}
 		,#{overdueHandleDatetime}
 		,#{overdueHandleNote}
@@ -209,7 +217,7 @@
 		,payed_amount = #{payedAmount}
 		,overplus_amount = #{overplusAmount}
 		,overdue_amount = #{overdueAmount}
-		,status = #{status}
+		,cur_node_code = #{curNodeCode}
 		,overdue_handler = #{overdueHandler}
 		,overdue_handle_datetime = #{overdueHandleDatetime}
 		,overdue_handle_note = #{overdueHandleNote}
@@ -237,7 +245,7 @@
 		,payed_amount
 		,overplus_amount
 		,overdue_amount
-		,status
+		,cur_node_code
 		,overdue_handler
 		,overdue_handle_datetime
 		,overdue_handle_note
@@ -264,7 +272,7 @@
 		,#{repayPlan.payedAmount}
 		,#{repayPlan.overplusAmount}
 		,#{repayPlan.overdueAmount}
-		,#{repayPlan.status}
+		,#{repayPlan.curNodeCode}
 		,#{repayPlan.overdueHandler}
 		,#{repayPlan.overdueHandleDatetime}
 		,#{repayPlan.overdueHandleNote}
@@ -283,9 +291,9 @@
 	<update id="update_paySuccess" parameterType="repayPlan">
 		UPDATE tht_repay_plan
 		SET
-		payed_amount = #{payedAmount}
+		cur_node_code = #{curNodeCode}
+		,payed_amount = #{payedAmount}
 		,overplus_amount = #{overplusAmount}
-		,status = #{status}
 		WHERE code = #{code}
 	</update>
 	
@@ -300,14 +308,14 @@
 	<update id="update_repayplan_status" parameterType="repayPlan">
 		UPDATE tht_repay_plan
 		SET
-		status = #{status}
+		cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 
 	<update id="overdue_handle" parameterType="repayPlan">
 		UPDATE tht_repay_plan
 		SET
-		status = #{status}
+		cur_node_code = #{curNodeCode}
 		,overdue_deposit = #{overdueDeposit}
 		,deposit_way = #{depositWay}
 		,overdue_handle_note = #{overdueHandleNote}

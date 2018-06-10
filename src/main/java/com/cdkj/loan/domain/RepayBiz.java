@@ -78,7 +78,7 @@ public class RepayBiz extends ABaseDO {
     // 履约保证金（可退）
     private Long lyDeposit;
 
-    // 扣除的履约保证金
+    // 扣除的履约保证金(退款金额)
     private Long cutLyDeposit;
 
     // 节点
@@ -136,6 +136,17 @@ public class RepayBiz extends ABaseDO {
 
     // 用户信息
     private User user;
+
+    // 统计未代偿总金额
+    private String unRepayTotalAmount;
+
+    public String getUnRepayTotalAmount() {
+        return unRepayTotalAmount;
+    }
+
+    public void setUnRepayTotalAmount(String unRepayTotalAmount) {
+        this.unRepayTotalAmount = unRepayTotalAmount;
+    }
 
     public Long getOverdueTotalDeposit() {
         return overdueTotalDeposit;
