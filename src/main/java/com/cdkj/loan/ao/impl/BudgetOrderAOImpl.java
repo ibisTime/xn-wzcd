@@ -482,25 +482,30 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             credit.setBudgetCode(budgetOrder.getCode());
             creditBO.refreshCredit(credit);
 
-            // 生成返点支付数据
-            Repoint repoint = new Repoint();
-            // 准入单的贷款金额 乘以 准入单的贷款产品的返点比例 等于应返金额
-            Long loanAmount = budgetOrder.getLoanAmount();
             LoanProduct loanProduct = loanProductBO.getLoanProduct(budgetOrder
                 .getLoanProductCode());
-            double backRate = loanProduct.getBackRate();
-            long shouldAmount = Math.round(loanAmount * backRate);
-            BizTeam bizTeam = bizTeamBO.getBizTeam(budgetOrder.getTeamCode());
-            repoint.setTeamCode(budgetOrder.getTeamCode());
-            repoint.setBizCode(budgetOrder.getCode());
-            repoint.setAccountNo(bizTeam.getAccountNo());
-            repoint.setBank(bizTeam.getBank());
-            repoint.setSubbranch(bizTeam.getSubbranch());
-            repoint.setShouldAmount(shouldAmount);
-            repoint.setStatus(ERepointStatus.TODO.getCode());
-            repoint.setUpdater(operator);
-            repoint.setUpdateDatetime(new Date());
-            repointBO.saveRepoint(repoint);
+            if (StringUtils.isNotBlank(budgetOrder.getTeamCode())) {
+                BizTeam bizTeam = bizTeamBO.getBizTeam(budgetOrder
+                    .getTeamCode());
+
+                // 生成返点支付数据
+                Repoint repoint = new Repoint();
+                // 应返金额=准入单的贷款金额*准入单的贷款产品的返点比例
+                Long loanAmount = budgetOrder.getLoanAmount();
+                repoint.setTeamCode(budgetOrder.getTeamCode());
+                repoint.setBizCode(budgetOrder.getCode());
+                repoint.setAccountNo(bizTeam.getAccountNo());
+                repoint.setBank(bizTeam.getBank());
+                repoint.setSubbranch(bizTeam.getSubbranch());
+
+                double backRate = loanProduct.getBackRate();
+                long shouldAmount = AmountUtil.mul(loanAmount, backRate);
+                repoint.setShouldAmount(shouldAmount);
+                repoint.setStatus(ERepointStatus.TODO.getCode());
+                repoint.setUpdater(operator);
+                repoint.setUpdateDatetime(new Date());
+                repointBO.saveRepoint(repoint);
+            }
 
         } else {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(

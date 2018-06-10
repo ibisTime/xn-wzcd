@@ -134,20 +134,20 @@ public class RepayBizAOImpl implements IRepayBizAO {
         }
 
         // 判断是否逾期
-        // List<RepayPlan> planList = repayPlanBO
-        // .queryRepayPlanListByRepayBizCode(code);
-        // for (RepayPlan repayPlan : planList) {
-        // if (!repayPlan.getStatus().equals(
-        // ERepayPlanNode.TO_REPAYMENTS.getCode())
-        // && !repayPlan.getStatus().equals(
-        // ERepayPlanStatus.YET_REPAYMENTS.getCode())
-        // && !repayPlan.getStatus().equals(
-        // ERepayPlanStatus.HESUAN_TO_GREEN.getCode())) {
-        // // 逾期处理
-        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-        // "当前有逾期未处理完成的还款计划，不能提前还款！");
-        // }
-        // }
+        List<RepayPlan> planList = repayPlanBO
+            .queryRepayPlanListByRepayBizCode(code);
+        for (RepayPlan repayPlan : planList) {
+            if (!repayPlan.getStatus().equals(
+                ERepayPlanNode.REPAY_YES.getCode())
+                    && !repayPlan.getStatus().equals(
+                        ERepayPlanNode.HANDLER_TO_GREEN.getCode())
+                    && !repayPlan.getStatus().equals(
+                        ERepayPlanNode.HANDLER_TO_YELLOW.getCode())) {
+                // 逾期处理
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前有逾期未处理完成的还款计划，不能提前还款！");
+            }
+        }
 
         // 提前还款服务费
         Long fwAmount = sysConfigBO.getLongValue(SysConstants.TQ_SERVICE);
@@ -200,8 +200,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         condition.setRepayBizCode(code);
         List<RepayPlan> planList = repayPlanBO.queryRepayPlanList(condition);
         for (RepayPlan repayPlan : planList) {
-            repayPlan
-                .setCurNodeCode(ERepayPlanNode.PRD_HANDLER_TO_BLACK.getCode());
+            repayPlan.setCurNodeCode(ERepayPlanNode.PRD_HANDLER_TO_BLACK
+                .getCode());
             repayPlanBO.refreshToBlackProduct(repayPlan);
         }
     }
