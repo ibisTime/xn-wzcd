@@ -61,8 +61,8 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
     }
 
     @Override
-    public int updateConfirmSettled(RepayBiz data) {
-        return super.update(NAMESPACE.concat("confirm_close"), data);
+    public int updateConfirmSettledProduct(RepayBiz data) {
+        return super.update(NAMESPACE.concat("confirm_settle"), data);
     }
 
     @Override

@@ -14,7 +14,7 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
 
     public int updateEnterBlackList(RepayBiz data);
 
-    public int updateConfirmSettled(RepayBiz data);
+    public int updateConfirmSettledProduct(RepayBiz data);
 
     public int updateRepayBizRestAmount(RepayBiz data);
 

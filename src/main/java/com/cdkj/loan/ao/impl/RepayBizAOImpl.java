@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.ao.IOrderAO;
@@ -25,9 +26,9 @@ import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.dto.req.XN630511Req;
 import com.cdkj.loan.dto.req.XN630513Req;
 import com.cdkj.loan.enums.EBizErrorCode;
-import com.cdkj.loan.enums.ERepayBizStatus;
+import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayBizType;
-import com.cdkj.loan.enums.ERepayPlanStatus;
+import com.cdkj.loan.enums.ERepayPlanNode;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -73,45 +74,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             req.getUpdater(), req.getRemark());
     }
 
-    @Override
-    public Paginable<RepayBiz> queryRepayBizPage(int start, int limit,
-            RepayBiz condition) {
-        Paginable<RepayBiz> results = repayBizBO.getPaginable(start, limit,
-            condition);
-        for (RepayBiz repayBiz : results.getList()) {
-            // LoanOrder loanOrder = new LoanOrder();
-            // loanOrder.setRepayBizCode(repayBiz.getCode());
-            // List<LoanOrder> queryLoanOrderList = loanOrderBO
-            // .queryLoanOrderList(loanOrder);
-            // repayBiz.setLoanOrderList(queryLoanOrderList);
-            setRefInfo(repayBiz);
-        }
-        return results;
-    }
-
-    @Override
-    public List<RepayBiz> queryRepayBizList(RepayBiz condition) {
-        return repayBizBO.queryRepayBizList(condition);
-    }
-
-    @Override
-    public RepayBiz getRepayBiz(String code) {
-
-        // 查询实际退款金额
-        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-
-        setRefInfo(repayBiz);
-
-        return repayBiz;
-    }
-
-    /** 
-     * @param repayBiz 
-     * @create: 2018年5月6日 下午5:11:12 haiqingzheng
-     * @history: 
-     */
     private void setRefInfo(RepayBiz repayBiz) {
-
         repayBiz.setUser(userBO.getUser(repayBiz.getUserId()));
         RepayPlan condition = new RepayPlan();
         condition.setOrder("cur_periods", true);
@@ -121,8 +84,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setRepayPlanList(repayPlanList);
 
         if (ERepayBizType.CAR.getCode().equals(repayBiz.getRefType())) {
-            repayBiz.setBudgetOrder(
-                budgetOrderAO.getBudgetOrder(repayBiz.getRefCode()));
+            repayBiz.setBudgetOrder(budgetOrderAO.getBudgetOrder(repayBiz
+                .getRefCode()));
         } else {
             repayBiz.setMallOrder(orderAO.getOrder(repayBiz.getRefCode()));
         }
@@ -148,61 +111,53 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Override
     public void advanceRepay(String code, String updater, String remark) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-        if (!ERepayBizStatus.TO_REPAYMENTS.getCode()
-            .equals(repayBiz.getStatus())) {
+        if (!ERepayBizNode.TO_REPAY.getCode().equals(repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "该还款业务不处于还款中，请重新选择！！！");
+                "当前还款业务不处于还款中");
         }
+
         // 判断是否逾期
-        List<RepayPlan> planList = repayPlanBO
-            .queryRepayPlanListByRepayBizCode(code);
-        for (RepayPlan repayPlan : planList) {
-            if (!repayPlan.getStatus()
-                .equals(ERepayPlanStatus.TO_REPAYMENTS.getCode())
-                    && !repayPlan.getStatus()
-                        .equals(ERepayPlanStatus.YET_REPAYMENTS.getCode())
-                    && !repayPlan.getStatus()
-                        .equals(ERepayPlanStatus.HESUAN_TO_GREEN.getCode())) {
-                // 逾期处理
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前有逾期未处理完成的还款计划，不能提前还款！");
-            }
-        }
+        // List<RepayPlan> planList = repayPlanBO
+        // .queryRepayPlanListByRepayBizCode(code);
+        // for (RepayPlan repayPlan : planList) {
+        // if (!repayPlan.getStatus().equals(
+        // ERepayPlanNode.TO_REPAYMENTS.getCode())
+        // && !repayPlan.getStatus().equals(
+        // ERepayPlanStatus.YET_REPAYMENTS.getCode())
+        // && !repayPlan.getStatus().equals(
+        // ERepayPlanStatus.HESUAN_TO_GREEN.getCode())) {
+        // // 逾期处理
+        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+        // "当前有逾期未处理完成的还款计划，不能提前还款！");
+        // }
+        // }
 
         // 提前还款服务费
         Long fwAmount = sysConfigBO.getLongValue(SysConstants.TQ_SERVICE);
-
         // 代扣总金额
         Long allAmount = repayBiz.getRestAmount() + fwAmount;
-
         // 代扣银行卡
         Bankcard bankcard = bankcardBO.getBankcard(repayBiz.getBankcardCode());
-
         // 必须扣全部，要么扣成功，要么扣失败，不能扣部分金额
         Long realWithholdAmount = baofuWithhold(bankcard, allAmount);
-
         // 更新还款业务
-        repayBizBO.repayEarlySuccess(repayBiz, realWithholdAmount);
-
+        repayBizBO.refreshAdvanceRepayCarLoan(repayBiz, realWithholdAmount);
         // 改变还款计划状态
-        for (RepayPlan repayPlan : planList) {
-            if (!ERepayPlanStatus.TO_REPAYMENTS.getCode()
-                .equals(repayPlan.getStatus())) {
-                continue;
-            }
-            repayPlan.setStatus(ERepayPlanStatus.YET_REPAYMENTS.getCode());
-            repayPlanBO.refreshRepayPlanStatus(repayPlan);
-        }
+        // for (RepayPlan repayPlan : planList) {
+        // if (!ERepayPlanStatus.TO_REPAYMENTS.getCode().equals(
+        // repayPlan.getStatus())) {
+        // continue;
+        // }
+        // repayPlan.setStatus(ERepayPlanStatus.YET_REPAYMENTS.getCode());
+        // repayPlanBO.refreshRepayPlanStatus(repayPlan);
+        // }
 
     }
 
     private Long baofuWithhold(Bankcard bankcard, Long amount) {
         Long successAmount = 0L;
-
         // TODO 宝付代扣逻辑
-
         successAmount = amount;
-
         return successAmount;
     }
 
@@ -213,55 +168,82 @@ public class RepayBizAOImpl implements IRepayBizAO {
     // }
 
     @Override
-    public void enterBlackList(String code, String blackHandleNote,
+    public void enterBlackListProduct(String code, String blackHandleNote,
             String updater, String remark) {
+        // TODO 验证还款业务状态，以及业务类型是否是产品
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
         repayBiz.setBlackHandleNote(blackHandleNote);
-        repayBiz.setStatus(ERepayBizStatus.YET_NOT_CONFIRMED.getCode());
+        repayBiz.setCurNodeCode(ERepayBizNode.PRO_BAD_DEBT.getCode());
         repayBiz.setUpdater(updater);
         repayBiz.setUpdateDatetime(new Date());
         repayBiz.setRemark(remark);
+        repayBizBO.refreshEnterBlackList(repayBiz);
 
-        RepayPlan repayPlan = new RepayPlan();
-        repayPlan.setRepayBizCode(code);
-        List<RepayPlan> planList = repayPlanBO.queryRepayPlanList(repayPlan);
-        for (RepayPlan repayPlan2 : planList) {
-            repayPlan2.setStatus(ERepayPlanStatus.HESUANNOT_TO_BLACK.getCode());
-            repayPlanBO.refreshRepayPlanStatus(repayPlan2);
+        RepayPlan condition = new RepayPlan();
+        condition.setRepayBizCode(code);
+        List<RepayPlan> planList = repayPlanBO.queryRepayPlanList(condition);
+        for (RepayPlan repayPlan : planList) {
+            repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_BLACK.getCode());
+            repayPlanBO.refreshToBlackProduct(repayPlan);
         }
-        repayBizBO.refreshRepayBizStatus(repayBiz);
     }
 
     @Override
-    public void confirmClose(XN630513Req req) {
+    @Transactional
+    public void confirmSettledProduct(XN630513Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        if (!ERepayBizStatus.YET_REPAYMENTS.getCode()
-            .equals(repayBiz.getStatus())
-                && !ERepayBizStatus.EARLY_REPAYMENT.getCode()
-                    .equals(repayBiz.getStatus())) {
+        if (!ERepayBizNode.PRO_SETTLED.getCode().equals(
+            repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "状态不是正常已还款或提前还款，不能确认结清！！！");
+                "当前产品状态不是已还款，不能确认结清！");
         }
+
+        // 更新还款业务
         repayBiz.setCutLyDeposit(StringValidater.toLong(req.getCutLyDeposit()));
-        if (repayBiz.getStatus()
-            .equals(ERepayBizStatus.TO_REPAYMENTS.getCode())) {
-            repayBiz.setStatus(ERepayBizStatus.YET_CLEARANCE.getCode());
-        } else {
-            repayBiz.setStatus(ERepayBizStatus.YET_EARLY_CLEARANCE.getCode());
-        }
-        repayBiz.setCloseAttach(req.getCloseAttach());
-        repayBiz.setCloseDatetime(new Date());
+        repayBiz.setSettleAttach(req.getSettleAttach());
+        repayBiz.setSettleDatetime(new Date());
         repayBiz.setUpdater(req.getUpdater());
         repayBiz.setUpdateDatetime(new Date());
         repayBiz.setRemark(req.getRemark());
-        RepayPlan repayPlan = new RepayPlan();
+        repayBizBO.confirmSettledProduct(repayBiz);
 
-        repayPlan.setRepayBizCode(req.getCode());
-        List<RepayPlan> planList = repayPlanBO.queryRepayPlanList(repayPlan);
-        for (RepayPlan repayPlan2 : planList) {
-            repayPlan2.setStatus(ERepayPlanStatus.YET_REPAYMENTS.getCode());
-            repayPlanBO.refreshRepayPlanStatus(repayPlan2);
+        // 还款计划批量结清
+        // RepayPlan planConditon = new RepayPlan();
+        // planConditon.setRepayBizCode(req.getCode());
+        // List<RepayPlan> planList =
+        // repayPlanBO.queryRepayPlanList(planConditon);
+        // for (RepayPlan repayPlan : planList) {
+        // repayPlan.setCurNodeCode(ERepayPlanNode.PRD_REPAY_YES.getCode());
+        // repayPlanBO.refreshRepayPlanNode(repayPlan);
+        // }
+    }
+
+    @Override
+    public Paginable<RepayBiz> queryRepayBizPage(int start, int limit,
+            RepayBiz condition) {
+        Paginable<RepayBiz> results = repayBizBO.getPaginable(start, limit,
+            condition);
+        for (RepayBiz repayBiz : results.getList()) {
+            // LoanOrder loanOrder = new LoanOrder();
+            // loanOrder.setRepayBizCode(repayBiz.getCode());
+            // List<LoanOrder> queryLoanOrderList = loanOrderBO
+            // .queryLoanOrderList(loanOrder);
+            // repayBiz.setLoanOrderList(queryLoanOrderList);
+            setRefInfo(repayBiz);
         }
-        repayBizBO.confirmClose(repayBiz);
+        return results;
+    }
+
+    @Override
+    public List<RepayBiz> queryRepayBizList(RepayBiz condition) {
+        return repayBizBO.queryRepayBizList(condition);
+    }
+
+    @Override
+    public RepayBiz getRepayBiz(String code) {
+        // 查询实际退款金额
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        setRefInfo(repayBiz);
+        return repayBiz;
     }
 }

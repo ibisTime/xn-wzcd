@@ -48,8 +48,7 @@ public class RepayPlan extends ABaseDO {
     // 逾期金额
     private Long overdueAmount;
 
-    // 状态
-    private String status;
+    private String curNodeCode;
 
     // 逾期处理人
     private String overdueHandler;
@@ -498,12 +497,12 @@ public class RepayPlan extends ABaseDO {
         this.overdueAmount = overdueAmount;
     }
 
-    public String getStatus() {
-        return status;
+    public String getCurNodeCode() {
+        return curNodeCode;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
     }
 
     public String getOverdueHandler() {

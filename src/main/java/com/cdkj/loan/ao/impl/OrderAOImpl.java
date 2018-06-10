@@ -218,7 +218,7 @@ public class OrderAOImpl implements IOrderAO {
         // 验证产品是否有未上架的
         doCheckProductOnline(order);
 
-        RepayBiz repayBiz = repayBizBO.genereateNewProductLoanRepayBiz(order);
+        RepayBiz repayBiz = repayBizBO.generateProductLoanRepayBiz(order);
 
         repayPlanBO.genereateNewRapayPlan(repayBiz);
 

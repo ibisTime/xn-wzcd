@@ -25,7 +25,6 @@ import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632300ReqOverdue;
 import com.cdkj.loan.enums.EOverdueMenuStatus;
-import com.cdkj.loan.enums.ERepayPlanStatus;
 
 @Service
 public class OverdueMenuAOImpl implements IOverdueMenuAO {
@@ -82,9 +81,10 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
                 repayPlan.setRepayBizCode(budgetOrder.getRepayBizCode());
                 RepayPlan repayPlanLast = repayPlanBO
                     .getRepayPlanLast(repayPlan);
-                repayPlanLast
-                    .setStatus(ERepayPlanStatus.OVERDUE_TO_HANDLE.getCode());
-                repayPlanBO.refreshRepayPlanStatus(repayPlanLast);
+                // TODO 还款计划是否更新
+                // repayPlanLast
+                // .setStatus(ERepayPlanStatus.OVERDUE_TO_HANDLE.getCode());
+                // repayPlanBO.refreshRepayPlanNode(repayPlanLast);
 
                 overdueMenu.setStatus(EOverdueMenuStatus.YCL.getCode());
                 overdueMenu.setBudgetOrderCode(budgetOrder.getCode());
@@ -94,18 +94,18 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
             // 最后逾期数据填充入库
             overdueMenu.setRealName(req.getRealName());
             overdueMenu.setIdNo(req.getIdNo());
-            overdueMenu
-                .setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
+            overdueMenu.setLoanAmount(StringValidater.toLong(req
+                .getLoanAmount()));
             overdueMenu.setFkDatetime(DateUtil.strToDate(req.getFkDatetime(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
             overdueMenu.setPeriods(StringValidater.toInteger(req.getPeriods()));
 
-            overdueMenu.setOverdueAmount(
-                StringValidater.toLong(req.getOverdueAmount()));
+            overdueMenu.setOverdueAmount(StringValidater.toLong(req
+                .getOverdueAmount()));
             overdueMenu.setOverdueDatetime(DateUtil.strToDate(
                 req.getOverdueDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
-            overdueMenu
-                .setRemainAmount(StringValidater.toLong(req.getRemainAmount()));
+            overdueMenu.setRemainAmount(StringValidater.toLong(req
+                .getRemainAmount()));
             overdueMenu.setLoanBankCode(loanBankCode);
             overdueMenu.setLoanBankName(bankName);
             overdueMenu.setImportDatetime(new Date());
@@ -121,15 +121,16 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
         RepayPlan condition = new RepayPlan();
         condition.setRepayBizCode(budgetOrder.getRepayBizCode());
         RepayPlan repayPlanLast = repayPlanBO.getRepayPlanLast(condition);
-        repayPlanLast.setStatus(ERepayPlanStatus.OVERDUE_TO_HANDLE.getCode());
-        repayPlanBO.refreshRepayPlanStatus(repayPlanLast);
+        // TODO 还款计划状态是否更新
+        // repayPlanLast.setStatus(ERepayPlanStatus.OVERDUE_TO_HANDLE.getCode());
+        // repayPlanBO.refreshRepayPlanNode(repayPlanLast);
 
         OverdueMenu overdueMenu = overdueMenuBO.getOverdueMenu(code);
         User user = userBO.getUser(repayPlanLast.getUserId());
         overdueMenu.setRealName(user.getRealName());
         overdueMenu.setIdNo(user.getIdNo());
-        RepayBiz repayBiz = repayBizBO
-            .getRepayBiz(repayPlanLast.getRepayBizCode());
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlanLast
+            .getRepayBizCode());
         overdueMenu.setLoanAmount(repayBiz.getLoanAmount());
         overdueMenu.setFkDatetime(budgetOrder.getBankFkDatetime());
         overdueMenu.setPeriods(repayPlanLast.getPeriods());
