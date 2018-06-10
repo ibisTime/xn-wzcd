@@ -159,4 +159,23 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
         super.update(NAMESPACE.concat("confirm_back_advance_fund"), data);
     }
 
+    @Override
+    public void applyCancel(BudgetOrder data) {
+
+        super.update(NAMESPACE.concat("apply_cancel"), data);
+
+    }
+
+    @Override
+    public void cancelBizAudit(BudgetOrder data) {
+
+        super.update(NAMESPACE.concat("update_cancel_biz_audit"), data);
+
+    }
+
+    @Override
+    public void cancelFinanceAudit(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_cancel_finance_audit"), data);
+
+    }
 }

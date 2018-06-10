@@ -254,6 +254,8 @@
 		<result column="back_advance_water_bill" property="backAdvanceWaterBill" />
 		<result column="cur_node_code" property="curNodeCode" />
 		
+		<result column="cancel_node_code" property="cancelNodeCode" />
+		<result column="frozen_status" property="frozenStatus" />
 		<result column="remark" property="remark" />
 
 
@@ -317,6 +319,10 @@
 			<if test="applyUserName != null and applyUserName != ''">
 				AND t.apply_user_name like "%"#{applyUserName}"%"
 			</if>
+			<if test="frozenStatus != null and frozenStatus != ''">
+				AND t.frozen_status = #{frozenStatus}
+			</if>
+			
 		</trim>
 	</sql>
 	<select id="select_budgetOrder" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
@@ -565,6 +571,7 @@
 		,t.remark
 		,t.team_code
 		,t.back_advance_status
+		,t.frozen_status
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -642,6 +649,7 @@
 		,t.remark
 		,t.team_code
 		,t.back_advance_status
+		,t.frozen_status
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -726,6 +734,7 @@
 		,t.remark
 		,t.team_code
 		,t.back_advance_status
+		,t.frozen_status
 		FROM
 		tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
 		<include refid="where_condition" />
@@ -1494,6 +1503,31 @@
 		,back_advance_open_bank	 = #{backAdvanceOpenBank}
 		,back_advance_subbranch = #{backAdvanceSubbranch}
 		,back_advance_water_bill = #{backAdvanceWaterBill}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="apply_cancel">
+		UPDATE tdq_budget_order
+		SET
+		remark = #{remark}
+		,frozen_status = #{frozenStatus}
+		,cancel_node_code = #{cancelNodeCode}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_cancel_biz_audit" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,frozen_status = #{frozenStatus}
+		WHERE code = #{code}
+	</update>
+	<update id="update_cancel_finance_audit" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,frozen_status = #{frozenStatus}
 		WHERE code = #{code}
 	</update>
 </mapper>

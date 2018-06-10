@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ISYSUserAO;
+import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ISYSRoleBO;
 import com.cdkj.loan.bo.ISYSUserBO;
@@ -36,6 +37,9 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
     @Autowired
     private IDepartmentBO departmentBO;
+
+    @Autowired
+    private IBizTeamBO bizTeamBO;
 
     @Override
     public String doAddUser(String type, String loginName, String loginPwd,
@@ -254,6 +258,10 @@ public class SYSUserAOImpl implements ISYSUserAO {
             if (StringUtils.isNotBlank(sysUser.getCompanyCode())) {
                 sysUser.setCompanyName(departmentBO.getDepartment(
                     sysUser.getCompanyCode()).getName());
+            }
+            if (StringUtils.isNotBlank(sysUser.getTeamCode())) {
+                sysUser.setTeamName(bizTeamBO.getBizTeam(sysUser.getTeamCode())
+                    .getName());
             }
         }
         return page;
