@@ -133,17 +133,14 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 "当前还款业务不处于还款中");
         }
 
-        // 判断是否逾期
+        // 判断还款计划中是否含有催收失败，进红名单处理，红名单处理中的状态，有则有逾期
         List<RepayPlan> planList = repayPlanBO
             .queryRepayPlanListByRepayBizCode(code);
         for (RepayPlan repayPlan : planList) {
-            if (!ERepayPlanNode.REPAY_YES.getCode().equals(
+            if (ERepayPlanNode.HANDLER_TO_RED.getCode().equals(
                 repayPlan.getCurNodeCode())
-                    && !ERepayPlanNode.HANDLER_TO_GREEN.getCode().equals(
-                        repayPlan.getCurNodeCode())
-                    && !ERepayPlanNode.HANDLER_TO_YELLOW.getCode().equals(
+                    || ERepayPlanNode.QKCSB_APPLY_TC.getCode().equals(
                         repayPlan.getCurNodeCode())) {
-                // 逾期处理
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前有逾期未处理完成的还款计划，不能提前还款！");
             }
@@ -161,14 +158,12 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBizBO.refreshAdvanceRepayCarLoan(repayBiz, realWithholdAmount);
         // 改变还款计划状态
         for (RepayPlan repayPlan : planList) {
-            if (!ERepayPlanNode.TO_REPAY.getCode().equals(
+            if (ERepayPlanNode.TO_REPAY.getCode().equals(
                 repayPlan.getCurNodeCode())) {
-                continue;
+                repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
+                repayPlanBO.refreshRepayPlanCurNodeCode(repayPlan);
             }
-            repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
-            repayPlanBO.refreshRepayPlanCurNodeCode(repayPlan);
         }
-
     }
 
     private Long baofuWithhold(Bankcard bankcard, Long amount) {
