@@ -31,8 +31,8 @@ import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN630532Req;
 import com.cdkj.loan.enums.EBizErrorCode;
-import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECurrency;
+import com.cdkj.loan.enums.EDealResult;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayPlanNode;
 import com.cdkj.loan.enums.ERepayPlanStatus;
@@ -81,8 +81,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             condition);
         for (RepayPlan repayPlan : results.getList()) {
             repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
-            repayPlan.setRepayBiz(
-                repayBizAO.getRepayBiz(repayPlan.getRepayBizCode()));
+            repayPlan.setRepayBiz(repayBizAO.getRepayBiz(repayPlan
+                .getRepayBizCode()));
 
         }
 
@@ -103,8 +103,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     public RepayPlan getRepayPlan(String code) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
         repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
-        repayPlan
-            .setRepayBiz(repayBizBO.getRepayBiz(repayPlan.getRepayBizCode()));
+        repayPlan.setRepayBiz(repayBizBO.getRepayBiz(repayPlan
+            .getRepayBizCode()));
         Cost cost = new Cost();
         cost.setRepayPlanCode(code);
         List<Cost> list = costBO.queryCostList(cost);
@@ -116,15 +116,15 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             .queryRemindLogList(remindLog);
         repayPlan.setRemindLogList(remindLogList);
 
-        String bankcardCode = repayBizBO
-            .getRepayBiz(repayPlan.getRepayBizCode()).getBankcardCode();
+        String bankcardCode = repayBizBO.getRepayBiz(
+            repayPlan.getRepayBizCode()).getBankcardCode();
         String bankcardNumber = bankcardBO.getBankcard(bankcardCode)
             .getBankcardNumber();
         repayPlan.setBankcardNumber(bankcardNumber);
 
         repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
-        repayPlan
-            .setRepayBiz(repayBizAO.getRepayBiz(repayPlan.getRepayBizCode()));
+        repayPlan.setRepayBiz(repayBizAO.getRepayBiz(repayPlan
+            .getRepayBizCode()));
 
         return repayPlan;
     }
@@ -140,8 +140,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
 
         // 校验是否是可还款状态
-        if (!ERepayPlanNode.TO_REPAY.getCode()
-            .equals(repayPlan.getCurNodeCode())) {
+        if (!ERepayPlanNode.TO_REPAY.getCode().equals(
+            repayPlan.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "本期还款计划不处于待还款状态");
         }
@@ -242,8 +242,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             condition);
         for (RepayPlan repayPlan : results.getList()) {
             repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
-            repayPlan.setRepayBiz(
-                repayBizBO.getRepayBiz(repayPlan.getRepayBizCode()));
+            repayPlan.setRepayBiz(repayBizBO.getRepayBiz(repayPlan
+                .getRepayBizCode()));
             Long monthRepayAmount = repayPlan.getRepayCapital()
                     * repayPlan.getRepayInterest();
             repayPlan.setMonthRepayAmount(monthRepayAmount);
@@ -258,10 +258,10 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(req.getCode());
 
-        if (!ERepayPlanStatus.OVERDUE_TO_HANDLE.getCode()
+        if (!ERepayPlanNode.OVERDUE.getCode()
             .equals(repayPlan.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "该条还款计划不是逾期状态！！！");
+                "当前还款计划不是逾期状态");
         }
 
         // 删除原来费用清单
@@ -271,29 +271,19 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         costAO.addCost(req.getCode(), req.getCostList());
 
         // 更新还款计划
-        repayPlan
-            .setOverdueDeposit(StringValidater.toLong(req.getOverdueDeposit()));
+        repayPlan.setOverdueDeposit(StringValidater.toLong(req
+            .getOverdueDeposit()));
         repayPlan.setDepositWay(req.getOverdueDepositWay());
         repayPlan.setOverdueHandleNote(req.getRemark());
-        repayPlanBO.refreshRepayPlanOverdue(repayPlan);
-
-        // 判断是否提交扣款
-        if (req.getIsSubmit().equals(EBoolean.YES.getCode())) {
-            // TODO 代扣
-
-            if ("1" == "1") {
-                // 代扣成功
-                ToGreen(req.getCode(), req.getOverdueDeposit());
-            }
+        if (EDealResult.GREEN.getCode().equals(req.getDealResult())) {
+            repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_GREEN.getCode());
+        } else if (EDealResult.RED.getCode().equals(req.getDealResult())) {
+            repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_RED.getCode());
+        } else if (EDealResult.YELLOW.getCode().equals(req.getDealResult())) {
+            repayPlan
+                .setCurNodeCode(ERepayPlanNode.HANDLER_TO_YELLOW.getCode());
         }
-    }
-
-    @Override
-    public void ToGreen(String code, String overdueDeposit) {
-        RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
-        repayPlan.setCurNodeCode(ERepayPlanStatus.HESUAN_TO_GREEN.getCode());
-        repayPlan.setOverdueDeposit(StringValidater.toLong(overdueDeposit));
-        repayPlanBO.refreshToGreen(repayPlan);
+        repayPlanBO.refreshRepayPlanOverdue(repayPlan);
     }
 
     @Override
@@ -309,10 +299,10 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         List<RepayPlan> results = repayPlanBO.queryRepayPlanList(condition);
         Long unsettledLoan = 0L;
         for (RepayPlan repayPlan : results) {
-            if (repayPlan.getCurNodeCode()
-                .equals(ERepayPlanStatus.OVERDUE_TO_HANDLE.getCode())
-                    || repayPlan.getCurNodeCode()
-                        .equals(ERepayPlanStatus.HESUAN_TO_GREEN.getCode())) {
+            if (repayPlan.getCurNodeCode().equals(
+                ERepayPlanStatus.OVERDUE_TO_HANDLE.getCode())
+                    || repayPlan.getCurNodeCode().equals(
+                        ERepayPlanStatus.HESUAN_TO_GREEN.getCode())) {
                 Long amount = repayPlan.getTotalFee() - repayPlan.getPayedFee()
                         + repayPlan.getOverplusAmount();
                 unsettledLoan = unsettledLoan + amount;
@@ -324,12 +314,12 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     @Override
     public Paginable<RepayPlan> queryRepayPlanPageByRoleCode(int start,
             int limit, RepayPlan condition) {
-        Paginable<RepayPlan> paginable = repayPlanBO
-            .getPaginableByRoleCode(start, limit, condition);
+        Paginable<RepayPlan> paginable = repayPlanBO.getPaginableByRoleCode(
+            start, limit, condition);
         for (RepayPlan repayPlan : paginable.getList()) {
             repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
-            repayPlan.setRepayBiz(
-                repayBizAO.getRepayBiz(repayPlan.getRepayBizCode()));
+            repayPlan.setRepayBiz(repayBizAO.getRepayBiz(repayPlan
+                .getRepayBizCode()));
 
         }
         return paginable;

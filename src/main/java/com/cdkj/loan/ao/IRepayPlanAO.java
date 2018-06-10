@@ -30,9 +30,6 @@ public interface IRepayPlanAO {
     // 逾期处理
     public void overdueHandle(XN630532Req req);
 
-    // 记绿名单
-    public void ToGreen(String code, String overdueDeposit);
-
     // 记黑名单
     public void ToBlack(String code);
 

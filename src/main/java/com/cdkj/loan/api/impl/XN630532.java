@@ -1,11 +1,3 @@
-/**
- * @Title XN630530.java 
- * @Package com.cdkj.loan.api.impl 
- * @Description 
- * @author haiqingzheng  
- * @date 2018年5月6日 下午5:46:47 
- * @version V1.0   
- */
 package com.cdkj.loan.api.impl;
 
 import com.cdkj.loan.ao.IRepayPlanAO;

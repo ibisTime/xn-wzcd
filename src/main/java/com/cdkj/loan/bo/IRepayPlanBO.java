@@ -6,6 +6,7 @@ import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.enums.ERepayPlanNode;
 
 public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
@@ -17,8 +18,10 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     public RepayPlan getRepayPlanLast(RepayPlan condition);
 
-    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
-            String repayBizCode);
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(String repayBizCode);
+
+    public RepayPlan getRepayPlanListByRepayBizCode(String repayBizCode,
+            ERepayPlanNode repayPlanNode);
 
     public RepayPlan getRepayPlan(String code);
 

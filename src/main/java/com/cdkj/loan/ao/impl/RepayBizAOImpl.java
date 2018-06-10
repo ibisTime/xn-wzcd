@@ -351,26 +351,24 @@ public class RepayBizAOImpl implements IRepayBizAO {
         return repayBiz;
     }
 
+    // 申请拖车逻辑：
+    // 1、前提条件：还款计划是“催收失败，进红名单处理”；再更改还款业务状态
     @Override
+    @Transactional
     public void applyTrailer(XN630555Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        List<RepayPlan> repayPlans = repayPlanBO
-            .queryRepayPlanListByRepayBizCode(req.getCode());
-        for (RepayPlan repayPlan : repayPlans) {
-            if (ERepayPlanNode.HANDLER_TO_RED.getCode().equals(
-                repayPlan.getCurNodeCode())) {
-                repayPlan.setCurNodeCode(ERepayPlanNode.QKCSB_APPLY_TC
-                    .getCode());
-                repayPlan.setTsCarAmount(StringValidater.toLong(req
-                    .getTsCarAmount()));
-                repayPlan.setTsBankcardNumber(req.getTsBankcardNumber());
-                repayPlan.setTsBankName(req.getTsBankName());
-                repayPlan.setTsSubbranch(req.getTsSubbranch());
-                repayPlan.setTcApplyNote(req.getTcApplyNote());
-                repayPlanBO.applyTrailer(repayPlan);
-            }
-        }
-        repayBiz.setCurNodeCode(ERepayBizNode.QKCSB_APPLY_TC.getCode());
+        RepayPlan repayPlan = repayPlanBO.getRepayPlanListByRepayBizCode(
+            req.getCode(), ERepayPlanNode.HANDLER_TO_RED);
+        repayPlan.setCurNodeCode(ERepayPlanNode.QKCSB_APPLY_TC.getCode());
+        repayPlan.setTsCarAmount(StringValidater.toLong(req.getTsCarAmount()));
+        repayPlan.setTsBankcardNumber(req.getTsBankcardNumber());
+        repayPlan.setTsBankName(req.getTsBankName());
+
+        repayPlan.setTsSubbranch(req.getTsSubbranch());
+        repayPlan.setTcApplyNote(req.getTcApplyNote());
+        repayPlanBO.applyTrailer(repayPlan);
+
+        repayBiz.setCurNodeCode(ERepayBizNode.FINANCE_REMIT.getCode());
         repayBiz.setUpdater(req.getOperator());
         repayBiz.setUpdateDatetime(new Date());
         repayBizBO.applyTrailer(repayBiz);

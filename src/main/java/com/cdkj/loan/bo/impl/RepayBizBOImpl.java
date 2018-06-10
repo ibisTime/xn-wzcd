@@ -162,7 +162,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBiz.setIsAdvanceSettled(EBoolean.YES.getCode());
         repayBiz.setRestAmount(0L);
         repayBiz.setUpdateDatetime(new Date());
-        repayBiz.setRemark("该业务已提前还款，待结清");
+        repayBiz.setRemark("已结清，待清款催收部审核");
         repayBizDAO.updateRepayAllAdvance(repayBiz);
     }
 

@@ -10,7 +10,7 @@ public class XN630532Req {
     private String code;// 还款计划编号
 
     @NotBlank
-    private String isSubmit;// 是否提交
+    private String dealResult; // 1=交保证金进绿名单 2=申请拖车进红名单 3=代偿进黄名单
 
     private String overdueDeposit;// 再次逾期保证金
 
@@ -19,10 +19,7 @@ public class XN630532Req {
 
     private String remark;// 备注
 
-    // ***********db properties***********
-
-    // 费用清单列表
-    private List<XN630535Req> costList;
+    private List<XN630535Req> costList; // 费用清单列表
 
     public String getCode() {
         return code;
@@ -32,12 +29,12 @@ public class XN630532Req {
         this.code = code;
     }
 
-    public String getIsSubmit() {
-        return isSubmit;
+    public String getDealResult() {
+        return dealResult;
     }
 
-    public void setIsSubmit(String isSubmit) {
-        this.isSubmit = isSubmit;
+    public void setDealResult(String dealResult) {
+        this.dealResult = dealResult;
     }
 
     public String getOverdueDeposit() {
