@@ -20,8 +20,10 @@ public interface IRepayBizAO {
     // 提前还款，车贷和商品分期都有
     public void advanceRepay(String code, String updater, String remark);
 
+    // ********************************car********************************
+
     // 清欠催收部审核
-    public void approveByQkcsDepart(String code, Long cutLyDeposit,
+    public void approveByQkcsDepartment(String code, Long cutLyDeposit,
             String updater, String remark);
 
     // 驻行人员审核
@@ -38,12 +40,6 @@ public interface IRepayBizAO {
     // 业务团队解除抵押
     public void releaseMortgage(String code, Date releaseDatetime,
             String updater);
-    // ********************************car********************************
-
-    // 清欠催收部审核
-    public void approveByQkcsDepartment(String code, String curNodeCode,
-            Long cutLyDeposit, String updater, String remark);
-
     // ********************************car********************************
 
     // ********************************product********************************
