@@ -78,7 +78,7 @@ public class RepayBiz extends ABaseDO {
     // 履约保证金（可退）
     private Long lyDeposit;
 
-    // 扣除的履约保证金
+    // 扣除的履约保证金(退款金额)
     private Long cutLyDeposit;
 
     // 节点
@@ -137,11 +137,40 @@ public class RepayBiz extends ABaseDO {
     // 用户信息
     private User user;
 
+    // 统计未代偿总金额
+    private String unRepayTotalAmount;
+
     // 角色编号
     private String roleCode;
 
+    // 车贷订单
+    private BudgetOrder budgetOrder;
+
+    // 还款计划列表
+    List<RepayPlan> repayPlanList;
+
+    // 商品订单
+    private Order mallOrder;
+
+    // 实际退款金额
+    private Long actualRefunds;
+
+    // 借款余额
+    private Long loanBalance;
+
+    // 银行名称
+    private String loanBankName;
+
     public String getRoleCode() {
         return roleCode;
+    }
+
+    public String getUnRepayTotalAmount() {
+        return unRepayTotalAmount;
+    }
+
+    public void setUnRepayTotalAmount(String unRepayTotalAmount) {
+        this.unRepayTotalAmount = unRepayTotalAmount;
     }
 
     public void setRoleCode(String roleCode) {
@@ -171,24 +200,6 @@ public class RepayBiz extends ABaseDO {
     public void setIsAdvanceSettled(String isAdvanceSettled) {
         this.isAdvanceSettled = isAdvanceSettled;
     }
-
-    // 车贷订单
-    private BudgetOrder budgetOrder;
-
-    // 还款计划列表
-    List<RepayPlan> repayPlanList;
-
-    // 商品订单
-    private Order mallOrder;
-
-    // 实际退款金额
-    private Long actualRefunds;
-
-    // 借款余额
-    private Long loanBalance;
-
-    // 银行名称
-    private String loanBankName;
 
     public String getCurNodeCode() {
         return curNodeCode;

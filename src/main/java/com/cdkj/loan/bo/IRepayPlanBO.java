@@ -55,9 +55,10 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
     // 清款催收部申请赎回
     public void qkcsbRedeemApply(RepayPlan repayPlan);
 
-    // 财务主管审核
     public void riskManagerCheck(RepayPlan repayPlan);
 
     public Paginable<RepayPlan> getPaginableByRoleCode(int start, int limit,
             RepayPlan condition);
+
+    public void refreshRepayPlanCurNodeCode(RepayPlan repayPlan);
 }

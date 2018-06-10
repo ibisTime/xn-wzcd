@@ -290,4 +290,8 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         return page;
     }
 
+    @Override
+    public void refreshRepayPlanCurNodeCode(RepayPlan repayPlan) {
+    }
+
 }

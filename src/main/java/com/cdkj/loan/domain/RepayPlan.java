@@ -166,11 +166,8 @@ public class RepayPlan extends ABaseDO {
     // 催收记录
     private List<RemindLog> remindLogList;
 
-    // 状态
-    private String status;
-
     // 状态list
-    private List<String> statusList;
+    private List<String> curNodeCodeList;
 
     // 未结清贷款金额
     private Long unsettledLoan;
@@ -400,12 +397,12 @@ public class RepayPlan extends ABaseDO {
         this.unsettledLoan = unsettledLoan;
     }
 
-    public List<String> getStatusList() {
-        return statusList;
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
     }
 
-    public void setStatusList(List<String> statusList) {
-        this.statusList = statusList;
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
     }
 
     public List<Cost> getCostList() {
@@ -623,13 +620,4 @@ public class RepayPlan extends ABaseDO {
     public void setRemindLogList(List<RemindLog> remindLogList) {
         this.remindLogList = remindLogList;
     }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
 }

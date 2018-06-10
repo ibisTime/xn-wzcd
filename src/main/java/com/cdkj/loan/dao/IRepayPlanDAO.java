@@ -10,8 +10,6 @@ public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
 
     public int update(RepayPlan data);
 
-    public int updateStatus(RepayPlan data);
-
     public void insertList(List<RepayPlan> dataList);
 
     public int repaySuccess(RepayPlan data);

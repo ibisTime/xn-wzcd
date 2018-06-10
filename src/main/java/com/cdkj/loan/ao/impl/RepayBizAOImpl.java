@@ -125,6 +125,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     // 提前还款
     @Override
+    @Transactional
     public void advanceRepay(String code, String updater, String remark) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
         if (!ERepayBizNode.TO_REPAY.getCode()
@@ -137,38 +138,45 @@ public class RepayBizAOImpl implements IRepayBizAO {
         List<RepayPlan> planList = repayPlanBO
             .queryRepayPlanListByRepayBizCode(code);
         for (RepayPlan repayPlan : planList) {
-            if (!repayPlan.getStatus()
+            if (!repayPlan.getCurNodeCode()
                 .equals(ERepayPlanNode.REPAY_YES.getCode())
-                    && !repayPlan.getStatus()
+                    && !repayPlan.getCurNodeCode()
                         .equals(ERepayPlanNode.HANDLER_TO_GREEN.getCode())
-                    && !repayPlan.getStatus()
+                    && !repayPlan.getCurNodeCode()
                         .equals(ERepayPlanNode.HANDLER_TO_YELLOW.getCode())) {
-                // 逾期处理
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前有逾期未处理完成的还款计划，不能提前还款！");
+                if (!ERepayPlanNode.REPAY_YES.getCode()
+                    .equals(repayPlan.getCurNodeCode())
+                        && !ERepayPlanNode.HANDLER_TO_GREEN.getCode()
+                            .equals(repayPlan.getCurNodeCode())
+                        && !ERepayPlanNode.HANDLER_TO_YELLOW.getCode()
+                            .equals(repayPlan.getCurNodeCode())) {
+                    // 逾期处理
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "当前有逾期未处理完成的还款计划，不能提前还款！");
+                }
+            }
+
+            // 提前还款服务费
+            Long fwAmount = sysConfigBO.getLongValue(SysConstants.TQ_SERVICE);
+            // 代扣总金额
+            Long allAmount = repayBiz.getRestAmount() + fwAmount;
+            // 代扣银行卡
+            Bankcard bankcard = bankcardBO
+                .getBankcard(repayBiz.getBankcardCode());
+            // 必须扣全部，要么扣成功，要么扣失败，不能扣部分金额
+            Long realWithholdAmount = baofuWithhold(bankcard, allAmount);
+            // 更新还款业务
+            repayBizBO.refreshAdvanceRepayCarLoan(repayBiz, realWithholdAmount);
+            // 改变还款计划状态
+            for (RepayPlan repayPlan2 : planList) {
+                if (!ERepayPlanNode.TO_REPAY.getCode()
+                    .equals(repayPlan2.getCurNodeCode())) {
+                    continue;
+                }
+                repayPlan2.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
+                repayPlanBO.refreshRepayPlanCurNodeCode(repayPlan2);
             }
         }
-
-        // 提前还款服务费
-        Long fwAmount = sysConfigBO.getLongValue(SysConstants.TQ_SERVICE);
-        // 代扣总金额
-        Long allAmount = repayBiz.getRestAmount() + fwAmount;
-        // 代扣银行卡
-        Bankcard bankcard = bankcardBO.getBankcard(repayBiz.getBankcardCode());
-        // 必须扣全部，要么扣成功，要么扣失败，不能扣部分金额
-        Long realWithholdAmount = baofuWithhold(bankcard, allAmount);
-        // 更新还款业务
-        repayBizBO.refreshAdvanceRepayCarLoan(repayBiz, realWithholdAmount);
-        // 改变还款计划状态
-        // for (RepayPlan repayPlan : planList) {
-        // if (!ERepayPlanStatus.TO_REPAYMENTS.getCode().equals(
-        // repayPlan.getStatus())) {
-        // continue;
-        // }
-        // repayPlan.setStatus(ERepayPlanStatus.YET_REPAYMENTS.getCode());
-        // repayPlanBO.refreshRepayPlanStatus(repayPlan);
-        // }
-
     }
 
     private Long baofuWithhold(Bankcard bankcard, Long amount) {
