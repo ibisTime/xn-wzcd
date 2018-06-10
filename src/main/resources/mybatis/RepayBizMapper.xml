@@ -58,9 +58,6 @@
 			<if test="refType != null and refType != '' ">
 				AND t.ref_type = #{refType}
 			</if>
-			<if test="roleCode != null and roleCode != '' ">
-				AND trn.role_code = #{roleCode}
-			</if>
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
@@ -116,7 +113,7 @@
 		
 		,t.settle_attach
 		,t.settle_datetime
-		,t.releaseDatetime
+		,t.release_datetime
 		,t.updater
 		,t.update_datetime
 		
@@ -293,7 +290,7 @@
 		UPDATE tht_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
-		,cut_ly_deposit = #{curNodeCode}
+		,cut_ly_deposit = #{cutLyDeposit}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}

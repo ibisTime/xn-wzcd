@@ -18,6 +18,7 @@ public class XN630554Req {
     private String operator;
 
     // 解除抵押时间
+    @NotBlank
     private String releaseDatetime;
 
     public String getCode() {
