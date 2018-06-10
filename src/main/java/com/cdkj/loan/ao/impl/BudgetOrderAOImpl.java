@@ -971,7 +971,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.getRepaySubbranch());
 
         // 自动生成还款业务
-        RepayBiz repayBiz = repayBizBO.genereateNewCarLoanRepayBiz(budgetOrder,
+        RepayBiz repayBiz = repayBizBO.generateCarLoanRepayBiz(budgetOrder,
             userId, bankcardCode, operator);
 
         // 自动生成还款计划
