@@ -110,4 +110,17 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
         return super.update(NAMESPACE.concat("update_riskManagerCheck"), data);
     }
 
+    @Override
+    public long selectTotalCountByRoleCode(RepayPlan condition) {
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_repayPlan_count_byRoleCode"), condition);
+    }
+
+    @Override
+    public List<RepayPlan> selectRepayPlanByRoleCode(RepayPlan condition,
+            int start, int pageSize) {
+        return super.selectList(NAMESPACE.concat("select_repayPlan_byRoleCode"),
+            condition, RepayPlan.class);
+    }
+
 }

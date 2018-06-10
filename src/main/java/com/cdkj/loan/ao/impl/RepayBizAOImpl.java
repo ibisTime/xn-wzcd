@@ -137,12 +137,12 @@ public class RepayBizAOImpl implements IRepayBizAO {
         List<RepayPlan> planList = repayPlanBO
             .queryRepayPlanListByRepayBizCode(code);
         for (RepayPlan repayPlan : planList) {
-            if (!repayPlan.getStatus().equals(
-                ERepayPlanNode.REPAY_YES.getCode())
-                    && !repayPlan.getStatus().equals(
-                        ERepayPlanNode.HANDLER_TO_GREEN.getCode())
-                    && !repayPlan.getStatus().equals(
-                        ERepayPlanNode.HANDLER_TO_YELLOW.getCode())) {
+            if (!repayPlan.getStatus()
+                .equals(ERepayPlanNode.REPAY_YES.getCode())
+                    && !repayPlan.getStatus()
+                        .equals(ERepayPlanNode.HANDLER_TO_GREEN.getCode())
+                    && !repayPlan.getStatus()
+                        .equals(ERepayPlanNode.HANDLER_TO_YELLOW.getCode())) {
                 // 逾期处理
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前有逾期未处理完成的还款计划，不能提前还款！");
@@ -200,8 +200,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         condition.setRepayBizCode(code);
         List<RepayPlan> planList = repayPlanBO.queryRepayPlanList(condition);
         for (RepayPlan repayPlan : planList) {
-            repayPlan.setCurNodeCode(ERepayPlanNode.PRD_HANDLER_TO_BLACK
-                .getCode());
+            repayPlan
+                .setCurNodeCode(ERepayPlanNode.PRD_HANDLER_TO_BLACK.getCode());
             repayPlanBO.refreshToBlackProduct(repayPlan);
         }
     }
@@ -445,7 +445,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 "当前节点不是清款催收部拖车录入节点，不能操作！");
         }
         if (EtrailerManageResult.USER_REDEEM.getCode().equals(appoveResult)) {
-            repayBiz.setCurNodeCode(ERepayBizNode.USER_REDEEM.getCode());
+            repayBiz.setCurNodeCode(ERepayBizNode.QKCSB_REDEEM_APPLY.getCode());
         } else {
             repayBiz.setCurNodeCode(ERepayBizNode.JUDICIAL_LAWSUIT.getCode());
         }
@@ -495,7 +495,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Override
     public void qkcsbRedeemApply(XN630561Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        if (!ERepayBizNode.USER_REDEEM.getCode()
+        if (!ERepayBizNode.QKCSB_REDEEM_APPLY.getCode()
             .equals(repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是待用户赎回节点，不能操作！");

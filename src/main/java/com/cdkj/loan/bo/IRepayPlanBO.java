@@ -3,6 +3,7 @@ package com.cdkj.loan.bo;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 
@@ -56,4 +57,7 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     // 财务主管审核
     public void riskManagerCheck(RepayPlan repayPlan);
+
+    public Paginable<RepayPlan> getPaginableByRoleCode(int start, int limit,
+            RepayPlan condition);
 }
