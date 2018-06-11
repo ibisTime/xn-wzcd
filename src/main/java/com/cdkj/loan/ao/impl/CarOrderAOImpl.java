@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.ICarOrderAO;
 import com.cdkj.loan.bo.ICarBO;
 import com.cdkj.loan.bo.ICarOrderBO;
-import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.domain.CarOrder;
-import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN630430Req;
 import com.cdkj.loan.enums.ECarOrderStatus;
 import com.cdkj.loan.exception.BizException;
@@ -29,7 +29,7 @@ public class CarOrderAOImpl implements ICarOrderAO {
     private ICarBO carBO;
 
     @Autowired
-    private ISYSUserBO sysUserBO;
+    private IUserBO userBO;
 
     @Override
     public String addCarOrder(XN630430Req req) {
@@ -82,7 +82,7 @@ public class CarOrderAOImpl implements ICarOrderAO {
         for (CarOrder carOrder : list) {
             Car car = carBO.getCar(carOrder.getCarCode());
             carOrder.setCar(car);
-            SYSUser user = sysUserBO.getUser(carOrder.getUserId());
+            User user = userBO.getUser(carOrder.getUserId());
             carOrder.setUser(user);
         }
         return results;
@@ -99,7 +99,7 @@ public class CarOrderAOImpl implements ICarOrderAO {
         for (CarOrder carOrder : carOrderList) {
             Car car = carBO.getCar(carOrder.getCarCode());
             carOrder.setCar(car);
-            SYSUser user = sysUserBO.getUser(carOrder.getUserId());
+            User user = userBO.getUser(carOrder.getUserId());
             carOrder.setUser(user);
         }
         return carOrderList;
