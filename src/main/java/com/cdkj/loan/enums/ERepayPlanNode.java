@@ -1,6 +1,7 @@
 package com.cdkj.loan.enums;
 
 public enum ERepayPlanNode {
+    // 车贷
     TO_REPAY("004_01", "待还款"), REPAY_YES("004_02", "已还款"), OVERDUE("004_03",
             "已逾期待处理"), HANDLER_TO_GREEN("004_04", "缴纳违约押金，进绿名单"), HANDLER_TO_YELLOW(
             "004_05", "已代偿，进黄名单"), HANDLER_TO_RED("004_06", "催收失败，进红名单处理"), QKCSB_APPLY_TC(

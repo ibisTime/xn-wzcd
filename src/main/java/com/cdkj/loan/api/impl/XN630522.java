@@ -32,6 +32,7 @@ public class XN630522 extends AProcessor {
         condition.setCode(req.getCode());
         condition.setUserId(req.getUserId());
         condition.setRefType(req.getRefType());
+        condition.setCurNodeCodeList(req.getCurNodeCodeList());
         condition.setCurNodeCode(req.getCurNodeCode());
         condition.setRoleCode(req.getRoleCode());
 

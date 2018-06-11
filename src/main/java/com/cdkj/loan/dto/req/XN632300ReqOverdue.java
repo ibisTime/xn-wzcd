@@ -22,10 +22,6 @@ public class XN632300ReqOverdue {
     @NotBlank
     private String overdueAmount;// 逾期金额
 
-    @NotBlank
-    private String overdueDatetime;// 逾期日期
-
-    @NotBlank
     private String remainAmount;// 剩余金额
 
     public String getRealName() {
@@ -74,14 +70,6 @@ public class XN632300ReqOverdue {
 
     public void setOverdueAmount(String overdueAmount) {
         this.overdueAmount = overdueAmount;
-    }
-
-    public String getOverdueDatetime() {
-        return overdueDatetime;
-    }
-
-    public void setOverdueDatetime(String overdueDatetime) {
-        this.overdueDatetime = overdueDatetime;
     }
 
     public String getRemainAmount() {

@@ -368,6 +368,7 @@
 		UPDATE tdh_repay_plan
 		SET
 		cur_node_code = #{curNodeCode}
+		,overdue_amount = #{overdueAmount}
 		WHERE code = #{code}
 	</update>
 	

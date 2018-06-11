@@ -75,12 +75,13 @@
 	            	#{item}
                 </foreach> 
 			</if>
-			<if test="roleCode != null and roleCode != '' ">
-				AND r.role_code = #{roleCode}
-			</if>
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
 			</if>
+			<if test="roleCode != null and roleCode != '' ">
+				AND r.role_code = #{roleCode}
+			</if>
+			
 			<if test="isAdvanceSettled != null and isAdvanceSettled != '' ">
 				AND t.is_advance_settled = #{isAdvanceSettled}
 			</if>

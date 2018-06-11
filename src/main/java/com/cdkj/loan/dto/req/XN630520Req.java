@@ -16,6 +16,16 @@ public class XN630520Req extends APageReq {
 
     private List<String> curNodeCodeList;// 节点
 
+    private String curNodeCode;// 节点
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
     public String getCode() {
         return code;
     }

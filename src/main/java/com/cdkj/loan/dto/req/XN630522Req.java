@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 public class XN630522Req extends APageReq {
 
     private static final long serialVersionUID = 5066181160930283667L;
@@ -12,8 +14,18 @@ public class XN630522Req extends APageReq {
 
     private String curNodeCode;// 节点
 
+    private List<String> curNodeCodeList;// 节点
+
     // 角色编号
     private String roleCode;
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
+    }
 
     public String getRoleCode() {
         return roleCode;

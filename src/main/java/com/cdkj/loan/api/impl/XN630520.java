@@ -27,8 +27,9 @@ public class XN630520 extends AProcessor {
         condition.setUserId(req.getUserId());
         condition.setRefType(req.getRefType());
         condition.setCurNodeCodeList(req.getCurNodeCodeList());
-        condition.setKeyWord(req.getKeyWord());
+        condition.setCurNodeCode(req.getCurNodeCode());
 
+        condition.setKeyWord(req.getKeyWord());
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IRepayBizAO.DEFAULT_ORDER_COLUMN;
