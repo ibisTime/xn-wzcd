@@ -42,7 +42,8 @@ public interface IBudgetOrderAO {
 
     // 财务确认垫资
     public void advanceFund(String code, String operator,
-            String advanceFundDatetime, String advanceFundAmount, String billPdf);
+            String advanceFundDatetime, String advanceFundAmount,
+            String billPdf);
 
     // 安装GPS
     public void installGps(String code, String operator,
@@ -100,5 +101,9 @@ public interface IBudgetOrderAO {
 
     // 客户作废 财务总监审核
     public void cancelFinanceAudit(XN632192Req req);
+
+    // 垫资超过1天未放款客户
+    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
+            BudgetOrder condition);
 
 }

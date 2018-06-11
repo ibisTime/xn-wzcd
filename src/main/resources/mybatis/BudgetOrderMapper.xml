@@ -317,6 +317,9 @@
 			<if test="curNodeCodeFk != null and curNodeCodeFk != '' ">
 				<![CDATA[AND t.cur_node_code <= #{curNodeCodeFk}]]>
 			</if>
+			<if test="advanceFlag != null and advanceFlag != '' ">
+				<![CDATA[AND DATEDIFF(now(), t.advance_fund_datetime) >= 1]]>
+			</if>
 			<if test="backAdvanceStatus != null and backAdvanceStatus != ''">
 				AND t.back_advance_status = #{backAdvanceStatus}
 			</if>

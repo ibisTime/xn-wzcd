@@ -709,6 +709,17 @@ public class BudgetOrder extends ABaseDO {
     // 放款节点
     private String curNodeCodeFk;
 
+    // 超过一天的标志
+    private String advanceFlag;
+
+    public String getAdvanceFlag() {
+        return advanceFlag;
+    }
+
+    public void setAdvanceFlag(String advanceFlag) {
+        this.advanceFlag = advanceFlag;
+    }
+
     public String getCurNodeCodeDz() {
         return curNodeCodeDz;
     }
