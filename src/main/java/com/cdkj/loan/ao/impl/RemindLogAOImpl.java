@@ -71,18 +71,22 @@ public class RemindLogAOImpl implements IRemindLogAO {
 
     // 催款
     @Override
-    public void Collect(String code, String way) {
+    public void collect(String code, String way) {
         if (ECollectStatus.MESSAGE_PUSH.getCode().equals(way)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "暂无消息推送！");
         }
         String userId = repayPlanBO.getRepayPlan(code).getUserId();
         String mobile = userBO.getUser(userId).getMobile();
-        smsOutBO.sendSmsOut(mobile, "您好，请及时还清本月本息，以免逾期给您造成不必要的麻烦");
+
+        String content = "您好，请及时还清本月本息，以免逾期给您造成不必要的麻烦";
+        smsOutBO.sendSmsOut(mobile, content);
         RemindLog remindLog = new RemindLog();
         remindLog.setRepayPlanCode(code);
         remindLog.setWay(way);
+
         String realName = userBO.getUser(userId).getRealName();
         remindLog.setToUser(realName);
+        remindLog.setContent(content);
         remindLog.setCreateDatetime(new Date());
         remindLogBO.saveRemindLog(remindLog);
     }

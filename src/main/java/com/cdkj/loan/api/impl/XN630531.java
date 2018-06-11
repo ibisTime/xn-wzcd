@@ -36,7 +36,7 @@ public class XN630531 extends AProcessor {
      */
     @Override
     public Object doBusiness() throws BizException {
-        remindLogAO.Collect(req.getCode(), req.getWay());
+        remindLogAO.collect(req.getCode(), req.getWay());
         return new BooleanRes(true);
     }
 

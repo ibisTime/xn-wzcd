@@ -176,3 +176,13 @@ CREATE TABLE `tdh_repoint` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='返点表';
 
+DROP TABLE IF EXISTS `tdh_remind_log`;
+CREATE TABLE `tdh_remind_log` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `repay_plan_code` varchar(32) DEFAULT NULL COMMENT '还款计划编号',
+  `way` varchar(255) DEFAULT NULL COMMENT '催收方式',
+  `to_user` varchar(255) DEFAULT NULL COMMENT '催收对象姓名',
+  `content` text COMMENT '催收文本',
+  `create_datetime` datetime DEFAULT NULL COMMENT '催收时间',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

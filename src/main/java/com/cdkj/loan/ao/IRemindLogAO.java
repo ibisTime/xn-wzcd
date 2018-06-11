@@ -21,6 +21,6 @@ public interface IRemindLogAO {
 
     public RemindLog getRemindLog(String code);
 
-    public void Collect(String code, String way);
+    public void collect(String code, String way);
 
 }
