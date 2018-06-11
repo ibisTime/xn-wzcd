@@ -66,4 +66,7 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
     public List<RepayBiz> selectRepayBizByRoleCode(RepayBiz condition,
             int start, int pageSize);
 
+    // 缴纳代偿金额
+    public void repayAmount(RepayBiz repayBiz);
+
 }

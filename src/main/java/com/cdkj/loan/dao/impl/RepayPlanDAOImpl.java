@@ -123,4 +123,9 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
             condition, RepayPlan.class);
     }
 
+    @Override
+    public int repayAmount(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_repayAmount"), data);
+    }
+
 }

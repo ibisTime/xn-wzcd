@@ -37,4 +37,6 @@ public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
 
     public int financeApprove(RepayPlan repayPlan);
 
+    public int repayAmount(RepayPlan repayPlan);
+
 }

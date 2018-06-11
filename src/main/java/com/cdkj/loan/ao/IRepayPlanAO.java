@@ -35,4 +35,7 @@ public interface IRepayPlanAO {
 
     public Long getUnsettledLoan();
 
+    // 缴纳代偿金额
+    public void repayAmount(String code, String operator, String payType);
+
 }

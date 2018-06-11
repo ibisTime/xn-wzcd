@@ -81,6 +81,9 @@ public class RepayPlan extends ABaseDO {
     // 实际代偿金额
     private Long realRepayAmount;
 
+    // 代偿是否缴纳
+    private String isRepay;
+
     // 拖车申请金额
     private Long tsCarAmount;
 
@@ -283,6 +286,14 @@ public class RepayPlan extends ABaseDO {
 
     public void setGuaName(String guaName) {
         this.guaName = guaName;
+    }
+
+    public String getIsRepay() {
+        return isRepay;
+    }
+
+    public void setIsRepay(String isRepay) {
+        this.isRepay = isRepay;
     }
 
     public String getGuaIdNo() {

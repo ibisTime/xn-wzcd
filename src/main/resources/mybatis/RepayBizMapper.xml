@@ -322,6 +322,7 @@
 		UPDATE tht_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
+		,is_advance_settled = #{isAdvanceSettled}
 		,rest_amount = #{restAmount}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
@@ -473,6 +474,14 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_repayAmount" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>

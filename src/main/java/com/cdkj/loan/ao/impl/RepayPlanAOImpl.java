@@ -1,6 +1,7 @@
 package com.cdkj.loan.ao.impl;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ import com.cdkj.loan.enums.EDealResult;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayPlanNode;
 import com.cdkj.loan.enums.ERepayPlanStatus;
+import com.cdkj.loan.enums.EResultStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -81,8 +83,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             condition);
         for (RepayPlan repayPlan : results.getList()) {
             repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
-            repayPlan.setRepayBiz(repayBizAO.getRepayBiz(repayPlan
-                .getRepayBizCode()));
+            repayPlan.setRepayBiz(
+                repayBizAO.getRepayBiz(repayPlan.getRepayBizCode()));
 
         }
 
@@ -103,8 +105,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     public RepayPlan getRepayPlan(String code) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
         repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
-        repayPlan.setRepayBiz(repayBizBO.getRepayBiz(repayPlan
-            .getRepayBizCode()));
+        repayPlan
+            .setRepayBiz(repayBizBO.getRepayBiz(repayPlan.getRepayBizCode()));
         Cost cost = new Cost();
         cost.setRepayPlanCode(code);
         List<Cost> list = costBO.queryCostList(cost);
@@ -116,15 +118,15 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             .queryRemindLogList(remindLog);
         repayPlan.setRemindLogList(remindLogList);
 
-        String bankcardCode = repayBizBO.getRepayBiz(
-            repayPlan.getRepayBizCode()).getBankcardCode();
+        String bankcardCode = repayBizBO
+            .getRepayBiz(repayPlan.getRepayBizCode()).getBankcardCode();
         String bankcardNumber = bankcardBO.getBankcard(bankcardCode)
             .getBankcardNumber();
         repayPlan.setBankcardNumber(bankcardNumber);
 
         repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
-        repayPlan.setRepayBiz(repayBizAO.getRepayBiz(repayPlan
-            .getRepayBizCode()));
+        repayPlan
+            .setRepayBiz(repayBizAO.getRepayBiz(repayPlan.getRepayBizCode()));
 
         return repayPlan;
     }
@@ -140,8 +142,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
 
         // 校验是否是待还款节点
-        if (!ERepayPlanNode.TO_REPAY.getCode().equals(
-            repayPlan.getCurNodeCode())) {
+        if (!ERepayPlanNode.TO_REPAY.getCode()
+            .equals(repayPlan.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "本期还款计划不处于待还款节点");
         }
@@ -234,8 +236,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             condition);
         for (RepayPlan repayPlan : results.getList()) {
             repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
-            repayPlan.setRepayBiz(repayBizBO.getRepayBiz(repayPlan
-                .getRepayBizCode()));
+            repayPlan.setRepayBiz(
+                repayBizBO.getRepayBiz(repayPlan.getRepayBizCode()));
             Long monthRepayAmount = repayPlan.getRepayCapital()
                     * repayPlan.getRepayInterest();
             repayPlan.setMonthRepayAmount(monthRepayAmount);
@@ -263,8 +265,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         costAO.addCost(req.getCode(), req.getCostList());
 
         // 更新还款计划
-        repayPlan.setOverdueDeposit(StringValidater.toLong(req
-            .getOverdueDeposit()));
+        repayPlan
+            .setOverdueDeposit(StringValidater.toLong(req.getOverdueDeposit()));
         repayPlan.setDepositWay(req.getOverdueDepositWay());
         repayPlan.setOverdueHandleNote(req.getRemark());
         if (EDealResult.GREEN.getCode().equals(req.getDealResult())) {
@@ -276,6 +278,19 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
                 .setCurNodeCode(ERepayPlanNode.HANDLER_TO_YELLOW.getCode());
         }
         repayPlanBO.refreshRepayPlanOverdue(repayPlan);
+    }
+
+    @Override
+    public void repayAmount(String code, String operator, String payType) {
+        RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
+        repayPlan.setRealRepayAmount(repayPlan.getOverdueAmount());
+        repayPlan.setIsRepay(EResultStatus.YES.getCode());
+        // TODO 支付方式
+        repayPlanBO.repayAmount(repayPlan);
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
+        repayBiz.setUpdater(operator);
+        repayBiz.setUpdateDatetime(new Date());
+        repayBizBO.repayAmount(repayBiz);
     }
 
     @Override
@@ -291,10 +306,10 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         List<RepayPlan> results = repayPlanBO.queryRepayPlanList(condition);
         Long unsettledLoan = 0L;
         for (RepayPlan repayPlan : results) {
-            if (repayPlan.getCurNodeCode().equals(
-                ERepayPlanStatus.OVERDUE_TO_HANDLE.getCode())
-                    || repayPlan.getCurNodeCode().equals(
-                        ERepayPlanStatus.HESUAN_TO_GREEN.getCode())) {
+            if (repayPlan.getCurNodeCode()
+                .equals(ERepayPlanStatus.OVERDUE_TO_HANDLE.getCode())
+                    || repayPlan.getCurNodeCode()
+                        .equals(ERepayPlanStatus.HESUAN_TO_GREEN.getCode())) {
                 Long amount = repayPlan.getTotalFee() - repayPlan.getPayedFee()
                         + repayPlan.getOverplusAmount();
                 unsettledLoan = unsettledLoan + amount;
@@ -306,12 +321,12 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     @Override
     public Paginable<RepayPlan> queryRepayPlanPageByRoleCode(int start,
             int limit, RepayPlan condition) {
-        Paginable<RepayPlan> paginable = repayPlanBO.getPaginableByRoleCode(
-            start, limit, condition);
+        Paginable<RepayPlan> paginable = repayPlanBO
+            .getPaginableByRoleCode(start, limit, condition);
         for (RepayPlan repayPlan : paginable.getList()) {
             repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
-            repayPlan.setRepayBiz(repayBizAO.getRepayBiz(repayPlan
-                .getRepayBizCode()));
+            repayPlan.setRepayBiz(
+                repayBizAO.getRepayBiz(repayPlan.getRepayBizCode()));
 
         }
         return paginable;

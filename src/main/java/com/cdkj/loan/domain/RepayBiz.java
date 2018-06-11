@@ -45,6 +45,9 @@ public class RepayBiz extends ABaseDO {
     // 贷款金额
     private Long loanAmount;
 
+    // 是否提前还款
+    private String isEarlyRepayment;
+
     // 总期数
     private int periods;
 
@@ -160,6 +163,17 @@ public class RepayBiz extends ABaseDO {
 
     // 银行名称
     private String loanBankName;
+
+    // 拖车时间
+    private Date takeDatetime;
+
+    public Date getTakeDatetime() {
+        return takeDatetime;
+    }
+
+    public void setTakeDatetime(Date takeDatetime) {
+        this.takeDatetime = takeDatetime;
+    }
 
     public String getRoleCode() {
         return roleCode;
@@ -439,6 +453,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setOverdueAmount(Long overdueAmount) {
         this.overdueAmount = overdueAmount;
+    }
+
+    public String getIsEarlyRepayment() {
+        return isEarlyRepayment;
+    }
+
+    public void setIsEarlyRepayment(String isEarlyRepayment) {
+        this.isEarlyRepayment = isEarlyRepayment;
     }
 
     public int getTotalOverdueCount() {
