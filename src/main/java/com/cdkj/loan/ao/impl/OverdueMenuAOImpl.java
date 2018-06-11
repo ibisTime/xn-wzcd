@@ -130,7 +130,7 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
     public void handleOverdueMenu(String code, String repayBizCode,
             String operator) {
         OverdueMenu overdueMenu = overdueMenuBO.getOverdueMenu(code);
-        if (EOverdueMenuStatus.DCL.getCode().equals(overdueMenu.getStatus())) {
+        if (EOverdueMenuStatus.YCL.getCode().equals(overdueMenu.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前逾期名单已处理");
         }
 
@@ -165,7 +165,8 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
 
     @Override
     public OverdueMenu getOverdueMenu(String code) {
-        return overdueMenuBO.getOverdueMenu(code);
+        OverdueMenu data = overdueMenuBO.getOverdueMenu(code);
+        return data;
     }
 
 }

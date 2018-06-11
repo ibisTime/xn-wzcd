@@ -8,7 +8,7 @@ public class XN632300ReqOverdue {
     private String realName;//
 
     @NotBlank
-    private String IdNo;// 证件号
+    private String idNo;// 证件号
 
     @NotBlank
     private String loanAmount;// 贷款金额
@@ -37,11 +37,11 @@ public class XN632300ReqOverdue {
     }
 
     public String getIdNo() {
-        return IdNo;
+        return idNo;
     }
 
     public void setIdNo(String idNo) {
-        IdNo = idNo;
+        this.idNo = idNo;
     }
 
     public String getLoanAmount() {
