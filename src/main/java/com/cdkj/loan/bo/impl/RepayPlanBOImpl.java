@@ -191,7 +191,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     }
 
     @Override
-    public boolean checkRepayComplete(String repayBizCode) {
+    public boolean checkRepayComplete(String repayBizCode, String repayPlanCode) {
 
         boolean isComplete = true;
 
@@ -201,52 +201,43 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
         List<RepayPlan> repayPlans = repayPlanDAO.selectList(condition);
 
         if (CollectionUtils.isNotEmpty(repayPlans)) {
-
-            // for (RepayPlan repayPlan : repayPlans) {
-            // if (!ERepayPlanStatus.YET_REPAYMENTS.getCode().equals(
-            // repayPlan.getStatus())
-            // && !ERepayPlanStatus.HESUAN_TO_GREEN.getCode().equals(
-            // repayPlan.getStatus())) {
-            // isComplete = false;
-            // break;
-            // }
-            // }
-
+            for (RepayPlan repayPlan : repayPlans) {
+                if (ERepayPlanNode.TO_REPAY.getCode().equals(
+                    repayPlan.getCurNodeCode())
+                        && !repayPlan.getCode().equals(repayPlanCode)) {
+                    isComplete = false;
+                    break;
+                }
+            }
         }
-
         return isComplete;
 
     }
 
     @Override
     public boolean checkPreUnpay(String repayBizCode, int curPeriod) {
-
         boolean flag = false;
-
         RepayPlan condition = new RepayPlan();
         condition.setRepayBizCode(repayBizCode);
         condition.setOrder("cur_periods", true);
         List<RepayPlan> repayPlans = repayPlanDAO.selectList(condition);
-
         if (CollectionUtils.isNotEmpty(repayPlans)) {
-
             for (RepayPlan repayPlan : repayPlans) {
                 if (repayPlan.getCurPeriods() >= curPeriod) {
                     break;
                 }
-                // if (!ERepayPlanStatus.YET_REPAYMENTS.getCode().equals(
-                // repayPlan.getStatus())
-                // && !ERepayPlanStatus.HESUAN_TO_GREEN.getCode().equals(
-                // repayPlan.getStatus())) {
-                // flag = true;
-                // break;
-                // }
+                if (ERepayPlanNode.TO_REPAY.getCode().equals(
+                    repayPlan.getCurNodeCode())
+                        || ERepayPlanNode.HANDLER_TO_RED.getCode().equals(
+                            repayPlan.getCurNodeCode())
+                        || ERepayPlanNode.QKCSB_APPLY_TC.getCode().equals(
+                            repayPlan.getCurNodeCode())) {
+                    flag = true;
+                    break;
+                }
             }
-
         }
-
         return flag;
-
     }
 
     @Override
@@ -315,4 +306,11 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
         repayPlanDAO.financeApprove(repayPlan);
     }
 
+    @Override
+    public int getTotalCount(String repayPlanCode, ERepayPlanNode repayPlanNode) {
+        RepayPlan condition = new RepayPlan();
+        condition.setCode(repayPlanCode);
+        condition.setCurNodeCode(repayPlanCode);
+        return (int) repayPlanDAO.selectTotalCount(condition);
+    }
 }

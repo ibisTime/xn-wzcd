@@ -140,12 +140,11 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
 
     @Override
     public void refreshRepayAllCarLoan(String repayBizCode) {
-        RepayBiz repayBiz = new RepayBiz();
-        repayBiz.setCode(repayBizCode);
+        RepayBiz repayBiz = getRepayBiz(repayBizCode);
         repayBiz.setCurNodeCode(ERepayBizNode.QKCS_DEPART_CHECK.getCode());// 到清款催收部审核节点
         repayBiz.setUpdater(ESysUser.SYS_USER_HTWT.getCode());
         repayBiz.setUpdateDatetime(new Date());
-        repayBiz.setRemark("本业务已正常还款");
+        repayBiz.setRemark("清款催收部待审核");
 
         repayBizDAO.updateRepayAll(repayBiz);
     }

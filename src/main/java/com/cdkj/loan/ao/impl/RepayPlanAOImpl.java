@@ -131,7 +131,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     @Override
     @Transactional
-    public void repayMonthly(String code) {
+    public void repayMonthly(String code, String operator) {
 
         // 查询还款计划
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
@@ -139,11 +139,11 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         // 查询还款业务
         RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
 
-        // 校验是否是可还款状态
+        // 校验是否是待还款节点
         if (!ERepayPlanNode.TO_REPAY.getCode().equals(
             repayPlan.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "本期还款计划不处于待还款状态");
+                "本期还款计划不处于待还款节点");
         }
 
         // 检查是否有未还清的还款计划
@@ -155,26 +155,17 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
         // 本次应扣款的金额
         Long shouldWithholdAmount = repayPlan.getOverplusAmount();
-
         // 还款卡获取
         Bankcard bankcard = bankcardBO.getBankcard(repayBiz.getBankcardCode());
-
         // 宝付代扣发起，返回本次真实扣成功的金额
         Long realWithholdAmount = baofuWithhold(bankcard, shouldWithholdAmount);
-
         // 该还款计划本次代扣完成后剩余应还金额
         Long overplusAmount = shouldWithholdAmount - realWithholdAmount;
-
         if (overplusAmount <= 0) {// 本次计划还清了
-
             repayAll(repayPlan, repayBiz, realWithholdAmount);
-
         } else { // 扣了一部分
-
             repayPart(repayPlan, repayBiz, realWithholdAmount);
-
         }
-
     }
 
     private void repayPart(RepayPlan repayPlan, RepayBiz repayBiz,
@@ -196,7 +187,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         repayBizBO.refreshRestAmount(repayBiz, realWithholdAmount);
 
         // 检查是否已经全部正常还款
-        if (repayPlanBO.checkRepayComplete(repayPlan.getRepayBizCode())) {
+        if (repayPlanBO.checkRepayComplete(repayPlan.getRepayBizCode(),
+            repayPlan.getCode())) {
             repayBizBO.refreshRepayAllCarLoan(repayPlan.getRepayBizCode());
         }
 

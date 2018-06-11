@@ -10,7 +10,7 @@ import com.cdkj.loan.enums.ERepayPlanNode;
 
 public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
-    public boolean checkRepayComplete(String repayBizCode);
+    public boolean checkRepayComplete(String repayBizCode, String repayPlanCode);
 
     public boolean checkPreUnpay(String repayBizCode, int curPeriod);
 
@@ -67,4 +67,6 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     // 财务经理审核
     public void financeApprove(RepayPlan repayPlan);
+
+    public int getTotalCount(String repayPlanCode, ERepayPlanNode repayPlanNode);
 }

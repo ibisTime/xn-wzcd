@@ -18,7 +18,18 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN630530Req {
 
     @NotBlank
-    private String code;// 还款计划编号（必填
+    private String code;// 还款计划编号（必填)
+
+    @NotBlank
+    private String operator;// 操作人
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
 
     public String getCode() {
         return code;

@@ -38,7 +38,7 @@ public class XN630530 extends AProcessor {
     public Object doBusiness() throws BizException {
 
         synchronized (XN630530Req.class) {
-            repayPlanAO.repayMonthly(req.getCode());
+            repayPlanAO.repayMonthly(req.getCode(), req.getOperator());
         }
 
         return new BooleanRes(true);
