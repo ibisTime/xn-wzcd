@@ -28,6 +28,7 @@ public class XN630540 extends AProcessor {
     public Object doBusiness() throws BizException {
         RepayPlan condition = new RepayPlan();
         condition.setUserId(req.getUserId());
+        condition.setRefType(req.getRefType());
         condition.setRepayBizCode(req.getRepayBizCode());
         condition.setCurNodeCode(req.getCurNodeCode());
         condition.setCurNodeCodeList(req.getCurNodeCodeList());

@@ -8,15 +8,16 @@
 		<result column="biz_code" property="bizCode" />
 		<result column="should_amount" property="shouldAmount" />
 		<result column="actual_amount" property="actualAmount" />
-		<result column="water_bill" property="waterBill" />
-		<result column="remark" property="remark" />
-		<result column="status" property="status" />
-		<result column="updater" property="updater" />
-		<result column="update_datetime" property="updateDatetime" />
+		
 		<result column="account_no" property="accountNo" />
 		<result column="bank" property="bank" />
 		<result column="subbranch" property="subbranch" />
+		<result column="water_bill" property="waterBill" />
+		<result column="status" property="status" />
 		
+		<result column="updater" property="updater" />
+		<result column="update_datetime" property="updateDatetime" />
+		<result column="remark" property="remark" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -25,6 +26,9 @@
 			</if>
 			<if test="teamCode != null and teamCode != '' ">
 				AND t.team_code = #{teamCode}
+			</if>
+			<if test="bizCode != null and bizCode != '' ">
+				AND t.biz_code = #{bizCode}
 			</if>
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
@@ -38,14 +42,16 @@
 		,t.biz_code
 		,t.should_amount
 		,t.actual_amount
-		,t.water_bill
-		,t.remark
-		,t.status
-		,t.updater
-		,t.update_datetime
 		,t.account_no
+		
 		,t.bank
 		,t.subbranch
+		,t.water_bill
+		,t.status
+		,t.updater
+		
+		,t.update_datetime
+		,t.remark
 		FROM
 		tht_repoint t
 		<include refid="where_condition" />
@@ -70,14 +76,16 @@
 		,biz_code
 		,should_amount
 		,actual_amount
+		
+		,account_no
+		,bank
+		,subbranch
 		,water_bill
-		,remark
 		,status
+		
 		,updater
 		,update_datetime
-		,t.account_no
-		,t.bank
-		,t.subbranch
+		,remark
 		)
 		VALUES(
 		#{code}
@@ -85,14 +93,16 @@
 		,#{bizCode}
 		,#{shouldAmount}
 		,#{actualAmount}
-		,#{waterBill}
-		,#{remark}
-		,#{status}
-		,#{updater}
-		,#{updateDatetime}
+		
 		,#{accountNo}
 		,#{bank}
 		,#{subbranch}
+		,#{waterBill}
+		,#{status}
+		
+		,#{updater}
+		,#{updateDatetime}
+		,#{remark}
 		)
 	</insert>
 
@@ -103,16 +113,16 @@
 		,biz_code = #{bizCode}
 		,should_amount = #{shouldAmount}
 		,actual_amount = #{actualAmount}
-		,water_bill = #{waterBill}
-		,remark = #{remark}
-		,status = #{status}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
 		,account_no = #{accountNo}
+		
 		,bank = #{bank}
 		,subbranch = #{subbranch}
+		,water_bill = #{waterBill}
+		,status = #{status}
+		,updater = #{updater}
+		
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
-
-
 </mapper>

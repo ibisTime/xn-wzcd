@@ -3,6 +3,7 @@ package com.cdkj.loan.bo.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -167,6 +168,34 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements
             }
         }
         return data;
+    }
+
+    @Override
+    public SYSUser getUserByLoginName(String loginName) {
+        SYSUser sysUser = null;
+        if (StringUtils.isNotBlank(loginName)) {
+            SYSUser condition = new SYSUser();
+            condition.setLoginName(loginName);
+            List<SYSUser> userList = sysUserDAO.selectList(condition);
+            if (CollectionUtils.isNotEmpty(userList)) {
+                sysUser = userList.get(0);
+            }
+        }
+        return sysUser;
+    }
+
+    @Override
+    public SYSUser getUserByMobile(String mobile) {
+        SYSUser sysUser = null;
+        if (StringUtils.isNotBlank(mobile)) {
+            SYSUser condition = new SYSUser();
+            condition.setMobile(mobile);
+            List<SYSUser> userList = sysUserDAO.selectList(condition);
+            if (CollectionUtils.isNotEmpty(userList)) {
+                sysUser = userList.get(0);
+            }
+        }
+        return sysUser;
     }
 
     @Override

@@ -24,7 +24,6 @@ public class XN632310 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-
         repointAO.confirmRepoint(req);
         return new BooleanRes(true);
     }

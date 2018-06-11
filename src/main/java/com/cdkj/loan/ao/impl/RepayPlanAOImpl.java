@@ -35,7 +35,6 @@ import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealResult;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayPlanNode;
-import com.cdkj.loan.enums.ERepayPlanStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -282,7 +281,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     @Override
     public void ToBlack(String code) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
-        repayPlan.setCurNodeCode(ERepayPlanStatus.HESUANNOT_TO_BLACK.getCode());
+        repayPlan.setCurNodeCode(ERepayPlanNode.PRD_HANDLER_TO_BLACK.getCode());
         repayPlanBO.refreshToBlackProduct(repayPlan);
     }
 
@@ -293,9 +292,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         Long unsettledLoan = 0L;
         for (RepayPlan repayPlan : results) {
             if (repayPlan.getCurNodeCode().equals(
-                ERepayPlanStatus.OVERDUE_TO_HANDLE.getCode())
+                ERepayPlanNode.OVERDUE.getCode())
                     || repayPlan.getCurNodeCode().equals(
-                        ERepayPlanStatus.HESUAN_TO_GREEN.getCode())) {
+                        ERepayPlanNode.HANDLER_TO_GREEN.getCode())) {
                 Long amount = repayPlan.getTotalFee() - repayPlan.getPayedFee()
                         + repayPlan.getOverplusAmount();
                 unsettledLoan = unsettledLoan + amount;

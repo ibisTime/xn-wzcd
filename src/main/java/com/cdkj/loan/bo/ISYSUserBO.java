@@ -34,6 +34,10 @@ public interface ISYSUserBO extends IPaginableBO<SYSUser> {
 
     public SYSUser getMoreUser(String userId);
 
+    public SYSUser getUserByLoginName(String loginName);
+
+    public SYSUser getUserByMobile(String mobile);
+
     public void refreshLoginPwd(SYSUser data, String loginPwd, String udpater,
             String remark);
 

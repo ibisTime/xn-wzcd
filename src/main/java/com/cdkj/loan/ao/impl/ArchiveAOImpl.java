@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +13,14 @@ import com.cdkj.loan.ao.IArchiveAO;
 import com.cdkj.loan.ao.ISYSUserAO;
 import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IDepartmentBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISocialRelationBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
-import com.cdkj.loan.domain.Department;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.SocialRelation;
 import com.cdkj.loan.dto.req.XN632800Req;
 import com.cdkj.loan.dto.req.XN632800ReqChild;
@@ -45,6 +47,9 @@ public class ArchiveAOImpl implements IArchiveAO {
 
     @Autowired
     private ISYSUserAO sysUserAO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Autowired
     private IDepartmentBO departmentBO;
@@ -78,9 +83,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(
-            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
+            req.getSocialSecurityRegDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -110,20 +115,30 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
 
-        if (null != req.getLeaveDatetime() && !"".equals(req.getLeaveDatetime())
-                && null != req.getEntryDatetime()
-                && !"".equals(req.getEntryDatetime())) {
+        if (StringUtils.isNotBlank(req.getLeaveDatetime())
+                && StringUtils.isNotBlank(req.getEntryDatetime())) {
             int num = DateUtil.daysBetween(req.getEntryDatetime(),
                 req.getLeaveDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING);
             String workingYears = String.valueOf(((int) (num / 365)));
             data.setWorkingYears(workingYears);
         }
-        Department department = departmentBO
-            .getDepartment(req.getDepartmentCode());
-        String userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
-            req.getMobile(), "888888", req.getMobile(), req.getRealName(),
-            SysConstants.COMMON_ROLE, department.getParentCode(),
-            department.getCode(), req.getPostCode());
+
+        SYSUser sysUserLoginName = sysUserBO
+            .getUserByLoginName(req.getMobile());
+        SYSUser sysUserMobile = sysUserBO.getUserByMobile(req.getMobile());
+
+        String userId = null;
+        if (sysUserLoginName == null && sysUserMobile == null) {
+            userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
+                req.getMobile(), "888888", req.getMobile(), req.getRealName(),
+                SysConstants.COMMON_ROLE, req.getPostCode());
+        } else {
+            if (sysUserLoginName != null) {
+                userId = sysUserLoginName.getUserId();
+            } else if (sysUserMobile != null) {
+                userId = sysUserMobile.getUserId();
+            }
+        }
         data.setUserId(userId);
         String archiveCode = archiveBO.saveArchive(data);
 
@@ -175,9 +190,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(
-            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
+            req.getSocialSecurityRegDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());

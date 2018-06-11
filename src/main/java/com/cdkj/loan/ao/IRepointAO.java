@@ -18,10 +18,6 @@ import com.cdkj.loan.dto.req.XN632310Req;
 public interface IRepointAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addRepoint(Repoint data);
-
-    public int dropRepoint(String code);
-
     // 确认返点支付
     public void confirmRepoint(XN632310Req req);
 

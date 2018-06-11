@@ -82,15 +82,15 @@ public class OverdueMenu extends ABaseDO {
     // 银行放款日期
     private Date bankFkDatetimeEnd;
 
-    // 业务订单
-    private BudgetOrder budgetOrder;
+    // 业务类型
+    private RepayBiz repayBiz;
 
-    public BudgetOrder getBudgetOrder() {
-        return budgetOrder;
+    public RepayBiz getRepayBiz() {
+        return repayBiz;
     }
 
-    public void setBudgetOrder(BudgetOrder budgetOrder) {
-        this.budgetOrder = budgetOrder;
+    public void setRepayBiz(RepayBiz repayBiz) {
+        this.repayBiz = repayBiz;
     }
 
     public Date getBankFkDatetimeStart() {

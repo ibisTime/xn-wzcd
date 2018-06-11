@@ -12,7 +12,17 @@ public class XN632315Req extends APageReq {
 
     private String teamCode;
 
+    private String bizCode;
+
     private String status;
+
+    public String getBizCode() {
+        return bizCode;
+    }
+
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
+    }
 
     public String getTeamCode() {
         return teamCode;

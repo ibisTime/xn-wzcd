@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,8 @@ import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630190Req;
 import com.cdkj.loan.dto.req.XN630192Req;
+import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -42,30 +45,38 @@ public class BizTeamAOImpl implements IBizTeamAO {
 
     @Override
     public String addBizTeam(XN630190Req req) {
-
         BizTeam data = new BizTeam();
         data.setName(req.getName());
+        doCheckCaptainOnlyOne(req.getCaptain());
         data.setCaptain(req.getCaptain());
-        data.setUpdater(req.getUpdater());
-        data.setUpdateDatetime(new Date());
-        data.setStatus("1");
         data.setAccountNo(req.getAccountNo());
         data.setBank(req.getBank());
+
         data.setSubbranch(req.getSubbranch());
         data.setWaterBill(req.getWaterBill());
+        data.setStatus(EBoolean.YES.getCode());
+        data.setUpdater(req.getUpdater());
+        data.setUpdateDatetime(new Date());
 
         SYSUser user = sysUserBO.getUser(data.getCaptain());
         data.setCompanyCode(user.getCompanyCode());
-        String bizTeamCode = bizTeamBO.saveBizTeam(data);
-        return bizTeamCode;
+        return bizTeamBO.saveBizTeam(data);
+    }
+
+    private void doCheckCaptainOnlyOne(String captain) {
+        SYSUser sysUser = sysUserBO.getUser(captain);
+        if (StringUtils.isNotBlank(sysUser.getTeamCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "该用户已入选其他团队");
+        }
     }
 
     @Override
     public void editBizTeam(XN630192Req req) {
-        if (!bizTeamBO.isBizTeamExist(req.getCode())) {
-            throw new BizException("xn0000", "业务团队不存在");
-        }
         BizTeam data = bizTeamBO.getBizTeam(req.getCode());
+        if (!req.getCaptain().equals(data.getCaptain())) {
+            doCheckCaptainOnlyOne(req.getCaptain());
+        }
         data.setName(req.getName());
         data.setCaptain(req.getCaptain());
         data.setUpdater(req.getUpdater());
@@ -94,7 +105,7 @@ public class BizTeamAOImpl implements IBizTeamAO {
             condition);
         List<BizTeam> list = paginable.getList();
         for (BizTeam bizTeam : list) {
-            init(bizTeam);
+            initBizTeam(bizTeam);
         }
 
         return paginable;
@@ -104,7 +115,7 @@ public class BizTeamAOImpl implements IBizTeamAO {
     public List<BizTeam> queryBizTeamList(BizTeam condition) {
         List<BizTeam> list = bizTeamBO.queryBizTeamList(condition);
         for (BizTeam bizTeam : list) {
-            init(bizTeam);
+            initBizTeam(bizTeam);
         }
 
         return list;
@@ -114,7 +125,7 @@ public class BizTeamAOImpl implements IBizTeamAO {
     public BizTeam getBizTeam(String code) {
 
         BizTeam bizTeam = bizTeamBO.getBizTeam(code);
-        init(bizTeam);
+        initBizTeam(bizTeam);
         SYSUser condition = new SYSUser();
         condition.setTeamCode(bizTeam.getCode());
         List<SYSUser> userList = sysUserBO.queryUserList(condition);
@@ -128,7 +139,7 @@ public class BizTeamAOImpl implements IBizTeamAO {
         return bizTeam;
     }
 
-    private void init(BizTeam bizTeam) {
+    private void initBizTeam(BizTeam bizTeam) {
 
         String captain = bizTeam.getCaptain();
         SYSUser user = sysUserBO.getUser(captain);

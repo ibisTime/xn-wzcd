@@ -111,6 +111,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
                 curPeriod);
 
             repayPlan.setCode(code);
+            repayBiz.setRefType(ERepayBizType.CAR.getCode());
             repayPlan.setRepayBizCode(repayBiz.getCode());
             repayPlan.setUserId(repayBiz.getUserId());
             repayPlan.setPeriods(repayBiz.getPeriods());

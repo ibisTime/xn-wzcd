@@ -30,6 +30,7 @@ public class XN632315 extends AProcessor {
     public Object doBusiness() throws BizException {
         Repoint condition = new Repoint();
         condition.setTeamCode(req.getTeamCode());
+        condition.setBizCode(req.getBizCode());
         condition.setStatus(req.getStatus());
 
         String column = req.getOrderColumn();

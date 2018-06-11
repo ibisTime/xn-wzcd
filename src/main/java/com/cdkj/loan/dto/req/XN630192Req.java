@@ -15,9 +15,11 @@ public class XN630192Req {
     private String code;
 
     // 团队名称
+    @NotBlank
     private String name;
 
     // 团队长
+    @NotBlank
     private String captain;
 
     // 更新人

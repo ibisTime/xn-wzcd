@@ -13,11 +13,7 @@ import com.cdkj.loan.domain.Repoint;
  */
 public interface IRepointBO extends IPaginableBO<Repoint> {
 
-    public boolean isRepointExist(String code);
-
     public String saveRepoint(Repoint data);
-
-    public int removeRepoint(String code);
 
     public int refreshRepoint(Repoint data);
 

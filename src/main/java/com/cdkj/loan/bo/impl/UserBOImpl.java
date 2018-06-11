@@ -185,6 +185,22 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     }
 
     @Override
+    public String getUserIdById(String idKind, String idNo) {
+        String userId = null;
+        if (StringUtils.isNotBlank(idNo)) {
+            User condition = new User();
+            condition.setIdKind(idKind);
+            condition.setIdNo(idNo);
+            List<User> list = userDAO.selectList(condition);
+            if (CollectionUtils.isNotEmpty(list)) {
+                User data = list.get(0);
+                userId = data.getUserId();
+            }
+        }
+        return userId;
+    }
+
+    @Override
     public String getUserIdByCondition(String mobile, String realName,
             String idKind, String idNo) {
         String userId = null;

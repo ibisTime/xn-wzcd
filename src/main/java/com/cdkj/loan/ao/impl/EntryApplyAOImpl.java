@@ -75,13 +75,11 @@ public class EntryApplyAOImpl implements IEntryApplyAO {
         data.setRelativeName(req.getRelativeName());
         data.setRelativePosition(req.getRelativePosition());
         data.setMainPerform(req.getMainPerform());
-        data.setProbationStartDatetime(
-            DateUtil.strToDate(req.getProbationStartDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setProbationStartDatetime(DateUtil.strToDate(
+            req.getProbationStartDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setProbationEndDatetime(DateUtil.strToDate(
             req.getProbationEndDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setProbationSalary(
-            StringValidater.toLong(req.getProbationSalary()));
+        data.setProbationSalary(StringValidater.toLong(req.getProbationSalary()));
         data.setBaseSalary(StringValidater.toLong(req.getBaseSalary()));
         data.setPerformSalary(StringValidater.toLong(req.getPerformSalary()));
         data.setPerformSalaryStandard(req.getPerformSalaryStandard());
@@ -89,8 +87,7 @@ public class EntryApplyAOImpl implements IEntryApplyAO {
         data.setCommunicatePayStandard(req.getCommunicatePayStandard());
         data.setProvincialBedStandard(req.getProvincialBedStandard());
         data.setNonProvincialBedStandard(req.getNonProvincialBedStandard());
-        data.setTrafficStandard(
-            StringValidater.toLong(req.getTrafficStandard()));
+        data.setTrafficStandard(StringValidater.toLong(req.getTrafficStandard()));
         data.setMobileStandard(StringValidater.toLong(req.getMobileStandard()));
         data.setTaxiStandard(StringValidater.toLong(req.getTaxiStandard()));
         data.setMealStandard(StringValidater.toLong(req.getMealStandard()));
@@ -147,29 +144,26 @@ public class EntryApplyAOImpl implements IEntryApplyAO {
             archive.setResidenceProperty(entryApply.getResidenceProperty());
             archive.setCurrentAddress(entryApply.getNowAddress());
             archive.setEmergencyContact(entryApply.getEmergencyContact());
-            archive.setEmergencyContactMobile(
-                entryApply.getEmergencyContactMobile());
+            archive.setEmergencyContactMobile(entryApply
+                .getEmergencyContactMobile());
             archive.setPhoto(entryApply.getPhoto());
-            archive.setPerformSalaryStandard(
-                entryApply.getPerformSalaryStandard());
-            archive.setQuarterlyAwardStandard(
-                entryApply.getQuarterlyAwardStandard());
-            archive.setCommumicationFeeStandard(
-                entryApply.getCommunicatePayStandard());
-            archive.setProvincialBedStandard(
-                entryApply.getProvincialBedStandard());
-            archive.setNoProvincialBedStandard(
-                entryApply.getNonProvincialBedStandard());
+            archive.setPerformSalaryStandard(entryApply
+                .getPerformSalaryStandard());
+            archive.setQuarterlyAwardStandard(entryApply
+                .getQuarterlyAwardStandard());
+            archive.setCommumicationFeeStandard(entryApply
+                .getCommunicatePayStandard());
+            archive.setProvincialBedStandard(entryApply
+                .getProvincialBedStandard());
+            archive.setNoProvincialBedStandard(entryApply
+                .getNonProvincialBedStandard());
             archive.setTrafficAward(entryApply.getTrafficStandard());
             archive.setMobileAward(entryApply.getMobileStandard());
             archive.setTaxiWard(entryApply.getTaxiStandard());
 
-            Department department = departmentBO
-                .getDepartment(entryApply.getDepartmentCode());
             String userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
                 entryApply.getMobile(), "888888", entryApply.getMobile(),
                 entryApply.getRealName(), SysConstants.COMMON_ROLE,
-                department.getParentCode(), department.getCode(),
                 entryApply.getPosition());
             archive.setUserId(userId);
             archiveBO.saveArchive(archive);
@@ -193,8 +187,8 @@ public class EntryApplyAOImpl implements IEntryApplyAO {
             for (EntryApply entryApply : paginable.getList()) {
                 WorkExperience wECondition = new WorkExperience();
                 wECondition.setParentCode(entryApply.getCode());
-                entryApply.setWorkExperienceList(
-                    workExperienceBO.queryWorkExperienceList(wECondition));
+                entryApply.setWorkExperienceList(workExperienceBO
+                    .queryWorkExperienceList(wECondition));
             }
         }
         return paginable;
@@ -210,8 +204,8 @@ public class EntryApplyAOImpl implements IEntryApplyAO {
         EntryApply entryApply = entryApplyBO.getEntryApply(code);
         WorkExperience wECondition = new WorkExperience();
         wECondition.setParentCode(entryApply.getCode());
-        entryApply.setWorkExperienceList(
-            workExperienceBO.queryWorkExperienceList(wECondition));
+        entryApply.setWorkExperienceList(workExperienceBO
+            .queryWorkExperienceList(wECondition));
         return entryApply;
     }
 

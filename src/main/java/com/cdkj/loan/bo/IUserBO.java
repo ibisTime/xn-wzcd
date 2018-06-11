@@ -60,6 +60,8 @@ public interface IUserBO extends IPaginableBO<User> {
     // 获取UserId并检查是否存在
     public String getUserId(String mobile, String kind);
 
+    public String getUserIdById(String idKind, String idNo);
+
     public User getUser(String userId);
 
     public String saveUser(String mobile);

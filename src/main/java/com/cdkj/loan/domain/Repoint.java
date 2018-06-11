@@ -29,11 +29,17 @@ public class Repoint extends ABaseDO {
     // 实返金额
     private Long actualAmount;
 
+    // 收款账号
+    private String accountNo;
+
+    // 收款银行
+    private String bank;
+
+    // 收款支行
+    private String subbranch;
+
     // 水单
     private String waterBill;
-
-    // 备注
-    private String remark;
 
     // 状态
     private String status;
@@ -44,14 +50,8 @@ public class Repoint extends ABaseDO {
     // 更新时间
     private Date updateDatetime;
 
-    // 收款账号
-    private String accountNo;
-
-    // 收款银行
-    private String bank;
-
-    // 收款支行
-    private String subbranch;
+    // 备注
+    private String remark;
 
     public String getAccountNo() {
         return accountNo;

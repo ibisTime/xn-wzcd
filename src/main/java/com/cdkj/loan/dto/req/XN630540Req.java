@@ -8,6 +8,8 @@ public class XN630540Req extends APageReq {
 
     private String userId;// 用户编号
 
+    private String refType;// 类型
+
     private String repayBizCode;// 关联业务编号
 
     private String curNodeCode;// 状态
@@ -15,6 +17,14 @@ public class XN630540Req extends APageReq {
     private String overdueHandler;// 逾期处理人
 
     private List<String> curNodeCodeList; // 状态List
+
+    public String getRefType() {
+        return refType;
+    }
+
+    public void setRefType(String refType) {
+        this.refType = refType;
+    }
 
     public String getOverdueHandler() {
         return overdueHandler;

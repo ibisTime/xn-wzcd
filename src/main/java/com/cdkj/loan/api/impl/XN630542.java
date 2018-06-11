@@ -25,15 +25,14 @@ public class XN630542 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-
         RepayPlan condition = new RepayPlan();
         condition.setUserId(req.getUserId());
+        condition.setRefType(req.getRefType());
         condition.setRepayBizCode(req.getRepayBizCode());
-        condition.setCurNodeCode(req.getStatus());
+        condition.setCurNodeCode(req.getCurNodeCode());
         condition.setOverdueHandler(req.getOverdueHandler());
 
         condition.setOrder("cur_periods", true);
-
         return repayPlanAO.queryRepayPlanList(condition);
     }
 

@@ -10,8 +10,7 @@ import java.util.Map;
  */
 public enum EGeneratePrefix {
 
-    ADVERTISE("AD", "广告"), DH("DH", "导航"), TRADE_ORDER("JY", "交易订单"), ARBITRATE(
-            "ZC", "仲裁工单")
+    REPAY_BIZ("RB", "还款业务"), REPAY_PLAN("RP", "还款计划"), DH("DH", "导航")
 
     , Account("A", "账户"), AJour("AJ", "账户流水"), EXCHANGE_CURRENCY("EC", "币种兑换"), HLORDER(
             "HL", "红蓝订单"), Charge("CZ", "充值订单"), Withdraw("QX", "取现订单"), BAOFOO_PAY_ORDER(

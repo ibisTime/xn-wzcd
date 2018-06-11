@@ -28,16 +28,6 @@ public class RepointBOImpl extends PaginableBOImpl<Repoint> implements
     private IRepointDAO repointDAO;
 
     @Override
-    public boolean isRepointExist(String code) {
-        Repoint condition = new Repoint();
-        condition.setCode(code);
-        if (repointDAO.selectTotalCount(condition) > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public String saveRepoint(Repoint data) {
         String code = null;
         if (data != null) {
@@ -46,17 +36,6 @@ public class RepointBOImpl extends PaginableBOImpl<Repoint> implements
             repointDAO.insert(data);
         }
         return code;
-    }
-
-    @Override
-    public int removeRepoint(String code) {
-        int count = 0;
-        if (StringUtils.isNotBlank(code)) {
-            Repoint data = new Repoint();
-            data.setCode(code);
-            count = repointDAO.delete(data);
-        }
-        return count;
     }
 
     @Override

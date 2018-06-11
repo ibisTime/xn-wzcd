@@ -28,7 +28,7 @@ public enum EBudgetOrderNode {
     // 客户作废的节点
     CANCEL_START("007_01", "申请作废开始"), CANCEL_BIZ_AUDIT("007_02", "业务总监审核"), CANCEL_FINANCE_AUDIT(
             "007_03", "财务总监审核"), CANCEL_END("007_04", "申请作废结束"), CANCEL_FAIL(
-            "007_05", "审核不通过");
+            "007_05", "作废审核不通过");
 
     public static Map<String, EBudgetOrderNode> getMap() {
         Map<String, EBudgetOrderNode> map = new HashMap<String, EBudgetOrderNode>();

@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 确认返点支付
  * @author: jiafr 
@@ -8,25 +10,19 @@ package com.cdkj.loan.dto.req;
  */
 public class XN632310Req {
 
-    private String actualAmount;
-
+    @NotBlank
     private String code;
 
-    private String remark;
+    @NotBlank
+    private String actualAmount;
 
-    private String updateDatetime;
-
-    private String updater;
-
+    @NotBlank
     private String waterBill;
 
-    public String getActualAmount() {
-        return actualAmount;
-    }
+    @NotBlank
+    private String updater;
 
-    public void setActualAmount(String actualAmount) {
-        this.actualAmount = actualAmount;
-    }
+    private String remark;
 
     public String getCode() {
         return code;
@@ -36,28 +32,12 @@ public class XN632310Req {
         this.code = code;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getActualAmount() {
+        return actualAmount;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getUpdateDatetime() {
-        return updateDatetime;
-    }
-
-    public void setUpdateDatetime(String updateDatetime) {
-        this.updateDatetime = updateDatetime;
-    }
-
-    public String getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater;
+    public void setActualAmount(String actualAmount) {
+        this.actualAmount = actualAmount;
     }
 
     public String getWaterBill() {
@@ -68,4 +48,19 @@ public class XN632310Req {
         this.waterBill = waterBill;
     }
 
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 }

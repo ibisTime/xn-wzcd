@@ -26,6 +26,7 @@ import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
+import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ESysUser;
@@ -98,8 +99,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
             String userId, String bankcardCode, String operator) {
 
         RepayBiz repayBiz = new RepayBiz();
-        String code = OrderNoGenerater.generate("RB");
-
+        String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
+            .getCode());
         repayBiz.setCode(code);
         repayBiz.setRefType(ERepayBizType.CAR.getCode());
         repayBiz.setRefCode(budgetOrder.getCode());
@@ -182,9 +183,11 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     @Override
     public RepayBiz generateProductLoanRepayBiz(Order order) {
         RepayBiz repayBiz = new RepayBiz();
-        String code = OrderNoGenerater.generate("RB");
+        String code = OrderNoGenerater.generate(EGeneratePrefix.REPAY_BIZ
+            .getCode());
 
         repayBiz.setCode(code);
+        repayBiz.setRefType(ERepayBizType.PRODUCT.getCode());
         User applyUser = userBO.getUser(order.getApplyUser());
         repayBiz.setUserId(applyUser.getUserId());
         repayBiz.setRealName(applyUser.getRealName());

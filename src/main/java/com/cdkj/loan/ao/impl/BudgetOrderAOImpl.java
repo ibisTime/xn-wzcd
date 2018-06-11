@@ -49,6 +49,7 @@ import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632128Req;
@@ -957,16 +958,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         /****** 生成还款业务 ******/
         // 检查用户是否已经注册过
-        String userId = userBO.getUserIdByCondition(budgetOrder.getMobile(),
-            budgetOrder.getApplyUserName(), budgetOrder.getIdKind(),
-            budgetOrder.getIdNo());
-        if (StringUtils.isBlank(userId)) {
+        User user = userBO.getUser(budgetOrder.getMobile(),
+            EUserKind.Customer.getCode());
+        String userId = null;
+        if (user == null) {
             // 用户代注册并实名认证
             userId = userBO.doRegisterAndIdentify(budgetOrder.getMobile(),
                 budgetOrder.getIdKind(), budgetOrder.getApplyUserName(),
                 budgetOrder.getIdNo());
             distributeAccount(userId, budgetOrder.getMobile(),
                 EUserKind.Customer.getCode());
+        } else {
+            userId = user.getUserId();
         }
 
         // 绑定用户银行卡

@@ -13,7 +13,6 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.dto.req.XN632310Req;
 import com.cdkj.loan.enums.ERepointStatus;
-import com.cdkj.loan.exception.BizException;
 
 /**
  * 
@@ -28,32 +27,16 @@ public class RepointAOImpl implements IRepointAO {
     private IRepointBO repointBO;
 
     @Override
-    public String addRepoint(Repoint data) {
-        return repointBO.saveRepoint(data);
-    }
-
-    @Override
     public void confirmRepoint(XN632310Req req) {
-        if (!repointBO.isRepointExist(req.getCode())) {
-            throw new BizException("xn0000", "返点数据不存在");
-        }
         Repoint data = repointBO.getRepoint(req.getCode());
         data.setActualAmount(StringValidater.toLong(req.getActualAmount()));
         data.setWaterBill(req.getWaterBill());
-        data.setRemark(req.getRemark());
         data.setStatus(ERepointStatus.HANDLED.getCode());
         data.setUpdater(req.getUpdater());
+
         data.setUpdateDatetime(new Date());
-
+        data.setRemark(req.getRemark());
         repointBO.refreshRepoint(data);
-    }
-
-    @Override
-    public int dropRepoint(String code) {
-        if (!repointBO.isRepointExist(code)) {
-            throw new BizException("xn0000", "返点数据不存在");
-        }
-        return repointBO.removeRepoint(code);
     }
 
     @Override

@@ -4,11 +4,12 @@
 <mapper namespace="com.cdkj.loan.dao.IRepayPlanDAO">
 	<resultMap id="repayPlan_DB_Result" type="repayPlan">
 		<result column="code" property="code" />
+		<result column="ref_type" property="refType" />
 		<result column="repay_biz_code" property="repayBizCode" />
 		<result column="user_id" property="userId" />
 		<result column="periods" property="periods" />
-		<result column="cur_periods" property="curPeriods" />
 		
+		<result column="cur_periods" property="curPeriods" />
 		<result column="repay_datetime" property="repayDatetime" />
 		<result column="repay_capital" property="repayCapital" />
 		<result column="repay_interest" property="repayInterest" />
@@ -61,6 +62,9 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="refType != null and refType != '' ">
+				AND t.ref_type = #{refType}
+			</if>
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
@@ -100,6 +104,7 @@
 	<select id="select_repayPlan" parameterType="repayPlan" resultMap="repayPlan_DB_Result">
 		SELECT
 		t.code
+		,t.ref_type
 		,t.repay_biz_code
 		,t.user_id
 		,t.periods
@@ -156,6 +161,7 @@
 	<select id="select_repayPlan_byRoleCode" parameterType="repayPlan" resultMap="repayPlan_DB_Result">
 		SELECT
 		t.code
+		,t.ref_type
 		,t.repay_biz_code
 		,t.user_id
 		,t.periods
@@ -226,6 +232,7 @@
 		INSERT INTO
 		tht_repay_plan(
 		code
+		,ref_type
 		,repay_biz_code
 		,user_id
 		,periods
@@ -249,6 +256,7 @@
 		)
 		VALUES(
 		#{code}
+		,#{refType}
 		,#{repayBizCode}
 		,#{userId}
 		,#{periods}
@@ -272,38 +280,11 @@
 		)
 	</insert>
 
-	<update id="update_repayPlan" parameterType="repayPlan">
-		UPDATE tht_repay_plan
-		SET
-		ref_type = #{refType}
-		ref_code = #{refCode}
-		,user_id = #{userId}
-		,periods = #{periods}
-		,cur_periods = #{curPeriods}
-		,repay_datetime = #{repayDatetime}
-		,repay_capital = #{repayCapital}
-		,repay_interest = #{repayInterest}
-		,payed_amount = #{payedAmount}
-		,overplus_amount = #{overplusAmount}
-		,overdue_amount = #{overdueAmount}
-		,cur_node_code = #{curNodeCode}
-		,overdue_handler = #{overdueHandler}
-		,overdue_handle_datetime = #{overdueHandleDatetime}
-		,overdue_handle_note = #{overdueHandleNote}
-		,total_fee = #{totalFee}
-		,payed_fee = #{payedFee}
-		,overdue_deposit = #{overdueDeposit}
-		,deposit_way = #{depositWay}
-		,should_deposit = #{shouldDeposit}
-		,remind_count = #{remindCount}
-		WHERE code = #{code}
-	</update>
-	
 	<insert id="insert_repayPlanList" parameterType="List">
-
 		INSERT INTO
 		tht_repay_plan(
 		code
+		,ref_type
 		,repay_biz_code
 		,user_id
 		,periods
@@ -331,6 +312,7 @@
 		<foreach collection="list" item="repayPlan" separator=",">
 		(
 		#{repayPlan.code}
+		,#{repayPlan.refType}
 		,#{repayPlan.repayBizCode}
 		,#{repayPlan.userId}
 		,#{repayPlan.periods}
@@ -352,9 +334,7 @@
 		,#{repayPlan.shouldDeposit}
 		,#{repayPlan.remindCount}
 		)
-		
 		</foreach>
-		
 	</insert>
 	
 	<update id="update_paySuccess" parameterType="repayPlan">

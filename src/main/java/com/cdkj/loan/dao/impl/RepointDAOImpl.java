@@ -24,7 +24,7 @@ public class RepointDAOImpl extends AMybatisTemplate implements IRepointDAO {
 
     @Override
     public int delete(Repoint data) {
-        return super.delete(NAMESPACE.concat("delete_repoint"), data);
+        return 0;
     }
 
     @Override
@@ -53,7 +53,6 @@ public class RepointDAOImpl extends AMybatisTemplate implements IRepointDAO {
 
     @Override
     public int update(Repoint data) {
-
         return super.update(NAMESPACE.concat("update_repoint"), data);
     }
 

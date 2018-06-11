@@ -18,6 +18,9 @@ public class RepayPlan extends ABaseDO {
     // 编号
     private String code;
 
+    // 关联类型
+    private String refType;
+
     // 关联业务编号
     private String repayBizCode;
 
@@ -180,6 +183,14 @@ public class RepayPlan extends ABaseDO {
 
     // 角色编号
     private String roleCode;
+
+    public String getRefType() {
+        return refType;
+    }
+
+    public void setRefType(String refType) {
+        this.refType = refType;
+    }
 
     public String getRoleCode() {
         return roleCode;

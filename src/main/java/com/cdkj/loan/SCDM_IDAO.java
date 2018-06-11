@@ -9,23 +9,20 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "repoint";
+    private static String key = "overdueRepay";
 
     // 实体名称
-    private static String keyName = "返点表";
+    private static String keyName = "逾期还款表";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tht_repoint";
+    private static String dbname = "tdq_overdue_repay";
 
-    private static String[] DBwords = { "code", "team_code", "biz_code",
-            "should_amount", "actual_amount", "water_bill", "remark", "status",
-            "updater", "update_datetime" };
+    private static String[] DBwords = { "id", "overdue_code", "repay_biz_code" };
 
-    private static String[] DBwordsName = { "编号", "团队编号", "业务编号", "应返金额",
-            "实返金额", "水单", "备注", "状态", "更新人", "更新时间" };
+    private static String[] DBwordsName = { "序号", "逾期名单编号", "还款业务编号" };
 
     public void testname() throws Exception {
     }
@@ -38,7 +35,7 @@ public class SCDM_IDAO {
     public static void main(String[] args) {
 
         System.out.println("*********开始打印*********");
-        String path = "/Users/hp/Desktop/temp";
+        String path = "/Users/xieyj/Desktop/temp";
 
         File DOMAINfile = new File(path, Key + ".java");
 

@@ -8,12 +8,30 @@ public class XN630542Req extends APageReq {
 
     private String userId;// 用户编号
 
+    private String refType;// 类型
+
+    private String curNodeCode;// 节点编号
+
     @NotBlank
     private String repayBizCode;// 关联业务编号
 
-    private String status;// 状态
-
     private String overdueHandler;// 逾期处理人
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
+    public String getRefType() {
+        return refType;
+    }
+
+    public void setRefType(String refType) {
+        this.refType = refType;
+    }
 
     public String getOverdueHandler() {
         return overdueHandler;
@@ -38,13 +56,4 @@ public class XN630542Req extends APageReq {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
 }

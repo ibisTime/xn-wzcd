@@ -11,6 +11,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBizTeamDAO;
 import com.cdkj.loan.domain.BizTeam;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -21,8 +22,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class BizTeamBOImpl extends PaginableBOImpl<BizTeam>
-        implements IBizTeamBO {
+public class BizTeamBOImpl extends PaginableBOImpl<BizTeam> implements
+        IBizTeamBO {
 
     @Autowired
     private IBizTeamDAO bizTeamDAO;
@@ -81,7 +82,7 @@ public class BizTeamBOImpl extends PaginableBOImpl<BizTeam>
         if (StringUtils.isNotBlank(code)) {
             BizTeam condition = new BizTeam();
             condition.setCode(code);
-            condition.setStatus("1");
+            condition.setStatus(EBoolean.YES.getCode());
             data = bizTeamDAO.select(condition);
             if (data == null) {
                 throw new BizException("xn0000", "业务团队不存在");

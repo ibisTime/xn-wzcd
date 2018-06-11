@@ -35,36 +35,12 @@ public class XN630050Req {
     @NotBlank
     private String roleCode;
 
-    // 公司编号
-    @NotBlank
-    private String companyCode;
-
-    // 部门编号
-    @NotBlank
-    private String departmentCode;
-
     // 岗位
     @NotBlank
     private String postCode;
 
     // 备注（选填）
     private String remark;
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
-
-    public String getDepartmentCode() {
-        return departmentCode;
-    }
-
-    public void setDepartmentCode(String departmentCode) {
-        this.departmentCode = departmentCode;
-    }
 
     public String getPostCode() {
         return postCode;

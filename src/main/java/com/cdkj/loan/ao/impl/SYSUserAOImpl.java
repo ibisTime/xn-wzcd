@@ -43,8 +43,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
     @Override
     public String doAddUser(String type, String loginName, String loginPwd,
-            String mobile, String realName, String roleCode,
-            String companyCode, String departmentCode, String postCode) {
+            String mobile, String realName, String roleCode, String postCode) {
         SYSUser data = new SYSUser();
         String userId = OrderNoGenerater.generate("U");
         data.setUserId(userId);
@@ -57,9 +56,13 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
         data.setCreateDatetme(new Date());
         data.setRoleCode(roleCode);
-        data.setCompanyCode(companyCode);
-        data.setDepartmentCode(departmentCode);
         data.setPostCode(postCode);
+        Department department = departmentBO.getDepartment(postCode);
+        data.setDepartmentCode(department.getParentCode());
+        Department company = departmentBO.getDepartment(department
+            .getParentCode());
+
+        data.setCompanyCode(company.getParentCode());
         data.setStatus(EUserStatus.NORMAL.getCode());
         sysUserBO.saveUser(data);
         return userId;
