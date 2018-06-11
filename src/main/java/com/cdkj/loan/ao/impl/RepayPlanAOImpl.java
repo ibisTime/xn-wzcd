@@ -1,7 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -287,10 +286,6 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         repayPlan.setIsRepay(EResultStatus.YES.getCode());
         // TODO 支付方式
         repayPlanBO.repayAmount(repayPlan);
-        RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
-        repayBiz.setUpdater(operator);
-        repayBiz.setUpdateDatetime(new Date());
-        repayBizBO.repayAmount(repayBiz);
     }
 
     @Override
