@@ -220,7 +220,7 @@ public class OrderAOImpl implements IOrderAO {
 
         RepayBiz repayBiz = repayBizBO.generateProductLoanRepayBiz(order);
 
-        repayPlanBO.genereateNewRapayPlan(repayBiz);
+        repayPlanBO.genereateNewRepayPlan(repayBiz);
 
         return toPayOrder(order, payType, isDk);
     }

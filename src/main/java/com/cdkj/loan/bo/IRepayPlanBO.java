@@ -28,7 +28,7 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
     public RepayPlan getRepayPlan(String code);
 
     // 产生还款计划
-    public void genereateNewRapayPlan(RepayBiz repayBiz);
+    public void genereateNewRepayPlan(RepayBiz repayBiz);
 
     // 支付成功更新
     public void repaySuccess(RepayPlan repayPlan, Long realWithholdAmount);

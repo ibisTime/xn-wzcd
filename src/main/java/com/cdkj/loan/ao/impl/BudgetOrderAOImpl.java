@@ -984,7 +984,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             userId, bankcardCode, operator);
 
         // 自动生成还款计划
-        repayPlanBO.genereateNewRapayPlan(repayBiz);
+        repayPlanBO.genereateNewRepayPlan(repayBiz);
 
         // 归档完成，更新预算单信息
         String repayBizCode = repayBiz.getCode();
