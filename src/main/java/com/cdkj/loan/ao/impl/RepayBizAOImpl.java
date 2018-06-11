@@ -363,6 +363,10 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
         RepayPlan repayPlan = repayPlanBO.getRepayPlanListByRepayBizCode(
             req.getCode(), ERepayPlanNode.HANDLER_TO_RED);
+        if (repayPlan == null) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "还款业务中没有进红名单处理的还款计划！");
+        }
 
         repayPlan.setCurNodeCode(ERepayPlanNode.QKCSB_APPLY_TC.getCode());
         repayPlan.setTsCarAmount(StringValidater.toLong(req.getTsCarAmount()));
@@ -516,8 +520,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             repayBiz
                 .setCurNodeCode(ERepayBizNode.FINANCE_MANAGER_CHECK.getCode());
         } else {
-            repayBiz
-                .setCurNodeCode(ERepayBizNode.RISK_MANAGER_CHECK_NO.getCode());
+            repayBiz.setCurNodeCode(ERepayBizNode.QKCSB_REDEEM_APPLY.getCode());
         }
         repayBiz.setUpdater(req.getOperator());
         repayBiz.setUpdateDatetime(new Date());

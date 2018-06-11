@@ -414,7 +414,7 @@
 		UPDATE tht_repay_plan
 		SET
 		remit_amount = #{remitAmount}
-		,remit_pdf = #{remitPdf}
+		,remit_bill_pdf = #{remitBillPdf}
 		WHERE code = #{code}
 	</update>
 	
