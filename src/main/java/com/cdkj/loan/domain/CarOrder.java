@@ -50,13 +50,13 @@ public class CarOrder extends ABaseDO {
     private Car car;
 
     // 用户
-    private SYSUser user;
+    private User user;
 
-    public SYSUser getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(SYSUser user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
