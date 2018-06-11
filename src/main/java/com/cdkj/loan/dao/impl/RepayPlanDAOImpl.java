@@ -127,4 +127,9 @@ public class RepayPlanDAOImpl extends AMybatisTemplate implements IRepayPlanDAO 
             RepayPlan.class);
     }
 
+    @Override
+    public int repayAmount(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_repayAmount"), data);
+    }
+
 }

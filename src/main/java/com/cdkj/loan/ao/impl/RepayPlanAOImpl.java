@@ -1,6 +1,7 @@
 package com.cdkj.loan.ao.impl;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealResult;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayPlanNode;
+import com.cdkj.loan.enums.EResultStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -276,6 +278,19 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
                 .setCurNodeCode(ERepayPlanNode.HANDLER_TO_YELLOW.getCode());
         }
         repayPlanBO.refreshRepayPlanOverdueHandle(repayPlan);
+    }
+
+    @Override
+    public void repayAmount(String code, String operator, String payType) {
+        RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
+        repayPlan.setRealRepayAmount(repayPlan.getOverdueAmount());
+        repayPlan.setIsRepay(EResultStatus.YES.getCode());
+        // TODO 支付方式
+        repayPlanBO.repayAmount(repayPlan);
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
+        repayBiz.setUpdater(operator);
+        repayBiz.setUpdateDatetime(new Date());
+        repayBizBO.repayAmount(repayBiz);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 public class XN630520Req extends APageReq {
 
     private static final long serialVersionUID = 5066181160930283667L;
@@ -10,7 +12,9 @@ public class XN630520Req extends APageReq {
 
     private String refType;// 关联类型
 
-    private String curNodeCode;// 节点
+    private String keyWord;// 关键字
+
+    private List<String> curNodeCodeList;// 节点
 
     public String getCode() {
         return code;
@@ -18,6 +22,14 @@ public class XN630520Req extends APageReq {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
     }
 
     public String getUserId() {
@@ -36,12 +48,12 @@ public class XN630520Req extends APageReq {
         this.refType = refType;
     }
 
-    public String getCurNodeCode() {
-        return curNodeCode;
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
     }
 
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
     }
 
 }

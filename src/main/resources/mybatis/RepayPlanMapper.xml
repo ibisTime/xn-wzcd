@@ -30,6 +30,7 @@
 		
 		<result column="remind_count" property="remindCount" />
 		<result column="real_repay_amount" property="realRepayAmount" />
+		<result column="is_repay" property="isRepay" />
 		<result column="ts_car_amount" property="tsCarAmount" />
 		<result column="ts_bankcard_number" property="tsBankcardNumber" />
 		<result column="ts_bank_name" property="tsBankName" />
@@ -126,6 +127,7 @@
 		,t.should_deposit
 		,t.remind_count
 		,t.real_repay_amount
+		,t.is_repay
 		,t.ts_car_amount
 		,t.ts_bankcard_number
 		,t.ts_bank_name
@@ -183,6 +185,7 @@
 		,t.should_deposit
 		,t.remind_count
 		,t.real_repay_amount
+		,t.is_repay
 		,t.ts_car_amount
 		,t.ts_bankcard_number
 		,t.ts_bank_name
@@ -442,6 +445,14 @@
 		UPDATE tht_repay_plan
 		SET
 		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_repayAmount" parameterType="repayPlan">
+		UPDATE tht_repay_plan
+		SET
+		real_repay_amount = #{realRepayAmount}
+		,is_repay = #{isRepay}
 		WHERE code = #{code}
 	</update>
 </mapper>

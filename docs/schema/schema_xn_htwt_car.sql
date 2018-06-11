@@ -148,6 +148,7 @@ CREATE TABLE `tht_repay_plan` (
   `should_deposit` bigint(20) DEFAULT NULL COMMENT '实际可退的再次逾期保证金',
   `remind_count` int(11) DEFAULT NULL COMMENT '已催款次数',
   `real_repay_amount` bigint(20) DEFAULT NULL COMMENT '实际代偿金额',
+  `is_repay` VARCHAR(4) NULL COMMENT '代偿是否缴纳';
   `ts_car_amount` bigint(20) DEFAULT NULL COMMENT '拖车申请金额',
   `ts_bankcard_number` varchar(255) DEFAULT NULL COMMENT '拖车收款账号',
   `ts_bank_name` varchar(255) DEFAULT NULL COMMENT '拖车开户行',

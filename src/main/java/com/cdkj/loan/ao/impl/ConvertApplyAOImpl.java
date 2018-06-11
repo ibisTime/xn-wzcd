@@ -121,6 +121,9 @@ public class ConvertApplyAOImpl implements IConvertApplyAO {
                 Archive archive = archiveBO
                     .getArchiveByUserid(convertApply.getApplyUser());
                 convertApply.setArchice(archive);
+                EntryApply entryApply = entryApplyBO
+                    .getEntryApply(convertApply.getEntryCode());
+                convertApply.setEntryApply(entryApply);
             }
         }
         return paginable;
@@ -143,6 +146,9 @@ public class ConvertApplyAOImpl implements IConvertApplyAO {
         Archive archive = archiveBO
             .getArchiveByUserid(convertApply.getApplyUser());
         convertApply.setArchice(archive);
+        EntryApply entryApply = entryApplyBO
+            .getEntryApply(convertApply.getEntryCode());
+        convertApply.setEntryApply(entryApply);
         return convertApply;
     }
 

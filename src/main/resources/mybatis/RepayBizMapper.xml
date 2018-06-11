@@ -66,11 +66,14 @@
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
-			<if test="realName != null and realName != '' ">
-				AND t.realName = #{realName}
+			<if test="keyWord != null and keyWord != '' ">
+				AND t.real_name like "%"#{keyWord}"%" OR  t.id_no like "%"#{keyWord}"%"
 			</if>
-			<if test="idNo != null and idNo != '' ">
-				AND t.id_no = #{idNo}
+			<if test="curNodeCodeList != null and curNodeCodeList.size() != 0 ">
+				AND t.cur_node_code in 
+                <foreach item="item" index="index" collection="curNodeCodeList" open="(" separator="," close=")">
+	            	#{item}
+                </foreach> 
 			</if>
 			<if test="roleCode != null and roleCode != '' ">
 				AND r.role_code = #{roleCode}
@@ -365,6 +368,7 @@
 		UPDATE tht_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
+		,is_advance_settled = #{isAdvanceSettled}
 		,rest_amount = #{restAmount}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
@@ -516,6 +520,14 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_repayAmount" parameterType="repayBiz">
+		UPDATE tht_repay_biz
+		SET
+		updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>

@@ -1,11 +1,3 @@
-/**
- * @Title XN630530.java 
- * @Package com.cdkj.loan.api.impl 
- * @Description 
- * @author haiqingzheng  
- * @date 2018年5月6日 下午5:46:47 
- * @version V1.0   
- */
 package com.cdkj.loan.api.impl;
 
 import com.cdkj.loan.ao.IRepayPlanAO;
@@ -18,31 +10,25 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
-/** 
- * 记黑名单
+/**
+ * 缴纳代偿金额
  * @author: CYL 
- * @since: 2018年5月9日 上午10:10:14 
+ * @since: 2018年6月11日 下午7:46:19 
  * @history:
  */
 public class XN630534 extends AProcessor {
-
     private IRepayPlanAO repayPlanAO = SpringContextHolder
         .getBean(IRepayPlanAO.class);
 
     private XN630534Req req = null;
 
-    /** 
-     * @see com.cdkj.loan.api.IProcessor#doBusiness()
-     */
     @Override
     public Object doBusiness() throws BizException {
-        repayPlanAO.ToBlack(req.getCode());
+        repayPlanAO.repayAmount(req.getCode(), req.getOperator(),
+            req.getPayType());
         return new BooleanRes(true);
     }
 
-    /** 
-     * @see com.cdkj.loan.api.IProcessor#doCheck(java.lang.String, java.lang.String)
-     */
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {

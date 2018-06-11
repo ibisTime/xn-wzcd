@@ -468,6 +468,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setCurNodeCode(ERepayBizNode.QKCSB_TC_INPUT.getCode());
         repayBiz.setUpdater(req.getOperator());
         repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setTakeDatetime(DateUtil.strToDate(req.getTakeDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         repayBizBO.trailerEntry(repayBiz);
     }
 

@@ -54,6 +54,9 @@ public class RepayBiz extends ABaseDO {
     // 贷款金额
     private Long loanAmount;
 
+    // 是否提前还款
+    private String isEarlyRepayment;
+
     // 总期数
     private int periods;
 
@@ -176,11 +179,34 @@ public class RepayBiz extends ABaseDO {
     // 银行名称
     private String loanBankName;
 
+    // 拖车时间
+    private Date takeDatetime;
+
     // 银行放款日期
     private Date bankFkDatetimeStart;
 
     // 银行放款日期
     private Date bankFkDatetimeEnd;
+
+    private String keyWord;// 关键字
+
+    private List<String> curNodeCodeList;// 节点
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
+    }
+
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
 
     public Date getBankFkDatetimeStart() {
         return bankFkDatetimeStart;
@@ -188,6 +214,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setBankFkDatetimeStart(Date bankFkDatetimeStart) {
         this.bankFkDatetimeStart = bankFkDatetimeStart;
+    }
+
+    public Date getTakeDatetime() {
+        return takeDatetime;
+    }
+
+    public void setTakeDatetime(Date takeDatetime) {
+        this.takeDatetime = takeDatetime;
     }
 
     public Date getBankFkDatetimeEnd() {
@@ -516,6 +550,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setOverdueAmount(Long overdueAmount) {
         this.overdueAmount = overdueAmount;
+    }
+
+    public String getIsEarlyRepayment() {
+        return isEarlyRepayment;
+    }
+
+    public void setIsEarlyRepayment(String isEarlyRepayment) {
+        this.isEarlyRepayment = isEarlyRepayment;
     }
 
     public int getTotalOverdueCount() {

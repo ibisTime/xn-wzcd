@@ -77,8 +77,19 @@ public class ConvertApply extends ABaseDO {
     // 人事档案
     private Archive archice;
 
+    // 入职申请
+    private EntryApply entryApply;
+
     // 试用期评估列表
     private List<ProbationAssess> probationAssessesList;
+
+    public EntryApply getEntryApply() {
+        return entryApply;
+    }
+
+    public void setEntryApply(EntryApply entryApply) {
+        this.entryApply = entryApply;
+    }
 
     public Integer getTotalGrade() {
         return totalGrade;
