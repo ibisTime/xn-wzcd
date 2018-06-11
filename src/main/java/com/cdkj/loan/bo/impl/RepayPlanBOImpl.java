@@ -160,7 +160,6 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
         repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
 
         repayPlanDAO.repaySuccess(repayPlan);
-
     }
 
     @Override

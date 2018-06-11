@@ -18,7 +18,7 @@ public class RepayPlanDAOImpl extends AMybatisTemplate implements IRepayPlanDAO 
 
     @Override
     public int delete(RepayPlan data) {
-        return super.delete(NAMESPACE.concat("delete_repayPlan"), data);
+        return 0;
     }
 
     @Override
@@ -43,11 +43,6 @@ public class RepayPlanDAOImpl extends AMybatisTemplate implements IRepayPlanDAO 
     public List<RepayPlan> selectList(RepayPlan condition, int start, int count) {
         return super.selectList(NAMESPACE.concat("select_repayPlan"), start,
             count, condition, RepayPlan.class);
-    }
-
-    @Override
-    public int update(RepayPlan data) {
-        return 0;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

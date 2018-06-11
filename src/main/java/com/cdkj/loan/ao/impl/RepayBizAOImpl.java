@@ -133,7 +133,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         if (ERepayBizType.CAR.getCode().equals(repayBiz.getRefType())) {
             advanceRepayCarLoan(code, repayBiz);
         } else {
-
+            advanceRepayProductLoan(code, repayBiz);
         }
     }
 
@@ -171,8 +171,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
         for (RepayPlan repayPlan : planList) {
             if (ERepayPlanNode.TO_REPAY.getCode().equals(
                 repayPlan.getCurNodeCode())) {
-                repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
-                repayPlanBO.refreshRepayPlanCurNodeCode(repayPlan);
+                // 更新还款计划
+                repayPlanBO.repaySuccess(repayPlan,
+                    repayPlan.getMonthRepayAmount());
             }
         }
     }

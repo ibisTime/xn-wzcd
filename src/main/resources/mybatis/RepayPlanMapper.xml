@@ -357,7 +357,7 @@
 		WHERE code = #{code}
 	</update>
 
-	<update id="update_repayplan_status" parameterType="repayPlan">
+	<update id="update_repayplan_node" parameterType="repayPlan">
 		UPDATE tht_repay_plan
 		SET
 		cur_node_code = #{curNodeCode}
