@@ -295,8 +295,11 @@
 			<if test="loanPeriod != null and loanPeriod != '' ">
 				AND t.loan_period = #{loanPeriod}
 			</if>
-			<if test="bankFkDatetime != null and bankFkDatetime != '' ">
-				AND t.bank_fk_datetime = #{bankFkDatetime}
+			<if test="bankFkDatetimeStart != null and bankFkDatetimeStart != '' ">
+				<![CDATA[AND t.bank_fk_datetime >= #{bankFkDatetimeStart}]]>
+			</if>
+			<if test="bankFkDatetimeEnd != null and bankFkDatetimeEnd != '' ">
+				<![CDATA[AND t.bank_fk_datetime <= #{bankFkDatetimeEnd}]]>
 			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
 				<![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
@@ -322,7 +325,6 @@
 			<if test="frozenStatus != null and frozenStatus != ''">
 				AND t.frozen_status = #{frozenStatus}
 			</if>
-			
 		</trim>
 	</sql>
 	<select id="select_budgetOrder" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">

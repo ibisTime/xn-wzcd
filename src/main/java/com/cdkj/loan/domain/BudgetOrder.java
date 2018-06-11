@@ -697,6 +697,28 @@ public class BudgetOrder extends ABaseDO {
     // 申请时间结束
     private Date advanceFundDatetimeEnd;
 
+    // 银行放款日期
+    private Date bankFkDatetimeStart;
+
+    // 银行放款日期
+    private Date bankFkDatetimeEnd;
+
+    public Date getBankFkDatetimeStart() {
+        return bankFkDatetimeStart;
+    }
+
+    public void setBankFkDatetimeStart(Date bankFkDatetimeStart) {
+        this.bankFkDatetimeStart = bankFkDatetimeStart;
+    }
+
+    public Date getBankFkDatetimeEnd() {
+        return bankFkDatetimeEnd;
+    }
+
+    public void setBankFkDatetimeEnd(Date bankFkDatetimeEnd) {
+        this.bankFkDatetimeEnd = bankFkDatetimeEnd;
+    }
+
     public Date getAdvanceFundDatetimeStart() {
         return advanceFundDatetimeStart;
     }

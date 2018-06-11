@@ -185,14 +185,15 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         // 更新还款计划
         repayPlanBO.repaySuccess(repayPlan, realWithholdAmount);
 
-        // 更新还款业务剩余金额
-        repayBizBO.refreshRestAmount(repayBiz, realWithholdAmount);
+        // 更新还款业务剩余金额,并判断是否全部缴清
+        repayBizBO.refreshRepayCarLoan(repayPlan.getRepayBizCode(),
+            realWithholdAmount);
 
-        // 检查是否已经全部正常还款
-        if (repayPlanBO.checkRepayComplete(repayPlan.getRepayBizCode(),
-            repayPlan.getCode())) {
-            repayBizBO.refreshRepayAllCarLoan(repayPlan.getRepayBizCode());
-        }
+        // repayBizBO.refreshRestAmount(repayBiz, realWithholdAmount);
+        // // 检查是否已经全部正常还款
+        // if (repayPlanBO.checkRepayComplete(repayPlan.getRepayBizCode(),
+        // repayPlan.getCode())) {
+        // }
 
         // 增加信用分
         addCreditScore(repayPlan, repayBiz);
@@ -277,7 +278,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             repayPlan
                 .setCurNodeCode(ERepayPlanNode.HANDLER_TO_YELLOW.getCode());
         }
-        repayPlanBO.refreshRepayPlanOverdue(repayPlan);
+        repayPlanBO.refreshRepayPlanOverdueHandle(repayPlan);
     }
 
     @Override

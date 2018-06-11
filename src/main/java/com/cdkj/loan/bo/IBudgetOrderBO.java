@@ -23,6 +23,8 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public BudgetOrder getBudgetOrder(String code);
 
+    public BudgetOrder getBudgetOrderByRepayBizCode(String repayBizCode);
+
     public void refreshriskChargeApprove(BudgetOrder budgetOrder);
 
     public void refreshbizChargeApprove(BudgetOrder budgetOrder);

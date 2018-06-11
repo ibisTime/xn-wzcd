@@ -115,8 +115,8 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     }
 
     @Override
-    public void refreshStatus(String userId, EUserStatus status, String updater,
-            String remark) {
+    public void refreshStatus(String userId, EUserStatus status,
+            String updater, String remark) {
         if (StringUtils.isNotBlank(userId)) {
             User data = new User();
             data.setUserId(userId);
@@ -130,8 +130,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
 
     @Override
     public void checkTradePwd(String userId, String tradePwd) {
-        if (StringUtils.isNotBlank(userId)
-                && StringUtils.isNotBlank(tradePwd)) {
+        if (StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(tradePwd)) {
             User user = this.getUser(userId);
             if (StringUtils.isBlank(user.getTradePwdStrength())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -151,8 +150,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
 
     @Override
     public void checkLoginPwd(String userId, String loginPwd) {
-        if (StringUtils.isNotBlank(userId)
-                && StringUtils.isNotBlank(loginPwd)) {
+        if (StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(loginPwd)) {
             User condition = new User();
             condition.setUserId(userId);
             condition.setLoginPwd(MD5Util.md5(loginPwd));
@@ -177,6 +175,25 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         if (StringUtils.isNotBlank(mobile)) {
             User condition = new User();
             condition.setMobile(mobile);
+            List<User> list = userDAO.selectList(condition);
+            if (CollectionUtils.isNotEmpty(list)) {
+                User data = list.get(0);
+                userId = data.getUserId();
+            }
+        }
+        return userId;
+    }
+
+    @Override
+    public String getUserIdByCondition(String mobile, String realName,
+            String idKind, String idNo) {
+        String userId = null;
+        if (StringUtils.isNotBlank(mobile)) {
+            User condition = new User();
+            condition.setMobile(mobile);
+            condition.setRealName(realName);
+            condition.setIdKind(idKind);
+            condition.setIdNo(idNo);
             List<User> list = userDAO.selectList(condition);
             if (CollectionUtils.isNotEmpty(list)) {
                 User data = list.get(0);
@@ -227,8 +244,8 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
                 User data = list.get(0);
                 userId = data.getUserId();
             } else
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "手机号[" + mobile + "]用户不存在");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "手机号["
+                        + mobile + "]用户不存在");
         }
         return userId;
     }

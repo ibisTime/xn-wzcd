@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 处理逾期客户
+ * 处理逾期名单
  * @author: CYL 
  * @since: 2018年6月2日 下午11:10:37 
  * @history:
@@ -24,8 +24,8 @@ public class XN632301 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        overdueMenuAO.handleOverdueMenu(req.getCode(),
-            req.getBudgetOrderCode());
+        overdueMenuAO.handleOverdueMenu(req.getCode(), req.getRepayBizCode(),
+            req.getOperator());
         return new BooleanRes(true);
     }
 

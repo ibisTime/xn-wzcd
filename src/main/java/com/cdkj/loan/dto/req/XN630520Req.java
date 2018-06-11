@@ -10,6 +10,8 @@ public class XN630520Req extends APageReq {
 
     private String refType;// 关联类型
 
+    private String keyWord;// 关键字
+
     private String curNodeCode;// 节点
 
     public String getCode() {
@@ -18,6 +20,14 @@ public class XN630520Req extends APageReq {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
     }
 
     public String getUserId() {

@@ -16,13 +16,34 @@
 		<result column="import_datetime" property="importDatetime" />
 		<result column="import_note" property="importNote" />
 		<result column="status" property="status" />
+		<result column="handle_datetime" property="handleDatetime" />
 		<result column="handle_note" property="handleNote" />
 		<result column="budget_order_code" property="budgetOrderCode" />
+		<result column="repay_biz_code" property="repayBizCode" />
+		<result column="repay_plan_code" property="repayPlanCode" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
+			</if>
+			<if test="realName != null and realName != '' ">
+				AND t.real_name = #{realName}
+			</if>
+			<if test="idNo != null and idNo != '' ">
+				AND t.id_no = #{idNo}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="budgetOrderCode != null and budgetOrderCode != '' ">
+				AND t.budget_order_code = #{budgetOrderCode}
+			</if>
+			<if test="repayBizCode != null and repayBizCode != '' ">
+				AND t.repay_biz_code = #{repayBizCode}
+			</if>
+			<if test="repayPlanCode != null and repayPlanCode != '' ">
+				AND t.repay_plan_code = #{repayPlanCode}
 			</if>
 		</trim>
 	</sql>
@@ -41,8 +62,11 @@
 		,t.import_datetime
 		,t.import_note
 		,t.status
+		,t.handle_datetime
 		,t.handle_note
 		,t.budget_order_code
+		,t.repay_biz_code
+		,t.repay_plan_code
 		FROM
 		tdh_overdue_menu t
 		<include refid="where_condition" />
@@ -75,8 +99,9 @@
 		,import_datetime
 		,import_note
 		,status
-		,handle_note
 		,budget_order_code
+		,repay_biz_code
+		,repay_plan_code
 		)
 		VALUES(
 		#{code}
@@ -92,30 +117,21 @@
 		,#{importDatetime}
 		,#{importNote}
 		,#{status}
-		,#{handleNote}
 		,#{budgetOrderCode}
+		,#{repayBizCode}
+		,#{repayPlanCode}
 		)
 	</insert>
 
 	<update id="update_overdueMenu" parameterType="overdueMenu">
 		UPDATE tdh_overdue_menu
 		SET
-		real_name = #{realName}
-		,id_no = #{idNo}
-		,loan_bank_name = #{loanBankName}
-		,loan_amount = #{loanAmount}
-		,periods = #{periods}
-		,remain_amount = #{remainAmount}
-		,fk_datetime = #{fkDatetime}
-		,overdue_amount = #{overdueAmount}
-		,overdue_datetime = #{overdueDatetime}
-		,import_datetime = #{importDatetime}
-		,import_note = #{importNote}
-		,status = #{status}
+		status = #{status}
+		,handle_datetime = #{handleDatetime}
 		,handle_note = #{handleNote}
 		,budget_order_code = #{budgetOrderCode}
+		,repay_biz_code = #{repayBizCode}
+		,repay_plan_code = #{repayPlanCode}
 		WHERE code = #{code}
 	</update>
-
-
 </mapper>

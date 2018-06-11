@@ -21,6 +21,15 @@ public class RepayBiz extends ABaseDO {
     // 申请人编号
     private String userId;
 
+    // 申请人姓名
+    private String realName;
+
+    // 申请人证件类型
+    private String idKind;
+
+    // 申请人证件号
+    private String idNo;
+
     // 还款卡编号
     private String bankcardCode;
 
@@ -62,6 +71,9 @@ public class RepayBiz extends ABaseDO {
 
     // 贷款时间终点
     private Date loanEndDatetime;
+
+    // 放款时间
+    private Date bankFkDatetime;
 
     // 风险保证金
     private Long fxDeposit;
@@ -137,6 +149,9 @@ public class RepayBiz extends ABaseDO {
 
     // ****** 辅助字段 ******
 
+    // 预算单编号
+    private String budgetOrderCode;
+
     // 用户信息
     private User user;
 
@@ -167,12 +182,74 @@ public class RepayBiz extends ABaseDO {
     // 拖车时间
     private Date takeDatetime;
 
+    // 银行放款日期
+    private Date bankFkDatetimeStart;
+
+    // 银行放款日期
+    private Date bankFkDatetimeEnd;
+
+    public Date getBankFkDatetimeStart() {
+        return bankFkDatetimeStart;
+    }
+
+    public void setBankFkDatetimeStart(Date bankFkDatetimeStart) {
+        this.bankFkDatetimeStart = bankFkDatetimeStart;
+    }
+
     public Date getTakeDatetime() {
         return takeDatetime;
     }
 
     public void setTakeDatetime(Date takeDatetime) {
         this.takeDatetime = takeDatetime;
+    }
+
+    public Date getBankFkDatetimeEnd() {
+        return bankFkDatetimeEnd;
+    }
+
+    public void setBankFkDatetimeEnd(Date bankFkDatetimeEnd) {
+        this.bankFkDatetimeEnd = bankFkDatetimeEnd;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getIdKind() {
+        return idKind;
+    }
+
+    public void setIdKind(String idKind) {
+        this.idKind = idKind;
+    }
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
+    }
+
+    public Date getBankFkDatetime() {
+        return bankFkDatetime;
+    }
+
+    public void setBankFkDatetime(Date bankFkDatetime) {
+        this.bankFkDatetime = bankFkDatetime;
+    }
+
+    public String getBudgetOrderCode() {
+        return budgetOrderCode;
+    }
+
+    public void setBudgetOrderCode(String budgetOrderCode) {
+        this.budgetOrderCode = budgetOrderCode;
     }
 
     public String getRoleCode() {

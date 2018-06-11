@@ -9,8 +9,7 @@ import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.RepayPlan;
 
 @Repository("repayPlanDAOImpl")
-public class RepayPlanDAOImpl extends AMybatisTemplate
-        implements IRepayPlanDAO {
+public class RepayPlanDAOImpl extends AMybatisTemplate implements IRepayPlanDAO {
 
     @Override
     public int insert(RepayPlan data) {
@@ -36,13 +35,12 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
 
     @Override
     public List<RepayPlan> selectList(RepayPlan condition) {
-        return super.selectList(NAMESPACE.concat("select_repayPlan"), condition,
-            RepayPlan.class);
+        return super.selectList(NAMESPACE.concat("select_repayPlan"),
+            condition, RepayPlan.class);
     }
 
     @Override
-    public List<RepayPlan> selectList(RepayPlan condition, int start,
-            int count) {
+    public List<RepayPlan> selectList(RepayPlan condition, int start, int count) {
         return super.selectList(NAMESPACE.concat("select_repayPlan"), start,
             count, condition, RepayPlan.class);
     }
@@ -70,7 +68,12 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
     }
 
     @Override
-    public int OverdueHandle(RepayPlan data) {
+    public int updateOverdue(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_overdue"), data);
+    }
+
+    @Override
+    public int overdueHandle(RepayPlan data) {
         return super.update(NAMESPACE.concat("overdue_handle"), data);
     }
 
@@ -119,8 +122,9 @@ public class RepayPlanDAOImpl extends AMybatisTemplate
     @Override
     public List<RepayPlan> selectRepayPlanByRoleCode(RepayPlan condition,
             int start, int pageSize) {
-        return super.selectList(NAMESPACE.concat("select_repayPlan_byRoleCode"),
-            condition, RepayPlan.class);
+        return super.selectList(
+            NAMESPACE.concat("select_repayPlan_byRoleCode"), condition,
+            RepayPlan.class);
     }
 
     @Override

@@ -250,6 +250,21 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     }
 
     @Override
+    public BudgetOrder getBudgetOrderByRepayBizCode(String repayBizCode) {
+        BudgetOrder data = null;
+        if (StringUtils.isNotBlank(repayBizCode)) {
+            BudgetOrder condition = new BudgetOrder();
+            condition.setRepayBizCode(repayBizCode);
+            data = budgetOrderDAO.select(condition);
+            if (data == null) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "预算单不存在！！");
+            }
+        }
+        return data;
+    }
+
+    @Override
     public int archiveSuccess(BudgetOrder budgetOrder, String repayBizCode,
             String userId) {
 

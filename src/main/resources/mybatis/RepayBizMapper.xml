@@ -5,22 +5,27 @@
 	<resultMap id="repayBiz_DB_Result" type="repayBiz">
 		<result column="code" property="code" />
 		<result column="user_id" property="userId" />
+		<result column="real_name" property="realName" />
+		<result column="id_kind" property="idKind" />
+		<result column="id_no" property="idNo" />
+		
 		<result column="bankcard_code" property="bankcardCode" />
 		<result column="ref_type" property="refType" />
 		<result column="ref_code" property="refCode" />
-		
 		<result column="biz_price" property="bizPrice" />
 		<result column="sf_rate" property="sfRate" />
+		
 		<result column="sf_amount" property="sfAmount" />
 		<result column="loan_bank" property="loanBank" />
 		<result column="loan_amount" property="loanAmount" />
-		
 		<result column="periods" property="periods" />
 		<result column="rest_periods" property="restPeriods" />
+		
 		<result column="bank_rate" property="bankRate" />
 		<result column="loan_start_datetime" property="loanStartDatetime" />
 		<result column="loan_end_datetime" property="loanEndDatetime" />
 		
+		<result column="bank_fk_datetime" property="bankFkdatetime" />
 		<result column="fx_deposit" property="fxDeposit" />
 		<result column="first_repay_datetime" property="firstRepayDatetime" />
 		<result column="first_repay_amount" property="firstRepayAmount" />
@@ -61,8 +66,14 @@
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
+			<if test="realName != null and realName != '' ">
+				AND t.realName = #{realName}
+			</if>
+			<if test="idNo != null and idNo != '' ">
+				AND t.id_no = #{idNo}
+			</if>
 			<if test="roleCode != null and roleCode != '' ">
-				AND t.role_code = #{roleCode}
+				AND r.role_code = #{roleCode}
 			</if>
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
@@ -70,12 +81,30 @@
 			<if test="isAdvanceSettled != null and isAdvanceSettled != '' ">
 				AND t.is_advance_settled = #{isAdvanceSettled}
 			</if>
+			<if test="loanBank != null and loanBank != '' ">
+				AND t.loan_bank = #{loanBank}
+			</if>
+			<if test="loanAmount != null and loanAmount != '' ">
+				AND t.loan_amount = #{loanAmount}
+			</if>
+			<if test="periods != null and periods != '' ">
+				AND t.periods = #{periods}
+			</if>
+			<if test="bankFkDatetimeStart != null and bankFkDatetimeStart != '' ">
+				<![CDATA[AND t.bank_fk_datetime >= #{bankFkDatetimeStart}]]>
+			</if>
+			<if test="bankFkDatetimeEnd != null and bankFkDatetimeEnd != '' ">
+				<![CDATA[AND t.bank_fk_datetime <= #{bankFkDatetimeEnd}]]>
+			</if>
 		</trim>
 	</sql>
 	<select id="select_repayBiz" parameterType="repayBiz" resultMap="repayBiz_DB_Result">
 		SELECT
 		t.code
 		,t.user_id
+		,t.real_name
+		,t.id_kind
+		,t.id_no
 		,t.bankcard_code
 		,t.ref_type
 		,t.ref_code
@@ -91,8 +120,9 @@
 		,t.bank_rate
 		,t.loan_start_datetime
 		,t.loan_end_datetime
-		,t.fx_deposit
+		,t.bank_fk_datetime
 		
+		,t.fx_deposit
 		,t.first_repay_datetime
 		,t.first_repay_amount
 		,t.month_datetime
@@ -134,6 +164,9 @@
 		SELECT
 		t.code
 		,t.user_id
+		,t.real_name
+		,t.id_kind
+		,t.id_no
 		,t.bankcard_code
 		,t.ref_type
 		,t.ref_code
@@ -149,6 +182,7 @@
 		,t.bank_rate
 		,t.loan_start_datetime
 		,t.loan_end_datetime
+		,t.bank_fk_datetime
 		,t.fx_deposit
 		
 		,t.first_repay_datetime
@@ -205,6 +239,9 @@
 		tht_repay_biz(
 		code
 		,user_id
+		,real_name
+		,id_kind
+		,id_no
 		,bankcard_code
 		,ref_type
 		,ref_code
@@ -220,6 +257,7 @@
 		,bank_rate
 		,loan_start_datetime
 		,loan_end_datetime
+		,bank_fk_datetime
 		
 		,fx_deposit
 		,first_repay_datetime
@@ -248,36 +286,41 @@
 		VALUES(
 		#{code}
 		,#{userId}
+		,#{realName}
+		,#{idKind}
+		,#{idNo}
+		
 		,#{bankcardCode}
 		,#{refType}
 		,#{refCode}
-		
 		,#{bizPrice}
 		,#{sfRate}
+		
 		,#{sfAmount}
 		,#{loanBank}
 		,#{loanAmount}
-		
 		,#{periods}
 		,#{restPeriods}
+		
 		,#{bankRate}
 		,#{loanStartDatetime}
 		,#{loanEndDatetime}
-		
+		,#{bankFkDatetime}
 		,#{fxDeposit}
 		,#{firstRepayDatetime}
+		
 		,#{firstRepayAmount}
 		,#{monthDatetime}
 		,#{monthAmount}
-		
 		,#{lyDeposit}
 		,#{cutLyDeposit}
+		
 		,#{curNodeCode}
 		,#{restAmount}
 		,#{restTotalCost}
-		
 		,#{overdueTotalDeposit}
 		,#{overdueTotalDepositIncome}
+		
 		,#{totalInDeposit}
 		,#{overdueAmount}
 		,#{totalOverdueCount}
