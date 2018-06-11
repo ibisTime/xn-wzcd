@@ -81,9 +81,6 @@ public class RepayPlan extends ABaseDO {
     // 实际代偿金额
     private Long realRepayAmount;
 
-    // 是否代偿
-    private String isRepay;
-
     // 拖车申请金额
     private Long tsCarAmount;
 

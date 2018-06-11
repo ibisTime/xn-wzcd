@@ -96,7 +96,7 @@ public class RepayBiz extends ABaseDO {
     // 节点
     private String curNodeCode;
 
-    // 剩余欠款(剩余本金，缺少利息)
+    // 剩余欠款(剩余本金本息，利息已包含在本金中)
     private Long restAmount;
 
     // 未还清收总成本

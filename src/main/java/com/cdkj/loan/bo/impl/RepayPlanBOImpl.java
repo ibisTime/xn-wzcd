@@ -127,10 +127,10 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
             repayPlan.setOverplusAmount(shouldRepayAmount);
 
             repayPlan.setOverdueAmount(0L);
-            if (ERepayBizType.CAR.getCode().equals(repayBiz.getCurNodeCode())) {
+            if (ERepayBizType.CAR.getCode().equals(repayBiz.getRefType())) {
                 repayPlan.setCurNodeCode(ERepayPlanNode.TO_REPAY.getCode());
             } else if (ERepayBizType.PRODUCT.getCode().equals(
-                repayBiz.getCurNodeCode())) {
+                repayBiz.getRefType())) {
                 repayPlan.setCurNodeCode(ERepayPlanNode.PRD_TO_REPAY.getCode());
             }
             repayPlan.setTotalFee(0L);
