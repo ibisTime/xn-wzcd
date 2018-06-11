@@ -7,6 +7,7 @@
 		<result column="entry_code" property="entryCode" />
 		<result column="apply_user" property="applyUser" />
 		<result column="apply_datetime" property="applyDatetime" />
+		
 		<result column="work_summary" property="workSummary" />
 		<result column="all_evaluation" property="allEvaluation" />
 		<result column="is_full_worker" property="isFullWorker" />
