@@ -703,6 +703,28 @@ public class BudgetOrder extends ABaseDO {
     // 银行放款日期
     private Date bankFkDatetimeEnd;
 
+    // 垫资节点
+    private String curNodeCodeDz;
+
+    // 放款节点
+    private String curNodeCodeFk;
+
+    public String getCurNodeCodeDz() {
+        return curNodeCodeDz;
+    }
+
+    public void setCurNodeCodeDz(String curNodeCodeDz) {
+        this.curNodeCodeDz = curNodeCodeDz;
+    }
+
+    public String getCurNodeCodeFk() {
+        return curNodeCodeFk;
+    }
+
+    public void setCurNodeCodeFk(String curNodeCodeFk) {
+        this.curNodeCodeFk = curNodeCodeFk;
+    }
+
     public Date getBankFkDatetimeStart() {
         return bankFkDatetimeStart;
     }

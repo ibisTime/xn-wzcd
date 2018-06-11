@@ -257,8 +257,6 @@
 		<result column="cancel_node_code" property="cancelNodeCode" />
 		<result column="frozen_status" property="frozenStatus" />
 		<result column="remark" property="remark" />
-
-
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -312,6 +310,12 @@
 			</if>
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
+			</if>
+			<if test="curNodeCodeDz != null and curNodeCodeDz != '' ">
+				<![CDATA[AND t.cur_node_code >= #{curNodeCodeDz}]]>
+			</if>
+			<if test="curNodeCodeFk != null and curNodeCodeFk != '' ">
+				<![CDATA[AND t.cur_node_code <= #{curNodeCodeFk}]]>
 			</if>
 			<if test="backAdvanceStatus != null and backAdvanceStatus != ''">
 				AND t.back_advance_status = #{backAdvanceStatus}
