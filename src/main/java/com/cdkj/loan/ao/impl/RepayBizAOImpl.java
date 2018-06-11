@@ -94,11 +94,13 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     private void setRefInfo(RepayBiz repayBiz) {
         repayBiz.setUser(userBO.getUser(repayBiz.getUserId()));
+
         RepayPlan condition = new RepayPlan();
         condition.setOrder("cur_periods", true);
         condition.setRepayBizCode(repayBiz.getCode());
         List<RepayPlan> repayPlanList = repayPlanBO
             .queryRepayPlanList(condition);
+
         repayBiz.setRepayPlanList(repayPlanList);
         if (ERepayBizType.CAR.getCode().equals(repayBiz.getRefType())) {
             repayBiz.setBudgetOrder(budgetOrderAO.getBudgetOrder(repayBiz
@@ -109,12 +111,12 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
         Long deposit = repayBiz.getLyDeposit() - repayBiz.getCutLyDeposit();
         Long amount = 0L;
-        for (RepayPlan repayPlan2 : repayPlanList) {
+        for (RepayPlan repayPlan : repayPlanList) {
             // 实际退款金额
-            Long shouldDeposit = repayPlan2.getShouldDeposit();
+            Long shouldDeposit = repayPlan.getShouldDeposit();
             deposit = deposit + shouldDeposit;
             // 借款余额
-            Long overplusAmount = repayPlan2.getOverplusAmount();
+            Long overplusAmount = repayPlan.getOverplusAmount();
             amount = amount + overplusAmount;
         }
         repayBiz.setActualRefunds(deposit);
