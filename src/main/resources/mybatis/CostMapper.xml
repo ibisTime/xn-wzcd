@@ -22,6 +22,15 @@
 			<if test="repayPlanCode != null and repayPlanCode != '' ">
 				AND t.repay_plan_code = #{repayPlanCode}
 			</if>
+			<if test="payWay != null and payWay != '' ">
+				AND t.pay_way = #{payWay}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="repayWay != null and repayWay != '' ">
+				AND t.repay_way = #{repayWay}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_cost" parameterType="cost" resultMap="cost_DB_Result">
@@ -37,7 +46,7 @@
 		,t.repay_way
 		,t.remark
 		FROM
-		tht_cost t
+		tdh_cost t
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -48,13 +57,13 @@
 
 	<select id="select_cost_count" parameterType="cost"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tht_cost t
+		SELECT count(1) FROM tdh_cost t
 		<include refid="where_condition" />
 	</select>
 
 	<insert id="insert_cost" parameterType="cost">
 		INSERT INTO
-		tht_cost(
+		tdh_cost(
 		code
 		,repay_plan_code
 		,item
@@ -81,13 +90,13 @@
 	</insert>
 	
 	<delete id="delete_cost" parameterType="cost">
-		DELETE FROM tht_cost
+		DELETE FROM tdh_cost
 		WHERE
 		repay_plan_code = #{repayPlanCode}			
 	</delete>
 
 	<update id="update_cost" parameterType="cost">
-		UPDATE tht_cost
+		UPDATE tdh_cost
 		SET
 		repay_plan_code = #{repayPlanCode}
 		,item = #{item}

@@ -15,6 +15,15 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="repayPlanCode != null and repayPlanCode != '' ">
+				AND t.repay_plan_code = #{repayPlanCode}
+			</if>
+			<if test="way != null and way != '' ">
+				AND t.way = #{way}
+			</if>
+			<if test="toUser != null and toUser != '' ">
+				AND t.to_user = #{toUser}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_remindLog" parameterType="remindLog" resultMap="remindLog_DB_Result">
@@ -26,7 +35,7 @@
 		,t.content
 		,t.create_datetime
 		FROM
-		tht_remind_log t
+		tdh_remind_log t
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -37,13 +46,13 @@
 
 	<select id="select_remindLog_count" parameterType="remindLog"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tht_remind_log t
+		SELECT count(1) FROM tdh_remind_log t
 		<include refid="where_condition" />
 	</select>
 
 	<insert id="insert_remindLog" parameterType="remindLog">
 		INSERT INTO
-		tht_remind_log(
+		tdh_remind_log(
 		code
 		,repay_plan_code
 		,way
@@ -62,7 +71,7 @@
 	</insert>
 
 	<update id="update_remindLog" parameterType="remindLog">
-		UPDATE tht_remind_log
+		UPDATE tdh_remind_log
 		SET
 		repay_plan_code = #{repayPlanCode}
 		,way = #{way}

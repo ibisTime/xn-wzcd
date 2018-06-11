@@ -26,7 +26,7 @@
 		,t.overdue_code
 		,t.repay_biz_code
 		FROM
-		tdq_overdue_repay t
+		tdh_overdue_repay t
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -37,13 +37,13 @@
 
 	<select id="select_overdueRepay_count" parameterType="overdueRepay"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tdq_overdue_repay t
+		SELECT count(1) FROM tdh_overdue_repay t
 		<include refid="where_condition" />
 	</select>
 
 	<insert id="insert_overdueRepay" parameterType="overdueRepay">
 		INSERT INTO
-		tdq_overdue_repay(
+		tdh_overdue_repay(
 		overdue_code
 		,repay_biz_code
 		)

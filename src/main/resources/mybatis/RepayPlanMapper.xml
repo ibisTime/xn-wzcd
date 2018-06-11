@@ -151,7 +151,7 @@
 		,t.suggest_note
 		,t.buy_out_amount
 		FROM
-		tht_repay_plan t
+		tdh_repay_plan t
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -209,7 +209,7 @@
 		,t.suggest_note
 		,t.buy_out_amount
 		FROM
-		tht_repay_plan t
+		tdh_repay_plan t
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -221,19 +221,19 @@
 
 	<select id="select_repayPlan_count" parameterType="repayPlan"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tht_repay_plan t
+		SELECT count(1) FROM tdh_repay_plan t
 		<include refid="where_condition" />
 	</select>
 	
 	<select id="select_repayPlan_count_byRoleCode" parameterType="repayPlan"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM (SELECT distinct code FROM tht_repay_plan t left join tsys_role_node r on t.cur_node_code = r.node_code
+		SELECT count(1) FROM (SELECT distinct code FROM tdh_repay_plan t left join tsys_role_node r on t.cur_node_code = r.node_code
 		<include refid="where_condition" />) tb
 	</select>
 
 	<insert id="insert_repayPlan" parameterType="repayPlan">
 		INSERT INTO
-		tht_repay_plan(
+		tdh_repay_plan(
 		code
 		,ref_type
 		,repay_biz_code
@@ -285,7 +285,7 @@
 
 	<insert id="insert_repayPlanList" parameterType="List">
 		INSERT INTO
-		tht_repay_plan(
+		tdh_repay_plan(
 		code
 		,ref_type
 		,repay_biz_code
@@ -341,7 +341,7 @@
 	</insert>
 	
 	<update id="update_paySuccess" parameterType="repayPlan">
-		UPDATE tht_repay_plan
+		UPDATE tdh_repay_plan
 		SET
 		cur_node_code = #{curNodeCode}
 		,payed_amount = #{payedAmount}
@@ -350,7 +350,7 @@
 	</update>
 	
 	<update id="update_payPartSuccess" parameterType="repayPlan">
-		UPDATE tht_repay_plan
+		UPDATE tdh_repay_plan
 		SET
 		payed_amount = #{payedAmount}
 		,overplus_amount = #{overplusAmount}
@@ -358,21 +358,21 @@
 	</update>
 
 	<update id="update_repayplan_node" parameterType="repayPlan">
-		UPDATE tht_repay_plan
+		UPDATE tdh_repay_plan
 		SET
 		cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 
 	<update id="update_overdue" parameterType="repayPlan">
-		UPDATE tht_repay_plan
+		UPDATE tdh_repay_plan
 		SET
 		cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 	
 	<update id="overdue_handle" parameterType="repayPlan">
-		UPDATE tht_repay_plan
+		UPDATE tdh_repay_plan
 		SET
 		cur_node_code = #{curNodeCode}
 		,overdue_deposit = #{overdueDeposit}
@@ -382,7 +382,7 @@
 	</update>
 	
 	<update id="update_applyTrailer" parameterType="repayPlan">
-		UPDATE tht_repay_plan
+		UPDATE tdh_repay_plan
 		SET
 		cur_node_code = #{curNodeCode}
 		,ts_car_amount = #{tsCarAmount}
@@ -394,7 +394,7 @@
 	</update>
 	
 	<update id="update_financialMoney" parameterType="repayPlan">
-		UPDATE tht_repay_plan
+		UPDATE tdh_repay_plan
 		SET
 		remit_amount = #{remitAmount}
 		,remit_bill_pdf = #{remitBillPdf}
@@ -402,7 +402,7 @@
 	</update>
 	
 	<update id="update_trailerEntry" parameterType="repayPlan">
-		UPDATE tht_repay_plan
+		UPDATE tdh_repay_plan
 		SET
 		take_car_address = #{takeCarAddress}
 		,take_datetime = #{takeDatetime}
@@ -413,7 +413,7 @@
 	</update>
 	
 	<update id="update_judicialLitigationEntry" parameterType="repayPlan">
-		UPDATE tht_repay_plan
+		UPDATE tdh_repay_plan
 		SET
 		cur_node_code = #{curNodeCode}
 		,buy_out_amount = #{buyOutAmount}
@@ -421,7 +421,7 @@
 	</update>
 	
 	<update id="update_qkcsbRedeemApply" parameterType="repayPlan">
-		UPDATE tht_repay_plan
+		UPDATE tdh_repay_plan
 		SET
 		jour_pdf = #{jourPdf}
 		,house_pdf = #{housePdf}
@@ -434,7 +434,7 @@
 	</update>
 	
 	<update id="update_riskManagerCheck" parameterType="repayPlan">
-		UPDATE tht_repay_plan
+		UPDATE tdh_repay_plan
 		SET
 		suggest = #{suggest}
 		,suggest_note = #{suggestNote}
@@ -442,14 +442,14 @@
 	</update>
 	
 	<update id="update_financeApprove" parameterType="repayPlan">
-		UPDATE tht_repay_plan
+		UPDATE tdh_repay_plan
 		SET
 		cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 	
 	<update id="update_repayAmount" parameterType="repayPlan">
-		UPDATE tht_repay_plan
+		UPDATE tdh_repay_plan
 		SET
 		real_repay_amount = #{realRepayAmount}
 		,is_repay = #{isRepay}

@@ -154,7 +154,7 @@
 		
 		,t.remark
 		FROM
-		tht_repay_biz t
+		tdh_repay_biz t
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -216,7 +216,7 @@
 		
 		,t.remark
 		FROM
-		tht_repay_biz t left join tsys_role_node r on t.cur_node_code = r.node_code
+		tdh_repay_biz t left join tsys_role_node r on t.cur_node_code = r.node_code
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -227,19 +227,19 @@
 	
 	<select id="select_repayBiz_count" parameterType="repayBiz"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tht_repay_biz t
+		SELECT count(1) FROM tdh_repay_biz t
 		<include refid="where_condition" />
 	</select>
 
 	<select id="select_repayBiz_count_byRoleCode" parameterType="repayBiz"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM (SELECT distinct code FROM tht_repay_biz t left join tsys_role_node r on t.cur_node_code = r.node_code
+		SELECT count(1) FROM (SELECT distinct code FROM tdh_repay_biz t left join tsys_role_node r on t.cur_node_code = r.node_code
 		<include refid="where_condition" />) tb
 	</select>
 
 	<insert id="insert_repayBiz" parameterType="repayBiz">
 		INSERT INTO
-		tht_repay_biz(
+		tdh_repay_biz(
 		code
 		,user_id
 		,real_name
@@ -337,7 +337,7 @@
 	</insert>
 
 	<update id="update_repayBiz_bankcard" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		bankcard_code = #{bankcardCode}
 		,updater = #{updater}
@@ -347,7 +347,7 @@
 	</update>
 	
 	<update id="enter_black_list_prd" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,black_handle_note = #{blackHandleNote}
@@ -358,14 +358,14 @@
 	</update>
 	
 	<update id="update_repayBiz_restAmount" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		rest_amount = #{restAmount}
 		WHERE code = #{code}
 	</update>
 	
 	<update id="update_repayAllAdvance" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,is_advance_settled = #{isAdvanceSettled}
@@ -377,7 +377,7 @@
 	</update>
 	
 	<update id="update_repayAll" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,rest_amount = #{restAmount}
@@ -388,7 +388,7 @@
 	</update>
 	
 	<update id="confirm_settle" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,settle_attach = #{settleAttach}
@@ -400,7 +400,7 @@
 	</update>
 	
 	<update id="update_approveByQkcsDepart" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,cut_ly_deposit = #{cutLyDeposit}
@@ -411,7 +411,7 @@
 	</update>
 	
 	<update id="update_approveByBankCheck" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,settle_attach = #{settleAttach}
@@ -423,7 +423,7 @@
 	</update>
 	
 	<update id="update_approveByManager" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
@@ -433,7 +433,7 @@
 	</update>
 	
 	<update id="update_approveByFinance" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
@@ -443,7 +443,7 @@
 	</update>
 	
 	<update id="update_releaseMortgage" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
@@ -453,7 +453,7 @@
 	</update>
 	
 	<update id="update_applyTrailer" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
@@ -462,7 +462,7 @@
 	</update>
 	
 	<update id="update_financialMoney" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
@@ -471,7 +471,7 @@
 	</update>
 	
 	<update id="update_trailerEntry" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
@@ -480,7 +480,7 @@
 	</update>
 	
 	<update id="update_judicialLitigationEntry" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
@@ -489,7 +489,7 @@
 	</update>
 	
 	<update id="update_trailerManage" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
@@ -498,7 +498,7 @@
 	</update>
 	
 	<update id="update_qkcsbRedeemApply" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
@@ -507,7 +507,7 @@
 	</update>
 	
 	<update id="update_riskManagerCheck" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
@@ -516,7 +516,7 @@
 	</update>
 	
 	<update id="update_financeApprove" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
@@ -525,7 +525,7 @@
 	</update>
 	
 	<update id="update_repayAmount" parameterType="repayBiz">
-		UPDATE tht_repay_biz
+		UPDATE tdh_repay_biz
 		SET
 		updater = #{updater}
 		,update_datetime = #{updateDatetime}
