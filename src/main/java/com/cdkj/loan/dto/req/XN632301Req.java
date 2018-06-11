@@ -2,17 +2,11 @@ package com.cdkj.loan.dto.req;
 
 public class XN632301Req {
 
-    private String budgetOrderCode;// 准入单编号
+    private String code;// 逾期名单编号
 
-    private String code;// 逾期客户名单编号
+    private String repayBizCode;// 还款业务编号
 
-    public String getBudgetOrderCode() {
-        return budgetOrderCode;
-    }
-
-    public void setBudgetOrderCode(String budgetOrderCode) {
-        this.budgetOrderCode = budgetOrderCode;
-    }
+    private String operator;// 操作人
 
     public String getCode() {
         return code;
@@ -22,4 +16,19 @@ public class XN632301Req {
         this.code = code;
     }
 
+    public String getRepayBizCode() {
+        return repayBizCode;
+    }
+
+    public void setRepayBizCode(String repayBizCode) {
+        this.repayBizCode = repayBizCode;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
 }

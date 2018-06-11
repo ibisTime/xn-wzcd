@@ -147,8 +147,6 @@
 		<typeAlias alias="noticeRead" type="com.cdkj.loan.domain.NoticeRead" />
 		<typeAlias alias="dayRest" type="com.cdkj.loan.domain.DayRest" />
 		<typeAlias alias="repoint" type="com.cdkj.loan.domain.Repoint" />
-		
+		<typeAlias alias="overdueRepay" type="com.cdkj.loan.domain.OverdueRepay" />
 	</typeAliases>
 </configuration>
-
-

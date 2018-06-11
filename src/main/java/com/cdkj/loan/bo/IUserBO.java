@@ -38,8 +38,8 @@ public interface IUserBO extends IPaginableBO<User> {
     public void refreshPhoto(String userId, String photo);
 
     // 更新状态
-    public void refreshStatus(String userId, EUserStatus normal, String updater,
-            String remark);
+    public void refreshStatus(String userId, EUserStatus normal,
+            String updater, String remark);
 
     // 验证支付密码:拿tradePwd进行MD5后与数据库中userId得数据库支付密码比对
     public void checkTradePwd(String userId, String tradePwd);
@@ -50,6 +50,9 @@ public interface IUserBO extends IPaginableBO<User> {
     public List<User> queryUserList(User condition);
 
     public String getUserIdByMobile(String mobile);
+
+    public String getUserIdByCondition(String mobile, String realName,
+            String idKind, String idNo);
 
     // 获取用户，不检查是否存在
     public User getUser(String mobile, String kind);

@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
+import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IBizTeamBO;
@@ -57,6 +59,7 @@ import com.cdkj.loan.dto.req.XN632180Req;
 import com.cdkj.loan.dto.req.XN632190Req;
 import com.cdkj.loan.dto.req.XN632191Req;
 import com.cdkj.loan.dto.req.XN632192Req;
+import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBackAdvanceStatus;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -64,12 +67,14 @@ import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetFrozenStatus;
 import com.cdkj.loan.enums.EBudgetOrderNode;
+import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.EIsAdvanceFund;
 import com.cdkj.loan.enums.ELoanProductStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ERepointStatus;
+import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -110,6 +115,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private IUserBO userBO;
+
+    @Autowired
+    private IAccountBO accountBO;
 
     @Autowired
     private IBankcardBO bankcardBO;
@@ -949,12 +957,16 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         /****** 生成还款业务 ******/
         // 检查用户是否已经注册过
-        String userId = userBO.getUserIdByMobile(budgetOrder.getMobile());
+        String userId = userBO.getUserIdByCondition(budgetOrder.getMobile(),
+            budgetOrder.getApplyUserName(), budgetOrder.getIdKind(),
+            budgetOrder.getIdNo());
         if (StringUtils.isBlank(userId)) {
             // 用户代注册并实名认证
             userId = userBO.doRegisterAndIdentify(budgetOrder.getMobile(),
                 budgetOrder.getIdKind(), budgetOrder.getApplyUserName(),
                 budgetOrder.getIdNo());
+            distributeAccount(userId, budgetOrder.getMobile(),
+                EUserKind.Customer.getCode());
         }
 
         // 绑定用户银行卡
@@ -982,6 +994,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), operator);
+    }
+
+    // 分配账号
+    private void distributeAccount(String userId, String mobile, String kind) {
+        List<String> currencyList = new ArrayList<String>();
+        currencyList.add(ECurrency.CNY.getCode());
+        currencyList.add(ECurrency.JF.getCode());
+        currencyList.add(ECurrency.XYF.getCode());
+
+        for (String currency : currencyList) {
+            accountBO.distributeAccount(userId, mobile,
+                EAccountType.getAccountType(kind), currency);
+        }
     }
 
     @Override

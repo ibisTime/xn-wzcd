@@ -61,11 +61,17 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
 
     // 当月
     @Override
-    public RepayPlan getRepayPlanLast(RepayPlan condition) {
+    public RepayPlan getRepayPlanCurMonth(String repayBizCode) {
+        RepayPlan condition = new RepayPlan();
+        condition.setRepayBizCode(repayBizCode);
         condition.setRepayStartDatetime(DateUtil.getFirstDay());
         condition.setRepayEndDatetime(DateUtil.getLastDay());
-        return repayPlanDAO.select(condition);
-
+        RepayPlan data = null;
+        List<RepayPlan> list = repayPlanDAO.selectList(condition);
+        if (CollectionUtils.isNotEmpty(list)) {
+            data = list.get(0);
+        }
+        return data;
     }
 
     @Override
@@ -148,7 +154,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
         repayPlan.setOverplusAmount(repayPlan.getOverplusAmount()
                 - realWithholdAmount);
 
-        // repayPlan.setStatus(ERepayBizStatus.YET_REPAYMENTS.getCode());
+        repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
 
         repayPlanDAO.repaySuccess(repayPlan);
 
@@ -164,6 +170,11 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
                 - realWithholdAmount);
 
         repayPlanDAO.repayPartSuccess(repayPlan);
+    }
+
+    @Override
+    public void refreshRepayPlanOverdue(RepayPlan repayPlan) {
+        repayPlanDAO.updateOverdue(repayPlan);
     }
 
     /**
@@ -241,18 +252,18 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     }
 
     @Override
-    public void refreshRepayPlanOverdue(RepayPlan repayPlan) {
-        repayPlanDAO.OverdueHandle(repayPlan);
+    public void refreshRepayPlanOverdueHandle(RepayPlan repayPlan) {
+        repayPlanDAO.overdueHandle(repayPlan);
     }
 
     @Override
     public void refreshToGreen(RepayPlan repayPlan) {
-        repayPlanDAO.OverdueHandle(repayPlan);
+        repayPlanDAO.overdueHandle(repayPlan);
     }
 
     @Override
     public void refreshToBlackProduct(RepayPlan repayPlan) {
-        repayPlanDAO.OverdueHandle(repayPlan);
+        repayPlanDAO.overdueHandle(repayPlan);
     }
 
     @Override

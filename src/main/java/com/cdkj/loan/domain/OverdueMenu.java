@@ -53,6 +53,9 @@ public class OverdueMenu extends ABaseDO {
     // 状态(0 待处理 1 已处理)
     private String status;
 
+    // 处理时间
+    private Date handleDatetime;
+
     // 处理说明
     private String handleNote;
 
@@ -72,6 +75,36 @@ public class OverdueMenu extends ABaseDO {
     private Date advanceFundDatetimeEnd;// 垫资日期止
 
     private String loanBankName;// 贷款银行名称
+
+    // 银行放款日期
+    private Date bankFkDatetimeStart;
+
+    // 银行放款日期
+    private Date bankFkDatetimeEnd;
+
+    public Date getBankFkDatetimeStart() {
+        return bankFkDatetimeStart;
+    }
+
+    public void setBankFkDatetimeStart(Date bankFkDatetimeStart) {
+        this.bankFkDatetimeStart = bankFkDatetimeStart;
+    }
+
+    public Date getBankFkDatetimeEnd() {
+        return bankFkDatetimeEnd;
+    }
+
+    public void setBankFkDatetimeEnd(Date bankFkDatetimeEnd) {
+        this.bankFkDatetimeEnd = bankFkDatetimeEnd;
+    }
+
+    public Date getHandleDatetime() {
+        return handleDatetime;
+    }
+
+    public void setHandleDatetime(Date handleDatetime) {
+        this.handleDatetime = handleDatetime;
+    }
 
     public String getLoanBankName() {
         return loanBankName;

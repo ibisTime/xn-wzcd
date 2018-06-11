@@ -52,12 +52,12 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
 
     @Override
     public int updateRepayAll(RepayBiz data) {
-        return super.update(NAMESPACE.concat("update_repayComplete"), data);
+        return super.update(NAMESPACE.concat("update_repayAll"), data);
     }
 
     @Override
     public int updateEnterBlackList(RepayBiz data) {
-        return super.update(NAMESPACE.concat("enter_black_list"), data);
+        return super.update(NAMESPACE.concat("enter_black_list_prd"), data);
     }
 
     @Override

@@ -74,7 +74,7 @@
 				AND t.cur_node_code = #{curNodeCode}
 			</if>
 			<if test="roleCode != null and roleCode != '' ">
-				AND t.role_code = #{roleCode}
+				AND r.role_code = #{roleCode}
 			</if>
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
@@ -381,6 +381,13 @@
 		WHERE code = #{code}
 	</update>
 
+	<update id="update_overdue" parameterType="repayPlan">
+		UPDATE tht_repay_plan
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
 	<update id="overdue_handle" parameterType="repayPlan">
 		UPDATE tht_repay_plan
 		SET

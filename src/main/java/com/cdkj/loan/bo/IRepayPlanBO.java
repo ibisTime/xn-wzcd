@@ -16,7 +16,7 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     public List<RepayPlan> queryRepayPlanList(RepayPlan condition);
 
-    public RepayPlan getRepayPlanLast(RepayPlan condition);
+    public RepayPlan getRepayPlanCurMonth(String repayBizCode);
 
     public List<RepayPlan> queryRepayPlanListByRepayBizCode(String repayBizCode);
 
@@ -31,8 +31,11 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
     // 支付成功更新
     public void repaySuccess(RepayPlan repayPlan, Long realWithholdAmount);
 
-    // 逾期更新
+    // 进入逾期
     public void refreshRepayPlanOverdue(RepayPlan repayPlan);
+
+    // 逾期后更新
+    public void refreshRepayPlanOverdueHandle(RepayPlan repayPlan);
 
     // 进入绿名单
     public void refreshToGreen(RepayPlan repayPlan);
