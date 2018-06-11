@@ -90,7 +90,12 @@ public class CarOrderAOImpl implements ICarOrderAO {
 
     @Override
     public CarOrder getCarOrder(String code) {
-        return carOrderBO.getCarOrder(code);
+        CarOrder carOrder = carOrderBO.getCarOrder(code);
+        Car car = carBO.getCar(carOrder.getCarCode());
+        carOrder.setCar(car);
+        User user = userBO.getUser(carOrder.getUserId());
+        carOrder.setUser(user);
+        return carOrder;
     }
 
     @Override
