@@ -29,8 +29,8 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
 
     @Override
     public long selectTotalCount(RepayBiz condition) {
-        return super.selectTotalCount(NAMESPACE.concat("select_repayBiz_count"),
-            condition);
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_repayBiz_count"), condition);
     }
 
     @Override
@@ -156,8 +156,7 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
     }
 
     @Override
-    public void repayAmount(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_repayAmount"), data);
+    public void repayOverDue(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_repay_overdue"), data);
     }
-
 }

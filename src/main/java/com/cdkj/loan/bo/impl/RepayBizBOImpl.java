@@ -421,7 +421,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     }
 
     @Override
-    public void repayAmount(RepayBiz repayBiz) {
-        repayBizDAO.repayAmount(repayBiz);
+    public void repayOverdue(RepayBiz repayBiz) {
+        repayBizDAO.repayOverDue(repayBiz);
     }
+
 }

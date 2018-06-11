@@ -520,18 +520,19 @@
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
+		,total_overdue_count = #{totalOverdueCount}
+		,cur_overdue_count = #{curOverdueCount}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_repayAmount" parameterType="repayBiz">
+	<update id="update_repay_overdue" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
-		updater = #{updater}
-		,update_datetime = #{updateDatetime}
+		overdue_amount = #{overdueAmount}
+		,total_overdue_count = #{totalOverdueCount}
+		,cur_overdue_count = #{curOverdueCount}
 		WHERE code = #{code}
 	</update>
-	
-	
 </mapper>

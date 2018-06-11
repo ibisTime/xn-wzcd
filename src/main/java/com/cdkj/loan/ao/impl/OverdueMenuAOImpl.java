@@ -51,7 +51,6 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
     private IRepayPlanBO repayPlanBO;
 
     @Override
-    @Transactional
     public void importOverdueMenu(String loanBankCode,
             List<XN632300ReqOverdue> list) {
         // 遍历循环导入
@@ -88,16 +87,8 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
                     overDueRepayPlan.setCurNodeCode(ERepayPlanNode.OVERDUE
                         .getCode());
 
-                    long totalRepayAmount = overDueRepayPlan.getRepayCapital()
-                            + overDueRepayPlan.getRepayInterest();
-                    if (totalRepayAmount < overdueMenu.getOverdueAmount()) {
-                        overDueRepayPlan.setOverdueAmount(totalRepayAmount);
-                    } else {
-                        overDueRepayPlan.setOverdueAmount(overdueMenu
-                            .getOverdueAmount());
-                    }
-                    // 更新逾期金额
-                    repayPlanBO.refreshRepayPlanOverdue(overDueRepayPlan);
+                    // 更新逾期还款信息
+                    refreshRepayInfo(overdueMenu, repayBiz, overDueRepayPlan);
 
                     overdueMenu.setStatus(EOverdueMenuStatus.YCL.getCode());
                     overdueMenu.setBudgetOrderCode(repayBiz.getRefCode());
@@ -130,6 +121,28 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
         }
     }
 
+    /** 
+     * @param overdueMenu
+     * @param repayBiz
+     * @param overDueRepayPlan 
+     * @create: 2018年6月12日 上午6:17:54 xieyj
+     * @history: 
+     */
+    private void refreshRepayInfo(OverdueMenu overdueMenu, RepayBiz repayBiz,
+            RepayPlan overDueRepayPlan) {
+        long totalRepayAmount = overDueRepayPlan.getRepayCapital()
+                + overDueRepayPlan.getRepayInterest();
+        overDueRepayPlan.setOverdueAmount(totalRepayAmount);
+        repayPlanBO.refreshRepayPlanOverdue(overDueRepayPlan);// 更新还款计划逾期金额
+
+        // 更新还款业务逾期金额
+        repayBiz.setOverdueAmount(repayBiz.getOverdueAmount()
+                + overDueRepayPlan.getOverdueAmount());
+        repayBiz.setTotalOverdueCount(repayBiz.getTotalOverdueCount() + 1);
+        repayBiz.setCurOverdueCount(repayBiz.getCurOverdueCount() + 1);
+        repayBizBO.repayOverdue(repayBiz);
+    }
+
     // 处理逻辑
     // 1、前提条件判断
     // 2、逾期名单状态更改为已处理
@@ -156,6 +169,8 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
             overDueRepayPlan.setOverdueAmount(overdueMenu.getOverdueAmount());
         }
         repayPlanBO.refreshRepayPlanOverdue(overDueRepayPlan);
+        // 更新逾期还款信息
+        refreshRepayInfo(overdueMenu, repayBiz, overDueRepayPlan);
 
         overdueMenu.setStatus(EOverdueMenuStatus.YCL.getCode());
         BudgetOrder budgetOrder = budgetOrderBO

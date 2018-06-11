@@ -54,9 +54,6 @@ public class RepayBiz extends ABaseDO {
     // 贷款金额
     private Long loanAmount;
 
-    // 是否提前还款
-    private String isEarlyRepayment;
-
     // 总期数
     private int periods;
 
@@ -117,10 +114,10 @@ public class RepayBiz extends ABaseDO {
     // 逾期总金额
     private Long overdueAmount;
 
-    // 累计逾期期数
+    // 累计逾期期数(记住历史逾期的次数)
     private int totalOverdueCount;
 
-    // 实际逾期期数
+    // 实际逾期期数(现在在逾期的次数)
     private int curOverdueCount;
 
     // 黑名单处理结果备案(商品分期)
@@ -550,14 +547,6 @@ public class RepayBiz extends ABaseDO {
 
     public void setOverdueAmount(Long overdueAmount) {
         this.overdueAmount = overdueAmount;
-    }
-
-    public String getIsEarlyRepayment() {
-        return isEarlyRepayment;
-    }
-
-    public void setIsEarlyRepayment(String isEarlyRepayment) {
-        this.isEarlyRepayment = isEarlyRepayment;
     }
 
     public int getTotalOverdueCount() {

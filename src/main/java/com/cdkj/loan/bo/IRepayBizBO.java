@@ -112,8 +112,8 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     // 部分还款更新还款金额
     public void refreshRestAmount(RepayBiz repayBiz, Long realWithholdAmount);
 
-    // 缴纳代偿金额
-    public void repayAmount(RepayBiz repayBiz);
+    // 更新逾期金额
+    public void repayOverdue(RepayBiz repayBiz);
 
     // ********************************common********************************
 }
