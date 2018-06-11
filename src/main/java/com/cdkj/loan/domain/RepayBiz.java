@@ -188,6 +188,26 @@ public class RepayBiz extends ABaseDO {
     // 银行放款日期
     private Date bankFkDatetimeEnd;
 
+    private String keyWord;// 关键字
+
+    private List<String> curNodeCodeList;// 节点
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
+    }
+
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
+
     public Date getBankFkDatetimeStart() {
         return bankFkDatetimeStart;
     }

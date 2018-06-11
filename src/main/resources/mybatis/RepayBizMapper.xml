@@ -66,11 +66,14 @@
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
-			<if test="realName != null and realName != '' ">
-				AND t.realName = #{realName}
+			<if test="keyWord != null and keyWord != '' ">
+				AND t.real_name like "%"#{keyWord}"%" OR  t.id_no like "%"#{keyWord}"%"
 			</if>
-			<if test="idNo != null and idNo != '' ">
-				AND t.id_no = #{idNo}
+			<if test="curNodeCodeList != null and curNodeCodeList.size() != 0 ">
+				AND t.cur_node_code in 
+                <foreach item="item" index="index" collection="curNodeCodeList" open="(" separator="," close=")">
+	            	#{item}
+                </foreach> 
 			</if>
 			<if test="roleCode != null and roleCode != '' ">
 				AND r.role_code = #{roleCode}
