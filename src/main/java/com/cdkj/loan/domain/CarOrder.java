@@ -49,6 +49,17 @@ public class CarOrder extends ABaseDO {
     // 车型
     private Car car;
 
+    // 用户
+    private SYSUser user;
+
+    public SYSUser getUser() {
+        return user;
+    }
+
+    public void setUser(SYSUser user) {
+        this.user = user;
+    }
+
     public Car getCar() {
         return car;
     }
