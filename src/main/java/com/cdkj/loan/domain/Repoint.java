@@ -20,6 +20,9 @@ public class Repoint extends ABaseDO {
     // 团队编号
     private String teamCode;
 
+    // 团队长
+    private String captain;
+
     // 业务编号
     private String bizCode;
 
@@ -59,6 +62,14 @@ public class Repoint extends ABaseDO {
 
     public void setAccountNo(String accountNo) {
         this.accountNo = accountNo;
+    }
+
+    public String getCaptain() {
+        return captain;
+    }
+
+    public void setCaptain(String captain) {
+        this.captain = captain;
     }
 
     public String getBank() {

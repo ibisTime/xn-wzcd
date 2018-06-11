@@ -573,14 +573,21 @@
 		
 		,t.enter_location
 		,t.sale_user_id
+		,t.team_code
 		,t.company_code
 		,t.apply_datetime
-		,t.cur_node_code
-		
-		,t.remark
-		,t.team_code
 		,t.back_advance_status
+		
+		,t.back_advance_amount
+		,t.back_advance_account
+		,t.back_advance_open_bank
+		,t.back_advance_subbranch
+		,t.back_advance_water_bill
+		
+		,t.cur_node_code
+		,t.cancel_node_code
 		,t.frozen_status
+		,t.remark
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -736,14 +743,21 @@
 		,t.bank_fk_datetime
 		,t.is_advance_fund
 		,t.sale_user_id
+		,t.team_code
 		,t.company_code
 		,t.apply_datetime
+		,t.back_advance_status
+		
+		,t.back_advance_amount
+		,t.back_advance_account
+		,t.back_advance_open_bank
+		,t.back_advance_subbranch
+		,t.back_advance_water_bill
 		
 		,t.cur_node_code
-		,t.remark
-		,t.team_code
-		,t.back_advance_status
+		,t.cancel_node_code
 		,t.frozen_status
+		,t.remark
 		FROM
 		tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
 		<include refid="where_condition" />
@@ -941,12 +955,21 @@
 		,is_advance_fund
 		
 		,sale_user_id
+		,team_code
 		,company_code
 		,apply_datetime
-		,cur_node_code
-		,remark
-		,team_code
 		,back_advance_status
+		
+		,back_advance_amount
+		,back_advance_account
+		,back_advance_open_bank
+		,back_advance_subbranch
+		,back_advance_water_bill
+		
+		,cur_node_code
+		,cancel_node_code
+		,frozen_status
+		,remark
 		)
 		VALUES(
 		#{code}
@@ -1126,12 +1149,19 @@
 		,#{isAdvanceFund}
 		
 		,#{saleUserId}
+		,#{teamCode}
 		,#{companyCode}
 		,#{applyDatetime}
-		,#{curNodeCode}
-		,#{remark}
-		,#{teamCode}
 		,#{backAdvanceStatus}
+		,#{backAdvanceAmount}
+		,#{backAdvanceAccount}
+		,#{backAdvanceOpenBank}
+		,#{backAdvanceSubbranch}
+		,#{backAdvanceWaterBill}
+		,#{curNodeCode}
+		,#{cancelNodeCode}
+		,#{frozenStatus}
+		,#{remark}
 		)
 	</insert>
 
@@ -1432,6 +1462,7 @@
 		,repay_first_month_datetime = #{repayFirstMonthDatetime}
 		,repay_first_month_amount = #{repayFirstMonthAmount}
 		,repay_month_amount = #{repayMonthAmount}
+		,bank_fk_datetime = #{bankFkDatetime}
 		,cur_node_code = #{curNodeCode}
 		,remark = #{remark}
 		WHERE code = #{code}

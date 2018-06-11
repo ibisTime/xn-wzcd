@@ -5,6 +5,7 @@
 	<resultMap id="repoint_DB_Result" type="repoint">
 		<result column="code" property="code" />
 		<result column="team_code" property="teamCode" />
+		<result column="captain" property="captain" />
 		<result column="biz_code" property="bizCode" />
 		<result column="should_amount" property="shouldAmount" />
 		<result column="actual_amount" property="actualAmount" />
@@ -27,6 +28,9 @@
 			<if test="teamCode != null and teamCode != '' ">
 				AND t.team_code = #{teamCode}
 			</if>
+			<if test="captain != null and captain != '' ">
+				AND t.captain = #{captain}
+			</if>
 			<if test="bizCode != null and bizCode != '' ">
 				AND t.biz_code = #{bizCode}
 			</if>
@@ -39,6 +43,7 @@
 		SELECT
 		t.code
 		,t.team_code
+		,t.captain
 		,t.biz_code
 		,t.should_amount
 		,t.actual_amount
@@ -73,6 +78,7 @@
 		tdh_repoint(
 		code
 		,team_code
+		,captain
 		,biz_code
 		,should_amount
 		,actual_amount
@@ -90,6 +96,7 @@
 		VALUES(
 		#{code}
 		,#{teamCode}
+		,#{captain}
 		,#{bizCode}
 		,#{shouldAmount}
 		,#{actualAmount}
@@ -110,6 +117,7 @@
 		UPDATE tdh_repoint
 		SET
 		team_code = #{teamCode}
+		captain = #{captain}
 		,biz_code = #{bizCode}
 		,should_amount = #{shouldAmount}
 		,actual_amount = #{actualAmount}
