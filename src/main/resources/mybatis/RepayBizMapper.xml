@@ -25,7 +25,7 @@
 		<result column="loan_start_datetime" property="loanStartDatetime" />
 		<result column="loan_end_datetime" property="loanEndDatetime" />
 		
-		<result column="bank_fk_datetime" property="bankFkdatetime" />
+		<result column="bank_fk_datetime" property="bankFkDatetime" />
 		<result column="fx_deposit" property="fxDeposit" />
 		<result column="first_repay_datetime" property="firstRepayDatetime" />
 		<result column="first_repay_amount" property="firstRepayAmount" />
