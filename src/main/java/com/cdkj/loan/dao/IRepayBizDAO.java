@@ -21,7 +21,7 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
     public int updateRepayBizRestAmount(RepayBiz data);
 
     // 清欠催收部审核
-    public void approveByQkcsDepart(RepayBiz data);
+    public void approveByQkcsDepartment(RepayBiz data);
 
     // 驻行人员审核
     public void approveByBankCheck(RepayBiz data);
@@ -35,13 +35,16 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
     // 业务团队解除抵押
     public void releaseMortgage(RepayBiz data);
 
+    // 红名单处理
+    public void overdueRedHandle(RepayBiz data);
+
     // 申请拖车
     public void applyTrailer(RepayBiz repayBiz);
 
     // 财务打款
     public void financialMoney(RepayBiz repayBiz);
 
-    // 清款催收部拖车录入
+    // 清欠催收部拖车录入
     public void trailerEntry(RepayBiz repayBiz);
 
     // 司法诉讼结果录入
@@ -50,7 +53,7 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
     // 拖车管理
     public void trailerManage(RepayBiz repayBiz);
 
-    // 清款催收部申请赎回
+    // 清欠催收部申请赎回
     public void qkcsbRedeemApply(RepayBiz repayBiz);
 
     // 风控主管审核

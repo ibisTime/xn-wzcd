@@ -6,5 +6,6 @@ import com.cdkj.loan.domain.Cost;
 public interface ICostDAO extends IBaseDAO<Cost> {
     String NAMESPACE = ICostDAO.class.getName().concat(".");
 
-    public int update(Cost data);
+    public int updateRepay(Cost data);
+
 }

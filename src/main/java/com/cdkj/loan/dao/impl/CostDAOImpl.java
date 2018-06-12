@@ -46,9 +46,7 @@ public class CostDAOImpl extends AMybatisTemplate implements ICostDAO {
     }
 
     @Override
-    public int update(Cost data) {
-        // TODO Auto-generated method stub
-        return 0;
+    public int updateRepay(Cost data) {
+        return super.update(NAMESPACE.concat("update_cost_repay"), data);
     }
-
 }

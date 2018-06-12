@@ -378,6 +378,7 @@
 		cur_node_code = #{curNodeCode}
 		,overdue_deposit = #{overdueDeposit}
 		,deposit_way = #{depositWay}
+		,total_fee = #{totalFee}
 		,overdue_handle_note = #{overdueHandleNote}
 		WHERE code = #{code}
 	</update>
@@ -446,6 +447,13 @@
 		UPDATE tdh_repay_plan
 		SET
 		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_payFee" parameterType="repayPlan">
+		UPDATE tdh_repay_plan
+		SET
+		payed_fee = #{payedFee}
 		WHERE code = #{code}
 	</update>
 	

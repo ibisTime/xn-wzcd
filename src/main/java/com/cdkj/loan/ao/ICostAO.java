@@ -13,8 +13,6 @@ public interface ICostAO {
 
     public int dropCost(String code);
 
-    public int editCost(Cost data);
-
     public Paginable<Cost> queryCostPage(int start, int limit, Cost condition);
 
     public List<Cost> queryCostList(Cost condition);

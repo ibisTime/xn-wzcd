@@ -95,20 +95,13 @@
 		repay_plan_code = #{repayPlanCode}			
 	</delete>
 
-	<update id="update_cost" parameterType="cost">
+	<update id="update_cost_repay" parameterType="cost">
 		UPDATE tdh_cost
 		SET
-		repay_plan_code = #{repayPlanCode}
-		,item = #{item}
-		,amount = #{amount}
-		,pay_datetime = #{payDatetime}
-		,pay_way = #{payWay}
-		,status = #{status}
+		status = #{status}
 		,repay_datetime = #{repayDatetime}
 		,repay_way = #{repayWay}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
-
-
 </mapper>

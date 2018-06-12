@@ -9,9 +9,10 @@ import com.cdkj.loan.ao.ICostAO;
 import com.cdkj.loan.bo.ICostBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Cost;
 import com.cdkj.loan.dto.req.XN630535Req;
-import com.cdkj.loan.exception.BizException;
+import com.cdkj.loan.enums.EBoolean;
 
 @Service
 public class CostAOImpl implements ICostAO {
@@ -25,21 +26,13 @@ public class CostAOImpl implements ICostAO {
             Cost cost = new Cost();
             cost.setRepayPlanCode(repayPlanCode);
             cost.setItem(Req.getItem());
-            cost.setAmount(Req.getAmount());
+            cost.setAmount(StringValidater.toLong(Req.getAmount()));
             cost.setPayDatetime(DateUtil.strToDate(Req.getPayDatetime(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
             cost.setPayWay(Req.getPayWay());
-            cost.setRepayWay(Req.getRepayWay());
+            cost.setStatus(EBoolean.NO.getCode());
             costBO.saveCost(cost);
         }
-    }
-
-    @Override
-    public int editCost(Cost data) {
-        if (!costBO.isCostExist(data.getCode())) {
-            throw new BizException("xn0000", "清收费用不存在");
-        }
-        return costBO.refreshCost(data);
     }
 
     @Override

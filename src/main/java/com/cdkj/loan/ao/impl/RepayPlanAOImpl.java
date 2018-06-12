@@ -30,9 +30,12 @@ import com.cdkj.loan.domain.RemindLog;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN630532Req;
+import com.cdkj.loan.dto.req.XN630535Req;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealResult;
+import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayPlanNode;
 import com.cdkj.loan.enums.EResultStatus;
@@ -248,26 +251,33 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     @Override
     @Transactional
     public void overdueHandle(XN630532Req req) {
-
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(req.getCode());
-
         if (!ERepayPlanNode.OVERDUE.getCode()
             .equals(repayPlan.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前还款计划不是逾期状态");
         }
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
+        if (ERepayBizNode.TO_REPAY.getCode().equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不是还款中，暂无法处理");
+        }
 
         // 删除原来费用清单
         costAO.dropCost(req.getCode());
-
         // 添加费用清单
         costAO.addCost(req.getCode(), req.getCostList());
+        long totalFee = 0;
+        for (XN630535Req xn630535Req : req.getCostList()) {
+            totalFee += StringValidater.toLong(xn630535Req.getAmount());
+        }
 
         // 更新还款计划
         repayPlan.setOverdueDeposit(StringValidater.toLong(req
             .getOverdueDeposit()));
         repayPlan.setDepositWay(req.getOverdueDepositWay());
         repayPlan.setOverdueHandleNote(req.getRemark());
+        repayPlan.setTotalFee(totalFee);
         if (EDealResult.GREEN.getCode().equals(req.getDealResult())) {
             repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_GREEN.getCode());
         } else if (EDealResult.RED.getCode().equals(req.getDealResult())) {
@@ -277,6 +287,30 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
                 .setCurNodeCode(ERepayPlanNode.HANDLER_TO_YELLOW.getCode());
         }
         repayPlanBO.refreshRepayPlanOverdueHandle(repayPlan);
+
+        // 更新还款业务未申请拖车节点
+        repayBizBO.overdueRedMenuHandle(repayBiz,
+            ERepayBizNode.QKCSB_APPLY_TC.getCode());
+    }
+
+    @Override
+    @Transactional
+    public void payFee(String code, List<String> costList, String operator,
+            String payType) {
+        RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
+        // TODO 支付方式 扣款
+        long totalFee = 0L;
+        for (String costCode : costList) {
+            Cost cost = costBO.getCost(costCode);
+            if (EBoolean.YES.getCode().equals(cost.getStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前清收成本已缴纳");
+            }
+            totalFee += cost.getAmount();
+            costBO.refreshRepay(cost, payType);
+        }
+        repayPlan.setPayedFee(totalFee + repayPlan.getPayedFee());
+        repayPlanBO.payFee(repayPlan);
     }
 
     @Override

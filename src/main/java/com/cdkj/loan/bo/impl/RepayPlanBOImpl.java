@@ -328,6 +328,11 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     }
 
     @Override
+    public void payFee(RepayPlan repayPlan) {
+        repayPlanDAO.payFee(repayPlan);
+    }
+
+    @Override
     public void repayAmount(RepayPlan repayPlan) {
         repayPlanDAO.repayAmount(repayPlan);
     }

@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 清款催收部申请赎回
+ * 清欠催收部申请赎回
  * @author: CYL 
  * @since: 2018年6月10日 下午4:11:27 
  * @history:

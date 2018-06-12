@@ -20,11 +20,14 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
-			<if test="status != null and status != '' ">
-				AND t.status = #{status}
+			<if test="captain != null and captain != '' ">
+				AND t.captain = #{captain}
 			</if>
 			<if test="companyCode != null and companyCode != '' ">
 				AND t.company_code = #{companyCode}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
 			</if>
 		</trim>
 	</sql>

@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,6 +12,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICostDAO;
 import com.cdkj.loan.domain.Cost;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -52,12 +54,11 @@ public class CostBOImpl extends PaginableBOImpl<Cost> implements ICostBO {
     }
 
     @Override
-    public int refreshCost(Cost data) {
-        int count = 0;
-        if (StringUtils.isNotBlank(data.getCode())) {
-            count = costDAO.update(data);
-        }
-        return count;
+    public void refreshRepay(Cost data, String repayWay) {
+        data.setStatus(EBoolean.YES.getCode());
+        data.setRepayWay(repayWay);
+        data.setRepayDatetime(new Date());
+        costDAO.updateRepay(data);
     }
 
     @Override

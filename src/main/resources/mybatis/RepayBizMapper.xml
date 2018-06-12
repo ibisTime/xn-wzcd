@@ -400,7 +400,18 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_approveByQkcsDepart" parameterType="repayBiz">
+	<update id="confirm_settleProduct" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,cut_ly_deposit = #{cutLyDeposit}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_approveByQkcsDepartment" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
@@ -450,6 +461,13 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,release_datetime = #{releaseDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_overdueRedHandle" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		cur_overdue_count = #{curOverdueCount}
 		WHERE code = #{code}
 	</update>
 	

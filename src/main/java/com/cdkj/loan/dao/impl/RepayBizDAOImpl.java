@@ -62,7 +62,7 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
 
     @Override
     public int updateConfirmSettledProduct(RepayBiz data) {
-        return super.update(NAMESPACE.concat("confirm_settle"), data);
+        return super.update(NAMESPACE.concat("confirm_settleProduct"), data);
     }
 
     @Override
@@ -77,8 +77,8 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
     }
 
     @Override
-    public void approveByQkcsDepart(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_approveByQkcsDepart"), data);
+    public void approveByQkcsDepartment(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_approveByQkcsDepartment"), data);
     }
 
     @Override
@@ -158,5 +158,10 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
     @Override
     public void repayOverDue(RepayBiz data) {
         super.update(NAMESPACE.concat("update_repay_overdue"), data);
+    }
+
+    @Override
+    public void overdueRedHandle(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_overdueRedHandle"), data);
     }
 }

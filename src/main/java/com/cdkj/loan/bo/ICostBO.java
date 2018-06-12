@@ -13,10 +13,9 @@ public interface ICostBO extends IPaginableBO<Cost> {
 
     public int removeCost(String code);
 
-    public int refreshCost(Cost data);
+    public void refreshRepay(Cost data, String repayWay);
 
     public List<Cost> queryCostList(Cost condition);
 
     public Cost getCost(String code);
-
 }
