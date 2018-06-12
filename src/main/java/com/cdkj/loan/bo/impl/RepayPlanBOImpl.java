@@ -19,6 +19,7 @@ import com.cdkj.loan.dao.IRepayPlanDAO;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayPlanNode;
@@ -156,6 +157,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
             repayPlan.setOverdueDeposit(0L);
             repayPlan.setShouldDeposit(0L);
             repayPlan.setRemindCount(0);
+            repayPlan.setIsRepay(EBoolean.NO.getCode());
             repayPlanList.add(repayPlan);
         }
 

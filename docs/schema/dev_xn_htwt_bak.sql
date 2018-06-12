@@ -9,7 +9,7 @@
  Target Server Version : 50633
  File Encoding         : utf-8
 
- Date: 06/12/2018 09:33:20 AM
+ Date: 06/06/2018 03:58:09 AM
 */
 
 SET NAMES utf8;
@@ -118,24 +118,6 @@ CREATE TABLE `tbf_withhold` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
---  Table structure for `tdh_cost`
--- ----------------------------
-DROP TABLE IF EXISTS `tdh_cost`;
-CREATE TABLE `tdh_cost` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `repay_plan_code` varchar(32) DEFAULT NULL COMMENT '还款计划编号',
-  `item` varchar(255) DEFAULT NULL COMMENT '费用项名称',
-  `amount` bigint(20) DEFAULT NULL COMMENT '金额',
-  `pay_datetime` datetime DEFAULT NULL COMMENT '发生时间',
-  `pay_way` varchar(255) DEFAULT NULL COMMENT '发生付款方式',
-  `status` varchar(4) DEFAULT NULL COMMENT '状态',
-  `repay_datetime` datetime DEFAULT NULL COMMENT '执行时间',
-  `repay_way` varchar(255) DEFAULT NULL COMMENT '执行付款方式',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
 --  Table structure for `tdh_overdue_menu`
 -- ----------------------------
 DROP TABLE IF EXISTS `tdh_overdue_menu`;
@@ -161,9 +143,6 @@ CREATE TABLE `tdh_overdue_menu` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='导入逾期名单';
 
--- ----------------------------
---  Table structure for `tdh_overdue_repay`
--- ----------------------------
 DROP TABLE IF EXISTS `tdh_overdue_repay`;
 CREATE TABLE `tdh_overdue_repay` (
   `id` int(32) NOT NULL AUTO_INCREMENT,
@@ -173,371 +152,220 @@ CREATE TABLE `tdh_overdue_repay` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='逾期名单关联表';
 
 -- ----------------------------
---  Table structure for `tdh_remind_log`
--- ----------------------------
-DROP TABLE IF EXISTS `tdh_remind_log`;
-CREATE TABLE `tdh_remind_log` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `repay_plan_code` varchar(32) DEFAULT NULL COMMENT '还款计划编号',
-  `way` varchar(255) DEFAULT NULL COMMENT '催收方式',
-  `to_user` varchar(255) DEFAULT NULL COMMENT '催收对象姓名',
-  `content` text COMMENT '催收文本',
-  `create_datetime` datetime DEFAULT NULL COMMENT '催收时间',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
---  Table structure for `tdh_repay_biz`
--- ----------------------------
-DROP TABLE IF EXISTS `tdh_repay_biz`;
-CREATE TABLE `tdh_repay_biz` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `user_id` varchar(32) DEFAULT NULL COMMENT '申请人编号',
-  `real_name` varchar(32) DEFAULT NULL COMMENT '真实姓名',
-  `id_kind` varchar(32) DEFAULT NULL COMMENT '证件号类型',
-  `id_no` varchar(32) DEFAULT NULL COMMENT '证件号编号',
-  `bankcard_code` varchar(32) DEFAULT NULL COMMENT '还款卡编号',
-  `ref_type` varchar(4) DEFAULT NULL COMMENT '关联类型(0=商品，1=车贷)',
-  `ref_code` varchar(32) DEFAULT NULL COMMENT '关联编号',
-  `biz_price` bigint(20) DEFAULT NULL COMMENT '业务总价',
-  `sf_rate` decimal(18,8) DEFAULT NULL COMMENT '首付比例',
-  `sf_amount` varchar(20) DEFAULT NULL COMMENT '首付金额',
-  `loan_bank` varchar(32) DEFAULT NULL COMMENT '贷款银行',
-  `loan_amount` bigint(20) DEFAULT NULL COMMENT '贷款金额',
-  `periods` int(11) DEFAULT NULL COMMENT '总期数',
-  `rest_periods` int(11) DEFAULT NULL COMMENT '剩余期数',
-  `bank_rate` decimal(18,8) DEFAULT NULL COMMENT '银行利率',
-  `loan_start_datetime` datetime DEFAULT NULL COMMENT '贷款时间起点',
-  `loan_end_datetime` datetime DEFAULT NULL COMMENT '贷款时间终点',
-  `bank_fk_datetime` datetime DEFAULT NULL COMMENT '银行放款时间',
-  `fx_deposit` bigint(20) DEFAULT NULL COMMENT '风险保证金',
-  `first_repay_datetime` datetime DEFAULT NULL COMMENT '首期还款日期',
-  `first_repay_amount` bigint(20) DEFAULT NULL COMMENT '首期月供金额',
-  `month_datetime` int(11) DEFAULT NULL COMMENT '每期还款日期',
-  `month_amount` bigint(20) DEFAULT NULL COMMENT '每期月供金额',
-  `ly_deposit` bigint(20) DEFAULT NULL COMMENT '履约保证金（可退）',
-  `cut_ly_deposit` bigint(20) DEFAULT NULL COMMENT '扣除的履约保证金',
-  `cur_node_code` varchar(32) DEFAULT NULL COMMENT '当前节点',
-  `rest_amount` bigint(20) DEFAULT NULL COMMENT '剩余欠款',
-  `rest_total_cost` bigint(20) DEFAULT NULL COMMENT '未还清收总成本',
-  `overdue_total_deposit` bigint(20) DEFAULT NULL COMMENT '再次逾期保证金总额',
-  `overdue_total_deposit_income` bigint(20) DEFAULT NULL COMMENT '再次逾期保证金总收入',
-  `total_in_deposit` bigint(20) DEFAULT NULL COMMENT '额外保证金收入',
-  `overdue_amount` bigint(20) DEFAULT NULL COMMENT '逾期总金额',
-  `total_overdue_count` int(11) DEFAULT NULL COMMENT '累计逾期期数',
-  `cur_overdue_count` int(11) DEFAULT NULL COMMENT '实际逾期期数',
-  `black_handle_note` text COMMENT '黑名单处理结果备案',
-  `is_advance_settled` varchar(255) DEFAULT NULL COMMENT '是否提前结清(0=正常结清 1=提前结清)',
-  `settle_attach` varchar(255) DEFAULT NULL COMMENT '结清证明',
-  `settle_datetime` datetime DEFAULT NULL COMMENT '结清时间',
-  `release_datetime` datetime DEFAULT NULL COMMENT '解除抵押时间',
-  `updater` varchar(255) DEFAULT NULL COMMENT '最近修改人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '最近修改时间',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  `team_code` varchar(32) DEFAULT NULL COMMENT '团队编号',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
---  Table structure for `tdh_repay_plan`
--- ----------------------------
-DROP TABLE IF EXISTS `tdh_repay_plan`;
-CREATE TABLE `tdh_repay_plan` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `ref_type` varchar(32) DEFAULT NULL COMMENT '类型',
-  `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',
-  `user_id` varchar(32) DEFAULT NULL COMMENT '借款人编号',
-  `periods` int(11) DEFAULT NULL COMMENT '总期数',
-  `cur_periods` int(11) DEFAULT NULL COMMENT '当前期数',
-  `repay_datetime` datetime DEFAULT NULL COMMENT '还款时间',
-  `repay_capital` bigint(20) DEFAULT NULL COMMENT '本期本金',
-  `repay_interest` decimal(18,8) DEFAULT NULL COMMENT '本期利息',
-  `payed_amount` bigint(20) DEFAULT NULL COMMENT '已还金额',
-  `overplus_amount` bigint(20) DEFAULT NULL COMMENT '剩余欠款',
-  `overdue_amount` bigint(20) DEFAULT NULL COMMENT '逾期金额',
-  `cur_node_code` varchar(32) DEFAULT NULL COMMENT '节点',
-  `overdue_handler` varchar(255) DEFAULT NULL COMMENT '逾期处理人',
-  `overdue_handle_datetime` datetime DEFAULT NULL COMMENT '逾期处理时间',
-  `overdue_handle_note` text COMMENT '逾期处理说明',
-  `total_fee` bigint(20) DEFAULT NULL COMMENT '清收费用总额',
-  `payed_fee` bigint(20) DEFAULT NULL COMMENT '已缴纳清收费用总额',
-  `overdue_deposit` bigint(20) DEFAULT NULL COMMENT '再次逾期保证金',
-  `deposit_way` varchar(255) DEFAULT NULL COMMENT '再次逾期保证金收取方式',
-  `should_deposit` bigint(20) DEFAULT NULL COMMENT '实际可退的再次逾期保证金',
-  `remind_count` int(11) DEFAULT NULL COMMENT '已催款次数',
-  `real_repay_amount` bigint(20) DEFAULT NULL COMMENT '实际代偿金额',
-  `is_repay` varchar(4) DEFAULT NULL COMMENT '代偿是否缴纳',
-  `ts_car_amount` bigint(20) DEFAULT NULL COMMENT '拖车申请金额',
-  `ts_bankcard_number` varchar(255) DEFAULT NULL COMMENT '拖车收款账号',
-  `ts_bank_name` varchar(255) DEFAULT NULL COMMENT '拖车开户行',
-  `ts_subbranch` varchar(255) DEFAULT NULL COMMENT '拖车开户支行',
-  `tc_apply_note` varchar(255) DEFAULT NULL COMMENT '拖车申请说明',
-  `remit_amount` bigint(20) DEFAULT NULL COMMENT '打款金额',
-  `remit_bill_pdf` varchar(255) DEFAULT NULL COMMENT '打款水单',
-  `take_car_address` varchar(255) DEFAULT NULL COMMENT '收车地点',
-  `take_datetime` datetime DEFAULT NULL COMMENT '拖车时间',
-  `take_name` varchar(255) DEFAULT NULL COMMENT '拖车人员',
-  `take_location` varchar(255) DEFAULT NULL COMMENT '拖车停放位置',
-  `take_note` varchar(255) DEFAULT NULL COMMENT '拖车说明',
-  `jour_pdf` varchar(255) DEFAULT NULL COMMENT '流水',
-  `house_pdf` varchar(255) DEFAULT NULL COMMENT '房产',
-  `gua_name` varchar(255) DEFAULT NULL COMMENT '担保人姓名',
-  `gua_id_no` varchar(255) DEFAULT NULL COMMENT '担保人身份证号',
-  `gua_mobile` varchar(255) DEFAULT NULL COMMENT '担保人手机号',
-  `gua_now_address` varchar(255) DEFAULT NULL COMMENT '担保人现居住地址',
-  `gua_note` varchar(255) DEFAULT NULL COMMENT '担保赎回说明',
-  `suggest` varchar(255) DEFAULT NULL COMMENT '建议(1=6个月保证金/2=已结清)',
-  `suggest_note` varchar(255) DEFAULT NULL COMMENT '建议说明',
-  `buy_out_amount` bigint(20) DEFAULT NULL COMMENT '团队买断扣除金额',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
---  Table structure for `tdh_repoint`
--- ----------------------------
-DROP TABLE IF EXISTS `tdh_repoint`;
-CREATE TABLE `tdh_repoint` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `team_code` varchar(32) DEFAULT NULL COMMENT '团队编号',
-  `captain` varchar(32) DEFAULT NULL,
-  `biz_code` varchar(32) DEFAULT NULL COMMENT '业务编号',
-  `should_amount` bigint(20) DEFAULT NULL COMMENT '应返金额',
-  `actual_amount` bigint(20) DEFAULT NULL COMMENT '实返金额',
-  `account_no` varchar(255) DEFAULT NULL COMMENT '收款账号',
-  `bank` varchar(255) DEFAULT NULL COMMENT '收款银行',
-  `subbranch` varchar(255) DEFAULT NULL COMMENT '收款支行',
-  `water_bill` varchar(255) DEFAULT NULL COMMENT '水单',
-  `status` char(1) DEFAULT NULL COMMENT '状态（0待返点 1已返点）',
-  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='返点表';
-
--- ----------------------------
 --  Table structure for `tdq_budget_order`
 -- ----------------------------
 DROP TABLE IF EXISTS `tdq_budget_order`;
 CREATE TABLE `tdq_budget_order` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',
-  `loan_product_code` varchar(32) DEFAULT NULL COMMENT '贷款产品编号',
-  `loan_product_name` tinytext COMMENT '贷款产品名称',
-  `loan_bank` tinytext COMMENT '贷款银行',
-  `gps_fee` bigint(20) DEFAULT NULL COMMENT 'GPS费用',
-  `auth_fee` bigint(20) DEFAULT NULL COMMENT '公证费',
-  `bank_fee` bigint(20) DEFAULT NULL COMMENT '银行服务费',
-  `company_fee` bigint(20) DEFAULT NULL COMMENT '公司服务费',
-  `credit_code` varchar(32) DEFAULT NULL COMMENT '征信单编号',
-  `biz_type` varchar(32) DEFAULT NULL COMMENT '业务种类',
-  `loan_period` varchar(32) DEFAULT NULL COMMENT '贷款期限',
-  `invoice_company` tinytext COMMENT '开票单位',
-  `car_brand` tinytext COMMENT '品牌',
-  `car_series` tinytext COMMENT '车系',
-  `car_model` tinytext COMMENT '车型',
-  `car_pic` text COMMENT '车辆照片',
-  `car_hgz_pic` tinytext COMMENT '合格证',
-  `car_hgz_no` tinytext COMMENT '合格证号',
-  `car_frame_no` tinytext COMMENT '车架号',
-  `car_engine_no` tinytext COMMENT '发动机号',
-  `original_price` bigint(20) DEFAULT NULL COMMENT '市场指导价',
-  `invoice_price` bigint(20) DEFAULT NULL COMMENT '开票价',
-  `car_color` tinytext COMMENT '颜色',
-  `month_deposit` bigint(20) DEFAULT NULL COMMENT '月供保证金',
-  `first_amount` bigint(20) DEFAULT NULL COMMENT '首付金额',
-  `first_rate` decimal(18,8) DEFAULT NULL COMMENT '首付比例',
-  `loan_amount` bigint(20) DEFAULT NULL COMMENT '贷款额',
-  `settle_address` tinytext COMMENT '落户地点',
-  `apply_user_id` tinytext COMMENT '申请人编号',
-  `apply_user_name` tinytext COMMENT '申请人姓名',
-  `gender` tinytext COMMENT '性别',
-  `marry_state` tinytext COMMENT '婚姻状况',
-  `nation` tinytext COMMENT '民族',
-  `education` tinytext COMMENT '学历',
-  `id_kind` varchar(32) DEFAULT NULL COMMENT '证件类型',
-  `id_no` varchar(255) DEFAULT NULL COMMENT '身份证号',
-  `family_number` varchar(255) DEFAULT NULL COMMENT '家庭人口',
-  `mobile` varchar(32) DEFAULT NULL COMMENT '手机号',
-  `now_address` varchar(255) DEFAULT NULL COMMENT '现居住地址',
-  `post_code1` varchar(255) DEFAULT NULL COMMENT '邮编1',
-  `residence_address` varchar(255) DEFAULT NULL COMMENT '户口所在地',
-  `post_code2` tinytext COMMENT '邮编2',
-  `family_main_asset` text COMMENT '家庭主要财产',
-  `main_asset_include` text COMMENT '主要财产包括',
-  `main_income` tinytext COMMENT '主要收入来源',
-  `work_company_name` tinytext COMMENT '工作单位名称',
-  `work_company_address` tinytext COMMENT '工作单位地址',
-  `work_company_property` tinytext COMMENT '单位性质',
-  `work_belong_industry` tinytext COMMENT '所属行业',
-  `work_profession` tinytext COMMENT '职业',
-  `work_datetime` datetime DEFAULT NULL COMMENT '何时进入现单位工作',
-  `self_company_area` tinytext COMMENT '自营公司单位面积',
-  `employee_quantity` varchar(255) DEFAULT NULL COMMENT '员工数量',
-  `enterprise_month_output` tinytext COMMENT '企业月产值',
-  `position` tinytext COMMENT '职位',
-  `post_title` tinytext COMMENT '职称',
-  `month_income` tinytext COMMENT '月收入',
-  `mate_name` tinytext COMMENT '配偶姓名',
-  `mate_mobile` tinytext COMMENT '配偶手机号',
-  `mate_id_no` tinytext COMMENT '配偶身份证号',
-  `mate_education` tinytext COMMENT '配偶学历',
-  `mate_company_name` tinytext COMMENT '配偶工作单位名称',
-  `mate_company_address` tinytext COMMENT '配偶工作单位地址',
-  `mate_company_contact_no` tinytext COMMENT '配偶工作单位联系电话',
-  `mate_zfb_jour_datetime_start` datetime DEFAULT NULL COMMENT '配偶支付宝流水时间起',
-  `mate_zfb_jour_datetime_end` datetime DEFAULT NULL COMMENT '配偶支付宝流水时间止',
-  `mate_zfb_jour_income` bigint(20) DEFAULT NULL COMMENT '配偶支付宝收入',
-  `mate_zfb_jour_expend` bigint(20) DEFAULT NULL COMMENT '配偶支付宝支出',
-  `mate_zfb_jour_balance` bigint(20) DEFAULT NULL COMMENT '配偶支付宝帐户余额',
-  `mate_zfb_jour_month_income` bigint(20) DEFAULT NULL COMMENT '配偶支付宝月均收入',
-  `mate_zfb_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '配偶支付宝月均支出',
-  `mate_zfb_jour_pic` text COMMENT '配偶支付宝流水图片',
-  `mate_zfb_jour_remark` tinytext COMMENT '配偶支付宝流水备注',
-  `mate_wx_jour_datetime_start` datetime DEFAULT NULL COMMENT '配偶微信流水时间起',
-  `mate_wx_jour_datetime_end` datetime DEFAULT NULL COMMENT '配偶微信流水时间止',
-  `mate_wx_jour_income` bigint(20) DEFAULT NULL COMMENT '配偶微信收入',
-  `mate_wx_jour_expend` bigint(20) DEFAULT NULL COMMENT '配偶微信支出',
-  `mate_wx_jour_balance` bigint(20) DEFAULT NULL COMMENT '配偶微信帐户余额',
-  `mate_wx_jour_month_income` bigint(20) DEFAULT NULL COMMENT '配偶微信月均收入',
-  `mate_wx_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '配偶微信月均支出',
-  `mate_wx_jour_pic` text COMMENT '配偶微信流水图片',
-  `mate_wx_jour_remark` tinytext COMMENT '配偶微信流水备注',
-  `mate_jour_datetime_start` datetime DEFAULT NULL COMMENT '配偶流水时间起',
-  `mate_jour_datetime_end` datetime DEFAULT NULL COMMENT '配偶流水时间止',
-  `mate_jour_income` bigint(20) DEFAULT NULL COMMENT '配偶收入',
-  `mate_jour_expend` bigint(20) DEFAULT NULL COMMENT '配偶支出',
-  `mate_jour_balance` bigint(20) DEFAULT NULL COMMENT '配偶帐户余额',
-  `mate_jour_month_income` bigint(20) DEFAULT NULL COMMENT '配偶月均收入',
-  `mate_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '配偶月均支出',
-  `mate_jour_pic` text COMMENT '配偶流水图片',
-  `mate_jour_remark` tinytext COMMENT '配偶流水备注',
-  `mate_asset_pdf` text COMMENT '配偶资产资料pdf',
-  `gua_name` tinytext COMMENT '担保人姓名',
-  `gua_mobile` tinytext COMMENT '担保人手机号',
-  `gua_id_no` tinytext COMMENT '担保人身份证号',
-  `gua_phone` tinytext COMMENT '担保人固定电话',
-  `gua_company_name` tinytext COMMENT '担保人工作单位名称',
-  `gua_company_address` tinytext COMMENT '担保人工作单位地址',
-  `gua_house_asset_address` tinytext COMMENT '担保人房产地址',
-  `gua_zfb_jour_datetime_start` datetime DEFAULT NULL COMMENT '担保人支付宝流水时间起',
-  `gua_zfb_jour_datetime_end` datetime DEFAULT NULL COMMENT '担保人支付宝流水时间止',
-  `gua_zfb_jour_income` bigint(20) DEFAULT NULL COMMENT '担保人支付宝收入',
-  `gua_zfb_jour_expend` bigint(20) DEFAULT NULL COMMENT '担保人支付宝支出',
-  `gua_zfb_jour_balance` bigint(20) DEFAULT NULL COMMENT '担保人支付宝帐户余额',
-  `gua_zfb_jour_month_income` bigint(20) DEFAULT NULL COMMENT '担保人支付宝月均收入',
-  `gua_zfb_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '担保人支付宝月均支出',
-  `gua_zfb_jour_pic` text COMMENT '担保人支付宝流水图片',
-  `gua_zfb_jour_remark` tinytext COMMENT '担保人支付宝流水备注',
-  `gua_wx_jour_datetime_start` datetime DEFAULT NULL COMMENT '担保人微信流水时间起',
-  `gua_wx_jour_datetime_end` datetime DEFAULT NULL COMMENT '担保人微信流水时间止',
-  `gua_wx_jour_income` bigint(20) DEFAULT NULL COMMENT '担保人微信收入',
-  `gua_wx_jour_expend` bigint(20) DEFAULT NULL COMMENT '担保人微信支出',
-  `gua_wx_jour_balance` bigint(20) DEFAULT NULL COMMENT '担保人微信帐户余额',
-  `gua_wx_jour_month_income` bigint(20) DEFAULT NULL COMMENT '担保人微信月均收入',
-  `gua_wx_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '担保人微信月均支出',
-  `gua_wx_jour_pic` text COMMENT '担保人微信流水图片',
-  `gua_wx_jour_remark` tinytext COMMENT '担保人微信流水备注',
-  `gua_jour_datetime_start` datetime DEFAULT NULL COMMENT '担保人流水时间起',
-  `gua_jour_datetime_end` datetime DEFAULT NULL COMMENT '担保人流水时间止',
-  `gua_jour_income` bigint(20) DEFAULT NULL COMMENT '担保人收入',
-  `gua_jour_expend` bigint(20) DEFAULT NULL COMMENT '担保人支出',
-  `gua_jour_balance` bigint(20) DEFAULT NULL COMMENT '担保人帐户余额',
-  `gua_jour_month_income` bigint(20) DEFAULT NULL COMMENT '担保人月均收入',
-  `gua_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '担保人月均支出',
-  `gua_jour_pic` text COMMENT '担保人流水图片',
-  `gua_jour_remark` tinytext COMMENT '担保人流水备注',
-  `gua_asset_pdf` text COMMENT '担保人资产资料pdf',
-  `emergency_name1` tinytext COMMENT '家庭紧急联系人信息1 姓名',
-  `emergency_relation1` tinytext COMMENT '家庭紧急联系人信息1 与申请人关系',
-  `emergency_mobile1` tinytext COMMENT '家庭紧急联系人信息1 手机号码',
-  `emergency_name2` tinytext COMMENT '家庭紧急联系人信息2 姓名',
-  `emergency_relation2` tinytext COMMENT '家庭紧急联系人信息2 与申请人关系',
-  `emergency_mobile2` tinytext COMMENT '家庭紧急联系人信息2 手机号码',
-  `zfb_jour_datetime_start` datetime DEFAULT NULL COMMENT '支付宝流水时间起',
-  `zfb_jour_datetime_end` datetime DEFAULT NULL COMMENT '支付宝流水时间止',
-  `zfb_jour_income` bigint(20) DEFAULT NULL COMMENT '支付宝收入',
-  `zfb_jour_expend` bigint(20) DEFAULT NULL COMMENT '支付宝支出',
-  `zfb_jour_balance` bigint(20) DEFAULT NULL COMMENT '支付宝帐户余额',
-  `zfb_jour_month_income` bigint(20) DEFAULT NULL COMMENT '支付宝月均收入',
-  `zfb_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '支付宝月均支出',
-  `zfb_jour_pic` text COMMENT '支付宝流水图片',
-  `zfb_jour_remark` tinytext COMMENT '支付宝流水备注',
-  `wx_jour_datetime_start` datetime DEFAULT NULL COMMENT '微信流水时间起',
-  `wx_jour_datetime_end` datetime DEFAULT NULL COMMENT '微信流水时间止',
-  `wx_jour_income` bigint(20) DEFAULT NULL COMMENT '微信收入',
-  `wx_jour_expend` bigint(20) DEFAULT NULL COMMENT '微信支出',
-  `wx_jour_balance` bigint(20) DEFAULT NULL COMMENT '微信帐户余额',
-  `wx_jour_month_income` bigint(20) DEFAULT NULL COMMENT '微信月均收入',
-  `wx_jour_month_expend` bigint(20) DEFAULT NULL COMMENT '微信月均支出',
-  `wx_jour_pic` text COMMENT '微信流水图片',
-  `wx_jour_remark` tinytext COMMENT '微信流水备注',
-  `jour_datetime_start` datetime DEFAULT NULL COMMENT '流水时间起',
-  `jour_datetime_end` datetime DEFAULT NULL COMMENT '流水时间止',
-  `jour_income` bigint(20) DEFAULT NULL COMMENT '收入',
-  `jour_expend` bigint(20) DEFAULT NULL COMMENT '支出',
-  `jour_balance` bigint(20) DEFAULT NULL COMMENT '帐户余额',
-  `jour_month_income` bigint(20) DEFAULT NULL COMMENT '月均收入',
-  `jour_month_expend` bigint(20) DEFAULT NULL COMMENT '月均支出',
-  `jour_pic` text COMMENT '流水图片',
-  `jour_remark` tinytext COMMENT '流水备注',
-  `asset_pdf` text COMMENT '资产资料pdf',
-  `house_contract` text COMMENT '购房合同',
-  `house_picture` text COMMENT '房屋照片',
-  `is_advance_fund` tinytext COMMENT '是否垫资',
-  `interview_video` tinytext COMMENT '面签视频',
-  `interview_contract` tinytext COMMENT '面签合同',
-  `advance_fund_datetime` datetime DEFAULT NULL COMMENT '垫资日期',
-  `advance_fund_amount` bigint(20) DEFAULT NULL COMMENT '垫资金额',
-  `bill_pdf` tinytext COMMENT '水单',
-  `car_settle_datetime` datetime DEFAULT NULL COMMENT '车辆落户日期',
-  `car_number` tinytext COMMENT '车牌号',
-  `car_invoice` tinytext COMMENT '车辆发票',
-  `car_hgz` tinytext COMMENT '合格证',
-  `car_jqx` tinytext COMMENT '交强险',
-  `car_syx` tinytext COMMENT '商业险',
-  `car_regcerti` tinytext COMMENT '登记证书',
-  `car_pd` tinytext COMMENT '车辆批单',
-  `car_key` tinytext COMMENT '车钥匙',
-  `car_big_smj` tinytext COMMENT '大本扫描件',
-  `bank_commit_datetime` datetime DEFAULT NULL COMMENT '银行提交时间',
-  `bank_commit_note` tinytext COMMENT '银行提交说明',
-  `bank_fk_datetime` datetime DEFAULT NULL COMMENT '银行放款时间',
-  `repay_bank_code` varchar(32) DEFAULT NULL COMMENT '还款卡银行编号',
-  `repay_bank_name` tinytext COMMENT '还款卡银行名称',
-  `repay_subbranch` tinytext COMMENT '还款卡开户支行',
-  `repay_bankcard_number` tinytext COMMENT '还款卡银行卡号',
-  `repay_bill_date` int(11) DEFAULT NULL COMMENT '银行账单日',
-  `repay_bank_date` int(11) DEFAULT NULL COMMENT '银行还款日',
-  `repay_company_date` int(11) DEFAULT NULL COMMENT '公司还款日',
-  `repay_first_month_amount` bigint(20) DEFAULT NULL COMMENT '首期月供金额',
-  `repay_first_month_datetime` datetime DEFAULT NULL COMMENT '首期还款日期',
-  `repay_month_amount` bigint(20) DEFAULT NULL COMMENT '每期月供金额',
-  `receipt_bank_code` tinytext COMMENT '收款银行编号',
-  `receipt_bank_name` tinytext COMMENT '收款银行名称',
-  `receipt_bankcard_number` tinytext COMMENT '收款银行卡号',
-  `receipt_pdf` tinytext COMMENT '收款凭证',
-  `receipt_remark` tinytext COMMENT '收款备注',
-  `pledge_datetime` datetime DEFAULT NULL COMMENT '抵押日期',
-  `green_big_smj` tinytext COMMENT '绿大本扫描件',
-  `pledge_bank_commit_datetime` datetime DEFAULT NULL COMMENT '抵押提交银行时间',
-  `pledge_bank_commit_note` tinytext COMMENT '抵押提交说明',
-  `enter_location` tinytext COMMENT '入档位置',
-  `sale_user_id` varchar(32) DEFAULT NULL COMMENT '业务员编号',
-  `team_code` varchar(32) DEFAULT NULL COMMENT '团队编号',
-  `company_code` varchar(32) DEFAULT NULL COMMENT '业务公司编号',
-  `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
-  `back_advance_status` char(1) DEFAULT NULL COMMENT '退客户垫资款状态（0无需退款 1银行已放款待财务退款 2财务已退垫资款）',
-  `back_advance_amount` bigint(20) DEFAULT NULL COMMENT '退客户垫资款 退款金额',
-  `back_advance_account` varchar(32) DEFAULT NULL COMMENT '退客户垫资款 收款账号',
-  `back_advance_open_bank` varchar(255) DEFAULT NULL COMMENT '退客户垫资款 开户行',
-  `back_advance_subbranch` varchar(255) DEFAULT NULL COMMENT '退客户垫资款 开户支行',
-  `back_advance_water_bill` varchar(255) DEFAULT NULL COMMENT '退客户垫资款 水单',
-  `cur_node_code` varchar(32) DEFAULT NULL COMMENT '当前节点编号',
-  `cancel_node_code` varchar(32) DEFAULT NULL COMMENT '客户申请作废时的节点编号',
-  `frozen_status` char(1) DEFAULT NULL COMMENT '冻结状态 （0冻结 1正常）',
-  `remark` tinytext COMMENT '备注',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='准入单';
+    `code` VARCHAR(32) NOT NULL COMMENT '编号',
+    `repay_biz_code` VARCHAR(32) DEFAULT NULL COMMENT '还款业务编号',
+    `loan_product_code` VARCHAR(32) DEFAULT NULL COMMENT '贷款产品编号',
+    `loan_product_name` tinytext DEFAULT NULL COMMENT '贷款产品名称',
+    `loan_bank` tinytext DEFAULT NULL COMMENT '贷款银行',
+    `gps_fee` BIGINT(20) DEFAULT NULL COMMENT 'GPS费用',
+    `auth_fee` BIGINT(20) DEFAULT NULL COMMENT '公证费',
+    `bank_fee` BIGINT(20) DEFAULT NULL COMMENT '银行服务费',
+    `company_fee` BIGINT(20) DEFAULT NULL COMMENT '公司服务费',
+    `credit_code` VARCHAR(32) DEFAULT NULL COMMENT '征信单编号',
+    `biz_type` VARCHAR(32) DEFAULT NULL COMMENT '业务种类',
+    `loan_period` VARCHAR(32) DEFAULT NULL COMMENT '贷款期限',
+    `invoice_company` tinytext DEFAULT NULL COMMENT '开票单位',
+    `car_brand` tinytext DEFAULT NULL COMMENT '品牌',
+    `car_series` tinytext DEFAULT NULL COMMENT '车系',
+    `car_model` tinytext DEFAULT NULL COMMENT '车型',
+    `car_pic` text DEFAULT NULL COMMENT '车辆照片',
+    `car_hgz_pic` tinytext DEFAULT NULL COMMENT '合格证',
+    `car_hgz_no` tinytext DEFAULT NULL COMMENT '合格证号',
+    `car_frame_no` tinytext DEFAULT NULL COMMENT '车架号',
+    `car_engine_no` tinytext DEFAULT NULL COMMENT '发动机号',
+    `original_price` BIGINT(20) DEFAULT NULL COMMENT '市场指导价',
+    `invoice_price` BIGINT(20) DEFAULT NULL COMMENT '开票价',
+    `car_color` tinytext DEFAULT NULL COMMENT '颜色',
+    `month_deposit` BIGINT(20) DEFAULT NULL COMMENT '月供保证金',
+    `first_amount` BIGINT(20) DEFAULT NULL COMMENT '首付金额',
+    `first_rate` DECIMAL(18,8) DEFAULT NULL COMMENT '首付比例',
+    `loan_amount` BIGINT(20) DEFAULT NULL COMMENT '贷款额',
+    `settle_address` tinytext DEFAULT NULL COMMENT '落户地点',
+    `apply_user_id` tinytext DEFAULT NULL COMMENT '申请人编号',
+    `apply_user_name` tinytext DEFAULT NULL COMMENT '申请人姓名',
+    `gender` tinytext DEFAULT NULL COMMENT '性别',
+    `marry_state` tinytext DEFAULT NULL COMMENT '婚姻状况',
+    `nation` tinytext DEFAULT NULL COMMENT '民族',
+    `education` tinytext DEFAULT NULL COMMENT '学历',
+    `id_kind` VARCHAR(32) DEFAULT NULL COMMENT '证件类型',
+    `id_no` VARCHAR(255) DEFAULT NULL COMMENT '身份证号',
+    `family_number` VARCHAR(255) DEFAULT NULL COMMENT '家庭人口',
+    `mobile` VARCHAR(32) DEFAULT NULL COMMENT '手机号',
+    `now_address` VARCHAR(255) DEFAULT NULL COMMENT '现居住地址',
+    `post_code1` VARCHAR(255) DEFAULT NULL COMMENT '邮编1',
+    `residence_address` VARCHAR(255) DEFAULT NULL COMMENT '户口所在地',
+    `post_code2` tinytext DEFAULT NULL COMMENT '邮编2',
+    `family_main_asset` text DEFAULT NULL COMMENT '家庭主要财产',
+    `main_asset_include` text DEFAULT NULL COMMENT '主要财产包括',
+    `main_income` tinytext DEFAULT NULL COMMENT '主要收入来源',
+    `work_company_name` tinytext DEFAULT NULL COMMENT '工作单位名称',
+    `work_company_address` tinytext DEFAULT NULL COMMENT '工作单位地址',
+    `work_company_property` tinytext DEFAULT NULL COMMENT '单位性质',
+    `work_belong_industry` tinytext DEFAULT NULL COMMENT '所属行业',
+    `work_profession` tinytext DEFAULT NULL COMMENT '职业',
+    `work_datetime` DATETIME DEFAULT NULL COMMENT '何时进入现单位工作',
+    `self_company_area` tinytext DEFAULT NULL COMMENT '自营公司单位面积',
+    `employee_quantity` VARCHAR(255) DEFAULT NULL COMMENT '员工数量',
+    `enterprise_month_output` tinytext DEFAULT NULL COMMENT '企业月产值',
+    `position` tinytext DEFAULT NULL COMMENT '职位',
+    `post_title` tinytext DEFAULT NULL COMMENT '职称',
+    `month_income` tinytext DEFAULT NULL COMMENT '月收入',
+    `mate_name` tinytext DEFAULT NULL COMMENT '配偶姓名',
+    `mate_mobile` tinytext DEFAULT NULL COMMENT '配偶手机号',
+    `mate_id_no` tinytext DEFAULT NULL COMMENT '配偶身份证号',
+    `mate_education` tinytext DEFAULT NULL COMMENT '配偶学历',
+    `mate_company_name` tinytext DEFAULT NULL COMMENT '配偶工作单位名称',
+    `mate_company_address` tinytext DEFAULT NULL COMMENT '配偶工作单位地址',
+    `mate_company_contact_no` tinytext DEFAULT NULL COMMENT '配偶工作单位联系电话',
+    `mate_zfb_jour_datetime_start` DATETIME DEFAULT NULL COMMENT '配偶支付宝流水时间起',
+    `mate_zfb_jour_datetime_end` DATETIME DEFAULT NULL COMMENT '配偶支付宝流水时间止',
+    `mate_zfb_jour_income` BIGINT(20) DEFAULT NULL COMMENT '配偶支付宝收入',
+    `mate_zfb_jour_expend` BIGINT(20) DEFAULT NULL COMMENT '配偶支付宝支出',
+    `mate_zfb_jour_balance` BIGINT(20) DEFAULT NULL COMMENT '配偶支付宝帐户余额',
+    `mate_zfb_jour_month_income` BIGINT(20) DEFAULT NULL COMMENT '配偶支付宝月均收入',
+    `mate_zfb_jour_month_expend` BIGINT(20) DEFAULT NULL COMMENT '配偶支付宝月均支出',
+    `mate_zfb_jour_pic` TEXT COMMENT '配偶支付宝流水图片',
+    `mate_zfb_jour_remark` tinytext DEFAULT NULL COMMENT '配偶支付宝流水备注',
+    `mate_wx_jour_datetime_start` DATETIME DEFAULT NULL COMMENT '配偶微信流水时间起',
+    `mate_wx_jour_datetime_end` DATETIME DEFAULT NULL COMMENT '配偶微信流水时间止',
+    `mate_wx_jour_income` BIGINT(20) DEFAULT NULL COMMENT '配偶微信收入',
+    `mate_wx_jour_expend` BIGINT(20) DEFAULT NULL COMMENT '配偶微信支出',
+    `mate_wx_jour_balance` BIGINT(20) DEFAULT NULL COMMENT '配偶微信帐户余额',
+    `mate_wx_jour_month_income` BIGINT(20) DEFAULT NULL COMMENT '配偶微信月均收入',
+    `mate_wx_jour_month_expend` BIGINT(20) DEFAULT NULL COMMENT '配偶微信月均支出',
+    `mate_wx_jour_pic` TEXT COMMENT '配偶微信流水图片',
+    `mate_wx_jour_remark` tinytext DEFAULT NULL COMMENT '配偶微信流水备注',
+    `mate_jour_datetime_start` DATETIME DEFAULT NULL COMMENT '配偶流水时间起',
+    `mate_jour_datetime_end` DATETIME DEFAULT NULL COMMENT '配偶流水时间止',
+    `mate_jour_income` BIGINT(20) DEFAULT NULL COMMENT '配偶收入',
+    `mate_jour_expend` BIGINT(20) DEFAULT NULL COMMENT '配偶支出',
+    `mate_jour_balance` BIGINT(20) DEFAULT NULL COMMENT '配偶帐户余额',
+    `mate_jour_month_income` BIGINT(20) DEFAULT NULL COMMENT '配偶月均收入',
+    `mate_jour_month_expend` BIGINT(20) DEFAULT NULL COMMENT '配偶月均支出',
+    `mate_jour_pic` TEXT COMMENT '配偶流水图片',
+    `mate_jour_remark` tinytext DEFAULT NULL COMMENT '配偶流水备注',
+    `mate_asset_pdf` TEXT COMMENT '配偶资产资料pdf',
+    `gua_name` tinytext DEFAULT NULL COMMENT '担保人姓名',
+    `gua_mobile` tinytext DEFAULT NULL COMMENT '担保人手机号',
+    `gua_id_no` tinytext DEFAULT NULL COMMENT '担保人身份证号',
+    `gua_phone` tinytext DEFAULT NULL COMMENT '担保人固定电话',
+    `gua_company_name` tinytext DEFAULT NULL COMMENT '担保人工作单位名称',
+    `gua_company_address` tinytext DEFAULT NULL COMMENT '担保人工作单位地址',
+    `gua_house_asset_address` tinytext DEFAULT NULL COMMENT '担保人房产地址',
+    `gua_zfb_jour_datetime_start` DATETIME DEFAULT NULL COMMENT '担保人支付宝流水时间起',
+    `gua_zfb_jour_datetime_end` DATETIME DEFAULT NULL COMMENT '担保人支付宝流水时间止',
+    `gua_zfb_jour_income` BIGINT(20) DEFAULT NULL COMMENT '担保人支付宝收入',
+    `gua_zfb_jour_expend` BIGINT(20) DEFAULT NULL COMMENT '担保人支付宝支出',
+    `gua_zfb_jour_balance` BIGINT(20) DEFAULT NULL COMMENT '担保人支付宝帐户余额',
+    `gua_zfb_jour_month_income` BIGINT(20) DEFAULT NULL COMMENT '担保人支付宝月均收入',
+    `gua_zfb_jour_month_expend` BIGINT(20) DEFAULT NULL COMMENT '担保人支付宝月均支出',
+    `gua_zfb_jour_pic` TEXT COMMENT '担保人支付宝流水图片',
+    `gua_zfb_jour_remark` tinytext DEFAULT NULL COMMENT '担保人支付宝流水备注',
+    `gua_wx_jour_datetime_start` DATETIME DEFAULT NULL COMMENT '担保人微信流水时间起',
+    `gua_wx_jour_datetime_end` DATETIME DEFAULT NULL COMMENT '担保人微信流水时间止',
+    `gua_wx_jour_income` BIGINT(20) DEFAULT NULL COMMENT '担保人微信收入',
+    `gua_wx_jour_expend` BIGINT(20) DEFAULT NULL COMMENT '担保人微信支出',
+    `gua_wx_jour_balance` BIGINT(20) DEFAULT NULL COMMENT '担保人微信帐户余额',
+    `gua_wx_jour_month_income` BIGINT(20) DEFAULT NULL COMMENT '担保人微信月均收入',
+    `gua_wx_jour_month_expend` BIGINT(20) DEFAULT NULL COMMENT '担保人微信月均支出',
+    `gua_wx_jour_pic` TEXT COMMENT '担保人微信流水图片',
+    `gua_wx_jour_remark` tinytext DEFAULT NULL COMMENT '担保人微信流水备注',
+    `gua_jour_datetime_start` DATETIME DEFAULT NULL COMMENT '担保人流水时间起',
+    `gua_jour_datetime_end` DATETIME DEFAULT NULL COMMENT '担保人流水时间止',
+    `gua_jour_income` BIGINT(20) DEFAULT NULL COMMENT '担保人收入',
+    `gua_jour_expend` BIGINT(20) DEFAULT NULL COMMENT '担保人支出',
+    `gua_jour_balance` BIGINT(20) DEFAULT NULL COMMENT '担保人帐户余额',
+    `gua_jour_month_income` BIGINT(20) DEFAULT NULL COMMENT '担保人月均收入',
+    `gua_jour_month_expend` BIGINT(20) DEFAULT NULL COMMENT '担保人月均支出',
+    `gua_jour_pic` TEXT COMMENT '担保人流水图片',
+    `gua_jour_remark` tinytext DEFAULT NULL COMMENT '担保人流水备注',
+    `gua_asset_pdf` TEXT COMMENT '担保人资产资料pdf',
+    `emergency_name1` tinytext DEFAULT NULL COMMENT '家庭紧急联系人信息1 姓名',
+    `emergency_relation1` tinytext DEFAULT NULL COMMENT '家庭紧急联系人信息1 与申请人关系',
+    `emergency_mobile1` tinytext DEFAULT NULL COMMENT '家庭紧急联系人信息1 手机号码',
+    `emergency_name2` tinytext DEFAULT NULL COMMENT '家庭紧急联系人信息2 姓名',
+    `emergency_relation2` tinytext DEFAULT NULL COMMENT '家庭紧急联系人信息2 与申请人关系',
+    `emergency_mobile2` tinytext DEFAULT NULL COMMENT '家庭紧急联系人信息2 手机号码',
+    `zfb_jour_datetime_start` DATETIME DEFAULT NULL COMMENT '支付宝流水时间起',
+    `zfb_jour_datetime_end` DATETIME DEFAULT NULL COMMENT '支付宝流水时间止',
+    `zfb_jour_income` BIGINT(20) DEFAULT NULL COMMENT '支付宝收入',
+    `zfb_jour_expend` BIGINT(20) DEFAULT NULL COMMENT '支付宝支出',
+    `zfb_jour_balance` BIGINT(20) DEFAULT NULL COMMENT '支付宝帐户余额',
+    `zfb_jour_month_income` BIGINT(20) DEFAULT NULL COMMENT '支付宝月均收入',
+    `zfb_jour_month_expend` BIGINT(20) DEFAULT NULL COMMENT '支付宝月均支出',
+    `zfb_jour_pic` TEXT COMMENT '支付宝流水图片',
+    `zfb_jour_remark` tinytext DEFAULT NULL COMMENT '支付宝流水备注',
+    `wx_jour_datetime_start` DATETIME DEFAULT NULL COMMENT '微信流水时间起',
+    `wx_jour_datetime_end` DATETIME DEFAULT NULL COMMENT '微信流水时间止',
+    `wx_jour_income` BIGINT(20) DEFAULT NULL COMMENT '微信收入',
+    `wx_jour_expend` BIGINT(20) DEFAULT NULL COMMENT '微信支出',
+    `wx_jour_balance` BIGINT(20) DEFAULT NULL COMMENT '微信帐户余额',
+    `wx_jour_month_income` BIGINT(20) DEFAULT NULL COMMENT '微信月均收入',
+    `wx_jour_month_expend` BIGINT(20) DEFAULT NULL COMMENT '微信月均支出',
+    `wx_jour_pic` TEXT COMMENT '微信流水图片',
+    `wx_jour_remark` tinytext DEFAULT NULL COMMENT '微信流水备注',
+    `jour_datetime_start` DATETIME DEFAULT NULL COMMENT '流水时间起',
+    `jour_datetime_end` DATETIME DEFAULT NULL COMMENT '流水时间止',
+    `jour_income` BIGINT(20) DEFAULT NULL COMMENT '收入',
+    `jour_expend` BIGINT(20) DEFAULT NULL COMMENT '支出',
+    `jour_balance` BIGINT(20) DEFAULT NULL COMMENT '帐户余额',
+    `jour_month_income` BIGINT(20) DEFAULT NULL COMMENT '月均收入',
+    `jour_month_expend` BIGINT(20) DEFAULT NULL COMMENT '月均支出',
+    `jour_pic` TEXT COMMENT '流水图片',
+    `jour_remark` tinytext DEFAULT NULL COMMENT '流水备注',
+    `asset_pdf` TEXT COMMENT '资产资料pdf',
+    `house_contract` TEXT DEFAULT NULL COMMENT '购房合同',
+    `house_picture` TEXT DEFAULT NULL COMMENT '房屋照片',
+    `is_advance_fund` tinytext DEFAULT NULL COMMENT '是否垫资',
+    `interview_video` tinytext DEFAULT NULL COMMENT '面签视频',
+    `interview_contract` tinytext DEFAULT NULL COMMENT '面签合同',
+    `advance_fund_datetime` DATETIME DEFAULT NULL COMMENT '垫资日期',
+    `advance_fund_amount` BIGINT(20) DEFAULT NULL COMMENT '垫资金额',
+    `bill_pdf` tinytext DEFAULT NULL COMMENT '水单',
+    `car_settle_datetime` DATETIME DEFAULT NULL COMMENT '车辆落户日期',
+    `car_number` tinytext DEFAULT NULL COMMENT '车牌号',
+    `car_invoice` tinytext DEFAULT NULL COMMENT '车辆发票',
+    `car_hgz` tinytext DEFAULT NULL COMMENT '合格证',
+    `car_jqx` tinytext DEFAULT NULL COMMENT '交强险',
+    `car_syx` tinytext DEFAULT NULL COMMENT '商业险',
+    `car_regcerti` tinytext DEFAULT NULL COMMENT '登记证书',
+    `car_pd` tinytext DEFAULT NULL COMMENT '车辆批单',
+    `car_key` tinytext DEFAULT NULL COMMENT '车钥匙',
+    `car_big_smj` tinytext DEFAULT NULL COMMENT '大本扫描件',
+    `bank_commit_datetime` DATETIME DEFAULT NULL COMMENT '银行提交时间',
+    `bank_commit_note` tinytext DEFAULT NULL COMMENT '银行提交说明',
+    `bank_fk_datetime` DATETIME DEFAULT NULL COMMENT '银行放款时间',
+    `repay_bank_code` VARCHAR(32) DEFAULT NULL COMMENT '还款卡银行编号',
+    `repay_bank_name` tinytext DEFAULT NULL COMMENT '还款卡银行名称',
+    `repay_subbranch` tinytext DEFAULT NULL COMMENT '还款卡开户支行',
+    `repay_bankcard_number` tinytext DEFAULT NULL COMMENT '还款卡银行卡号',
+    `repay_bill_date` INT(11) DEFAULT NULL COMMENT '银行账单日',
+    `repay_bank_date` INT(11) DEFAULT NULL COMMENT '银行还款日',
+    `repay_company_date` INT(11) DEFAULT NULL COMMENT '公司还款日',
+    `repay_first_month_amount` BIGINT(20) DEFAULT NULL COMMENT '首期月供金额',
+    `repay_first_month_datetime` DATETIME DEFAULT NULL COMMENT '首期还款日期',
+    `repay_month_amount` BIGINT(20) DEFAULT NULL COMMENT '每期月供金额',
+    `receipt_bank_code` tinytext DEFAULT NULL COMMENT '收款银行编号',
+    `receipt_bank_name` tinytext DEFAULT NULL COMMENT '收款银行名称',
+    `receipt_bankcard_number` tinytext DEFAULT NULL COMMENT '收款银行卡号',
+    `receipt_pdf` tinytext DEFAULT NULL COMMENT '收款凭证',
+    `receipt_remark` tinytext DEFAULT NULL COMMENT '收款备注',
+    `pledge_datetime` DATETIME DEFAULT NULL COMMENT '抵押日期',
+    `green_big_smj` tinytext DEFAULT NULL COMMENT '绿大本扫描件',
+    `pledge_bank_commit_datetime` DATETIME DEFAULT NULL COMMENT '抵押提交银行时间',
+    `pledge_bank_commit_note` tinytext DEFAULT NULL COMMENT '抵押提交说明',
+    `enter_location` tinytext DEFAULT NULL COMMENT '入档位置',
+    `sale_user_id` VARCHAR(32) DEFAULT NULL COMMENT '业务员编号',
+    `company_code` VARCHAR(32) DEFAULT NULL COMMENT '业务公司编号',
+    `apply_datetime` DATETIME DEFAULT NULL COMMENT '申请时间',
+    `cur_node_code` VARCHAR(32) DEFAULT NULL COMMENT '当前节点编号',
+    `remark` tinytext DEFAULT NULL COMMENT '备注',
+    PRIMARY KEY (`code`)
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8 COMMENT='准入单';
 
 -- ----------------------------
 --  Table structure for `tdq_budget_order_fee`
@@ -581,7 +409,7 @@ CREATE TABLE `tdq_budget_order_fee_detail` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tdq_budget_order_gps`;
 CREATE TABLE `tdq_budget_order_gps` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
+  `code` varchar(32) NOT NULL COMMENT 'gps编号',
   `gps_dev_no` varchar(32) DEFAULT NULL COMMENT 'gps设备号',
   `gps_type` varchar(32) DEFAULT NULL COMMENT 'gps类型',
   `az_location` varchar(32) DEFAULT NULL COMMENT '安装位置',
@@ -953,7 +781,7 @@ CREATE TABLE `tp_archive` (
   `updater` varchar(255) DEFAULT NULL COMMENT '更新人',
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  `is_delete` char(1) DEFAULT NULL COMMENT '0删除',
+  `is_delete` char(1) DEFAULT NULL COMMENT '0删除1正常',
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='人事档案';
@@ -970,91 +798,6 @@ CREATE TABLE `tp_archive_location` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='档案存放位置';
-
--- ----------------------------
---  Table structure for `tp_ask_for_apply`
--- ----------------------------
-DROP TABLE IF EXISTS `tp_ask_for_apply`;
-CREATE TABLE `tp_ask_for_apply` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `apply_user` varchar(32) DEFAULT NULL COMMENT '申请人',
-  `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
-  `lead_user_id` varchar(255) DEFAULT NULL COMMENT '请示领导',
-  `content` varchar(255) DEFAULT NULL COMMENT '请示内容',
-  `status` varchar(4) DEFAULT NULL COMMENT '状态',
-  `updater` varchar(255) DEFAULT NULL COMMENT '更新人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='领导请示申请';
-
--- ----------------------------
---  Table structure for `tp_assert_apply`
--- ----------------------------
-DROP TABLE IF EXISTS `tp_assert_apply`;
-CREATE TABLE `tp_assert_apply` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `type` char(1) DEFAULT NULL COMMENT '类型(1=办公 2=固定资产)',
-  `apply_user` varchar(255) DEFAULT NULL COMMENT '申请人',
-  `apply_note` varchar(255) DEFAULT NULL COMMENT '申请说明',
-  `is_print` char(1) DEFAULT NULL COMMENT '是否印刷品（1是 2不是）',
-  `pdf` varchar(255) DEFAULT NULL COMMENT '附件',
-  `status` char(1) DEFAULT NULL COMMENT '状态',
-  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='办公用品/固定资产';
-
--- ----------------------------
---  Table structure for `tp_assert_goods`
--- ----------------------------
-DROP TABLE IF EXISTS `tp_assert_goods`;
-CREATE TABLE `tp_assert_goods` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `assert_code` varchar(32) DEFAULT NULL COMMENT '办公用品编号',
-  `product_code` varchar(45) DEFAULT NULL COMMENT '品名',
-  `mode` varchar(255) DEFAULT NULL COMMENT '规格',
-  `quantity` varchar(32) DEFAULT NULL COMMENT '申请数量',
-  `price` bigint(20) DEFAULT NULL COMMENT '出库价格',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='办公物品列表';
-
--- ----------------------------
---  Table structure for `tp_assert_user`
--- ----------------------------
-DROP TABLE IF EXISTS `tp_assert_user`;
-CREATE TABLE `tp_assert_user` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `assert_code` varchar(32) DEFAULT NULL COMMENT '办公用品编号',
-  `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
-  `print_quantity` varchar(32) DEFAULT NULL COMMENT '印刷数量',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='办公用户列表';
-
--- ----------------------------
---  Table structure for `tp_car_break`
--- ----------------------------
-DROP TABLE IF EXISTS `tp_car_break`;
-CREATE TABLE `tp_car_break` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `user_id` varchar(32) DEFAULT NULL COMMENT '违章人编号',
-  `car_no` varchar(32) DEFAULT NULL COMMENT '车牌号',
-  `happen_datetime` datetime DEFAULT NULL COMMENT '违章时间',
-  `address` varchar(255) DEFAULT NULL COMMENT '违章地点',
-  `action` varchar(255) DEFAULT NULL COMMENT '违章行为',
-  `score` int(11) DEFAULT NULL COMMENT '记分',
-  `punish_amount` decimal(18,8) DEFAULT NULL COMMENT '罚款金额',
-  `handle_note` varchar(255) DEFAULT NULL COMMENT '处理情况',
-  `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
-  `status` varchar(32) DEFAULT NULL COMMENT '状态',
-  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='车辆违章处理';
 
 -- ----------------------------
 --  Table structure for `tp_check_project`
@@ -1110,7 +853,7 @@ CREATE TABLE `tp_comp_regime` (
   `type` varchar(4) NOT NULL COMMENT '类型(1行政事务类 2 人力资源管理类 3 财务管理类 4 营销管理类 5 生产管理类)',
   `regime_code` varchar(32) DEFAULT NULL COMMENT '制度编号',
   `name` varchar(32) DEFAULT NULL COMMENT '名称',
-  `scope` varchar(32) DEFAULT NULL COMMENT '授权查看范围',
+  `scope` varchar(32) NOT NULL COMMENT '授权查看范围',
   `content` varchar(255) DEFAULT NULL COMMENT '内容',
   `status` varchar(32) DEFAULT NULL COMMENT '状态',
   `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
@@ -1126,7 +869,6 @@ DROP TABLE IF EXISTS `tp_contract`;
 CREATE TABLE `tp_contract` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(255) DEFAULT NULL COMMENT '合同类型',
-  `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
   `archive_code` varchar(32) DEFAULT NULL COMMENT '档案编号',
   `contract_no` varchar(255) DEFAULT NULL COMMENT '合同编号',
   `start_datetime` datetime DEFAULT NULL COMMENT '开始日期',
@@ -1158,20 +900,6 @@ CREATE TABLE `tp_convert_apply` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='转正申请';
 
 -- ----------------------------
---  Table structure for `tp_day_rest`
--- ----------------------------
-DROP TABLE IF EXISTS `tp_day_rest`;
-CREATE TABLE `tp_day_rest` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '序号',
-  `date` datetime DEFAULT NULL COMMENT '日期',
-  `is_rest` varchar(4) DEFAULT NULL COMMENT '是否休息',
-  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
-  `company_code` varchar(32) DEFAULT NULL COMMENT '公司编号',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='休息日记录';
-
--- ----------------------------
 --  Table structure for `tp_employ_apply`
 -- ----------------------------
 DROP TABLE IF EXISTS `tp_employ_apply`;
@@ -1195,10 +923,9 @@ CREATE TABLE `tp_employ_apply` (
   `postcode` varchar(255) DEFAULT NULL COMMENT '邮编',
   `award` varchar(255) DEFAULT NULL COMMENT '受过何种奖励或专业训练',
   `is_out` char(1) DEFAULT NULL COMMENT '能否出差',
-  `is_over_time` char(1) DEFAULT NULL COMMENT '能否加班',
   `is_adjust_work` char(1) DEFAULT NULL COMMENT '能否接受工作调动',
-  `is_once_recruited` char(1) DEFAULT NULL COMMENT '是否曾在我公司应聘',
-  `is_friend_work` char(1) DEFAULT NULL COMMENT '是否有亲属或朋友在我司工作',
+  `is_once_recruited` varchar(255) DEFAULT NULL COMMENT '是否曾在我公司应聘',
+  `is_friend_work` varchar(255) DEFAULT NULL COMMENT '是否有亲属或朋友在我司工作',
   `composite` varchar(255) DEFAULT NULL COMMENT '综合',
   `quality` varchar(255) DEFAULT NULL COMMENT '素质',
   `interview_record` varchar(255) DEFAULT NULL COMMENT '面试记录',
@@ -1224,9 +951,7 @@ DROP TABLE IF EXISTS `tp_entry_apply`;
 CREATE TABLE `tp_entry_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `position` varchar(255) DEFAULT NULL COMMENT '入职岗位',
-  `department_code` varchar(32) DEFAULT NULL COMMENT '部门编号',
   `entry_datetime` datetime DEFAULT NULL COMMENT '入职时间',
-  `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
   `real_name` varchar(255) DEFAULT NULL COMMENT '姓名',
   `gender` varchar(4) DEFAULT NULL COMMENT '性别',
   `birthday` datetime DEFAULT NULL COMMENT '出生年月',
@@ -1265,41 +990,12 @@ CREATE TABLE `tp_entry_apply` (
   `salary_card_no` varchar(32) DEFAULT NULL COMMENT '工资卡账号',
   `bank` varchar(32) DEFAULT NULL COMMENT '工资卡账号',
   `bank_code` varchar(32) DEFAULT NULL COMMENT '开户行行号',
-  `subbranch` varchar(255) DEFAULT NULL COMMENT '开户支行',
   `status` varchar(4) DEFAULT NULL COMMENT '状态',
   `updater` varchar(255) DEFAULT NULL COMMENT '更新人',
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='入职申请';
-
--- ----------------------------
---  Table structure for `tp_fee_advance_apply`
--- ----------------------------
-DROP TABLE IF EXISTS `tp_fee_advance_apply`;
-CREATE TABLE `tp_fee_advance_apply` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `type` varchar(32) DEFAULT NULL COMMENT '类型',
-  `ref_assert_code` varchar(32) DEFAULT NULL COMMENT '关联资产审批编号',
-  `ref_budget_order_code` varchar(32) DEFAULT NULL COMMENT '关联车贷业务编号',
-  `amount` bigint(20) DEFAULT NULL COMMENT '预支金额',
-  `subbranch` varchar(255) DEFAULT NULL COMMENT '开户银行',
-  `bankcard_number` varchar(255) DEFAULT NULL COMMENT '银行账号',
-  `account_name` varchar(255) DEFAULT NULL COMMENT '账户名',
-  `apply_user` varchar(32) DEFAULT NULL COMMENT '申请人',
-  `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
-  `apply_note` varchar(255) DEFAULT NULL COMMENT '申请说明',
-  `pay_datetime` datetime DEFAULT NULL COMMENT '付款时间',
-  `pay_bank` varchar(32) DEFAULT NULL COMMENT '付款银行',
-  `pay_bankcard` varchar(255) DEFAULT NULL COMMENT '付款账号',
-  `pay_pdf` varchar(255) DEFAULT NULL COMMENT '付款凭证',
-  `status` varchar(32) DEFAULT NULL COMMENT '状态(0=待审核 1=审核通过 2=审核不通过 3=财务审核通过 4=财务审核不通过 5=确认放款)',
-  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='费用预支申请';
 
 -- ----------------------------
 --  Table structure for `tp_leave_apply`
@@ -1332,7 +1028,7 @@ CREATE TABLE `tp_notice` (
   `title` varchar(255) NOT NULL COMMENT '公告标题',
   `urgent_status` varchar(4) NOT NULL COMMENT '紧急程度（1 普通 2 紧急）',
   `publish_department_code` varchar(32) NOT NULL COMMENT '发布部门',
-  `scope` varchar(32) DEFAULT NULL COMMENT '公告范围',
+  `scope` varchar(32) NOT NULL COMMENT '公告范围',
   `content` varchar(255) NOT NULL COMMENT '公告内容',
   `publish_datetime` datetime DEFAULT NULL COMMENT '发布时间',
   `status` varchar(32) DEFAULT NULL COMMENT '状态',
@@ -1341,19 +1037,6 @@ CREATE TABLE `tp_notice` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公告管理';
-
--- ----------------------------
---  Table structure for `tp_notice_read`
--- ----------------------------
-DROP TABLE IF EXISTS `tp_notice_read`;
-CREATE TABLE `tp_notice_read` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '序号',
-  `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
-  `status` varchar(32) DEFAULT NULL COMMENT '状态(0=未读，1=已读)',
-  `notice_code` varchar(32) DEFAULT NULL COMMENT '公告编号',
-  `ref_type` varchar(4) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公告阅读记录';
 
 -- ----------------------------
 --  Table structure for `tp_overtime_apply`
@@ -1407,7 +1090,7 @@ CREATE TABLE `tp_recruit_apply` (
   `position_add_reason` varchar(255) DEFAULT NULL COMMENT '该职位增加原因',
   `temp_start_datetime` datetime DEFAULT NULL COMMENT '临时聘用开始时间',
   `temp_end_datetime` datetime DEFAULT NULL COMMENT '临时聘用结束时间',
-  `note` varchar(255) DEFAULT NULL COMMENT '说明',
+  `other_note` varchar(255) DEFAULT NULL COMMENT '说明',
   `gender` varchar(32) DEFAULT NULL COMMENT '性别',
   `age` varchar(255) DEFAULT NULL COMMENT '年龄',
   `marry_state` varchar(255) DEFAULT NULL COMMENT '婚育情况',
@@ -1422,18 +1105,6 @@ CREATE TABLE `tp_recruit_apply` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用人申请';
-
--- ----------------------------
---  Table structure for `tp_scope_people`
--- ----------------------------
-DROP TABLE IF EXISTS `tp_scope_people`;
-CREATE TABLE `tp_scope_people` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '序号',
-  `type` varchar(32) NOT NULL COMMENT '类型(所有人员=-1,分公司=1，部门=2,职位=3，具体人=4)',
-  `people_code` varchar(32) DEFAULT NULL COMMENT '具体类型人员编号',
-  `ref_code` varchar(32) DEFAULT NULL COMMENT '参考编号',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公告或制度人员范围';
 
 -- ----------------------------
 --  Table structure for `tp_social_relation`
@@ -1517,26 +1188,6 @@ CREATE TABLE `tp_supple_sign_apply_detail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='补签申请明细';
 
 -- ----------------------------
---  Table structure for `tp_transfer_position_apply`
--- ----------------------------
-DROP TABLE IF EXISTS `tp_transfer_position_apply`;
-CREATE TABLE `tp_transfer_position_apply` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `apply_user` varchar(32) DEFAULT NULL COMMENT '申请人',
-  `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
-  `new_department` varchar(255) DEFAULT NULL COMMENT '新部门',
-  `new_position` varchar(255) DEFAULT NULL COMMENT '新岗位',
-  `start_datetime` datetime DEFAULT NULL COMMENT '开始日期',
-  `end_datetime` datetime DEFAULT NULL COMMENT '结束日期',
-  `reason` varchar(255) DEFAULT NULL COMMENT '缘由',
-  `status` varchar(4) DEFAULT NULL COMMENT '状态',
-  `updater` varchar(255) DEFAULT NULL COMMENT '更新人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='调岗申请';
-
--- ----------------------------
 --  Table structure for `tp_travel_apply`
 -- ----------------------------
 DROP TABLE IF EXISTS `tp_travel_apply`;
@@ -1568,34 +1219,6 @@ CREATE TABLE `tp_travel_apply_detail` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='时间申请明细';
-
--- ----------------------------
---  Table structure for `tp_welfare_apply`
--- ----------------------------
-DROP TABLE IF EXISTS `tp_welfare_apply`;
-CREATE TABLE `tp_welfare_apply` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `apply_user` varchar(32) DEFAULT NULL COMMENT '申请人',
-  `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
-  `apply_note` varchar(255) DEFAULT NULL COMMENT '申请说明',
-  `status` varchar(32) DEFAULT NULL COMMENT '状态',
-  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='福利发放申请';
-
--- ----------------------------
---  Table structure for `tp_welfare_user`
--- ----------------------------
-DROP TABLE IF EXISTS `tp_welfare_user`;
-CREATE TABLE `tp_welfare_user` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `welfare_code` varchar(255) DEFAULT NULL COMMENT '福利编号',
-  `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='福利关联人员';
 
 -- ----------------------------
 --  Table structure for `tp_work_experience`
@@ -1860,25 +1483,6 @@ CREATE TABLE `tsys_biz_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
---  Table structure for `tsys_biz_team`
--- ----------------------------
-DROP TABLE IF EXISTS `tsys_biz_team`;
-CREATE TABLE `tsys_biz_team` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `name` varchar(255) DEFAULT NULL COMMENT '团队名称',
-  `captain` varchar(32) DEFAULT NULL COMMENT '团队长',
-  `company_code` varchar(32) DEFAULT NULL COMMENT '所属公司编号',
-  `status` char(1) DEFAULT NULL COMMENT '状态（1正常0删除）',
-  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
-  `account_no` varchar(32) DEFAULT NULL COMMENT '收款账号',
-  `bank` varchar(255) DEFAULT NULL COMMENT '收款银行',
-  `subbranch` varchar(255) DEFAULT NULL COMMENT '收款支行',
-  `water_bill` varchar(255) DEFAULT NULL COMMENT '水单',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='业务团队';
-
--- ----------------------------
 --  Table structure for `tsys_config`
 -- ----------------------------
 DROP TABLE IF EXISTS `tsys_config`;
@@ -2034,7 +1638,6 @@ CREATE TABLE `tsys_user` (
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
   `status` varchar(4) DEFAULT NULL COMMENT '状态',
   `remark` text COMMENT '备注',
-  `team_code` varchar(32) DEFAULT NULL COMMENT '所属业务团队编号',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -481,7 +481,7 @@
 	<update id="update_overdueRedHandle" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
-		cur_overdue_count = #{curOverdueCount}
+		cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 	

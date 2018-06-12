@@ -88,6 +88,7 @@ CREATE TABLE `tdh_repay_biz` (
   `updater` varchar(255) DEFAULT NULL COMMENT '最近修改人',
   `update_datetime` datetime DEFAULT NULL COMMENT '最近修改时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `team_code` varchar(32) DEFAULT NULL COMMENT '团队编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

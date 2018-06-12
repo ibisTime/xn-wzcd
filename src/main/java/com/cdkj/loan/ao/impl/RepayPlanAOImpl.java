@@ -275,6 +275,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         // 更新还款计划
         repayPlan.setOverdueDeposit(StringValidater.toLong(req
             .getOverdueDeposit()));
+        repayPlan.setOverdueAmount(0L);
         repayPlan.setDepositWay(req.getOverdueDepositWay());
         repayPlan.setOverdueHandleNote(req.getRemark());
         repayPlan.setTotalFee(totalFee);

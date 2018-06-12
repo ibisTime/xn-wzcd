@@ -256,6 +256,7 @@
 		,deposit_way
 		,should_deposit
 		,remind_count
+		,is_repay
 		)
 		VALUES(
 		#{code}
@@ -280,6 +281,7 @@
 		,#{depositWay}
 		,#{shouldDeposit}
 		,#{remindCount}
+		,#{isRepay}
 		)
 	</insert>
 
@@ -308,6 +310,7 @@
 		,deposit_way
 		,should_deposit
 		,remind_count
+		,is_repay
 		)
 		
 		VALUES
@@ -336,6 +339,7 @@
 		,#{repayPlan.depositWay}
 		,#{repayPlan.shouldDeposit}
 		,#{repayPlan.remindCount}
+		,#{repayPlan.isRepay}
 		)
 		</foreach>
 	</insert>
@@ -377,6 +381,7 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,overdue_deposit = #{overdueDeposit}
+		,overdue_amount = #{overdueAmount}
 		,deposit_way = #{depositWay}
 		,total_fee = #{totalFee}
 		,overdue_handle_note = #{overdueHandleNote}
