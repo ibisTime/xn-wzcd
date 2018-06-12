@@ -56,6 +56,18 @@ public class Repoint extends ABaseDO {
     // 备注
     private String remark;
 
+    /*----------辅助字段-----------*/
+
+    private SYSUser user;// 用户
+
+    public SYSUser getUser() {
+        return user;
+    }
+
+    public void setUser(SYSUser user) {
+        this.user = user;
+    }
+
     public String getAccountNo() {
         return accountNo;
     }
