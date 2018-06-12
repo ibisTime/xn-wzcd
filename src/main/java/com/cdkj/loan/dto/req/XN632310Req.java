@@ -16,6 +16,7 @@ public class XN632310Req {
     @NotBlank
     private String actualAmount;
 
+    @NotBlank
     private String waterBill;
 
     @NotBlank

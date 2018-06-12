@@ -28,7 +28,6 @@ public class XN630190Req {
     @NotBlank
     private String subbranch;
 
-    @NotBlank
     private String waterBill;
 
     public String getAccountNo() {
