@@ -547,19 +547,19 @@
 		,t.bank_commit_datetime
 		,t.bank_commit_note
 		
+		,t.bank_fk_datetime
 		,t.repay_bank_code
 		,t.repay_bank_name
 		,t.repay_subbranch
 		,t.repay_bankcard_number
-		,t.repay_bill_date
 		
+		,t.repay_bill_date
 		,t.repay_bank_date
 		,t.repay_company_date
 		,t.repay_first_month_amount
 		,t.repay_first_month_datetime
-		,t.repay_month_amount
 		
-		,t.bank_fk_datetime
+		,t.repay_month_amount
 		,t.receipt_bank_code
 		,t.receipt_bank_name
 		,t.receipt_bankcard_number

@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.cdkj.loan.ao.IArchiveAO;
 import com.cdkj.loan.ao.ISYSUserAO;
@@ -27,6 +28,7 @@ import com.cdkj.loan.dto.req.XN632800ReqChild;
 import com.cdkj.loan.dto.req.XN632802Req;
 import com.cdkj.loan.dto.req.XN632802ReqChild;
 import com.cdkj.loan.dto.res.XN632803Res;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.exception.BizException;
 
@@ -83,9 +85,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
-            req.getSocialSecurityRegDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(
+            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -143,6 +145,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         String archiveCode = archiveBO.saveArchive(data);
 
         List<XN632800ReqChild> socialRelationList = req.getSocialRelationList();
+        if (CollectionUtils.isEmpty(socialRelationList)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "社会关系为空！");
+        }
         for (XN632800ReqChild xn632800ReqChild : socialRelationList) {
             SocialRelation data1 = new SocialRelation();
             data1.setArchiveCode(archiveCode);
@@ -190,9 +195,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
-            req.getSocialSecurityRegDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(
+            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
