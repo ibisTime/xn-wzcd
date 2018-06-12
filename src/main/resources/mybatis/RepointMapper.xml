@@ -112,4 +112,20 @@
 		,#{remark}
 		)
 	</insert>
+	
+	<update id="update_repoint" parameterType="repoint">
+		UPDATE tdh_repoint
+		SET
+		actual_amount = #{actualAmount}
+		,account_no = #{accountNo}
+		,bank = #{bank}
+		,subbranch = #{subbranch}
+		,water_bill = #{waterBill}
+		
+		,status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
 </mapper>

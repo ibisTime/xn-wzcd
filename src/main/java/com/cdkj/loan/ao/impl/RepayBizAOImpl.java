@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -134,6 +133,16 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setLoanBalance(amount);
         String bankName = bankBO.getBank(repayBiz.getLoanBank()).getBankName();
         repayBiz.setLoanBankName(bankName);
+
+        RepayPlan overdueRepayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
+            repayBiz.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
+        repayBiz.setOverdueRepayPlan(overdueRepayPlan);
+        if (null != repayBiz.getTeamCode() && "" != repayBiz.getTeamCode()) {
+            BizTeam bizTeam = bizTeamBO.getBizTeam(repayBiz.getTeamCode());
+            repayBiz.setBizTeam(bizTeam);
+            SYSUser sysUser = sysUserBO.getUser(bizTeam.getCaptain());
+            repayBiz.setLeadUser(sysUser);
+        }
     }
 
     // 提前还款
@@ -372,10 +381,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
             condition);
         for (RepayBiz repayBiz : results.getList()) {
             setRefInfo(repayBiz);
-            RepayPlan overdueRepayPlan = repayPlanBO
-                .getRepayPlanListByRepayBizCode(repayBiz.getCode(),
-                    ERepayPlanNode.QKCSB_APPLY_TC);
-            repayBiz.setOverdueRepayPlan(overdueRepayPlan);
         }
         return results;
     }
@@ -387,10 +392,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
             start, limit, condition);
         for (RepayBiz repayBiz : paginable.getList()) {
             setRefInfo(repayBiz);
-            RepayPlan overdueRepayPlan = repayPlanBO
-                .getRepayPlanListByRepayBizCode(repayBiz.getCode(),
-                    ERepayPlanNode.QKCSB_APPLY_TC);
-            repayBiz.setOverdueRepayPlan(overdueRepayPlan);
         }
         return paginable;
     }
@@ -405,15 +406,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
         // 查询实际退款金额
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
         setRefInfo(repayBiz);
-        RepayPlan overdueRepayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
-            repayBiz.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
-        repayBiz.setOverdueRepayPlan(overdueRepayPlan);
-        if (StringUtils.isNotBlank(repayBiz.getTeamCode())) {
-            BizTeam bizTeam = bizTeamBO.getBizTeam(repayBiz.getTeamCode());
-            repayBiz.setBizTeam(bizTeam);
-            SYSUser sysUser = sysUserBO.getUser(bizTeam.getCaptain());
-            repayBiz.setLeadUser(sysUser);
-        }
         return repayBiz;
     }
 
