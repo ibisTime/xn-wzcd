@@ -150,6 +150,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBiz.setUpdateDatetime(new Date());
         repayBiz.setRemark(budgetOrder.getRemark());
 
+        repayBiz.setTeamCode(budgetOrder.getTeamCode());
         repayBizDAO.insert(repayBiz);
         return repayBiz;
     }
@@ -254,7 +255,6 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBiz.setUpdater(order.getUpdater());
         repayBiz.setUpdateDatetime(new Date());
         repayBiz.setRemark(order.getRemark());
-
         repayBizDAO.insert(repayBiz);
         return repayBiz;
     }

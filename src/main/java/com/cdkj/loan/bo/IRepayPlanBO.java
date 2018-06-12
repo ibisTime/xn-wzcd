@@ -23,6 +23,9 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
     public RepayPlan getRepayPlanListByRepayBizCode(String repayBizCode,
             ERepayPlanNode repayPlanNode);
 
+    public RepayPlan getRepayPlanByRepayBizCode(String repayBizCode,
+            ERepayPlanNode repayPlanNode);
+
     public RepayPlan getRepayPlan(String code);
 
     // 产生还款计划

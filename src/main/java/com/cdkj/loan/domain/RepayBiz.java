@@ -144,7 +144,16 @@ public class RepayBiz extends ABaseDO {
     // 备注
     private String remark;
 
+    // 团队编号
+    private String teamCode;
+
     // ****** 辅助字段 ******
+
+    // 业务团队
+    private BizTeam bizTeam;
+
+    // 领队信息
+    private SYSUser leadUser;
 
     // 预算单编号
     private String budgetOrderCode;
@@ -176,9 +185,6 @@ public class RepayBiz extends ABaseDO {
     // 银行名称
     private String loanBankName;
 
-    // 拖车时间
-    private Date takeDatetime;
-
     // 银行放款日期
     private Date bankFkDatetimeStart;
 
@@ -187,7 +193,41 @@ public class RepayBiz extends ABaseDO {
 
     private String keyWord;// 关键字
 
+    private RepayPlan overdueRepayPlan;
+
     private List<String> curNodeCodeList;// 节点
+
+    public SYSUser getLeadUser() {
+        return leadUser;
+    }
+
+    public void setLeadUser(SYSUser leadUser) {
+        this.leadUser = leadUser;
+    }
+
+    public String getTeamCode() {
+        return teamCode;
+    }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
+    }
+
+    public BizTeam getBizTeam() {
+        return bizTeam;
+    }
+
+    public void setBizTeam(BizTeam bizTeam) {
+        this.bizTeam = bizTeam;
+    }
+
+    public RepayPlan getOverdueRepayPlan() {
+        return overdueRepayPlan;
+    }
+
+    public void setOverdueRepayPlan(RepayPlan overdueRepayPlan) {
+        this.overdueRepayPlan = overdueRepayPlan;
+    }
 
     public List<String> getCurNodeCodeList() {
         return curNodeCodeList;
@@ -211,14 +251,6 @@ public class RepayBiz extends ABaseDO {
 
     public void setBankFkDatetimeStart(Date bankFkDatetimeStart) {
         this.bankFkDatetimeStart = bankFkDatetimeStart;
-    }
-
-    public Date getTakeDatetime() {
-        return takeDatetime;
-    }
-
-    public void setTakeDatetime(Date takeDatetime) {
-        this.takeDatetime = takeDatetime;
     }
 
     public Date getBankFkDatetimeEnd() {

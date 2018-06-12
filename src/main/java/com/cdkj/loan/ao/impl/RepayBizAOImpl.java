@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,19 +14,23 @@ import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankcardBO;
+import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bankcard;
+import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.dto.req.XN630511Req;
 import com.cdkj.loan.dto.req.XN630513Req;
@@ -62,6 +67,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
     private IUserBO userBO;
 
     @Autowired
+    private ISYSUserBO sysUserBO;
+
+    @Autowired
     private IBudgetOrderAO budgetOrderAO;
 
     @Autowired
@@ -75,6 +83,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     @Autowired
     private INodeFlowBO nodeFlowBO;
+
+    @Autowired
+    private IBizTeamBO bizTeamBO;
 
     // 变更银行卡
     @Override
@@ -361,6 +372,10 @@ public class RepayBizAOImpl implements IRepayBizAO {
             condition);
         for (RepayBiz repayBiz : results.getList()) {
             setRefInfo(repayBiz);
+            RepayPlan overdueRepayPlan = repayPlanBO
+                .getRepayPlanListByRepayBizCode(repayBiz.getCode(),
+                    ERepayPlanNode.QKCSB_APPLY_TC);
+            repayBiz.setOverdueRepayPlan(overdueRepayPlan);
         }
         return results;
     }
@@ -372,6 +387,10 @@ public class RepayBizAOImpl implements IRepayBizAO {
             start, limit, condition);
         for (RepayBiz repayBiz : paginable.getList()) {
             setRefInfo(repayBiz);
+            RepayPlan overdueRepayPlan = repayPlanBO
+                .getRepayPlanListByRepayBizCode(repayBiz.getCode(),
+                    ERepayPlanNode.QKCSB_APPLY_TC);
+            repayBiz.setOverdueRepayPlan(overdueRepayPlan);
         }
         return paginable;
     }
@@ -386,6 +405,15 @@ public class RepayBizAOImpl implements IRepayBizAO {
         // 查询实际退款金额
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
         setRefInfo(repayBiz);
+        RepayPlan overdueRepayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
+            repayBiz.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
+        repayBiz.setOverdueRepayPlan(overdueRepayPlan);
+        if (StringUtils.isNotBlank(repayBiz.getTeamCode())) {
+            BizTeam bizTeam = bizTeamBO.getBizTeam(repayBiz.getTeamCode());
+            repayBiz.setBizTeam(bizTeam);
+            SYSUser sysUser = sysUserBO.getUser(bizTeam.getCaptain());
+            repayBiz.setLeadUser(sysUser);
+        }
         return repayBiz;
     }
 
@@ -460,8 +488,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setCurNodeCode(ERepayBizNode.QKCSB_TC_INPUT.getCode());
         repayBiz.setUpdater(req.getOperator());
         repayBiz.setUpdateDatetime(new Date());
-        repayBiz.setTakeDatetime(DateUtil.strToDate(req.getTakeDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
         repayBizBO.trailerEntry(repayBiz);
     }
 
