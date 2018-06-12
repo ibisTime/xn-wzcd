@@ -26,6 +26,7 @@ import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN632300ReqOverdue;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EOverdueMenuStatus;
+import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayPlanNode;
 import com.cdkj.loan.exception.BizException;
 
@@ -51,6 +52,7 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
     private IRepayPlanBO repayPlanBO;
 
     @Override
+    @Transactional
     public void importOverdueMenu(String loanBankCode,
             List<XN632300ReqOverdue> list) {
         // 遍历循环导入
@@ -69,6 +71,7 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
                 overdue.getFkDatetime(), false));
             condition.setBankFkDatetimeEnd(DateUtil.getFrontDate(
                 overdue.getFkDatetime(), true));
+            condition.setCurNodeCode(ERepayBizNode.TO_REPAY.getCode());
             List<RepayBiz> repayBizList = repayBizBO
                 .queryRepayBizList(condition);
             OverdueMenu overdueMenu = new OverdueMenu();

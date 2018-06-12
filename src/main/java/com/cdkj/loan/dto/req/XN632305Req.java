@@ -15,6 +15,16 @@ public class XN632305Req extends APageReq {
 
     private String advanceFundDatetimeEnd;// 垫资日期止
 
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getBudgetOrderCode() {
         return budgetOrderCode;
     }

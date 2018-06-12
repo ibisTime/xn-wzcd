@@ -31,12 +31,14 @@ public class XN632305 extends AProcessor {
         OverdueMenu condition = new OverdueMenu();
         condition.setBudgetOrderCode(req.getBudgetOrderCode());
         condition.setRealName(req.getRealName());
-        condition.setAdvanceFundDatetimeStart(
-            DateUtil.strToDate(req.getAdvanceFundDatetimeStart(),
+        condition.setAdvanceFundDatetimeStart(DateUtil.strToDate(
+            req.getAdvanceFundDatetimeStart(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition
+            .setAdvanceFundDatetimeEnd(DateUtil.strToDate(
+                req.getAdvanceFundDatetimeEnd(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setAdvanceFundDatetimeEnd(
-            DateUtil.strToDate(req.getAdvanceFundDatetimeEnd(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setStatus(req.getStatus());
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
