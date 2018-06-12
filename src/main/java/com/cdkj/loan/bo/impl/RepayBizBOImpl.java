@@ -150,6 +150,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBiz.setUpdateDatetime(new Date());
         repayBiz.setRemark(budgetOrder.getRemark());
 
+        repayBiz.setTeamCode(budgetOrder.getTeamCode());
         repayBizDAO.insert(repayBiz);
         return repayBiz;
     }
@@ -159,13 +160,19 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         RepayBiz repayBiz = getRepayBiz(repayBizCode);
         repayBiz.setRestAmount(repayBiz.getRestAmount() - realWithholdAmount);
         if (repayBiz.getRestAmount() == 0) {
-            repayBiz.setCurNodeCode(ERepayBizNode.QKCS_DEPART_CHECK.getCode());// 到清款催收部审核节点
-            repayBiz.setRemark("清款催收部待审核");
+            repayBiz.setCurNodeCode(ERepayBizNode.QKCS_DEPART_CHECK.getCode());// 到清欠催收部审核节点
+            repayBiz.setRemark("清欠催收部待审核");
         }
         repayBiz.setUpdater(ESysUser.SYS_USER_HTWT.getCode());
         repayBiz.setUpdateDatetime(new Date());
 
         repayBizDAO.updateRepayAll(repayBiz);
+    }
+
+    @Override
+    public void overdueRedMenuHandle(RepayBiz data, String curNodeCode) {
+        data.setCurNodeCode(curNodeCode);
+        repayBizDAO.overdueRedHandle(data);
     }
 
     @Override
@@ -180,7 +187,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBiz.setIsAdvanceSettled(EBoolean.YES.getCode());
         repayBiz.setRestAmount(0L);
         repayBiz.setUpdateDatetime(new Date());
-        repayBiz.setRemark("已结清，待清款催收部审核");
+        repayBiz.setRemark("已结清，待清欠催收部审核");
         repayBizDAO.updateRepayAllAdvance(repayBiz);
     }
 
@@ -248,7 +255,6 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBiz.setUpdater(order.getUpdater());
         repayBiz.setUpdateDatetime(new Date());
         repayBiz.setRemark(order.getRemark());
-
         repayBizDAO.insert(repayBiz);
         return repayBiz;
     }
@@ -300,17 +306,15 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     }
 
     @Override
-    public void approveByQkcsDepartment(String code, String curNodeCode,
+    public void approveByQkcsDepartment(RepayBiz repayBiz, String curNodeCode,
             Long cutLyDeposit, String updater, String remark) {
-        RepayBiz repayBiz = new RepayBiz();
-        repayBiz.setCode(code);
         repayBiz.setCurNodeCode(curNodeCode);
         repayBiz.setCutLyDeposit(cutLyDeposit);
         repayBiz.setUpdater(updater);
-
         repayBiz.setUpdateDatetime(new Date());
         repayBiz.setRemark(remark);
-        repayBizDAO.approveByQkcsDepart(repayBiz);
+
+        repayBizDAO.approveByQkcsDepartment(repayBiz);
     }
 
     @Override

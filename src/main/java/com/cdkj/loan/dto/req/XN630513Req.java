@@ -11,11 +11,6 @@ public class XN630513Req {
     private String cutLyDeposit;// 应扣除的履约保证金
 
     @NotBlank
-    private String settleAttach;// 结清证明
-
-    private String settleDatetime;// 结清时间
-
-    @NotBlank
     private String updater;// 操作人
 
     private String remark;// 备注
@@ -34,22 +29,6 @@ public class XN630513Req {
 
     public void setCutLyDeposit(String cutLyDeposit) {
         this.cutLyDeposit = cutLyDeposit;
-    }
-
-    public String getSettleAttach() {
-        return settleAttach;
-    }
-
-    public void setSettleAttach(String settleAttach) {
-        this.settleAttach = settleAttach;
-    }
-
-    public String getSettleDatetime() {
-        return settleDatetime;
-    }
-
-    public void setSettleDatetime(String settleDatetime) {
-        this.settleDatetime = settleDatetime;
     }
 
     public String getUpdater() {

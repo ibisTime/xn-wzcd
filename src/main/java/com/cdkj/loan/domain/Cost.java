@@ -24,7 +24,7 @@ public class Cost extends ABaseDO {
     private String item;
 
     // 金额
-    private String amount;
+    private Long amount;
 
     // 发生时间
     private Date payDatetime;
@@ -68,11 +68,11 @@ public class Cost extends ABaseDO {
         return item;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(Long amount) {
         this.amount = amount;
     }
 
-    public String getAmount() {
+    public Long getAmount() {
         return amount;
     }
 

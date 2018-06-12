@@ -60,6 +60,20 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
         return data;
     }
 
+    @Override
+    public RepayPlan getRepayPlanByRepayBizCode(String repayBizCode,
+            ERepayPlanNode repayPlanNode) {
+        RepayPlan condition = new RepayPlan();
+        condition.setRepayBizCode(repayBizCode);
+        condition.setCurNodeCode(repayPlanNode.getCode());
+        List<RepayPlan> list = repayPlanDAO.selectList(condition);
+        RepayPlan data = null;
+        if (CollectionUtils.isNotEmpty(list)) {
+            data = list.get(0);
+        }
+        return data;
+    }
+
     // 当月
     @Override
     public RepayPlan getRepayPlanCurMonth(String repayBizCode) {
@@ -325,6 +339,11 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
         condition.setCode(repayPlanCode);
         condition.setCurNodeCode(repayPlanCode);
         return (int) repayPlanDAO.selectTotalCount(condition);
+    }
+
+    @Override
+    public void payFee(RepayPlan repayPlan) {
+        repayPlanDAO.payFee(repayPlan);
     }
 
     @Override

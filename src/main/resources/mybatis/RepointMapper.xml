@@ -112,23 +112,18 @@
 		,#{remark}
 		)
 	</insert>
-
+	
 	<update id="update_repoint" parameterType="repoint">
 		UPDATE tdh_repoint
 		SET
-		team_code = #{teamCode}
-		captain = #{captain}
-		,biz_code = #{bizCode}
-		,should_amount = #{shouldAmount}
-		,actual_amount = #{actualAmount}
+		actual_amount = #{actualAmount}
 		,account_no = #{accountNo}
-		
 		,bank = #{bank}
 		,subbranch = #{subbranch}
 		,water_bill = #{waterBill}
+		
 		,status = #{status}
 		,updater = #{updater}
-		
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
 		WHERE code = #{code}

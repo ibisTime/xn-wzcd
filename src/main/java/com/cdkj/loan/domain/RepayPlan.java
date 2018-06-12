@@ -75,7 +75,7 @@ public class RepayPlan extends ABaseDO {
     // 再次逾期保证金收取方式
     private String depositWay;
 
-    // 实际可退的再次逾期保证金
+    // 实际可退的再次逾期保证金(作废)
     private Long shouldDeposit;
 
     // 已催款次数

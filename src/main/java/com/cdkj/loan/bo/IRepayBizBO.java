@@ -27,6 +27,9 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
     // ********************************car********************************
 
+    // 逾期红名单处理
+    public void overdueRedMenuHandle(RepayBiz data, String curNodeCode);
+
     // 形成还款业务
     public RepayBiz generateCarLoanRepayBiz(BudgetOrder budgetOrder,
             String userId, String bankcardCode, String operator);
@@ -42,7 +45,7 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     public void confirmSettledProduct(RepayBiz repayBiz);
 
     // 清欠催收部审核
-    public void approveByQkcsDepartment(String code, String curNodeCode,
+    public void approveByQkcsDepartment(RepayBiz repayBiz, String curNodeCode,
             Long cutLyDeposit, String updater, String remark);
 
     // 驻行人员审核
@@ -68,7 +71,7 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     // 财务打款
     public void financialMoney(RepayBiz repayBiz);
 
-    // 清款催收部拖车录入
+    // 清欠催收部拖车录入
     public void trailerEntry(RepayBiz repayBiz);
 
     // 拖车管理
@@ -77,7 +80,7 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     // 司法诉讼结果录入
     public void judicialLitigationEntry(RepayBiz repayBiz);
 
-    // 清款催收部申请赎回
+    // 清欠催收部申请赎回
     public void qkcsbRedeemApply(RepayBiz repayBiz);
 
     // 风控主管审核

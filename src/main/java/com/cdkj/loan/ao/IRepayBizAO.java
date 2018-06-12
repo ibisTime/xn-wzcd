@@ -53,7 +53,7 @@ public interface IRepayBizAO {
     public void financialMoney(String code, String operator, String remitAmount,
             String remitPdf);
 
-    // 清款催收部拖车录入
+    // 清欠催收部拖车录入
     public void trailerEntry(XN630557Req req);
 
     // 拖车管理处理结果
@@ -64,7 +64,7 @@ public interface IRepayBizAO {
     public void judicialLitigationEntry(String code, String buyOutAmount,
             String way, String operator);
 
-    // 清款催收部申请赎回
+    // 清欠催收部申请赎回
     public void qkcsbRedeemApply(XN630561Req req);
 
     // 财务主管审核

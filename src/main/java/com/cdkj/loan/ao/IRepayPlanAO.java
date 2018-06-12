@@ -30,6 +30,10 @@ public interface IRepayPlanAO {
     // 逾期处理
     public void overdueHandle(XN630532Req req);
 
+    // 缴纳清收成本
+    public void payFee(String code, List<String> costList, String payType,
+            String operator);
+
     // 记黑名单
     public void ToBlack(String code);
 
