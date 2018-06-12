@@ -609,7 +609,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
                         - repayPlan.getOverdueAmount());
             } else {
                 repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
-                repayBiz.setCurNodeCode(ERepayBizNode.SETTLED.getCode());
+                repayBiz.setCurNodeCode(ERepayBizNode.RELEASE_MORTGAGE
+                    .getCode());
                 repayBiz.setCurOverdueCount(0);
                 repayBiz.setOverdueAmount(0L);
             }
