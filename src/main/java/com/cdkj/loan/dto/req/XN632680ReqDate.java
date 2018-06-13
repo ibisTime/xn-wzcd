@@ -8,17 +8,17 @@ package com.cdkj.loan.dto.req;
  */
 public class XN632680ReqDate {
     // 日期
-    private String restDate;
+    private String date;
 
     // 是否休息
     private String isRest;
 
-    public String getRestDate() {
-        return restDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setRestDate(String restDate) {
-        this.restDate = restDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getIsRest() {

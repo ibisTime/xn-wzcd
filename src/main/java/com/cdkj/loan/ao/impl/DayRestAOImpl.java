@@ -73,7 +73,7 @@ public class DayRestAOImpl implements IDayRestAO {
         List<DayRest> dayRestList = new ArrayList<DayRest>();
         for (XN632680ReqDate date : req.getDateList()) {
             DayRest dayRest = new DayRest();
-            dayRest.setDate(DateUtil.strToDate(date.getRestDate(),
+            dayRest.setDate(DateUtil.strToDate(date.getDate(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
             dayRest.setIsRest(date.getIsRest());
             dayRest.setUpdater(req.getUpdater());
