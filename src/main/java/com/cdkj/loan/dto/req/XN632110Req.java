@@ -13,19 +13,25 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class XN632110Req {
 
+    // 贷款银行编号
     @NotBlank
     private String loanBankCode;
 
+    // 购车途径
     @NotBlank
     private String shopWay;
 
+    // 贷款金额
     @NotBlank
     private String loanAmount;
 
+    // 行驶证正面
     private String xszFront;
 
+    // 行驶证反面
     private String xszReverse;
 
+    // 操作人
     @NotBlank
     private String operator;
 

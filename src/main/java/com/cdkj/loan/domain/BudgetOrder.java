@@ -443,7 +443,7 @@ public class BudgetOrder extends ABaseDO {
     // 发保合预警天数
     private Integer fbhWarnDay;
 
-    // 状态
+    // 发保合状态（已录入/待录入）
     private String status;
 
     // 应退按揭款
