@@ -444,22 +444,22 @@ public class BudgetOrder extends ABaseDO {
     private String fbhWarnDay;
 
     // 发保合状态（已录入/待录入）
-    private String status;
+    private String fbhstatus;
 
     // 应退按揭款
     private String shouldBackAmount;
 
-    // 付款时间
-    private Date payDatetime;
+    // 退按揭款状态(0无需退款1银行已放款待财务退款2财务已退垫资款)
+    private String shouldBackStatus;
 
-    // 付款银行
-    private String payBank;
+    // 退按揭款付款时间
+    private Date shouldBackDatetime;
 
-    // 付款账号
-    private String payAccount;
+    // 退按揭款付款账号
+    private String shouldBackBankcardCode;
 
-    // 付款凭证
-    private String payPdf;
+    // 退按揭款付款凭证
+    private String shouldBackBillPdf;
 
     // 作废申请日期
     private String zfApplyDatetime;
@@ -470,11 +470,8 @@ public class BudgetOrder extends ABaseDO {
     // 作废收款金额
     private String zfSkAmount;
 
-    // 作废收款银行
-    private String zfSkBank;
-
-    // 作废收款账号
-    private String zfSkBankcardNumber;
+    // 作废收款账号编号
+    private String zfSkBankcardCode;
 
     // 作废收款时间
     private Date zfSkReceiptDatetime;
@@ -499,24 +496,6 @@ public class BudgetOrder extends ABaseDO {
 
     // 是否提交作废申请
     private String isSubmitCancel;
-
-    // 退客户垫资款状态(0无需退款1银行已放款待财务退款2财务已退垫资款)
-    private String backAdvanceStatus;
-
-    // 退款金额
-    private String backAdvanceAmount;
-
-    // 收款账号
-    private String backAdvanceAccount;
-
-    // 开户行
-    private String backAdvanceOpenBank;
-
-    // 开户支行
-    private String backAdvanceSubbranch;
-
-    // 凭证
-    private String backAdvanceInvoice;
 
     // 节点编号
     private String curNodeCode;
@@ -618,52 +597,36 @@ public class BudgetOrder extends ABaseDO {
         this.isSubmitCancel = isSubmitCancel;
     }
 
-    public String getBackAdvanceStatus() {
-        return backAdvanceStatus;
+    public String getShouldBackStatus() {
+        return shouldBackStatus;
     }
 
-    public void setBackAdvanceStatus(String backAdvanceStatus) {
-        this.backAdvanceStatus = backAdvanceStatus;
+    public void setShouldBackStatus(String shouldBackStatus) {
+        this.shouldBackStatus = shouldBackStatus;
     }
 
-    public String getBackAdvanceAmount() {
-        return backAdvanceAmount;
+    public Date getShouldBackDatetime() {
+        return shouldBackDatetime;
     }
 
-    public void setBackAdvanceAmount(String backAdvanceAmount) {
-        this.backAdvanceAmount = backAdvanceAmount;
+    public void setShouldBackDatetime(Date shouldBackDatetime) {
+        this.shouldBackDatetime = shouldBackDatetime;
     }
 
-    public String getBackAdvanceAccount() {
-        return backAdvanceAccount;
+    public String getShouldBackBankcardCode() {
+        return shouldBackBankcardCode;
     }
 
-    public void setBackAdvanceAccount(String backAdvanceAccount) {
-        this.backAdvanceAccount = backAdvanceAccount;
+    public void setShouldBackBankcardCode(String shouldBackBankcardCode) {
+        this.shouldBackBankcardCode = shouldBackBankcardCode;
     }
 
-    public String getBackAdvanceOpenBank() {
-        return backAdvanceOpenBank;
+    public String getShouldBackBillPdf() {
+        return shouldBackBillPdf;
     }
 
-    public void setBackAdvanceOpenBank(String backAdvanceOpenBank) {
-        this.backAdvanceOpenBank = backAdvanceOpenBank;
-    }
-
-    public String getBackAdvanceSubbranch() {
-        return backAdvanceSubbranch;
-    }
-
-    public void setBackAdvanceSubbranch(String backAdvanceSubbranch) {
-        this.backAdvanceSubbranch = backAdvanceSubbranch;
-    }
-
-    public String getBackAdvanceInvoice() {
-        return backAdvanceInvoice;
-    }
-
-    public void setBackAdvanceInvoice(String backAdvanceInvoice) {
-        this.backAdvanceInvoice = backAdvanceInvoice;
+    public void setShouldBackBillPdf(String shouldBackBillPdf) {
+        this.shouldBackBillPdf = shouldBackBillPdf;
     }
 
     public String getInsuranceCompanyName() {
@@ -1858,14 +1821,6 @@ public class BudgetOrder extends ABaseDO {
         this.fbhWarnDay = fbhWarnDay;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getShouldBackAmount() {
         return shouldBackAmount;
     }
@@ -1874,36 +1829,12 @@ public class BudgetOrder extends ABaseDO {
         this.shouldBackAmount = shouldBackAmount;
     }
 
-    public Date getPayDatetime() {
-        return payDatetime;
+    public String getFbhstatus() {
+        return fbhstatus;
     }
 
-    public void setPayDatetime(Date payDatetime) {
-        this.payDatetime = payDatetime;
-    }
-
-    public String getPayBank() {
-        return payBank;
-    }
-
-    public void setPayBank(String payBank) {
-        this.payBank = payBank;
-    }
-
-    public String getPayAccount() {
-        return payAccount;
-    }
-
-    public void setPayAccount(String payAccount) {
-        this.payAccount = payAccount;
-    }
-
-    public String getPayPdf() {
-        return payPdf;
-    }
-
-    public void setPayPdf(String payPdf) {
-        this.payPdf = payPdf;
+    public void setFbhstatus(String fbhstatus) {
+        this.fbhstatus = fbhstatus;
     }
 
     public String getZfApplyDatetime() {
@@ -1930,20 +1861,12 @@ public class BudgetOrder extends ABaseDO {
         this.zfSkAmount = zfSkAmount;
     }
 
-    public String getZfSkBank() {
-        return zfSkBank;
+    public String getZfSkBankcardCode() {
+        return zfSkBankcardCode;
     }
 
-    public void setZfSkBank(String zfSkBank) {
-        this.zfSkBank = zfSkBank;
-    }
-
-    public String getZfSkBankcardNumber() {
-        return zfSkBankcardNumber;
-    }
-
-    public void setZfSkBankcardNumber(String zfSkBankcardNumber) {
-        this.zfSkBankcardNumber = zfSkBankcardNumber;
+    public void setZfSkBankcardCode(String zfSkBankcardCode) {
+        this.zfSkBankcardCode = zfSkBankcardCode;
     }
 
     public Date getZfSkReceiptDatetime() {
