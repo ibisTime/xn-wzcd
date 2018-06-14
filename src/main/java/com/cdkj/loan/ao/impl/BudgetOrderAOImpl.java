@@ -370,9 +370,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
         if (!EBudgetOrderNode.BANK_LOAN_COMMIT.getCode()
-            .equals(budgetOrder.getCurNodeCode())) {
+            .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.BRANCH_PENDING_PARTS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是银行放款确认提交节点，不能操作");
+                "当前节点不是发件节点，不能操作");
         }
 
         String nextNodeCode = getNextNodeCode(budgetOrder.getCurNodeCode(),
