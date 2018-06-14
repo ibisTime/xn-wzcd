@@ -206,6 +206,7 @@ CREATE TABLE `tdq_budget_order` (
   `back_advance_subbranch` tinytext DEFAULT NULL COMMENT '开户支行',
   `back_advance_invoice` tinytext DEFAULT NULL COMMENT '凭证',
   `cur_node_code` varchar(32) DEFAULT NULL COMMENT '节点编号',
+  `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '业务编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

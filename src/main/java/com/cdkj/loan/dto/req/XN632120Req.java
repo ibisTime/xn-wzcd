@@ -18,6 +18,9 @@ public class XN632120Req {
     // 客户类型
     private String customerType;
 
+    // 业务员编号
+    private String saleUserId;
+
     // 汽车经销商编号
     private String carDealerCode;
 
@@ -741,6 +744,14 @@ public class XN632120Req {
 
     public void setBankBillPdf(String bankBillPdf) {
         this.bankBillPdf = bankBillPdf;
+    }
+
+    public String getSaleUserId() {
+        return saleUserId;
+    }
+
+    public void setSaleUserId(String saleUserId) {
+        this.saleUserId = saleUserId;
     }
 
     public String getSingleProvePdf() {

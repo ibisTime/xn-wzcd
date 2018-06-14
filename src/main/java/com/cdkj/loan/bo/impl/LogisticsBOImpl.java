@@ -6,13 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.cdkj.loan.ao.IUserAO;
-import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ILogisticsBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ILogisticsDAO;
 import com.cdkj.loan.domain.Logistics;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELogisticsStatus;
@@ -32,10 +32,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     private ILogisticsDAO logisticsDAO;
 
     @Autowired
-    private IBudgetOrderBO budgetOrderBO;
-
-    @Autowired
-    private IUserAO userAO;
+    private ISYSUserBO sysUserBO;
 
     @Override
     public String saveLogistics(String type, String bizCode, String userId,
@@ -47,7 +44,8 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
         data.setType(type);
         data.setBizCode(bizCode);
         data.setUserId(userId);
-
+        SYSUser user = sysUserBO.getUser(userId);
+        data.setLogisticsCompany(user.getCompanyCode());
         data.setFromNodeCode(fromNodeCode);
         data.setToNodeCode(toNodeCode);
         data.setRefFileList(refFileList);

@@ -106,4 +106,17 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
         super.update(NAMESPACE.concat("update_curNodeCode"), data);
     }
 
+    @Override
+    public long selectTotalCountByRoleCode(BudgetOrder condition) {
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_budgetOrder_count_byRoleCode"), condition);
+    }
+
+    @Override
+    public List<BudgetOrder> selectBudgetOrderByRoleCodeList(
+            BudgetOrder condition, int start, int pageSize) {
+        return super.selectList(NAMESPACE.concat("select_budgetOrder_roleCode"),
+            start, pageSize, condition, BudgetOrder.class);
+    }
+
 }

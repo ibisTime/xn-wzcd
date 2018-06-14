@@ -15,7 +15,11 @@ public enum EBudgetOrderNode {
     
     BANK_LOAN_COMMIT("007_01","确认提交银行"),SEND_LOGISTICS("007_02","分公司内勤寄送银行材料"),COMPANY_COLLECTION_CHECK("007_03","总公司内勤收件并核查"),
     SEND_BANK_MATERIALS("007_04","总公司内勤寄送银行材料"),BANK_COLLECTION_CHECK("007_05","银行驻点收件并核查"),CONFIRM_RECEIVABLES("007_06","确认收款"),
-    BRANCH_PENDING_PARTS("007_07","分公司内勤寄送银行材料待补件"),HEADQUARTERS_PENDING_PARTS("007_08","总公司内勤寄送银行材料待补件");
+    BRANCH_PENDING_PARTS("007_07","分公司内勤寄送银行材料待补件"),HEADQUARTERS_PENDING_PARTS("007_08","总公司内勤寄送银行材料待补件"),
+    
+    CAR_BANK_LOAN_COMMIT("008_01","确认提交银行"),CAR_SEND_LOGISTICS("008_02","分公司内勤寄送银行材料"),CAR_COMPANY_COLLECTION_CHECK("008_03","总公司内勤收件并核查"),
+    CAR_SEND_BANK_MATERIALS("008_04","总公司内勤寄送银行材料"),CAR_BANK_COLLECTION_CHECK("008_05","银行驻点收件并核查"),CAR_PLEDGE_CONFIRM("008_06","抵押完成"),
+    CAR_BRANCH_PENDING_PARTS("008_07","分公司内勤寄送银行材料待补件"),CAR_HEADQUARTERS_PENDING_PARTS("008_08","总公司内勤寄送银行材料待补件");
 
     public static Map<String, EBudgetOrderNode> getMap() {
         Map<String, EBudgetOrderNode> map = new HashMap<String, EBudgetOrderNode>();

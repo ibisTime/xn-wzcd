@@ -19,6 +19,7 @@ import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.IInsuranceCompanyBO;
+import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
@@ -37,7 +38,6 @@ import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.InsuranceCompany;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SYSUser;
-import com.cdkj.loan.domain.SaleUser;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632120ReqIncome;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
@@ -50,6 +50,7 @@ import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EButtonCode;
 import com.cdkj.loan.enums.ELoanRole;
+import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -94,6 +95,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Autowired
     private IBudgetOrderGpsBO budgetOrderGpsBO;
 
+    @Autowired
+    private ILogisticsBO logisticsBO;
+
     @Override
     @Transactional
     public String addBudgetOrder(XN632120Req req) {
@@ -102,6 +106,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             req.getCreditCode(), ELoanRole.APPLY_USER);
         data.setCustomerName(applyCreditUser.getUserName());
         data.setCustomerType(req.getCustomerType());
+        data.setSaleUserId(req.getSaleUserId());
         data.setCarDealerCode(req.getCarDealerCode());
 
         data.setLoanBankCode(req.getLoanBankCode());
@@ -154,11 +159,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         data.setOtherNote(req.getOtherNote());
         data.setOilSubsidy(StringValidater.toLong(req.getOilSubsidy()));
-        data.setOilSubsidyKil(req.getOilSubsidyKil());
+        data.setOilSubsidyKil(StringValidater.toDouble(req.getOilSubsidyKil()));
         data.setIsPlatInsure(req.getIsPlatInsure());
         data.setGpsFee(StringValidater.toLong(req.getGpsFee()));
 
-        data.setGpsDeduct(req.getGpsDeduct());
+        data.setGpsDeduct(StringValidater.toLong(req.getGpsDeduct()));
         data.setGpsFeeWay(req.getGpsFeeWay());
         data.setLyAmount(StringValidater.toLong(req.getLyAmount()));
         data.setFxAmount(StringValidater.toLong(req.getFxAmount()));
@@ -382,6 +387,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setOperateDatetime(new Date());
         budgetOrderBO.refreshBankLoanCommit(data);
 
+        // 生成资料传递
+        NodeFlow nodeFlow = nodeFlowBO
+            .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
+        logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+            budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+            budgetOrder.getCurNodeCode(), nextNodeCode, nodeFlow.getFileList());
+
         // 日志记录
         String preCurrentNode = budgetOrder.getCurNodeCode();
         EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
@@ -435,11 +447,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             String pledgeCommitNote, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
-        // if (!EBudgetOrderNode.AREA_AUDIT.getCode()
-        // .equals(budgetOrder.getCurNodeCode())) {
-        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-        // "当前节点不是银行放款确认提交节点，不能操作");
-        // }
+        if (!EBudgetOrderNode.CAR_BANK_LOAN_COMMIT.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是银行放款确认提交节点，不能操作");
+        }
 
         String nextNodeCode = getNextNodeCode(budgetOrder.getCurNodeCode(),
             EBoolean.YES.getCode());
@@ -454,12 +466,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.refreshCarPledgeCommit(data);
 
         // 日志记录
-        // String preCurrentNode = budgetOrder.getCurNodeCode();
-        // EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-        // .get(budgetOrder.getCurNodeCode());
-        // sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-        // EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-        // currentNode.getCode(), currentNode.getValue(), operator);
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), operator);
     }
 
     @Override
@@ -467,11 +479,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public void refreshCarPledgeConfirm(String code, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
-        // if (!EBudgetOrderNode.AREA_AUDIT.getCode()
-        // .equals(budgetOrder.getCurNodeCode())) {
-        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-        // "当前节点不是银行放款确认提交节点，不能操作");
-        // }
+        if (!EBudgetOrderNode.CAR_PLEDGE_CONFIRM.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是抵押完成节点，不能操作");
+        }
 
         String nextNodeCode = getNextNodeCode(budgetOrder.getCurNodeCode(),
             EBoolean.YES.getCode());
@@ -484,12 +496,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.refreshCarPledgeConfirm(data);
 
         // 日志记录
-        // String preCurrentNode = budgetOrder.getCurNodeCode();
-        // EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-        // .get(budgetOrder.getCurNodeCode());
-        // sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-        // EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-        // currentNode.getCode(), currentNode.getValue(), operator);
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), operator);
     }
 
     @Override
@@ -532,7 +544,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         data.setFrameNo(req.getFrameNo());
         data.setEngineNo(req.getEngineNo());
-        data.setForceInsurance(req.getForceInsurance());
+        data.setForceInsurance(StringValidater.toLong(req.getForceInsurance()));
         data.setCommerceInsurance(req.getCommerceInsurance());
         data.setInsuranceEffectDatetime(
             DateUtil.strToDate(req.getInsuranceEffectDatetime(),
@@ -691,9 +703,16 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setOperatorName(operator.getRealName());
         }
 
-        SaleUser saleUser = saleUserBO.getSaleUser(budgetOrder.getSaleUserId());
+        SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
         if (null != saleUser) {
             budgetOrder.setSaleUserName(saleUser.getRealName());
         }
+    }
+
+    @Override
+    public Object queryBudgetOrderPageByRoleCode(int start, int limit,
+            BudgetOrder condition) {
+
+        return budgetOrderBO.getPaginableByRoleCode(start, limit, condition);
     }
 }

@@ -4,8 +4,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.api.AProcessor;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632145Req;
 import com.cdkj.loan.exception.BizException;
@@ -13,9 +15,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 银行放款分页查
- * @author: silver 
- * @since: 2018年6月13日 下午2:54:27 
+ * 预算单分页查
+ * @author: CYL 
+ * @since: 2018年6月14日 下午11:22:49 
  * @history:
  */
 public class XN632145 extends AProcessor {
@@ -29,16 +31,23 @@ public class XN632145 extends AProcessor {
         BudgetOrder condition = new BudgetOrder();
         condition.setCode(req.getCode());
         condition.setCustomerName(req.getCustomerName());
+        condition.setApplyDatetimeStart(DateUtil.strToDate(
+            req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setApplyDatetimeEnd(DateUtil.strToDate(
+            req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setCurNodeCode(req.getCurNodeCode());
+        condition.setCarDealerCode(req.getCarDealerCode());
         condition.setLoanBankCode(req.getLoanBankCode());
-        // condition.setCurNodeCode(EBudgetOrderNode.AREA_AUDIT.getCode());
+        condition.setCompanyCode(req.getCompanyCode());
+        condition.setIsAdvanceFund(req.getIsAdvanceFund());
 
-        String column = req.getOrderColumn();
-        if (StringUtils.isBlank(column)) {
-            column = IBudgetOrderAO.DEFAULT_ORDER_COLUMN;
+        String orderColumn = req.getOrderColumn();
+        if (StringUtils.isBlank(orderColumn)) {
+            orderColumn = IBudgetOrderAO.DEFAULT_ORDER_COLUMN;
         }
-        condition.setOrder(column, req.getOrderDir());
-        int start = Integer.valueOf(req.getStart());
-        int limit = Integer.valueOf(req.getLimit());
+        condition.setOrder(orderColumn, req.getOrderDir());
+        int start = StringValidater.toInteger(req.getStart());
+        int limit = StringValidater.toInteger(req.getLimit());
         return budgetOrderAO.queryBudgetOrderPage(start, limit, condition);
     }
 
