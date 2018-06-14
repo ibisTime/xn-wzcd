@@ -485,6 +485,9 @@ public class BudgetOrder extends ABaseDO {
     // 节点编号
     private String curNodeCode;
 
+    // 业务编号
+    private String repayBizCode;
+
     /*-------辅助字段-------*/
 
     private String applyDatetimeStart;// 申请时间起始
@@ -506,6 +509,14 @@ public class BudgetOrder extends ABaseDO {
     private String operatorName;// 经办人
 
     private String saleUserName;// 业务员
+
+    public String getRepayBizCode() {
+        return repayBizCode;
+    }
+
+    public void setRepayBizCode(String repayBizCode) {
+        this.repayBizCode = repayBizCode;
+    }
 
     public String getBankReceiptName() {
         return bankReceiptName;

@@ -36,4 +36,8 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public BudgetOrder getBudgetOrder(String code);
 
+    public BudgetOrder getBudgetOrderByRepayBizCode(String repayBizCode);
+
+    public void logicOrder(String code, String operator);
+
 }

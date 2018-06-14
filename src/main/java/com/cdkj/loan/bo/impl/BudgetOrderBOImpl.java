@@ -7,20 +7,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBudgetOrderDAO;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
-        implements IBudgetOrderBO {
+public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
+        IBudgetOrderBO {
 
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
+
+    @Autowired
+    private INodeFlowBO nodeFlowBO;
 
     @Override
     public String saveBudgetOrder(BudgetOrder data) {
@@ -83,6 +88,21 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     }
 
     @Override
+    public BudgetOrder getBudgetOrderByRepayBizCode(String repayBizCode) {
+        BudgetOrder data = null;
+        if (StringUtils.isNotBlank(repayBizCode)) {
+            BudgetOrder condition = new BudgetOrder();
+            condition.setRepayBizCode(repayBizCode);
+            data = budgetOrderDAO.select(condition);
+            if (data == null) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "预算单不存在！！");
+            }
+        }
+        return data;
+    }
+
+    @Override
     public void refreshBankLoanCommit(BudgetOrder data) {
         if (data != null) {
             budgetOrderDAO.updateBankLoanCommit(data);
@@ -115,6 +135,37 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         if (data != null) {
             budgetOrderDAO.updateCarLoanArchive(data);
         }
+    }
+
+    /** 
+     * @see com.cdkj.loan.bo.IBudgetOrderBO#logicOrder(com.cdkj.loan.domain.BudgetOrder)
+     */
+    @Override
+    public void logicOrder(String code, String operator) {
+        BudgetOrder budgetOrder = getBudgetOrder(code);
+        // String preCurrentNode = budgetOrder.getCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
+            .getCurNodeCode());
+        budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+
+        // if (EBudgetOrderNode.DHAPPROVEDATA.getCode().equals(
+        // nodeFlow.getCurrentNode())) {
+        // if (StringUtils.isNotBlank(nodeFlow.getFileList())) {
+        // logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+        // budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+        // nodeFlow.getCurrentNode(), nodeFlow.getNextNode(),
+        // nodeFlow.getFileList());
+        // } else {
+        // throw new BizException("xn0000", "当前节点材料清单不存在");
+        // }
+        // }
+        // budgetOrderDAO.updaterLogicNode(budgetOrder);
+        // 日志记录
+        // EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+        // budgetOrder.getCurNodeCode());
+        // sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+        // EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+        // currentNode.getCode(), currentNode.getValue(), operator);
     }
 
 }
