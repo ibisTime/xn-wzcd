@@ -27,7 +27,7 @@ import com.cdkj.loan.exception.BizException;
  * 准入单手续费
  * @author: jiafr 
  * @since: 2018年5月30日 下午9:46:40 
- * @history:
+ * @history
  */
 @Service
 public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
@@ -57,8 +57,8 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
     public Paginable<BudgetOrderFee> queryBudgetOrderFeePage(int start,
             int limit, BudgetOrderFee condition) {
 
-        Paginable<BudgetOrderFee> paginable = budgetOrderFeeBO
-            .getPaginable(start, limit, condition);
+        Paginable<BudgetOrderFee> paginable = budgetOrderFeeBO.getPaginable(
+            start, limit, condition);
 
         List<BudgetOrderFee> list = paginable.getList();
 
@@ -81,8 +81,7 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
     }
 
     @Override
-    public List<BudgetOrderFee> queryBudgetOrderFeeList(
-            BudgetOrderFee condition) {
+    public List<BudgetOrderFee> queryBudgetOrderFeeList(BudgetOrderFee condition) {
         return budgetOrderFeeBO.queryBudgetOrderFeeList(condition);
     }
 
@@ -101,17 +100,17 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
         }
 
         // 设置业务公司真实姓名
-        Department department = departmentBO
-            .getDepartment(budgetOrderFee.getCompanyCode());
-        BudgetOrder budgetOrder = budgetOrderBO
-            .getBudgetOrder(budgetOrderFee.getBudgetOrder());
+        Department department = departmentBO.getDepartment(budgetOrderFee
+            .getCompanyCode());
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(budgetOrderFee
+            .getBudgetOrder());
         SYSUser saleUser = sysUserBO.getUser(budgetOrderFee.getUserId());
         budgetOrderFee.setUserName(saleUser.getRealName());
 
         // 设置贷款银行和贷款金额
         if (null != budgetOrder) {
 
-            Bank bank = bankBO.getBank(budgetOrder.getLoanBank());
+            Bank bank = bankBO.getBank(budgetOrder.getLoanBankCode());
             if (null != bank) {
                 budgetOrderFee.setLoanBankName(bank.getBankName());
             }
@@ -129,8 +128,8 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
             CollectBankcard collectBankcard = collectBankcardBO
                 .getCollectBankcard(platBankcard);
             budgetOrderFeeDetail.setCollectBankcard(collectBankcard);
-            SYSUser updateUser = sysUserBO
-                .getUser(budgetOrderFeeDetail.getUpdater());
+            SYSUser updateUser = sysUserBO.getUser(budgetOrderFeeDetail
+                .getUpdater());
             if (null != updateUser) {
                 budgetOrderFeeDetail.setUpdater(updateUser.getRealName());
             }

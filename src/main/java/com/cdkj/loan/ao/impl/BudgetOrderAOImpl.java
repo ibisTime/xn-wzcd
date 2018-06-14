@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.ICarDealerBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
@@ -39,6 +40,7 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.SaleUser;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632120ReqIncome;
+import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632190Req;
 import com.cdkj.loan.enums.EApproveResult;
@@ -88,6 +90,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private ISYSUserBO sysUserBO;
+
+    @Autowired
+    private IBudgetOrderGpsBO budgetOrderGpsBO;
 
     @Override
     @Transactional
@@ -359,11 +364,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             String bankCommitNote, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
-        // if (!EBudgetOrderNode.AREA_AUDIT.getCode()
-        // .equals(budgetOrder.getCurNodeCode())) {
-        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-        // "当前节点不是银行放款确认提交节点，不能操作");
-        // }
+        if (!EBudgetOrderNode.BANK_LOAN_COMMIT.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是银行放款确认提交节点，不能操作");
+        }
 
         String nextNodeCode = getNextNodeCode(budgetOrder.getCurNodeCode(),
             EBoolean.YES.getCode());
@@ -378,12 +383,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.refreshBankLoanCommit(data);
 
         // 日志记录
-        // String preCurrentNode = budgetOrder.getCurNodeCode();
-        // EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-        // .get(budgetOrder.getCurNodeCode());
-        // sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-        // EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-        // currentNode.getCode(), currentNode.getValue(), operator);
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), operator);
     }
 
     @Override
@@ -391,11 +396,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public void refreshBankLoanConfirm(XN632141Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
 
-        // if (!EBudgetOrderNode.AREA_AUDIT.getCode()
-        // .equals(budgetOrder.getCurNodeCode())) {
-        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-        // "当前节点不是银行放款确认提交节点，不能操作");
-        // }
+        if (!EBudgetOrderNode.CONFIRM_RECEIVABLES.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是银行放款确认提交节点，不能操作");
+        }
 
         String nextNodeCode = getNextNodeCode(budgetOrder.getCurNodeCode(),
             EBoolean.YES.getCode());
@@ -416,12 +421,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.refreshBankLoanConfirm(data);
 
         // 日志记录
-        // String preCurrentNode = budgetOrder.getCurNodeCode();
-        // EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-        // .get(budgetOrder.getCurNodeCode());
-        // sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-        // EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-        // currentNode.getCode(), currentNode.getValue(), req.getOperator());
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), req.getOperator());
     }
 
     @Override
@@ -573,6 +578,32 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
         // EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
         // currentNode.getCode(), currentNode.getValue(), req.getOperator());
+    }
+
+    @Override
+    @Transactional
+    public void installGps(String code, String operator,
+            List<XN632126ReqGps> gpsAzList) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+
+        // 删除
+        budgetOrderGpsBO.removeBudgetOrderGpsList(code);
+        // 添加
+        budgetOrderGpsBO.saveBudgetOrderGpsList(code, gpsAzList);
+
+        // 下个节点设置
+        // budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+        // EBudgetOrderNode.GPSAZ.getCode()).getNextNode());
+        // budgetOrderBO.installGps(budgetOrder);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), operator);
     }
 
     // 获取下一个节点

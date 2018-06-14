@@ -18,9 +18,12 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Logistics;
+import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632150Req;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
@@ -62,9 +65,10 @@ public class LogisticsAOImpl implements ILogisticsAO {
     public void sendLogistics(XN632150Req req) {
         Logistics data = logisticsBO.getLogistics(req.getCode());
         if (!ELogisticsStatus.TO_SEND.getCode().equals(data.getStatus())
-                && !ELogisticsStatus.TO_SEND_AGAIN.getCode().equals(
-                    data.getStatus())) {
-            throw new BizException("xn0000", "资料不是待发货状态!");
+                && !ELogisticsStatus.TO_SEND_AGAIN.getCode()
+                    .equals(data.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "资料不是待发货状态!");
         }
 
         // 发件
@@ -76,13 +80,22 @@ public class LogisticsAOImpl implements ILogisticsAO {
         logistics.setLogisticsCode(req.getLogisticsCode());
 
         logistics.setSendDatetime(DateUtil.strToDate(req.getSendDatetime(),
-            DateUtil.DATA_TIME_PATTERN_1));
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         logistics.setSendNote(req.getSendNote());
         logistics.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
         logisticsBO.sendLogistics(logistics);
 
         if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             gpsApplyBO.sendGps(data.getBizCode(), logistics.getSendDatetime());
+        } else {
+            BudgetOrder budgetOrder = budgetOrderBO
+                .getBudgetOrder(data.getBizCode());
+            String curNodeCode = budgetOrder.getCurNodeCode();
+            NodeFlow nodeFlow = nodeFlowBO
+                .getNodeFlowByCurrentNode(curNodeCode);
+            String nextNode = nodeFlow.getNextNode();
+            budgetOrder.setCurNodeCode(nextNode);
+            budgetOrderBO.updateCurNodeCode(budgetOrder);
         }
 
         // 操作人
@@ -93,7 +106,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
     public void receiveLogistics(String code, String operator, String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
-            throw new BizException("xn0000", "资料不是待收件状态!");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "资料不是待收件状态!");
         }
         logisticsBO.receiveLogistics(code, remark);
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
@@ -104,10 +118,12 @@ public class LogisticsAOImpl implements ILogisticsAO {
     }
 
     @Override
-    public void sendAgainLogistics(String code, String operator, String remark) {
+    public void sendAgainLogistics(String code, String operator,
+            String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
-            throw new BizException("xn0000", "资料不是待收件状态!");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "资料不是待收件状态!");
         }
         logisticsBO.sendAgainLogistics(code, remark);
     }
