@@ -173,19 +173,18 @@
 		<result column="pd_pdf" property="pdPdf" />
 		<result column="fbh_remark" property="fbhRemark" />
 		<result column="fbh_warn_day" property="fbhWarnDay" />
-		<result column="status" property="status" />
+		<result column="fbh_status" property="fbhStatus" />
 		<result column="should_back_amount" property="shouldBackAmount" />
 		
-		<result column="pay_datetime" property="payDatetime" />
-		<result column="pay_bank" property="payBank" />
-		<result column="pay_account" property="payAccount" />
-		<result column="pay_pdf" property="payPdf" />
+		<result column="should_back_status" property="shouldBackStatus" />
+		<result column="should_back_datetime" property="shouldBackDatetime" />
+		<result column="should_back_bankcard_code" property="shouldBackBankcardCode" />
+		<result column="should_back_bill_pdf" property="shouldBackBillPdf" />
 		<result column="zf_apply_datetime" property="zfApplyDatetime" />
 		
 		<result column="zf_reason" property="zfReason" />
 		<result column="zf_sk_amount" property="zfSkAmount" />
-		<result column="zf_sk_bank" property="zfSkBank" />
-		<result column="zf_sk_bankcard_number" property="zfSkBankcardNumber" />
+		<result column="zf_sk_bankcard_code" property="zfSkBankcardCode" />
 		<result column="zf_sk_receipt_datetime" property="zfSkReceiptDatetime" />
 		<result column="zf_finance_remark" property="zfFinanceRemark" />
 		
@@ -195,12 +194,6 @@
 		<result column="frozen_status" property="frozenStatus" />
 		<result column="cancel_node_code" property="cancelNodeCode" />
 		<result column="is_submit_cancel" property="isSubmitCancel" />
-		<result column="back_advance_status" property="backAdvanceStatus" />
-		<result column="back_advance_amount" property="backAdvanceAmount" />
-		<result column="back_advance_account" property="backAdvanceAccount" />
-		<result column="back_advance_open_bank" property="backAdvanceOpenBank" />
-		<result column="back_advance_subbranch" property="backAdvanceSubbranch" />
-		<result column="back_advance_invoice" property="backAdvanceInvoice" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="repay_biz_code" property="repayBizCode" />
 	</resultMap>
@@ -223,9 +216,6 @@
 			</if>
 			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
 				<![CDATA[AND t.apply_datetime < #{applyDatetimeEnd}]]>
-			</if>
-			<if test="status != null and status != '' ">
-				AND t.status = #{status}
 			</if>
 			<if test="carDealerCode != null and carDealerCode != '' ">
 				AND t.car_dealer_code = #{carDealerCode}
@@ -389,17 +379,16 @@
 		,t.pd_pdf
 		,t.fbh_remark
 		,t.fbh_warn_day
-		,t.status
+		,t.fbh_status
 		,t.should_back_amount
-		,t.pay_datetime
-		,t.pay_bank
-		,t.pay_account
-		,t.pay_pdf
+		,t.should_back_status
+		,t.should_back_datetime
+		,t.should_back_bankcard_code
+		,t.should_back_bill_pdf
 		,t.zf_apply_datetime
 		,t.zf_reason
 		,t.zf_sk_amount
-		,t.zf_sk_bank
-		,t.zf_sk_bankcard_number
+		,t.zf_sk_bankcard_code
 		,t.zf_sk_receipt_datetime
 		,t.zf_finance_remark
 		
@@ -409,12 +398,6 @@
 		,t.frozen_status
 		,t.cancel_node_code
 		,t.is_submit_cancel
-		,t.back_advance_status
-		,t.back_advance_amount
-		,t.back_advance_account
-		,t.back_advance_open_bank
-		,t.back_advance_subbranch
-		,t.back_advance_invoice
 		
 		,t.cur_node_code
 		,t.repay_biz_code
@@ -579,17 +562,16 @@
 		,t.pd_pdf
 		,t.fbh_remark
 		,t.fbh_warn_day
-		,t.status
+		,t.fbh_status
 		,t.should_back_amount
-		,t.pay_datetime
-		,t.pay_bank
-		,t.pay_account
-		,t.pay_pdf
+		,t.should_back_status
+		,t.should_back_datetime
+		,t.should_back_bankcard_code
+		,t.should_back_bill_pdf
 		,t.zf_apply_datetime
 		,t.zf_reason
 		,t.zf_sk_amount
-		,t.zf_sk_bank
-		,t.zf_sk_bankcard_number
+		,t.zf_sk_bankcard_code
 		,t.zf_sk_receipt_datetime
 		,t.zf_finance_remark
 		
@@ -599,12 +581,6 @@
 		,t.frozen_status
 		,t.cancel_node_code
 		,t.is_submit_cancel
-		,t.back_advance_status
-		,t.back_advance_amount
-		,t.back_advance_account
-		,t.back_advance_open_bank
-		,t.back_advance_subbranch
-		,t.back_advance_invoice
 		
 		,t.cur_node_code
 		,t.repay_biz_code
