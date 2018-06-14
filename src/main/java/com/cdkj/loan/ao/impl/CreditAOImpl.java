@@ -322,17 +322,26 @@ public class CreditAOImpl implements ICreditAO {
         if (StringUtils.isNotBlank(credit.getCompanyCode())) {
             Department department = departmentBO.getDepartment(credit
                 .getCompanyCode());
-            credit.setCompanyName(department.getName());
+            if (null != department) {
+                credit.setCompanyName(department.getName());
+            }
         }
 
         if (StringUtils.isNotBlank(credit.getSaleUserId())) {
             SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
-            credit.setSalesmanName(user.getRealName());
+            if (null != user) {
+                credit.setSalesmanName(user.getRealName());
+            }
+
         }
 
         if (StringUtils.isNotBlank(credit.getLoanBankCode())) {
+
             Bank bank = bankBO.getBank(credit.getLoanBankCode());
-            credit.setLoanBankName(bank.getBankName());
+            if (null != bank) {
+                credit.setLoanBankName(bank.getBankName());
+            }
+
         }
 
     }
