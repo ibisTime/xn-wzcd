@@ -482,6 +482,42 @@ public class BudgetOrder extends ABaseDO {
     // 作废财务备注
     private String zfFinanceRemark;
 
+    // 制卡状态
+    private String makeCardStatus;
+
+    // 制卡更新人
+    private String makeCardOperator;
+
+    // 制卡备注
+    private String makeCardRemark;
+
+    // 冻结状态(0冻结 1正常)
+    private String frozenStatus;
+
+    // 客户申请作废时的节点编号
+    private String cancelNodeCode;
+
+    // 是否提交作废申请
+    private String isSubmitCancel;
+
+    // 退客户垫资款状态(0无需退款1银行已放款待财务退款2财务已退垫资款)
+    private String backAdvanceStatus;
+
+    // 退款金额
+    private String backAdvanceAmount;
+
+    // 收款账号
+    private String backAdvanceAccount;
+
+    // 开户行
+    private String backAdvanceOpenBank;
+
+    // 开户支行
+    private String backAdvanceSubbranch;
+
+    // 凭证
+    private String backAdvanceInvoice;
+
     // 节点编号
     private String curNodeCode;
 
@@ -532,6 +568,102 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCarDealerName(String carDealerName) {
         this.carDealerName = carDealerName;
+    }
+
+    public String getMakeCardStatus() {
+        return makeCardStatus;
+    }
+
+    public void setMakeCardStatus(String makeCardStatus) {
+        this.makeCardStatus = makeCardStatus;
+    }
+
+    public String getMakeCardOperator() {
+        return makeCardOperator;
+    }
+
+    public void setMakeCardOperator(String makeCardOperator) {
+        this.makeCardOperator = makeCardOperator;
+    }
+
+    public String getMakeCardRemark() {
+        return makeCardRemark;
+    }
+
+    public void setMakeCardRemark(String makeCardRemark) {
+        this.makeCardRemark = makeCardRemark;
+    }
+
+    public String getFrozenStatus() {
+        return frozenStatus;
+    }
+
+    public void setFrozenStatus(String frozenStatus) {
+        this.frozenStatus = frozenStatus;
+    }
+
+    public String getCancelNodeCode() {
+        return cancelNodeCode;
+    }
+
+    public void setCancelNodeCode(String cancelNodeCode) {
+        this.cancelNodeCode = cancelNodeCode;
+    }
+
+    public String getIsSubmitCancel() {
+        return isSubmitCancel;
+    }
+
+    public void setIsSubmitCancel(String isSubmitCancel) {
+        this.isSubmitCancel = isSubmitCancel;
+    }
+
+    public String getBackAdvanceStatus() {
+        return backAdvanceStatus;
+    }
+
+    public void setBackAdvanceStatus(String backAdvanceStatus) {
+        this.backAdvanceStatus = backAdvanceStatus;
+    }
+
+    public String getBackAdvanceAmount() {
+        return backAdvanceAmount;
+    }
+
+    public void setBackAdvanceAmount(String backAdvanceAmount) {
+        this.backAdvanceAmount = backAdvanceAmount;
+    }
+
+    public String getBackAdvanceAccount() {
+        return backAdvanceAccount;
+    }
+
+    public void setBackAdvanceAccount(String backAdvanceAccount) {
+        this.backAdvanceAccount = backAdvanceAccount;
+    }
+
+    public String getBackAdvanceOpenBank() {
+        return backAdvanceOpenBank;
+    }
+
+    public void setBackAdvanceOpenBank(String backAdvanceOpenBank) {
+        this.backAdvanceOpenBank = backAdvanceOpenBank;
+    }
+
+    public String getBackAdvanceSubbranch() {
+        return backAdvanceSubbranch;
+    }
+
+    public void setBackAdvanceSubbranch(String backAdvanceSubbranch) {
+        this.backAdvanceSubbranch = backAdvanceSubbranch;
+    }
+
+    public String getBackAdvanceInvoice() {
+        return backAdvanceInvoice;
+    }
+
+    public void setBackAdvanceInvoice(String backAdvanceInvoice) {
+        this.backAdvanceInvoice = backAdvanceInvoice;
     }
 
     public String getInsuranceCompanyName() {

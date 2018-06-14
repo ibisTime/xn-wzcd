@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -18,8 +19,8 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
-        IBudgetOrderBO {
+public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
+        implements IBudgetOrderBO {
 
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
@@ -144,10 +145,11 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     public void logicOrder(String code, String operator) {
         BudgetOrder budgetOrder = getBudgetOrder(code);
         // String preCurrentNode = budgetOrder.getCurNodeCode();
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
-            .getCurNodeCode());
+        NodeFlow nodeFlow = nodeFlowBO
+            .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
-
+        budgetOrder.setOperator(operator);
+        budgetOrder.setOperateDatetime(new Date());
         // if (EBudgetOrderNode.DHAPPROVEDATA.getCode().equals(
         // nodeFlow.getCurrentNode())) {
         // if (StringUtils.isNotBlank(nodeFlow.getFileList())) {
@@ -159,13 +161,18 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         // throw new BizException("xn0000", "当前节点材料清单不存在");
         // }
         // }
-        // budgetOrderDAO.updaterLogicNode(budgetOrder);
+        budgetOrderDAO.updaterLogicNode(budgetOrder);
         // 日志记录
         // EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
         // budgetOrder.getCurNodeCode());
         // sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
         // EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
         // currentNode.getCode(), currentNode.getValue(), operator);
+    }
+
+    @Override
+    public void updateCurNodeCode(BudgetOrder budgetOrder) {
+        budgetOrderDAO.updateCurNodeCode(budgetOrder);
     }
 
 }

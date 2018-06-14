@@ -187,8 +187,20 @@
 		<result column="zf_sk_bank" property="zfSkBank" />
 		<result column="zf_sk_bankcard_number" property="zfSkBankcardNumber" />
 		<result column="zf_sk_receipt_datetime" property="zfSkReceiptDatetime" />
-		
 		<result column="zf_finance_remark" property="zfFinanceRemark" />
+		
+		<result column="make_card_status" property="makeCardStatus" />
+		<result column="make_card_operator" property="makeCardOperator" />
+		<result column="make_card_remark" property="makeCardRemark" />
+		<result column="frozen_status" property="frozenStatus" />
+		<result column="cancel_node_code" property="cancelNodeCode" />
+		<result column="is_submit_cancel" property="isSubmitCancel" />
+		<result column="back_advance_status" property="backAdvanceStatus" />
+		<result column="back_advance_amount" property="backAdvanceAmount" />
+		<result column="back_advance_account" property="backAdvanceAccount" />
+		<result column="back_advance_open_bank" property="backAdvanceOpenBank" />
+		<result column="back_advance_subbranch" property="backAdvanceSubbranch" />
+		<result column="back_advance_invoice" property="backAdvanceInvoice" />
 		<result column="cur_node_code" property="curNodeCode" />
 	</resultMap>
 	<sql id="where_condition">
@@ -383,6 +395,20 @@
 		,t.zf_sk_bankcard_number
 		,t.zf_sk_receipt_datetime
 		,t.zf_finance_remark
+		
+		,t.make_card_status
+		,t.make_card_operator
+		,t.make_card_remark
+		,t.frozen_status
+		,t.cancel_node_code
+		,t.is_submit_cancel
+		,t.back_advance_status
+		,t.back_advance_amount
+		,t.back_advance_account
+		,t.back_advance_open_bank
+		,t.back_advance_subbranch
+		,t.back_advance_invoice
+		
 		,t.cur_node_code
 		FROM
 		tdq_budget_order t
@@ -666,164 +692,6 @@
 		)
 	</insert>
 
-	<update id="update_budgetOrder" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		customer_type = #{customerType}
-		,customer_name = #{customerName}
-		,car_dealer_code = #{carDealerCode}
-		,loan_bank_code = #{loanBankCode}
-		,original_price = #{originalPrice}
-		,car_model = #{carModel}
-		,loan_periods = #{loanPeriods}
-		,invoice_price = #{invoicePrice}
-		,shop_way = #{shopWay}
-		,rate_type = #{rateType}
-		,loan_amount = #{loanAmount}
-		,is_survey = #{isSurvey}
-		,bank_rate = #{bankRate}
-		,company_loan_cs = #{companyLoanCs}
-		,is_advance_fund = #{isAdvanceFund}
-		,global_rate = #{globalRate}
-		,fee = #{fee}
-		,car_dealer_subsidy = #{carDealerSubsidy}
-		,bank_loan_cs = #{bankLoanCs}
-		,company_code = #{companyCode}
-		,sale_user_id = #{saleUserId}
-		,car_price = #{carPrice}
-		,bank_branch = #{bankBranch}
-		,is_house_property = #{isHouseProperty}
-		,house_property = #{houseProperty}
-		,is_house_contract = #{isHouseContract}
-		,house_contract = #{houseContract}
-		,house_invoice = #{houseInvoice}
-		,is_license = #{isLicense}
-		,license = #{license}
-		,is_site_prove = #{isSiteProve}
-		,site_prove = #{siteProve}
-		,site_area = #{siteArea}
-		,car_type = #{carType}
-		,is_drice_license = #{isDriceLicense}
-		,drice_license = #{driceLicense}
-		,other_property_note = #{otherPropertyNote}
-		,apply_birth_address = #{applyBirthAddress}
-		,apply_now_address = #{applyNowAddress}
-		,house_type = #{houseType}
-		,gh_birth_address = #{ghBirthAddress}
-		,guarantor1_birth_address = #{guarantor1BirthAddress}
-		,guarantor2_birth_address = #{guarantor2BirthAddress}
-		,other_note = #{otherNote}
-		,oil_subsidy = #{oilSubsidy}
-		,oil_subsidy_kil = #{oilSubsidyKil}
-		,is_plat_insure = #{isPlatInsure}
-		,gps_fee = #{gpsFee}
-		,gps_deduct = #{gpsDeduct}
-		,gps_fee_way = #{gpsFeeWay}
-		,ly_amount = #{lyAmount}
-		,fx_amount = #{fxAmount}
-		,other_fee = #{otherFee}
-		,fee_way = #{feeWay}
-		,marry_divorce = #{marryDivorce}
-		,apply_user_hkb = #{applyUserHkb}
-		,bank_bill_pdf = #{bankBillPdf}
-		,single_prove_pdf = #{singleProvePdf}
-		,income_prove_pdf = #{incomeProvePdf}
-		,live_prove_pdf = #{liveProvePdf}
-		,build_prove_pdf = #{buildProvePdf}
-		,hkb_first_page = #{hkbFirstPage}
-		,hkb_main_page = #{hkbMainPage}
-		,gh_hkb = #{ghHkb}
-		,guarantor1_id_no = #{guarantor1IdNo}
-		,guarantor1_hkb = #{guarantor1Hkb}
-		,guarantor2_id_no = #{guarantor2IdNo}
-		,guarantor2_hkb = #{guarantor2Hkb}
-		,house_pic = #{housePic}
-		,house_unit_pic = #{houseUnitPic}
-		,house_door_pic = #{houseDoorPic}
-		,house_room_pic = #{houseRoomPic}
-		,house_customer_pic = #{houseCustomerPic}
-		,house_sale_customer_pic = #{houseSaleCustomerPic}
-		,company_name_pic = #{companyNamePic}
-		,company_place_pic = #{companyPlacePic}
-		,company_workshop_pic = #{companyWorkshopPic}
-		,company_sale_customer_pic = #{companySaleCustomerPic}
-		,second_hgz = #{secondHgz}
-		,second_odometer = #{secondOdometer}
-		,second_car_front_pic = #{secondCarFrontPic}
-		,second_console_pic = #{secondConsolePic}
-		,second_300_pdf = #{second300Pdf}
-		,second_qxb_pic = #{secondQxbPic}
-		,second_car_in_pic = #{secondCarInPic}
-		,second_number = #{secondNumber}
-		,other_file_pdf = #{otherFilePdf}
-		,other_apply_note = #{otherApplyNote}
-		,apply_datetime = #{applyDatetime}
-		,cancel_reason = #{cancelReason}
-		,bank_commit_datetime = #{bankCommitDatetime}
-		,bank_commit_note = #{bankCommitNote}
-		,bank_fk_amount = #{bankFkAmount}
-		,bank_fk_datetime = #{bankFkDatetime}
-		,bank_receipt_code = #{bankReceiptCode}
-		,bank_receipt_number = #{bankReceiptNumber}
-		,bank_receipt_pdf = #{bankReceiptPdf}
-		,bank_receipt_note = #{bankReceiptNote}
-		,pledge_commit_datetime = #{pledgeCommitDatetime}
-		,pledge_commit_note = #{pledgeCommitNote}
-		,pledge_contract_code = #{pledgeContractCode}
-		,insurance_company_code = #{insuranceCompanyCode}
-		,car_color = #{carColor}
-		,car_brand = #{carBrand}
-		,frame_no = #{frameNo}
-		,engine_no = #{engineNo}
-		,commerce_insurance = #{commerceInsurance}
-		,insurance_effect_datetime = #{insuranceEffectDatetime}
-		,insurance_bank = #{insuranceBank}
-		,guarantee_contract_code = #{guaranteeContractCode}
-		,reg_certificate_code = #{regCertificateCode}
-		,other_contact = #{otherContact}
-		,contact_mobile = #{contactMobile}
-		,guarantor_name = #{guarantorName}
-		,guarantor_mobile = #{guarantorMobile}
-		,bank_card_number = #{bankCardNumber}
-		,bill_datetime = #{billDatetime}
-		,month_amount = #{monthAmount}
-		,id_no_pic = #{idNoPic}
-		,file_list = #{fileList}
-		,is_complete = #{isComplete}
-		,store_place = #{storePlace}
-		,file_remark = #{fileRemark}
-		,operator = #{operator}
-		,operate_datetime = #{operateDatetime}
-		,operate_department = #{operateDepartment}
-		,makecard_remark = #{makecardRemark}
-		,delivery_datetime = #{deliveryDatetime}
-		,is_right_invoice = #{isRightInvoice}
-		,current_invoice_price = #{currentInvoicePrice}
-		,invoice = #{invoice}
-		,certification = #{certification}
-		,force_insurance = #{forceInsurance}
-		,business_insurance = #{businessInsurance}
-		,motor_reg_certification = #{motorRegCertification}
-		,pd_pdf = #{pdPdf}
-		,fbh_remark = #{fbhRemark}
-		,fbh_warn_day = #{fbhWarnDay}
-		,status = #{status}
-		,should_back_amount = #{shouldBackAmount}
-		,pay_datetime = #{payDatetime}
-		,pay_bank = #{payBank}
-		,pay_account = #{payAccount}
-		,pay_pdf = #{payPdf}
-		,zf_apply_datetime = #{zfApplyDatetime}
-		,zf_reason = #{zfReason}
-		,zf_sk_amount = #{zfSkAmount}
-		,zf_sk_bank = #{zfSkBank}
-		,zf_sk_bankcard_number = #{zfSkBankcardNumber}
-		,zf_sk_receipt_datetime = #{zfSkReceiptDatetime}
-		,zf_finance_remark = #{zfFinanceRemark}
-		,cur_node_code = #{curNodeCode}
-		WHERE code = #{code}
-	</update>
-	
 	<update id="update_areaManagerApprove" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
@@ -940,4 +808,19 @@
 		WHERE code = #{code}
 	</update>
 	
+	<update id="update_logicNode" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,operator = #{operator}
+		,operate_datetime = #{operateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_curNodeCode" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
 </mapper>

@@ -29,4 +29,10 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     // 车贷入档补录
     public void updateCarLoanArchive(BudgetOrder data);
+
+    // 收件审核通过，改变预算单状态
+    void updaterLogicNode(BudgetOrder budgetOrder);
+
+    // 改变节点
+    void updateCurNodeCode(BudgetOrder budgetOrder);
 }
