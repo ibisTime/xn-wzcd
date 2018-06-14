@@ -23,6 +23,7 @@ CREATE TABLE `tdh_cost` (
 DROP TABLE IF EXISTS `tdh_overdue_menu`;
 CREATE TABLE `tdh_overdue_menu` (
   `code` varchar(32) NOT NULL COMMENT '编号',
+  `batch_datetime` datetime DEFAULT NULL COMMENT '批量日期(yyyymmdd)',
   `real_name` varchar(255) DEFAULT NULL COMMENT '客户姓名',
   `id_no` varchar(32) DEFAULT NULL COMMENT '证件号',
   `loan_bank_name` varchar(255) DEFAULT NULL COMMENT '贷款银行名称',
@@ -130,11 +131,13 @@ CREATE TABLE `tdh_repay_plan` (
   `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',
   `user_id` varchar(32) DEFAULT NULL COMMENT '借款人编号',
   `periods` int(11) DEFAULT NULL COMMENT '总期数',
+  
   `cur_periods` int(11) DEFAULT NULL COMMENT '当前期数',
   `repay_datetime` datetime DEFAULT NULL COMMENT '还款时间',
   `repay_capital` bigint(20) DEFAULT NULL COMMENT '本期本金',
   `repay_interest` decimal(18,8) DEFAULT NULL COMMENT '本期利息',
   `payed_amount` bigint(20) DEFAULT NULL COMMENT '已还金额',
+  
   `overplus_amount` bigint(20) DEFAULT NULL COMMENT '剩余欠款',
   `overdue_amount` bigint(20) DEFAULT NULL COMMENT '逾期金额',
   `cur_node_code` varchar(32) DEFAULT NULL COMMENT '节点',
@@ -195,3 +198,23 @@ CREATE TABLE `tdh_repoint` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='返点表';
+
+DROP TABLE IF EXISTS `tdh_replace_repay_apply`;
+CREATE TABLE `tdh_replace_repay_apply` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `type` varchar(32) NOT NULL COMMENT '代偿性质',
+  `amount` bigint(20) NOT NULL COMMENT '预算金额',
+  `biz_code` varchar(32) NOT NULL COMMENT '业务编号',
+  `receipt_bank` varchar(32) NOT NULL COMMENT '收款人开户行',
+  `receipt_real_name` varchar(32) NOT NULL COMMENT '收款人名称',
+  `receipt_account` varchar(32) NOT NULL COMMENT '收款人账号',
+  `is_urgent` varchar(32) NOT NULL COMMENT '是否加急',
+  `apply_user` varchar(32) NOT NULL COMMENT '申请人',
+  `apply_datetime` datetime  NOT NULL COMMENT '申请时间',
+  `apply_note` varchar(32) NOT NULL COMMENT '申请说明',
+  `status` varchar(32) NOT NULL COMMENT '状态',
+  `updater` varchar(32) NOT NULL COMMENT '更新人',
+  `update_datetime` datetime NOT NULL COMMENT '更新时间',
+  `remark` varchar(255) NOT NULL COMMENT '备注',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='代偿申请单';
