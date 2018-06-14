@@ -211,3 +211,13 @@ CREATE TABLE `tb_gps_apply` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='gps申领管理';
+
+DROP TABLE IF EXISTS `tb_loan_cs`;
+CREATE TABLE `tb_loan_cs` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `type` varchar(32) NOT NULL COMMENT '类型(1 新车 2 二手车)',
+  `min_cs` decimal(18,8) DEFAULT NULL COMMENT '最低成数',
+  `max_cs` decimal(18,8) DEFAULT NULL COMMENT '最高成数',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='我司贷款成数';
