@@ -165,7 +165,7 @@ public class BudgetOrder extends ABaseDO {
     private Long oilSubsidy;
 
     // 油补公里数
-    private String oilSubsidyKil;
+    private double oilSubsidyKil;
 
     // 是否我司续保
     private String isPlatInsure;
@@ -174,7 +174,7 @@ public class BudgetOrder extends ABaseDO {
     private Long gpsFee;
 
     // GPS提成
-    private String gpsDeduct;
+    private Long gpsDeduct;
 
     // GPS收费方式
     private String gpsFeeWay;
@@ -411,13 +411,13 @@ public class BudgetOrder extends ABaseDO {
     private String makecardRemark;
 
     // 提车日期
-    private String deliveryDatetime;
+    private Date deliveryDatetime;
 
     // 发票是否正确
     private String isRightInvoice;
 
     // 现发票价
-    private String currentInvoicePrice;
+    private Long currentInvoicePrice;
 
     // 发票
     private String invoice;
@@ -426,10 +426,10 @@ public class BudgetOrder extends ABaseDO {
     private String certification;
 
     // 交强险
-    private String forceInsurance;
+    private Long forceInsurance;
 
     // 商业险
-    private String businessInsurance;
+    private Long businessInsurance;
 
     // 机动车登记证书
     private String motorRegCertification;
@@ -441,7 +441,7 @@ public class BudgetOrder extends ABaseDO {
     private String fbhRemark;
 
     // 发保合预警天数
-    private String fbhWarnDay;
+    private Integer fbhWarnDay;
 
     // 状态
     private String status;
@@ -462,13 +462,13 @@ public class BudgetOrder extends ABaseDO {
     private String payPdf;
 
     // 作废申请日期
-    private String zfApplyDatetime;
+    private Date zfApplyDatetime;
 
     // 作废作废原因
     private String zfReason;
 
     // 作废收款金额
-    private String zfSkAmount;
+    private Long zfSkAmount;
 
     // 作废收款银行
     private String zfSkBank;
@@ -504,7 +504,7 @@ public class BudgetOrder extends ABaseDO {
     private String backAdvanceStatus;
 
     // 退款金额
-    private String backAdvanceAmount;
+    private Long backAdvanceAmount;
 
     // 收款账号
     private String backAdvanceAccount;
@@ -526,9 +526,11 @@ public class BudgetOrder extends ABaseDO {
 
     /*-------辅助字段-------*/
 
-    private String applyDatetimeStart;// 申请时间起始
+    private String roleCode;// 角色编号
 
-    private String applyDatetimeEnd;// 申请时间结束
+    private Date applyDatetimeStart;// 申请时间起始
+
+    private Date applyDatetimeEnd;// 申请时间结束
 
     private List<String> fileListArray;
 
@@ -545,6 +547,14 @@ public class BudgetOrder extends ABaseDO {
     private String operatorName;// 经办人
 
     private String saleUserName;// 业务员
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
 
     public String getRepayBizCode() {
         return repayBizCode;
@@ -624,14 +634,6 @@ public class BudgetOrder extends ABaseDO {
 
     public void setBackAdvanceStatus(String backAdvanceStatus) {
         this.backAdvanceStatus = backAdvanceStatus;
-    }
-
-    public String getBackAdvanceAmount() {
-        return backAdvanceAmount;
-    }
-
-    public void setBackAdvanceAmount(String backAdvanceAmount) {
-        this.backAdvanceAmount = backAdvanceAmount;
     }
 
     public String getBackAdvanceAccount() {
@@ -1114,14 +1116,6 @@ public class BudgetOrder extends ABaseDO {
         this.oilSubsidy = oilSubsidy;
     }
 
-    public String getOilSubsidyKil() {
-        return oilSubsidyKil;
-    }
-
-    public void setOilSubsidyKil(String oilSubsidyKil) {
-        this.oilSubsidyKil = oilSubsidyKil;
-    }
-
     public String getIsPlatInsure() {
         return isPlatInsure;
     }
@@ -1136,14 +1130,6 @@ public class BudgetOrder extends ABaseDO {
 
     public void setGpsFee(Long gpsFee) {
         this.gpsFee = gpsFee;
-    }
-
-    public String getGpsDeduct() {
-        return gpsDeduct;
-    }
-
-    public void setGpsDeduct(String gpsDeduct) {
-        this.gpsDeduct = gpsDeduct;
     }
 
     public String getGpsFeeWay() {
@@ -1770,14 +1756,6 @@ public class BudgetOrder extends ABaseDO {
         this.makecardRemark = makecardRemark;
     }
 
-    public String getDeliveryDatetime() {
-        return deliveryDatetime;
-    }
-
-    public void setDeliveryDatetime(String deliveryDatetime) {
-        this.deliveryDatetime = deliveryDatetime;
-    }
-
     public String getIsRightInvoice() {
         return isRightInvoice;
     }
@@ -1786,11 +1764,35 @@ public class BudgetOrder extends ABaseDO {
         this.isRightInvoice = isRightInvoice;
     }
 
-    public String getCurrentInvoicePrice() {
+    public double getOilSubsidyKil() {
+        return oilSubsidyKil;
+    }
+
+    public void setOilSubsidyKil(double oilSubsidyKil) {
+        this.oilSubsidyKil = oilSubsidyKil;
+    }
+
+    public Long getGpsDeduct() {
+        return gpsDeduct;
+    }
+
+    public void setGpsDeduct(Long gpsDeduct) {
+        this.gpsDeduct = gpsDeduct;
+    }
+
+    public Date getDeliveryDatetime() {
+        return deliveryDatetime;
+    }
+
+    public void setDeliveryDatetime(Date deliveryDatetime) {
+        this.deliveryDatetime = deliveryDatetime;
+    }
+
+    public Long getCurrentInvoicePrice() {
         return currentInvoicePrice;
     }
 
-    public void setCurrentInvoicePrice(String currentInvoicePrice) {
+    public void setCurrentInvoicePrice(Long currentInvoicePrice) {
         this.currentInvoicePrice = currentInvoicePrice;
     }
 
@@ -1810,19 +1812,19 @@ public class BudgetOrder extends ABaseDO {
         this.certification = certification;
     }
 
-    public String getForceInsurance() {
+    public Long getForceInsurance() {
         return forceInsurance;
     }
 
-    public void setForceInsurance(String forceInsurance) {
+    public void setForceInsurance(Long forceInsurance) {
         this.forceInsurance = forceInsurance;
     }
 
-    public String getBusinessInsurance() {
+    public Long getBusinessInsurance() {
         return businessInsurance;
     }
 
-    public void setBusinessInsurance(String businessInsurance) {
+    public void setBusinessInsurance(Long businessInsurance) {
         this.businessInsurance = businessInsurance;
     }
 
@@ -1850,11 +1852,11 @@ public class BudgetOrder extends ABaseDO {
         this.fbhRemark = fbhRemark;
     }
 
-    public String getFbhWarnDay() {
+    public Integer getFbhWarnDay() {
         return fbhWarnDay;
     }
 
-    public void setFbhWarnDay(String fbhWarnDay) {
+    public void setFbhWarnDay(Integer fbhWarnDay) {
         this.fbhWarnDay = fbhWarnDay;
     }
 
@@ -1906,11 +1908,11 @@ public class BudgetOrder extends ABaseDO {
         this.payPdf = payPdf;
     }
 
-    public String getZfApplyDatetime() {
+    public Date getZfApplyDatetime() {
         return zfApplyDatetime;
     }
 
-    public void setZfApplyDatetime(String zfApplyDatetime) {
+    public void setZfApplyDatetime(Date zfApplyDatetime) {
         this.zfApplyDatetime = zfApplyDatetime;
     }
 
@@ -1922,11 +1924,11 @@ public class BudgetOrder extends ABaseDO {
         this.zfReason = zfReason;
     }
 
-    public String getZfSkAmount() {
+    public Long getZfSkAmount() {
         return zfSkAmount;
     }
 
-    public void setZfSkAmount(String zfSkAmount) {
+    public void setZfSkAmount(Long zfSkAmount) {
         this.zfSkAmount = zfSkAmount;
     }
 
@@ -1962,6 +1964,14 @@ public class BudgetOrder extends ABaseDO {
         this.zfFinanceRemark = zfFinanceRemark;
     }
 
+    public Long getBackAdvanceAmount() {
+        return backAdvanceAmount;
+    }
+
+    public void setBackAdvanceAmount(Long backAdvanceAmount) {
+        this.backAdvanceAmount = backAdvanceAmount;
+    }
+
     public String getCurNodeCode() {
         return curNodeCode;
     }
@@ -1970,19 +1980,19 @@ public class BudgetOrder extends ABaseDO {
         this.curNodeCode = curNodeCode;
     }
 
-    public String getApplyDatetimeStart() {
+    public Date getApplyDatetimeStart() {
         return applyDatetimeStart;
     }
 
-    public void setApplyDatetimeStart(String applyDatetimeStart) {
+    public void setApplyDatetimeStart(Date applyDatetimeStart) {
         this.applyDatetimeStart = applyDatetimeStart;
     }
 
-    public String getApplyDatetimeEnd() {
+    public Date getApplyDatetimeEnd() {
         return applyDatetimeEnd;
     }
 
-    public void setApplyDatetimeEnd(String applyDatetimeEnd) {
+    public void setApplyDatetimeEnd(Date applyDatetimeEnd) {
         this.applyDatetimeEnd = applyDatetimeEnd;
     }
 
