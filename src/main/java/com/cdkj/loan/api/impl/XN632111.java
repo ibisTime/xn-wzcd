@@ -1,6 +1,6 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.ICreditAO;
+import com.cdkj.loan.ao.ICreditUserAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
@@ -13,19 +13,20 @@ import com.cdkj.loan.spring.SpringContextHolder;
 /**
  * 录入银行征信结果
  * @author: jiafr 
- * @since: 2018年5月25日 下午3:03:53 
+ * @since: 2018年5月25日 下午3:22:27 
  * @history:
  */
 public class XN632111 extends AProcessor {
 
-    private ICreditAO creditAO = SpringContextHolder.getBean(ICreditAO.class);
+    private ICreditUserAO creditUserAO = SpringContextHolder
+        .getBean(ICreditUserAO.class);
 
-    private XN632111Req req = null;
+    private XN632111Req req = null;;
 
     @Override
     public Object doBusiness() throws BizException {
 
-        creditAO.inputBankCreditResult(req);
+        creditUserAO.inputBankCreditResult(req);
 
         return new BooleanRes(true);
     }

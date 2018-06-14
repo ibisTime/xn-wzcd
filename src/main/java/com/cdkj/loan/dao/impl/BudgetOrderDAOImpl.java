@@ -9,8 +9,8 @@ import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.BudgetOrder;
 
 @Repository("budgetOrderDAOImpl")
-public class BudgetOrderDAOImpl extends AMybatisTemplate implements
-        IBudgetOrderDAO {
+public class BudgetOrderDAOImpl extends AMybatisTemplate
+        implements IBudgetOrderDAO {
 
     @Override
     public int insert(BudgetOrder data) {
@@ -23,78 +23,27 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
     }
 
     @Override
-    public void update(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_budgetOrder"), data);
+    public int updateAreaManagerApprove(BudgetOrder data) {
+        return super.update(NAMESPACE.concat("update_areaManagerApprove"),
+            data);
     }
 
     @Override
-    public void updaterIskApprove(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_riskApprove"), data);
+    public int updateBranchCompanyApprove(BudgetOrder data) {
+        return super.update(NAMESPACE.concat("update_branchCompanyApprove"),
+            data);
+
     }
 
     @Override
-    public void updaterIskChargeApprove(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_charge_riskApprove"), data);
+    public int updateGlobalManagerApprove(BudgetOrder data) {
+        return super.update(NAMESPACE.concat("update_globalCompanyApprove"),
+            data);
     }
 
     @Override
-    public void updaterInterview(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_interview"), data);
-    }
-
-    @Override
-    public void updaterBizChargeApprove(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_biz_charge_approve"), data);
-    }
-
-    @Override
-    public void updaterAdvancefund(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_advancefund"), data);
-    }
-
-    @Override
-    public void updaterGpsManagerApprove(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_gps_manager_approve"), data);
-    }
-
-    @Override
-    public void updaterInstallGps(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_install_gps"), data);
-    }
-
-    @Override
-    public void updaterCarSettle(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_car_settle"), data);
-    }
-
-    @Override
-    public void updaterCommitBank(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_commit_bank"), data);
-    }
-
-    @Override
-    public void updaterEntryFk(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_entry_fk"), data);
-    }
-
-    @Override
-    public void updaterConfirmReceipt(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_confirm_receipt"), data);
-    }
-
-    @Override
-    public void updaterEntryMortgage(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_entry_mortgage"), data);
-    }
-
-    @Override
-    public void updaterMortgageCommitBank(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_mortgage_commit_bank"), data);
-    }
-
-    @Override
-    public void updaterMortgageFinish(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_mortgage_finish"), data);
+    public int updateCancelOrder(BudgetOrder data) {
+        return super.update(NAMESPACE.concat("update_cancelOrder"), data);
     }
 
     @Override
@@ -123,59 +72,28 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
     }
 
     @Override
-    public int updateArchiveSuccess(BudgetOrder data) {
-        return super.update(NAMESPACE.concat("update_archiveSuccess"), data);
+    public void updateBankLoanCommit(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_bankLoanCommit"), data);
     }
 
     @Override
-    public void updaterLogicNode(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_logic_node"), data);
+    public void updateBankLoanConfirm(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_bankLoanConfirm"), data);
     }
 
     @Override
-    public List<BudgetOrder> selectBudgetOrderByRoleCodeList(
-            BudgetOrder condition, int start, int count) {
-        return super.selectList(
-            NAMESPACE.concat("select_budgetOrder_byRoleCode"), start, count,
-            condition, BudgetOrder.class);
+    public void updateCarPledgeCommit(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_carPledgeCommit"), data);
     }
 
     @Override
-    public long selectTotalCountByRoleCode(BudgetOrder condition) {
-        return super.selectTotalCount(
-            NAMESPACE.concat("select_budgetOrder_count_byRoleCode"), condition);
+    public void updateCarPledgeConfirm(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_carPledgeConfirm"), data);
     }
 
     @Override
-    public void insertBackAdvanceFund(BudgetOrder data) {
-
-        super.update(NAMESPACE.concat("insert_back_advance_fund"), data);
-
+    public void updateCarLoanArchive(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_carLoanArchive"), data);
     }
 
-    @Override
-    public void confirmBackAdvanceFund(BudgetOrder data) {
-
-        super.update(NAMESPACE.concat("confirm_back_advance_fund"), data);
-    }
-
-    @Override
-    public void applyCancel(BudgetOrder data) {
-
-        super.update(NAMESPACE.concat("apply_cancel"), data);
-
-    }
-
-    @Override
-    public void cancelBizAudit(BudgetOrder data) {
-
-        super.update(NAMESPACE.concat("update_cancel_biz_audit"), data);
-
-    }
-
-    @Override
-    public void cancelFinanceAudit(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_cancel_finance_audit"), data);
-
-    }
 }

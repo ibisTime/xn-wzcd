@@ -3,61 +3,48 @@ package com.cdkj.loan.dto.req;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
-/**
- * 修改征信
- * @author: jiafr 
- * @since: 2018年5月29日 下午7:36:06 
- * @history:
- */
 public class XN632112Req {
 
-    // 征信单编号
-    @NotBlank
-    private String creditCode;
-
-    // 贷款银行
-    private String loanBankCode;
-
-    // 贷款金额
-    private String loanAmount;
-
-    // 业务种类
-    private String bizType;
-
-    // 二手车评估报告
-    private String secondCarReport;
-
-    // 行驶证正面
-    private String xszFront;
-
-    // 行驶证反面
-    private String xszReverse;
-
-    private List<XN632112ReqCreditUser> creditUserList;
-
-    // 操作按钮
-    @NotBlank
-    private String buttonCode;
-
-    // 操作人
     @NotBlank
     private String operator;
 
-    public String getButtonCode() {
-        return buttonCode;
+    @NotBlank
+    private String creditCode;
+
+    @NotBlank
+    private String loanBank;
+
+    @NotBlank
+    private String shopWay;
+
+    @NotBlank
+    private String loanAmount;
+
+    @NotBlank
+    private String xszFront;
+
+    @NotBlank
+    private String xszReverse;
+
+    @NotEmpty
+    private List<XN632112ReqChild> creditUserList;
+
+    public String getLoanBank() {
+        return loanBank;
     }
 
-    public void setButtonCode(String buttonCode) {
-        this.buttonCode = buttonCode;
+    public void setLoanBank(String loanBank) {
+        this.loanBank = loanBank;
     }
 
-    public String getLoanBankCode() {
-        return loanBankCode;
+    public String getShopWay() {
+        return shopWay;
     }
 
-    public void setLoanBankCode(String loanBankCode) {
-        this.loanBankCode = loanBankCode;
+    public void setShopWay(String shopWay) {
+        this.shopWay = shopWay;
     }
 
     public String getLoanAmount() {
@@ -66,22 +53,6 @@ public class XN632112Req {
 
     public void setLoanAmount(String loanAmount) {
         this.loanAmount = loanAmount;
-    }
-
-    public String getBizType() {
-        return bizType;
-    }
-
-    public void setBizType(String bizType) {
-        this.bizType = bizType;
-    }
-
-    public String getSecondCarReport() {
-        return secondCarReport;
-    }
-
-    public void setSecondCarReport(String secondCarReport) {
-        this.secondCarReport = secondCarReport;
     }
 
     public String getXszFront() {
@@ -100,20 +71,12 @@ public class XN632112Req {
         this.xszReverse = xszReverse;
     }
 
-    public List<XN632112ReqCreditUser> getCreditUserList() {
+    public List<XN632112ReqChild> getCreditUserList() {
         return creditUserList;
     }
 
-    public void setCreditUserList(List<XN632112ReqCreditUser> creditUserList) {
+    public void setCreditUserList(List<XN632112ReqChild> creditUserList) {
         this.creditUserList = creditUserList;
-    }
-
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
     }
 
     public String getCreditCode() {
@@ -122,6 +85,14 @@ public class XN632112Req {
 
     public void setCreditCode(String creditCode) {
         this.creditCode = creditCode;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
 }

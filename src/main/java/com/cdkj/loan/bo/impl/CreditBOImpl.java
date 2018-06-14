@@ -2,7 +2,6 @@ package com.cdkj.loan.bo.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +13,6 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICreditDAO;
 import com.cdkj.loan.domain.Credit;
-import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.enums.EGeneratePrefix;
 
 /**
@@ -46,20 +44,12 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
 
     @Override
     public Credit getCredit(String code) {
-        Credit condition = new Credit();
-        condition.setCode(code);
-        return creditDAO.select(condition);
-    }
 
-    @Override
-    public Credit getMoreCredit(String code) {
         Credit condition = new Credit();
+
         condition.setCode(code);
-        Credit credit = creditDAO.select(condition);
-        List<CreditUser> creditUserList = creditUserBO
-            .queryCreditUserList(code);
-        credit.setCreditUserList(creditUserList);
-        return credit;
+
+        return creditDAO.select(condition);
     }
 
     @Override
@@ -85,9 +75,9 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
 
     @Override
     public void refreshCreditNode(Credit credit) {
-        if (StringUtils.isNotBlank(credit.getCurNodeCode())) {
-            creditDAO.updateNode(credit);
-        }
+
+        creditDAO.updateNode(credit);
+
     }
 
 }

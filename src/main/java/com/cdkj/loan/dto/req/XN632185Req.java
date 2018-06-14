@@ -1,57 +1,48 @@
 package com.cdkj.loan.dto.req;
 
 /**
- * 分页查询退客户垫资款
- * @author: jiafr 
- * @since: 2018年6月9日 下午10:31:06 
+ * 车辆抵押分页查
+ * @author: silver 
+ * @since: 2018年6月13日 下午2:56:47 
  * @history:
  */
 public class XN632185Req extends APageReq {
 
+    /** 
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+     */
     private static final long serialVersionUID = 1L;
 
-    // 客户姓名
-    private String applyUserName;
-
     // 业务编号
-    private String bizCode;
+    private String code;
 
-    // 申请时间起
-    private String startDatetime;
+    // 客户姓名
+    private String customerName;
 
-    // 申请时间止
-    private String endDatetime;
+    // 贷款银行
+    private String loanBankCode;
 
-    public String getApplyUserName() {
-        return applyUserName;
+    public String getCode() {
+        return code;
     }
 
-    public void setApplyUserName(String applyUserName) {
-        this.applyUserName = applyUserName;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getBizCode() {
-        return bizCode;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setBizCode(String bizCode) {
-        this.bizCode = bizCode;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
-    public String getStartDatetime() {
-        return startDatetime;
+    public String getLoanBankCode() {
+        return loanBankCode;
     }
 
-    public void setStartDatetime(String startDatetime) {
-        this.startDatetime = startDatetime;
+    public void setLoanBankCode(String loanBankCode) {
+        this.loanBankCode = loanBankCode;
     }
-
-    public String getEndDatetime() {
-        return endDatetime;
-    }
-
-    public void setEndDatetime(String endDatetime) {
-        this.endDatetime = endDatetime;
-    }
-
 }

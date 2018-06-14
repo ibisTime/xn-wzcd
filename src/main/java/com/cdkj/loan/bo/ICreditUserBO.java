@@ -20,11 +20,11 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     // 录入银行征信结果
     public void inputBankCreditResult(CreditUser creditUser);
 
+    // 修改征信人员信息收入
+    public void refreshCreditUserIncome(CreditUser creditUser);
+
     // 批量查询征信人员
     public List<CreditUser> queryCreditUserList(CreditUser condition);
-
-    // 查询对应的征信人员信息
-    public List<CreditUser> queryCreditUserList(String creditCode);
 
     // 查询征信单共还人，担保人，本人
     public CreditUser getCreditUserByCreditCode(String creditCode,

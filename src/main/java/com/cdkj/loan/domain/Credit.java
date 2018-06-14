@@ -13,28 +13,13 @@ import com.cdkj.loan.dao.base.ABaseDO;
  */
 public class Credit extends ABaseDO {
 
+    /** 
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+     */
     private static final long serialVersionUID = 1L;
 
     // 编号
     private String code;
-
-    // 贷款银行编号
-    private String loanBankCode;
-
-    // 贷款金额
-    private Long loanAmount;
-
-    // 业务种类 （新车 二手车）
-    private String bizType;
-
-    // 二手车评估报告
-    private String secondCarReport;
-
-    // 行驶证正面
-    private String xszFront;
-
-    // 行驶证反面
-    private String xszReverse;
 
     // 预算单编号
     private String budgetCode;
@@ -48,8 +33,26 @@ public class Credit extends ABaseDO {
     // 申请时间
     private Date applyDatetime;
 
+    // 贷款银行编号
+    private String loanBankCode;
+
+    // 购车途径
+    private String shopWay;
+
+    // 贷款金额
+    private Long loanAmount;
+
+    // 行驶证正面
+    private String xszFront;
+
+    // 行驶证反面
+    private String xszReverse;
+
     // 当前节点编号
     private String curNodeCode;
+
+    // 附件
+    private String accessory;
 
     // ****************db properties*******************
 
@@ -65,13 +68,13 @@ public class Credit extends ABaseDO {
     // 业务公司
     private String companyName;
 
-    // 贷款银行名称
+    // 贷款银行
     private String loanBankName;
 
     // 业务员
-    private String saleUserName;
+    private String salesmanName;
 
-    // 征信人员（申请人）
+    // 征信人员中的贷款角色为主申请人的信息 ： 客户姓名 手机号 身份证号...
     private CreditUser creditUser;
 
     // 征信人员信息
@@ -91,30 +94,6 @@ public class Credit extends ABaseDO {
 
     public void setBudgetCode(String budgetCode) {
         this.budgetCode = budgetCode;
-    }
-
-    public String getLoanBankCode() {
-        return loanBankCode;
-    }
-
-    public void setLoanBankCode(String loanBankCode) {
-        this.loanBankCode = loanBankCode;
-    }
-
-    public Long getLoanAmount() {
-        return loanAmount;
-    }
-
-    public void setLoanAmount(Long loanAmount) {
-        this.loanAmount = loanAmount;
-    }
-
-    public String getBizType() {
-        return bizType;
-    }
-
-    public void setBizType(String bizType) {
-        this.bizType = bizType;
     }
 
     public String getCompanyCode() {
@@ -141,12 +120,28 @@ public class Credit extends ABaseDO {
         this.applyDatetime = applyDatetime;
     }
 
-    public String getSecondCarReport() {
-        return secondCarReport;
+    public String getLoanBankCode() {
+        return loanBankCode;
     }
 
-    public void setSecondCarReport(String secondCarReport) {
-        this.secondCarReport = secondCarReport;
+    public void setLoanBankCode(String loanBankCode) {
+        this.loanBankCode = loanBankCode;
+    }
+
+    public String getShopWay() {
+        return shopWay;
+    }
+
+    public void setShopWay(String shopWay) {
+        this.shopWay = shopWay;
+    }
+
+    public Long getLoanAmount() {
+        return loanAmount;
+    }
+
+    public void setLoanAmount(Long loanAmount) {
+        this.loanAmount = loanAmount;
     }
 
     public String getXszFront() {
@@ -173,28 +168,12 @@ public class Credit extends ABaseDO {
         this.curNodeCode = curNodeCode;
     }
 
-    public Date getApplyDatetimeStart() {
-        return applyDatetimeStart;
+    public String getAccessory() {
+        return accessory;
     }
 
-    public void setApplyDatetimeStart(Date applyDatetimeStart) {
-        this.applyDatetimeStart = applyDatetimeStart;
-    }
-
-    public Date getApplyDatetimeEnd() {
-        return applyDatetimeEnd;
-    }
-
-    public void setApplyDatetimeEnd(Date applyDatetimeEnd) {
-        this.applyDatetimeEnd = applyDatetimeEnd;
-    }
-
-    public String getRoleCode() {
-        return roleCode;
-    }
-
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode;
+    public void setAccessory(String accessory) {
+        this.accessory = accessory;
     }
 
     public String getCompanyName() {
@@ -213,12 +192,12 @@ public class Credit extends ABaseDO {
         this.loanBankName = loanBankName;
     }
 
-    public String getSaleUserName() {
-        return saleUserName;
+    public String getSalesmanName() {
+        return salesmanName;
     }
 
-    public void setSaleUserName(String saleUserName) {
-        this.saleUserName = saleUserName;
+    public void setSalesmanName(String salesmanName) {
+        this.salesmanName = salesmanName;
     }
 
     public CreditUser getCreditUser() {
@@ -235,6 +214,30 @@ public class Credit extends ABaseDO {
 
     public void setCreditUserList(List<CreditUser> creditUserList) {
         this.creditUserList = creditUserList;
+    }
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
+
+    public Date getApplyDatetimeStart() {
+        return applyDatetimeStart;
+    }
+
+    public void setApplyDatetimeStart(Date applyDatetimeStart) {
+        this.applyDatetimeStart = applyDatetimeStart;
+    }
+
+    public Date getApplyDatetimeEnd() {
+        return applyDatetimeEnd;
+    }
+
+    public void setApplyDatetimeEnd(Date applyDatetimeEnd) {
+        this.applyDatetimeEnd = applyDatetimeEnd;
     }
 
 }

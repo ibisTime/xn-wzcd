@@ -1,542 +1,313 @@
 package com.cdkj.loan.dto.req;
 
-import org.hibernate.validator.constraints.NotBlank;
+import java.util.List;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class XN632120Req {
 
-    // 编号
-    @NotBlank
-    private String code;
-
     // 操作人
-    @NotBlank
     private String operator;
 
     // 处理类型(0 保存 1 发送)
-    @NotBlank
     private String dealType;
 
-    // 贷款产品编号
-    @NotBlank
-    private String loanProductCode;
-
-    // 公司手续费
-    private String companyFee;
-
-    // 是否垫资
-    @NotBlank
-    private String isAdvanceFund;
-
     // 征信单编号
-    @NotBlank
     private String creditCode;
 
-    // 业务种类
-    @NotBlank
-    private String bizType;
+    // 客户类型
+    private String customerType;
 
-    // 贷款期限
-    @NotBlank
-    private String loanPeriod;
+    // 汽车经销商编号
+    private String carDealerCode;
 
-    // 开票单位
-    @NotBlank
-    private String invoiceCompany;
+    // 贷款银行编号
+    private String loanBankCode;
 
-    // 品牌
-    @NotBlank
-    private String carBrand;
+    // 贷款支行编号
+    private String loanBankSubbranch;
 
-    // 车系
-    @NotBlank
-    private String carSeries;
-
-    // 车型
-    @NotBlank
-    private String carModel;
-
-    // 车辆照片
-    @NotBlank
-    private String carPic;
-
-    // 合格证
-    @NotBlank
-    private String carHgzPic;
-
-    // 合格证号
-    @NotBlank
-    private String carHgzNo;
-
-    // 车架号
-    @NotBlank
-    private String carFrameNo;
-
-    // 发动机号
-    @NotBlank
-    private String carEngineNo;
-
-    // 市场指导价
-    @NotBlank
+    // 厂商指导价
     private String originalPrice;
 
-    // 开票价
-    @NotBlank
+    // 车辆型号
+    private String carModel;
+
+    // 贷款周期
+    private String loanPeriods;
+
+    // 发票价格
     private String invoicePrice;
 
-    // 颜色
-    @NotBlank
-    private String carColor;
+    // 利率类型
+    private String rateType;
 
-    // 月供保证金
-    @NotBlank
-    private String monthDeposit;
-
-    // 首付金额
-    @NotBlank
-    private String firstAmount;
-
-    // 首付比例
-    @NotBlank
-    private String firstRate;
-
-    // 贷款额
-    @NotBlank
+    // 贷款金额
     private String loanAmount;
 
-    // 落户地点
-    @NotBlank
-    private String settleAddress;
+    // 是否需要贷前调查
+    private String isSurvey;
 
-    // 申请人姓名
-    @NotBlank
-    private String applyUserName;
+    // 银行利率
+    private String bankRate;
 
-    // 性别
-    @NotBlank
-    private String gender;
+    // 是否垫资
+    private String isAdvanceFund;
+
+    // 服务费
+    private String fee;
+
+    // 厂家贴息
+    private String carDealerSubsidy;
+
+    // 申请人就职单位
+    private String applyUserCompany;
+
+    // 申请人职位
+    private String applyUserDuty;
 
     // 婚姻状况
-    @NotBlank
     private String marryState;
 
-    // 民族
-    @NotBlank
-    private String nation;
+    // 其他收入说明
+    private String otherIncomeNote;
 
-    // 学历
-    @NotBlank
-    private String education;
+    // 房产证情况
+    private String isHouseProperty;
 
-    // 身份证号
-    @NotBlank
-    private String idNo;
+    // 房产证
+    private String houseProperty;
 
-    // 家庭人口
-    @NotBlank
-    private String familyNumber;
-
-    // 手机号
-    @NotBlank
-    private String mobile;
-
-    // 现居住地址
-    @NotBlank
-    private String nowAddress;
-
-    // 邮编1
-    @NotBlank
-    private String postCode1;
-
-    // 户口所在地
-    @NotBlank
-    private String residenceAddress;
-
-    // 邮编2
-    @NotBlank
-    private String postCode2;
-
-    // 家庭主要财产
-    @NotBlank
-    private String familyMainAsset;
-
-    // 主要财产包括
-    @NotBlank
-    private String mainAssetInclude;
-
-    // 主要收入来源
-    @NotBlank
-    private String mainIncome;
-
-    // 工作单位名称
-    @NotBlank
-    private String workCompanyName;
-
-    // 工作单位地址
-    @NotBlank
-    private String workCompanyAddress;
-
-    // 单位性质
-    private String workCompanyProperty;
-
-    // 所属行业
-    private String workBelongIndustry;
-
-    // 职业
-    private String workProfession;
-
-    // 何时进入现单位工作
-    private String workDatetime;
-
-    // 自营公司单位面积
-    private String selfCompanyArea;
-
-    // 员工数量
-    private String employeeQuantity;
-
-    // 企业月产值
-    private String enterpriseMonthOutput;
-
-    // 职位
-    private String position;
-
-    // 职称
-    private String postTitle;
-
-    // 月收入
-    private String monthIncome;
-
-    // 配偶姓名
-    private String mateName;
-
-    // 配偶手机号
-    private String mateMobile;
-
-    // 配偶身份证号
-    private String mateIdNo;
-
-    // 配偶学历
-    private String mateEducation;
-
-    // 配偶工作单位名称
-    private String mateCompanyName;
-
-    // 配偶工作单位地址
-    private String mateCompanyAddress;
-
-    // 配偶工作单位联系电话
-    private String mateCompanyContactNo;
-
-    // 配偶支付宝流水时间起
-    private String mateZfbJourDatetimeStart;
-
-    // 配偶支付宝流水时间止
-    private String mateZfbJourDatetimeEnd;
-
-    // 配偶支付宝收入
-    private String mateZfbJourIncome;
-
-    // 配偶支付宝支出
-    private String mateZfbJourExpend;
-
-    // 配偶支付宝帐户余额
-    private String mateZfbJourBalance;
-
-    // 配偶支付宝月均收入
-    private String mateZfbJourMonthIncome;
-
-    // 配偶支付宝月均支出
-    private String mateZfbJourMonthExpend;
-
-    // 配偶支付宝流水图片
-    private String mateZfbJourPic;
-
-    // 配偶支付宝流水备注
-    private String mateZfbJourRemark;
-
-    // 配偶微信流水时间起
-    private String mateWxJourDatetimeStart;
-
-    // 配偶微信流水时间止
-    private String mateWxJourDatetimeEnd;
-
-    // 配偶微信收入
-    private String mateWxJourIncome;
-
-    // 配偶微信支出
-    private String mateWxJourExpend;
-
-    // 配偶微信帐户余额
-    private String mateWxJourBalance;
-
-    // 配偶微信月均收入
-    private String mateWxJourMonthIncome;
-
-    // 配偶微信月均支出
-    private String mateWxJourMonthExpend;
-
-    // 配偶微信流水图片
-    private String mateWxJourPic;
-
-    // 配偶微信流水备注
-    private String mateWxJourRemark;
-
-    // 配偶流水时间起
-    private String mateJourDatetimeStart;
-
-    // 配偶流水时间止
-    private String mateJourDatetimeEnd;
-
-    // 配偶收入
-    private String mateJourIncome;
-
-    // 配偶支出
-    private String mateJourExpend;
-
-    // 配偶帐户余额
-    private String mateJourBalance;
-
-    // 配偶月均收入
-    private String mateJourMonthIncome;
-
-    // 配偶月均支出
-    private String mateJourMonthExpend;
-
-    // 配偶流水图片
-    private String mateJourPic;
-
-    // 配偶流水备注
-    private String mateJourRemark;
-
-    // 配偶资产资料pdf
-    private String mateAssetPdf;
-
-    // 担保人姓名
-    private String guaName;
-
-    // 担保人手机号
-    private String guaMobile;
-
-    // 担保人身份证号
-    private String guaIdNo;
-
-    // 担保人固定电话
-    private String guaPhone;
-
-    // 担保人工作单位名称
-    private String guaCompanyName;
-
-    // 担保人工作单位地址
-    private String guaCompanyAddress;
-
-    // 担保人房产地址
-    private String guaHouseAssetAddress;
-
-    // 担保人支付宝流水时间起
-    private String guaZfbJourDatetimeStart;
-
-    // 担保人支付宝流水时间止
-    private String guaZfbJourDatetimeEnd;
-
-    // 担保人支付宝收入
-    private String guaZfbJourIncome;
-
-    // 担保人支付宝支出
-    private String guaZfbJourExpend;
-
-    // 担保人支付宝帐户余额
-    private String guaZfbJourBalance;
-
-    // 担保人支付宝月均收入
-    private String guaZfbJourMonthIncome;
-
-    // 担保人支付宝月均支出
-    private String guaZfbJourMonthExpend;
-
-    // 担保人支付宝流水图片
-    private String guaZfbJourPic;
-
-    // 担保人支付宝流水备注
-    private String guaZfbJourRemark;
-
-    // 担保人微信流水时间起
-    private String guaWxJourDatetimeStart;
-
-    // 担保人微信流水时间止
-    private String guaWxJourDatetimeEnd;
-
-    // 担保人微信收入
-    private String guaWxJourIncome;
-
-    // 担保人微信支出
-    private String guaWxJourExpend;
-
-    // 担保人微信帐户余额
-    private String guaWxJourBalance;
-
-    // 担保人微信月均收入
-    private String guaWxJourMonthIncome;
-
-    // 担保人微信月均支出
-    private String guaWxJourMonthExpend;
-
-    // 担保人微信流水图片
-    private String guaWxJourPic;
-
-    // 担保人微信流水备注
-    private String guaWxJourRemark;
-
-    // 担保人流水时间起
-    private String guaJourDatetimeStart;
-
-    // 担保人流水时间止
-    private String guaJourDatetimeEnd;
-
-    // 担保人收入
-    private String guaJourIncome;
-
-    // 担保人支出
-    private String guaJourExpend;
-
-    // 担保人帐户余额
-    private String guaJourBalance;
-
-    // 担保人月均收入
-    private String guaJourMonthIncome;
-
-    // 担保人月均支出
-    private String guaJourMonthExpend;
-
-    // 担保人流水图片
-    private String guaJourPic;
-
-    // 担保人流水备注
-    private String guaJourRemark;
-
-    // 担保人资产资料pdf
-    private String guaAssetPdf;
-
-    // 家庭紧急联系人信息1 姓名
-    private String emergencyName1;
-
-    // 家庭紧急联系人信息1 与申请人关系
-    private String emergencyRelation1;
-
-    // 家庭紧急联系人信息1 手机号码
-    private String emergencyMobile1;
-
-    // 家庭紧急联系人信息2 姓名
-    private String emergencyName2;
-
-    // 家庭紧急联系人信息2 与申请人关系
-    private String emergencyRelation2;
-
-    // 家庭紧急联系人信息2 手机号码
-    private String emergencyMobile2;
-
-    // 支付宝流水时间起
-    private String zfbJourDatetimeStart;
-
-    // 支付宝流水时间止
-    private String zfbJourDatetimeEnd;
-
-    // 支付宝收入
-    private String zfbJourIncome;
-
-    // 支付宝支出
-    private String zfbJourExpend;
-
-    // 支付宝帐户余额
-    private String zfbJourBalance;
-
-    // 支付宝月均收入
-    private String zfbJourMonthIncome;
-
-    // 支付宝月均支出
-    private String zfbJourMonthExpend;
-
-    // 支付宝流水图片
-    private String zfbJourPic;
-
-    // 支付宝流水备注
-    private String zfbJourRemark;
-
-    // 微信流水时间起
-    private String wxJourDatetimeStart;
-
-    // 微信流水时间止
-    private String wxJourDatetimeEnd;
-
-    // 微信收入
-    private String wxJourIncome;
-
-    // 微信支出
-    private String wxJourExpend;
-
-    // 微信帐户余额
-    private String wxJourBalance;
-
-    // 微信月均收入
-    private String wxJourMonthIncome;
-
-    // 微信月均支出
-    private String wxJourMonthExpend;
-
-    // 微信流水图片
-    private String wxJourPic;
-
-    // 微信流水备注
-    private String wxJourRemark;
-
-    // 流水时间起
-    private String jourDatetimeStart;
-
-    // 流水时间止
-    private String jourDatetimeEnd;
-
-    // 收入
-    private String jourIncome;
-
-    // 支出
-    private String jourExpend;
-
-    // 帐户余额
-    private String jourBalance;
-
-    // 月均收入
-    private String jourMonthIncome;
-
-    // 月均支出
-    private String jourMonthExpend;
-
-    // 流水图片
-    private String jourPic;
-
-    // 流水备注
-    private String jourRemark;
-
-    // 资产资料pdf
-    private String assetPdf;
+    // 有无购房合同
+    private String isHouseContract;
 
     // 购房合同
     private String houseContract;
 
-    // 房屋照片
-    private String housePicture;
+    // 购房发票
+    private String houseInvoice;
 
-    public String getCompanyFee() {
-        return companyFee;
+    // 营业执照情况
+    private String isLicense;
+
+    // 营业执照
+    private String license;
+
+    // 提供场地证明
+    private String isSiteProve;
+
+    // 场地证明
+    private String siteProve;
+
+    // 经营场地面积
+    private String siteArea;
+
+    // 现有车辆类型
+    private String carType;
+
+    // 有无驾照
+    private String isDriceLicense;
+
+    // 驾照
+    private String driceLicense;
+
+    // 其他资产说明
+    private String otherPropertyNote;
+
+    // 申请人户籍地
+    private String applyBirthAddress;
+
+    // 现住地址
+    private String applyNowAddress;
+
+    // 现住房屋类型
+    private String houseType;
+
+    // 共还人户籍地
+    private String ghBirthAddress;
+
+    // 担保1户籍地
+    private String guarantor1BirthAddress;
+
+    // 担保2户籍地
+    private String guarantor2BirthAddress;
+
+    // 其他情况说明
+    private String otherNote;
+
+    // 油补
+    private String oilSubsidy;
+
+    // 油补公里数
+    private String oilSubsidyKil;
+
+    // 是否我司续保
+    private String isPlatInsure;
+
+    // GPS收费
+    private String gpsFee;
+
+    // GPS提成
+    private String gpsDeduct;
+
+    // GPS收费方式
+    private String gpsFeeWay;
+
+    // 履约保证金
+    private String lyAmount;
+
+    // 担保风险金
+    private String fxAmount;
+
+    // 杂费
+    private String otherFee;
+
+    // 手续费收取方式
+    private String feeWay;
+
+    // 结婚证离婚证
+    private String marryDivorce;
+
+    // 户口本(主贷本人页)
+    private String applyUserHkb;
+
+    // 银行流水
+    private String bankBillPdf;
+
+    // 单身证明
+    private String singleProvePdf;
+
+    // 收入证明
+    private String incomeProvePdf;
+
+    // 居住证明
+    private String liveProvePdf;
+
+    // 自建房证明
+    private String buildProvePdf;
+
+    // 户口本（首页）
+    private String hkbFirstPage;
+
+    // 户口本（户主页）
+    private String hkbMainPage;
+
+    // 共还人户口本
+    private String ghHkb;
+
+    // 担保人1身份证
+    private String guarantor1IdNo;
+
+    // 担保人1户口本
+    private String guarantor1Hkb;
+
+    // 担保人2身份证
+    private String guarantor2IdNo;
+
+    // 担保人2户口本
+    private String guarantor2Hkb;
+
+    // 小区外观
+    private String housePic;
+
+    // 单元楼照片
+    private String houseUnitPic;
+
+    // 门牌照片
+    private String houseDoorPic;
+
+    // 客厅照片
+    private String houseRoomPic;
+
+    // 主贷与住宅合影
+    private String houseCustomerPic;
+
+    // 签约员与客户在房子合影照片
+    private String houseSaleCustomerPic;
+
+    // 企业名称照片
+    private String companyNamePic;
+
+    // 办公场地照片
+    private String companyPlacePic;
+
+    // 生产车间照片
+    private String companyWorkshopPic;
+
+    // 签约员与客户在公司合影照片
+    private String companySaleCustomerPic;
+
+    // 二手车合格证
+    private String secondHgz;
+
+    // 里程表
+    private String secondOdometer;
+
+    // 车前正面照
+    private String secondCarFrontPic;
+
+    // 中控台
+    private String secondConsolePic;
+
+    // 车300评估页
+    private String second300Pdf;
+
+    // 汽修宝截图
+    private String secondQxbPic;
+
+    // 车内饰
+    private String secondCarInPic;
+
+    // 铭牌
+    private String secondNumber;
+
+    // 其他材料附件
+    private String otherFilePdf;
+
+    // 申请说明事项
+    private String otherApplyNote;
+
+    // 申请时间
+    private String applyDatetime;
+
+    // gps列表编号
+    @NotEmpty
+    private List<String> gpsList;
+
+    // 征信人员收入
+    @NotEmpty
+    private List<XN632120ReqIncome> creditUserIncomeList;
+
+    public String getApplyUserCompany() {
+        return applyUserCompany;
     }
 
-    public void setCompanyFee(String companyFee) {
-        this.companyFee = companyFee;
+    public void setApplyUserCompany(String applyUserCompany) {
+        this.applyUserCompany = applyUserCompany;
     }
 
-    public String getCode() {
-        return code;
+    public String getApplyUserDuty() {
+        return applyUserDuty;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setApplyUserDuty(String applyUserDuty) {
+        this.applyUserDuty = applyUserDuty;
+    }
+
+    public String getMarryState() {
+        return marryState;
+    }
+
+    public void setMarryState(String marryState) {
+        this.marryState = marryState;
+    }
+
+    public String getOtherIncomeNote() {
+        return otherIncomeNote;
+    }
+
+    public void setOtherIncomeNote(String otherIncomeNote) {
+        this.otherIncomeNote = otherIncomeNote;
     }
 
     public String getOperator() {
@@ -555,14 +326,6 @@ public class XN632120Req {
         this.dealType = dealType;
     }
 
-    public String getLoanProductCode() {
-        return loanProductCode;
-    }
-
-    public void setLoanProductCode(String loanProductCode) {
-        this.loanProductCode = loanProductCode;
-    }
-
     public String getCreditCode() {
         return creditCode;
     }
@@ -571,36 +334,45 @@ public class XN632120Req {
         this.creditCode = creditCode;
     }
 
-    public String getBizType() {
-        return bizType;
+    public List<String> getGpsList() {
+        return gpsList;
     }
 
-    public void setBizType(String bizType) {
-        this.bizType = bizType;
+    public void setGpsList(List<String> gpsList) {
+        this.gpsList = gpsList;
     }
 
-    public String getLoanPeriod() {
-        return loanPeriod;
+    public List<XN632120ReqIncome> getCreditUserIncomeList() {
+        return creditUserIncomeList;
     }
 
-    public void setLoanPeriod(String loanPeriod) {
-        this.loanPeriod = loanPeriod;
+    public void setCreditUserIncomeList(
+            List<XN632120ReqIncome> creditUserIncomeList) {
+        this.creditUserIncomeList = creditUserIncomeList;
     }
 
-    public String getInvoiceCompany() {
-        return invoiceCompany;
+    public String getCustomerType() {
+        return customerType;
     }
 
-    public void setInvoiceCompany(String invoiceCompany) {
-        this.invoiceCompany = invoiceCompany;
+    public void setCustomerType(String customerType) {
+        this.customerType = customerType;
     }
 
-    public String getCarBrand() {
-        return carBrand;
+    public String getCarDealerCode() {
+        return carDealerCode;
     }
 
-    public void setCarBrand(String carBrand) {
-        this.carBrand = carBrand;
+    public void setCarDealerCode(String carDealerCode) {
+        this.carDealerCode = carDealerCode;
+    }
+
+    public String getLoanBankCode() {
+        return loanBankCode;
+    }
+
+    public void setLoanBankCode(String loanBankCode) {
+        this.loanBankCode = loanBankCode;
     }
 
     public String getOriginalPrice() {
@@ -611,6 +383,22 @@ public class XN632120Req {
         this.originalPrice = originalPrice;
     }
 
+    public String getCarModel() {
+        return carModel;
+    }
+
+    public void setCarModel(String carModel) {
+        this.carModel = carModel;
+    }
+
+    public String getLoanPeriods() {
+        return loanPeriods;
+    }
+
+    public void setLoanPeriods(String loanPeriods) {
+        this.loanPeriods = loanPeriods;
+    }
+
     public String getInvoicePrice() {
         return invoicePrice;
     }
@@ -619,36 +407,12 @@ public class XN632120Req {
         this.invoicePrice = invoicePrice;
     }
 
-    public String getCarColor() {
-        return carColor;
+    public String getRateType() {
+        return rateType;
     }
 
-    public void setCarColor(String carColor) {
-        this.carColor = carColor;
-    }
-
-    public String getMonthDeposit() {
-        return monthDeposit;
-    }
-
-    public void setMonthDeposit(String monthDeposit) {
-        this.monthDeposit = monthDeposit;
-    }
-
-    public String getFirstAmount() {
-        return firstAmount;
-    }
-
-    public void setFirstAmount(String firstAmount) {
-        this.firstAmount = firstAmount;
-    }
-
-    public String getFirstRate() {
-        return firstRate;
-    }
-
-    public void setFirstRate(String firstRate) {
-        this.firstRate = firstRate;
+    public void setRateType(String rateType) {
+        this.rateType = rateType;
     }
 
     public String getLoanAmount() {
@@ -659,492 +423,20 @@ public class XN632120Req {
         this.loanAmount = loanAmount;
     }
 
-    public String getSettleAddress() {
-        return settleAddress;
+    public String getIsSurvey() {
+        return isSurvey;
     }
 
-    public void setSettleAddress(String settleAddress) {
-        this.settleAddress = settleAddress;
+    public void setIsSurvey(String isSurvey) {
+        this.isSurvey = isSurvey;
     }
 
-    public String getApplyUserName() {
-        return applyUserName;
+    public String getBankRate() {
+        return bankRate;
     }
 
-    public void setApplyUserName(String applyUserName) {
-        this.applyUserName = applyUserName;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getMarryState() {
-        return marryState;
-    }
-
-    public void setMarryState(String marryState) {
-        this.marryState = marryState;
-    }
-
-    public String getNation() {
-        return nation;
-    }
-
-    public void setNation(String nation) {
-        this.nation = nation;
-    }
-
-    public String getEducation() {
-        return education;
-    }
-
-    public void setEducation(String education) {
-        this.education = education;
-    }
-
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
-    public String getFamilyNumber() {
-        return familyNumber;
-    }
-
-    public void setFamilyNumber(String familyNumber) {
-        this.familyNumber = familyNumber;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getNowAddress() {
-        return nowAddress;
-    }
-
-    public void setNowAddress(String nowAddress) {
-        this.nowAddress = nowAddress;
-    }
-
-    public String getPostCode1() {
-        return postCode1;
-    }
-
-    public void setPostCode1(String postCode1) {
-        this.postCode1 = postCode1;
-    }
-
-    public String getResidenceAddress() {
-        return residenceAddress;
-    }
-
-    public void setResidenceAddress(String residenceAddress) {
-        this.residenceAddress = residenceAddress;
-    }
-
-    public String getPostCode2() {
-        return postCode2;
-    }
-
-    public void setPostCode2(String postCode2) {
-        this.postCode2 = postCode2;
-    }
-
-    public String getFamilyMainAsset() {
-        return familyMainAsset;
-    }
-
-    public void setFamilyMainAsset(String familyMainAsset) {
-        this.familyMainAsset = familyMainAsset;
-    }
-
-    public String getMainAssetInclude() {
-        return mainAssetInclude;
-    }
-
-    public void setMainAssetInclude(String mainAssetInclude) {
-        this.mainAssetInclude = mainAssetInclude;
-    }
-
-    public String getMainIncome() {
-        return mainIncome;
-    }
-
-    public void setMainIncome(String mainIncome) {
-        this.mainIncome = mainIncome;
-    }
-
-    public String getWorkCompanyName() {
-        return workCompanyName;
-    }
-
-    public void setWorkCompanyName(String workCompanyName) {
-        this.workCompanyName = workCompanyName;
-    }
-
-    public String getWorkCompanyAddress() {
-        return workCompanyAddress;
-    }
-
-    public void setWorkCompanyAddress(String workCompanyAddress) {
-        this.workCompanyAddress = workCompanyAddress;
-    }
-
-    public String getSelfCompanyArea() {
-        return selfCompanyArea;
-    }
-
-    public void setSelfCompanyArea(String selfCompanyArea) {
-        this.selfCompanyArea = selfCompanyArea;
-    }
-
-    public String getEmployeeQuantity() {
-        return employeeQuantity;
-    }
-
-    public void setEmployeeQuantity(String employeeQuantity) {
-        this.employeeQuantity = employeeQuantity;
-    }
-
-    public String getEnterpriseMonthOutput() {
-        return enterpriseMonthOutput;
-    }
-
-    public void setEnterpriseMonthOutput(String enterpriseMonthOutput) {
-        this.enterpriseMonthOutput = enterpriseMonthOutput;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public String getPostTitle() {
-        return postTitle;
-    }
-
-    public void setPostTitle(String postTitle) {
-        this.postTitle = postTitle;
-    }
-
-    public String getMonthIncome() {
-        return monthIncome;
-    }
-
-    public void setMonthIncome(String monthIncome) {
-        this.monthIncome = monthIncome;
-    }
-
-    public String getMateName() {
-        return mateName;
-    }
-
-    public void setMateName(String mateName) {
-        this.mateName = mateName;
-    }
-
-    public String getMateMobile() {
-        return mateMobile;
-    }
-
-    public void setMateMobile(String mateMobile) {
-        this.mateMobile = mateMobile;
-    }
-
-    public String getMateIdNo() {
-        return mateIdNo;
-    }
-
-    public void setMateIdNo(String mateIdNo) {
-        this.mateIdNo = mateIdNo;
-    }
-
-    public String getMateEducation() {
-        return mateEducation;
-    }
-
-    public void setMateEducation(String mateEducation) {
-        this.mateEducation = mateEducation;
-    }
-
-    public String getMateCompanyName() {
-        return mateCompanyName;
-    }
-
-    public void setMateCompanyName(String mateCompanyName) {
-        this.mateCompanyName = mateCompanyName;
-    }
-
-    public String getMateCompanyAddress() {
-        return mateCompanyAddress;
-    }
-
-    public void setMateCompanyAddress(String mateCompanyAddress) {
-        this.mateCompanyAddress = mateCompanyAddress;
-    }
-
-    public String getMateCompanyContactNo() {
-        return mateCompanyContactNo;
-    }
-
-    public void setMateCompanyContactNo(String mateCompanyContactNo) {
-        this.mateCompanyContactNo = mateCompanyContactNo;
-    }
-
-    public String getGuaName() {
-        return guaName;
-    }
-
-    public void setGuaName(String guaName) {
-        this.guaName = guaName;
-    }
-
-    public String getGuaMobile() {
-        return guaMobile;
-    }
-
-    public void setGuaMobile(String guaMobile) {
-        this.guaMobile = guaMobile;
-    }
-
-    public String getGuaIdNo() {
-        return guaIdNo;
-    }
-
-    public void setGuaIdNo(String guaIdNo) {
-        this.guaIdNo = guaIdNo;
-    }
-
-    public String getGuaPhone() {
-        return guaPhone;
-    }
-
-    public void setGuaPhone(String guaPhone) {
-        this.guaPhone = guaPhone;
-    }
-
-    public String getGuaCompanyName() {
-        return guaCompanyName;
-    }
-
-    public void setGuaCompanyName(String guaCompanyName) {
-        this.guaCompanyName = guaCompanyName;
-    }
-
-    public String getGuaCompanyAddress() {
-        return guaCompanyAddress;
-    }
-
-    public void setGuaCompanyAddress(String guaCompanyAddress) {
-        this.guaCompanyAddress = guaCompanyAddress;
-    }
-
-    public String getGuaHouseAssetAddress() {
-        return guaHouseAssetAddress;
-    }
-
-    public void setGuaHouseAssetAddress(String guaHouseAssetAddress) {
-        this.guaHouseAssetAddress = guaHouseAssetAddress;
-    }
-
-    public String getEmergencyName1() {
-        return emergencyName1;
-    }
-
-    public void setEmergencyName1(String emergencyName1) {
-        this.emergencyName1 = emergencyName1;
-    }
-
-    public String getEmergencyRelation1() {
-        return emergencyRelation1;
-    }
-
-    public void setEmergencyRelation1(String emergencyRelation1) {
-        this.emergencyRelation1 = emergencyRelation1;
-    }
-
-    public String getEmergencyMobile1() {
-        return emergencyMobile1;
-    }
-
-    public void setEmergencyMobile1(String emergencyMobile1) {
-        this.emergencyMobile1 = emergencyMobile1;
-    }
-
-    public String getEmergencyName2() {
-        return emergencyName2;
-    }
-
-    public void setEmergencyName2(String emergencyName2) {
-        this.emergencyName2 = emergencyName2;
-    }
-
-    public String getEmergencyRelation2() {
-        return emergencyRelation2;
-    }
-
-    public void setEmergencyRelation2(String emergencyRelation2) {
-        this.emergencyRelation2 = emergencyRelation2;
-    }
-
-    public String getEmergencyMobile2() {
-        return emergencyMobile2;
-    }
-
-    public void setEmergencyMobile2(String emergencyMobile2) {
-        this.emergencyMobile2 = emergencyMobile2;
-    }
-
-    public String getJourDatetimeStart() {
-        return jourDatetimeStart;
-    }
-
-    public void setJourDatetimeStart(String jourDatetimeStart) {
-        this.jourDatetimeStart = jourDatetimeStart;
-    }
-
-    public String getJourDatetimeEnd() {
-        return jourDatetimeEnd;
-    }
-
-    public void setJourDatetimeEnd(String jourDatetimeEnd) {
-        this.jourDatetimeEnd = jourDatetimeEnd;
-    }
-
-    public String getJourIncome() {
-        return jourIncome;
-    }
-
-    public void setJourIncome(String jourIncome) {
-        this.jourIncome = jourIncome;
-    }
-
-    public String getJourExpend() {
-        return jourExpend;
-    }
-
-    public void setJourExpend(String jourExpend) {
-        this.jourExpend = jourExpend;
-    }
-
-    public String getJourBalance() {
-        return jourBalance;
-    }
-
-    public void setJourBalance(String jourBalance) {
-        this.jourBalance = jourBalance;
-    }
-
-    public String getJourMonthIncome() {
-        return jourMonthIncome;
-    }
-
-    public void setJourMonthIncome(String jourMonthIncome) {
-        this.jourMonthIncome = jourMonthIncome;
-    }
-
-    public String getJourMonthExpend() {
-        return jourMonthExpend;
-    }
-
-    public void setJourMonthExpend(String jourMonthExpend) {
-        this.jourMonthExpend = jourMonthExpend;
-    }
-
-    public String getJourRemark() {
-        return jourRemark;
-    }
-
-    public void setJourRemark(String jourRemark) {
-        this.jourRemark = jourRemark;
-    }
-
-    public String getCarSeries() {
-        return carSeries;
-    }
-
-    public void setCarSeries(String carSeries) {
-        this.carSeries = carSeries;
-    }
-
-    public String getCarModel() {
-        return carModel;
-    }
-
-    public void setCarModel(String carModel) {
-        this.carModel = carModel;
-    }
-
-    public String getCarPic() {
-        return carPic;
-    }
-
-    public void setCarPic(String carPic) {
-        this.carPic = carPic;
-    }
-
-    public String getCarHgzPic() {
-        return carHgzPic;
-    }
-
-    public void setCarHgzPic(String carHgzPic) {
-        this.carHgzPic = carHgzPic;
-    }
-
-    public String getCarHgzNo() {
-        return carHgzNo;
-    }
-
-    public void setCarHgzNo(String carHgzNo) {
-        this.carHgzNo = carHgzNo;
-    }
-
-    public String getCarFrameNo() {
-        return carFrameNo;
-    }
-
-    public void setCarFrameNo(String carFrameNo) {
-        this.carFrameNo = carFrameNo;
-    }
-
-    public String getCarEngineNo() {
-        return carEngineNo;
-    }
-
-    public void setCarEngineNo(String carEngineNo) {
-        this.carEngineNo = carEngineNo;
-    }
-
-    public String getHouseContract() {
-        return houseContract;
-    }
-
-    public void setHouseContract(String houseContract) {
-        this.houseContract = houseContract;
-    }
-
-    public String getHousePicture() {
-        return housePicture;
-    }
-
-    public void setHousePicture(String housePicture) {
-        this.housePicture = housePicture;
+    public void setBankRate(String bankRate) {
+        this.bankRate = bankRate;
     }
 
     public String getIsAdvanceFund() {
@@ -1155,644 +447,556 @@ public class XN632120Req {
         this.isAdvanceFund = isAdvanceFund;
     }
 
-    public String getMateZfbJourDatetimeStart() {
-        return mateZfbJourDatetimeStart;
+    public String getFee() {
+        return fee;
     }
 
-    public void setMateZfbJourDatetimeStart(String mateZfbJourDatetimeStart) {
-        this.mateZfbJourDatetimeStart = mateZfbJourDatetimeStart;
+    public void setFee(String fee) {
+        this.fee = fee;
     }
 
-    public String getMateZfbJourDatetimeEnd() {
-        return mateZfbJourDatetimeEnd;
+    public String getCarDealerSubsidy() {
+        return carDealerSubsidy;
     }
 
-    public void setMateZfbJourDatetimeEnd(String mateZfbJourDatetimeEnd) {
-        this.mateZfbJourDatetimeEnd = mateZfbJourDatetimeEnd;
+    public void setCarDealerSubsidy(String carDealerSubsidy) {
+        this.carDealerSubsidy = carDealerSubsidy;
     }
 
-    public String getMateZfbJourIncome() {
-        return mateZfbJourIncome;
+    public String getIsHouseProperty() {
+        return isHouseProperty;
     }
 
-    public void setMateZfbJourIncome(String mateZfbJourIncome) {
-        this.mateZfbJourIncome = mateZfbJourIncome;
+    public void setIsHouseProperty(String isHouseProperty) {
+        this.isHouseProperty = isHouseProperty;
     }
 
-    public String getMateZfbJourExpend() {
-        return mateZfbJourExpend;
+    public String getHouseProperty() {
+        return houseProperty;
     }
 
-    public void setMateZfbJourExpend(String mateZfbJourExpend) {
-        this.mateZfbJourExpend = mateZfbJourExpend;
+    public void setHouseProperty(String houseProperty) {
+        this.houseProperty = houseProperty;
     }
 
-    public String getMateZfbJourBalance() {
-        return mateZfbJourBalance;
+    public String getIsHouseContract() {
+        return isHouseContract;
     }
 
-    public void setMateZfbJourBalance(String mateZfbJourBalance) {
-        this.mateZfbJourBalance = mateZfbJourBalance;
+    public void setIsHouseContract(String isHouseContract) {
+        this.isHouseContract = isHouseContract;
     }
 
-    public String getMateZfbJourMonthIncome() {
-        return mateZfbJourMonthIncome;
+    public String getHouseContract() {
+        return houseContract;
     }
 
-    public void setMateZfbJourMonthIncome(String mateZfbJourMonthIncome) {
-        this.mateZfbJourMonthIncome = mateZfbJourMonthIncome;
+    public void setHouseContract(String houseContract) {
+        this.houseContract = houseContract;
     }
 
-    public String getMateZfbJourMonthExpend() {
-        return mateZfbJourMonthExpend;
+    public String getHouseInvoice() {
+        return houseInvoice;
     }
 
-    public void setMateZfbJourMonthExpend(String mateZfbJourMonthExpend) {
-        this.mateZfbJourMonthExpend = mateZfbJourMonthExpend;
+    public void setHouseInvoice(String houseInvoice) {
+        this.houseInvoice = houseInvoice;
     }
 
-    public String getMateZfbJourPic() {
-        return mateZfbJourPic;
+    public String getIsLicense() {
+        return isLicense;
     }
 
-    public void setMateZfbJourPic(String mateZfbJourPic) {
-        this.mateZfbJourPic = mateZfbJourPic;
+    public void setIsLicense(String isLicense) {
+        this.isLicense = isLicense;
     }
 
-    public String getMateZfbJourRemark() {
-        return mateZfbJourRemark;
+    public String getLicense() {
+        return license;
     }
 
-    public void setMateZfbJourRemark(String mateZfbJourRemark) {
-        this.mateZfbJourRemark = mateZfbJourRemark;
+    public void setLicense(String license) {
+        this.license = license;
     }
 
-    public String getMateWxJourDatetimeStart() {
-        return mateWxJourDatetimeStart;
+    public String getIsSiteProve() {
+        return isSiteProve;
     }
 
-    public void setMateWxJourDatetimeStart(String mateWxJourDatetimeStart) {
-        this.mateWxJourDatetimeStart = mateWxJourDatetimeStart;
+    public void setIsSiteProve(String isSiteProve) {
+        this.isSiteProve = isSiteProve;
     }
 
-    public String getMateWxJourDatetimeEnd() {
-        return mateWxJourDatetimeEnd;
+    public String getSiteProve() {
+        return siteProve;
     }
 
-    public void setMateWxJourDatetimeEnd(String mateWxJourDatetimeEnd) {
-        this.mateWxJourDatetimeEnd = mateWxJourDatetimeEnd;
+    public void setSiteProve(String siteProve) {
+        this.siteProve = siteProve;
     }
 
-    public String getMateWxJourIncome() {
-        return mateWxJourIncome;
+    public String getSiteArea() {
+        return siteArea;
     }
 
-    public void setMateWxJourIncome(String mateWxJourIncome) {
-        this.mateWxJourIncome = mateWxJourIncome;
+    public void setSiteArea(String siteArea) {
+        this.siteArea = siteArea;
     }
 
-    public String getMateWxJourExpend() {
-        return mateWxJourExpend;
+    public String getCarType() {
+        return carType;
     }
 
-    public void setMateWxJourExpend(String mateWxJourExpend) {
-        this.mateWxJourExpend = mateWxJourExpend;
+    public void setCarType(String carType) {
+        this.carType = carType;
     }
 
-    public String getMateWxJourBalance() {
-        return mateWxJourBalance;
+    public String getIsDriceLicense() {
+        return isDriceLicense;
     }
 
-    public void setMateWxJourBalance(String mateWxJourBalance) {
-        this.mateWxJourBalance = mateWxJourBalance;
+    public void setIsDriceLicense(String isDriceLicense) {
+        this.isDriceLicense = isDriceLicense;
     }
 
-    public String getMateWxJourMonthIncome() {
-        return mateWxJourMonthIncome;
+    public String getDriceLicense() {
+        return driceLicense;
     }
 
-    public void setMateWxJourMonthIncome(String mateWxJourMonthIncome) {
-        this.mateWxJourMonthIncome = mateWxJourMonthIncome;
+    public void setDriceLicense(String driceLicense) {
+        this.driceLicense = driceLicense;
     }
 
-    public String getMateWxJourMonthExpend() {
-        return mateWxJourMonthExpend;
+    public String getLoanBankSubbranch() {
+        return loanBankSubbranch;
     }
 
-    public void setMateWxJourMonthExpend(String mateWxJourMonthExpend) {
-        this.mateWxJourMonthExpend = mateWxJourMonthExpend;
+    public void setLoanBankSubbranch(String loanBankSubbranch) {
+        this.loanBankSubbranch = loanBankSubbranch;
     }
 
-    public String getMateWxJourPic() {
-        return mateWxJourPic;
+    public String getOtherPropertyNote() {
+        return otherPropertyNote;
     }
 
-    public void setMateWxJourPic(String mateWxJourPic) {
-        this.mateWxJourPic = mateWxJourPic;
+    public void setOtherPropertyNote(String otherPropertyNote) {
+        this.otherPropertyNote = otherPropertyNote;
     }
 
-    public String getMateWxJourRemark() {
-        return mateWxJourRemark;
+    public String getApplyBirthAddress() {
+        return applyBirthAddress;
     }
 
-    public void setMateWxJourRemark(String mateWxJourRemark) {
-        this.mateWxJourRemark = mateWxJourRemark;
+    public void setApplyBirthAddress(String applyBirthAddress) {
+        this.applyBirthAddress = applyBirthAddress;
     }
 
-    public String getMateJourDatetimeStart() {
-        return mateJourDatetimeStart;
+    public String getApplyNowAddress() {
+        return applyNowAddress;
     }
 
-    public void setMateJourDatetimeStart(String mateJourDatetimeStart) {
-        this.mateJourDatetimeStart = mateJourDatetimeStart;
+    public void setApplyNowAddress(String applyNowAddress) {
+        this.applyNowAddress = applyNowAddress;
     }
 
-    public String getMateJourDatetimeEnd() {
-        return mateJourDatetimeEnd;
+    public String getHouseType() {
+        return houseType;
     }
 
-    public void setMateJourDatetimeEnd(String mateJourDatetimeEnd) {
-        this.mateJourDatetimeEnd = mateJourDatetimeEnd;
+    public void setHouseType(String houseType) {
+        this.houseType = houseType;
     }
 
-    public String getMateJourIncome() {
-        return mateJourIncome;
+    public String getGhBirthAddress() {
+        return ghBirthAddress;
     }
 
-    public void setMateJourIncome(String mateJourIncome) {
-        this.mateJourIncome = mateJourIncome;
+    public void setGhBirthAddress(String ghBirthAddress) {
+        this.ghBirthAddress = ghBirthAddress;
     }
 
-    public String getMateJourExpend() {
-        return mateJourExpend;
+    public String getGuarantor1BirthAddress() {
+        return guarantor1BirthAddress;
     }
 
-    public void setMateJourExpend(String mateJourExpend) {
-        this.mateJourExpend = mateJourExpend;
+    public void setGuarantor1BirthAddress(String guarantor1BirthAddress) {
+        this.guarantor1BirthAddress = guarantor1BirthAddress;
     }
 
-    public String getMateJourBalance() {
-        return mateJourBalance;
+    public String getGuarantor2BirthAddress() {
+        return guarantor2BirthAddress;
     }
 
-    public void setMateJourBalance(String mateJourBalance) {
-        this.mateJourBalance = mateJourBalance;
+    public void setGuarantor2BirthAddress(String guarantor2BirthAddress) {
+        this.guarantor2BirthAddress = guarantor2BirthAddress;
     }
 
-    public String getMateJourMonthIncome() {
-        return mateJourMonthIncome;
+    public String getOtherNote() {
+        return otherNote;
     }
 
-    public void setMateJourMonthIncome(String mateJourMonthIncome) {
-        this.mateJourMonthIncome = mateJourMonthIncome;
+    public void setOtherNote(String otherNote) {
+        this.otherNote = otherNote;
     }
 
-    public String getMateJourMonthExpend() {
-        return mateJourMonthExpend;
+    public String getOilSubsidy() {
+        return oilSubsidy;
     }
 
-    public void setMateJourMonthExpend(String mateJourMonthExpend) {
-        this.mateJourMonthExpend = mateJourMonthExpend;
+    public void setOilSubsidy(String oilSubsidy) {
+        this.oilSubsidy = oilSubsidy;
     }
 
-    public String getMateJourPic() {
-        return mateJourPic;
+    public String getOilSubsidyKil() {
+        return oilSubsidyKil;
     }
 
-    public void setMateJourPic(String mateJourPic) {
-        this.mateJourPic = mateJourPic;
+    public void setOilSubsidyKil(String oilSubsidyKil) {
+        this.oilSubsidyKil = oilSubsidyKil;
     }
 
-    public String getMateJourRemark() {
-        return mateJourRemark;
+    public String getIsPlatInsure() {
+        return isPlatInsure;
     }
 
-    public void setMateJourRemark(String mateJourRemark) {
-        this.mateJourRemark = mateJourRemark;
+    public void setIsPlatInsure(String isPlatInsure) {
+        this.isPlatInsure = isPlatInsure;
     }
 
-    public String getMateAssetPdf() {
-        return mateAssetPdf;
+    public String getGpsFee() {
+        return gpsFee;
     }
 
-    public void setMateAssetPdf(String mateAssetPdf) {
-        this.mateAssetPdf = mateAssetPdf;
+    public void setGpsFee(String gpsFee) {
+        this.gpsFee = gpsFee;
     }
 
-    public String getGuaZfbJourDatetimeStart() {
-        return guaZfbJourDatetimeStart;
+    public String getGpsDeduct() {
+        return gpsDeduct;
     }
 
-    public void setGuaZfbJourDatetimeStart(String guaZfbJourDatetimeStart) {
-        this.guaZfbJourDatetimeStart = guaZfbJourDatetimeStart;
+    public void setGpsDeduct(String gpsDeduct) {
+        this.gpsDeduct = gpsDeduct;
     }
 
-    public String getGuaZfbJourDatetimeEnd() {
-        return guaZfbJourDatetimeEnd;
+    public String getGpsFeeWay() {
+        return gpsFeeWay;
     }
 
-    public void setGuaZfbJourDatetimeEnd(String guaZfbJourDatetimeEnd) {
-        this.guaZfbJourDatetimeEnd = guaZfbJourDatetimeEnd;
+    public void setGpsFeeWay(String gpsFeeWay) {
+        this.gpsFeeWay = gpsFeeWay;
     }
 
-    public String getGuaZfbJourIncome() {
-        return guaZfbJourIncome;
+    public String getLyAmount() {
+        return lyAmount;
     }
 
-    public void setGuaZfbJourIncome(String guaZfbJourIncome) {
-        this.guaZfbJourIncome = guaZfbJourIncome;
+    public void setLyAmount(String lyAmount) {
+        this.lyAmount = lyAmount;
     }
 
-    public String getGuaZfbJourExpend() {
-        return guaZfbJourExpend;
+    public String getFxAmount() {
+        return fxAmount;
     }
 
-    public void setGuaZfbJourExpend(String guaZfbJourExpend) {
-        this.guaZfbJourExpend = guaZfbJourExpend;
+    public void setFxAmount(String fxAmount) {
+        this.fxAmount = fxAmount;
     }
 
-    public String getGuaZfbJourBalance() {
-        return guaZfbJourBalance;
+    public String getOtherFee() {
+        return otherFee;
     }
 
-    public void setGuaZfbJourBalance(String guaZfbJourBalance) {
-        this.guaZfbJourBalance = guaZfbJourBalance;
+    public void setOtherFee(String otherFee) {
+        this.otherFee = otherFee;
     }
 
-    public String getGuaZfbJourMonthIncome() {
-        return guaZfbJourMonthIncome;
+    public String getFeeWay() {
+        return feeWay;
     }
 
-    public void setGuaZfbJourMonthIncome(String guaZfbJourMonthIncome) {
-        this.guaZfbJourMonthIncome = guaZfbJourMonthIncome;
+    public void setFeeWay(String feeWay) {
+        this.feeWay = feeWay;
     }
 
-    public String getGuaZfbJourMonthExpend() {
-        return guaZfbJourMonthExpend;
+    public String getMarryDivorce() {
+        return marryDivorce;
     }
 
-    public void setGuaZfbJourMonthExpend(String guaZfbJourMonthExpend) {
-        this.guaZfbJourMonthExpend = guaZfbJourMonthExpend;
+    public void setMarryDivorce(String marryDivorce) {
+        this.marryDivorce = marryDivorce;
     }
 
-    public String getGuaZfbJourPic() {
-        return guaZfbJourPic;
+    public String getApplyUserHkb() {
+        return applyUserHkb;
     }
 
-    public void setGuaZfbJourPic(String guaZfbJourPic) {
-        this.guaZfbJourPic = guaZfbJourPic;
+    public void setApplyUserHkb(String applyUserHkb) {
+        this.applyUserHkb = applyUserHkb;
     }
 
-    public String getGuaZfbJourRemark() {
-        return guaZfbJourRemark;
+    public String getBankBillPdf() {
+        return bankBillPdf;
     }
 
-    public void setGuaZfbJourRemark(String guaZfbJourRemark) {
-        this.guaZfbJourRemark = guaZfbJourRemark;
+    public void setBankBillPdf(String bankBillPdf) {
+        this.bankBillPdf = bankBillPdf;
     }
 
-    public String getGuaWxJourDatetimeStart() {
-        return guaWxJourDatetimeStart;
+    public String getSingleProvePdf() {
+        return singleProvePdf;
     }
 
-    public void setGuaWxJourDatetimeStart(String guaWxJourDatetimeStart) {
-        this.guaWxJourDatetimeStart = guaWxJourDatetimeStart;
+    public void setSingleProvePdf(String singleProvePdf) {
+        this.singleProvePdf = singleProvePdf;
     }
 
-    public String getGuaWxJourDatetimeEnd() {
-        return guaWxJourDatetimeEnd;
+    public String getIncomeProvePdf() {
+        return incomeProvePdf;
     }
 
-    public void setGuaWxJourDatetimeEnd(String guaWxJourDatetimeEnd) {
-        this.guaWxJourDatetimeEnd = guaWxJourDatetimeEnd;
+    public void setIncomeProvePdf(String incomeProvePdf) {
+        this.incomeProvePdf = incomeProvePdf;
     }
 
-    public String getGuaWxJourIncome() {
-        return guaWxJourIncome;
+    public String getLiveProvePdf() {
+        return liveProvePdf;
     }
 
-    public void setGuaWxJourIncome(String guaWxJourIncome) {
-        this.guaWxJourIncome = guaWxJourIncome;
+    public void setLiveProvePdf(String liveProvePdf) {
+        this.liveProvePdf = liveProvePdf;
     }
 
-    public String getGuaWxJourExpend() {
-        return guaWxJourExpend;
+    public String getBuildProvePdf() {
+        return buildProvePdf;
     }
 
-    public void setGuaWxJourExpend(String guaWxJourExpend) {
-        this.guaWxJourExpend = guaWxJourExpend;
+    public void setBuildProvePdf(String buildProvePdf) {
+        this.buildProvePdf = buildProvePdf;
     }
 
-    public String getGuaWxJourBalance() {
-        return guaWxJourBalance;
+    public String getHkbFirstPage() {
+        return hkbFirstPage;
     }
 
-    public void setGuaWxJourBalance(String guaWxJourBalance) {
-        this.guaWxJourBalance = guaWxJourBalance;
+    public void setHkbFirstPage(String hkbFirstPage) {
+        this.hkbFirstPage = hkbFirstPage;
     }
 
-    public String getGuaWxJourMonthIncome() {
-        return guaWxJourMonthIncome;
+    public String getHkbMainPage() {
+        return hkbMainPage;
     }
 
-    public void setGuaWxJourMonthIncome(String guaWxJourMonthIncome) {
-        this.guaWxJourMonthIncome = guaWxJourMonthIncome;
+    public void setHkbMainPage(String hkbMainPage) {
+        this.hkbMainPage = hkbMainPage;
     }
 
-    public String getGuaWxJourMonthExpend() {
-        return guaWxJourMonthExpend;
+    public String getGhHkb() {
+        return ghHkb;
     }
 
-    public void setGuaWxJourMonthExpend(String guaWxJourMonthExpend) {
-        this.guaWxJourMonthExpend = guaWxJourMonthExpend;
+    public void setGhHkb(String ghHkb) {
+        this.ghHkb = ghHkb;
     }
 
-    public String getGuaWxJourPic() {
-        return guaWxJourPic;
+    public String getGuarantor1IdNo() {
+        return guarantor1IdNo;
     }
 
-    public void setGuaWxJourPic(String guaWxJourPic) {
-        this.guaWxJourPic = guaWxJourPic;
+    public void setGuarantor1IdNo(String guarantor1IdNo) {
+        this.guarantor1IdNo = guarantor1IdNo;
     }
 
-    public String getGuaWxJourRemark() {
-        return guaWxJourRemark;
+    public String getGuarantor1Hkb() {
+        return guarantor1Hkb;
     }
 
-    public void setGuaWxJourRemark(String guaWxJourRemark) {
-        this.guaWxJourRemark = guaWxJourRemark;
+    public void setGuarantor1Hkb(String guarantor1Hkb) {
+        this.guarantor1Hkb = guarantor1Hkb;
     }
 
-    public String getGuaJourDatetimeStart() {
-        return guaJourDatetimeStart;
+    public String getGuarantor2IdNo() {
+        return guarantor2IdNo;
     }
 
-    public void setGuaJourDatetimeStart(String guaJourDatetimeStart) {
-        this.guaJourDatetimeStart = guaJourDatetimeStart;
+    public void setGuarantor2IdNo(String guarantor2IdNo) {
+        this.guarantor2IdNo = guarantor2IdNo;
     }
 
-    public String getGuaJourDatetimeEnd() {
-        return guaJourDatetimeEnd;
+    public String getGuarantor2Hkb() {
+        return guarantor2Hkb;
     }
 
-    public void setGuaJourDatetimeEnd(String guaJourDatetimeEnd) {
-        this.guaJourDatetimeEnd = guaJourDatetimeEnd;
+    public void setGuarantor2Hkb(String guarantor2Hkb) {
+        this.guarantor2Hkb = guarantor2Hkb;
     }
 
-    public String getGuaJourIncome() {
-        return guaJourIncome;
+    public String getHousePic() {
+        return housePic;
     }
 
-    public void setGuaJourIncome(String guaJourIncome) {
-        this.guaJourIncome = guaJourIncome;
+    public void setHousePic(String housePic) {
+        this.housePic = housePic;
     }
 
-    public String getGuaJourExpend() {
-        return guaJourExpend;
+    public String getHouseUnitPic() {
+        return houseUnitPic;
     }
 
-    public void setGuaJourExpend(String guaJourExpend) {
-        this.guaJourExpend = guaJourExpend;
+    public void setHouseUnitPic(String houseUnitPic) {
+        this.houseUnitPic = houseUnitPic;
     }
 
-    public String getGuaJourBalance() {
-        return guaJourBalance;
+    public String getHouseDoorPic() {
+        return houseDoorPic;
     }
 
-    public void setGuaJourBalance(String guaJourBalance) {
-        this.guaJourBalance = guaJourBalance;
+    public void setHouseDoorPic(String houseDoorPic) {
+        this.houseDoorPic = houseDoorPic;
     }
 
-    public String getGuaJourMonthIncome() {
-        return guaJourMonthIncome;
+    public String getHouseRoomPic() {
+        return houseRoomPic;
     }
 
-    public void setGuaJourMonthIncome(String guaJourMonthIncome) {
-        this.guaJourMonthIncome = guaJourMonthIncome;
+    public void setHouseRoomPic(String houseRoomPic) {
+        this.houseRoomPic = houseRoomPic;
     }
 
-    public String getGuaJourMonthExpend() {
-        return guaJourMonthExpend;
+    public String getHouseCustomerPic() {
+        return houseCustomerPic;
     }
 
-    public void setGuaJourMonthExpend(String guaJourMonthExpend) {
-        this.guaJourMonthExpend = guaJourMonthExpend;
+    public void setHouseCustomerPic(String houseCustomerPic) {
+        this.houseCustomerPic = houseCustomerPic;
     }
 
-    public String getGuaJourPic() {
-        return guaJourPic;
+    public String getHouseSaleCustomerPic() {
+        return houseSaleCustomerPic;
     }
 
-    public void setGuaJourPic(String guaJourPic) {
-        this.guaJourPic = guaJourPic;
+    public void setHouseSaleCustomerPic(String houseSaleCustomerPic) {
+        this.houseSaleCustomerPic = houseSaleCustomerPic;
     }
 
-    public String getGuaJourRemark() {
-        return guaJourRemark;
+    public String getCompanyNamePic() {
+        return companyNamePic;
     }
 
-    public void setGuaJourRemark(String guaJourRemark) {
-        this.guaJourRemark = guaJourRemark;
+    public void setCompanyNamePic(String companyNamePic) {
+        this.companyNamePic = companyNamePic;
     }
 
-    public String getGuaAssetPdf() {
-        return guaAssetPdf;
+    public String getCompanyPlacePic() {
+        return companyPlacePic;
     }
 
-    public void setGuaAssetPdf(String guaAssetPdf) {
-        this.guaAssetPdf = guaAssetPdf;
+    public void setCompanyPlacePic(String companyPlacePic) {
+        this.companyPlacePic = companyPlacePic;
     }
 
-    public String getZfbJourDatetimeStart() {
-        return zfbJourDatetimeStart;
+    public String getCompanyWorkshopPic() {
+        return companyWorkshopPic;
     }
 
-    public void setZfbJourDatetimeStart(String zfbJourDatetimeStart) {
-        this.zfbJourDatetimeStart = zfbJourDatetimeStart;
+    public void setCompanyWorkshopPic(String companyWorkshopPic) {
+        this.companyWorkshopPic = companyWorkshopPic;
     }
 
-    public String getZfbJourDatetimeEnd() {
-        return zfbJourDatetimeEnd;
+    public String getCompanySaleCustomerPic() {
+        return companySaleCustomerPic;
     }
 
-    public void setZfbJourDatetimeEnd(String zfbJourDatetimeEnd) {
-        this.zfbJourDatetimeEnd = zfbJourDatetimeEnd;
+    public void setCompanySaleCustomerPic(String companySaleCustomerPic) {
+        this.companySaleCustomerPic = companySaleCustomerPic;
     }
 
-    public String getZfbJourIncome() {
-        return zfbJourIncome;
+    public String getSecondHgz() {
+        return secondHgz;
     }
 
-    public void setZfbJourIncome(String zfbJourIncome) {
-        this.zfbJourIncome = zfbJourIncome;
+    public void setSecondHgz(String secondHgz) {
+        this.secondHgz = secondHgz;
     }
 
-    public String getZfbJourExpend() {
-        return zfbJourExpend;
+    public String getSecondOdometer() {
+        return secondOdometer;
     }
 
-    public void setZfbJourExpend(String zfbJourExpend) {
-        this.zfbJourExpend = zfbJourExpend;
+    public void setSecondOdometer(String secondOdometer) {
+        this.secondOdometer = secondOdometer;
     }
 
-    public String getZfbJourBalance() {
-        return zfbJourBalance;
+    public String getSecondCarFrontPic() {
+        return secondCarFrontPic;
     }
 
-    public void setZfbJourBalance(String zfbJourBalance) {
-        this.zfbJourBalance = zfbJourBalance;
+    public void setSecondCarFrontPic(String secondCarFrontPic) {
+        this.secondCarFrontPic = secondCarFrontPic;
     }
 
-    public String getZfbJourMonthIncome() {
-        return zfbJourMonthIncome;
+    public String getSecondConsolePic() {
+        return secondConsolePic;
     }
 
-    public void setZfbJourMonthIncome(String zfbJourMonthIncome) {
-        this.zfbJourMonthIncome = zfbJourMonthIncome;
+    public void setSecondConsolePic(String secondConsolePic) {
+        this.secondConsolePic = secondConsolePic;
     }
 
-    public String getZfbJourMonthExpend() {
-        return zfbJourMonthExpend;
+    public String getSecond300Pdf() {
+        return second300Pdf;
     }
 
-    public void setZfbJourMonthExpend(String zfbJourMonthExpend) {
-        this.zfbJourMonthExpend = zfbJourMonthExpend;
+    public void setSecond300Pdf(String second300Pdf) {
+        this.second300Pdf = second300Pdf;
     }
 
-    public String getZfbJourPic() {
-        return zfbJourPic;
+    public String getSecondQxbPic() {
+        return secondQxbPic;
     }
 
-    public void setZfbJourPic(String zfbJourPic) {
-        this.zfbJourPic = zfbJourPic;
+    public void setSecondQxbPic(String secondQxbPic) {
+        this.secondQxbPic = secondQxbPic;
     }
 
-    public String getZfbJourRemark() {
-        return zfbJourRemark;
+    public String getSecondCarInPic() {
+        return secondCarInPic;
     }
 
-    public void setZfbJourRemark(String zfbJourRemark) {
-        this.zfbJourRemark = zfbJourRemark;
+    public void setSecondCarInPic(String secondCarInPic) {
+        this.secondCarInPic = secondCarInPic;
     }
 
-    public String getWxJourDatetimeStart() {
-        return wxJourDatetimeStart;
+    public String getSecondNumber() {
+        return secondNumber;
     }
 
-    public void setWxJourDatetimeStart(String wxJourDatetimeStart) {
-        this.wxJourDatetimeStart = wxJourDatetimeStart;
+    public void setSecondNumber(String secondNumber) {
+        this.secondNumber = secondNumber;
     }
 
-    public String getWxJourDatetimeEnd() {
-        return wxJourDatetimeEnd;
+    public String getOtherFilePdf() {
+        return otherFilePdf;
     }
 
-    public void setWxJourDatetimeEnd(String wxJourDatetimeEnd) {
-        this.wxJourDatetimeEnd = wxJourDatetimeEnd;
+    public void setOtherFilePdf(String otherFilePdf) {
+        this.otherFilePdf = otherFilePdf;
     }
 
-    public String getWxJourIncome() {
-        return wxJourIncome;
+    public String getOtherApplyNote() {
+        return otherApplyNote;
     }
 
-    public void setWxJourIncome(String wxJourIncome) {
-        this.wxJourIncome = wxJourIncome;
+    public void setOtherApplyNote(String otherApplyNote) {
+        this.otherApplyNote = otherApplyNote;
     }
 
-    public String getWxJourExpend() {
-        return wxJourExpend;
+    public String getApplyDatetime() {
+        return applyDatetime;
     }
 
-    public void setWxJourExpend(String wxJourExpend) {
-        this.wxJourExpend = wxJourExpend;
-    }
-
-    public String getWxJourBalance() {
-        return wxJourBalance;
-    }
-
-    public void setWxJourBalance(String wxJourBalance) {
-        this.wxJourBalance = wxJourBalance;
-    }
-
-    public String getWxJourMonthIncome() {
-        return wxJourMonthIncome;
-    }
-
-    public void setWxJourMonthIncome(String wxJourMonthIncome) {
-        this.wxJourMonthIncome = wxJourMonthIncome;
-    }
-
-    public String getWxJourMonthExpend() {
-        return wxJourMonthExpend;
-    }
-
-    public void setWxJourMonthExpend(String wxJourMonthExpend) {
-        this.wxJourMonthExpend = wxJourMonthExpend;
-    }
-
-    public String getWxJourPic() {
-        return wxJourPic;
-    }
-
-    public void setWxJourPic(String wxJourPic) {
-        this.wxJourPic = wxJourPic;
-    }
-
-    public String getWxJourRemark() {
-        return wxJourRemark;
-    }
-
-    public void setWxJourRemark(String wxJourRemark) {
-        this.wxJourRemark = wxJourRemark;
-    }
-
-    public String getJourPic() {
-        return jourPic;
-    }
-
-    public void setJourPic(String jourPic) {
-        this.jourPic = jourPic;
-    }
-
-    public String getAssetPdf() {
-        return assetPdf;
-    }
-
-    public void setAssetPdf(String assetPdf) {
-        this.assetPdf = assetPdf;
-    }
-
-    public String getWorkCompanyProperty() {
-        return workCompanyProperty;
-    }
-
-    public void setWorkCompanyProperty(String workCompanyProperty) {
-        this.workCompanyProperty = workCompanyProperty;
-    }
-
-    public String getWorkBelongIndustry() {
-        return workBelongIndustry;
-    }
-
-    public void setWorkBelongIndustry(String workBelongIndustry) {
-        this.workBelongIndustry = workBelongIndustry;
-    }
-
-    public String getWorkProfession() {
-        return workProfession;
-    }
-
-    public void setWorkProfession(String workProfession) {
-        this.workProfession = workProfession;
-    }
-
-    public String getWorkDatetime() {
-        return workDatetime;
-    }
-
-    public void setWorkDatetime(String workDatetime) {
-        this.workDatetime = workDatetime;
+    public void setApplyDatetime(String applyDatetime) {
+        this.applyDatetime = applyDatetime;
     }
 
 }

@@ -2,12 +2,6 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-/**
- * 业务总监审核
- * @author: xieyj 
- * @since: 2018年5月29日 下午10:29:59 
- * @history:
- */
 public class XN632124Req {
 
     @NotBlank
@@ -16,10 +10,10 @@ public class XN632124Req {
     @NotBlank
     private String approveResult;// 审核结果
 
-    private String approveNote;// 审核说明
-
     @NotBlank
     private String operator;// 操作人
+
+    private String approveNote;// 审核说明
 
     public String getCode() {
         return code;

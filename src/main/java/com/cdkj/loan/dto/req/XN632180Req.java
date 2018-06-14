@@ -1,42 +1,24 @@
 package com.cdkj.loan.dto.req;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 /**
- * 财务确认退客户垫资款
- * @author: jiafr 
- * @since: 2018年6月9日 下午4:11:16 
+ * 车辆抵押确认提交银行
+ * @author: silver 
+ * @since: 2018年6月13日 下午2:48:35 
  * @history:
  */
 public class XN632180Req {
 
-    // 编号
-    @NotBlank
+    // 预算单编号
     private String code;
 
+    // 抵押提交时间
+    private String pledgeCommitDatetime;
+
+    // 抵押提交说明
+    private String pledgeCommitNote;
+
     // 操作人
-    @NotBlank
     private String operator;
-
-    // 退款金额
-    @NotBlank
-    private String backAdvanceAmount;
-
-    // 收款账号
-    @NotBlank
-    private String backAdvanceAccount;
-
-    // 开户行
-    @NotBlank
-    private String backAdvanceOpenBank;
-
-    // 开户支行
-    @NotBlank
-    private String backAdvanceSubbranch;
-
-    // 水单
-    @NotBlank
-    private String backAdvanceWaterBill;
 
     public String getCode() {
         return code;
@@ -46,52 +28,28 @@ public class XN632180Req {
         this.code = code;
     }
 
+    public String getPledgeCommitDatetime() {
+        return pledgeCommitDatetime;
+    }
+
+    public void setPledgeCommitDatetime(String pledgeCommitDatetime) {
+        this.pledgeCommitDatetime = pledgeCommitDatetime;
+    }
+
+    public String getPledgeCommitNote() {
+        return pledgeCommitNote;
+    }
+
+    public void setPledgeCommitNote(String pledgeCommitNote) {
+        this.pledgeCommitNote = pledgeCommitNote;
+    }
+
     public String getOperator() {
         return operator;
     }
 
     public void setOperator(String operator) {
         this.operator = operator;
-    }
-
-    public String getBackAdvanceAmount() {
-        return backAdvanceAmount;
-    }
-
-    public void setBackAdvanceAmount(String backAdvanceAmount) {
-        this.backAdvanceAmount = backAdvanceAmount;
-    }
-
-    public String getBackAdvanceAccount() {
-        return backAdvanceAccount;
-    }
-
-    public void setBackAdvanceAccount(String backAdvanceAccount) {
-        this.backAdvanceAccount = backAdvanceAccount;
-    }
-
-    public String getBackAdvanceOpenBank() {
-        return backAdvanceOpenBank;
-    }
-
-    public void setBackAdvanceOpenBank(String backAdvanceOpenBank) {
-        this.backAdvanceOpenBank = backAdvanceOpenBank;
-    }
-
-    public String getBackAdvanceSubbranch() {
-        return backAdvanceSubbranch;
-    }
-
-    public void setBackAdvanceSubbranch(String backAdvanceSubbranch) {
-        this.backAdvanceSubbranch = backAdvanceSubbranch;
-    }
-
-    public String getBackAdvanceWaterBill() {
-        return backAdvanceWaterBill;
-    }
-
-    public void setBackAdvanceWaterBill(String backAdvanceWaterBill) {
-        this.backAdvanceWaterBill = backAdvanceWaterBill;
     }
 
 }

@@ -12,20 +12,18 @@ import com.cdkj.loan.spring.SpringContextHolder;
 /**
  * 征信报告查看
  * @author: jiafr 
- * @since: 2018年5月26日 下午2:33:29 
+ * @since: 2018年5月26日 下午10:22:45 
  * @history:
  */
 public class XN632118 extends AProcessor {
-
-    private ICreditUserAO ICreditUserBO = SpringContextHolder
+    private ICreditUserAO creditUserAO = SpringContextHolder
         .getBean(ICreditUserAO.class);
 
     private XN632118Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-
-        return ICreditUserBO.getCreditUserReport(req.getCode());
+        return creditUserAO.getCreditUserReport(req.getCode());
     }
 
     @Override
@@ -33,7 +31,5 @@ public class XN632118 extends AProcessor {
             throws ParaException {
         req = JsonUtil.json2Bean(inputparams, XN632118Req.class);
         ObjValidater.validateReq(req);
-
     }
-
 }

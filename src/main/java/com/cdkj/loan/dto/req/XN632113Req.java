@@ -3,7 +3,7 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 风控专员审核
+ * 征信初审
  * @author: jiafr 
  * @since: 2018年5月26日 下午9:14:21 
  * @history:
@@ -18,12 +18,12 @@ public class XN632113Req {
     @NotBlank
     private String approveResult;
 
-    // 审核说明
-    private String approveNote;
-
     // 操作人
     @NotBlank
     private String operator;
+
+    // 附件
+    private String accessory;
 
     public String getCode() {
         return code;
@@ -49,12 +49,12 @@ public class XN632113Req {
         this.operator = operator;
     }
 
-    public String getApproveNote() {
-        return approveNote;
+    public String getAccessory() {
+        return accessory;
     }
 
-    public void setApproveNote(String approveNote) {
-        this.approveNote = approveNote;
+    public void setAccessory(String accessory) {
+        this.accessory = accessory;
     }
 
 }

@@ -10,9 +10,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 预算单详情查询
- * @author: CYL 
- * @since: 2018年5月30日 下午10:08:03 
+ * 详细查银行放款详细查
+ * @author: silver 
+ * @since: 2018年6月13日 下午3:02:04 
  * @history:
  */
 public class XN632146 extends AProcessor {
@@ -23,7 +23,7 @@ public class XN632146 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return budgetOrderAO.getMoreBudget(req.getCode());
+        return budgetOrderAO.getBudgetOrder(req.getCode());
     }
 
     @Override

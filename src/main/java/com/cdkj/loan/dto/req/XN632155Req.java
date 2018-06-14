@@ -1,59 +1,77 @@
 package com.cdkj.loan.dto.req;
 
 /**
- * 分页查询资料补发
- * @author: silver 
- * @since: 2018年5月29日 下午11:02:18 
- * @history:
+ * 垫资分页查询
+ * @author: jiafr 
+ * @since: 2018年5月29日 下午2:16:08 
+ * @history:AS
  */
-public class XN632155Req extends APageReq {
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
-     */
-    private static final long serialVersionUID = 389113977005434174L;
+public class XN632155Req {
 
-    // 业务编号
-    private String bizCode;
+    // 预算单编号
+    private String budgetCode;
 
-    // 用户编号
-    private String userId;
+    // 垫资单编号
+    private String advanceFundCode;
 
-    // 业务节点
-    private String bizNodeCode;
+    // 垫资金额（选填）
+    private String advanceFundAmount;
 
-    // 状态
-    private String status;
+    // 是否垫资(选填)
+    private String isAdvanceFund;
 
-    public String getBizCode() {
-        return bizCode;
+    // 收款账号编号（选填）
+    private String collectBankcardCode;
+
+    // 操作人
+    private String operator;
+
+    public String getBudgetCode() {
+        return budgetCode;
     }
 
-    public void setBizCode(String bizCode) {
-        this.bizCode = bizCode;
+    public void setBudgetCode(String budgetCode) {
+        this.budgetCode = budgetCode;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getAdvanceFundCode() {
+        return advanceFundCode;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setAdvanceFundCode(String advanceFundCode) {
+        this.advanceFundCode = advanceFundCode;
     }
 
-    public String getBizNodeCode() {
-        return bizNodeCode;
+    public String getAdvanceFundAmount() {
+        return advanceFundAmount;
     }
 
-    public void setBizNodeCode(String bizNodeCode) {
-        this.bizNodeCode = bizNodeCode;
+    public void setAdvanceFundAmount(String advanceFundAmount) {
+        this.advanceFundAmount = advanceFundAmount;
     }
 
-    public String getStatus() {
-        return status;
+    public String getIsAdvanceFund() {
+        return isAdvanceFund;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setIsAdvanceFund(String isAdvanceFund) {
+        this.isAdvanceFund = isAdvanceFund;
+    }
+
+    public String getCollectBankcardCode() {
+        return collectBankcardCode;
+    }
+
+    public void setCollectBankcardCode(String collectBankcardCode) {
+        this.collectBankcardCode = collectBankcardCode;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
 }

@@ -2,6 +2,7 @@ package com.cdkj.loan.api.impl;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.api.AProcessor;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN632180Req;
@@ -11,9 +12,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 财务确认退垫资款
- * @author: jiafr 
- * @since: 2018年6月9日 下午10:09:57 
+ * 车辆抵押确认提交银行
+ * @author: silver 
+ * @since: 2018年6月13日 下午2:42:47 
  * @history:
  */
 public class XN632180 extends AProcessor {
@@ -24,7 +25,10 @@ public class XN632180 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.confirmBackAdvanceFund(req);
+        budgetOrderAO.refreshCarPledgeCommit(req.getCode(),
+            DateUtil.strToDate(req.getPledgeCommitDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING),
+            req.getPledgeCommitNote(), req.getOperator());
         return new BooleanRes(true);
     }
 
@@ -34,4 +38,5 @@ public class XN632180 extends AProcessor {
         req = JsonUtil.json2Bean(inputparams, XN632180Req.class);
         ObjValidater.validateReq(req);
     }
+
 }

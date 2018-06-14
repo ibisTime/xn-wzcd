@@ -1,7 +1,7 @@
 package com.cdkj.loan.dto.req;
 
 /**
- * 征信分页查询
+ * 征信分页查询 （按角色权限）
  * @author: jiafr 
  * @since: 2018年5月26日 上午10:18:51 
  * @history:
@@ -13,36 +13,23 @@ public class XN632116Req extends APageReq {
      */
     private static final long serialVersionUID = 1L;
 
-    // 业务员编号
-    private String saleUserId;
-
-    // 预算单编号
-    private String budgetOrderCode;
-
     // 申请日期开始
     private String applyDatetimeStart;
 
     // 申请日期结束
     private String applyDatetimeEnd;
 
-    // 节点编号
-    private String curNodeCode;
+    // 贷款银行
+    private String loanBankCode;
 
-    public String getSaleUserId() {
-        return saleUserId;
-    }
+    // 客户姓名
+    private String userName;
 
-    public void setSaleUserId(String saleUserId) {
-        this.saleUserId = saleUserId;
-    }
+    // 业务员
+    private String saleUserId;
 
-    public String getBudgetOrderCode() {
-        return budgetOrderCode;
-    }
-
-    public void setBudgetOrderCode(String budgetOrderCode) {
-        this.budgetOrderCode = budgetOrderCode;
-    }
+    // 征信单编号
+    private String creditCode;
 
     public String getApplyDatetimeStart() {
         return applyDatetimeStart;
@@ -60,12 +47,36 @@ public class XN632116Req extends APageReq {
         this.applyDatetimeEnd = applyDatetimeEnd;
     }
 
-    public String getCurNodeCode() {
-        return curNodeCode;
+    public String getLoanBankCode() {
+        return loanBankCode;
     }
 
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
+    public void setLoanBankCode(String loanBankCode) {
+        this.loanBankCode = loanBankCode;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getSaleUserId() {
+        return saleUserId;
+    }
+
+    public void setSaleUserId(String saleUserId) {
+        this.saleUserId = saleUserId;
+    }
+
+    public String getCreditCode() {
+        return creditCode;
+    }
+
+    public void setCreditCode(String creditCode) {
+        this.creditCode = creditCode;
     }
 
 }

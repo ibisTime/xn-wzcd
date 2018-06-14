@@ -17,12 +17,10 @@ public class XN632110Req {
     private String loanBankCode;
 
     @NotBlank
-    private String loanAmount;
+    private String shopWay;
 
     @NotBlank
-    private String bizType;
-
-    private String secondCarReport;
+    private String loanAmount;
 
     private String xszFront;
 
@@ -31,19 +29,8 @@ public class XN632110Req {
     @NotBlank
     private String operator;
 
-    @NotBlank
-    private String buttonCode;
-
-    public String getButtonCode() {
-        return buttonCode;
-    }
-
-    public void setButtonCode(String buttonCode) {
-        this.buttonCode = buttonCode;
-    }
-
     @NotEmpty
-    private List<XN632110ReqCreditUser> creditUserList;
+    private List<XN632110ReqChild> creditUserList;
 
     public String getOperator() {
         return operator;
@@ -61,12 +48,12 @@ public class XN632110Req {
         this.loanBankCode = loanBankCode;
     }
 
-    public String getSecondCarReport() {
-        return secondCarReport;
+    public String getShopWay() {
+        return shopWay;
     }
 
-    public void setSecondCarReport(String secondCarReport) {
-        this.secondCarReport = secondCarReport;
+    public void setShopWay(String shopWay) {
+        this.shopWay = shopWay;
     }
 
     public String getLoanAmount() {
@@ -93,20 +80,12 @@ public class XN632110Req {
         this.xszReverse = xszReverse;
     }
 
-    public List<XN632110ReqCreditUser> getCreditUserList() {
+    public List<XN632110ReqChild> getCreditUserList() {
         return creditUserList;
     }
 
-    public void setCreditUserList(List<XN632110ReqCreditUser> creditUserList) {
+    public void setCreditUserList(List<XN632110ReqChild> creditUserList) {
         this.creditUserList = creditUserList;
-    }
-
-    public String getBizType() {
-        return bizType;
-    }
-
-    public void setBizType(String bizType) {
-        this.bizType = bizType;
     }
 
 }

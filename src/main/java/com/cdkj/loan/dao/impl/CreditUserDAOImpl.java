@@ -67,4 +67,9 @@ public class CreditUserDAOImpl extends AMybatisTemplate implements
         super.update(NAMESPACE.concat("update_creditUser"), creditUser);
 
     }
+
+    @Override
+    public void updateCreditUserIncome(CreditUser creditUser) {
+        super.update(NAMESPACE.concat("update_creditUserIncome"), creditUser);
+    }
 }

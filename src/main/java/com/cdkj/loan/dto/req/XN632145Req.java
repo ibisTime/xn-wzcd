@@ -1,5 +1,11 @@
 package com.cdkj.loan.dto.req;
 
+/**
+ * 银行放款分页查
+ * @author: silver 
+ * @since: 2018年6月13日 下午2:56:47 
+ * @history:
+ */
 public class XN632145Req extends APageReq {
 
     /** 
@@ -7,26 +13,21 @@ public class XN632145Req extends APageReq {
      */
     private static final long serialVersionUID = 1L;
 
-    private String code;// 业务编号
+    // 业务编号
+    private String code;
 
-    private String customerName;// 客户姓名
+    // 客户姓名
+    private String customerName;
 
-    private String applyDatetimeStart;// 申请时间起始
+    // 贷款银行
+    private String loanBankCode;
 
-    private String applyDatetimeEnd;// 申请时间结束
-
-    private String saleUserId;// 业务员用户编号
-
-    private String curNodeCode;// 当前节点编号
-
-    private String isAdvanceFund;// 是否垫资
-
-    public String getSaleUserId() {
-        return saleUserId;
+    public String getCode() {
+        return code;
     }
 
-    public void setSaleUserId(String saleUserId) {
-        this.saleUserId = saleUserId;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getCustomerName() {
@@ -37,44 +38,11 @@ public class XN632145Req extends APageReq {
         this.customerName = customerName;
     }
 
-    public String getCode() {
-        return code;
+    public String getLoanBankCode() {
+        return loanBankCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setLoanBankCode(String loanBankCode) {
+        this.loanBankCode = loanBankCode;
     }
-
-    public String getCurNodeCode() {
-        return curNodeCode;
-    }
-
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
-    }
-
-    public String getApplyDatetimeStart() {
-        return applyDatetimeStart;
-    }
-
-    public void setApplyDatetimeStart(String applyDatetimeStart) {
-        this.applyDatetimeStart = applyDatetimeStart;
-    }
-
-    public String getApplyDatetimeEnd() {
-        return applyDatetimeEnd;
-    }
-
-    public void setApplyDatetimeEnd(String applyDatetimeEnd) {
-        this.applyDatetimeEnd = applyDatetimeEnd;
-    }
-
-    public String getIsAdvanceFund() {
-        return isAdvanceFund;
-    }
-
-    public void setIsAdvanceFund(String isAdvanceFund) {
-        this.isAdvanceFund = isAdvanceFund;
-    }
-
 }

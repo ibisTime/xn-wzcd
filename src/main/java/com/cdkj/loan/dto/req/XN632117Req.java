@@ -1,7 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 /**
  * 征信详情查询
  * @author: jiafr 
@@ -10,8 +8,7 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN632117Req {
 
-    // 征信人员编号
-    @NotBlank
+    // 征信单编号
     private String code;
 
     public String getCode() {

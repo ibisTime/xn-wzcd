@@ -11,9 +11,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 客户申请作废
- * @author: jiafr 
- * @since: 2018年6月10日 下午7:28:45 
+ * 车贷入档补录
+ * @author: silver 
+ * @since: 2018年6月13日 下午2:42:47 
  * @history:
  */
 public class XN632190 extends AProcessor {
@@ -24,7 +24,7 @@ public class XN632190 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.applyCancel(req);
+        budgetOrderAO.refreshCarLoanArchive(req);
         return new BooleanRes(true);
     }
 

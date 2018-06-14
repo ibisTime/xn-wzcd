@@ -1,53 +1,59 @@
 package com.cdkj.loan.dto.req;
 
 /**
- * 分页查询客户作废
- * @author: jiafr 
- * @since: 2018年6月10日 下午9:08:41 
+ * 车贷档案分页查
+ * @author: silver 
+ * @since: 2018年6月13日 下午2:56:47 
  * @history:
  */
 public class XN632195Req extends APageReq {
 
+    /** 
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+     */
     private static final long serialVersionUID = 1L;
 
-    private String applyUserName;
+    // 业务编号
+    private String code;
 
-    private String bizCode;
+    // 客户姓名
+    private String customerName;
 
-    private String advanceFundDatetimeStart;
+    // 贷款银行
+    private String loanBankCode;
 
-    private String advanceFundDatetimeEnd;
+    // 业务员
+    private String saleUserId;
 
-    public String getApplyUserName() {
-        return applyUserName;
+    public String getCode() {
+        return code;
     }
 
-    public void setApplyUserName(String applyUserName) {
-        this.applyUserName = applyUserName;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getBizCode() {
-        return bizCode;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setBizCode(String bizCode) {
-        this.bizCode = bizCode;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
-    public String getAdvanceFundDatetimeStart() {
-        return advanceFundDatetimeStart;
+    public String getLoanBankCode() {
+        return loanBankCode;
     }
 
-    public void setAdvanceFundDatetimeStart(String advanceFundDatetimeStart) {
-        this.advanceFundDatetimeStart = advanceFundDatetimeStart;
+    public void setLoanBankCode(String loanBankCode) {
+        this.loanBankCode = loanBankCode;
     }
 
-    public String getAdvanceFundDatetimeEnd() {
-        return advanceFundDatetimeEnd;
+    public String getSaleUserId() {
+        return saleUserId;
     }
 
-    public void setAdvanceFundDatetimeEnd(String advanceFundDatetimeEnd) {
-        this.advanceFundDatetimeEnd = advanceFundDatetimeEnd;
+    public void setSaleUserId(String saleUserId) {
+        this.saleUserId = saleUserId;
     }
-
 }

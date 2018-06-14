@@ -4,590 +4,386 @@
 <mapper namespace="com.cdkj.loan.dao.IBudgetOrderDAO">
 	<resultMap id="budgetOrder_DB_Result" type="budgetOrder">
 		<result column="code" property="code" />
-		<result column="repay_biz_code" property="repayBizCode" />
-		<result column="loan_product_code" property="loanProductCode" />
-		<result column="loan_product_name" property="loanProductName" />
-		<result column="loan_bank" property="loanBank" />
+		<result column="customer_type" property="customerType" />
+		<result column="customer_name" property="customerName" />
+		<result column="car_dealer_code" property="carDealerCode" />
+		<result column="loan_bank_code" property="loanBankCode" />
+	    <result column="loan_bank_subbranch" property="loanBankSubbranch" />
 		
-		<result column="gps_fee" property="gpsFee" />
-		<result column="auth_fee" property="authFee" />
-		<result column="bank_fee" property="bankFee" />
-		<result column="company_fee" property="companyFee" />
-		<result column="credit_code" property="creditCode" />
-		
-		<result column="biz_type" property="bizType" />
-		<result column="loan_period" property="loanPeriod" />
-		<result column="invoice_company" property="invoiceCompany" />
-		<result column="car_brand" property="carBrand" />
-		<result column="car_series" property="carSeries" />
-		<result column="car_model" property="carModel" />
-		
-		<result column="car_pic" property="carPic" />
-		<result column="car_hgz_pic" property="carHgzPic" />
-		<result column="car_hgz_no" property="carHgzNo" />
-		<result column="car_frame_no" property="carFrameNo" />
-		<result column="car_engine_no" property="carEngineNo" />
 		<result column="original_price" property="originalPrice" />
-		
+		<result column="car_model" property="carModel" />
+		<result column="loan_periods" property="loanPeriods" />
 		<result column="invoice_price" property="invoicePrice" />
-		<result column="car_color" property="carColor" />
-		<result column="month_deposit" property="monthDeposit" />
-		<result column="first_amount" property="firstAmount" />
-		<result column="first_rate" property="firstRate" />
+		<result column="shop_way" property="shopWay" />
 		
+		<result column="rate_type" property="rateType" />
 		<result column="loan_amount" property="loanAmount" />
-		<result column="settle_address" property="settleAddress" />
-		<result column="apply_user_id" property="applyUserId" />
-		<result column="apply_user_name" property="applyUserName" />
-		<result column="gender" property="gender" />
+		<result column="is_survey" property="isSurvey" />
+		<result column="bank_rate" property="bankRate" />
+		<result column="company_loan_cs" property="companyLoanCs" />
 		
-		<result column="marry_state" property="marryState" />
-		<result column="nation" property="nation" />
-		<result column="education" property="education" />
-		<result column="id_kind" property="idKind" />
-		<result column="id_no" property="idNo" />
-		
-		<result column="family_number" property="familyNumber" />
-		<result column="mobile" property="mobile" />
-		<result column="now_address" property="nowAddress" />
-		<result column="post_code1" property="postCode1" />
-		<result column="residence_address" property="residenceAddress" />
-		<result column="post_code2" property="postCode2" />
-		
-		<result column="family_main_asset" property="familyMainAsset" />
-		<result column="main_asset_include" property="mainAssetInclude" />
-		<result column="main_income" property="mainIncome" />
-		<result column="work_company_name" property="workCompanyName" />
-		<result column="work_company_address" property="workCompanyAddress" />
-		<result column="work_company_property" property="workCompanyProperty" />
-		<result column="work_belong_industry" property="workBelongIndustry" />
-		<result column="work_profession" property="workProfession" />
-		<result column="work_datetime" property="workDatetime" />
-		
-		<result column="self_company_area" property="selfCompanyArea" />
-		<result column="employee_quantity" property="employeeQuantity" />
-		<result column="enterprise_month_output" property="enterpriseMonthOutput" />
-		<result column="position" property="position" />
-		<result column="post_title" property="postTitle" />
-		
-		<result column="month_income" property="monthIncome" />
-		<result column="mate_name" property="mateName" />
-		<result column="mate_mobile" property="mateMobile" />
-		<result column="mate_id_no" property="mateIdNo" />
-		<result column="mate_education" property="mateEducation" />
-		
-		<result column="mate_company_name" property="mateCompanyName" />
-		<result column="mate_company_address" property="mateCompanyAddress" />
-		<result column="mate_company_contact_no" property="mateCompanyContactNo" />
-		
-		<result column="mate_zfb_jour_datetime_start" property="mateZfbJourDatetimeStart" />
-		<result column="mate_zfb_jour_datetime_end" property="mateZfbJourDatetimeEnd" />
-		<result column="mate_zfb_jour_income" property="mateZfbJourIncome" />
-		<result column="mate_zfb_jour_expend" property="mateZfbJourExpend" />
-		
-		<result column="mate_zfb_jour_balance" property="mateZfbJourBalance" />
-		<result column="mate_zfb_jour_month_income" property="mateZfbJourMonthIncome" />
-		<result column="mate_zfb_jour_month_expend" property="mateZfbJourMonthExpend" />
-		<result column="mate_zfb_jour_pic" property="mateZfbJourPic" />
-		<result column="mate_zfb_jour_remark" property="mateZfbJourRemark" />
-		<result column="mate_wx_jour_datetime_start" property="mateWxJourDatetimeStart" />
-		<result column="mate_wx_jour_datetime_end" property="mateWxJourDatetimeEnd" />
-		<result column="mate_wx_jour_income" property="mateWxJourIncome" />
-		<result column="mate_wx_jour_expend" property="mateWxJourExpend" />
-		
-		<result column="mate_wx_jour_balance" property="mateWxJourBalance" />
-		<result column="mate_wx_jour_month_income" property="mateWxJourMonthIncome" />
-		<result column="mate_wx_jour_month_expend" property="mateWxJourMonthExpend" />
-		<result column="mate_wx_jour_pic" property="mateWxJourPic" />
-		<result column="mate_wx_jour_remark" property="mateWxJourRemark" />
-		<result column="mate_jour_datetime_start" property="mateJourDatetimeStart" />
-		<result column="mate_jour_datetime_end" property="mateJourDatetimeEnd" />
-		<result column="mate_jour_income" property="mateJourIncome" />
-		<result column="mate_jour_expend" property="mateJourExpend" />
-		
-		<result column="mate_jour_balance" property="mateJourBalance" />
-		<result column="mate_jour_month_income" property="mateJourMonthIncome" />
-		<result column="mate_jour_month_expend" property="mateJourMonthExpend" />
-		<result column="mate_jour_pic" property="mateJourPic" />
-		<result column="mate_jour_remark" property="mateJourRemark" />
-		<result column="mate_asset_pdf" property="mateAssetPdf" />
-		
-		<result column="gua_name" property="guaName" />
-		<result column="gua_mobile" property="guaMobile" />
-		
-		<result column="gua_id_no" property="guaIdNo" />
-		<result column="gua_phone" property="guaPhone" />
-		<result column="gua_company_name" property="guaCompanyName" />
-		<result column="gua_company_address" property="guaCompanyAddress" />
-		<result column="gua_house_asset_address" property="guaHouseAssetAddress" />
-		
-		<result column="gua_zfb_jour_datetime_start" property="guaZfbJourDatetimeStart" />
-		<result column="gua_zfb_jour_datetime_end" property="guaZfbJourDatetimeEnd" />
-		<result column="gua_zfb_jour_income" property="guaZfbJourIncome" />
-		<result column="gua_zfb_jour_expend" property="guaZfbJourExpend" />
-		
-		<result column="gua_zfb_jour_balance" property="guaZfbJourBalance" />
-		<result column="gua_zfb_jour_month_income" property="guaZfbJourMonthIncome" />
-		<result column="gua_zfb_jour_month_expend" property="guaZfbJourMonthExpend" />
-		<result column="gua_zfb_jour_pic" property="guaZfbJourPic" />
-		<result column="gua_zfb_jour_remark" property="guaZfbJourRemark" />
-		<result column="gua_wx_jour_datetime_start" property="guaWxJourDatetimeStart" />
-		<result column="gua_wx_jour_datetime_end" property="guaWxJourDatetimeEnd" />
-		<result column="gua_wx_jour_income" property="guaWxJourIncome" />
-		<result column="gua_wx_jour_expend" property="guaWxJourExpend" />
-		
-		<result column="gua_wx_jour_balance" property="guaWxJourBalance" />
-		<result column="gua_wx_jour_month_income" property="guaWxJourMonthIncome" />
-		<result column="gua_wx_jour_month_expend" property="guaWxJourMonthExpend" />
-		<result column="gua_wx_jour_pic" property="guaWxJourPic" />
-		<result column="gua_wx_jour_remark" property="guaWxJourRemark" />
-		<result column="gua_jour_datetime_start" property="guaJourDatetimeStart" />
-		<result column="gua_jour_datetime_end" property="guaJourDatetimeEnd" />
-		<result column="gua_jour_income" property="guaJourIncome" />
-		<result column="gua_jour_expend" property="guaJourExpend" />
-		
-		<result column="gua_jour_balance" property="guaJourBalance" />
-		<result column="gua_jour_month_income" property="guaJourMonthIncome" />
-		<result column="gua_jour_month_expend" property="guaJourMonthExpend" />
-		<result column="gua_jour_pic" property="guaJourPic" />
-		<result column="gua_jour_remark" property="guaJourRemark" />
-		<result column="gua_asset_pdf" property="guaAssetPdf" />
-		
-		<result column="emergency_name1" property="emergencyName1" />
-		<result column="emergency_relation1" property="emergencyRelation1" />
-		<result column="emergency_mobile1" property="emergencyMobile1" />
-		<result column="emergency_name2" property="emergencyName2" />
-		<result column="emergency_relation2" property="emergencyRelation2" />
-		
-		<result column="emergency_mobile2" property="emergencyMobile2" />
-		<result column="zfb_jour_datetime_start" property="zfbJourDatetimeStart" />
-		<result column="zfb_jour_datetime_end" property="zfbJourDatetimeEnd" />
-		<result column="zfb_jour_income" property="zfbJourIncome" />
-		<result column="zfb_jour_expend" property="zfbJourExpend" />
-		
-		<result column="zfb_jour_balance" property="zfbJourBalance" />
-		<result column="zfb_jour_month_income" property="zfbJourMonthIncome" />
-		<result column="zfb_jour_month_expend" property="zfbJourMonthExpend" />
-		<result column="zfb_jour_pic" property="zfbJourPic" />
-		<result column="zfb_jour_remark" property="zfbJourRemark" />
-		<result column="wx_jour_datetime_start" property="wxJourDatetimeStart" />
-		<result column="wx_jour_datetime_end" property="wxJourDatetimeEnd" />
-		<result column="wx_jour_income" property="wxJourIncome" />
-		<result column="wx_jour_expend" property="wxJourExpend" />
-		
-		<result column="wx_jour_balance" property="wxJourBalance" />
-		<result column="wx_jour_month_income" property="wxJourMonthIncome" />
-		<result column="wx_jour_month_expend" property="wxJourMonthExpend" />
-		<result column="wx_jour_pic" property="wxJourPic" />
-		<result column="wx_jour_remark" property="wxJourRemark" />
-		<result column="jour_datetime_start" property="jourDatetimeStart" />
-		<result column="jour_datetime_end" property="jourDatetimeEnd" />
-		<result column="jour_income" property="jourIncome" />
-		<result column="jour_expend" property="jourExpend" />
-		
-		<result column="jour_balance" property="jourBalance" />
-		<result column="jour_month_income" property="jourMonthIncome" />
-		<result column="jour_month_expend" property="jourMonthExpend" />
-		<result column="jour_pic" property="jourPic" />
-		<result column="jour_remark" property="jourRemark" />
-		<result column="asset_pdf" property="assetPdf" />
-		<result column="house_contract" property="houseContract" />
-		
-		<result column="house_picture" property="housePicture" />
 		<result column="is_advance_fund" property="isAdvanceFund" />
-		<result column="interview_video" property="interviewVideo" />
-		<result column="interview_contract" property="interviewContract" />
-		<result column="advance_fund_datetime" property="advanceFundDatetime" />
+		<result column="global_rate" property="globalRate" />
+		<result column="fee" property="fee" />
+		<result column="car_dealer_subsidy" property="carDealerSubsidy" />
+		<result column="bank_loan_cs" property="bankLoanCs" />
 		
-		<result column="advance_fund_amount" property="advanceFundAmount" />
-		<result column="bill_pdf" property="billPdf" />
-		<result column="car_settle_datetime" property="carSettleDatetime" />
-		<result column="car_number" property="carNumber" />
-		<result column="car_invoice" property="carInvoice" />
+		<result column="company_code" property="companyCode" />
+		<result column="sale_user_id" property="saleUserId" />
+		<result column="apply_user_company" property="applyUserCompany" />
+		<result column="apply_user_duty" property="applyUserDuty" />
+		<result column="apply_user_ghr_relation" property="applyUserGhrRelation" />
+		<result column="marry_state" property="marryState" />
+		<result column="other_income_note" property="otherIncomeNote" />
 		
-		<result column="car_hgz" property="carHgz" />
-		<result column="car_jqx" property="carJqx" />
-		<result column="car_syx" property="carSyx" />
-		<result column="car_regcerti" property="carRegcerti" />
-		<result column="car_pd" property="carPd" />
+		<result column="is_house_property" property="isHouseProperty" />
+		<result column="house_property" property="houseProperty" />
+		<result column="is_house_contract" property="isHouseContract" />
+		<result column="house_contract" property="houseContract" />
+		<result column="house_invoice" property="houseInvoice" />
 		
-		<result column="car_key" property="carKey" />
-		<result column="car_big_smj" property="carBigSmj" />
+		<result column="is_license" property="isLicense" />
+		<result column="license" property="license" />
+		<result column="is_site_prove" property="isSiteProve" />
+		<result column="site_prove" property="siteProve" />
+		<result column="site_area" property="siteArea" />
+		<result column="car_type" property="carType" />
+		
+		<result column="is_drice_license" property="isDriceLicense" />
+		<result column="drice_license" property="driceLicense" />
+		<result column="other_property_note" property="otherPropertyNote" />
+		<result column="apply_birth_address" property="applyBirthAddress" />
+		<result column="apply_now_address" property="applyNowAddress" />
+		
+		<result column="house_type" property="houseType" />
+		<result column="gh_birth_address" property="ghBirthAddress" />
+		<result column="guarantor1_birth_address" property="guarantor1BirthAddress" />
+		<result column="guarantor2_birth_address" property="guarantor2BirthAddress" />
+		<result column="other_note" property="otherNote" />
+		
+		<result column="oil_subsidy" property="oilSubsidy" />
+		<result column="oil_subsidy_kil" property="oilSubsidyKil" />
+		<result column="is_plat_insure" property="isPlatInsure" />
+		<result column="gps_fee" property="gpsFee" />
+		<result column="gps_deduct" property="gpsDeduct" />
+		
+		<result column="gps_fee_way" property="gpsFeeWay" />
+		<result column="ly_amount" property="lyAmount" />
+		<result column="fx_amount" property="fxAmount" />
+		<result column="other_fee" property="otherFee" />
+		<result column="fee_way" property="feeWay" />
+		
+		<result column="marry_divorce" property="marryDivorce" />
+		<result column="apply_user_hkb" property="applyUserHkb" />
+		<result column="bank_bill_pdf" property="bankBillPdf" />
+		<result column="single_prove_pdf" property="singleProvePdf" />
+		<result column="income_prove_pdf" property="incomeProvePdf" />
+		
+		<result column="live_prove_pdf" property="liveProvePdf" />
+		<result column="build_prove_pdf" property="buildProvePdf" />
+		<result column="hkb_first_page" property="hkbFirstPage" />
+		<result column="hkb_main_page" property="hkbMainPage" />
+		<result column="gh_hkb" property="ghHkb" />
+		
+		<result column="guarantor1_id_no" property="guarantor1IdNo" />
+		<result column="guarantor1_hkb" property="guarantor1Hkb" />
+		<result column="guarantor2_id_no" property="guarantor2IdNo" />
+		<result column="guarantor2_hkb" property="guarantor2Hkb" />
+		<result column="house_pic" property="housePic" />
+		
+		<result column="house_unit_pic" property="houseUnitPic" />
+		<result column="house_door_pic" property="houseDoorPic" />
+		<result column="house_room_pic" property="houseRoomPic" />
+		<result column="house_customer_pic" property="houseCustomerPic" />
+		<result column="house_sale_customer_pic" property="houseSaleCustomerPic" />
+		
+		<result column="company_name_pic" property="companyNamePic" />
+		<result column="company_place_pic" property="companyPlacePic" />
+		<result column="company_workshop_pic" property="companyWorkshopPic" />
+		<result column="company_sale_customer_pic" property="companySaleCustomerPic" />
+		<result column="second_hgz" property="secondHgz" />
+		
+		<result column="second_odometer" property="secondOdometer" />
+		<result column="second_car_front_pic" property="secondCarFrontPic" />
+		<result column="second_console_pic" property="secondConsolePic" />
+		<result column="second_300_pdf" property="second300Pdf" />
+		<result column="second_qxb_pic" property="secondQxbPic" />
+		
+		<result column="second_car_in_pic" property="secondCarInPic" />
+		<result column="second_number" property="secondNumber" />
+		<result column="other_file_pdf" property="otherFilePdf" />
+		<result column="other_apply_note" property="otherApplyNote" />
+		<result column="apply_datetime" property="applyDatetime" />
+		
+		<result column="cancel_reason" property="cancelReason" />
 		<result column="bank_commit_datetime" property="bankCommitDatetime" />
 		<result column="bank_commit_note" property="bankCommitNote" />
-		<result column="repay_bank_code" property="repayBankCode" />
-		
-		<result column="repay_bank_name" property="repayBankName" />
-		<result column="repay_subbranch" property="repaySubbranch" />
-		<result column="repay_bankcard_number" property="repayBankcardNumber" />
-		<result column="repay_bill_date" property="repayBillDate" />
-		<result column="repay_bank_date" property="repayBankDate" />
-		<result column="repay_company_date" property="repayCompanyDate" />
-
-		<result column="repay_first_month_amount" property="repayFirstMonthAmount" />
-		<result column="repay_first_month_datetime" property="repayFirstMonthDatetime" />
-		<result column="repay_month_amount" property="repayMonthAmount" />
+		<result column="bank_fk_amount" property="bankFkAmount" />
 		<result column="bank_fk_datetime" property="bankFkDatetime" />
-		<result column="receipt_bank_code" property="receiptBankCode" />
 		
-		<result column="receipt_bank_name" property="receiptBankName" />
-		<result column="receipt_bankcard_number" property="receiptBankcardNumber" />
-		<result column="receipt_pdf" property="receiptPdf" />
-		<result column="receipt_remark" property="receiptRemark" />
-		<result column="pledge_datetime" property="pledgeDatetime" />
+		<result column="bank_receipt_code" property="bankReceiptCode" />
+		<result column="bank_receipt_number" property="bankReceiptNumber" />
+		<result column="bank_receipt_pdf" property="bankReceiptPdf" />
+		<result column="bank_receipt_note" property="bankReceiptNote" />
+		<result column="pledge_commit_datetime" property="pledgeCommitDatetime" />
 		
-		<result column="green_big_smj" property="greenBigSmj" />
-		<result column="pledge_bank_commit_datetime" property="pledgeBankCommitDatetime" />
-		<result column="pledge_bank_commit_note" property="pledgeBankCommitNote" />
-		<result column="enter_location" property="enterLocation" />
-		<result column="sale_user_id" property="saleUserId" />
+		<result column="pledge_commit_note" property="pledgeCommitNote" />
+		<result column="pledge_contract_code" property="pledgeContractCode" />
+		<result column="insurance_company_code" property="insuranceCompanyCode" />
+		<result column="car_color" property="carColor" />
+		<result column="car_brand" property="carBrand" />
 		
-		<result column="team_code" property="teamCode" />
-		<result column="company_code" property="companyCode" />
-		<result column="apply_datetime" property="applyDatetime" />
-		<result column="back_advance_status" property="backAdvanceStatus" />
-		<result column="back_advance_amount" property="backAdvanceAmount" />
+		<result column="frame_no" property="frameNo" />
+		<result column="engine_no" property="engineNo" />
+		<result column="commerce_insurance" property="commerceInsurance" />
+		<result column="insurance_effect_datetime" property="insuranceEffectDatetime" />
+		<result column="insurance_bank" property="insuranceBank" />
 		
-		<result column="back_advance_account" property="backAdvanceAccount" />
-		<result column="back_advance_open_bank" property="backAdvanceOpenBank" />
-		<result column="back_advance_subbranch" property="backAdvanceSubbranch" />
-		<result column="back_advance_water_bill" property="backAdvanceWaterBill" />
+		<result column="guarantee_contract_code" property="guaranteeContractCode" />
+		<result column="reg_certificate_code" property="regCertificateCode" />
+		<result column="other_contact" property="otherContact" />
+		<result column="contact_mobile" property="contactMobile" />
+		<result column="guarantor_name" property="guarantorName" />
+		
+		<result column="guarantor_mobile" property="guarantorMobile" />
+		<result column="bank_card_number" property="bankCardNumber" />
+		<result column="bill_datetime" property="billDatetime" />
+		<result column="month_amount" property="monthAmount" />
+		<result column="id_no_pic" property="idNoPic" />
+		
+		<result column="file_list" property="fileList" />
+		<result column="is_complete" property="isComplete" />
+		<result column="store_place" property="storePlace" />
+		<result column="file_remark" property="fileRemark" />
+		<result column="operator" property="operator" />
+		
+		<result column="operate_datetime" property="operateDatetime" />
+		<result column="operate_department" property="operateDepartment" />
+		<result column="makecard_remark" property="makecardRemark" />
+		<result column="delivery_datetime" property="deliveryDatetime" />
+		<result column="is_right_invoice" property="isRightInvoice" />
+		<result column="current_invoice_price" property="currentInvoicePrice" />
+		
+		<result column="invoice" property="invoice" />
+		<result column="certification" property="certification" />
+		<result column="force_insurance" property="forceInsurance" />
+		<result column="business_insurance" property="businessInsurance" />
+		<result column="motor_reg_certification" property="motorRegCertification" />
+		
+		<result column="pd_pdf" property="pdPdf" />
+		<result column="fbh_remark" property="fbhRemark" />
+		<result column="fbh_warn_day" property="fbhWarnDay" />
+		<result column="status" property="status" />
+		<result column="should_back_amount" property="shouldBackAmount" />
+		
+		<result column="pay_datetime" property="payDatetime" />
+		<result column="pay_bank" property="payBank" />
+		<result column="pay_account" property="payAccount" />
+		<result column="pay_pdf" property="payPdf" />
+		<result column="zf_apply_datetime" property="zfApplyDatetime" />
+		
+		<result column="zf_reason" property="zfReason" />
+		<result column="zf_sk_amount" property="zfSkAmount" />
+		<result column="zf_sk_bank" property="zfSkBank" />
+		<result column="zf_sk_bankcard_number" property="zfSkBankcardNumber" />
+		<result column="zf_sk_receipt_datetime" property="zfSkReceiptDatetime" />
+		
+		<result column="zf_finance_remark" property="zfFinanceRemark" />
 		<result column="cur_node_code" property="curNodeCode" />
-		
-		<result column="cancel_node_code" property="cancelNodeCode" />
-		<result column="frozen_status" property="frozenStatus" />
-		<result column="remark" property="remark" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
-			<if test="repayBizCode != null and repayBizCode != '' ">
-				AND t.repay_biz_code = #{repayBizCode}
+			<if test="customerName != null and customerName != '' ">
+				AND t.customer_name like "%"#{customerName}"%"
 			</if>
-			<if test="roleCode != null and roleCode != '' ">
-				AND trn.role_code = #{roleCode}
-			</if>
-			<if test="loanProductCode != null and loanProductCode != '' ">
-				AND t.loan_product_code = #{loanProductCode}
-			</if>
-			<if test="saleUserId != null and saleUserId != '' ">
-				AND t.sale_user_id = #{saleUserId}
-			</if>
-			<if test="applyUserId != null and applyUserId != '' ">
-				AND t.apply_user_id = #{applyUserId}
-			</if>
-			<if test="applyUserName != null and applyUserName != '' ">
-				AND t.apply_user_name = #{applyUserName}
-			</if>
-			<if test="idNo != null and idNo != '' ">
-				AND t.id_no = #{idNo}
-			</if>
-			<if test="loanBank != null and loanBank != '' ">
-				AND t.loan_bank = #{loanBank}
-			</if>
-			<if test="loanAmount != null and loanAmount != '' ">
-				AND t.loan_amount = #{loanAmount}
-			</if>
-			<if test="loanPeriod != null and loanPeriod != '' ">
-				AND t.loan_period = #{loanPeriod}
-			</if>
-			<if test="bankFkDatetimeStart != null and bankFkDatetimeStart != '' ">
-				<![CDATA[AND t.bank_fk_datetime >= #{bankFkDatetimeStart}]]>
-			</if>
-			<if test="bankFkDatetimeEnd != null and bankFkDatetimeEnd != '' ">
-				<![CDATA[AND t.bank_fk_datetime <= #{bankFkDatetimeEnd}]]>
+			<if test="curNodeCode != null and curNodeCode != '' ">
+				AND t.cur_node_code like "%"#{curNodeCode}"%"
 			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
-				<![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
+				<![CDATA[AND t.apply_datetime > #{applyDatetimeStart}]]>
 			</if>
 			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
-				<![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
+				<![CDATA[AND t.apply_datetime < #{applyDatetimeEnd}]]>
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="carDealerCode != null and carDealerCode != '' ">
+				AND t.car_dealer_code = #{carDealerCode}
 			</if>
 			<if test="isAdvanceFund != null and isAdvanceFund != '' ">
 				AND t.is_advance_fund = #{isAdvanceFund}
 			</if>
-			<if test="curNodeCode != null and curNodeCode != '' ">
-				AND t.cur_node_code = #{curNodeCode}
+			<if test="loanBankCode != null and loanBankCode != '' ">
+				AND t.loan_bank_code = #{loanBankCode}
 			</if>
-			<if test="curNodeCodeDz != null and curNodeCodeDz != '' ">
-				<![CDATA[AND t.cur_node_code >= #{curNodeCodeDz}]]>
-			</if>
-			<if test="curNodeCodeFk != null and curNodeCodeFk != '' ">
-				<![CDATA[AND t.cur_node_code <= #{curNodeCodeFk}]]>
-			</if>
-			<if test="advanceFlag != null and advanceFlag != '' ">
-				<![CDATA[AND DATEDIFF(now(), t.advance_fund_datetime) >= 1]]>
-			</if>
-			<if test="backAdvanceStatus != null and backAdvanceStatus != ''">
-				AND t.back_advance_status = #{backAdvanceStatus}
-			</if>
-			<if test="teamCode != null and teamCode != ''">
-				AND t.team_code = #{teamCode}
-			</if>
-			<if test="applyUserName != null and applyUserName != ''">
-				AND t.apply_user_name like "%"#{applyUserName}"%"
-			</if>
-			<if test="frozenStatus != null and frozenStatus != ''">
-				AND t.frozen_status = #{frozenStatus}
+			<if test="saleUserId != null and saleUserId != '' ">
+				AND t.sale_user_id = #{saleUserId}
 			</if>
 		</trim>
 	</sql>
 	<select id="select_budgetOrder" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
 		SELECT
 		t.code
-		,t.repay_biz_code
-		,t.loan_product_code
-		,t.loan_product_name
-		,t.loan_bank
-		
-		,t.gps_fee
-		,t.auth_fee
-		,t.bank_fee
-		,t.company_fee
-		,t.credit_code
-		
-		,t.biz_type
-		,t.loan_period
-		,t.invoice_company
-		,t.car_brand
-		,t.car_series
-		,t.car_model
-		,t.car_pic
-		,t.car_hgz_pic
-		,t.car_hgz_no
-		,t.car_frame_no
-		,t.car_engine_no
+		,t.customer_type
+		,t.customer_name
+		,t.car_dealer_code
+		,t.loan_bank_code
+		,t.loan_bank_subbranch
 		,t.original_price
-		
+		,t.car_model
+		,t.loan_periods
 		,t.invoice_price
-		,t.car_color
-		,t.month_deposit
-		,t.first_amount
-		,t.first_rate
-		
+		,t.shop_way
+		,t.rate_type
 		,t.loan_amount
-		,t.settle_address
-		,t.apply_user_id
-		,t.apply_user_name
-		,t.gender
-		
-		,t.marry_state
-		,t.nation
-		,t.education
-		,t.id_kind
-		,t.id_no
-		
-		,t.family_number
-		,t.mobile
-		,t.now_address
-		,t.post_code1
-		,t.residence_address
-		
-		,t.post_code2
-		,t.family_main_asset
-		,t.main_asset_include
-		,t.main_income
-		,t.work_company_name
-		
-		,t.work_company_address
-		,t.work_company_property
-		,t.work_belong_industry
-		,t.work_profession
-		,t.work_datetime
-		,t.self_company_area
-		,t.employee_quantity
-		,t.enterprise_month_output
-		,t.position
-		
-		,t.post_title
-		,t.month_income
-		
-		,t.mate_zfb_jour_datetime_start
-		,t.mate_zfb_jour_datetime_end
-		,t.mate_zfb_jour_income
-		,t.mate_zfb_jour_expend
-		,t.mate_zfb_jour_balance
-		,t.mate_zfb_jour_month_income
-		,t.mate_zfb_jour_month_expend
-		,t.mate_zfb_jour_month_expend
-		,t.mate_zfb_jour_pic
-		,t.mate_zfb_jour_remark
-		
-		,t.mate_wx_jour_datetime_start
-		,t.mate_wx_jour_datetime_end
-		,t.mate_wx_jour_income
-		,t.mate_wx_jour_expend
-		,t.mate_wx_jour_balance
-		,t.mate_wx_jour_month_income
-		,t.mate_wx_jour_month_expend
-		,t.mate_wx_jour_pic
-		,t.mate_wx_jour_remark
-		
-		,t.mate_jour_datetime_start
-		,t.mate_jour_datetime_end
-		,t.mate_jour_income
-		,t.mate_jour_expend
-		,t.mate_jour_balance
-		,t.mate_jour_month_income
-		,t.mate_jour_month_expend
-		,t.mate_jour_pic
-		,t.mate_jour_remark
-		,t.mate_asset_pdf
-		
-		,t.mate_name
-		,t.mate_mobile
-		,t.mate_id_no
-		
-		,t.mate_education
-		,t.mate_company_name
-		,t.mate_company_address
-		,t.mate_company_contact_no
-		,t.gua_name
-		
-		,t.gua_mobile
-		,t.gua_id_no
-		,t.gua_phone
-		,t.gua_company_name
-		,t.gua_company_address
-		,t.gua_house_asset_address
-		
-		,t.gua_zfb_jour_datetime_start
-		,t.gua_zfb_jour_datetime_end
-		,t.gua_zfb_jour_income
-		,t.gua_zfb_jour_expend
-		,t.gua_zfb_jour_balance
-		,t.gua_zfb_jour_month_income
-		,t.gua_zfb_jour_month_expend
-		,t.gua_zfb_jour_pic
-		,t.gua_zfb_jour_remark
-		
-		,t.gua_wx_jour_datetime_start
-		,t.gua_wx_jour_datetime_end
-		,t.gua_wx_jour_income
-		,t.gua_wx_jour_expend
-		,t.gua_wx_jour_balance
-		,t.gua_wx_jour_month_income
-		,t.gua_wx_jour_month_expend
-		,t.gua_wx_jour_pic
-		,t.gua_wx_jour_remark
-		
-		,t.gua_jour_datetime_start
-		,t.gua_jour_datetime_end
-		,t.gua_jour_income
-		,t.gua_jour_expend
-		,t.gua_jour_balance
-		,t.gua_jour_month_income
-		,t.gua_jour_month_expend
-		,t.gua_jour_pic
-		,t.gua_jour_remark
-		,t.gua_asset_pdf
-		
-		,t.emergency_name1
-		,t.emergency_relation1
-		,t.emergency_mobile1
-		,t.emergency_name2
-		
-		,t.emergency_relation2
-		,t.emergency_mobile2
-		
-		,t.zfb_jour_datetime_start
-		,t.zfb_jour_datetime_end
-		,t.zfb_jour_income
-		,t.zfb_jour_expend
-		,t.zfb_jour_balance
-		,t.zfb_jour_month_income
-		,t.zfb_jour_month_expend
-		,t.zfb_jour_pic
-		,t.zfb_jour_remark
-		
-		,t.wx_jour_datetime_start
-		,t.wx_jour_datetime_end
-		,t.wx_jour_income
-		,t.wx_jour_expend
-		,t.wx_jour_balance
-		,t.wx_jour_month_income
-		,t.wx_jour_month_expend
-		,t.wx_jour_pic
-		,t.wx_jour_remark
-		
-		,t.jour_datetime_start
-		,t.jour_datetime_end
-		,t.jour_income
-		,t.jour_expend
-		,t.jour_balance
-		,t.jour_month_income
-		,t.jour_month_expend
-		,t.jour_pic
-		,t.jour_remark
-		,t.asset_pdf
-		
-		,t.house_contract
-		,t.house_picture
+		,t.is_survey
+		,t.bank_rate
+		,t.company_loan_cs
 		,t.is_advance_fund
-		,t.interview_video
-		,t.interview_contract
-		
-		,t.advance_fund_datetime
-		,t.advance_fund_amount
-		,t.bill_pdf
-		,t.car_settle_datetime
-		,t.car_number
-		
-		,t.car_invoice
-		,t.car_hgz
-		,t.car_jqx
-		,t.car_syx
-		,t.car_regcerti
-		
-		,t.car_pd
-		,t.car_key
-		,t.car_big_smj
+		,t.global_rate
+		,t.fee
+		,t.car_dealer_subsidy
+		,t.bank_loan_cs
+		,t.company_code
+		,t.sale_user_id
+		,t.apply_user_company
+		,t.apply_user_duty
+		,t.apply_user_ghr_relation
+		,t.marry_state
+		,t.other_income_note
+		,t.is_house_property
+		,t.house_property
+		,t.is_house_contract
+		,t.house_contract
+		,t.house_invoice
+		,t.is_license
+		,t.license
+		,t.is_site_prove
+		,t.site_prove
+		,t.site_area
+		,t.car_type
+		,t.is_drice_license
+		,t.drice_license
+		,t.other_property_note
+		,t.apply_birth_address
+		,t.apply_now_address
+		,t.house_type
+		,t.gh_birth_address
+		,t.guarantor1_birth_address
+		,t.guarantor2_birth_address
+		,t.other_note
+		,t.oil_subsidy
+		,t.oil_subsidy_kil
+		,t.is_plat_insure
+		,t.gps_fee
+		,t.gps_deduct
+		,t.gps_fee_way
+		,t.ly_amount
+		,t.fx_amount
+		,t.other_fee
+		,t.fee_way
+		,t.marry_divorce
+		,t.apply_user_hkb
+		,t.bank_bill_pdf
+		,t.single_prove_pdf
+		,t.income_prove_pdf
+		,t.live_prove_pdf
+		,t.build_prove_pdf
+		,t.hkb_first_page
+		,t.hkb_main_page
+		,t.gh_hkb
+		,t.guarantor1_id_no
+		,t.guarantor1_hkb
+		,t.guarantor2_id_no
+		,t.guarantor2_hkb
+		,t.house_pic
+		,t.house_unit_pic
+		,t.house_door_pic
+		,t.house_room_pic
+		,t.house_customer_pic
+		,t.house_sale_customer_pic
+		,t.company_name_pic
+		,t.company_place_pic
+		,t.company_workshop_pic
+		,t.company_sale_customer_pic
+		,t.second_hgz
+		,t.second_odometer
+		,t.second_car_front_pic
+		,t.second_console_pic
+		,t.second_300_pdf
+		,t.second_qxb_pic
+		,t.second_car_in_pic
+		,t.second_number
+		,t.other_file_pdf
+		,t.other_apply_note
+		,t.apply_datetime
+		,t.cancel_reason
 		,t.bank_commit_datetime
 		,t.bank_commit_note
-		
+		,t.bank_fk_amount
 		,t.bank_fk_datetime
-		,t.repay_bank_code
-		,t.repay_bank_name
-		,t.repay_subbranch
-		,t.repay_bankcard_number
-		
-		,t.repay_bill_date
-		,t.repay_bank_date
-		,t.repay_company_date
-		,t.repay_first_month_amount
-		,t.repay_first_month_datetime
-		
-		,t.repay_month_amount
-		,t.receipt_bank_code
-		,t.receipt_bank_name
-		,t.receipt_bankcard_number
-		,t.receipt_pdf
-		
-		,t.receipt_remark
-		,t.pledge_datetime
-		,t.green_big_smj
-		,t.pledge_bank_commit_datetime
-		,t.pledge_bank_commit_note
-		
-		,t.enter_location
-		,t.sale_user_id
-		,t.team_code
-		,t.company_code
-		,t.apply_datetime
-		,t.back_advance_status
-		
-		,t.back_advance_amount
-		,t.back_advance_account
-		,t.back_advance_open_bank
-		,t.back_advance_subbranch
-		,t.back_advance_water_bill
-		
+		,t.bank_receipt_code
+		,t.bank_receipt_number
+		,t.bank_receipt_pdf
+		,t.bank_receipt_note
+		,t.pledge_commit_datetime
+		,t.pledge_commit_note
+		,t.pledge_contract_code
+		,t.insurance_company_code
+		,t.car_color
+		,t.car_brand
+		,t.frame_no
+		,t.engine_no
+		,t.commerce_insurance
+		,t.insurance_effect_datetime
+		,t.insurance_bank
+		,t.guarantee_contract_code
+		,t.reg_certificate_code
+		,t.other_contact
+		,t.contact_mobile
+		,t.guarantor_name
+		,t.guarantor_mobile
+		,t.bank_card_number
+		,t.bill_datetime
+		,t.month_amount
+		,t.id_no_pic
+		,t.file_list
+		,t.is_complete
+		,t.store_place
+		,t.file_remark
+		,t.operator
+		,t.operate_datetime
+		,t.operate_department
+		,t.makecard_remark
+		,t.delivery_datetime
+		,t.is_right_invoice
+		,t.current_invoice_price
+		,t.invoice
+		,t.certification
+		,t.force_insurance
+		,t.business_insurance
+		,t.motor_reg_certification
+		,t.pd_pdf
+		,t.fbh_remark
+		,t.fbh_warn_day
+		,t.status
+		,t.should_back_amount
+		,t.pay_datetime
+		,t.pay_bank
+		,t.pay_account
+		,t.pay_pdf
+		,t.zf_apply_datetime
+		,t.zf_reason
+		,t.zf_sk_amount
+		,t.zf_sk_bank
+		,t.zf_sk_bankcard_number
+		,t.zf_sk_receipt_datetime
+		,t.zf_finance_remark
 		,t.cur_node_code
-		,t.cancel_node_code
-		,t.frozen_status
-		,t.remark
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -601,71 +397,57 @@
 	<select id="select_budgetOrderList" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
 		SELECT
 		t.code
-		,t.repay_biz_code
-		,t.loan_product_code
-		,t.loan_product_name
-		,t.loan_bank
+		,t.cur_node_code 
+		,t.insurance_company_code 
+		,t.car_color 
+		,t.car_brand 
+		,t.frame_no 
+		,t.engine_no 
 		
-		,t.gps_fee
-		,t.auth_fee
-		,t.bank_fee
-		,t.company_fee
-		,t.credit_code
-		
-		,t.biz_type
-		,t.loan_period
-		,t.invoice_company
-		,t.car_brand
-		,t.car_series
-		,t.car_model
-		,t.car_pic
-		,t.car_hgz_pic
-		,t.car_hgz_no
-		,t.car_frame_no
-		,t.car_engine_no
-		,t.original_price
-		
-		,t.invoice_price
-		,t.car_color
-		,t.month_deposit
-		,t.first_amount
-		,t.first_rate
-		
-		,t.loan_amount
-		,t.settle_address
-		,t.apply_user_id
-		,t.apply_user_name
-		,t.gender
-		
-		,t.id_kind
-		,t.id_no
-		,t.mobile
-		,t.car_number
-		,t.car_invoice
-		
-		,t.repay_bank_code
-		,t.repay_bank_name
-		,t.repay_subbranch
-		,t.repay_bankcard_number
-		,t.repay_bill_date
-		
-		,t.repay_bank_date
-		,t.repay_company_date
-		,t.repay_first_month_amount
-		,t.repay_first_month_datetime
-		,t.repay_month_amount
-		
-		,t.bank_fk_datetime
-		,t.is_advance_fund
+		,t.force_insurance
+		,t.commerce_insurance
+		,t.insurance_effect_datetime
+		,t.insurance_bank
 		,t.sale_user_id
-		,t.company_code
-		,t.apply_datetime
 		
-		,t.cur_node_code
-		,t.remark
-		,t.team_code
-		,t.back_advance_status
-		,t.frozen_status
+		,t.guarantee_contract_code
+		,t.reg_certificate_code
+		,t.other_contact
+		,t.contact_mobile
+		,t.guarantor_name
+		
+		,t.guarantor_mobile
+		,t.bank_card_number
+		,t.bill_datetime
+		,t.month_amount
+		,t.id_no_pic
+		
+		,t.file_list
+		,t.is_complete
+		,t.month_amount
+		,t.store_place
+		,t.file_remark
+		
+		,t.operator
+		,t.operate_datetime
+		,t.operate_department
+		,t.bank_commit_datetime
+		,t.bank_commit_note
+		
+		,t.bank_fk_amount
+		,t.bank_fk_datetime
+		,t.bank_receipt_code
+		,t.bank_receipt_number
+		,t.bank_receipt_pdf
+		
+		,t.bank_receipt_note
+		,t.pledge_commit_datetime
+		,t.pledge_commit_note
+		,t.loan_amount
+		,t.loan_bank_code
+		
+		,t.car_dealer_code
+		,t.loan_periods
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -681,893 +463,481 @@
 		SELECT count(1) FROM tdq_budget_order t
 		<include refid="where_condition" />
 	</select>
-	
-	<select id="select_budgetOrder_byRoleCode" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
-		SELECT
-		distinct
-		t.code
-		,t.repay_biz_code
-		,t.loan_product_code
-		,t.loan_product_name
-		,t.loan_bank
-		
-		,t.gps_fee
-		,t.auth_fee
-		,t.bank_fee
-		,t.company_fee
-		,t.credit_code
-		
-		,t.biz_type
-		,t.loan_period
-		,t.invoice_company
-		,t.car_brand
-		,t.car_series
-		,t.car_model
-		,t.car_pic
-		,t.car_hgz_pic
-		,t.car_hgz_no
-		,t.car_frame_no
-		,t.car_engine_no
-		,t.original_price
-		
-		,t.invoice_price
-		,t.car_color
-		,t.month_deposit
-		,t.first_amount
-		,t.first_rate
-		
-		,t.loan_amount
-		,t.settle_address
-		,t.apply_user_id
-		,t.apply_user_name
-		,t.gender
-		
-		,t.id_kind
-		,t.id_no
-		,t.mobile
-		,t.car_number
-		,t.car_invoice
-		
-		,t.repay_bank_code
-		,t.repay_bank_name
-		,t.repay_subbranch
-		,t.repay_bankcard_number
-		,t.repay_bill_date
-		
-		,t.repay_bank_date
-		,t.repay_company_date
-		,t.repay_first_month_amount
-		,t.repay_first_month_datetime
-		,t.repay_month_amount
-		
-		,t.bank_fk_datetime
-		,t.is_advance_fund
-		,t.sale_user_id
-		,t.team_code
-		,t.company_code
-		,t.apply_datetime
-		,t.back_advance_status
-		
-		,t.back_advance_amount
-		,t.back_advance_account
-		,t.back_advance_open_bank
-		,t.back_advance_subbranch
-		,t.back_advance_water_bill
-		
-		,t.cur_node_code
-		,t.cancel_node_code
-		,t.frozen_status
-		,t.remark
-		FROM
-		tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
-		<include refid="where_condition" />
-		<trim prefix="ORDER BY ">
-			<if test="order != null and order != '' ">
-				t.${order}
-			</if>
-		</trim>
-	</select>
-
-	<select id="select_budgetOrder_count_byRoleCode" parameterType="budgetOrder"
-		resultType="java.lang.Long">
-		SELECT count(1) FROM (SELECT distinct code FROM tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
-		<include refid="where_condition" />) tb
-	</select>
 
 	<insert id="insert_budgetOrder" parameterType="budgetOrder">
 		INSERT INTO
 		tdq_budget_order(
 		code
-		,loan_product_code
-		,loan_product_name
-		,loan_bank
-		,gps_fee
-		,auth_fee
-		,bank_fee
-		,company_fee
-		,credit_code
-		,biz_type
-		,loan_period
-		,invoice_company
-		,car_brand
-		,car_series
-		,car_model
-		,car_pic
-		,car_hgz_pic
-		,car_hgz_no
-		,car_frame_no
-		,car_engine_no
+		,customer_type
+		,customer_name
+		,car_dealer_code
+		,loan_bank_code
+		,loan_bank_subbranch
 		,original_price
+		,car_model
+		,loan_periods
 		,invoice_price
-		,car_color
-		,month_deposit
-		,first_amount
-		,first_rate
+		,shop_way
+		,rate_type
 		,loan_amount
-		,settle_address
-		,apply_user_name
-		,gender
-		,marry_state
-		,nation
-		,education
-		,id_no
-		,family_number
-		,mobile
-		,now_address
-		,post_code1
-		,residence_address
-		,post_code2
-		,family_main_asset
-		,main_asset_include
-		,main_income
-		,work_company_name
-		,work_company_address
-		,work_company_property
-		,work_belong_industry
-		,work_profession
-		,work_datetime
-		,self_company_area
-		,employee_quantity
-		,enterprise_month_output
-		,position
-		,post_title
-		,month_income
-		,mate_zfb_jour_datetime_start
-		,mate_zfb_jour_datetime_end
-		,mate_zfb_jour_income
-		,mate_zfb_jour_expend
-		,mate_zfb_jour_balance
-		,mate_zfb_jour_month_income
-		,mate_zfb_jour_month_expend
-		,mate_zfb_jour_pic
-		,mate_zfb_jour_remark
-		
-		,mate_wx_jour_datetime_start
-		,mate_wx_jour_datetime_end
-		,mate_wx_jour_income
-		,mate_wx_jour_expend
-		,mate_wx_jour_balance
-		,mate_wx_jour_month_income
-		,mate_wx_jour_month_expend
-		,mate_wx_jour_pic
-		,mate_wx_jour_remark
-		
-		,mate_jour_datetime_start
-		,mate_jour_datetime_end
-		,mate_jour_income
-		,mate_jour_expend
-		,mate_jour_balance
-		,mate_jour_month_income
-		,mate_jour_month_expend
-		,mate_jour_pic
-		,mate_jour_remark
-		,mate_asset_pdf
-		
-		,mate_name
-		,mate_mobile
-		,mate_id_no
-		
-		,mate_education
-		,mate_company_name
-		,mate_company_address
-		,mate_company_contact_no
-		,gua_name
-		
-		,gua_mobile
-		,gua_id_no
-		,gua_phone
-		,gua_company_name
-		,gua_company_address
-		,gua_house_asset_address
-		
-		,gua_zfb_jour_datetime_start
-		,gua_zfb_jour_datetime_end
-		,gua_zfb_jour_income
-		,gua_zfb_jour_expend
-		,gua_zfb_jour_balance
-		,gua_zfb_jour_month_income
-		,gua_zfb_jour_month_expend
-		,gua_zfb_jour_pic
-		,gua_zfb_jour_remark
-		
-		,gua_wx_jour_datetime_start
-		,gua_wx_jour_datetime_end
-		,gua_wx_jour_income
-		,gua_wx_jour_expend
-		,gua_wx_jour_balance
-		,gua_wx_jour_month_income
-		,gua_wx_jour_month_expend
-		,gua_wx_jour_pic
-		,gua_wx_jour_remark
-		
-		,gua_jour_datetime_start
-		,gua_jour_datetime_end
-		,gua_jour_income
-		,gua_jour_expend
-		,gua_jour_balance
-		,gua_jour_month_income
-		,gua_jour_month_expend
-		,gua_jour_pic
-		,gua_jour_remark
-		,gua_asset_pdf
-		
-		,emergency_name1
-		,emergency_relation1
-		,emergency_mobile1
-		,emergency_name2
-		
-		,emergency_relation2
-		,emergency_mobile2
-		
-		,zfb_jour_datetime_start
-		,zfb_jour_datetime_end
-		,zfb_jour_income
-		,zfb_jour_expend
-		,zfb_jour_balance
-		,zfb_jour_month_income
-		,zfb_jour_month_expend
-		,zfb_jour_pic
-		,zfb_jour_remark
-		
-		,wx_jour_datetime_start
-		,wx_jour_datetime_end
-		,wx_jour_income
-		,wx_jour_expend
-		,wx_jour_balance
-		,wx_jour_month_income
-		,wx_jour_month_expend
-		,wx_jour_pic
-		,wx_jour_remark
-		
-		,jour_datetime_start
-		,jour_datetime_end
-		,jour_income
-		,jour_expend
-		,jour_balance
-		,jour_month_income
-		,jour_month_expend
-		,jour_pic
-		,jour_remark
-		,asset_pdf
-		
-		,house_contract
-		,house_picture
+		,is_survey
+		,bank_rate
+		,company_loan_cs
 		,is_advance_fund
-		
-		,sale_user_id
-		,team_code
+		,global_rate
+		,fee
+		,car_dealer_subsidy
+		,bank_loan_cs
 		,company_code
+		,sale_user_id
+		
+		,apply_user_company
+		,apply_user_duty
+		,apply_user_ghr_relation
+		,marry_state
+		,other_income_note
+		
+		,is_house_property
+		,house_property
+		,is_house_contract
+		,house_contract
+		,house_invoice
+		,is_license
+		,license
+		,is_site_prove
+		,site_prove
+		,site_area
+		,car_type
+		,is_drice_license
+		,drice_license
+		,other_property_note
+		,apply_birth_address
+		,apply_now_address
+		,house_type
+		,gh_birth_address
+		,guarantor1_birth_address
+		,guarantor2_birth_address
+		,other_note
+		,oil_subsidy
+		,oil_subsidy_kil
+		,is_plat_insure
+		,gps_fee
+		,gps_deduct
+		,gps_fee_way
+		,ly_amount
+		,fx_amount
+		,other_fee
+		,fee_way
+		,marry_divorce
+		,apply_user_hkb
+		,bank_bill_pdf
+		,single_prove_pdf
+		,income_prove_pdf
+		,live_prove_pdf
+		,build_prove_pdf
+		,hkb_first_page
+		,hkb_main_page
+		,gh_hkb
+		,guarantor1_id_no
+		,guarantor1_hkb
+		,guarantor2_id_no
+		,guarantor2_hkb
+		,house_pic
+		,house_unit_pic
+		,house_door_pic
+		,house_room_pic
+		,house_customer_pic
+		,house_sale_customer_pic
+		,company_name_pic
+		,company_place_pic
+		,company_workshop_pic
+		,company_sale_customer_pic
+		,second_hgz
+		,second_odometer
+		,second_car_front_pic
+		,second_console_pic
+		,second_300_pdf
+		,second_qxb_pic
+		,second_car_in_pic
+		,second_number
+		,other_file_pdf
+		,other_apply_note
 		,apply_datetime
-		,back_advance_status
-		
-		,back_advance_amount
-		,back_advance_account
-		,back_advance_open_bank
-		,back_advance_subbranch
-		,back_advance_water_bill
-		
 		,cur_node_code
-		,cancel_node_code
-		,frozen_status
-		,remark
 		)
 		VALUES(
 		#{code}
-		,#{loanProductCode}
-		,#{loanProductName}
-		,#{loanBank}
-		,#{gpsFee}
-		,#{authFee}
-		,#{bankFee}
-		,#{companyFee}
-		,#{creditCode}
-		,#{bizType}
-		,#{loanPeriod}
-		,#{invoiceCompany}
-		,#{carBrand}
-		,#{carSeries}
-		,#{carModel}
-		,#{carPic}
-		,#{carHgzPic}
-		,#{carHgzNo}
-		,#{carFrameNo}
-		,#{carEngineNo}
+		,#{customerType}
+		,#{customerName}
+		,#{carDealerCode}
+		,#{loanBankCode}
+		,#{loanBankSubbranch}
 		,#{originalPrice}
+		,#{carModel}
+		,#{loanPeriods}
 		,#{invoicePrice}
-		,#{carColor}
-		,#{monthDeposit}
-		,#{firstAmount}
-		,#{firstRate}
+		,#{shopWay}
+		,#{rateType}
 		,#{loanAmount}
-		,#{settleAddress}
-		,#{applyUserName}
-		,#{gender}
-		,#{marryState}
-		,#{nation}
-		,#{education}
-		,#{idNo}
-		,#{familyNumber}
-		,#{mobile}
-		,#{nowAddress}
-		,#{postCode1}
-		,#{residenceAddress}
-		,#{postCode2}
-		,#{familyMainAsset}
-		,#{mainAssetInclude}
-		,#{mainIncome}
-		,#{workCompanyName}
-		,#{workCompanyAddress}
-		,#{workCompanyProperty}
-		,#{workBelongIndustry}
-		,#{workProfession}
-		,#{workDatetime}
-		,#{selfCompanyArea}
-		,#{employeeQuantity}
-		,#{enterpriseMonthOutput}
-		,#{position}
-		,#{postTitle}
-		,#{monthIncome}
-		,#{mateZfbJourDatetimeStart}
-		,#{mateZfbJourDatetimeEnd}
-		,#{mateZfbJourIncome}
-		,#{mateZfbJourExpend}
-		,#{mateZfbJourBalance}
-		,#{mateZfbJourMonthIncome}
-		,#{mateZfbJourMonthExpend}
-		,#{mateZfbJourPic}
-		,#{mateZfbJourRemark}
-		 
-		,#{mateWxJourDatetimeStart}
-		,#{mateWxJourDatetimeEnd}
-		,#{mateWxJourIncome}
-		,#{mateWxJourExpend}
-		,#{mateWxJourBalance}
-		,#{mateWxJourMonthIncome}
-		,#{mateWxJourMonthExpend}
-		,#{mateWxJourPic}
-		,#{mateWxJourRemark}
-		
-		,#{mateJourDatetimeStart}
-		,#{mateJourDatetimeEnd}
-		,#{mateJourIncome}
-		,#{mateJourExpend}
-		,#{mateJourBalance}
-		,#{mateJourMonthIncome}
-		,#{mateJourMonthExpend}
-		,#{mateJourPic}
-		,#{mateJourRemark}
-		,#{mateAssetPdf}
-		 
-		,#{mateName}
-		,#{mateMobile}
-		,#{mateIdNo}
-		 
-		,#{mateEducation}
-		,#{mateCompanyName}
-		,#{mateCompanyAddress}
-		,#{mateCompanyContactNo}
-		,#{guaName}
-		
-		,#{guaMobile}
-		,#{guaIdNo}
-		,#{guaPhone}
-		,#{guaCompanyName}
-		,#{guaCompanyAddress}
-		,#{guaHouseAssetAddress}
-		
-		,#{guaZfbJourDatetimeStart}
-		,#{guaZfbJourDatetimeEnd}
-		,#{guaZfbJourIncome}
-		,#{guaZfbJourExpend}
-		,#{guaZfbJourBalance}
-		,#{guaZfbJourMonthIncome}
-		,#{guaZfbJourMonthExpend}
-		,#{guaZfbJourPic}
-		,#{guaZfbJourRemark}
-		
-		,#{guaWxJourDatetimeStart}
-		,#{guaWxJourDatetimeEnd}
-		,#{guaWxJourIncome}
-		,#{guaWxJourExpend}
-		,#{guaWxJourBalance}
-		,#{guaWxJourMonthIncome}
-		,#{guaWxJourMonthExpend}
-		,#{guaWxJourPic}
-		,#{guaWxJourRemark}
-		
-		,#{guaJourDatetimeStart}
-		,#{guaJourDatetimeEnd}
-		,#{guaJourIncome}
-		,#{guaJourExpend}
-		,#{guaJourBalance}
-		,#{guaJourMonthIncome}
-		,#{guaJourMonthExpend}
-		,#{guaJourPic}
-		,#{guaJourRemark}
-		,#{guaAssetPdf}
-		
-		,#{emergencyName1}
-		,#{emergencyRelation1}
-		,#{emergencyMobile1}
-		,#{emergencyName2}
-		
-		,#{emergencyRelation2}
-		,#{emergencyMobile2}
-		
-		,#{zfbJourDatetimeStart}
-		,#{zfbJourDatetimeEnd}
-		,#{zfbJourIncome}
-		,#{zfbJourExpend}
-		,#{zfbJourBalance}
-		,#{zfbJourMonthIncome}
-		,#{zfbJourMonthExpend}
-		,#{zfbJourPic}
-		,#{zfbJourRemark}
-		
-		,#{wxJourDatetimeStart}
-		,#{wxJourDatetimeEnd}
-		,#{wxJourIncome}
-		,#{wxJourExpend}
-		,#{wxJourBalance}
-		,#{wxJourMonthIncome}
-		,#{wxJourMonthExpend}
-		,#{wxJourPic}
-		,#{wxJourRemark}
-		 
-		,#{jourDatetimeStart}
-		,#{jourDatetimeEnd}
-		,#{jourIncome}
-		,#{jourExpend}
-		,#{jourBalance}
-		,#{jourMonthIncome}
-		,#{jourMonthExpend}
-		,#{jourPic}
-		,#{jourRemark}
-		,#{assetPdf}
-		,#{houseContract}
-		,#{housePicture}
+		,#{isSurvey}
+		,#{bankRate}
+		,#{companyLoanCs}
 		,#{isAdvanceFund}
-		
-		,#{saleUserId}
-		,#{teamCode}
+		,#{globalRate}
+		,#{fee}
+		,#{carDealerSubsidy}
+		,#{bankLoanCs}
 		,#{companyCode}
+		,#{saleUserId}
+		
+		,#{applyUserCompany}
+		,#{applyUserDuty}
+		,#{applyUserGhrRelation}
+		,#{marryState}
+		,#{otherIncomeNote}
+		
+		,#{isHouseProperty}
+		,#{houseProperty}
+		,#{isHouseContract}
+		,#{houseContract}
+		,#{houseInvoice}
+		,#{isLicense}
+		,#{license}
+		,#{isSiteProve}
+		,#{siteProve}
+		,#{siteArea}
+		,#{carType}
+		,#{isDriceLicense}
+		,#{driceLicense}
+		,#{otherPropertyNote}
+		,#{applyBirthAddress}
+		,#{applyNowAddress}
+		,#{houseType}
+		,#{ghBirthAddress}
+		,#{guarantor1BirthAddress}
+		,#{guarantor2BirthAddress}
+		,#{otherNote}
+		,#{oilSubsidy}
+		,#{oilSubsidyKil}
+		,#{isPlatInsure}
+		,#{gpsFee}
+		,#{gpsDeduct}
+		,#{gpsFeeWay}
+		,#{lyAmount}
+		,#{fxAmount}
+		,#{otherFee}
+		,#{feeWay}
+		,#{marryDivorce}
+		,#{applyUserHkb}
+		,#{bankBillPdf}
+		,#{singleProvePdf}
+		,#{incomeProvePdf}
+		,#{liveProvePdf}
+		,#{buildProvePdf}
+		,#{hkbFirstPage}
+		,#{hkbMainPage}
+		,#{ghHkb}
+		,#{guarantor1IdNo}
+		,#{guarantor1Hkb}
+		,#{guarantor2IdNo}
+		,#{guarantor2Hkb}
+		,#{housePic}
+		,#{houseUnitPic}
+		,#{houseDoorPic}
+		,#{houseRoomPic}
+		,#{houseCustomerPic}
+		,#{houseSaleCustomerPic}
+		,#{companyNamePic}
+		,#{companyPlacePic}
+		,#{companyWorkshopPic}
+		,#{companySaleCustomerPic}
+		,#{secondHgz}
+		,#{secondOdometer}
+		,#{secondCarFrontPic}
+		,#{secondConsolePic}
+		,#{second300Pdf}
+		,#{secondQxbPic}
+		,#{secondCarInPic}
+		,#{secondNumber}
+		,#{otherFilePdf}
+		,#{otherApplyNote}
 		,#{applyDatetime}
-		,#{backAdvanceStatus}
-		,#{backAdvanceAmount}
-		,#{backAdvanceAccount}
-		,#{backAdvanceOpenBank}
-		,#{backAdvanceSubbranch}
-		,#{backAdvanceWaterBill}
 		,#{curNodeCode}
-		,#{cancelNodeCode}
-		,#{frozenStatus}
-		,#{remark}
 		)
 	</insert>
 
 	<update id="update_budgetOrder" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		loan_product_code = #{loanProductCode}
-		,loan_product_name = #{loanProductName}
-		,loan_bank = #{loanBank}
-		,gps_fee = #{gpsFee}
-		,auth_fee = #{authFee}
-		
-		,bank_fee = #{bankFee}
-		,company_fee = #{companyFee}
-		,credit_code = #{creditCode}
-		,biz_type = #{bizType}
-		,loan_period = #{loanPeriod}
-		
-		,invoice_company = #{invoiceCompany}
-		,car_brand = #{carBrand}
-		,car_series = #{carSeries}
-		,car_model = #{carModel}
-		,car_pic = #{carPic}
-		
-		,car_hgz_pic = #{carHgzPic}
-		,car_hgz_no = #{carHgzNo}
-		,car_frame_no = #{carFrameNo}
-		,car_engine_no = #{carEngineNo}
+		customer_type = #{customerType}
+		,customer_name = #{customerName}
+		,car_dealer_code = #{carDealerCode}
+		,loan_bank_code = #{loanBankCode}
 		,original_price = #{originalPrice}
-		
+		,car_model = #{carModel}
+		,loan_periods = #{loanPeriods}
 		,invoice_price = #{invoicePrice}
-		,car_color = #{carColor}
-		,month_deposit = #{monthDeposit}
-		,first_amount = #{firstAmount}
-		,first_rate = #{firstRate}
-		
+		,shop_way = #{shopWay}
+		,rate_type = #{rateType}
 		,loan_amount = #{loanAmount}
-		,settle_address = #{settleAddress}
-		,apply_user_name = #{applyUserName}
-		,gender = #{gender}
-		,marry_state = #{marryState}
-		
-		,nation = #{nation}
-		,education = #{education}
-		,family_number = #{familyNumber}
-		,now_address = #{nowAddress}
-		,post_code1 = #{postCode1}
-		
-		,residence_address = #{residenceAddress}
-		,post_code2 = #{postCode2}
-		,family_main_asset = #{familyMainAsset}
-		,main_asset_include = #{mainAssetInclude}
-		,main_income = #{mainIncome}
-		
-		,work_company_name = #{workCompanyName}
-		,work_company_address = #{workCompanyAddress}
-		,work_company_property = #{workCompanyProperty}
-		,work_belong_industry = #{workBelongIndustry}
-		,work_profession = #{workProfession}
-		
-		,work_datetime = #{workDatetime}
-		,self_company_area = #{selfCompanyArea}
-		,employee_quantity = #{employeeQuantity}
-		,enterprise_month_output = #{enterpriseMonthOutput}
-		,position = #{position}
-		
-		,post_title = #{postTitle}
-		,month_income = #{monthIncome}
-		,mate_name = #{mateName}
-		,mate_mobile = #{mateMobile}
-		,mate_id_no = #{mateIdNo}
-		
-		,mate_education = #{mateEducation}
-		,mate_company_name = #{mateCompanyName}
-		,mate_company_address = #{mateCompanyAddress}
-		,mate_company_contact_no = #{mateCompanyContactNo}
-		,mate_zfb_jour_datetime_start = #{mateZfbJourDatetimeStart}
-		
-		,mate_zfb_jour_datetime_end = #{mateZfbJourDatetimeEnd}
-		,mate_zfb_jour_income = #{mateZfbJourIncome}
-		,mate_zfb_jour_expend = #{mateZfbJourExpend}
-		,mate_zfb_jour_balance = #{mateZfbJourBalance}
-		,mate_zfb_jour_month_income = #{mateZfbJourMonthIncome}
-		
-		,mate_zfb_jour_month_expend = #{mateZfbJourMonthExpend}
-		,mate_zfb_jour_pic = #{mateZfbJourPic}
-		,mate_zfb_jour_remark = #{mateZfbJourRemark}
-		,mate_wx_jour_datetime_start = #{mateWxJourDatetimeStart}
-		,mate_wx_jour_datetime_end = #{mateWxJourDatetimeEnd}
-		
-		,mate_wx_jour_income = #{mateWxJourIncome}
-		,mate_wx_jour_expend = #{mateWxJourExpend}
-		,mate_wx_jour_balance = #{mateWxJourBalance}
-		,mate_wx_jour_month_income = #{mateWxJourMonthIncome}
-		,mate_wx_jour_month_expend = #{mateWxJourMonthExpend}
-		
-		,mate_wx_jour_pic = #{mateWxJourPic}
-		,mate_wx_jour_remark = #{mateWxJourRemark}
-		,mate_jour_datetime_start = #{mateJourDatetimeStart}
-		,mate_jour_datetime_end = #{mateJourDatetimeEnd}
-		,mate_jour_income = #{mateJourIncome}
-		
-		,mate_jour_expend = #{mateJourExpend}
-		,mate_jour_balance = #{mateJourBalance}
-		,mate_jour_month_income = #{mateJourMonthIncome}
-		,mate_jour_month_expend = #{mateJourMonthExpend}
-		,mate_jour_pic = #{mateJourPic}
-		
-		,mate_jour_remark = #{mateJourRemark}
-		,mate_asset_pdf = #{mateAssetPdf}
-		,gua_name = #{guaName}
-		,gua_mobile = #{guaMobile}
-		,gua_id_no = #{guaIdNo}
-		
-		,gua_phone = #{guaPhone}
-		,gua_company_name = #{guaCompanyName}
-		,gua_company_address = #{guaCompanyAddress}
-		,gua_house_asset_address = #{guaHouseAssetAddress}
-		,gua_zfb_jour_datetime_start = #{guaZfbJourDatetimeStart}
-		
-		,gua_zfb_jour_datetime_end = #{guaZfbJourDatetimeEnd}
-		,gua_zfb_jour_income = #{guaZfbJourIncome}
-		,gua_zfb_jour_expend = #{guaZfbJourExpend}
-		,gua_zfb_jour_balance = #{guaZfbJourBalance}
-		,gua_zfb_jour_month_income = #{guaZfbJourMonthIncome}
-		
-		,gua_zfb_jour_month_expend = #{guaZfbJourMonthExpend}
-		,gua_zfb_jour_pic = #{guaZfbJourPic}
-		,gua_zfb_jour_remark = #{guaZfbJourRemark}
-		,gua_wx_jour_datetime_start = #{guaWxJourDatetimeStart}
-		,gua_wx_jour_datetime_end = #{guaWxJourDatetimeEnd}
-		,gua_wx_jour_income = #{guaWxJourIncome}
-		
-		,gua_wx_jour_expend = #{guaWxJourExpend}
-		,gua_wx_jour_balance = #{guaWxJourBalance}
-		,gua_wx_jour_month_income = #{guaWxJourMonthIncome}
-		,gua_wx_jour_month_expend = #{guaWxJourMonthExpend}
-		,gua_wx_jour_pic = #{guaWxJourPic}
-		
-		,gua_wx_jour_remark = #{guaWxJourRemark}
-		,gua_jour_datetime_start = #{guaJourDatetimeStart}
-		,gua_jour_datetime_end = #{guaJourDatetimeEnd}
-		,gua_jour_income = #{guaJourIncome}
-		,gua_jour_expend = #{guaJourExpend}
-		
-		,gua_jour_balance = #{guaJourBalance}
-		,gua_jour_month_income = #{guaJourMonthIncome}
-		,gua_jour_month_expend = #{guaJourMonthExpend}
-		,gua_jour_pic = #{guaJourPic}
-		,gua_jour_remark = #{guaJourRemark}
-		,gua_asset_pdf = #{guaAssetPdf}
-		
-		,emergency_name1 = #{emergencyName1}
-		,emergency_relation1 = #{emergencyRelation1}
-		,emergency_mobile1 = #{emergencyMobile1}
-		,emergency_name2 = #{emergencyName2}
-		,emergency_relation2 = #{emergencyRelation2}
-		
-		,emergency_mobile2 = #{emergencyMobile2}
-		,zfb_jour_datetime_start = #{zfbJourDatetimeStart}
-		,zfb_jour_datetime_end = #{zfbJourDatetimeEnd}
-		,zfb_jour_income = #{zfbJourIncome}
-		,zfb_jour_expend = #{zfbJourExpend}
-		
-		,zfb_jour_balance = #{zfbJourBalance}
-		,zfb_jour_month_income = #{zfbJourMonthIncome}
-		,zfb_jour_month_expend = #{zfbJourMonthExpend}
-		,zfb_jour_pic = #{zfbJourPic}
-		,zfb_jour_remark = #{zfbJourRemark}
-		
-		,wx_jour_datetime_start = #{wxJourDatetimeStart}
-		,wx_jour_datetime_end = #{wxJourDatetimeEnd}
-		,wx_jour_income = #{wxJourIncome}
-		,wx_jour_expend = #{wxJourExpend}
-		,wx_jour_balance = #{wxJourBalance}
-		
-		,wx_jour_month_income = #{wxJourMonthIncome}
-		,wx_jour_month_expend = #{wxJourMonthExpend}
-		,wx_jour_pic = #{wxJourPic}
-		,wx_jour_remark = #{wxJourRemark}
-		,jour_datetime_start = #{jourDatetimeStart}
-		
-		,jour_datetime_end = #{jourDatetimeEnd}
-		,jour_income = #{jourIncome}
-		,jour_expend = #{jourExpend}
-		,jour_balance = #{jourBalance}
-		,jour_month_income = #{jourMonthIncome}
-		
-		,jour_month_expend = #{jourMonthExpend}
-		,jour_pic = #{jourPic}
-		,jour_remark = #{jourRemark}
-		,asset_pdf = #{assetPdf}
-		,house_contract = #{houseContract}
-		
-		,house_picture = #{housePicture}
+		,is_survey = #{isSurvey}
+		,bank_rate = #{bankRate}
+		,company_loan_cs = #{companyLoanCs}
 		,is_advance_fund = #{isAdvanceFund}
-		,cur_node_code = #{curNodeCode}
-		,remark = #{remark}
-		,team_code = #{teamCode}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="update_riskApprove" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		cur_node_code = #{curNodeCode}
-		,remark = #{remark}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="update_charge_riskApprove" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		cur_node_code = #{curNodeCode}
-		,remark = #{remark}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="update_interview" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		cur_node_code = #{curNodeCode}
-		,interview_video = #{interviewVideo}
-		,interview_contract = #{interviewContract}
-		,remark = #{remark}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="update_biz_charge_approve" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		cur_node_code = #{curNodeCode}
-		,remark = #{remark}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="update_gps_manager_approve" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		cur_node_code = #{curNodeCode}
-		,remark = #{remark}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="update_install_gps" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		cur_node_code = #{curNodeCode}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="update_advancefund" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		advance_fund_datetime = #{advanceFundDatetime}
-		,advance_fund_amount = #{advanceFundAmount}
-		,cur_node_code = #{curNodeCode}
-		,remark = #{remark}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="update_commit_bank" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		bank_commit_datetime = #{bankCommitDatetime}
-		,cur_node_code = #{curNodeCode}
-		,remark = #{remark}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="update_car_settle" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		car_settle_datetime = #{carSettleDatetime}
-		,car_invoice = #{carInvoice}
-		,car_hgz = #{carHgz}
-		,car_jqx = #{carJqx}
-		,car_syx = #{carSyx}
-		,car_regcerti = #{carRegcerti}
-		,car_pd = #{carPd}
-		,car_key = #{carKey}
-		,car_big_smj = #{carBigSmj}
-		,cur_node_code = #{curNodeCode}
-		,remark = #{remark}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="update_entry_fk" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		repay_bank_code = #{repayBankCode}
-		,repay_bank_name = #{repayBankName}
-		,repay_subbranch = #{repaySubbranch}
-		,repay_bankcard_number = #{repayBankcardNumber}
-		,repay_bill_date = #{repayBillDate}
-		,repay_bank_date = #{repayBankDate}
-		,repay_company_date = #{repayCompanyDate}
-		,repay_first_month_datetime = #{repayFirstMonthDatetime}
-		,repay_first_month_amount = #{repayFirstMonthAmount}
-		,repay_month_amount = #{repayMonthAmount}
+		,global_rate = #{globalRate}
+		,fee = #{fee}
+		,car_dealer_subsidy = #{carDealerSubsidy}
+		,bank_loan_cs = #{bankLoanCs}
+		,company_code = #{companyCode}
+		,sale_user_id = #{saleUserId}
+		,car_price = #{carPrice}
+		,bank_branch = #{bankBranch}
+		,is_house_property = #{isHouseProperty}
+		,house_property = #{houseProperty}
+		,is_house_contract = #{isHouseContract}
+		,house_contract = #{houseContract}
+		,house_invoice = #{houseInvoice}
+		,is_license = #{isLicense}
+		,license = #{license}
+		,is_site_prove = #{isSiteProve}
+		,site_prove = #{siteProve}
+		,site_area = #{siteArea}
+		,car_type = #{carType}
+		,is_drice_license = #{isDriceLicense}
+		,drice_license = #{driceLicense}
+		,other_property_note = #{otherPropertyNote}
+		,apply_birth_address = #{applyBirthAddress}
+		,apply_now_address = #{applyNowAddress}
+		,house_type = #{houseType}
+		,gh_birth_address = #{ghBirthAddress}
+		,guarantor1_birth_address = #{guarantor1BirthAddress}
+		,guarantor2_birth_address = #{guarantor2BirthAddress}
+		,other_note = #{otherNote}
+		,oil_subsidy = #{oilSubsidy}
+		,oil_subsidy_kil = #{oilSubsidyKil}
+		,is_plat_insure = #{isPlatInsure}
+		,gps_fee = #{gpsFee}
+		,gps_deduct = #{gpsDeduct}
+		,gps_fee_way = #{gpsFeeWay}
+		,ly_amount = #{lyAmount}
+		,fx_amount = #{fxAmount}
+		,other_fee = #{otherFee}
+		,fee_way = #{feeWay}
+		,marry_divorce = #{marryDivorce}
+		,apply_user_hkb = #{applyUserHkb}
+		,bank_bill_pdf = #{bankBillPdf}
+		,single_prove_pdf = #{singleProvePdf}
+		,income_prove_pdf = #{incomeProvePdf}
+		,live_prove_pdf = #{liveProvePdf}
+		,build_prove_pdf = #{buildProvePdf}
+		,hkb_first_page = #{hkbFirstPage}
+		,hkb_main_page = #{hkbMainPage}
+		,gh_hkb = #{ghHkb}
+		,guarantor1_id_no = #{guarantor1IdNo}
+		,guarantor1_hkb = #{guarantor1Hkb}
+		,guarantor2_id_no = #{guarantor2IdNo}
+		,guarantor2_hkb = #{guarantor2Hkb}
+		,house_pic = #{housePic}
+		,house_unit_pic = #{houseUnitPic}
+		,house_door_pic = #{houseDoorPic}
+		,house_room_pic = #{houseRoomPic}
+		,house_customer_pic = #{houseCustomerPic}
+		,house_sale_customer_pic = #{houseSaleCustomerPic}
+		,company_name_pic = #{companyNamePic}
+		,company_place_pic = #{companyPlacePic}
+		,company_workshop_pic = #{companyWorkshopPic}
+		,company_sale_customer_pic = #{companySaleCustomerPic}
+		,second_hgz = #{secondHgz}
+		,second_odometer = #{secondOdometer}
+		,second_car_front_pic = #{secondCarFrontPic}
+		,second_console_pic = #{secondConsolePic}
+		,second_300_pdf = #{second300Pdf}
+		,second_qxb_pic = #{secondQxbPic}
+		,second_car_in_pic = #{secondCarInPic}
+		,second_number = #{secondNumber}
+		,other_file_pdf = #{otherFilePdf}
+		,other_apply_note = #{otherApplyNote}
+		,apply_datetime = #{applyDatetime}
+		,cancel_reason = #{cancelReason}
+		,bank_commit_datetime = #{bankCommitDatetime}
+		,bank_commit_note = #{bankCommitNote}
+		,bank_fk_amount = #{bankFkAmount}
 		,bank_fk_datetime = #{bankFkDatetime}
+		,bank_receipt_code = #{bankReceiptCode}
+		,bank_receipt_number = #{bankReceiptNumber}
+		,bank_receipt_pdf = #{bankReceiptPdf}
+		,bank_receipt_note = #{bankReceiptNote}
+		,pledge_commit_datetime = #{pledgeCommitDatetime}
+		,pledge_commit_note = #{pledgeCommitNote}
+		,pledge_contract_code = #{pledgeContractCode}
+		,insurance_company_code = #{insuranceCompanyCode}
+		,car_color = #{carColor}
+		,car_brand = #{carBrand}
+		,frame_no = #{frameNo}
+		,engine_no = #{engineNo}
+		,commerce_insurance = #{commerceInsurance}
+		,insurance_effect_datetime = #{insuranceEffectDatetime}
+		,insurance_bank = #{insuranceBank}
+		,guarantee_contract_code = #{guaranteeContractCode}
+		,reg_certificate_code = #{regCertificateCode}
+		,other_contact = #{otherContact}
+		,contact_mobile = #{contactMobile}
+		,guarantor_name = #{guarantorName}
+		,guarantor_mobile = #{guarantorMobile}
+		,bank_card_number = #{bankCardNumber}
+		,bill_datetime = #{billDatetime}
+		,month_amount = #{monthAmount}
+		,id_no_pic = #{idNoPic}
+		,file_list = #{fileList}
+		,is_complete = #{isComplete}
+		,store_place = #{storePlace}
+		,file_remark = #{fileRemark}
+		,operator = #{operator}
+		,operate_datetime = #{operateDatetime}
+		,operate_department = #{operateDepartment}
+		,makecard_remark = #{makecardRemark}
+		,delivery_datetime = #{deliveryDatetime}
+		,is_right_invoice = #{isRightInvoice}
+		,current_invoice_price = #{currentInvoicePrice}
+		,invoice = #{invoice}
+		,certification = #{certification}
+		,force_insurance = #{forceInsurance}
+		,business_insurance = #{businessInsurance}
+		,motor_reg_certification = #{motorRegCertification}
+		,pd_pdf = #{pdPdf}
+		,fbh_remark = #{fbhRemark}
+		,fbh_warn_day = #{fbhWarnDay}
+		,status = #{status}
+		,should_back_amount = #{shouldBackAmount}
+		,pay_datetime = #{payDatetime}
+		,pay_bank = #{payBank}
+		,pay_account = #{payAccount}
+		,pay_pdf = #{payPdf}
+		,zf_apply_datetime = #{zfApplyDatetime}
+		,zf_reason = #{zfReason}
+		,zf_sk_amount = #{zfSkAmount}
+		,zf_sk_bank = #{zfSkBank}
+		,zf_sk_bankcard_number = #{zfSkBankcardNumber}
+		,zf_sk_receipt_datetime = #{zfSkReceiptDatetime}
+		,zf_finance_remark = #{zfFinanceRemark}
 		,cur_node_code = #{curNodeCode}
-		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_confirm_receipt" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		receipt_bank_code = #{receiptBankCode}
-		,receipt_bank_name = #{receiptBankName}
-		,receipt_bankcard_number = #{receiptBankcardNumber}
-		,receipt_pdf = #{receiptPdf}
-		,receipt_remark = #{receiptRemark}
-		,cur_node_code = #{curNodeCode}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="update_logic_node" parameterType="budgetOrder">
+	<update id="update_areaManagerApprove" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
-		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_entry_mortgage" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		pledge_datetime = #{pledgeDatetime}
-		,green_big_smj = #{greenBigSmj}
-		,cur_node_code = #{curNodeCode}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="update_mortgage_commit_bank" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		pledge_bank_commit_datetime = #{pledgeBankCommitDatetime}
-		,pledge_bank_commit_note = #{pledgeBankCommitNote}
-		,cur_node_code = #{curNodeCode}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="update_mortgage_finish" parameterType="budgetOrder">
+	<update id="update_branchCompanyApprove" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
-		,car_number = #{carNumber}
-		,car_regcerti = #{carRegcerti}
-		,car_pd = #{carPd}
-		,car_key = #{carKey}
-		,car_big_smj = #{carBigSmj}
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_archiveSuccess" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		enter_location = #{enterLocation}
-		,cur_node_code = #{curNodeCode}
-		,repay_biz_code = #{repayBizCode}
-		,apply_user_id = #{applyUserId}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="insert_back_advance_fund" parameterType="budgetOrder">
-		UPDATE tdq_budget_order
-		SET
-		back_advance_status = #{backAdvanceStatus}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="confirm_back_advance_fund">
-		UPDATE tdq_budget_order
-		SET
-		back_advance_amount = #{backAdvanceAmount}
-		,back_advance_account = #{backAdvanceAccount}
-		,back_advance_open_bank	 = #{backAdvanceOpenBank}
-		,back_advance_subbranch = #{backAdvanceSubbranch}
-		,back_advance_water_bill = #{backAdvanceWaterBill}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="apply_cancel">
-		UPDATE tdq_budget_order
-		SET
-		remark = #{remark}
-		,frozen_status = #{frozenStatus}
-		,cancel_node_code = #{cancelNodeCode}
-		,cur_node_code = #{curNodeCode}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="update_cancel_biz_audit" parameterType="budgetOrder">
+	<update id="update_globalCompanyApprove" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
-		,frozen_status = #{frozenStatus}
 		WHERE code = #{code}
 	</update>
-	<update id="update_cancel_finance_audit" parameterType="budgetOrder">
+	
+	<update id="update_cancelOrder" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
-		,frozen_status = #{frozenStatus}
+		,cancel_reason = #{cancelReason}
 		WHERE code = #{code}
 	</update>
+	
+	
+	<update id="update_bankLoanCommit" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,bank_commit_datetime = #{bankCommitDatetime}
+		,bank_commit_note = #{bankCommitNote}
+		,operator = #{operator}
+		,operate_datetime = #{operateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_bankLoanConfirm" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,bank_fk_amount = #{bankFkAmount}
+		,bank_fk_datetime = #{bankFkDatetime}
+		,bank_receipt_code = #{bankReceiptCode}
+		,bank_receipt_number = #{bankReceiptNumber}
+		,bank_receipt_pdf = #{bankReceiptPdf}
+		,bank_receipt_note = #{bankReceiptNote}
+		,operator = #{operator}
+		,operate_datetime = #{operateDatetime}
+		WHERE code = #{code}
+	</update>
+		
+	<update id="update_carPledgeCommit" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,pledge_commit_datetime = #{pledgeCommitDatetime}
+		,pledge_commit_note = #{pledgeCommitNote}
+		,operator = #{operator}
+		,operate_datetime = #{operateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_carPledgeConfirm" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,operator = #{operator}
+		,operate_datetime = #{operateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_carLoanArchive" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,insurance_company_code = #{insuranceCompanyCode}
+		,car_color = #{carColor}
+		,car_brand = #{carBrand}
+		,frame_no = #{frameNo}
+		,engine_no = #{engineNo}
+		
+		,force_insurance = #{forceInsurance}
+		,commerce_insurance = #{commerceInsurance}
+		,insurance_effect_datetime = #{insuranceEffectDatetime}
+		,insurance_bank = #{insuranceBank}
+		,sale_user_id = #{saleUserId}
+		
+		,guarantee_contract_code = #{guaranteeContractCode}
+		,reg_certificate_code = #{regCertificateCode}
+		,other_contact = #{otherContact}
+		,contact_mobile = #{contactMobile}
+		,guarantor_name = #{guarantorName}
+		
+		,guarantor_mobile = #{guarantorMobile}
+		,bank_card_number = #{bankCardNumber}
+		,bill_datetime = #{billDatetime}
+		,month_amount = #{monthAmount}
+		,id_no_pic = #{idNoPic}
+		
+		,file_list = #{fileList}
+		,is_complete = #{isComplete}
+		,month_amount = #{monthAmount}
+		,store_place = #{storePlace}
+		,file_remark = #{fileRemark}
+		
+		,operator = #{operator}
+		,operate_datetime = #{operateDatetime}
+		,operate_department = #{operateDepartment}
+		WHERE code = #{code}
+	</update>
+	
 </mapper>

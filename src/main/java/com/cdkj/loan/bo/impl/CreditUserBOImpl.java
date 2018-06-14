@@ -2,7 +2,6 @@ package com.cdkj.loan.bo.impl;
 
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,8 +23,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
-        implements ICreditUserBO {
+public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
+        ICreditUserBO {
 
     @Autowired
     private ICreditUserDAO creditUserDAO;
@@ -34,8 +33,8 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
     public void saveCreditUser(CreditUser creditUser) {
         String code = null;
         if (creditUser != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.CREDITUSER.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER
+                .getCode());
             creditUser.setCode(code);
             creditUserDAO.insert(creditUser);
         }
@@ -52,7 +51,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
             data = creditUserDAO.select(creditUser);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "征信人员不存在!");
+                    "征信人员编号不存在!");
             }
         }
         return data;
@@ -60,9 +59,11 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
 
     @Override
     public void refreshCreditUser(CreditUser creditUser) {
+
         if (StringUtils.isNotBlank(creditUser.getCode())) {
             creditUserDAO.updateCreditUser(creditUser);
         }
+
     }
 
     @Override
@@ -74,31 +75,24 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
     }
 
     @Override
+    public void refreshCreditUserIncome(CreditUser creditUser) {
+        creditUserDAO.updateCreditUserIncome(creditUser);
+    }
+
+    @Override
     public List<CreditUser> queryCreditUserList(CreditUser condition) {
 
         return creditUserDAO.selectList(condition);
     }
 
     @Override
-    public List<CreditUser> queryCreditUserList(String creditCode) {
-        CreditUser condition = new CreditUser();
-        condition.setCreditCode(creditCode);
-        return creditUserDAO.selectList(condition);
-    }
-
-    @Override
     public CreditUser getCreditUserByCreditCode(String creditCode,
             ELoanRole creditUserRelation) {
-        CreditUser creditUser = null;
         CreditUser condition = new CreditUser();
         condition.setCreditCode(creditCode);
         condition.setRelation(creditUserRelation.getCode());
 
-        List<CreditUser> list = creditUserDAO.selectList(condition);
-        if (CollectionUtils.isNotEmpty(list)) {
-            creditUser = list.get(0);
-        }
-        return creditUser;
+        return creditUserDAO.select(condition);
     }
 
 }
