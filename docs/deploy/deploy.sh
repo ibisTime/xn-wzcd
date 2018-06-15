@@ -1,8 +1,8 @@
 
 #!/usr/bin/expect
 
-set tomcat_path "/mnt/www/htwt/tomcat_xn_htwt"
-set war_name "xn-htwt"
+set tomcat_path "/mnt/www/wzcd/tomcat_xn_htwt"
+set war_name "xn-wzcd"
 #set host_ip "47.96.161.183"
 #set host_pwd "cdkjqwertyQ01"
 

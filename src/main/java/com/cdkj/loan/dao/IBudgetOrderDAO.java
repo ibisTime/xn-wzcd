@@ -1,5 +1,7 @@
 package com.cdkj.loan.dao;
 
+import java.util.List;
+
 import com.cdkj.loan.dao.base.IBaseDAO;
 import com.cdkj.loan.domain.BudgetOrder;
 
@@ -29,4 +31,15 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     // 车贷入档补录
     public void updateCarLoanArchive(BudgetOrder data);
+
+    // 收件审核通过，改变预算单状态
+    void updaterLogicNode(BudgetOrder budgetOrder);
+
+    // 改变节点
+    void updateCurNodeCode(BudgetOrder budgetOrder);
+
+    long selectTotalCountByRoleCode(BudgetOrder condition);
+
+    List<BudgetOrder> selectBudgetOrderByRoleCodeList(BudgetOrder condition,
+            int start, int pageSize);
 }

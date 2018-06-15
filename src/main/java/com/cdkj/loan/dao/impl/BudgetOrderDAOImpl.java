@@ -96,4 +96,27 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
         super.update(NAMESPACE.concat("update_carLoanArchive"), data);
     }
 
+    @Override
+    public void updaterLogicNode(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_logicNode"), data);
+    }
+
+    @Override
+    public void updateCurNodeCode(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_curNodeCode"), data);
+    }
+
+    @Override
+    public long selectTotalCountByRoleCode(BudgetOrder condition) {
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_budgetOrder_count_byRoleCode"), condition);
+    }
+
+    @Override
+    public List<BudgetOrder> selectBudgetOrderByRoleCodeList(
+            BudgetOrder condition, int start, int pageSize) {
+        return super.selectList(NAMESPACE.concat("select_budgetOrder_roleCode"),
+            start, pageSize, condition, BudgetOrder.class);
+    }
+
 }

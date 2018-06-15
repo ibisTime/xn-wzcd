@@ -5,6 +5,12 @@ import java.util.List;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
+/**
+ * 修改征信
+ * @author: jiafr 
+ * @since: 2018年6月14日 下午8:47:26 
+ * @history:
+ */
 public class XN632112Req {
 
     @NotBlank

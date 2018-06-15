@@ -165,7 +165,7 @@ public class BudgetOrder extends ABaseDO {
     private Long oilSubsidy;
 
     // 油补公里数
-    private String oilSubsidyKil;
+    private double oilSubsidyKil;
 
     // 是否我司续保
     private String isPlatInsure;
@@ -174,7 +174,7 @@ public class BudgetOrder extends ABaseDO {
     private Long gpsFee;
 
     // GPS提成
-    private String gpsDeduct;
+    private Long gpsDeduct;
 
     // GPS收费方式
     private String gpsFeeWay;
@@ -411,13 +411,13 @@ public class BudgetOrder extends ABaseDO {
     private String makecardRemark;
 
     // 提车日期
-    private String deliveryDatetime;
+    private Date deliveryDatetime;
 
     // 发票是否正确
     private String isRightInvoice;
 
     // 现发票价
-    private String currentInvoicePrice;
+    private Long currentInvoicePrice;
 
     // 发票
     private String invoice;
@@ -426,10 +426,10 @@ public class BudgetOrder extends ABaseDO {
     private String certification;
 
     // 交强险
-    private String forceInsurance;
+    private Long forceInsurance;
 
     // 商业险
-    private String businessInsurance;
+    private Long businessInsurance;
 
     // 机动车登记证书
     private String motorRegCertification;
@@ -441,46 +441,61 @@ public class BudgetOrder extends ABaseDO {
     private String fbhRemark;
 
     // 发保合预警天数
-    private String fbhWarnDay;
+    private Integer fbhWarnDay;
 
-    // 状态
-    private String status;
+    // 发保合状态（已录入/待录入）
+    private String fbhstatus;
 
     // 应退按揭款
     private String shouldBackAmount;
 
-    // 付款时间
-    private Date payDatetime;
+    // 退按揭款状态(0无需退款1银行已放款待财务退款2财务已退垫资款)
+    private String shouldBackStatus;
 
-    // 付款银行
-    private String payBank;
+    // 退按揭款付款时间
+    private Date shouldBackDatetime;
 
-    // 付款账号
-    private String payAccount;
+    // 退按揭款付款账号
+    private String shouldBackBankcardCode;
 
-    // 付款凭证
-    private String payPdf;
+    // 退按揭款付款凭证
+    private String shouldBackBillPdf;
 
     // 作废申请日期
-    private String zfApplyDatetime;
+    private Date zfApplyDatetime;
 
     // 作废作废原因
     private String zfReason;
 
     // 作废收款金额
-    private String zfSkAmount;
+    private Long zfSkAmount;
 
-    // 作废收款银行
-    private String zfSkBank;
-
-    // 作废收款账号
-    private String zfSkBankcardNumber;
+    // 作废收款账号编号
+    private String zfSkBankcardCode;
 
     // 作废收款时间
     private Date zfSkReceiptDatetime;
 
     // 作废财务备注
     private String zfFinanceRemark;
+
+    // 制卡状态
+    private String makeCardStatus;
+
+    // 制卡更新人
+    private String makeCardOperator;
+
+    // 制卡备注
+    private String makeCardRemark;
+
+    // 冻结状态(0冻结 1正常)
+    private String frozenStatus;
+
+    // 客户申请作废时的节点编号
+    private String cancelNodeCode;
+
+    // 是否提交作废申请
+    private String isSubmitCancel;
 
     // 节点编号
     private String curNodeCode;
@@ -490,9 +505,11 @@ public class BudgetOrder extends ABaseDO {
 
     /*-------辅助字段-------*/
 
-    private String applyDatetimeStart;// 申请时间起始
+    private String roleCode;// 角色编号
 
-    private String applyDatetimeEnd;// 申请时间结束
+    private Date applyDatetimeStart;// 申请时间起始
+
+    private Date applyDatetimeEnd;// 申请时间结束
 
     private List<String> fileListArray;
 
@@ -509,6 +526,14 @@ public class BudgetOrder extends ABaseDO {
     private String operatorName;// 经办人
 
     private String saleUserName;// 业务员
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
 
     public String getRepayBizCode() {
         return repayBizCode;
@@ -532,6 +557,86 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCarDealerName(String carDealerName) {
         this.carDealerName = carDealerName;
+    }
+
+    public String getMakeCardStatus() {
+        return makeCardStatus;
+    }
+
+    public void setMakeCardStatus(String makeCardStatus) {
+        this.makeCardStatus = makeCardStatus;
+    }
+
+    public String getMakeCardOperator() {
+        return makeCardOperator;
+    }
+
+    public void setMakeCardOperator(String makeCardOperator) {
+        this.makeCardOperator = makeCardOperator;
+    }
+
+    public String getMakeCardRemark() {
+        return makeCardRemark;
+    }
+
+    public void setMakeCardRemark(String makeCardRemark) {
+        this.makeCardRemark = makeCardRemark;
+    }
+
+    public String getFrozenStatus() {
+        return frozenStatus;
+    }
+
+    public void setFrozenStatus(String frozenStatus) {
+        this.frozenStatus = frozenStatus;
+    }
+
+    public String getCancelNodeCode() {
+        return cancelNodeCode;
+    }
+
+    public void setCancelNodeCode(String cancelNodeCode) {
+        this.cancelNodeCode = cancelNodeCode;
+    }
+
+    public String getIsSubmitCancel() {
+        return isSubmitCancel;
+    }
+
+    public void setIsSubmitCancel(String isSubmitCancel) {
+        this.isSubmitCancel = isSubmitCancel;
+    }
+
+    public String getShouldBackStatus() {
+        return shouldBackStatus;
+    }
+
+    public Date getShouldBackDatetime() {
+        return shouldBackDatetime;
+    }
+
+    public void setShouldBackDatetime(Date shouldBackDatetime) {
+        this.shouldBackDatetime = shouldBackDatetime;
+    }
+
+    public void setShouldBackStatus(String shouldBackStatus) {
+        this.shouldBackStatus = shouldBackStatus;
+    }
+
+    public String getShouldBackBankcardCode() {
+        return shouldBackBankcardCode;
+    }
+
+    public void setShouldBackBankcardCode(String shouldBackBankcardCode) {
+        this.shouldBackBankcardCode = shouldBackBankcardCode;
+    }
+
+    public String getShouldBackBillPdf() {
+        return shouldBackBillPdf;
+    }
+
+    public void setShouldBackBillPdf(String shouldBackBillPdf) {
+        this.shouldBackBillPdf = shouldBackBillPdf;
     }
 
     public String getInsuranceCompanyName() {
@@ -982,14 +1087,6 @@ public class BudgetOrder extends ABaseDO {
         this.oilSubsidy = oilSubsidy;
     }
 
-    public String getOilSubsidyKil() {
-        return oilSubsidyKil;
-    }
-
-    public void setOilSubsidyKil(String oilSubsidyKil) {
-        this.oilSubsidyKil = oilSubsidyKil;
-    }
-
     public String getIsPlatInsure() {
         return isPlatInsure;
     }
@@ -1004,14 +1101,6 @@ public class BudgetOrder extends ABaseDO {
 
     public void setGpsFee(Long gpsFee) {
         this.gpsFee = gpsFee;
-    }
-
-    public String getGpsDeduct() {
-        return gpsDeduct;
-    }
-
-    public void setGpsDeduct(String gpsDeduct) {
-        this.gpsDeduct = gpsDeduct;
     }
 
     public String getGpsFeeWay() {
@@ -1638,14 +1727,6 @@ public class BudgetOrder extends ABaseDO {
         this.makecardRemark = makecardRemark;
     }
 
-    public String getDeliveryDatetime() {
-        return deliveryDatetime;
-    }
-
-    public void setDeliveryDatetime(String deliveryDatetime) {
-        this.deliveryDatetime = deliveryDatetime;
-    }
-
     public String getIsRightInvoice() {
         return isRightInvoice;
     }
@@ -1654,11 +1735,35 @@ public class BudgetOrder extends ABaseDO {
         this.isRightInvoice = isRightInvoice;
     }
 
-    public String getCurrentInvoicePrice() {
+    public double getOilSubsidyKil() {
+        return oilSubsidyKil;
+    }
+
+    public void setOilSubsidyKil(double oilSubsidyKil) {
+        this.oilSubsidyKil = oilSubsidyKil;
+    }
+
+    public Long getGpsDeduct() {
+        return gpsDeduct;
+    }
+
+    public void setGpsDeduct(Long gpsDeduct) {
+        this.gpsDeduct = gpsDeduct;
+    }
+
+    public Date getDeliveryDatetime() {
+        return deliveryDatetime;
+    }
+
+    public void setDeliveryDatetime(Date deliveryDatetime) {
+        this.deliveryDatetime = deliveryDatetime;
+    }
+
+    public Long getCurrentInvoicePrice() {
         return currentInvoicePrice;
     }
 
-    public void setCurrentInvoicePrice(String currentInvoicePrice) {
+    public void setCurrentInvoicePrice(Long currentInvoicePrice) {
         this.currentInvoicePrice = currentInvoicePrice;
     }
 
@@ -1678,19 +1783,19 @@ public class BudgetOrder extends ABaseDO {
         this.certification = certification;
     }
 
-    public String getForceInsurance() {
+    public Long getForceInsurance() {
         return forceInsurance;
     }
 
-    public void setForceInsurance(String forceInsurance) {
+    public void setForceInsurance(Long forceInsurance) {
         this.forceInsurance = forceInsurance;
     }
 
-    public String getBusinessInsurance() {
+    public Long getBusinessInsurance() {
         return businessInsurance;
     }
 
-    public void setBusinessInsurance(String businessInsurance) {
+    public void setBusinessInsurance(Long businessInsurance) {
         this.businessInsurance = businessInsurance;
     }
 
@@ -1718,20 +1823,12 @@ public class BudgetOrder extends ABaseDO {
         this.fbhRemark = fbhRemark;
     }
 
-    public String getFbhWarnDay() {
+    public Integer getFbhWarnDay() {
         return fbhWarnDay;
     }
 
-    public void setFbhWarnDay(String fbhWarnDay) {
+    public void setFbhWarnDay(Integer fbhWarnDay) {
         this.fbhWarnDay = fbhWarnDay;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getShouldBackAmount() {
@@ -1742,43 +1839,19 @@ public class BudgetOrder extends ABaseDO {
         this.shouldBackAmount = shouldBackAmount;
     }
 
-    public Date getPayDatetime() {
-        return payDatetime;
+    public String getFbhstatus() {
+        return fbhstatus;
     }
 
-    public void setPayDatetime(Date payDatetime) {
-        this.payDatetime = payDatetime;
+    public void setFbhstatus(String fbhstatus) {
+        this.fbhstatus = fbhstatus;
     }
 
-    public String getPayBank() {
-        return payBank;
-    }
-
-    public void setPayBank(String payBank) {
-        this.payBank = payBank;
-    }
-
-    public String getPayAccount() {
-        return payAccount;
-    }
-
-    public void setPayAccount(String payAccount) {
-        this.payAccount = payAccount;
-    }
-
-    public String getPayPdf() {
-        return payPdf;
-    }
-
-    public void setPayPdf(String payPdf) {
-        this.payPdf = payPdf;
-    }
-
-    public String getZfApplyDatetime() {
+    public Date getZfApplyDatetime() {
         return zfApplyDatetime;
     }
 
-    public void setZfApplyDatetime(String zfApplyDatetime) {
+    public void setZfApplyDatetime(Date zfApplyDatetime) {
         this.zfApplyDatetime = zfApplyDatetime;
     }
 
@@ -1790,28 +1863,20 @@ public class BudgetOrder extends ABaseDO {
         this.zfReason = zfReason;
     }
 
-    public String getZfSkAmount() {
+    public Long getZfSkAmount() {
         return zfSkAmount;
     }
 
-    public void setZfSkAmount(String zfSkAmount) {
+    public void setZfSkAmount(Long zfSkAmount) {
         this.zfSkAmount = zfSkAmount;
     }
 
-    public String getZfSkBank() {
-        return zfSkBank;
+    public String getZfSkBankcardCode() {
+        return zfSkBankcardCode;
     }
 
-    public void setZfSkBank(String zfSkBank) {
-        this.zfSkBank = zfSkBank;
-    }
-
-    public String getZfSkBankcardNumber() {
-        return zfSkBankcardNumber;
-    }
-
-    public void setZfSkBankcardNumber(String zfSkBankcardNumber) {
-        this.zfSkBankcardNumber = zfSkBankcardNumber;
+    public void setZfSkBankcardCode(String zfSkBankcardCode) {
+        this.zfSkBankcardCode = zfSkBankcardCode;
     }
 
     public Date getZfSkReceiptDatetime() {
@@ -1838,19 +1903,19 @@ public class BudgetOrder extends ABaseDO {
         this.curNodeCode = curNodeCode;
     }
 
-    public String getApplyDatetimeStart() {
+    public Date getApplyDatetimeStart() {
         return applyDatetimeStart;
     }
 
-    public void setApplyDatetimeStart(String applyDatetimeStart) {
+    public void setApplyDatetimeStart(Date applyDatetimeStart) {
         this.applyDatetimeStart = applyDatetimeStart;
     }
 
-    public String getApplyDatetimeEnd() {
+    public Date getApplyDatetimeEnd() {
         return applyDatetimeEnd;
     }
 
-    public void setApplyDatetimeEnd(String applyDatetimeEnd) {
+    public void setApplyDatetimeEnd(Date applyDatetimeEnd) {
         this.applyDatetimeEnd = applyDatetimeEnd;
     }
 

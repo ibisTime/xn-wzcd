@@ -77,6 +77,7 @@
 		<typeAlias alias="bankRate" type="com.cdkj.loan.domain.BankRate" />
 		<typeAlias alias="bankSubbranch" type="com.cdkj.loan.domain.BankSubbranch" />
 		<typeAlias alias="loanProduct" type="com.cdkj.loan.domain.LoanProduct" />
+		<typeAlias alias="loanCs" type="com.cdkj.loan.domain.LoanCs" />
 		
 		<!-- 经销商信息 -->
 		<typeAlias alias="carDealer" type="com.cdkj.loan.domain.CarDealer" />
@@ -96,6 +97,7 @@
 		
 		<!-- 贷后 -->
 		<typeAlias alias="overdueMenu" type="com.cdkj.loan.domain.OverdueMenu" />
+		<typeAlias alias="replaceRepayApply" type="com.cdkj.loan.domain.ReplaceRepayApply" />
 		
 		<!-- 行政人事 -->
 		<typeAlias alias="gpsApply" type="com.cdkj.loan.domain.GpsApply" />

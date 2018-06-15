@@ -6,13 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.cdkj.loan.ao.IUserAO;
-import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ILogisticsBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ILogisticsDAO;
 import com.cdkj.loan.domain.Logistics;
+import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.exception.BizException;
@@ -25,28 +26,26 @@ import com.cdkj.loan.exception.BizException;
  */
 
 @Component
-public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
-        ILogisticsBO {
+public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
+        implements ILogisticsBO {
     @Autowired
     private ILogisticsDAO logisticsDAO;
 
     @Autowired
-    private IBudgetOrderBO budgetOrderBO;
-
-    @Autowired
-    private IUserAO userAO;
+    private ISYSUserBO sysUserBO;
 
     @Override
     public String saveLogistics(String type, String bizCode, String userId,
             String fromNodeCode, String toNodeCode, String refFileList) {
-        String code = OrderNoGenerater.generate(EGeneratePrefix.LOGISTICS
-            .getCode());
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.LOGISTICS.getCode());
         Logistics data = new Logistics();
         data.setCode(code);
         data.setType(type);
         data.setBizCode(bizCode);
         data.setUserId(userId);
-
+        SYSUser user = sysUserBO.getUser(userId);
+        data.setLogisticsCompany(user.getCompanyCode());
         data.setFromNodeCode(fromNodeCode);
         data.setToNodeCode(toNodeCode);
         data.setRefFileList(refFileList);
@@ -63,12 +62,13 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
     @Override
     public void receiveLogistics(String code, String remark) {
         if (null == code) {
-            throw new BizException("xn0000", "请填写编号");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写编号");
         }
 
-        if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(
-            getLogistics(code).getStatus())) {
-            throw new BizException("xn0000", "资料不是待收件状态。");
+        if (!ELogisticsStatus.TO_RECEIVE.getCode()
+            .equals(getLogistics(code).getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "资料不是待收件状态。");
         }
 
         Logistics condition = new Logistics();
@@ -82,20 +82,21 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
     @Override
     public void sendAgainLogistics(String code, String remark) {
         if (null == code) {
-            throw new BizException("xn0000", "请填写编号");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写编号");
         }
 
         Logistics data = new Logistics();
         data.setCode(code);
         data.setRemark(remark);
         data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
+        data.setReceiptDatetime(new Date());
         logisticsDAO.updateLogisticsReceive(data);
     }
 
     @Override
     public Logistics getLogistics(String code) {
         if (null == code) {
-            throw new BizException("xn0000", "请填写编号");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写编号");
         }
 
         Logistics data = new Logistics();
