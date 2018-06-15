@@ -46,4 +46,6 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     List<BudgetOrder> selectBudgetOrderByRoleCodeList(BudgetOrder condition,
             int start, int pageSize);
 
+    // 制卡录入
+    void refreshCardMaking(BudgetOrder condition);
 }

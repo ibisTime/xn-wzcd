@@ -42,7 +42,10 @@ public class XN632062Req {
     private String agreement;// 协议
 
     @NotBlank
-    private String agreementValidDate;// 合作协议有效期
+    private String agreementValidDateStart;// 合作协议有效期起
+
+    @NotBlank
+    private String agreementValidDateEnd;// 合作协议有效期止
 
     @NotBlank
     private String agreementStatus;// 协议状态
@@ -171,12 +174,20 @@ public class XN632062Req {
         this.agreement = agreement;
     }
 
-    public String getAgreementValidDate() {
-        return agreementValidDate;
+    public String getAgreementValidDateStart() {
+        return agreementValidDateStart;
     }
 
-    public void setAgreementValidDate(String agreementValidDate) {
-        this.agreementValidDate = agreementValidDate;
+    public void setAgreementValidDateStart(String agreementValidDateStart) {
+        this.agreementValidDateStart = agreementValidDateStart;
+    }
+
+    public String getAgreementValidDateEnd() {
+        return agreementValidDateEnd;
+    }
+
+    public void setAgreementValidDateEnd(String agreementValidDateEnd) {
+        this.agreementValidDateEnd = agreementValidDateEnd;
     }
 
     public String getAgreementStatus() {

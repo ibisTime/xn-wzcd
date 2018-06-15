@@ -13,8 +13,8 @@
 		<result column="contact_phone" property="contactPhone" />
 		<result column="main_brand" property="mainBrand" />
 		<result column="parent_group" property="parentGroup" />
-		<result column="agreement" property="agreement" />
-		<result column="agreement_valid_date" property="agreementValidDate" />
+		<result column="agreement_valid_date_start" property="agreementValidDateStart" />
+		<result column="agreement_valid_date_end" property="agreementValidDateEnd" />
 		<result column="agreement_status" property="agreementStatus" />
 		<result column="agreement_pic" property="agreementPic" />
 		<result column="settle_way" property="settleWay" />
@@ -52,8 +52,8 @@
 		,t.contact_phone
 		,t.main_brand
 		,t.parent_group
-		,t.agreement
-		,t.agreement_valid_date
+		,t.agreement_valid_date_start
+		,t.agreement_valid_date_end
 		,t.agreement_status
 		,t.agreement_pic
 		,t.settle_way
@@ -92,7 +92,8 @@
 		,main_brand
 		,parent_group
 		,agreement
-		,agreement_valid_date
+		,agreement_valid_date_start
+		,agreement_valid_date_end
 		,agreement_status
 		,agreement_pic
 		,settle_way
@@ -114,7 +115,8 @@
 		,#{mainBrand}
 		,#{parentGroup}
 		,#{agreement}
-		,#{agreementValidDate}
+		,#{agreementValidDateStart}
+		,#{agreementValidDateEnd}
 		,#{agreementStatus}
 		,#{agreementPic}
 		,#{settleWay}
@@ -139,7 +141,8 @@
 		,main_brand = #{mainBrand}
 		,parent_group = #{parentGroup}
 		,agreement = #{agreement}
-		,agreement_valid_date = #{agreementValidDate}
+		,agreement_valid_date_start = #{agreementValidDateStart}
+		,agreement_valid_date_end = #{agreementValidDateEnd}
 		,agreement_status = #{agreementStatus}
 		,agreement_pic = #{agreementPic}
 		,settle_way = #{settleWay}

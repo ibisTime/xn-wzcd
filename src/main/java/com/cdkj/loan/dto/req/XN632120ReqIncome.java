@@ -8,9 +8,6 @@ package com.cdkj.loan.dto.req;
  */
 public class XN632120ReqIncome {
 
-    // 编号
-    private String code;
-
     // 月收入
     private String monthIncome;
 
@@ -25,14 +22,6 @@ public class XN632120ReqIncome {
 
     // 是否打件
     private String isPrint;
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public String getMonthIncome() {
         return monthIncome;

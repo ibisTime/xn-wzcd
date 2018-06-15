@@ -29,7 +29,6 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
         data.setCompanyCode(req.getCompanyCode());
         data.setRealName(req.getRealName());
         data.setBankCode(req.getBankCode());
-        data.setBankName(req.getBankName());
         data.setSubbranch(req.getSubbranch());
         data.setBankcardNumber(req.getBankcardNumber());
         data.setRemark(req.getRemark());
@@ -44,7 +43,6 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
         data.setCompanyCode(req.getCompanyCode());
         data.setRealName(req.getRealName());
         data.setBankCode(req.getBankCode());
-        data.setBankName(req.getBankName());
         data.setSubbranch(req.getSubbranch());
         data.setBankcardNumber(req.getBankcardNumber());
         data.setRemark(req.getRemark());

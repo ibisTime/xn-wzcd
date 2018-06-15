@@ -32,14 +32,12 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.CarDealer;
-import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.InsuranceCompany;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632120Req;
-import com.cdkj.loan.dto.req.XN632120ReqIncome;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632200Req;
@@ -131,6 +129,40 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .getCarDealerSubsidy()));
 
         data.setBankLoanCs((double) (loanAmount + fee) / invoicePrice);// 银行贷款成数
+        data.setApplyUserMonthIncome(StringValidater.toLong(req
+            .getApplyUserMonthIncome()));
+        data.setApplyUserSettleInterest(StringValidater.toLong(req
+            .getApplyUserSettleInterest()));
+        data.setApplyUserBalance(StringValidater.toLong(req
+            .getApplyUserBalance()));
+        data.setApplyUserJourShowIncome(req.getApplyUserJourShowIncome());
+
+        data.setApplyUserIsPrint(req.getApplyUserIsPrint());
+        data.setGhMonthIncome(StringValidater.toLong(req.getGhMonthIncome()));
+        data.setGhSettleInterest(StringValidater.toLong(req
+            .getGhSettleInterest()));
+        data.setGhBalance(StringValidater.toLong(req.getGhBalance()));
+        data.setGhJourShowIncome(req.getGhJourShowIncome());
+
+        data.setGhIsPrint(req.getGhIsPrint());
+        data.setGuarantor1MonthIncome(StringValidater.toLong(req
+            .getGuarantor1MonthIncome()));
+        data.setGuarantor1SettleInterest(StringValidater.toLong(req
+            .getGuarantor1SettleInterest()));
+        data.setGuarantor1Balance(StringValidater.toLong(req
+            .getGuarantor1Balance()));
+        data.setGuarantor1JourShowIncome(req.getGuarantor1JourShowIncome());
+
+        data.setGuarantor1IsPrint(req.getGuarantor1IsPrint());
+        data.setGuarantor2MonthIncome(StringValidater.toLong(req
+            .getGuarantor2MonthIncome()));
+        data.setGuarantor2SettleInterest(StringValidater.toLong(req
+            .getGuarantor2SettleInterest()));
+        data.setGuarantor2Balance(StringValidater.toLong(req
+            .getGuarantor2Balance()));
+        data.setGuarantor2JourShowIncome(req.getGuarantor2JourShowIncome());
+
+        data.setGuarantor2IsPrint(req.getGuarantor2IsPrint());
         data.setIsHouseProperty(req.getIsHouseProperty());
         data.setHouseProperty(req.getHouseProperty());
         data.setIsHouseContract(req.getIsHouseContract());
@@ -228,22 +260,24 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             // gpsBO.refreshUseGps(dataGps);
         }
 
-        // 更新征信人员信息
-        for (XN632120ReqIncome reqIncome : req.getCreditUserIncomeList()) {
-            CreditUser creditUser = new CreditUser();
-            creditUser.setCode(reqIncome.getCode());
-            creditUser.setMonthIncome(StringValidater.toLong(reqIncome
-                .getMonthIncome()));
-            creditUser.setSettleInterest(StringValidater.toDouble(reqIncome
-                .getSettleInterest()));
-            creditUser
-                .setBalance(StringValidater.toLong(reqIncome.getBalance()));
-
-            creditUser.setJourShowIncome(reqIncome.getJourShowIncome());
-            creditUser.setJourShowIncome(reqIncome.getJourShowIncome());
-            creditUser.setIsPrint(reqIncome.getIsPrint());
-            creditUserBO.refreshCreditUserIncome(creditUser);
-        }
+        // // 更新征信人员信息
+        // for (XN632120ReqIncome reqIncome : req.getCreditUserIncomeList()) {
+        // CreditUser creditUser = new CreditUser();
+        // String code = OrderNoGenerater
+        // .generate(EGeneratePrefix.CREDITUSER.getCode());
+        // creditUser.setCode(code);
+        // creditUser.setMonthIncome(
+        // StringValidater.toLong(reqIncome.getMonthIncome()));
+        // creditUser.setSettleInterest(
+        // StringValidater.toDouble(reqIncome.getSettleInterest()));
+        // creditUser
+        // .setBalance(StringValidater.toLong(reqIncome.getBalance()));
+        //
+        // creditUser.setJourShowIncome(reqIncome.getJourShowIncome());
+        // creditUser.setJourShowIncome(reqIncome.getJourShowIncome());
+        // creditUser.setIsPrint(reqIncome.getIsPrint());
+        // creditUserBO.refreshCreditUserIncome(creditUser);
+        // }
 
         budgetOrderBO.refresh(data);
     }
@@ -338,7 +372,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 budgetOrder.setCurNodeCode(EAdvanceFundNode.BRANCH_CONFIRM
                     .getCode());
             }
-
         } else {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.SECOND_AUDIT.getCode()).getBackNode());
@@ -738,5 +771,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             BudgetOrder condition) {
 
         return budgetOrderBO.getPaginableByRoleCode(start, limit, condition);
+    }
+
+    @Override
+    public void refreshCardMaking(String code, String bankCardNumber,
+            String makeCardRemark) {
+        BudgetOrder condition = budgetOrderBO.getBudgetOrder(code);
+        condition.setBankCardNumber(bankCardNumber);
+        condition.setMakeCardRemark(makeCardRemark);
+        budgetOrderBO.refreshCardMaking(condition);
     }
 }
