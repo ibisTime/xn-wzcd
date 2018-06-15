@@ -77,6 +77,41 @@ public class BankSubbranch extends ABaseDO {
     // 备注
     private String remark;
 
+    /*-------辅助字段---------*/
+
+    // 银行名称
+    private String bankName;
+
+    // 银行
+    private Bank bank;
+
+    // 更新人姓名
+    private String updaterName;
+
+    public String getUpdaterName() {
+        return updaterName;
+    }
+
+    public void setUpdaterName(String updaterName) {
+        this.updaterName = updaterName;
+    }
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
     public int getId() {
         return id;
     }

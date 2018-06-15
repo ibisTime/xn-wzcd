@@ -1,7 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 /**
  * 列表查询支行信息
  * @author: silver 
@@ -10,8 +8,8 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 
 public class XN632057Req {
+
     // 银行编号
-    @NotBlank
     private String bankCode;
 
     public String getBankCode() {
