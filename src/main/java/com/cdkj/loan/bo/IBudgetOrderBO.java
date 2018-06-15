@@ -43,4 +43,8 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 发件，改变节点
     public void updateCurNodeCode(BudgetOrder budgetOrder);
 
+    // 根据角色分页查
+    public Object getPaginableByRoleCode(int start, int limit,
+            BudgetOrder condition);
+
 }

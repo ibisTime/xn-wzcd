@@ -60,4 +60,8 @@ public interface IBudgetOrderAO {
 
     public BudgetOrder getBudgetOrder(String code);
 
+    // 根据角色分页查
+    public Object queryBudgetOrderPageByRoleCode(int start, int limit,
+            BudgetOrder condition);
+
 }

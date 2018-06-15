@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.api.AProcessor;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.domain.BudgetOrder;
@@ -13,9 +14,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 银行放款列表查
- * @author: silver 
- * @since: 2018年6月13日 下午3:04:03 
+ * 预算单列表查
+ * @author: CYL 
+ * @since: 2018年6月14日 下午11:41:53 
  * @history:
  */
 public class XN632147 extends AProcessor {
@@ -29,8 +30,15 @@ public class XN632147 extends AProcessor {
         BudgetOrder condition = new BudgetOrder();
         condition.setCode(req.getCode());
         condition.setCustomerName(req.getCustomerName());
+        condition.setApplyDatetimeStart(DateUtil.strToDate(
+            req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setApplyDatetimeEnd(DateUtil.strToDate(
+            req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setCurNodeCode(req.getCurNodeCode());
+        condition.setCarDealerCode(req.getCarDealerCode());
         condition.setLoanBankCode(req.getLoanBankCode());
-        // condition.setCurNodeCode(EBudgetOrderNode.AREA_AUDIT.getCode());
+        condition.setCompanyCode(req.getCompanyCode());
+        condition.setIsAdvanceFund(req.getIsAdvanceFund());
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {

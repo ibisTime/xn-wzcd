@@ -21,10 +21,40 @@ public class XN632148Req extends APageReq {
 
     private String curNodeCode;// 当前节点编号
 
+    private String carDealerCode;// 汽车经销商
+
+    private String loanBankCode;// 贷款银行
+
+    private String companyCode;// 业务公司
+
     private String isAdvanceFund;// 是否垫资
 
     @NotBlank
     private String roleCode;// 角色编号
+
+    public String getCarDealerCode() {
+        return carDealerCode;
+    }
+
+    public void setCarDealerCode(String carDealerCode) {
+        this.carDealerCode = carDealerCode;
+    }
+
+    public String getLoanBankCode() {
+        return loanBankCode;
+    }
+
+    public void setLoanBankCode(String loanBankCode) {
+        this.loanBankCode = loanBankCode;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
 
     public String getSaleUserId() {
         return saleUserId;

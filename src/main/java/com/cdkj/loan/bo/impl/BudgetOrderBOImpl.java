@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.base.Page;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBudgetOrderDAO;
@@ -173,6 +175,24 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     @Override
     public void updateCurNodeCode(BudgetOrder budgetOrder) {
         budgetOrderDAO.updateCurNodeCode(budgetOrder);
+    }
+
+    @Override
+    public Object getPaginableByRoleCode(int start, int limit,
+            BudgetOrder condition) {
+        prepare(condition);
+
+        long totalCount = budgetOrderDAO.selectTotalCountByRoleCode(condition);
+
+        Paginable<BudgetOrder> page = new Page<BudgetOrder>(start, limit,
+            totalCount);
+
+        List<BudgetOrder> dataList = budgetOrderDAO
+            .selectBudgetOrderByRoleCodeList(condition, page.getStart(),
+                page.getPageSize());
+
+        page.setList(dataList);
+        return page;
     }
 
 }
