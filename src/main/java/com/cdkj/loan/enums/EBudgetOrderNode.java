@@ -25,7 +25,7 @@ public enum EBudgetOrderNode {
     FEN_CAR_SEND_LOGISTICS("009_04","分公司准备并寄送抵押材料"),HEADQUARTERS_CAR_COMPANY_COLLECTION_CHECK("009_05","总公司内勤收件并核查"),
     HEADQUARTERS_CAR_SEND_BANK_MATERIALS("009_06","总公司内勤寄送银行材料"),CAR_FEN_BANK_COLLECTION_CHECK("009_07","银行驻点收件并核查"),
     HEADQUARTERS_SEND_CONTRACT("009_08","总公司寄送合同待补件"),FEN_CAR_BRANCH_PENDING_PARTS("009_09","分公司内勤寄送银行材料待补件"),
-    HEADQUARTERS_CAR_HEADQUARTERS_PENDING_PARTS("009_10","总公司内勤寄送银行材料待补件");
+    HEADQUARTERS_CAR_PENDING_PARTS("009_10","总公司内勤寄送银行材料待补件");
 
     public static Map<String, EBudgetOrderNode> getMap() {
         Map<String, EBudgetOrderNode> map = new HashMap<String, EBudgetOrderNode>();

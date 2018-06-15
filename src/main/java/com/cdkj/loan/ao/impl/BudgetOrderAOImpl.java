@@ -23,7 +23,6 @@ import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
-import com.cdkj.loan.bo.ISaleUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.PhoneUtil;
@@ -85,9 +84,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private IDepartmentBO departmentBO;
-
-    @Autowired
-    private ISaleUserBO saleUserBO;
 
     @Autowired
     private ISYSUserBO sysUserBO;
@@ -374,6 +370,28 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 && !EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
                     .equals(budgetOrder.getCurNodeCode())
                 && !EBudgetOrderNode.BRANCH_PENDING_PARTS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.HEADQUARTERS_PENDING_PARTS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.CAR_BANK_LOAN_COMMIT.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.CAR_SEND_BANK_MATERIALS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.CAR_BRANCH_PENDING_PARTS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.CAR_HEADQUARTERS_PENDING_PARTS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.CAR_FEN_BANK_LOAN_COMMIT.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.FEN_CAR_SEND_LOGISTICS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.HEADQUARTERS_CAR_SEND_BANK_MATERIALS
+                    .getCode().equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.HEADQUARTERS_SEND_CONTRACT.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.FEN_CAR_BRANCH_PENDING_PARTS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.HEADQUARTERS_CAR_PENDING_PARTS.getCode()
                     .equals(budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是发件节点，不能操作");

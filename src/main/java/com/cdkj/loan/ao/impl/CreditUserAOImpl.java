@@ -71,49 +71,49 @@ public class CreditUserAOImpl implements ICreditUserAO {
         for (XN632111ReqChild Child : list) {
             String code = Child.getCode();
             CreditUser creditUser = creditUserBO.getCreditUser(code);
-            creditUser.setDkdyCount(StringValidater.toInteger(Child
-                .getDkdyCount()));
-            creditUser.setDkdyAmount(StringValidater.toLong(Child
-                .getDkdyAmount()));
-            creditUser.setDkdy2YearOverTimes(StringValidater.toInteger(Child
-                .getDkdy2yearOverTimes()));
-            creditUser.setDkdyMaxOverAmount(StringValidater.toLong(Child
-                .getDkdyMaxOverAmount()));
-            creditUser.setDkdyCurrentOverAmount(StringValidater.toLong(Child
-                .getDkdyCurrentOverAmount()));
-            creditUser.setDkdy6MonthAvgAmount(StringValidater.toLong(Child
-                .getDkdy6monthAvgAmount()));
+            creditUser
+                .setDkdyCount(StringValidater.toInteger(Child.getDkdyCount()));
+            creditUser
+                .setDkdyAmount(StringValidater.toLong(Child.getDkdyAmount()));
+            creditUser.setDkdy2YearOverTimes(
+                StringValidater.toInteger(Child.getDkdy2yearOverTimes()));
+            creditUser.setDkdyMaxOverAmount(
+                StringValidater.toLong(Child.getDkdyMaxOverAmount()));
+            creditUser.setDkdyCurrentOverAmount(
+                StringValidater.toLong(Child.getDkdyCurrentOverAmount()));
+            creditUser.setDkdy6MonthAvgAmount(
+                StringValidater.toLong(Child.getDkdy6monthAvgAmount()));
 
-            creditUser.setHkxyUnsettleCount(StringValidater.toInteger(Child
-                .getHkxyUnsettleCount()));
-            creditUser.setHkxyUnsettleAmount(StringValidater.toLong(Child
-                .getHkxyUnsettleAmount()));
-            creditUser.setHkxy2YearOverTimes(StringValidater.toInteger(Child
-                .getHkxy2yearOverTimes()));
-            creditUser.setHkxyMonthMaxOverAmount(StringValidater.toLong(Child
-                .getHkxyMonthMaxOverAmount()));
-            creditUser.setHkxy6MonthAvgAmount(StringValidater.toLong(Child
-                .getHkxy6monthAvgAmount()));
-            creditUser.setHkxyCurrentOverAmount(StringValidater.toLong(Child
-                .getHkxyCurrentOverAmount()));
+            creditUser.setHkxyUnsettleCount(
+                StringValidater.toInteger(Child.getHkxyUnsettleCount()));
+            creditUser.setHkxyUnsettleAmount(
+                StringValidater.toLong(Child.getHkxyUnsettleAmount()));
+            creditUser.setHkxy2YearOverTimes(
+                StringValidater.toInteger(Child.getHkxy2yearOverTimes()));
+            creditUser.setHkxyMonthMaxOverAmount(
+                StringValidater.toLong(Child.getHkxyMonthMaxOverAmount()));
+            creditUser.setHkxy6MonthAvgAmount(
+                StringValidater.toLong(Child.getHkxy6monthAvgAmount()));
+            creditUser.setHkxyCurrentOverAmount(
+                StringValidater.toLong(Child.getHkxyCurrentOverAmount()));
 
-            creditUser.setXykCount(StringValidater.toInteger(Child
-                .getXykCount()));
-            creditUser.setXykCreditAmount(StringValidater.toLong(Child
-                .getXykCreditAmount()));
-            creditUser.setXyk6MonthUseAmount(StringValidater.toLong(Child
-                .getXyk6monthUseAmount()));
-            creditUser.setXyk2YearOverTimes(StringValidater.toInteger(Child
-                .getXyk2yearOverTimes()));
-            creditUser.setXykMonthMaxOverAmount(StringValidater.toLong(Child
-                .getXykMonthMaxOverAmount()));
-            creditUser.setXykCurrentOverAmount(StringValidater.toLong(Child
-                .getXykCurrentOverAmount()));
+            creditUser
+                .setXykCount(StringValidater.toInteger(Child.getXykCount()));
+            creditUser.setXykCreditAmount(
+                StringValidater.toLong(Child.getXykCreditAmount()));
+            creditUser.setXyk6MonthUseAmount(
+                StringValidater.toLong(Child.getXyk6monthUseAmount()));
+            creditUser.setXyk2YearOverTimes(
+                StringValidater.toInteger(Child.getXyk2yearOverTimes()));
+            creditUser.setXykMonthMaxOverAmount(
+                StringValidater.toLong(Child.getXykMonthMaxOverAmount()));
+            creditUser.setXykCurrentOverAmount(
+                StringValidater.toLong(Child.getXykCurrentOverAmount()));
 
-            creditUser.setOutGuaranteesCount(StringValidater.toInteger(Child
-                .getOutGuaranteesCount()));
-            creditUser.setOutGuaranteesAmount(StringValidater.toLong(Child
-                .getOutGuaranteesAmount()));
+            creditUser.setOutGuaranteesCount(
+                StringValidater.toInteger(Child.getOutGuaranteesCount()));
+            creditUser.setOutGuaranteesAmount(
+                StringValidater.toLong(Child.getOutGuaranteesAmount()));
             creditUser.setOutGuaranteesRemark(Child.getOutGuaranteesRemark());
 
             creditUserBO.inputBankCreditResult(creditUser);
@@ -121,13 +121,13 @@ public class CreditUserAOImpl implements ICreditUserAO {
 
         // 之前节点
         String preCurrentNode = credit.getCurNodeCode();
-        credit.setCurNodeCode(nodeFlowBO.getNodeFlow(credit.getCurNodeCode())
-            .getNextNode());
+        credit.setCurNodeCode(nodeFlowBO
+            .getNodeFlowByCurrentNode(credit.getCurNodeCode()).getNextNode());
         creditBO.refreshCreditNode(credit);
 
         // 日志记录
-        ECreditNode currentNode = ECreditNode.getMap().get(
-            credit.getCurNodeCode());
+        ECreditNode currentNode = ECreditNode.getMap()
+            .get(credit.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
