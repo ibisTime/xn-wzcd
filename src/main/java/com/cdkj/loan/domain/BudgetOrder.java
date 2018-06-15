@@ -467,9 +467,6 @@ public class BudgetOrder extends ABaseDO {
     // 经办部门
     private String operateDepartment;
 
-    // 制卡备注
-    private String makecardRemark;
-
     // 提车日期
     private Date deliveryDatetime;
 
@@ -1937,14 +1934,6 @@ public class BudgetOrder extends ABaseDO {
 
     public void setOperateDepartment(String operateDepartment) {
         this.operateDepartment = operateDepartment;
-    }
-
-    public String getMakecardRemark() {
-        return makecardRemark;
-    }
-
-    public void setMakecardRemark(String makecardRemark) {
-        this.makecardRemark = makecardRemark;
     }
 
     public String getIsRightInvoice() {

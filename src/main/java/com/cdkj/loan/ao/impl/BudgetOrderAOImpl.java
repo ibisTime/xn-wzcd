@@ -778,4 +778,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         return budgetOrderBO.getPaginableByRoleCode(start, limit, condition);
     }
+
+    @Override
+    public void refreshCardMaking(String code, String bankCardNumber,
+            String makeCardRemark) {
+        BudgetOrder condition = budgetOrderBO.getBudgetOrder(code);
+        condition.setBankCardNumber(bankCardNumber);
+        condition.setMakeCardRemark(makeCardRemark);
+        budgetOrderBO.refreshCardMaking(condition);
+    }
 }

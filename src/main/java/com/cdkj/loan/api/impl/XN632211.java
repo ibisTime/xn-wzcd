@@ -5,10 +5,17 @@ import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN632211Req;
+import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
+/**
+ * 制卡录入
+ * @author: CYL 
+ * @since: 2018年6月15日 下午8:17:36 
+ * @history:
+ */
 public class XN632211 extends AProcessor {
     private IBudgetOrderAO budgetOrderAO = SpringContextHolder
         .getBean(IBudgetOrderAO.class);
@@ -17,8 +24,9 @@ public class XN632211 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return null;
-        // new PKCodeRes(budgetOrderAO.);
+        budgetOrderAO.refreshCardMaking(req.getCode(), req.getBankCardNumber(),
+            req.getMakeCardRemark());
+        return new BooleanRes(true);
     }
 
     @Override

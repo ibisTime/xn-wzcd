@@ -47,4 +47,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     public Object getPaginableByRoleCode(int start, int limit,
             BudgetOrder condition);
 
+    // 制卡录入
+    public void refreshCardMaking(BudgetOrder condition);
+
 }

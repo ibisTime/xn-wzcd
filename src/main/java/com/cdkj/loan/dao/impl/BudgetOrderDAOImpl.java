@@ -119,4 +119,9 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
             start, pageSize, condition, BudgetOrder.class);
     }
 
+    @Override
+    public void refreshCardMaking(BudgetOrder condition) {
+        super.update(NAMESPACE.concat("update_cardMaking"), condition);
+    }
+
 }

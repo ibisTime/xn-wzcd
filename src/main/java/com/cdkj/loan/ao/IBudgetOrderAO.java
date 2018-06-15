@@ -64,4 +64,8 @@ public interface IBudgetOrderAO {
     public Object queryBudgetOrderPageByRoleCode(int start, int limit,
             BudgetOrder condition);
 
+    // 制卡录入
+    public void refreshCardMaking(String code, String bankCardNumber,
+            String makeCardRemark);
+
 }

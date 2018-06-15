@@ -195,4 +195,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         return page;
     }
 
+    @Override
+    public void refreshCardMaking(BudgetOrder condition) {
+        budgetOrderDAO.refreshCardMaking(condition);
+    }
+
 }
