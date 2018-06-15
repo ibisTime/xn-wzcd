@@ -4,6 +4,7 @@
 <mapper namespace="com.cdkj.loan.dao.IOverdueMenuDAO">
 	<resultMap id="overdueMenu_DB_Result" type="overdueMenu">
 		<result column="code" property="code" />
+		<result column="batch_datetime" property="batchDatetime" />
 		<result column="real_name" property="realName" />
 		<result column="id_no" property="idNo" />
 		<result column="loan_bank_name" property="loanBankName" />
@@ -50,6 +51,7 @@
 	<select id="select_overdueMenu" parameterType="overdueMenu" resultMap="overdueMenu_DB_Result">
 		SELECT
 		t.code
+		,t.batch_datetime
 		,t.real_name
 		,t.id_no
 		,t.loan_bank_name
@@ -87,6 +89,7 @@
 		INSERT INTO
 		tdh_overdue_menu(
 		code
+		,batch_datetime
 		,real_name
 		,id_no
 		,loan_bank_name
@@ -105,6 +108,7 @@
 		)
 		VALUES(
 		#{code}
+		,#{batchDatetime}
 		,#{realName}
 		,#{idNo}
 		,#{loanBankName}
