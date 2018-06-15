@@ -75,6 +75,9 @@ public class RepayPlan extends ABaseDO {
     // 再次逾期保证金收取方式
     private String depositWay;
 
+    // 实际还款金额
+    private Long realRepayAmount;
+
     // 实际可退的再次逾期保证金(作废)
     private Long shouldDeposit;
 
@@ -82,12 +85,66 @@ public class RepayPlan extends ABaseDO {
     private int remindCount;
 
     // 实际代偿金额
-    private Long realRepayAmount;
+    private Long realReplaceRepayAmount;
 
     // 代偿是否缴纳
-    private String isRepay;
+    private String isReplaceRepay;
 
-    // 拖车申请金额
+    // 代偿时间
+    private Date replaceRepayDatetime;
+
+    // 收回代偿金额
+    private Long backReplaceRepayAmount;
+
+    // 收回代偿时间
+    private Date backReplaceRepayDatetime;
+
+    // 催收方式
+    private String collectionWay;
+
+    // 催收对象
+    private String collectionTarget;
+
+    // 催收过程
+    private String collectionProcess;
+
+    // 客户意愿
+    private String collectionWish;
+
+    // 催收结果
+    private String collectionResult;
+
+    // 是否提供押金
+    private String depositIsProvide;
+
+    // 催收情况说明
+    private String collectionNote;
+
+    // 与我司过往是否有纠纷
+    private String isPlatIssue;
+
+    // 代偿后采取的方式
+    private String replaceRepayedWay;
+
+    // 暂缓天数
+    private int putOffDay;
+
+    // 代偿申请原因
+    private String replaceRepayApplyReason;
+
+    // 代偿申请原因说明
+    private String replaceRepayApplyNote;
+
+    // 是否典当行赎回
+    private String isPawnshopRedeem;
+
+    // 典当行名称
+    private String pawnshopName;
+
+    // 典当行赎金小写
+    private String ransom;
+
+    // 拖车申请费用
     private Long tsCarAmount;
 
     // 拖车收款账号
@@ -102,8 +159,14 @@ public class RepayPlan extends ABaseDO {
     // 拖车申请说明
     private String tcApplyNote;
 
+    // 打款时间
+    private Date remitDatetime;
+
     // 打款金额
     private Long remitAmount;
+
+    // 打款银行
+    private String remitBankCode;
 
     // 打款水单
     private String remitBillPdf;
@@ -123,35 +186,17 @@ public class RepayPlan extends ABaseDO {
     // 拖车说明
     private String takeNote;
 
-    // 流水
-    private String jourPdf;
+    // 处理结果
+    private String dealResult;
 
-    // 房产
-    private String housePdf;
+    // 出售价格
+    private Long sellPrice;
 
-    // 担保人姓名
-    private String guaName;
+    // 保证金
+    private Long deposit;
 
-    // 担保人身份证号
-    private String guaIdNo;
-
-    // 担保人手机号
-    private String guaMobile;
-
-    // 担保人现居住地址
-    private String guaNowAddress;
-
-    // 担保赎回说明
-    private String guaNote;
-
-    // 建议(1=6个月保证金/2=已结清)
-    private String suggest;
-
-    // 建议说明
-    private String suggestNote;
-
-    // 团队买断扣除金额
-    private Long buyOutAmount;
+    // 费用说明
+    private String feeNote;
 
     // ****** 辅助字段 ******
     // 还款计划开始时间
@@ -201,22 +246,6 @@ public class RepayPlan extends ABaseDO {
 
     public void setRoleCode(String roleCode) {
         this.roleCode = roleCode;
-    }
-
-    public Long getRealRepayAmount() {
-        return realRepayAmount;
-    }
-
-    public void setRealRepayAmount(Long realRepayAmount) {
-        this.realRepayAmount = realRepayAmount;
-    }
-
-    public Long getBuyOutAmount() {
-        return buyOutAmount;
-    }
-
-    public void setBuyOutAmount(Long buyOutAmount) {
-        this.buyOutAmount = buyOutAmount;
     }
 
     public Long getRemitAmount() {
@@ -273,86 +302,6 @@ public class RepayPlan extends ABaseDO {
 
     public void setTakeNote(String takeNote) {
         this.takeNote = takeNote;
-    }
-
-    public String getJourPdf() {
-        return jourPdf;
-    }
-
-    public void setJourPdf(String jourPdf) {
-        this.jourPdf = jourPdf;
-    }
-
-    public String getHousePdf() {
-        return housePdf;
-    }
-
-    public void setHousePdf(String housePdf) {
-        this.housePdf = housePdf;
-    }
-
-    public String getGuaName() {
-        return guaName;
-    }
-
-    public void setGuaName(String guaName) {
-        this.guaName = guaName;
-    }
-
-    public String getIsRepay() {
-        return isRepay;
-    }
-
-    public void setIsRepay(String isRepay) {
-        this.isRepay = isRepay;
-    }
-
-    public String getGuaIdNo() {
-        return guaIdNo;
-    }
-
-    public void setGuaIdNo(String guaIdNo) {
-        this.guaIdNo = guaIdNo;
-    }
-
-    public String getGuaMobile() {
-        return guaMobile;
-    }
-
-    public void setGuaMobile(String guaMobile) {
-        this.guaMobile = guaMobile;
-    }
-
-    public String getGuaNowAddress() {
-        return guaNowAddress;
-    }
-
-    public void setGuaNowAddress(String guaNowAddress) {
-        this.guaNowAddress = guaNowAddress;
-    }
-
-    public String getGuaNote() {
-        return guaNote;
-    }
-
-    public void setGuaNote(String guaNote) {
-        this.guaNote = guaNote;
-    }
-
-    public String getSuggest() {
-        return suggest;
-    }
-
-    public void setSuggest(String suggest) {
-        this.suggest = suggest;
-    }
-
-    public String getSuggestNote() {
-        return suggestNote;
-    }
-
-    public void setSuggestNote(String suggestNote) {
-        this.suggestNote = suggestNote;
     }
 
     public String getTcApplyNote() {

@@ -17,16 +17,19 @@ public class OverdueMenu extends ABaseDO {
     // 编号
     private String code;
 
-    // 客户姓名
+    // 批量日期
+    private Date batchDatetime;
+
+    // 客户姓名(匹配)
     private String realName;
 
-    // 证件号
+    // 证件号(匹配)
     private String idNo;
 
     // 贷款银行
     private String loanBankCode;
 
-    // 贷款金额
+    // 贷款金额(匹配)
     private Long loanAmount;
 
     // 总期数
@@ -35,7 +38,7 @@ public class OverdueMenu extends ABaseDO {
     // 剩余金额
     private Long remainAmount;
 
-    // 放款日期
+    // 放款日期(匹配)
     private Date fkDatetime;
 
     // 逾期金额
@@ -84,6 +87,14 @@ public class OverdueMenu extends ABaseDO {
 
     // 业务类型
     private RepayBiz repayBiz;
+
+    public Date getBatchDatetime() {
+        return batchDatetime;
+    }
+
+    public void setBatchDatetime(Date batchDatetime) {
+        this.batchDatetime = batchDatetime;
+    }
 
     public RepayBiz getRepayBiz() {
         return repayBiz;

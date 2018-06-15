@@ -375,4 +375,8 @@
 		<property name="paginableDAO" ref="loanCsDAOImpl"/>
 	</bean>
 	
+	<bean id="replaceRepayApplyBO" class="com.cdkj.loan.bo.impl.ReplaceRepayApplyBOImpl">
+		<property name="paginableDAO" ref="replaceRepayApplyDAOImpl"/>
+	</bean>
+	
 </beans>
