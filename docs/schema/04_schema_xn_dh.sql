@@ -177,6 +177,39 @@ CREATE TABLE `tdh_repay_plan` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='还款计划表';
 
+
+-- ----------------------------
+--  Table structure for `tdh_judge`
+-- ----------------------------
+DROP TABLE IF EXISTS `tdh_judge`;
+CREATE TABLE `tdh_judge` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',
+  `case_number` varchar(32) DEFAULT NULL COMMENT '案号',
+  `plaintiff` varchar(32) DEFAULT NULL COMMENT '原告',
+  `defendant` varchar(32) DEFAULT NULL COMMENT '被告',
+  `case_subject` varchar(32) DEFAULT NULL COMMENT '诉讼标的',
+  `case_car` varchar(32) DEFAULT NULL COMMENT '涉案车辆',
+  `case_fee` varchar(32) DEFAULT NULL COMMENT '诉讼费',
+  `case_start_datetime` varchar(32) DEFAULT NULL COMMENT '起诉日期',
+  `case_status` varchar(32) DEFAULT NULL COMMENT '起诉状态',
+  
+  `case_pdf` varchar(255) DEFAULT NULL COMMENT '起诉附件',
+  
+  `court_datetime` datetime DEFAULT NULL COMMENT '开庭日期',
+  `judge_datetime` datetime DEFAULT NULL COMMENT '判决日期',
+  `judge_pdf` varchar(255) DEFAULT NULL COMMENT '判决附件',
+  `exe_case_number` varchar(32) DEFAULT NULL COMMENT '执行案号',
+  `exe_apply_user` varchar(32) DEFAULT NULL COMMENT '执行申请人',
+  
+  `exe_datetime` datetime DEFAULT NULL COMMENT '执行日期',
+  `exe_result` varchar(255) DEFAULT NULL COMMENT '执行结果',
+  `sale_datetime` datetime DEFAULT NULL COMMENT '拍卖日期',
+  `exe_pdf` varchar(255) DEFAULT NULL COMMENT '执行裁定书',
+  `status` varchar(32) DEFAULT NULL COMMENT '状态(0 处理中/1=已经处理)',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='司法审判表';
+
 -- ----------------------------
 --  Table structure for `tdh_repoint`
 -- ----------------------------

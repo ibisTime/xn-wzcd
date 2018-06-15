@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN632300ReqOverdue {
 
     @NotBlank
-    private String realName;//
+    private String realName;// 姓名
 
     @NotBlank
     private String idNo;// 证件号
