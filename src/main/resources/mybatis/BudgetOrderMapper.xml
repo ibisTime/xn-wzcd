@@ -34,8 +34,29 @@
 		<result column="apply_user_duty" property="applyUserDuty" />
 		<result column="apply_user_ghr_relation" property="applyUserGhrRelation" />
 		<result column="marry_state" property="marryState" />
-		<result column="other_income_note" property="otherIncomeNote" />
 		
+		<result column="apply_user_month_income" property="applyUserMonthIncome" />
+		<result column="apply_user_settle_interest" property="applyUserSettleInterest" />
+		<result column="apply_user_balance" property="applyUserBalance" />
+		<result column="apply_user_jour_show_income" property="applyUserJourShowIncome" />
+		<result column="apply_user_is_print" property="applyUserIsPrint" />
+		<result column="gh_month_income" property="ghMonthIncome" />
+		<result column="gh_settle_interest" property="ghSettleInterest" />
+		<result column="gh_balance" property="ghBalance" />
+		<result column="gh_jour_show_income" property="ghJourShowIncome" />
+		<result column="gh_is_print" property="ghIsPrint" />
+		<result column="guarantor1_month_income" property="guarantor1MonthIncome" />
+		<result column="guarantor1_settle_interest" property="guarantor1SettleInterest" />
+		<result column="guarantor1_balance" property="guarantor1Balance" />
+		<result column="guarantor1_jour_show_income" property="guarantor1JourShowIncome" />
+		<result column="guarantor1_is_print" property="guarantor1IsPrint" />
+		<result column="guarantor2_month_income" property="guarantor2MonthIncome" />
+		<result column="guarantor2_settle_interest" property="guarantor2SettleInterest" />
+		<result column="guarantor2_balance" property="guarantor2Balance" />
+		<result column="guarantor2_jour_show_income" property="guarantor2JourShowIncome" />
+		<result column="guarantor2_is_print" property="guarantor2IsPrint" />
+		
+		<result column="other_income_note" property="otherIncomeNote" />
 		<result column="is_house_property" property="isHouseProperty" />
 		<result column="house_property" property="houseProperty" />
 		<result column="is_house_contract" property="isHouseContract" />
@@ -263,6 +284,26 @@
 		,t.apply_user_duty
 		,t.apply_user_ghr_relation
 		,t.marry_state
+		,t.apply_user_month_income
+		,t.apply_user_settle_interest
+		,t.apply_user_balance
+		,t.apply_user_jour_show_income
+		,t.apply_user_is_print
+		,t.gh_month_income
+		,t.gh_settle_interest
+		,t.gh_balance
+		,t.gh_jour_show_income
+		,t.gh_is_print
+		,t.guarantor1_month_income
+		,t.guarantor1_settle_interest
+		,t.guarantor1_balance
+		,t.guarantor1_jour_show_income
+		,t.guarantor1_is_print
+		,t.guarantor2_month_income 
+		,t.guarantor2_settle_interest   
+		,t.guarantor2_balance
+		,t.guarantor2_jour_show_income     
+		,t.guarantor2_is_print 
 		,t.other_income_note
 		,t.is_house_property
 		,t.house_property
@@ -446,6 +487,26 @@
 		,t.apply_user_duty
 		,t.apply_user_ghr_relation
 		,t.marry_state
+		,t.apply_user_month_income
+		,t.apply_user_settle_interest
+		,t.apply_user_balance
+		,t.apply_user_jour_show_income
+		,t.apply_user_is_print
+		,t.gh_month_income
+		,t.gh_settle_interest
+		,t.gh_balance
+		,t.gh_jour_show_income
+		,t.gh_is_print
+		,t.guarantor1_month_income
+		,t.guarantor1_settle_interest
+		,t.guarantor1_balance
+		,t.guarantor1_jour_show_income
+		,t.guarantor1_is_print
+		,t.guarantor2_month_income 
+		,t.guarantor2_settle_interest   
+		,t.guarantor2_balance
+		,t.guarantor2_jour_show_income     
+		,t.guarantor2_is_print 
 		,t.other_income_note
 		,t.is_house_property
 		,t.house_property
@@ -695,6 +756,26 @@
 		,apply_user_duty
 		,apply_user_ghr_relation
 		,marry_state
+		,apply_user_month_income
+		,apply_user_settle_interest
+		,apply_user_balance
+		,apply_user_jour_show_income
+		,apply_user_is_print
+		,gh_month_income
+		,gh_settle_interest
+		,gh_balance
+		,gh_jour_show_income
+		,gh_is_print
+		,guarantor1_month_income
+		,guarantor1_settle_interest
+		,guarantor1_balance
+		,guarantor1_jour_show_income
+		,guarantor1_is_print
+		,guarantor2_month_income 
+		,guarantor2_settle_interest   
+		,guarantor2_balance
+		,guarantor2_jour_show_income     
+		,guarantor2_is_print 
 		,other_income_note
 		
 		,is_house_property
@@ -795,6 +876,26 @@
 		,#{applyUserDuty}
 		,#{applyUserGhrRelation}
 		,#{marryState}
+		,#{applyUserMonthIncome}
+		,#{applyUserSettleInterest}
+		,#{applyUserBalance}
+		,#{applyUserJourShowIncome}
+		,#{applyUserIsPrint}
+		,#{ghMonthIncome}
+		,#{ghSettleInterest}
+		,#{ghBalance}
+		,#{ghJourShowIncome}
+		,#{ghIsPrint}
+		,#{guarantor1MonthIncome}
+		,#{guarantor1SettleInterest}
+		,#{guarantor1Balance}
+		,#{guarantor1JourShowIncome}
+		,#{guarantor1IsPrint}
+		,#{guarantor2MonthIncome}
+		,#{guarantor2SettleInterest}   
+		,#{guarantor2Balance}
+		,#{guarantor2JourShowIncome}
+		,#{guarantor2IsPrint} 
 		,#{otherIncomeNote}
 		
 		,#{isHouseProperty}

@@ -95,6 +95,66 @@ public class BudgetOrder extends ABaseDO {
     // 婚姻状况
     private String marryState;
 
+    // 申请人月收入
+    private Long applyUserMonthIncome;
+
+    // 申请人结息
+    private Long applyUserSettleInterest;
+
+    // 申请人余额
+    private Long applyUserBalance;
+
+    // 申请人流水是否体现月收入
+    private String applyUserJourShowIncome;
+
+    // 申请人是否打件
+    private String applyUserIsPrint;
+
+    // 共还人月收入
+    private Long ghMonthIncome;
+
+    // 共还人结息
+    private Long ghSettleInterest;
+
+    // 共还人余额
+    private Long ghBalance;
+
+    // 共还人流水是否体现月收入
+    private String ghJourShowIncome;
+
+    // 共还人是否打件
+    private String ghIsPrint;
+
+    // 担保人1月收入
+    private Long guarantor1MonthIncome;
+
+    // 担保人1结息
+    private Long guarantor1SettleInterest;
+
+    // 担保人1余额
+    private Long guarantor1Balance;
+
+    // 担保人1流水是否体现月收入
+    private String guarantor1JourShowIncome;
+
+    // 担保人1是否打件
+    private String guarantor1IsPrint;
+
+    // 担保人2月收入
+    private Long guarantor2MonthIncome;
+
+    // 担保人2结息
+    private Long guarantor2SettleInterest;
+
+    // 担保人2余额
+    private Long guarantor2Balance;
+
+    // 担保人2流水是否体现月收入
+    private String guarantor2JourShowIncome;
+
+    // 担保人2是否打件
+    private String guarantor2IsPrint;
+
     // 其他收入说明
     private String otherIncomeNote;
 
@@ -1289,6 +1349,166 @@ public class BudgetOrder extends ABaseDO {
 
     public String getHouseCustomerPic() {
         return houseCustomerPic;
+    }
+
+    public Long getApplyUserMonthIncome() {
+        return applyUserMonthIncome;
+    }
+
+    public void setApplyUserMonthIncome(Long applyUserMonthIncome) {
+        this.applyUserMonthIncome = applyUserMonthIncome;
+    }
+
+    public Long getApplyUserSettleInterest() {
+        return applyUserSettleInterest;
+    }
+
+    public void setApplyUserSettleInterest(Long applyUserSettleInterest) {
+        this.applyUserSettleInterest = applyUserSettleInterest;
+    }
+
+    public Long getApplyUserBalance() {
+        return applyUserBalance;
+    }
+
+    public void setApplyUserBalance(Long applyUserBalance) {
+        this.applyUserBalance = applyUserBalance;
+    }
+
+    public String getApplyUserJourShowIncome() {
+        return applyUserJourShowIncome;
+    }
+
+    public void setApplyUserJourShowIncome(String applyUserJourShowIncome) {
+        this.applyUserJourShowIncome = applyUserJourShowIncome;
+    }
+
+    public String getApplyUserIsPrint() {
+        return applyUserIsPrint;
+    }
+
+    public void setApplyUserIsPrint(String applyUserIsPrint) {
+        this.applyUserIsPrint = applyUserIsPrint;
+    }
+
+    public Long getGhMonthIncome() {
+        return ghMonthIncome;
+    }
+
+    public void setGhMonthIncome(Long ghMonthIncome) {
+        this.ghMonthIncome = ghMonthIncome;
+    }
+
+    public Long getGhSettleInterest() {
+        return ghSettleInterest;
+    }
+
+    public void setGhSettleInterest(Long ghSettleInterest) {
+        this.ghSettleInterest = ghSettleInterest;
+    }
+
+    public Long getGhBalance() {
+        return ghBalance;
+    }
+
+    public void setGhBalance(Long ghBalance) {
+        this.ghBalance = ghBalance;
+    }
+
+    public String getGhJourShowIncome() {
+        return ghJourShowIncome;
+    }
+
+    public void setGhJourShowIncome(String ghJourShowIncome) {
+        this.ghJourShowIncome = ghJourShowIncome;
+    }
+
+    public String getGhIsPrint() {
+        return ghIsPrint;
+    }
+
+    public void setGhIsPrint(String ghIsPrint) {
+        this.ghIsPrint = ghIsPrint;
+    }
+
+    public Long getGuarantor1MonthIncome() {
+        return guarantor1MonthIncome;
+    }
+
+    public void setGuarantor1MonthIncome(Long guarantor1MonthIncome) {
+        this.guarantor1MonthIncome = guarantor1MonthIncome;
+    }
+
+    public Long getGuarantor1SettleInterest() {
+        return guarantor1SettleInterest;
+    }
+
+    public void setGuarantor1SettleInterest(Long guarantor1SettleInterest) {
+        this.guarantor1SettleInterest = guarantor1SettleInterest;
+    }
+
+    public Long getGuarantor1Balance() {
+        return guarantor1Balance;
+    }
+
+    public void setGuarantor1Balance(Long guarantor1Balance) {
+        this.guarantor1Balance = guarantor1Balance;
+    }
+
+    public String getGuarantor1JourShowIncome() {
+        return guarantor1JourShowIncome;
+    }
+
+    public void setGuarantor1JourShowIncome(String guarantor1JourShowIncome) {
+        this.guarantor1JourShowIncome = guarantor1JourShowIncome;
+    }
+
+    public String getGuarantor1IsPrint() {
+        return guarantor1IsPrint;
+    }
+
+    public void setGuarantor1IsPrint(String guarantor1IsPrint) {
+        this.guarantor1IsPrint = guarantor1IsPrint;
+    }
+
+    public Long getGuarantor2MonthIncome() {
+        return guarantor2MonthIncome;
+    }
+
+    public void setGuarantor2MonthIncome(Long guarantor2MonthIncome) {
+        this.guarantor2MonthIncome = guarantor2MonthIncome;
+    }
+
+    public Long getGuarantor2SettleInterest() {
+        return guarantor2SettleInterest;
+    }
+
+    public void setGuarantor2SettleInterest(Long guarantor2SettleInterest) {
+        this.guarantor2SettleInterest = guarantor2SettleInterest;
+    }
+
+    public Long getGuarantor2Balance() {
+        return guarantor2Balance;
+    }
+
+    public void setGuarantor2Balance(Long guarantor2Balance) {
+        this.guarantor2Balance = guarantor2Balance;
+    }
+
+    public String getGuarantor2JourShowIncome() {
+        return guarantor2JourShowIncome;
+    }
+
+    public void setGuarantor2JourShowIncome(String guarantor2JourShowIncome) {
+        this.guarantor2JourShowIncome = guarantor2JourShowIncome;
+    }
+
+    public String getGuarantor2IsPrint() {
+        return guarantor2IsPrint;
+    }
+
+    public void setGuarantor2IsPrint(String guarantor2IsPrint) {
+        this.guarantor2IsPrint = guarantor2IsPrint;
     }
 
     public void setHouseCustomerPic(String houseCustomerPic) {
