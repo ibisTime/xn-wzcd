@@ -13,7 +13,9 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICreditDAO;
 import com.cdkj.loan.domain.Credit;
+import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.ELoanRole;
 
 /**
  * 征信单
@@ -46,10 +48,12 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
     public Credit getCredit(String code) {
 
         Credit condition = new Credit();
-
         condition.setCode(code);
-
-        return creditDAO.select(condition);
+        Credit credit = creditDAO.select(condition);
+        CreditUser applyUser = creditUserBO.getCreditUserByCreditCode(code,
+            ELoanRole.APPLY_USER);
+        credit.setCreditUser(applyUser);
+        return credit;
     }
 
     @Override

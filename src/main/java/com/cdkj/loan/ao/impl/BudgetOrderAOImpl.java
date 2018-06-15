@@ -30,8 +30,6 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.CarDealer;
-import com.cdkj.loan.domain.Credit;
-import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.InsuranceCompany;
@@ -41,13 +39,13 @@ import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632200Req;
+import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EButtonCode;
-import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
@@ -95,31 +93,25 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public String addBudgetOrder(XN632120Req req) {
-        BudgetOrder data = new BudgetOrder();
-        CreditUser applyCreditUser = creditUserBO.getCreditUserByCreditCode(
-            req.getCreditCode(), ELoanRole.APPLY_USER);
-        data.setCustomerName(applyCreditUser.getUserName());
-        data.setCustomerType(req.getCustomerType());
-        data.setSaleUserId(req.getSaleUserId());
-        data.setCarDealerCode(req.getCarDealerCode());
+    public void addBudgetOrder(XN632120Req req) {
 
-        data.setLoanBankCode(req.getLoanBankCode());
+        BudgetOrder data = budgetOrderBO
+            .getBudgetOrder(req.getBudgetOrderCode());
+
+        data.setCustomerType(req.getCustomerType());
+        data.setCarDealerCode(req.getCarDealerCode());
         data.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
         data.setCarModel(req.getCarModel());
         data.setLoanPeriods(req.getLoanPeriods());
-        data.setInvoicePrice(StringValidater.toLong(req.getInvoicePrice()));
 
-        Credit credit = creditBO.getCredit(req.getCreditCode());
-        data.setShopWay(credit.getShopWay());
+        data.setInvoicePrice(StringValidater.toLong(req.getInvoicePrice()));
         data.setRateType(req.getRateType());
-        data.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
         data.setIsSurvey(req.getIsSurvey());
         data.setBankRate(StringValidater.toDouble(req.getBankRate()));
-
-        Long loanAmount = StringValidater.toLong(req.getLoanAmount());
+        Long loanAmount = data.getLoanAmount();
         Long invoicePrice = StringValidater.toLong(req.getInvoicePrice());
         data.setCompanyLoanCs((double) (loanAmount / invoicePrice));// 我司贷款成数
+
         data.setIsAdvanceFund(req.getIsAdvanceFund());
         Long fee = StringValidater.toLong(req.getFee());
         data.setGlobalRate((double) (fee / loanAmount)
@@ -240,13 +232,16 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setOtherApplyNote(req.getOtherApplyNote());
         data.setApplyDatetime(new Date());
 
-        EBudgetOrderNode node = EBudgetOrderNode.START_NODE;
-        data.setCurNodeCode(node.getCode());
+        String preNodeCode = data.getCurNodeCode();
         if (EButtonCode.SEND.getCode().equals(req.getDealType())) {
-            node = EBudgetOrderNode.getMap()
-                .get(nodeFlowBO.getNodeFlowByCurrentNode(
-                    EBudgetOrderNode.AREA_AUDIT.getCode()));
-            data.setCurNodeCode(EBudgetOrderNode.AREA_AUDIT.getCode());
+            EBudgetOrderNode node = EBudgetOrderNode.getMap().get(nodeFlowBO
+                .getNodeFlowByCurrentNode(data.getCurNodeCode()).getNextNode());
+            data.setCurNodeCode(node.getCode());
+
+            // 日志记录
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
+                EBizLogType.BUDGET_ORDER, data.getCode(), preNodeCode,
+                node.getCode(), node.getValue(), req.getOperator());
         }
 
         // 使用gps更新列表
@@ -275,12 +270,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // creditUserBO.refreshCreditUserIncome(creditUser);
         // }
 
-        String code = budgetOrderBO.saveBudgetOrder(data);
-
-        // 日志记录
-        sysBizLogBO.saveSYSBizLog(code, EBizLogType.BUDGET_ORDER, code,
-            node.getCode(), node.getValue(), req.getOperator());
-        return code;
+        budgetOrderBO.refresh(data);
     }
 
     @Override
@@ -371,6 +361,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                         .getNodeFlowByCurrentNode(
                             EBudgetOrderNode.SECOND_AUDIT.getCode())
                         .getNextNode());
+            // 审核通过 判断是总公司业务还是分公司业务
+            Department department = departmentBO
+                .getDepartment(budgetOrder.getCompanyCode());
+            if ("".equals(department.getParentCode())) {// 总公司业务
+                budgetOrder
+                    .setCurNodeCode(EAdvanceFundNode.PARENT_CONFIRM.getCode());
+            }
+
         } else {
             budgetOrder
                 .setCurNodeCode(
@@ -425,9 +423,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 && !EBudgetOrderNode.HEADQUARTERS_SEND_CONTRACT.getCode()
                     .equals(budgetOrder.getCurNodeCode())
                 && !EBudgetOrderNode.FEN_CAR_BRANCH_PENDING_PARTS.getCode()
-                    .equals(budgetOrder.getCurNodeCode())
-                && !EBudgetOrderNode.HEADQUARTERS_CAR_PENDING_PARTS.getCode()
                     .equals(budgetOrder.getCurNodeCode())) {
+            // &&
+            // !EBudgetOrderNode.HEADQUARTERS_CAR_PENDING_PARTS.getCode().equals(budgetOrder.getCurNodeCode())
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是发件节点，不能操作");
         }
@@ -571,12 +569,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Transactional
     public void refreshCarLoanArchive(XN632200Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
-
-        if (!EBudgetOrderNode.PENDING_FILE.getCode()
-            .equals(budgetOrder.getCurNodeCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是待入档节点，不能操作");
-        }
+        // if (!EBudgetOrderNode.PENDING_FILE.getCode().equals(
+        // budgetOrder.getCurNodeCode())) {
+        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+        // "当前节点不是待入档节点，不能操作");
+        // }
 
         if (EBoolean.YES.getCode().equals(req.getIsComplete())
                 && null == req.getStorePlace()) {

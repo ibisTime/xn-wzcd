@@ -968,6 +968,118 @@
 		,#{repayBizCode}
 		)
 	</insert>
+	
+	<update id="update_budgetOrder" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		customer_type = #{customerType}
+		,car_dealer_code = #{carDealerCode}
+		,loan_bank_subbranch = #{loanBankSubbranch}
+		,original_price = #{originalPrice}
+		,car_model = #{carModel}
+		
+		,loan_periods = #{loanPeriods}
+		,invoice_price = #{invoicePrice}
+		,rate_type = #{rateType}
+		,is_survey = #{isSurvey}
+		,bank_rate = #{bankRate}
+		
+		,company_loan_cs = #{companyLoanCs}
+		,is_advance_fund = #{isAdvanceFund}
+		,global_rate = #{globalRate}
+		,fee = #{fee}
+		,car_dealer_subsidy = #{carDealerSubsidy}
+		
+		,bank_loan_cs = #{bankLoanCs}		
+		,apply_user_company = #{applyUserCompany}
+		,apply_user_duty = #{applyUserDuty}
+		,apply_user_ghr_relation = #{applyUserGhrRelation}
+		,marry_state = #{marryState}
+		
+		,other_income_note = #{otherIncomeNote}		
+		,is_house_property = #{isHouseProperty}
+		,house_property = #{houseProperty}
+		,is_house_contract = #{isHouseContract}
+		,house_contract = #{houseContract}
+		
+		,house_invoice = #{houseInvoice}
+		,is_license = #{isLicense}
+		,license = #{license}
+		,is_site_prove = #{isSiteProve}
+		,site_prove = #{siteProve}
+		
+		,site_area = #{siteArea}
+		,car_type = #{carType}
+		,is_drice_license = #{isDriceLicense}
+		,drice_license = #{driceLicense}
+		,other_property_note = #{otherPropertyNote}
+		
+		,apply_birth_address = #{applyBirthAddress}
+		,apply_now_address = #{applyNowAddress}
+		,house_type = #{houseType}
+		,gh_birth_address = #{ghBirthAddress}
+		,guarantor1_birth_address = #{guarantor1BirthAddress}
+		
+		,guarantor2_birth_address = #{guarantor2BirthAddress}
+		,other_note = #{otherNote}
+		,oil_subsidy = #{oilSubsidy}
+		,oil_subsidy_kil = #{oilSubsidyKil}
+		,is_plat_insure = #{isPlatInsure}
+		
+		,gps_fee = #{gpsFee}
+		,gps_deduct = #{gpsDeduct}
+		,gps_fee_way = #{gpsFeeWay}
+		,ly_amount = #{lyAmount}
+		,fx_amount = #{fxAmount}
+		
+		,other_fee = #{otherFee}
+		,fee_way = #{feeWay}
+		,marry_divorce = #{marryDivorce}
+		,apply_user_hkb = #{applyUserHkb}
+		,bank_bill_pdf = #{bankBillPdf}
+		
+		,single_prove_pdf = #{singleProvePdf}
+		,income_prove_pdf = #{incomeProvePdf}
+		,live_prove_pdf = #{liveProvePdf}
+		,build_prove_pdf = #{buildProvePdf}
+		,hkb_first_page = #{hkbFirstPage}
+		
+		,hkb_main_page = #{hkbMainPage}
+		,gh_hkb = #{ghHkb}
+		,guarantor1_id_no = #{guarantor1IdNo}
+		,guarantor1_hkb = #{guarantor1Hkb}
+		,guarantor2_id_no = #{guarantor2IdNo}
+		
+		,guarantor2_hkb = #{guarantor2Hkb}
+		,house_pic = #{housePic}
+		,house_unit_pic = #{houseUnitPic}
+		,house_door_pic = #{houseDoorPic}
+		,house_room_pic = #{houseRoomPic}
+		
+		,house_customer_pic = #{houseCustomerPic}
+		,house_sale_customer_pic = #{houseSaleCustomerPic}
+		,company_name_pic = #{companyNamePic}
+		,company_place_pic = #{companyPlacePic}
+		,company_workshop_pic = #{companyWorkshopPic}
+		
+		,company_sale_customer_pic = #{companySaleCustomerPic}
+		,second_hgz = #{secondHgz}
+		,second_odometer = #{secondOdometer}
+		,second_car_front_pic = #{secondCarFrontPic}
+		,second_console_pic = #{secondConsolePic}
+		
+		,second_300_pdf = #{second300Pdf}
+		,second_qxb_pic = #{secondQxbPic}
+		,second_car_in_pic = #{secondCarInPic}
+		,second_number = #{secondNumber}
+		,other_file_pdf = #{otherFilePdf}
+		
+		,other_apply_note = #{otherApplyNote}
+		,apply_datetime = #{applyDatetime}
+		,cur_node_code = #{curNodeCode}
+		,repay_biz_code = #{repayBizCode}
+		WHERE code = #{code}
+	</update>
 
 	<update id="update_areaManagerApprove" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
