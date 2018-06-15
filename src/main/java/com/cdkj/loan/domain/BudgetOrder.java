@@ -500,7 +500,7 @@ public class BudgetOrder extends ABaseDO {
     // 节点编号
     private String curNodeCode;
 
-    // 业务编号
+    // 还款业务编号
     private String repayBizCode;
 
     /*-------辅助字段-------*/
