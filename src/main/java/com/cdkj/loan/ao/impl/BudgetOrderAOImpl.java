@@ -23,7 +23,6 @@ import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
-import com.cdkj.loan.bo.ISaleUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.PhoneUtil;
@@ -42,7 +41,7 @@ import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632120ReqIncome;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632141Req;
-import com.cdkj.loan.dto.req.XN632190Req;
+import com.cdkj.loan.dto.req.XN632200Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -85,9 +84,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private IDepartmentBO departmentBO;
-
-    @Autowired
-    private ISaleUserBO saleUserBO;
 
     @Autowired
     private ISYSUserBO sysUserBO;
@@ -374,6 +370,28 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 && !EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
                     .equals(budgetOrder.getCurNodeCode())
                 && !EBudgetOrderNode.BRANCH_PENDING_PARTS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.HEADQUARTERS_PENDING_PARTS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.CAR_BANK_LOAN_COMMIT.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.CAR_SEND_BANK_MATERIALS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.CAR_BRANCH_PENDING_PARTS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.CAR_HEADQUARTERS_PENDING_PARTS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.CAR_FEN_BANK_LOAN_COMMIT.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.FEN_CAR_SEND_LOGISTICS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.HEADQUARTERS_CAR_SEND_BANK_MATERIALS
+                    .getCode().equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.HEADQUARTERS_SEND_CONTRACT.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.FEN_CAR_BRANCH_PENDING_PARTS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.HEADQUARTERS_CAR_PENDING_PARTS.getCode()
                     .equals(budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是发件节点，不能操作");
@@ -418,8 +436,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 "当前节点不是银行放款确认提交节点，不能操作");
         }
 
-        String nextNodeCode = getNextNodeCode(budgetOrder.getCurNodeCode(),
-            EBoolean.YES.getCode());
+        String nextNodeCode = null;
+        Department department = departmentBO
+            .getDepartment(budgetOrder.getCompanyCode());
+        String parentCode = department.getParentCode();
+        if (parentCode == null) {
+            nextNodeCode = EBudgetOrderNode.CAR_BANK_LOAN_COMMIT.getCode();
+        }
+        nextNodeCode = EBudgetOrderNode.CAR_FEN_BANK_LOAN_COMMIT.getCode();
 
         BudgetOrder data = new BudgetOrder();
         data.setCurNodeCode(nextNodeCode);
@@ -510,14 +534,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void refreshCarLoanArchive(XN632190Req req) {
+    public void refreshCarLoanArchive(XN632200Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
 
-        // if (!EBudgetOrderNode.AREA_AUDIT.getCode()
-        // .equals(budgetOrder.getCurNodeCode())) {
-        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-        // "当前节点不是银行放款确认提交节点，不能操作");
-        // }
+        if (!EBudgetOrderNode.PENDING_FILE.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是待入档节点，不能操作");
+        }
 
         if (EBoolean.YES.getCode().equals(req.getIsComplete())
                 && null == req.getStorePlace()) {
@@ -588,12 +612,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.refreshCarLoanArchive(data);
 
         // 日志记录
-        // String preCurrentNode = budgetOrder.getCurNodeCode();
-        // EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-        // .get(budgetOrder.getCurNodeCode());
-        // sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-        // EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-        // currentNode.getCode(), currentNode.getValue(), req.getOperator());
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), req.getOperator());
     }
 
     @Override

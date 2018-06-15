@@ -1,11 +1,18 @@
 package com.cdkj.loan.dto.req;
 
-import org.hibernate.validator.constraints.NotBlank;
-
+/**
+ * 确认抵押完成
+ * @author: silver 
+ * @since: 2018年6月13日 下午2:48:35 
+ * @history:
+ */
 public class XN632191Req {
 
-    @NotBlank
+    // 预算单编号
     private String code;
+
+    // 操作人
+    private String operator;
 
     public String getCode() {
         return code;
@@ -14,4 +21,13 @@ public class XN632191Req {
     public void setCode(String code) {
         this.code = code;
     }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
 }

@@ -10,7 +10,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 车贷档案详细查
+ * 车辆抵押详情查
  * @author: silver 
  * @since: 2018年6月13日 下午3:02:04 
  * @history:
