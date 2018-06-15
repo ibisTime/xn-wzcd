@@ -3,6 +3,8 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 public class XN632300ReqOverdue {
+    @NotBlank
+    private String batchDatetime;// 批量日期
 
     @NotBlank
     private String realName;// 姓名
@@ -78,6 +80,14 @@ public class XN632300ReqOverdue {
 
     public void setRemainAmount(String remainAmount) {
         this.remainAmount = remainAmount;
+    }
+
+    public String getBatchDatetime() {
+        return batchDatetime;
+    }
+
+    public void setBatchDatetime(String batchDatetime) {
+        this.batchDatetime = batchDatetime;
     }
 
 }

@@ -10,7 +10,7 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632141Req;
-import com.cdkj.loan.dto.req.XN632190Req;
+import com.cdkj.loan.dto.req.XN632200Req;
 
 @Component
 public interface IBudgetOrderAO {
@@ -48,7 +48,7 @@ public interface IBudgetOrderAO {
     public void refreshCarPledgeConfirm(String code, String operator);
 
     // 车贷入档补录
-    public void refreshCarLoanArchive(XN632190Req req);
+    public void refreshCarLoanArchive(XN632200Req req);
 
     public void installGps(String code, String operator,
             List<XN632126ReqGps> gpsAzList);

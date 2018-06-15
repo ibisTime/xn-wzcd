@@ -31,7 +31,7 @@ public class NodeFlowBOImpl extends PaginableBOImpl<NodeFlow>
         NodeFlow data = null;
         if (StringUtils.isNotBlank(id)) {
             NodeFlow condition = new NodeFlow();
-            condition.setCurrentNode(id);
+            condition.setId(id);
             data = nodeFlowDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),

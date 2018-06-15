@@ -8,13 +8,12 @@ import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632197Req;
-import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 车辆档案列表查
+ * 银行放款列表查
  * @author: silver 
  * @since: 2018年6月13日 下午3:04:03 
  * @history:
@@ -31,8 +30,7 @@ public class XN632197 extends AProcessor {
         condition.setCode(req.getCode());
         condition.setCustomerName(req.getCustomerName());
         condition.setLoanBankCode(req.getLoanBankCode());
-        condition.setCurNodeCode(EBudgetOrderNode.AREA_AUDIT.getCode());
-        condition.setSaleUserId(req.getSaleUserId());
+        // condition.setCurNodeCode(EBudgetOrderNode.AREA_AUDIT.getCode());
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
