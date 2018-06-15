@@ -20,7 +20,6 @@ public class XN632030Req {
     @NotBlank
     private String bankName;
 
-    @NotBlank
     private String subbranch;
 
     // 12期
