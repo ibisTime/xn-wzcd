@@ -76,7 +76,6 @@
 		
 		<typeAlias alias="bankRate" type="com.cdkj.loan.domain.BankRate" />
 		<typeAlias alias="bankSubbranch" type="com.cdkj.loan.domain.BankSubbranch" />
-		<typeAlias alias="loanProduct" type="com.cdkj.loan.domain.LoanProduct" />
 		<typeAlias alias="loanCs" type="com.cdkj.loan.domain.LoanCs" />
 		
 		<!-- 经销商信息 -->
@@ -150,5 +149,7 @@
 		<typeAlias alias="dayRest" type="com.cdkj.loan.domain.DayRest" />
 		<typeAlias alias="repoint" type="com.cdkj.loan.domain.Repoint" />
 		<typeAlias alias="overdueRepay" type="com.cdkj.loan.domain.OverdueRepay" />
+		
+		<typeAlias alias="advanceFund" type="com.cdkj.loan.domain.AdvanceFund" />
 	</typeAliases>
 </configuration>

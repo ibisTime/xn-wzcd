@@ -212,10 +212,6 @@
 		<property name="paginableDAO" ref="bankSubbranchDAOImpl"/>
 	</bean>
 	
-	<bean id="loanProductBO" class="com.cdkj.loan.bo.impl.LoanProductBOImpl">
-		<property name="paginableDAO" ref="loanProductDAOImpl"/>
-	</bean>
-	
 	<bean id="logisticsBO" class="com.cdkj.loan.bo.impl.LogisticsBOImpl">
 		<property name="paginableDAO" ref="logisticsDAOImpl"/>
 	</bean>
@@ -377,6 +373,10 @@
 	
 	<bean id="replaceRepayApplyBO" class="com.cdkj.loan.bo.impl.ReplaceRepayApplyBOImpl">
 		<property name="paginableDAO" ref="replaceRepayApplyDAOImpl"/>
+	</bean>
+	
+	<bean id="advanceFundBO" class="com.cdkj.loan.bo.impl.AdvanceFundBOImpl">
+		<property name="paginableDAO" ref="advanceFundDAOImpl"/>
 	</bean>
 	
 </beans>

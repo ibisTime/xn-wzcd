@@ -504,7 +504,7 @@ public class BudgetOrder extends ABaseDO {
     private String fbhstatus;
 
     // 应退按揭款
-    private String shouldBackAmount;
+    private Long shouldBackAmount;
 
     // 退按揭款状态(0无需退款1银行已放款待财务退款2财务已退垫资款)
     private String shouldBackStatus;
@@ -2040,11 +2040,11 @@ public class BudgetOrder extends ABaseDO {
         this.fbhWarnDay = fbhWarnDay;
     }
 
-    public String getShouldBackAmount() {
+    public Long getShouldBackAmount() {
         return shouldBackAmount;
     }
 
-    public void setShouldBackAmount(String shouldBackAmount) {
+    public void setShouldBackAmount(Long shouldBackAmount) {
         this.shouldBackAmount = shouldBackAmount;
     }
 
