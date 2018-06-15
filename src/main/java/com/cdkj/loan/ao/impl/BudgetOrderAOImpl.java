@@ -537,11 +537,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public void refreshCarLoanArchive(XN632200Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
 
-        // if (!EBudgetOrderNode.AREA_AUDIT.getCode()
-        // .equals(budgetOrder.getCurNodeCode())) {
-        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-        // "当前节点不是银行放款确认提交节点，不能操作");
-        // }
+        if (!EBudgetOrderNode.PENDING_FILE.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是待入档节点，不能操作");
+        }
 
         if (EBoolean.YES.getCode().equals(req.getIsComplete())
                 && null == req.getStorePlace()) {
@@ -612,12 +612,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.refreshCarLoanArchive(data);
 
         // 日志记录
-        // String preCurrentNode = budgetOrder.getCurNodeCode();
-        // EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-        // .get(budgetOrder.getCurNodeCode());
-        // sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-        // EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-        // currentNode.getCode(), currentNode.getValue(), req.getOperator());
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), req.getOperator());
     }
 
     @Override
