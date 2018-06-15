@@ -15,8 +15,8 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class NodeFlowBOImpl extends PaginableBOImpl<NodeFlow> implements
-        INodeFlowBO {
+public class NodeFlowBOImpl extends PaginableBOImpl<NodeFlow>
+        implements INodeFlowBO {
 
     @Autowired
     INodeFlowDAO nodeFlowDAO;
@@ -31,7 +31,7 @@ public class NodeFlowBOImpl extends PaginableBOImpl<NodeFlow> implements
         NodeFlow data = null;
         if (StringUtils.isNotBlank(id)) {
             NodeFlow condition = new NodeFlow();
-            condition.setId(id);
+            condition.setCurrentNode(id);
             data = nodeFlowDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
