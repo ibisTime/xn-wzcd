@@ -41,7 +41,7 @@ import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632120ReqIncome;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632141Req;
-import com.cdkj.loan.dto.req.XN632190Req;
+import com.cdkj.loan.dto.req.XN632200Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -436,8 +436,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 "当前节点不是银行放款确认提交节点，不能操作");
         }
 
-        String nextNodeCode = getNextNodeCode(budgetOrder.getCurNodeCode(),
-            EBoolean.YES.getCode());
+        String nextNodeCode = null;
+        Department department = departmentBO
+            .getDepartment(budgetOrder.getCompanyCode());
+        String parentCode = department.getParentCode();
+        if (parentCode == null) {
+            nextNodeCode = EBudgetOrderNode.CAR_BANK_LOAN_COMMIT.getCode();
+        }
+        nextNodeCode = EBudgetOrderNode.CAR_FEN_BANK_LOAN_COMMIT.getCode();
 
         BudgetOrder data = new BudgetOrder();
         data.setCurNodeCode(nextNodeCode);
@@ -528,7 +534,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void refreshCarLoanArchive(XN632190Req req) {
+    public void refreshCarLoanArchive(XN632200Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
 
         // if (!EBudgetOrderNode.AREA_AUDIT.getCode()

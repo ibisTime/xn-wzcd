@@ -5,14 +5,15 @@ import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN632191Req;
+import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 车贷档案详细查
+ * 确认抵押完成
  * @author: silver 
- * @since: 2018年6月13日 下午3:02:04 
+ * @since: 2018年6月13日 下午2:42:47 
  * @history:
  */
 public class XN632191 extends AProcessor {
@@ -23,7 +24,8 @@ public class XN632191 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return budgetOrderAO.getBudgetOrder(req.getCode());
+        budgetOrderAO.refreshCarPledgeConfirm(req.getCode(), req.getOperator());
+        return new BooleanRes(true);
     }
 
     @Override

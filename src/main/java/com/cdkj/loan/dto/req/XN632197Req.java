@@ -16,9 +16,6 @@ public class XN632197Req extends AListReq {
     // 贷款银行
     private String loanBankCode;
 
-    // 业务员
-    private String saleUserId;
-
     public String getCode() {
         return code;
     }
@@ -41,14 +38,6 @@ public class XN632197Req extends AListReq {
 
     public void setLoanBankCode(String loanBankCode) {
         this.loanBankCode = loanBankCode;
-    }
-
-    public String getSaleUserId() {
-        return saleUserId;
-    }
-
-    public void setSaleUserId(String saleUserId) {
-        this.saleUserId = saleUserId;
     }
 
 }
