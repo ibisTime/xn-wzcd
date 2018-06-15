@@ -9,23 +9,17 @@ public class XN632120Req {
     // 操作人
     private String operator;
 
+    // 预算单编号
+    private String budgetOrderCode;
+
     // 处理类型(0 保存 1 发送)
     private String dealType;
-
-    // 征信单编号
-    private String creditCode;
 
     // 客户类型
     private String customerType;
 
-    // 业务员编号
-    private String saleUserId;
-
     // 汽车经销商编号
     private String carDealerCode;
-
-    // 贷款银行编号
-    private String loanBankCode;
 
     // 贷款支行编号
     private String loanBankSubbranch;
@@ -44,9 +38,6 @@ public class XN632120Req {
 
     // 利率类型
     private String rateType;
-
-    // 贷款金额
-    private String loanAmount;
 
     // 是否需要贷前调查
     private String isSurvey;
@@ -281,6 +272,14 @@ public class XN632120Req {
     @NotEmpty
     private List<XN632120ReqIncome> creditUserIncomeList;
 
+    public String getBudgetOrderCode() {
+        return budgetOrderCode;
+    }
+
+    public void setBudgetOrderCode(String budgetOrderCode) {
+        this.budgetOrderCode = budgetOrderCode;
+    }
+
     public String getApplyUserCompany() {
         return applyUserCompany;
     }
@@ -329,14 +328,6 @@ public class XN632120Req {
         this.dealType = dealType;
     }
 
-    public String getCreditCode() {
-        return creditCode;
-    }
-
-    public void setCreditCode(String creditCode) {
-        this.creditCode = creditCode;
-    }
-
     public List<String> getGpsList() {
         return gpsList;
     }
@@ -368,14 +359,6 @@ public class XN632120Req {
 
     public void setCarDealerCode(String carDealerCode) {
         this.carDealerCode = carDealerCode;
-    }
-
-    public String getLoanBankCode() {
-        return loanBankCode;
-    }
-
-    public void setLoanBankCode(String loanBankCode) {
-        this.loanBankCode = loanBankCode;
     }
 
     public String getOriginalPrice() {
@@ -416,14 +399,6 @@ public class XN632120Req {
 
     public void setRateType(String rateType) {
         this.rateType = rateType;
-    }
-
-    public String getLoanAmount() {
-        return loanAmount;
-    }
-
-    public void setLoanAmount(String loanAmount) {
-        this.loanAmount = loanAmount;
     }
 
     public String getIsSurvey() {
@@ -744,14 +719,6 @@ public class XN632120Req {
 
     public void setBankBillPdf(String bankBillPdf) {
         this.bankBillPdf = bankBillPdf;
-    }
-
-    public String getSaleUserId() {
-        return saleUserId;
-    }
-
-    public void setSaleUserId(String saleUserId) {
-        this.saleUserId = saleUserId;
     }
 
     public String getSingleProvePdf() {

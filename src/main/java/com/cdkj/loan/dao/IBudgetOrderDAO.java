@@ -9,6 +9,9 @@ import com.cdkj.loan.domain.BudgetOrder;
 public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     String NAMESPACE = IBudgetOrderDAO.class.getName().concat(".");
 
+    // 预算单页面新增预算单
+    void update(BudgetOrder data);
+
     int updateAreaManagerApprove(BudgetOrder data);
 
     int updateBranchCompanyApprove(BudgetOrder data);
@@ -42,4 +45,5 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     List<BudgetOrder> selectBudgetOrderByRoleCodeList(BudgetOrder condition,
             int start, int pageSize);
+
 }

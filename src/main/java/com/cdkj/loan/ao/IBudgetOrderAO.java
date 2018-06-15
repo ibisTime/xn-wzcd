@@ -16,7 +16,7 @@ import com.cdkj.loan.dto.req.XN632190Req;
 public interface IBudgetOrderAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addBudgetOrder(XN632120Req req);
+    public void addBudgetOrder(XN632120Req req);
 
     // 区域总经理审核
     public void approveAreaManager(String code, String operator,
