@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
+import com.cdkj.loan.bo.IAdvanceFundBO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.ICarDealerBO;
+import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IDepartmentBO;
@@ -92,6 +94,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private ILogisticsBO logisticsBO;
+
+    @Autowired
+    private IAdvanceFundBO advanceFundBO;
+
+    @Autowired
+    private ICollectBankcardBO collectBankcardBO;
 
     @Override
     @Transactional
@@ -314,13 +322,20 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                EBudgetOrderNode.SECOND_AUDIT.getCode()).getNextNode());
             // 审核通过 判断是总公司业务还是分公司业务
             Department department = departmentBO.getDepartment(budgetOrder
                 .getCompanyCode());
-            if ("".equals(department.getParentCode())) {// 总公司业务
+
+            if ("".equals(department.getParentCode())
+                    && null == department.getParentCode()) {
+                // 总公司业务
                 budgetOrder.setCurNodeCode(EAdvanceFundNode.PARENT_CONFIRM
+                    .getCode());
+
+            } else if (!"".equals(department.getParentCode())
+                    && null != department.getParentCode()) {
+                // 分公司的业务
+                budgetOrder.setCurNodeCode(EAdvanceFundNode.BRANCH_CONFIRM
                     .getCode());
             }
 
