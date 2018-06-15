@@ -582,6 +582,8 @@ public class BudgetOrder extends ABaseDO {
 
     private String operatorName;// 经办人
 
+    private User user; // 用户
+
     private String saleUserName;// 业务员
 
     public String getRoleCode() {
@@ -590,6 +592,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setRoleCode(String roleCode) {
         this.roleCode = roleCode;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getRepayBizCode() {

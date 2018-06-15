@@ -659,6 +659,9 @@
 		SELECT
 		t.code
 		,t.cur_node_code 
+		,t.customer_name
+		,t.car_dealer_code
+		,t.company_code
 		,t.insurance_company_code 
 		,t.car_color 
 		,t.car_brand 
