@@ -808,7 +808,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         budgetOrder.setDeliveryDatetime(DateUtil.strToDate(
             req.getDeliveryDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder.setIsRightInvoice(req.getIsRightInvoice());
+        Long loanAmount = budgetOrder.getLoanAmount();
+        Long currentInvoicePrice = StringValidater
+            .toLong(req.getCurrentInvoicePrice());
+        double companyLoanCs = loanAmount / currentInvoicePrice;
+        budgetOrder.setCompanyLoanCs(companyLoanCs);
+        if (companyLoanCs >= 0.6 && companyLoanCs <= 0.9) {
+            budgetOrder.setIsRightInvoice(EBoolean.YES.getCode());
+        }
+        budgetOrder.setIsRightInvoice(EBoolean.NO.getCode());
         budgetOrder.setCurrentInvoicePrice(
             StringValidater.toLong(req.getCurrentInvoicePrice()));
         budgetOrder.setInvoice(req.getInvoice());
@@ -820,5 +828,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setMotorRegCertification(req.getMotorRegCertification());
         budgetOrder.setPdPdf(req.getPdPdf());
         budgetOrder.setFbhRemark(req.getFbhRemark());
+        budgetOrderBO.entryPreservation(budgetOrder);
     }
 }

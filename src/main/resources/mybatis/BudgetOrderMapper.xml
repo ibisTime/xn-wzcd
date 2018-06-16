@@ -1223,4 +1223,20 @@
 		,make_card_remark = #{makeCardRemark}
 		WHERE code = #{code}
 	</update>
+
+	<update id="update_entryPreservation" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		delivery_datetime = #{deliveryDatetime}
+		,is_right_invoice = #{isRightInvoice}
+		,current_invoice_price = #{currentInvoicePrice}
+		,invoice = #{invoice}
+		,certification = #{certification}
+		,force_insurance = #{forceInsurance}
+		,business_insurance = #{businessInsurance}
+		,motor_reg_certification = #{motorRegCertification}
+		,pd_pdf = #{pdPdf}
+		,fbh_remark = #{fbhRemark}
+		WHERE code = #{code}
+	</update>
 </mapper>

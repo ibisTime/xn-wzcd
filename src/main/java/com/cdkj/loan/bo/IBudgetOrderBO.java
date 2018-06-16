@@ -54,4 +54,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 制卡录入
     public void refreshCardMaking(BudgetOrder condition);
 
+    // 发保合录入
+    public void entryPreservation(BudgetOrder budgetOrder);
+
 }

@@ -48,4 +48,7 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     // 制卡录入
     void refreshCardMaking(BudgetOrder condition);
+
+    // 发保合录入
+    void entryPreservation(BudgetOrder budgetOrder);
 }
