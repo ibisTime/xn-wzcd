@@ -7,6 +7,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.dto.req.XN630511Req;
+import com.cdkj.loan.dto.req.XN630512Req;
 import com.cdkj.loan.dto.req.XN630513Req;
 import com.cdkj.loan.dto.req.XN630551Req;
 import com.cdkj.loan.dto.req.XN630555Req;
@@ -22,10 +23,16 @@ public interface IRepayBizAO {
 
     public void editBankcardModify(XN630511Req req);
 
-    // 提前还款，车贷和商品分期都有
+    // 管理端提前还款
+    public void advanceRepayOss(XN630512Req req);
+
+    // 前端提前还款(保留)
     public void advanceRepay(String code, String updater, String remark);
 
     // ********************************car********************************
+
+    // 结算单申请
+    public void settleApply();
 
     // 清欠催收部审核
     public void approveByQkcsDepartment(String code, Long cutLyDeposit,
@@ -50,15 +57,14 @@ public interface IRepayBizAO {
     public void applyTrailer(XN630555Req req);
 
     // 财务打款
-    public void financialMoney(String code, String operator, String remitAmount,
-            String remitPdf);
+    public void financialMoney(String code, String operator,
+            String remitAmount, String remitPdf);
 
     // 清欠催收部拖车录入
     public void trailerEntry(XN630557Req req);
 
     // 拖车管理处理结果
-    public void trailerManage(String code, String appoveResult,
-            String operator);
+    public void trailerManage(String code, String appoveResult, String operator);
 
     // 司法诉讼结果录入
     public void judicialLitigationEntry(String code, String buyOutAmount,
@@ -72,6 +78,7 @@ public interface IRepayBizAO {
 
     // 风控主管审核
     public void riskManagerCheck(XN630563Req req);
+
     // ********************************car********************************
 
     // ********************************product********************************
@@ -90,7 +97,7 @@ public interface IRepayBizAO {
 
     public RepayBiz getRepayBiz(String code);
 
-    public Paginable<RepayBiz> queryRepayBizPageByRoleCode(int start, int limit,
-            RepayBiz condition);
+    public Paginable<RepayBiz> queryRepayBizPageByRoleCode(int start,
+            int limit, RepayBiz condition);
 
 }

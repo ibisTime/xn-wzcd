@@ -26,10 +26,6 @@ INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`locatio
 INSERT INTO `tsys_user` (`user_id`,`type`,`photo`,`login_name`,`mobile`,`login_pwd`,`login_pwd_strength`,`create_datetme`,`role_code`,`updater`,`update_datetime`,`status`,`remark`) VALUES ('USYS201800000000001','P',NULL,'admin',NULL,'fb62579e990da4e2a8f15c3d1e123438','1',now(),'RO201800000000000001','admin',now(),'0','超级用户');
 
 /*
--- Query: select `code`,`name`,`level`,`updater`,now() `update_datetime`,`remark` from tsys_role
--- Date: 2018-06-06 04:51
-*/
-/*
 -- Query: SELECT code,name,level,updater,now() update_datetime,remark FROM xn_htwt_online.tsys_role
 -- Date: 2018-06-12 12:17
 */
@@ -2413,86 +2409,9 @@ INSERT INTO `tstd_account` (`account_number`,`user_id`,`real_name`,`type`,`statu
 -- Date: 2018-05-31 09:26
 */
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_01','填写征信单','001',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_02','录入征信结果','001',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_03','风控专员审核','001',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_04','风控专员审核不通过','001',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_09','征信单完成','001',NULL);
-
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_01','填写准入申请单','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_02','风控专员审核','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_03','风控主管审核','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_04','重新填写准入申请单','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_05','面签','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_06','业务总监审核','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_07','财务垫资','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_08','重新面签','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_09','业务团队安装GPS','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_10','GPS管理员审核','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_11','业务团队车辆落户','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_12','业务团队重新安装GPS','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_13','业务贷后审核材料','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_14','驻行人员审核放款材料','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_15','驻行人员回录提交放款材料','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_16','驻行人员录入银行放款信息','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_17','财务确认银行放款','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_18','业务团队车辆抵押','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_19','驻行人员审核抵押材料','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_20','抵押提交银行','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_21','抵押完成','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_22','确认入档','002',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('002_23','还款计划','002',NULL);
-
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_01','还款中','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_02','清欠催收部审核','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_03','驻行人员审核	','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_04','总经理审核','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_05','财务审核','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_06','解除抵押','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_07','已完成','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_08','清欠催收部申请拖车','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_09','财务打款','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_10','清欠催收部拖车','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_11','清欠催收部已拖车','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_12','待用户赎回','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_13','司法诉讼','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_14','坏账','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_15','业务团队买断','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_16','业务团队租赁','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_17','清欠催收部申请赎回','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_18','风控主管审核','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_19','财务经理审核','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_20','风控主管审核不通过','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_21','财务经理审核不通过','003',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('003_22','结清剩余还款','003',NULL);
-
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('005_01','还款中','005',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('005_02','已结清','005',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('005_03','确认结清','005',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('005_04','确认不还','005',NULL);
-
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('004_01','待还款	','004',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('004_02','已还款	','004',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('004_03','已逾期待处理	','004',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('004_04','缴纳违约押金，进绿名单	','004',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('004_05','已代偿，进黄名单	','004',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('004_06','催收失败，进红名单处理	','004',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('004_07','红名单处理中	','004',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('004_08','坏账','004',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('004_09','业务团队买断	','004',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('004_10','业务团队租赁	','004',NULL);
-
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('006_01','待还款','006',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('006_02','已还款','006',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('006_03','已逾期待处理','006',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('006_04','逾期处理，进绿名单','006',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('006_05','不还，进黑名单','006',NULL);
-
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('007_01','申请作废开始','007',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('007_02','业务总监审核	','007',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('007_03','财务总监审核	','007',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('007_04','申请作废结束','007',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('007_05','作废审核不通过','007',NULL);
-
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_01','填写征信单','001',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_01','填写征信单','001',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('001_01','填写征信单','001',NULL);
 /*
 -- Query: SELECT `type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark` FROM tsys_node_flow
 -- Date: 2018-06-01 08:32

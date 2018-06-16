@@ -13,7 +13,6 @@ import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankcardBO;
-import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
@@ -25,13 +24,12 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bankcard;
-import com.cdkj.loan.domain.BizTeam;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
-import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.dto.req.XN630511Req;
+import com.cdkj.loan.dto.req.XN630512Req;
 import com.cdkj.loan.dto.req.XN630513Req;
 import com.cdkj.loan.dto.req.XN630551Req;
 import com.cdkj.loan.dto.req.XN630555Req;
@@ -83,9 +81,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Autowired
     private INodeFlowBO nodeFlowBO;
 
-    @Autowired
-    private IBizTeamBO bizTeamBO;
-
     // 变更银行卡
     @Override
     public void editBankcardNew(XN630510Req req) {
@@ -129,19 +124,62 @@ public class RepayBizAOImpl implements IRepayBizAO {
             Long overplusAmount = repayPlan.getOverplusAmount();
             amount = amount + overplusAmount;
         }
-        repayBiz.setActualRefunds(deposit);
-        repayBiz.setLoanBalance(amount);
-        String bankName = bankBO.getBank(repayBiz.getLoanBank()).getBankName();
-        repayBiz.setLoanBankName(bankName);
 
         RepayPlan overdueRepayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
             repayBiz.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
         repayBiz.setOverdueRepayPlan(overdueRepayPlan);
-        if (null != repayBiz.getTeamCode() && "" != repayBiz.getTeamCode()) {
-            BizTeam bizTeam = bizTeamBO.getBizTeam(repayBiz.getTeamCode());
-            repayBiz.setBizTeam(bizTeam);
-            SYSUser sysUser = sysUserBO.getUser(bizTeam.getCaptain());
-            repayBiz.setLeadUser(sysUser);
+    }
+
+    @Override
+    @Transactional
+    public void advanceRepayOss(XN630512Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
+        if (ERepayBizType.CAR.getCode().equals(repayBiz.getRefType())) {
+            advanceRepayCarLoanOss(req, repayBiz);
+        } else {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "暂不支持产品管理端提前还款");
+        }
+    }
+
+    // 车贷订单提前还款逻辑
+    // 1、判断还款业务是否是还款中，还款计划是否含有催收失败，进红名单处理，红名单处理中的状态，有则无法处理
+    // 2、
+    private void advanceRepayCarLoanOss(XN630512Req req, RepayBiz repayBiz) {
+        // 1、判断还款业务是否是还款中，还款计划是否含有催收失败，进红名单处理，红名单处理中的状态，有则无法处理
+        if (!ERepayBizNode.TO_REPAY.getCode().equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不处于还款中");
+        }
+
+        List<RepayPlan> planList = repayPlanBO
+            .queryRepayPlanListByRepayBizCode(repayBiz.getCode());
+        for (RepayPlan repayPlan : planList) {
+            if (ERepayPlanNode.HANDLER_TO_RED.getCode().equals(
+                repayPlan.getCurNodeCode())
+                    || ERepayPlanNode.QKCSB_APPLY_TC.getCode().equals(
+                        repayPlan.getCurNodeCode())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前有逾期未处理完成的还款计划，不能提前还款！");
+            }
+        }
+
+        // 代扣总金额
+        Long allAmount = repayBiz.getRestAmount();
+        // 代扣银行卡
+        Bankcard bankcard = bankcardBO.getBankcard(repayBiz.getBankcardCode());
+        // 必须扣全部，要么扣成功，要么扣失败，不能扣部分金额
+        Long realWithholdAmount = baofuWithhold(bankcard, allAmount);
+        // 更新还款业务
+        repayBizBO.refreshAdvanceRepayCarLoan(repayBiz, realWithholdAmount);
+        // 改变还款计划状态
+        for (RepayPlan repayPlan : planList) {
+            if (ERepayPlanNode.TO_REPAY.getCode().equals(
+                repayPlan.getCurNodeCode())) {
+                // 更新还款计划
+                repayPlanBO.repaySuccess(repayPlan,
+                    repayPlan.getMonthRepayAmount());
+            }
         }
     }
 
@@ -232,9 +270,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             for (RepayPlan repayPlan : rpList) {
                 if (ERepayPlanNode.TO_REPAY.getCode().equals(
                     repayPlan.getCurNodeCode())) {
-                    repayPlan
-                        .setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
-                    repayPlanBO.refreshRepayPlanCurNodeCode(repayPlan);
+                    repayPlanBO.repaySuccess(repayPlan, realWithholdAmount);
                 }
             }
         }

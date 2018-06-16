@@ -10,18 +10,26 @@ import java.util.Map;
  * @history:
  */
 public enum ERepayBizNode {
-    // 车贷
-    TO_REPAY("003_01", "还款中"), QKCS_DEPART_CHECK("003_02", "清欠催收部审核"), BANK_CHECK(
-            "003_03", "驻行人员审核"), MANAGER_CHECK("003_04", "总经理审核"), FINANCE_CHECK(
-            "003_05", "财务审核"), RELEASE_MORTGAGE("003_06", "解除抵押"), SETTLED(
-            "003_07", "已结清"), QKCSB_APPLY_TC("003_08", "清欠催收部申请拖车"), FINANCE_REMIT(
-            "003_09", "财务打款"), QKCSB_TOTC("003_10", "清欠催收部拖车结果待录入"), QKCSB_TC_INPUT(
-            "003_11", "清欠催收部拖车结果已录入"), JUDICIAL_LAWSUIT("003_13", "司法诉讼"), BAD_DEBT(
-            "003_14", "坏账"), TEAN_BUY_OUT("003_15", "业务团队买断"), TEAM_RENT(
-            "003_16", "业务团队租赁"), QKCSB_REDEEM_APPLY("003_17", "清欠催收部申请赎回"), RISK_MANAGER_CHECK(
-            "003_18", "风控主管审核"), FINANCE_MANAGER_CHECK("003_19", "财务经理审核"), RISK_MANAGER_CHECK_NO(
-            "003_20", "风控主管审核不通过"), FINANCE_MANAGER_CHECK_NO("003_21",
-            "财务经理审核不通过"), REDEEM_SETTLED("003_22", "结清剩余还款"),
+
+    // 车贷正常流程
+    TO_REPAY("020_01", "还款中"), COMMIT_SETTLE("020_02", "提交结算单"), FINANCE_CHECK(
+            "020_03", "财务审核"), FINANCE_CHECK_NO("020_04", "财务审核不通过"), CASH_REMIT(
+            "020_05", "出纳打款"), RELEASE_MORTGAGE_APPLY("020_06", "解除抵押申请"), RISK_INDOOR_CHECK(
+            "020_07", "风控内勤审核"), RISK_INDOOR_CHECK_NO("020_08", "风控内勤审核不通过"), RISK_MANAGER_CHECK(
+            "020_09", "风控经理审核"), RISK_MANAGER_CHECK_NO("020_10", "风控经理审核不通过"), BANK_REC_LOGIC(
+            "020_11", "驻行人员收件"), MORTGAGE_INPUT("020_12", "驻行人员回录抵押"), MORTGAGE_OVER(
+            "020_13", "抵押完成"),
+
+    // 拖车流程
+    TC_APPLY("021_01", "申请拖车"), TC_RISK_MANAGE_CHECK("021_02", "风控经理审核"), TC_RISK_MANAGE_CHECK_NO(
+            "021_03", "风控经理审核不通过"), TC_COMPANY_MANAGE_CHECK("021_04",
+            "分公司总经理审核"), TC_COMPANY_MANAGE_CHECK_NO("021_05", "分公司总经理审核不通过"), TC_RISK_LEADER_CHECK(
+            "021_06", "风控总监审核"), TC_RISK_LEADER_CHECK_NO("021_07", "风控总监审核不通过"), TC_FINANCE_CHECK(
+            "021_08", "财务经理审核"), TC_FINANCE_CHECK_NO("021_09", "财务经理审核不通过"), TC_SURE_FK(
+            "021_10", "确认放款"), TC_FK_INPUT("021_11", "录入拖车结果"), SELLED(
+            "021_12", "出售"), JUDGE("021_13", "司法诉讼"), JUDGE_FOLLOW("021_14",
+            "诉讼跟进"), JUDGE_RESULT_INPUT("021_15", "诉讼结果录入"), FINANCE_SURE_RECEIPT(
+            "021_16", "财务确认收款"),
 
     // 商品分期的节点
     PRO_TO_REPAY("005_01", "还款中"), PRO_SETTLED("005_02", "已结清"), PRO_CONFIRM_SETTLE(

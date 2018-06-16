@@ -29,6 +29,7 @@
 		<result column="fx_deposit" property="fxDeposit" />
 		<result column="first_repay_datetime" property="firstRepayDatetime" />
 		<result column="first_repay_amount" property="firstRepayAmount" />
+		<result column="bill_datetime" property="billDatetime" />
 		<result column="month_datetime" property="monthDatetime" />
 		<result column="month_amount" property="monthAmount" />
 		
@@ -41,16 +42,41 @@
 		<result column="overdue_total_deposit" property="overdueTotalDeposit" />
 		<result column="overdue_total_deposit_income" property="overdueTotalDepositIncome" />
 		<result column="total_in_deposit" property="totalInDeposit" />
-		<result column="overdue_amount" property="overdueAmount" />
+		<result column="rest_overdue_amount" property="restOverdueAmount" />
 		<result column="total_overdue_count" property="totalOverdueCount" />
 		
 		<result column="cur_overdue_count" property="curOverdueCount" />
+		<result column="rest_replace_repay_amount" property="restReplaceRepayAmount" />
+		<result column="rest_replace_repay_count" property="totalReplaceRepayCount" />
+		<result column="cur_replace_repay_count" property="curReplaceRepayCount" />
 		<result column="black_handle_note" property="blackHandleNote" />
+		
 		<result column="is_advance_settled" property="isAdvanceSettled" />
 		<result column="settle_attach" property="settleAttach" />
 		<result column="settle_datetime" property="settleDatetime" />
-		
+		<result column="deposit_receipt" property="depositReceipt" />
+		<result column="refund_bank_subbranch" property="refundBankSubbranch" />
+		<result column="refund_bank_real_name" property="refundBankRealName" />
+		<result column="refund_bankcard" property="refundBankcard" />
+		<result column="second_company_insurance" property="secondCompanyInsurance" />
+		<result column="third_company_insurance" property="thirdCompanyInsurance" />
+		<result column="release_apply_note" property="releaseApplyNote" />
 		<result column="release_datetime" property="releaseDatetime" />
+		<result column="release_note" property="releaseNote" />
+						
+	    <result column="judge_receipt_datetime" property="judgeReceiptDatetime" />
+		<result column="judge_receipt_amount" property="judgeReceiptAmount" />
+		<result column="judge_receipt_bank" property="judgeReceiptBank" />
+		<result column="judge_receipt_bankcard" property="judgeReceiptBankcard" />
+		<result column="judge_note" property="judgeNote" />
+		<result column="judge_bill_pdf" property="judgeBillPdf" />
+			
+		<result column="settle_pay_datetime" property="settlePayDatetime" />
+		<result column="settle_bank" property="settleBank" />
+		<result column="settle_bankcard" property="settleBankcard" />
+		<result column="settle_pdf" property="settlePdf" />
+		<result column="settle_note" property="settleNote" />
+		
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
 		<result column="remark" property="remark" />
@@ -119,47 +145,76 @@
 		,t.real_name
 		,t.id_kind
 		,t.id_no
+		
 		,t.bankcard_code
 		,t.ref_type
 		,t.ref_code
-		
 		,t.biz_price
 		,t.sf_rate
+		
 		,t.sf_amount
 		,t.loan_bank
 		,t.loan_amount
-		
 		,t.periods
 		,t.rest_periods
+		
 		,t.bank_rate
 		,t.loan_start_datetime
 		,t.loan_end_datetime
 		,t.bank_fk_datetime
-		
 		,t.fx_deposit
+		
 		,t.first_repay_datetime
 		,t.first_repay_amount
+		,t.bill_datetime
 		,t.month_datetime
 		,t.month_amount
-		,t.ly_deposit
 		
+		,t.ly_deposit
 		,t.cut_ly_deposit
 		,t.cur_node_code
 		,t.rest_amount
 		,t.rest_total_cost
+		
 		,t.overdue_total_deposit
 		,t.overdue_total_deposit_income
 		,t.total_in_deposit
-		
-		,t.overdue_amount
+		,t.rest_overdue_amount
 		,t.total_overdue_count
-		,t.cur_overdue_count
-		,t.black_handle_note
-		,t.is_advance_settled
 		
+		,t.cur_overdue_count
+		,t.rest_replace_repay_amount
+		,t.total_replace_repay_count
+		,t.cur_replace_repay_count
+		,t.black_handle_note
+		
+		,t.is_advance_settled
 		,t.settle_attach
 		,t.settle_datetime
+		,t.deposit_receipt
+		,t.refund_bank_subbranch
+		
+		,t.refund_bank_realName
+		,t.refund_bankcard
+		,t.second_company_insurance
+		,t.third_company_insurance
+		,t.release_apply_note
+		
 		,t.release_datetime
+		,t.release_note
+		,t.judge_receipt_datetime
+		,t.judge_receipt_amount
+		,t.judge_receipt_bank
+		
+		,t.judge_receipt_bankcard
+		,t.judge_note
+		,t.judge_bill_pdf
+		,t.settle_pay_datetime
+		,t.settle_bank
+		
+		,t.settle_bankcard
+		,t.settle_pdf
+		,t.settle_note
 		,t.updater
 		,t.update_datetime
 		
@@ -182,18 +237,19 @@
 		,t.real_name
 		,t.id_kind
 		,t.id_no
+		
 		,t.bankcard_code
 		,t.ref_type
 		,t.ref_code
-		
 		,t.biz_price
 		,t.sf_rate
+		
 		,t.sf_amount
 		,t.loan_bank
 		,t.loan_amount
-		
 		,t.periods
 		,t.rest_periods
+		
 		,t.bank_rate
 		,t.loan_start_datetime
 		,t.loan_end_datetime
@@ -202,27 +258,55 @@
 		
 		,t.first_repay_datetime
 		,t.first_repay_amount
+		,t.bill_datetime
 		,t.month_datetime
 		,t.month_amount
-		,t.ly_deposit
 		
+		,t.ly_deposit
 		,t.cut_ly_deposit
 		,t.cur_node_code
 		,t.rest_amount
 		,t.rest_total_cost
+		
 		,t.overdue_total_deposit
 		,t.overdue_total_deposit_income
 		,t.total_in_deposit
-		
-		,t.overdue_amount
+		,t.rest_overdue_amount
 		,t.total_overdue_count
-		,t.cur_overdue_count
-		,t.black_handle_note
-		,t.is_advance_settled
 		
+		,t.cur_overdue_count
+		,t.rest_replace_repay_amount
+		,t.total_replace_repay_count
+		,t.cur_replace_repay_count
+		,t.black_handle_note
+		
+		,t.is_advance_settled
 		,t.settle_attach
 		,t.settle_datetime
+		,t.deposit_receipt
+		,t.refund_bank_subbranch
+		
+		,t.refund_bank_realName
+		,t.refund_bankcard
+		,t.second_company_insurance
+		,t.third_company_insurance
+		,t.release_apply_note
+		
 		,t.release_datetime
+		,t.release_note
+		,t.judge_receipt_datetime
+		,t.judge_receipt_amount
+		,t.judge_receipt_bank
+		
+		,t.judge_receipt_bankcard
+		,t.judge_note
+		,t.judge_bill_pdf
+		,t.settle_pay_datetime
+		,t.settle_bank
+		
+		,t.settle_bankcard
+		,t.settle_pdf
+		,t.settle_note
 		,t.updater
 		,t.update_datetime
 		
@@ -258,24 +342,25 @@
 		,real_name
 		,id_kind
 		,id_no
+		
 		,bankcard_code
 		,ref_type
 		,ref_code
-		
 		,biz_price
 		,sf_rate
+		
 		,sf_amount
 		,loan_bank
 		,loan_amount
-		
 		,periods
 		,rest_periods
+		
 		,bank_rate
 		,loan_start_datetime
 		,loan_end_datetime
 		,bank_fk_datetime
-		
 		,fx_deposit
+		
 		,first_repay_datetime
 		,first_repay_amount
 		,month_datetime
@@ -290,11 +375,16 @@
 		,overdue_total_deposit
 		,overdue_total_deposit_income
 		,total_in_deposit
-		,overdue_amount
+		,rest_overdue_amount
 		,total_overdue_count
+		
 		,cur_overdue_count
+		,rest_replace_repay_amount
+		,total_replace_repay_count
+		,cur_replace_repay_count
 		,black_handle_note
 		
+		,is_advance_settled
 		,updater
 		,update_datetime
 		,remark
@@ -324,26 +414,32 @@
 		,#{loanEndDatetime}
 		,#{bankFkDatetime}
 		,#{fxDeposit}
-		,#{firstRepayDatetime}
 		
+		,#{firstRepayDatetime}
 		,#{firstRepayAmount}
+		,#{billDatetime}
 		,#{monthDatetime}
 		,#{monthAmount}
+		
 		,#{lyDeposit}
 		,#{cutLyDeposit}
-		
 		,#{curNodeCode}
 		,#{restAmount}
 		,#{restTotalCost}
+		
 		,#{overdueTotalDeposit}
 		,#{overdueTotalDepositIncome}
-		
 		,#{totalInDeposit}
-		,#{overdueAmount}
+		,#{restOverdueAmount}
 		,#{totalOverdueCount}
+		
 		,#{curOverdueCount}
+		,#{restReplaceRepayAmount}
+		,#{totalReplaceRepayCount}
+		,#{curReplaceRepayCount}
 		,#{blackHandleNote}
 		
+		,#{isAdvanceSettled}
 		,#{updater}
 		,#{updateDatetime}
 		,#{remark}
@@ -379,11 +475,22 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_repayAllAdvance" parameterType="repayBiz">
+	<update id="update_repayApply" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
+		,cut_ly_deposit = #{cutLyDeposit}
 		,is_advance_settled = #{isAdvanceSettled}
+		,settle_attach = #{settleAttach}
+	    ,settle_datetime = #{settleDatetime}
+	    
+		,deposit_receipt = #{depositReceipt}
+		,refund_bank_subbranch =#{refundBankSubbranch}
+		,refund_bank_realName =#{refundBankRealName}
+		,refund_bankcard =#{refundBankcard}
+		,second_company_insurance =#{secondCompanyInsurance}
+		
+		,third_company_insurance =#{thirdCompanyInsurance}
 		,rest_amount = #{restAmount}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
@@ -402,30 +509,7 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="confirm_settle" parameterType="repayBiz">
-		UPDATE tdh_repay_biz
-		SET
-		cur_node_code = #{curNodeCode}
-		,settle_attach = #{settleAttach}
-		,settle_datetime = #{settleDatetime}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		,remark = #{remark}
-		WHERE code = #{code}
-	</update>
-	
 	<update id="confirm_settleProduct" parameterType="repayBiz">
-		UPDATE tdh_repay_biz
-		SET
-		cur_node_code = #{curNodeCode}
-		,cut_ly_deposit = #{cutLyDeposit}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		,remark = #{remark}
-		WHERE code = #{code}
-	</update>
-	
-	<update id="update_approveByQkcsDepartment" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}

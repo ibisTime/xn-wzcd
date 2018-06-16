@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 提前还款
+ * 提前还款(管理端)
  * @author: CYL 
  * @since: 2018年5月8日 上午10:32:21 
  * @history:
@@ -24,8 +24,7 @@ public class XN630512 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repayBizBO.advanceRepay(req.getCode(), req.getUpdater(),
-            req.getRemark());
+        repayBizBO.advanceRepayOss(req);
         return new BooleanRes(true);
     }
 
