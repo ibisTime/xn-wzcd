@@ -90,72 +90,61 @@ CREATE TABLE `tdh_repay_biz` (
   `loan_amount` bigint(20) DEFAULT NULL COMMENT '贷款金额',
   `periods` int(11) DEFAULT NULL COMMENT '总期数',
   `rest_periods` int(11) DEFAULT NULL COMMENT '剩余期数',
-  
   `bank_rate` decimal(18,8) DEFAULT NULL COMMENT '银行利率',
   `loan_start_datetime` datetime DEFAULT NULL COMMENT '贷款时间起点',
   `loan_end_datetime` datetime DEFAULT NULL COMMENT '贷款时间终点',
   `bank_fk_datetime` datetime DEFAULT NULL COMMENT '银行放款时间',
   `fx_deposit` bigint(20) DEFAULT NULL COMMENT '风险保证金',
-  
   `first_repay_datetime` datetime DEFAULT NULL COMMENT '首期还款日期',
   `first_repay_amount` bigint(20) DEFAULT NULL COMMENT '首期月供金额',
   `bill_datetime` int(11) DEFAULT NULL COMMENT '每期账单日',
   `month_datetime` int(11) DEFAULT NULL COMMENT '每期还款日',
   `month_amount` bigint(20) DEFAULT NULL COMMENT '每期月供金额',
-  
   `ly_deposit` bigint(20) DEFAULT NULL COMMENT '履约保证金（可退）',
   `cut_ly_deposit` bigint(20) DEFAULT NULL COMMENT '扣除的履约保证金',
   `cur_node_code` varchar(32) DEFAULT NULL COMMENT '当前节点',
   `rest_amount` bigint(20) DEFAULT NULL COMMENT '剩余欠款',
   `rest_total_cost` bigint(20) DEFAULT NULL COMMENT '未还清收总成本',
-  
   `overdue_total_deposit` bigint(20) DEFAULT NULL COMMENT '再次逾期保证金总额',
   `overdue_total_deposit_income` bigint(20) DEFAULT NULL COMMENT '再次逾期保证金总收入',
   `total_in_deposit` bigint(20) DEFAULT NULL COMMENT '额外保证金收入',
   `rest_overdue_amount` bigint(20) DEFAULT NULL COMMENT '剩余逾期总金额',
   `total_overdue_count` int(11) DEFAULT NULL COMMENT '累计逾期期数',
-  
   `cur_overdue_count` int(11) DEFAULT NULL COMMENT '现有逾期期数',
   `rest_replace_repay_amount` bigint(20) DEFAULT NULL COMMENT '现有代偿金额',
   `total_replace_repay_count` int(11) DEFAULT NULL COMMENT '累计代偿次数',
   `cur_replace_repay_count` int(11) DEFAULT NULL COMMENT '现在代偿次数',
   `black_handle_note` text COMMENT '黑名单处理结果备案',
-  
+  `settle_datetime` datetime DEFAULT NULL COMMENT '结清时间',
   `is_advance_settled` varchar(255) DEFAULT NULL COMMENT '是否提前结清(0=正常结清 1=提前结清)',
   `settle_attach` varchar(255) DEFAULT NULL COMMENT '结清证明',
-  `settle_datetime` datetime DEFAULT NULL COMMENT '结清时间',
   `deposit_receipt` varchar(255) DEFAULT NULL COMMENT '押金单',
   `refund_bank_subbranch` varchar(255) DEFAULT NULL COMMENT '退款开户行',
-  
   `refund_bank_realName` varchar(255) DEFAULT NULL COMMENT '退款户名',
   `refund_bankcard` varchar(255) DEFAULT NULL COMMENT '退款账号',
   `second_company_insurance` varchar(255) DEFAULT NULL COMMENT '第二年按公司指定续保',
-  `third_company_insurance` varchar(255) DEFAULT NULL COMMENT '第三年按公司指定续保',
+  `thirdCompanyInsurance` varchar(255) DEFAULT NULL COMMENT '第三年按公司指定续保',
   `release_apply_note` varchar(255) DEFAULT NULL COMMENT '解除抵押说明',
-  
   `release_datetime` datetime DEFAULT NULL COMMENT '解除抵押时间',
   `release_note` varchar(255) DEFAULT NULL COMMENT '解除抵押回录说明',
+  `release_template_id` varchar(32) DEFAULT NULL COMMENT '解除抵押模板',
   `judge_receipt_datetime` datetime DEFAULT NULL COMMENT '司法诉讼收款时间',
   `judge_receipt_amount` bigint(20) DEFAULT NULL COMMENT '司法诉讼收款金额',
   `judge_receipt_bank` varchar(255) DEFAULT NULL COMMENT '司法诉讼收款银行',
-  
   `judge_receipt_bankcard` varchar(255) DEFAULT NULL COMMENT '司法诉讼收款银行账号',
   `judge_note` varchar(255) DEFAULT NULL COMMENT '司法诉讼备注',
   `judge_bill_pdf` varchar(255) DEFAULT NULL COMMENT '司法诉讼收款凭证',
   `settle_pay_datetime` datetime DEFAULT NULL COMMENT '结清付款时间',
   `settle_bank` varchar(255) DEFAULT NULL COMMENT '结清付款银行',
-  
   `settle_bankcard` varchar(255) DEFAULT NULL COMMENT '结清付款账号',
-  `settle_pdf` text DEFAULT NULL COMMENT '结清打款凭证',
-  `settle_note` text DEFAULT NULL COMMENT '结清说明',
+  `settle_pdf` text COMMENT '结清打款凭证',
+  `settle_note` text COMMENT '结清说明',
   `updater` varchar(255) DEFAULT NULL COMMENT '最近修改人',
   `update_datetime` datetime DEFAULT NULL COMMENT '最近修改时间',
-  
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `team_code` varchar(32) DEFAULT NULL COMMENT '团队编号',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='还款业务表';
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='还款业务表'
 -- ----------------------------
 --  Table structure for `tdh_repay_plan`
 -- ----------------------------

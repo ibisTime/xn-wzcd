@@ -171,6 +171,9 @@ public class RepayBiz extends ABaseDO {
     // 解除抵押回录说明
     private String releaseNote;
 
+    // 解除抵押模板
+    private String releaseTemplateId;
+
     // ********************司法诉讼打款回来的********************
 
     // 司法诉讼收款时间
@@ -292,6 +295,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setIdNo(String idNo) {
         this.idNo = idNo;
+    }
+
+    public String getReleaseTemplateId() {
+        return releaseTemplateId;
+    }
+
+    public void setReleaseTemplateId(String releaseTemplateId) {
+        this.releaseTemplateId = releaseTemplateId;
     }
 
     public String getBankcardCode() {
