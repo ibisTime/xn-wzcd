@@ -31,6 +31,12 @@ public class AmountUtil {
         return a.divide(b).doubleValue();
     }
 
+    public static double div(Long amount1, Long amount2) {
+        BigDecimal a = new BigDecimal(Double.toString(amount1));
+        BigDecimal b = new BigDecimal(Double.toString(amount2));
+        return a.divide(b).doubleValue();
+    }
+
     public static long div(Long amount, double rate) {
         BigDecimal a = new BigDecimal(amount);
         BigDecimal b = new BigDecimal(rate);

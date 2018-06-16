@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
+import com.cdkj.loan.bo.IAdvanceFundBO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.ICarDealerBO;
+import com.cdkj.loan.bo.ICarDealerProtocolBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
@@ -22,6 +24,7 @@ import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.IInsuranceCompanyBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.IRepointDetailBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
@@ -29,15 +32,21 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.PhoneUtil;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.AdvanceFund;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.CarDealer;
+import com.cdkj.loan.domain.CarDealerProtocol;
+import com.cdkj.loan.domain.CollectBankcard;
+import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.InsuranceCompany;
 import com.cdkj.loan.domain.NodeFlow;
+import com.cdkj.loan.domain.RepointDetail;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632120Req;
+import com.cdkj.loan.dto.req.XN632120ReqRepointDetail;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632200Req;
@@ -50,7 +59,12 @@ import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EButtonCode;
 import com.cdkj.loan.enums.EDealType;
+import com.cdkj.loan.enums.EIsAdvanceFund;
+import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ELogisticsType;
+import com.cdkj.loan.enums.ERateType;
+import com.cdkj.loan.enums.ERepointDetailStatus;
+import com.cdkj.loan.enums.EUseMoneyPurpose;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -98,11 +112,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Autowired
     private ILogisticsBO logisticsBO;
 
-    // @Autowired
-    // private IAdvanceFundBO advanceFundBO;
+    @Autowired
+    private IAdvanceFundBO advanceFundBO;
 
     @Autowired
     private ICollectBankcardBO collectBankcardBO;
+
+    @Autowired
+    private IRepointDetailBO repointDetailBO;
+
+    @Autowired
+    private ICarDealerProtocolBO carDealerProtocolBO;
 
     @Override
     @Transactional
@@ -257,6 +277,88 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 node.getCode(), node.getValue(), req.getOperator());
         }
 
+        List<XN632120ReqRepointDetail> list = req.getRepointDetailList();
+        for (XN632120ReqRepointDetail req1 : list) {
+
+            // 生成返点明细数据(用款用途)
+            RepointDetail data1 = new RepointDetail();
+            if (EUseMoneyPurpose.MORTGAGE.getCode().equals(// 应退按揭款
+                req1.getUseMoneyPurpose())) {
+                data1.setCompanyCode(req1.getCompanyCode());
+                data1.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE.getCode());
+            } else if (EUseMoneyPurpose.PROTOCOL_INNER.getCode()
+                .equals(req1.getUseMoneyPurpose())) {// 协议内
+                data1.setCarDealerCode(req1.getCarDealerCode());
+                data1.setUseMoneyPurpose(
+                    EUseMoneyPurpose.PROTOCOL_INNER.getCode());
+            } else if (EUseMoneyPurpose.MORTGAGE.getCode()
+                .equals(req1.getUseMoneyPurpose())
+                    && EIsAdvanceFund.NO.getCode()
+                        .equals(data.getIsAdvanceFund())) {// 应退按揭款 不垫资
+                data1.setMortgageAccountNo(req1.getMortgageAccountNo());
+                data1.setUseMoneyPurpose(
+                    EUseMoneyPurpose.PROTOCOL_INNER.getCode());
+            } else if (EUseMoneyPurpose.PROTOCOL_OUTER.getCode()
+                .equals(req1.getUseMoneyPurpose())) {
+                data1.setUseMoneyPurpose(
+                    EUseMoneyPurpose.PROTOCOL_OUTER.getCode());
+            }
+
+            data1.setBudgetCode(data.getCode());
+            data1.setUserName(data.getCustomerName());
+            CreditUser user = creditUserBO.getCreditUserByCreditCode(
+                data.getCreditCode(), ELoanRole.APPLY_USER);
+            data1.setIdNo(user.getIdNo());
+            data1.setCarType(data.getCarType());
+            data1.setLoanAmount(data.getLoanAmount());
+            data1.setBankRate(data.getBankRate());
+            CarDealerProtocol condition = new CarDealerProtocol();
+            condition.setCarDealerCode(data.getCarDealerCode());
+            CarDealerProtocol protocol = carDealerProtocolBO
+                .getCarDealerProtocol(Integer.valueOf(req1.getProtocolId()));
+            Integer key = Integer.valueOf(data.getLoanPeriods());
+
+            if (ERateType.CT.getCode().equals(data.getRateType())) {
+                switch (key) {
+                    case 12:
+                        data1.setBenchmarkRate(protocol.getPlatCtRate12());
+                        break;
+                    case 24:
+                        data1.setBenchmarkRate(protocol.getPlatCtRate24());
+                        break;
+                    case 36:
+                        data1.setBenchmarkRate(protocol.getPlatCtRate36());
+                        break;
+                    default:
+                        data1.setBenchmarkRate(protocol.getPlatCtRate12());
+                        break;
+                }
+            } else if (ERateType.ZK.getCode().equals(data.getRateType())) {
+                switch (key) {
+                    case 12:
+                        data1.setBenchmarkRate(protocol.getPlatZkRate12());
+                        break;
+                    case 24:
+                        data1.setBenchmarkRate(protocol.getPlatZkRate24());
+                        break;
+                    case 36:
+                        data1.setBenchmarkRate(protocol.getPlatZkRate36());
+                        break;
+                    default:
+                        data1.setBenchmarkRate(protocol.getPlatZkRate12());
+                        break;
+                }
+            }
+            // 服务费未处理
+            data1.setFee(fee);
+            data1.setRepointAmount(req1.getRepointAmount());
+            data1.setAccountCode(req1.getAccountCode());
+            data1.setCurNodeCode(ERepointDetailStatus.TODO_MAKE_BILL.getCode());
+
+            repointDetailBO.saveRepointDetail(data1);
+
+        }
+
         // 使用gps更新列表
         for (String gpsCode : req.getGpsList()) {
             Gps dataGps = new Gps();
@@ -368,21 +470,87 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            // 审核通过 判断是总公司业务还是分公司业务
+            // 预算单节点改为垫资审核
+            budgetOrder
+                .setCurNodeCode(EBudgetOrderNode.ADVANCE_FUND_AUDIT.getCode());
+
+            // 生成垫资单判断是总公司业务还是分公司业务
             Department department = departmentBO
                 .getDepartment(budgetOrder.getCompanyCode());
-
             if ("".equals(department.getParentCode())
                     && null == department.getParentCode()) {
-                // 总公司业务
-                budgetOrder
-                    .setCurNodeCode(EAdvanceFundNode.PARENT_CONFIRM.getCode());
+                // 总公司业务 打款给汽车经销商
+                AdvanceFund data = new AdvanceFund();
+                data.setBudgetCode(budgetOrder.getCode());
+                data.setType("1");
+                data.setCustomerName(budgetOrder.getCustomerName());
+                data.setCompanyCode(budgetOrder.getCompanyCode());
+                data.setCarDealerCode(budgetOrder.getCarDealerCode());
+                // 用款应该是预算单的应退按揭款 现在暂时用贷款金额 用款用途做完后换成用款用途的应退按揭款
+                data.setUseAmount(budgetOrder.getLoanAmount());
+                data.setLoanBankCode(budgetOrder.getLoanBankCode());
+                data.setIsAdvanceFund(budgetOrder.getIsAdvanceFund());
+                CollectBankcard condition = new CollectBankcard();
+                condition.setCompanyCode(budgetOrder.getCarDealerCode());
+                List<CollectBankcard> list = collectBankcardBO
+                    .queryCollectBankcardList(condition);
+                String collectBankcardCode = null;
+                for (CollectBankcard collectBankcard : list) {
+                    if ("2".equals(collectBankcard.getType())) {
+                        // 类型(1 普通账户 2 经销商的收款账号 3 经销商返点账号)
+                        collectBankcardCode = collectBankcard.getCode();
+                    }
+                }
+                // 汽车经销商的账号
+                data.setCollectBankcardCode(collectBankcardCode);
+                data.setUpdater(operator);
+                data.setUpdateDatetime(new Date());
+                data.setCurNodeCode(EAdvanceFundNode.PARENT_CONFIRM.getCode());
+
+                String advanceFundCode = advanceFundBO.saveAdvanceFund(data);
+
+                sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+                    EBizLogType.ADVANCE_FUND_PARENT, advanceFundCode,
+                    EAdvanceFundNode.PARENT_CONFIRM.getCode(),
+                    EAdvanceFundNode.PARENT_CONFIRM.getValue(), operator);
 
             } else if (!"".equals(department.getParentCode())
                     && null != department.getParentCode()) {
-                // 分公司的业务
-                budgetOrder
-                    .setCurNodeCode(EAdvanceFundNode.BRANCH_CONFIRM.getCode());
+                // 分公司的业务 打款给分公司
+                AdvanceFund data = new AdvanceFund();
+                data.setBudgetCode(budgetOrder.getCode());
+                data.setType("2");
+                data.setCustomerName(budgetOrder.getCustomerName());
+                data.setCompanyCode(budgetOrder.getCompanyCode());
+                data.setCarDealerCode(budgetOrder.getCarDealerCode());
+                // 用款应该是预算单的应退按揭款 现在暂时用贷款金额 用款用途做完后换成用款用途的应退按揭款
+                data.setUseAmount(budgetOrder.getLoanAmount());
+                data.setLoanBankCode(budgetOrder.getLoanBankCode());
+                data.setIsAdvanceFund(budgetOrder.getIsAdvanceFund());
+                CollectBankcard condition = new CollectBankcard();
+                condition.setCompanyCode(budgetOrder.getCompanyCode());
+                List<CollectBankcard> list = collectBankcardBO
+                    .queryCollectBankcardList(condition);
+                String collectBankcardCode = null;
+                for (CollectBankcard collectBankcard : list) {
+                    if ("1".equals(collectBankcard.getType())) {
+                        // 类型(1 普通账户 2 经销商的收款账号 3 经销商返点账号)
+                        collectBankcardCode = collectBankcard.getCode();
+                    }
+                }
+                // 分公司的账号
+                data.setCollectBankcardCode(collectBankcardCode);
+                data.setUpdater(operator);
+                data.setUpdateDatetime(new Date());
+                data.setCurNodeCode(EAdvanceFundNode.BRANCH_CONFIRM.getCode());
+
+                String advanceFundCode = advanceFundBO.saveAdvanceFund(data);
+
+                sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+                    EBizLogType.ADVANCE_FUND_BRANCH, advanceFundCode,
+                    EAdvanceFundNode.BRANCH_CONFIRM.getCode(),
+                    EAdvanceFundNode.BRANCH_CONFIRM.getValue(), operator);
+
             }
         } else {
             budgetOrder

@@ -8,7 +8,7 @@ package com.cdkj.loan.enums;
  */
 public enum ERepointStatus {
 
-    TODO("0", "待返点"), HANDLED("1", "已返点");
+    TODO("0", "待打款"), HANDLED("1", "已打款");
 
     ERepointStatus(String code, String value) {
         this.code = code;

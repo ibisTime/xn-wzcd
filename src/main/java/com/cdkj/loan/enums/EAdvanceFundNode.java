@@ -1,5 +1,8 @@
 package com.cdkj.loan.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 垫资节点
  * @author: jiafr 
@@ -16,6 +19,14 @@ public enum EAdvanceFundNode {
             "004_03", "省分公司总经理审核"), BRANCH_MAKE_BILL("004_04", "分公司制单"), BRANCH_COMPANY(
             "004_05", "确认打款给分公司"), BRANCH_CAR_DEALER("004_06", "确认打款给车行"), BRANCH_AGAIN(
             "004_07", "重新确认用款单");
+
+    public static Map<String, EAdvanceFundNode> getMap() {
+        Map<String, EAdvanceFundNode> map = new HashMap<String, EAdvanceFundNode>();
+        for (EAdvanceFundNode node : EAdvanceFundNode.values()) {
+            map.put(node.getCode(), node);
+        }
+        return map;
+    }
 
     EAdvanceFundNode(String code, String value) {
         this.code = code;

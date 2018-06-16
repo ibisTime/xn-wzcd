@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IRepointDetailDAO">
+	<resultMap id="repointDetail_DB_Result" type="repointDetail">
+		<result column="code" property="code" />
+		<result column="budget_code" property="budgetCode" />
+		<result column="repoint_code" property="repointCode" />
+		<result column="user_name" property="userName" />
+		<result column="id_no" property="idNo" />
+		<result column="car_dealer_code" property="carDealerCode" />
+		<result column="company_code" property="companyCode" />
+		<result column="car_type" property="carType" />
+		<result column="loan_amount" property="loanAmount" />
+		<result column="bank_rate" property="bankRate" />
+		<result column="benchmark_rate" property="benchmarkRate" />
+		<result column="fee" property="fee" />
+		<result column="use_money_purpose" property="useMoneyPurpose" />
+		<result column="repoint_amount" property="repointAmount" />
+		<result column="account_code" property="accountCode" />
+		<result column="mortgage_account_no" property="mortgageAccountNo" />
+		<result column="cur_node_code" property="curNodeCode" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="budgetCode != null and budgetCode != '' ">
+				AND t.budget_code = #{budgetCode}
+			</if>
+			<if test="carDealerCode != null and carDealerCode != '' ">
+				AND t.car_dealer_code = #{carDealerCode}
+			</if>
+			<if test="useMoneyPurpose != null and useMoneyPurpose != '' ">
+				AND t.use_money_purpose = #{useMoneyPurpose}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_repointDetail" parameterType="repointDetail" resultMap="repointDetail_DB_Result">
+		SELECT
+		t.code
+		,t.budget_code
+		,t.repoint_code
+		,t.user_name
+		,t.id_no
+		,t.car_dealer_code
+		,t.company_code
+		,t.car_type
+		,t.loan_amount
+		,t.bank_rate
+		,t.benchmark_rate
+		,t.fee
+		,t.use_money_purpose
+		,t.repoint_amount
+		,t.account_code
+		,t.mortgage_account_no
+		,t.cur_node_code
+		FROM
+		tdqt_repoint_detail t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_repointDetail_count" parameterType="repointDetail"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdqt_repoint_detail t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_repointDetail" parameterType="repointDetail">
+		INSERT INTO
+		tdqt_repoint_detail(
+		code
+		,budget_code
+		,repoint_code
+		,user_name
+		,id_no
+		,car_dealer_code
+		,company_code
+		,car_type
+		,loan_amount
+		,bank_rate
+		,benchmark_rate
+		,fee
+		,use_money_purpose
+		,repoint_amount
+		,account_code
+		,mortgage_account_no
+		,cur_node_code
+		)
+		VALUES(
+		#{code}
+		,#{budgetCode}
+		,#{repointCode}
+		,#{userName}
+		,#{idNo}
+		,#{carDealerCode}
+		,#{companyCode}
+		,#{carType}
+		,#{loanAmount}
+		,#{bankRate}
+		,#{benchmarkRate}
+		,#{fee}
+		,#{useMoneyPurpose}
+		,#{repointAmount}
+		,#{accountCode}
+		,#{mortgageAccountNo}
+		,#{curNodeCode}
+		)
+	</insert>
+
+	<update id="update_repointDetail" parameterType="repointDetail">
+		UPDATE tdqt_repoint_detail
+		SET
+		budget_code = #{budgetCode}
+		,repoint_code = #{repointCode}
+		,user_name = #{userName}
+		,id_no = #{idNo}
+		,car_dealer_code = #{carDealerCode}
+		,company_code = #{companyCode}
+		,car_type = #{carType}
+		,loan_amount = #{loanAmount}
+		,bank_rate = #{bankRate}
+		,benchmark_rate = #{benchmarkRate}
+		,fee = #{fee}
+		,use_money_purpose = #{useMoneyPurpose}
+		,repoint_amount = #{repointAmount}
+		,account_code = #{accountCode}
+		,mortgage_account_no = #{mortgageAccountNo}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>

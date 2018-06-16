@@ -328,12 +328,25 @@ public class XN632120Req {
     @NotEmpty
     private List<String> gpsList;
 
+    // 用款用途
+    @NotEmpty
+    private List<XN632120ReqRepointDetail> repointDetailList;
+
     // 征信人员收入
     // @NotEmpty
     // private List<XN632120ReqIncome> creditUserIncomeList;
 
     public String getBudgetOrderCode() {
         return budgetOrderCode;
+    }
+
+    public List<XN632120ReqRepointDetail> getRepointDetailList() {
+        return repointDetailList;
+    }
+
+    public void setRepointDetailList(
+            List<XN632120ReqRepointDetail> repointDetailList) {
+        this.repointDetailList = repointDetailList;
     }
 
     public void setBudgetOrderCode(String budgetOrderCode) {

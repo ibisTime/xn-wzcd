@@ -9,20 +9,25 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "overdueRepay";
+    private static String key = "repointDetail";
 
     // 实体名称
-    private static String keyName = "逾期还款表";
+    private static String keyName = "返点明细表";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdq_overdue_repay";
+    private static String dbname = "tdqt_repoint_detail";
 
-    private static String[] DBwords = { "id", "overdue_code", "repay_biz_code" };
+    private static String[] DBwords = { "code", "budget_code", "repoint_code",
+            "user_name", "id_no", "car_dealer_code", "car_type", "loan_amount",
+            "bank_rate", "benchmark_rate", "fee", "use_money_purpose",
+            "repoint_amount", "account_code", "cur_node_code" };
 
-    private static String[] DBwordsName = { "序号", "逾期名单编号", "还款业务编号" };
+    private static String[] DBwordsName = { "编号", "预算单编号", "返点编号", "客户姓名",
+            "身份证号", "汽车经销商编号", "车辆型号", "贷款金额", "银行实际利率", "基准利率", "服务费", "用款用途",
+            "返点金额", "账号编号", "节点(0待制单1已制单待打款2已打款)" };
 
     public void testname() throws Exception {
     }
@@ -35,7 +40,7 @@ public class SCDM_IDAO {
     public static void main(String[] args) {
 
         System.out.println("*********开始打印*********");
-        String path = "/Users/xieyj/Desktop/temp";
+        String path = "/Users/hp/Desktop/temp";
 
         File DOMAINfile = new File(path, Key + ".java");
 
