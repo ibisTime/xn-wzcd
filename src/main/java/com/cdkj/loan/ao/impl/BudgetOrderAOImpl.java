@@ -41,6 +41,7 @@ import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632200Req;
+import com.cdkj.loan.dto.req.XN632220Req;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -800,5 +801,24 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         condition.setBankCardNumber(bankCardNumber);
         condition.setMakeCardRemark(makeCardRemark);
         budgetOrderBO.refreshCardMaking(condition);
+    }
+
+    @Override
+    public void entryPreservation(XN632220Req req) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        budgetOrder.setDeliveryDatetime(DateUtil.strToDate(
+            req.getDeliveryDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setIsRightInvoice(req.getIsRightInvoice());
+        budgetOrder.setCurrentInvoicePrice(
+            StringValidater.toLong(req.getCurrentInvoicePrice()));
+        budgetOrder.setInvoice(req.getInvoice());
+        budgetOrder.setCertification(req.getCertification());
+        budgetOrder
+            .setForceInsurance(StringValidater.toLong(req.getForceInsurance()));
+        budgetOrder.setBusinessInsurance(
+            StringValidater.toLong(req.getBusinessInsurance()));
+        budgetOrder.setMotorRegCertification(req.getMotorRegCertification());
+        budgetOrder.setPdPdf(req.getPdPdf());
+        budgetOrder.setFbhRemark(req.getFbhRemark());
     }
 }

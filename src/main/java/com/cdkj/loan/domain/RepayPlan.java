@@ -85,19 +85,19 @@ public class RepayPlan extends ABaseDO {
     private int remindCount;
 
     // 实际代偿金额
-    private Long realReplaceRepayAmount;
+    private Long replaceRealRepayAmount;
 
     // 代偿是否缴纳
-    private String isReplaceRepay;
+    private String replaceIsRepay;
 
     // 代偿时间
     private Date replaceRepayDatetime;
 
-    // 收回代偿金额
-    private Long backReplaceRepayAmount;
+    // 代偿收回金额
+    private Long replaceBackRepayAmount;
 
-    // 收回代偿时间
-    private Date backReplaceRepayDatetime;
+    // 代偿收回时间
+    private Date replaceBackRepayDatetime;
 
     // ******************处理数据******************
     // 催收方式
