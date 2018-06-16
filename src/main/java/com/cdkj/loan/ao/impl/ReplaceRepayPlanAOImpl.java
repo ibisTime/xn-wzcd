@@ -7,13 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IReplaceRepayPlanAO;
+import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IReplaceRepayApplyBO;
 import com.cdkj.loan.bo.IReplaceRepayPlanBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.ReplaceRepayApply;
 import com.cdkj.loan.domain.ReplaceRepayPlan;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632330Req;
 import com.cdkj.loan.dto.req.XN632335Req;
 import com.cdkj.loan.enums.EBoolean;
@@ -33,6 +37,12 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
 
     @Autowired
     private IReplaceRepayApplyBO replaceRepayApplyBO;
+
+    @Autowired
+    private IBankBO bankBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     public String addReplaceRepayPlan(XN632330Req req) {
@@ -175,18 +185,54 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
     @Override
     public Paginable<ReplaceRepayPlan> queryReplaceRepayPlanPage(int start,
             int limit, ReplaceRepayPlan condition) {
-        return replaceRepayPlanBO.getPaginable(start, limit, condition);
+        Paginable<ReplaceRepayPlan> page = replaceRepayPlanBO
+            .getPaginable(start, limit, condition);
+        List<ReplaceRepayPlan> list = page.getList();
+        for (ReplaceRepayPlan replaceRepayPlan : list) {
+            init(replaceRepayPlan);
+        }
+        return page;
     }
 
     @Override
     public List<ReplaceRepayPlan> queryReplaceRepayPlanList(
             ReplaceRepayPlan condition) {
-        return replaceRepayPlanBO.queryReplaceRepayPlanList(condition);
+        List<ReplaceRepayPlan> list = replaceRepayPlanBO
+            .queryReplaceRepayPlanList(condition);
+        for (ReplaceRepayPlan replaceRepayPlan : list) {
+            init(replaceRepayPlan);
+        }
+        return list;
     }
 
     @Override
     public ReplaceRepayPlan getReplaceRepayPlan(String code) {
-        return replaceRepayPlanBO.getReplaceRepayPlan(code);
+        ReplaceRepayPlan replaceRepayPlan = replaceRepayPlanBO
+            .getReplaceRepayPlan(code);
+        init(replaceRepayPlan);
+        return replaceRepayPlan;
+    }
+
+    private void init(ReplaceRepayPlan replaceRepayPlan) {
+        Bank bank = bankBO.getBank(replaceRepayPlan.getRepayBank());
+        if (null != bank) {
+            replaceRepayPlan.setRepayBankName(bank.getBankName());
+        }
+
+        SYSUser user = sysUserBO.getUser(replaceRepayPlan.getRepayUser());
+        if (null != user) {
+            replaceRepayPlan.setRepayUserName(user.getRealName());
+        }
+
+        user = sysUserBO.getUser(replaceRepayPlan.getCustomerUserId());
+        if (null != user) {
+            replaceRepayPlan.setCustomerUserName(user.getRealName());
+        }
+
+        user = sysUserBO.getUser(replaceRepayPlan.getUpdater());
+        if (null != user) {
+            replaceRepayPlan.setUpdaterName(user.getRealName());
+        }
     }
 
 }
