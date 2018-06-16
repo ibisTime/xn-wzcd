@@ -51,4 +51,13 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     // 发保合录入
     void entryPreservation(BudgetOrder budgetOrder);
+
+    // 发票不匹配申请
+    void invoiceMismatchApply(BudgetOrder budgetOrder);
+
+    // 审核
+    void approveApply(BudgetOrder budgetOrder);
+
+    // 二审
+    void twoApproveApply(BudgetOrder budgetOrder);
 }
