@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN632052Req {
     // 编号
     @NotBlank
-    private String id;
+    private String code;
 
     // 简称
     @NotBlank
@@ -68,12 +68,12 @@ public class XN632052Req {
     // 备注
     private String remark;
 
-    public String getId() {
-        return id;
+    public String getCode() {
+        return code;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getAbbrName() {

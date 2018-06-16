@@ -8,8 +8,10 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBankSubbranchDAO;
 import com.cdkj.loan.domain.BankSubbranch;
+import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -26,8 +28,18 @@ public class BankSubbranchBOImpl extends PaginableBOImpl<BankSubbranch>
     private IBankSubbranchDAO bankSubbranchDAO;
 
     @Override
-    public int saveBankSubbranch(BankSubbranch data) {
-        return bankSubbranchDAO.insert(data);
+    public String saveBankSubbranch(BankSubbranch data) {
+        String code = null;
+        if (data != null) {
+            if (data.getCode() == null) {
+                code = OrderNoGenerater
+                    .generate(EGeneratePrefix.BANKSUBBRANCH.getCode());
+                data.setCode(code);
+            }
+            bankSubbranchDAO.insert(data);
+        }
+
+        return code;
     }
 
     @Override

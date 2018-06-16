@@ -12,7 +12,7 @@ import com.cdkj.loan.domain.BankSubbranch;
  * @history:
  */
 public interface IBankSubbranchBO extends IPaginableBO<BankSubbranch> {
-    public int saveBankSubbranch(BankSubbranch data);
+    public String saveBankSubbranch(BankSubbranch data);
 
     public int dropBankSubbranch(BankSubbranch data);
 

@@ -28,7 +28,7 @@ public enum EGeneratePrefix {
             "CB", "收款账号"), CARDEALER("CD", "经销商信息表"), CARDEALERPROTOCOL("CDT",
             "经销商协议表"),
 
-    BUDGET("BG", "预订单"), GPS("G", "GPS"), BANK("BA", "银行"), LOGISTICS("L",
+    BUDGET("BG", "预订单"), GPS("G", "GPS"), BANK("BA", "银行"), BANKSUBBRANCH("BS", "支行"), LOGISTICS("L",
 
     "资料传递"), BUDGETORDER("BO", "预算单"), LOAN_PRODUCT("LP", "贷款产品"), GPSAZ(
             "GPSAZ", "gps安装"), GPS_APPLY("GA", "GPS申领"), BUDGET_ORDER_FEE(

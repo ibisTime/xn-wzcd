@@ -18,11 +18,11 @@ public interface IBankSubbranchAO {
 
     public long addBankSubbranch(XN632050Req req);
 
-    public int dropBankSubbranch(int id);
+    public int dropBankSubbranch(String code);
 
     public int editBankSubbranch(XN632052Req req);
 
-    public BankSubbranch getBankSubbranch(int id);
+    public BankSubbranch getBankSubbranch(String code);
 
     public Paginable<BankSubbranch> queryBankSubbranchPage(int start, int limit,
             BankSubbranch condition);
