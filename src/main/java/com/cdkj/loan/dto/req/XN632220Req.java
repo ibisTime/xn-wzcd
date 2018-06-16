@@ -1,32 +1,42 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class XN632220Req {
 
     // 预算单编号
+    @NotBlank
     private String code;
 
     // 提车日期
+    @NotBlank
     private String deliveryDatetime;
 
     // 发票是否正确
     private String isRightInvoice;
 
     // 现发票价
+    @NotBlank
     private String currentInvoicePrice;
 
     // 发票
+    @NotBlank
     private String invoice;
 
     // 合格证
+    @NotBlank
     private String certification;
 
     // 交强险
+    @NotBlank
     private String forceInsurance;
 
     // 商业险
+    @NotBlank
     private String businessInsurance;
 
     // 机动车登记证书
+    @NotBlank
     private String motorRegCertification;
 
     // 批单
@@ -36,6 +46,7 @@ public class XN632220Req {
     private String fbhRemark;
 
     // 操作人
+    @NotBlank
     private String operator;
 
     public String getCode() {
