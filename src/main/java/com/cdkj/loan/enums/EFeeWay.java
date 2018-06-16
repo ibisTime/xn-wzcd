@@ -1,16 +1,17 @@
 package com.cdkj.loan.enums;
 
 /**
- * 返点状态
+ * 手续费收取方式
  * @author: jiafr 
- * @since: 2018年6月9日 下午6:38:51 
+ * @since: 2018年6月16日 下午3:26:38 
  * @history:
  */
-public enum ERepointStatus {
+public enum EFeeWay {
 
-    TODO("0", "待打款"), HANDLED("1", "已打款");
+    TRANSFER_ACCOUNTS("1", "转账"), MORTGAGE("2", "按揭款"), REPOINT("3", "返点"), NO_FEE(
+            "4", "不收费");
 
-    ERepointStatus(String code, String value) {
+    EFeeWay(String code, String value) {
         this.code = code;
         this.value = value;
     }

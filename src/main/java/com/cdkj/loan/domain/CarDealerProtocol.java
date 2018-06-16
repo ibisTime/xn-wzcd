@@ -15,73 +15,73 @@ public class CarDealerProtocol extends ABaseDO {
 
     private String bankCode;// 银行编号
 
-    private String platCtRate12;// 我司12期基准利率
+    private Double platCtRate12;// 我司12期基准利率
 
-    private String platCtRate24;// 我司24期基准利率
+    private Double platCtRate24;// 我司24期基准利率
 
-    private String platCtRate36;// 我司36期基准利率
+    private Double platCtRate36;// 我司36期基准利率
 
-    private String platZkRate12;// 我司12期基准利率
+    private Double platZkRate12;// 我司12期基准利率
 
-    private String platZkRate24;// 我司24期基准利率
+    private Double platZkRate24;// 我司24期基准利率
 
-    private String platZkRate36;// 我司36期基准利率
+    private Double platZkRate36;// 我司36期基准利率
 
     private String assureType;// 担保费类型(1单笔/2贷款额百分比)
 
-    private String assureFee;// 单笔担保费
+    private Long assureFee;// 单笔担保费
 
-    private String assureRate;// 担保费贷款额百分比
+    private Double assureRate;// 担保费贷款额百分比
 
     private String dzType;// 垫资费类型(1单笔/2贷款额百分比)
 
-    private String dzFee;// 单笔垫资费
+    private Long dzFee;// 单笔垫资费
 
-    private String dzRate;// 垫资费贷款额百分比
+    private Double dzRate;// 垫资费贷款额百分比
 
     private String lyAmountType;// 履约保证金类型(1单笔/2贷款额百分比)
 
-    private String lyAmountFee;// 单笔履约保证金
+    private Long lyAmountFee;// 单笔履约保证金
 
-    private String lyAmountRate;// 履约保证金贷款额百分比
+    private Double lyAmountRate;// 履约保证金贷款额百分比
 
     private String gpsType;// GPS类型(1单笔/2贷款额百分比)
 
-    private String gpsFee;// 单笔GPS费
+    private Long gpsFee;// 单笔GPS费
 
-    private String gpsRate;// GPS垫资费贷款额百分比
+    private Double gpsRate;// GPS垫资费贷款额百分比
 
     private String otherType;// 杂费类型(1单笔/2贷款额百分比)
 
-    private String otherFee;// 单笔杂费
+    private Long otherFee;// 单笔杂费
 
-    private String otherRate;// 杂费贷款额百分比
+    private Double otherRate;// 杂费贷款额百分比
 
     private String introduceType;// 介绍费类型(1单笔/2贷款额百分比)
 
-    private String introduceFee;// 单笔介绍费
+    private Long introduceFee;// 单笔介绍费
 
-    private String introduceRate;// 介绍费贷款额百分比
+    private Double introduceRate;// 介绍费贷款额百分比
 
     private String returnPointType;// 返点类型(1单笔/2贷款额百分比)
 
-    private String returnPointFee;// 单笔返点
+    private Long returnPointFee;// 单笔返点
 
-    private String returnPointRate;// 返点贷款额百分比
+    private Double returnPointRate;// 返点贷款额百分比
 
     private String isDz;// 是否垫资(1 是 0 否)
 
     private String insuAgencyYear1Type;// 1年保险代理费类型(1平台/2车行)
 
-    private String insuAgencyYear1Fee;// 1年保险代理费
+    private Long insuAgencyYear1Fee;// 1年保险代理费
 
     private String insuAgencyYear2Type;// 2年保险代理费类型(1平台/2车行)
 
-    private String insuAgencyYear2Fee;// 2年保险代理费
+    private Long insuAgencyYear2Fee;// 2年保险代理费
 
     private String insuAgencyYear3Type;// 3年保险代理费类型(1平台/2车行)
 
-    private String insuAgencyYear3Fee;// 3年保险代理费
+    private Long insuAgencyYear3Fee;// 3年保险代理费
 
     public int getId() {
         return id;
@@ -107,51 +107,51 @@ public class CarDealerProtocol extends ABaseDO {
         this.bankCode = bankCode;
     }
 
-    public String getPlatCtRate12() {
+    public Double getPlatCtRate12() {
         return platCtRate12;
     }
 
-    public void setPlatCtRate12(String platCtRate12) {
+    public void setPlatCtRate12(Double platCtRate12) {
         this.platCtRate12 = platCtRate12;
     }
 
-    public String getPlatCtRate24() {
+    public Double getPlatCtRate24() {
         return platCtRate24;
     }
 
-    public void setPlatCtRate24(String platCtRate24) {
+    public void setPlatCtRate24(Double platCtRate24) {
         this.platCtRate24 = platCtRate24;
     }
 
-    public String getPlatCtRate36() {
+    public Double getPlatCtRate36() {
         return platCtRate36;
     }
 
-    public void setPlatCtRate36(String platCtRate36) {
+    public void setPlatCtRate36(Double platCtRate36) {
         this.platCtRate36 = platCtRate36;
     }
 
-    public String getPlatZkRate12() {
+    public Double getPlatZkRate12() {
         return platZkRate12;
     }
 
-    public void setPlatZkRate12(String platZkRate12) {
+    public void setPlatZkRate12(Double platZkRate12) {
         this.platZkRate12 = platZkRate12;
     }
 
-    public String getPlatZkRate24() {
+    public Double getPlatZkRate24() {
         return platZkRate24;
     }
 
-    public void setPlatZkRate24(String platZkRate24) {
+    public void setPlatZkRate24(Double platZkRate24) {
         this.platZkRate24 = platZkRate24;
     }
 
-    public String getPlatZkRate36() {
+    public Double getPlatZkRate36() {
         return platZkRate36;
     }
 
-    public void setPlatZkRate36(String platZkRate36) {
+    public void setPlatZkRate36(Double platZkRate36) {
         this.platZkRate36 = platZkRate36;
     }
 
@@ -163,19 +163,19 @@ public class CarDealerProtocol extends ABaseDO {
         this.assureType = assureType;
     }
 
-    public String getAssureFee() {
+    public Long getAssureFee() {
         return assureFee;
     }
 
-    public void setAssureFee(String assureFee) {
+    public void setAssureFee(Long assureFee) {
         this.assureFee = assureFee;
     }
 
-    public String getAssureRate() {
+    public Double getAssureRate() {
         return assureRate;
     }
 
-    public void setAssureRate(String assureRate) {
+    public void setAssureRate(Double assureRate) {
         this.assureRate = assureRate;
     }
 
@@ -187,19 +187,19 @@ public class CarDealerProtocol extends ABaseDO {
         this.dzType = dzType;
     }
 
-    public String getDzFee() {
+    public Long getDzFee() {
         return dzFee;
     }
 
-    public void setDzFee(String dzFee) {
+    public void setDzFee(Long dzFee) {
         this.dzFee = dzFee;
     }
 
-    public String getDzRate() {
+    public Double getDzRate() {
         return dzRate;
     }
 
-    public void setDzRate(String dzRate) {
+    public void setDzRate(Double dzRate) {
         this.dzRate = dzRate;
     }
 
@@ -211,19 +211,19 @@ public class CarDealerProtocol extends ABaseDO {
         this.lyAmountType = lyAmountType;
     }
 
-    public String getLyAmountFee() {
+    public Long getLyAmountFee() {
         return lyAmountFee;
     }
 
-    public void setLyAmountFee(String lyAmountFee) {
+    public void setLyAmountFee(Long lyAmountFee) {
         this.lyAmountFee = lyAmountFee;
     }
 
-    public String getLyAmountRate() {
+    public Double getLyAmountRate() {
         return lyAmountRate;
     }
 
-    public void setLyAmountRate(String lyAmountRate) {
+    public void setLyAmountRate(Double lyAmountRate) {
         this.lyAmountRate = lyAmountRate;
     }
 
@@ -235,19 +235,19 @@ public class CarDealerProtocol extends ABaseDO {
         this.gpsType = gpsType;
     }
 
-    public String getGpsFee() {
+    public Long getGpsFee() {
         return gpsFee;
     }
 
-    public void setGpsFee(String gpsFee) {
+    public void setGpsFee(Long gpsFee) {
         this.gpsFee = gpsFee;
     }
 
-    public String getGpsRate() {
+    public Double getGpsRate() {
         return gpsRate;
     }
 
-    public void setGpsRate(String gpsRate) {
+    public void setGpsRate(Double gpsRate) {
         this.gpsRate = gpsRate;
     }
 
@@ -259,19 +259,19 @@ public class CarDealerProtocol extends ABaseDO {
         this.otherType = otherType;
     }
 
-    public String getOtherFee() {
+    public Long getOtherFee() {
         return otherFee;
     }
 
-    public void setOtherFee(String otherFee) {
+    public void setOtherFee(Long otherFee) {
         this.otherFee = otherFee;
     }
 
-    public String getOtherRate() {
+    public Double getOtherRate() {
         return otherRate;
     }
 
-    public void setOtherRate(String otherRate) {
+    public void setOtherRate(Double otherRate) {
         this.otherRate = otherRate;
     }
 
@@ -283,19 +283,19 @@ public class CarDealerProtocol extends ABaseDO {
         this.introduceType = introduceType;
     }
 
-    public String getIntroduceFee() {
+    public Long getIntroduceFee() {
         return introduceFee;
     }
 
-    public void setIntroduceFee(String introduceFee) {
+    public void setIntroduceFee(Long introduceFee) {
         this.introduceFee = introduceFee;
     }
 
-    public String getIntroduceRate() {
+    public Double getIntroduceRate() {
         return introduceRate;
     }
 
-    public void setIntroduceRate(String introduceRate) {
+    public void setIntroduceRate(Double introduceRate) {
         this.introduceRate = introduceRate;
     }
 
@@ -307,19 +307,19 @@ public class CarDealerProtocol extends ABaseDO {
         this.returnPointType = returnPointType;
     }
 
-    public String getReturnPointFee() {
+    public Long getReturnPointFee() {
         return returnPointFee;
     }
 
-    public void setReturnPointFee(String returnPointFee) {
+    public void setReturnPointFee(Long returnPointFee) {
         this.returnPointFee = returnPointFee;
     }
 
-    public String getReturnPointRate() {
+    public Double getReturnPointRate() {
         return returnPointRate;
     }
 
-    public void setReturnPointRate(String returnPointRate) {
+    public void setReturnPointRate(Double returnPointRate) {
         this.returnPointRate = returnPointRate;
     }
 
@@ -339,11 +339,11 @@ public class CarDealerProtocol extends ABaseDO {
         this.insuAgencyYear1Type = insuAgencyYear1Type;
     }
 
-    public String getInsuAgencyYear1Fee() {
+    public Long getInsuAgencyYear1Fee() {
         return insuAgencyYear1Fee;
     }
 
-    public void setInsuAgencyYear1Fee(String insuAgencyYear1Fee) {
+    public void setInsuAgencyYear1Fee(Long insuAgencyYear1Fee) {
         this.insuAgencyYear1Fee = insuAgencyYear1Fee;
     }
 
@@ -355,11 +355,11 @@ public class CarDealerProtocol extends ABaseDO {
         this.insuAgencyYear2Type = insuAgencyYear2Type;
     }
 
-    public String getInsuAgencyYear2Fee() {
+    public Long getInsuAgencyYear2Fee() {
         return insuAgencyYear2Fee;
     }
 
-    public void setInsuAgencyYear2Fee(String insuAgencyYear2Fee) {
+    public void setInsuAgencyYear2Fee(Long insuAgencyYear2Fee) {
         this.insuAgencyYear2Fee = insuAgencyYear2Fee;
     }
 
@@ -371,11 +371,11 @@ public class CarDealerProtocol extends ABaseDO {
         this.insuAgencyYear3Type = insuAgencyYear3Type;
     }
 
-    public String getInsuAgencyYear3Fee() {
+    public Long getInsuAgencyYear3Fee() {
         return insuAgencyYear3Fee;
     }
 
-    public void setInsuAgencyYear3Fee(String insuAgencyYear3Fee) {
+    public void setInsuAgencyYear3Fee(Long insuAgencyYear3Fee) {
         this.insuAgencyYear3Fee = insuAgencyYear3Fee;
     }
 

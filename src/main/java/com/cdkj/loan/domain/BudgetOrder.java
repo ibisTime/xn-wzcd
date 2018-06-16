@@ -17,6 +17,9 @@ public class BudgetOrder extends ABaseDO {
     // 编号
     private String code;
 
+    // 征信单编号
+    private String creditCode;
+
     // 客户类型
     private String customerType;
 
@@ -2136,6 +2139,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setApplyDatetimeEnd(Date applyDatetimeEnd) {
         this.applyDatetimeEnd = applyDatetimeEnd;
+    }
+
+    public String getCreditCode() {
+        return creditCode;
+    }
+
+    public void setCreditCode(String creditCode) {
+        this.creditCode = creditCode;
     }
 
 }
