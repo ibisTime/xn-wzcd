@@ -1,4 +1,3 @@
-
 -- ----------------------------
 --  Table structure for `tdh_cost`
 -- ----------------------------
@@ -72,17 +71,20 @@ CREATE TABLE `tdh_remind_log` (
 -- ----------------------------
 --  Table structure for `tdh_repay_biz`
 -- ----------------------------
+DROP TABLE IF EXISTS `tdh_repay_biz`;
 CREATE TABLE `tdh_repay_biz` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `user_id` varchar(32) DEFAULT NULL COMMENT '申请人编号',
   `real_name` varchar(32) DEFAULT NULL COMMENT '真实姓名',
   `id_kind` varchar(32) DEFAULT NULL COMMENT '证件号类型',
   `id_no` varchar(32) DEFAULT NULL COMMENT '证件号编号',
+  
   `bankcard_code` varchar(32) DEFAULT NULL COMMENT '还款卡编号',
   `ref_type` varchar(4) DEFAULT NULL COMMENT '关联类型(0=商品，1=车贷)',
   `ref_code` varchar(32) DEFAULT NULL COMMENT '关联编号',
   `biz_price` bigint(20) DEFAULT NULL COMMENT '业务总价',
   `sf_rate` decimal(18,8) DEFAULT NULL COMMENT '首付比例',
+  
   `sf_amount` varchar(20) DEFAULT NULL COMMENT '首付金额',
   `loan_bank` varchar(32) DEFAULT NULL COMMENT '贷款银行',
   `loan_amount` bigint(20) DEFAULT NULL COMMENT '贷款金额',
@@ -199,7 +201,6 @@ CREATE TABLE `tdh_repay_plan` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='还款计划表';
 
-
 -- ----------------------------
 --  Table structure for `tdh_judge`
 -- ----------------------------
@@ -210,6 +211,7 @@ CREATE TABLE `tdh_judge` (
   `case_number` varchar(32) DEFAULT NULL COMMENT '案号',
   `plaintiff` varchar(32) DEFAULT NULL COMMENT '原告',
   `defendant` varchar(32) DEFAULT NULL COMMENT '被告',
+  
   `case_subject` varchar(32) DEFAULT NULL COMMENT '诉讼标的',
   `case_car` varchar(32) DEFAULT NULL COMMENT '涉案车辆',
   `case_fee` varchar(32) DEFAULT NULL COMMENT '诉讼费',
@@ -217,18 +219,17 @@ CREATE TABLE `tdh_judge` (
   `case_status` varchar(32) DEFAULT NULL COMMENT '起诉状态',
   
   `case_pdf` varchar(255) DEFAULT NULL COMMENT '起诉附件',
-  
   `court_datetime` datetime DEFAULT NULL COMMENT '开庭日期',
   `judge_datetime` datetime DEFAULT NULL COMMENT '判决日期',
   `judge_pdf` varchar(255) DEFAULT NULL COMMENT '判决附件',
   `exe_case_number` varchar(32) DEFAULT NULL COMMENT '执行案号',
-  `exe_apply_user` varchar(32) DEFAULT NULL COMMENT '执行申请人',
   
+  `exe_apply_user` varchar(32) DEFAULT NULL COMMENT '执行申请人',
   `exe_datetime` datetime DEFAULT NULL COMMENT '执行日期',
   `exe_result` varchar(255) DEFAULT NULL COMMENT '执行结果',
   `sale_datetime` datetime DEFAULT NULL COMMENT '拍卖日期',
   `exe_pdf` varchar(255) DEFAULT NULL COMMENT '执行裁定书',
-  `status` varchar(32) DEFAULT NULL COMMENT '状态(0 处理中/1=已经处理)',
+  
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='司法审判表';
 
@@ -259,7 +260,7 @@ CREATE TABLE `tdh_replace_repay_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(32) NOT NULL COMMENT '代偿性质',
   `amount` bigint(20) NOT NULL COMMENT '预算金额',
-  `biz_code` varchar(32) NOT NULL COMMENT '业务编号',
+  `biz_code` varchar(32) NOT NULL COMMENT '还款计划编号',
   `receipt_bank` varchar(32) NOT NULL COMMENT '收款人开户行',
   `receipt_real_name` varchar(32) NOT NULL COMMENT '收款人名称',
   `receipt_account` varchar(32) NOT NULL COMMENT '收款人账号',
@@ -273,3 +274,31 @@ CREATE TABLE `tdh_replace_repay_apply` (
   `remark` varchar(255) NOT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='代偿申请单';
+
+DROP TABLE IF EXISTS `tdh_replace_repay_plan`;
+CREATE TABLE `tdh_replace_repay_plan` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `is_plat_issue` varchar(32) NULL COMMENT '与我司过往是否有纠纷',
+  `take_way` varchar(32) NULL COMMENT '代偿后采取的方式',
+  `defer_days` int(11) NULL COMMENT '暂缓天数',
+  `apply_reason` varchar(32) NULL COMMENT '代偿申请原因',
+
+  `apply_reason_note` varchar(255) NULL COMMENT '代偿申请原因说明',
+  `risk_note` varchar(255) NULL COMMENT '风控经理意见',
+  `repay_rate` decimal(18,8) NULL COMMENT '代偿利率',
+  `repay_date` datetime NULL COMMENT '付款日期',
+  `repay_bankcard` varchar(255) NULL COMMENT '付款银行卡',
+  
+  `repay_bank` varchar(32) NULL COMMENT '付款银行',
+  `repay_user` varchar(32)  NULL COMMENT '付款人',
+  `repay_bill` varchar(255) NULL COMMENT '付款凭证',
+  `repay_note` varchar(255) NULL COMMENT '付款说明',
+  `biz_code` varchar(32) NOT NULL COMMENT '业务编号(还款计划)',
+  
+  `replace_apply_code` varchar(32) NULL COMMENT '代偿申请编号',
+  `cur_node_code` varchar(32) NULL COMMENT '当前节点',
+  `updater` varchar(32) NULL COMMENT '更新人',
+  `update_datetime` datetime NULL COMMENT '更新时间',
+  `remark` varchar(255) NULL COMMENT '备注',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='代偿还款计划单';
