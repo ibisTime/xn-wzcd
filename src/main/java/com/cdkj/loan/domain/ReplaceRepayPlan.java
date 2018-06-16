@@ -80,6 +80,47 @@ public class ReplaceRepayPlan extends ABaseDO {
     // 备注
     private String remark;
 
+    // **********db properties**************
+    private String repayBankName;
+
+    private String repayUserName;
+
+    private String customerUserName;
+
+    private String updaterName;
+
+    public String getRepayBankName() {
+        return repayBankName;
+    }
+
+    public void setRepayBankName(String repayBankName) {
+        this.repayBankName = repayBankName;
+    }
+
+    public String getRepayUserName() {
+        return repayUserName;
+    }
+
+    public void setRepayUserName(String repayUserName) {
+        this.repayUserName = repayUserName;
+    }
+
+    public String getCustomerUserName() {
+        return customerUserName;
+    }
+
+    public void setCustomerUserName(String customerUserName) {
+        this.customerUserName = customerUserName;
+    }
+
+    public String getUpdaterName() {
+        return updaterName;
+    }
+
+    public void setUpdaterName(String updaterName) {
+        this.updaterName = updaterName;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }
