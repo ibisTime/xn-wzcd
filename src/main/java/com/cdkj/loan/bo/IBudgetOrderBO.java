@@ -69,4 +69,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 应退按揭款
     public void mortgageRefund(BudgetOrder budgetOrder);
 
+    // 作废申请
+    public void applyCancel(BudgetOrder budgetOrder);
+
 }

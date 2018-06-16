@@ -233,4 +233,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         budgetOrderDAO.mortgageRefund(budgetOrder);
     }
 
+    @Override
+    public void applyCancel(BudgetOrder budgetOrder) {
+        budgetOrderDAO.applyCancel(budgetOrder);
+    }
+
 }

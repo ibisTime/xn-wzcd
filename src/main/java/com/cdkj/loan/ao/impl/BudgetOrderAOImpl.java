@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.bo.IAdvanceFundBO;
 import com.cdkj.loan.bo.IBankBO;
+import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.ICarDealerBO;
@@ -34,6 +35,7 @@ import com.cdkj.loan.common.PhoneUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.AdvanceFund;
 import com.cdkj.loan.domain.Bank;
+import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.CarDealerProtocol;
@@ -51,11 +53,13 @@ import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632200Req;
 import com.cdkj.loan.dto.req.XN632220Req;
+import com.cdkj.loan.dto.req.XN632270Req;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
+import com.cdkj.loan.enums.EBudgetFrozenStatus;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EButtonCode;
 import com.cdkj.loan.enums.EDealType;
@@ -90,6 +94,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private IBankBO bankBO;
+
+    @Autowired
+    private IBankSubbranchBO bankSubbranchBO;
 
     @Autowired
     private ICarDealerBO carDealerBO;
@@ -949,6 +956,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (null != loanBank) {
             budgetOrder.setLoanBankName(loanBank.getBankName());
         }
+        BankSubbranch bankSubbranch = new BankSubbranch();
+        bankSubbranch.setCode(budgetOrder.getLoanBankCode());
+        BankSubbranch subbranch = bankSubbranchBO
+            .getBankSubbranch(bankSubbranch);
+        if (null != subbranch) {
+            budgetOrder.setBankSubbranch(subbranch);
+        }
 
         Department department = departmentBO
             .getDepartment(budgetOrder.getOperateDepartment());
@@ -1129,5 +1143,26 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setShouldBackBillPdf(shouldBackBillPdf);
         budgetOrderBO.mortgageRefund(budgetOrder);
+    }
+
+    @Override
+    public void applyCancel(XN632270Req req) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        budgetOrder.setZfReason(req.getZfReason());
+        budgetOrder.setFrozenStatus(EBudgetFrozenStatus.FROZEN.getCode());
+        budgetOrder.setCancelNodeCode(budgetOrder.getCurNodeCode());
+        // 节点
+        EBudgetOrderNode currentNode = EBudgetOrderNode.APPLY_CANCEL;
+        String nextNode = nodeFlowBO
+            .getNodeFlowByCurrentNode(currentNode.getCode()).getNextNode();
+        currentNode = EBudgetOrderNode.getMap().get(nextNode);
+        budgetOrder.setCurNodeCode(currentNode.getCode());
+
+        budgetOrderBO.applyCancel(budgetOrder);
+
+        // 写日志
+        sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_CANCEL, budgetOrder.getCode(),
+            currentNode.getCode(), currentNode.getValue(), req.getOperator());
     }
 }

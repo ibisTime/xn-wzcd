@@ -12,6 +12,7 @@ import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632200Req;
 import com.cdkj.loan.dto.req.XN632220Req;
+import com.cdkj.loan.dto.req.XN632270Req;
 
 @Component
 public interface IBudgetOrderAO {
@@ -87,5 +88,8 @@ public interface IBudgetOrderAO {
     // 应退按揭款
     public void mortgageRefund(String code, String shouldBackBankcardCode,
             String shouldBackDatetime, String shouldBackBillPdf);
+
+    // 申请作废
+    public void applyCancel(XN632270Req req);
 
 }

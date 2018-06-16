@@ -1295,7 +1295,6 @@
 		WHERE code = #{code}
 	</update>
 
-	
 	<update id="update_mortgageRefund" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
@@ -1303,6 +1302,16 @@
 		,should_back_bankcard_code = #{shouldBackBankcardCode}
 		,should_back_datetime = #{shouldBackDatetime}
 		,should_back_bill_pdf = #{shouldBackBillPdf}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_applyCancel" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		zf_reason = #{zfReason}
+		,frozen_status = #{frozenStatus}
+		,cancel_node_code = #{cancelNodeCode}
+		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 </mapper>

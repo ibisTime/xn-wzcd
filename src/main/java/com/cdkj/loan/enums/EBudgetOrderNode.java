@@ -39,7 +39,9 @@ public enum EBudgetOrderNode {
 
     PENDING_FILE("010_01", "待入档"), ALREADY_FILE("010_02", "已入档"),
     
-    INVOICE_MISMATCH_APPLY("011_01","发票不匹配申请"),APPROVE_APPLY("011_02","审核申请"),TWO_APPROVE_APPLY("011_03","二审"),FINANCE_CONFIRM("011_04","财务确认");
+    INVOICE_MISMATCH_APPLY("011_01","发票不匹配申请"),APPROVE_APPLY("011_02","审核申请"),TWO_APPROVE_APPLY("011_03","二审"),FINANCE_CONFIRM("011_04","财务确认"),
+    
+    APPLY_CANCEL("012_01","申请作废"),APPROVE_CANCEL("012_02","审核"),FINANCE_CONFIRM_RECEIVABLES("012_03","财务确认收款"),;
 
     public static Map<String, EBudgetOrderNode> getMap() {
         Map<String, EBudgetOrderNode> map = new HashMap<String, EBudgetOrderNode>();

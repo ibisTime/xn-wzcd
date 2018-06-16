@@ -63,4 +63,7 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     // 应退按揭款
     void mortgageRefund(BudgetOrder budgetOrder);
+
+    // 作废申请
+    void applyCancel(BudgetOrder budgetOrder);
 }

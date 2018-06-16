@@ -157,4 +157,9 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
         super.update(NAMESPACE.concat("update_mortgageRefund"), condition);
     }
 
+    @Override
+    public void applyCancel(BudgetOrder condition) {
+        super.update(NAMESPACE.concat("update_applyCancel"), condition);
+    }
+
 }

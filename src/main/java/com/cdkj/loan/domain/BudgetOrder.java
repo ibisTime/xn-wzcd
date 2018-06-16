@@ -604,6 +604,26 @@ public class BudgetOrder extends ABaseDO {
 
     private String saleUserName;// 业务员
 
+    private Bank bank;// 贷款银行
+
+    private BankSubbranch bankSubbranch;// 支行
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
+    public BankSubbranch getBankSubbranch() {
+        return bankSubbranch;
+    }
+
+    public void setBankSubbranch(BankSubbranch bankSubbranch) {
+        this.bankSubbranch = bankSubbranch;
+    }
+
     public String getRoleCode() {
         return roleCode;
     }
