@@ -40,6 +40,12 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
 
     @Override
     public String addReplaceRepayApply(XN632320Req req) {
+        ReplaceRepayApply condition = new ReplaceRepayApply();
+        condition.setBizCode(req.getBizCode());
+        if (0 != replaceRepayApplyBO.getTotalCount(condition)) {
+            throw new BizException("xn0000", "当前业务已申请代偿预算单，请勿重复申请！");
+        }
+
         ReplaceRepayApply data = new ReplaceRepayApply();
         data.setAmount(StringValidater.toLong(req.getAmount()));
         data.setBizCode(req.getBizCode());
