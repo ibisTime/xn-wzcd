@@ -125,7 +125,7 @@ public class RepayPlan extends ABaseDO {
 
     // ******************拖车数据******************
     // 是否典当行赎回
-    private String isPawnshopRedeem;
+    private String pawnshopIsRedeem;
 
     // 典当行名称
     private String pawnshopName;

@@ -156,6 +156,7 @@ CREATE TABLE `tdh_repay_biz` (
   `team_code` varchar(32) DEFAULT NULL COMMENT '团队编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='还款业务表'
+
 -- ----------------------------
 --  Table structure for `tdh_repay_plan`
 -- ----------------------------
@@ -185,15 +186,15 @@ CREATE TABLE `tdh_repay_plan` (
   `overdue_deposit` bigint(20) DEFAULT NULL COMMENT '再次逾期保证金',
   `overdue_deposit_way` varchar(255) DEFAULT NULL COMMENT '再次逾期保证金收取方式',
   
-  `repay_is_part` varchar(4) DEFAULT NULL COMMENT '是否部分还款',
+  `repay_is_part` char(1) DEFAULT NULL COMMENT '是否部分还款',
   `real_repay_amount` bigint(20) DEFAULT NULL COMMENT '实际还款金额',
   `remind_count` int(11) DEFAULT NULL COMMENT '已催款次数',
   `real_replace_repay_amount` bigint(20) DEFAULT NULL COMMENT '实际代偿金额',
-  `is_replace_repay` varchar(4) DEFAULT NULL COMMENT '代偿是否缴纳',
+  `is_replace_repay` char(1) DEFAULT NULL COMMENT '代偿是否缴纳',
   
   `replace_repay_datetime` datetime DEFAULT NULL COMMENT '代偿时间',
-  `back_replace_repay_amount` bigint(20) DEFAULT NULL COMMENT '收回代偿金额',
-  `back_replace_repay_datetime` datetime DEFAULT NULL COMMENT '收回代偿时间',
+  `replace_back_repay_amount` bigint(20) DEFAULT NULL COMMENT '收回代偿金额',
+  `replace_back_repay_datetime` datetime DEFAULT NULL COMMENT '收回代偿时间',
   `collection_way` varchar(255) DEFAULT NULL COMMENT '催收方式',
   `collection_target` varchar(255) DEFAULT NULL COMMENT '催收对象',
   
@@ -203,7 +204,7 @@ CREATE TABLE `tdh_repay_plan` (
   `deposit_is_provide` varchar(4) DEFAULT NULL COMMENT '是否提供押金',
   `collection_note` varchar(255) DEFAULT NULL COMMENT '催收情况说明',
   
-  `is_pawnshop_redeem` varchar(4) DEFAULT NULL COMMENT '是否典当行赎回',
+  `pawnshop_is_redeem` varchar(4) DEFAULT NULL COMMENT '是否典当行赎回',
   `pawnshop_name` varchar(255) DEFAULT NULL COMMENT '典当行名称',
   `ransom` varchar(255) DEFAULT NULL COMMENT '典当行赎金小写',
   `ts_car_amount` bigint(20) DEFAULT NULL COMMENT '拖车申请金额',
