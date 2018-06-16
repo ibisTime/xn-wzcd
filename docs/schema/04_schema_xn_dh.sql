@@ -190,7 +190,7 @@ CREATE TABLE `tdh_repay_plan` (
   `real_repay_amount` bigint(20) DEFAULT NULL COMMENT '实际还款金额',
   `remind_count` int(11) DEFAULT NULL COMMENT '已催款次数',
   `real_replace_repay_amount` bigint(20) DEFAULT NULL COMMENT '实际代偿金额',
-  `is_replace_repay` char(1) DEFAULT NULL COMMENT '代偿是否缴纳',
+  `replace_is_repay` char(1) DEFAULT NULL COMMENT '代偿是否缴纳',
   
   `replace_repay_datetime` datetime DEFAULT NULL COMMENT '代偿时间',
   `replace_back_repay_amount` bigint(20) DEFAULT NULL COMMENT '收回代偿金额',
@@ -227,7 +227,11 @@ CREATE TABLE `tdh_repay_plan` (
   `deal_result` varchar(255) DEFAULT NULL COMMENT '处理结果',
   `sell_price` bigint(20) DEFAULT NULL COMMENT '出售价格',
   `deposit` bigint(20) DEFAULT NULL COMMENT '保证金',
+  
   `fee_note` varchar(255) DEFAULT NULL COMMENT '费用说明',
+  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='还款计划表';
 

@@ -26,10 +26,10 @@ public enum ERepayBizNode {
             "分公司总经理审核"), TC_COMPANY_MANAGE_CHECK_NO("021_05", "分公司总经理审核不通过"), TC_RISK_LEADER_CHECK(
             "021_06", "风控总监审核"), TC_RISK_LEADER_CHECK_NO("021_07", "风控总监审核不通过"), TC_FINANCE_CHECK(
             "021_08", "财务经理审核"), TC_FINANCE_CHECK_NO("021_09", "财务经理审核不通过"), TC_SURE_FK(
-            "021_10", "确认放款"), TC_FK_INPUT("021_11", "录入拖车结果"), SELLED(
-            "021_12", "出售"), JUDGE("021_13", "司法诉讼"), JUDGE_FOLLOW("021_14",
-            "诉讼跟进"), JUDGE_RESULT_INPUT("021_15", "诉讼结果录入"), FINANCE_SURE_RECEIPT(
-            "021_16", "财务确认收款"),
+            "021_10", "确认放款"), TC_FK_INPUT("021_11", "录入拖车结果"), TC_TO_HANDLE("021_12","已录入待处理"),SELLED(
+            "021_14", "出售"), JUDGE("021_15", "司法诉讼"), JUDGE_FOLLOW("021_16",
+            "诉讼跟进"), JUDGE_RESULT_INPUT("021_17", "诉讼结果录入"), FINANCE_SURE_RECEIPT(
+            "021_18", "财务确认收款"),
 
     // 商品分期的节点
     PRO_TO_REPAY("005_01", "还款中"), PRO_SETTLED("005_02", "已结清"), PRO_CONFIRM_SETTLE(
