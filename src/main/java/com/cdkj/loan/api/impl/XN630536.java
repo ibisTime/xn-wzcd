@@ -37,7 +37,7 @@ public class XN630536 extends AProcessor {
      */
     @Override
     public Object doBusiness() throws BizException {
-        repayPlanAO.ToBlack(req.getCode());
+        repayPlanAO.doMakeBlack(req.getCode());
         return new BooleanRes(true);
     }
 

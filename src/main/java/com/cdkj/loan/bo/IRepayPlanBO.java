@@ -38,7 +38,7 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
     public void refreshRepayPlanOverdue(RepayPlan repayPlan);
 
     // 逾期后更新
-    public void refreshRepayPlanOverdueHandle(RepayPlan repayPlan);
+    public void refreshOverdueHandle(RepayPlan repayPlan);
 
     // 进入绿名单
     public void refreshToGreen(RepayPlan repayPlan);

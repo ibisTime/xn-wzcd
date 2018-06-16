@@ -3,7 +3,6 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -154,7 +153,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         // 必须扣全部，要么扣成功，要么扣失败，不能扣部分金额
         Long realWithholdAmount = baofuWithhold(bankcard, allAmount);
         // 更新还款业务
-        repayBizBO.refreshAdvanceRepayCarLoan(repayBiz, realWithholdAmount);
+        repayBizBO
+            .refreshAdvanceRepayCarLoan(req, repayBiz, realWithholdAmount);
         // 改变还款计划状态
         for (RepayPlan repayPlan : planList) {
             if (ERepayPlanNode.TO_REPAY.getCode().equals(
@@ -166,93 +166,94 @@ public class RepayBizAOImpl implements IRepayBizAO {
         }
     }
 
-    // 提前还款
-    @Override
-    @Transactional
-    public void advanceRepay(String code, String updater, String remark) {
-        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-        if (ERepayBizType.CAR.getCode().equals(repayBiz.getRefType())) {
-            advanceRepayCarLoan(code, repayBiz);
-        } else {
-            advanceRepayProductLoan(code, repayBiz);
-        }
-    }
+    // // 提前还款
+    // @Override
+    // @Transactional
+    // public void advanceRepay(String code, String updater, String remark) {
+    // RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+    // if (ERepayBizType.CAR.getCode().equals(repayBiz.getRefType())) {
+    // advanceRepayCarLoan(code, repayBiz);
+    // } else {
+    // advanceRepayProductLoan(code, repayBiz);
+    // }
+    // }
 
     // 车贷订单提前还款
-    private void advanceRepayCarLoan(String code, RepayBiz repayBiz) {
-        if (!ERepayBizNode.TO_REPAY.getCode().equals(repayBiz.getCurNodeCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前还款业务不处于还款中");
-        }
+    // private void advanceRepayCarLoan(String code, RepayBiz repayBiz) {
+    // if (!ERepayBizNode.TO_REPAY.getCode().equals(repayBiz.getCurNodeCode()))
+    // {
+    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+    // "当前还款业务不处于还款中");
+    // }
+    //
+    // // 判断还款计划中是否含有催收失败，进红名单处理，红名单处理中的状态，有则有逾期
+    // List<RepayPlan> planList = repayPlanBO
+    // .queryRepayPlanListByRepayBizCode(code);
+    // for (RepayPlan repayPlan : planList) {
+    // if (ERepayPlanNode.HANDLER_TO_RED.getCode().equals(
+    // repayPlan.getCurNodeCode())
+    // || ERepayPlanNode.QKCSB_APPLY_TC.getCode().equals(
+    // repayPlan.getCurNodeCode())) {
+    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+    // "当前有逾期未处理完成的还款计划，不能提前还款！");
+    // }
+    // }
+    // // 代扣总金额
+    // Long allAmount = repayBiz.getRestAmount();
+    // // 代扣银行卡
+    // Bankcard bankcard = bankcardBO.getBankcard(repayBiz.getBankcardCode());
+    // // 必须扣全部，要么扣成功，要么扣失败，不能扣部分金额
+    // Long realWithholdAmount = baofuWithhold(bankcard, allAmount);
+    // // 更新还款业务
+    // repayBizBO.refreshAdvanceRepayCarLoan(repayBiz, realWithholdAmount);
+    // // 改变还款计划状态
+    // for (RepayPlan repayPlan : planList) {
+    // if (ERepayPlanNode.TO_REPAY.getCode().equals(
+    // repayPlan.getCurNodeCode())) {
+    // // 更新还款计划
+    // repayPlanBO.repaySuccess(repayPlan,
+    // repayPlan.getMonthRepayAmount());
+    // }
+    // }
+    // }
 
-        // 判断还款计划中是否含有催收失败，进红名单处理，红名单处理中的状态，有则有逾期
-        List<RepayPlan> planList = repayPlanBO
-            .queryRepayPlanListByRepayBizCode(code);
-        for (RepayPlan repayPlan : planList) {
-            if (ERepayPlanNode.HANDLER_TO_RED.getCode().equals(
-                repayPlan.getCurNodeCode())
-                    || ERepayPlanNode.QKCSB_APPLY_TC.getCode().equals(
-                        repayPlan.getCurNodeCode())) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前有逾期未处理完成的还款计划，不能提前还款！");
-            }
-        }
-        // 代扣总金额
-        Long allAmount = repayBiz.getRestAmount();
-        // 代扣银行卡
-        Bankcard bankcard = bankcardBO.getBankcard(repayBiz.getBankcardCode());
-        // 必须扣全部，要么扣成功，要么扣失败，不能扣部分金额
-        Long realWithholdAmount = baofuWithhold(bankcard, allAmount);
-        // 更新还款业务
-        repayBizBO.refreshAdvanceRepayCarLoan(repayBiz, realWithholdAmount);
-        // 改变还款计划状态
-        for (RepayPlan repayPlan : planList) {
-            if (ERepayPlanNode.TO_REPAY.getCode().equals(
-                repayPlan.getCurNodeCode())) {
-                // 更新还款计划
-                repayPlanBO.repaySuccess(repayPlan,
-                    repayPlan.getMonthRepayAmount());
-            }
-        }
-    }
-
-    // 产品订单提前还款
-    private void advanceRepayProductLoan(String code, RepayBiz repayBiz) {
-        if (!ERepayBizNode.PRO_TO_REPAY.getCode().equals(
-            repayBiz.getCurNodeCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前还款业务不处于还款中");
-        }
-
-        int count = repayPlanBO.getTotalCount(repayBiz.getCode(),
-            ERepayPlanNode.PRD_TO_REPAY);
-        if (count <= 0) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前还款业务已还完！");
-        }
-
-        // 代扣总金额
-        Long allAmount = repayBiz.getRestAmount();
-        // 代扣银行卡
-        Bankcard bankcard = bankcardBO.getBankcard(repayBiz.getBankcardCode());
-        // 必须扣全部，要么扣成功，要么扣失败，不能扣部分金额
-        Long realWithholdAmount = baofuWithhold(bankcard, allAmount);
-        // 更新还款业务
-        repayBizBO.refreshAdvanceRepayCarLoan(repayBiz, realWithholdAmount);
-        // 改变还款计划状态
-        RepayPlan rpCondition = new RepayPlan();
-        rpCondition.setCurNodeCode(ERepayPlanNode.TO_REPAY.getCode());
-        rpCondition.setRepayBizCode(repayBiz.getCode());
-        List<RepayPlan> rpList = repayPlanBO.queryRepayPlanList(rpCondition);
-        if (CollectionUtils.isNotEmpty(rpList)) {
-            for (RepayPlan repayPlan : rpList) {
-                if (ERepayPlanNode.TO_REPAY.getCode().equals(
-                    repayPlan.getCurNodeCode())) {
-                    repayPlanBO.repaySuccess(repayPlan, realWithholdAmount);
-                }
-            }
-        }
-    }
+    // // 产品订单提前还款
+    // private void advanceRepayProductLoan(String code, RepayBiz repayBiz) {
+    // if (!ERepayBizNode.PRO_TO_REPAY.getCode().equals(
+    // repayBiz.getCurNodeCode())) {
+    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+    // "当前还款业务不处于还款中");
+    // }
+    //
+    // int count = repayPlanBO.getTotalCount(repayBiz.getCode(),
+    // ERepayPlanNode.PRD_TO_REPAY);
+    // if (count <= 0) {
+    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+    // "当前还款业务已还完！");
+    // }
+    //
+    // // 代扣总金额
+    // Long allAmount = repayBiz.getRestAmount();
+    // // 代扣银行卡
+    // Bankcard bankcard = bankcardBO.getBankcard(repayBiz.getBankcardCode());
+    // // 必须扣全部，要么扣成功，要么扣失败，不能扣部分金额
+    // Long realWithholdAmount = baofuWithhold(bankcard, allAmount);
+    // // 更新还款业务
+    // repayBizBO.refreshAdvanceRepayCarLoan(repayBiz, realWithholdAmount);
+    // // 改变还款计划状态
+    // RepayPlan rpCondition = new RepayPlan();
+    // rpCondition.setCurNodeCode(ERepayPlanNode.TO_REPAY.getCode());
+    // rpCondition.setRepayBizCode(repayBiz.getCode());
+    // List<RepayPlan> rpList = repayPlanBO.queryRepayPlanList(rpCondition);
+    // if (CollectionUtils.isNotEmpty(rpList)) {
+    // for (RepayPlan repayPlan : rpList) {
+    // if (ERepayPlanNode.TO_REPAY.getCode().equals(
+    // repayPlan.getCurNodeCode())) {
+    // repayPlanBO.repaySuccess(repayPlan, realWithholdAmount);
+    // }
+    // }
+    // }
+    // }
 
     private Long baofuWithhold(Bankcard bankcard, Long amount) {
         Long successAmount = 0L;
@@ -637,14 +638,4 @@ public class RepayBizAOImpl implements IRepayBizAO {
         }
         return nextNodeCode;
     }
-
-    /** 
-     * @see com.cdkj.loan.ao.IRepayBizAO#settleApply()
-     */
-    @Override
-    public void settleApply() {
-        // TODO Auto-generated method stub
-
-    }
-
 }

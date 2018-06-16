@@ -1,7 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-import java.util.Date;
-
 import org.hibernate.validator.constraints.NotBlank;
 
 public class XN630512Req {
@@ -16,7 +14,7 @@ public class XN630512Req {
     private String settleAttach;
 
     // 结清时间
-    private Date settleDatetime;
+    private String settleDatetime;
 
     // 押金单
     private String depositReceipt;
@@ -67,11 +65,11 @@ public class XN630512Req {
         this.settleAttach = settleAttach;
     }
 
-    public Date getSettleDatetime() {
+    public String getSettleDatetime() {
         return settleDatetime;
     }
 
-    public void setSettleDatetime(Date settleDatetime) {
+    public void setSettleDatetime(String settleDatetime) {
         this.settleDatetime = settleDatetime;
     }
 
