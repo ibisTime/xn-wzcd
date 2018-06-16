@@ -556,7 +556,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
         if (!EBudgetOrderNode.CAR_PLEDGE_CONFIRM.getCode()
-            .equals(budgetOrder.getCurNodeCode())) {
+            .equals(budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.CAR_FEN_PLEDGE_CONFIRM.getCode()
+                    .equals(budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是抵押完成节点，不能操作");
         }
