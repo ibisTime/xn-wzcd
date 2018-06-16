@@ -29,7 +29,7 @@ public enum EBudgetOrderNode {
             "008_08", "总公司内勤寄送银行材料待补件"),
 
     CAR_FEN_BANK_LOAN_COMMIT("009_01", "确认提交银行"), SENDING_CONTRACT("009_02",
-            "总公司准备并寄送合同"), FEN_COMPANY_COLLECTION_CHECK("009_03", "分公司内勤收件并核查"), FEN_CAR_SEND_LOGISTICS(
+            "总公司准备并寄送合同到分公司"), FEN_COMPANY_COLLECTION_CHECK("009_03", "分公司内勤收件并核查"), FEN_CAR_SEND_LOGISTICS(
             "009_04", "分公司准备并寄送抵押材料"), HEADQUARTERS_CAR_COMPANY_COLLECTION_CHECK(
             "009_05", "总公司内勤收件并核查"), HEADQUARTERS_CAR_SEND_BANK_MATERIALS(
             "009_06", "总公司内勤寄送银行材料"), CAR_FEN_BANK_COLLECTION_CHECK("009_07",
