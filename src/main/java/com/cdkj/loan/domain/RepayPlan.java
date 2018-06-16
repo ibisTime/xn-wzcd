@@ -73,13 +73,13 @@ public class RepayPlan extends ABaseDO {
     private Long overdueDeposit;
 
     // 再次逾期保证金收取方式
-    private String depositWay;
+    private String overdueDepositWay;
+
+    // 是否部分还款
+    private String repayIsPart;
 
     // 实际还款金额
     private Long realRepayAmount;
-
-    // 实际可退的再次逾期保证金(作废)
-    private Long shouldDeposit;
 
     // 已催款次数
     private int remindCount;
@@ -99,6 +99,7 @@ public class RepayPlan extends ABaseDO {
     // 收回代偿时间
     private Date backReplaceRepayDatetime;
 
+    // ******************处理数据******************
     // 催收方式
     private String collectionWay;
 
@@ -120,21 +121,9 @@ public class RepayPlan extends ABaseDO {
     // 催收情况说明
     private String collectionNote;
 
-    // 与我司过往是否有纠纷
-    private String isPlatIssue;
+    // ******************处理数据******************
 
-    // 代偿后采取的方式
-    private String replaceRepayedWay;
-
-    // 暂缓天数
-    private int putOffDay;
-
-    // 代偿申请原因
-    private String replaceRepayApplyReason;
-
-    // 代偿申请原因说明
-    private String replaceRepayApplyNote;
-
+    // ******************拖车数据******************
     // 是否典当行赎回
     private String isPawnshopRedeem;
 
@@ -158,6 +147,8 @@ public class RepayPlan extends ABaseDO {
 
     // 拖车申请说明
     private String tcApplyNote;
+
+    // ******************拖车数据******************
 
     // 打款时间
     private Date remitDatetime;
@@ -542,14 +533,6 @@ public class RepayPlan extends ABaseDO {
 
     public void setDepositWay(String depositWay) {
         this.depositWay = depositWay;
-    }
-
-    public Long getShouldDeposit() {
-        return shouldDeposit;
-    }
-
-    public void setShouldDeposit(Long shouldDeposit) {
-        this.shouldDeposit = shouldDeposit;
     }
 
     public int getRemindCount() {
