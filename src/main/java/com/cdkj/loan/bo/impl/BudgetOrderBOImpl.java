@@ -213,4 +213,19 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         budgetOrderDAO.entryPreservation(budgetOrder);
     }
 
+    @Override
+    public void invoiceMismatchApply(BudgetOrder budgetOrder) {
+        budgetOrderDAO.invoiceMismatchApply(budgetOrder);
+    }
+
+    @Override
+    public void approveApply(BudgetOrder budgetOrder) {
+        budgetOrderDAO.approveApply(budgetOrder);
+    }
+
+    @Override
+    public void twoApproveApply(BudgetOrder budgetOrder) {
+        budgetOrderDAO.twoApproveApply(budgetOrder);
+    }
+
 }

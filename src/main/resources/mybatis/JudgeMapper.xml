@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IJudgeDAO">
+	<resultMap id="judge_DB_Result" type="judge">
+		<result column="code" property="code" />
+		<result column="repay_biz_code" property="repayBizCode" />
+		<result column="case_number" property="caseNumber" />
+		<result column="plaintiff" property="plaintiff" />
+		<result column="defendant" property="defendant" />
+		
+		<result column="case_subject" property="caseSubject" />
+		<result column="case_car" property="caseCar" />
+		<result column="case_fee" property="caseFee" />
+		<result column="case_start_datetime" property="caseStartDatetime" />
+		<result column="case_status" property="caseStatus" />
+		
+		<result column="case_pdf" property="casePdf" />
+		<result column="court_datetime" property="courtDatetime" />
+		<result column="judge_datetime" property="judgeDatetime" />
+		<result column="judge_pdf" property="judgePdf" />
+		<result column="exe_case_number" property="exeCaseNumber" />
+		
+		<result column="exe_apply_user" property="exeApplyUser" />
+		<result column="exe_datetime" property="exeDatetime" />
+		<result column="exe_result" property="exeResult" />
+		<result column="sale_datetime" property="saleDatetime" />
+		<result column="exe_pdf" property="exePdf" />
+		
+		<result column="updater" property="updater" />
+		<result column="update_datetime" property="updateDatetime" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="repayBizCode != null and repayBizCode != '' ">
+				AND t.repay_biz_code = #{repayBizCode}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_judge" parameterType="judge" resultMap="judge_DB_Result">
+		SELECT
+		t.code
+		,t.repay_biz_code
+		,t.case_number
+		,t.plaintiff
+		,t.defendant
+		,t.case_subject
+		,t.case_car
+		,t.case_fee
+		,t.case_start_datetime
+		,t.case_status
+		,t.case_pdf
+		,t.court_datetime
+		,t.judge_datetime
+		,t.judge_pdf
+		,t.exe_case_number
+		,t.exe_apply_user
+		,t.exe_datetime
+		,t.exe_result
+		,t.sale_datetime
+		,t.exe_pdf
+		,t.updater
+		,t.update_datetime
+		FROM
+		tdh_judge t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_judge_count" parameterType="judge"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdh_judge t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_judge" parameterType="judge">
+		INSERT INTO
+		tdh_judge(
+		code
+		,repay_biz_code
+		,case_number
+		,plaintiff
+		,defendant
+		,case_subject
+		,case_car
+		,case_fee
+		,case_start_datetime
+		,case_status
+		,case_pdf
+		,court_datetime
+		,judge_datetime
+		,judge_pdf
+		,exe_case_number
+		,exe_apply_user
+		,exe_datetime
+		,exe_result
+		,sale_datetime
+		,exe_pdf
+		)
+		VALUES(
+		#{code}
+		,#{repayBizCode}
+		,#{caseNumber}
+		,#{plaintiff}
+		,#{defendant}
+		,#{caseSubject}
+		,#{caseCar}
+		,#{caseFee}
+		,#{caseStartDatetime}
+		,#{caseStatus}
+		,#{casePdf}
+		,#{courtDatetime}
+		,#{judgeDatetime}
+		,#{judgePdf}
+		,#{exeCaseNumber}
+		,#{exeApplyUser}
+		,#{exeDatetime}
+		,#{exeResult}
+		,#{saleDatetime}
+		,#{exePdf}
+		)
+	</insert>
+	
+	<update id="update_judgeFollow" parameterType="judge">
+		UPDATE tdh_judge
+		SET
+		case_fee = #{caseFee}
+		,case_status = #{caseStatus}
+		,court_datetime = #{courtDatetime}
+		,judge_datetime = #{judgeDatetime}
+		,judge_pdf = #{judgePdf}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_judgeResultEntry" parameterType="judge">
+		UPDATE tdh_judge
+		SET
+		exe_case_number = #{exeCaseNumber}
+		,exe_apply_user = #{exeApplyUser}
+		,exe_datetime = #{exeDatetime}
+		,exe_result = #{exeResult}
+		,sale_datetime = #{saleDatetime}
+		,exe_pdf = #{exePdf}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+</mapper>

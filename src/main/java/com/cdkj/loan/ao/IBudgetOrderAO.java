@@ -72,4 +72,16 @@ public interface IBudgetOrderAO {
     // 发保合录入
     public void entryPreservation(XN632220Req req);
 
+    // 发票不匹配申请
+    public void invoiceMismatchApply(String code, String loanAmount,
+            String dealType, String operator);
+
+    // 审核
+    public void approveApply(String code, String approveResult,
+            String approveNote, String operator);
+
+    // 二审
+    public void twoApproveApply(String code, String approveResult,
+            String approveNote, String operator);
+
 }

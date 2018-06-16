@@ -1780,6 +1780,12 @@ INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('009_11','总公
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('010_01','待入档','010',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('010_02','已入档','010',NULL);
 
+INSERT INTO `tsys_node` (`code`, `name`, `type`,`remark`) VALUES ('011_01', '发票不匹配申请', '011',NULL);
+INSERT INTO `tsys_node` (`code`, `name`, `type`,`remark`) VALUES ('011_02', '审核', '011',NULL);
+INSERT INTO `tsys_node` (`code`, `name`, `type`,`remark`) VALUES ('011_03', '二审', '011',NULL);
+INSERT INTO `tsys_node` (`code`, `name`, `type`,`remark`) VALUES ('011_04', '财务确认', '011',NULL);
+
+
 
 /*
 -- Query: SELECT `type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark` FROM tsys_node_flow

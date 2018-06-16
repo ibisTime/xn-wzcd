@@ -260,6 +260,8 @@ CREATE TABLE `tdh_judge` (
   `sale_datetime` datetime DEFAULT NULL COMMENT '拍卖日期',
   `exe_pdf` varchar(255) DEFAULT NULL COMMENT '执行裁定书',
   
+  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='司法审判表';
 
