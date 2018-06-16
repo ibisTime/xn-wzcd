@@ -50,6 +50,7 @@ import com.cdkj.loan.dto.req.XN632120ReqRepointDetail;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632200Req;
+import com.cdkj.loan.dto.req.XN632220Req;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -57,6 +58,7 @@ import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EButtonCode;
+import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EIsAdvanceFund;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ELogisticsType;
@@ -713,7 +715,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
         if (!EBudgetOrderNode.CAR_PLEDGE_CONFIRM.getCode().equals(
-            budgetOrder.getCurNodeCode())) {
+            budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.CAR_FEN_PLEDGE_CONFIRM.getCode().equals(
+                    budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是抵押完成节点，不能操作");
         }
@@ -953,5 +957,122 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         condition.setBankCardNumber(bankCardNumber);
         condition.setMakeCardRemark(makeCardRemark);
         budgetOrderBO.refreshCardMaking(condition);
+    }
+
+    @Override
+    public void entryPreservation(XN632220Req req) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        budgetOrder.setDeliveryDatetime(DateUtil.strToDate(
+            req.getDeliveryDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        Long loanAmount = budgetOrder.getLoanAmount();
+        Long currentInvoicePrice = StringValidater.toLong(req
+            .getCurrentInvoicePrice());
+        double companyLoanCs = loanAmount / currentInvoicePrice;
+        budgetOrder.setCompanyLoanCs(companyLoanCs);
+        if (companyLoanCs >= 0.6 && companyLoanCs <= 0.9) {
+            budgetOrder.setIsRightInvoice(EBoolean.YES.getCode());
+        }
+        budgetOrder.setIsRightInvoice(EBoolean.NO.getCode());
+        budgetOrder.setCurrentInvoicePrice(StringValidater.toLong(req
+            .getCurrentInvoicePrice()));
+        budgetOrder.setInvoice(req.getInvoice());
+        budgetOrder.setCertification(req.getCertification());
+        budgetOrder.setForceInsurance(StringValidater.toLong(req
+            .getForceInsurance()));
+        budgetOrder.setBusinessInsurance(StringValidater.toLong(req
+            .getBusinessInsurance()));
+        budgetOrder.setMotorRegCertification(req.getMotorRegCertification());
+        budgetOrder.setPdPdf(req.getPdPdf());
+        budgetOrder.setFbhRemark(req.getFbhRemark());
+        budgetOrderBO.entryPreservation(budgetOrder);
+    }
+
+    @Override
+    public void invoiceMismatchApply(String code, String loanAmount,
+            String dealType, String operator) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+        if (!EBudgetOrderNode.INVOICE_MISMATCH_APPLY.getCode().equals(
+            budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是发票不匹配申请节点，不能操作！");
+        }
+        // 当前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        // 下个节点
+        String nextNode = nodeFlowBO.getNodeFlowByCurrentNode(
+            EBudgetOrderNode.INVOICE_MISMATCH_APPLY.getCode()).getNextNode();
+
+        budgetOrder.setLoanAmount(StringValidater.toLong(loanAmount));
+        if (EDealType.SEND.getCode().equals(dealType)) {
+            budgetOrder.setCurNodeCode(nextNode);
+        }
+        budgetOrderBO.invoiceMismatchApply(budgetOrder);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+            budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), operator);
+    }
+
+    @Override
+    public void approveApply(String code, String approveResult,
+            String approveNote, String operator) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+
+        if (!EBudgetOrderNode.APPROVE_APPLY.getCode().equals(
+            budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是审核节点，不能操作");
+        }
+
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                EBudgetOrderNode.APPROVE_APPLY.getCode()).getNextNode());
+        } else {
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                EBudgetOrderNode.APPROVE_APPLY.getCode()).getBackNode());
+        }
+        budgetOrderBO.approveApply(budgetOrder);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+            budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), operator);
+    }
+
+    @Override
+    public void twoApproveApply(String code, String approveResult,
+            String approveNote, String operator) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+
+        if (!EBudgetOrderNode.TWO_APPROVE_APPLY.getCode().equals(
+            budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是二审节点，不能操作");
+        }
+
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                EBudgetOrderNode.TWO_APPROVE_APPLY.getCode()).getNextNode());
+        } else {
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                EBudgetOrderNode.TWO_APPROVE_APPLY.getCode()).getBackNode());
+        }
+        budgetOrderBO.twoApproveApply(budgetOrder);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+            budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), operator);
     }
 }

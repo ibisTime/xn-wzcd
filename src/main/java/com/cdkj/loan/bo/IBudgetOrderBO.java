@@ -54,4 +54,16 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 制卡录入
     public void refreshCardMaking(BudgetOrder condition);
 
+    // 发保合录入
+    public void entryPreservation(BudgetOrder budgetOrder);
+
+    // 发票不匹配申请
+    public void invoiceMismatchApply(BudgetOrder budgetOrder);
+
+    // 审核
+    public void approveApply(BudgetOrder budgetOrder);
+
+    // 二审
+    public void twoApproveApply(BudgetOrder budgetOrder);
+
 }

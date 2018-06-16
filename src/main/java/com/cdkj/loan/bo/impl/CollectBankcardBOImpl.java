@@ -36,7 +36,6 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
                 data.setCompanyCode(code);
                 data.setRealName(collectBankcard.getRealName());
                 data.setBankCode(collectBankcard.getBankCode());
-                data.setBankName(collectBankcard.getBankName());
                 data.setSubbranch(collectBankcard.getSubbranch());
                 data.setBankcardNumber(collectBankcard.getBankcardNumber());
                 data.setRemark(collectBankcard.getRemark());
@@ -60,7 +59,6 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
                 data.setCompanyCode(code);
                 data.setRealName(collectBankcard.getRealName());
                 data.setBankCode(bankCode);
-                data.setBankName(collectBankcard.getBankName());
                 data.setSubbranch(collectBankcard.getSubbranch());
                 data.setBankcardNumber(collectBankcard.getBankcardNumber());
                 data.setPointRate(collectBankcard.getPointRate());

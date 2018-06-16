@@ -73,32 +73,33 @@ public class RepayPlan extends ABaseDO {
     private Long overdueDeposit;
 
     // 再次逾期保证金收取方式
-    private String depositWay;
+    private String overdueDepositWay;
+
+    // 是否部分还款
+    private String repayIsPart;
 
     // 实际还款金额
     private Long realRepayAmount;
-
-    // 实际可退的再次逾期保证金(作废)
-    private Long shouldDeposit;
 
     // 已催款次数
     private int remindCount;
 
     // 实际代偿金额
-    private Long realReplaceRepayAmount;
+    private Long replaceRealRepayAmount;
 
     // 代偿是否缴纳
-    private String isReplaceRepay;
+    private String replaceIsRepay;
 
     // 代偿时间
     private Date replaceRepayDatetime;
 
-    // 收回代偿金额
-    private Long backReplaceRepayAmount;
+    // 代偿收回金额
+    private Long replaceBackRepayAmount;
 
-    // 收回代偿时间
-    private Date backReplaceRepayDatetime;
+    // 代偿收回时间
+    private Date replaceBackRepayDatetime;
 
+    // ******************处理数据******************
     // 催收方式
     private String collectionWay;
 
@@ -120,23 +121,11 @@ public class RepayPlan extends ABaseDO {
     // 催收情况说明
     private String collectionNote;
 
-    // 与我司过往是否有纠纷
-    private String isPlatIssue;
+    // ******************处理数据******************
 
-    // 代偿后采取的方式
-    private String replaceRepayedWay;
-
-    // 暂缓天数
-    private int putOffDay;
-
-    // 代偿申请原因
-    private String replaceRepayApplyReason;
-
-    // 代偿申请原因说明
-    private String replaceRepayApplyNote;
-
+    // ******************拖车数据******************
     // 是否典当行赎回
-    private String isPawnshopRedeem;
+    private String pawnshopIsRedeem;
 
     // 典当行名称
     private String pawnshopName;
@@ -158,6 +147,8 @@ public class RepayPlan extends ABaseDO {
 
     // 拖车申请说明
     private String tcApplyNote;
+
+    // ******************拖车数据******************
 
     // 打款时间
     private Date remitDatetime;
@@ -232,164 +223,20 @@ public class RepayPlan extends ABaseDO {
     // 角色编号
     private String roleCode;
 
-    public String getRefType() {
-        return refType;
-    }
-
-    public void setRefType(String refType) {
-        this.refType = refType;
-    }
-
-    public String getRoleCode() {
-        return roleCode;
-    }
-
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode;
-    }
-
-    public Long getRemitAmount() {
-        return remitAmount;
-    }
-
-    public void setRemitAmount(Long remitAmount) {
-        this.remitAmount = remitAmount;
-    }
-
-    public String getRemitBillPdf() {
-        return remitBillPdf;
-    }
-
-    public void setRemitBillPdf(String remitBillPdf) {
-        this.remitBillPdf = remitBillPdf;
-    }
-
-    public String getTakeCarAddress() {
-        return takeCarAddress;
-    }
-
-    public void setTakeCarAddress(String takeCarAddress) {
-        this.takeCarAddress = takeCarAddress;
-    }
-
-    public Date getTakeDatetime() {
-        return takeDatetime;
-    }
-
-    public void setTakeDatetime(Date takeDatetime) {
-        this.takeDatetime = takeDatetime;
-    }
-
-    public String getTakeName() {
-        return takeName;
-    }
-
-    public void setTakeName(String takeName) {
-        this.takeName = takeName;
-    }
-
-    public String getTakeLocation() {
-        return takeLocation;
-    }
-
-    public void setTakeLocation(String takeLocation) {
-        this.takeLocation = takeLocation;
-    }
-
-    public String getTakeNote() {
-        return takeNote;
-    }
-
-    public void setTakeNote(String takeNote) {
-        this.takeNote = takeNote;
-    }
-
-    public String getTcApplyNote() {
-        return tcApplyNote;
-    }
-
-    public void setTcApplyNote(String tcApplyNote) {
-        this.tcApplyNote = tcApplyNote;
-    }
-
-    public Long getTsCarAmount() {
-        return tsCarAmount;
-    }
-
-    public void setTsCarAmount(Long tsCarAmount) {
-        this.tsCarAmount = tsCarAmount;
-    }
-
-    public String getTsBankcardNumber() {
-        return tsBankcardNumber;
-    }
-
-    public void setTsBankcardNumber(String tsBankcardNumber) {
-        this.tsBankcardNumber = tsBankcardNumber;
-    }
-
-    public String getTsBankName() {
-        return tsBankName;
-    }
-
-    public void setTsBankName(String tsBankName) {
-        this.tsBankName = tsBankName;
-    }
-
-    public String getTsSubbranch() {
-        return tsSubbranch;
-    }
-
-    public void setTsSubbranch(String tsSubbranch) {
-        this.tsSubbranch = tsSubbranch;
-    }
-
-    public String getBankcardNumber() {
-        return bankcardNumber;
-    }
-
-    public void setBankcardNumber(String bankcardNumber) {
-        this.bankcardNumber = bankcardNumber;
-    }
-
-    public Long getMonthRepayAmount() {
-        return monthRepayAmount;
-    }
-
-    public void setMonthRepayAmount(Long monthRepayAmount) {
-        this.monthRepayAmount = monthRepayAmount;
-    }
-
-    public Long getUnsettledLoan() {
-        return unsettledLoan;
-    }
-
-    public void setUnsettledLoan(Long unsettledLoan) {
-        this.unsettledLoan = unsettledLoan;
-    }
-
-    public List<String> getCurNodeCodeList() {
-        return curNodeCodeList;
-    }
-
-    public void setCurNodeCodeList(List<String> curNodeCodeList) {
-        this.curNodeCodeList = curNodeCodeList;
-    }
-
-    public List<Cost> getCostList() {
-        return costList;
-    }
-
-    public void setCostList(List<Cost> costList) {
-        this.costList = costList;
-    }
-
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getRefType() {
+        return refType;
+    }
+
+    public void setRefType(String refType) {
+        this.refType = refType;
     }
 
     public String getRepayBizCode() {
@@ -406,22 +253,6 @@ public class RepayPlan extends ABaseDO {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public Date getRepayStartDatetime() {
-        return repayStartDatetime;
-    }
-
-    public void setRepayStartDatetime(Date repayStartDatetime) {
-        this.repayStartDatetime = repayStartDatetime;
-    }
-
-    public Date getRepayEndDatetime() {
-        return repayEndDatetime;
-    }
-
-    public void setRepayEndDatetime(Date repayEndDatetime) {
-        this.repayEndDatetime = repayEndDatetime;
     }
 
     public int getPeriods() {
@@ -470,6 +301,14 @@ public class RepayPlan extends ABaseDO {
 
     public void setPayedAmount(Long payedAmount) {
         this.payedAmount = payedAmount;
+    }
+
+    public long getOverplusAmount() {
+        return overplusAmount;
+    }
+
+    public void setOverplusAmount(long overplusAmount) {
+        this.overplusAmount = overplusAmount;
     }
 
     public Long getOverdueAmount() {
@@ -536,20 +375,28 @@ public class RepayPlan extends ABaseDO {
         this.overdueDeposit = overdueDeposit;
     }
 
-    public String getDepositWay() {
-        return depositWay;
+    public String getOverdueDepositWay() {
+        return overdueDepositWay;
     }
 
-    public void setDepositWay(String depositWay) {
-        this.depositWay = depositWay;
+    public void setOverdueDepositWay(String overdueDepositWay) {
+        this.overdueDepositWay = overdueDepositWay;
     }
 
-    public Long getShouldDeposit() {
-        return shouldDeposit;
+    public String getRepayIsPart() {
+        return repayIsPart;
     }
 
-    public void setShouldDeposit(Long shouldDeposit) {
-        this.shouldDeposit = shouldDeposit;
+    public void setRepayIsPart(String repayIsPart) {
+        this.repayIsPart = repayIsPart;
+    }
+
+    public Long getRealRepayAmount() {
+        return realRepayAmount;
+    }
+
+    public void setRealRepayAmount(Long realRepayAmount) {
+        this.realRepayAmount = realRepayAmount;
     }
 
     public int getRemindCount() {
@@ -560,12 +407,284 @@ public class RepayPlan extends ABaseDO {
         this.remindCount = remindCount;
     }
 
-    public long getOverplusAmount() {
-        return overplusAmount;
+    public Long getReplaceRealRepayAmount() {
+        return replaceRealRepayAmount;
     }
 
-    public void setOverplusAmount(long overplusAmount) {
-        this.overplusAmount = overplusAmount;
+    public void setReplaceRealRepayAmount(Long replaceRealRepayAmount) {
+        this.replaceRealRepayAmount = replaceRealRepayAmount;
+    }
+
+    public String getReplaceIsRepay() {
+        return replaceIsRepay;
+    }
+
+    public void setReplaceIsRepay(String replaceIsRepay) {
+        this.replaceIsRepay = replaceIsRepay;
+    }
+
+    public Date getReplaceRepayDatetime() {
+        return replaceRepayDatetime;
+    }
+
+    public void setReplaceRepayDatetime(Date replaceRepayDatetime) {
+        this.replaceRepayDatetime = replaceRepayDatetime;
+    }
+
+    public Long getReplaceBackRepayAmount() {
+        return replaceBackRepayAmount;
+    }
+
+    public void setReplaceBackRepayAmount(Long replaceBackRepayAmount) {
+        this.replaceBackRepayAmount = replaceBackRepayAmount;
+    }
+
+    public Date getReplaceBackRepayDatetime() {
+        return replaceBackRepayDatetime;
+    }
+
+    public void setReplaceBackRepayDatetime(Date replaceBackRepayDatetime) {
+        this.replaceBackRepayDatetime = replaceBackRepayDatetime;
+    }
+
+    public String getCollectionWay() {
+        return collectionWay;
+    }
+
+    public void setCollectionWay(String collectionWay) {
+        this.collectionWay = collectionWay;
+    }
+
+    public String getCollectionTarget() {
+        return collectionTarget;
+    }
+
+    public void setCollectionTarget(String collectionTarget) {
+        this.collectionTarget = collectionTarget;
+    }
+
+    public String getCollectionProcess() {
+        return collectionProcess;
+    }
+
+    public void setCollectionProcess(String collectionProcess) {
+        this.collectionProcess = collectionProcess;
+    }
+
+    public String getCollectionWish() {
+        return collectionWish;
+    }
+
+    public void setCollectionWish(String collectionWish) {
+        this.collectionWish = collectionWish;
+    }
+
+    public String getCollectionResult() {
+        return collectionResult;
+    }
+
+    public void setCollectionResult(String collectionResult) {
+        this.collectionResult = collectionResult;
+    }
+
+    public String getDepositIsProvide() {
+        return depositIsProvide;
+    }
+
+    public void setDepositIsProvide(String depositIsProvide) {
+        this.depositIsProvide = depositIsProvide;
+    }
+
+    public String getCollectionNote() {
+        return collectionNote;
+    }
+
+    public void setCollectionNote(String collectionNote) {
+        this.collectionNote = collectionNote;
+    }
+
+    public String getPawnshopIsRedeem() {
+        return pawnshopIsRedeem;
+    }
+
+    public void setPawnshopIsRedeem(String pawnshopIsRedeem) {
+        this.pawnshopIsRedeem = pawnshopIsRedeem;
+    }
+
+    public String getPawnshopName() {
+        return pawnshopName;
+    }
+
+    public void setPawnshopName(String pawnshopName) {
+        this.pawnshopName = pawnshopName;
+    }
+
+    public String getRansom() {
+        return ransom;
+    }
+
+    public void setRansom(String ransom) {
+        this.ransom = ransom;
+    }
+
+    public Long getTsCarAmount() {
+        return tsCarAmount;
+    }
+
+    public void setTsCarAmount(Long tsCarAmount) {
+        this.tsCarAmount = tsCarAmount;
+    }
+
+    public String getTsBankcardNumber() {
+        return tsBankcardNumber;
+    }
+
+    public void setTsBankcardNumber(String tsBankcardNumber) {
+        this.tsBankcardNumber = tsBankcardNumber;
+    }
+
+    public String getTsBankName() {
+        return tsBankName;
+    }
+
+    public void setTsBankName(String tsBankName) {
+        this.tsBankName = tsBankName;
+    }
+
+    public String getTsSubbranch() {
+        return tsSubbranch;
+    }
+
+    public void setTsSubbranch(String tsSubbranch) {
+        this.tsSubbranch = tsSubbranch;
+    }
+
+    public String getTcApplyNote() {
+        return tcApplyNote;
+    }
+
+    public void setTcApplyNote(String tcApplyNote) {
+        this.tcApplyNote = tcApplyNote;
+    }
+
+    public Date getRemitDatetime() {
+        return remitDatetime;
+    }
+
+    public void setRemitDatetime(Date remitDatetime) {
+        this.remitDatetime = remitDatetime;
+    }
+
+    public Long getRemitAmount() {
+        return remitAmount;
+    }
+
+    public void setRemitAmount(Long remitAmount) {
+        this.remitAmount = remitAmount;
+    }
+
+    public String getRemitBankCode() {
+        return remitBankCode;
+    }
+
+    public void setRemitBankCode(String remitBankCode) {
+        this.remitBankCode = remitBankCode;
+    }
+
+    public String getRemitBillPdf() {
+        return remitBillPdf;
+    }
+
+    public void setRemitBillPdf(String remitBillPdf) {
+        this.remitBillPdf = remitBillPdf;
+    }
+
+    public String getTakeCarAddress() {
+        return takeCarAddress;
+    }
+
+    public void setTakeCarAddress(String takeCarAddress) {
+        this.takeCarAddress = takeCarAddress;
+    }
+
+    public Date getTakeDatetime() {
+        return takeDatetime;
+    }
+
+    public void setTakeDatetime(Date takeDatetime) {
+        this.takeDatetime = takeDatetime;
+    }
+
+    public String getTakeName() {
+        return takeName;
+    }
+
+    public void setTakeName(String takeName) {
+        this.takeName = takeName;
+    }
+
+    public String getTakeLocation() {
+        return takeLocation;
+    }
+
+    public void setTakeLocation(String takeLocation) {
+        this.takeLocation = takeLocation;
+    }
+
+    public String getTakeNote() {
+        return takeNote;
+    }
+
+    public void setTakeNote(String takeNote) {
+        this.takeNote = takeNote;
+    }
+
+    public String getDealResult() {
+        return dealResult;
+    }
+
+    public void setDealResult(String dealResult) {
+        this.dealResult = dealResult;
+    }
+
+    public Long getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(Long sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+
+    public Long getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(Long deposit) {
+        this.deposit = deposit;
+    }
+
+    public String getFeeNote() {
+        return feeNote;
+    }
+
+    public void setFeeNote(String feeNote) {
+        this.feeNote = feeNote;
+    }
+
+    public Date getRepayStartDatetime() {
+        return repayStartDatetime;
+    }
+
+    public void setRepayStartDatetime(Date repayStartDatetime) {
+        this.repayStartDatetime = repayStartDatetime;
+    }
+
+    public Date getRepayEndDatetime() {
+        return repayEndDatetime;
+    }
+
+    public void setRepayEndDatetime(Date repayEndDatetime) {
+        this.repayEndDatetime = repayEndDatetime;
     }
 
     public User getUser() {
@@ -584,11 +703,59 @@ public class RepayPlan extends ABaseDO {
         this.repayBiz = repayBiz;
     }
 
+    public List<Cost> getCostList() {
+        return costList;
+    }
+
+    public void setCostList(List<Cost> costList) {
+        this.costList = costList;
+    }
+
     public List<RemindLog> getRemindLogList() {
         return remindLogList;
     }
 
     public void setRemindLogList(List<RemindLog> remindLogList) {
         this.remindLogList = remindLogList;
+    }
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
+    }
+
+    public Long getUnsettledLoan() {
+        return unsettledLoan;
+    }
+
+    public void setUnsettledLoan(Long unsettledLoan) {
+        this.unsettledLoan = unsettledLoan;
+    }
+
+    public Long getMonthRepayAmount() {
+        return monthRepayAmount;
+    }
+
+    public void setMonthRepayAmount(Long monthRepayAmount) {
+        this.monthRepayAmount = monthRepayAmount;
+    }
+
+    public String getBankcardNumber() {
+        return bankcardNumber;
+    }
+
+    public void setBankcardNumber(String bankcardNumber) {
+        this.bankcardNumber = bankcardNumber;
+    }
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
 }

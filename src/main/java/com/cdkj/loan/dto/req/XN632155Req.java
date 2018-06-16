@@ -7,11 +7,16 @@ package com.cdkj.loan.dto.req;
  * @history:
  */
 public class XN632155Req extends APageReq {
-
-    private static final long serialVersionUID = 1L;
+    /** 
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
+     */
+    private static final long serialVersionUID = 4012969865163344214L;
 
     // 业务编号
     private String bizCode;
+
+    // 用户编号
+    private String userId;
 
     // 节点编号
     private String bizNodeCode;
@@ -19,15 +24,20 @@ public class XN632155Req extends APageReq {
     // 状态
     private String status;
 
-    // 用户编号
-    private String userId;
-
     public String getBizCode() {
         return bizCode;
     }
 
     public void setBizCode(String bizCode) {
         this.bizCode = bizCode;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getBizNodeCode() {
@@ -44,14 +54,6 @@ public class XN632155Req extends APageReq {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
 }

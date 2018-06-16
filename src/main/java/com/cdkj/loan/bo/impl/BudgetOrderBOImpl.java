@@ -21,8 +21,8 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
-        IBudgetOrderBO {
+public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
+        implements IBudgetOrderBO {
 
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
@@ -155,8 +155,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     public void logicOrder(String code, String operator) {
         BudgetOrder budgetOrder = getBudgetOrder(code);
         // String preCurrentNode = budgetOrder.getCurNodeCode();
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
-            .getCurNodeCode());
+        NodeFlow nodeFlow = nodeFlowBO
+            .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
@@ -206,6 +206,26 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     @Override
     public void refreshCardMaking(BudgetOrder condition) {
         budgetOrderDAO.refreshCardMaking(condition);
+    }
+
+    @Override
+    public void entryPreservation(BudgetOrder budgetOrder) {
+        budgetOrderDAO.entryPreservation(budgetOrder);
+    }
+
+    @Override
+    public void invoiceMismatchApply(BudgetOrder budgetOrder) {
+        budgetOrderDAO.invoiceMismatchApply(budgetOrder);
+    }
+
+    @Override
+    public void approveApply(BudgetOrder budgetOrder) {
+        budgetOrderDAO.approveApply(budgetOrder);
+    }
+
+    @Override
+    public void twoApproveApply(BudgetOrder budgetOrder) {
+        budgetOrderDAO.twoApproveApply(budgetOrder);
     }
 
 }

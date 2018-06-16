@@ -8,7 +8,6 @@
 		<result column="company_code" property="companyCode" />
 		<result column="real_name" property="realName" />
 		<result column="bank_code" property="bankCode" />
-		<result column="bank_name" property="bankName" />
 		<result column="subbranch" property="subbranch" />
 		<result column="bankcard_number" property="bankcardNumber" />
 		<result column="remark" property="remark" />
@@ -37,7 +36,6 @@
 		,t.company_code
 		,t.real_name
 		,t.bank_code
-		,t.bank_name
 		,t.subbranch
 		,t.bankcard_number
 		,t.remark
@@ -65,7 +63,6 @@
 		,company_code
 		,real_name
 		,bank_code
-		,bank_name
 		,subbranch
 		,bankcard_number
 		,remark
@@ -76,7 +73,6 @@
 		,#{companyCode}
 		,#{realName}
 		,#{bankCode}
-		,#{bankName}
 		,#{subbranch}
 		,#{bankcardNumber}
 		,#{remark}
@@ -95,7 +91,6 @@
 		,company_code = #{companyCode}
 		,real_name = #{realName}
 		,bank_code = #{bankCode}
-		,bank_name = #{bankName}
 		,subbranch = #{subbranch}
 		,bankcard_number = #{bankcardNumber}
 		,remark = #{remark}

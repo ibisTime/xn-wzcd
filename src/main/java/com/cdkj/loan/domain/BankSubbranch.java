@@ -18,7 +18,7 @@ public class BankSubbranch extends ABaseDO {
     private static final long serialVersionUID = 3792099812449388157L;
 
     // 序号
-    private int id;
+    private String code;
 
     // 银行编号
     private String bankCode;
@@ -112,12 +112,12 @@ public class BankSubbranch extends ABaseDO {
         this.bankName = bankName;
     }
 
-    public int getId() {
-        return id;
+    public String getCode() {
+        return code;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getBankCode() {

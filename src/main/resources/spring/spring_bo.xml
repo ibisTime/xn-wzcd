@@ -388,4 +388,9 @@
 	</bean>
 	
 
+
+	<bean id="judgeBO" class="com.cdkj.loan.bo.impl.JudgeBOImpl">
+		<property name="paginableDAO" ref="judgeDAOImpl"/>
+	</bean>
+
 </beans>

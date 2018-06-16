@@ -14,7 +14,6 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.PhoneUtil;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.domain.SYSUser;
@@ -40,7 +39,7 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
     private ISYSUserBO sysUserBO;
 
     @Override
-    public long addBankSubbranch(XN632050Req req) {
+    public String addBankSubbranch(XN632050Req req) {
         if (null == bankBO.getBank(req.getBankCode())) {
             throw new BizException("xn0000", "银行信息不存在。");
         }
@@ -76,15 +75,14 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());
-        bankSubbranchBO.saveBankSubbranch(data);
 
-        return bankSubbranchBO.getBankSubbranchMaxid(req.getBankCode());
+        return bankSubbranchBO.saveBankSubbranch(data);
     }
 
     @Override
-    public int dropBankSubbranch(int id) {
+    public int dropBankSubbranch(String code) {
         BankSubbranch condition = new BankSubbranch();
-        condition.setId(id);
+        condition.setCode(code);
         return bankSubbranchBO.dropBankSubbranch(condition);
     }
 
@@ -98,7 +96,7 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
         }
 
         BankSubbranch data = new BankSubbranch();
-        data.setId(StringValidater.toInteger(req.getId()));
+        data.setCode(req.getCode());
         data.setAbbrName(req.getAbbrName());
         data.setFullName(req.getFullName());
         data.setOpenBank(req.getOpenBank());
@@ -125,9 +123,9 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
     }
 
     @Override
-    public BankSubbranch getBankSubbranch(int id) {
+    public BankSubbranch getBankSubbranch(String code) {
         BankSubbranch condition = new BankSubbranch();
-        condition.setId(id);
+        condition.setCode(code);
         BankSubbranch bankSubbranch = bankSubbranchBO
             .getBankSubbranch(condition);
         initBankSubbranch(bankSubbranch);

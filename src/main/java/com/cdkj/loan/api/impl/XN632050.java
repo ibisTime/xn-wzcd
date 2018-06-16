@@ -5,7 +5,6 @@ import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN632050Req;
-import com.cdkj.loan.dto.res.PKCodeRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -25,8 +24,7 @@ public class XN632050 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return new PKCodeRes(
-            String.valueOf(bankSubbranchAO.addBankSubbranch(req)));
+        return bankSubbranchAO.addBankSubbranch(req);
     }
 
     @Override

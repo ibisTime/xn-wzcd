@@ -3,12 +3,16 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 业务团队解除抵押
+ * 财务经理审核
  * @author: silver 
  * @since: 2018年6月10日 上午10:49:34 
  * @history:
  */
 public class XN630554Req {
+    // 审核结果(必填)1=通过 0=不通过
+    @NotBlank
+    private String approveResult;
+
     // 还款业务编号
     @NotBlank
     private String code;
@@ -17,9 +21,16 @@ public class XN630554Req {
     @NotBlank
     private String operator;
 
-    // 解除抵押时间
-    @NotBlank
-    private String releaseDatetime;
+    // 备注
+    private String remark;
+
+    public String getApproveResult() {
+        return approveResult;
+    }
+
+    public void setApproveResult(String approveResult) {
+        this.approveResult = approveResult;
+    }
 
     public String getCode() {
         return code;
@@ -37,12 +48,12 @@ public class XN630554Req {
         this.operator = operator;
     }
 
-    public String getReleaseDatetime() {
-        return releaseDatetime;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setReleaseDatetime(String releaseDatetime) {
-        this.releaseDatetime = releaseDatetime;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
 }

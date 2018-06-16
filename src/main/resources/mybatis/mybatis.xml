@@ -98,6 +98,7 @@
 		<typeAlias alias="overdueMenu" type="com.cdkj.loan.domain.OverdueMenu" />
 		<typeAlias alias="replaceRepayApply" type="com.cdkj.loan.domain.ReplaceRepayApply" />
 		<typeAlias alias="replaceRepayPlan" type="com.cdkj.loan.domain.ReplaceRepayPlan" />
+		<typeAlias alias="judge" type="com.cdkj.loan.domain.Judge" />
 		
 		<!-- 行政人事 -->
 		<typeAlias alias="gpsApply" type="com.cdkj.loan.domain.GpsApply" />
