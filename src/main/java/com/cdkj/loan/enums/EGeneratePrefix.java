@@ -28,7 +28,8 @@ public enum EGeneratePrefix {
             "CB", "收款账号"), CARDEALER("CD", "经销商信息表"), CARDEALERPROTOCOL("CDT",
             "经销商协议表"),
 
-    BUDGET("BG", "预订单"), GPS("G", "GPS"), BANK("BA", "银行"), BANKSUBBRANCH("BS", "支行"), LOGISTICS("L",
+    BUDGET("BG", "预订单"), GPS("G", "GPS"), BANK("BA", "银行"), BANKSUBBRANCH("BS",
+            "支行"), LOGISTICS("L",
 
     "资料传递"), BUDGETORDER("BO", "预算单"), LOAN_PRODUCT("LP", "贷款产品"), GPSAZ(
             "GPSAZ", "gps安装"), GPS_APPLY("GA", "GPS申领"), BUDGET_ORDER_FEE(
@@ -53,8 +54,9 @@ public enum EGeneratePrefix {
 
     ASKFORAPPLY("AFA", "领导请示申请"), CAR_BREAK("CAB", "车辆违章处理"), WELFARE_APPLY(
             "WA", "福利发放"), WELFARE_USER("WU", "福利发放人员"), BIZ_TEAM("BT", "业务团队"), REPOINT(
-            "RE", "返点"), REPLACE_REPAY_APPLY("RRA","代偿预算单"), REPLACE_REPAY_PLAN("PPP","代偿预算审核"), ADVANCE_FUND(
-                "AF", "垫资单"), JUDGE("J", "司法诉讼");
+            "RE", "返点"), REPLACE_REPAY_APPLY("RRA", "代偿预算单"), REPLACE_REPAY_PLAN(
+            "PPP", "代偿预算审核"), ADVANCE_FUND("AF", "垫资单"), REPOINT_DETAIL("RD",
+            "返点明细"), JUDGE("J", "司法诉讼");
 
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();

@@ -379,8 +379,18 @@
 		<property name="paginableDAO" ref="replaceRepayPlanDAOImpl"/>
 	</bean>
 	
+	<bean id="repointDetailBO" class="com.cdkj.loan.bo.impl.RepointDetailBOImpl">
+		<property name="paginableDAO" ref="repointDetailDAOImpl"/>
+	</bean>
+	
+	<bean id="advanceFundBO" class="com.cdkj.loan.bo.impl.AdvanceFundBOImpl">
+		<property name="paginableDAO" ref="advanceFundDAOImpl"/>
+	</bean>
+	
+
+
 	<bean id="judgeBO" class="com.cdkj.loan.bo.impl.JudgeBOImpl">
 		<property name="paginableDAO" ref="judgeDAOImpl"/>
 	</bean>
-	
+
 </beans>

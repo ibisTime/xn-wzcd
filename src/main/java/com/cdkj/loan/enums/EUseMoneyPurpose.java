@@ -1,16 +1,17 @@
 package com.cdkj.loan.enums;
 
 /**
- * 返点状态
+ * 返点明细类型（用款用途）
  * @author: jiafr 
- * @since: 2018年6月9日 下午6:38:51 
+ * @since: 2018年6月16日 下午3:35:33 
  * @history:
  */
-public enum ERepointStatus {
+public enum EUseMoneyPurpose {
 
-    TODO("0", "待打款"), HANDLED("1", "已打款");
+    MORTGAGE("1", "应退按揭款"), PROTOCOL_INNER("2", "协议内返点"), PROTOCOL_OUTER("2",
+            "协议外返点");
 
-    ERepointStatus(String code, String value) {
+    EUseMoneyPurpose(String code, String value) {
         this.code = code;
         this.value = value;
     }

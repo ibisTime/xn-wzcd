@@ -25,8 +25,7 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
 
     @Override
     public void saveCollectBankcardList(
-            List<CollectBankcard> collectBankcardList, String type,
-            String code) {
+            List<CollectBankcard> collectBankcardList, String type, String code) {
         if (CollectionUtils.isNotEmpty(collectBankcardList)) {
             for (CollectBankcard collectBankcard : collectBankcardList) {
                 String cbCode = OrderNoGenerater
@@ -73,8 +72,8 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
     public String saveCollectBankcard(CollectBankcard data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.COLLECTBANKCARD.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.COLLECTBANKCARD
+                .getCode());
             data.setCode(code);
             collectBankcardDAO.insert(data);
         }

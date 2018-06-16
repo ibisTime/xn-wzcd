@@ -1,16 +1,16 @@
 package com.cdkj.loan.enums;
 
 /**
- * 返点状态
+ * 返点明细节点
  * @author: jiafr 
- * @since: 2018年6月9日 下午6:38:51 
+ * @since: 2018年6月16日 下午10:32:31 
  * @history:
  */
-public enum ERepointStatus {
+public enum ERepointDetailStatus {
 
-    TODO("0", "待打款"), HANDLED("1", "已打款");
+    TODO_MAKE_BILL("0", "待制单"), TODO_PAY("1", "已制单待打款"), HANDLED("2", "已打款");
 
-    ERepointStatus(String code, String value) {
+    ERepointDetailStatus(String code, String value) {
         this.code = code;
         this.value = value;
     }

@@ -10,19 +10,23 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.ICreditAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.IRepointDetailBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
+import com.cdkj.loan.domain.RepointDetail;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632110ReqChild;
@@ -36,6 +40,7 @@ import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ECreditNode;
 import com.cdkj.loan.enums.ELoanRole;
+import com.cdkj.loan.enums.EUseMoneyPurpose;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -70,6 +75,12 @@ public class CreditAOImpl implements ICreditAO {
 
     @Autowired
     private IBudgetOrderBO budgetOrderBO;
+
+    @Autowired
+    private IRepointDetailBO repointDetailBO;
+
+    @Autowired
+    private ICollectBankcardBO collectBankcardBO;
 
     @Override
     public String addCredit(XN632110Req req) {
@@ -309,6 +320,7 @@ public class CreditAOImpl implements ICreditAO {
 
             // 生成预算单
             BudgetOrder data = new BudgetOrder();
+            data.setCreditCode(credit.getCode());
             data.setCompanyCode(credit.getCompanyCode());
             data.setSaleUserId(credit.getSaleUserId());
             data.setLoanBankCode(credit.getLoanBankCode());
@@ -318,6 +330,20 @@ public class CreditAOImpl implements ICreditAO {
             EBudgetOrderNode node = EBudgetOrderNode.START_NODE;
             data.setCurNodeCode(node.getCode());
             String budgetOrderCode = budgetOrderBO.saveBudgetOrder(data);
+
+            // 生成返点明细数据(应退按揭款)
+            RepointDetail repointDetail = new RepointDetail();
+            repointDetail.setBudgetCode(budgetOrderCode);
+            repointDetail.setUserName(data.getCustomerName());
+            repointDetail.setLoanAmount(data.getLoanAmount());
+            repointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
+                .getCode());
+            repointDetail.setRepointAmount(data.getLoanAmount());
+            CollectBankcard collectBankcard = collectBankcardBO
+                .getCollectBankcard(data.getCompanyCode());
+            repointDetail.setAccountCode(collectBankcard.getCode());
+            repointDetailBO.saveRepointDetail(repointDetail);
+
             // 日志记录
             sysBizLogBO.saveSYSBizLog(budgetOrderCode,
                 EBizLogType.BUDGET_ORDER, budgetOrderCode, node.getCode(),
