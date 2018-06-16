@@ -41,8 +41,6 @@ public class SysConstants {
 
     public static String QXDBZDJE = "QXDBZDJE"; // 取现单笔最大金额
 
-    public static String TQ_SERVICE = "tq_service";// 提前还款服务费
-
     // 短信模板
     public static String WITHDRAW = "您有一个新的取现订单（编号：%s）需要处理！"; // 有人提现
 
