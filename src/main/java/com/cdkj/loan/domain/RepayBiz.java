@@ -105,10 +105,10 @@ public class RepayBiz extends ABaseDO {
     // 未还清收总成本
     private Long restTotalCost;
 
-    // 再次逾期保证金总额
+    // 再次逾期保证金总额(作废)
     private Long overdueTotalDeposit;
 
-    // 再次逾期保证金总收入
+    // 再次逾期保证金总收入(作废)
     private Long overdueTotalDepositIncome;
 
     // 额外保证金收入(作废)
@@ -120,29 +120,29 @@ public class RepayBiz extends ABaseDO {
     // 累计逾期期数
     private int totalOverdueCount;
 
-    // 现在逾期的次数
+    // 现有逾期的次数
     private int curOverdueCount;
 
     // 现有代偿金额(黄名单)
-    private Long restYellowAmount;
+    private Long restReplaceRepayAmount;
 
     // 累计代偿次数
-    private int totalYellowCount;
+    private int totalReplaceRepayCount;
 
     // 现在代偿次数
-    private int curYellowCount;
+    private int curReplaceRepayCount;
 
     // 黑名单处理结果备案(商品分期)
     private String blackHandleNote;
-
-    // 结清时间
-    private Date settleDatetime;
 
     // 是否提前结清(0=正常结清 1=提前结清)
     private String isAdvanceSettled;
 
     // 结清证明
     private String settleAttach;
+
+    // 结清时间
+    private Date settleDatetime;
 
     // 押金单
     private String depositReceipt;
@@ -154,7 +154,7 @@ public class RepayBiz extends ABaseDO {
     private String refundBankRealName;
 
     // 退款账号
-    private String refundBankcardNumber;
+    private String refundBankcard;
 
     // 第二年按公司指定续保
     private String secondCompanyInsurance;
@@ -170,6 +170,8 @@ public class RepayBiz extends ABaseDO {
 
     // 解除抵押回录说明
     private String releaseNote;
+
+    // ********************司法诉讼打款回来的********************
 
     // 司法诉讼收款时间
     private Date judgeReceiptDatetime;
@@ -189,6 +191,9 @@ public class RepayBiz extends ABaseDO {
     // 司法诉讼收款凭证
     private String judgeBillPdf;
 
+    // ********************司法诉讼打款回来的********************
+
+    // ********************结清打款回来的********************
     // 结清付款时间
     private Date settlePayDatetime;
 
@@ -203,6 +208,8 @@ public class RepayBiz extends ABaseDO {
 
     // 结清说明
     private String settleNote;
+
+    // ********************结清打款回来的********************
 
     // 最近修改人
     private String updater;
@@ -246,54 +253,6 @@ public class RepayBiz extends ABaseDO {
     private RepayPlan overdueRepayPlan;
 
     private List<String> curNodeCodeList;// 节点
-
-    public Date getJudgeReceiptDatetime() {
-        return judgeReceiptDatetime;
-    }
-
-    public void setJudgeReceiptDatetime(Date judgeReceiptDatetime) {
-        this.judgeReceiptDatetime = judgeReceiptDatetime;
-    }
-
-    public Long getJudgeReceiptAmount() {
-        return judgeReceiptAmount;
-    }
-
-    public void setJudgeReceiptAmount(Long judgeReceiptAmount) {
-        this.judgeReceiptAmount = judgeReceiptAmount;
-    }
-
-    public String getJudgeReceiptBank() {
-        return judgeReceiptBank;
-    }
-
-    public void setJudgeReceiptBank(String judgeReceiptBank) {
-        this.judgeReceiptBank = judgeReceiptBank;
-    }
-
-    public String getJudgeReceiptBankcard() {
-        return judgeReceiptBankcard;
-    }
-
-    public void setJudgeReceiptBankcard(String judgeReceiptBankcard) {
-        this.judgeReceiptBankcard = judgeReceiptBankcard;
-    }
-
-    public String getJudgeNote() {
-        return judgeNote;
-    }
-
-    public void setJudgeNote(String judgeNote) {
-        this.judgeNote = judgeNote;
-    }
-
-    public String getJudgeBillPdf() {
-        return judgeBillPdf;
-    }
-
-    public void setJudgeBillPdf(String judgeBillPdf) {
-        this.judgeBillPdf = judgeBillPdf;
-    }
 
     public String getCode() {
         return code;
@@ -583,28 +542,28 @@ public class RepayBiz extends ABaseDO {
         this.curOverdueCount = curOverdueCount;
     }
 
-    public Long getRestYellowAmount() {
-        return restYellowAmount;
+    public Long getRestReplaceRepayAmount() {
+        return restReplaceRepayAmount;
     }
 
-    public void setRestYellowAmount(Long restYellowAmount) {
-        this.restYellowAmount = restYellowAmount;
+    public void setRestReplaceRepayAmount(Long restReplaceRepayAmount) {
+        this.restReplaceRepayAmount = restReplaceRepayAmount;
     }
 
-    public int getTotalYellowCount() {
-        return totalYellowCount;
+    public int getTotalReplaceRepayCount() {
+        return totalReplaceRepayCount;
     }
 
-    public void setTotalYellowCount(int totalYellowCount) {
-        this.totalYellowCount = totalYellowCount;
+    public void setTotalReplaceRepayCount(int totalReplaceRepayCount) {
+        this.totalReplaceRepayCount = totalReplaceRepayCount;
     }
 
-    public int getCurYellowCount() {
-        return curYellowCount;
+    public int getCurReplaceRepayCount() {
+        return curReplaceRepayCount;
     }
 
-    public void setCurYellowCount(int curYellowCount) {
-        this.curYellowCount = curYellowCount;
+    public void setCurReplaceRepayCount(int curReplaceRepayCount) {
+        this.curReplaceRepayCount = curReplaceRepayCount;
     }
 
     public String getBlackHandleNote() {
@@ -663,12 +622,12 @@ public class RepayBiz extends ABaseDO {
         this.refundBankRealName = refundBankRealName;
     }
 
-    public String getRefundBankcardNumber() {
-        return refundBankcardNumber;
+    public String getRefundBankcard() {
+        return refundBankcard;
     }
 
-    public void setRefundBankcardNumber(String refundBankcardNumber) {
-        this.refundBankcardNumber = refundBankcardNumber;
+    public void setRefundBankcard(String refundBankcard) {
+        this.refundBankcard = refundBankcard;
     }
 
     public String getSecondCompanyInsurance() {
@@ -687,12 +646,116 @@ public class RepayBiz extends ABaseDO {
         this.thirdCompanyInsurance = thirdCompanyInsurance;
     }
 
+    public String getReleaseApplyNote() {
+        return releaseApplyNote;
+    }
+
+    public void setReleaseApplyNote(String releaseApplyNote) {
+        this.releaseApplyNote = releaseApplyNote;
+    }
+
     public Date getReleaseDatetime() {
         return releaseDatetime;
     }
 
     public void setReleaseDatetime(Date releaseDatetime) {
         this.releaseDatetime = releaseDatetime;
+    }
+
+    public String getReleaseNote() {
+        return releaseNote;
+    }
+
+    public void setReleaseNote(String releaseNote) {
+        this.releaseNote = releaseNote;
+    }
+
+    public Date getJudgeReceiptDatetime() {
+        return judgeReceiptDatetime;
+    }
+
+    public void setJudgeReceiptDatetime(Date judgeReceiptDatetime) {
+        this.judgeReceiptDatetime = judgeReceiptDatetime;
+    }
+
+    public Long getJudgeReceiptAmount() {
+        return judgeReceiptAmount;
+    }
+
+    public void setJudgeReceiptAmount(Long judgeReceiptAmount) {
+        this.judgeReceiptAmount = judgeReceiptAmount;
+    }
+
+    public String getJudgeReceiptBank() {
+        return judgeReceiptBank;
+    }
+
+    public void setJudgeReceiptBank(String judgeReceiptBank) {
+        this.judgeReceiptBank = judgeReceiptBank;
+    }
+
+    public String getJudgeReceiptBankcard() {
+        return judgeReceiptBankcard;
+    }
+
+    public void setJudgeReceiptBankcard(String judgeReceiptBankcard) {
+        this.judgeReceiptBankcard = judgeReceiptBankcard;
+    }
+
+    public String getJudgeNote() {
+        return judgeNote;
+    }
+
+    public void setJudgeNote(String judgeNote) {
+        this.judgeNote = judgeNote;
+    }
+
+    public String getJudgeBillPdf() {
+        return judgeBillPdf;
+    }
+
+    public void setJudgeBillPdf(String judgeBillPdf) {
+        this.judgeBillPdf = judgeBillPdf;
+    }
+
+    public Date getSettlePayDatetime() {
+        return settlePayDatetime;
+    }
+
+    public void setSettlePayDatetime(Date settlePayDatetime) {
+        this.settlePayDatetime = settlePayDatetime;
+    }
+
+    public String getSettleBank() {
+        return settleBank;
+    }
+
+    public void setSettleBank(String settleBank) {
+        this.settleBank = settleBank;
+    }
+
+    public String getSettleBankcard() {
+        return settleBankcard;
+    }
+
+    public void setSettleBankcard(String settleBankcard) {
+        this.settleBankcard = settleBankcard;
+    }
+
+    public String getSettlePdf() {
+        return settlePdf;
+    }
+
+    public void setSettlePdf(String settlePdf) {
+        this.settlePdf = settlePdf;
+    }
+
+    public String getSettleNote() {
+        return settleNote;
+    }
+
+    public void setSettleNote(String settleNote) {
+        this.settleNote = settleNote;
     }
 
     public String getUpdater() {
