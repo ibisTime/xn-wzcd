@@ -10,11 +10,14 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.IBankSubbranchAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankSubbranchBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.PhoneUtil;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankSubbranch;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632050Req;
 import com.cdkj.loan.dto.req.XN632052Req;
 import com.cdkj.loan.exception.BizException;
@@ -32,6 +35,9 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
 
     @Autowired
     private IBankBO bankBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     public long addBankSubbranch(XN632050Req req) {
@@ -122,18 +128,42 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
     public BankSubbranch getBankSubbranch(int id) {
         BankSubbranch condition = new BankSubbranch();
         condition.setId(id);
-        return bankSubbranchBO.getBankSubbranch(condition);
+        BankSubbranch bankSubbranch = bankSubbranchBO
+            .getBankSubbranch(condition);
+        initBankSubbranch(bankSubbranch);
+        return bankSubbranch;
     }
 
     @Override
     public Paginable<BankSubbranch> queryBankSubbranchPage(int start, int limit,
             BankSubbranch condition) {
-        return bankSubbranchBO.getPaginable(start, limit, condition);
+        Paginable<BankSubbranch> paginable = bankSubbranchBO.getPaginable(start,
+            limit, condition);
+        for (BankSubbranch bankSubbranch : paginable.getList()) {
+            initBankSubbranch(bankSubbranch);
+        }
+        return paginable;
     }
 
     @Override
     public List<BankSubbranch> queryBankSubbranchList(BankSubbranch condition) {
-        return bankSubbranchBO.queryBankSubbranchList(condition);
+        List<BankSubbranch> bankSubbranchList = bankSubbranchBO
+            .queryBankSubbranchList(condition);
+        for (BankSubbranch bankSubbranch : bankSubbranchList) {
+            initBankSubbranch(bankSubbranch);
+        }
+        return bankSubbranchList;
+    }
+
+    private void initBankSubbranch(BankSubbranch bankSubbranch) {
+        if (bankSubbranch != null) {
+            Bank bank = bankBO.getBank(bankSubbranch.getBankCode());
+            bankSubbranch.setBank(bank);
+            String bankName = bank.getBankName();
+            bankSubbranch.setBankName(bankName);
+            SYSUser user = sysUserBO.getUser(bankSubbranch.getUpdater());
+            bankSubbranch.setUpdaterName(user.getRealName());
+        }
     }
 
 }

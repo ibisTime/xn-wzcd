@@ -1,37 +1,38 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.ILoanProductAO;
+import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN632173Req;
+import com.cdkj.loan.dto.req.XN632211Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 上架贷款产品
- * @author: silver 
- * @since: 2018年5月30日 下午1:33:40 
+ * 制卡录入
+ * @author: CYL 
+ * @since: 2018年6月15日 下午8:17:36 
  * @history:
  */
-public class XN632173 extends AProcessor {
-    private ILoanProductAO loanProduct = SpringContextHolder
-        .getBean(ILoanProductAO.class);
+public class XN632211 extends AProcessor {
+    private IBudgetOrderAO budgetOrderAO = SpringContextHolder
+        .getBean(IBudgetOrderAO.class);
 
-    private XN632173Req req = null;
+    private XN632211Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        loanProduct.publishYesLoanProduct(req.getCode(), req.getUpdater());
+        budgetOrderAO.refreshCardMaking(req.getCode(), req.getBankCardNumber(),
+            req.getMakeCardRemark());
         return new BooleanRes(true);
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632173Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632211Req.class);
         ObjValidater.validateReq(req);
     }
 

@@ -63,7 +63,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
 
         if (!ECreditNode.LRZXY.getCode().equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是录入银行征信结果节点，不能操作");
+                "当前节点不是录入征信源结果节点，不能操作");
         }
 
         List<XN632111ReqChild> list = req.getBankCreditResultList();

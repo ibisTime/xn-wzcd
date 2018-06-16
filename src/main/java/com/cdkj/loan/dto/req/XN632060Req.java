@@ -36,10 +36,10 @@ public class XN632060Req {
     private String parentGroup;// 所属集团
 
     @NotBlank
-    private String agreement;// 协议
+    private String agreementValidDateStart;// 合作协议有效期起
 
     @NotBlank
-    private String agreementValidDate;// 合作协议有效期
+    private String agreementValidDateEnd;// 合作协议有效期止
 
     @NotBlank
     private String agreementStatus;// 协议状态
@@ -189,20 +189,20 @@ public class XN632060Req {
         this.parentGroup = parentGroup;
     }
 
-    public String getAgreement() {
-        return agreement;
+    public String getAgreementValidDateStart() {
+        return agreementValidDateStart;
     }
 
-    public void setAgreement(String agreement) {
-        this.agreement = agreement;
+    public void setAgreementValidDateStart(String agreementValidDateStart) {
+        this.agreementValidDateStart = agreementValidDateStart;
     }
 
-    public String getAgreementValidDate() {
-        return agreementValidDate;
+    public String getAgreementValidDateEnd() {
+        return agreementValidDateEnd;
     }
 
-    public void setAgreementValidDate(String agreementValidDate) {
-        this.agreementValidDate = agreementValidDate;
+    public void setAgreementValidDateEnd(String agreementValidDateEnd) {
+        this.agreementValidDateEnd = agreementValidDateEnd;
     }
 
     public String getAgreementStatus() {

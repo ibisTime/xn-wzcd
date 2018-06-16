@@ -32,9 +32,9 @@ public class CarDealer extends ABaseDO {
 
     private String parentGroup;// 所属集团
 
-    private String agreement;// 协议
+    private Date agreementValidDateStart;// 合作协议有效期起
 
-    private Date agreementValidDate;// 合作协议有效期
+    private Date agreementValidDateEnd;// 合作协议有效期止
 
     private String agreementStatus;// 协议状态
 
@@ -202,20 +202,20 @@ public class CarDealer extends ABaseDO {
         this.parentGroup = parentGroup;
     }
 
-    public String getAgreement() {
-        return agreement;
+    public Date getAgreementValidDateStart() {
+        return agreementValidDateStart;
     }
 
-    public void setAgreement(String agreement) {
-        this.agreement = agreement;
+    public void setAgreementValidDateStart(Date agreementValidDateStart) {
+        this.agreementValidDateStart = agreementValidDateStart;
     }
 
-    public Date getAgreementValidDate() {
-        return agreementValidDate;
+    public Date getAgreementValidDateEnd() {
+        return agreementValidDateEnd;
     }
 
-    public void setAgreementValidDate(Date agreementValidDate) {
-        this.agreementValidDate = agreementValidDate;
+    public void setAgreementValidDateEnd(Date agreementValidDateEnd) {
+        this.agreementValidDateEnd = agreementValidDateEnd;
     }
 
     public String getAgreementStatus() {

@@ -7,7 +7,11 @@ import com.cdkj.loan.domain.BudgetOrder;
 
 public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
+    // 征信结果生成的预算单
     public String saveBudgetOrder(BudgetOrder data);
+
+    // 预算单页面新增预算单
+    public void refresh(BudgetOrder data);
 
     public void refreshAreaManagerApprove(BudgetOrder data);
 
@@ -46,5 +50,8 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 根据角色分页查
     public Object getPaginableByRoleCode(int start, int limit,
             BudgetOrder condition);
+
+    // 制卡录入
+    public void refreshCardMaking(BudgetOrder condition);
 
 }

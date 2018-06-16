@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICreditAO;
 import com.cdkj.loan.bo.IBankBO;
+import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IDepartmentBO;
@@ -18,6 +19,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
@@ -31,6 +33,7 @@ import com.cdkj.loan.dto.req.XN632114Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ECreditNode;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.exception.BizException;
@@ -64,6 +67,9 @@ public class CreditAOImpl implements ICreditAO {
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private IBudgetOrderBO budgetOrderBO;
 
     @Override
     public String addCredit(XN632110Req req) {
@@ -135,7 +141,7 @@ public class CreditAOImpl implements ICreditAO {
 
         if (!ECreditNode.MODIFY.getCode().equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是修改征信节点，不能操作");
+                "当前节点不是重新上传征信资料节点，不能操作");
         }
 
         // 修改征信单
@@ -182,9 +188,7 @@ public class CreditAOImpl implements ICreditAO {
     public Credit getCredit(String creditCode) {
 
         Credit credit = creditBO.getCredit(creditCode);
-
         init(credit);
-
         return credit;
 
     }
@@ -302,6 +306,25 @@ public class CreditAOImpl implements ICreditAO {
             // 审核通过，改变节点
             credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 credit.getCurNodeCode()).getNextNode());
+
+            // 生成预算单
+            BudgetOrder data = new BudgetOrder();
+            data.setCompanyCode(credit.getCompanyCode());
+            data.setSaleUserId(credit.getSaleUserId());
+            data.setLoanBankCode(credit.getLoanBankCode());
+            data.setShopWay(credit.getShopWay());
+            data.setLoanAmount(credit.getLoanAmount());
+            data.setCustomerName(credit.getCreditUser().getUserName());
+            EBudgetOrderNode node = EBudgetOrderNode.START_NODE;
+            data.setCurNodeCode(node.getCode());
+            String budgetOrderCode = budgetOrderBO.saveBudgetOrder(data);
+            // 日志记录
+            sysBizLogBO.saveSYSBizLog(budgetOrderCode,
+                EBizLogType.BUDGET_ORDER, budgetOrderCode, node.getCode(),
+                node.getValue(), req.getOperator());
+            // 征信单回写预算单编号
+            credit.setBudgetCode(budgetOrderCode);
+            creditBO.refreshCredit(credit);
 
         } else {
             credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(

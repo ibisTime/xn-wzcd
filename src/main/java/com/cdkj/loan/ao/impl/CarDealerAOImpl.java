@@ -55,8 +55,11 @@ public class CarDealerAOImpl implements ICarDealerAO {
         data.setContactPhone(StringValidater.toLong(req.getContactPhone()));
         data.setMainBrand(req.getMainBrand());
         data.setParentGroup(req.getParentGroup());
-        data.setAgreementValidDate(DateUtil.strToDate(
-            req.getAgreementValidDate(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setAgreementValidDateStart(
+            DateUtil.strToDate(req.getAgreementValidDateStart(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setAgreementValidDateEnd(DateUtil.strToDate(
+            req.getAgreementValidDateEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setAgreementStatus(req.getAgreementStatus());
         data.setAgreementPic(req.getAgreementPic());
         data.setSettleWay(req.getSettleWay());
@@ -105,8 +108,11 @@ public class CarDealerAOImpl implements ICarDealerAO {
         data.setContactPhone(StringValidater.toLong(req.getContactPhone()));
         data.setMainBrand(req.getMainBrand());
         data.setParentGroup(req.getParentGroup());
-        data.setAgreementValidDate(DateUtil.strToDate(
-            req.getAgreementValidDate(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setAgreementValidDateStart(
+            DateUtil.strToDate(req.getAgreementValidDateStart(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setAgreementValidDateEnd(DateUtil.strToDate(
+            req.getAgreementValidDateEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setAgreementStatus(req.getAgreementStatus());
         data.setAgreementPic(req.getAgreementPic());
         data.setSettleWay(req.getSettleWay());

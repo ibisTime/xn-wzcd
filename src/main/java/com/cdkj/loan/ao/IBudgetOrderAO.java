@@ -16,7 +16,7 @@ import com.cdkj.loan.dto.req.XN632200Req;
 public interface IBudgetOrderAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addBudgetOrder(XN632120Req req);
+    public void addBudgetOrder(XN632120Req req);
 
     // 区域总经理审核
     public void approveAreaManager(String code, String operator,
@@ -63,5 +63,9 @@ public interface IBudgetOrderAO {
     // 根据角色分页查
     public Object queryBudgetOrderPageByRoleCode(int start, int limit,
             BudgetOrder condition);
+
+    // 制卡录入
+    public void refreshCardMaking(String code, String bankCardNumber,
+            String makeCardRemark);
 
 }

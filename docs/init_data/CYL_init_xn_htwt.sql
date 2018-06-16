@@ -537,6 +537,14 @@ INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_d
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','suggest','1','6个月保证金','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','suggest','2','已结清','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'bank_rate_type','银行利率类型','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','bank_rate_type','1','传统利率','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','bank_rate_type','2','建行直客','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','bank_rate_type','3','中行直客','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','bank_rate_type','4','建行直客垫资','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','bank_rate_type','5','中行直客垫资','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','bank_rate_type','6','传统利率A','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+
 /*
 -- Query: select `type`,`ckey`,`cvalue`,`updater`,now() as `update_datetime`,`remark`,`company_code`,`system_code` from tsys_config
 -- Date: 2018-05-11 20:40

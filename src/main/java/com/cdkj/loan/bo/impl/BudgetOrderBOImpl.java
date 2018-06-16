@@ -21,8 +21,8 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
-        implements IBudgetOrderBO {
+public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
+        IBudgetOrderBO {
 
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
@@ -39,6 +39,14 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             budgetOrderDAO.insert(data);
         }
         return code;
+    }
+
+    @Override
+    public void refresh(BudgetOrder data) {
+        if (data != null) {
+            budgetOrderDAO.update(data);
+        }
+
     }
 
     @Override
@@ -147,8 +155,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     public void logicOrder(String code, String operator) {
         BudgetOrder budgetOrder = getBudgetOrder(code);
         // String preCurrentNode = budgetOrder.getCurNodeCode();
-        NodeFlow nodeFlow = nodeFlowBO
-            .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
+            .getCurNodeCode());
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
@@ -193,6 +201,11 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
 
         page.setList(dataList);
         return page;
+    }
+
+    @Override
+    public void refreshCardMaking(BudgetOrder condition) {
+        budgetOrderDAO.refreshCardMaking(condition);
     }
 
 }
