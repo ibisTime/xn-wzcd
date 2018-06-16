@@ -131,7 +131,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 + StringValidater.toDouble(req.getBankRate()));// 综合利率
         data.setFee(StringValidater.toLong(req.getFee()));
         data.setCarDealerSubsidy(
-            StringValidater.toDouble(req.getCarDealerSubsidy()));
+            StringValidater.toLong(req.getCarDealerSubsidy()));
 
         data.setBankLoanCs((double) (loanAmount + fee) / invoicePrice);// 银行贷款成数
         data.setApplyUserMonthIncome(
@@ -643,6 +643,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             DateUtil.FRONT_DATE_FORMAT_STRING));
 
         data.setMonthAmount(StringValidater.toLong(req.getMonthAmount()));
+        data.setRepayBankDate(
+            StringValidater.toInteger(req.getRepayBankDate()));
+        data.setRepayFirstMonthAmount(
+            StringValidater.toLong(req.getRepayFirstMonthAmount()));
+        data.setRepayFirstMonthDatetime(
+            DateUtil.strToDate(req.getRepayFirstMonthDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setRepayMonthAmount(
+            StringValidater.toLong(req.getRepayMonthAmount()));
+
+        data.setIdNo(req.getIdNo());
         data.setIdNoPic(req.getIdNoPic());
         data.setIsComplete(req.getIsComplete());
         data.setStorePlace(req.getStorePlace());
@@ -931,5 +942,24 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), operator);
+    }
+
+    @Override
+    public void mortgageRefund(String code, String shouldBackBankcardCode,
+            String shouldBackDatetime, String shouldBackBillPdf) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+
+        Long loanAmount = budgetOrder.getLoanAmount();
+        Long fee = budgetOrder.getFee();
+        Long gpsFee = budgetOrder.getGpsFee();
+        Long carDealerSubsidy = budgetOrder.getCarDealerSubsidy();
+        Long shouldBackAmount = loanAmount - fee - gpsFee - carDealerSubsidy;
+
+        budgetOrder.setShouldBackAmount(shouldBackAmount);
+        budgetOrder.setShouldBackBankcardCode(shouldBackBankcardCode);
+        budgetOrder.setShouldBackDatetime(DateUtil.strToDate(shouldBackDatetime,
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setShouldBackBillPdf(shouldBackBillPdf);
+        budgetOrderBO.mortgageRefund(budgetOrder);
     }
 }

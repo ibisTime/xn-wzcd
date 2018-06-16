@@ -72,6 +72,21 @@ public class XN632200Req {
     // 月还款额
     private String monthAmount;
 
+    // 银行还款日
+    private String repayBankDate;
+
+    // 首期还款金额
+    private String repayFirstMonthAmount;
+
+    // 首期还款日期
+    private String repayFirstMonthDatetime;
+
+    // 每期月供金额
+    private String repayMonthAmount;
+
+    // 身份证号
+    private String idNo;
+
     // 身份证照片
     private String idNoPic;
 
@@ -102,6 +117,46 @@ public class XN632200Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getRepayBankDate() {
+        return repayBankDate;
+    }
+
+    public void setRepayBankDate(String repayBankDate) {
+        this.repayBankDate = repayBankDate;
+    }
+
+    public String getRepayFirstMonthAmount() {
+        return repayFirstMonthAmount;
+    }
+
+    public void setRepayFirstMonthAmount(String repayFirstMonthAmount) {
+        this.repayFirstMonthAmount = repayFirstMonthAmount;
+    }
+
+    public String getRepayFirstMonthDatetime() {
+        return repayFirstMonthDatetime;
+    }
+
+    public void setRepayFirstMonthDatetime(String repayFirstMonthDatetime) {
+        this.repayFirstMonthDatetime = repayFirstMonthDatetime;
+    }
+
+    public String getRepayMonthAmount() {
+        return repayMonthAmount;
+    }
+
+    public void setRepayMonthAmount(String repayMonthAmount) {
+        this.repayMonthAmount = repayMonthAmount;
+    }
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
     }
 
     public String getInsuranceCompanyCode() {

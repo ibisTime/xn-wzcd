@@ -170,6 +170,12 @@
 		<result column="bank_card_number" property="bankCardNumber" />
 		<result column="bill_datetime" property="billDatetime" />
 		<result column="month_amount" property="monthAmount" />
+		<result column="repay_bank_date" property="repayBankDate" />
+		
+		<result column="repay_first_month_amount" property="repayFirstMonthAmount" />
+		<result column="repay_first_month_datetime" property="repayFirstMonthDatetime" />
+		<result column="repay_month_amount" property="repayMonthAmount" />
+		<result column="id_no" property="idNo" />
 		<result column="id_no_pic" property="idNoPic" />
 		
 		<result column="file_list" property="fileList" />
@@ -400,6 +406,11 @@
 		,t.bank_card_number
 		,t.bill_datetime
 		,t.month_amount
+		,t.repay_bank_date
+		,t.repay_first_month_amount
+		,t.repay_first_month_datetime
+		,t.repay_month_amount
+		,t.id_no
 		,t.id_no_pic
 		,t.file_list
 		,t.is_complete
@@ -603,6 +614,11 @@
 		,t.bank_card_number
 		,t.bill_datetime
 		,t.month_amount
+		,t.repay_bank_date
+		,t.repay_first_month_amount
+		,t.repay_first_month_datetime
+		,t.repay_month_amount
+		,t.id_no
 		,t.id_no_pic
 		,t.file_list
 		,t.is_complete
@@ -684,6 +700,11 @@
 		,t.bank_card_number
 		,t.bill_datetime
 		,t.month_amount
+		,t.repay_bank_date
+		,t.repay_first_month_amount
+		,t.repay_first_month_datetime
+		,t.repay_month_amount
+		,t.id_no
 		,t.id_no_pic
 		
 		,t.file_list
@@ -1186,6 +1207,12 @@
 		,bank_card_number = #{bankCardNumber}
 		,bill_datetime = #{billDatetime}
 		,month_amount = #{monthAmount}
+		,repay_bank_date = #{repayBankDate}
+		
+		,repay_first_month_amount = #{repayFirstMonthAmount}
+		,repay_first_month_datetime = #{repayFirstMonthDatetime}
+		,repay_month_amount = #{repayMonthAmount}
+		,id_no = #{idNo}
 		,id_no_pic = #{idNoPic}
 		
 		,file_list = #{fileList}
@@ -1259,6 +1286,16 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_mortgageRefund" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		should_back_amount = #{shouldBackAmount}
+		,should_back_bankcard_code = #{shouldBackBankcardCode}
+		,should_back_datetime = #{shouldBackDatetime}
+		,should_back_bill_pdf = #{shouldBackBillPdf}
 		WHERE code = #{code}
 	</update>
 </mapper>

@@ -84,4 +84,8 @@ public interface IBudgetOrderAO {
     public void twoApproveApply(String code, String approveResult,
             String approveNote, String operator);
 
+    // 应退按揭款
+    public void mortgageRefund(String code, String shouldBackBankcardCode,
+            String shouldBackDatetime, String shouldBackBillPdf);
+
 }

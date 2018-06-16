@@ -72,7 +72,7 @@ public class BudgetOrder extends ABaseDO {
     private Long fee;
 
     // 厂家贴息
-    private double carDealerSubsidy;
+    private Long carDealerSubsidy;
 
     // 银行贷款成数
     private double bankLoanCs;
@@ -442,6 +442,21 @@ public class BudgetOrder extends ABaseDO {
 
     // 月还款额
     private Long monthAmount;
+
+    // 银行还款日
+    private int repayBankDate;
+
+    // 首期还款金额
+    private Long repayFirstMonthAmount;
+
+    // 首期还款日期
+    private Date repayFirstMonthDatetime;
+
+    // 每期月供金额
+    private Long repayMonthAmount;
+
+    // 身份证号
+    private String idNo;
 
     // 身份证照片
     private String idNoPic;
@@ -906,11 +921,11 @@ public class BudgetOrder extends ABaseDO {
         this.fee = fee;
     }
 
-    public double getCarDealerSubsidy() {
+    public Long getCarDealerSubsidy() {
         return carDealerSubsidy;
     }
 
-    public void setCarDealerSubsidy(double carDealerSubsidy) {
+    public void setCarDealerSubsidy(Long carDealerSubsidy) {
         this.carDealerSubsidy = carDealerSubsidy;
     }
 
@@ -1352,6 +1367,46 @@ public class BudgetOrder extends ABaseDO {
 
     public void setHouseRoomPic(String houseRoomPic) {
         this.houseRoomPic = houseRoomPic;
+    }
+
+    public int getRepayBankDate() {
+        return repayBankDate;
+    }
+
+    public void setRepayBankDate(int repayBankDate) {
+        this.repayBankDate = repayBankDate;
+    }
+
+    public Long getRepayFirstMonthAmount() {
+        return repayFirstMonthAmount;
+    }
+
+    public void setRepayFirstMonthAmount(Long repayFirstMonthAmount) {
+        this.repayFirstMonthAmount = repayFirstMonthAmount;
+    }
+
+    public Date getRepayFirstMonthDatetime() {
+        return repayFirstMonthDatetime;
+    }
+
+    public void setRepayFirstMonthDatetime(Date repayFirstMonthDatetime) {
+        this.repayFirstMonthDatetime = repayFirstMonthDatetime;
+    }
+
+    public Long getRepayMonthAmount() {
+        return repayMonthAmount;
+    }
+
+    public void setRepayMonthAmount(Long repayMonthAmount) {
+        this.repayMonthAmount = repayMonthAmount;
+    }
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
     }
 
     public String getHouseCustomerPic() {

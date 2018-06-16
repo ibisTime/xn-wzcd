@@ -228,4 +228,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         budgetOrderDAO.twoApproveApply(budgetOrder);
     }
 
+    @Override
+    public void mortgageRefund(BudgetOrder budgetOrder) {
+        budgetOrderDAO.mortgageRefund(budgetOrder);
+    }
+
 }
