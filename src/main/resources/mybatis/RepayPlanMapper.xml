@@ -16,47 +16,65 @@
 		<result column="payed_amount" property="payedAmount" />
 		<result column="overplus_amount" property="overplusAmount" />
 		
+		<result column="overplus_amount" property="overplusAmount" />
 		<result column="overdue_amount" property="overdueAmount" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="overdue_handler" property="overdueHandler" />
 		<result column="overdue_handle_datetime" property="overdueHandleDatetime" />
-		<result column="overdue_handle_note" property="overdueHandleNote" />
 		
+		<result column="overdue_handle_note" property="overdueHandleNote" />
 		<result column="total_fee" property="totalFee" />
 		<result column="payed_fee" property="payedFee" />
 		<result column="overdue_deposit" property="overdueDeposit" />
-		<result column="deposit_way" property="depositWay" />
-		<result column="should_deposit" property="shouldDeposit" />
+		<result column="overdue_deposit_way" property="overdueDepositWay" />
 		
-		<result column="remind_count" property="remindCount" />
+		<result column="repay_is_part" property="repayIsPart" />
 		<result column="real_repay_amount" property="realRepayAmount" />
-		<result column="is_repay" property="isRepay" />
+		<result column="remind_count" property="remindCount" />
+		<result column="real_replace_repay_amount" property="replaceRealRepayAmount" />
+		<result column="replace_is_repay" property="replaceIsRepay" />
+		
+		<result column="replace_repay_datetime" property="replaceRepayDatetime" />
+		<result column="replace_back_repay_amount" property="replaceBackRepayAmount" />
+		<result column="replace_back_repay_datetime" property="replaceBackRepayDatetime" />
+		<result column="collection_way" property="collectionWay" />
+		<result column="collection_target" property="collectionTarget" />
+		
+		<result column="collection_process" property="collectionProcess" />
+		<result column="collection_wish" property="collectionWish" />
+		<result column="collection_result" property="collectionResult" />
+		<result column="deposit_is_provide" property="depositIsProvide" />
+		<result column="collection_note" property="collectionNote" />
+		
+		<result column="pawnshop_is_redeem" property="pawnshopIsRedeem" />
+		<result column="pawnshop_name" property="pawnshopName" />
+		<result column="ransom" property="ransom" />
 		<result column="ts_car_amount" property="tsCarAmount" />
 		<result column="ts_bankcard_number" property="tsBankcardNumber" />
-		<result column="ts_bank_name" property="tsBankName" />
 		
+		<result column="ts_bank_name" property="tsBankName" />
 		<result column="ts_subbranch" property="tsSubbranch" />
 		<result column="tc_apply_note" property="tcApplyNote" />
+		<result column="remit_datetime" property="remitDatetime" />
 		<result column="remit_amount" property="remitAmount" />
+		
+		<result column="remit_bank_code" property="remitBankCode" />
 		<result column="remit_bill_pdf" property="remitBillPdf" />
 		<result column="take_car_address" property="takeCarAddress" />
-		
 		<result column="take_datetime" property="takeDatetime" />
 		<result column="take_name" property="takeName" />
+		
 		<result column="take_location" property="takeLocation" />
 		<result column="take_note" property="takeNote" />
-		<result column="jour_pdf" property="jourPdf" />
+		<result column="deal_result" property="dealResult" />
+		<result column="sell_price" property="sellPrice" />
+		<result column="deposit" property="deposit" />
 		
-		<result column="house_pdf" property="housePdf" />
-		<result column="gua_name" property="guaName" />
-		<result column="gua_id_no" property="guaIdNo" />
-		<result column="gua_mobile" property="guaMobile" />
-		<result column="gua_now_address" property="guaNowAddress" />
+		<result column="fee_note" property="feeNote" />
+		<result column="updater" property="updater" />
+		<result column="update_datetime" property="updateDatetime" />
+		<result column="remark" property="remark" />
 		
-		<result column="gua_note" property="guaNote" />
-		<result column="suggest" property="suggest" />
-		<result column="suggest_note" property="suggestNote" />
-		<result column="buy_out_amount" property="buyOutAmount" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -109,47 +127,71 @@
 		,t.repay_biz_code
 		,t.user_id
 		,t.periods
+		
 		,t.cur_periods
 		,t.repay_datetime
 		,t.repay_capital
 		,t.repay_interest
 		,t.payed_amount
+		
 		,t.overplus_amount
 		,t.overdue_amount
 		,t.cur_node_code
 		,t.overdue_handler
 		,t.overdue_handle_datetime
+		
 		,t.overdue_handle_note
 		,t.total_fee
 		,t.payed_fee
 		,t.overdue_deposit
-		,t.deposit_way
-		,t.should_deposit
-		,t.remind_count
+		,t.overdue_deposit_way
+		
+		,t.repay_is_part
 		,t.real_repay_amount
-		,t.is_repay
+		,t.remind_count
+		,t.real_replace_repay_amount
+		,t.replace_is_repay
+		
+		,t.replace_repay_datetime
+		,t.replace_back_repay_amount
+		,t.replace_back_repay_datetime
+		,t.collection_way
+		,t.collection_target
+		
+		,t.collection_process
+		,t.collection_wish
+		,t.collection_result
+		,t.deposit_is_provide
+		,t.collection_note
+		
+		,t.pawnshop_is_redeem
+		,t.pawnshop_name
+		,t.ransom
 		,t.ts_car_amount
 		,t.ts_bankcard_number
+		
 		,t.ts_bank_name
 		,t.ts_subbranch
 		,t.tc_apply_note
+		,t.remit_datetime
 		,t.remit_amount
+		
+		,t.remit_bank_code
 		,t.remit_bill_pdf
 		,t.take_car_address
 		,t.take_datetime
 		,t.take_name
+		
 		,t.take_location
 		,t.take_note
-		,t.jour_pdf
-		,t.house_pdf
-		,t.gua_name
-		,t.gua_id_no
-		,t.gua_mobile
-		,t.gua_now_address
-		,t.gua_note
-		,t.suggest
-		,t.suggest_note
-		,t.buy_out_amount
+		,t.deal_result
+		,t.sell_price
+		,t.deposit
+		
+		,t.fee_note
+		,t.updater
+		,t.update_datetime
+		,t.remark
 		FROM
 		tdh_repay_plan t
 		<include refid="where_condition" />
@@ -167,47 +209,67 @@
 		,t.repay_biz_code
 		,t.user_id
 		,t.periods
+		
 		,t.cur_periods
 		,t.repay_datetime
 		,t.repay_capital
 		,t.repay_interest
 		,t.payed_amount
+		
 		,t.overplus_amount
 		,t.overdue_amount
 		,t.cur_node_code
 		,t.overdue_handler
 		,t.overdue_handle_datetime
+		
 		,t.overdue_handle_note
 		,t.total_fee
 		,t.payed_fee
 		,t.overdue_deposit
-		,t.deposit_way
-		,t.should_deposit
-		,t.remind_count
+		,t.overdue_deposit_way
+		
+		,t.repay_is_part
 		,t.real_repay_amount
-		,t.is_repay
+		,t.remind_count
+		,t.real_replace_repay_amount
+		,t.replace_is_repay
+		
+		,t.replace_repay_datetime
+		,t.replace_back_repay_amount
+		,t.replace_back_repay_datetime
+		,t.collection_way
+		,t.collection_target
+		
+		,t.collection_process
+		,t.collection_wish
+		,t.collection_result
+		,t.deposit_is_provide
+		,t.collection_note
+		
+		,t.pawnshop_is_redeem
+		,t.pawnshop_name
+		,t.ransom
 		,t.ts_car_amount
 		,t.ts_bankcard_number
+		
 		,t.ts_bank_name
 		,t.ts_subbranch
 		,t.tc_apply_note
+		,t.remit_datetime
 		,t.remit_amount
+		
+		,t.remit_bank_code
 		,t.remit_bill_pdf
 		,t.take_car_address
 		,t.take_datetime
 		,t.take_name
+		
 		,t.take_location
 		,t.take_note
-		,t.jour_pdf
-		,t.house_pdf
-		,t.gua_name
-		,t.gua_id_no
-		,t.gua_mobile
-		,t.gua_now_address
-		,t.gua_note
-		,t.suggest
-		,t.suggest_note
-		,t.buy_out_amount
+		,t.deal_result
+		,t.sell_price
+		,t.deposit
+		,t.fee_note
 		FROM
 		tdh_repay_plan t
 		<include refid="where_condition" />
@@ -467,6 +529,103 @@
 		SET
 		real_repay_amount = #{realRepayAmount}
 		,is_repay = #{isRepay}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_tc_Apply" parameterType="repayPlan">
+		UPDATE tdh_repay_plan
+		SET
+		cur_node_code = #{curNodeCode}
+		,pawnshop_is_redeem = #{pawnshopIsRedeem}
+		,pawnshop_name = #{pawnshopName}
+		,ransom = #{ransom}
+		,ts_car_amount = #{tsCarAmount}
+		,ts_bankcard_number = #{tsBankcardNumber}
+		
+		,ts_bank_name = #{tsBankName}
+		,ts_subbranch = #{tsSubbranch}
+		,tc_apply_note = #{tcApplyNote}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_tc_riskManageCheck" parameterType="repayPlan">
+		UPDATE tdh_repay_plan
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark]
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_tc_companyManageCheck" parameterType="repayPlan">
+		UPDATE tdh_repay_plan
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark]
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_tc_riskLeaderCheck" parameterType="repayPlan">
+		UPDATE tdh_repay_plan
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark]
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_tc_financeCheck" parameterType="repayPlan">
+		UPDATE tdh_repay_plan
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark]
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_tc_sureFK" parameterType="repayPlan">
+		UPDATE tdh_repay_plan
+		SET
+		cur_node_code = #{curNodeCode}
+		,remit_datetime = #{remitDatetime}
+		,remit_bank_code = #{remitBankCode}
+		,remitBillPdf = #{remitBillPdf}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_tc_FKInput" parameterType="repayPlan">
+		UPDATE tdh_repay_plan
+		SET
+		cur_node_code = #{curNodeCode}
+		,take_car_address = #{takeCarAddress}
+		,take_datetime = #{takeDatetime}
+		,take_name = #{takeName}
+		,take_location = #{takeLocation}
+		,take_note = #{takeNote}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+		
+	<update id="update_tc_toHandle" parameterType="repayPlan">
+		UPDATE tdh_repay_plan
+		SET
+		cur_node_code = #{curNodeCode}
+		,deal_result = #{dealResult}
+		,sell_price = #{sellPrice}
+		,deposit = #{deposit}
+		,fee_note = #{feeNote}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>
 </mapper>
