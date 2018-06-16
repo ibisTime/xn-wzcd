@@ -97,7 +97,8 @@
 	
 	<insert id="insert_bankSubbranch" parameterType="bankSubbranch">
 		INSERT INTO tb_bank_subbranch(
-		bank_code
+		code
+		,bank_code
 		,abbr_name
 		,full_name
 		,open_bank
@@ -121,7 +122,8 @@
 		,remark
 		)
 		VALUES(
-		#{bankCode}
+		#{code}
+		,#{bankCode}
 		,#{abbrName}
 		,#{fullName}
 		,#{openBank}
