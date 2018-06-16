@@ -2,21 +2,42 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+/**
+ * 财务确认收货
+ * @author: silver 
+ * @since: 2018年6月16日 下午3:39:21 
+ * @history:
+ */
 public class XN630563Req {
+    // 还款业务编号
+    @NotBlank
+    private String code;
+
+    // 司法诉讼收款时间
+    @NotBlank
+    private String judgeReceiptDatetime;
+
+    // 司法诉讼收款金额
+    @NotBlank
+    private String judgeReceiptAmount;
+
+    // 司法诉讼收款银行
+    @NotBlank
+    private String judgeReceiptBank;
+
+    // 司法诉讼收款银行账号
+    @NotBlank
+    private String judgeReceiptBankcard;
+
+    // 司法诉讼收款凭证
+    @NotBlank
+    private String judgeBillPdf;
+
+    // 司法诉讼备注
+    private String judgeNote;
 
     @NotBlank
-    private String code;// 编号
-
-    @NotBlank
-    private String approveResult;// 审核结果
-
-    @NotBlank
-    private String suggest;// 建议
-
-    private String suggestNote;// 建议说明
-
-    @NotBlank
-    private String operator;// 操作人
+    private String operator;
 
     public String getCode() {
         return code;
@@ -26,28 +47,52 @@ public class XN630563Req {
         this.code = code;
     }
 
-    public String getApproveResult() {
-        return approveResult;
+    public String getJudgeReceiptDatetime() {
+        return judgeReceiptDatetime;
     }
 
-    public void setApproveResult(String approveResult) {
-        this.approveResult = approveResult;
+    public void setJudgeReceiptDatetime(String judgeReceiptDatetime) {
+        this.judgeReceiptDatetime = judgeReceiptDatetime;
     }
 
-    public String getSuggest() {
-        return suggest;
+    public String getJudgeReceiptAmount() {
+        return judgeReceiptAmount;
     }
 
-    public void setSuggest(String suggest) {
-        this.suggest = suggest;
+    public void setJudgeReceiptAmount(String judgeReceiptAmount) {
+        this.judgeReceiptAmount = judgeReceiptAmount;
     }
 
-    public String getSuggestNote() {
-        return suggestNote;
+    public String getJudgeReceiptBank() {
+        return judgeReceiptBank;
     }
 
-    public void setSuggestNote(String suggestNote) {
-        this.suggestNote = suggestNote;
+    public void setJudgeReceiptBank(String judgeReceiptBank) {
+        this.judgeReceiptBank = judgeReceiptBank;
+    }
+
+    public String getJudgeReceiptBankcard() {
+        return judgeReceiptBankcard;
+    }
+
+    public void setJudgeReceiptBankcard(String judgeReceiptBankcard) {
+        this.judgeReceiptBankcard = judgeReceiptBankcard;
+    }
+
+    public String getJudgeBillPdf() {
+        return judgeBillPdf;
+    }
+
+    public void setJudgeBillPdf(String judgeBillPdf) {
+        this.judgeBillPdf = judgeBillPdf;
+    }
+
+    public String getJudgeNote() {
+        return judgeNote;
+    }
+
+    public void setJudgeNote(String judgeNote) {
+        this.judgeNote = judgeNote;
     }
 
     public String getOperator() {

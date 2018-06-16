@@ -3,7 +3,7 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 驻行人员审核
+ * 拖车分控经理审核
  * @author: silver 
  * @since: 2018年6月10日 上午10:49:34 
  * @history:
@@ -13,7 +13,7 @@ public class XN630551Req {
     @NotBlank
     private String approveResult;
 
-    // 还款业务编号
+    // 还款计划编号
     @NotBlank
     private String code;
 
@@ -23,12 +23,6 @@ public class XN630551Req {
 
     // 备注
     private String remark;
-
-    // 结清时间
-    private String settleDatetime;
-
-    // 结清证明
-    private String settlePdf;
 
     public String getApproveResult() {
         return approveResult;
@@ -60,22 +54,6 @@ public class XN630551Req {
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    public String getSettleDatetime() {
-        return settleDatetime;
-    }
-
-    public void setSettleDatetime(String settleDatetime) {
-        this.settleDatetime = settleDatetime;
-    }
-
-    public String getSettlePdf() {
-        return settlePdf;
-    }
-
-    public void setSettlePdf(String settlePdf) {
-        this.settlePdf = settlePdf;
     }
 
 }

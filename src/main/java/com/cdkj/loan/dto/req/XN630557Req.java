@@ -2,27 +2,33 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+/**
+ * 结果处理
+ * @author: silver 
+ * @since: 2018年6月16日 下午3:09:50 
+ * @history:
+ */
 public class XN630557Req {
-
+    // 编号
     @NotBlank
-    private String code;// 编号
+    private String code;
 
+    // 处理结果
     @NotBlank
-    private String operator;// 操作人
+    private String dealResult;
 
+    // 出售价格
+    private String sellPrice;
+
+    // 保证金
+    private String deposit;
+
+    // 费用说明
+    private String feeNote;
+
+    // 操作人
     @NotBlank
-    private String takeCarAddress;// 收车地点
-
-    @NotBlank
-    private String takeDatetime;// 拖车时间
-
-    @NotBlank
-    private String takeLocation;// 拖车停放位置
-
-    @NotBlank
-    private String takeName;// 拖车人员
-
-    private String takeNote;// 拖车说明
+    private String operator;
 
     public String getCode() {
         return code;
@@ -32,52 +38,44 @@ public class XN630557Req {
         this.code = code;
     }
 
+    public String getDealResult() {
+        return dealResult;
+    }
+
+    public void setDealResult(String dealResult) {
+        this.dealResult = dealResult;
+    }
+
+    public String getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(String sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+
+    public String getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(String deposit) {
+        this.deposit = deposit;
+    }
+
+    public String getFeeNote() {
+        return feeNote;
+    }
+
+    public void setFeeNote(String feeNote) {
+        this.feeNote = feeNote;
+    }
+
     public String getOperator() {
         return operator;
     }
 
     public void setOperator(String operator) {
         this.operator = operator;
-    }
-
-    public String getTakeCarAddress() {
-        return takeCarAddress;
-    }
-
-    public void setTakeCarAddress(String takeCarAddress) {
-        this.takeCarAddress = takeCarAddress;
-    }
-
-    public String getTakeDatetime() {
-        return takeDatetime;
-    }
-
-    public void setTakeDatetime(String takeDatetime) {
-        this.takeDatetime = takeDatetime;
-    }
-
-    public String getTakeLocation() {
-        return takeLocation;
-    }
-
-    public void setTakeLocation(String takeLocation) {
-        this.takeLocation = takeLocation;
-    }
-
-    public String getTakeName() {
-        return takeName;
-    }
-
-    public void setTakeName(String takeName) {
-        this.takeName = takeName;
-    }
-
-    public String getTakeNote() {
-        return takeNote;
-    }
-
-    public void setTakeNote(String takeNote) {
-        this.takeNote = takeNote;
     }
 
 }

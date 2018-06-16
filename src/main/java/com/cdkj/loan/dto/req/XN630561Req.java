@@ -2,33 +2,37 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+/**
+ * 诉讼跟进
+ * @author: silver 
+ * @since: 2018年6月16日 下午3:31:47 
+ * @history:
+ */
 public class XN630561Req {
+    // 编号
+    @NotBlank
+    private String code;
+
+    // 诉讼费
+    @NotBlank
+    private String caseFee;
+
+    // 起诉状态
+    @NotBlank
+    private String caseStatus;
+
+    // 开庭日期
+    private String courtDatetime;
+
+    // 判决日期
+    private String judgeDatetime;
+
+    // 判决附件
+    @NotBlank
+    private String judgePdf;
 
     @NotBlank
-    private String code;// 编号
-
-    @NotBlank
-    private String guaName;// 担保人姓名
-
-    @NotBlank
-    private String guaMobile;// 担保人手机号
-
-    @NotBlank
-    private String guaIdNo;// 担保人身份证号
-
-    @NotBlank
-    private String guaNowAddress;// 担保人现居住地址
-
-    @NotBlank
-    private String housePdf;// 房产
-
-    @NotBlank
-    private String jourPdf;// 流水
-
-    private String guaNote;// 赎回说明
-
-    @NotBlank
-    private String operator;// 操作人
+    private String operator;
 
     public String getCode() {
         return code;
@@ -38,60 +42,44 @@ public class XN630561Req {
         this.code = code;
     }
 
-    public String getGuaName() {
-        return guaName;
+    public String getCaseFee() {
+        return caseFee;
     }
 
-    public void setGuaName(String guaName) {
-        this.guaName = guaName;
+    public void setCaseFee(String caseFee) {
+        this.caseFee = caseFee;
     }
 
-    public String getGuaMobile() {
-        return guaMobile;
+    public String getCaseStatus() {
+        return caseStatus;
     }
 
-    public void setGuaMobile(String guaMobile) {
-        this.guaMobile = guaMobile;
+    public void setCaseStatus(String caseStatus) {
+        this.caseStatus = caseStatus;
     }
 
-    public String getGuaIdNo() {
-        return guaIdNo;
+    public String getCourtDatetime() {
+        return courtDatetime;
     }
 
-    public void setGuaIdNo(String guaIdNo) {
-        this.guaIdNo = guaIdNo;
+    public void setCourtDatetime(String courtDatetime) {
+        this.courtDatetime = courtDatetime;
     }
 
-    public String getGuaNowAddress() {
-        return guaNowAddress;
+    public String getJudgeDatetime() {
+        return judgeDatetime;
     }
 
-    public void setGuaNowAddress(String guaNowAddress) {
-        this.guaNowAddress = guaNowAddress;
+    public void setJudgeDatetime(String judgeDatetime) {
+        this.judgeDatetime = judgeDatetime;
     }
 
-    public String getHousePdf() {
-        return housePdf;
+    public String getJudgePdf() {
+        return judgePdf;
     }
 
-    public void setHousePdf(String housePdf) {
-        this.housePdf = housePdf;
-    }
-
-    public String getJourPdf() {
-        return jourPdf;
-    }
-
-    public void setJourPdf(String jourPdf) {
-        this.jourPdf = jourPdf;
-    }
-
-    public String getGuaNote() {
-        return guaNote;
-    }
-
-    public void setGuaNote(String guaNote) {
-        this.guaNote = guaNote;
+    public void setJudgePdf(String judgePdf) {
+        this.judgePdf = judgePdf;
     }
 
     public String getOperator() {
