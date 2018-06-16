@@ -11,6 +11,7 @@ import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632200Req;
+import com.cdkj.loan.dto.req.XN632220Req;
 
 @Component
 public interface IBudgetOrderAO {
@@ -67,5 +68,8 @@ public interface IBudgetOrderAO {
     // 制卡录入
     public void refreshCardMaking(String code, String bankCardNumber,
             String makeCardRemark);
+
+    // 发保合录入
+    public void entryPreservation(XN632220Req req);
 
 }
