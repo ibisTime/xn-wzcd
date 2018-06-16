@@ -3,7 +3,7 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 总经理审核
+ * 拖车分公司总公司审核
  * @author: silver 
  * @since: 2018年6月10日 上午10:49:34 
  * @history:

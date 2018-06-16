@@ -2,16 +2,22 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class XN630564Req {
+/**
+ * 申请解除
+ * @author: silver 
+ * @since: 2018年6月16日 下午3:39:21 
+ * @history:
+ */
+public class XN630573Req {
+    // 还款业务编号
+    @NotBlank
+    private String code;
+
+    // 申请说明
+    private String applyNote;
 
     @NotBlank
-    private String code;// 编号
-
-    @NotBlank
-    private String appoveResult;// 处理结果
-
-    @NotBlank
-    private String operator;// 操作人
+    private String operator;
 
     public String getCode() {
         return code;
@@ -21,12 +27,12 @@ public class XN630564Req {
         this.code = code;
     }
 
-    public String getAppoveResult() {
-        return appoveResult;
+    public String getApplyNote() {
+        return applyNote;
     }
 
-    public void setAppoveResult(String appoveResult) {
-        this.appoveResult = appoveResult;
+    public void setApplyNote(String applyNote) {
+        this.applyNote = applyNote;
     }
 
     public String getOperator() {
