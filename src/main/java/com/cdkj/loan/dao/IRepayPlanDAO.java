@@ -14,7 +14,7 @@ public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
 
     public int updateOverdue(RepayPlan repayPlan);
 
-    public int overdueHandle(RepayPlan repayPlan);
+    public int updateOverdueHandle(RepayPlan repayPlan);
 
     public int repayPartSuccess(RepayPlan repayPlan);
 

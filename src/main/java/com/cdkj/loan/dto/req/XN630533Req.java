@@ -14,7 +14,7 @@ public class XN630533Req {
     private List<String> costList; // 费用清单列表
 
     @NotBlank
-    private String payType;// 1=线上代扣 2=线下归还
+    private String payType;// 2=线下归还
 
     @NotBlank
     private String operator;

@@ -8,6 +8,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.RepayBiz;
+import com.cdkj.loan.dto.req.XN630512Req;
 
 public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
@@ -35,7 +36,7 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
             String userId, String bankcardCode, String operator);
 
     // 车贷提前还款
-    public void refreshAdvanceRepayCarLoan(RepayBiz repayBiz,
+    public void refreshAdvanceRepayCarLoan(XN630512Req req, RepayBiz repayBiz,
             Long realWithholdAmount);
 
     // 车贷还款订单

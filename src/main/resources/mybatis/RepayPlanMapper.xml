@@ -79,31 +79,31 @@
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
-				AND t.code = #{code}
+				AND t.code=#{code}
 			</if>
 			<if test="refType != null and refType != '' ">
-				AND t.ref_type = #{refType}
+				AND t.ref_type=#{refType}
 			</if>
 			<if test="userId != null and userId != '' ">
-				AND t.user_id = #{userId}
+				AND t.user_id=#{userId}
 			</if>
 			<if test="repayDatetime != null and repayDatetime != '' ">
-				AND t.repay_datetime = #{repayDatetime}
+				AND t.repay_datetime=#{repayDatetime}
 			</if>
 			<if test="repayBizCode != null and repayBizCode != '' ">
-				AND t.repay_biz_code = #{repayBizCode}
+				AND t.repay_biz_code=#{repayBizCode}
 			</if>
 			<if test="curNodeCode != null and curNodeCode != '' ">
-				AND t.cur_node_code = #{curNodeCode}
+				AND t.cur_node_code=#{curNodeCode}
 			</if>
 			<if test="roleCode != null and roleCode != '' ">
-				AND r.role_code = #{roleCode}
+				AND r.role_code=#{roleCode}
 			</if>
 			<if test="curNodeCode != null and curNodeCode != '' ">
-				AND t.cur_node_code = #{curNodeCode}
+				AND t.cur_node_code=#{curNodeCode}
 			</if>
 			<if test="overdueHandler != null and overdueHandler != '' ">
-				AND t.codoverdue_handlere = #{overdueHandler}
+				AND t.codoverdue_handler=#{overdueHandler}
 			</if>
 			<if test="repayStartDatetime != null and repayStartDatetime != '' ">
 				<![CDATA[AND t.repay_datetime >= #{repayStartDatetime}]]>
@@ -269,7 +269,11 @@
 		,t.deal_result
 		,t.sell_price
 		,t.deposit
+		
 		,t.fee_note
+		,t.updater
+		,t.update_datetime
+		,t.remark
 		FROM
 		tdh_repay_plan t
 		<include refid="where_condition" />
@@ -279,7 +283,6 @@
 			</if>
 		</trim>
 	</select>
-	
 
 	<select id="select_repayPlan_count" parameterType="repayPlan"
 		resultType="java.lang.Long">
@@ -292,60 +295,6 @@
 		SELECT count(1) FROM (SELECT distinct code FROM tdh_repay_plan t left join tsys_role_node r on t.cur_node_code = r.node_code
 		<include refid="where_condition" />) tb
 	</select>
-
-	<insert id="insert_repayPlan" parameterType="repayPlan">
-		INSERT INTO
-		tdh_repay_plan(
-		code
-		,ref_type
-		,repay_biz_code
-		,user_id
-		,periods
-		,cur_periods
-		,repay_datetime
-		,repay_capital
-		,repay_interest
-		,payed_amount
-		,overplus_amount
-		,overdue_amount
-		,cur_node_code
-		,overdue_handler
-		,overdue_handle_datetime
-		,overdue_handle_note
-		,total_fee
-		,payed_fee
-		,overdue_deposit
-		,deposit_way
-		,should_deposit
-		,remind_count
-		,is_repay
-		)
-		VALUES(
-		#{code}
-		,#{refType}
-		,#{repayBizCode}
-		,#{userId}
-		,#{periods}
-		,#{curPeriods}
-		,#{repayDatetime}
-		,#{repayCapital}
-		,#{repayInterest}
-		,#{payedAmount}
-		,#{overplusAmount}
-		,#{overdueAmount}
-		,#{curNodeCode}
-		,#{overdueHandler}
-		,#{overdueHandleDatetime}
-		,#{overdueHandleNote}
-		,#{totalFee}
-		,#{payedFee}
-		,#{overdueDeposit}
-		,#{depositWay}
-		,#{shouldDeposit}
-		,#{remindCount}
-		,#{isRepay}
-		)
-	</insert>
 
 	<insert id="insert_repayPlanList" parameterType="List">
 		INSERT INTO
@@ -363,16 +312,16 @@
 		,overplus_amount
 		,overdue_amount
 		,cur_node_code
-		,overdue_handler
-		,overdue_handle_datetime
-		,overdue_handle_note
 		,total_fee
 		,payed_fee
 		,overdue_deposit
-		,deposit_way
-		,should_deposit
+		,overdue_deposit_way
+		,repay_is_part
+		,real_repay_amount
 		,remind_count
-		,is_repay
+		,replace_real_repay_amount
+		,replace_is_repay
+		,replace_back_repay_amount
 		)
 		
 		VALUES
@@ -392,16 +341,16 @@
 		,#{repayPlan.overplusAmount}
 		,#{repayPlan.overdueAmount}
 		,#{repayPlan.curNodeCode}
-		,#{repayPlan.overdueHandler}
-		,#{repayPlan.overdueHandleDatetime}
-		,#{repayPlan.overdueHandleNote}
 		,#{repayPlan.totalFee}
 		,#{repayPlan.payedFee}
 		,#{repayPlan.overdueDeposit}
-		,#{repayPlan.depositWay}
-		,#{repayPlan.shouldDeposit}
+		,#{repayPlan.overdueDepositWay}
+		,#{repayPlan.repayIsPart}
+		,#{repayPlan.realRepayAmount}
 		,#{repayPlan.remindCount}
-		,#{repayPlan.isRepay}
+		,#{repayPlan.replaceRealRepayAmount}
+		,#{repayPlan.replaceIsRepay}
+		,#{repayPlan.replaceBackRepayAmount}
 		)
 		</foreach>
 	</insert>
@@ -409,223 +358,232 @@
 	<update id="update_paySuccess" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code = #{curNodeCode}
-		,payed_amount = #{payedAmount}
-		,overplus_amount = #{overplusAmount}
-		WHERE code = #{code}
+		cur_node_code=#{curNodeCode}
+		,payed_amount=#{payedAmount}
+		,overplus_amount=#{overplusAmount}
+		WHERE code=#{code}
 	</update>
 	
 	<update id="update_payPartSuccess" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		payed_amount = #{payedAmount}
-		,overplus_amount = #{overplusAmount}
-		WHERE code = #{code}
+		payed_amount=#{payedAmount}
+		,overplus_amount=#{overplusAmount}
+		WHERE code=#{code}
 	</update>
 
 	<update id="update_repayplan_node" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code = #{curNodeCode}
-		WHERE code = #{code}
+		cur_node_code=#{curNodeCode}
+		WHERE code=#{code}
 	</update>
 
 	<update id="update_overdue" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code = #{curNodeCode}
-		,overdue_amount = #{overdueAmount}
-		WHERE code = #{code}
+		cur_node_code=#{curNodeCode}
+		,overdue_amount=#{overdueAmount}
+		WHERE code=#{code}
 	</update>
 	
 	<update id="overdue_handle" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code = #{curNodeCode}
-		,overdue_deposit = #{overdueDeposit}
-		,overdue_amount = #{overdueAmount}
-		,deposit_way = #{depositWay}
-		,total_fee = #{totalFee}
-		,overdue_handle_note = #{overdueHandleNote}
-		WHERE code = #{code}
+		cur_node_code=#{curNodeCode}
+		,collection_way=#{collectionWay}
+		,collection_target=#{collectionTarget}
+		,collection_process=#{collectionProcess}
+		,collection_wish=#{collectionWish}
+		,collection_result=#{collectionResult}
+		
+		,deposit_is_provide=#{depositIsProvide}
+		,overdue_deposit=#{overdueDeposit}
+		,real_repay_amount=#{realRepayAmount}
+		,overdue_amount=#{overdueAmount}
+		,total_fee=#{totalFee}
+		
+		,collection_note=#{collectionNote}
+
+		WHERE code=#{code}
 	</update>
 	
 	<update id="update_applyTrailer" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code = #{curNodeCode}
-		,ts_car_amount = #{tsCarAmount}
-		,ts_bankcard_number = #{tsBankcardNumber}
-		,ts_bank_name  = #{tsBankName}
-		,ts_subbranch = #{tsSubbranch}
-		,tc_apply_note = #{tcApplyNote}
-		WHERE code = #{code}
+		cur_node_code=#{curNodeCode}
+		,ts_car_amount=#{tsCarAmount}
+		,ts_bankcard_number=#{tsBankcardNumber}
+		,ts_bank_name =#{tsBankName}
+		,ts_subbranch=#{tsSubbranch}
+		,tc_apply_note=#{tcApplyNote}
+		WHERE code=#{code}
 	</update>
 	
 	<update id="update_financialMoney" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		remit_amount = #{remitAmount}
-		,remit_bill_pdf = #{remitBillPdf}
-		WHERE code = #{code}
+		remit_amount=#{remitAmount}
+		,remit_bill_pdf=#{remitBillPdf}
+		WHERE code=#{code}
 	</update>
 	
 	<update id="update_trailerEntry" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		take_car_address = #{takeCarAddress}
-		,take_datetime = #{takeDatetime}
-		,take_location = #{takeLocation}
-		,take_name = #{takeName}
-		,take_note = #{takeNote}
-		WHERE code = #{code}
+		take_car_address=#{takeCarAddress}
+		,take_datetime=#{takeDatetime}
+		,take_location=#{takeLocation}
+		,take_name=#{takeName}
+		,take_note=#{takeNote}
+		WHERE code=#{code}
 	</update>
 	
 	<update id="update_judicialLitigationEntry" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code = #{curNodeCode}
-		,buy_out_amount = #{buyOutAmount}
-		WHERE code = #{code}
+		cur_node_code=#{curNodeCode}
+		,buy_out_amount=#{buyOutAmount}
+		WHERE code=#{code}
 	</update>
 	
 	<update id="update_qkcsbRedeemApply" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		jour_pdf = #{jourPdf}
-		,house_pdf = #{housePdf}
-		,gua_name = #{guaName}
-		,gua_id_no = #{guaIdNo}
-		,gua_mobile = #{guaMobile}
-		,gua_now_address = #{guaNowAddress}
-		,gua_note = #{guaNote}
-		WHERE code = #{code}
+		jour_pdf=#{jourPdf}
+		,house_pdf=#{housePdf}
+		,gua_name=#{guaName}
+		,gua_id_no=#{guaIdNo}
+		,gua_mobile=#{guaMobile}
+		,gua_now_address=#{guaNowAddress}
+		,gua_note=#{guaNote}
+		WHERE code=#{code}
 	</update>
 	
 	<update id="update_riskManagerCheck" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		suggest = #{suggest}
-		,suggest_note = #{suggestNote}
-		WHERE code = #{code}
+		suggest=#{suggest}
+		,suggest_note=#{suggestNote}
+		WHERE code=#{code}
 	</update>
 	
 	<update id="update_financeApprove" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code = #{curNodeCode}
-		WHERE code = #{code}
+		cur_node_code=#{curNodeCode}
+		WHERE code=#{code}
 	</update>
 	
 	<update id="update_payFee" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		payed_fee = #{payedFee}
-		WHERE code = #{code}
+		payed_fee=#{payedFee}
+		WHERE code=#{code}
 	</update>
 	
 	<update id="update_repayAmount" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		real_repay_amount = #{realRepayAmount}
-		,is_repay = #{isRepay}
-		WHERE code = #{code}
+		real_repay_amount=#{realRepayAmount}
+		,replace_is_repay=#{replaceIsRepay}
+		WHERE code=#{code}
 	</update>
 	
 	<update id="update_tc_Apply" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code = #{curNodeCode}
-		,pawnshop_is_redeem = #{pawnshopIsRedeem}
-		,pawnshop_name = #{pawnshopName}
-		,ransom = #{ransom}
-		,ts_car_amount = #{tsCarAmount}
-		,ts_bankcard_number = #{tsBankcardNumber}
+		cur_node_code=#{curNodeCode}
+		,pawnshop_is_redeem=#{pawnshopIsRedeem}
+		,pawnshop_name=#{pawnshopName}
+		,ransom=#{ransom}
+		,ts_car_amount=#{tsCarAmount}
+		,ts_bankcard_number=#{tsBankcardNumber}
 		
-		,ts_bank_name = #{tsBankName}
-		,ts_subbranch = #{tsSubbranch}
-		,tc_apply_note = #{tcApplyNote}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		WHERE code = #{code}
+		,ts_bank_name=#{tsBankName}
+		,ts_subbranch=#{tsSubbranch}
+		,tc_apply_note=#{tcApplyNote}
+		,updater=#{updater}
+		,update_datetime=#{updateDatetime}
+		WHERE code=#{code}
 	</update>
 
 	<update id="update_tc_riskManageCheck" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code = #{curNodeCode}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		,remark = #{remark]
-		WHERE code = #{code}
+		cur_node_code=#{curNodeCode}
+		,updater=#{updater}
+		,update_datetime=#{updateDatetime}
+		,remark=#{remark]
+		WHERE code=#{code}
 	</update>
 	
 	<update id="update_tc_companyManageCheck" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code = #{curNodeCode}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		,remark = #{remark]
-		WHERE code = #{code}
+		cur_node_code=#{curNodeCode}
+		,updater=#{updater}
+		,update_datetime=#{updateDatetime}
+		,remark=#{remark}
+		WHERE code=#{code}
 	</update>
 	
 	<update id="update_tc_riskLeaderCheck" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code = #{curNodeCode}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		,remark = #{remark]
-		WHERE code = #{code}
+		cur_node_code=#{curNodeCode}
+		,updater=#{updater}
+		,update_datetime=#{updateDatetime}
+		,remark=#{remark}
+		WHERE code=#{code}
 	</update>
 
 	<update id="update_tc_financeCheck" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code = #{curNodeCode}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		,remark = #{remark]
-		WHERE code = #{code}
+		cur_node_code=#{curNodeCode}
+		,updater=#{updater}
+		,update_datetime=#{updateDatetime}
+		,remark=#{remark}
+		WHERE code=#{code}
 	</update>
 
 	<update id="update_tc_sureFK" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code = #{curNodeCode}
-		,remit_datetime = #{remitDatetime}
-		,remit_bank_code = #{remitBankCode}
-		,remitBillPdf = #{remitBillPdf}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		WHERE code = #{code}
+		cur_node_code=#{curNodeCode}
+		,remit_datetime=#{remitDatetime}
+		,remit_bank_code=#{remitBankCode}
+		,remitBillPdf=#{remitBillPdf}
+		,updater=#{updater}
+		,update_datetime=#{updateDatetime}
+		WHERE code=#{code}
 	</update>
 
 	<update id="update_tc_FKInput" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code = #{curNodeCode}
-		,take_car_address = #{takeCarAddress}
-		,take_datetime = #{takeDatetime}
-		,take_name = #{takeName}
-		,take_location = #{takeLocation}
-		,take_note = #{takeNote}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		WHERE code = #{code}
+		cur_node_code=#{curNodeCode}
+		,take_car_address=#{takeCarAddress}
+		,take_datetime=#{takeDatetime}
+		,take_name=#{takeName}
+		,take_location=#{takeLocation}
+		,take_note=#{takeNote}
+		,updater=#{updater}
+		,update_datetime=#{updateDatetime}
+		WHERE code=#{code}
 	</update>
 		
 	<update id="update_tc_toHandle" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code = #{curNodeCode}
-		,deal_result = #{dealResult}
-		,sell_price = #{sellPrice}
-		,deposit = #{deposit}
-		,fee_note = #{feeNote}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		WHERE code = #{code}
+		cur_node_code=#{curNodeCode}
+		,deal_result=#{dealResult}
+		,sell_price=#{sellPrice}
+		,deposit=#{deposit}
+		,fee_note=#{feeNote}
+		,updater=#{updater}
+		,update_datetime=#{updateDatetime}
+		WHERE code=#{code}
 	</update>
 </mapper>

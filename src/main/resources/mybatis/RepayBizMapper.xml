@@ -47,7 +47,7 @@
 		
 		<result column="cur_overdue_count" property="curOverdueCount" />
 		<result column="rest_replace_repay_amount" property="restReplaceRepayAmount" />
-		<result column="rest_replace_repay_count" property="totalReplaceRepayCount" />
+		<result column="total_replace_repay_count" property="totalReplaceRepayCount" />
 		<result column="cur_replace_repay_count" property="curReplaceRepayCount" />
 		<result column="black_handle_note" property="blackHandleNote" />
 		
@@ -63,6 +63,7 @@
 		<result column="release_apply_note" property="releaseApplyNote" />
 		<result column="release_datetime" property="releaseDatetime" />
 		<result column="release_note" property="releaseNote" />
+		<result column="release_template_id" property="releaseTemplateId" />
 						
 	    <result column="judge_receipt_datetime" property="judgeReceiptDatetime" />
 		<result column="judge_receipt_amount" property="judgeReceiptAmount" />
@@ -202,10 +203,11 @@
 		
 		,t.release_datetime
 		,t.release_note
+		,t.release_template_id
 		,t.judge_receipt_datetime
 		,t.judge_receipt_amount
-		,t.judge_receipt_bank
 		
+		,t.judge_receipt_bank
 		,t.judge_receipt_bankcard
 		,t.judge_note
 		,t.judge_bill_pdf
@@ -294,10 +296,11 @@
 		
 		,t.release_datetime
 		,t.release_note
+		,t.release_template_id
 		,t.judge_receipt_datetime
 		,t.judge_receipt_amount
-		,t.judge_receipt_bank
 		
+		,t.judge_receipt_bank
 		,t.judge_receipt_bankcard
 		,t.judge_note
 		,t.judge_bill_pdf
@@ -363,6 +366,7 @@
 		
 		,first_repay_datetime
 		,first_repay_amount
+		,bill_datetime
 		,month_datetime
 		,month_amount
 		
@@ -475,7 +479,7 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_repayApply" parameterType="repayBiz">
+	<update id="update_repayAllAdvance" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
@@ -485,12 +489,12 @@
 	    ,settle_datetime = #{settleDatetime}
 	    
 		,deposit_receipt = #{depositReceipt}
-		,refund_bank_subbranch =#{refundBankSubbranch}
-		,refund_bank_realName =#{refundBankRealName}
-		,refund_bankcard =#{refundBankcard}
-		,second_company_insurance =#{secondCompanyInsurance}
+		,refund_bank_subbranch = #{refundBankSubbranch}
+		,refund_bank_realName = #{refundBankRealName}
+		,refund_bankcard = #{refundBankcard}
+		,second_company_insurance = #{secondCompanyInsurance}
 		
-		,third_company_insurance =#{thirdCompanyInsurance}
+		,third_company_insurance = #{thirdCompanyInsurance}
 		,rest_amount = #{restAmount}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
@@ -646,7 +650,7 @@
 	<update id="update_repay_overdue" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
-		overdue_amount = #{overdueAmount}
+		rest_overdue_amount = #{restOverdueAmount}
 		,total_overdue_count = #{totalOverdueCount}
 		,cur_overdue_count = #{curOverdueCount}
 		WHERE code = #{code}

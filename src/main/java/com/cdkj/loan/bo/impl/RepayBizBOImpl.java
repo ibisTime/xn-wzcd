@@ -17,6 +17,8 @@ import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.AmountUtil;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.IRepayBizDAO;
@@ -24,9 +26,11 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.User;
+import com.cdkj.loan.dto.req.XN630512Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ESysUser;
@@ -104,20 +108,23 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBiz.setRefType(ERepayBizType.CAR.getCode());
         repayBiz.setRefCode(budgetOrder.getCode());
         repayBiz.setUserId(userId);
-        repayBiz.setRealName(budgetOrder.getApplyUserName());
-        repayBiz.setIdKind(budgetOrder.getIdKind());
-        repayBiz.setIdNo(budgetOrder.getIdNo());
+        repayBiz.setRealName(budgetOrder.getCustomerName());
+        repayBiz.setIdKind(EIDKind.IDCard.getCode());
+        // repayBiz.setIdNo(budgetOrder.getIdNo());
 
         repayBiz.setBankcardCode(bankcardCode);
         repayBiz.setBizPrice(budgetOrder.getInvoicePrice());
-        repayBiz.setSfRate(budgetOrder.getFirstRate());
-        repayBiz.setSfAmount(budgetOrder.getFirstAmount());
-        repayBiz.setLoanBank(budgetOrder.getLoanBank());
+        Long firstAmount = budgetOrder.getInvoicePrice()
+                - budgetOrder.getLoanAmount();// 首付金额
+        repayBiz.setSfRate(AmountUtil.div(firstAmount,
+            budgetOrder.getInvoicePrice()));// 首付比例
+        repayBiz.setSfAmount(firstAmount);
+        repayBiz.setLoanBank(budgetOrder.getLoanBankCode());
         repayBiz.setLoanAmount(budgetOrder.getLoanAmount());
 
         repayBiz.setFxDeposit(0L);
         repayBiz.setPeriods(StringValidater.toInteger(budgetOrder
-            .getLoanPeriod()));
+            .getLoanPeriods()));
         repayBiz.setRestPeriods(repayBiz.getPeriods());
         repayBiz.setBankRate(0.0);// 作废
 
@@ -128,29 +135,27 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBiz.setLoanEndDatetime(addMonths);
         repayBiz.setFxDeposit(0L);
 
-        repayBiz
-            .setFirstRepayDatetime(budgetOrder.getRepayFirstMonthDatetime());
-        repayBiz.setFirstRepayAmount(budgetOrder.getRepayFirstMonthAmount());
-
-        repayBiz.setMonthDatetime(budgetOrder.getRepayBankDate());
-        repayBiz.setMonthAmount(budgetOrder.getRepayMonthAmount());
-        repayBiz.setLyDeposit(budgetOrder.getMonthDeposit());
+        // repayBiz
+        // .setFirstRepayDatetime(budgetOrder.getRepayFirstMonthDatetime());
+        // repayBiz.setFirstRepayAmount(budgetOrder.getRepayFirstMonthAmount());
+        //
+        // repayBiz.setMonthDatetime(budgetOrder.getRepayBankDate());
+        // repayBiz.setMonthAmount(budgetOrder.getRepayMonthAmount());
+        repayBiz.setLyDeposit(budgetOrder.getLyAmount());
         repayBiz.setCutLyDeposit(0L);
         repayBiz.setCurNodeCode(ERepayBizNode.TO_REPAY.getCode());
 
         repayBiz.setRestAmount(budgetOrder.getLoanAmount());
         repayBiz.setRestTotalCost(0L);
         repayBiz.setTotalInDeposit(0L);
-        repayBiz.setOverdueAmount(0L);
+        repayBiz.setRestOverdueAmount(0L);
         repayBiz.setTotalOverdueCount(0);
 
         repayBiz.setCurOverdueCount(0);
         repayBiz.setBlackHandleNote("暂无");
         repayBiz.setUpdater(operator);
         repayBiz.setUpdateDatetime(new Date());
-        repayBiz.setRemark(budgetOrder.getRemark());
 
-        repayBiz.setTeamCode(budgetOrder.getTeamCode());
         repayBizDAO.insert(repayBiz);
         return repayBiz;
     }
@@ -160,8 +165,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         RepayBiz repayBiz = getRepayBiz(repayBizCode);
         repayBiz.setRestAmount(repayBiz.getRestAmount() - realWithholdAmount);
         if (repayBiz.getRestAmount() == 0) {
-            repayBiz.setCurNodeCode(ERepayBizNode.QKCS_DEPART_CHECK.getCode());// 到清欠催收部审核节点
-            repayBiz.setRemark("清欠催收部待审核");
+            repayBiz.setCurNodeCode(ERepayBizNode.COMMIT_SETTLE.getCode());// 提交结算单节点
+            repayBiz.setRemark("提交结算单");
         }
         repayBiz.setUpdater(ESysUser.SYS_USER_HTWT.getCode());
         repayBiz.setUpdateDatetime(new Date());
@@ -181,13 +186,26 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     }
 
     @Override
-    public void refreshAdvanceRepayCarLoan(RepayBiz repayBiz,
+    public void refreshAdvanceRepayCarLoan(XN630512Req req, RepayBiz repayBiz,
             Long realWithholdAmount) {
-        repayBiz.setCurNodeCode(ERepayBizNode.QKCS_DEPART_CHECK.getCode());
+        repayBiz.setCutLyDeposit(StringValidater.toLong(req.getCutLyDeposit()));
+        repayBiz.setSettleAttach(req.getSettleAttach());
+        repayBiz.setSettleDatetime(DateUtil.strToDate(req.getSettleDatetime(),
+            DateUtil.DATA_TIME_PATTERN_1));
+        repayBiz.setDepositReceipt(req.getDepositReceipt());
+        repayBiz.setRefundBankSubbranch(req.getRefundBankSubbranch());
+
+        repayBiz.setRefundBankRealName(req.getRefundBankRealName());
+        repayBiz.setRefundBankcard(req.getRefundBankcard());
+        repayBiz.setSecondCompanyInsurance(req.getSecondCompanyInsurance());
+        repayBiz.setThirdCompanyInsurance(req.getThirdCompanyInsurance());
+        repayBiz.setCurNodeCode(ERepayBizNode.FINANCE_CHECK.getCode());
+
         repayBiz.setIsAdvanceSettled(EBoolean.YES.getCode());
         repayBiz.setRestAmount(0L);
+        repayBiz.setUpdater(req.getOperator());
         repayBiz.setUpdateDatetime(new Date());
-        repayBiz.setRemark("已结清，待清欠催收部审核");
+        repayBiz.setRemark("财务审核");
         repayBizDAO.updateRepayAllAdvance(repayBiz);
     }
 
@@ -247,7 +265,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBiz.setRestTotalCost(0L);
 
         repayBiz.setTotalInDeposit(0L);
-        repayBiz.setOverdueAmount(0L);
+        repayBiz.setRestOverdueAmount(0L);
         repayBiz.setTotalOverdueCount(0);
         repayBiz.setCurOverdueCount(0);
         repayBiz.setBlackHandleNote("暂无");

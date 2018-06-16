@@ -15,6 +15,17 @@ public class XN630534Req {
     @NotBlank
     private String payType;
 
+    // 支付金额
+    private String payAmount;
+
+    public String getPayAmount() {
+        return payAmount;
+    }
+
+    public void setPayAmount(String payAmount) {
+        this.payAmount = payAmount;
+    }
+
     public String getCode() {
         return code;
     }

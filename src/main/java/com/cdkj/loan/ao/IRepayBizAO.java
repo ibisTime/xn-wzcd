@@ -20,12 +20,9 @@ public interface IRepayBizAO {
     public void advanceRepayOss(XN630512Req req);
 
     // 前端提前还款(保留)
-    public void advanceRepay(String code, String updater, String remark);
+    // public void advanceRepay(String code, String updater, String remark);
 
     // ********************************car********************************
-
-    // 结算单申请
-    public void settleApply();
 
     // // 清欠催收部审核
     // public void approveByQkcsDepartment(String code, Long cutLyDeposit,
