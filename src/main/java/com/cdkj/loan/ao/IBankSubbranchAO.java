@@ -16,7 +16,7 @@ import com.cdkj.loan.dto.req.XN632052Req;
 public interface IBankSubbranchAO {
     String DEFAULT_ORDER_COLUMN = "id";
 
-    public long addBankSubbranch(XN632050Req req);
+    public String addBankSubbranch(XN632050Req req);
 
     public int dropBankSubbranch(String code);
 

@@ -39,7 +39,7 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
     private ISYSUserBO sysUserBO;
 
     @Override
-    public long addBankSubbranch(XN632050Req req) {
+    public String addBankSubbranch(XN632050Req req) {
         if (null == bankBO.getBank(req.getBankCode())) {
             throw new BizException("xn0000", "银行信息不存在。");
         }
@@ -75,9 +75,8 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());
-        bankSubbranchBO.saveBankSubbranch(data);
 
-        return bankSubbranchBO.getBankSubbranchMaxid(req.getBankCode());
+        return bankSubbranchBO.saveBankSubbranch(data);
     }
 
     @Override
