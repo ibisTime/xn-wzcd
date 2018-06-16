@@ -97,6 +97,7 @@
 		<!-- 贷后 -->
 		<typeAlias alias="overdueMenu" type="com.cdkj.loan.domain.OverdueMenu" />
 		<typeAlias alias="replaceRepayApply" type="com.cdkj.loan.domain.ReplaceRepayApply" />
+		<typeAlias alias="replaceRepayPlan" type="com.cdkj.loan.domain.ReplaceRepayPlan" />
 		
 		<!-- 行政人事 -->
 		<typeAlias alias="gpsApply" type="com.cdkj.loan.domain.GpsApply" />
@@ -150,6 +151,5 @@
 		<typeAlias alias="repoint" type="com.cdkj.loan.domain.Repoint" />
 		<typeAlias alias="overdueRepay" type="com.cdkj.loan.domain.OverdueRepay" />
 		
-		<typeAlias alias="advanceFund" type="com.cdkj.loan.domain.AdvanceFund" />
 	</typeAliases>
 </configuration>
