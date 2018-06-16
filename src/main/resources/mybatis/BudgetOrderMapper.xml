@@ -1314,5 +1314,13 @@
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
+
+	<update id="update_cancelBizAudit" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		frozen_status = #{frozenStatus}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
 </mapper>
 

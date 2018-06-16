@@ -54,6 +54,7 @@ import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632200Req;
 import com.cdkj.loan.dto.req.XN632220Req;
 import com.cdkj.loan.dto.req.XN632270Req;
+import com.cdkj.loan.dto.req.XN632271Req;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -1164,5 +1165,44 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_CANCEL, budgetOrder.getCode(),
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
+    }
+
+    @Override
+    public void cancelBizAudit(XN632271Req req) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+
+        if (!EBudgetOrderNode.APPROVE_CANCEL.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是审核节点，不能操作");
+        }
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
+            // 判断是否已垫资 如果已经垫资 下一个节点是财务审核节点 未垫资 下一个节点时废流程结束节点
+            if (EIsAdvanceFund.NO.getCode()
+                .equals(budgetOrder.getIsAdvanceFund())) {// 没垫资情况
+                budgetOrder.setCurNodeCode(
+                    EBudgetOrderNode.CANCEL_APPLY_END.getCode());
+                budgetOrder
+                    .setFrozenStatus(EBudgetFrozenStatus.NORMAL.getCode());
+            } else {// 垫资情况
+                String currentNode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode())
+                    .getNextNode();
+                budgetOrder.setCurNodeCode(currentNode);
+            }
+
+        } else if (EApproveResult.NOT_PASS.getCode()
+            .equals(req.getApproveResult())) {
+            budgetOrder.setCurNodeCode(budgetOrder.getCancelNodeCode());
+            budgetOrder.setFrozenStatus(EBudgetFrozenStatus.NORMAL.getCode());
+        }
+
+        budgetOrderBO.cancelBizAudit(budgetOrder);
+        // 写日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_CANCEL, budgetOrder.getCode(), preCurrentNode,
+            budgetOrder.getCurNodeCode(), req.getApproveNote(),
+            req.getOperator());
     }
 }

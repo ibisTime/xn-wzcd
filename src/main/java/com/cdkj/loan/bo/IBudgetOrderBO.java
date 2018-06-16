@@ -72,4 +72,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 作废申请
     public void applyCancel(BudgetOrder budgetOrder);
 
+    // 作废审核
+    public void cancelBizAudit(BudgetOrder budgetOrder);
+
 }
