@@ -1220,7 +1220,7 @@
 		UPDATE tdq_budget_order
 		SET
 		bank_card_number = #{bankCardNumber}
-		make_card_remark = #{makeCardRemark}
+		,make_card_remark = #{makeCardRemark}
 		WHERE code = #{code}
 	</update>
 </mapper>
