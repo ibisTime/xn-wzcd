@@ -430,85 +430,46 @@
 		,tc_apply_note=#{tcApplyNote}
 		,updater=#{updater}
 		,update_datetime=#{updateDatetime}
-		WHERE code=#{code}
-	</update>
-
-	<update id="update_takeCarRiskManageCheck" parameterType="repayPlan">
-		UPDATE tdh_repay_plan
-		SET
-		cur_node_code=#{curNodeCode}
-		,updater=#{updater}
-		,update_datetime=#{updateDatetime}
-		,remark=#{remark]
-		WHERE code=#{code}
-	</update>
-	
-	<update id="update_takeCarCompanyManageCheck" parameterType="repayPlan">
-		UPDATE tdh_repay_plan
-		SET
-		cur_node_code=#{curNodeCode}
-		,updater=#{updater}
-		,update_datetime=#{updateDatetime}
-		,remark=#{remark}
-		WHERE code=#{code}
-	</update>
-	
-	<update id="update_takeCarRiskLeaderCheck" parameterType="repayPlan">
-		UPDATE tdh_repay_plan
-		SET
-		cur_node_code=#{curNodeCode}
-		,updater=#{updater}
-		,update_datetime=#{updateDatetime}
 		,remark=#{remark}
 		WHERE code=#{code}
 	</update>
 
-	<update id="update_takeCarFinanceCheck" parameterType="repayPlan">
+	<update id="update_takeCarSureFk" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code=#{curNodeCode}
-		,updater=#{updater}
-		,update_datetime=#{updateDatetime}
-		,remark=#{remark}
-		WHERE code=#{code}
-	</update>
-
-	<update id="update_tc_sureFk" parameterType="repayPlan">
-		UPDATE tdh_repay_plan
-		SET
-		cur_node_code=#{curNodeCode}
-		,remit_datetime=#{remitDatetime}
+		remit_datetime=#{remitDatetime}
 		,remit_bank_code=#{remitBankCode}
 		,remitBillPdf=#{remitBillPdf}
 		,updater=#{updater}
 		,update_datetime=#{updateDatetime}
+		,remark=#{remark}
 		WHERE code=#{code}
 	</update>
 
-	<update id="update_tcFkInput" parameterType="repayPlan">
+	<update id="update_takeCarInputResult" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code=#{curNodeCode}
-		,take_car_address=#{takeCarAddress}
+		take_car_address=#{takeCarAddress}
 		,take_datetime=#{takeDatetime}
 		,take_name=#{takeName}
 		,take_location=#{takeLocation}
 		,take_note=#{takeNote}
 		,updater=#{updater}
 		,update_datetime=#{updateDatetime}
+		,remark=#{remark}
 		WHERE code=#{code}
 	</update>
 		
-	<update id="update_tc_toHandle" parameterType="repayPlan">
+	<update id="update_takeCarResultHandle" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code=#{curNodeCode}
-		,deal_result=#{dealResult}
+		deal_result=#{dealResult}
 		,sell_price=#{sellPrice}
 		,deposit=#{deposit}
 		,fee_note=#{feeNote}
 		,updater=#{updater}
 		,update_datetime=#{updateDatetime}
+		,remark=#{remark}
 		WHERE code=#{code}
 	</update>
 </mapper>

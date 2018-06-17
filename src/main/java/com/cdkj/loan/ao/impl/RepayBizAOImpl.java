@@ -256,8 +256,20 @@ public class RepayBizAOImpl implements IRepayBizAO {
     // 1、节点前提判断
     // 2、将信息录入还款计划，还款业务节点信息更新
     @Override
+    @Transactional
     public void takeCarApply(XN630550Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
+        if (!ERepayBizNode.TC_APPLY.getCode().equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不在拖车节点！");
+        }
 
+        // 还款计划落地数据
+        RepayPlan repayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
+            req.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
+        repayPlanBO.takeCarApply(repayPlan, req);
+
+        // 还款业务变更节点
     }
 
     @Override

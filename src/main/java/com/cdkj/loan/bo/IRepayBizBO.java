@@ -1,6 +1,5 @@
 package com.cdkj.loan.bo;
 
-import java.util.Date;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
@@ -40,56 +39,34 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
             Long realWithholdAmount);
 
     // 车贷还款订单
-    public void refreshRepayCarLoan(String repayBizCode,
-            Long realWithholdAmount);
+    public void refreshRepayCarLoan(String repayBizCode, Long realWithholdAmount);
 
     // 车贷确认结算
     public void confirmSettledProduct(RepayBiz repayBiz);
 
-    // 清欠催收部审核
-    public void approveByQkcsDepartment(RepayBiz repayBiz, String curNodeCode,
-            Long cutLyDeposit, String updater, String remark);
+    // 申请拖车
+    public void takeCarApply(RepayBiz data);
 
-    // 驻行人员审核
-    public void approveByBankCheck(String code, String curNodeCode,
-            Date settleDatetime, String settleAttach, String updater,
-            String remark);
+    // 拖车分控经理审核
+    public void takeCarRiskManageCheck(RepayBiz data);
 
-    // 总经理审核
-    public void approveByManager(String code, String curNodeCode,
-            String updater, String remark);
+    // 拖车分公司总公司审核
+    public void takeCarCompanyManageCheck(RepayBiz data);
 
-    // 财务审核
-    public void approveByFinance(String code, String curNodeCode,
-            String updater, String remark);
+    // 风控总监审核
+    public void takeCarRiskLeaderCheck(RepayBiz data);
 
-    // 业务团队解除抵押
-    public void releaseMortgage(String code, String curNodeCode,
-            Date releaseDatetime, String updater);
+    // 财务经理审核
+    public void takeCarFinanceManageCheck(RepayBiz data);
 
-    // 拖车申请
-    public void applyTrailer(RepayBiz repayBiz);
+    // 确认放款
+    public void takeCarSureFk(RepayBiz data);
 
-    // 财务打款
-    public void financialMoney(RepayBiz repayBiz);
+    // 录入拖车结果
+    public void takeCarInputResult(RepayBiz data);
 
-    // 清欠催收部拖车录入
-    public void trailerEntry(RepayBiz repayBiz);
-
-    // 拖车管理
-    public void trailerManage(RepayBiz repayBiz);
-
-    // 司法诉讼结果录入
-    public void judicialLitigationEntry(RepayBiz repayBiz);
-
-    // 清欠催收部申请赎回
-    public void qkcsbRedeemApply(RepayBiz repayBiz);
-
-    // 风控主管审核
-    public void riskManagerCheck(RepayBiz repayBiz);
-
-    // 财务主管审核
-    public void financeApprove(RepayBiz repayBiz);
+    // 结果处理
+    public void takeCarResultHandle(RepayBiz data);
 
     /********************************司法诉讼********************************/
     // 诉讼申请
