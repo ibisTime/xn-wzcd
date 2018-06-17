@@ -161,6 +161,13 @@
 		<result column="insurance_effect_datetime" property="insuranceEffectDatetime" />
 		<result column="insurance_bank" property="insuranceBank" />
 		
+		<result column="insurance_remind_count" property="insuranceRemindCount" />
+		<result column="insurance_apply_datetime" property="insuranceApplyDatetime" />
+		<result column="insurance_end_datetime" property="insuranceEndDatetime" />
+		<result column="insurance_force_pdf" property="insuranceForcePdf" />
+		<result column="insurance_business_pdf" property="insuranceBusinessPdf" />
+		<result column="insurance_note" property="insuranceNote" />
+		
 		<result column="guarantee_contract_code" property="guaranteeContractCode" />
 		<result column="reg_certificate_code" property="regCertificateCode" />
 		<result column="other_contact" property="otherContact" />
@@ -404,6 +411,12 @@
 		,t.commerce_insurance
 		,t.insurance_effect_datetime
 		,t.insurance_bank
+		,t.insurance_remind_count
+		,t.insurance_apply_datetime
+		,t.insurance_end_datetime
+		,t.insurance_force_pdf
+		,t.insurance_business_pdf
+		,t.insurance_note
 		,t.guarantee_contract_code
 		,t.reg_certificate_code
 		,t.other_contact
@@ -1387,5 +1400,24 @@
 		cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_renewInsuranceRemind" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		insurance_remind_count = #{insuranceRemindCount}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_renewInsurance" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		insurance_company_code = #{insuranceCompanyCode}
+		,insurance_apply_datetime = #{insuranceApplyDatetime}
+		,insurance_end_datetime = #{insuranceEndDatetime}
+		,insurance_force_pdf = #{insuranceForcePdf}
+		,insurance_business_pdf = #{insuranceBusinessPdf}
+		,insurance_note = #{insuranceNote}
+		WHERE code = #{code}
+	</update>
+		
 </mapper>
-

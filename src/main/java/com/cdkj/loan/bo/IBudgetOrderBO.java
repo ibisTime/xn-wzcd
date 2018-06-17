@@ -90,4 +90,9 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 提醒发起流程
     public void remindingProcess(BudgetOrder budgetOrder);
 
+    // 续保短信提醒
+    public void renewInsuranceRemind(String code, int insuranceRemindCount);
+
+    // 续保
+    public void renewInsurance(BudgetOrder data);
 }
