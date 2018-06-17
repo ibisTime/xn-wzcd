@@ -70,4 +70,28 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
     // 财务确认收货
     public int updateFinanceSureReceipt(RepayBiz data);
 
+    // ********************************结清管理********************************
+    // 结算单申请
+    public int updateCommitSettle(RepayBiz data);
+
+    // 财务审核
+    public int updateFinanceCheck(RepayBiz data);
+
+    // 确认付款
+    public int updateCashRemit(RepayBiz data);
+
+    // 申请解除
+    public int updateReleaseMortgageApply(RepayBiz data);
+
+    // 风控内勤审核
+    public int updateRiskIndoorCheck(RepayBiz data);
+
+    // 风控主管审核
+    public int updateRiskManagerCheck(RepayBiz data);
+
+    // 收件
+    public int updateBankRecLogic(RepayBiz data);
+
+    // 结果回录
+    public int updateMortgageInput(RepayBiz data);
 }

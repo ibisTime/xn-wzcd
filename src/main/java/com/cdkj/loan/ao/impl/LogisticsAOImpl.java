@@ -14,6 +14,7 @@ import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -59,6 +60,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Autowired
     private ISYSUserBO sysUserBO;
+
+    @Autowired
+    private IRepayBizBO repayBizBO;
 
     @Override
     @Transactional
@@ -114,6 +118,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
             budgetOrderBO.logicOrder(data.getBizCode(), operator);
         } else if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             gpsApplyBO.receiveGps(data.getBizCode());
+        } else if (ELogisticsType.REPAY_BIZ.getCode().equals(data.getType())) {
+            repayBizBO.refreshBankRecLogic(data.getBizCode(), operator);
         }
     }
 

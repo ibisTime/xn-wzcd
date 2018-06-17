@@ -13,6 +13,9 @@ import com.cdkj.loan.dto.req.XN630550Req;
 import com.cdkj.loan.dto.req.XN630556Req;
 import com.cdkj.loan.dto.req.XN630557Req;
 import com.cdkj.loan.dto.req.XN630563Req;
+import com.cdkj.loan.dto.req.XN630570Req;
+import com.cdkj.loan.dto.req.XN630572Req;
+import com.cdkj.loan.dto.req.XN630576Req;
 
 public interface IRepayBizAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
@@ -60,6 +63,32 @@ public interface IRepayBizAO {
 
     // 司法诉讼财务收款
     public void judgeFinanceSureReceipt(XN630563Req req);
+
+    /********************************结清管理********************************/
+    // 结算单申请
+    public void settltCommitSettle(XN630570Req req);
+
+    // 财务审核
+    public void settleFinanceCheck(String code, String approveResult,
+            String approveNote, String operator);
+
+    // 确认付款
+    public void settleCashRemit(XN630572Req req);
+
+    // 申请解除
+    public void settleReleaseMortgageApply(String code, String applyNote,
+            String operator);
+
+    // 风控内勤审核
+    public void settleRiskIndoorCheck(String code, String approveResult,
+            String approveNote, String operator);
+
+    // 风控主管审核
+    public void settleRiskManagerCheck(String code, String approveResult,
+            String approveNote, String operator);
+
+    // 结果回录
+    public void settleMortgageInput(XN630576Req req);
 
     // ********************************car********************************
 
