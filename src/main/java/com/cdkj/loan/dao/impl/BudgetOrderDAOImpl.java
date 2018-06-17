@@ -183,8 +183,13 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
     }
 
     @Override
-    public void RemindingProcess(BudgetOrder condition) {
-        super.update(NAMESPACE.concat("update_RemindingProcess"), condition);
+    public void remindingProcess(BudgetOrder condition) {
+        super.update(NAMESPACE.concat("update_remindingProcess"), condition);
+    }
+
+    @Override
+    public void canceOrder(BudgetOrder condition) {
+        super.update(NAMESPACE.concat("update_canceOrder"), condition);
     }
 
 }

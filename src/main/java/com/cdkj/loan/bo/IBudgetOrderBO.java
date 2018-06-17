@@ -13,6 +13,9 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 预算单页面新增预算单
     public void refresh(BudgetOrder data);
 
+    // 申请撤销
+    public void canceOrder(BudgetOrder budgetOrder);
+
     public void refreshAreaManagerApprove(BudgetOrder data);
 
     public void refreshBranchCompanyApprove(BudgetOrder data);
@@ -85,6 +88,6 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     public void receiptAndReturn(BudgetOrder budgetOrder);
 
     // 提醒发起流程
-    public void RemindingProcess(BudgetOrder budgetOrder);
+    public void remindingProcess(BudgetOrder budgetOrder);
 
 }

@@ -80,6 +80,9 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     void receiptAndReturn(BudgetOrder budgetOrder);
 
     // 提醒发起流程
-    void RemindingProcess(BudgetOrder budgetOrder);
+    void remindingProcess(BudgetOrder budgetOrder);
+
+    // 申请撤销
+    void canceOrder(BudgetOrder budgetOrder);
 
 }

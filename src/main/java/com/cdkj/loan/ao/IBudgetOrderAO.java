@@ -109,6 +109,6 @@ public interface IBudgetOrderAO {
     public void receiptAndReturn(XN632280Req req);
 
     // 提醒发起流程
-    public void RemindingProcess(String code);
+    public void remindingProcess(String code);
 
 }

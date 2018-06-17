@@ -64,7 +64,7 @@ public class XN632060Req {
 
     private List<CollectBankcard> jxsCollectBankcardList;// 经销商收款账号列表
 
-    private List<XN632060ReqProtocol> CarDealerProtocolList;// 经销商协议表
+    private List<XN632060ReqProtocol> carDealerProtocolList;// 经销商协议表
 
     private List<CollectBankcard> gsCollectBankcardList;// 工商银行返点账号列表
 
@@ -86,12 +86,12 @@ public class XN632060Req {
     }
 
     public List<XN632060ReqProtocol> getCarDealerProtocolList() {
-        return CarDealerProtocolList;
+        return carDealerProtocolList;
     }
 
     public void setCarDealerProtocolList(
             List<XN632060ReqProtocol> carDealerProtocolList) {
-        CarDealerProtocolList = carDealerProtocolList;
+        this.carDealerProtocolList = carDealerProtocolList;
     }
 
     public List<CollectBankcard> getGsCollectBankcardList() {
