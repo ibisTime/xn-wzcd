@@ -29,8 +29,8 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
 
     @Override
     public long selectTotalCount(RepayBiz condition) {
-        return super.selectTotalCount(
-            NAMESPACE.concat("select_repayBiz_count"), condition);
+        return super.selectTotalCount(NAMESPACE.concat("select_repayBiz_count"),
+            condition);
     }
 
     @Override
@@ -112,8 +112,8 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
 
     @Override
     public int updateTakeCarInputResult(RepayBiz data) {
-        return super
-            .update(NAMESPACE.concat("update_takeCarInputResult"), data);
+        return super.update(NAMESPACE.concat("update_takeCarInputResult"),
+            data);
     }
 
     @Override
@@ -165,4 +165,46 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
         return super.update(NAMESPACE.concat("update_judgeFinanceSureReceipt"),
             data);
     }
+
+    @Override
+    public int updateCommitSettle(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_commitSettle"), data);
+    }
+
+    @Override
+    public int updateFinanceCheck(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_financeCheck"), data);
+    }
+
+    @Override
+    public int updateCashRemit(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_cashRemit"), data);
+    }
+
+    @Override
+    public int updateReleaseMortgageApply(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_releaseMortgageApply"),
+            data);
+    }
+
+    @Override
+    public int updateRiskIndoorCheck(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_riskIndoorCheck"), data);
+    }
+
+    @Override
+    public int updateRiskManagerCheck(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_riskManagerCheck"), data);
+    }
+
+    @Override
+    public int updateBankRecLogic(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_bankRecLogic"), data);
+    }
+
+    @Override
+    public int updateMortgageInput(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_mortgageInput"), data);
+    }
+
 }

@@ -127,7 +127,7 @@ CREATE TABLE `tdh_repay_biz` (
   `deposit_receipt` varchar(255) DEFAULT NULL COMMENT '押金单',
   `refund_bank_subbranch` varchar(255) DEFAULT NULL COMMENT '退款开户行',
   
-  `refund_bank_realName` varchar(255) DEFAULT NULL COMMENT '退款户名',
+  `refund_bank_real_name` varchar(255) DEFAULT NULL COMMENT '退款户名',
   `refund_bankcard` varchar(255) DEFAULT NULL COMMENT '退款账号',
   `second_company_insurance` varchar(255) DEFAULT NULL COMMENT '第二年按公司指定续保',
   `third_company_insurance` varchar(255) DEFAULT NULL COMMENT '第三年按公司指定续保',

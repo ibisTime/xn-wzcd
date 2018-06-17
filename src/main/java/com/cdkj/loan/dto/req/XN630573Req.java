@@ -14,7 +14,7 @@ public class XN630573Req {
     private String code;
 
     // 申请说明
-    private String applyNote;
+    private String releaseApplyNote;
 
     @NotBlank
     private String operator;
@@ -27,12 +27,12 @@ public class XN630573Req {
         this.code = code;
     }
 
-    public String getApplyNote() {
-        return applyNote;
+    public String getReleaseApplyNote() {
+        return releaseApplyNote;
     }
 
-    public void setApplyNote(String applyNote) {
-        this.applyNote = applyNote;
+    public void setReleaseApplyNote(String releaseApplyNote) {
+        this.releaseApplyNote = releaseApplyNote;
     }
 
     public String getOperator() {

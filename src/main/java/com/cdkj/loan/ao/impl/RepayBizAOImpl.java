@@ -526,6 +526,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     }
 
     @Override
+    @Transactional
     public void settltCommitSettle(XN630570Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         if (!ERepayBizNode.COMMIT_SETTLE.getCode()
@@ -554,9 +555,18 @@ public class RepayBizAOImpl implements IRepayBizAO {
             EBoolean.YES.getCode());
         data.setCurNodeCode(nextNodeCode);
         repayBizBO.refreshCommitSettle(data);
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap()
+            .get(repayBiz.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(),
+            repayBiz.getCurNodeCode(), nextNodeCode, currentNode.getValue(),
+            req.getOperator());
     }
 
     @Override
+    @Transactional
     public void settleFinanceCheck(String code, String approveResult,
             String approveNote, String operator) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
@@ -570,9 +580,18 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
         repayBizBO.refreshFinanceCheck(code, nextNodeCode, approveNote,
             operator);
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap()
+            .get(repayBiz.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(),
+            repayBiz.getCurNodeCode(), nextNodeCode, currentNode.getValue(),
+            operator);
     }
 
     @Override
+    @Transactional
     public void settleCashRemit(XN630572Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         if (!ERepayBizNode.CASH_REMIT.getCode()
@@ -595,9 +614,18 @@ public class RepayBizAOImpl implements IRepayBizAO {
             EBoolean.YES.getCode());
         data.setCurNodeCode(nextNodeCode);
         repayBizBO.refreshCashRemit(data);
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap()
+            .get(repayBiz.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(),
+            repayBiz.getCurNodeCode(), nextNodeCode, currentNode.getValue(),
+            req.getOperator());
     }
 
     @Override
+    @Transactional
     public void settleReleaseMortgageApply(String code, String releaseApplyNote,
             String operator) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
@@ -610,9 +638,18 @@ public class RepayBizAOImpl implements IRepayBizAO {
             EBoolean.YES.getCode());
         repayBizBO.refreshReleaseMortgageApply(code, nextNodeCode,
             releaseApplyNote, operator);
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap()
+            .get(repayBiz.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(),
+            repayBiz.getCurNodeCode(), nextNodeCode, currentNode.getValue(),
+            operator);
     }
 
     @Override
+    @Transactional
     public void settleRiskIndoorCheck(String code, String approveResult,
             String approveNote, String operator) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
@@ -624,6 +661,14 @@ public class RepayBizAOImpl implements IRepayBizAO {
         String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
             approveResult);
         repayBizBO.refreshRiskIndoorCheck(code, nextNodeCode, approveNote,
+            operator);
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap()
+            .get(repayBiz.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(),
+            repayBiz.getCurNodeCode(), nextNodeCode, currentNode.getValue(),
             operator);
     }
 
@@ -648,9 +693,18 @@ public class RepayBizAOImpl implements IRepayBizAO {
         logisticsBO.saveLogistics(ELogisticsType.REPAY_BIZ.getCode(), code,
             repayBiz.getUserId(), repayBiz.getCurNodeCode(), nextNodeCode,
             nodeFlow.getFileList());
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap()
+            .get(repayBiz.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(),
+            repayBiz.getCurNodeCode(), nextNodeCode, currentNode.getValue(),
+            operator);
     }
 
     @Override
+    @Transactional
     public void settleMortgageInput(XN630576Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         if (!ERepayBizNode.MORTGAGE_INPUT.getCode()
@@ -671,6 +725,14 @@ public class RepayBizAOImpl implements IRepayBizAO {
             EBoolean.YES.getCode());
         data.setCurNodeCode(nextNodeCode);
         repayBizBO.refreshMortgageInput(data);
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap()
+            .get(repayBiz.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(),
+            repayBiz.getCurNodeCode(), nextNodeCode, currentNode.getValue(),
+            req.getOperator());
     }
 
     private String getNextNodeCode(String curNodeCode, String approveResult) {

@@ -17,10 +17,6 @@ public class XN630570Req {
     @NotBlank
     private String cutLyDeposit;
 
-    // 结清时间
-    @NotBlank
-    private String settleDatetime;
-
     // 退款开户行
     @NotBlank
     private String refundBankSubbranch;
@@ -41,6 +37,10 @@ public class XN630570Req {
 
     // 结清证明
     private String settleAttach;
+
+    // 结清时间
+    @NotBlank
+    private String settleDatetime;
 
     // 押金单
     private String depositReceipt;
