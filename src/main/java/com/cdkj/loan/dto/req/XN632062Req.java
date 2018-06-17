@@ -39,9 +39,6 @@ public class XN632062Req {
     private String parentGroup;// 所属集团
 
     @NotBlank
-    private String agreement;// 协议
-
-    @NotBlank
     private String agreementValidDateStart;// 合作协议有效期起
 
     @NotBlank
@@ -164,14 +161,6 @@ public class XN632062Req {
 
     public void setParentGroup(String parentGroup) {
         this.parentGroup = parentGroup;
-    }
-
-    public String getAgreement() {
-        return agreement;
-    }
-
-    public void setAgreement(String agreement) {
-        this.agreement = agreement;
     }
 
     public String getAgreementValidDateStart() {

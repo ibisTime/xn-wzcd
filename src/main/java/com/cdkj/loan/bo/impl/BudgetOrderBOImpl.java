@@ -259,8 +259,26 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     }
 
     @Override
-    public void RemindingProcess(BudgetOrder budgetOrder) {
-        budgetOrderDAO.RemindingProcess(budgetOrder);
+    public void remindingProcess(BudgetOrder budgetOrder) {
+        budgetOrderDAO.remindingProcess(budgetOrder);
+    }
+
+    @Override
+    public void canceOrder(BudgetOrder budgetOrder) {
+        budgetOrderDAO.canceOrder(budgetOrder);
+    }
+
+    @Override
+    public void renewInsuranceRemind(String code, int insuranceRemindCount) {
+        BudgetOrder budgetOrder = new BudgetOrder();
+        budgetOrder.setCode(code);
+        budgetOrder.setInsuranceRemindCount(insuranceRemindCount);
+        budgetOrderDAO.updateRenewInsuranceRemind(budgetOrder);
+    }
+
+    @Override
+    public void renewInsurance(BudgetOrder data) {
+        budgetOrderDAO.updateRenewInsurance(data);
     }
 
     @Override

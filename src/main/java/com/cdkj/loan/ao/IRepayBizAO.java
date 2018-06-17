@@ -66,7 +66,7 @@ public interface IRepayBizAO {
 
     /********************************结清管理********************************/
     // 结算单申请
-    public void settltCommitSettle(XN630570Req req);
+    public void commitSettle(XN630570Req req);
 
     // 财务审核
     public void settleFinanceCheck(String code, String approveResult,

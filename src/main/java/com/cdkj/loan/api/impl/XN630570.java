@@ -24,7 +24,7 @@ public class XN630570 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repayBizAO.settltCommitSettle(req);
+        repayBizAO.commitSettle(req);
         return new BooleanRes(true);
     }
 

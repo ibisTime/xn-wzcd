@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.ICarDealerProtocolBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICarDealerProtocolDAO;
 import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.dto.req.XN632060ReqProtocol;
@@ -27,43 +28,59 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
                 CarDealerProtocol data = new CarDealerProtocol();
                 data.setCarDealerCode(req.getCarDealerCode());
                 data.setBankCode(req.getBankCode());
-                data.setPlatCtRate12(req.getPlatCtRate12());
-                data.setPlatCtRate24(req.getPlatCtRate24());
-                data.setPlatCtRate36(req.getPlatCtRate36());
+                data.setPlatCtRate12(
+                    StringValidater.toDouble(req.getPlatCtRate12()));
+                data.setPlatCtRate24(
+                    StringValidater.toDouble(req.getPlatCtRate24()));
+                data.setPlatCtRate36(
+                    StringValidater.toDouble(req.getPlatCtRate36()));
 
-                data.setPlatZkRate12(req.getPlatZkRate12());
-                data.setPlatZkRate24(req.getPlatZkRate24());
-                data.setPlatZkRate36(req.getPlatZkRate36());
+                data.setPlatZkRate12(
+                    StringValidater.toDouble(req.getPlatZkRate12()));
+                data.setPlatZkRate24(
+                    StringValidater.toDouble(req.getPlatZkRate24()));
+                data.setPlatZkRate36(
+                    StringValidater.toDouble(req.getPlatZkRate36()));
                 data.setAssureType(req.getAssureType());
-                data.setAssureFee(req.getAssureFee());
+                data.setAssureFee(StringValidater.toLong(req.getAssureFee()));
 
-                data.setAssureRate(req.getAssureRate());
+                data.setAssureRate(
+                    StringValidater.toDouble(req.getAssureRate()));
                 data.setLyAmountType(req.getLyAmountType());
-                data.setLyAmountFee(req.getLyAmountFee());
-                data.setLyAmountRate(req.getLyAmountRate());
+                data.setLyAmountFee(
+                    StringValidater.toLong(req.getLyAmountFee()));
+                data.setLyAmountRate(
+                    StringValidater.toDouble(req.getLyAmountRate()));
                 data.setGpsType(req.getGpsType());
 
-                data.setGpsFee(req.getGpsFee());
-                data.setGpsRate(req.getGpsRate());
+                data.setGpsFee(StringValidater.toLong(req.getGpsFee()));
+                data.setGpsRate(StringValidater.toDouble(req.getGpsRate()));
                 data.setOtherType(req.getOtherType());
-                data.setOtherFee(req.getOtherFee());
-                data.setOtherRate(req.getOtherRate());
+                data.setOtherFee(StringValidater.toLong(req.getOtherFee()));
+                data.setOtherRate(StringValidater.toDouble(req.getOtherRate()));
 
                 data.setIntroduceType(req.getIntroduceType());
-                data.setIntroduceFee(req.getIntroduceFee());
-                data.setIntroduceRate(req.getIntroduceRate());
+                data.setIntroduceFee(
+                    StringValidater.toLong(req.getIntroduceFee()));
+                data.setIntroduceRate(
+                    StringValidater.toDouble(req.getIntroduceRate()));
                 data.setReturnPointType(req.getReturnPointType());
-                data.setReturnPointFee(req.getReturnPointFee());
+                data.setReturnPointFee(
+                    StringValidater.toLong(req.getReturnPointFee()));
 
-                data.setReturnPointRate(req.getReturnPointRate());
+                data.setReturnPointRate(
+                    StringValidater.toDouble(req.getReturnPointRate()));
                 data.setIsDz(req.getIsDz());
                 data.setInsuAgencyYear1Type(req.getInsuAgencyYear1Type());
-                data.setInsuAgencyYear1Fee(req.getInsuAgencyYear1Fee());
+                data.setInsuAgencyYear1Fee(
+                    StringValidater.toLong(req.getInsuAgencyYear1Fee()));
                 data.setInsuAgencyYear2Type(req.getInsuAgencyYear2Type());
 
-                data.setInsuAgencyYear2Fee(req.getInsuAgencyYear2Fee());
+                data.setInsuAgencyYear2Fee(
+                    StringValidater.toLong(req.getInsuAgencyYear2Fee()));
                 data.setInsuAgencyYear3Type(req.getInsuAgencyYear3Type());
-                data.setInsuAgencyYear3Fee(req.getInsuAgencyYear3Fee());
+                data.setInsuAgencyYear3Fee(
+                    StringValidater.toLong(req.getInsuAgencyYear3Fee()));
 
                 carDealerProtocolDAO.insert(data);
             }

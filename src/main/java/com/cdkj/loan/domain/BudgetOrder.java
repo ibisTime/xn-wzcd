@@ -419,6 +419,24 @@ public class BudgetOrder extends ABaseDO {
     // 保险经办银行
     private String insuranceBank;
 
+    // 续保提醒次数
+    private int insuranceRemindCount;
+
+    // 投保时间
+    private Date insuranceApplyDatetime;
+
+    // 到期日期
+    private Date insuranceEndDatetime;
+
+    // 交强险保单
+    private String insuranceForcePdf;
+
+    // 商业险保单
+    private String insuranceBusinessPdf;
+
+    // 续保说明
+    private String insuranceNote;
+
     // 担保合同编号
     private String guaranteeContractCode;
 
@@ -2244,6 +2262,54 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCreditCode(String creditCode) {
         this.creditCode = creditCode;
+    }
+
+    public int getInsuranceRemindCount() {
+        return insuranceRemindCount;
+    }
+
+    public void setInsuranceRemindCount(int insuranceRemindCount) {
+        this.insuranceRemindCount = insuranceRemindCount;
+    }
+
+    public Date getInsuranceApplyDatetime() {
+        return insuranceApplyDatetime;
+    }
+
+    public void setInsuranceApplyDatetime(Date insuranceApplyDatetime) {
+        this.insuranceApplyDatetime = insuranceApplyDatetime;
+    }
+
+    public Date getInsuranceEndDatetime() {
+        return insuranceEndDatetime;
+    }
+
+    public void setInsuranceEndDatetime(Date insuranceEndDatetime) {
+        this.insuranceEndDatetime = insuranceEndDatetime;
+    }
+
+    public String getInsuranceForcePdf() {
+        return insuranceForcePdf;
+    }
+
+    public void setInsuranceForcePdf(String insuranceForcePdf) {
+        this.insuranceForcePdf = insuranceForcePdf;
+    }
+
+    public String getInsuranceBusinessPdf() {
+        return insuranceBusinessPdf;
+    }
+
+    public void setInsuranceBusinessPdf(String insuranceBusinessPdf) {
+        this.insuranceBusinessPdf = insuranceBusinessPdf;
+    }
+
+    public String getInsuranceNote() {
+        return insuranceNote;
+    }
+
+    public void setInsuranceNote(String insuranceNote) {
+        this.insuranceNote = insuranceNote;
     }
 
 }

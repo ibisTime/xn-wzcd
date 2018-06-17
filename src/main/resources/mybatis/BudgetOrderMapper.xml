@@ -161,6 +161,13 @@
 		<result column="insurance_effect_datetime" property="insuranceEffectDatetime" />
 		<result column="insurance_bank" property="insuranceBank" />
 		
+		<result column="insurance_remind_count" property="insuranceRemindCount" />
+		<result column="insurance_apply_datetime" property="insuranceApplyDatetime" />
+		<result column="insurance_end_datetime" property="insuranceEndDatetime" />
+		<result column="insurance_force_pdf" property="insuranceForcePdf" />
+		<result column="insurance_business_pdf" property="insuranceBusinessPdf" />
+		<result column="insurance_note" property="insuranceNote" />
+		
 		<result column="guarantee_contract_code" property="guaranteeContractCode" />
 		<result column="reg_certificate_code" property="regCertificateCode" />
 		<result column="other_contact" property="otherContact" />
@@ -404,6 +411,12 @@
 		,t.commerce_insurance
 		,t.insurance_effect_datetime
 		,t.insurance_bank
+		,t.insurance_remind_count
+		,t.insurance_apply_datetime
+		,t.insurance_end_datetime
+		,t.insurance_force_pdf
+		,t.insurance_business_pdf
+		,t.insurance_note
 		,t.guarantee_contract_code
 		,t.reg_certificate_code
 		,t.other_contact
@@ -686,8 +699,10 @@
 	<select id="select_budgetOrderList" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
 		SELECT
 		t.code
+		,t.credit_code 
 		,t.cur_node_code 
 		,t.customer_name
+		,t.is_advance_fund
 		,t.car_dealer_code
 		,t.company_code
 		,t.insurance_company_code 
@@ -748,6 +763,9 @@
 		
 		,t.car_dealer_code
 		,t.loan_periods
+		,t.is_submit_cancel
+		,t.zf_sk_amount
+		,t.zf_sk_receipt_datetime
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -768,6 +786,7 @@
 		INSERT INTO
 		tdq_budget_order(
 		code
+		,credit_code
 		,customer_type
 		,customer_name
 		,car_dealer_code
@@ -888,6 +907,7 @@
 		)
 		VALUES(
 		#{code}
+		,#{creditCode}
 		,#{customerType}
 		,#{customerName}
 		,#{carDealerCode}
@@ -1366,18 +1386,46 @@
 		WHERE code = #{code}
 	</update>
 
-	<update id="update_RemindingProcess" parameterType="budgetOrder">
+	<update id="update_remindingProcess" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
 		is_submit_cancel = #{isSubmitCancel}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
+
 	<update id="bank_loan_confirm_submit_bank" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
-</mapper>
 
+
+	<update id="update_canceOrder" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_renewInsuranceRemind" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		insurance_remind_count = #{insuranceRemindCount}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_renewInsurance" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		insurance_company_code = #{insuranceCompanyCode}
+		,insurance_apply_datetime = #{insuranceApplyDatetime}
+		,insurance_end_datetime = #{insuranceEndDatetime}
+		,insurance_force_pdf = #{insuranceForcePdf}
+		,insurance_business_pdf = #{insuranceBusinessPdf}
+		,insurance_note = #{insuranceNote}
+		WHERE code = #{code}
+	</update>
+		
+</mapper>
