@@ -1404,7 +1404,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public void RemindingProcess(String code) {
+    public void remindingProcess(String code) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
         if (!EBoolean.NO.getCode().equals(budgetOrder.getIsSubmitCancel())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -1412,7 +1412,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
         budgetOrder.setIsSubmitCancel(EBoolean.YES.getCode());
         budgetOrder.setCurNodeCode(EBudgetOrderNode.TO_APPLY_CANCEL.getCode());
-        budgetOrderBO.RemindingProcess(budgetOrder);
+        budgetOrderBO.remindingProcess(budgetOrder);
     }
 
 }

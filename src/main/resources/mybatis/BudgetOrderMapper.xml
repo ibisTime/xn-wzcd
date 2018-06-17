@@ -1373,7 +1373,7 @@
 		WHERE code = #{code}
 	</update>
 
-	<update id="update_RemindingProcess" parameterType="budgetOrder">
+	<update id="update_remindingProcess" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
 		is_submit_cancel = #{isSubmitCancel}

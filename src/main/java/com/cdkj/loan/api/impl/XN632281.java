@@ -24,7 +24,7 @@ public class XN632281 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.RemindingProcess(req.getCode());
+        budgetOrderAO.remindingProcess(req.getCode());
         return new BooleanRes(true);
     }
 
