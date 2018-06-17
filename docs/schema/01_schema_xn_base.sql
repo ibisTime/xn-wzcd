@@ -84,6 +84,7 @@ CREATE TABLE `tb_collect_bankcard` (
   `bank_name` varchar(255) DEFAULT NULL COMMENT '银行名称',
   `subbranch` varchar(255) DEFAULT NULL COMMENT '开户支行',
   `bankcard_number` varchar(255) DEFAULT NULL COMMENT '账号',
+  `point_rate` DECIMAL(18,8) DEFAULT NULL COMMENT '返点比例',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收款账号表';
