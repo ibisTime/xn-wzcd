@@ -15,6 +15,7 @@ import com.cdkj.loan.dto.req.XN632220Req;
 import com.cdkj.loan.dto.req.XN632270Req;
 import com.cdkj.loan.dto.req.XN632271Req;
 import com.cdkj.loan.dto.req.XN632272Req;
+import com.cdkj.loan.dto.req.XN632280Req;
 
 @Component
 public interface IBudgetOrderAO {
@@ -103,5 +104,8 @@ public interface IBudgetOrderAO {
 
     // 财务确认收款
     public void financeConfirm(XN632272Req req);
+
+    // 收款回录
+    public void financeConfirm(XN632280Req req);
 
 }
