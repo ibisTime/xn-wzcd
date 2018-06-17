@@ -1415,4 +1415,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.remindingProcess(budgetOrder);
     }
 
+    @Override
+    public void renewInsuranceRemind(String code, int insuranceRemindCount) {
+        budgetOrderBO.renewInsuranceRemind(code, insuranceRemindCount);
+    }
+
+    @Override
+    public void renewInsurance(BudgetOrder data) {
+        budgetOrderBO.renewInsurance(data);
+    }
+
 }

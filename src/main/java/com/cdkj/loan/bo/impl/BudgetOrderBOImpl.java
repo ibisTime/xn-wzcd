@@ -268,4 +268,17 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         budgetOrderDAO.canceOrder(budgetOrder);
     }
 
+    @Override
+    public void renewInsuranceRemind(String code, int insuranceRemindCount) {
+        BudgetOrder budgetOrder = new BudgetOrder();
+        budgetOrder.setCode(code);
+        budgetOrder.setInsuranceRemindCount(insuranceRemindCount);
+        budgetOrderDAO.updateRenewInsuranceRemind(budgetOrder);
+    }
+
+    @Override
+    public void renewInsurance(BudgetOrder data) {
+        budgetOrderDAO.updateRenewInsurance(data);
+    }
+
 }

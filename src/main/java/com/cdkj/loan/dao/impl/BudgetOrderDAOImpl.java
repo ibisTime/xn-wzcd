@@ -192,4 +192,15 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
         super.update(NAMESPACE.concat("update_canceOrder"), condition);
     }
 
+    @Override
+    public int updateRenewInsuranceRemind(BudgetOrder data) {
+        return super.update(NAMESPACE.concat("update_renewInsuranceRemind"),
+            data);
+    }
+
+    @Override
+    public int updateRenewInsurance(BudgetOrder data) {
+        return super.update(NAMESPACE.concat("update_renewInsurance"), data);
+    }
+
 }

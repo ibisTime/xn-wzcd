@@ -2264,4 +2264,52 @@ public class BudgetOrder extends ABaseDO {
         this.creditCode = creditCode;
     }
 
+    public int getInsuranceRemindCount() {
+        return insuranceRemindCount;
+    }
+
+    public void setInsuranceRemindCount(int insuranceRemindCount) {
+        this.insuranceRemindCount = insuranceRemindCount;
+    }
+
+    public Date getInsuranceApplyDatetime() {
+        return insuranceApplyDatetime;
+    }
+
+    public void setInsuranceApplyDatetime(Date insuranceApplyDatetime) {
+        this.insuranceApplyDatetime = insuranceApplyDatetime;
+    }
+
+    public Date getInsuranceEndDatetime() {
+        return insuranceEndDatetime;
+    }
+
+    public void setInsuranceEndDatetime(Date insuranceEndDatetime) {
+        this.insuranceEndDatetime = insuranceEndDatetime;
+    }
+
+    public String getInsuranceForcePdf() {
+        return insuranceForcePdf;
+    }
+
+    public void setInsuranceForcePdf(String insuranceForcePdf) {
+        this.insuranceForcePdf = insuranceForcePdf;
+    }
+
+    public String getInsuranceBusinessPdf() {
+        return insuranceBusinessPdf;
+    }
+
+    public void setInsuranceBusinessPdf(String insuranceBusinessPdf) {
+        this.insuranceBusinessPdf = insuranceBusinessPdf;
+    }
+
+    public String getInsuranceNote() {
+        return insuranceNote;
+    }
+
+    public void setInsuranceNote(String insuranceNote) {
+        this.insuranceNote = insuranceNote;
+    }
+
 }
