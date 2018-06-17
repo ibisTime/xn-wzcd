@@ -80,6 +80,41 @@ public class AdvanceFund extends ABaseDO {
     // 申请时间
     private Date applyDatetime;
 
+    /*********************db properties******************/
+
+    // 角色编号
+    private String roleCode;
+
+    // 申请时间起
+    private Date applyDatetimeStart;
+
+    // 申请时间止
+    private Date applyDatetimeEnd;
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
+
+    public Date getApplyDatetimeStart() {
+        return applyDatetimeStart;
+    }
+
+    public void setApplyDatetimeStart(Date applyDatetimeStart) {
+        this.applyDatetimeStart = applyDatetimeStart;
+    }
+
+    public Date getApplyDatetimeEnd() {
+        return applyDatetimeEnd;
+    }
+
+    public void setApplyDatetimeEnd(Date applyDatetimeEnd) {
+        this.applyDatetimeEnd = applyDatetimeEnd;
+    }
+
     public Date getApplyDatetime() {
         return applyDatetime;
     }

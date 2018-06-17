@@ -52,4 +52,8 @@ public interface IAdvanceFundAO {
     // 申请撤销垫资
     public void applyCancelAdvanceFund(XN632177Req req);
 
+    // 分页查询垫资单根据角色编号
+    public Object queryAdvanceFundPageByRoleCode(int start, int limit,
+            AdvanceFund condition);
+
 }

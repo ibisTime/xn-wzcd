@@ -1,7 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-import java.util.Date;
-
 /**
  * 分页查询垫资
  * @author: jiafr 
@@ -21,25 +19,72 @@ public class XN632185Req extends APageReq {
     // 业务公司编号
     private String companyCode;
 
-    // 垫资日期
-    private Date advanceFundDatetime;
+    // 贷款银行编号
+    private String loanBankCode;
 
-    // 付款银行编号
-    private String payBankcardCode;
+    // 操作人编号
+    private String roleCode;
 
-    // 付款凭证
-    private String billPdf;
+    // 申请日期起
+    private String applyDatetimeStart;
 
-    // 意见说明
-    private String note;
+    // 申请日期止
+    private String applyDatetimeEnd;
 
-    // 撤销理由
-    private String cancelReason;
+    public String getRoleCode() {
+        return roleCode;
+    }
 
-    // 更新人
-    private String updater;
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
 
-    // 更新时间
-    private Date updateDatetime;
+    public String getApplyDatetimeStart() {
+        return applyDatetimeStart;
+    }
+
+    public void setApplyDatetimeStart(String applyDatetimeStart) {
+        this.applyDatetimeStart = applyDatetimeStart;
+    }
+
+    public String getApplyDatetimeEnd() {
+        return applyDatetimeEnd;
+    }
+
+    public void setApplyDatetimeEnd(String applyDatetimeEnd) {
+        this.applyDatetimeEnd = applyDatetimeEnd;
+    }
+
+    public String getBudgetCode() {
+        return budgetCode;
+    }
+
+    public void setBudgetCode(String budgetCode) {
+        this.budgetCode = budgetCode;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public String getLoanBankCode() {
+        return loanBankCode;
+    }
+
+    public void setLoanBankCode(String loanBankCode) {
+        this.loanBankCode = loanBankCode;
+    }
 
 }
