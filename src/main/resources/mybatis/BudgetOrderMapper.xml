@@ -176,6 +176,8 @@
 		<result column="repay_first_month_amount" property="repayFirstMonthAmount" />
 		<result column="repay_first_month_datetime" property="repayFirstMonthDatetime" />
 		<result column="repay_month_amount" property="repayMonthAmount" />
+		<result column="mobile" property="mobile" />
+		<result column="id_kind" property="idKind" />
 		<result column="id_no" property="idNo" />
 		<result column="id_no_pic" property="idNoPic" />
 		
@@ -415,6 +417,8 @@
 		,t.repay_first_month_amount
 		,t.repay_first_month_datetime
 		,t.repay_month_amount
+		,t.mobile
+		,t.id_kind
 		,t.id_no
 		,t.id_no_pic
 		,t.file_list
@@ -624,6 +628,8 @@
 		,t.repay_first_month_amount
 		,t.repay_first_month_datetime
 		,t.repay_month_amount
+		,t.mobile
+		,t.id_kind
 		,t.id_no
 		,t.id_no_pic
 		,t.file_list
@@ -710,6 +716,8 @@
 		,t.repay_first_month_amount
 		,t.repay_first_month_datetime
 		,t.repay_month_amount
+		,t.mobile
+		,t.id_kind
 		,t.id_no
 		,t.id_no_pic
 		
@@ -1218,6 +1226,8 @@
 		,repay_first_month_amount = #{repayFirstMonthAmount}
 		,repay_first_month_datetime = #{repayFirstMonthDatetime}
 		,repay_month_amount = #{repayMonthAmount}
+		,mobile = #{mobile}
+		,id_kind = #{idKind}
 		,id_no = #{idNo}
 		,id_no_pic = #{idNoPic}
 		

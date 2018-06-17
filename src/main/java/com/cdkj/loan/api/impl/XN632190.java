@@ -25,7 +25,7 @@ public class XN632190 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.refreshCarPledgeCommit(req.getCode(),
+        budgetOrderAO.carPledgeCommit(req.getCode(),
             DateUtil.strToDate(req.getPledgeCommitDatetime(),
                 DateUtil.FRONT_DATE_FORMAT_STRING),
             req.getPledgeCommitNote(), req.getOperator());

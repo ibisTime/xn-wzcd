@@ -371,11 +371,19 @@
 		,overplus_amount=#{overplusAmount}
 		WHERE code=#{code}
 	</update>
-
-	<update id="update_repayplan_node" parameterType="repayPlan">
+	
+	<update id="update_payFee" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		cur_node_code=#{curNodeCode}
+		payed_fee=#{payedFee}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_repayAmount" parameterType="repayPlan">
+		UPDATE tdh_repay_plan
+		SET
+		real_repay_amount=#{realRepayAmount}
+		,replace_is_repay=#{replaceIsRepay}
 		WHERE code=#{code}
 	</update>
 
@@ -404,97 +412,14 @@
 		,total_fee=#{totalFee}
 		
 		,collection_note=#{collectionNote}
-
 		WHERE code=#{code}
 	</update>
 	
-	<update id="update_applyTrailer" parameterType="repayPlan">
-		UPDATE tdh_repay_plan
-		SET
-		cur_node_code=#{curNodeCode}
-		,ts_car_amount=#{tsCarAmount}
-		,ts_bankcard_number=#{tsBankcardNumber}
-		,ts_bank_name =#{tsBankName}
-		,ts_subbranch=#{tsSubbranch}
-		,tc_apply_note=#{tcApplyNote}
-		WHERE code=#{code}
-	</update>
 	
-	<update id="update_financialMoney" parameterType="repayPlan">
+	<update id="update_takeCarApply" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		remit_amount=#{remitAmount}
-		,remit_bill_pdf=#{remitBillPdf}
-		WHERE code=#{code}
-	</update>
-	
-	<update id="update_trailerEntry" parameterType="repayPlan">
-		UPDATE tdh_repay_plan
-		SET
-		take_car_address=#{takeCarAddress}
-		,take_datetime=#{takeDatetime}
-		,take_location=#{takeLocation}
-		,take_name=#{takeName}
-		,take_note=#{takeNote}
-		WHERE code=#{code}
-	</update>
-	
-	<update id="update_judicialLitigationEntry" parameterType="repayPlan">
-		UPDATE tdh_repay_plan
-		SET
-		cur_node_code=#{curNodeCode}
-		,buy_out_amount=#{buyOutAmount}
-		WHERE code=#{code}
-	</update>
-	
-	<update id="update_qkcsbRedeemApply" parameterType="repayPlan">
-		UPDATE tdh_repay_plan
-		SET
-		jour_pdf=#{jourPdf}
-		,house_pdf=#{housePdf}
-		,gua_name=#{guaName}
-		,gua_id_no=#{guaIdNo}
-		,gua_mobile=#{guaMobile}
-		,gua_now_address=#{guaNowAddress}
-		,gua_note=#{guaNote}
-		WHERE code=#{code}
-	</update>
-	
-	<update id="update_riskManagerCheck" parameterType="repayPlan">
-		UPDATE tdh_repay_plan
-		SET
-		suggest=#{suggest}
-		,suggest_note=#{suggestNote}
-		WHERE code=#{code}
-	</update>
-	
-	<update id="update_financeApprove" parameterType="repayPlan">
-		UPDATE tdh_repay_plan
-		SET
-		cur_node_code=#{curNodeCode}
-		WHERE code=#{code}
-	</update>
-	
-	<update id="update_payFee" parameterType="repayPlan">
-		UPDATE tdh_repay_plan
-		SET
-		payed_fee=#{payedFee}
-		WHERE code=#{code}
-	</update>
-	
-	<update id="update_repayAmount" parameterType="repayPlan">
-		UPDATE tdh_repay_plan
-		SET
-		real_repay_amount=#{realRepayAmount}
-		,replace_is_repay=#{replaceIsRepay}
-		WHERE code=#{code}
-	</update>
-	
-	<update id="update_tc_Apply" parameterType="repayPlan">
-		UPDATE tdh_repay_plan
-		SET
-		cur_node_code=#{curNodeCode}
-		,pawnshop_is_redeem=#{pawnshopIsRedeem}
+		pawnshop_is_redeem=#{pawnshopIsRedeem}
 		,pawnshop_name=#{pawnshopName}
 		,ransom=#{ransom}
 		,ts_car_amount=#{tsCarAmount}
@@ -508,7 +433,7 @@
 		WHERE code=#{code}
 	</update>
 
-	<update id="update_tc_riskManageCheck" parameterType="repayPlan">
+	<update id="update_takeCarRiskManageCheck" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
 		cur_node_code=#{curNodeCode}
@@ -518,7 +443,7 @@
 		WHERE code=#{code}
 	</update>
 	
-	<update id="update_tc_companyManageCheck" parameterType="repayPlan">
+	<update id="update_takeCarCompanyManageCheck" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
 		cur_node_code=#{curNodeCode}
@@ -528,7 +453,7 @@
 		WHERE code=#{code}
 	</update>
 	
-	<update id="update_tc_riskLeaderCheck" parameterType="repayPlan">
+	<update id="update_takeCarRiskLeaderCheck" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
 		cur_node_code=#{curNodeCode}
@@ -538,7 +463,7 @@
 		WHERE code=#{code}
 	</update>
 
-	<update id="update_tc_financeCheck" parameterType="repayPlan">
+	<update id="update_takeCarFinanceCheck" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
 		cur_node_code=#{curNodeCode}
@@ -548,7 +473,7 @@
 		WHERE code=#{code}
 	</update>
 
-	<update id="update_tc_sureFK" parameterType="repayPlan">
+	<update id="update_tc_sureFk" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
 		cur_node_code=#{curNodeCode}
@@ -560,7 +485,7 @@
 		WHERE code=#{code}
 	</update>
 
-	<update id="update_tc_FKInput" parameterType="repayPlan">
+	<update id="update_tcFkInput" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
 		cur_node_code=#{curNodeCode}

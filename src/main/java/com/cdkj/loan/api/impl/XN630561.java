@@ -23,7 +23,7 @@ public class XN630561 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        judgeAO.refreshJudgeFollow(req);
+        judgeAO.judgeFollow(req);
         return new BooleanRes(true);
     }
 

@@ -28,6 +28,9 @@ import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.dto.req.XN630511Req;
 import com.cdkj.loan.dto.req.XN630512Req;
 import com.cdkj.loan.dto.req.XN630513Req;
+import com.cdkj.loan.dto.req.XN630550Req;
+import com.cdkj.loan.dto.req.XN630556Req;
+import com.cdkj.loan.dto.req.XN630557Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ERepayBizNode;
@@ -166,95 +169,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
         }
     }
 
-    // // 提前还款
-    // @Override
-    // @Transactional
-    // public void advanceRepay(String code, String updater, String remark) {
-    // RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-    // if (ERepayBizType.CAR.getCode().equals(repayBiz.getRefType())) {
-    // advanceRepayCarLoan(code, repayBiz);
-    // } else {
-    // advanceRepayProductLoan(code, repayBiz);
-    // }
-    // }
-
-    // 车贷订单提前还款
-    // private void advanceRepayCarLoan(String code, RepayBiz repayBiz) {
-    // if (!ERepayBizNode.TO_REPAY.getCode().equals(repayBiz.getCurNodeCode()))
-    // {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前还款业务不处于还款中");
-    // }
-    //
-    // // 判断还款计划中是否含有催收失败，进红名单处理，红名单处理中的状态，有则有逾期
-    // List<RepayPlan> planList = repayPlanBO
-    // .queryRepayPlanListByRepayBizCode(code);
-    // for (RepayPlan repayPlan : planList) {
-    // if (ERepayPlanNode.HANDLER_TO_RED.getCode().equals(
-    // repayPlan.getCurNodeCode())
-    // || ERepayPlanNode.QKCSB_APPLY_TC.getCode().equals(
-    // repayPlan.getCurNodeCode())) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前有逾期未处理完成的还款计划，不能提前还款！");
-    // }
-    // }
-    // // 代扣总金额
-    // Long allAmount = repayBiz.getRestAmount();
-    // // 代扣银行卡
-    // Bankcard bankcard = bankcardBO.getBankcard(repayBiz.getBankcardCode());
-    // // 必须扣全部，要么扣成功，要么扣失败，不能扣部分金额
-    // Long realWithholdAmount = baofuWithhold(bankcard, allAmount);
-    // // 更新还款业务
-    // repayBizBO.refreshAdvanceRepayCarLoan(repayBiz, realWithholdAmount);
-    // // 改变还款计划状态
-    // for (RepayPlan repayPlan : planList) {
-    // if (ERepayPlanNode.TO_REPAY.getCode().equals(
-    // repayPlan.getCurNodeCode())) {
-    // // 更新还款计划
-    // repayPlanBO.repaySuccess(repayPlan,
-    // repayPlan.getMonthRepayAmount());
-    // }
-    // }
-    // }
-
-    // // 产品订单提前还款
-    // private void advanceRepayProductLoan(String code, RepayBiz repayBiz) {
-    // if (!ERepayBizNode.PRO_TO_REPAY.getCode().equals(
-    // repayBiz.getCurNodeCode())) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前还款业务不处于还款中");
-    // }
-    //
-    // int count = repayPlanBO.getTotalCount(repayBiz.getCode(),
-    // ERepayPlanNode.PRD_TO_REPAY);
-    // if (count <= 0) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前还款业务已还完！");
-    // }
-    //
-    // // 代扣总金额
-    // Long allAmount = repayBiz.getRestAmount();
-    // // 代扣银行卡
-    // Bankcard bankcard = bankcardBO.getBankcard(repayBiz.getBankcardCode());
-    // // 必须扣全部，要么扣成功，要么扣失败，不能扣部分金额
-    // Long realWithholdAmount = baofuWithhold(bankcard, allAmount);
-    // // 更新还款业务
-    // repayBizBO.refreshAdvanceRepayCarLoan(repayBiz, realWithholdAmount);
-    // // 改变还款计划状态
-    // RepayPlan rpCondition = new RepayPlan();
-    // rpCondition.setCurNodeCode(ERepayPlanNode.TO_REPAY.getCode());
-    // rpCondition.setRepayBizCode(repayBiz.getCode());
-    // List<RepayPlan> rpList = repayPlanBO.queryRepayPlanList(rpCondition);
-    // if (CollectionUtils.isNotEmpty(rpList)) {
-    // for (RepayPlan repayPlan : rpList) {
-    // if (ERepayPlanNode.TO_REPAY.getCode().equals(
-    // repayPlan.getCurNodeCode())) {
-    // repayPlanBO.repaySuccess(repayPlan, realWithholdAmount);
-    // }
-    // }
-    // }
-    // }
-
     private Long baofuWithhold(Bankcard bankcard, Long amount) {
         Long successAmount = 0L;
         // TODO 宝付代扣逻辑
@@ -303,87 +217,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBizBO.confirmSettledProduct(repayBiz);
     }
 
-    //
-    // @Override
-    // public void approveByQkcsDepartment(String code, Long cutLyDeposit,
-    // String updater, String remark) {
-    // RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-    // if (!ERepayBizNode.QKCS_DEPART_CHECK.getCode().equals(
-    // repayBiz.getCurNodeCode())) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前还款业务不处于清欠催收部审核中");
-    // }
-    //
-    // String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
-    // EBoolean.YES.getCode());
-    //
-    // repayBizBO.approveByQkcsDepartment(repayBiz, nextNodeCode,
-    // cutLyDeposit, updater, remark);
-    // }
-    //
-    // @Override
-    // public void approveByBankCheck(XN630551Req req) {
-    // RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-    // if (!ERepayBizNode.BANK_CHECK.getCode().equals(
-    // repayBiz.getCurNodeCode())) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前还款业务不处于驻行人员审核中");
-    // }
-    //
-    // String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
-    // req.getApproveResult());
-    //
-    // repayBizBO.approveByBankCheck(req.getCode(), nextNodeCode, DateUtil
-    // .strToDate(req.getSettleDatetime(), DateUtil.DATA_TIME_PATTERN_1),
-    // req.getSettlePdf(), req.getOperator(), req.getRemark());
-    // }
-    //
-    // @Override
-    // public void approveByManager(String code, String approveResult,
-    // String updater, String remark) {
-    // RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-    // if (!ERepayBizNode.MANAGER_CHECK.getCode().equals(
-    // repayBiz.getCurNodeCode())) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前还款业务不处于总经理审核中");
-    // }
-    //
-    // String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
-    // approveResult);
-    // repayBizBO.approveByManager(code, nextNodeCode, updater, remark);
-    // }
-    //
-    // @Override
-    // public void approveByFinance(String code, String approveResult,
-    // String updater, String remark) {
-    // RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-    // if (!ERepayBizNode.FINANCE_CHECK.getCode().equals(
-    // repayBiz.getCurNodeCode())) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前还款业务不处于财务审核中");
-    // }
-    //
-    // String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
-    // approveResult);
-    // repayBizBO.approveByFinance(code, nextNodeCode, updater, remark);
-    // }
-    //
-    // @Override
-    // public void releaseMortgage(String code, Date releaseDatetime,
-    // String updater) {
-    // RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-    // if (!ERepayBizNode.RELEASE_MORTGAGE.getCode().equals(
-    // repayBiz.getCurNodeCode())) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前还款业务不处于解除抵押中");
-    // }
-    //
-    // String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
-    // EBoolean.YES.getCode());
-    // repayBizBO
-    // .releaseMortgage(code, nextNodeCode, releaseDatetime, updater);
-    // }
-
     @Override
     public Paginable<RepayBiz> queryRepayBizPage(int start, int limit,
             RepayBiz condition) {
@@ -419,214 +252,51 @@ public class RepayBizAOImpl implements IRepayBizAO {
         return repayBiz;
     }
 
-    //
-    // // 申请拖车逻辑：
-    // // 1、前提条件：还款计划是“催收失败，进红名单处理”；再更改还款业务状态
-    // @Override
-    // @Transactional
-    // public void applyTrailer(XN630555Req req) {
-    // RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-    //
-    // RepayPlan repayPlan = repayPlanBO.getRepayPlanListByRepayBizCode(
-    // req.getCode(), ERepayPlanNode.HANDLER_TO_RED);
-    // if (repayPlan == null) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "还款业务中没有进红名单处理的还款计划！");
-    // }
-    //
-    // repayPlan.setCurNodeCode(ERepayPlanNode.QKCSB_APPLY_TC.getCode());
-    // repayPlan.setTsCarAmount(StringValidater.toLong(req.getTsCarAmount()));
-    // repayPlan.setTsBankcardNumber(req.getTsBankcardNumber());
-    // repayPlan.setTsBankName(req.getTsBankName());
-    //
-    // repayPlan.setTsSubbranch(req.getTsSubbranch());
-    // repayPlan.setTcApplyNote(req.getTcApplyNote());
-    // repayPlanBO.applyTrailer(repayPlan);
-    //
-    // repayBiz.setCurNodeCode(ERepayBizNode.FINANCE_REMIT.getCode());
-    // repayBiz.setUpdater(req.getOperator());
-    // repayBiz.setUpdateDatetime(new Date());
-    // repayBizBO.applyTrailer(repayBiz);
-    // }
-    //
-    // @Override
-    // public void financialMoney(String code, String operator,
-    // String remitAmount, String remitPdf) {
-    // RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-    // if (!ERepayBizNode.FINANCE_REMIT.getCode().equals(
-    // repayBiz.getCurNodeCode())) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前节点不是财务打款节点，不能操作！");
-    // }
-    // RepayPlan repayPlan = repayPlanBO.getRepayPlanListByRepayBizCode(code,
-    // ERepayPlanNode.QKCSB_APPLY_TC);
-    // repayPlan.setRemitAmount(StringValidater.toLong(remitAmount));
-    // repayPlan.setRemitBillPdf(remitPdf);
-    // repayPlanBO.financialMoney(repayPlan);
-    //
-    // repayBiz.setCurNodeCode(ERepayBizNode.QKCSB_TOTC.getCode());
-    // repayBiz.setUpdater(operator);
-    // repayBiz.setUpdateDatetime(new Date());
-    // repayBizBO.financialMoney(repayBiz);
-    // }
-    //
-    // @Override
-    // public void trailerEntry(XN630557Req req) {
-    // RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-    // if (!ERepayBizNode.QKCSB_TOTC.getCode().equals(
-    // repayBiz.getCurNodeCode())) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前节点不是清欠催收部拖车结果待录入节点，不能操作！");
-    // }
-    // RepayPlan repayPlan = repayPlanBO.getRepayPlanListByRepayBizCode(
-    // req.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
-    // repayPlan.setTakeCarAddress(req.getTakeCarAddress());
-    // repayPlan.setTakeDatetime(DateUtil.strToDate(req.getTakeDatetime(),
-    // DateUtil.FRONT_DATE_FORMAT_STRING));
-    // repayPlan.setTakeLocation(req.getTakeLocation());
-    // repayPlan.setTakeName(req.getTakeName());
-    // repayPlan.setTakeNote(req.getTakeNote());
-    // repayPlanBO.trailerEntry(repayPlan);
-    //
-    // repayBiz.setCurNodeCode(ERepayBizNode.QKCSB_TC_INPUT.getCode());
-    // repayBiz.setUpdater(req.getOperator());
-    // repayBiz.setUpdateDatetime(new Date());
-    // repayBizBO.trailerEntry(repayBiz);
-    // }
-    //
-    // @Override
-    // public void trailerManage(String code, String appoveResult, String
-    // operator) {
-    // RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-    // if (!ERepayBizNode.QKCSB_TC_INPUT.getCode().equals(
-    // repayBiz.getCurNodeCode())) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前节点不是清欠催收部拖车结果已录入节点，不能操作！");
-    // }
-    // if (EtrailerManageResult.USER_REDEEM.getCode().equals(appoveResult)) {
-    // repayBiz.setCurNodeCode(ERepayBizNode.QKCSB_REDEEM_APPLY.getCode());
-    // } else {
-    // repayBiz.setCurNodeCode(ERepayBizNode.JUDICIAL_LAWSUIT.getCode());
-    // }
-    // repayBiz.setUpdater(operator);
-    // repayBiz.setUpdateDatetime(new Date());
-    // repayBizBO.trailerManage(repayBiz);
-    // }
-    //
-    // @Override
-    // public void judicialLitigationEntry(String code, String buyOutAmount,
-    // String way, String operator) {
-    // RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-    // if (!ERepayBizNode.JUDICIAL_LAWSUIT.getCode().equals(
-    // repayBiz.getCurNodeCode())) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前节点不是司法诉讼节点，不能操作！");
-    // }
-    // RepayPlan repayPlan = repayPlanBO.getRepayPlanListByRepayBizCode(code,
-    // ERepayPlanNode.QKCSB_APPLY_TC);
-    // repayPlan.setBuyOutAmount(StringValidater.toLong(buyOutAmount));
-    // if (EJudicialLitigationEntryWay.BAD_DEBT.getCode().equals(way)) {
-    // repayPlan.setCurNodeCode(ERepayPlanNode.BAD_DEBT.getCode());
-    // repayBiz.setCurNodeCode(ERepayBizNode.BAD_DEBT.getCode());
-    // } else if (EJudicialLitigationEntryWay.TEAN_BUY_OUT.getCode().equals(
-    // way)) {
-    // repayPlan.setCurNodeCode(ERepayPlanNode.TEAN_BUY_OUT.getCode());
-    // repayBiz.setCurNodeCode(ERepayBizNode.TEAN_BUY_OUT.getCode());
-    // } else {
-    // repayPlan.setCurNodeCode(ERepayPlanNode.TEAM_RENT.getCode());
-    // repayBiz.setCurNodeCode(ERepayBizNode.TEAM_RENT.getCode());
-    // }
-    // repayPlanBO.judicialLitigationEntry(repayPlan);
-    //
-    // repayBiz.setUpdater(operator);
-    // repayBiz.setUpdateDatetime(new Date());
-    // repayBizBO.judicialLitigationEntry(repayBiz);
-    // }
-    //
-    // @Override
-    // public void qkcsbRedeemApply(XN630561Req req) {
-    // RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-    // if (!ERepayBizNode.QKCSB_REDEEM_APPLY.getCode().equals(
-    // repayBiz.getCurNodeCode())) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前节点不是清欠催收部申请赎回节点，不能操作！");
-    // }
-    // RepayPlan repayPlan = repayPlanBO.getRepayPlanListByRepayBizCode(
-    // req.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
-    // repayPlan.setJourPdf(req.getJourPdf());
-    // repayPlan.setGuaNote(req.getGuaNote());
-    // repayPlan.setGuaName(req.getGuaName());
-    // repayPlan.setGuaMobile(req.getGuaMobile());
-    // repayPlan.setGuaIdNo(req.getGuaIdNo());
-    // repayPlan.setGuaNowAddress(req.getGuaNowAddress());
-    // repayPlan.setHousePdf(req.getHousePdf());
-    // repayPlanBO.qkcsbRedeemApply(repayPlan);
-    //
-    // repayBiz.setCurNodeCode(ERepayBizNode.RISK_MANAGER_CHECK.getCode());
-    // repayBiz.setUpdater(req.getOperator());
-    // repayBiz.setUpdateDatetime(new Date());
-    // repayBizBO.qkcsbRedeemApply(repayBiz);
-    // }
-    //
-    // @Override
-    // public void riskManagerCheck(XN630563Req req) {
-    // RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-    // if (!ERepayBizNode.RISK_MANAGER_CHECK.getCode().equals(
-    // repayBiz.getCurNodeCode())) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前节点不是风控主管审核节点，不能操作！");
-    // }
-    // RepayPlan repayPlan = repayPlanBO.getRepayPlanListByRepayBizCode(
-    // req.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
-    // repayPlan.setSuggest(req.getSuggest());
-    // repayPlan.setSuggestNote(req.getSuggestNote());
-    // repayPlanBO.riskManagerCheck(repayPlan);
-    //
-    // if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
-    // repayBiz.setCurNodeCode(ERepayBizNode.FINANCE_MANAGER_CHECK
-    // .getCode());
-    // } else {
-    // repayBiz.setCurNodeCode(ERepayBizNode.QKCSB_REDEEM_APPLY.getCode());
-    // }
-    // repayBiz.setUpdater(req.getOperator());
-    // repayBiz.setUpdateDatetime(new Date());
-    // repayBizBO.riskManagerCheck(repayBiz);
-    // }
-    //
-    // @Override
-    // public void financeApprove(XN630562Req req) {
-    // RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-    // if (!ERepayBizNode.FINANCE_MANAGER_CHECK.getCode().equals(
-    // repayBiz.getCurNodeCode())) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前节点不是财务经理审核节点，不能操作！");
-    // }
-    // RepayPlan repayPlan = repayPlanBO.getRepayPlanListByRepayBizCode(
-    // req.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
-    // if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
-    // if (ERepayPlanSuggest.SIX_SAFEGUARDS.getCode().equals(
-    // repayPlan.getSuggest())) {
-    // repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
-    // repayBiz.setCurNodeCode(ERepayBizNode.TO_REPAY.getCode());
-    // repayBiz.setCurOverdueCount(repayBiz.getCurOverdueCount() - 1);
-    // repayBiz.setOverdueAmount(repayBiz.getOverdueAmount()
-    // - repayPlan.getOverdueAmount());
-    // } else {
-    // repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
-    // repayBiz.setCurNodeCode(ERepayBizNode.RELEASE_MORTGAGE
-    // .getCode());
-    // repayBiz.setCurOverdueCount(0);
-    // repayBiz.setOverdueAmount(0L);
-    // }
-    // repayPlanBO.financeApprove(repayPlan);
-    // } else {
-    // repayBiz.setCurNodeCode(ERepayBizNode.RISK_MANAGER_CHECK.getCode());
-    // }
-    //
-    // repayBiz.setUpdater(req.getOperator());
-    // repayBiz.setUpdateDatetime(new Date());
-    // repayBizBO.financeApprove(repayBiz);
-    // }
+    // 逻辑
+    // 1、节点前提判断
+    // 2、将信息录入还款计划，还款业务节点信息更新
+    @Override
+    public void takeCarApply(XN630550Req req) {
+
+    }
+
+    @Override
+    public void takeCarRiskManageCheck(String code, String approveResult,
+            String operator, String remark) {
+
+    }
+
+    @Override
+    public void takeCarCompanyManageCheck(String code, String approveResult,
+            String operator, String remark) {
+
+    }
+
+    @Override
+    public void takeCarRiskLeaderCheck(String code, String approveResult,
+            String operator, String remark) {
+
+    }
+
+    @Override
+    public void takeCarFinanceManageCheck(String code, String approveResult,
+            String operator, String remark) {
+
+    }
+
+    @Override
+    public void takeCarSureFk(String code, String remitBankCode,
+            String remitBillPdf, Date remitDatetime, String operator) {
+
+    }
+
+    @Override
+    public void takeCarInputResult(XN630556Req req) {
+    }
+
+    @Override
+    public void takeCarResultHandle(XN630557Req req) {
+    }
 
     private String getNextNodeCode(String curNodeCode, String approveResult) {
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);

@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
+import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IAdvanceFundBO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankSubbranchBO;
+import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.ICarDealerBO;
@@ -25,11 +27,14 @@ import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.IInsuranceCompanyBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.IRepayBizBO;
+import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.IRepointDetailBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.PhoneUtil;
 import com.cdkj.loan.core.StringValidater;
@@ -45,8 +50,10 @@ import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.InsuranceCompany;
 import com.cdkj.loan.domain.NodeFlow;
+import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepointDetail;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632120ReqRepointDetail;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
@@ -55,6 +62,7 @@ import com.cdkj.loan.dto.req.XN632200Req;
 import com.cdkj.loan.dto.req.XN632220Req;
 import com.cdkj.loan.dto.req.XN632270Req;
 import com.cdkj.loan.dto.req.XN632271Req;
+import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EAdvanceType;
 import com.cdkj.loan.enums.EApproveResult;
@@ -65,13 +73,16 @@ import com.cdkj.loan.enums.EBudgetFrozenStatus;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EButtonCode;
 import com.cdkj.loan.enums.ECollectBankcard;
+import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealType;
+import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.EIsAdvanceFund;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ERateType;
 import com.cdkj.loan.enums.ERepointDetailStatus;
 import com.cdkj.loan.enums.EUseMoneyPurpose;
+import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -133,6 +144,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private ICarDealerProtocolBO carDealerProtocolBO;
+
+    @Autowired
+    private IBankcardBO bankcardBO;
+
+    @Autowired
+    private IRepayBizBO repayBizBO;
+
+    @Autowired
+    private IRepayPlanBO repayPlanBO;
+
+    @Autowired
+    private IAccountBO accountBO;
 
     @Override
     @Transactional
@@ -578,7 +601,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void refreshBankLoanCommit(String code, Date bankCommitDatetime,
+    public void bankLoanCommit(String code, Date bankCommitDatetime,
             String bankCommitNote, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
@@ -644,7 +667,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void refreshBankLoanConfirm(XN632141Req req) {
+    public void bankLoanConfirm(XN632141Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
 
         if (!EBudgetOrderNode.CONFIRM_RECEIVABLES.getCode().equals(
@@ -688,7 +711,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void refreshCarPledgeCommit(String code, Date pledgeCommitDatetime,
+    public void carPledgeCommit(String code, Date pledgeCommitDatetime,
             String pledgeCommitNote, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
@@ -723,7 +746,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void refreshCarPledgeConfirm(String code, String operator) {
+    public void carPledgeConfirm(String code, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
         if (!EBudgetOrderNode.CAR_PLEDGE_CONFIRM.getCode().equals(
@@ -753,15 +776,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             currentNode.getCode(), currentNode.getValue(), operator);
     }
 
+    // 逻辑
+    // 1、前提条件判断
+    // 2、没完善可再次补充，完善则入档完成
+    // 3、
     @Override
     @Transactional
-    public void refreshCarLoanArchive(XN632200Req req) {
+    public void carLoanArchive(XN632200Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
-        // if (!EBudgetOrderNode.PENDING_FILE.getCode().equals(
-        // budgetOrder.getCurNodeCode())) {
-        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-        // "当前节点不是待入档节点，不能操作");
-        // }
+        if (!EBudgetOrderNode.PENDING_FILE.getCode().equals(
+            budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是待入档节点，不能操作");
+        }
 
         if (EBoolean.YES.getCode().equals(req.getIsComplete())
                 && null == req.getStorePlace()) {
@@ -781,62 +808,99 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             nextNodeCode = getNextNodeCode(budgetOrder.getCurNodeCode(),
                 EBoolean.YES.getCode());
         }
+        budgetOrder.setCurNodeCode(nextNodeCode);
+        budgetOrder.setInsuranceCompanyCode(req.getInsuranceCompanyCode());
+        budgetOrder.setCarColor(req.getCarColor());
+        budgetOrder.setCarBrand(req.getCarBrand());
 
-        BudgetOrder data = new BudgetOrder();
-        data.setCurNodeCode(nextNodeCode);
-        data.setCode(req.getCode());
-        data.setInsuranceCompanyCode(req.getInsuranceCompanyCode());
-        data.setCarColor(req.getCarColor());
-        data.setCarBrand(req.getCarBrand());
+        budgetOrder.setFrameNo(req.getFrameNo());
+        budgetOrder.setEngineNo(req.getEngineNo());
+        budgetOrder.setForceInsurance(StringValidater.toLong(req
+            .getForceInsurance()));
+        budgetOrder.setCommerceInsurance(req.getCommerceInsurance());
+        budgetOrder
+            .setInsuranceEffectDatetime(DateUtil.strToDate(
+                req.getInsuranceEffectDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
 
-        data.setFrameNo(req.getFrameNo());
-        data.setEngineNo(req.getEngineNo());
-        data.setForceInsurance(StringValidater.toLong(req.getForceInsurance()));
-        data.setCommerceInsurance(req.getCommerceInsurance());
-        data.setInsuranceEffectDatetime(DateUtil.strToDate(
-            req.getInsuranceEffectDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setInsuranceBank(req.getInsuranceBank());
+        budgetOrder.setSaleUserId(req.getSaleUserId());
+        budgetOrder.setGuaranteeContractCode(req.getGuaranteeContractCode());
+        budgetOrder.setRegCertificateCode(req.getRegCertificateCode());
+        budgetOrder.setOtherContact(req.getOtherContact());
 
-        data.setInsuranceBank(req.getInsuranceBank());
-        data.setSaleUserId(req.getSaleUserId());
-        data.setGuaranteeContractCode(req.getGuaranteeContractCode());
-        data.setRegCertificateCode(req.getRegCertificateCode());
-        data.setOtherContact(req.getOtherContact());
-
-        data.setContactMobile(req.getContactMobile());
-        data.setGuarantorName(req.getGuarantorName());
-        data.setGuarantorMobile(req.getGuarantorMobile());
-        data.setBankCardNumber(req.getBankCardNumber());
-        data.setBillDatetime(DateUtil.strToDate(req.getBillDatetime(),
+        budgetOrder.setContactMobile(req.getContactMobile());
+        budgetOrder.setGuarantorName(req.getGuarantorName());
+        budgetOrder.setGuarantorMobile(req.getGuarantorMobile());
+        budgetOrder.setBankCardNumber(req.getBankCardNumber());
+        budgetOrder.setBillDatetime(DateUtil.strToDate(req.getBillDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
 
-        data.setMonthAmount(StringValidater.toLong(req.getMonthAmount()));
-        data.setRepayBankDate(StringValidater.toInteger(req.getRepayBankDate()));
-        data.setRepayFirstMonthAmount(StringValidater.toLong(req
+        budgetOrder
+            .setMonthAmount(StringValidater.toLong(req.getMonthAmount()));
+        budgetOrder.setRepayBankDate(StringValidater.toInteger(req
+            .getRepayBankDate()));
+        budgetOrder.setRepayFirstMonthAmount(StringValidater.toLong(req
             .getRepayFirstMonthAmount()));
-        data.setRepayFirstMonthDatetime(DateUtil.strToDate(
-            req.getRepayFirstMonthDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setRepayMonthAmount(StringValidater.toLong(req
+        budgetOrder
+            .setRepayFirstMonthDatetime(DateUtil.strToDate(
+                req.getRepayFirstMonthDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setRepayMonthAmount(StringValidater.toLong(req
             .getRepayMonthAmount()));
 
-        data.setIdNo(req.getIdNo());
-        data.setIdNoPic(req.getIdNoPic());
-        data.setIsComplete(req.getIsComplete());
-        data.setStorePlace(req.getStorePlace());
-        data.setFileRemark(req.getFileRemark());
+        CreditUser creditUser = creditUserBO.getCreditUserByCreditCode(
+            budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+        budgetOrder.setMobile(creditUser.getMobile());
+        budgetOrder.setIdKind(EIDKind.IDCard.getCode());
+        budgetOrder.setIdNo(creditUser.getIdNo());
+        budgetOrder.setIdNoPic(req.getIdNoPic());
+        budgetOrder.setIsComplete(req.getIsComplete());
+        budgetOrder.setStorePlace(req.getStorePlace());
+        budgetOrder.setFileRemark(req.getFileRemark());
 
-        data.setOperator(req.getOperator());
-        data.setOperateDatetime(new Date());
-        data.setOperateDepartment(req.getOperateDepartment());
+        budgetOrder.setOperator(req.getOperator());
+        budgetOrder.setOperateDatetime(new Date());
+        budgetOrder.setOperateDepartment(req.getOperateDepartment());
 
         if (null != req.getFileList()) {
             StringBuilder fileListBuilder = new StringBuilder();
             for (String file : req.getFileList()) {
                 fileListBuilder.append(file).append(",");
             }
-            data.setFileList(fileListBuilder.toString());
+            budgetOrder.setFileList(fileListBuilder.toString());
         }
 
-        budgetOrderBO.refreshCarLoanArchive(data);
+        budgetOrderBO.refreshCarLoanArchive(budgetOrder);
+
+        /****** 生成还款业务 ******/
+        // 检查用户是否已经注册过
+        User user = userBO.getUser(budgetOrder.getMobile(),
+            EUserKind.Customer.getCode());
+        String userId = null;
+        if (user == null) {
+            // 用户代注册并实名认证
+            userId = userBO.doRegisterAndIdentify(budgetOrder.getMobile(),
+                budgetOrder.getIdKind(), budgetOrder.getCustomerName(),
+                budgetOrder.getIdNo());
+            distributeAccount(userId, budgetOrder.getMobile(),
+                EUserKind.Customer.getCode());
+        } else {
+            userId = user.getUserId();
+        }
+
+        // 绑定用户银行卡
+        String bankcardCode = bankcardBO.bind(userId,
+            budgetOrder.getCustomerName(), budgetOrder.getBankCardNumber(),
+            budgetOrder.getLoanBankCode(), budgetOrder.getLoanBankName(),
+            budgetOrder.getLoanBankSubbranch());
+
+        // 自动生成还款业务
+        RepayBiz repayBiz = repayBizBO.generateCarLoanRepayBiz(budgetOrder,
+            userId, bankcardCode, req.getOperator());
+
+        // 自动生成还款计划
+        repayPlanBO.genereateNewRepayPlan(repayBiz);
 
         // 日志记录
         String preCurrentNode = budgetOrder.getCurNodeCode();
@@ -845,6 +909,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
+    }
+
+    // 分配账号
+    private void distributeAccount(String userId, String mobile, String kind) {
+        List<String> currencyList = new ArrayList<String>();
+        currencyList.add(ECurrency.CNY.getCode());
+        currencyList.add(ECurrency.JF.getCode());
+
+        for (String currency : currencyList) {
+            accountBO.distributeAccount(userId, mobile,
+                EAccountType.getAccountType(kind), currency);
+        }
     }
 
     @Override
@@ -979,7 +1055,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public void refreshCardMaking(String code, String bankCardNumber,
+    public void cardMaking(String code, String bankCardNumber,
             String makeCardRemark) {
         BudgetOrder condition = budgetOrderBO.getBudgetOrder(code);
         condition.setBankCardNumber(bankCardNumber);
@@ -995,8 +1071,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         Long loanAmount = budgetOrder.getLoanAmount();
         Long currentInvoicePrice = StringValidater.toLong(req
             .getCurrentInvoicePrice());
-        double companyLoanCs = loanAmount / currentInvoicePrice;
+        double companyLoanCs = AmountUtil.div(loanAmount, currentInvoicePrice);
         budgetOrder.setCompanyLoanCs(companyLoanCs);
+        budgetOrder.setIsRightInvoice(EBoolean.NO.getCode());
         if (companyLoanCs >= 0.6 && companyLoanCs <= 0.9) {
             budgetOrder.setIsRightInvoice(EBoolean.YES.getCode());
         }

@@ -1,7 +1,10 @@
 package com.cdkj.loan.api.impl;
 
+import java.util.Date;
+
 import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.api.AProcessor;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN630555Req;
@@ -11,9 +14,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 清欠催收部申请拖车
- * @author: silver 
- * @since: 2018年6月10日 上午10:49:05 
+ * 拖车确认放款
+ * @author: xieyj 
+ * @since: 2018年6月17日 下午2:52:56 
  * @history:
  */
 public class XN630555 extends AProcessor {
@@ -24,7 +27,10 @@ public class XN630555 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repayBizAO.applyTrailer(req);
+        Date remitDatetime = DateUtil.strToDate(req.getRemitDatetime(),
+            DateUtil.DATA_TIME_PATTERN_1);
+        repayBizAO.takeCarSureFk(req.getCode(), req.getRemitBankCode(),
+            req.getRemitBillPdf(), remitDatetime, req.getOperator());
         return new BooleanRes(true);
     }
 
