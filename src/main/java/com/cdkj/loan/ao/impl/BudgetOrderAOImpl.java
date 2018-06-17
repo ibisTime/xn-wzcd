@@ -75,6 +75,7 @@ import com.cdkj.loan.enums.EButtonCode;
 import com.cdkj.loan.enums.ECollectBankcard;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealType;
+import com.cdkj.loan.enums.EFbhStatus;
 import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.EIsAdvanceFund;
 import com.cdkj.loan.enums.ELoanRole;
@@ -1112,6 +1113,20 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Transactional
     public void entryPreservation(XN632220Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        if (EBoolean.YES.getCode().equals(budgetOrder.getIsAdvanceFund())) {
+            if (!EBudgetOrderNode.ADVANCE_FUND_AUDIT.getCode()
+                .equals(budgetOrder.getMakeCardStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前节点不是垫资完成节点，不能操作！");
+            }
+        } else {
+            if (!EBudgetOrderNode.CONFIRM_RECEIVABLES.getCode()
+                .equals(budgetOrder.getMakeCardStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前节点不是银行放款节点，不能操作！");
+            }
+        }
+
         budgetOrder.setDeliveryDatetime(DateUtil.strToDate(
             req.getDeliveryDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         Long loanAmount = budgetOrder.getLoanAmount();
@@ -1135,6 +1150,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setMotorRegCertification(req.getMotorRegCertification());
         budgetOrder.setPdPdf(req.getPdPdf());
         budgetOrder.setFbhRemark(req.getFbhRemark());
+        budgetOrder.setFbhstatus(EFbhStatus.TO_PENDING_ENTRY.getCode());
         budgetOrderBO.entryPreservation(budgetOrder);
     }
 
