@@ -45,11 +45,11 @@ public class XN630570Req {
     // 押金单
     private String depositReceipt;
 
-    // 备注
-    private String remark;
-
     @NotBlank
     private String operator;
+
+    // 备注
+    private String remark;
 
     public String getOperator() {
         return operator;
