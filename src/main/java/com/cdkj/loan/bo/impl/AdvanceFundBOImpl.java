@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IAdvanceFundBO;
+import com.cdkj.loan.bo.base.Page;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IAdvanceFundDAO;
@@ -152,5 +154,23 @@ public class AdvanceFundBOImpl extends PaginableBOImpl<AdvanceFund> implements
             advanceFundDAO.updateApplyCancelAdvanceFund(data);
         }
 
+    }
+
+    @Override
+    public Object queryAdvanceFundPageByRoleCode(int start, int limit,
+            AdvanceFund condition) {
+        prepare(condition);
+
+        long totalCount = advanceFundDAO.selectTotalCountByRoleCode(condition);
+
+        Paginable<AdvanceFund> page = new Page<AdvanceFund>(start, limit,
+            totalCount);
+
+        List<AdvanceFund> dataList = advanceFundDAO
+            .selectAdvenceFundByRoleCodeList(condition, page.getStart(),
+                page.getPageSize());
+
+        page.setList(dataList);
+        return page;
     }
 }

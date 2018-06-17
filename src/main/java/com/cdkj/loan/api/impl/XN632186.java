@@ -1,38 +1,35 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.IRepayBizAO;
+import com.cdkj.loan.ao.IAdvanceFundAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN630563Req;
-import com.cdkj.loan.dto.res.BooleanRes;
+import com.cdkj.loan.dto.req.XN632186Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 司法诉讼-财务确认收款
- * @author: silver 
- * @since: 2018年6月16日 下午8:45:52 
+ * 详情查询垫资单
+ * @author: jiafr 
+ * @since: 2018年6月17日 下午9:11:46 
  * @history:
  */
-public class XN630563 extends AProcessor {
-    private IRepayBizAO repayBizAO = SpringContextHolder
-        .getBean(IRepayBizAO.class);
+public class XN632186 extends AProcessor {
+    private IAdvanceFundAO advanceFundAO = SpringContextHolder
+        .getBean(IAdvanceFundAO.class);
 
-    private XN630563Req req = null;
+    private XN632186Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        repayBizAO.judgeFinanceSureReceipt(req);
-        return new BooleanRes(true);
+        return advanceFundAO.getAdvanceFund(req.getCode());
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN630563Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632186Req.class);
         ObjValidater.validateReq(req);
     }
-
 }

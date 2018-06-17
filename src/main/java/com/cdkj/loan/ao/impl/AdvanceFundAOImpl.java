@@ -264,4 +264,12 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         advanceFundBO.applyCancelAdvanceFund(data);
 
     }
+
+    @Override
+    public Object queryAdvanceFundPageByRoleCode(int start, int limit,
+            AdvanceFund condition) {
+
+        return advanceFundBO.queryAdvanceFundPageByRoleCode(start, limit,
+            condition);
+    }
 }
