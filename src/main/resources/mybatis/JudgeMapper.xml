@@ -152,7 +152,7 @@
 		WHERE code = #{code}
 	</update>
 
-	<update id="update_judgeResultEntry" parameterType="judge">
+	<update id="update_judgeResultInput" parameterType="judge">
 		UPDATE tdh_judge
 		SET
 		exe_case_number = #{exeCaseNumber}
@@ -161,18 +161,9 @@
 		,exe_result = #{exeResult}
 		,sale_datetime = #{saleDatetime}
 		,exe_pdf = #{exePdf}
+		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>
-	
-	<update id="update_financeSureReceipt" parameterType="judge">
-		UPDATE tdh_judge
-		SET
-		status = #{status}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		WHERE code = #{code}
-	</update>
-	
 </mapper>

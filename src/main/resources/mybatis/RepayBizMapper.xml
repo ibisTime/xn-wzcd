@@ -195,7 +195,7 @@
 		,t.deposit_receipt
 		,t.refund_bank_subbranch
 		
-		,t.refund_bank_realName
+		,t.refund_bank_real_name
 		,t.refund_bankcard
 		,t.second_company_insurance
 		,t.third_company_insurance
@@ -288,7 +288,7 @@
 		,t.deposit_receipt
 		,t.refund_bank_subbranch
 		
-		,t.refund_bank_realName
+		,t.refund_bank_real_name
 		,t.refund_bankcard
 		,t.second_company_insurance
 		,t.third_company_insurance
@@ -490,7 +490,7 @@
 	    
 		,deposit_receipt = #{depositReceipt}
 		,refund_bank_subbranch = #{refundBankSubbranch}
-		,refund_bank_realName = #{refundBankRealName}
+		,refund_bank_real_name = #{refundBankRealName}
 		,refund_bankcard = #{refundBankcard}
 		,second_company_insurance = #{secondCompanyInsurance}
 		
@@ -713,6 +713,7 @@
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
+		,remark = #{remark}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
@@ -736,7 +737,7 @@
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
-		,apply_note = #{applyNote}
+		,release_apply_note = #{releaseApplyNote}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
@@ -746,12 +747,23 @@
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
+		,remark = #{remark}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>
 	
 	<update id="update_riskManagerCheck" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,remark = #{remark}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_bankRecLogic" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}

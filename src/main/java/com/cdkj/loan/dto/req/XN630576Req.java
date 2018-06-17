@@ -59,4 +59,12 @@ public class XN630576Req {
         this.operator = operator;
     }
 
+    public String getReleaseTemplateId() {
+        return releaseTemplateId;
+    }
+
+    public void setReleaseTemplateId(String releaseTemplateId) {
+        this.releaseTemplateId = releaseTemplateId;
+    }
+
 }

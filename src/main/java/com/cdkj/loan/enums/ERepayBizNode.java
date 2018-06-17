@@ -29,7 +29,8 @@ public enum ERepayBizNode {
             "021_10", "确认放款"), TC_RESULT_INPUT("021_11", "录入拖车结果"), TC_TO_HANDLE(
             "021_12", "已录入待处理"), REDEEM("021_13", "已赎回"), SELLED("021_14", "出售"), JUDGE(
             "021_15", "司法诉讼"), JUDGE_FOLLOW("021_16", "诉讼跟进"), JUDGE_RESULT_INPUT(
-            "021_17", "诉讼结果录入"), FINANCE_SURE_RECEIPT("021_18", "财务确认收款"),
+            "021_17", "诉讼结果录入"), FINANCE_SURE_RECEIPT("021_18", "财务收款"), JUDGE_BAD(
+            "021_19", "坏账"),
 
     // 商品分期的节点
     PRO_TO_REPAY("005_01", "还款中"), PRO_SETTLED("005_02", "已结清"), PRO_CONFIRM_SETTLE(

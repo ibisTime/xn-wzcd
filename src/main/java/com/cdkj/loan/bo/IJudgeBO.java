@@ -11,8 +11,6 @@ import com.cdkj.loan.enums.EBoolean;
 
 public interface IJudgeBO extends IPaginableBO<Judge> {
 
-    public boolean isJudgeExist(String code);
-
     public String saveJudge(XN630560Req req);
 
     // 诉讼跟进
@@ -20,9 +18,6 @@ public interface IJudgeBO extends IPaginableBO<Judge> {
 
     // 执行结果录入
     public void refreshJudgeResultInput(XN630562Req req);
-
-    // 财务确认收货
-    public void refreshFinanceSureReceipt(String code, String updater);
 
     public List<Judge> queryJudgeList(Judge condition);
 
