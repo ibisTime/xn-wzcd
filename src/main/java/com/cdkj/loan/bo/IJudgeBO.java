@@ -7,6 +7,7 @@ import com.cdkj.loan.domain.Judge;
 import com.cdkj.loan.dto.req.XN630560Req;
 import com.cdkj.loan.dto.req.XN630561Req;
 import com.cdkj.loan.dto.req.XN630562Req;
+import com.cdkj.loan.enums.EBoolean;
 
 public interface IJudgeBO extends IPaginableBO<Judge> {
 
@@ -27,6 +28,6 @@ public interface IJudgeBO extends IPaginableBO<Judge> {
 
     public Judge getJudge(String code);
 
-    public Judge selectJudge(Judge condition);
+    public Judge queryJudgeByRepayBizCode(String repayBizCode, EBoolean status);
 
 }

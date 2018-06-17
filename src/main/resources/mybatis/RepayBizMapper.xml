@@ -573,7 +573,7 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_applyTrailer" parameterType="repayBiz">
+	<update id="update_takeCarApply" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
@@ -582,7 +582,7 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_financialMoney" parameterType="repayBiz">
+	<update id="update_takeCarRiskManageCheck" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
@@ -591,7 +591,7 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_trailerEntry" parameterType="repayBiz">
+	<update id="update_takeCarCompanyManageCheck" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
@@ -600,7 +600,7 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_judicialLitigationEntry" parameterType="repayBiz">
+	<update id="update_takeCarRiskLeaderCheck" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
@@ -609,7 +609,7 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_trailerManage" parameterType="repayBiz">
+	<update id="update_takeCarFinanceManageCheck" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
@@ -618,7 +618,7 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_qkcsbRedeemApply" parameterType="repayBiz">
+	<update id="update_takeCarSureFk" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
@@ -627,7 +627,7 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_riskManagerCheck" parameterType="repayBiz">
+	<update id="update_takeCarInputResult" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
@@ -636,12 +636,10 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_financeApprove" parameterType="repayBiz">
+	<update id="update_takeCarResultHandle" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
-		,total_overdue_count = #{totalOverdueCount}
-		,cur_overdue_count = #{curOverdueCount}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
