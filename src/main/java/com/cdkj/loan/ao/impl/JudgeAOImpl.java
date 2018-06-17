@@ -9,7 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IJudgeAO;
 import com.cdkj.loan.bo.IJudgeBO;
+import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
@@ -19,6 +22,9 @@ import com.cdkj.loan.dto.req.XN630560Req;
 import com.cdkj.loan.dto.req.XN630561Req;
 import com.cdkj.loan.dto.req.XN630562Req;
 import com.cdkj.loan.dto.req.XN630563Req;
+import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBoolean;
+import com.cdkj.loan.enums.ECaseStatus;
 import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.exception.BizException;
 
@@ -36,6 +42,15 @@ public class JudgeAOImpl implements IJudgeAO {
     @Autowired
     private IRepayBizBO repayBizBO;
 
+    @Autowired
+    private ISYSUserBO sysUserBO;
+
+    @Autowired
+    private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private INodeFlowBO nodeFlowBO;
+
     @Override
     @Transactional
     public String judgeApply(XN630560Req req) {
@@ -44,78 +59,65 @@ public class JudgeAOImpl implements IJudgeAO {
             throw new BizException("xn0000", "当前业务不在司法诉讼节点！");
         }
 
-        Judge data = new Judge();
-        data.setRepayBizCode(req.getRepayBizCode());
-        data.setCaseNumber(req.getCaseNumber());
-        data.setPlaintiff(req.getPlaintiff());
-        data.setDefendant(req.getDefendant());
-        data.setCaseSubject(req.getCaseSubject());
-
-        data.setCaseFee(StringValidater.toLong(req.getCaseFee()));
-        data.setCaseStartDatetime(DateUtil.strToDate(req.getCaseStartDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setCasePdf(req.getCasePdf());
-        data.setUpdater(req.getOperator());
-        data.setUpdateDatetime(new Date());
-
         repayBizBO.refreshJudgeApply(req.getRepayBizCode());
-        return judgeBO.saveJudge(data);
+        String code = judgeBO.saveJudge(req);
+
+        // 日志记录
+        ERepayBizNode node = ERepayBizNode.getMap().get(nodeFlowBO
+            .getNodeFlowByCurrentNode(repayBiz.getCurNodeCode()).getNextNode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getRepayBizCode(),
+            EBizLogType.REPAY_BIZ, req.getRepayBizCode(),
+            repayBiz.getCurNodeCode(), node.getCode(), node.getValue(),
+            req.getOperator());
+        return code;
     }
 
     @Override
     @Transactional
     public void judgeFollow(XN630561Req req) {
-        Judge judge = judgeBO.getJudge(req.getCode());
-        RepayBiz repayBiz = repayBizBO.getRepayBiz(judge.getRepayBizCode());
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         if (!ERepayBizNode.JUDGE_FOLLOW.getCode()
             .equals(repayBiz.getCurNodeCode())) {
             throw new BizException("xn0000", "当前业务不在诉讼跟进节点！");
         }
 
-        Judge data = new Judge();
-        data.setCode(req.getCode());
-        data.setCaseFee(StringValidater.toLong(req.getCaseFee()));
-        data.setCaseStatus(req.getCaseStatus());
-        data.setCourtDatetime(DateUtil.strToDate(req.getCourtDatetime(),
-            DateUtil.DB_DATE_FORMAT_STRING));
-        data.setJudgeDatetime(DateUtil.strToDate(req.getJudgeDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        // 判决时修改还款业务状态
+        if (ECaseStatus.JUDGE.getCode().equals(req.getCaseStatus())) {
+            repayBizBO.refreshJudgeFollow(repayBiz.getCode());
+        }
 
-        data.setJudgePdf(req.getJudgePdf());
-        data.setUpdater(req.getOperator());
-        data.setUpdateDatetime(new Date());
-        repayBizBO.refreshJudgeFollow(repayBiz.getCode());
-        judgeBO.refreshJudgeFollow(data);
+        judgeBO.refreshJudgeFollow(req);
+
+        // 日志记录
+        ERepayBizNode node = ERepayBizNode.getMap().get(nodeFlowBO
+            .getNodeFlowByCurrentNode(repayBiz.getCurNodeCode()).getNextNode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getCode(),
+            EBizLogType.REPAY_BIZ, req.getCode(), repayBiz.getCurNodeCode(),
+            node.getCode(), node.getValue(), req.getOperator());
     }
 
     @Override
     @Transactional
-    public void judgeResultEntry(XN630562Req req) {
-        Judge judge = judgeBO.getJudge(req.getCode());
-        RepayBiz repayBiz = repayBizBO.getRepayBiz(judge.getRepayBizCode());
+    public void judgeResultInput(XN630562Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         if (!ERepayBizNode.JUDGE_RESULT_INPUT.getCode()
             .equals(repayBiz.getCurNodeCode())) {
             throw new BizException("xn0000", "当前业务不在执行结果录入节点！");
         }
 
-        Judge data = new Judge();
-        data.setCode(req.getCode());
-        data.setExeCaseNumber(req.getExeCaseNumber());
-        data.setExeApplyUser(req.getExeApplyUser());
-        data.setExeDatetime(DateUtil.strToDate(req.getExeDatetime(),
-            DateUtil.DB_DATE_FORMAT_STRING));
-        data.setExeResult(req.getExeResult());
-
-        data.setSaleDatetime(DateUtil.strToDate(req.getSaleDatetime(),
-            DateUtil.DB_DATE_FORMAT_STRING));
-        data.setExePdf(req.getExePdf());
-        data.setUpdater(req.getOperator());
-        data.setUpdateDatetime(new Date());
         repayBizBO.refreshJudgeResultInput(repayBiz.getCode());
-        judgeBO.refreshJudgeResultEntry(data);
+        judgeBO.refreshJudgeResultInput(req);
+
+        // 日志记录
+        ERepayBizNode node = ERepayBizNode.getMap().get(nodeFlowBO
+            .getNodeFlowByCurrentNode(repayBiz.getCurNodeCode()).getNextNode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getCode(),
+            EBizLogType.REPAY_BIZ, req.getCode(), repayBiz.getCurNodeCode(),
+            node.getCode(), node.getValue(), req.getOperator());
     }
 
     @Override
+    @Transactional
     public void financeSureReceipt(XN630563Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         if (!ERepayBizNode.FINANCE_SURE_RECEIPT.getCode()
@@ -126,7 +128,7 @@ public class JudgeAOImpl implements IJudgeAO {
         RepayBiz data = new RepayBiz();
         data.setCode(req.getCode());
         data.setJudgeReceiptDatetime(DateUtil.strToDate(
-            req.getJudgeReceiptDatetime(), DateUtil.DB_DATE_FORMAT_STRING));
+            req.getJudgeReceiptDatetime(), DateUtil.DATA_TIME_PATTERN_1));
         data.setJudgeReceiptAmount(
             StringValidater.toLong(req.getJudgeReceiptAmount()));
         data.setJudgeReceiptBank(req.getJudgeReceiptBank());
@@ -137,22 +139,50 @@ public class JudgeAOImpl implements IJudgeAO {
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
         repayBizBO.refreshFinanceSureReceipt(data);
+
+        Judge condition = new Judge();
+        condition.setStatus(EBoolean.NO.getCode());
+        condition.setRepayBizCode(req.getCode());
+        Judge judge = judgeBO.selectJudge(condition);
+        judgeBO.refreshFinanceSureReceipt(judge.getCode(), req.getOperator());
+
+        // 日志记录
+        ERepayBizNode node = ERepayBizNode.getMap().get(nodeFlowBO
+            .getNodeFlowByCurrentNode(repayBiz.getCurNodeCode()).getNextNode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getCode(),
+            EBizLogType.REPAY_BIZ, req.getCode(), repayBiz.getCurNodeCode(),
+            node.getCode(), node.getValue(), req.getOperator());
     }
 
     @Override
     public Paginable<Judge> queryJudgePage(int start, int limit,
             Judge condition) {
-        return judgeBO.getPaginable(start, limit, condition);
+        Paginable<Judge> page = judgeBO.getPaginable(start, limit, condition);
+        List<Judge> list = page.getList();
+        for (Judge judge : list) {
+            init(judge);
+        }
+        return page;
     }
 
     @Override
     public List<Judge> queryJudgeList(Judge condition) {
-        return judgeBO.queryJudgeList(condition);
+        List<Judge> list = judgeBO.queryJudgeList(condition);
+        for (Judge judge : list) {
+            init(judge);
+        }
+        return list;
     }
 
     @Override
     public Judge getJudge(String code) {
-        return judgeBO.getJudge(code);
+        Judge judge = judgeBO.getJudge(code);
+        init(judge);
+        return judge;
     }
 
+    private void init(Judge judge) {
+        judge.setUpdaterName(
+            sysUserBO.getUser(judge.getUpdater()).getRealName());
+    }
 }

@@ -27,6 +27,7 @@
 		<result column="sale_datetime" property="saleDatetime" />
 		<result column="exe_pdf" property="exePdf" />
 		
+		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
 	</resultMap>
@@ -37,6 +38,9 @@
 			</if>
 			<if test="repayBizCode != null and repayBizCode != '' ">
 				AND t.repay_biz_code = #{repayBizCode}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
 			</if>
 		</trim>
 	</sql>
@@ -62,6 +66,7 @@
 		,t.exe_result
 		,t.sale_datetime
 		,t.exe_pdf
+		,t.status
 		,t.updater
 		,t.update_datetime
 		FROM
@@ -103,6 +108,9 @@
 		,exe_result
 		,sale_datetime
 		,exe_pdf
+		,status
+		,updater
+		,update_datetime
 		)
 		VALUES(
 		#{code}
@@ -125,6 +133,9 @@
 		,#{exeResult}
 		,#{saleDatetime}
 		,#{exePdf}
+		,#{status}
+		,#{updater}
+		,#{update_datetime}
 		)
 	</insert>
 	
@@ -150,6 +161,15 @@
 		,exe_result = #{exeResult}
 		,sale_datetime = #{saleDatetime}
 		,exe_pdf = #{exePdf}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_financeSureReceipt" parameterType="judge">
+		UPDATE tdh_judge
+		SET
+		status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}

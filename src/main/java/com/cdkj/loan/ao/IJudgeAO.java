@@ -21,7 +21,7 @@ public interface IJudgeAO {
     public void judgeFollow(XN630561Req req);
 
     // 执行结果录入
-    public void judgeResultEntry(XN630562Req req);
+    public void judgeResultInput(XN630562Req req);
 
     // 财务确认收货
     public void financeSureReceipt(XN630563Req req);
