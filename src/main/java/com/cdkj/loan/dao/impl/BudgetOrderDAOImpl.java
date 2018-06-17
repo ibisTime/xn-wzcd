@@ -182,4 +182,9 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
         super.update(NAMESPACE.concat("update_receiptAndReturn"), condition);
     }
 
+    @Override
+    public void RemindingProcess(BudgetOrder condition) {
+        super.update(NAMESPACE.concat("update_RemindingProcess"), condition);
+    }
+
 }
