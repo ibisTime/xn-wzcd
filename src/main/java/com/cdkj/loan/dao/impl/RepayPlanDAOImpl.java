@@ -73,39 +73,35 @@ public class RepayPlanDAOImpl extends AMybatisTemplate implements IRepayPlanDAO 
     }
 
     @Override
-    public int applyTrailer(RepayPlan data) {
-        return super.update(NAMESPACE.concat("update_applyTrailer"), data);
+    public int payFee(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_payFee"), data);
     }
 
     @Override
-    public int financialMoney(RepayPlan data) {
-        return super.update(NAMESPACE.concat("update_financialMoney"), data);
+    public int repayAmount(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_repayAmount"), data);
     }
 
     @Override
-    public int trailerEntry(RepayPlan data) {
-        return super.update(NAMESPACE.concat("update_trailerEntry"), data);
+    public int updateTakeCarApply(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_takeCarApply"), data);
     }
 
     @Override
-    public int judicialLitigationEntry(RepayPlan data) {
-        return super.update(NAMESPACE.concat("update_judicialLitigationEntry"),
+    public int updateTakeCarSureFk(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_takeCarSureFk"), data);
+    }
+
+    @Override
+    public int updateTakeCarInputResult(RepayPlan data) {
+        return super
+            .update(NAMESPACE.concat("update_takeCarInputResult"), data);
+    }
+
+    @Override
+    public int updateTakeCarResultHandle(RepayPlan data) {
+        return super.update(NAMESPACE.concat("update_takeCarResultHandle"),
             data);
-    }
-
-    @Override
-    public int qkcsbRedeemApply(RepayPlan data) {
-        return super.update(NAMESPACE.concat("update_qkcsbRedeemApply"), data);
-    }
-
-    @Override
-    public int riskManagerCheck(RepayPlan data) {
-        return super.update(NAMESPACE.concat("update_riskManagerCheck"), data);
-    }
-
-    @Override
-    public int financeApprove(RepayPlan data) {
-        return super.update(NAMESPACE.concat("update_financeApprove"), data);
     }
 
     @Override
@@ -121,15 +117,4 @@ public class RepayPlanDAOImpl extends AMybatisTemplate implements IRepayPlanDAO 
             NAMESPACE.concat("select_repayPlan_byRoleCode"), condition,
             RepayPlan.class);
     }
-
-    @Override
-    public int payFee(RepayPlan data) {
-        return super.update(NAMESPACE.concat("update_payFee"), data);
-    }
-
-    @Override
-    public int repayAmount(RepayPlan data) {
-        return super.update(NAMESPACE.concat("update_repayAmount"), data);
-    }
-
 }

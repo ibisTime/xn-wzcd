@@ -74,11 +74,26 @@ public class Judge extends ABaseDO {
     // 执行裁定书
     private String exePdf;
 
+    // 状态 0 待处理 1 结束
+    private String status;
+
     // 更新人
     private String updater;
 
     // 更新时间
     private Date updateDatetime;
+
+    /******************db properties******************/
+    // 更新人
+    private String updaterName;
+
+    public String getUpdaterName() {
+        return updaterName;
+    }
+
+    public void setUpdaterName(String updaterName) {
+        this.updaterName = updaterName;
+    }
 
     public String getCode() {
         return code;
@@ -254,6 +269,14 @@ public class Judge extends ABaseDO {
 
     public void setUpdateDatetime(Date updateDatetime) {
         this.updateDatetime = updateDatetime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

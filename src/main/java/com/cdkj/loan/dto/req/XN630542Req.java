@@ -2,7 +2,7 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class XN630542Req extends APageReq {
+public class XN630542Req extends AListReq {
 
     private static final long serialVersionUID = 5066181160930283667L;
 
