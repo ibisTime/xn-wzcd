@@ -449,7 +449,8 @@
 	<update id="update_takeCarInputResult" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		take_car_address=#{takeCarAddress}
+		cur_node_code=#{curNodeCode}
+		,take_car_address=#{takeCarAddress}
 		,take_datetime=#{takeDatetime}
 		,take_name=#{takeName}
 		,take_location=#{takeLocation}

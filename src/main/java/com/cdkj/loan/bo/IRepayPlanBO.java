@@ -24,6 +24,9 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     public List<RepayPlan> queryRepayPlanListByRepayBizCode(String repayBizCode);
 
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
+            String repayBizCode, List<String> repayPlanNodeList);
+
     public RepayPlan getRepayPlanListByRepayBizCode(String repayBizCode,
             ERepayPlanNode repayPlanNode);
 
@@ -58,6 +61,10 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     // 缴纳代偿金额
     public void repayAmount(RepayPlan repayPlan);
+
+    // 拖车处理
+    public void refreshRepayPlanTakeCarHandle(String repayBizCode,
+            ERepayPlanNode repayPlanNode);
 
     // 拖车申请
     public void takeCarApply(RepayPlan data, XN630550Req req);
