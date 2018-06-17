@@ -419,6 +419,24 @@ public class BudgetOrder extends ABaseDO {
     // 保险经办银行
     private String insuranceBank;
 
+    // 续保提醒次数
+    private int insuranceRemindCount;
+
+    // 投保时间
+    private Date insuranceApplyDatetime;
+
+    // 到期日期
+    private Date insuranceEndDatetime;
+
+    // 交强险保单
+    private String insuranceForcePdf;
+
+    // 商业险保单
+    private String insuranceBusinessPdf;
+
+    // 续保说明
+    private String insuranceNote;
+
     // 担保合同编号
     private String guaranteeContractCode;
 
