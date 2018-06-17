@@ -68,6 +68,10 @@ public interface IBudgetOrderAO {
     public Object queryBudgetOrderPageByRoleCode(int start, int limit,
             BudgetOrder condition);
 
+    // 制卡申请
+    public void approveMakeCard(String code, String makeCardRemark,
+            String operator);
+
     // 制卡录入
     public void cardMaking(String code, String bankCardNumber,
             String makeCardRemark);

@@ -1172,6 +1172,7 @@
 		,bank_receipt_note = #{bankReceiptNote}
 		,operator = #{operator}
 		,operate_datetime = #{operateDatetime}
+		,make_card_status = #{makeCardStatus}
 		WHERE code = #{code}
 	</update>
 		
@@ -1262,7 +1263,8 @@
 	<update id="update_cardMaking" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		bank_card_number = #{bankCardNumber}
+		make_card_status = #{makeCardStatus}
+		,bank_card_number = #{bankCardNumber}
 		,make_card_remark = #{makeCardRemark}
 		WHERE code = #{code}
 	</update>
@@ -1341,6 +1343,15 @@
 		,zf_sk_receipt_datetime = #{frozenStatus}
 		,zf_finance_remark = #{zfFinanceRemark}
 		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_approveMakeCard" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		make_card_status = #{makeCardStatus}
+		,make_card_operator = #{makeCardOperator}
+		,make_card_remark = #{makeCardRemark}
 		WHERE code = #{code}
 	</update>
 </mapper>
