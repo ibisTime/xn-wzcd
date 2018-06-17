@@ -387,8 +387,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             }
             // 服务费未处理
             data1.setFee(fee);
-            data1.setRepointAmount(StringValidater.toLong(req1
-                .getRepointAmount()));
+            data1.setRepointAmount(
+                StringValidater.toLong(req1.getRepointAmount()));
             data1.setAccountCode(req1.getAccountCode());
             data1.setCurNodeCode(ERepointDetailStatus.TODO_MAKE_BILL.getCode());
 
@@ -1368,8 +1368,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public void financeConfirm(XN632280Req req) {
-
+    public void receiptAndReturn(XN632280Req req) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        budgetOrder.setZfSkBankcardCode(req.getZfSkBankcardCode());
+        budgetOrder.setZfSkAmount(StringValidater.toLong(req.getZfSkAmount()));
+        budgetOrder.setZfSkReceiptDatetime(DateUtil.strToDate(
+            req.getZfSkReceiptDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setZfFinanceRemark(req.getZfFinanceRemark());
+        budgetOrder.setIsSubmitCancel(EBoolean.YES.getCode());
+        budgetOrderBO.receiptAndReturn(budgetOrder);
     }
 
 }

@@ -24,7 +24,7 @@ public class XN632280 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.financeConfirm(req);
+        budgetOrderAO.receiptAndReturn(req);
         return new BooleanRes(true);
     }
 

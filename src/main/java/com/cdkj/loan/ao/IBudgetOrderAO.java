@@ -106,6 +106,6 @@ public interface IBudgetOrderAO {
     public void financeConfirm(XN632272Req req);
 
     // 收款回录
-    public void financeConfirm(XN632280Req req);
+    public void receiptAndReturn(XN632280Req req);
 
 }

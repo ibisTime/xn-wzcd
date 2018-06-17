@@ -1355,5 +1355,15 @@
 		,make_card_remark = #{makeCardRemark}
 		WHERE code = #{code}
 	</update>
+
+	<update id="update_receiptAndReturn" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		zf_sk_amount = #{zfSkAmount}
+		,zf_sk_bankcard_code = #{zfSkBankcardCode}
+		,zf_sk_receipt_datetime = #{frozenStatus}
+		,zf_finance_remark = #{zfFinanceRemark}
+		WHERE code = #{code}
+	</update>
 </mapper>
 

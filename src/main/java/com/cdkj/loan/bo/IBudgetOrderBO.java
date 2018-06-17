@@ -81,4 +81,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 财务确认收款
     public void financeConfirm(BudgetOrder budgetOrder);
 
+    // 收款回录
+    public void receiptAndReturn(BudgetOrder budgetOrder);
+
 }
