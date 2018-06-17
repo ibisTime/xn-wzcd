@@ -53,7 +53,7 @@ public class RepayPlanDAOImpl extends AMybatisTemplate implements IRepayPlanDAO 
     }
 
     @Override
-    public int repaySuccess(RepayPlan data) {
+    public int repayResultHandle(RepayPlan data) {
         return super.update(NAMESPACE.concat("update_paySuccess"), data);
     }
 
