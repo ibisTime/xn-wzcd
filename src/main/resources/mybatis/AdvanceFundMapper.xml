@@ -24,6 +24,7 @@
 		<result column="cancel_reason" property="cancelReason" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
+		<result column="apply_datetime" property="applyDatetime" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">

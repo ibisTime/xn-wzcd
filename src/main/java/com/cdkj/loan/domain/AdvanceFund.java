@@ -77,6 +77,17 @@ public class AdvanceFund extends ABaseDO {
     // 更新时间
     private Date updateDatetime;
 
+    // 申请时间
+    private Date applyDatetime;
+
+    public Date getApplyDatetime() {
+        return applyDatetime;
+    }
+
+    public void setApplyDatetime(Date applyDatetime) {
+        this.applyDatetime = applyDatetime;
+    }
+
     public String getTotalAdvanceFundCode() {
         return totalAdvanceFundCode;
     }
