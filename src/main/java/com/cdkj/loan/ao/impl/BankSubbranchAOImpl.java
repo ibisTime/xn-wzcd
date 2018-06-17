@@ -53,6 +53,8 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
 
         BankSubbranch data = new BankSubbranch();
         data.setBankCode(req.getBankCode());
+        Bank bank = bankBO.getBank(req.getBankCode());
+        data.setBankType(bank.getBankCode());
         data.setAbbrName(req.getAbbrName());
         data.setFullName(req.getFullName());
         data.setOpenBank(req.getOpenBank());
