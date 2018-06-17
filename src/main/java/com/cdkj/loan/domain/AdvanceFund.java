@@ -20,6 +20,9 @@ public class AdvanceFund extends ABaseDO {
     // 预算单编号
     private String budgetCode;
 
+    // 垫资汇总单编号(分公司业务才有)
+    private String totalAdvanceFundCode;
+
     // 类型(1总公司业务 2分公司业务)
     private String type;
 
@@ -54,7 +57,7 @@ public class AdvanceFund extends ABaseDO {
     private Long advanceFundAmount;
 
     // 垫资日期
-    private String advanceFundDatetime;
+    private Date advanceFundDatetime;
 
     // 付款银行编号
     private String payBankcardCode;
@@ -73,6 +76,14 @@ public class AdvanceFund extends ABaseDO {
 
     // 更新时间
     private Date updateDatetime;
+
+    public String getTotalAdvanceFundCode() {
+        return totalAdvanceFundCode;
+    }
+
+    public void setTotalAdvanceFundCode(String totalAdvanceFundCode) {
+        this.totalAdvanceFundCode = totalAdvanceFundCode;
+    }
 
     public String getType() {
         return type;
@@ -178,12 +189,12 @@ public class AdvanceFund extends ABaseDO {
         return advanceFundAmount;
     }
 
-    public void setAdvanceFundDatetime(String advanceFundDatetime) {
-        this.advanceFundDatetime = advanceFundDatetime;
+    public Date getAdvanceFundDatetime() {
+        return advanceFundDatetime;
     }
 
-    public String getAdvanceFundDatetime() {
-        return advanceFundDatetime;
+    public void setAdvanceFundDatetime(Date advanceFundDatetime) {
+        this.advanceFundDatetime = advanceFundDatetime;
     }
 
     public void setPayBankcardCode(String payBankcardCode) {

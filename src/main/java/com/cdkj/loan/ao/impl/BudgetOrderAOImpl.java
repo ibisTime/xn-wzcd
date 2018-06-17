@@ -387,7 +387,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             }
             // 服务费未处理
             data1.setFee(fee);
-            data1.setRepointAmount(req1.getRepointAmount());
+            data1.setRepointAmount(StringValidater.toLong(req1
+                .getRepointAmount()));
             data1.setAccountCode(req1.getAccountCode());
             data1.setCurNodeCode(ERepointDetailStatus.TODO_MAKE_BILL.getCode());
 

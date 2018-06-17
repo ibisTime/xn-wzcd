@@ -3,6 +3,7 @@ package com.cdkj.loan.bo.impl;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -108,5 +109,21 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
             }
         }
         return data;
+    }
+
+    @Override
+    public CarDealerProtocol getCarDealerProtocolByCarDealerCode(
+            String carDealerCode) {
+        CarDealerProtocol data = null;
+        if (StringUtils.isNotBlank(carDealerCode)) {
+            CarDealerProtocol condition = new CarDealerProtocol();
+            condition.setCarDealerCode(carDealerCode);
+            data = carDealerProtocolDAO.select(condition);
+            if (data == null) {
+                throw new BizException("xn0000", "根据汽车经销商查询协议不存在！");
+            }
+        }
+        return data;
+
     }
 }

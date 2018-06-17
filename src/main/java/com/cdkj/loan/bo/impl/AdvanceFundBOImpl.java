@@ -108,4 +108,49 @@ public class AdvanceFundBOImpl extends PaginableBOImpl<AdvanceFund> implements
             advanceFundDAO.updateProvinceAudit(data);
         }
     }
+
+    @Override
+    public void parentMakeBill(AdvanceFund data) {
+        if (null != data) {
+            advanceFundDAO.updateParentMakeBill(data);
+        }
+
+    }
+
+    @Override
+    public void branchMakeBill(AdvanceFund data) {
+        if (null != data) {
+            advanceFundDAO.updateBranchMakeBill(data);
+        }
+    }
+
+    @Override
+    public void confirmPayCarDealer(AdvanceFund data) {
+        if (StringUtils.isNotBlank(data.getCode())) {
+            AdvanceFund advanceFund = advanceFundDAO.select(data);
+            if (null != advanceFund) {
+                advanceFundDAO.confirmPayCarDealer(advanceFund);
+            } else {
+                throw new BizException("xn0000", "垫资单不存在");
+            }
+
+        }
+
+    }
+
+    @Override
+    public void confirmPayBranchCompany(AdvanceFund data) {
+        if (null != data) {
+            advanceFundDAO.updateConfirmPayBranchCompany(data);
+        }
+
+    }
+
+    @Override
+    public void applyCancelAdvanceFund(AdvanceFund data) {
+        if (null != data) {
+            advanceFundDAO.updateApplyCancelAdvanceFund(data);
+        }
+
+    }
 }
