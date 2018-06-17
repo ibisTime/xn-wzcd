@@ -5,7 +5,7 @@ import java.util.Map;
 
 public enum ELoanPeriod {
 
-    ONE_YEAER("12", "一年"), TWO_YEAR("24", "两年"), THREE_YEAR("36", "三年");
+    ONE_YEAER("12", "12期"), TWO_YEAR("24", "24期"), THREE_YEAR("36", "36期");
 
     ELoanPeriod(String code, String value) {
         this.code = code;
