@@ -20,6 +20,7 @@
 		<result column="collection_note" property="collectionNote" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
+		<result column="status" property="status" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -47,6 +48,7 @@
 		,t.collection_note
 		,t.updater
 		,t.update_datetime
+		,t.status
 		FROM
 		tdq_total_advance_fund t
 		<include refid="where_condition" />
@@ -83,6 +85,7 @@
 		,collection_note
 		,updater
 		,update_datetime
+		,status
 		)
 		VALUES(
 		#{code}
@@ -102,6 +105,7 @@
 		,#{collectionNote}
 		,#{updater}
 		,#{updateDatetime}
+		,#{status}
 		)
 	</insert>
 
@@ -124,6 +128,7 @@
 		,collection_note = #{collectionNote}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,status = #{status}
 		WHERE code = #{code}
 	</update>
 

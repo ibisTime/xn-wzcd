@@ -10,13 +10,13 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN632175Req {
 
-    // 编号
+    // 垫资单编号编号
     @NotBlank
     private String code;
 
     // 垫资金额
     @NotBlank
-    private Long advanceFundAmount;
+    private String advanceFundAmount;
 
     // 垫资日期
     @NotBlank
@@ -45,11 +45,11 @@ public class XN632175Req {
         this.code = code;
     }
 
-    public Long getAdvanceFundAmount() {
+    public String getAdvanceFundAmount() {
         return advanceFundAmount;
     }
 
-    public void setAdvanceFundAmount(Long advanceFundAmount) {
+    public void setAdvanceFundAmount(String advanceFundAmount) {
         this.advanceFundAmount = advanceFundAmount;
     }
 

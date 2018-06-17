@@ -12,6 +12,7 @@ import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ITotalAdvanceFundBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.AdvanceFund;
 import com.cdkj.loan.domain.TotalAdvanceFund;
@@ -20,6 +21,7 @@ import com.cdkj.loan.dto.req.XN632176Req;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.ETotalAdvanceFundStatus;
+import com.cdkj.loan.enums.ETotalAdvanceFundType;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -47,12 +49,14 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
     public String addTotalAdvanceFund(XN632174Req req) {
 
         TotalAdvanceFund data = new TotalAdvanceFund();
+        data.setType(ETotalAdvanceFundType.FIRST.getCode());
+
         data.setCompanyCode(req.getCompanyCode());
         data.setTotalAdvanceFund(StringValidater.toLong(req
             .getTotalAdvanceFund()));
         data.setPayAmount(StringValidater.toLong(req.getPayAmount()));
         data.setMakeBillNote(req.getMakeBillNote());
-        data.setUpdater(req.getUpdater());
+        data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
         data.setStatus(ETotalAdvanceFundStatus.TODO.getCode());
         String totalAdvanceFundCode = totalAdvanceFundBO
@@ -67,9 +71,11 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
                 preNodeCode).getNextNode());
             EAdvanceFundNode node = EAdvanceFundNode.getMap().get(
                 advanceFund.getCurNodeCode());
-            sysBizLogBO.saveNewAndPreEndSYSBizLog(advanceFund.getCode(),
-                EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),
-                preNodeCode, node.getCode(), node.getValue(), req.getUpdater());
+            sysBizLogBO
+                .saveNewAndPreEndSYSBizLog(advanceFund.getCode(),
+                    EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),
+                    preNodeCode, node.getCode(), node.getValue(),
+                    req.getOperator());
 
             advanceFundBO.branchMakeBill(advanceFund);
 
@@ -114,28 +120,32 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
     @Override
     public void confirmPayBranchCompany(XN632176Req req) {
 
+        TotalAdvanceFund data = totalAdvanceFundBO.getTotalAdvanceFund(req
+            .getCode());
+        data.setPayDatetime(DateUtil.strToDate(req.getPayDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setPayBankcardCode(req.getPayBankcardCode());
+        data.setBillPdf(req.getBillPdf());
+        data.setPayNote(req.getPayNote());
+        data.setUpdater(req.getOperator());
+        data.setUpdateDatetime(new Date());
+        data.setStatus(ETotalAdvanceFundStatus.HANDLED.getCode());
+        totalAdvanceFundBO.refreshTotalAdvanceFund(data);
+
         List<String> codeList = req.getCodeList();
         for (String code : codeList) {
-
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
             String preNodeCode = advanceFund.getCurNodeCode();
-
             advanceFund.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 preNodeCode).getNextNode());
-
             advanceFundBO.confirmPayBranchCompany(advanceFund);
-
             EAdvanceFundNode node = EAdvanceFundNode.getMap().get(
-                nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode).getNextNode());
-
-            sysBizLogBO
-                .saveNewAndPreEndSYSBizLog(advanceFund.getBudgetCode(),
-                    EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),
-                    preNodeCode, node.getCode(), req.getPayNote(),
-                    req.getUpdater());
-
+                advanceFund.getCurNodeCode());
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(advanceFund.getCode(),
+                EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),
+                preNodeCode, node.getCode(), req.getPayNote(),
+                req.getOperator());
         }
 
     }
-
 }

@@ -1,6 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,17 +10,11 @@ import java.util.List;
  */
 public class XN632176Req {
 
-    // 业务公司编号
-    private String companyCode;
-
-    // 垫资总金额
-    private Long totalAdvanceFund;
-
-    // 付款金额
-    private Long payAmount;
+    // 垫资汇总编号
+    private String code;
 
     // 付款时间
-    private Date payDatetime;
+    private String payDatetime;
 
     // 付款账号编号
     private String payBankcardCode;
@@ -33,13 +26,18 @@ public class XN632176Req {
     private String payNote;
 
     // 更新人
-    private String updater;
-
-    // 更新时间
-    private Date updateDatetime;
+    private String operator;
 
     // 垫资单编号列表
     private List<String> codeList;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public List<String> getCodeList() {
         return codeList;
@@ -47,38 +45,6 @@ public class XN632176Req {
 
     public void setCodeList(List<String> codeList) {
         this.codeList = codeList;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
-
-    public Long getTotalAdvanceFund() {
-        return totalAdvanceFund;
-    }
-
-    public void setTotalAdvanceFund(Long totalAdvanceFund) {
-        this.totalAdvanceFund = totalAdvanceFund;
-    }
-
-    public Long getPayAmount() {
-        return payAmount;
-    }
-
-    public void setPayAmount(Long payAmount) {
-        this.payAmount = payAmount;
-    }
-
-    public Date getPayDatetime() {
-        return payDatetime;
-    }
-
-    public void setPayDatetime(Date payDatetime) {
-        this.payDatetime = payDatetime;
     }
 
     public String getPayBankcardCode() {
@@ -105,20 +71,20 @@ public class XN632176Req {
         this.payNote = payNote;
     }
 
-    public String getUpdater() {
-        return updater;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setUpdater(String updater) {
-        this.updater = updater;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
-    public Date getUpdateDatetime() {
-        return updateDatetime;
+    public String getPayDatetime() {
+        return payDatetime;
     }
 
-    public void setUpdateDatetime(Date updateDatetime) {
-        this.updateDatetime = updateDatetime;
+    public void setPayDatetime(String payDatetime) {
+        this.payDatetime = payDatetime;
     }
 
 }

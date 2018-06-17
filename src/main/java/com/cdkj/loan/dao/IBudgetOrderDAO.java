@@ -82,4 +82,7 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 提醒发起流程
     void RemindingProcess(BudgetOrder budgetOrder);
 
+    // 银行放款确认提交银行
+    void bankLoanConfirmSubmitBank(BudgetOrder budgetOrder);
+
 }

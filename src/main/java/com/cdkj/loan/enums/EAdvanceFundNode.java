@@ -13,12 +13,13 @@ public enum EAdvanceFundNode {
 
     PARENT_CONFIRM("003_01", "确认用款单"), PARENT_AREA("003_02", "区域总经理审核"), PARENT_PROVINCE(
             "003_03", "省分公司总经理审核"), PARENT_MAKE_BILL("003_04", "总公司制单"), PARENT_CAR_DEALER(
-            "003_05", "确认打款给车行"), PARENT_AGAIN("003_06", "重新确认用款单"),
+            "003_05", "确认打款给车行"), PARENT_AGAIN("003_06", "重新确认用款单"), PARENT_ADVANCE_END(
+            "003_07", "垫资完成"),
 
     BRANCH_CONFIRM("004_01", "确认用款单"), BRANCH_AREA("004_02", "区域总经理审核"), BRANCH_PROVINCE(
             "004_03", "省分公司总经理审核"), BRANCH_MAKE_BILL("004_04", "分公司制单"), BRANCH_COMPANY(
             "004_05", "确认打款给分公司"), BRANCH_CAR_DEALER("004_06", "确认打款给车行"), BRANCH_AGAIN(
-            "004_07", "重新确认用款单");
+            "004_07", "重新确认用款单"), BRANCH_ADVANCE_END("004_08", "垫资完成");
 
     public static Map<String, EAdvanceFundNode> getMap() {
         Map<String, EAdvanceFundNode> map = new HashMap<String, EAdvanceFundNode>();

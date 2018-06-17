@@ -88,4 +88,5 @@ public class TotalAdvanceFundBOImpl extends PaginableBOImpl<TotalAdvanceFund>
         }
         return data;
     }
+
 }
