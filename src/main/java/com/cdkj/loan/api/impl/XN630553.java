@@ -11,9 +11,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 财务审核
- * @author: silver 
- * @since: 2018年6月10日 上午10:49:05 
+ * 拖车风控总监审核
+ * @author: xieyj 
+ * @since: 2018年6月17日 下午2:50:49 
  * @history:
  */
 public class XN630553 extends AProcessor {
@@ -24,8 +24,8 @@ public class XN630553 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repayBizAO.approveByFinance(req.getCode(), req.getApproveResult(),
-            req.getOperator(), req.getRemark());
+        repayBizAO.takeCarRiskLeaderCheck(req.getCode(),
+            req.getApproveResult(), req.getOperator(), req.getRemark());
         return new BooleanRes(true);
     }
 

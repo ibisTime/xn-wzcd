@@ -2,7 +2,6 @@ package com.cdkj.loan.api.impl;
 
 import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.api.AProcessor;
-import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN630554Req;
@@ -12,9 +11,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 业务团队解除抵押
- * @author: silver 
- * @since: 2018年6月10日 上午10:49:05 
+ * 拖车财务经理审核
+ * @author: xieyj 
+ * @since: 2018年6月17日 下午2:51:28 
  * @history:
  */
 public class XN630554 extends AProcessor {
@@ -25,9 +24,8 @@ public class XN630554 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repayBizAO.releaseMortgage(req.getCode(), DateUtil
-            .strToDate(req.getReleaseDatetime(), DateUtil.DATA_TIME_PATTERN_1),
-            req.getOperator());
+        repayBizAO.takeCarFinanceManageCheck(req.getCode(),
+            req.getApproveResult(), req.getOperator(), req.getRemark());
         return new BooleanRes(true);
     }
 

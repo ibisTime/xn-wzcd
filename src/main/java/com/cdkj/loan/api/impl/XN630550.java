@@ -4,7 +4,6 @@ import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dto.req.XN630550Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
@@ -12,9 +11,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 清欠催收部审核
- * @author: silver 
- * @since: 2018年6月10日 上午10:49:05 
+ * 拖车申请
+ * @author: xieyj 
+ * @since: 2018年6月17日 下午1:46:42 
  * @history:
  */
 public class XN630550 extends AProcessor {
@@ -25,9 +24,7 @@ public class XN630550 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repayBizAO.approveByQkcsDepartment(req.getCode(),
-            StringValidater.toLong(req.getCutLyDeposit()), req.getOperator(),
-            req.getRemark());
+        repayBizAO.takeCarApply(req);
         return new BooleanRes(true);
     }
 

@@ -9,13 +9,13 @@ import org.hibernate.validator.constraints.NotBlank;
  * @history:
  */
 public class XN630550Req {
-    // 还款计划编号
+    // 还款业务编号
     @NotBlank
     private String code;
 
     // 是否典当行赎回 1 是 0 否
     @NotBlank
-    private String isPawnshopRedeem;
+    private String pawnshopIsRedeem;
 
     // 典当行名称
     private String pawnshopName;
@@ -55,12 +55,12 @@ public class XN630550Req {
         this.code = code;
     }
 
-    public String getIsPawnshopRedeem() {
-        return isPawnshopRedeem;
+    public String getPawnshopIsRedeem() {
+        return pawnshopIsRedeem;
     }
 
-    public void setIsPawnshopRedeem(String isPawnshopRedeem) {
-        this.isPawnshopRedeem = isPawnshopRedeem;
+    public void setPawnshopIsRedeem(String pawnshopIsRedeem) {
+        this.pawnshopIsRedeem = pawnshopIsRedeem;
     }
 
     public String getPawnshopName() {
