@@ -264,6 +264,7 @@ CREATE TABLE `tdh_judge` (
   `sale_datetime` datetime DEFAULT NULL COMMENT '拍卖日期',
   `exe_pdf` varchar(255) DEFAULT NULL COMMENT '执行裁定书',
   
+  `status` varchar(4) DEFAULT NULL COMMENT '状态 0 待处理 1 结束',
   `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`code`)

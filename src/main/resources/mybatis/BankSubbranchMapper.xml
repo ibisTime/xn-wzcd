@@ -5,6 +5,7 @@
 	<resultMap id="bankSubbranch_DB_result" type="bankSubbranch">
 		<result column="code" property="code" />
 		<result column="bank_code" property="bankCode" />
+		<result column="bank_type" property="bankType" />
 		<result column="abbr_name" property="abbrName" />
 		<result column="full_name" property="fullName" />
 		<result column="open_bank" property="openBank" />
@@ -36,6 +37,9 @@
 			<if test="bankCode != null and bankCode != '' ">
 				AND t.bank_code = #{bankCode}
 			</if>
+			<if test="bankType != null and bankType != '' ">
+				AND t.bank_type = #{bankType}
+			</if>
 			<if test="phoneNumber != null and phoneNumber != '' ">
 				AND t.phone_number = #{phoneNumber}
 			</if>
@@ -58,6 +62,7 @@
 		SELECT
 		t.code
 		,t.bank_code
+		,t.bank_type
 		,t.abbr_name
 		,t.full_name
 		,t.open_bank
@@ -99,6 +104,7 @@
 		INSERT INTO tb_bank_subbranch(
 		code
 		,bank_code
+		,bank_type
 		,abbr_name
 		,full_name
 		,open_bank
@@ -124,6 +130,7 @@
 		VALUES(
 		#{code}
 		,#{bankCode}
+		,#{bankType}
 		,#{abbrName}
 		,#{fullName}
 		,#{openBank}

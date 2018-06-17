@@ -287,6 +287,13 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     }
 
     @Override
+    public void repayOverdue(RepayBiz repayBiz) {
+        if (repayBiz != null) {
+            repayBizDAO.repayOverDue(repayBiz);
+        }
+    }
+
+    @Override
     public void refreshAdvanceRepayProduct(RepayBiz repayBiz,
             Long realWithholdAmount) {
     }
@@ -301,23 +308,6 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
 
     @Override
     public void refreshEnterBlackList(RepayBiz data) {
-    }
-
-    @Override
-    public Paginable<RepayBiz> getPaginableByRoleCode(int start, int limit,
-            RepayBiz condition) {
-        prepare(condition);
-        long totalCount = repayBizDAO.selectTotalCountByRoleCode(condition);
-        Page<RepayBiz> page = new Page<RepayBiz>(start, limit, totalCount);
-        List<RepayBiz> dataList = repayBizDAO.selectRepayBizByRoleCode(
-            condition, page.getStart(), page.getPageSize());
-        page.setList(dataList);
-        return page;
-    }
-
-    @Override
-    public void repayOverdue(RepayBiz repayBiz) {
-        repayBizDAO.repayOverDue(repayBiz);
     }
 
     @Override
@@ -413,7 +403,16 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     @Override
     public void takeCarResultHandle(RepayBiz data) {
         // TODO Auto-generated method stub
-
     }
 
+    public Paginable<RepayBiz> getPaginableByRoleCode(int start, int limit,
+            RepayBiz condition) {
+        prepare(condition);
+        long totalCount = repayBizDAO.selectTotalCountByRoleCode(condition);
+        Page<RepayBiz> page = new Page<RepayBiz>(start, limit, totalCount);
+        List<RepayBiz> dataList = repayBizDAO.selectRepayBizByRoleCode(
+            condition, page.getStart(), page.getPageSize());
+        page.setList(dataList);
+        return page;
+    }
 }

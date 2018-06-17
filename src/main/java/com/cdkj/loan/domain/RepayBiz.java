@@ -257,6 +257,9 @@ public class RepayBiz extends ABaseDO {
 
     private List<String> curNodeCodeList;// 节点
 
+    // 司法诉讼
+    private List<Judge> judgeList;
+
     public String getCode() {
         return code;
     }
@@ -887,5 +890,13 @@ public class RepayBiz extends ABaseDO {
 
     public void setCurNodeCodeList(List<String> curNodeCodeList) {
         this.curNodeCodeList = curNodeCodeList;
+    }
+
+    public List<Judge> getJudgeList() {
+        return judgeList;
+    }
+
+    public void setJudgeList(List<Judge> judgeList) {
+        this.judgeList = judgeList;
     }
 }
