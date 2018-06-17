@@ -3,19 +3,26 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IAdvanceFundAO;
 import com.cdkj.loan.bo.IAdvanceFundBO;
+import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.ICollectBankcardBO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.AdvanceFund;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.CollectBankcard;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.dto.req.XN632170Req;
 import com.cdkj.loan.dto.req.XN632171Req;
 import com.cdkj.loan.dto.req.XN632172Req;
@@ -51,6 +58,15 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
 
     @Autowired
     private IBudgetOrderBO budgetOrderBO;
+
+    @Autowired
+    private IDepartmentBO departmentBO;
+
+    @Autowired
+    private IBankBO IBankBO;
+
+    @Autowired
+    private ICollectBankcardBO collectBankcardBO;
 
     @Override
     public void confirmAdvanceFund(XN632170Req req) {
@@ -98,17 +114,29 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
     @Override
     public Paginable<AdvanceFund> queryAdvanceFundPage(int start, int limit,
             AdvanceFund condition) {
-        return advanceFundBO.getPaginable(start, limit, condition);
+        Paginable<AdvanceFund> paginable = advanceFundBO.getPaginable(start,
+            limit, condition);
+        List<AdvanceFund> list = paginable.getList();
+        for (AdvanceFund advanceFund : list) {
+            init(advanceFund);
+        }
+        return paginable;
     }
 
     @Override
     public List<AdvanceFund> queryAdvanceFundList(AdvanceFund condition) {
-        return advanceFundBO.queryAdvanceFundList(condition);
+        List<AdvanceFund> list = advanceFundBO.queryAdvanceFundList(condition);
+        for (AdvanceFund advanceFund : list) {
+            init(advanceFund);
+        }
+        return list;
     }
 
     @Override
     public AdvanceFund getAdvanceFund(String code) {
-        return advanceFundBO.getAdvanceFund(code);
+        AdvanceFund data = advanceFundBO.getAdvanceFund(code);
+        init(data);
+        return data;
     }
 
     @Override
@@ -289,5 +317,50 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
 
         return advanceFundBO.queryAdvanceFundPageByRoleCode(start, limit,
             condition);
+    }
+
+    private AdvanceFund init(AdvanceFund data) {
+        if (StringUtils.isNotBlank(data.getBudgetCode())) {
+            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
+                .getBudgetCode());
+            data.setCreditCode(budgetOrder.getCreditCode());
+        }
+        if (StringUtils.isNotBlank(data.getCompanyCode())) {
+            Department company = departmentBO.getDepartment(data
+                .getCompanyCode());
+            if (null != company) {
+                data.setBizCompanyName(company.getName());
+            }
+
+        }
+        if (StringUtils.isNotBlank(data.getCarDealerCode())) {
+            Department carDealer = departmentBO.getDepartment(data
+                .getCarDealerCode());
+            if (null != carDealer) {
+                data.setCarDealerName(carDealer.getName());
+            }
+        }
+        if (StringUtils.isNotBlank(data.getLoanBankCode())) {
+            Bank bank = IBankBO.getBank(data.getLoanBankCode());
+            if (null != bank) {
+                data.setLoanBankName(bank.getBankName());
+            }
+        }
+        if (StringUtils.isNotBlank(data.getCollectBankcardCode())) {
+            CollectBankcard collectBankcard = collectBankcardBO
+                .getCollectBankcard(data.getCollectBankcardCode());
+            if (null != collectBankcard) {
+                data.setCollectionAccountNo(collectBankcard.getBankcardNumber());
+            }
+        }
+        if (StringUtils.isNotBlank(data.getPayBankcardCode())) {
+            CollectBankcard payBankcard = collectBankcardBO
+                .getCollectBankcard(data.getPayBankcardCode());
+            if (null != payBankcard) {
+                data.setPayAccountNo(payBankcard.getBankcardNumber());
+            }
+        }
+        return data;
+
     }
 }

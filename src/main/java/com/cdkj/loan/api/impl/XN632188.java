@@ -9,23 +9,23 @@ import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.AdvanceFund;
-import com.cdkj.loan.dto.req.XN632185Req;
+import com.cdkj.loan.dto.req.XN632188Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 分页查询垫资按角色权限
+ * 分页查询垫资
  * @author: jiafr 
  * @since: 2018年6月17日 下午8:02:51 
  * @history:
  */
-public class XN632185 extends AProcessor {
+public class XN632188 extends AProcessor {
 
     private IAdvanceFundAO advanceFundAO = SpringContextHolder
         .getBean(IAdvanceFundAO.class);
 
-    private XN632185Req req = null;
+    private XN632188Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
@@ -34,7 +34,6 @@ public class XN632185 extends AProcessor {
         condition.setCustomerName(req.getCustomerName());
         condition.setCompanyCode(req.getCompanyCode());
         condition.setLoanBankCode(req.getLoanBankCode());
-        condition.setRoleCode(req.getRoleCode());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setApplyDatetimeEnd(DateUtil.strToDate(
@@ -46,14 +45,13 @@ public class XN632185 extends AProcessor {
         condition.setOrder(column, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
-        return advanceFundAO.queryAdvanceFundPageByRoleCode(start, limit,
-            condition);
+        return advanceFundAO.queryAdvanceFundPage(start, limit, condition);
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632185Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632188Req.class);
         ObjValidater.validateReq(req);
     }
 }
