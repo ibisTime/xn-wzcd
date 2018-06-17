@@ -15,6 +15,7 @@ import com.cdkj.loan.dto.req.XN632220Req;
 import com.cdkj.loan.dto.req.XN632270Req;
 import com.cdkj.loan.dto.req.XN632271Req;
 import com.cdkj.loan.dto.req.XN632272Req;
+import com.cdkj.loan.dto.req.XN632280Req;
 
 @Component
 public interface IBudgetOrderAO {
@@ -68,6 +69,10 @@ public interface IBudgetOrderAO {
     public Object queryBudgetOrderPageByRoleCode(int start, int limit,
             BudgetOrder condition);
 
+    // 制卡申请
+    public void approveMakeCard(String code, String makeCardRemark,
+            String operator);
+
     // 制卡录入
     public void cardMaking(String code, String bankCardNumber,
             String makeCardRemark);
@@ -99,5 +104,8 @@ public interface IBudgetOrderAO {
 
     // 财务确认收款
     public void financeConfirm(XN632272Req req);
+
+    // 收款回录
+    public void receiptAndReturn(XN632280Req req);
 
 }

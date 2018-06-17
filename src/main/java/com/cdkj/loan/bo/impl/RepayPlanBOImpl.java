@@ -50,6 +50,15 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     }
 
     @Override
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
+            String repayBizCode, List<String> curNodeList) {
+        RepayPlan condition = new RepayPlan();
+        condition.setRepayBizCode(repayBizCode);
+        condition.setCurNodeCodeList(curNodeList);
+        return repayPlanDAO.selectList(condition);
+    }
+
+    @Override
     public RepayPlan getRepayPlanListByRepayBizCode(String repayBizCode,
             ERepayPlanNode repayPlanNode) {
         RepayPlan condition = new RepayPlan();
@@ -182,7 +191,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
 
         repayPlan.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
 
-        repayPlanDAO.repaySuccess(repayPlan);
+        repayPlanDAO.repayResultHandle(repayPlan);
     }
 
     @Override
@@ -299,6 +308,28 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     @Override
     public void repayAmount(RepayPlan repayPlan) {
         repayPlanDAO.repayAmount(repayPlan);
+    }
+
+    @Override
+    public void refreshRepayPlanTakeCarHandle(String repayBizCode,
+            ERepayPlanNode repayPlanNode) {
+        List<String> nodeList = new ArrayList<String>();
+        nodeList.add(ERepayPlanNode.TO_REPAY.getCode());
+        nodeList.add(ERepayPlanNode.QKCSB_APPLY_TC.getCode());
+        List<RepayPlan> planList = queryRepayPlanListByRepayBizCode(
+            repayBizCode, nodeList);
+        for (RepayPlan repayPlan : planList) {
+            repayPlan.setCurNodeCode(repayPlanNode.getCode());
+            if (repayPlan.getCurNodeCode().equals(
+                ERepayPlanNode.BAD_DEBT.getCode())) {
+                repayPlan.setPayedAmount(0L);
+                repayPlan.setOverplusAmount(repayPlan.getMonthRepayAmount());
+            } else {
+                repayPlan.setPayedAmount(repayPlan.getMonthRepayAmount());
+                repayPlan.setOverplusAmount(0L);
+            }
+            repayPlanDAO.repayResultHandle(repayPlan);
+        }
     }
 
     @Override

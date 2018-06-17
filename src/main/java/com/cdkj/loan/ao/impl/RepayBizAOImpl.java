@@ -17,6 +17,7 @@ import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
@@ -39,7 +40,9 @@ import com.cdkj.loan.dto.req.XN630570Req;
 import com.cdkj.loan.dto.req.XN630572Req;
 import com.cdkj.loan.dto.req.XN630576Req;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
+import com.cdkj.loan.enums.EDealResult;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayBizType;
@@ -84,6 +87,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     @Autowired
     private ILogisticsBO logisticsBO;
+
+    private ISYSBizLogBO sysBizLogBO;
 
     // 变更银行卡
     @Override
@@ -279,10 +284,17 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Transactional
     public void takeCarApply(XN630550Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        if (!ERepayBizNode.TC_APPLY.getCode()
-            .equals(repayBiz.getCurNodeCode())) {
+        if (!ERepayBizNode.TC_APPLY.getCode().equals(repayBiz.getCurNodeCode())
+                && !ERepayBizNode.TC_RISK_MANAGE_CHECK_NO.getCode()
+                    .equals(repayBiz.getCurNodeCode())
+                && !ERepayBizNode.TC_COMPANY_MANAGE_CHECK_NO.getCode()
+                    .equals(repayBiz.getCurNodeCode())
+                && !ERepayBizNode.TC_RISK_LEADER_CHECK_NO.getCode()
+                    .equals(repayBiz.getCurNodeCode())
+                && !ERepayBizNode.TC_FINANCE_CHECK_NO.getCode()
+                    .equals(repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前还款业务不在拖车节点！");
+                "当前还款业务不在拖车提交节点！");
         }
 
         // 还款计划落地数据
@@ -291,44 +303,226 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayPlanBO.takeCarApply(repayPlan, req);
 
         // 还款业务变更节点
+        String preNodeCode = repayBiz.getCurNodeCode();
+        String nextNodeCode = getNextNodeCode(preNodeCode,
+            EBoolean.YES.getCode());
+        repayBiz.setCurNodeCode(nextNodeCode);
+        repayBizBO.takeCarApply(repayBiz);
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap()
+            .get(repayBiz.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preNodeCode,
+            currentNode.getCode(), currentNode.getValue(), req.getOperator());
     }
 
     @Override
     public void takeCarRiskManageCheck(String code, String approveResult,
             String operator, String remark) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizNode.TC_RISK_MANAGE_CHECK.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不在拖车风控经理审核节点！");
+        }
 
+        // 还款业务变更节点
+        String preNodeCode = repayBiz.getCurNodeCode();
+        String nextNodeCode = getNextNodeCode(preNodeCode, approveResult);
+        repayBiz.setCurNodeCode(nextNodeCode);
+        repayBizBO.takeCarRiskManageCheck(repayBiz);
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap()
+            .get(repayBiz.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preNodeCode,
+            currentNode.getCode(), currentNode.getValue(), operator);
     }
 
     @Override
     public void takeCarCompanyManageCheck(String code, String approveResult,
             String operator, String remark) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizNode.TC_COMPANY_MANAGE_CHECK.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不在拖车分公司总经理审核节点！");
+        }
+
+        // 还款业务变更节点
+        String preNodeCode = repayBiz.getCurNodeCode();
+        String nextNodeCode = getNextNodeCode(preNodeCode, approveResult);
+        repayBiz.setCurNodeCode(nextNodeCode);
+        repayBizBO.takeCarCompanyManageCheck(repayBiz);
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap()
+            .get(repayBiz.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preNodeCode,
+            currentNode.getCode(), currentNode.getValue(), operator);
 
     }
 
     @Override
     public void takeCarRiskLeaderCheck(String code, String approveResult,
             String operator, String remark) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizNode.TC_RISK_LEADER_CHECK.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不在风控总监审核节点！");
+        }
 
+        // 还款业务变更节点
+        String preNodeCode = repayBiz.getCurNodeCode();
+        String nextNodeCode = getNextNodeCode(preNodeCode, approveResult);
+        repayBiz.setCurNodeCode(nextNodeCode);
+        repayBizBO.takeCarRiskLeaderCheck(repayBiz);
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap()
+            .get(repayBiz.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preNodeCode,
+            currentNode.getCode(), currentNode.getValue(), operator);
     }
 
     @Override
     public void takeCarFinanceManageCheck(String code, String approveResult,
             String operator, String remark) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizNode.TC_FINANCE_CHECK.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不在财务经理审核节点！");
+        }
 
+        // 还款业务变更节点
+        String preNodeCode = repayBiz.getCurNodeCode();
+        String nextNodeCode = getNextNodeCode(preNodeCode, approveResult);
+        repayBiz.setCurNodeCode(nextNodeCode);
+        repayBizBO.takeCarFinanceManageCheck(repayBiz);
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap()
+            .get(repayBiz.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preNodeCode,
+            currentNode.getCode(), currentNode.getValue(), operator);
     }
 
     @Override
     public void takeCarSureFk(String code, String remitBankCode,
             String remitBillPdf, Date remitDatetime, String operator) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizNode.TC_SURE_FK.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不在确认放款节点！");
+        }
 
+        // 还款计划变更节点
+        RepayPlan repayPlan = repayPlanBO.getRepayPlanByRepayBizCode(code,
+            ERepayPlanNode.QKCSB_APPLY_TC);
+        repayPlanBO.takeCarSureFk(repayPlan, remitBankCode, remitBillPdf,
+            remitDatetime, operator);
+
+        // 还款业务变更节点
+        String preNodeCode = repayBiz.getCurNodeCode();
+        String nextNodeCode = getNextNodeCode(preNodeCode,
+            EBoolean.YES.getCode());
+        repayBiz.setCurNodeCode(nextNodeCode);
+        repayBizBO.takeCarSureFk(repayBiz);
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap()
+            .get(repayBiz.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preNodeCode,
+            currentNode.getCode(), currentNode.getValue(), operator);
     }
 
     @Override
     public void takeCarInputResult(XN630556Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
+        if (!ERepayBizNode.TC_RESULT_INPUT.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不在录入拖车结果节点！");
+        }
+
+        // 还款计划变更节点
+        RepayPlan repayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
+            req.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
+        repayPlanBO.takeCarInputResult(repayPlan, req);
+
+        // 还款业务变更节点
+        String preNodeCode = repayBiz.getCurNodeCode();
+        String nextNodeCode = getNextNodeCode(preNodeCode,
+            EBoolean.YES.getCode());
+        repayBiz.setCurNodeCode(nextNodeCode);
+        repayBizBO.takeCarInputResult(repayBiz);
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap()
+            .get(repayBiz.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preNodeCode,
+            currentNode.getCode(), currentNode.getValue(), req.getOperator());
     }
 
     @Override
     public void takeCarResultHandle(XN630557Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
+        if (!ERepayBizNode.TC_TO_HANDLE.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不在拖车结果已录入待处理节点！");
+        }
+
+        // 还款计划变更节点
+        RepayPlan repayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
+            req.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
+        repayPlanBO.takeCarResultHandle(repayPlan, req);
+
+        // 还款业务变更节点
+        String preNodeCode = repayBiz.getCurNodeCode();
+        String nextNodeCode = null;
+        if (EDealResult.SELLED.getCode().equals(req.getDealResult())) {// 出售
+            nextNodeCode = ERepayBizNode.SELLED.getCode();
+            // 还款计划处理为坏账
+            repayPlanBO.refreshRepayPlanTakeCarHandle(
+                repayPlan.getRepayBizCode(), ERepayPlanNode.BAD_DEBT);
+
+        } else if (EDealResult.REDEEM.getCode().equals(req.getDealResult())
+                || EDealResult.GREEN.getCode().equals(req.getDealResult())) {// 赎回或缴纳押金
+            if (repayPlan.getCurPeriods() == repayPlan.getPeriods()) {// 最后一期
+                nextNodeCode = ERepayBizNode.COMMIT_SETTLE.getCode();
+                // 还款计划处理为已结清
+                repayPlanBO.refreshRepayPlanTakeCarHandle(
+                    repayPlan.getRepayBizCode(), ERepayPlanNode.REPAY_YES);
+
+            } else {
+                nextNodeCode = ERepayBizNode.TO_REPAY.getCode();
+                // 还款计划处理为继续还款中
+                repayPlanBO.repaySuccess(repayPlan,
+                    repayPlan.getMonthRepayAmount());
+            }
+        } else if (EDealResult.JUDGE.getCode().equals(req.getDealResult())) {// 司法诉讼，还款计划暂不处理
+            nextNodeCode = ERepayBizNode.JUDGE.getCode();
+        }
+        repayBiz.setCurNodeCode(nextNodeCode);
+        repayBizBO.takeCarResultHandle(repayBiz);
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap()
+            .get(repayBiz.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), preNodeCode,
+            currentNode.getCode(), currentNode.getValue(), req.getOperator());
     }
 
     @Override

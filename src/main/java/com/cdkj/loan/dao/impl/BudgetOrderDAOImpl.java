@@ -172,4 +172,14 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
         super.update(NAMESPACE.concat("update_financeConfirm"), condition);
     }
 
+    @Override
+    public void approveMakeCard(BudgetOrder condition) {
+        super.update(NAMESPACE.concat("update_approveMakeCard"), condition);
+    }
+
+    @Override
+    public void receiptAndReturn(BudgetOrder condition) {
+        super.update(NAMESPACE.concat("update_receiptAndReturn"), condition);
+    }
+
 }

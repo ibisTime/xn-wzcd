@@ -10,6 +10,7 @@
 		<result column="bank_code" property="bankCode" />
 		<result column="subbranch" property="subbranch" />
 		<result column="bankcard_number" property="bankcardNumber" />
+		<result column="point_rate" property="pointRate" />
 		<result column="remark" property="remark" />
 	</resultMap>
 	<sql id="where_condition">
@@ -38,6 +39,7 @@
 		,t.bank_code
 		,t.subbranch
 		,t.bankcard_number
+		,t.point_rate
 		,t.remark
 		FROM
 		tb_collect_bankcard t
@@ -65,6 +67,7 @@
 		,bank_code
 		,subbranch
 		,bankcard_number
+		,point_rate
 		,remark
 		)
 		VALUES(
@@ -75,6 +78,7 @@
 		,#{bankCode}
 		,#{subbranch}
 		,#{bankcardNumber}
+		,#{pointRate}
 		,#{remark}
 		)
 	</insert>
@@ -93,9 +97,32 @@
 		,bank_code = #{bankCode}
 		,subbranch = #{subbranch}
 		,bankcard_number = #{bankcardNumber}
+		,point_rate = #{pointRate}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
+	
+	<select id="select_collect_bankcard_byCompanyCodeAndType" parameterType="collectBankcard" resultMap="collectBankcard_DB_Result">
+		SELECT
+		t.code
+		,t.type
+		,t.company_code
+		,t.real_name
+		,t.bank_code
+		,t.subbranch
+		,t.bankcard_number
+		,t.point_rate
+		,t.remark
+		FROM
+		tb_collect_bankcard t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	
+	</select>
 
 
 </mapper>
