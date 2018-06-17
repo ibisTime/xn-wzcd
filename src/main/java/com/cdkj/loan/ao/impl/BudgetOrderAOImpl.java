@@ -30,6 +30,7 @@ import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.PhoneUtil;
 import com.cdkj.loan.core.StringValidater;
@@ -1006,12 +1007,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         Long loanAmount = budgetOrder.getLoanAmount();
         Long currentInvoicePrice = StringValidater
             .toLong(req.getCurrentInvoicePrice());
-        double companyLoanCs = loanAmount / currentInvoicePrice;
+        double companyLoanCs = AmountUtil.div(loanAmount, currentInvoicePrice);
         budgetOrder.setCompanyLoanCs(companyLoanCs);
+        budgetOrder.setIsRightInvoice(EBoolean.NO.getCode());
         if (companyLoanCs >= 0.6 && companyLoanCs <= 0.9) {
             budgetOrder.setIsRightInvoice(EBoolean.YES.getCode());
         }
-        budgetOrder.setIsRightInvoice(EBoolean.NO.getCode());
         budgetOrder.setCurrentInvoicePrice(
             StringValidater.toLong(req.getCurrentInvoicePrice()));
         budgetOrder.setInvoice(req.getInvoice());
