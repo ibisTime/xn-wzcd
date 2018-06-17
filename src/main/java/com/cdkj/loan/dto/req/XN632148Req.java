@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 public class XN632148Req extends APageReq {
@@ -29,6 +31,8 @@ public class XN632148Req extends APageReq {
 
     private String isAdvanceFund;// 是否垫资
 
+    private List<String> curNodeCodeList;// 节点
+
     @NotBlank
     private String roleCode;// 角色编号
 
@@ -38,6 +42,14 @@ public class XN632148Req extends APageReq {
 
     public void setCarDealerCode(String carDealerCode) {
         this.carDealerCode = carDealerCode;
+    }
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
     }
 
     public String getLoanBankCode() {
