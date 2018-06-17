@@ -107,4 +107,18 @@ public class AdvanceFundDAOImpl extends AMybatisTemplate implements
 
     }
 
+    @Override
+    public long selectTotalCountByRoleCode(AdvanceFund condition) {
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_advanceFund_count_byRoleCode"), condition);
+    }
+
+    @Override
+    public List<AdvanceFund> selectAdvenceFundByRoleCodeList(
+            AdvanceFund condition, int start, int pageSize) {
+        return super.selectList(
+            NAMESPACE.concat("select_advanceFund_byRoleCode"), start, pageSize,
+            condition, AdvanceFund.class);
+    }
+
 }

@@ -49,4 +49,8 @@ public interface IAdvanceFundBO extends IPaginableBO<AdvanceFund> {
     // 申请撤销垫资
     public void applyCancelAdvanceFund(AdvanceFund data);
 
+    // 分页查询垫资单根据角色编号
+    public Object queryAdvanceFundPageByRoleCode(int start, int limit,
+            AdvanceFund condition);
+
 }

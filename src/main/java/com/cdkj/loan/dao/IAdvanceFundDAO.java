@@ -1,5 +1,7 @@
 package com.cdkj.loan.dao;
 
+import java.util.List;
+
 import com.cdkj.loan.dao.base.IBaseDAO;
 import com.cdkj.loan.domain.AdvanceFund;
 
@@ -37,4 +39,10 @@ public interface IAdvanceFundDAO extends IBaseDAO<AdvanceFund> {
 
     // 申请撤销垫资
     void updateApplyCancelAdvanceFund(AdvanceFund data);
+
+    long selectTotalCountByRoleCode(AdvanceFund condition);
+
+    List<AdvanceFund> selectAdvenceFundByRoleCodeList(AdvanceFund condition,
+            int start, int pageSize);
+
 }
