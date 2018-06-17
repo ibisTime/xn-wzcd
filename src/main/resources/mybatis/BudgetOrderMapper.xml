@@ -686,6 +686,7 @@
 	<select id="select_budgetOrderList" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
 		SELECT
 		t.code
+		,t.credit_code 
 		,t.cur_node_code 
 		,t.customer_name
 		,t.is_advance_fund
@@ -751,6 +752,7 @@
 		,t.loan_periods
 		,t.is_submit_cancel
 		,t.zf_sk_amount
+		,t.zf_sk_receipt_datetime
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -771,6 +773,7 @@
 		INSERT INTO
 		tdq_budget_order(
 		code
+		,credit_code
 		,customer_type
 		,customer_name
 		,car_dealer_code
@@ -891,6 +894,7 @@
 		)
 		VALUES(
 		#{code}
+		,#{creditCode}
 		,#{customerType}
 		,#{customerName}
 		,#{carDealerCode}
