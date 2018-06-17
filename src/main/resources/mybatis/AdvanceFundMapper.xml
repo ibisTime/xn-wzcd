@@ -270,5 +270,16 @@
 		cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_apply_cancel_advance_fund" parameterType="advanceFund">
+		UPDATE tdq_advance_fund
+		SET
+		cur_node_code = #{curNodeCode}
+		,cancel_reason = #{cancelReason}
+		,updater = #{updater}
+		WHERE code = #{code}
+	
+	</update>
+	
 
 </mapper>

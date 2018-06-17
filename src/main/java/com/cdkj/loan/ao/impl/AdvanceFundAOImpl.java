@@ -13,6 +13,7 @@ import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.AdvanceFund;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632170Req;
@@ -208,23 +209,40 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
 
         AdvanceFund data = advanceFundBO.getAdvanceFund(req.getCode());
 
-        data.setAdvanceFundAmount(req.getAdvanceFundAmount());
+        data.setAdvanceFundAmount(StringValidater.toLong(req
+            .getAdvanceFundAmount()));
         data.setAdvanceFundDatetime(DateUtil.strToDate(
             req.getAdvanceFundDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setPayBankcardCode(req.getPayBankcardCode());
         data.setBillPdf(req.getBillPdf());
         data.setNote(req.getNote());
         data.setUpdater(req.getOperator());
+        String preNodeCode = data.getCurNodeCode();
+        data.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
+            .getNextNode());
+        advanceFundBO.confirmPayCarDealer(data);
+        EAdvanceFundNode node = EAdvanceFundNode.getMap().get(
+            data.getCurNodeCode());
+        EBizLogType refType = null;
+        if (EAdvanceType.PARENT_BIZ.getCode().equals(data.getType())) {
+            refType = EBizLogType.ADVANCE_FUND_PARENT;
+        } else if (EAdvanceType.BRANCH_BIZ.getCode().equals(data.getType())) {
+            refType = EBizLogType.ADVANCE_FUND_BRANCH;
+        }
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getBudgetCode(), refType,
+            data.getCode(), preNodeCode, node.getCode(), req.getNote(),
+            req.getOperator());
 
         // 更改节点为银行放款流程第一步
-        data.setCurNodeCode(EBudgetOrderNode.BANK_LOAN_COMMIT.getCode());
-
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
+            .getBudgetCode());
+        budgetOrder.setCurNodeCode(EBudgetOrderNode.BANK_LOAN_COMMIT.getCode());
         sysBizLogBO.saveSYSBizLog(data.getBudgetCode(),
-            EBizLogType.BUDGET_ORDER, data.getBudgetCode(),
+            EBizLogType.BANK_LOAN_COMMIT, data.getBudgetCode(),
             EBudgetOrderNode.BANK_LOAN_COMMIT.getCode(),
             EBudgetOrderNode.BANK_LOAN_COMMIT.getValue(), req.getOperator());
+        budgetOrderBO.bankLoanConfirmSubmitBank(budgetOrder);
 
-        advanceFundBO.confirmPayCarDealer(data);
     }
 
     @Override

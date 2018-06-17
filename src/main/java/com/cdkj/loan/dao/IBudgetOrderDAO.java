@@ -82,6 +82,9 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 提醒发起流程
     void remindingProcess(BudgetOrder budgetOrder);
 
+    // 银行放款确认提交银行
+    void bankLoanConfirmSubmitBank(BudgetOrder budgetOrder);
+
     // 申请撤销
     void canceOrder(BudgetOrder budgetOrder);
 
@@ -90,4 +93,5 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     // 续保
     public int updateRenewInsurance(BudgetOrder data);
+
 }

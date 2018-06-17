@@ -128,14 +128,8 @@ public class AdvanceFundBOImpl extends PaginableBOImpl<AdvanceFund> implements
 
     @Override
     public void confirmPayCarDealer(AdvanceFund data) {
-        if (StringUtils.isNotBlank(data.getCode())) {
-            AdvanceFund advanceFund = advanceFundDAO.select(data);
-            if (null != advanceFund) {
-                advanceFundDAO.confirmPayCarDealer(advanceFund);
-            } else {
-                throw new BizException("xn0000", "垫资单不存在");
-            }
-
+        if (null != data) {
+            advanceFundDAO.confirmPayCarDealer(data);
         }
 
     }

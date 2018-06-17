@@ -23,10 +23,18 @@ public class XN632174Req {
     private String makeBillNote;
 
     // 更新人
-    private String updater;
+    private String operator;
 
     // 垫资单编号列表
     private List<String> codeList;
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
 
     public String getCompanyCode() {
         return companyCode;
@@ -58,14 +66,6 @@ public class XN632174Req {
 
     public void setMakeBillNote(String makeBillNote) {
         this.makeBillNote = makeBillNote;
-    }
-
-    public String getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater;
     }
 
     public List<String> getCodeList() {
