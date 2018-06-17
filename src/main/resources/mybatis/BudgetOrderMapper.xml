@@ -1332,5 +1332,16 @@
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
+
+	<update id="update_financeConfirm" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		zf_sk_amount = #{zfSkAmount}
+		,zf_sk_bankcard_code = #{zfSkBankcardCode}
+		,zf_sk_receipt_datetime = #{frozenStatus}
+		,zf_finance_remark = #{zfFinanceRemark}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
 </mapper>
 

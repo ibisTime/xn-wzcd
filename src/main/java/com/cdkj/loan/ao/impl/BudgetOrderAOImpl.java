@@ -61,6 +61,7 @@ import com.cdkj.loan.dto.req.XN632200Req;
 import com.cdkj.loan.dto.req.XN632220Req;
 import com.cdkj.loan.dto.req.XN632270Req;
 import com.cdkj.loan.dto.req.XN632271Req;
+import com.cdkj.loan.dto.req.XN632272Req;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EApproveResult;
@@ -1267,5 +1268,32 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             EBizLogType.BUDGET_CANCEL, budgetOrder.getCode(), preCurrentNode,
             budgetOrder.getCurNodeCode(), req.getApproveNote(),
             req.getOperator());
+    }
+
+    @Override
+    public void financeConfirm(XN632272Req req) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+
+        if (!EBudgetOrderNode.FINANCE_CONFIRM_RECEIVABLES.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是财务确认收款节点，不能操作");
+        }
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        budgetOrder.setZfSkAmount(StringValidater.toLong(req.getZfSkAmount()));
+        budgetOrder.setZfSkBankcardCode(req.getZfSkBankcardCode());
+        budgetOrder.setZfSkReceiptDatetime(DateUtil.strToDate(
+            req.getZfSkReceiptDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setZfFinanceRemark(req.getZfFinanceRemark());
+        budgetOrder.setCurNodeCode(
+            nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
+        budgetOrderBO.financeConfirm(budgetOrder);
+
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), req.getOperator());
     }
 }
