@@ -1,6 +1,6 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.IJudgeAO;
+import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
@@ -11,19 +11,20 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 财务确认收货
+ * 司法诉讼-财务确认收款
  * @author: silver 
  * @since: 2018年6月16日 下午8:45:52 
  * @history:
  */
 public class XN630563 extends AProcessor {
-    private IJudgeAO judgeAO = SpringContextHolder.getBean(IJudgeAO.class);
+    private IRepayBizAO repayBizAO = SpringContextHolder
+        .getBean(IRepayBizAO.class);
 
     private XN630563Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        judgeAO.financeSureReceipt(req);
+        repayBizAO.judgeFinanceSureReceipt(req);
         return new BooleanRes(true);
     }
 

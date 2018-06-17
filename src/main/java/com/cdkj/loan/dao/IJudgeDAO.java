@@ -11,8 +11,4 @@ public interface IJudgeDAO extends IBaseDAO<Judge> {
 
     // 执行结果录入
     public void updateJudgeResultInput(Judge data);
-
-    // 财务确认收货
-    public void updateFinanceSureReceipt(Judge data);
-
 }

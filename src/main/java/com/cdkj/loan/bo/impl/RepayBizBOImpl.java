@@ -326,16 +326,35 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBizDAO.updateJudgeFollow(data);
     }
 
+    // 执行结果录入用户已还清
     @Override
-    public void refreshJudgeResultInput(String code) {
+    public void refreshJudgePaid(String code) {
         RepayBiz data = new RepayBiz();
         data.setCode(code);
         data.setCurNodeCode(ERepayBizNode.FINANCE_SURE_RECEIPT.getCode());
         repayBizDAO.updateJudgeResultInput(data);
     }
 
+    // 执行结果录入需要重新诉讼
     @Override
-    public void refreshFinanceSureReceipt(RepayBiz data) {
+    public void refreshJudgeAgain(String code) {
+        RepayBiz data = new RepayBiz();
+        data.setCode(code);
+        data.setCurNodeCode(ERepayBizNode.JUDGE.getCode());
+        repayBizDAO.updateJudgeResultInput(data);
+    }
+
+    // 执行结果录入归入坏账
+    @Override
+    public void refreshJudgeBad(String code) {
+        RepayBiz data = new RepayBiz();
+        data.setCode(code);
+        data.setCurNodeCode(ERepayBizNode.JUDGE_BAD.getCode());
+        repayBizDAO.updateJudgeResultInput(data);
+    }
+
+    @Override
+    public void refreshJudgeFinanceSureReceipt(RepayBiz data) {
         repayBizDAO.updateFinanceSureReceipt(data);
     }
 

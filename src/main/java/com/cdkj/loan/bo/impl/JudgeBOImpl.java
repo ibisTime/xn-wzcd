@@ -31,16 +31,6 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
     private IJudgeDAO judgeDAO;
 
     @Override
-    public boolean isJudgeExist(String code) {
-        Judge condition = new Judge();
-        condition.setCode(code);
-        if (judgeDAO.selectTotalCount(condition) > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public String saveJudge(XN630560Req req) {
         Judge data = new Judge();
         String code = OrderNoGenerater
@@ -84,7 +74,6 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
     @Override
     public void refreshJudgeResultInput(XN630562Req req) {
         Judge data = queryJudgeByRepayBizCode(req.getCode(), EBoolean.NO);
-        data.setCode(req.getCode());
         data.setExeCaseNumber(req.getExeCaseNumber());
         data.setExeApplyUser(req.getExeApplyUser());
         data.setExeDatetime(DateUtil.strToDate(req.getExeDatetime(),
@@ -94,19 +83,10 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
         data.setSaleDatetime(DateUtil.strToDate(req.getSaleDatetime(),
             DateUtil.DB_DATE_FORMAT_STRING));
         data.setExePdf(req.getExePdf());
+        data.setStatus(EBoolean.YES.getCode());
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
         judgeDAO.updateJudgeResultInput(data);
-    }
-
-    @Override
-    public void refreshFinanceSureReceipt(String code, String updater) {
-        Judge data = new Judge();
-        data.setCode(code);
-        data.setStatus(EBoolean.YES.getCode());
-        data.setUpdater(updater);
-        data.setUpdateDatetime(new Date());
-        judgeDAO.updateFinanceSureReceipt(data);
     }
 
     @Override

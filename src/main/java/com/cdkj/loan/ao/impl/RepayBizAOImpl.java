@@ -21,6 +21,7 @@ import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.domain.Judge;
@@ -34,6 +35,7 @@ import com.cdkj.loan.dto.req.XN630513Req;
 import com.cdkj.loan.dto.req.XN630550Req;
 import com.cdkj.loan.dto.req.XN630556Req;
 import com.cdkj.loan.dto.req.XN630557Req;
+import com.cdkj.loan.dto.req.XN630563Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
@@ -514,6 +516,37 @@ public class RepayBizAOImpl implements IRepayBizAO {
         sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
             EBizLogType.REPAY_BIZ, repayBiz.getCode(), preNodeCode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
+    }
+
+    @Override
+    @Transactional
+    public void judgeFinanceSureReceipt(XN630563Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
+        if (!ERepayBizNode.FINANCE_SURE_RECEIPT.getCode().equals(
+            repayBiz.getCurNodeCode())) {
+            throw new BizException("xn0000", "当前还款业务不在财务确认收款节点！");
+        }
+
+        repayBiz.setJudgeReceiptDatetime(DateUtil.strToDate(
+            req.getJudgeReceiptDatetime(), DateUtil.DATA_TIME_PATTERN_1));
+        repayBiz.setJudgeReceiptAmount(StringValidater.toLong(req
+            .getJudgeReceiptAmount()));
+        repayBiz.setJudgeReceiptBank(req.getJudgeReceiptBank());
+        repayBiz.setJudgeReceiptBankcard(req.getJudgeReceiptBankcard());
+        repayBiz.setJudgeBillPdf(req.getJudgeBillPdf());
+
+        repayBiz.setJudgeNote(req.getJudgeNote());
+        repayBiz.setUpdater(req.getOperator());
+        repayBiz.setUpdateDatetime(new Date());
+        repayBizBO.refreshJudgeFinanceSureReceipt(repayBiz);
+
+        // 日志记录
+        ERepayBizNode node = ERepayBizNode.getMap().get(
+            nodeFlowBO.getNodeFlowByCurrentNode(repayBiz.getCurNodeCode())
+                .getNextNode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getCode(),
+            EBizLogType.REPAY_BIZ, req.getCode(), repayBiz.getCurNodeCode(),
+            node.getCode(), node.getValue(), req.getOperator());
     }
 
     private String getNextNodeCode(String curNodeCode, String approveResult) {

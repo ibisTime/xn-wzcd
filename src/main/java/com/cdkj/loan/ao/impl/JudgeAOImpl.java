@@ -1,6 +1,5 @@
 package com.cdkj.loan.ao.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,21 +10,20 @@ import com.cdkj.loan.ao.IJudgeAO;
 import com.cdkj.loan.bo.IJudgeBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
+import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
-import com.cdkj.loan.common.DateUtil;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Judge;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.dto.req.XN630560Req;
 import com.cdkj.loan.dto.req.XN630561Req;
 import com.cdkj.loan.dto.req.XN630562Req;
-import com.cdkj.loan.dto.req.XN630563Req;
 import com.cdkj.loan.enums.EBizLogType;
-import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECaseStatus;
+import com.cdkj.loan.enums.EExeResult;
 import com.cdkj.loan.enums.ERepayBizNode;
+import com.cdkj.loan.enums.ERepayPlanNode;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -43,6 +41,9 @@ public class JudgeAOImpl implements IJudgeAO {
     private IRepayBizBO repayBizBO;
 
     @Autowired
+    private IRepayPlanBO repayPlanBO;
+
+    @Autowired
     private ISYSUserBO sysUserBO;
 
     @Autowired
@@ -56,7 +57,7 @@ public class JudgeAOImpl implements IJudgeAO {
     public String judgeApply(XN630560Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
         if (!ERepayBizNode.JUDGE.getCode().equals(repayBiz.getCurNodeCode())) {
-            throw new BizException("xn0000", "当前业务不在司法诉讼节点！");
+            throw new BizException("xn0000", "当前还款业务不在司法诉讼节点！");
         }
 
         repayBizBO.refreshJudgeApply(req.getRepayBizCode());
@@ -79,7 +80,7 @@ public class JudgeAOImpl implements IJudgeAO {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         if (!ERepayBizNode.JUDGE_FOLLOW.getCode().equals(
             repayBiz.getCurNodeCode())) {
-            throw new BizException("xn0000", "当前业务不在诉讼跟进节点！");
+            throw new BizException("xn0000", "当前还款业务不在诉讼跟进节点！");
         }
 
         // 判决时修改还款业务状态
@@ -106,46 +107,26 @@ public class JudgeAOImpl implements IJudgeAO {
             repayBiz.getCurNodeCode())) {
             throw new BizException("xn0000", "当前业务不在执行结果录入节点！");
         }
-
-        repayBizBO.refreshJudgeResultInput(repayBiz.getCode());
         judgeBO.refreshJudgeResultInput(req);
+        // 结果为完毕，则用户已还欠款；结果为中止，则需要重新诉讼；结果为终结，则为坏账；
+        if (EExeResult.FINISH_NORMAL.getCode().equals(req.getExeResult())) {// 还款计划设置为已还清
 
-        // 日志记录
-        ERepayBizNode node = ERepayBizNode.getMap().get(
-            nodeFlowBO.getNodeFlowByCurrentNode(repayBiz.getCurNodeCode())
-                .getNextNode());
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getCode(),
-            EBizLogType.REPAY_BIZ, req.getCode(), repayBiz.getCurNodeCode(),
-            node.getCode(), node.getValue(), req.getOperator());
-    }
+            repayPlanBO.refreshRepayPlanTakeCarHandle(req.getCode(),
+                ERepayPlanNode.REPAY_YES);
+            repayBizBO.refreshJudgePaid(req.getCode());
 
-    @Override
-    @Transactional
-    public void financeSureReceipt(XN630563Req req) {
-        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        if (!ERepayBizNode.FINANCE_SURE_RECEIPT.getCode().equals(
-            repayBiz.getCurNodeCode())) {
-            throw new BizException("xn0000", "当前业务不在财务确认收货节点！");
+        } else if (EExeResult.ABORT.getCode().equals(req.getExeResult())) {// 还款计划不操作
+
+            repayBizBO.refreshJudgeAgain(req.getCode());
+
+        } else if (EExeResult.FINISH_BAD.getCode().equals(req.getExeResult())) {
+
+            // 还款计划处理为坏账
+            repayPlanBO.refreshRepayPlanTakeCarHandle(req.getCode(),
+                ERepayPlanNode.BAD_DEBT);
+            repayBizBO.refreshJudgeBad(req.getCode());
+
         }
-
-        RepayBiz data = new RepayBiz();
-        data.setCode(req.getCode());
-        data.setJudgeReceiptDatetime(DateUtil.strToDate(
-            req.getJudgeReceiptDatetime(), DateUtil.DATA_TIME_PATTERN_1));
-        data.setJudgeReceiptAmount(StringValidater.toLong(req
-            .getJudgeReceiptAmount()));
-        data.setJudgeReceiptBank(req.getJudgeReceiptBank());
-        data.setJudgeReceiptBankcard(req.getJudgeReceiptBankcard());
-        data.setJudgeBillPdf(req.getJudgeBillPdf());
-
-        data.setJudgeNote(req.getJudgeNote());
-        data.setUpdater(req.getOperator());
-        data.setUpdateDatetime(new Date());
-        repayBizBO.refreshFinanceSureReceipt(data);
-
-        Judge judge = judgeBO.queryJudgeByRepayBizCode(req.getCode(),
-            EBoolean.NO);
-        judgeBO.refreshFinanceSureReceipt(judge.getCode(), req.getOperator());
 
         // 日志记录
         ERepayBizNode node = ERepayBizNode.getMap().get(

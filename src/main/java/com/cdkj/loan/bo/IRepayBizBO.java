@@ -75,11 +75,17 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     // 诉讼跟进
     public void refreshJudgeFollow(String code);
 
-    // 执行结果录入
-    public void refreshJudgeResultInput(String code);
+    // 执行结果录入用户已还清
+    public void refreshJudgePaid(String code);
 
-    // 财务确认收货
-    public void refreshFinanceSureReceipt(RepayBiz data);
+    // 执行结果录入需要重新诉讼
+    public void refreshJudgeAgain(String code);
+
+    // 执行结果录入归入坏账
+    public void refreshJudgeBad(String code);
+
+    // 财务确认收款
+    public void refreshJudgeFinanceSureReceipt(RepayBiz data);
 
     // ********************************car********************************
 
