@@ -248,6 +248,12 @@
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code like "%"#{curNodeCode}"%"
 			</if>
+			<if test="curNodeCodeList != null and curNodeCodeList.size() != 0 ">
+				AND t.cur_node_code in 
+                <foreach item="item" index="index" collection="curNodeCodeList" open="(" separator="," close=")">
+	            	#{item}
+                </foreach> 
+			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
 				<![CDATA[AND t.apply_datetime > #{applyDatetimeStart}]]>
 			</if>
@@ -271,6 +277,9 @@
 			</if>
 			<if test="creditCode != null and creditCode != '' ">
 				AND t.credit_code = #{creditCode}
+			</if>
+			<if test="fbhStatus != null and fbhStatus != '' ">
+				AND t.fbh_status = #{fbhStatus}
 			</if>
 		</trim>
 	</sql>

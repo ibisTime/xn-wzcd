@@ -632,6 +632,16 @@ public class BudgetOrder extends ABaseDO {
 
     private BankSubbranch bankSubbranch;// 支行
 
+    private List<String> curNodeCodeList;// 节点
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
+    }
+
     public Bank getBank() {
         return bank;
     }

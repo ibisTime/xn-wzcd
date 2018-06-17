@@ -40,6 +40,7 @@ public class XN632145 extends AProcessor {
         condition.setLoanBankCode(req.getLoanBankCode());
         condition.setCompanyCode(req.getCompanyCode());
         condition.setIsAdvanceFund(req.getIsAdvanceFund());
+        condition.setCurNodeCodeList(req.getCurNodeCodeList());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
