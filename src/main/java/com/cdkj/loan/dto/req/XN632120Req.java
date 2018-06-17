@@ -2,6 +2,7 @@ package com.cdkj.loan.dto.req;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class XN632120Req {
@@ -13,6 +14,7 @@ public class XN632120Req {
     private String budgetOrderCode;
 
     // 处理类型(0 保存 1 发送)
+    @NotBlank
     private String dealType;
 
     // 客户类型

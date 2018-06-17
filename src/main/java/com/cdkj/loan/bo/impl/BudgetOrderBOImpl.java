@@ -258,4 +258,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         budgetOrderDAO.receiptAndReturn(budgetOrder);
     }
 
+    @Override
+    public void RemindingProcess(BudgetOrder budgetOrder) {
+        budgetOrderDAO.RemindingProcess(budgetOrder);
+    }
+
 }
