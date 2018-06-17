@@ -1,6 +1,6 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.IRepayBizAO;
+import com.cdkj.loan.ao.IJudgeAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
@@ -17,14 +17,13 @@ import com.cdkj.loan.spring.SpringContextHolder;
  * @history:
  */
 public class XN630563 extends AProcessor {
-    private IRepayBizAO repayBizAO = SpringContextHolder
-        .getBean(IRepayBizAO.class);
+    private IJudgeAO judgeAO = SpringContextHolder.getBean(IJudgeAO.class);
 
     private XN630563Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        repayBizAO.riskManagerCheck(req);
+        judgeAO.financeSureReceipt(req);
         return new BooleanRes(true);
     }
 

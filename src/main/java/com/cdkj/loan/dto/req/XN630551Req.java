@@ -9,13 +9,14 @@ import org.hibernate.validator.constraints.NotBlank;
  * @history:
  */
 public class XN630551Req {
+
+    // 还款业务编号
+    @NotBlank
+    private String code;
+
     // 审核结果(必填)1=通过 0=不通过
     @NotBlank
     private String approveResult;
-
-    // 还款计划编号
-    @NotBlank
-    private String code;
 
     // 最近修改人
     @NotBlank

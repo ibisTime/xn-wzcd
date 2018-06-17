@@ -11,9 +11,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 清欠催收部拖车录入
- * @author: CYL 
- * @since: 2018年6月10日 下午4:11:27 
+ * 结果处理
+ * @author: xieyj 
+ * @since: 2018年6月17日 下午2:56:09 
  * @history:
  */
 public class XN630557 extends AProcessor {
@@ -24,7 +24,7 @@ public class XN630557 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repayBizAO.trailerEntry(req);
+        repayBizAO.takeCarResultHandle(req);
         return new BooleanRes(true);
     }
 

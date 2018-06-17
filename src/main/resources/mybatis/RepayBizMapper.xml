@@ -655,4 +655,41 @@
 		,cur_overdue_count = #{curOverdueCount}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_judgeApply" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_judgeFollow" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_judgeResultInput" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_judgeFinanceSureReceipt" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,judge_receipt_datetime = #{judgeReceiptDatetime}
+		,judge_receipt_amount = #{judgeReceiptAmount}
+		,judge_receipt_bank = #{judgeReceiptBank}
+		,judge_receipt_bankcard = #{judgeReceiptBankcard}
+		,judge_bill_pdf = #{judgeBillPdf}
+		,judge_note = #{judgeNote}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+	
 </mapper>

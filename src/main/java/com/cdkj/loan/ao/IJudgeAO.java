@@ -9,18 +9,22 @@ import com.cdkj.loan.domain.Judge;
 import com.cdkj.loan.dto.req.XN630560Req;
 import com.cdkj.loan.dto.req.XN630561Req;
 import com.cdkj.loan.dto.req.XN630562Req;
+import com.cdkj.loan.dto.req.XN630563Req;
 
 @Component
 public interface IJudgeAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addJudge(XN630560Req req);
+    public String judgeApply(XN630560Req req);
 
     // 诉讼跟进
-    public void refreshJudgeFollow(XN630561Req req);
+    public void judgeFollow(XN630561Req req);
 
     // 执行结果录入
-    public void refreshJudgeResultEntry(XN630562Req req);
+    public void judgeResultEntry(XN630562Req req);
+
+    // 财务确认收货
+    public void financeSureReceipt(XN630563Req req);
 
     public Paginable<Judge> queryJudgePage(int start, int limit,
             Judge condition);
