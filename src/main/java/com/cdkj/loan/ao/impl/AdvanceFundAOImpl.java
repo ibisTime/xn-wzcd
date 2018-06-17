@@ -54,8 +54,6 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
     @Override
     public void confirmAdvanceFund(XN632170Req req) {
 
-        // 补充设置申请时间
-
         AdvanceFund data = advanceFundBO.getAdvanceFund(req.getCode());
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
