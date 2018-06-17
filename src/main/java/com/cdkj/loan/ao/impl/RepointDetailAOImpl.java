@@ -98,36 +98,38 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
             .getBudgetOrderCode());
         List<XN632290Res> resList = new ArrayList<XN632290Res>();
         // 协议内返点
-        CarDealerProtocol condition = new CarDealerProtocol();
-        condition.setCarDealerCode(req.getCarDealerCode());
-        List<CarDealerProtocol> list = carDealerProtocolBO
-            .queryCarDealerProtocolList(condition);
-        for (CarDealerProtocol carDealerProtocol : list) {
+        CarDealerProtocol carDealerProtocol = carDealerProtocolBO
+            .getCarDealerProtocolByCarDealerCode(req.getCarDealerCode());
+
+        CollectBankcard condition = new CollectBankcard();
+        condition.setCompanyCode(req.getCarDealerCode());
+        condition.setType(ECollectBankcard.DEALER_REBATE.getCode());
+        List<CollectBankcard> list = collectBankcardBO
+            .queryCollectBankcardByCompanyCodeAndType(condition);
+        for (CollectBankcard collectBankcard : list) {
+
+            Double pointRate = collectBankcard.getPointRate();
+
             XN632290Res res = new XN632290Res();
             res.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER.getCode());
             // 1单笔 2贷款额百分比
             if ("1".equals(carDealerProtocol.getReturnPointType())) {
-                res.setRepointAmount(carDealerProtocol.getReturnPointFee());
+                res.setRepointAmount(AmountUtil.mul(
+                    carDealerProtocol.getReturnPointFee(), pointRate));
             } else if ("2".equals(carDealerProtocol.getReturnPointType())) {
                 Long loanAmount = budgetOrder.getLoanAmount();
                 Double returnPointRate = carDealerProtocol.getReturnPointRate();
                 Long RepointAmount = AmountUtil
                     .mul(loanAmount, returnPointRate);
-                res.setRepointAmount(RepointAmount);
+                res.setRepointAmount(AmountUtil.mul(RepointAmount, pointRate));
             }
             res.setId(String.valueOf(carDealerProtocol.getId()));
-            CollectBankcard condition1 = new CollectBankcard();
-            condition1.setCompanyCode(req.getCarDealerCode());
-            condition1.setType(ECollectBankcard.DEALER_REBATE.getCode());
-            List<CollectBankcard> list1 = collectBankcardBO
-                .queryCollectBankcardList(condition1);
-            CollectBankcard bankcard1 = list1.get(0);
-            res.setAccountCode(bankcard1.getBankcardNumber());
+            res.setAccountCode(collectBankcard.getBankcardNumber());
             CarDealer carDealer = carDealerBO.getCarDealer(req
                 .getCarDealerCode());
             res.setCompanyName(carDealer.getFullName());
-            res.setBankcardNumber(bankcard1.getBankcardNumber());
-            res.setSubbranch(bankcard1.getSubbranch());
+            res.setBankcardNumber(collectBankcard.getBankcardNumber());
+            res.setSubbranch(collectBankcard.getSubbranch());
             resList.add(res);
         }
 
@@ -138,14 +140,14 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         Department department = departmentBO.getDepartment(budgetOrder
             .getCompanyCode());
         res.setCompanyName(department.getName());
-
         CollectBankcard condition2 = new CollectBankcard();
         condition2.setCompanyCode(department.getCode());
-        List<CollectBankcard> list3 = collectBankcardBO
-            .queryCollectBankcardList(condition2);
-        CollectBankcard bankcard2 = list3.get(0);
-        res.setBankcardNumber(bankcard2.getBankcardNumber());
-        res.setSubbranch(bankcard2.getSubbranch());
+        condition2.setType(ECollectBankcard.PLATFORM.getCode());
+        List<CollectBankcard> list2 = collectBankcardBO
+            .queryCollectBankcardByCompanyCodeAndType(condition2);
+        CollectBankcard collectBankcard2 = list2.get(0);
+        res.setBankcardNumber(collectBankcard2.getBankcardNumber());
+        res.setSubbranch(collectBankcard2.getSubbranch());
         resList.add(res);
         return resList;
     }

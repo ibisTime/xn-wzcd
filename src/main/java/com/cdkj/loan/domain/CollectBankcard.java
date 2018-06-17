@@ -25,7 +25,7 @@ public class CollectBankcard extends ABaseDO {
 
     private String bankcardNumber;// 账号
 
-    private String pointRate;// 返点比例
+    private Double pointRate;// 返点比例
 
     private String remark;// 备注
 
@@ -51,11 +51,11 @@ public class CollectBankcard extends ABaseDO {
         this.companyName = companyName;
     }
 
-    public String getPointRate() {
+    public Double getPointRate() {
         return pointRate;
     }
 
-    public void setPointRate(String pointRate) {
+    public void setPointRate(Double pointRate) {
         this.pointRate = pointRate;
     }
 

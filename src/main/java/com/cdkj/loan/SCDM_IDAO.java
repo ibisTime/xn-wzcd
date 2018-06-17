@@ -9,25 +9,27 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "repointDetail";
+    private static String key = "totalAdvanceFund";
 
     // 实体名称
-    private static String keyName = "返点明细表";
+    private static String keyName = "垫资汇总表";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdqt_repoint_detail";
+    private static String dbname = "tdq_total_advance_fund";
 
-    private static String[] DBwords = { "code", "budget_code", "repoint_code",
-            "user_name", "id_no", "car_dealer_code", "car_type", "loan_amount",
-            "bank_rate", "benchmark_rate", "fee", "use_money_purpose",
-            "repoint_amount", "account_code", "cur_node_code" };
+    private static String[] DBwords = { "code", "type", "company_code",
+            "total_advance_fund", "pay_amount", "make_bill_note",
+            "pay_datetime", "pay_bankcard_code", "bill_pdf", "pay_note",
+            "collection_amount", "collection_datetime",
+            "collection_bankcard_code", "collection_bill_pdf",
+            "collection_note", "updater", "update_datetime" };
 
-    private static String[] DBwordsName = { "编号", "预算单编号", "返点编号", "客户姓名",
-            "身份证号", "汽车经销商编号", "车辆型号", "贷款金额", "银行实际利率", "基准利率", "服务费", "用款用途",
-            "返点金额", "账号编号", "节点(0待制单1已制单待打款2已打款)" };
+    private static String[] DBwordsName = { "编号", "类型", "业务公司编号", "垫资总金额",
+            "付款金额", "制单意见说明", "付款时间", "付款账号编号", "付款凭证（水单）", "付款意见说明", "收款金额",
+            "收款时间", "收款银行（收款账号编号）", "收款凭证（水单）", "收款意见说明", "更新人", "更新时间" };
 
     public void testname() throws Exception {
     }

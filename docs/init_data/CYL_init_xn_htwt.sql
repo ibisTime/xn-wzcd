@@ -550,6 +550,12 @@ INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_d
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','settle_way','2','现结','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','settle_way','3','季结','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
 
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'make_card_status','制卡状态','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','make_card_status','0','待制卡','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','make_card_status','1','已制卡','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','make_card_status','2','待回录','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','make_card_status','3','已回录','admin',now(),NULL,'CD-HTWT000020','CD-HTWT000020');
+
 /*
 -- Query: select `type`,`ckey`,`cvalue`,`updater`,now() as `update_datetime`,`remark`,`company_code`,`system_code` from tsys_config
 -- Date: 2018-05-11 20:40

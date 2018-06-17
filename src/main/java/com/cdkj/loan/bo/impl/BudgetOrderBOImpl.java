@@ -248,4 +248,14 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         budgetOrderDAO.financeConfirm(budgetOrder);
     }
 
+    @Override
+    public void approveMakeCard(BudgetOrder budgetOrder) {
+        budgetOrderDAO.approveMakeCard(budgetOrder);
+    }
+
+    @Override
+    public void receiptAndReturn(BudgetOrder budgetOrder) {
+        budgetOrderDAO.receiptAndReturn(budgetOrder);
+    }
+
 }
