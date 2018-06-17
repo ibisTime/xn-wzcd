@@ -75,4 +75,36 @@ public class AdvanceFundDAOImpl extends AMybatisTemplate implements
 
     }
 
+    @Override
+    public void updateParentMakeBill(AdvanceFund data) {
+        super.update(NAMESPACE.concat("update_parent_make_bill"), data);
+
+    }
+
+    @Override
+    public void updateBranchMakeBill(AdvanceFund data) {
+        super.update(NAMESPACE.concat("update_branch_make_bill"), data);
+
+    }
+
+    @Override
+    public void confirmPayCarDealer(AdvanceFund data) {
+        super.update(NAMESPACE.concat("update_confirm_pay_car_dealer"), data);
+
+    }
+
+    @Override
+    public void updateConfirmPayBranchCompany(AdvanceFund data) {
+        super.update(NAMESPACE.concat("update_confirm_pay_branch_company"),
+            data);
+
+    }
+
+    @Override
+    public void updateApplyCancelAdvanceFund(AdvanceFund data) {
+        super
+            .update(NAMESPACE.concat("update_apply_cancel_advance_fund"), data);
+
+    }
+
 }

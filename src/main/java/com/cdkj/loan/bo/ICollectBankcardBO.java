@@ -28,4 +28,7 @@ public interface ICollectBankcardBO extends IPaginableBO<CollectBankcard> {
     public void removeCollectBankcardByList(
             List<CollectBankcard> CollectBankcardList);
 
+    public List<CollectBankcard> queryCollectBankcardByCompanyCodeAndType(
+            CollectBankcard condition);
+
 }

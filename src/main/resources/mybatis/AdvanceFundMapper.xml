@@ -5,6 +5,7 @@
 	<resultMap id="advanceFund_DB_Result" type="advanceFund">
 		<result column="code" property="code" />
 		<result column="budget_code" property="budgetCode" />
+		<result column="total_advance_fund_code" property="totalAdvanceFundCode" />
 		<result column="type" property="type" />
 		<result column="customer_name" property="customerName" />
 		<result column="company_code" property="companyCode" />
@@ -35,6 +36,7 @@
 		SELECT
 		t.code
 		,t.budget_code
+		,t.total_advance_fund_code
 		,t.type
 		,t.customer_name
 		,t.company_code
@@ -74,6 +76,7 @@
 		tdq_advance_fund(
 		code
 		,budget_code
+		,total_advance_fund_code
 		,type
 		,customer_name
 		,company_code
@@ -96,6 +99,7 @@
 		VALUES(
 		#{code}
 		,#{budgetCode}
+		,#{totalAdvanceFundCode}
 		,#{type}
 		,#{customerName}
 		,#{companyCode}
@@ -121,6 +125,7 @@
 		UPDATE tdq_advance_fund
 		SET
 		budget_code = #{budgetCode}
+		,total_advance_fund_code = #{totalAdvanceFundCode}
 		,type = #{type}
 		,customer_name = #{customerName}
 		,company_code = #{companyCode}
@@ -162,6 +167,42 @@
 		cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_parent_make_bill" parameterType="advanceFund">
+		UPDATE tdq_advance_fund
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_branch_make_bill" parameterType="advanceFund">
+		UPDATE tdq_advance_fund
+		SET
+		cur_node_code = #{curNodeCode}
+		,total_advance_fund_code = #{totalAdvanceFundCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_confirm_pay_car_dealer" parameterType="advanceFund">
+		UPDATE tdq_advance_fund
+		SET
+		budget_code = #{budgetCode}
+		,cur_node_code = #{curNodeCode}
+		,advance_fund_amount = #{advanceFundAmount}
+		,advance_fund_datetime = #{advanceFundDatetime}
+		,pay_bankcard_code = #{payBankcardCode}
+		,bill_pdf = #{billPdf}
+		,note = #{note}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
 
+	<update id="update_confirm_pay_branch_company" parameterType="advanceFund">
+		UPDATE tdq_advance_fund
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
 
 </mapper>

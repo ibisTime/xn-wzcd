@@ -132,4 +132,21 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
 
     }
 
+    @Override
+    public List<CollectBankcard> queryCollectBankcardByCompanyCodeAndType(
+            CollectBankcard condition) {
+        List<CollectBankcard> list = null;
+        if (StringUtils.isNotBlank(condition.getCompanyCode())
+                && StringUtils.isNotBlank(condition.getType())) {
+            list = collectBankcardDAO
+                .selectCollectBankcardByCompanyCodeAndTypeList(condition);
+            if (list == null) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "收款账号不存在");
+            }
+        }
+
+        return list;
+    }
+
 }

@@ -10,6 +10,8 @@ import com.cdkj.loan.dto.req.XN632170Req;
 import com.cdkj.loan.dto.req.XN632171Req;
 import com.cdkj.loan.dto.req.XN632172Req;
 import com.cdkj.loan.dto.req.XN632173Req;
+import com.cdkj.loan.dto.req.XN632175Req;
+import com.cdkj.loan.dto.req.XN632177Req;
 
 /**
  * 
@@ -43,5 +45,11 @@ public interface IAdvanceFundAO {
 
     // 总公司制单
     public void parentMakeBill(XN632173Req req);
+
+    // 确认打款给车行
+    public void confirmPayCarDealer(XN632175Req req);
+
+    // 申请撤销垫资
+    public void applyCancelAdvanceFund(XN632177Req req);
 
 }

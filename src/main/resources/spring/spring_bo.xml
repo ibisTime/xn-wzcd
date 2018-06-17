@@ -392,5 +392,9 @@
 	<bean id="judgeBO" class="com.cdkj.loan.bo.impl.JudgeBOImpl">
 		<property name="paginableDAO" ref="judgeDAOImpl"/>
 	</bean>
+	
+	<bean id="totalAdvanceFundBO" class="com.cdkj.loan.bo.impl.TotalAdvanceFundBOImpl">
+		<property name="paginableDAO" ref="totalAdvanceFundDAOImpl"/>
+	</bean>
 
 </beans>

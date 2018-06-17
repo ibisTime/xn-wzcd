@@ -21,4 +21,8 @@ public interface ICarDealerProtocolBO extends IPaginableBO<CarDealerProtocol> {
 
     public CarDealerProtocol getCarDealerProtocol(int id);
 
+    // 根据汽车经销商编号查协议
+    public CarDealerProtocol getCarDealerProtocolByCarDealerCode(
+            String carDealerCode);
+
 }

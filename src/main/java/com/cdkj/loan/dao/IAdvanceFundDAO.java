@@ -22,4 +22,19 @@ public interface IAdvanceFundDAO extends IBaseDAO<AdvanceFund> {
 
     // 省分公司总经理审核 更新节点
     void updateProvinceAudit(AdvanceFund data);
+
+    // 总公司制单
+    void updateParentMakeBill(AdvanceFund data);
+
+    // 分公司制单
+    void updateBranchMakeBill(AdvanceFund data);
+
+    // 确认打款给车行
+    void confirmPayCarDealer(AdvanceFund data);
+
+    // 确认打款给分公司
+    void updateConfirmPayBranchCompany(AdvanceFund data);
+
+    // 申请撤销垫资
+    void updateApplyCancelAdvanceFund(AdvanceFund data);
 }

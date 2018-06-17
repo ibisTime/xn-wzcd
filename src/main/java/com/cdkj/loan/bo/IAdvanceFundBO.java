@@ -34,4 +34,19 @@ public interface IAdvanceFundBO extends IPaginableBO<AdvanceFund> {
     // 省分公司总经理审核 更新节点
     public void refreshProvinceAudit(AdvanceFund data);
 
+    // 总公司制单
+    public void parentMakeBill(AdvanceFund data);
+
+    // 分公司制单
+    public void branchMakeBill(AdvanceFund data);
+
+    // 确认打款给车行
+    public void confirmPayCarDealer(AdvanceFund data);
+
+    // 确认打款给分公司
+    public void confirmPayBranchCompany(AdvanceFund data);
+
+    // 申请撤销垫资
+    public void applyCancelAdvanceFund(AdvanceFund data);
+
 }
