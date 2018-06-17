@@ -2,41 +2,17 @@ package com.cdkj.loan.dto.req;
 
 public class XN632120ReqRepointDetail {
 
-    // 编号
-    private String code;
-
     // 协议id
     private String protocolId;
 
     // 预算单编号
     private String budgetCode;
 
-    // 客户姓名
-    private String userName;
-
-    // 身份证号
-    private String idNo;
-
     // 汽车经销商编号
     private String carDealerCode;
 
     // 业务公司编号
     private String companyCode;
-
-    // 车辆型号
-    private String carType;
-
-    // 贷款金额
-    private Long loanAmount;
-
-    // 银行实际利率
-    private Double bankRate;
-
-    // 基准利率
-    private Double benchmarkRate;
-
-    // 服务费
-    private Long fee;
 
     // 用款用途
     private String useMoneyPurpose;
@@ -50,9 +26,6 @@ public class XN632120ReqRepointDetail {
     // 收款账号（用于客户不垫资，手动输入的应退按揭款的收款账号 ）
     private String mortgageAccountNo;
 
-    // 节点(0待制单1已制单待打款2已打款)
-    private String curNodeCode;
-
     public String getProtocolId() {
         return protocolId;
     }
@@ -61,100 +34,28 @@ public class XN632120ReqRepointDetail {
         this.protocolId = protocolId;
     }
 
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
-
-    public String getMortgageAccountNo() {
-        return mortgageAccountNo;
-    }
-
-    public void setMortgageAccountNo(String mortgageAccountNo) {
-        this.mortgageAccountNo = mortgageAccountNo;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getCode() {
-        return code;
+    public String getBudgetCode() {
+        return budgetCode;
     }
 
     public void setBudgetCode(String budgetCode) {
         this.budgetCode = budgetCode;
     }
 
-    public String getBudgetCode() {
-        return budgetCode;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
-    public String getIdNo() {
-        return idNo;
+    public String getCarDealerCode() {
+        return carDealerCode;
     }
 
     public void setCarDealerCode(String carDealerCode) {
         this.carDealerCode = carDealerCode;
     }
 
-    public String getCarDealerCode() {
-        return carDealerCode;
+    public String getCompanyCode() {
+        return companyCode;
     }
 
-    public void setCarType(String carType) {
-        this.carType = carType;
-    }
-
-    public String getCarType() {
-        return carType;
-    }
-
-    public Long getLoanAmount() {
-        return loanAmount;
-    }
-
-    public void setLoanAmount(Long loanAmount) {
-        this.loanAmount = loanAmount;
-    }
-
-    public Double getBankRate() {
-        return bankRate;
-    }
-
-    public void setBankRate(Double bankRate) {
-        this.bankRate = bankRate;
-    }
-
-    public Double getBenchmarkRate() {
-        return benchmarkRate;
-    }
-
-    public void setBenchmarkRate(Double benchmarkRate) {
-        this.benchmarkRate = benchmarkRate;
-    }
-
-    public Long getFee() {
-        return fee;
-    }
-
-    public void setFee(Long fee) {
-        this.fee = fee;
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
     }
 
     public String getUseMoneyPurpose() {
@@ -173,20 +74,20 @@ public class XN632120ReqRepointDetail {
         this.repointAmount = repointAmount;
     }
 
-    public void setAccountCode(String accountCode) {
-        this.accountCode = accountCode;
-    }
-
     public String getAccountCode() {
         return accountCode;
     }
 
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
+    public void setAccountCode(String accountCode) {
+        this.accountCode = accountCode;
     }
 
-    public String getCurNodeCode() {
-        return curNodeCode;
+    public String getMortgageAccountNo() {
+        return mortgageAccountNo;
+    }
+
+    public void setMortgageAccountNo(String mortgageAccountNo) {
+        this.mortgageAccountNo = mortgageAccountNo;
     }
 
 }
