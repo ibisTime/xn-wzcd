@@ -71,4 +71,18 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
 
     // 更新逾期金额和次数
     public void repayOverDue(RepayBiz repayBiz);
+
+    // ********************************司法诉讼********************************
+    // 诉讼申请
+    public void updateJudgeApply(RepayBiz data);
+
+    // 诉讼跟进
+    public void updateJudgeFollow(RepayBiz data);
+
+    // 执行结果录入
+    public void updateJudgeResultInput(RepayBiz data);
+
+    // 财务确认收货
+    public void updateFinanceSureReceipt(RepayBiz data);
+
 }
