@@ -177,7 +177,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     @Override
     public void overdueRedMenuHandle(RepayBiz data, String curNodeCode) {
         data.setCurNodeCode(curNodeCode);
-        repayBizDAO.overdueRedHandle(data);
+        repayBizDAO.updateOverdueRedHandle(data);
     }
 
     @Override
@@ -341,6 +341,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
 
     @Override
     public void takeCarApply(RepayBiz data) {
+        repayBizDAO.updateTakeCarApply(data);
     }
 
     /** 
@@ -348,8 +349,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
      */
     @Override
     public void takeCarRiskManageCheck(RepayBiz data) {
-        // TODO Auto-generated method stub
-
+        repayBizDAO.updateTakeCarRiskManageCheck(data);
     }
 
     /** 
@@ -357,8 +357,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
      */
     @Override
     public void takeCarCompanyManageCheck(RepayBiz data) {
-        // TODO Auto-generated method stub
-
+        repayBizDAO.updateTakeCarCompanyManageCheck(data);
     }
 
     /** 
@@ -366,8 +365,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
      */
     @Override
     public void takeCarRiskLeaderCheck(RepayBiz data) {
-        // TODO Auto-generated method stub
-
+        repayBizDAO.updateTakeCarRiskLeaderCheck(data);
     }
 
     /** 
@@ -375,8 +373,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
      */
     @Override
     public void takeCarFinanceManageCheck(RepayBiz data) {
-        // TODO Auto-generated method stub
-
+        repayBizDAO.updateTakeCarFinanceManageCheck(data);
     }
 
     /** 
@@ -384,8 +381,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
      */
     @Override
     public void takeCarSureFk(RepayBiz data) {
-        // TODO Auto-generated method stub
-
+        repayBizDAO.updateTakeCarSureFk(data);
     }
 
     /** 
@@ -393,8 +389,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
      */
     @Override
     public void takeCarInputResult(RepayBiz data) {
-        // TODO Auto-generated method stub
-
+        repayBizDAO.updateTakeCarInputResult(data);
     }
 
     /** 
@@ -402,7 +397,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
      */
     @Override
     public void takeCarResultHandle(RepayBiz data) {
-        // TODO Auto-generated method stub
+        repayBizDAO.updateTakeCarResultHandle(data);
     }
 
     public Paginable<RepayBiz> getPaginableByRoleCode(int start, int limit,

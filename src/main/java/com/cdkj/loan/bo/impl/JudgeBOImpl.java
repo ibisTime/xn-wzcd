@@ -3,6 +3,7 @@ package com.cdkj.loan.bo.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import com.cdkj.loan.domain.Judge;
 import com.cdkj.loan.dto.req.XN630560Req;
 import com.cdkj.loan.dto.req.XN630561Req;
 import com.cdkj.loan.dto.req.XN630562Req;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECaseStatus;
 import com.cdkj.loan.enums.EGeneratePrefix;
@@ -52,8 +54,8 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
         data.setCaseSubject(req.getCaseSubject());
         data.setCaseStatus(ECaseStatus.RECORD.getCode());
         data.setCaseFee(StringValidater.toLong(req.getCaseFee()));
-        data.setCaseStartDatetime(DateUtil.strToDate(req.getCaseStartDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setCaseStartDatetime(DateUtil.strToDate(
+            req.getCaseStartDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCasePdf(req.getCasePdf());
 
         data.setStatus(EBoolean.NO.getCode());
@@ -65,11 +67,7 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
 
     @Override
     public void refreshJudgeFollow(XN630561Req req) {
-        Judge condition = new Judge();
-        condition.setStatus(EBoolean.NO.getCode());
-        condition.setRepayBizCode(req.getCode());
-
-        Judge data = selectJudge(condition);
+        Judge data = queryJudgeByRepayBizCode(req.getCode(), EBoolean.NO);
         data.setCaseFee(StringValidater.toLong(req.getCaseFee()));
         data.setCaseStatus(req.getCaseStatus());
         data.setCourtDatetime(DateUtil.strToDate(req.getCourtDatetime(),
@@ -85,11 +83,7 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
 
     @Override
     public void refreshJudgeResultInput(XN630562Req req) {
-        Judge condition = new Judge();
-        condition.setStatus(EBoolean.NO.getCode());
-        condition.setRepayBizCode(req.getCode());
-
-        Judge data = selectJudge(condition);
+        Judge data = queryJudgeByRepayBizCode(req.getCode(), EBoolean.NO);
         data.setCode(req.getCode());
         data.setExeCaseNumber(req.getExeCaseNumber());
         data.setExeApplyUser(req.getExeApplyUser());
@@ -128,19 +122,26 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
             condition.setCode(code);
             data = judgeDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "记录不存在！");
+                throw new BizException("xn0000", "对应诉讼信息不存在!");
             }
         }
         return data;
     }
 
     @Override
-    public Judge selectJudge(Judge condition) {
-        Judge data = judgeDAO.select(condition);
-        if (data == null) {
-            throw new BizException("xn0000", "记录不存在！");
+    public Judge queryJudgeByRepayBizCode(String repayBizCode, EBoolean status) {
+        Judge data = null;
+
+        Judge condition = new Judge();
+        condition.setRepayBizCode(repayBizCode);
+        condition.setStatus(status.getCode());
+        List<Judge> list = judgeDAO.selectList(condition);
+        if (CollectionUtils.isNotEmpty(list)) {
+            data = list.get(0);
+        } else {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "对应诉讼信息不存在!");
         }
         return data;
     }
-
 }
