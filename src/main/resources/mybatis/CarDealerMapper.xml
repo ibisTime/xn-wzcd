@@ -91,7 +91,6 @@
 		,contact_phone
 		,main_brand
 		,parent_group
-		,agreement
 		,agreement_valid_date_start
 		,agreement_valid_date_end
 		,agreement_status
@@ -114,7 +113,6 @@
 		,#{contactPhone}
 		,#{mainBrand}
 		,#{parentGroup}
-		,#{agreement}
 		,#{agreementValidDateStart}
 		,#{agreementValidDateEnd}
 		,#{agreementStatus}
@@ -140,7 +138,6 @@
 		,contact_phone = #{contactPhone}
 		,main_brand = #{mainBrand}
 		,parent_group = #{parentGroup}
-		,agreement = #{agreement}
 		,agreement_valid_date_start = #{agreementValidDateStart}
 		,agreement_valid_date_end = #{agreementValidDateEnd}
 		,agreement_status = #{agreementStatus}

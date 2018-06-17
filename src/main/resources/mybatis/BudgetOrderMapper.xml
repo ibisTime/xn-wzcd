@@ -688,6 +688,7 @@
 		t.code
 		,t.cur_node_code 
 		,t.customer_name
+		,t.is_advance_fund
 		,t.car_dealer_code
 		,t.company_code
 		,t.insurance_company_code 
@@ -748,6 +749,8 @@
 		
 		,t.car_dealer_code
 		,t.loan_periods
+		,t.is_submit_cancel
+		,t.zf_sk_amount
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
