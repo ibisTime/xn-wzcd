@@ -23,6 +23,9 @@ public class BankSubbranch extends ABaseDO {
     // 银行编号
     private String bankCode;
 
+    // 银行行别=银行里的bankCode
+    private String bankType;
+
     // 简称
     private String abbrName;
 
@@ -87,6 +90,14 @@ public class BankSubbranch extends ABaseDO {
 
     // 更新人姓名
     private String updaterName;
+
+    public String getBankType() {
+        return bankType;
+    }
+
+    public void setBankType(String bankType) {
+        this.bankType = bankType;
+    }
 
     public String getUpdaterName() {
         return updaterName;
