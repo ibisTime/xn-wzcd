@@ -24,7 +24,7 @@ public class XN632211 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.refreshCardMaking(req.getCode(), req.getBankCardNumber(),
+        budgetOrderAO.cardMaking(req.getCode(), req.getBankCardNumber(),
             req.getMakeCardRemark());
         return new BooleanRes(true);
     }

@@ -458,6 +458,12 @@ public class BudgetOrder extends ABaseDO {
     // 每期月供金额
     private Long repayMonthAmount;
 
+    // 手机号
+    private String mobile;
+
+    // 证件类型
+    private String idKind;
+
     // 身份证号
     private String idNo;
 
@@ -1422,6 +1428,22 @@ public class BudgetOrder extends ABaseDO {
 
     public void setRepayMonthAmount(Long repayMonthAmount) {
         this.repayMonthAmount = repayMonthAmount;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getIdKind() {
+        return idKind;
+    }
+
+    public void setIdKind(String idKind) {
+        this.idKind = idKind;
     }
 
     public String getIdNo() {

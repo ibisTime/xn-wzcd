@@ -181,6 +181,8 @@ CREATE TABLE `tdq_budget_order` (
   `repay_first_month_amount` bigint(20) DEFAULT NULL COMMENT '首期还款金额',
   `repay_first_month_datetime` datetime DEFAULT NULL COMMENT '首期还款日期',
   `repay_month_amount` bigint(20) DEFAULT NULL COMMENT '每期月供金额',
+  `mobile` varchar(32) DEFAULT NULL COMMENT '手机号',
+  `id_kind` varchar(32) DEFAULT NULL COMMENT '证件类型',
   `id_no` varchar(32) DEFAULT NULL COMMENT '身份证号',
   `id_no_pic` varchar(255) DEFAULT NULL COMMENT '身份证照片',
   `file_list` tinytext DEFAULT NULL COMMENT '已入档清单',

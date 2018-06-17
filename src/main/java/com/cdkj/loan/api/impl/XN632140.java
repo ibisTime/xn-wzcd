@@ -25,7 +25,7 @@ public class XN632140 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.refreshBankLoanCommit(req.getCode(),
+        budgetOrderAO.bankLoanCommit(req.getCode(),
             DateUtil.strToDate(req.getBankCommitDatetime(),
                 DateUtil.FRONT_DATE_FORMAT_STRING),
             req.getBankCommitNote(), req.getOperator());

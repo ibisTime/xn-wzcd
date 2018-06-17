@@ -37,21 +37,21 @@ public interface IBudgetOrderAO {
     public void canceOrder(String code, String operator, String cancelNote);
 
     // 银行放款确认提交
-    public void refreshBankLoanCommit(String code, Date bankCommitDatetime,
+    public void bankLoanCommit(String code, Date bankCommitDatetime,
             String bankCommitNote, String operator);
 
     // 确认银行放款
-    public void refreshBankLoanConfirm(XN632141Req req);
+    public void bankLoanConfirm(XN632141Req req);
 
     // 车辆抵押确认提交银行
-    public void refreshCarPledgeCommit(String code, Date pledgeCommitDatetime,
+    public void carPledgeCommit(String code, Date pledgeCommitDatetime,
             String pledgeCommitNote, String operator);
 
     // 确认抵押完成
-    public void refreshCarPledgeConfirm(String code, String operator);
+    public void carPledgeConfirm(String code, String operator);
 
     // 车贷入档补录
-    public void refreshCarLoanArchive(XN632200Req req);
+    public void carLoanArchive(XN632200Req req);
 
     public void installGps(String code, String operator,
             List<XN632126ReqGps> gpsAzList);
@@ -68,7 +68,7 @@ public interface IBudgetOrderAO {
             BudgetOrder condition);
 
     // 制卡录入
-    public void refreshCardMaking(String code, String bankCardNumber,
+    public void cardMaking(String code, String bankCardNumber,
             String makeCardRemark);
 
     // 发保合录入
