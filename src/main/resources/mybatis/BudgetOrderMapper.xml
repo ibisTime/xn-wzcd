@@ -744,6 +744,7 @@
 		,t.pledge_commit_note
 		,t.loan_amount
 		,t.loan_bank_code
+		,t.make_card_status
 		
 		,t.car_dealer_code
 		,t.loan_periods
