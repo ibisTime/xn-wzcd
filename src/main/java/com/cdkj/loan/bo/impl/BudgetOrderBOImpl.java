@@ -243,4 +243,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         budgetOrderDAO.cancelBizAudit(budgetOrder);
     }
 
+    @Override
+    public void financeConfirm(BudgetOrder budgetOrder) {
+        budgetOrderDAO.financeConfirm(budgetOrder);
+    }
+
 }

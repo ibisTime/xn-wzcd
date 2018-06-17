@@ -11,9 +11,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 财务打款
- * @author: CYL 
- * @since: 2018年6月10日 下午4:11:27 
+ * 录入拖车结果
+ * @author: xieyj 
+ * @since: 2018年6月17日 下午2:55:31 
  * @history:
  */
 public class XN630556 extends AProcessor {
@@ -24,8 +24,7 @@ public class XN630556 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repayBizAO.financialMoney(req.getCode(), req.getOperator(),
-            req.getRemitAmount(), req.getRemitPdf());
+        repayBizAO.takeCarInputResult(req);
         return new BooleanRes(true);
     }
 
