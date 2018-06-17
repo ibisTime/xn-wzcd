@@ -20,47 +20,32 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
 
     public int updateRepayBizRestAmount(RepayBiz data);
 
-    // 清欠催收部审核
-    public void approveByQkcsDepartment(RepayBiz data);
-
-    // 驻行人员审核
-    public void approveByBankCheck(RepayBiz data);
-
-    // 总经理审核
-    public void approveByManager(RepayBiz data);
-
-    // 财务审核
-    public void approveByFinance(RepayBiz data);
-
-    // 业务团队解除抵押
-    public void releaseMortgage(RepayBiz data);
-
     // 红名单处理
-    public void overdueRedHandle(RepayBiz data);
+    public int updateOverdueRedHandle(RepayBiz data);
 
     // 申请拖车
-    public void applyTrailer(RepayBiz repayBiz);
+    public int updateTakeCarApply(RepayBiz data);
 
-    // 财务打款
-    public void financialMoney(RepayBiz repayBiz);
+    // 拖车分控经理审核
+    public int updateTakeCarRiskManageCheck(RepayBiz data);
 
-    // 清欠催收部拖车录入
-    public void trailerEntry(RepayBiz repayBiz);
+    // 拖车分公司总公司审核
+    public int updateTakeCarCompanyManageCheck(RepayBiz data);
 
-    // 司法诉讼结果录入
-    public void judicialLitigationEntry(RepayBiz repayBiz);
+    // 风控总监审核
+    public int updateTakeCarRiskLeaderCheck(RepayBiz data);
 
-    // 拖车管理
-    public void trailerManage(RepayBiz repayBiz);
+    // 财务经理审核
+    public int updateTakeCarFinanceManageCheck(RepayBiz data);
 
-    // 清欠催收部申请赎回
-    public void qkcsbRedeemApply(RepayBiz repayBiz);
+    // 确认放款
+    public int updateTakeCarSureFk(RepayBiz data);
 
-    // 风控主管审核
-    public void riskManagerCheck(RepayBiz repayBiz);
+    // 录入拖车结果
+    public int updateTakeCarInputResult(RepayBiz data);
 
-    // 财务主管审核
-    public void financeApprove(RepayBiz repayBiz);
+    // 结果处理
+    public int updateTakeCarResultHandle(RepayBiz data);
 
     // 根据角色查条数
     public long selectTotalCountByRoleCode(RepayBiz condition);
@@ -70,19 +55,19 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
             int start, int pageSize);
 
     // 更新逾期金额和次数
-    public void repayOverDue(RepayBiz repayBiz);
+    public int repayOverDue(RepayBiz repayBiz);
 
     // ********************************司法诉讼********************************
     // 诉讼申请
-    public void updateJudgeApply(RepayBiz data);
+    public int updateJudgeApply(RepayBiz data);
 
     // 诉讼跟进
-    public void updateJudgeFollow(RepayBiz data);
+    public int updateJudgeFollow(RepayBiz data);
 
     // 执行结果录入
-    public void updateJudgeResultInput(RepayBiz data);
+    public int updateJudgeResultInput(RepayBiz data);
 
     // 财务确认收货
-    public void updateFinanceSureReceipt(RepayBiz data);
+    public int updateFinanceSureReceipt(RepayBiz data);
 
 }

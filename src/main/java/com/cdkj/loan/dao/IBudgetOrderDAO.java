@@ -46,6 +46,9 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     List<BudgetOrder> selectBudgetOrderByRoleCodeList(BudgetOrder condition,
             int start, int pageSize);
 
+    // 申请制卡
+    void approveMakeCard(BudgetOrder budgetOrder);
+
     // 制卡录入
     void refreshCardMaking(BudgetOrder condition);
 
@@ -69,4 +72,8 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     // 作废审核
     void cancelBizAudit(BudgetOrder budgetOrder);
+
+    // 财务确认收款
+    void financeConfirm(BudgetOrder budgetOrder);
+
 }

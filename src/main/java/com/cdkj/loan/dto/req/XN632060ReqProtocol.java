@@ -103,19 +103,16 @@ public class XN632060ReqProtocol {
     @NotBlank
     private String insuAgencyYear1Type;// 1年保险代理费类型(1平台/2车行)
 
-    @NotBlank
     private String insuAgencyYear1Fee;// 1年保险代理费
 
     @NotBlank
     private String insuAgencyYear2Type;// 2年保险代理费类型(1平台/2车行)
 
-    @NotBlank
     private String insuAgencyYear2Fee;// 2年保险代理费
 
     @NotBlank
     private String insuAgencyYear3Type;// 3年保险代理费类型(1平台/2车行)
 
-    @NotBlank
     private String insuAgencyYear3Fee;// 3年保险代理费
 
     public String getCarDealerCode() {

@@ -18,27 +18,25 @@ public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
 
     public int repayPartSuccess(RepayPlan repayPlan);
 
-    public int applyTrailer(RepayPlan repayPlan);
+    public int payFee(RepayPlan repayPlan);
 
-    public int financialMoney(RepayPlan repayPlan);
+    public int repayAmount(RepayPlan repayPlan);
 
-    public int trailerEntry(RepayPlan repayPlan);
+    // 拖车申请
+    public int updateTakeCarApply(RepayPlan data);
 
-    public int judicialLitigationEntry(RepayPlan repayPlan);
+    // 确认放款
+    public int updateTakeCarSureFk(RepayPlan data);
 
-    public int qkcsbRedeemApply(RepayPlan repayPlan);
+    // 录入拖车结果
+    public int updateTakeCarInputResult(RepayPlan data);
 
-    public int riskManagerCheck(RepayPlan repayPlan);
+    // 结果处理
+    public int updateTakeCarResultHandle(RepayPlan data);
 
     public long selectTotalCountByRoleCode(RepayPlan condition);
 
     public List<RepayPlan> selectRepayPlanByRoleCode(RepayPlan condition,
             int start, int pageSize);
-
-    public int financeApprove(RepayPlan repayPlan);
-
-    public int payFee(RepayPlan repayPlan);
-
-    public int repayAmount(RepayPlan repayPlan);
 
 }

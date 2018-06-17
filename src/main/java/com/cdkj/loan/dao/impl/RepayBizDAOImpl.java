@@ -29,8 +29,8 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
 
     @Override
     public long selectTotalCount(RepayBiz condition) {
-        return super.selectTotalCount(NAMESPACE.concat("select_repayBiz_count"),
-            condition);
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_repayBiz_count"), condition);
     }
 
     @Override
@@ -77,69 +77,49 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
     }
 
     @Override
-    public void approveByQkcsDepartment(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_approveByQkcsDepartment"), data);
+    public int updateTakeCarApply(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_takeCarApply"), data);
     }
 
     @Override
-    public void approveByBankCheck(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_approveByBankCheck"), data);
+    public int updateTakeCarRiskManageCheck(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_takeCarRiskManageCheck"),
+            data);
     }
 
     @Override
-    public void approveByManager(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_approveByManager"), data);
+    public int updateTakeCarCompanyManageCheck(RepayBiz data) {
+        return super.update(
+            NAMESPACE.concat("update_takeCarCompanyManageCheck"), data);
     }
 
     @Override
-    public void approveByFinance(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_approveByFinance"), data);
+    public int updateTakeCarRiskLeaderCheck(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_takeCarRiskLeaderCheck"),
+            data);
     }
 
     @Override
-    public void releaseMortgage(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_releaseMortgage"), data);
+    public int updateTakeCarFinanceManageCheck(RepayBiz data) {
+        return super.update(
+            NAMESPACE.concat("update_takeCarFinanceManageCheck"), data);
     }
 
     @Override
-    public void applyTrailer(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_applyTrailer"), data);
+    public int updateTakeCarSureFk(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_takeCarSureFk"), data);
     }
 
     @Override
-    public void financialMoney(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_financialMoney"), data);
+    public int updateTakeCarInputResult(RepayBiz data) {
+        return super
+            .update(NAMESPACE.concat("update_takeCarInputResult"), data);
     }
 
     @Override
-    public void trailerEntry(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_trailerEntry"), data);
-
-    }
-
-    @Override
-    public void judicialLitigationEntry(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_judicialLitigationEntry"), data);
-    }
-
-    @Override
-    public void trailerManage(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_trailerManage"), data);
-    }
-
-    @Override
-    public void qkcsbRedeemApply(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_qkcsbRedeemApply"), data);
-    }
-
-    @Override
-    public void riskManagerCheck(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_riskManagerCheck"), data);
-    }
-
-    @Override
-    public void financeApprove(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_financeApprove"), data);
+    public int updateTakeCarResultHandle(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_takeCarResultHandle"),
+            data);
     }
 
     @Override
@@ -156,32 +136,33 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
     }
 
     @Override
-    public void repayOverDue(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_repay_overdue"), data);
+    public int repayOverDue(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_repay_overdue"), data);
     }
 
     @Override
-    public void overdueRedHandle(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_overdueRedHandle"), data);
+    public int updateOverdueRedHandle(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_overdueRedHandle"), data);
     }
 
     @Override
-    public void updateJudgeApply(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_judgeApply"), data);
+    public int updateJudgeApply(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_judgeApply"), data);
     }
 
     @Override
-    public void updateJudgeFollow(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_judgeFollow"), data);
+    public int updateJudgeFollow(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_judgeFollow"), data);
     }
 
     @Override
-    public void updateJudgeResultInput(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_judgeResultInput"), data);
+    public int updateJudgeResultInput(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_judgeResultInput"), data);
     }
 
     @Override
-    public void updateFinanceSureReceipt(RepayBiz data) {
-        super.update(NAMESPACE.concat("update_judgeFinanceSureReceipt"), data);
+    public int updateFinanceSureReceipt(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_judgeFinanceSureReceipt"),
+            data);
     }
 }

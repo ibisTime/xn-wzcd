@@ -15,9 +15,13 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.IRepayPlanDAO;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.dto.req.XN630550Req;
+import com.cdkj.loan.dto.req.XN630556Req;
+import com.cdkj.loan.dto.req.XN630557Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
@@ -288,33 +292,13 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     }
 
     @Override
-    public void applyTrailer(RepayPlan repayPlan) {
-        repayPlanDAO.applyTrailer(repayPlan);
+    public void payFee(RepayPlan repayPlan) {
+        repayPlanDAO.payFee(repayPlan);
     }
 
     @Override
-    public void financialMoney(RepayPlan repayPlan) {
-        repayPlanDAO.financialMoney(repayPlan);
-    }
-
-    @Override
-    public void trailerEntry(RepayPlan repayPlan) {
-        repayPlanDAO.trailerEntry(repayPlan);
-    }
-
-    @Override
-    public void judicialLitigationEntry(RepayPlan repayPlan) {
-        repayPlanDAO.judicialLitigationEntry(repayPlan);
-    }
-
-    @Override
-    public void qkcsbRedeemApply(RepayPlan repayPlan) {
-        repayPlanDAO.qkcsbRedeemApply(repayPlan);
-    }
-
-    @Override
-    public void riskManagerCheck(RepayPlan repayPlan) {
-        repayPlanDAO.riskManagerCheck(repayPlan);
+    public void repayAmount(RepayPlan repayPlan) {
+        repayPlanDAO.repayAmount(repayPlan);
     }
 
     @Override
@@ -330,15 +314,6 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     }
 
     @Override
-    public void refreshRepayPlanCurNodeCode(RepayPlan repayPlan) {
-    }
-
-    @Override
-    public void financeApprove(RepayPlan repayPlan) {
-        repayPlanDAO.financeApprove(repayPlan);
-    }
-
-    @Override
     public int getTotalCount(String repayPlanCode, ERepayPlanNode repayPlanNode) {
         RepayPlan condition = new RepayPlan();
         condition.setCode(repayPlanCode);
@@ -347,12 +322,54 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     }
 
     @Override
-    public void payFee(RepayPlan repayPlan) {
-        repayPlanDAO.payFee(repayPlan);
+    public void takeCarApply(RepayPlan data, XN630550Req req) {
+        data.setPawnshopIsRedeem(req.getPawnshopIsRedeem());
+        data.setPawnshopName(req.getPawnshopName());
+        data.setRansom(req.getRansom());
+        data.setTsCarAmount(StringValidater.toLong(req.getTsCarAmount()));
+        data.setTsBankcardNumber(req.getTsBankcardNumber());
+        data.setTsBankName(req.getTsBankName());
+        data.setTsSubbranch(req.getTsSubbranch());
+        data.setTcApplyNote(req.getTcApplyNote());
+        data.setUpdater(req.getOperator());
+        data.setUpdateDatetime(new Date());
+        data.setRemark("申请拖车");
+        repayPlanDAO.updateTakeCarApply(data);
     }
 
     @Override
-    public void repayAmount(RepayPlan repayPlan) {
-        repayPlanDAO.repayAmount(repayPlan);
+    public void takeCarSureFk(RepayPlan data, String remitBankCode,
+            String remitBillPdf, Date remitDatetime, String operator) {
+        data.setRemitBankCode(remitBankCode);
+        data.setRemitBillPdf(remitBillPdf);
+        data.setRemitDatetime(remitDatetime);
+        data.setUpdater(operator);
+        data.setUpdateDatetime(new Date());
+        data.setRemark("确认收款");
+        repayPlanDAO.updateTakeCarApply(data);
+    }
+
+    @Override
+    public void takeCarInputResult(RepayPlan data, XN630556Req req) {
+        data.setTakeCarAddress(req.getTakeCarAddress());
+        data.setTakeDatetime(DateUtil.strToDate(req.getTakeDatetime(),
+            DateUtil.DATA_TIME_PATTERN_1));
+        data.setTakeName(req.getTakeName());
+        data.setTakeLocation(req.getTakeLocation());
+        data.setTakeNote(req.getTakeNote());
+        data.setUpdater(req.getOperator());
+        data.setUpdateDatetime(new Date());
+        repayPlanDAO.updateTakeCarInputResult(data);
+    }
+
+    @Override
+    public void takeCarResultHandle(RepayPlan data, XN630557Req req) {
+        data.setDealResult(req.getDealResult());
+        data.setSellPrice(StringValidater.toLong(req.getSellPrice()));
+        data.setDeposit(StringValidater.toLong(req.getDeposit()));
+        data.setFeeNote(req.getFeeNote());
+        data.setUpdater(req.getOperator());
+        data.setUpdateDatetime(new Date());
+        repayPlanDAO.updateTakeCarInputResult(data);
     }
 }

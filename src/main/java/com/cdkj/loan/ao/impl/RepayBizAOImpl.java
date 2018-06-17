@@ -12,6 +12,7 @@ import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankcardBO;
+import com.cdkj.loan.bo.IJudgeBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
@@ -21,6 +22,7 @@ import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bankcard;
+import com.cdkj.loan.domain.Judge;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
@@ -71,6 +73,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Autowired
     private INodeFlowBO nodeFlowBO;
 
+    @Autowired
+    private IJudgeBO judgeBO;
+
     // 变更银行卡
     @Override
     public void editBankcardNew(XN630510Req req) {
@@ -109,6 +114,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
             Long overplusAmount = repayPlan.getOverplusAmount();
             amount = amount + overplusAmount;
         }
+
+        // 司法诉讼
+        Judge judgeCondition = new Judge();
+        judgeCondition.setRepayBizCode(repayBiz.getCode());
+        repayBiz.setJudgeList(judgeBO.queryJudgeList(judgeCondition));
 
         RepayPlan overdueRepayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
             repayBiz.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
@@ -256,8 +266,20 @@ public class RepayBizAOImpl implements IRepayBizAO {
     // 1、节点前提判断
     // 2、将信息录入还款计划，还款业务节点信息更新
     @Override
+    @Transactional
     public void takeCarApply(XN630550Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
+        if (!ERepayBizNode.TC_APPLY.getCode().equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不在拖车节点！");
+        }
 
+        // 还款计划落地数据
+        RepayPlan repayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
+            req.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
+        repayPlanBO.takeCarApply(repayPlan, req);
+
+        // 还款业务变更节点
     }
 
     @Override
