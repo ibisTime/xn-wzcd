@@ -1380,5 +1380,12 @@
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
+
+	<update id="update_canceOrder" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
 </mapper>
 

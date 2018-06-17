@@ -263,4 +263,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         budgetOrderDAO.RemindingProcess(budgetOrder);
     }
 
+    @Override
+    public void canceOrder(BudgetOrder budgetOrder) {
+        budgetOrderDAO.canceOrder(budgetOrder);
+    }
+
 }

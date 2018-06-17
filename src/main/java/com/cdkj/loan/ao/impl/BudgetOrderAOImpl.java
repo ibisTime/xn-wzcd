@@ -608,7 +608,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     public void canceOrder(String code, String operator, String cancelNote) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+        // 之前节点
+        String preCurrentNode = budgetOrder.getCurNodeCode();
+        budgetOrder.setCurNodeCode(EBudgetOrderNode.START_NODE.getCode());
+        budgetOrderBO.canceOrder(budgetOrder);
 
+        // 日志记录
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+            currentNode.getCode(), currentNode.getValue(), operator);
     }
 
     @Override
@@ -1293,11 +1304,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Transactional
     public void applyCancel(XN632270Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
-        if (!EBudgetOrderNode.TO_APPLY_CANCEL.getCode()
-            .equals(budgetOrder.getCurNodeCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是待作废节点，不能操作");
-        }
         String preCurrentNode = budgetOrder.getCurNodeCode();
         budgetOrder.setZfReason(req.getZfReason());
         budgetOrder.setFrozenStatus(EBudgetFrozenStatus.FROZEN.getCode());
