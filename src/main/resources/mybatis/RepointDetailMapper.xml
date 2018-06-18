@@ -35,6 +35,9 @@
 			<if test="useMoneyPurpose != null and useMoneyPurpose != '' ">
 				AND t.use_money_purpose = #{useMoneyPurpose}
 			</if>
+			<if test="repointCode != null and repointCode != '' ">
+				AND t.repoint_code = #{repointCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_repointDetail" parameterType="repointDetail" resultMap="repointDetail_DB_Result">
@@ -133,6 +136,14 @@
 		,account_code = #{accountCode}
 		,mortgage_account_no = #{mortgageAccountNo}
 		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_cur_node_code" parameterType="repointDetail">
+		UPDATE tdqt_repoint_detail
+		SET
+		cur_node_code = #{curNodeCode}
+		,repoint_code = #{repointCode}
 		WHERE code = #{code}
 	</update>
 

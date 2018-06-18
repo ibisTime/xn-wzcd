@@ -26,9 +26,9 @@ public class SCDM_IDAO {
             "pay_bankcard_code", "bill_pdf", "pay_remark", "settle_type",
             "cur_node_code" };
 
-    private static String[] DBwordsName = { "编号", "类型", "业务公司编号", "垫资总金额",
-            "付款金额", "制单意见说明", "付款时间", "付款账号编号", "付款凭证（水单）", "付款意见说明", "收款金额",
-            "收款时间", "收款银行（收款账号编号）", "收款凭证（水单）", "收款意见说明", "更新人", "更新时间" };
+    private static String[] DBwordsName = { "编号", "汽车经销商编号", "收款账号编号", "总金额",
+            "缘由", "申请公司编号", "申请人编号", "申请时间", "付款时间  ", "付款账号编号", "水单", "付款备注",
+            "结算方式", "节点（0待打款1已打款）" };
 
     public void testname() throws Exception {
     }

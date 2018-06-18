@@ -59,4 +59,10 @@ public class RepointDetailDAOImpl extends AMybatisTemplate implements
         return 0;
     }
 
+    @Override
+    public void updateCurNodeCode(RepointDetail data) {
+
+        super.update(NAMESPACE.concat("update_cur_node_code"), data);
+    }
+
 }
