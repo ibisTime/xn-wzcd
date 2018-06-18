@@ -132,10 +132,10 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
     }
 
     @Override
-    public Paginable<BankSubbranch> queryBankSubbranchPage(int start,
-            int limit, BankSubbranch condition) {
-        Paginable<BankSubbranch> paginable = bankSubbranchBO.getPaginable(
-            start, limit, condition);
+    public Paginable<BankSubbranch> queryBankSubbranchPage(int start, int limit,
+            BankSubbranch condition) {
+        Paginable<BankSubbranch> paginable = bankSubbranchBO.getPaginable(start,
+            limit, condition);
         for (BankSubbranch bankSubbranch : paginable.getList()) {
             initBankSubbranch(bankSubbranch);
         }
@@ -154,7 +154,7 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
 
     private void initBankSubbranch(BankSubbranch bankSubbranch) {
         if (bankSubbranch != null) {
-            Bank bank = bankBO.getBankBySubbranch(bankSubbranch.getBankCode());
+            Bank bank = bankBO.getBankBySubbranch(bankSubbranch.getCode());
             bankSubbranch.setBank(bank);
             String bankName = bank.getBankName();
             bankSubbranch.setBankName(bankName);
