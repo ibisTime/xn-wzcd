@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICollectBankcardAO;
+import com.cdkj.loan.bo.IBankBO;
+import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
-import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.domain.Bank;
+import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.dto.req.XN632000Req;
 import com.cdkj.loan.dto.req.XN632002Req;
@@ -20,7 +23,10 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
     private ICollectBankcardBO collectBankcardBO;
 
     @Autowired
-    private IDepartmentBO departmentBO;
+    private IBankSubbranchBO bankSubbranchBO;
+
+    @Autowired
+    private IBankBO bankBO;
 
     @Override
     public String addCollectBankcard(XN632000Req req) {
@@ -29,7 +35,12 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
         data.setCompanyCode(req.getCompanyCode());
         data.setRealName(req.getRealName());
         data.setBankCode(req.getBankCode());
-        data.setSubbranch(req.getSubbranch());
+        // 获取银行名称
+        BankSubbranch subbranch = bankSubbranchBO
+            .getBankSubbranch(req.getBankCode());
+        Bank bank = bankBO.getBank(subbranch.getBankCode());
+        data.setBankName(bank.getBankName());
+
         data.setBankcardNumber(req.getBankcardNumber());
         data.setRemark(req.getRemark());
         return collectBankcardBO.saveCollectBankcard(data);
@@ -43,7 +54,12 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
         data.setCompanyCode(req.getCompanyCode());
         data.setRealName(req.getRealName());
         data.setBankCode(req.getBankCode());
-        data.setSubbranch(req.getSubbranch());
+        // 获取银行名称
+        BankSubbranch subbranch = bankSubbranchBO
+            .getBankSubbranch(req.getBankCode());
+        Bank bank = bankBO.getBank(subbranch.getBankCode());
+        data.setBankName(bank.getBankName());
+
         data.setBankcardNumber(req.getBankcardNumber());
         data.setRemark(req.getRemark());
         return collectBankcardBO.refreshCollectBankcard(data);

@@ -7,5 +7,6 @@ import com.cdkj.loan.domain.BudgetOrderGps;
 public interface IBudgetOrderGpsDAO extends IBaseDAO<BudgetOrderGps> {
     String NAMESPACE = IBudgetOrderGpsDAO.class.getName().concat(".");
 
-    int update(BudgetOrderGps data);
+    // 回收作废
+    public int updateAbandonBudgetOrderGps(BudgetOrderGps data);
 }

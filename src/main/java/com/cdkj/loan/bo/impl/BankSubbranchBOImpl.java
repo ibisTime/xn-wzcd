@@ -53,11 +53,13 @@ public class BankSubbranchBOImpl extends PaginableBOImpl<BankSubbranch>
     }
 
     @Override
-    public BankSubbranch getBankSubbranch(BankSubbranch condition) {
-        BankSubbranch select = bankSubbranchDAO.select(condition);
-        Bank bank = bankAO.getBank(select.getBankCode());
-        select.setBank(bank);
-        return select;
+    public BankSubbranch getBankSubbranch(String code) {
+        BankSubbranch condition = new BankSubbranch();
+        condition.setCode(code);
+        BankSubbranch bankSubbranch = bankSubbranchDAO.select(condition);
+        Bank bank = bankAO.getBank(bankSubbranch.getBankCode());
+        bankSubbranch.setBank(bank);
+        return bankSubbranch;
     }
 
     @Override

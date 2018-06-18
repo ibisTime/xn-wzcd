@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -25,7 +27,7 @@ public class BudgetOrderGps extends ABaseDO {
     private String azLocation;
 
     // 安装时间
-    private String azDatetime;
+    private Date azDatetime;
 
     // 安装人员
     private String azUser;
@@ -79,11 +81,11 @@ public class BudgetOrderGps extends ABaseDO {
         return azLocation;
     }
 
-    public void setAzDatetime(String azDatetime) {
+    public void setAzDatetime(Date azDatetime) {
         this.azDatetime = azDatetime;
     }
 
-    public String getAzDatetime() {
+    public Date getAzDatetime() {
         return azDatetime;
     }
 

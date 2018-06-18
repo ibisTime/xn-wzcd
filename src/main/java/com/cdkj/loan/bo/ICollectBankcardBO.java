@@ -27,8 +27,7 @@ public interface ICollectBankcardBO extends IPaginableBO<CollectBankcard> {
             List<XN632060ReqCollectBankcard> gsCollectBankcardList, String type,
             String belongBank, String code);
 
-    public void removeCollectBankcardByList(
-            List<XN632060ReqCollectBankcard> CollectBankcardList);
+    public void removeCollectBankcardByCompanyCode(String companyCode);
 
     public List<CollectBankcard> queryCollectBankcardByCompanyCodeAndType(
             CollectBankcard condition);

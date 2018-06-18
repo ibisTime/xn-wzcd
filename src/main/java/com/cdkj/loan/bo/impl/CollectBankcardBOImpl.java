@@ -39,7 +39,6 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
                 data.setCompanyCode(code);
                 data.setRealName(collectBankcard.getRealName());
                 data.setBankCode(collectBankcard.getBankCode());
-                data.setSubbranch(collectBankcard.getSubbranch());
                 data.setBankcardNumber(collectBankcard.getBankcardNumber());
                 data.setRemark(collectBankcard.getRemark());
                 data.setRemark(collectBankcard.getRemark());
@@ -63,10 +62,9 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
                 data.setCompanyCode(code);
                 data.setRealName(collectBankcard.getRealName());
                 data.setBankCode(collectBankcard.getBankCode());
-                data.setSubbranch(collectBankcard.getSubbranch());
                 data.setBankcardNumber(collectBankcard.getBankcardNumber());
-                data.setPointRate(
-                    StringValidater.toDouble(collectBankcard.getPointRate()));
+                data.setPointRate(StringValidater.toDouble(collectBankcard
+                    .getPointRate()));
                 data.setRemark(collectBankcard.getRemark());
                 collectBankcardDAO.insert(data);
             }
@@ -77,8 +75,8 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
     public String saveCollectBankcard(CollectBankcard data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.COLLECTBANKCARD.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.COLLECTBANKCARD
+                .getCode());
             data.setCode(code);
             collectBankcardDAO.insert(data);
         }
@@ -127,16 +125,15 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
     }
 
     @Override
-    public void removeCollectBankcardByList(
-            List<XN632060ReqCollectBankcard> CollectBankcardList) {
-        if (CollectionUtils.isNotEmpty(CollectBankcardList)) {
-            for (XN632060ReqCollectBankcard collectBankcard : CollectBankcardList) {
-                CollectBankcard data = new CollectBankcard();
-                data.setCode(collectBankcard.getCode());
-                collectBankcardDAO.delete(data);
+    public void removeCollectBankcardByCompanyCode(String companyCode) {
+        CollectBankcard condition = new CollectBankcard();
+        condition.setCompanyCode(companyCode);
+        List<CollectBankcard> collectBankcardList = queryCollectBankcardList(condition);
+        if (CollectionUtils.isNotEmpty(collectBankcardList)) {
+            for (CollectBankcard collectBankcard : collectBankcardList) {
+                collectBankcardDAO.delete(collectBankcard);
             }
         }
-
     }
 
     @Override

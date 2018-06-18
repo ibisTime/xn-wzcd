@@ -232,6 +232,11 @@
 		,insu_agency_year3_fee = #{insuAgencyYear3Fee}
 		WHERE id = #{id}
 	</update>
+	
+	<delete id="delete_carDealerProtocol" parameterType="carDealerProtocol">
+		DELETE FROM tb_car_dealer_protocol
+		WHERE id = #{id}
+	</delete>
 
 
 </mapper>

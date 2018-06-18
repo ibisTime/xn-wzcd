@@ -9,7 +9,7 @@
 		<result column="company_code" property="companyCode" />
 		<result column="real_name" property="realName" />
 		<result column="bank_code" property="bankCode" />
-		<result column="subbranch" property="subbranch" />
+		<result column="bank_name" property="bankName" />
 		<result column="bankcard_number" property="bankcardNumber" />
 		<result column="point_rate" property="pointRate" />
 		<result column="remark" property="remark" />
@@ -42,7 +42,7 @@
 		,t.company_code
 		,t.real_name
 		,t.bank_code
-		,t.subbranch
+		,t.bank_name
 		,t.bankcard_number
 		,t.point_rate
 		,t.remark
@@ -71,7 +71,7 @@
 		,company_code
 		,real_name
 		,bank_code
-		,subbranch
+		,bank_name
 		,bankcard_number
 		,point_rate
 		,remark
@@ -83,7 +83,7 @@
 		,#{companyCode}
 		,#{realName}
 		,#{bankCode}
-		,#{subbranch}
+		,#{bankName}
 		,#{bankcardNumber}
 		,#{pointRate}
 		,#{remark}
@@ -103,7 +103,7 @@
 		,company_code = #{companyCode}
 		,real_name = #{realName}
 		,bank_code = #{bankCode}
-		,subbranch = #{subbranch}
+		,bank_name = #{bankName}
 		,bankcard_number = #{bankcardNumber}
 		,point_rate = #{pointRate}
 		,remark = #{remark}
@@ -118,7 +118,7 @@
 		,t.company_code
 		,t.real_name
 		,t.bank_code
-		,t.subbranch
+		,t.bank_name
 		,t.bankcard_number
 		,t.point_rate
 		,t.remark

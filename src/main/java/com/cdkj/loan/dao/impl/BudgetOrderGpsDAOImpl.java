@@ -24,8 +24,9 @@ public class BudgetOrderGpsDAOImpl extends AMybatisTemplate
     }
 
     @Override
-    public int update(BudgetOrderGps data) {
-        return super.update(NAMESPACE.concat("update_budgetOrderGps"), data);
+    public int updateAbandonBudgetOrderGps(BudgetOrderGps data) {
+        return super.update(NAMESPACE.concat("update_abandonBudgetOrderGps"),
+            data);
     }
 
     @Override

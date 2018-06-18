@@ -10,11 +10,13 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.dao.IBudgetOrderGpsDAO;
 import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBudgetOrderGpsStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -46,7 +48,10 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
                 data.setGpsDevNo(gps.getGpsDevNo());
                 data.setGpsType(gps.getGpsType());
                 data.setAzLocation(reqGps.getAzLocation());
-                data.setAzDatetime(reqGps.getAzDatetime());
+                data.setStatus(EBudgetOrderGpsStatus.YES.getCode());
+
+                data.setAzDatetime(DateUtil.strToDate(reqGps.getAzDatetime(),
+                    DateUtil.DATA_TIME_PATTERN_1));
                 data.setAzUser(reqGps.getAzUser());
                 data.setRemark(reqGps.getRemark());
                 data.setBudgetOrder(code);
@@ -81,12 +86,10 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
     }
 
     @Override
-    public int refreshBudgetOrderGps(BudgetOrderGps data) {
-        int count = 0;
+    public void abandonBudgetOrderGps(BudgetOrderGps data) {
         if (StringUtils.isNotBlank(data.getCode())) {
-            count = budgetOrderGpsDAO.update(data);
+            budgetOrderGpsDAO.updateAbandonBudgetOrderGps(data);
         }
-        return count;
     }
 
     @Override

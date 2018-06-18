@@ -24,7 +24,6 @@ public class XN632032Req {
     private String bankName;
 
     // 支行名称
-    @NotBlank
     private String subbranch;
 
     // 12期
