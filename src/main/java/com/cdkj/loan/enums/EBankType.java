@@ -8,7 +8,7 @@ package com.cdkj.loan.enums;
  */
 public enum EBankType {
 
-    GH("1", "工行"), ZH("2", "中行"), JH("3", "建行");
+    GH("ICBC", "工行"), ZH("BOC", "中行"), JH("CCB", "建行");
 
     EBankType(String code, String value) {
         this.code = code;

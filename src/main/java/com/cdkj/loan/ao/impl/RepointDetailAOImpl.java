@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IRepointDetailAO;
-import com.cdkj.loan.bo.IBankSubbranchBO;
+import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICarDealerBO;
 import com.cdkj.loan.bo.ICarDealerProtocolBO;
@@ -16,7 +16,7 @@ import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IRepointDetailBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.AmountUtil;
-import com.cdkj.loan.domain.BankSubbranch;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.CarDealerProtocol;
@@ -25,6 +25,7 @@ import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.RepointDetail;
 import com.cdkj.loan.dto.req.XN632290Req;
 import com.cdkj.loan.dto.res.XN632290Res;
+import com.cdkj.loan.enums.EBankType;
 import com.cdkj.loan.enums.ECollectBankcard;
 import com.cdkj.loan.enums.EUseMoneyPurpose;
 import com.cdkj.loan.exception.BizException;
@@ -57,7 +58,7 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
     private IDepartmentBO departmentBO;
 
     @Autowired
-    private IBankSubbranchBO bankSubbranchBO;
+    private IBankBO bankBO;
 
     @Override
     public String addRepointDetail(RepointDetail data) {
@@ -101,11 +102,23 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
 
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req
             .getBudgetOrderCode());
+
         List<XN632290Res> resList = new ArrayList<XN632290Res>();
 
+        Bank bank = bankBO.getBank(req.getLoanBankCode());
+
+        EBankType eBankType = null;
         // 协议内返点
+        if (EBankType.GH.getCode().equals(bank.getBankCode())) {
+            eBankType = EBankType.GH;
+        } else if (EBankType.ZH.getCode().equals(bank.getBankCode())) {
+            eBankType = EBankType.ZH;
+        } else if (EBankType.JH.getCode().equals(bank.getBankCode())) {
+            eBankType = EBankType.JH;
+        }
         CarDealerProtocol carDealerProtocol = carDealerProtocolBO
-            .getCarDealerProtocolByCarDealerCode(req.getCarDealerCode());
+            .getCarDealerProtocolByCarDealerCode(req.getCarDealerCode(),
+                eBankType.getCode());
         CollectBankcard condition = new CollectBankcard();
         condition.setCompanyCode(req.getCarDealerCode());
         condition.setType(ECollectBankcard.DEALER_REBATE.getCode());
@@ -132,9 +145,7 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
                 .getCarDealerCode());
             res.setCompanyName(carDealer.getFullName());
             res.setBankcardNumber(collectBankcard.getBankcardNumber());
-            BankSubbranch bankSubbranch = bankSubbranchBO
-                .getBankSubbranch(collectBankcard.getBankCode());
-            res.setSubbranch(bankSubbranch.getFullName());
+            res.setSubbranch(collectBankcard.getRealName());
             resList.add(res);
         }
 
@@ -152,10 +163,7 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
             .queryCollectBankcardByCompanyCodeAndType(condition2);
         CollectBankcard collectBankcard2 = list2.get(0);
         res.setBankcardNumber(collectBankcard2.getBankcardNumber());
-
-        BankSubbranch bankSubbranch = bankSubbranchBO
-            .getBankSubbranch(collectBankcard2.getBankCode());
-        res.setSubbranch(bankSubbranch.getFullName());
+        res.setSubbranch(collectBankcard2.getRealName());
         resList.add(res);
         return resList;
     }

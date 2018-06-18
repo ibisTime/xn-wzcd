@@ -30,33 +30,31 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
                 CarDealerProtocol data = new CarDealerProtocol();
                 data.setCarDealerCode(code);
                 data.setBankCode(req.getBankCode());
-                data.setPlatCtRate12(
-                    StringValidater.toDouble(req.getPlatCtRate12()));
-                data.setPlatCtRate24(
-                    StringValidater.toDouble(req.getPlatCtRate24()));
-                data.setPlatCtRate36(
-                    StringValidater.toDouble(req.getPlatCtRate36()));
+                data.setPlatCtRate12(StringValidater.toDouble(req
+                    .getPlatCtRate12()));
+                data.setPlatCtRate24(StringValidater.toDouble(req
+                    .getPlatCtRate24()));
+                data.setPlatCtRate36(StringValidater.toDouble(req
+                    .getPlatCtRate36()));
 
-                data.setPlatZkRate12(
-                    StringValidater.toDouble(req.getPlatZkRate12()));
-                data.setPlatZkRate24(
-                    StringValidater.toDouble(req.getPlatZkRate24()));
-                data.setPlatZkRate36(
-                    StringValidater.toDouble(req.getPlatZkRate36()));
+                data.setPlatZkRate12(StringValidater.toDouble(req
+                    .getPlatZkRate12()));
+                data.setPlatZkRate24(StringValidater.toDouble(req
+                    .getPlatZkRate24()));
+                data.setPlatZkRate36(StringValidater.toDouble(req
+                    .getPlatZkRate36()));
                 data.setAssureType(req.getAssureType());
                 data.setAssureFee(StringValidater.toLong(req.getAssureFee()));
 
-                data.setAssureRate(
-                    StringValidater.toDouble(req.getAssureRate()));
+                data.setAssureRate(StringValidater.toDouble(req.getAssureRate()));
                 data.setDzType(req.getDzType());
                 data.setDzFee(StringValidater.toLong(req.getDzFee()));
                 data.setDzRate(StringValidater.toDouble(req.getDzRate()));
                 data.setLyAmountType(req.getLyAmountType());
 
-                data.setLyAmountFee(
-                    StringValidater.toLong(req.getLyAmountFee()));
-                data.setLyAmountRate(
-                    StringValidater.toDouble(req.getLyAmountRate()));
+                data.setLyAmountFee(StringValidater.toLong(req.getLyAmountFee()));
+                data.setLyAmountRate(StringValidater.toDouble(req
+                    .getLyAmountRate()));
                 data.setGpsType(req.getGpsType());
                 data.setGpsFee(StringValidater.toLong(req.getGpsFee()));
                 data.setGpsRate(StringValidater.toDouble(req.getGpsRate()));
@@ -65,28 +63,28 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
                 data.setOtherFee(StringValidater.toLong(req.getOtherFee()));
                 data.setOtherRate(StringValidater.toDouble(req.getOtherRate()));
                 data.setIntroduceType(req.getIntroduceType());
-                data.setIntroduceFee(
-                    StringValidater.toLong(req.getIntroduceFee()));
+                data.setIntroduceFee(StringValidater.toLong(req
+                    .getIntroduceFee()));
 
-                data.setIntroduceRate(
-                    StringValidater.toDouble(req.getIntroduceRate()));
+                data.setIntroduceRate(StringValidater.toDouble(req
+                    .getIntroduceRate()));
                 data.setReturnPointType(req.getReturnPointType());
-                data.setReturnPointFee(
-                    StringValidater.toLong(req.getReturnPointFee()));
-                data.setReturnPointRate(
-                    StringValidater.toDouble(req.getReturnPointRate()));
+                data.setReturnPointFee(StringValidater.toLong(req
+                    .getReturnPointFee()));
+                data.setReturnPointRate(StringValidater.toDouble(req
+                    .getReturnPointRate()));
                 data.setIsDz(req.getIsDz());
 
                 data.setInsuAgencyYear1Type(req.getInsuAgencyYear1Type());
-                data.setInsuAgencyYear1Fee(
-                    StringValidater.toLong(req.getInsuAgencyYear1Fee()));
+                data.setInsuAgencyYear1Fee(StringValidater.toLong(req
+                    .getInsuAgencyYear1Fee()));
                 data.setInsuAgencyYear2Type(req.getInsuAgencyYear2Type());
-                data.setInsuAgencyYear2Fee(
-                    StringValidater.toLong(req.getInsuAgencyYear2Fee()));
+                data.setInsuAgencyYear2Fee(StringValidater.toLong(req
+                    .getInsuAgencyYear2Fee()));
                 data.setInsuAgencyYear3Type(req.getInsuAgencyYear3Type());
 
-                data.setInsuAgencyYear3Fee(
-                    StringValidater.toLong(req.getInsuAgencyYear3Fee()));
+                data.setInsuAgencyYear3Fee(StringValidater.toLong(req
+                    .getInsuAgencyYear3Fee()));
                 carDealerProtocolDAO.insert(data);
             }
         }
@@ -112,8 +110,7 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
     public void removeCarDealerProtocolByCarDealerCode(String carDealerCode) {
         CarDealerProtocol data = new CarDealerProtocol();
         data.setCarDealerCode(carDealerCode);
-        List<CarDealerProtocol> carDealerProtocolList = queryCarDealerProtocolList(
-            data);
+        List<CarDealerProtocol> carDealerProtocolList = queryCarDealerProtocolList(data);
         for (CarDealerProtocol carDealerProtocol : carDealerProtocolList) {
             carDealerProtocolDAO.delete(carDealerProtocol);
         }
@@ -141,11 +138,12 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
 
     @Override
     public CarDealerProtocol getCarDealerProtocolByCarDealerCode(
-            String carDealerCode) {
+            String carDealerCode, String bankCode) {
         CarDealerProtocol data = null;
         if (StringUtils.isNotBlank(carDealerCode)) {
             CarDealerProtocol condition = new CarDealerProtocol();
             condition.setCarDealerCode(carDealerCode);
+            condition.setBankCode(bankCode);
             data = carDealerProtocolDAO.select(condition);
             if (data == null) {
                 throw new BizException("xn0000", "根据汽车经销商查询协议不存在！");

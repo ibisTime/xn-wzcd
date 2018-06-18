@@ -8,12 +8,8 @@ package com.cdkj.loan.enums;
  */
 public enum ERateType {
 
-    CT("1", "传统"), ZK("2", "直客");
-
-    /*
-     * GH_CT("1", "工行传统"), ZH_CT("2", "中行传统"), JH_CT("3", "建行传统"), GH_ZK("4",
-     * "工行传统"), ZH_ZK("5", "中行传统"), JH_ZK("6", "建行传统");
-     */
+    GH_CT("1", "工行传统"), ZH_CT("2", "中行传统"), JH_CT("3", "建行传统"), GH_ZK("4",
+            "工行直客"), ZH_ZK("5", "中行直客"), JH_ZK("6", "建行直客");
 
     ERateType(String code, String value) {
         this.code = code;
