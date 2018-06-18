@@ -18,10 +18,6 @@ public class XN632673Req {
     @NotBlank
     private String payDatetime;
 
-    // 付款银行
-    @NotBlank
-    private String payBank;
-
     // 付款账号
     @NotBlank
     private String payBankcard;
@@ -47,14 +43,6 @@ public class XN632673Req {
 
     public void setPayDatetime(String payDatetime) {
         this.payDatetime = payDatetime;
-    }
-
-    public String getPayBank() {
-        return payBank;
-    }
-
-    public void setPayBank(String payBank) {
-        this.payBank = payBank;
     }
 
     public String getPayBankcard() {

@@ -126,8 +126,8 @@ public class FeeAdvanceApplyAOImpl implements IFeeAdvanceApplyAO {
     }
 
     @Override
-    public void sureFk(String code, String payDatetime, String payBank,
-            String payBankcard, String payPdf, String updater) {
+    public void sureFk(String code, String payDatetime, String payBankcard,
+            String payPdf, String updater) {
         FeeAdvanceApply data = feeAdvanceApplyBO.getFeeAdvanceApply(code);
         if (!EFeeAdvanceApplyStatus.FINANCE_APPROVE_YES.getCode().equals(
             data.getStatus())) {
@@ -137,7 +137,6 @@ public class FeeAdvanceApplyAOImpl implements IFeeAdvanceApplyAO {
 
         data.setPayDatetime(DateUtil.strToDate(payDatetime,
             DateUtil.DATA_TIME_PATTERN_1));
-        data.setPayBank(payBank);
         data.setPayBankcard(payBankcard);
         data.setPayPdf(payPdf);
         data.setStatus(EFeeAdvanceApplyStatus.SURE_FK.getCode());
@@ -203,7 +202,7 @@ public class FeeAdvanceApplyAOImpl implements IFeeAdvanceApplyAO {
 
         // 付款银行
         if (StringUtils.isNotBlank(data.getPayBank())) {
-            Bank payBankInfo = bankBO.getBank(data.getPayBank());
+            Bank payBankInfo = bankBO.getBankBySubbranch(data.getPayBank());
             data.setPayBankInfo(payBankInfo);
         }
     }

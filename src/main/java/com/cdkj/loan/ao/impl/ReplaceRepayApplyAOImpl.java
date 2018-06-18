@@ -66,8 +66,7 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
     public void refreshFinanceManageApprove(String code, String approveResult,
             String updater, String remark) {
         ReplaceRepayApply data = replaceRepayApplyBO.getReplaceRepayApply(code);
-        if (!EReplaceRepayStatus.TO_APPROVE.getCode()
-            .equals(data.getStatus())) {
+        if (!EReplaceRepayStatus.TO_APPROVE.getCode().equals(data.getStatus())) {
             throw new BizException("xn0000", "预算单不在财务经理审核状态！");
         }
 
@@ -89,8 +88,8 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
     @Override
     public Paginable<ReplaceRepayApply> queryReplaceRepayApplyPage(int start,
             int limit, ReplaceRepayApply condition) {
-        Paginable<ReplaceRepayApply> page = replaceRepayApplyBO
-            .getPaginable(start, limit, condition);
+        Paginable<ReplaceRepayApply> page = replaceRepayApplyBO.getPaginable(
+            start, limit, condition);
         List<ReplaceRepayApply> list = page.getList();
         for (ReplaceRepayApply replaceRepayApply : list) {
             init(replaceRepayApply);
@@ -129,7 +128,8 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
             replaceRepayApply.setUpdaterName(updaterUser.getRealName());
         }
 
-        Bank bank = bankBO.getBank(replaceRepayApply.getReceiptBank());
+        Bank bank = bankBO.getBankBySubbranch(replaceRepayApply
+            .getReceiptBank());
         if (null != bank) {
             replaceRepayApply.setReceiptBankName(bank.getBankName());
         }

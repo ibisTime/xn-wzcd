@@ -61,7 +61,8 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
             RepayBiz condition = new RepayBiz();
             condition.setRealName(overdue.getRealName());
             condition.setIdNo(overdue.getIdNo());
-            String bankName = bankBO.getBank(loanBankCode).getBankName();
+            String bankName = bankBO.getBankBySubbranch(loanBankCode)
+                .getBankName();
             condition.setLoanBank(loanBankCode);
             condition.setLoanAmount(StringValidater.toLong(overdue
                 .getLoanAmount()));

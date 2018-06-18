@@ -105,7 +105,7 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
 
         List<XN632290Res> resList = new ArrayList<XN632290Res>();
 
-        Bank bank = bankBO.getBank(req.getLoanBankCode());
+        Bank bank = bankBO.getBankBySubbranch(budgetOrder.getLoanBankCode());
 
         EBankType eBankType = null;
         // 协议内返点

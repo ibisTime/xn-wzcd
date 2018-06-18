@@ -25,8 +25,7 @@ public class XN632673 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         feeAdvanceApplyAO.sureFk(req.getCode(), req.getPayDatetime(),
-            req.getPayBank(), req.getPayBankcard(), req.getPayPdf(),
-            req.getUpdater());
+            req.getPayBankcard(), req.getPayPdf(), req.getUpdater());
         return new BooleanRes(true);
     }
 
