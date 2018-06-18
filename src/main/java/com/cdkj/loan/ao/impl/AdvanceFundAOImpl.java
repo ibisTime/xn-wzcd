@@ -214,9 +214,9 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         EAdvanceFundNode currentNode = EAdvanceFundNode.getMap().get(
             data.getCurNodeCode());
         EBizLogType refType = null;
-        if ("1".equals(data.getType())) {
+        if (EAdvanceType.PARENT_BIZ.getCode().equals(data.getType())) {
             refType = EBizLogType.ADVANCE_FUND_PARENT;
-        } else if ("2".equals(data.getType())) {
+        } else if (EAdvanceType.BRANCH_BIZ.getCode().equals(data.getType())) {
             refType = EBizLogType.ADVANCE_FUND_BRANCH;
         }
         sysBizLogBO.saveSYSBizLog(data.getBudgetCode(), refType,

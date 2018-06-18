@@ -495,8 +495,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             // 生成垫资单判断是总公司业务还是分公司业务
             Department department = departmentBO.getDepartment(budgetOrder
                 .getCompanyCode());
-            if ("".equals(department.getParentCode())
-                    && null == department.getParentCode()) {
+            if (EBoolean.NO.getCode().equals(department.getParentCode())) {
                 // 总公司业务 打款给汽车经销商
                 AdvanceFund data = new AdvanceFund();
                 data.setBudgetCode(budgetOrder.getCode());
@@ -533,8 +532,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     EAdvanceFundNode.PARENT_CONFIRM.getCode(),
                     EAdvanceFundNode.PARENT_CONFIRM.getValue(), operator);
 
-            } else if (!"".equals(department.getParentCode())
-                    && null != department.getParentCode()) {
+            } else {
                 // 分公司的业务 打款给分公司
                 AdvanceFund data = new AdvanceFund();
                 data.setBudgetCode(budgetOrder.getCode());
