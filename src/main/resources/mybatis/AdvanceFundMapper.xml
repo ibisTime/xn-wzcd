@@ -96,6 +96,7 @@
 	
 	<select id="select_advanceFund_byRoleCode" parameterType="advanceFund" resultMap="advanceFund_DB_Result">
 		SELECT
+		distinct
 		t.code
 		,t.budget_code
 		,t.total_advance_fund_code
