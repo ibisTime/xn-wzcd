@@ -11,6 +11,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBankDAO;
 import com.cdkj.loan.domain.Bank;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -52,6 +53,21 @@ public class BankBOImpl extends PaginableBOImpl<Bank> implements IBankBO {
     }
 
     @Override
+    public Bank getBankByBankCode(String bankCode) {
+        Bank bank = null;
+        if (StringUtils.isNotBlank(bankCode)) {
+            Bank data = new Bank();
+            data.setBankCode(bankCode);
+            bank = bankDAO.select(data);
+            if (null == bank) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "该银行行别不存在！");
+            }
+        }
+        return bank;
+    }
+
+    @Override
     public int editBank(Bank data) {
         return bankDAO.updateBank(data);
     }
@@ -60,4 +76,5 @@ public class BankBOImpl extends PaginableBOImpl<Bank> implements IBankBO {
     public List<Bank> queryBankList(Bank condition) {
         return bankDAO.selectList(condition);
     }
+
 }

@@ -1462,4 +1462,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.renewInsurance(data);
     }
 
+    @Override
+    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
+            BudgetOrder condition) {
+        return budgetOrderBO.getPaginable(start, limit, condition);
+    }
+
 }

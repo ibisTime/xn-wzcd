@@ -9,8 +9,6 @@ import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632910Req;
-import com.cdkj.loan.enums.EBoolean;
-import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -30,9 +28,9 @@ public class XN632910 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         BudgetOrder condition = new BudgetOrder();
-        condition.setCurNodeCodeDz(EBudgetOrderNode.GPSAZ.getCode());
-        condition.setCurNodeCodeFk(EBudgetOrderNode.ENTRYMORTGAGE.getCode());
-        condition.setAdvanceFlag(EBoolean.YES.getCode());
+        // condition.setCurNodeCodeDz(EBudgetOrderNode.GPSAZ.getCode());
+        // condition.setCurNodeCodeFk(EBudgetOrderNode.ENTRYMORTGAGE.getCode());
+        // condition.setAdvanceFlag(EBoolean.YES.getCode());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

@@ -117,4 +117,8 @@ public interface IBudgetOrderAO {
 
     // 续保
     public void renewInsurance(XN632341Req req);
+
+    // 垫资超过1天未放款客户
+    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
+            BudgetOrder condition);
 }

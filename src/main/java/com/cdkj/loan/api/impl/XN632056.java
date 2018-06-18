@@ -4,7 +4,6 @@ import com.cdkj.loan.ao.IBankSubbranchAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dto.req.XN632056Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
@@ -25,8 +24,7 @@ public class XN632056 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return bankSubbranchAO
-            .getBankSubbranch(StringValidater.toInteger(req.getId()));
+        return bankSubbranchAO.getBankSubbranch(req.getCode());
     }
 
     @Override
