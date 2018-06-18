@@ -101,16 +101,13 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         // 协议内返点
         CarDealerProtocol carDealerProtocol = carDealerProtocolBO
             .getCarDealerProtocolByCarDealerCode(req.getCarDealerCode());
-
         CollectBankcard condition = new CollectBankcard();
         condition.setCompanyCode(req.getCarDealerCode());
         condition.setType(ECollectBankcard.DEALER_REBATE.getCode());
         List<CollectBankcard> list = collectBankcardBO
             .queryCollectBankcardByCompanyCodeAndType(condition);
         for (CollectBankcard collectBankcard : list) {
-
             Double pointRate = collectBankcard.getPointRate();
-
             XN632290Res res = new XN632290Res();
             res.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER.getCode());
             // 1单笔 2贷款额百分比
