@@ -12,10 +12,10 @@ import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.IGpsDAO;
 import com.cdkj.loan.domain.Gps;
-import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGpsUseStatus;
+import com.cdkj.loan.enums.EGpsUserApplyStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -42,24 +42,45 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
     }
 
     @Override
-    public void applyGps(Gps data) {
-        if (data != null) {
-            gpsDAO.updateApply(data);
-        }
+    public void approveCompanyGps(String code, String companyCode,
+            Date applyDatetime, String companyApplyCode) {
+        Gps gps = getGps(code);
+        gps.setCompanyCode(companyCode);
+        gps.setCompanyApplyStatus(EBoolean.NO.getCode());
+        gps.setCompanyApplyDatetime(applyDatetime);
+        gps.setCompanyApplyCode(companyApplyCode);
+        gpsDAO.updateCompanyApprove(gps);
     }
 
     @Override
-    public void refreshApplyGps(String code, SYSUser user, String applyCode) {
-        if (StringUtils.isNotBlank(code)) {
-            Gps data = new Gps();
-            data.setCode(code);
-            data.setApplyCode(applyCode);
-            data.setCompanyCode(user.getCompanyCode());
-            data.setApplyUser(user.getUserId());
-            data.setApplyStatus(EBoolean.YES.getCode());
-            data.setApplyDatetime(new Date());
-            gpsDAO.updateApplyStatus(data);
+    public void receiveCompanyGps(String code) {
+        Gps gps = getGps(code);
+        gps.setCompanyApplyStatus(EBoolean.YES.getCode());
+        gpsDAO.updateCompanyReceive(gps);
+    }
+
+    @Override
+    public void applyUserGps(String code, String applyCode, String applyUser) {
+        Gps data = getGps(code);
+        data.setApplyCode(applyCode);
+        data.setApplyUser(applyUser);
+        data.setApplyStatus(EGpsUserApplyStatus.APPLYING.getCode());
+        data.setApplyDatetime(new Date());
+        gpsDAO.updateUserApply(data);
+    }
+
+    @Override
+    public void approveUserGps(String code, String approveResult) {
+        Gps data = getGps(code);
+        if (EBoolean.YES.getCode().equals(approveResult)) {
+            data.setApplyStatus(EGpsUserApplyStatus.APPLYED.getCode());
+        } else {
+            data.setApplyCode(null);
+            data.setApplyUser(null);
+            data.setApplyStatus(EGpsUserApplyStatus.TO_APPLY.getCode());
+            data.setApplyDatetime(null);
         }
+        gpsDAO.updateUserApprove(data);
     }
 
     @Override
@@ -76,6 +97,14 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
 
     @Override
     public List<Gps> queryGpsList(Gps condition) {
+        return gpsDAO.selectList(condition);
+    }
+
+    @Override
+    public List<Gps> queryGpsListByUserApplyCode(String userApplyCode) {
+        Gps condition = new Gps();
+        condition.setApplyCode(userApplyCode);
+        condition.setApplyStatus(EGpsUserApplyStatus.APPLYING.getCode());
         return gpsDAO.selectList(condition);
     }
 

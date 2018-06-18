@@ -52,31 +52,21 @@ public class CarDealerProtocolAOImpl implements ICarDealerProtocolAO {
         data.setReturnPointType(req.getReturnPointType());
         data.setReturnPointFee(StringValidater.toLong(req.getReturnPointFee()));
 
-        data.setReturnPointRate(StringValidater.toDouble(req
-            .getReturnPointRate()));
+        data.setReturnPointRate(
+            StringValidater.toDouble(req.getReturnPointRate()));
         data.setIsDz(req.getIsDz());
         data.setInsuAgencyYear1Type(req.getInsuAgencyYear1Type());
-        data.setInsuAgencyYear1Fee(StringValidater.toLong(req
-            .getInsuAgencyYear1Fee()));
+        data.setInsuAgencyYear1Fee(
+            StringValidater.toLong(req.getInsuAgencyYear1Fee()));
         data.setInsuAgencyYear2Type(req.getInsuAgencyYear2Type());
 
-        data.setInsuAgencyYear2Fee(StringValidater.toLong(req
-            .getInsuAgencyYear2Fee()));
+        data.setInsuAgencyYear2Fee(
+            StringValidater.toLong(req.getInsuAgencyYear2Fee()));
         data.setInsuAgencyYear3Type(req.getInsuAgencyYear3Type());
-        data.setInsuAgencyYear3Fee(StringValidater.toLong(req
-            .getInsuAgencyYear3Fee()));
+        data.setInsuAgencyYear3Fee(
+            StringValidater.toLong(req.getInsuAgencyYear3Fee()));
 
         return carDealerProtocolBO.saveCarDealerProtocol(data);
-    }
-
-    @Override
-    public int editCarDealerProtocol(CarDealerProtocol data) {
-        return carDealerProtocolBO.refreshCarDealerProtocol(data);
-    }
-
-    @Override
-    public int dropCarDealerProtocol(int id) {
-        return carDealerProtocolBO.removeCarDealerProtocol(id);
     }
 
     @Override

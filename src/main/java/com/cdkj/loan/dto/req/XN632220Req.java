@@ -36,7 +36,6 @@ public class XN632220Req {
     private String businessInsurance;
 
     // 机动车登记证书
-    @NotBlank
     private String motorRegCertification;
 
     // 批单

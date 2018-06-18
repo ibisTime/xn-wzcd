@@ -630,7 +630,7 @@ public class BudgetOrder extends ABaseDO {
 
     private Bank bank;// 贷款银行
 
-    private Gps gps;// gps
+    private List<BudgetOrderGps> budgetOrderGpsList;
 
     private BankSubbranch bankSubbranch;// 支行
 
@@ -644,12 +644,12 @@ public class BudgetOrder extends ABaseDO {
         this.curNodeCodeList = curNodeCodeList;
     }
 
-    public Gps getGps() {
-        return gps;
+    public List<BudgetOrderGps> getBudgetOrderGpsList() {
+        return budgetOrderGpsList;
     }
 
-    public void setGps(Gps gps) {
-        this.gps = gps;
+    public void setBudgetOrderGpsList(List<BudgetOrderGps> budgetOrderGpsList) {
+        this.budgetOrderGpsList = budgetOrderGpsList;
     }
 
     public Bank getBank() {

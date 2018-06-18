@@ -15,7 +15,7 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IGpsApplyDAO;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.GpsApply;
-import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EGpsApplyStatus;
 import com.cdkj.loan.exception.BizException;
@@ -40,16 +40,6 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply> implements
     private ISYSUserBO sysUserBO;
 
     @Override
-    public boolean isGpsApplyExist(String code) {
-        GpsApply condition = new GpsApply();
-        condition.setCode(code);
-        if (gpsApplyDAO.selectTotalCount(condition) > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public String saveGpsApply(GpsApply data) {
         String code = null;
         if (data != null) {
@@ -62,13 +52,31 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply> implements
     }
 
     @Override
-    public void approveGpsApply(String code, EGpsApplyStatus eGpsApplyStatus,
-            String remark) {
-        if (StringUtils.isNotBlank(code)) {
-            GpsApply gpsApply = new GpsApply();
-            gpsApply.setCode(code);
-            gpsApply.setStatus(eGpsApplyStatus.getCode());
-            gpsApply.setRemark(remark);
+    public void approveCompanyGpsApply(GpsApply gpsApply, String approveResult,
+            String approveUser, String approveNote) {
+        if (null != gpsApply) {
+            if (EBoolean.YES.getCode().equals(approveResult)) {
+                gpsApply.setStatus(EGpsApplyStatus.APPROVE_YES.getCode());
+            } else {
+                gpsApply.setStatus(EGpsApplyStatus.APPROVE_NO.getCode());
+            }
+            gpsApply.setApproveUser(approveUser);
+            gpsApply.setApproveNote(approveNote);
+            gpsApplyDAO.updateGpsApplyApprove(gpsApply);
+        }
+    }
+
+    @Override
+    public void approveUserGpsApply(GpsApply gpsApply, String approveResult,
+            String approveUser, String approveNote) {
+        if (null != gpsApply) {
+            if (EBoolean.YES.getCode().equals(approveResult)) {
+                gpsApply.setStatus(EGpsApplyStatus.RECEIVED.getCode());
+            } else {
+                gpsApply.setStatus(EGpsApplyStatus.APPROVE_NO.getCode());
+            }
+            gpsApply.setApproveUser(approveUser);
+            gpsApply.setApproveNote(approveNote);
             gpsApplyDAO.updateGpsApplyApprove(gpsApply);
         }
     }
@@ -95,8 +103,7 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply> implements
         condition.setApplyCode(code);
         List<Gps> gpsList = gpsBO.queryGpsList(condition);
         for (Gps gps : gpsList) {
-            SYSUser user = sysUserBO.getUser(data.getApplyUser());
-            gpsBO.refreshApplyGps(gps.getCode(), user, code);
+            gpsBO.receiveCompanyGps(gps.getCode());
         }
     }
 
