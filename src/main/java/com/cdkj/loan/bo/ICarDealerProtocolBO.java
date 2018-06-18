@@ -12,8 +12,6 @@ public interface ICarDealerProtocolBO extends IPaginableBO<CarDealerProtocol> {
 
     public int saveCarDealerProtocol(CarDealerProtocol data);
 
-    public int removeCarDealerProtocol(int id);
-
     public int refreshCarDealerProtocol(CarDealerProtocol data);
 
     public List<CarDealerProtocol> queryCarDealerProtocolList(

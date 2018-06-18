@@ -22,6 +22,7 @@ import com.cdkj.loan.bo.ICarDealerProtocolBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IDepartmentBO;
+import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.IInsuranceCompanyBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
@@ -124,6 +125,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private IUserBO userBO;
+
+    @Autowired
+    private IGpsBO gpsBO;
 
     @Autowired
     private IBudgetOrderGpsBO budgetOrderGpsBO;
@@ -1080,6 +1084,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (null != saleUser) {
             budgetOrder.setSaleUserName(saleUser.getRealName());
         }
+
     }
 
     @Override
@@ -1177,7 +1182,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setMotorRegCertification(req.getMotorRegCertification());
         budgetOrder.setPdPdf(req.getPdPdf());
         budgetOrder.setFbhRemark(req.getFbhRemark());
-        budgetOrder.setFbhstatus(EFbhStatus.TO_PENDING_ENTRY.getCode());
+        budgetOrder.setFbhStatus(EFbhStatus.TO_PENDING_ENTRY.getCode());
         budgetOrderBO.entryPreservation(budgetOrder);
     }
 
