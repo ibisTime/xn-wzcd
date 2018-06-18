@@ -127,16 +127,16 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
     }
 
     @Override
-    public void removeCollectBankcardByList(
-            List<XN632060ReqCollectBankcard> CollectBankcardList) {
-        if (CollectionUtils.isNotEmpty(CollectBankcardList)) {
-            for (XN632060ReqCollectBankcard collectBankcard : CollectBankcardList) {
-                CollectBankcard data = new CollectBankcard();
-                data.setCode(collectBankcard.getCode());
-                collectBankcardDAO.delete(data);
+    public void removeCollectBankcardByCompanyCode(String companyCode) {
+        CollectBankcard condition = new CollectBankcard();
+        condition.setCompanyCode(companyCode);
+        List<CollectBankcard> collectBankcardList = queryCollectBankcardList(
+            condition);
+        if (CollectionUtils.isNotEmpty(collectBankcardList)) {
+            for (CollectBankcard collectBankcard : collectBankcardList) {
+                collectBankcardDAO.delete(collectBankcard);
             }
         }
-
     }
 
     @Override

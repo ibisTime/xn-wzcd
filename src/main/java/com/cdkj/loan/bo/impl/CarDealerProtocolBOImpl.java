@@ -106,6 +106,17 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
     }
 
     @Override
+    public void removeCarDealerProtocolByCarDealerCode(String carDealerCode) {
+        CarDealerProtocol data = new CarDealerProtocol();
+        data.setCarDealerCode(carDealerCode);
+        List<CarDealerProtocol> carDealerProtocolList = queryCarDealerProtocolList(
+            data);
+        for (CarDealerProtocol carDealerProtocol : carDealerProtocolList) {
+            carDealerProtocolDAO.delete(carDealerProtocol);
+        }
+    }
+
+    @Override
     public List<CarDealerProtocol> queryCarDealerProtocolList(
             CarDealerProtocol condition) {
         return carDealerProtocolDAO.selectList(condition);
@@ -140,4 +151,5 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
         return data;
 
     }
+
 }
