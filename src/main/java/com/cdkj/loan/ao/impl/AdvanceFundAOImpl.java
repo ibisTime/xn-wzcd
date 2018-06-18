@@ -11,6 +11,7 @@ import com.cdkj.loan.ao.IAdvanceFundAO;
 import com.cdkj.loan.bo.IAdvanceFundBO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.ICarDealerBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.INodeFlowBO;
@@ -21,6 +22,7 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.AdvanceFund;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.dto.req.XN632170Req;
@@ -67,6 +69,9 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
 
     @Autowired
     private ICollectBankcardBO collectBankcardBO;
+
+    @Autowired
+    private ICarDealerBO carDealerBO;
 
     @Override
     public void confirmAdvanceFund(XN632170Req req) {
@@ -348,10 +353,10 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             }
         }
         if (StringUtils.isNotBlank(data.getCarDealerCode())) {
-            Department carDealer = departmentBO.getDepartment(data
+            CarDealer carDealer = carDealerBO.getCarDealer(data
                 .getCarDealerCode());
             if (null != carDealer) {
-                data.setCarDealerName(carDealer.getName());
+                data.setCarDealerName(carDealer.getFullName());
             }
         }
         if (StringUtils.isNotBlank(data.getLoanBankCode())) {
