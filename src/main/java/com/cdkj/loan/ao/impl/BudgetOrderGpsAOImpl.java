@@ -13,7 +13,9 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.dto.req.XN632342Req;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBudgetOrderGpsStatus;
+import com.cdkj.loan.exception.BizException;
 
 @Service
 public class BudgetOrderGpsAOImpl implements IBudgetOrderGpsAO {
@@ -28,7 +30,7 @@ public class BudgetOrderGpsAOImpl implements IBudgetOrderGpsAO {
         BudgetOrderGps data = new BudgetOrderGps();
         Gps gps = gpsBO.getGps(req.getGpsCode());
         data.setCode(req.getGpsCode());
-        data.setStatus(EBudgetOrderGpsStatus.YES.getCode());
+        data.setStatus(EBudgetOrderGpsStatus.USE_ING.getCode());
         data.setGpsDevNo(gps.getGpsDevNo());
         data.setGpsType(gps.getGpsType());
         data.setAzLocation(req.getAzLocation());
@@ -45,9 +47,11 @@ public class BudgetOrderGpsAOImpl implements IBudgetOrderGpsAO {
     @Override
     public void abandonBudgetOrderGps(String code, String remark,
             String operater) {
-        BudgetOrderGps data = new BudgetOrderGps();
-        data.setCode(code);
-        data.setStatus(EBudgetOrderGpsStatus.NO.getCode());
+        BudgetOrderGps data = budgetOrderGpsBO.getBudgetOrderGps(code);
+        if (EBudgetOrderGpsStatus.INVALID.getCode().equals(data.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前gps已作废");
+        }
+        data.setStatus(EBudgetOrderGpsStatus.INVALID.getCode());
         data.setRemark(remark);
         budgetOrderGpsBO.abandonBudgetOrderGps(data);
     }
@@ -59,8 +63,7 @@ public class BudgetOrderGpsAOImpl implements IBudgetOrderGpsAO {
     }
 
     @Override
-    public List<BudgetOrderGps> queryBudgetOrderGpsList(
-            BudgetOrderGps condition) {
+    public List<BudgetOrderGps> queryBudgetOrderGpsList(BudgetOrderGps condition) {
         return budgetOrderGpsBO.queryBudgetOrderGpsList(condition);
     }
 

@@ -28,6 +28,6 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
 
     // 查询征信单共还人，担保人，本人
     public CreditUser getCreditUserByCreditCode(String creditCode,
-            ELoanRole creditUserRelation);
+            ELoanRole loanRole);
 
 }

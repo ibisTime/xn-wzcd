@@ -10,11 +10,9 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
-import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.dao.IBudgetOrderGpsDAO;
 import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.Gps;
-import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBudgetOrderGpsStatus;
 import com.cdkj.loan.exception.BizException;
@@ -38,24 +36,20 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
     }
 
     @Override
-    public void saveBudgetOrderGpsList(String code,
-            List<XN632126ReqGps> gpsAzList) {
-        if (CollectionUtils.isNotEmpty(gpsAzList)) {
-            for (XN632126ReqGps reqGps : gpsAzList) {
+    public void saveBudgetOrderGpsList(String budgetOrder, List<String> gpsList) {
+        if (CollectionUtils.isNotEmpty(gpsList)) {
+            for (String gpsCode : gpsList) {
                 BudgetOrderGps data = new BudgetOrderGps();
-                Gps gps = gpsBO.getGps(reqGps.getCode());
-                data.setCode(reqGps.getCode());
+                Gps gps = gpsBO.getGps(gpsCode);
+                data.setCode(gps.getCode());
                 data.setGpsDevNo(gps.getGpsDevNo());
                 data.setGpsType(gps.getGpsType());
-                data.setAzLocation(reqGps.getAzLocation());
-                data.setStatus(EBudgetOrderGpsStatus.YES.getCode());
-
-                data.setAzDatetime(DateUtil.strToDate(reqGps.getAzDatetime(),
-                    DateUtil.DATA_TIME_PATTERN_1));
-                data.setAzUser(reqGps.getAzUser());
-                data.setRemark(reqGps.getRemark());
-                data.setBudgetOrder(code);
+                data.setStatus(EBudgetOrderGpsStatus.USE_ING.getCode());
+                data.setBudgetOrder(budgetOrder);
                 saveBudgetOrderGps(data);
+
+                // 更新gps使用状态为使用中
+                gpsBO.refreshUseGps(gpsCode, budgetOrder);
             }
         } else {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -75,13 +69,14 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
     }
 
     @Override
-    public void removeBudgetOrderGpsList(String code) {
+    public void removeBudgetOrderGpsList(String budgetOrderCode) {
         BudgetOrderGps condition = new BudgetOrderGps();
-        condition.setBudgetOrder(code);
-        List<BudgetOrderGps> queryBudgetOrderGpsList = queryBudgetOrderGpsList(
-            condition);
+        condition.setBudgetOrder(budgetOrderCode);
+        List<BudgetOrderGps> queryBudgetOrderGpsList = queryBudgetOrderGpsList(condition);
         for (BudgetOrderGps budgetOrderGps : queryBudgetOrderGpsList) {
             budgetOrderGpsDAO.delete(budgetOrderGps);
+            // 更新gps使用状态为未使用
+            gpsBO.refreshUnUse(budgetOrderGps.getCode());
         }
     }
 
@@ -100,8 +95,7 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
     }
 
     @Override
-    public List<BudgetOrderGps> queryBudgetOrderGpsList(
-            BudgetOrderGps condition) {
+    public List<BudgetOrderGps> queryBudgetOrderGpsList(BudgetOrderGps condition) {
         return budgetOrderGpsDAO.selectList(condition);
     }
 

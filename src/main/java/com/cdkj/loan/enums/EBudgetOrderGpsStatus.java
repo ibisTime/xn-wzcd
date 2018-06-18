@@ -7,7 +7,7 @@ package com.cdkj.loan.enums;
  * @history:
  */
 public enum EBudgetOrderGpsStatus {
-    YES("1", "使用中"), NO("0", "已作废");
+    INVALID("0", "已作废"), USE_ING("1", "使用中");
     EBudgetOrderGpsStatus(String code, String value) {
         this.code = code;
         this.value = value;
