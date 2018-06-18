@@ -94,25 +94,25 @@ public class AdvanceFund extends ABaseDO {
     // 征信单编号
     private String creditCode;
 
-    //
+    // 收款账号
     private String collectionAccountNo;
 
-    //
+    // 打款账号
     private String payAccountNo;
 
-    //
+    // 开户行名称
     private String openBankName;
 
-    //
+    // 贷款银行名称
     private String loanBankName;
 
-    //
+    // 业务公司名称
     private String bizCompanyName;
 
-    //
+    // 汽车经销商名称
     private String carDealerName;
 
-    //
+    // 申请人
     private String applyName;
 
     public String getPayAccountNo() {

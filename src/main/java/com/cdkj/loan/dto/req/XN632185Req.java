@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 分页查询垫资
  * @author: jiafr 
@@ -23,6 +25,7 @@ public class XN632185Req extends APageReq {
     private String loanBankCode;
 
     // 操作人编号
+    @NotBlank
     private String roleCode;
 
     // 申请日期起
