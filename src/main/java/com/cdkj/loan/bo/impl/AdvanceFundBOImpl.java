@@ -147,12 +147,11 @@ public class AdvanceFundBOImpl extends PaginableBOImpl<AdvanceFund> implements
         if (null != data) {
             advanceFundDAO.updateApplyCancelAdvanceFund(data);
         }
-
     }
 
     @Override
-    public Object queryAdvanceFundPageByRoleCode(int start, int limit,
-            AdvanceFund condition) {
+    public Paginable<AdvanceFund> queryAdvanceFundPageByRoleCode(int start,
+            int limit, AdvanceFund condition) {
         prepare(condition);
 
         long totalCount = advanceFundDAO.selectTotalCountByRoleCode(condition);

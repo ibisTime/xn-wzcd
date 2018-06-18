@@ -2,6 +2,7 @@ package com.cdkj.loan.ao.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,67 +68,70 @@ public class CreditUserAOImpl implements ICreditUserAO {
         }
 
         List<XN632111ReqChild> list = req.getBankCreditResultList();
-
-        for (XN632111ReqChild Child : list) {
-            String code = Child.getCode();
+        for (XN632111ReqChild child : list) {
+            String code = child.getCode();
+            if (StringUtils.isBlank(code)) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "征信人员编号不能为空");
+            }
             CreditUser creditUser = creditUserBO.getCreditUser(code);
-            creditUser
-                .setDkdyCount(StringValidater.toInteger(Child.getDkdyCount()));
-            creditUser
-                .setDkdyAmount(StringValidater.toLong(Child.getDkdyAmount()));
-            creditUser.setDkdy2YearOverTimes(
-                StringValidater.toInteger(Child.getDkdy2yearOverTimes()));
-            creditUser.setDkdyMaxOverAmount(
-                StringValidater.toLong(Child.getDkdyMaxOverAmount()));
-            creditUser.setDkdyCurrentOverAmount(
-                StringValidater.toLong(Child.getDkdyCurrentOverAmount()));
-            creditUser.setDkdy6MonthAvgAmount(
-                StringValidater.toLong(Child.getDkdy6monthAvgAmount()));
+            creditUser.setDkdyCount(StringValidater.toInteger(child
+                .getDkdyCount()));
+            creditUser.setDkdyAmount(StringValidater.toLong(child
+                .getDkdyAmount()));
+            creditUser.setDkdy2YearOverTimes(StringValidater.toInteger(child
+                .getDkdy2yearOverTimes()));
+            creditUser.setDkdyMaxOverAmount(StringValidater.toLong(child
+                .getDkdyMaxOverAmount()));
+            creditUser.setDkdyCurrentOverAmount(StringValidater.toLong(child
+                .getDkdyCurrentOverAmount()));
+            creditUser.setDkdy6MonthAvgAmount(StringValidater.toLong(child
+                .getDkdy6monthAvgAmount()));
 
-            creditUser.setHkxyUnsettleCount(
-                StringValidater.toInteger(Child.getHkxyUnsettleCount()));
-            creditUser.setHkxyUnsettleAmount(
-                StringValidater.toLong(Child.getHkxyUnsettleAmount()));
-            creditUser.setHkxy2YearOverTimes(
-                StringValidater.toInteger(Child.getHkxy2yearOverTimes()));
-            creditUser.setHkxyMonthMaxOverAmount(
-                StringValidater.toLong(Child.getHkxyMonthMaxOverAmount()));
-            creditUser.setHkxy6MonthAvgAmount(
-                StringValidater.toLong(Child.getHkxy6monthAvgAmount()));
-            creditUser.setHkxyCurrentOverAmount(
-                StringValidater.toLong(Child.getHkxyCurrentOverAmount()));
+            creditUser.setHkxyUnsettleCount(StringValidater.toInteger(child
+                .getHkxyUnsettleCount()));
+            creditUser.setHkxyUnsettleAmount(StringValidater.toLong(child
+                .getHkxyUnsettleAmount()));
+            creditUser.setHkxy2YearOverTimes(StringValidater.toInteger(child
+                .getHkxy2yearOverTimes()));
+            creditUser.setHkxyMonthMaxOverAmount(StringValidater.toLong(child
+                .getHkxyMonthMaxOverAmount()));
+            creditUser.setHkxy6MonthAvgAmount(StringValidater.toLong(child
+                .getHkxy6monthAvgAmount()));
+            creditUser.setHkxyCurrentOverAmount(StringValidater.toLong(child
+                .getHkxyCurrentOverAmount()));
 
-            creditUser
-                .setXykCount(StringValidater.toInteger(Child.getXykCount()));
-            creditUser.setXykCreditAmount(
-                StringValidater.toLong(Child.getXykCreditAmount()));
-            creditUser.setXyk6MonthUseAmount(
-                StringValidater.toLong(Child.getXyk6monthUseAmount()));
-            creditUser.setXyk2YearOverTimes(
-                StringValidater.toInteger(Child.getXyk2yearOverTimes()));
-            creditUser.setXykMonthMaxOverAmount(
-                StringValidater.toLong(Child.getXykMonthMaxOverAmount()));
-            creditUser.setXykCurrentOverAmount(
-                StringValidater.toLong(Child.getXykCurrentOverAmount()));
+            creditUser.setXykCount(StringValidater.toInteger(child
+                .getXykCount()));
+            creditUser.setXykCreditAmount(StringValidater.toLong(child
+                .getXykCreditAmount()));
+            creditUser.setXyk6MonthUseAmount(StringValidater.toLong(child
+                .getXyk6monthUseAmount()));
+            creditUser.setXyk2YearOverTimes(StringValidater.toInteger(child
+                .getXyk2yearOverTimes()));
+            creditUser.setXykMonthMaxOverAmount(StringValidater.toLong(child
+                .getXykMonthMaxOverAmount()));
+            creditUser.setXykCurrentOverAmount(StringValidater.toLong(child
+                .getXykCurrentOverAmount()));
 
-            creditUser.setOutGuaranteesCount(
-                StringValidater.toInteger(Child.getOutGuaranteesCount()));
-            creditUser.setOutGuaranteesAmount(
-                StringValidater.toLong(Child.getOutGuaranteesAmount()));
-            creditUser.setOutGuaranteesRemark(Child.getOutGuaranteesRemark());
+            creditUser.setOutGuaranteesCount(StringValidater.toInteger(child
+                .getOutGuaranteesCount()));
+            creditUser.setOutGuaranteesAmount(StringValidater.toLong(child
+                .getOutGuaranteesAmount()));
+            creditUser.setOutGuaranteesRemark(child.getOutGuaranteesRemark());
 
             creditUserBO.inputBankCreditResult(creditUser);
         }
 
         // 之前节点
         String preCurrentNode = credit.getCurNodeCode();
-        credit.setCurNodeCode(nodeFlowBO
-            .getNodeFlowByCurrentNode(credit.getCurNodeCode()).getNextNode());
+        credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+            credit.getCurNodeCode()).getNextNode());
         creditBO.refreshCreditNode(credit);
 
         // 日志记录
-        ECreditNode currentNode = ECreditNode.getMap()
-            .get(credit.getCurNodeCode());
+        ECreditNode currentNode = ECreditNode.getMap().get(
+            credit.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
