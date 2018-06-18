@@ -35,4 +35,7 @@ public interface IRepointDetailAO {
     // 展示返点明细
     public List<XN632290Res> showRepointDetail(XN632290Req req);
 
+    // 列表查询返点明细 按汽车经销商编号和返点账号编号
+    public Object queryRepointDetailListByCarDealerCode(RepointDetail condition);
+
 }

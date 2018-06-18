@@ -62,7 +62,7 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
     @Override
     public int editRepointDetail(RepointDetail data) {
         if (!repointDetailBO.isRepointDetailExist(data.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "返点明细编号不存在");
         }
         return repointDetailBO.refreshRepointDetail(data);
     }
@@ -70,7 +70,7 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
     @Override
     public int dropRepointDetail(String code) {
         if (!repointDetailBO.isRepointDetailExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
+            throw new BizException("xn0000", "返点明细编号不存在");
         }
         return repointDetailBO.removeRepointDetail(code);
     }
@@ -97,6 +97,7 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req
             .getBudgetOrderCode());
         List<XN632290Res> resList = new ArrayList<XN632290Res>();
+
         // 协议内返点
         CarDealerProtocol carDealerProtocol = carDealerProtocolBO
             .getCarDealerProtocolByCarDealerCode(req.getCarDealerCode());
@@ -150,5 +151,11 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         res.setSubbranch(collectBankcard2.getSubbranch());
         resList.add(res);
         return resList;
+    }
+
+    @Override
+    public Object queryRepointDetailListByCarDealerCode(RepointDetail condition) {
+
+        return repointDetailBO.queryRepointDetailList(condition);
     }
 }

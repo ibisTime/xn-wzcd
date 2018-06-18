@@ -30,11 +30,22 @@ public class BudgetOrderGps extends ABaseDO {
     // 安装人员
     private String azUser;
 
+    // 状态(1 使用中 0 已作废)
+    private String status;
+
     // 备注
     private String remark;
 
     // 预算单编号
     private String budgetOrder;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public void setCode(String code) {
         this.code = code;

@@ -207,4 +207,10 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
         return super.update(NAMESPACE.concat("update_mortgageInput"), data);
     }
 
+    @Override
+    public int updateRepayEndCommitSettle(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_repayPlanEndCommitSettle"),
+            data);
+    }
+
 }

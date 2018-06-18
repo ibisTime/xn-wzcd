@@ -10,10 +10,6 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN632710Req {
 
-    // 申请公司
-    @NotBlank
-    private String companyCode;
-
     // 申请人
     @NotBlank
     private String applyUser;
@@ -24,14 +20,6 @@ public class XN632710Req {
 
     // 申请原因
     private String applyReason;
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
 
     public String getApplyUser() {
         return applyUser;

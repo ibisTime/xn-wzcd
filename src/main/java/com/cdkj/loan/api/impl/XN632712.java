@@ -11,9 +11,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * GPS申领审核不通过
- * @author: silver 
- * @since: 2018年5月31日 上午12:39:53 
+ * gps 公司审核
+ * @author: xieyj 
+ * @since: 2018年6月18日 下午4:55:01 
  * @history:
  */
 public class XN632712 extends AProcessor {
@@ -24,7 +24,7 @@ public class XN632712 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        gpsApplyAO.approveNoGpsApply(req.getCode(), req.getRemark());
+        gpsApplyAO.approveCompanyGps(req);
         return new BooleanRes(true);
     }
 

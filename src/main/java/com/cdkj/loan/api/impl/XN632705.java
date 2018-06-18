@@ -29,6 +29,8 @@ public class XN632705 extends AProcessor {
         condition.setGpsDevNo(req.getGpsDevNo());
         condition.setGpsType(req.getGpsType());
         condition.setCompanyCode(req.getCompanyCode());
+        condition.setCompanyApplyCode(req.getCompanyApplyCode());
+        condition.setCompanyApplyStatus(req.getCompanyApplyStatus());
         condition.setApplyStatus(req.getApplyStatus());
         condition.setUseStatus(req.getUseStatus());
 
