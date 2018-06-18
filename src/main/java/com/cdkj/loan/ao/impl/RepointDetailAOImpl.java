@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IRepointDetailAO;
+import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICarDealerBO;
 import com.cdkj.loan.bo.ICarDealerProtocolBO;
@@ -15,6 +16,7 @@ import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IRepointDetailBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.AmountUtil;
+import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.CarDealerProtocol;
@@ -53,6 +55,9 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
 
     @Autowired
     private IDepartmentBO departmentBO;
+
+    @Autowired
+    private IBankSubbranchBO bankSubbranchBO;
 
     @Override
     public String addRepointDetail(RepointDetail data) {
@@ -130,7 +135,9 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
                 .getCarDealerCode());
             res.setCompanyName(carDealer.getFullName());
             res.setBankcardNumber(collectBankcard.getBankcardNumber());
-            res.setSubbranch(collectBankcard.getSubbranch());
+            BankSubbranch bankSubbranch = bankSubbranchBO
+                .getBankSubbranch(collectBankcard.getBankCode());
+            res.setSubbranch(bankSubbranch.getFullName());
             resList.add(res);
         }
 
@@ -148,7 +155,10 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
             .queryCollectBankcardByCompanyCodeAndType(condition2);
         CollectBankcard collectBankcard2 = list2.get(0);
         res.setBankcardNumber(collectBankcard2.getBankcardNumber());
-        res.setSubbranch(collectBankcard2.getSubbranch());
+
+        BankSubbranch bankSubbranch = bankSubbranchBO
+            .getBankSubbranch(collectBankcard2.getBankCode());
+        res.setSubbranch(bankSubbranch.getFullName());
         resList.add(res);
         return resList;
     }

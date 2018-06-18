@@ -37,8 +37,8 @@ public class BankSubbranchBOImpl extends PaginableBOImpl<BankSubbranch>
         String code = null;
         if (data != null) {
             if (data.getCode() == null) {
-                code = OrderNoGenerater
-                    .generate(EGeneratePrefix.BANKSUBBRANCH.getCode());
+                code = OrderNoGenerater.generate(EGeneratePrefix.BANKSUBBRANCH
+                    .getCode());
                 data.setCode(code);
             }
             bankSubbranchDAO.insert(data);
@@ -58,6 +58,16 @@ public class BankSubbranchBOImpl extends PaginableBOImpl<BankSubbranch>
         Bank bank = bankAO.getBank(select.getBankCode());
         select.setBank(bank);
         return select;
+    }
+
+    @Override
+    public BankSubbranch getBankSubbranch(String code) {
+        BankSubbranch condition = new BankSubbranch();
+        condition.setCode(code);
+        BankSubbranch bankSubbranch = bankSubbranchDAO.select(condition);
+        Bank bank = bankAO.getBank(bankSubbranch.getBankCode());
+        bankSubbranch.setBank(bank);
+        return bankSubbranch;
     }
 
     @Override

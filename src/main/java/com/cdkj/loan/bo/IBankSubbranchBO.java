@@ -18,6 +18,8 @@ public interface IBankSubbranchBO extends IPaginableBO<BankSubbranch> {
 
     public BankSubbranch getBankSubbranch(BankSubbranch condition);
 
+    public BankSubbranch getBankSubbranch(String code);
+
     public long getBankSubbranchMaxid(String bankCode);
 
     public int editBankSubbranch(BankSubbranch data);
