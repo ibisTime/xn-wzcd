@@ -35,6 +35,15 @@ public class GpsApply extends ABaseDO {
     // 申请个数
     private Integer applyCount;
 
+    // 审核人
+    private String approveUser;
+
+    // 审核时间
+    private Date approveDatetime;
+
+    // 审核说明
+    private String approveNote;
+
     // 发货日期
     private Date sendDatetime;
 
@@ -53,6 +62,30 @@ public class GpsApply extends ABaseDO {
 
     // 公司名称
     private String companyName;
+
+    public String getApproveUser() {
+        return approveUser;
+    }
+
+    public void setApproveUser(String approveUser) {
+        this.approveUser = approveUser;
+    }
+
+    public Date getApproveDatetime() {
+        return approveDatetime;
+    }
+
+    public void setApproveDatetime(Date approveDatetime) {
+        this.approveDatetime = approveDatetime;
+    }
+
+    public String getApproveNote() {
+        return approveNote;
+    }
+
+    public void setApproveNote(String approveNote) {
+        this.approveNote = approveNote;
+    }
 
     public void setCode(String code) {
         this.code = code;

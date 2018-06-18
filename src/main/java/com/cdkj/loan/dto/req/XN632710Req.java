@@ -3,15 +3,16 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * GPS申领
+ * GPS公司申领
  * @author: silver 
  * @since: 2018年5月30日 下午11:46:36 
  * @history:
  */
 public class XN632710Req {
-    // 类型(1 公司 2 个人)
+
+    // 申请公司
     @NotBlank
-    private String type;
+    private String companyCode;
 
     // 申请人
     @NotBlank
@@ -24,12 +25,12 @@ public class XN632710Req {
     // 申请原因
     private String applyReason;
 
-    public String getType() {
-        return type;
+    public String getCompanyCode() {
+        return companyCode;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
     }
 
     public String getApplyUser() {
@@ -55,5 +56,4 @@ public class XN632710Req {
     public void setApplyReason(String applyReason) {
         this.applyReason = applyReason;
     }
-
 }

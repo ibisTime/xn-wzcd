@@ -42,6 +42,7 @@ public class GpsAOImpl implements IGpsAO {
         data.setCode(code);
         data.setGpsDevNo(gpsDevNo);
         data.setGpsType(gpsType);
+        data.setCompanyApplyStatus(EBoolean.NO.getCode());
         data.setApplyStatus(EBoolean.NO.getCode());
         data.setUseStatus(EGpsUseStatus.UN_USE.getCode());
         gpsBO.saveGps(data);

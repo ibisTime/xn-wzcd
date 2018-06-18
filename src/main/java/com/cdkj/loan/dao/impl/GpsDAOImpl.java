@@ -22,13 +22,25 @@ public class GpsDAOImpl extends AMybatisTemplate implements IGpsDAO {
     }
 
     @Override
-    public int updateApply(Gps data) {
-        return super.update(NAMESPACE.concat("update_gps_apply"), data);
+    public int updateCompanyApprove(Gps data) {
+        return super.update(NAMESPACE.concat("update_gps_company_approve"),
+            data);
     }
 
     @Override
-    public int updateApplyStatus(Gps data) {
-        return super.update(NAMESPACE.concat("update_gps_applyStatus"), data);
+    public int updateCompanyReceive(Gps data) {
+        return super.update(NAMESPACE.concat("update_gps_company_receive"),
+            data);
+    }
+
+    @Override
+    public int updateUserApply(Gps data) {
+        return super.update(NAMESPACE.concat("update_gps_user_apply"), data);
+    }
+
+    @Override
+    public int updateUserApprove(Gps data) {
+        return super.insert(NAMESPACE.concat("update_gps_user_approve"), data);
     }
 
     @Override
@@ -59,4 +71,5 @@ public class GpsDAOImpl extends AMybatisTemplate implements IGpsDAO {
         return super.selectList(NAMESPACE.concat("select_gps"), start, count,
             condition, Gps.class);
     }
+
 }

@@ -184,9 +184,14 @@ CREATE TABLE `tb_gps` (
   `gps_dev_no` varchar(32) NOT NULL COMMENT 'gps编号',
   `gps_type` varchar(32) NOT NULL COMMENT 'gps类型( 1 有线 0 无线)',
   `company_code` varchar(32) DEFAULT NULL COMMENT '公司编号',
+  `company_apply_status` varchar(32) DEFAULT NULL COMMENT '公司申领状态(0 待申领 1 已申领)',
+  
+  `company_apply_datetime` datetime DEFAULT NULL COMMENT '公司申领日期',
+  `company_apply_code` varchar(32) DEFAULT NULL COMMENT '公司申领编号',
   `apply_user` varchar(32) DEFAULT NULL COMMENT '申领人',
-  `apply_status` varchar(32) DEFAULT NULL COMMENT '申领状态(0 待申领 1 已申领)',
+  `apply_status` varchar(32) DEFAULT NULL COMMENT '申领人申领状态(0 待申领 1 已申领)',
   `apply_datetime` datetime DEFAULT NULL COMMENT '申领日期',
+
   `apply_code` varchar(32) DEFAULT NULL COMMENT '申领编号',
   `use_status` varchar(32) DEFAULT NULL COMMENT '使用状态(0 待使用 1 已使用)',
   `use_datetime` datetime DEFAULT NULL COMMENT '使用日期',
@@ -204,8 +209,13 @@ CREATE TABLE `tb_gps_apply` (
   `company_code` varchar(32) DEFAULT NULL COMMENT '公司编号',
   `apply_user` varchar(32) DEFAULT NULL COMMENT '申请人',
   `apply_datetime` datetime DEFAULT NULL COMMENT '申请日期',
+  
   `apply_reason` varchar(255) DEFAULT NULL COMMENT '申请原因',
   `apply_count` int(11) DEFAULT NULL COMMENT '申请个数',
+  `approve_user` varchar(32) DEFAULT NULL COMMENT '审核人',
+  `approve_datetime` datetime DEFAULT NULL COMMENT '审核日期',
+  `approve_note` varchar(255) DEFAULT NULL COMMENT '审核说明',
+  
   `send_datetime` datetime DEFAULT NULL COMMENT '发货日期',
   `receive_datetime` datetime DEFAULT NULL COMMENT '收货日期',
   `status` varchar(32) DEFAULT NULL COMMENT '状态(0 待审核 1 审核通过,待发货 2 审核不通过 3 已发货,待收货 4 已收货)',
