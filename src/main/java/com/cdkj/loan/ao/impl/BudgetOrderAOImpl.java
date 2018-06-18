@@ -987,10 +987,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             }
             budgetOrder.setFileListArray(fileList);
         }
-        Bank receiptBank = bankBO.getBankBySubbranch(budgetOrder
-            .getBankReceiptCode());
-        if (null != receiptBank) {
-            budgetOrder.setBankReceiptName(receiptBank.getBankName());
+
+        if (StringUtils.isNotBlank(budgetOrder.getBankReceiptCode())) {
+            CollectBankcard receiptBank = collectBankcardBO
+                .getCollectBankcard(budgetOrder.getBankReceiptCode());
+            if (null != receiptBank) {
+                budgetOrder.setBankReceiptName(receiptBank.getBankName());
+            }
         }
 
         CarDealer carDealer = carDealerBO.getCarDealer(budgetOrder
@@ -1005,8 +1008,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setInsuranceCompanyName(insuranceCompany.getName());
         }
 
-        Bank loanBank = bankBO.getBankBySubbranch(budgetOrder
-            .getBankReceiptCode());
+        Bank loanBank = bankBO
+            .getBankBySubbranch(budgetOrder.getLoanBankCode());
         if (null != loanBank) {
             budgetOrder.setLoanBankName(loanBank.getBankName());
         }
@@ -1040,10 +1043,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public Object queryBudgetOrderPageByRoleCode(int start, int limit,
-            BudgetOrder condition) {
-
-        return budgetOrderBO.getPaginableByRoleCode(start, limit, condition);
+    public Paginable<BudgetOrder> queryBudgetOrderPageByRoleCode(int start,
+            int limit, BudgetOrder condition) {
+        Paginable<BudgetOrder> page = budgetOrderBO.getPaginableByRoleCode(
+            start, limit, condition);
+        List<BudgetOrder> list = page.getList();
+        for (BudgetOrder budgetOrder : list) {
+            initBudget(budgetOrder);
+        }
+        return page;
     }
 
     @Override

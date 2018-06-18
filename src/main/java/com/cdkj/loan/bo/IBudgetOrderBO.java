@@ -3,6 +3,7 @@ package com.cdkj.loan.bo;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 
 public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
@@ -51,7 +52,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     public void updateCurNodeCode(BudgetOrder budgetOrder);
 
     // 根据角色分页查
-    public Object getPaginableByRoleCode(int start, int limit,
+    public Paginable<BudgetOrder> getPaginableByRoleCode(int start, int limit,
             BudgetOrder condition);
 
     // 申请制卡

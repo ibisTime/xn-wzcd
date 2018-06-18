@@ -63,8 +63,8 @@ public interface IBudgetOrderAO {
     public BudgetOrder getBudgetOrder(String code);
 
     // 根据角色分页查
-    public Object queryBudgetOrderPageByRoleCode(int start, int limit,
-            BudgetOrder condition);
+    public Paginable<BudgetOrder> queryBudgetOrderPageByRoleCode(int start,
+            int limit, BudgetOrder condition);
 
     // 制卡申请
     public void approveMakeCard(String code, String makeCardRemark,
@@ -115,6 +115,6 @@ public interface IBudgetOrderAO {
     public void renewInsurance(XN632341Req req);
 
     // 垫资超过1天未放款客户
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
-            BudgetOrder condition);
+    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start,
+            int limit, BudgetOrder condition);
 }
