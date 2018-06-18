@@ -78,6 +78,7 @@ DROP TABLE IF EXISTS `tb_collect_bankcard`;
 CREATE TABLE `tb_collect_bankcard` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(4) DEFAULT NULL COMMENT '类型(1 普通账户 2 经销商的收款账号 3 经销商返点账号)',
+  `belong_bank` varchar(32) DEFAULT NULL COMMENT '三种银行',
   `company_code` varchar(32) DEFAULT NULL COMMENT '公司编号',
   `real_name` varchar(255) DEFAULT NULL COMMENT '户名',
   `bank_code` varchar(32) DEFAULT NULL COMMENT '银行行别',

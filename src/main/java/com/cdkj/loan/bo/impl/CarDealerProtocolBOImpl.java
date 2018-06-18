@@ -22,6 +22,7 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
     @Autowired
     private ICarDealerProtocolDAO carDealerProtocolDAO;
 
+    @Override
     public void saveCarDealerProtocolList(List<XN632060ReqProtocol> list) {
         if (CollectionUtils.isNotEmpty(list)) {
             for (XN632060ReqProtocol req : list) {
@@ -87,16 +88,11 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
         }
     }
 
+    @Override
     public int saveCarDealerProtocol(CarDealerProtocol data) {
         int id = data.getId();
         carDealerProtocolDAO.insert(data);
         return id;
-    }
-
-    @Override
-    public int removeCarDealerProtocol(int id) {
-
-        return 0;
     }
 
     @Override

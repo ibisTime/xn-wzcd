@@ -8,10 +8,9 @@ import com.cdkj.loan.dao.ICollectBankcardDAO;
 import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.CollectBankcard;
 
-//CHECK 。。。 
 @Repository("collectBankcardDAOImpl")
-public class CollectBankcardDAOImpl extends AMybatisTemplate implements
-        ICollectBankcardDAO {
+public class CollectBankcardDAOImpl extends AMybatisTemplate
+        implements ICollectBankcardDAO {
 
     @Override
     public int insert(CollectBankcard data) {
