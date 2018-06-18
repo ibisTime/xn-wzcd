@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.dto.req.XN632060ReqProtocol;
+import com.cdkj.loan.dto.req.XN632291Req;
+import com.cdkj.loan.dto.res.XN632291Res;
 
 @Component
 public interface ICarDealerProtocolAO {
@@ -21,5 +23,8 @@ public interface ICarDealerProtocolAO {
             CarDealerProtocol condition);
 
     public CarDealerProtocol getCarDealerProtocol(int id);
+
+    // 协议收费
+    public XN632291Res protocolFee(XN632291Req req);
 
 }
