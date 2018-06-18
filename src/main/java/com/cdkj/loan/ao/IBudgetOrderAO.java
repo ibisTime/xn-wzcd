@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632120Req;
-import com.cdkj.loan.dto.req.XN632126ReqGps;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632200Req;
 import com.cdkj.loan.dto.req.XN632220Req;
@@ -55,9 +54,6 @@ public interface IBudgetOrderAO {
 
     // 车贷入档补录
     public void carLoanArchive(XN632200Req req);
-
-    public void installGps(String code, String operator,
-            List<XN632126ReqGps> gpsAzList);
 
     public Paginable<BudgetOrder> queryBudgetOrderPage(int start, int limit,
             BudgetOrder condition);
