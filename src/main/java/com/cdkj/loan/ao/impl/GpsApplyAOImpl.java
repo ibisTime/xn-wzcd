@@ -62,7 +62,12 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         // 保存数据
         GpsApply data = new GpsApply();
         data.setType(EGpsApplyType.COMPANY.getCode());
-        data.setCompanyCode(req.getCompanyCode());
+        SYSUser sysUser = sysUserBO.getUser(req.getApplyUser());
+        if (StringUtils.isBlank(sysUser.getPostCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "申请用户还未设置职位");
+        }
+        data.setCompanyCode(sysUser.getCompanyCode());
         data.setApplyUser(req.getApplyUser());
         data.setApplyReason(req.getApplyReason());
         data.setApplyCount(StringValidater.toInteger(req.getApplyCount()));
