@@ -1756,11 +1756,9 @@ INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('005_01','还款
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('005_02','已结清','005',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('005_03','确认结清','005',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('005_04','确认不还','005',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('006_01','待还款','006',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('006_02','已还款','006',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('006_03','已逾期待处理','006',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('006_04','逾期处理，进绿名单','006',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('006_05','不还，进黑名单','006',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('006_01','待审核','006',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('006_02','审核通过','006',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('006_03','审核不通过','006',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('007_01','确认提交银行','007',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('007_02','分公司内勤寄送银行材料','007',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('007_03','总公司内勤收件并核查','007',NULL);

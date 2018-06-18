@@ -76,7 +76,7 @@ public class CarDealerAOImpl implements ICarDealerAO {
             ECollectBankcard.DEALER_COLLECT.getCode(), code);
         // 协议
         carDealerProtocolBO
-            .saveCarDealerProtocolList(req.getCarDealerProtocolList());
+            .saveCarDealerProtocolList(req.getCarDealerProtocolList(), code);
         // 工行返点账号
         collectBankcardBO.saveCollectBankcardList(
             req.getGsCollectBankcardList(),
@@ -137,8 +137,8 @@ public class CarDealerAOImpl implements ICarDealerAO {
             req.getJxsCollectBankcardList(),
             ECollectBankcard.DEALER_COLLECT.getCode(), req.getCode());
 
-        carDealerProtocolBO
-            .saveCarDealerProtocolList(req.getCarDealerProtocolList());
+        carDealerProtocolBO.saveCarDealerProtocolList(
+            req.getCarDealerProtocolList(), req.getCode());
 
         collectBankcardBO.saveCollectBankcardList(
             req.getGsCollectBankcardList(),
