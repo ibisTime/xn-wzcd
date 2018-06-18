@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CollectBankcard;
+import com.cdkj.loan.dto.req.XN632060ReqCollectBankcard;
 
 public interface ICollectBankcardBO extends IPaginableBO<CollectBankcard> {
 
@@ -19,14 +20,15 @@ public interface ICollectBankcardBO extends IPaginableBO<CollectBankcard> {
     public CollectBankcard getCollectBankcard(String code);
 
     public void saveCollectBankcardList(
-            List<CollectBankcard> CollectBankcardList, String type, String code);
+            List<XN632060ReqCollectBankcard> CollectBankcardList, String type,
+            String code);
 
     public void saveCollectBankcardList(
-            List<CollectBankcard> gsCollectBankcardList, String type,
-            String bankCode, String code);
+            List<XN632060ReqCollectBankcard> gsCollectBankcardList, String type,
+            String belongBank, String code);
 
     public void removeCollectBankcardByList(
-            List<CollectBankcard> CollectBankcardList);
+            List<XN632060ReqCollectBankcard> CollectBankcardList);
 
     public List<CollectBankcard> queryCollectBankcardByCompanyCodeAndType(
             CollectBankcard condition);

@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 public class XN632147Req extends AListReq {
 
     /** 
@@ -27,12 +29,22 @@ public class XN632147Req extends AListReq {
 
     private String isAdvanceFund;// 是否垫资
 
+    private List<String> curNodeCodeList;// 节点
+
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
     }
 
     public String getCustomerName() {

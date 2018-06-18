@@ -16,6 +16,7 @@ import com.cdkj.loan.dto.req.XN632270Req;
 import com.cdkj.loan.dto.req.XN632271Req;
 import com.cdkj.loan.dto.req.XN632272Req;
 import com.cdkj.loan.dto.req.XN632280Req;
+import com.cdkj.loan.dto.req.XN632341Req;
 
 @Component
 public interface IBudgetOrderAO {
@@ -112,8 +113,8 @@ public interface IBudgetOrderAO {
     public void remindingProcess(String code);
 
     // 续保短信提醒
-    public void renewInsuranceRemind(String code, int insuranceRemindCount);
+    public void renewInsuranceRemind(String code);
 
     // 续保
-    public void renewInsurance(BudgetOrder data);
+    public void renewInsurance(XN632341Req req);
 }

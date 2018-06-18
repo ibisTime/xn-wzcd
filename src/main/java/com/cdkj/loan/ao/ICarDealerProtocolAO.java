@@ -14,10 +14,6 @@ public interface ICarDealerProtocolAO {
 
     public int addCarDealerProtocol(XN632060ReqProtocol req);
 
-    public int dropCarDealerProtocol(int id);
-
-    public int editCarDealerProtocol(CarDealerProtocol data);
-
     public Paginable<CarDealerProtocol> queryCarDealerProtocolPage(int start,
             int limit, CarDealerProtocol condition);
 

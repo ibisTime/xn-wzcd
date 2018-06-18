@@ -91,6 +91,94 @@ public class AdvanceFund extends ABaseDO {
     // 申请时间止
     private Date applyDatetimeEnd;
 
+    // 征信单编号
+    private String creditCode;
+
+    //
+    private String collectionAccountNo;
+
+    //
+    private String payAccountNo;
+
+    //
+    private String openBankName;
+
+    //
+    private String loanBankName;
+
+    //
+    private String bizCompanyName;
+
+    //
+    private String carDealerName;
+
+    //
+    private String applyName;
+
+    public String getPayAccountNo() {
+        return payAccountNo;
+    }
+
+    public void setPayAccountNo(String payAccountNo) {
+        this.payAccountNo = payAccountNo;
+    }
+
+    public String getCollectionAccountNo() {
+        return collectionAccountNo;
+    }
+
+    public void setCollectionAccountNo(String collectionAccountNo) {
+        this.collectionAccountNo = collectionAccountNo;
+    }
+
+    public String getOpenBankName() {
+        return openBankName;
+    }
+
+    public void setOpenBankName(String openBankName) {
+        this.openBankName = openBankName;
+    }
+
+    public String getLoanBankName() {
+        return loanBankName;
+    }
+
+    public void setLoanBankName(String loanBankName) {
+        this.loanBankName = loanBankName;
+    }
+
+    public String getBizCompanyName() {
+        return bizCompanyName;
+    }
+
+    public void setBizCompanyName(String bizCompanyName) {
+        this.bizCompanyName = bizCompanyName;
+    }
+
+    public String getCarDealerName() {
+        return carDealerName;
+    }
+
+    public void setCarDealerName(String carDealerName) {
+        this.carDealerName = carDealerName;
+    }
+
+    public String getApplyName() {
+        return applyName;
+    }
+
+    public void setApplyName(String applyName) {
+        this.applyName = applyName;
+    }
+
+    public String getCreditCode() {
+        return creditCode;
+    }
+
+    public void setCreditCode(String creditCode) {
+        this.creditCode = creditCode;
+    }
+
     public String getRoleCode() {
         return roleCode;
     }

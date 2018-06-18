@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import com.cdkj.loan.bo.ICarDealerProtocolBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IDepartmentBO;
+import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.IInsuranceCompanyBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
@@ -30,6 +32,7 @@ import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.IRepointDetailBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.ISmsOutBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.AmountUtil;
@@ -40,6 +43,7 @@ import com.cdkj.loan.domain.AdvanceFund;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.domain.CollectBankcard;
@@ -62,6 +66,7 @@ import com.cdkj.loan.dto.req.XN632270Req;
 import com.cdkj.loan.dto.req.XN632271Req;
 import com.cdkj.loan.dto.req.XN632272Req;
 import com.cdkj.loan.dto.req.XN632280Req;
+import com.cdkj.loan.dto.req.XN632341Req;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EAdvanceType;
@@ -124,6 +129,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     private IUserBO userBO;
 
     @Autowired
+    private IGpsBO gpsBO;
+
+    @Autowired
     private IBudgetOrderGpsBO budgetOrderGpsBO;
 
     @Autowired
@@ -152,6 +160,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private IAccountBO accountBO;
+
+    @Autowired
+    private ISmsOutBO smsOutBO;
 
     @Override
     @Transactional
@@ -1075,6 +1086,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (null != saleUser) {
             budgetOrder.setSaleUserName(saleUser.getRealName());
         }
+        List<BudgetOrderGps> budgetOrderGpsList = budgetOrderGpsBO
+            .queryBudgetOrderGpsList(budgetOrder.getCode());
+        if (CollectionUtils.isNotEmpty(budgetOrderGpsList)) {
+            budgetOrder.setBudgetOrderGpsList(budgetOrderGpsList);
+        }
     }
 
     @Override
@@ -1172,7 +1188,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setMotorRegCertification(req.getMotorRegCertification());
         budgetOrder.setPdPdf(req.getPdPdf());
         budgetOrder.setFbhRemark(req.getFbhRemark());
-        budgetOrder.setFbhstatus(EFbhStatus.TO_PENDING_ENTRY.getCode());
+        budgetOrder.setFbhStatus(EFbhStatus.TO_PENDING_ENTRY.getCode());
         budgetOrderBO.entryPreservation(budgetOrder);
     }
 
@@ -1416,12 +1432,33 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public void renewInsuranceRemind(String code, int insuranceRemindCount) {
+    @Transactional
+    public void renewInsuranceRemind(String code) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+        String mobile = budgetOrder.getMobile();
+        int insuranceRemindCount = budgetOrder.getInsuranceRemindCount() + 1;
+        String content = "尊敬的" + PhoneUtil.hideMobile(mobile)
+                + "用户，您的保险已快到期，请及时续保！";
+        smsOutBO.sendSmsOut(mobile, content);
         budgetOrderBO.renewInsuranceRemind(code, insuranceRemindCount);
     }
 
     @Override
-    public void renewInsurance(BudgetOrder data) {
+    public void renewInsurance(XN632341Req req) {
+        BudgetOrder data = new BudgetOrder();
+        data.setCode(req.getCode());
+        data.setInsuranceCompanyCode(req.getInsuranceCompanyCode());
+        data.setInsuranceApplyDatetime(
+            DateUtil.strToDate(req.getInsuranceApplyDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setInsuranceEndDatetime(DateUtil.strToDate(
+            req.getInsuranceEndDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setInsuranceForcePdf(req.getInsuranceForcePdf());
+
+        data.setInsuranceBusinessPdf(req.getInsuranceBusinessPdf());
+        data.setInsuranceNote(req.getInsuranceNote());
+        data.setOperator(req.getOperator());
+        data.setOperateDatetime(new Date());
         budgetOrderBO.renewInsurance(data);
     }
 

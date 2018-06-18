@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 /**
  * 银行放款分页查
  * @author: silver 
@@ -33,12 +35,22 @@ public class XN632145Req extends APageReq {
 
     private String isAdvanceFund;// 是否垫资
 
+    private List<String> curNodeCodeList;// 节点
+
     public String getCarDealerCode() {
         return carDealerCode;
     }
 
     public void setCarDealerCode(String carDealerCode) {
         this.carDealerCode = carDealerCode;
+    }
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
     }
 
     public String getLoanBankCode() {

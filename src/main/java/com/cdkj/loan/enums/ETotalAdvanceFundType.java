@@ -8,7 +8,7 @@ package com.cdkj.loan.enums;
  */
 public enum ETotalAdvanceFundType {
 
-    FIRST("1", "第一次打款"), SECOND("2", "发票不匹配补打款");
+    FIRST("1", "第一次打款"), SECOND("2", "发票不匹配补打款"), COLLECTION("3", "发票不匹配收回款");
 
     ETotalAdvanceFundType(String code, String value) {
         this.code = code;

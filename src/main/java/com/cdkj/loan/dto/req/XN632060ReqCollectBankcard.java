@@ -1,13 +1,6 @@
-package com.cdkj.loan.domain;
+package com.cdkj.loan.dto.req;
 
-import com.cdkj.loan.dao.base.ABaseDO;
-
-public class CollectBankcard extends ABaseDO {
-
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
-     */
-    private static final long serialVersionUID = 1L;
+public class XN632060ReqCollectBankcard {
 
     private String code;// 编号
 
@@ -27,7 +20,7 @@ public class CollectBankcard extends ABaseDO {
 
     private String bankcardNumber;// 账号
 
-    private Double pointRate;// 返点比例
+    private String pointRate;// 返点比例
 
     private String remark;// 备注
 
@@ -37,12 +30,12 @@ public class CollectBankcard extends ABaseDO {
 
     private String companyName;// 公司名称
 
-    public String getBankName() {
-        return bankName;
+    public String getKeyword() {
+        return keyword;
     }
 
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
     public String getBelongBank() {
@@ -59,22 +52,6 @@ public class CollectBankcard extends ABaseDO {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
-    }
-
-    public Double getPointRate() {
-        return pointRate;
-    }
-
-    public void setPointRate(Double pointRate) {
-        this.pointRate = pointRate;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
     }
 
     public String getCode() {
@@ -117,6 +94,14 @@ public class CollectBankcard extends ABaseDO {
         this.bankCode = bankCode;
     }
 
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
     public String getSubbranch() {
         return subbranch;
     }
@@ -131,6 +116,14 @@ public class CollectBankcard extends ABaseDO {
 
     public void setBankcardNumber(String bankcardNumber) {
         this.bankcardNumber = bankcardNumber;
+    }
+
+    public String getPointRate() {
+        return pointRate;
+    }
+
+    public void setPointRate(String pointRate) {
+        this.pointRate = pointRate;
     }
 
     public String getRemark() {

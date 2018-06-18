@@ -15,7 +15,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 分页查询垫资
+ * 分页查询垫资按角色权限
  * @author: jiafr 
  * @since: 2018年6月17日 下午8:02:51 
  * @history:

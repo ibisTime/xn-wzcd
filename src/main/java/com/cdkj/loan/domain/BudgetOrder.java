@@ -543,7 +543,7 @@ public class BudgetOrder extends ABaseDO {
     private Integer fbhWarnDay;
 
     // 发保合状态（已录入/待录入）
-    private String fbhstatus;
+    private String fbhStatus;
 
     // 应退按揭款
     private Long shouldBackAmount;
@@ -630,7 +630,27 @@ public class BudgetOrder extends ABaseDO {
 
     private Bank bank;// 贷款银行
 
+    private List<BudgetOrderGps> budgetOrderGpsList;
+
     private BankSubbranch bankSubbranch;// 支行
+
+    private List<String> curNodeCodeList;// 节点
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
+    }
+
+    public List<BudgetOrderGps> getBudgetOrderGpsList() {
+        return budgetOrderGpsList;
+    }
+
+    public void setBudgetOrderGpsList(List<BudgetOrderGps> budgetOrderGpsList) {
+        this.budgetOrderGpsList = budgetOrderGpsList;
+    }
 
     public Bank getBank() {
         return bank;
@@ -2176,12 +2196,12 @@ public class BudgetOrder extends ABaseDO {
         this.shouldBackAmount = shouldBackAmount;
     }
 
-    public String getFbhstatus() {
-        return fbhstatus;
+    public String getFbhStatus() {
+        return fbhStatus;
     }
 
-    public void setFbhstatus(String fbhstatus) {
-        this.fbhstatus = fbhstatus;
+    public void setFbhStatus(String fbhStatus) {
+        this.fbhStatus = fbhStatus;
     }
 
     public Date getZfApplyDatetime() {

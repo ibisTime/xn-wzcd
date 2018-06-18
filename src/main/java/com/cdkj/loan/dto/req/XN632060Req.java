@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.cdkj.loan.domain.CollectBankcard;
-
 public class XN632060Req {
 
     @NotBlank
@@ -62,26 +60,26 @@ public class XN632060Req {
 
     private String remark;// 备注
 
-    private List<CollectBankcard> jxsCollectBankcardList;// 经销商收款账号列表
+    private List<XN632060ReqCollectBankcard> jxsCollectBankcardList;// 经销商收款账号列表
 
     private List<XN632060ReqProtocol> carDealerProtocolList;// 经销商协议表
 
-    private List<CollectBankcard> gsCollectBankcardList;// 工商银行返点账号列表
+    private List<XN632060ReqCollectBankcard> gsCollectBankcardList;// 工商银行返点账号列表
 
-    private List<CollectBankcard> zhCollectBankcardList;// 中行银行返点账号列表
+    private List<XN632060ReqCollectBankcard> zhCollectBankcardList;// 中行银行返点账号列表
 
-    private List<CollectBankcard> jhCollectBankcardList;// 建行银行返点账号列表
+    private List<XN632060ReqCollectBankcard> jhCollectBankcardList;// 建行银行返点账号列表
 
     public String getFullName() {
         return fullName;
     }
 
-    public List<CollectBankcard> getJxsCollectBankcardList() {
+    public List<XN632060ReqCollectBankcard> getJxsCollectBankcardList() {
         return jxsCollectBankcardList;
     }
 
     public void setJxsCollectBankcardList(
-            List<CollectBankcard> jxsCollectBankcardList) {
+            List<XN632060ReqCollectBankcard> jxsCollectBankcardList) {
         this.jxsCollectBankcardList = jxsCollectBankcardList;
     }
 
@@ -94,30 +92,30 @@ public class XN632060Req {
         this.carDealerProtocolList = carDealerProtocolList;
     }
 
-    public List<CollectBankcard> getGsCollectBankcardList() {
+    public List<XN632060ReqCollectBankcard> getGsCollectBankcardList() {
         return gsCollectBankcardList;
     }
 
     public void setGsCollectBankcardList(
-            List<CollectBankcard> gsCollectBankcardList) {
+            List<XN632060ReqCollectBankcard> gsCollectBankcardList) {
         this.gsCollectBankcardList = gsCollectBankcardList;
     }
 
-    public List<CollectBankcard> getZhCollectBankcardList() {
+    public List<XN632060ReqCollectBankcard> getZhCollectBankcardList() {
         return zhCollectBankcardList;
     }
 
     public void setZhCollectBankcardList(
-            List<CollectBankcard> zhCollectBankcardList) {
+            List<XN632060ReqCollectBankcard> zhCollectBankcardList) {
         this.zhCollectBankcardList = zhCollectBankcardList;
     }
 
-    public List<CollectBankcard> getJhCollectBankcardList() {
+    public List<XN632060ReqCollectBankcard> getJhCollectBankcardList() {
         return jhCollectBankcardList;
     }
 
     public void setJhCollectBankcardList(
-            List<CollectBankcard> jhCollectBankcardList) {
+            List<XN632060ReqCollectBankcard> jhCollectBankcardList) {
         this.jhCollectBankcardList = jhCollectBankcardList;
     }
 
