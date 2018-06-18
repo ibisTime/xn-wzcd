@@ -9,23 +9,22 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "totalAdvanceFund";
+    private static String key = "repoint";
 
     // 实体名称
-    private static String keyName = "垫资汇总表";
+    private static String keyName = "返点表";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdq_total_advance_fund";
+    private static String dbname = "tdqt_repoint";
 
-    private static String[] DBwords = { "code", "type", "company_code",
-            "total_advance_fund", "pay_amount", "make_bill_note",
-            "pay_datetime", "pay_bankcard_code", "bill_pdf", "pay_note",
-            "collection_amount", "collection_datetime",
-            "collection_bankcard_code", "collection_bill_pdf",
-            "collection_note", "updater", "update_datetime" };
+    private static String[] DBwords = { "code", "car_dealer_code",
+            "bankcard_code", "total_amount", "reason", "company_code",
+            "apply_user_id", "apply_datetime", "pay_datetime",
+            "pay_bankcard_code", "bill_pdf", "pay_remark", "settle_type",
+            "cur_node_code" };
 
     private static String[] DBwordsName = { "编号", "类型", "业务公司编号", "垫资总金额",
             "付款金额", "制单意见说明", "付款时间", "付款账号编号", "付款凭证（水单）", "付款意见说明", "收款金额",
