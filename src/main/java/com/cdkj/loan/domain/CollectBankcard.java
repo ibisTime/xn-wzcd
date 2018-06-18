@@ -23,8 +23,6 @@ public class CollectBankcard extends ABaseDO {
 
     private String bankName;// 银行名称
 
-    private String subbranch;// 开户支行
-
     private String bankcardNumber;// 账号
 
     private Double pointRate;// 返点比例
@@ -115,14 +113,6 @@ public class CollectBankcard extends ABaseDO {
 
     public void setBankCode(String bankCode) {
         this.bankCode = bankCode;
-    }
-
-    public String getSubbranch() {
-        return subbranch;
-    }
-
-    public void setSubbranch(String subbranch) {
-        this.subbranch = subbranch;
     }
 
     public String getBankcardNumber() {

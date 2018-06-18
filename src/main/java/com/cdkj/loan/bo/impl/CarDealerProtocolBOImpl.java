@@ -48,42 +48,45 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
 
                 data.setAssureRate(
                     StringValidater.toDouble(req.getAssureRate()));
+                data.setDzType(req.getDzType());
+                data.setDzFee(StringValidater.toLong(req.getDzFee()));
+                data.setDzRate(StringValidater.toDouble(req.getDzRate()));
                 data.setLyAmountType(req.getLyAmountType());
+
                 data.setLyAmountFee(
                     StringValidater.toLong(req.getLyAmountFee()));
                 data.setLyAmountRate(
                     StringValidater.toDouble(req.getLyAmountRate()));
                 data.setGpsType(req.getGpsType());
-
                 data.setGpsFee(StringValidater.toLong(req.getGpsFee()));
                 data.setGpsRate(StringValidater.toDouble(req.getGpsRate()));
+
                 data.setOtherType(req.getOtherType());
                 data.setOtherFee(StringValidater.toLong(req.getOtherFee()));
                 data.setOtherRate(StringValidater.toDouble(req.getOtherRate()));
-
                 data.setIntroduceType(req.getIntroduceType());
                 data.setIntroduceFee(
                     StringValidater.toLong(req.getIntroduceFee()));
+
                 data.setIntroduceRate(
                     StringValidater.toDouble(req.getIntroduceRate()));
                 data.setReturnPointType(req.getReturnPointType());
                 data.setReturnPointFee(
                     StringValidater.toLong(req.getReturnPointFee()));
-
                 data.setReturnPointRate(
                     StringValidater.toDouble(req.getReturnPointRate()));
                 data.setIsDz(req.getIsDz());
+
                 data.setInsuAgencyYear1Type(req.getInsuAgencyYear1Type());
                 data.setInsuAgencyYear1Fee(
                     StringValidater.toLong(req.getInsuAgencyYear1Fee()));
                 data.setInsuAgencyYear2Type(req.getInsuAgencyYear2Type());
-
                 data.setInsuAgencyYear2Fee(
                     StringValidater.toLong(req.getInsuAgencyYear2Fee()));
                 data.setInsuAgencyYear3Type(req.getInsuAgencyYear3Type());
+
                 data.setInsuAgencyYear3Fee(
                     StringValidater.toLong(req.getInsuAgencyYear3Fee()));
-
                 carDealerProtocolDAO.insert(data);
             }
         }

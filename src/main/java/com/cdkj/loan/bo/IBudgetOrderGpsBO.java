@@ -17,11 +17,12 @@ public interface IBudgetOrderGpsBO extends IPaginableBO<BudgetOrderGps> {
 
     public void removeBudgetOrderGpsList(String code);
 
-    public int refreshBudgetOrderGps(BudgetOrderGps data);
+    public void abandonBudgetOrderGps(BudgetOrderGps data);
 
     public List<BudgetOrderGps> queryBudgetOrderGpsList(String budgetCode);
 
-    public List<BudgetOrderGps> queryBudgetOrderGpsList(BudgetOrderGps condition);
+    public List<BudgetOrderGps> queryBudgetOrderGpsList(
+            BudgetOrderGps condition);
 
     public BudgetOrderGps getBudgetOrderGps(String code);
 
