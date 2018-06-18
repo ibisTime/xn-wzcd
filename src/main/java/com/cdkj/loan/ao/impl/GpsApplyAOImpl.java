@@ -107,7 +107,7 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         // 思路:
         // 1、申请记录落地
         GpsApply data = new GpsApply();
-        data.setType(EGpsApplyType.COMPANY.getCode());
+        data.setType(EGpsApplyType.PERSON.getCode());
         SYSUser sysUser = sysUserBO.getUser(req.getApplyUser());
         if (StringUtils.isBlank(sysUser.getPostCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
