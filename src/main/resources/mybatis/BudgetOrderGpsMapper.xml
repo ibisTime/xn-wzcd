@@ -9,6 +9,7 @@
 		<result column="az_location" property="azLocation" />
 		<result column="az_datetime" property="azDatetime" />
 		<result column="az_user" property="azUser" />
+		<result column="status" property="status" />
 		<result column="remark" property="remark" />
 		<result column="budget_order" property="budgetOrder" />
 	</resultMap>
@@ -16,6 +17,12 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
+			<if test="budgetOrder != null and budgetOrder != '' ">
+				AND t.budget_order = #{budgetOrder}
 			</if>
 		</trim>
 	</sql>
@@ -27,6 +34,7 @@
 		,t.az_location
 		,t.az_datetime
 		,t.az_user
+		,t.status
 		,t.remark
 		,t.budget_order
 		FROM
@@ -54,6 +62,7 @@
 		,az_location
 		,az_datetime
 		,az_user
+		,status
 		,remark
 		,budget_order
 		)
@@ -64,26 +73,22 @@
 		,#{azLocation}
 		,#{azDatetime}
 		,#{azUser}
+		,#{status}
 		,#{remark}
 		,#{budgetOrder}
 		)
 	</insert>
-
-	<update id="update_budgetOrderGps" parameterType="budgetOrderGps">
+	
+	<update id="update_abandonBudgetOrderGps" parameterType="budgetOrderGps">
 		UPDATE tdq_budget_order_gps
 		SET
-		gps_dev_no = #{gpsDevNo}
-		,gps_type = #{gpsType}
-		,az_location = #{azLocation}
-		,az_datetime = #{azDatetime}
-		,az_user = #{azUser}
+		status = #{status}
 		,remark = #{remark}
-		,budget_order = #{budgetOrder}
 		WHERE code = #{code}
 	</update>
 	
 	<delete id="delete_budgetOrderGps" parameterType="budgetOrderGps">
-		DELETE FROM tdq_budget_order_gps
+		DELETE FROM tdq_budget_order_gps 
 		WHERE code = #{code}
 	</delete>
 </mapper>

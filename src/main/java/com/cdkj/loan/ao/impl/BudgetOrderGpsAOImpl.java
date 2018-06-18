@@ -7,14 +7,50 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBudgetOrderGpsAO;
 import com.cdkj.loan.bo.IBudgetOrderGpsBO;
+import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.BudgetOrderGps;
+import com.cdkj.loan.domain.Gps;
+import com.cdkj.loan.dto.req.XN632342Req;
+import com.cdkj.loan.enums.EBudgetOrderGpsStatus;
 
 @Service
 public class BudgetOrderGpsAOImpl implements IBudgetOrderGpsAO {
-
     @Autowired
     private IBudgetOrderGpsBO budgetOrderGpsBO;
+
+    @Autowired
+    private IGpsBO gpsBO;
+
+    @Override
+    public String saveBudgetOrderGps(XN632342Req req) {
+        BudgetOrderGps data = new BudgetOrderGps();
+        Gps gps = gpsBO.getGps(req.getGpsCode());
+        data.setCode(req.getGpsCode());
+        data.setStatus(EBudgetOrderGpsStatus.YES.getCode());
+        data.setGpsDevNo(gps.getGpsDevNo());
+        data.setGpsType(gps.getGpsType());
+        data.setAzLocation(req.getAzLocation());
+
+        data.setAzDatetime(DateUtil.strToDate(req.getAzDatetime(),
+            DateUtil.DATA_TIME_PATTERN_1));
+        data.setAzUser(req.getAzUser());
+        data.setRemark(req.getRemark());
+        data.setBudgetOrder(req.getBudgetOrder());
+        budgetOrderGpsBO.saveBudgetOrderGps(data);
+        return req.getGpsCode();
+    }
+
+    @Override
+    public void abandonBudgetOrderGps(String code, String remark,
+            String operater) {
+        BudgetOrderGps data = new BudgetOrderGps();
+        data.setCode(code);
+        data.setStatus(EBudgetOrderGpsStatus.NO.getCode());
+        data.setRemark(remark);
+        budgetOrderGpsBO.abandonBudgetOrderGps(data);
+    }
 
     @Override
     public Paginable<BudgetOrderGps> queryBudgetOrderGpsPage(int start,
@@ -23,7 +59,8 @@ public class BudgetOrderGpsAOImpl implements IBudgetOrderGpsAO {
     }
 
     @Override
-    public List<BudgetOrderGps> queryBudgetOrderGpsList(BudgetOrderGps condition) {
+    public List<BudgetOrderGps> queryBudgetOrderGpsList(
+            BudgetOrderGps condition) {
         return budgetOrderGpsBO.queryBudgetOrderGpsList(condition);
     }
 
@@ -31,4 +68,5 @@ public class BudgetOrderGpsAOImpl implements IBudgetOrderGpsAO {
     public BudgetOrderGps getBudgetOrderGps(String code) {
         return budgetOrderGpsBO.getBudgetOrderGps(code);
     }
+
 }
