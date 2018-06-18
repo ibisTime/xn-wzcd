@@ -29,8 +29,8 @@ public class LoanCsAOImpl implements ILoanCsAO {
         LoanCs data = new LoanCs();
         data.setCode(req.getCode());
         data.setType(req.getType());
-        data.setMinCs(StringValidater.toLong(req.getMinCs()));
-        data.setMaxCs(StringValidater.toLong(req.getMaxCs()));
+        data.setMinCs(StringValidater.toDouble(req.getMinCs()));
+        data.setMaxCs(StringValidater.toDouble(req.getMaxCs()));
         data.setRemark(req.getRemark());
         loanCsBO.refreshLoanCs(data);
     }

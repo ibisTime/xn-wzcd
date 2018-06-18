@@ -19,10 +19,10 @@ public class LoanCs extends ABaseDO {
     private String type;
 
     // 最低成数
-    private Long minCs;
+    private double minCs;
 
     // 最高成数
-    private Long maxCs;
+    private double maxCs;
 
     // 备注
     private String remark;
@@ -43,19 +43,19 @@ public class LoanCs extends ABaseDO {
         return type;
     }
 
-    public void setMinCs(Long minCs) {
+    public void setMinCs(double minCs) {
         this.minCs = minCs;
     }
 
-    public Long getMinCs() {
+    public double getMinCs() {
         return minCs;
     }
 
-    public void setMaxCs(Long maxCs) {
+    public void setMaxCs(double maxCs) {
         this.maxCs = maxCs;
     }
 
-    public Long getMaxCs() {
+    public double getMaxCs() {
         return maxCs;
     }
 
