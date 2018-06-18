@@ -99,4 +99,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 续保
     public void renewInsurance(BudgetOrder data);
 
+    // 改变预算单节点 公共
+    public void refreshCurNodeCode(BudgetOrder budgetOrder);
+
 }
