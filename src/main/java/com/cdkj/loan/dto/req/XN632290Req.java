@@ -16,17 +16,6 @@ public class XN632290Req {
     @NotBlank
     private String carDealerCode;
 
-    @NotBlank
-    private String loanBankCode;
-
-    public String getLoanBankCode() {
-        return loanBankCode;
-    }
-
-    public void setLoanBankCode(String loanBankCode) {
-        this.loanBankCode = loanBankCode;
-    }
-
     public String getBudgetOrderCode() {
         return budgetOrderCode;
     }

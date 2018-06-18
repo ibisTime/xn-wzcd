@@ -82,8 +82,8 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
     }
 
     @Override
-    public Paginable<RepointDetail> queryRepointDetailPage(int start,
-            int limit, RepointDetail condition) {
+    public Paginable<RepointDetail> queryRepointDetailPage(int start, int limit,
+            RepointDetail condition) {
         return repointDetailBO.getPaginable(start, limit, condition);
     }
 
@@ -100,12 +100,12 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
     @Override
     public List<XN632290Res> showRepointDetail(XN632290Req req) {
 
-        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req
-            .getBudgetOrderCode());
+        BudgetOrder budgetOrder = budgetOrderBO
+            .getBudgetOrder(req.getBudgetOrderCode());
 
         List<XN632290Res> resList = new ArrayList<XN632290Res>();
 
-        Bank bank = bankBO.getBank(req.getLoanBankCode());
+        Bank bank = bankBO.getBank(budgetOrder.getLoanBankCode());
 
         EBankType eBankType = null;
         // 协议内返点
@@ -130,19 +130,19 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
             res.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER.getCode());
             // 1单笔 2贷款额百分比
             if ("1".equals(carDealerProtocol.getReturnPointType())) {
-                res.setRepointAmount(AmountUtil.mul(
-                    carDealerProtocol.getReturnPointFee(), pointRate));
+                res.setRepointAmount(AmountUtil
+                    .mul(carDealerProtocol.getReturnPointFee(), pointRate));
             } else if ("2".equals(carDealerProtocol.getReturnPointType())) {
                 Long loanAmount = budgetOrder.getLoanAmount();
                 Double returnPointRate = carDealerProtocol.getReturnPointRate();
-                Long RepointAmount = AmountUtil
-                    .mul(loanAmount, returnPointRate);
+                Long RepointAmount = AmountUtil.mul(loanAmount,
+                    returnPointRate);
                 res.setRepointAmount(AmountUtil.mul(RepointAmount, pointRate));
             }
             res.setId(String.valueOf(carDealerProtocol.getId()));
             res.setAccountCode(collectBankcard.getBankcardNumber());
-            CarDealer carDealer = carDealerBO.getCarDealer(req
-                .getCarDealerCode());
+            CarDealer carDealer = carDealerBO
+                .getCarDealer(req.getCarDealerCode());
             res.setCompanyName(carDealer.getFullName());
             res.setBankcardNumber(collectBankcard.getBankcardNumber());
             res.setSubbranch(collectBankcard.getRealName());
@@ -153,8 +153,8 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         XN632290Res res = new XN632290Res();
         res.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE.getCode());
         res.setRepointAmount(budgetOrder.getLoanAmount());
-        Department department = departmentBO.getDepartment(budgetOrder
-            .getCompanyCode());
+        Department department = departmentBO
+            .getDepartment(budgetOrder.getCompanyCode());
         res.setCompanyName(department.getName());
         CollectBankcard condition2 = new CollectBankcard();
         condition2.setCompanyCode(department.getCode());
@@ -169,7 +169,8 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
     }
 
     @Override
-    public Object queryRepointDetailListByCarDealerCode(RepointDetail condition) {
+    public Object queryRepointDetailListByCarDealerCode(
+            RepointDetail condition) {
 
         return repointDetailBO.queryRepointDetailList(condition);
     }
