@@ -14,7 +14,8 @@ import com.cdkj.loan.enums.ERepayPlanNode;
 
 public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
-    public boolean checkRepayComplete(String repayBizCode, String repayPlanCode);
+    public boolean checkRepayComplete(String repayBizCode,
+            String repayPlanCode);
 
     public boolean checkPreUnpay(String repayBizCode, int curPeriod);
 
@@ -22,10 +23,11 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     public RepayPlan getRepayPlanCurMonth(String repayBizCode);
 
-    public List<RepayPlan> queryRepayPlanListByRepayBizCode(String repayBizCode);
-
     public List<RepayPlan> queryRepayPlanListByRepayBizCode(
-            String repayBizCode, List<String> repayPlanNodeList);
+            String repayBizCode);
+
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(String repayBizCode,
+            List<String> repayPlanNodeList);
 
     public RepayPlan getRepayPlanListByRepayBizCode(String repayBizCode,
             ERepayPlanNode repayPlanNode);
@@ -79,8 +81,12 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
     // 结果处理
     public void takeCarResultHandle(RepayPlan data, XN630557Req req);
 
+    // 每天凌晨定时更新还款计划状态为已结清
+    public void refreshPayedDaily(String code);
+
     public Paginable<RepayPlan> getPaginableByRoleCode(int start, int limit,
             RepayPlan condition);
 
-    public int getTotalCount(String repayPlanCode, ERepayPlanNode repayPlanNode);
+    public int getTotalCount(String repayPlanCode,
+            ERepayPlanNode repayPlanNode);
 }

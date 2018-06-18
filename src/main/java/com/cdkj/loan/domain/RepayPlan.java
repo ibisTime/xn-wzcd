@@ -232,6 +232,17 @@ public class RepayPlan extends ABaseDO {
     // 角色编号
     private String roleCode;
 
+    // 还款结束时间
+    private Date repayDatetimeEnd;
+
+    public Date getRepayDatetimeEnd() {
+        return repayDatetimeEnd;
+    }
+
+    public void setRepayDatetimeEnd(Date repayDatetimeEnd) {
+        this.repayDatetimeEnd = repayDatetimeEnd;
+    }
+
     public String getRemark() {
         return remark;
     }
