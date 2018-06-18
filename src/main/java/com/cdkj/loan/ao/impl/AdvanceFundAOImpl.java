@@ -323,11 +323,15 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
     }
 
     @Override
-    public Object queryAdvanceFundPageByRoleCode(int start, int limit,
-            AdvanceFund condition) {
-
-        return advanceFundBO.queryAdvanceFundPageByRoleCode(start, limit,
-            condition);
+    public Paginable<AdvanceFund> queryAdvanceFundPageByRoleCode(int start,
+            int limit, AdvanceFund condition) {
+        Paginable<AdvanceFund> paginable = advanceFundBO
+            .queryAdvanceFundPageByRoleCode(start, limit, condition);
+        List<AdvanceFund> list = paginable.getList();
+        for (AdvanceFund advanceFund : list) {
+            init(advanceFund);
+        }
+        return paginable;
     }
 
     private AdvanceFund init(AdvanceFund data) {
@@ -342,7 +346,6 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             if (null != company) {
                 data.setBizCompanyName(company.getName());
             }
-
         }
         if (StringUtils.isNotBlank(data.getCarDealerCode())) {
             Department carDealer = departmentBO.getDepartment(data

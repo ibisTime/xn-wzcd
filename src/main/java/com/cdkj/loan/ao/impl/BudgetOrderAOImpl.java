@@ -346,7 +346,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 data1.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
                     .getCode());
             } else if (EUseMoneyPurpose.PROTOCOL_OUTER.getCode().equals(
-                req1.getUseMoneyPurpose())) {// 协议外
+                req1.getUseMoneyPurpose())) {
                 data1.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_OUTER
                     .getCode());
             }
@@ -493,9 +493,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 .getCode());
 
             // 生成垫资单判断是总公司业务还是分公司业务
+
             Department department = departmentBO.getDepartment(budgetOrder
                 .getCompanyCode());
             if (EBoolean.NO.getCode().equals(department.getParentCode())) {
+
                 // 总公司业务 打款给汽车经销商
                 AdvanceFund data = new AdvanceFund();
                 data.setBudgetCode(budgetOrder.getCode());
@@ -773,6 +775,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCode(code);
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
+        SYSUser user = sysUserBO.getUser(operator);
+        budgetOrder.setOperateDepartment(user.getDepartmentCode());
         budgetOrderBO.refreshCarPledgeConfirm(budgetOrder);
 
         // 日志记录

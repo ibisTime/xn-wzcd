@@ -3,6 +3,7 @@ package com.cdkj.loan.bo;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.AdvanceFund;
 
 /**
@@ -50,7 +51,7 @@ public interface IAdvanceFundBO extends IPaginableBO<AdvanceFund> {
     public void applyCancelAdvanceFund(AdvanceFund data);
 
     // 分页查询垫资单根据角色编号
-    public Object queryAdvanceFundPageByRoleCode(int start, int limit,
-            AdvanceFund condition);
+    public Paginable<AdvanceFund> queryAdvanceFundPageByRoleCode(int start,
+            int limit, AdvanceFund condition);
 
 }
