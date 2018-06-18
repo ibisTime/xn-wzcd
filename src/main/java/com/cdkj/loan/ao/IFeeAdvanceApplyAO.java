@@ -20,8 +20,8 @@ public interface IFeeAdvanceApplyAO {
     public void financeApproveApply(String code, String approveResult,
             String updater, String remark);
 
-    public void sureFk(String code, String payDatetime, String payBank,
-            String payBankcard, String payPdf, String updater);
+    public void sureFk(String code, String payDatetime, String payBankcard,
+            String payPdf, String updater);
 
     public Paginable<FeeAdvanceApply> queryFeeAdvanceApplyPage(int start,
             int limit, FeeAdvanceApply condition);

@@ -341,7 +341,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             }
         }
         if (StringUtils.isNotBlank(data.getLoanBankCode())) {
-            Bank bank = bankBO.getBank(data.getLoanBankCode());
+            Bank bank = bankBO.getBankBySubbranch(data.getLoanBankCode());
             if (null != bank) {
                 data.setLoanBankName(bank.getBankName());
             }

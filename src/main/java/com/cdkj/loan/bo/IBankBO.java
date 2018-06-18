@@ -18,6 +18,8 @@ public interface IBankBO extends IPaginableBO<Bank> {
 
     public Bank getBank(String code);
 
+    public Bank getBankBySubbranch(String subbranchCode);
+
     public Bank getBankByBankCode(String bankCode);
 
     public int editBank(Bank data);

@@ -54,8 +54,8 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
             data.setCustomerUserId(replaceRepayApply.getApplyUser());
         }
 
-        data.setCurNodeCode(
-            EReplaceRepayPlanNode.TO_RISK_MANAGE_APPROVE.getCode());
+        data.setCurNodeCode(EReplaceRepayPlanNode.TO_RISK_MANAGE_APPROVE
+            .getCode());
         data.setReplaceApplyCode(req.getReplaceApplyCode());
         data.setBizCode(req.getBizCode());
         data.setIsPlatIssue(req.getIsPlatIssue());
@@ -74,8 +74,8 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
             String riskNote, String remark, String operator) {
         ReplaceRepayPlan replaceRepayPlan = replaceRepayPlanBO
             .getReplaceRepayPlan(code);
-        if (!EReplaceRepayPlanNode.TO_RISK_MANAGE_APPROVE.getCode()
-            .equals(replaceRepayPlan.getCurNodeCode())) {
+        if (!EReplaceRepayPlanNode.TO_RISK_MANAGE_APPROVE.getCode().equals(
+            replaceRepayPlan.getCurNodeCode())) {
             throw new BizException("xn0000", "代偿记录不在风控经理审核状态，无法审核！");
         }
 
@@ -97,8 +97,8 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
             String remark, String operator) {
         ReplaceRepayPlan replaceRepayPlan = replaceRepayPlanBO
             .getReplaceRepayPlan(code);
-        if (!EReplaceRepayPlanNode.RISK_MANAGE_APPROVE_YES.getCode()
-            .equals(replaceRepayPlan.getCurNodeCode())) {
+        if (!EReplaceRepayPlanNode.RISK_MANAGE_APPROVE_YES.getCode().equals(
+            replaceRepayPlan.getCurNodeCode())) {
             throw new BizException("xn0000", "代偿记录不在分公司审核状态，无法审核！");
         }
 
@@ -118,8 +118,8 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
             String remark, String operator) {
         ReplaceRepayPlan replaceRepayPlan = replaceRepayPlanBO
             .getReplaceRepayPlan(code);
-        if (!EReplaceRepayPlanNode.SUBCOMP_APPROVE_YES.getCode()
-            .equals(replaceRepayPlan.getCurNodeCode())) {
+        if (!EReplaceRepayPlanNode.SUBCOMP_APPROVE_YES.getCode().equals(
+            replaceRepayPlan.getCurNodeCode())) {
             throw new BizException("xn0000", "代偿记录不在风控总监审核状态，无法审核！");
         }
 
@@ -140,8 +140,8 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
             String remark, String operator) {
         ReplaceRepayPlan replaceRepayPlan = replaceRepayPlanBO
             .getReplaceRepayPlan(code);
-        if (!EReplaceRepayPlanNode.RISK_CHIEF_APPROVE_YES.getCode()
-            .equals(replaceRepayPlan.getCurNodeCode())) {
+        if (!EReplaceRepayPlanNode.RISK_CHIEF_APPROVE_YES.getCode().equals(
+            replaceRepayPlan.getCurNodeCode())) {
             throw new BizException("xn0000", "代偿记录不在财务审核状态，无法审核！");
         }
 
@@ -160,8 +160,8 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
     public void updateConfirmLoan(XN632335Req req) {
         ReplaceRepayPlan replaceRepayPlan = replaceRepayPlanBO
             .getReplaceRepayPlan(req.getCode());
-        if (!EReplaceRepayPlanNode.FINANCE_APPROVE_YES.getCode()
-            .equals(replaceRepayPlan.getCurNodeCode())) {
+        if (!EReplaceRepayPlanNode.FINANCE_APPROVE_YES.getCode().equals(
+            replaceRepayPlan.getCurNodeCode())) {
             throw new BizException("xn0000", "代偿记录不在确认放款状态，无法审核！");
         }
 
@@ -185,8 +185,8 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
     @Override
     public Paginable<ReplaceRepayPlan> queryReplaceRepayPlanPage(int start,
             int limit, ReplaceRepayPlan condition) {
-        Paginable<ReplaceRepayPlan> page = replaceRepayPlanBO
-            .getPaginable(start, limit, condition);
+        Paginable<ReplaceRepayPlan> page = replaceRepayPlanBO.getPaginable(
+            start, limit, condition);
         List<ReplaceRepayPlan> list = page.getList();
         for (ReplaceRepayPlan replaceRepayPlan : list) {
             init(replaceRepayPlan);
@@ -214,7 +214,7 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
     }
 
     private void init(ReplaceRepayPlan replaceRepayPlan) {
-        Bank bank = bankBO.getBank(replaceRepayPlan.getRepayBank());
+        Bank bank = bankBO.getBankBySubbranch(replaceRepayPlan.getRepayBank());
         if (null != bank) {
             replaceRepayPlan.setRepayBankName(bank.getBankName());
         }

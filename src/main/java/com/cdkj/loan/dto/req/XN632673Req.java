@@ -18,10 +18,6 @@ public class XN632673Req {
     @NotBlank
     private String payDatetime;
 
-    // 付款银行
-    @NotBlank
-    private String payBank;
-
     // 付款账号
     @NotBlank
     private String payBankcard;

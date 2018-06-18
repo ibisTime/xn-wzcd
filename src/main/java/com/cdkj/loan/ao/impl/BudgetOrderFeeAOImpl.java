@@ -109,8 +109,8 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
 
         // 设置贷款银行和贷款金额
         if (null != budgetOrder) {
-
-            Bank bank = bankBO.getBank(budgetOrder.getLoanBankCode());
+            Bank bank = bankBO
+                .getBankBySubbranch(budgetOrder.getLoanBankCode());
             if (null != bank) {
                 budgetOrderFee.setLoanBankName(bank.getBankName());
             }

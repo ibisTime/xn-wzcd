@@ -82,6 +82,7 @@ import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EFbhStatus;
 import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.EIsAdvanceFund;
+import com.cdkj.loan.enums.ELoanPeriod;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.EMakeCardStatus;
@@ -357,41 +358,39 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 condition.setCarDealerCode(data.getCarDealerCode());
                 CarDealerProtocol protocol = carDealerProtocolBO
                     .getCarDealerProtocol(Integer.valueOf(req1.getProtocolId()));
-                Integer key = Integer.valueOf(data.getLoanPeriods());
 
-                if (ERateType.CT.getCode().equals(data.getRateType())) {
-                    switch (key) {
-                        case 12:
-                            data1.setBenchmarkRate(protocol.getPlatCtRate12());
-                            break;
-                        case 24:
-                            data1.setBenchmarkRate(protocol.getPlatCtRate24());
-                            break;
-                        case 36:
-                            data1.setBenchmarkRate(protocol.getPlatCtRate36());
-                            break;
-                        default:
-                            data1.setBenchmarkRate(protocol.getPlatCtRate12());
-                            break;
+                if (ELoanPeriod.ONE_YEAER.getCode().equals(
+                    data.getLoanPeriods())) {
+
+                    if (ERateType.CT.getCode().equals(data.getRateType())) {
+                        data1.setBenchmarkRate(protocol.getPlatCtRate12());
+                    } else if (ERateType.ZT.getCode()
+                        .equals(data.getRateType())) {
+                        data1.setBenchmarkRate(protocol.getPlatZkRate12());
                     }
-                } else if (ERateType.ZK.getCode().equals(data.getRateType())) {
-                    switch (key) {
-                        case 12:
-                            data1.setBenchmarkRate(protocol.getPlatZkRate12());
-                            break;
-                        case 24:
-                            data1.setBenchmarkRate(protocol.getPlatZkRate24());
-                            break;
-                        case 36:
-                            data1.setBenchmarkRate(protocol.getPlatZkRate36());
-                            break;
-                        default:
-                            data1.setBenchmarkRate(protocol.getPlatZkRate12());
-                            break;
+
+                } else if (ELoanPeriod.TWO_YEAR.getCode().equals(
+                    data.getLoanPeriods())) {
+
+                    if (ERateType.CT.getCode().equals(data.getRateType())) {
+                        data1.setBenchmarkRate(protocol.getPlatCtRate24());
+                    } else if (ERateType.ZT.getCode()
+                        .equals(data.getRateType())) {
+                        data1.setBenchmarkRate(protocol.getPlatZkRate24());
                     }
+
+                } else if (ELoanPeriod.THREE_YEAR.getCode().equals(
+                    data.getLoanPeriods())) {
+
+                    if (ERateType.CT.getCode().equals(data.getRateType())) {
+                        data1.setBenchmarkRate(protocol.getPlatCtRate36());
+                    } else if (ERateType.ZT.getCode()
+                        .equals(data.getRateType())) {
+                        data1.setBenchmarkRate(protocol.getPlatZkRate36());
+                    }
+
                 }
             }
-
             // 服务费未处理
             data1.setFee(fee);
             data1.setRepointAmount(StringValidater.toLong(req1
@@ -409,25 +408,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             dataGps.setCode(gpsCode);
             // gpsBO.refreshUseGps(dataGps);
         }
-
-        // // 更新征信人员信息
-        // for (XN632120ReqIncome reqIncome : req.getCreditUserIncomeList()) {
-        // CreditUser creditUser = new CreditUser();
-        // String code = OrderNoGenerater
-        // .generate(EGeneratePrefix.CREDITUSER.getCode());
-        // creditUser.setCode(code);
-        // creditUser.setMonthIncome(
-        // StringValidater.toLong(reqIncome.getMonthIncome()));
-        // creditUser.setSettleInterest(
-        // StringValidater.toDouble(reqIncome.getSettleInterest()));
-        // creditUser
-        // .setBalance(StringValidater.toLong(reqIncome.getBalance()));
-        //
-        // creditUser.setJourShowIncome(reqIncome.getJourShowIncome());
-        // creditUser.setJourShowIncome(reqIncome.getJourShowIncome());
-        // creditUser.setIsPrint(reqIncome.getIsPrint());
-        // creditUserBO.refreshCreditUserIncome(creditUser);
-        // }
 
         budgetOrderBO.refresh(data);
     }
@@ -1003,7 +983,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             }
             budgetOrder.setFileListArray(fileList);
         }
-        Bank receiptBank = bankBO.getBank(budgetOrder.getBankReceiptCode());
+        Bank receiptBank = bankBO.getBankBySubbranch(budgetOrder
+            .getBankReceiptCode());
         if (null != receiptBank) {
             budgetOrder.setBankReceiptName(receiptBank.getBankName());
         }
@@ -1020,7 +1001,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setInsuranceCompanyName(insuranceCompany.getName());
         }
 
-        Bank loanBank = bankBO.getBank(budgetOrder.getBankReceiptCode());
+        Bank loanBank = bankBO.getBankBySubbranch(budgetOrder
+            .getBankReceiptCode());
         if (null != loanBank) {
             budgetOrder.setLoanBankName(loanBank.getBankName());
         }
@@ -1408,8 +1390,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
-            BudgetOrder condition) {
+    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start,
+            int limit, BudgetOrder condition) {
         return budgetOrderBO.getPaginable(start, limit, condition);
     }
 

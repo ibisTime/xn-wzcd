@@ -369,7 +369,7 @@ public class CreditAOImpl implements ICreditAO {
 
         if (StringUtils.isNotBlank(credit.getLoanBankCode())) {
 
-            Bank bank = bankBO.getBank(credit.getLoanBankCode());
+            Bank bank = bankBO.getBankBySubbranch(credit.getLoanBankCode());
             if (null != bank) {
                 credit.setLoanBankName(bank.getBankName());
             }
