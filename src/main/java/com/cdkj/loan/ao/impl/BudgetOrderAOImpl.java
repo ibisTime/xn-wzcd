@@ -388,7 +388,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                         .equals(data.getRateType())) {
                         data1.setBenchmarkRate(protocol.getPlatZkRate36());
                     }
-
                 }
             }
             // 服务费未处理
