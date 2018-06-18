@@ -21,25 +21,6 @@ CREATE TABLE `tsys_biz_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='业务日志跟踪表';
 
 -- ----------------------------
---  Table structure for `tsys_biz_team`
--- ----------------------------
-DROP TABLE IF EXISTS `tsys_biz_team`;
-CREATE TABLE `tsys_biz_team` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `name` varchar(255) DEFAULT NULL COMMENT '团队名称',
-  `captain` varchar(32) DEFAULT NULL COMMENT '团队长',
-  `company_code` varchar(32) DEFAULT NULL COMMENT '所属公司编号',
-  `status` char(1) DEFAULT NULL COMMENT '状态（1正常0删除）',
-  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
-  `account_no` varchar(32) DEFAULT NULL COMMENT '收款账号',
-  `bank` varchar(255) DEFAULT NULL COMMENT '收款银行',
-  `subbranch` varchar(255) DEFAULT NULL COMMENT '收款支行',
-  `water_bill` varchar(255) DEFAULT NULL COMMENT '水单',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='业务团队';
-
--- ----------------------------
 --  Table structure for `tsys_config`
 -- ----------------------------
 DROP TABLE IF EXISTS `tsys_config`;
