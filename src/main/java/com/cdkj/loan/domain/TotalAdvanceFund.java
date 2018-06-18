@@ -17,7 +17,7 @@ public class TotalAdvanceFund extends ABaseDO {
     // 编号
     private String code;
 
-    // 类型(1第一次打款2发票不匹配补打款)
+    // 类型(1第一次打款2发票不匹配补打款3发票不匹配收回款)
     private String type;
 
     // 业务公司编号

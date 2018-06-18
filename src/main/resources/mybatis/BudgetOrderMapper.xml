@@ -1434,6 +1434,9 @@
 		,insurance_force_pdf = #{insuranceForcePdf}
 		,insurance_business_pdf = #{insuranceBusinessPdf}
 		,insurance_note = #{insuranceNote}
+		,insurance_remind_count = 0
+		,operator = #{operator}
+		,operate_datetime = #{operateDatetime}
 		WHERE code = #{code}
 	</update>
 		

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ITotalAdvanceFundAO;
 import com.cdkj.loan.bo.IAdvanceFundBO;
+import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ITotalAdvanceFundBO;
@@ -15,9 +16,11 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.AdvanceFund;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.TotalAdvanceFund;
 import com.cdkj.loan.dto.req.XN632174Req;
 import com.cdkj.loan.dto.req.XN632176Req;
+import com.cdkj.loan.dto.req.XN632233Req;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.ETotalAdvanceFundStatus;
@@ -44,6 +47,9 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private IBudgetOrderBO budgetOrderBO;
 
     @Override
     public String addTotalAdvanceFund(XN632174Req req) {
@@ -146,6 +152,35 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
                 preNodeCode, node.getCode(), req.getPayNote(),
                 req.getOperator());
         }
+
+    }
+
+    @Override
+    public void financeConfirm(XN632233Req req) {
+        TotalAdvanceFund data = new TotalAdvanceFund();
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+
+        data.setType(req.getType());
+        data.setCompanyCode(budgetOrder.getCompanyCode());
+        data.setUpdater(req.getOperator());
+        data.setUpdateDatetime(new Date());
+
+        if (ETotalAdvanceFundType.SECOND.getCode().equals(req.getType())) {
+            data.setPayAmount(StringValidater.toLong(req.getPayAmount()));
+            data.setPayBankcardCode(req.getPayBankcardCode());
+            data.setPayDatetime(DateUtil.strToDate(req.getPayDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setBillPdf(req.getPayBillPdf());
+        } else if (ETotalAdvanceFundType.COLLECTION.getCode().equals(
+            req.getType())) {
+            data.setCollectionAmount(StringValidater.toLong(req
+                .getCollectionAmount()));
+            data.setCollectionBankcardCode(req.getCollectionBankcardCode());
+            data.setCollectionDatetime(DateUtil.strToDate(
+                req.getCollectionDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setCollectionBillPdf(req.getCollectionBillPdf());
+        }
+        totalAdvanceFundBO.saveTotalAdvanceFund(data);
 
     }
 }

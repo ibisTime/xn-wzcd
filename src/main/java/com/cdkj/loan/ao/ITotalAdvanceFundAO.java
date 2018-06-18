@@ -8,6 +8,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.TotalAdvanceFund;
 import com.cdkj.loan.dto.req.XN632174Req;
 import com.cdkj.loan.dto.req.XN632176Req;
+import com.cdkj.loan.dto.req.XN632233Req;
 
 /**
  * 
@@ -36,5 +37,8 @@ public interface ITotalAdvanceFundAO {
 
     // 确认打款给分公司
     public void confirmPayBranchCompany(XN632176Req req);
+
+    // 财务审核
+    public void financeConfirm(XN632233Req req);
 
 }
