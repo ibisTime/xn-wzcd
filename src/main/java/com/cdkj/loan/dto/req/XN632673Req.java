@@ -45,14 +45,6 @@ public class XN632673Req {
         this.payDatetime = payDatetime;
     }
 
-    public String getPayBank() {
-        return payBank;
-    }
-
-    public void setPayBank(String payBank) {
-        this.payBank = payBank;
-    }
-
     public String getPayBankcard() {
         return payBankcard;
     }
