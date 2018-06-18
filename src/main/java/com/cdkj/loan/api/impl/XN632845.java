@@ -2,7 +2,6 @@ package com.cdkj.loan.api.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.cdkj.loan.ao.ILoanProductAO;
 import com.cdkj.loan.ao.IRecruitApplyAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.DateUtil;
@@ -39,7 +38,7 @@ public class XN632845 extends AProcessor {
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
-            orderColumn = ILoanProductAO.DEFAULT_ORDER_COLUMN;
+            orderColumn = IRecruitApplyAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(orderColumn, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());
