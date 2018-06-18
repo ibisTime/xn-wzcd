@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ICollectBankcardAO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
-import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.dto.req.XN632000Req;
@@ -18,9 +17,6 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
 
     @Autowired
     private ICollectBankcardBO collectBankcardBO;
-
-    @Autowired
-    private IDepartmentBO departmentBO;
 
     @Override
     public String addCollectBankcard(XN632000Req req) {

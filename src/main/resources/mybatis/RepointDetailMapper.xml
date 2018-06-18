@@ -37,6 +37,9 @@
 			</if>
 			<if test="repointCode != null and repointCode != '' ">
 				AND t.repoint_code = #{repointCode}
+			</if>			
+			<if test="accountCode != null and accountCode != '' ">
+				AND t.account_code = #{accountCode}
 			</if>
 		</trim>
 	</sql>

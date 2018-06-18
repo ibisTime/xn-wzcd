@@ -97,8 +97,15 @@ public class CarDealerAOImpl implements ICarDealerAO {
     }
 
     @Override
+    @Transactional
     public void editCarDealer(XN632062Req req) {
         CarDealer data = carDealerBO.getCarDealer(req.getCode());
+        // 删除经销商下的收款账号
+        collectBankcardBO.removeCollectBankcardByCompanyCode(data.getCode());
+        // 删除协议
+        carDealerProtocolBO
+            .removeCarDealerProtocolByCarDealerCode(data.getCode());
+
         data.setFullName(req.getFullName());
         data.setAbbrName(req.getAbbrName());
         data.setIsSelfDevelop(req.getIsSelfDevelop());
@@ -123,15 +130,7 @@ public class CarDealerAOImpl implements ICarDealerAO {
         data.setPolicyNote(req.getPolicyNote());
         data.setRemark(req.getRemark());
         carDealerBO.refreshCarDealer(data);
-        // 删除
-        collectBankcardBO
-            .removeCollectBankcardByList(req.getJxsCollectBankcardList());
-        collectBankcardBO
-            .removeCollectBankcardByList(req.getGsCollectBankcardList());
-        collectBankcardBO
-            .removeCollectBankcardByList(req.getZhCollectBankcardList());
-        collectBankcardBO
-            .removeCollectBankcardByList(req.getJhCollectBankcardList());
+
         // 保存
         collectBankcardBO.saveCollectBankcardList(
             req.getJxsCollectBankcardList(),
