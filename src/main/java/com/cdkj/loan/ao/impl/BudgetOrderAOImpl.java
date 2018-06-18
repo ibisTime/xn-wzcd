@@ -30,6 +30,7 @@ import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.IRepointDetailBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.ISmsOutBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.AmountUtil;
@@ -62,6 +63,7 @@ import com.cdkj.loan.dto.req.XN632270Req;
 import com.cdkj.loan.dto.req.XN632271Req;
 import com.cdkj.loan.dto.req.XN632272Req;
 import com.cdkj.loan.dto.req.XN632280Req;
+import com.cdkj.loan.dto.req.XN632341Req;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EAdvanceType;
@@ -152,6 +154,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private IAccountBO accountBO;
+
+    @Autowired
+    private ISmsOutBO smsOutBO;
 
     @Override
     @Transactional
@@ -1416,12 +1421,33 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public void renewInsuranceRemind(String code, int insuranceRemindCount) {
+    @Transactional
+    public void renewInsuranceRemind(String code) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+        String mobile = budgetOrder.getMobile();
+        int insuranceRemindCount = budgetOrder.getInsuranceRemindCount() + 1;
+        String content = "尊敬的" + PhoneUtil.hideMobile(mobile)
+                + "用户，您的保险已快到期，请及时续保！";
+        smsOutBO.sendSmsOut(mobile, content);
         budgetOrderBO.renewInsuranceRemind(code, insuranceRemindCount);
     }
 
     @Override
-    public void renewInsurance(BudgetOrder data) {
+    public void renewInsurance(XN632341Req req) {
+        BudgetOrder data = new BudgetOrder();
+        data.setCode(req.getCode());
+        data.setInsuranceCompanyCode(req.getInsuranceCompanyCode());
+        data.setInsuranceApplyDatetime(
+            DateUtil.strToDate(req.getInsuranceApplyDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setInsuranceEndDatetime(DateUtil.strToDate(
+            req.getInsuranceEndDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setInsuranceForcePdf(req.getInsuranceForcePdf());
+
+        data.setInsuranceBusinessPdf(req.getInsuranceBusinessPdf());
+        data.setInsuranceNote(req.getInsuranceNote());
+        data.setOperator(req.getOperator());
+        data.setOperateDatetime(new Date());
         budgetOrderBO.renewInsurance(data);
     }
 

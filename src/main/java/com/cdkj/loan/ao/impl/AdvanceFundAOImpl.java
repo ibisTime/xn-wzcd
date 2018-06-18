@@ -63,7 +63,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
     private IDepartmentBO departmentBO;
 
     @Autowired
-    private IBankBO IBankBO;
+    private IBankBO bankBO;
 
     @Autowired
     private ICollectBankcardBO collectBankcardBO;
@@ -341,7 +341,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             }
         }
         if (StringUtils.isNotBlank(data.getLoanBankCode())) {
-            Bank bank = IBankBO.getBank(data.getLoanBankCode());
+            Bank bank = bankBO.getBank(data.getLoanBankCode());
             if (null != bank) {
                 data.setLoanBankName(bank.getBankName());
             }
