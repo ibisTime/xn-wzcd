@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,7 @@ import com.cdkj.loan.domain.AdvanceFund;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.domain.CollectBankcard;
@@ -1084,7 +1086,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (null != saleUser) {
             budgetOrder.setSaleUserName(saleUser.getRealName());
         }
-
+        List<BudgetOrderGps> budgetOrderGpsList = budgetOrderGpsBO
+            .queryBudgetOrderGpsList(budgetOrder.getCode());
+        if (CollectionUtils.isNotEmpty(budgetOrderGpsList)) {
+            budgetOrder.setBudgetOrderGpsList(budgetOrderGpsList);
+        }
     }
 
     @Override
