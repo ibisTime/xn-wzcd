@@ -1,11 +1,3 @@
-/**
- * @Title XN802182Res.java 
- * @Package com.std.account.dto.res 
- * @Description 
- * @author haiqingzheng  
- * @date 2016年12月26日 下午4:46:41 
- * @version V1.0   
- */
 package com.cdkj.loan.dto.res;
 
 /**

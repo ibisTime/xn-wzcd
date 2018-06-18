@@ -320,7 +320,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         List<XN632120ReqRepointDetail> list = req.getRepointDetailList();
         for (XN632120ReqRepointDetail req1 : list) {
-
             // 生成返点明细数据(用款用途)
             RepointDetail data1 = new RepointDetail();
             if (EUseMoneyPurpose.MORTGAGE.getCode().equals(// 应退按揭款
@@ -340,7 +339,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 data1.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
                     .getCode());
             } else if (EUseMoneyPurpose.PROTOCOL_OUTER.getCode().equals(
-                req1.getUseMoneyPurpose())) {
+                req1.getUseMoneyPurpose())) {// 协议外
                 data1.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_OUTER
                     .getCode());
             }
@@ -390,7 +389,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     }
                 }
             }
-            // 服务费未处理
             data1.setFee(fee);
             data1.setRepointAmount(StringValidater.toLong(req1
                 .getRepointAmount()));
