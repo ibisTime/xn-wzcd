@@ -104,11 +104,9 @@ public class XN632200Req {
     private String fileRemark;
 
     // 经办人
-    @NotBlank
     private String operator;
 
     // 经办部门
-    @NotBlank
     private String operateDepartment;
 
     public String getCode() {
