@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.GpsApply;
-import com.cdkj.loan.enums.EGpsApplyStatus;
 
 /**
  * GPS申领
@@ -15,12 +14,16 @@ import com.cdkj.loan.enums.EGpsApplyStatus;
  */
 public interface IGpsApplyBO extends IPaginableBO<GpsApply> {
 
-    public boolean isGpsApplyExist(String code);
-
+    // 申请gps
     public String saveGpsApply(GpsApply data);
 
-    public void approveGpsApply(String code, EGpsApplyStatus eGpsApplyStatus,
-            String remark);
+    // 审核gps
+    public void approveCompanyGpsApply(GpsApply gpsApply, String approveResult,
+            String approveUser, String approveNote);
+
+    // 审核gps
+    public void approveUserGpsApply(GpsApply gpsApply, String approveResult,
+            String approveUser, String approveNote);
 
     public List<GpsApply> queryGpsApplyList(GpsApply condition);
 

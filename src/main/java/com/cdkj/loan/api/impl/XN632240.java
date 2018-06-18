@@ -1,37 +1,38 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.IGpsApplyAO;
+import com.cdkj.loan.ao.IRepointAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN632711Req;
-import com.cdkj.loan.dto.res.BooleanRes;
+import com.cdkj.loan.dto.req.XN632240Req;
+import com.cdkj.loan.dto.res.PKCodeRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * GPS申领审核通过
- * @author: silver 
- * @since: 2018年5月31日 上午12:39:53 
+ * 返点财务经理制单（新增）
+ * @author: jiafr 
+ * @since: 2018年6月18日 下午2:20:00 
  * @history:
  */
-public class XN632711 extends AProcessor {
-    private IGpsApplyAO gpsApplyAO = SpringContextHolder
-        .getBean(IGpsApplyAO.class);
+public class XN632240 extends AProcessor {
+    private IRepointAO repointAO = SpringContextHolder
+        .getBean(IRepointAO.class);
 
-    private XN632711Req req = null;
+    private XN632240Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        gpsApplyAO.approveCompanyGpsApply(req);
-        return new BooleanRes(true);
+
+        return new PKCodeRes(repointAO.addRepoint(req));
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632711Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632240Req.class);
         ObjValidater.validateReq(req);
     }
+
 }

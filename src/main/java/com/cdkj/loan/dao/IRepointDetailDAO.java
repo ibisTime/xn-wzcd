@@ -8,4 +8,6 @@ public interface IRepointDetailDAO extends IBaseDAO<RepointDetail> {
     String NAMESPACE = IRepointDetailDAO.class.getName().concat(".");
 
     int update(RepointDetail data);
+
+    void updateCurNodeCode(RepointDetail data);
 }
