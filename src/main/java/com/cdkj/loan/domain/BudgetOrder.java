@@ -628,6 +628,8 @@ public class BudgetOrder extends ABaseDO {
 
     private String saleUserName;// 业务员
 
+    private String companyName;// 业务公司名称
+
     private Bank bank;// 贷款银行
 
     private List<BudgetOrderGps> budgetOrderGpsList;
@@ -635,6 +637,14 @@ public class BudgetOrder extends ABaseDO {
     private BankSubbranch bankSubbranch;// 支行
 
     private List<String> curNodeCodeList;// 节点
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
     public List<String> getCurNodeCodeList() {
         return curNodeCodeList;

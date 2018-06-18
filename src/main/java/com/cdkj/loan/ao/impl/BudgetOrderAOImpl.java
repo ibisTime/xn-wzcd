@@ -1026,6 +1026,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setOperateDepartmentName(department.getName());
         }
 
+        // 业务公司名称
+        if (StringUtils.isNotBlank(budgetOrder.getCompanyCode())) {
+            Department company = departmentBO.getDepartment(budgetOrder
+                .getCompanyCode());
+            budgetOrder.setCompanyName(company.getName());
+        }
+
         SYSUser user = sysUserBO.getUser(budgetOrder.getOperator());
         if (null != user) {
             budgetOrder.setOperatorName(user.getRealName());
