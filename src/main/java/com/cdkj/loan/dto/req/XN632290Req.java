@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 展示返点明细（用款用途）
  * @author: jiafr 
@@ -8,9 +10,22 @@ package com.cdkj.loan.dto.req;
  */
 public class XN632290Req {
 
+    @NotBlank
     private String budgetOrderCode;
 
+    @NotBlank
     private String carDealerCode;
+
+    @NotBlank
+    private String useMoneyPurpose;
+
+    public String getUseMoneyPurpose() {
+        return useMoneyPurpose;
+    }
+
+    public void setUseMoneyPurpose(String useMoneyPurpose) {
+        this.useMoneyPurpose = useMoneyPurpose;
+    }
 
     public String getBudgetOrderCode() {
         return budgetOrderCode;
