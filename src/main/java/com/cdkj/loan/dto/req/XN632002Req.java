@@ -20,12 +20,6 @@ public class XN632002Req {
     private String bankCode;// 银行行别
 
     @NotBlank
-    private String bankName;// 银行名称
-
-    @NotBlank
-    private String subbranch;// 开户支行
-
-    @NotBlank
     private String bankcardNumber;// 账号
 
     private String remark;// 备注
@@ -68,22 +62,6 @@ public class XN632002Req {
 
     public void setBankCode(String bankCode) {
         this.bankCode = bankCode;
-    }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
-    }
-
-    public String getSubbranch() {
-        return subbranch;
-    }
-
-    public void setSubbranch(String subbranch) {
-        this.subbranch = subbranch;
     }
 
     public String getBankcardNumber() {
