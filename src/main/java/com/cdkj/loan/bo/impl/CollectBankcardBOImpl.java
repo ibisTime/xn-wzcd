@@ -112,6 +112,17 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
     }
 
     @Override
+    public List<CollectBankcard> queryCollectBankcardList(
+            XN632060ReqCollectBankcard condition) {
+        CollectBankcard data = new CollectBankcard();
+        data.setType(condition.getType());
+        data.setKeyword(condition.getKeyword());
+        data.setBelongBank(condition.getBelongBank());
+        data.setCompanyCode(condition.getCompanyCode());
+        return collectBankcardDAO.selectList(data);
+    }
+
+    @Override
     public CollectBankcard getCollectBankcard(String code) {
         CollectBankcard data = null;
         if (StringUtils.isNotBlank(code)) {

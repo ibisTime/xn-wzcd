@@ -17,6 +17,9 @@ public interface ICollectBankcardBO extends IPaginableBO<CollectBankcard> {
     public List<CollectBankcard> queryCollectBankcardList(
             CollectBankcard condition);
 
+    public List<CollectBankcard> queryCollectBankcardList(
+            XN632060ReqCollectBankcard condition);
+
     public CollectBankcard getCollectBankcard(String code);
 
     public void saveCollectBankcardList(

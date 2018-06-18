@@ -5,6 +5,7 @@
 	<resultMap id="collectBankcard_DB_Result" type="collectBankcard">
 		<result column="code" property="code" />
 		<result column="type" property="type" />
+		<result column="belong_bank" property="belongBank" />
 		<result column="company_code" property="companyCode" />
 		<result column="real_name" property="realName" />
 		<result column="bank_code" property="bankCode" />
@@ -21,6 +22,9 @@
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
 			</if>
+			<if test="belongBank != null and belongBank != '' ">
+				AND t.belong_bank = #{belongBank}
+			</if>
 			<if test="keyword != null and keyword != '' ">
 				AND t.real_name like "%"#{keyword}"%" OR  t.bank_name like "%"#{keyword}"%"
 				OR  t.bankcardNumber like "%"#{keyword}"%" OR  t.subbranch like "%"#{keyword}"%"
@@ -34,6 +38,7 @@
 		SELECT
 		t.code
 		,t.type
+		,t.belong_bank
 		,t.company_code
 		,t.real_name
 		,t.bank_code
@@ -62,6 +67,7 @@
 		tb_collect_bankcard(
 		code
 		,type
+		,belong_bank
 		,company_code
 		,real_name
 		,bank_code
@@ -73,6 +79,7 @@
 		VALUES(
 		#{code}
 		,#{type}
+		,#{belongBank}
 		,#{companyCode}
 		,#{realName}
 		,#{bankCode}
@@ -92,6 +99,7 @@
 		UPDATE tb_collect_bankcard
 		SET
 		type = #{type}
+		,belong_bank = #{belongBank}
 		,company_code = #{companyCode}
 		,real_name = #{realName}
 		,bank_code = #{bankCode}
@@ -106,6 +114,7 @@
 		SELECT
 		t.code
 		,t.type
+		,t.belong_bank
 		,t.company_code
 		,t.real_name
 		,t.bank_code
