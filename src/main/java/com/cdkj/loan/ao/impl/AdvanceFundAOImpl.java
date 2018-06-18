@@ -177,7 +177,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
 
             if (EIsAdvanceFund.NO.getCode().equals(data.getIsAdvanceFund())) {
-                // 不垫资 结束垫资流程 进入银行放款流程
+                // 不垫资 结束垫资流程 预算单进入银行放款流程
                 BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
                     .getBudgetCode());
                 budgetOrder.setCurNodeCode(EBudgetOrderNode.BANK_LOAN_COMMIT
@@ -187,6 +187,17 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
                     EBudgetOrderNode.BANK_LOAN_COMMIT.getCode(),
                     EBudgetOrderNode.BANK_LOAN_COMMIT.getValue(),
                     req.getOperator());
+                budgetOrderBO.refreshCurNodeCode(budgetOrder);
+
+                // 垫资单垫资流程结束
+                if (EAdvanceType.PARENT_BIZ.getCode().equals(data.getType())) {
+                    data.setCurNodeCode(EAdvanceFundNode.PARENT_ADVANCE_END
+                        .getCode());
+                } else if (EAdvanceType.BRANCH_BIZ.getCode().equals(
+                    data.getType())) {
+                    data.setCurNodeCode(EAdvanceFundNode.BRANCH_ADVANCE_END
+                        .getCode());
+                }
 
             } else if (EIsAdvanceFund.YES.getCode().equals(
                 data.getIsAdvanceFund())) {
