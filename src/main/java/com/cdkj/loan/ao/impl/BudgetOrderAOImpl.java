@@ -732,9 +732,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setOperator(req.getOperator());
         budgetOrder.setOperateDatetime(new Date());
 
-        BankSubbranch bankSubbranch = new BankSubbranch();
-        bankSubbranch.setCode(budgetOrder.getLoanBankCode());
-        BankSubbranch data = bankSubbranchBO.getBankSubbranch(bankSubbranch);
+        BankSubbranch data = bankSubbranchBO
+            .getBankSubbranch(budgetOrder.getLoanBankCode());
         if ("ICBC" == data.getBankType()) {
             budgetOrder
                 .setMakeCardStatus(EMakeCardStatus.PENDING_CARD.getCode());
@@ -1063,10 +1062,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (null != loanBank) {
             budgetOrder.setLoanBankName(loanBank.getBankName());
         }
-        BankSubbranch bankSubbranch = new BankSubbranch();
-        bankSubbranch.setCode(budgetOrder.getLoanBankCode());
+
         BankSubbranch subbranch = bankSubbranchBO
-            .getBankSubbranch(bankSubbranch);
+            .getBankSubbranch(budgetOrder.getLoanBankCode());
         if (null != subbranch) {
             budgetOrder.setBankSubbranch(subbranch);
         }
@@ -1110,9 +1108,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前状态不是待制卡状态，不能操作！");
         }
-        BankSubbranch bankSubbranch = new BankSubbranch();
-        bankSubbranch.setCode(budgetOrder.getLoanBankCode());
-        BankSubbranch data = bankSubbranchBO.getBankSubbranch(bankSubbranch);
+        BankSubbranch data = bankSubbranchBO
+            .getBankSubbranch(budgetOrder.getLoanBankCode());
         if ("ICBC" != data.getBankType()) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "银行行别不是工行，不能操作！");
@@ -1134,9 +1131,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前状态不是待回录状态，不能操作！");
         }
-        BankSubbranch bankSubbranch = new BankSubbranch();
-        bankSubbranch.setCode(budgetOrder.getLoanBankCode());
-        BankSubbranch data = bankSubbranchBO.getBankSubbranch(bankSubbranch);
+
+        BankSubbranch data = bankSubbranchBO
+            .getBankSubbranch(budgetOrder.getLoanBankCode());
         if ("ICBC" == data.getBankType()) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "银行行别是工行，不能操作！");

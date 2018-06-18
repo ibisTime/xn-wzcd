@@ -126,10 +126,7 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
 
     @Override
     public BankSubbranch getBankSubbranch(String code) {
-        BankSubbranch condition = new BankSubbranch();
-        condition.setCode(code);
-        BankSubbranch bankSubbranch = bankSubbranchBO
-            .getBankSubbranch(condition);
+        BankSubbranch bankSubbranch = bankSubbranchBO.getBankSubbranch(code);
         initBankSubbranch(bankSubbranch);
         return bankSubbranch;
     }

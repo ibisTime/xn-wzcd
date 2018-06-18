@@ -36,10 +36,8 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
         data.setRealName(req.getRealName());
         data.setBankCode(req.getBankCode());
         // 获取银行名称
-        BankSubbranch bankSubbranch = new BankSubbranch();
-        bankSubbranch.setCode(req.getBankCode());
         BankSubbranch subbranch = bankSubbranchBO
-            .getBankSubbranch(bankSubbranch);
+            .getBankSubbranch(req.getBankCode());
         Bank bank = bankBO.getBank(subbranch.getBankCode());
         data.setBankName(bank.getBankName());
 
@@ -57,10 +55,8 @@ public class CollectBankcardAOImpl implements ICollectBankcardAO {
         data.setRealName(req.getRealName());
         data.setBankCode(req.getBankCode());
         // 获取银行名称
-        BankSubbranch bankSubbranch = new BankSubbranch();
-        bankSubbranch.setCode(req.getBankCode());
         BankSubbranch subbranch = bankSubbranchBO
-            .getBankSubbranch(bankSubbranch);
+            .getBankSubbranch(req.getBankCode());
         Bank bank = bankBO.getBank(subbranch.getBankCode());
         data.setBankName(bank.getBankName());
 
