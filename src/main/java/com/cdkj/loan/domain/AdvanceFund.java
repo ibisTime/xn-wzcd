@@ -115,6 +115,16 @@ public class AdvanceFund extends ABaseDO {
     // 申请人
     private String applyName;
 
+    private BudgetOrder budgetOrder;
+
+    public BudgetOrder getBudgetOrder() {
+        return budgetOrder;
+    }
+
+    public void setBudgetOrder(BudgetOrder budgetOrder) {
+        this.budgetOrder = budgetOrder;
+    }
+
     public String getPayAccountNo() {
         return payAccountNo;
     }

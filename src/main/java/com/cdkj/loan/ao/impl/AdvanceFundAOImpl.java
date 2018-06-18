@@ -344,6 +344,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
                 .getBudgetCode());
             data.setCreditCode(budgetOrder.getCreditCode());
+            data.setBudgetOrder(budgetOrder);
         }
         if (StringUtils.isNotBlank(data.getCompanyCode())) {
             Department company = departmentBO.getDepartment(data
@@ -379,6 +380,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
                 data.setPayAccountNo(payBankcard.getBankcardNumber());
             }
         }
+
         return data;
 
     }
