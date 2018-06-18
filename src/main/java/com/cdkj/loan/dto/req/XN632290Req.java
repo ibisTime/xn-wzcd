@@ -16,17 +16,6 @@ public class XN632290Req {
     @NotBlank
     private String carDealerCode;
 
-    @NotBlank
-    private String useMoneyPurpose;
-
-    public String getUseMoneyPurpose() {
-        return useMoneyPurpose;
-    }
-
-    public void setUseMoneyPurpose(String useMoneyPurpose) {
-        this.useMoneyPurpose = useMoneyPurpose;
-    }
-
     public String getBudgetOrderCode() {
         return budgetOrderCode;
     }
