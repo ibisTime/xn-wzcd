@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.bo.IGpsApplyBO;
 import com.cdkj.loan.bo.IGpsBO;
@@ -91,6 +92,7 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply> implements
     }
 
     @Override
+    @Transactional
     public void receiveGps(String code) {
         // 更新申请单，状态更新已收件
         GpsApply data = getGpsApply(code);
@@ -100,7 +102,7 @@ public class GpsApplyBOImpl extends PaginableBOImpl<GpsApply> implements
 
         // gps领用状态更改
         Gps condition = new Gps();
-        condition.setApplyCode(code);
+        condition.setCompanyApplyCode(data.getCode());
         List<Gps> gpsList = gpsBO.queryGpsList(condition);
         for (Gps gps : gpsList) {
             gpsBO.receiveCompanyGps(gps.getCode());

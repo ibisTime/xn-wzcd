@@ -3,6 +3,7 @@ package com.cdkj.loan.dto.req;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class XN632062Req {
 
@@ -63,14 +64,19 @@ public class XN632062Req {
 
     private String remark;// 备注
 
+    @NotEmpty
     private List<XN632060ReqCollectBankcard> jxsCollectBankcardList;// 经销商收款账号列表
 
+    @NotEmpty
     private List<XN632060ReqProtocol> carDealerProtocolList;// 经销商协议表
 
+    @NotEmpty
     private List<XN632060ReqCollectBankcard> gsCollectBankcardList;// 工商银行返点账号列表
 
+    @NotEmpty
     private List<XN632060ReqCollectBankcard> zhCollectBankcardList;// 中行银行返点账号列表
 
+    @NotEmpty
     private List<XN632060ReqCollectBankcard> jhCollectBankcardList;// 建行银行返点账号列表
 
     public String getCode() {
