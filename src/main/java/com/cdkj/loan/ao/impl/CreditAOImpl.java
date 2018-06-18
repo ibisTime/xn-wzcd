@@ -38,6 +38,7 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ECreditNode;
+import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.exception.BizException;
 
@@ -82,9 +83,12 @@ public class CreditAOImpl implements ICreditAO {
 
     @Override
     public String addCredit(XN632110Req req) {
-
         // 操作人编号
         SYSUser sysUser = sysUserBO.getUser(req.getOperator());
+        if (StringUtils.isBlank(sysUser.getPostCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前用户还未设置岗位");
+        }
 
         // 新增征信单
         Credit credit = new Credit();
@@ -98,12 +102,12 @@ public class CreditAOImpl implements ICreditAO {
         credit.setXszReverse(req.getXszReverse());
         credit.setApplyDatetime(new Date());
 
-        if (null != sysUser.getCompanyCode()
-                && !"".equals(sysUser.getCompanyCode())) {
-            Department department = departmentBO.getDepartment(sysUser
-                .getCompanyCode());
-            credit.setCompanyName(department.getName());
-        }
+        // if (null != sysUser.getCompanyCode()
+        // && !"".equals(sysUser.getCompanyCode())) {
+        // Department department = departmentBO.getDepartment(sysUser
+        // .getCompanyCode());
+        // credit.setCompanyName(department.getName());
+        // }
 
         // 设置当前节点
         ECreditNode currentNode = ECreditNode.getMap().get(
@@ -134,15 +138,12 @@ public class CreditAOImpl implements ICreditAO {
         // 日志记录
         sysBizLogBO.saveSYSBizLog(creditCode, EBizLogType.CREDIT, creditCode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
-
         return creditCode;
     }
 
     @Override
     public void editCredit(XN632112Req req) {
-
         Credit credit = creditBO.getCredit(req.getCreditCode());
-
         if (null == credit) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "根据征信单编号查询不到征信单");
@@ -190,12 +191,10 @@ public class CreditAOImpl implements ICreditAO {
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), PrecurNodeCode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
-
     }
 
     @Override
     public Credit getCredit(String creditCode) {
-
         Credit credit = creditBO.getCredit(creditCode);
         init(credit);
         return credit;
@@ -247,19 +246,12 @@ public class CreditAOImpl implements ICreditAO {
                 credit.getCode(), ELoanRole.APPLY_USER));
             init(credit);
         }
-
         return result;
     }
 
     @Override
     public void primaryAudit(XN632113Req req) {
-
         Credit credit = creditBO.getCredit(req.getCode());
-
-        if (null == credit) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "根据征信单编号查询不到征信单");
-        }
 
         if (!ECreditNode.PRIMARYAUDIT.getCode().equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -295,14 +287,7 @@ public class CreditAOImpl implements ICreditAO {
     @Override
     @Transactional
     public void firstAudit(XN632114Req req) {
-
         Credit credit = creditBO.getCredit(req.getCode());
-
-        if (null == credit) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "根据征信单编号查询不到征信单");
-        }
-
         if (!ECreditNode.FIRSTAUDIT.getCode().equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是一审节点，不能操作");
@@ -317,29 +302,41 @@ public class CreditAOImpl implements ICreditAO {
             // 生成预算单
             BudgetOrder data = new BudgetOrder();
             data.setCreditCode(credit.getCode());
+            CreditUser customerUser = creditUserBO.getCreditUserByCreditCode(
+                credit.getCode(), ELoanRole.APPLY_USER);
+            if (customerUser == null) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "征信人员信息中缺少申请本人信息，请打回");
+            }
+
+            data.setCustomerName(customerUser.getUserName());
+            data.setIdKind(EIDKind.IDCard.getCode());
+            data.setIdNo(customerUser.getIdNo());
+            data.setMobile(customerUser.getMobile());
+            data.setLoanBankCode(credit.getLoanBankCode());
+
             data.setCompanyCode(credit.getCompanyCode());
             data.setSaleUserId(credit.getSaleUserId());
-            data.setLoanBankCode(credit.getLoanBankCode());
             data.setShopWay(credit.getShopWay());
             data.setLoanAmount(credit.getLoanAmount());
-            data.setCustomerName(credit.getCreditUser().getUserName());
             EBudgetOrderNode node = EBudgetOrderNode.START_NODE;
+
             data.setCurNodeCode(node.getCode());
             String budgetOrderCode = budgetOrderBO.saveBudgetOrder(data);
-
             // 日志记录
             sysBizLogBO.saveSYSBizLog(budgetOrderCode,
                 EBizLogType.BUDGET_ORDER, budgetOrderCode, node.getCode(),
                 node.getValue(), req.getOperator());
+
             // 征信单回写预算单编号
             credit.setBudgetCode(budgetOrderCode);
             creditBO.refreshCredit(credit);
-
         } else {
             credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 credit.getCurNodeCode()).getBackNode());
         }
         creditBO.refreshCreditNode(credit);
+
         // 日志记录
         ECreditNode currentNode = ECreditNode.getMap().get(
             credit.getCurNodeCode());
@@ -350,7 +347,6 @@ public class CreditAOImpl implements ICreditAO {
     }
 
     private void init(Credit credit) {
-
         if (StringUtils.isNotBlank(credit.getCompanyCode())) {
             Department department = departmentBO.getDepartment(credit
                 .getCompanyCode());
@@ -361,19 +357,12 @@ public class CreditAOImpl implements ICreditAO {
 
         if (StringUtils.isNotBlank(credit.getSaleUserId())) {
             SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
-            if (null != user) {
-                credit.setSalesmanName(user.getRealName());
-            }
-
+            credit.setSalesmanName(user.getRealName());
         }
 
         if (StringUtils.isNotBlank(credit.getLoanBankCode())) {
-
             Bank bank = bankBO.getBankBySubbranch(credit.getLoanBankCode());
-            if (null != bank) {
-                credit.setLoanBankName(bank.getBankName());
-            }
-
+            credit.setLoanBankName(bank.getBankName());
         }
 
     }

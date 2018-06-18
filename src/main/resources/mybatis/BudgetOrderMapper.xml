@@ -8,63 +8,67 @@
 		<result column="customer_type" property="customerType" />
 		<result column="customer_name" property="customerName" />
 		<result column="car_dealer_code" property="carDealerCode" />
+		
 		<result column="loan_bank_code" property="loanBankCode" />
 	    <result column="loan_bank_subbranch" property="loanBankSubbranch" />
-		
 		<result column="original_price" property="originalPrice" />
 		<result column="car_model" property="carModel" />
 		<result column="loan_periods" property="loanPeriods" />
+		
 		<result column="invoice_price" property="invoicePrice" />
 		<result column="shop_way" property="shopWay" />
-		
 		<result column="rate_type" property="rateType" />
 		<result column="loan_amount" property="loanAmount" />
 		<result column="is_survey" property="isSurvey" />
+		
 		<result column="bank_rate" property="bankRate" />
 		<result column="company_loan_cs" property="companyLoanCs" />
-		
 		<result column="is_advance_fund" property="isAdvanceFund" />
 		<result column="global_rate" property="globalRate" />
 		<result column="fee" property="fee" />
+		
 		<result column="car_dealer_subsidy" property="carDealerSubsidy" />
 		<result column="bank_loan_cs" property="bankLoanCs" />
-		
 		<result column="company_code" property="companyCode" />
 		<result column="sale_user_id" property="saleUserId" />
 		<result column="apply_user_company" property="applyUserCompany" />
+		
 		<result column="apply_user_duty" property="applyUserDuty" />
 		<result column="apply_user_ghr_relation" property="applyUserGhrRelation" />
 		<result column="marry_state" property="marryState" />
-		
 		<result column="apply_user_month_income" property="applyUserMonthIncome" />
 		<result column="apply_user_settle_interest" property="applyUserSettleInterest" />
+		
 		<result column="apply_user_balance" property="applyUserBalance" />
 		<result column="apply_user_jour_show_income" property="applyUserJourShowIncome" />
 		<result column="apply_user_is_print" property="applyUserIsPrint" />
 		<result column="gh_month_income" property="ghMonthIncome" />
 		<result column="gh_settle_interest" property="ghSettleInterest" />
+		
 		<result column="gh_balance" property="ghBalance" />
 		<result column="gh_jour_show_income" property="ghJourShowIncome" />
 		<result column="gh_is_print" property="ghIsPrint" />
 		<result column="guarantor1_month_income" property="guarantor1MonthIncome" />
 		<result column="guarantor1_settle_interest" property="guarantor1SettleInterest" />
+		
 		<result column="guarantor1_balance" property="guarantor1Balance" />
 		<result column="guarantor1_jour_show_income" property="guarantor1JourShowIncome" />
 		<result column="guarantor1_is_print" property="guarantor1IsPrint" />
 		<result column="guarantor2_month_income" property="guarantor2MonthIncome" />
 		<result column="guarantor2_settle_interest" property="guarantor2SettleInterest" />
+		
 		<result column="guarantor2_balance" property="guarantor2Balance" />
 		<result column="guarantor2_jour_show_income" property="guarantor2JourShowIncome" />
 		<result column="guarantor2_is_print" property="guarantor2IsPrint" />
-		
 		<result column="other_income_note" property="otherIncomeNote" />
 		<result column="is_house_property" property="isHouseProperty" />
+		
 		<result column="house_property" property="houseProperty" />
 		<result column="is_house_contract" property="isHouseContract" />
 		<result column="house_contract" property="houseContract" />
 		<result column="house_invoice" property="houseInvoice" />
-		
 		<result column="is_license" property="isLicense" />
+		
 		<result column="license" property="license" />
 		<result column="is_site_prove" property="isSiteProve" />
 		<result column="site_prove" property="siteProve" />
@@ -230,6 +234,7 @@
 		<result column="make_card_remark" property="makeCardRemark" />
 		<result column="frozen_status" property="frozenStatus" />
 		<result column="cancel_node_code" property="cancelNodeCode" />
+		
 		<result column="is_submit_cancel" property="isSubmitCancel" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="repay_biz_code" property="repayBizCode" />
@@ -246,7 +251,7 @@
 				AND t.customer_name like "%"#{customerName}"%"
 			</if>
 			<if test="curNodeCode != null and curNodeCode != '' ">
-				AND t.cur_node_code like "%"#{curNodeCode}"%"
+				AND t.cur_node_code = #{curNodeCode}
 			</if>
 			<if test="curNodeCodeList != null and curNodeCodeList.size() != 0 ">
 				AND t.cur_node_code in 

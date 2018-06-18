@@ -49,7 +49,6 @@ import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
-import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.InsuranceCompany;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
@@ -167,9 +166,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     @Transactional
     public void editBudgetOrder(XN632120Req req) {
-
         BudgetOrder data = budgetOrderBO.getBudgetOrder(req
             .getBudgetOrderCode());
+        if (!EBudgetOrderNode.START_NODE.getCode()
+            .equals(data.getCurNodeCode())
+                && !EBudgetOrderNode.FILL_AGAIN.getCode().equals(
+                    data.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前预算单节点不能修改");
+        }
 
         data.setCustomerType(req.getCustomerType());
         data.setCarDealerCode(req.getCarDealerCode());
@@ -183,17 +188,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setBankRate(StringValidater.toDouble(req.getBankRate()));
         Long loanAmount = data.getLoanAmount();
         Long invoicePrice = StringValidater.toLong(req.getInvoicePrice());
-        data.setCompanyLoanCs((double) (loanAmount / invoicePrice));// 我司贷款成数
+        data.setCompanyLoanCs(AmountUtil.div(loanAmount, invoicePrice));// 我司贷款成数
 
         data.setIsAdvanceFund(req.getIsAdvanceFund());
         Long fee = StringValidater.toLong(req.getFee());
-        data.setGlobalRate((double) (fee / loanAmount)
+        data.setFee(fee);
+        double feeRate = AmountUtil.div(fee, loanAmount);
+        data.setGlobalRate(feeRate
                 + StringValidater.toDouble(req.getBankRate()));// 综合利率
-        data.setFee(StringValidater.toLong(req.getFee()));
         data.setCarDealerSubsidy(StringValidater.toLong(req
             .getCarDealerSubsidy()));
 
-        data.setBankLoanCs((double) (loanAmount + fee) / invoicePrice);// 银行贷款成数
+        Long totalAmount = loanAmount + fee;// 总费用
+        data.setBankLoanCs(AmountUtil.div(totalAmount, invoicePrice));// 银行贷款成数
         data.setApplyUserMonthIncome(StringValidater.toLong(req
             .getApplyUserMonthIncome()));
         data.setApplyUserSettleInterest(StringValidater.toLong(req
@@ -396,15 +403,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             data1.setCurNodeCode(ERepointDetailStatus.TODO_MAKE_BILL.getCode());
 
             repointDetailBO.saveRepointDetail(data1);
-
         }
 
-        // 使用gps更新列表
-        for (String gpsCode : req.getGpsList()) {
-            Gps dataGps = new Gps();
-            dataGps.setCode(gpsCode);
-            // gpsBO.refreshUseGps(dataGps);
-        }
+        // 删除
+        budgetOrderGpsBO.removeBudgetOrderGpsList(data.getCode());
+        // 添加
+        budgetOrderGpsBO.saveBudgetOrderGpsList(data.getCode(),
+            req.getGpsList());
 
         budgetOrderBO.refresh(data);
     }
@@ -980,10 +985,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             }
             budgetOrder.setFileListArray(fileList);
         }
-        Bank receiptBank = bankBO.getBankBySubbranch(budgetOrder
-            .getBankReceiptCode());
-        if (null != receiptBank) {
-            budgetOrder.setBankReceiptName(receiptBank.getBankName());
+
+        if (StringUtils.isNotBlank(budgetOrder.getBankReceiptCode())) {
+            CollectBankcard receiptBank = collectBankcardBO
+                .getCollectBankcard(budgetOrder.getBankReceiptCode());
+            if (null != receiptBank) {
+                budgetOrder.setBankReceiptName(receiptBank.getBankName());
+            }
         }
 
         CarDealer carDealer = carDealerBO.getCarDealer(budgetOrder
@@ -998,8 +1006,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setInsuranceCompanyName(insuranceCompany.getName());
         }
 
-        Bank loanBank = bankBO.getBankBySubbranch(budgetOrder
-            .getBankReceiptCode());
+        Bank loanBank = bankBO
+            .getBankBySubbranch(budgetOrder.getLoanBankCode());
         if (null != loanBank) {
             budgetOrder.setLoanBankName(loanBank.getBankName());
         }
@@ -1033,10 +1041,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public Object queryBudgetOrderPageByRoleCode(int start, int limit,
-            BudgetOrder condition) {
-
-        return budgetOrderBO.getPaginableByRoleCode(start, limit, condition);
+    public Paginable<BudgetOrder> queryBudgetOrderPageByRoleCode(int start,
+            int limit, BudgetOrder condition) {
+        Paginable<BudgetOrder> page = budgetOrderBO.getPaginableByRoleCode(
+            start, limit, condition);
+        List<BudgetOrder> list = page.getList();
+        for (BudgetOrder budgetOrder : list) {
+            initBudget(budgetOrder);
+        }
+        return page;
     }
 
     @Override
@@ -1290,6 +1303,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 budgetOrder.setCurNodeCode(currentNode);
             }
 
+            // 更新gps使用状态为待使用
+            budgetOrderGpsBO.removeBudgetOrderGpsList(budgetOrder.getCode());
         } else if (EApproveResult.NOT_PASS.getCode().equals(
             req.getApproveResult())) {
             budgetOrder.setCurNodeCode(budgetOrder.getCancelNodeCode());
@@ -1360,12 +1375,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Transactional
     public void renewInsuranceRemind(String code) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
-        String mobile = budgetOrder.getMobile();
         int insuranceRemindCount = budgetOrder.getInsuranceRemindCount() + 1;
-        String content = "尊敬的" + PhoneUtil.hideMobile(mobile)
-                + "用户，您的保险已快到期，请及时续保！";
-        smsOutBO.sendSmsOut(mobile, content);
         budgetOrderBO.renewInsuranceRemind(code, insuranceRemindCount);
+
+        String mobile = budgetOrder.getMobile();
+        String content = "尊敬的" + PhoneUtil.hideMobile(mobile)
+                + "用户，您的保险即将到期，请及时续保！";
+        smsOutBO.sendSmsOut(mobile, content);
     }
 
     @Override

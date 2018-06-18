@@ -7,7 +7,7 @@ package com.cdkj.loan.enums;
  * @history:
  */
 public enum EGpsApplyType {
-    COMPANY("1", "公司"), PERSON("", "个人");
+    COMPANY("1", "公司"), PERSON("2", "个人");
 
     EGpsApplyType(String code, String value) {
         this.code = code;

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
@@ -17,7 +18,9 @@ import com.cdkj.loan.dao.IBudgetOrderDAO;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -29,6 +32,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
 
     @Autowired
     private INodeFlowBO nodeFlowBO;
+
+    @Autowired
+    private ILogisticsBO logisticsBO;
 
     @Override
     public String saveBudgetOrder(BudgetOrder data) {
@@ -160,18 +166,25 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
-        // if (EBudgetOrderNode.DHAPPROVEDATA.getCode().equals(
-        // nodeFlow.getCurrentNode())) {
-        // if (StringUtils.isNotBlank(nodeFlow.getFileList())) {
-        // logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-        // budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-        // nodeFlow.getCurrentNode(), nodeFlow.getNextNode(),
-        // nodeFlow.getFileList());
-        // } else {
-        // throw new BizException("xn0000", "当前节点材料清单不存在");
-        // }
-        // }
+        if (EBudgetOrderNode.COMPANY_COLLECTION_CHECK.getCode().equals(
+            nodeFlow.getCurrentNode())
+                || EBudgetOrderNode.CAR_COMPANY_COLLECTION_CHECK.getCode()
+                    .equals(nodeFlow.getCurrentNode())
+                || EBudgetOrderNode.FEN_COMPANY_COLLECTION_CHECK.getCode()
+                    .equals(nodeFlow.getCurrentNode())
+                || EBudgetOrderNode.HEADQUARTERS_CAR_COMPANY_COLLECTION_CHECK
+                    .getCode().equals(nodeFlow.getCurrentNode())) {
+            if (StringUtils.isNotBlank(nodeFlow.getFileList())) {
+                logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                    budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                    nodeFlow.getCurrentNode(), nodeFlow.getNextNode(),
+                    nodeFlow.getFileList());
+            } else {
+                throw new BizException("xn0000", "当前节点材料清单不存在");
+            }
+        }
         budgetOrderDAO.updaterLogicNode(budgetOrder);
+
         // 日志记录
         // EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
         // budgetOrder.getCurNodeCode());
@@ -186,7 +199,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     }
 
     @Override
-    public Object getPaginableByRoleCode(int start, int limit,
+    public Paginable<BudgetOrder> getPaginableByRoleCode(int start, int limit,
             BudgetOrder condition) {
         prepare(condition);
 
