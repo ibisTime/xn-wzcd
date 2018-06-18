@@ -166,7 +166,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void addBudgetOrder(XN632120Req req) {
+    public void editBudgetOrder(XN632120Req req) {
 
         BudgetOrder data = budgetOrderBO
             .getBudgetOrder(req.getBudgetOrderCode());

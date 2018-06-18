@@ -22,7 +22,7 @@ import com.cdkj.loan.dto.req.XN632341Req;
 public interface IBudgetOrderAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public void addBudgetOrder(XN632120Req req);
+    public void editBudgetOrder(XN632120Req req);
 
     // 区域总经理审核
     public void approveAreaManager(String code, String operator,

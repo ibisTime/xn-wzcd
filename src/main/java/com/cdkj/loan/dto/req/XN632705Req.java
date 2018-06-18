@@ -16,6 +16,12 @@ public class XN632705Req extends APageReq {
     // 公司编号
     private String companyCode;
 
+    // 公司申领编号
+    private String companyApplyCode;
+
+    // 公司申领状态
+    private String companyApplyStatus;
+
     // 申请状态
     private String applyStatus;
 
@@ -24,6 +30,22 @@ public class XN632705Req extends APageReq {
 
     // 业务编号
     private String bizCode;
+
+    public String getCompanyApplyStatus() {
+        return companyApplyStatus;
+    }
+
+    public void setCompanyApplyStatus(String companyApplyStatus) {
+        this.companyApplyStatus = companyApplyStatus;
+    }
+
+    public String getCompanyApplyCode() {
+        return companyApplyCode;
+    }
+
+    public void setCompanyApplyCode(String companyApplyCode) {
+        this.companyApplyCode = companyApplyCode;
+    }
 
     public String getGpsDevNo() {
         return gpsDevNo;

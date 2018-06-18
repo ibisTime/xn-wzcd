@@ -34,6 +34,9 @@ public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
     // 结果处理
     public int updateTakeCarResultHandle(RepayPlan data);
 
+    // 每天凌晨定时更新还款计划状态为已结清
+    public int updatePayedDaily(RepayPlan data);
+
     public long selectTotalCountByRoleCode(RepayPlan condition);
 
     public List<RepayPlan> selectRepayPlanByRoleCode(RepayPlan condition,

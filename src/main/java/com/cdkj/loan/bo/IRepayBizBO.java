@@ -117,6 +117,9 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     // 结果回录
     public void refreshMortgageInput(RepayBiz data);
 
+    // 还款计划结束后更新为提交结算单
+    public void refreshRepayEndCommitSettle(String code);
+
     // ********************************car********************************
 
     // ******************************product********************************

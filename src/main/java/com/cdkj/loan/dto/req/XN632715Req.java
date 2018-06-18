@@ -17,7 +17,7 @@ public class XN632715Req extends APageReq {
     private String applyUser;
 
     // 所属公司
-    private String company;
+    private String companyCode;
 
     // 状态
     private String status;
@@ -30,12 +30,12 @@ public class XN632715Req extends APageReq {
         this.applyUser = applyUser;
     }
 
-    public String getCompany() {
-        return company;
+    public String getCompanyCode() {
+        return companyCode;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
     }
 
     public String getStatus() {

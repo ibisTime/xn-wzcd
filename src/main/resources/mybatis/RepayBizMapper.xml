@@ -783,4 +783,11 @@
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>
+
+	<update id="update_repayPlanEndCommitSettle" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>	
 </mapper>
