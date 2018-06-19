@@ -79,7 +79,6 @@ import com.cdkj.loan.enums.ECollectBankcard;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EFbhStatus;
-import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.EIsAdvanceFund;
 import com.cdkj.loan.enums.ELoanPeriod;
 import com.cdkj.loan.enums.ELoanRole;
@@ -882,11 +881,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setRepayMonthAmount(
             StringValidater.toLong(req.getRepayMonthAmount()));
 
-        CreditUser creditUser = creditUserBO.getCreditUserByCreditCode(
-            budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
-        budgetOrder.setMobile(creditUser.getMobile());
-        budgetOrder.setIdKind(EIDKind.IDCard.getCode());
-        budgetOrder.setIdNo(creditUser.getIdNo());
         budgetOrder.setIdNoPic(req.getIdNoPic());
         budgetOrder.setIsComplete(req.getIsComplete());
         budgetOrder.setStorePlace(req.getStorePlace());
