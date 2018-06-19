@@ -66,6 +66,7 @@ import com.cdkj.loan.dto.req.XN632271Req;
 import com.cdkj.loan.dto.req.XN632272Req;
 import com.cdkj.loan.dto.req.XN632280Req;
 import com.cdkj.loan.dto.req.XN632341Req;
+import com.cdkj.loan.dto.res.XN632291Res;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EAdvanceType;
@@ -78,7 +79,6 @@ import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EButtonCode;
 import com.cdkj.loan.enums.ECollectBankcardType;
 import com.cdkj.loan.enums.ECurrency;
-import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EFbhStatus;
 import com.cdkj.loan.enums.EIsAdvanceFund;
 import com.cdkj.loan.enums.ELoanPeriod;
@@ -265,52 +265,56 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setOilSubsidy(StringValidater.toLong(req.getOilSubsidy()));
         data.setOilSubsidyKil(StringValidater.toDouble(req.getOilSubsidyKil()));
         data.setIsPlatInsure(req.getIsPlatInsure());
-        data.setGpsFee(StringValidater.toLong(req.getGpsFee()));
 
+        // 根据协议计算出各种手续费
+        XN632291Res xn632291Res = carDealerProtocolBO.calProtocolFee(
+            data.getCode(), data.getCarDealerCode());
+        data.setGpsFee(StringValidater.toLong(xn632291Res.getGpsFee()));
         data.setGpsDeduct(StringValidater.toDouble((req.getGpsDeduct())));
         data.setGpsFeeWay(req.getGpsFeeWay());
-        data.setLyAmount(StringValidater.toLong(req.getLyAmount()));
-        data.setFxAmount(StringValidater.toLong(req.getFxAmount()));
-        data.setOtherFee(StringValidater.toLong(req.getOtherFee()));
 
+        data.setLyAmount(StringValidater.toLong(xn632291Res.getLyAmount()));
+        data.setFxAmount(StringValidater.toLong(xn632291Res.getFxAmount()));
+        data.setOtherFee(StringValidater.toLong(xn632291Res.getOtherFee()));
         data.setFeeWay(req.getFeeWay());
         data.setMarryDivorce(req.getMarryDivorce());
+
         data.setApplyUserHkb(req.getApplyUserHkb());
         data.setBankBillPdf(req.getBankBillPdf());
         data.setSingleProvePdf(req.getSingleProvePdf());
-
         data.setIncomeProvePdf(req.getIncomeProvePdf());
         data.setLiveProvePdf(req.getLiveProvePdf());
+
         data.setBuildProvePdf(req.getBuildProvePdf());
         data.setHkbFirstPage(req.getHkbFirstPage());
         data.setHkbMainPage(req.getHkbMainPage());
-
         data.setGhHkb(req.getGhHkb());
         data.setGuarantor1IdNo(req.getGuarantor1IdNo());
+
         data.setGuarantor1Hkb(req.getGuarantor1Hkb());
         data.setGuarantor2IdNo(req.getGuarantor2IdNo());
         data.setGuarantor2Hkb(req.getGuarantor2Hkb());
-
         data.setHousePic(req.getHousePic());
         data.setHouseUnitPic(req.getHouseUnitPic());
+
         data.setHouseDoorPic(req.getHouseDoorPic());
         data.setHouseRoomPic(req.getHouseRoomPic());
         data.setHouseCustomerPic(req.getHouseCustomerPic());
-
         data.setHouseSaleCustomerPic(req.getHouseSaleCustomerPic());
         data.setCompanyNamePic(req.getCompanyNamePic());
+
         data.setCompanyPlacePic(req.getCompanyPlacePic());
         data.setCompanyWorkshopPic(req.getCompanyWorkshopPic());
         data.setCompanySaleCustomerPic(req.getCompanySaleCustomerPic());
-
         data.setSecondHgz(req.getSecondHgz());
         data.setSecondOdometer(req.getSecondOdometer());
+
         data.setSecondConsolePic(req.getSecondConsolePic());
         data.setSecond300Pdf(req.getSecond300Pdf());
         data.setSecondQxbPic(req.getSecondQxbPic());
-
         data.setSecondCarInPic(req.getSecondCarInPic());
         data.setSecondNumber(req.getSecondNumber());
+
         data.setOtherFilePdf(req.getOtherFilePdf());
         data.setOtherApplyNote(req.getOtherApplyNote());
         data.setApplyDatetime(new Date());
@@ -491,6 +495,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            // 产生手续费
+            budgetOrderFeeBO.saveBudgetOrderFee(budgetOrder, operator);
+
             // 预算单节点改为垫资审核
             budgetOrder.setCurNodeCode(EBudgetOrderNode.ADVANCE_FUND_AUDIT
                 .getCode());
@@ -1165,7 +1172,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     @Transactional
     public void invoiceMismatchApply(String code, String loanAmount,
-            String dealType, String operator) {
+            String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
         if (!EBudgetOrderNode.INVOICE_MISMATCH_APPLY.getCode().equals(
             budgetOrder.getCurNodeCode())) {
@@ -1177,11 +1184,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 下个节点
         String nextNode = nodeFlowBO.getNodeFlowByCurrentNode(
             EBudgetOrderNode.INVOICE_MISMATCH_APPLY.getCode()).getNextNode();
-
+        budgetOrder.setPreLoanAmount(budgetOrder.getLoanAmount());
         budgetOrder.setLoanAmount(StringValidater.toLong(loanAmount));
-        if (EDealType.SEND.getCode().equals(dealType)) {
-            budgetOrder.setCurNodeCode(nextNode);
-        }
+        budgetOrder.setCurNodeCode(nextNode);
         budgetOrderBO.invoiceMismatchApply(budgetOrder);
 
         // 日志记录
@@ -1234,31 +1239,33 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是二审节点，不能操作");
         }
-
-        // 生成 收回手续费
-        /*
-         * BudgetOrderFee data = new BudgetOrderFee();
-         * data.setCompanyCode(budgetOrder.getCompanyCode());
-         * data.setUserId(budgetOrder.getSaleUserId()); //
-         * 收客户手续费合计：履约保证金+担保风险金+GPS收费+杂费
-         * data.setShouldAmount(budgetOrder.getFee() + budgetOrder.getLyAmount()
-         * + budgetOrder.getFxAmount() + budgetOrder.getGpsFee() +
-         * budgetOrder.getOtherFee()); data.setRealAmount(0L);
-         * data.setIsSettled(EBoolean.NO.getCode()); data.setUpdater(operator);
-         * data.setUpdateDatetime(new Date()); data.setBudgetOrder(code);
-         * budgetOrderFeeBO.saveBudgetOrderFee(data);
-         */
-
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.TWO_APPROVE_APPLY.getCode()).getNextNode());
+            XN632291Res xn632291Res = carDealerProtocolBO.calProtocolFee(
+                budgetOrder.getCode(), budgetOrder.getCarDealerCode());
+            budgetOrder.setGpsFee(StringValidater.toLong(xn632291Res
+                .getGpsFee()));
+            budgetOrder.setLyAmount(StringValidater.toLong(xn632291Res
+                .getLyAmount()));
+            budgetOrder.setFxAmount(StringValidater.toLong(xn632291Res
+                .getFxAmount()));
+
+            budgetOrder.setOtherFee(StringValidater.toLong(xn632291Res
+                .getOtherFee()));
+            budgetOrderBO.twoApproveYes(budgetOrder);
+
+            // 将原来的手续设置为失效，新增手续费
+            budgetOrderFeeBO.refreshBudgetOrderNoEffect(budgetOrder.getCode());
+            budgetOrderFeeBO.saveBudgetOrderFee(budgetOrder, operator);
+            // TODO 将原来的返点设置为失效，新增返点
         } else {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.TWO_APPROVE_APPLY.getCode()).getBackNode());
+            budgetOrderBO.twoApproveNo(budgetOrder);
         }
-        budgetOrderBO.twoApproveApply(budgetOrder);
 
         // 日志记录
         EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(

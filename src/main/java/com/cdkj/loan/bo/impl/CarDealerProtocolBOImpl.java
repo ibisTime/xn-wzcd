@@ -7,12 +7,23 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.IBankBO;
+import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICarDealerProtocolBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICarDealerProtocolDAO;
+import com.cdkj.loan.domain.Bank;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.dto.req.XN632060ReqProtocol;
+import com.cdkj.loan.dto.res.XN632291Res;
+import com.cdkj.loan.enums.EAssureType;
+import com.cdkj.loan.enums.EBankType;
+import com.cdkj.loan.enums.EGpsTypeProtocol;
+import com.cdkj.loan.enums.ELyAmountType;
+import com.cdkj.loan.enums.EOtherType;
 import com.cdkj.loan.exception.BizException;
 
 @Component
@@ -21,6 +32,12 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
 
     @Autowired
     private ICarDealerProtocolDAO carDealerProtocolDAO;
+
+    @Autowired
+    private IBudgetOrderBO budgetOrderBO;
+
+    @Autowired
+    private IBankBO bankBO;
 
     @Override
     public void saveCarDealerProtocolList(List<XN632060ReqProtocol> list,
@@ -150,7 +167,59 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
             }
         }
         return data;
-
     }
 
+    @Override
+    public XN632291Res calProtocolFee(String budgetOrderCode,
+            String carDealerCode) {
+        XN632291Res res = new XN632291Res();
+
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(budgetOrderCode);
+
+        Long loanAmount = budgetOrder.getLoanAmount();
+
+        Bank bank = bankBO.getBankBySubbranch(budgetOrder.getLoanBankCode());
+        EBankType eBankType = null;
+        if (EBankType.GH.getCode().equals(bank.getBankCode())) {
+            eBankType = EBankType.GH;
+        } else if (EBankType.ZH.getCode().equals(bank.getBankCode())) {
+            eBankType = EBankType.ZH;
+        } else if (EBankType.JH.getCode().equals(bank.getBankCode())) {
+            eBankType = EBankType.JH;
+        }
+        CarDealerProtocol carDealerProtocol = getCarDealerProtocolByCarDealerCode(
+            carDealerCode, eBankType.getCode());
+        if (EAssureType.SINGLE.getCode().equals(
+            carDealerProtocol.getAssureType())) {
+            res.setFxAmount(String.valueOf(carDealerProtocol.getAssureFee()));
+        } else {
+            res.setFxAmount(String.valueOf(AmountUtil.mul(loanAmount,
+                carDealerProtocol.getAssureRate())));
+        }
+
+        if (ELyAmountType.SINGLE.getCode().equals(
+            carDealerProtocol.getLyAmountType())) {
+            res.setLyAmount(String.valueOf(carDealerProtocol.getLyAmountFee()));
+        } else {
+            res.setLyAmount(String.valueOf(AmountUtil.mul(loanAmount,
+                carDealerProtocol.getLyAmountRate())));
+        }
+
+        if (EGpsTypeProtocol.SINGLE.getCode().equals(
+            carDealerProtocol.getGpsType())) {
+            res.setGpsFee(String.valueOf(carDealerProtocol.getGpsRate()));
+        } else {
+            res.setGpsFee(String.valueOf(AmountUtil.mul(loanAmount,
+                carDealerProtocol.getGpsRate())));
+        }
+
+        if (EOtherType.SINGLE.getCode()
+            .equals(carDealerProtocol.getOtherType())) {
+            res.setOtherFee(String.valueOf(carDealerProtocol.getOtherFee()));
+        } else {
+            res.setOtherFee(String.valueOf(AmountUtil.mul(loanAmount,
+                carDealerProtocol.getOtherRate())));
+        }
+        return res;
+    }
 }

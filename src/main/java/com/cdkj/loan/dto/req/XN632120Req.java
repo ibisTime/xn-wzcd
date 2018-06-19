@@ -201,23 +201,11 @@ public class XN632120Req {
     // 是否我司续保
     private String isPlatInsure;
 
-    // GPS收费
-    private String gpsFee;
-
     // GPS提成
     private String gpsDeduct;
 
     // GPS收费方式
     private String gpsFeeWay;
-
-    // 履约保证金
-    private String lyAmount;
-
-    // 担保风险金
-    private String fxAmount;
-
-    // 杂费
-    private String otherFee;
 
     // 手续费收取方式
     private String feeWay;
@@ -708,14 +696,6 @@ public class XN632120Req {
         this.isPlatInsure = isPlatInsure;
     }
 
-    public String getGpsFee() {
-        return gpsFee;
-    }
-
-    public void setGpsFee(String gpsFee) {
-        this.gpsFee = gpsFee;
-    }
-
     public String getGpsDeduct() {
         return gpsDeduct;
     }
@@ -730,30 +710,6 @@ public class XN632120Req {
 
     public void setGpsFeeWay(String gpsFeeWay) {
         this.gpsFeeWay = gpsFeeWay;
-    }
-
-    public String getLyAmount() {
-        return lyAmount;
-    }
-
-    public void setLyAmount(String lyAmount) {
-        this.lyAmount = lyAmount;
-    }
-
-    public String getFxAmount() {
-        return fxAmount;
-    }
-
-    public void setFxAmount(String fxAmount) {
-        this.fxAmount = fxAmount;
-    }
-
-    public String getOtherFee() {
-        return otherFee;
-    }
-
-    public void setOtherFee(String otherFee) {
-        this.otherFee = otherFee;
     }
 
     public String getFeeWay() {

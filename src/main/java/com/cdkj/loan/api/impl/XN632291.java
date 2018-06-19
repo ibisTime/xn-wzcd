@@ -5,7 +5,6 @@ import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN632291Req;
-import com.cdkj.loan.dto.res.XN632291Res;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -24,10 +23,8 @@ public class XN632291 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-
-        XN632291Res res = carDealerProtocolAO.protocolFee(req);
-
-        return res;
+        return carDealerProtocolAO.calProtocolFee(req.getBudgetOrderCode(),
+            req.getCarDealerCode());
     }
 
     @Override

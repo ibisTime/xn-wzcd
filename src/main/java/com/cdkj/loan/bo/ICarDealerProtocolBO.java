@@ -5,6 +5,7 @@ import java.util.List;
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.dto.req.XN632060ReqProtocol;
+import com.cdkj.loan.dto.res.XN632291Res;
 
 public interface ICarDealerProtocolBO extends IPaginableBO<CarDealerProtocol> {
 
@@ -25,5 +26,9 @@ public interface ICarDealerProtocolBO extends IPaginableBO<CarDealerProtocol> {
     // 根据汽车经销商编号查协议
     public CarDealerProtocol getCarDealerProtocolByCarDealerCode(
             String carDealerCode, String bankCode);
+
+    // 根据协议计算各种费用
+    public XN632291Res calProtocolFee(String budgetOrderCode,
+            String carDealerCode);
 
 }
