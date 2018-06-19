@@ -502,6 +502,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             // 判断是否预算单是否垫资
             if (EIsAdvanceFund.NO.getCode()
                 .equals(budgetOrder.getIsAdvanceFund())) {
+
                 // 不垫资 进入银行放款流程第一步
                 // 更改节点为银行放款流程第一步
                 budgetOrder
@@ -511,6 +512,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     EBudgetOrderNode.SEND_LOGISTICS.getCode(),
                     EBudgetOrderNode.SEND_LOGISTICS.getValue(), operator);
                 budgetOrderBO.bankLoanConfirmSubmitBank(budgetOrder);
+
+                // 当前节点
+                String curNodeCode = budgetOrder.getCurNodeCode();
+                String nextNodeCode = nodeFlowBO
+                    .getNodeFlowByCurrentNode(curNodeCode).getNextNode();
+
+                // 生成资料传递
+                NodeFlow nodeFlow = nodeFlowBO
+                    .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
+                logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                    budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                    curNodeCode, nextNodeCode, nodeFlow.getFileList());
             }
             if (EIsAdvanceFund.YES.getCode()
                 .equals(budgetOrder.getIsAdvanceFund())) {
