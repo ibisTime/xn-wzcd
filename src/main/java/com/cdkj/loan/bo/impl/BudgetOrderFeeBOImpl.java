@@ -32,7 +32,7 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
         if (budgetOrder != null
                 && StringUtils.isNotBlank(operator)
                 && EBudgetOrderFeeWay.TRANSFER.getCode().equals(
-                    budgetOrder.getFeeWay())) {// 当手续费收取方式是转账时产生手续费
+                    budgetOrder.getServiceChargeWay())) {// 当手续费收取方式是转账时产生手续费
             BudgetOrderFee budgetOrderFee = new BudgetOrderFee();
             code = OrderNoGenerater.generate(EGeneratePrefix.BUDGET_ORDER_FEE
                 .getCode());
