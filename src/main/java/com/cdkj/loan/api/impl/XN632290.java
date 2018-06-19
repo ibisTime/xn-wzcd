@@ -1,13 +1,11 @@
 package com.cdkj.loan.api.impl;
 
-import java.util.List;
-
 import com.cdkj.loan.ao.IRepointDetailAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dto.req.XN632290Req;
-import com.cdkj.loan.dto.res.XN632290Res;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -26,10 +24,8 @@ public class XN632290 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-
-        List<XN632290Res> list = repointDetailAO.showRepointDetail(req);
-
-        return list;
+        return repointDetailAO.showRepointDetail(req,
+            StringValidater.toLong(req.getLoanAmount()));
     }
 
     @Override
