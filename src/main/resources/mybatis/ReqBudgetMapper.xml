@@ -108,6 +108,7 @@
 		,t.dz_amount
 		,t.dz_datetime
 		,t.collection_bank
+		,t.collection_amount
 		,t.collection_account
 		,t.collection_datetime
 		,t.collection_remark

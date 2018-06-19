@@ -297,7 +297,6 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     @Override
     public void bankLoanConfirmSubmitBank(BudgetOrder budgetOrder) {
         budgetOrderDAO.bankLoanConfirmSubmitBank(budgetOrder);
-
     }
 
     @Override
