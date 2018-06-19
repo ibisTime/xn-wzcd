@@ -82,7 +82,7 @@ public class TotalAdvanceFundBOImpl extends PaginableBOImpl<TotalAdvanceFund>
             TotalAdvanceFund condition = new TotalAdvanceFund();
             condition.setCode(code);
             data = totalAdvanceFundDAO.select(condition);
-            if (data == null) {
+            if (null == data) {
                 throw new BizException("xn0000", "垫资汇总数据不存在");
             }
         }

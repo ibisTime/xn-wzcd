@@ -21,7 +21,7 @@ public interface ITotalAdvanceFundAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
     // 分公司制单
-    public String addTotalAdvanceFund(XN632174Req req);
+    public void addTotalAdvanceFund(XN632174Req req);
 
     public int dropTotalAdvanceFund(String code);
 
@@ -36,7 +36,7 @@ public interface ITotalAdvanceFundAO {
     public TotalAdvanceFund getTotalAdvanceFund(String code);
 
     // 确认打款给分公司
-    public void confirmPayBranchCompany(XN632176Req req);
+    public String confirmPayBranchCompany(XN632176Req req);
 
     // 财务审核
     public void financeConfirm(XN632233Req req);

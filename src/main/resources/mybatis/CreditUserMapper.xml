@@ -26,7 +26,7 @@
 		<result column="hkxy_unsettle_count" property="hkxyUnsettleCount" />
 		<result column="hkxy_unsettle_amount" property="hkxyUnsettleAmount" />
 		<result column="hkxy_2year_over_times" property="hkxy2YearOverTimes" />
-		<result column="hkxy_monthmax_over_amount" property="hkxyMonthMaxOverAmount" />		
+		<result column="hkxy_month_max_over_amount" property="hkxyMonthMaxOverAmount" />		
 		<result column="hkxy_current_over_amount" property="hkxyCurrentOverAmount" />
 		<result column="hkxy_6month_avg_amount" property="hkxy6MonthAvgAmount" />
 		
