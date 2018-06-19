@@ -723,30 +723,117 @@
 	<select id="select_budgetOrderList" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
 		SELECT
 		t.code
-		,t.credit_code 
-		,t.cur_node_code 
+		,t.credit_code
+		,t.customer_type
 		,t.customer_name
-		,t.is_advance_fund
 		,t.car_dealer_code
+		,t.loan_bank_code
+		,t.loan_bank_subbranch
+		,t.original_price
+		,t.car_model
+		,t.loan_periods
+		,t.invoice_price
+		,t.shop_way
+		,t.rate_type
+		,t.pre_loan_amount
+		,t.loan_amount
+		,t.is_survey
+		,t.bank_rate
+		,t.company_loan_cs
+		,t.is_advance_fund
+		,t.global_rate
+		,t.fee
+		,t.car_dealer_subsidy
+		,t.bank_loan_cs
 		,t.company_code
-		,t.insurance_company_code 
-		,t.car_color 
-		,t.car_brand 
-		,t.frame_no 
-		,t.engine_no 
+		,t.sale_user_id
+		,t.apply_user_company
+		,t.apply_user_duty
+		,t.apply_user_ghr_relation
+		,t.marry_state
+		,t.apply_user_month_income
+		,t.apply_user_settle_interest
+		,t.apply_user_balance
+		,t.apply_user_jour_show_income
+		,t.apply_user_is_print
+		,t.gh_month_income
+		,t.gh_settle_interest
+		,t.gh_balance
+		,t.gh_jour_show_income
+		,t.gh_is_print
 		
-		,t.force_insurance
+		,t.is_house_property
+		,t.house_property
+		,t.is_house_contract
+		,t.house_contract
+		,t.house_invoice
+		,t.is_license
+		,t.license
+		,t.is_site_prove
+		,t.site_prove
+		,t.site_area
+		,t.car_type
+		,t.is_drice_license
+		,t.drice_license
+		,t.other_property_note
+		,t.apply_birth_address
+		,t.apply_now_address
+		,t.house_type
+		,t.gh_birth_address
+		,t.guarantor1_birth_address
+		,t.guarantor2_birth_address
+		,t.other_note
+		,t.oil_subsidy
+		,t.oil_subsidy_kil
+		,t.is_plat_insure
+		,t.gps_fee
+		,t.gps_deduct
+		,t.gps_fee_way
+		,t.ly_amount
+		,t.fx_amount
+		,t.other_fee
+		,t.service_charge_way
+		,t.service_charge
+		,t.marry_divorce
+		,t.apply_user_hkb
+		,t.bank_bill_pdf
+		,t.single_prove_pdf
+		,t.income_prove_pdf
+		,t.live_prove_pdf
+		,t.build_prove_pdf
+		,t.hkb_first_page
+		,t.hkb_main_page
+		,t.gh_hkb
+		
+		,t.second_number
+		,t.other_file_pdf
+		,t.other_apply_note
+		,t.apply_datetime
+		,t.cancel_reason
+		,t.bank_commit_datetime
+		,t.bank_commit_note
+		,t.bank_fk_amount
+		,t.bank_fk_datetime
+		,t.bank_receipt_code
+		,t.bank_receipt_number
+		,t.bank_receipt_pdf
+		,t.bank_receipt_note
+		,t.pledge_commit_datetime
+		,t.pledge_commit_note
+		,t.pledge_contract_code
+		,t.insurance_company_code
+		,t.car_color
+		,t.car_brand
+		,t.frame_no
+		,t.engine_no
 		,t.commerce_insurance
 		,t.insurance_effect_datetime
 		,t.insurance_bank
-		,t.sale_user_id
-		
 		,t.guarantee_contract_code
 		,t.reg_certificate_code
 		,t.other_contact
 		,t.contact_mobile
 		,t.guarantor_name
-		
 		,t.guarantor_mobile
 		,t.bank_card_number
 		,t.bill_datetime
@@ -759,38 +846,47 @@
 		,t.id_kind
 		,t.id_no
 		,t.id_no_pic
-		
 		,t.file_list
 		,t.is_complete
-		,t.month_amount
 		,t.store_place
 		,t.file_remark
-		
 		,t.operator
 		,t.operate_datetime
 		,t.operate_department
-		,t.bank_commit_datetime
-		,t.bank_commit_note
-		
-		,t.bank_fk_amount
-		,t.bank_fk_datetime
-		,t.bank_receipt_code
-		,t.bank_receipt_number
-		,t.bank_receipt_pdf
-		
-		,t.bank_receipt_note
-		,t.pledge_commit_datetime
-		,t.pledge_commit_note
-		,t.pre_loan_amount
-		,t.loan_amount
-		,t.loan_bank_code
-		,t.make_card_status
-		
-		,t.car_dealer_code
-		,t.loan_periods
-		,t.is_submit_cancel
+		,t.makecard_remark
+		,t.delivery_datetime
+		,t.is_right_invoice
+		,t.current_invoice_price
+		,t.invoice
+		,t.certification
+		,t.force_insurance
+		,t.business_insurance
+		,t.motor_reg_certification
+		,t.pd_pdf
+		,t.fbh_remark
+		,t.fbh_warn_day
+		,t.fbh_status
+		,t.should_back_amount
+		,t.should_back_status
+		,t.should_back_datetime
+		,t.should_back_bankcard_code
+		,t.should_back_bill_pdf
+		,t.zf_apply_datetime
+		,t.zf_reason
 		,t.zf_sk_amount
+		,t.zf_sk_bankcard_code
 		,t.zf_sk_receipt_datetime
+		,t.zf_finance_remark
+		
+		,t.make_card_status
+		,t.make_card_operator
+		,t.make_card_remark
+		,t.frozen_status
+		,t.cancel_node_code
+		,t.is_submit_cancel
+		
+		,t.cur_node_code
+		,t.repay_biz_code
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -1078,13 +1174,37 @@
 		,fee = #{fee}
 		,car_dealer_subsidy = #{carDealerSubsidy}
 		
-		,bank_loan_cs = #{bankLoanCs}		
+		,bank_loan_cs = #{bankLoanCs}	
 		,apply_user_company = #{applyUserCompany}
 		,apply_user_duty = #{applyUserDuty}
 		,apply_user_ghr_relation = #{applyUserGhrRelation}
 		,marry_state = #{marryState}
 		
-		,other_income_note = #{otherIncomeNote}		
+		,apply_user_month_income = #{applyUserMonthIncome}
+		,apply_user_settle_interest = #{applyUserSettleInterest}
+		,apply_user_balance = #{applyUserBalance}
+		,apply_user_jour_show_income = #{applyUserJourShowIncome}
+		,apply_user_is_print = #{applyUserIsPrint}
+		
+		,gh_month_income = #{ghMonthIncome}
+		,gh_settle_interest = #{ghSettleInterest}
+		,gh_balance = #{ghBalance}
+		,gh_jour_show_income = #{ghJourShowIncome}
+		,gh_is_print = #{ghIsPrint}
+		
+		,guarantor1_month_income = #{guarantor1MonthIncome}
+		,guarantor1_settle_interest = #{guarantor1SettleInterest}
+		,guarantor1_balance = #{guarantor1Balance}
+		,guarantor1_jour_show_income = #{guarantor1JourShowIncome}
+		,guarantor1_is_print = #{guarantor1IsPrint}
+		
+		,guarantor2_month_income = #{guarantor2MonthIncome}
+		,guarantor2_settle_interest = #{guarantor2SettleInterest}   
+		,guarantor2_balance = #{guarantor2Balance}
+		,guarantor2_jour_show_income = #{guarantor2JourShowIncome}
+		,guarantor2_is_print = #{guarantor2IsPrint} 
+		
+		,other_income_note = #{otherIncomeNote}
 		,is_house_property = #{isHouseProperty}
 		,house_property = #{houseProperty}
 		,is_house_contract = #{isHouseContract}
@@ -1107,20 +1227,20 @@
 		,house_type = #{houseType}
 		,gh_birth_address = #{ghBirthAddress}
 		,guarantor1_birth_address = #{guarantor1BirthAddress}
-		
 		,guarantor2_birth_address = #{guarantor2BirthAddress}
+		
 		,other_note = #{otherNote}
 		,oil_subsidy = #{oilSubsidy}
 		,oil_subsidy_kil = #{oilSubsidyKil}
 		,is_plat_insure = #{isPlatInsure}
-		
 		,gps_fee = #{gpsFee}
+		
 		,gps_deduct = #{gpsDeduct}
 		,gps_fee_way = #{gpsFeeWay}
 		,ly_amount = #{lyAmount}
 		,fx_amount = #{fxAmount}
-		
 		,other_fee = #{otherFee}
+		
 		,service_charge_way = #{serviceChargeWay}
 		,service_charge = #{serviceCharge}
 		,marry_divorce = #{marryDivorce}
