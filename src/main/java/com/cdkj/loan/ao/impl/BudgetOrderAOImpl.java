@@ -871,7 +871,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             DateUtil.FRONT_DATE_FORMAT_STRING));
 
         budgetOrder
-            .setMonthAmount(StringValidater.toLong(req.getMonthAmount()));
+            .setMonthAmount(StringValidater.toLong(req.getRepayMonthAmount()));
         budgetOrder.setRepayBankDate(
             StringValidater.toInteger(req.getRepayBankDate()));
         budgetOrder.setRepayFirstMonthAmount(

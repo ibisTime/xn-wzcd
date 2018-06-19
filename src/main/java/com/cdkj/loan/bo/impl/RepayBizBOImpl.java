@@ -110,7 +110,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setUserId(userId);
         repayBiz.setRealName(budgetOrder.getCustomerName());
         repayBiz.setIdKind(EIDKind.IDCard.getCode());
-        // repayBiz.setIdNo(budgetOrder.getIdNo());
+        repayBiz.setIdNo(budgetOrder.getIdNo());
 
         repayBiz.setBankcardCode(bankcardCode);
         repayBiz.setBizPrice(budgetOrder.getInvoicePrice());
@@ -135,12 +135,12 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setLoanEndDatetime(addMonths);
         repayBiz.setFxDeposit(0L);
 
-        // repayBiz
-        // .setFirstRepayDatetime(budgetOrder.getRepayFirstMonthDatetime());
-        // repayBiz.setFirstRepayAmount(budgetOrder.getRepayFirstMonthAmount());
-        //
-        // repayBiz.setMonthDatetime(budgetOrder.getRepayBankDate());
-        // repayBiz.setMonthAmount(budgetOrder.getRepayMonthAmount());
+        repayBiz
+            .setFirstRepayDatetime(budgetOrder.getRepayFirstMonthDatetime());
+        repayBiz.setFirstRepayAmount(budgetOrder.getRepayFirstMonthAmount());
+
+        repayBiz.setMonthDatetime(budgetOrder.getRepayBankDate());
+        repayBiz.setMonthAmount(budgetOrder.getRepayMonthAmount());
         repayBiz.setLyDeposit(budgetOrder.getLyAmount());
         repayBiz.setCutLyDeposit(0L);
         repayBiz.setCurNodeCode(ERepayBizNode.TO_REPAY.getCode());
