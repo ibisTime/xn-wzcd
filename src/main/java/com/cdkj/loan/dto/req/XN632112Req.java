@@ -20,7 +20,7 @@ public class XN632112Req {
     private String creditCode;
 
     @NotBlank
-    private String loanBank;
+    private String loanBankCode;
 
     @NotBlank
     private String shopWay;
@@ -28,21 +28,19 @@ public class XN632112Req {
     @NotBlank
     private String loanAmount;
 
-    @NotBlank
     private String xszFront;
 
-    @NotBlank
     private String xszReverse;
 
     @NotEmpty
     private List<XN632112ReqChild> creditUserList;
 
-    public String getLoanBank() {
-        return loanBank;
+    public String getLoanBankCode() {
+        return loanBankCode;
     }
 
-    public void setLoanBank(String loanBank) {
-        this.loanBank = loanBank;
+    public void setLoanBankCode(String loanBankCode) {
+        this.loanBankCode = loanBankCode;
     }
 
     public String getShopWay() {
