@@ -2,6 +2,8 @@ package com.cdkj.loan.dto.req;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -332,7 +334,7 @@ public class XN632120Req {
     private List<String> gpsList;
 
     // 用款用途
-    @NotEmpty
+    @NotNull(message = "用款用途数据不能为空")
     private List<XN632120ReqRepointDetail> repointDetailList;
 
     // 征信人员收入
