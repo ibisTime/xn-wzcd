@@ -52,6 +52,9 @@
 			<if test="roleCode != null and roleCode != '' ">
 				AND trn.role_code = #{roleCode}
 			</if>
+			<if test="curNodeCode != null and curNodeCode != '' ">
+				AND t.cur_node_code = #{curNodeCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_advanceFund" parameterType="advanceFund" resultMap="advanceFund_DB_Result">
