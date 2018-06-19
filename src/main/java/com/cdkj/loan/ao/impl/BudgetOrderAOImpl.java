@@ -203,7 +203,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setCarDealerSubsidy(StringValidater.toLong(req
             .getCarDealerSubsidy()));
 
-        Long totalAmount = loanAmount + fee;// 总费用
+        Long totalAmount = loanAmount + fee;// 总费用 贷款总额
         data.setBankLoanCs(AmountUtil.div(totalAmount, invoicePrice));// 银行贷款成数
         data.setApplyUserMonthIncome(StringValidater.toLong(req
             .getApplyUserMonthIncome()));
@@ -277,7 +277,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setLyAmount(StringValidater.toLong(xn632291Res.getLyAmount()));
         data.setFxAmount(StringValidater.toLong(xn632291Res.getFxAmount()));
         data.setOtherFee(StringValidater.toLong(xn632291Res.getOtherFee()));
-        data.setFeeWay(req.getFeeWay());
+        data.setServiceChargeWay(req.getFeeWay());
+
+        Long serviceCharge = StringValidater.toLong(xn632291Res.getLyAmount())
+                + StringValidater.toLong(xn632291Res.getFxAmount())
+                + StringValidater.toLong(xn632291Res.getGpsFee())
+                + StringValidater.toLong(xn632291Res.getOtherFee());
+        // 收客户手续费合计：履约保证金+担保风险金+GPS收费+杂费
+        data.setServiceCharge(serviceCharge);
+
         data.setMarryDivorce(req.getMarryDivorce());
 
         data.setApplyUserHkb(req.getApplyUserHkb());
@@ -552,6 +560,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                         .queryRepointDetailList(repointDetail);
                     RepointDetail mortgage = RepointDetailList.get(0);
                     data.setUseAmount(mortgage.getRepointAmount());// 应退按揭款来自用款用途的应退按揭款
+                    data.setLoanAmount(budgetOrder.getLoanAmount());
+                    data.setServiceCharge(budgetOrder.getServiceCharge());
+                    data.setServiceChargeWay(budgetOrder.getServiceChargeWay());
+                    data.setGpsFee(budgetOrder.getGpsFee());
+                    data.setGpsFeeWay(budgetOrder.getGpsFeeWay());
                     data.setLoanBankCode(budgetOrder.getLoanBankCode());
                     data.setIsAdvanceFund(budgetOrder.getIsAdvanceFund());
                     CollectBankcard condition = new CollectBankcard();
@@ -591,6 +604,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     data.setCarDealerCode(budgetOrder.getCarDealerCode());
                     // 用款应该是预算单的应退按揭款 现在暂时用贷款金额 用款用途做完后换成用款用途的应退按揭款
                     data.setUseAmount(budgetOrder.getLoanAmount());
+                    data.setLoanAmount(budgetOrder.getLoanAmount());
+                    data.setServiceCharge(budgetOrder.getServiceCharge());
+                    data.setServiceChargeWay(budgetOrder.getServiceChargeWay());
+                    data.setGpsFee(budgetOrder.getGpsFee());
+                    data.setGpsFeeWay(budgetOrder.getGpsFeeWay());
                     data.setLoanBankCode(budgetOrder.getLoanBankCode());
                     data.setIsAdvanceFund(budgetOrder.getIsAdvanceFund());
                     CollectBankcard condition = new CollectBankcard();

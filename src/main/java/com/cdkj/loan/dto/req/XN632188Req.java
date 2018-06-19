@@ -14,6 +14,18 @@ public class XN632188Req {
     @NotBlank
     private String companyCode;
 
+    // 1分公司制单2确认打款分公司
+    @NotBlank
+    private String curNodeCode;
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
     public String getCompanyCode() {
         return companyCode;
     }

@@ -11,6 +11,13 @@
 		<result column="company_code" property="companyCode" />
 		<result column="car_dealer_code" property="carDealerCode" />
 		<result column="use_amount" property="useAmount" />
+
+        <result column="loan_amount" property="loanAmount" />    
+        <result column="service_charge" property="serviceCharge" />  
+        <result column="service_charge_way" property="serviceChargeWay" />  
+        <result column="gps_fee" property="gpsFee" />  
+        <result column="gps_fee_way" property="gpsFeeWay" />  
+                           
 		<result column="loan_bank_code" property="loanBankCode" />
 		<result column="is_advance_fund" property="isAdvanceFund" />
 		<result column="collect_bankcard_code" property="collectBankcardCode" />
@@ -52,6 +59,9 @@
 			<if test="roleCode != null and roleCode != '' ">
 				AND trn.role_code = #{roleCode}
 			</if>
+			<if test="curNodeCode != null and curNodeCode != '' ">
+				AND t.cur_node_code = #{curNodeCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_advanceFund" parameterType="advanceFund" resultMap="advanceFund_DB_Result">
@@ -64,6 +74,13 @@
 		,t.company_code
 		,t.car_dealer_code
 		,t.use_amount
+		
+		,t.loan_amount
+		,t.service_charge
+		,t.service_charge_way
+		,t.gps_fee
+		,t.gps_fee_way
+		
 		,t.loan_bank_code
 		,t.is_advance_fund
 		,t.collect_bankcard_code
@@ -105,6 +122,11 @@
 		,t.company_code
 		,t.car_dealer_code
 		,t.use_amount
+		,t.loan_amount
+		,t.service_charge
+		,t.service_charge_way
+		,t.gps_fee
+		,t.gps_fee_way
 		,t.loan_bank_code
 		,t.is_advance_fund
 		,t.collect_bankcard_code
@@ -146,6 +168,11 @@
 		,company_code
 		,car_dealer_code
 		,use_amount
+		,t.loan_amount
+		,t.service_charge
+		,t.service_charge_way
+		,t.gps_fee
+		,t.gps_fee_way
 		,loan_bank_code
 		,is_advance_fund
 		,collect_bankcard_code
@@ -170,6 +197,11 @@
 		,#{companyCode}
 		,#{carDealerCode}
 		,#{useAmount}
+		,#{loanAmount}
+		,#{serviceCharge}
+		,#{serviceChargeWay}
+		,#{gpsFee}
+		,#{gpsFeeWay}
 		,#{loanBankCode}
 		,#{isAdvanceFund}
 		,#{collectBankcardCode}
@@ -197,6 +229,13 @@
 		,company_code = #{companyCode}
 		,car_dealer_code = #{carDealerCode}
 		,use_amount = #{useAmount}
+		
+		,loan_amount = #{loanAmount}
+		,service_charge = #{serviceCharge}
+		,service_charge_way = #{serviceChargeWay}
+		,gps_fee = #{gpsFee}
+		,gps_fee_way = #{gpsFeeWay}
+		
 		,loan_bank_code = #{loanBankCode}
 		,is_advance_fund = #{isAdvanceFund}
 		,collect_bankcard_code = #{collectBankcardCode}

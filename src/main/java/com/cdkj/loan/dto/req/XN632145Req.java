@@ -37,6 +37,17 @@ public class XN632145Req extends APageReq {
 
     private List<String> curNodeCodeList;// 节点
 
+    // 是否提交作废申请
+    private String isSubmitCancel;
+
+    public String getIsSubmitCancel() {
+        return isSubmitCancel;
+    }
+
+    public void setIsSubmitCancel(String isSubmitCancel) {
+        this.isSubmitCancel = isSubmitCancel;
+    }
+
     public String getCarDealerCode() {
         return carDealerCode;
     }

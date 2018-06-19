@@ -33,11 +33,22 @@ public class XN632148Req extends APageReq {
 
     private List<String> curNodeCodeList;// 节点
 
+    // 是否提交作废申请
+    private String isSubmitCancel;
+
     @NotBlank
     private String roleCode;// 角色编号
 
     public String getCarDealerCode() {
         return carDealerCode;
+    }
+
+    public String getIsSubmitCancel() {
+        return isSubmitCancel;
+    }
+
+    public void setIsSubmitCancel(String isSubmitCancel) {
+        this.isSubmitCancel = isSubmitCancel;
     }
 
     public void setCarDealerCode(String carDealerCode) {
