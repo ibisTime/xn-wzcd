@@ -21,6 +21,7 @@ public class XN632120Req {
     private String customerType;
 
     // 汽车经销商编号
+    @NotBlank
     private String carDealerCode;
 
     // 贷款支行编号

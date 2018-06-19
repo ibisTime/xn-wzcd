@@ -31,7 +31,7 @@
 		<result column="repay_is_part" property="repayIsPart" />
 		<result column="real_repay_amount" property="realRepayAmount" />
 		<result column="remind_count" property="remindCount" />
-		<result column="real_replace_repay_amount" property="replaceRealRepayAmount" />
+		<result column="replace_real_repay_amount" property="replaceRealRepayAmount" />
 		<result column="replace_is_repay" property="replaceIsRepay" />
 		
 		<result column="replace_repay_datetime" property="replaceRepayDatetime" />
@@ -152,7 +152,7 @@
 		,t.repay_is_part
 		,t.real_repay_amount
 		,t.remind_count
-		,t.real_replace_repay_amount
+		,t.replace_real_repay_amount
 		,t.replace_is_repay
 		
 		,t.replace_repay_datetime
@@ -234,7 +234,7 @@
 		,t.repay_is_part
 		,t.real_repay_amount
 		,t.remind_count
-		,t.real_replace_repay_amount
+		,t.replace_real_repay_amount
 		,t.replace_is_repay
 		
 		,t.replace_repay_datetime

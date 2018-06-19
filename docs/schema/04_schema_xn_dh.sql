@@ -211,7 +211,7 @@ CREATE TABLE `tdh_repay_plan` (
   `repay_is_part` char(1) DEFAULT NULL COMMENT '是否部分还款',
   `real_repay_amount` bigint(20) DEFAULT NULL COMMENT '实际还款金额',
   `remind_count` int(11) DEFAULT NULL COMMENT '已催款次数',
-  `real_replace_repay_amount` bigint(20) DEFAULT NULL COMMENT '实际代偿金额',
+  `replace_real_repay_amount` bigint(20) DEFAULT NULL COMMENT '代偿实际金额',
   `replace_is_repay` char(1) DEFAULT NULL COMMENT '代偿是否缴纳',
   
   `replace_repay_datetime` datetime DEFAULT NULL COMMENT '代偿时间',

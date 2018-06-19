@@ -915,6 +915,7 @@
 		,second_number
 		,other_file_pdf
 		,other_apply_note
+		,id_no
 		,apply_datetime
 		,cur_node_code
 		,repay_biz_code
@@ -1036,6 +1037,7 @@
 		,#{secondNumber}
 		,#{otherFilePdf}
 		,#{otherApplyNote}
+		,#{idNO}
 		,#{applyDatetime}
 		,#{curNodeCode}
 		,#{repayBizCode}
