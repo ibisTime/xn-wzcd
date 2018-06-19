@@ -206,19 +206,29 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         condition.setType(ECollectBankcardType.DEALER_REBATE.getCode());
         List<CollectBankcard> list = collectBankcardBO
             .queryCollectBankcardByCompanyCodeAndType(condition);
+
+        Bank bank2 = bankBO.getBankBySubbranch(budgetOrder.getLoanBankCode());
+        String bankCode = null;
+        if (null != bank2) {
+            bankCode = bank2.getBankCode();
+        }
         for (CollectBankcard collectBankcard : list) {
-            XN632290Res res = new XN632290Res();
-            Double pointRate = collectBankcard.getPointRate();
-            res.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER.getCode());
-            res.setRepointAmount(AmountUtil.mul(actualRepointAmount, pointRate));
-            res.setId(String.valueOf(carDealerProtocol.getId()));
-            res.setAccountCode(collectBankcard.getBankcardNumber());
-            CarDealer carDealer = carDealerBO.getCarDealer(req
-                .getCarDealerCode());
-            res.setCompanyName(carDealer.getFullName());
-            res.setBankcardNumber(collectBankcard.getBankcardNumber());
-            res.setSubbranch(collectBankcard.getRealName());
-            resList.add(res);
+            if (collectBankcard.getBankCode() == bankCode) {
+                XN632290Res res = new XN632290Res();
+                Double pointRate = collectBankcard.getPointRate();
+                res.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
+                    .getCode());
+                res.setRepointAmount(AmountUtil.mul(actualRepointAmount,
+                    pointRate));
+                res.setId(String.valueOf(carDealerProtocol.getId()));
+                res.setAccountCode(collectBankcard.getBankcardNumber());
+                CarDealer carDealer = carDealerBO.getCarDealer(req
+                    .getCarDealerCode());
+                res.setCompanyName(carDealer.getFullName());
+                res.setBankcardNumber(collectBankcard.getBankcardNumber());
+                res.setSubbranch(collectBankcard.getRealName());
+                resList.add(res);
+            }
         }
         // 2、应退按揭款
         XN632290Res res = new XN632290Res();
