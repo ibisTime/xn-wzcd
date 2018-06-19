@@ -38,6 +38,21 @@ public class AdvanceFund extends ABaseDO {
     // 用款金额(应退按揭款)
     private Long useAmount;
 
+    // 贷款金额
+    private Long loanAmount;
+
+    // 手续费
+    private Long serviceCharge;
+
+    // 手续费收取方式
+    private String serviceChargeWay;
+
+    // GPS费
+    private Long gpsFee;
+
+    // GPS收取方式
+    private String gpsFeeWay;
+
     // 贷款银行编号
     private String loanBankCode;
 
@@ -116,6 +131,46 @@ public class AdvanceFund extends ABaseDO {
     private String applyName;
 
     private BudgetOrder budgetOrder;
+
+    public Long getLoanAmount() {
+        return loanAmount;
+    }
+
+    public void setLoanAmount(Long loanAmount) {
+        this.loanAmount = loanAmount;
+    }
+
+    public Long getServiceCharge() {
+        return serviceCharge;
+    }
+
+    public void setServiceCharge(Long serviceCharge) {
+        this.serviceCharge = serviceCharge;
+    }
+
+    public Long getGpsFee() {
+        return gpsFee;
+    }
+
+    public void setGpsFee(Long gpsFee) {
+        this.gpsFee = gpsFee;
+    }
+
+    public String getServiceChargeWay() {
+        return serviceChargeWay;
+    }
+
+    public void setServiceChargeWay(String serviceChargeWay) {
+        this.serviceChargeWay = serviceChargeWay;
+    }
+
+    public String getGpsFeeWay() {
+        return gpsFeeWay;
+    }
+
+    public void setGpsFeeWay(String gpsFeeWay) {
+        this.gpsFeeWay = gpsFeeWay;
+    }
 
     public BudgetOrder getBudgetOrder() {
         return budgetOrder;

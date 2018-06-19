@@ -255,7 +255,10 @@ public class BudgetOrder extends ABaseDO {
     private Long otherFee;
 
     // 手续费收取方式
-    private String feeWay;
+    private String serviceChargeWay;
+
+    // 手续费（收客户手续费合计）
+    private Long serviceCharge;
 
     // 结婚证离婚证
     private String marryDivorce;
@@ -1305,14 +1308,6 @@ public class BudgetOrder extends ABaseDO {
         this.otherFee = otherFee;
     }
 
-    public String getFeeWay() {
-        return feeWay;
-    }
-
-    public void setFeeWay(String feeWay) {
-        this.feeWay = feeWay;
-    }
-
     public String getMarryDivorce() {
         return marryDivorce;
     }
@@ -2351,6 +2346,22 @@ public class BudgetOrder extends ABaseDO {
 
     public void setInsuranceNote(String insuranceNote) {
         this.insuranceNote = insuranceNote;
+    }
+
+    public String getServiceChargeWay() {
+        return serviceChargeWay;
+    }
+
+    public void setServiceChargeWay(String serviceChargeWay) {
+        this.serviceChargeWay = serviceChargeWay;
+    }
+
+    public Long getServiceCharge() {
+        return serviceCharge;
+    }
+
+    public void setServiceCharge(Long serviceCharge) {
+        this.serviceCharge = serviceCharge;
     }
 
 }

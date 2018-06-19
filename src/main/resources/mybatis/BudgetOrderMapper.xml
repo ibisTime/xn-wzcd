@@ -98,7 +98,8 @@
 		<result column="ly_amount" property="lyAmount" />
 		<result column="fx_amount" property="fxAmount" />
 		<result column="other_fee" property="otherFee" />
-		<result column="fee_way" property="feeWay" />
+		<result column="service_charge_way" property="serviceChargeWay" />
+		<result column="service_charge" property="serviceCharge" />
 		
 		<result column="marry_divorce" property="marryDivorce" />
 		<result column="apply_user_hkb" property="applyUserHkb" />
@@ -371,7 +372,8 @@
 		,t.ly_amount
 		,t.fx_amount
 		,t.other_fee
-		,t.fee_way
+		,t.service_charge_way
+		,t.service_charge
 		,t.marry_divorce
 		,t.apply_user_hkb
 		,t.bank_bill_pdf
@@ -590,7 +592,8 @@
 		,t.ly_amount
 		,t.fx_amount
 		,t.other_fee
-		,t.fee_way
+		,t.service_charge_way
+		,t.service_charge
 		,t.marry_divorce
 		,t.apply_user_hkb
 		,t.bank_bill_pdf
@@ -885,7 +888,8 @@
 		,ly_amount
 		,fx_amount
 		,other_fee
-		,fee_way
+		,service_charge_way
+		,service_charge
 		,marry_divorce
 		,apply_user_hkb
 		,bank_bill_pdf
@@ -1007,7 +1011,8 @@
 		,#{lyAmount}
 		,#{fxAmount}
 		,#{otherFee}
-		,#{feeWay}
+		,#{serviceChargeWay}
+		,#{serviceCharge}
 		,#{marryDivorce}
 		,#{applyUserHkb}
 		,#{bankBillPdf}
@@ -1113,7 +1118,8 @@
 		,fx_amount = #{fxAmount}
 		
 		,other_fee = #{otherFee}
-		,fee_way = #{feeWay}
+		,service_charge_way = #{serviceChargeWay}
+		,service_charge = #{serviceCharge}
 		,marry_divorce = #{marryDivorce}
 		,apply_user_hkb = #{applyUserHkb}
 		,bank_bill_pdf = #{bankBillPdf}
