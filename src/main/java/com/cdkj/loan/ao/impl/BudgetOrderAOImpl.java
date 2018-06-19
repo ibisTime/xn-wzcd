@@ -491,91 +491,114 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            // 预算单节点改为垫资审核
-            budgetOrder.setCurNodeCode(EBudgetOrderNode.ADVANCE_FUND_AUDIT
-                .getCode());
-
-            // 生成垫资单判断是总公司业务还是分公司业务
-
-            Department department = departmentBO.getDepartment(budgetOrder
-                .getCompanyCode());
-            if (EBoolean.NO.getCode().equals(department.getParentCode())) {
-
-                // 总公司业务 打款给汽车经销商
-                AdvanceFund data = new AdvanceFund();
-                data.setBudgetCode(budgetOrder.getCode());
-                data.setType(EAdvanceType.PARENT_BIZ.getCode());
-                data.setCustomerName(budgetOrder.getCustomerName());
-                data.setCompanyCode(budgetOrder.getCompanyCode());
-                data.setCarDealerCode(budgetOrder.getCarDealerCode());
-                // 用款应该是预算单的应退按揭款 现在暂时用贷款金额 用款用途做完后换成用款用途的应退按揭款
-                data.setUseAmount(budgetOrder.getLoanAmount());
-                data.setLoanBankCode(budgetOrder.getLoanBankCode());
-                data.setIsAdvanceFund(budgetOrder.getIsAdvanceFund());
-                CollectBankcard condition = new CollectBankcard();
-                condition.setCompanyCode(budgetOrder.getCarDealerCode());
-                List<CollectBankcard> list = collectBankcardBO
-                    .queryCollectBankcardList(condition);
-                String collectBankcardCode = null;
-                for (CollectBankcard collectBankcard : list) {
-
-                    if (ECollectBankcardType.DEALER_COLLECT.getCode().equals(
-                        collectBankcard.getType())) {
-                        // 经销商的收款账号
-                        collectBankcardCode = collectBankcard.getCode();
-                    }
-                }
-                // 汽车经销商的账号
-                data.setCollectBankcardCode(collectBankcardCode);
-                data.setUpdater(operator);
-                data.setUpdateDatetime(new Date());
-                data.setCurNodeCode(EAdvanceFundNode.PARENT_CONFIRM.getCode());
-
-                String advanceFundCode = advanceFundBO.saveAdvanceFund(data);
-
+            // 判断是否预算单是否垫资
+            if (EIsAdvanceFund.NO.getCode().equals(
+                budgetOrder.getIsAdvanceFund())) {
+                // 不垫资 进入银行放款流程第一步
+                // 更改节点为银行放款流程第一步
+                budgetOrder.setCurNodeCode(EBudgetOrderNode.SEND_LOGISTICS
+                    .getCode());
                 sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
-                    EBizLogType.ADVANCE_FUND_PARENT, advanceFundCode,
-                    EAdvanceFundNode.PARENT_CONFIRM.getCode(),
-                    EAdvanceFundNode.PARENT_CONFIRM.getValue(), operator);
-
-            } else {
-                // 分公司的业务 打款给分公司
-                AdvanceFund data = new AdvanceFund();
-                data.setBudgetCode(budgetOrder.getCode());
-                data.setType(EAdvanceType.BRANCH_BIZ.getCode());
-                data.setCustomerName(budgetOrder.getCustomerName());
-                data.setCompanyCode(budgetOrder.getCompanyCode());
-                data.setCarDealerCode(budgetOrder.getCarDealerCode());
-                // 用款应该是预算单的应退按揭款 现在暂时用贷款金额 用款用途做完后换成用款用途的应退按揭款
-                data.setUseAmount(budgetOrder.getLoanAmount());
-                data.setLoanBankCode(budgetOrder.getLoanBankCode());
-                data.setIsAdvanceFund(budgetOrder.getIsAdvanceFund());
-                CollectBankcard condition = new CollectBankcard();
-                condition.setCompanyCode(budgetOrder.getCompanyCode());
-                List<CollectBankcard> list = collectBankcardBO
-                    .queryCollectBankcardList(condition);
-                String collectBankcardCode = null;
-                for (CollectBankcard collectBankcard : list) {
-                    if (ECollectBankcardType.PLATFORM.getCode().equals(
-                        collectBankcard.getType())) {
-                        // 公司普通账户
-                        collectBankcardCode = collectBankcard.getCode();
-                    }
-                }
-                // 分公司的账号
-                data.setCollectBankcardCode(collectBankcardCode);
-                data.setUpdater(operator);
-                data.setUpdateDatetime(new Date());
-                data.setCurNodeCode(EAdvanceFundNode.BRANCH_CONFIRM.getCode());
-
-                String advanceFundCode = advanceFundBO.saveAdvanceFund(data);
-
-                sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
-                    EBizLogType.ADVANCE_FUND_BRANCH, advanceFundCode,
-                    EAdvanceFundNode.BRANCH_CONFIRM.getCode(),
-                    EAdvanceFundNode.BRANCH_CONFIRM.getValue(), operator);
-
+                    EBizLogType.BANK_LOAN_COMMIT, budgetOrder.getCode(),
+                    EBudgetOrderNode.SEND_LOGISTICS.getCode(),
+                    EBudgetOrderNode.SEND_LOGISTICS.getValue(), operator);
+                budgetOrderBO.bankLoanConfirmSubmitBank(budgetOrder);
             }
+            if (EIsAdvanceFund.YES.getCode().equals(
+                budgetOrder.getIsAdvanceFund())) {
+                // 垫资 预算单节点改为垫资审核
+                // 生成垫资单判断是总公司业务还是分公司业务
+                budgetOrder.setCurNodeCode(EBudgetOrderNode.ADVANCE_FUND_AUDIT
+                    .getCode());
+                Department department = departmentBO.getDepartment(budgetOrder
+                    .getCompanyCode());
+                if (EBoolean.NO.getCode().equals(department.getParentCode())) {
+                    // 总公司业务 打款给汽车经销商
+                    AdvanceFund data = new AdvanceFund();
+                    data.setBudgetCode(budgetOrder.getCode());
+                    data.setType(EAdvanceType.PARENT_BIZ.getCode());
+                    data.setCustomerName(budgetOrder.getCustomerName());
+                    data.setCompanyCode(budgetOrder.getCompanyCode());
+                    data.setCarDealerCode(budgetOrder.getCarDealerCode());
+                    RepointDetail repointDetail = new RepointDetail();
+                    repointDetail.setBudgetCode(budgetOrder.getCode());
+                    repointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
+                        .getCode());
+                    List<RepointDetail> RepointDetailList = repointDetailBO
+                        .queryRepointDetailList(repointDetail);
+                    RepointDetail mortgage = RepointDetailList.get(0);
+                    data.setUseAmount(mortgage.getRepointAmount());// 应退按揭款来自用款用途的应退按揭款
+                    data.setLoanBankCode(budgetOrder.getLoanBankCode());
+                    data.setIsAdvanceFund(budgetOrder.getIsAdvanceFund());
+                    CollectBankcard condition = new CollectBankcard();
+                    condition.setCompanyCode(budgetOrder.getCarDealerCode());
+                    List<CollectBankcard> list = collectBankcardBO
+                        .queryCollectBankcardList(condition);
+                    String collectBankcardCode = null;
+                    for (CollectBankcard collectBankcard : list) {
+                        if (ECollectBankcardType.DEALER_COLLECT.getCode()
+                            .equals(collectBankcard.getType())) {
+                            // 经销商的收款账号
+                            collectBankcardCode = collectBankcard.getCode();
+                        }
+                    }
+                    // 汽车经销商的账号
+                    data.setCollectBankcardCode(collectBankcardCode);
+                    data.setUpdater(operator);
+                    data.setUpdateDatetime(new Date());
+                    data.setCurNodeCode(EAdvanceFundNode.PARENT_CONFIRM
+                        .getCode());
+
+                    String advanceFundCode = advanceFundBO
+                        .saveAdvanceFund(data);
+
+                    sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+                        EBizLogType.ADVANCE_FUND_PARENT, advanceFundCode,
+                        EAdvanceFundNode.PARENT_CONFIRM.getCode(),
+                        EAdvanceFundNode.PARENT_CONFIRM.getValue(), operator);
+
+                } else {
+                    // 分公司的业务 打款给分公司
+                    AdvanceFund data = new AdvanceFund();
+                    data.setBudgetCode(budgetOrder.getCode());
+                    data.setType(EAdvanceType.BRANCH_BIZ.getCode());
+                    data.setCustomerName(budgetOrder.getCustomerName());
+                    data.setCompanyCode(budgetOrder.getCompanyCode());
+                    data.setCarDealerCode(budgetOrder.getCarDealerCode());
+                    // 用款应该是预算单的应退按揭款 现在暂时用贷款金额 用款用途做完后换成用款用途的应退按揭款
+                    data.setUseAmount(budgetOrder.getLoanAmount());
+                    data.setLoanBankCode(budgetOrder.getLoanBankCode());
+                    data.setIsAdvanceFund(budgetOrder.getIsAdvanceFund());
+                    CollectBankcard condition = new CollectBankcard();
+                    condition.setCompanyCode(budgetOrder.getCompanyCode());
+                    List<CollectBankcard> list = collectBankcardBO
+                        .queryCollectBankcardList(condition);
+                    String collectBankcardCode = null;
+                    for (CollectBankcard collectBankcard : list) {
+                        if (ECollectBankcardType.PLATFORM.getCode().equals(
+                            collectBankcard.getType())) {
+                            // 公司普通账户
+                            collectBankcardCode = collectBankcard.getCode();
+                        }
+                    }
+                    // 分公司的账号
+                    data.setCollectBankcardCode(collectBankcardCode);
+                    data.setUpdater(operator);
+                    data.setUpdateDatetime(new Date());
+                    data.setCurNodeCode(EAdvanceFundNode.BRANCH_CONFIRM
+                        .getCode());
+
+                    String advanceFundCode = advanceFundBO
+                        .saveAdvanceFund(data);
+
+                    sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+                        EBizLogType.ADVANCE_FUND_BRANCH, advanceFundCode,
+                        EAdvanceFundNode.BRANCH_CONFIRM.getCode(),
+                        EAdvanceFundNode.BRANCH_CONFIRM.getValue(), operator);
+
+                }
+            }
+
         } else {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.SECOND_AUDIT.getCode()).getBackNode());

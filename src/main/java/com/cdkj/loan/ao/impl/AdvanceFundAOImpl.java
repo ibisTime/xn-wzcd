@@ -15,6 +15,7 @@ import com.cdkj.loan.bo.ICarDealerBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.IReqBudgetBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
@@ -25,12 +26,14 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.Department;
+import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.dto.req.XN632170Req;
 import com.cdkj.loan.dto.req.XN632171Req;
 import com.cdkj.loan.dto.req.XN632172Req;
 import com.cdkj.loan.dto.req.XN632173Req;
 import com.cdkj.loan.dto.req.XN632175Req;
 import com.cdkj.loan.dto.req.XN632177Req;
+import com.cdkj.loan.dto.res.XN632188Res;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EAdvanceType;
 import com.cdkj.loan.enums.EApproveResult;
@@ -72,6 +75,9 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
 
     @Autowired
     private ICarDealerBO carDealerBO;
+
+    @Autowired
+    private IReqBudgetBO reqBudgetBO;
 
     @Override
     public void confirmAdvanceFund(XN632170Req req) {
@@ -339,6 +345,37 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         return paginable;
     }
 
+    @Override
+    public XN632188Res branchMakeBill(String companyCode) {
+        XN632188Res res = new XN632188Res();
+
+        AdvanceFund condition = new AdvanceFund();
+        condition.setCompanyCode(companyCode);
+        // condition.setIsAdvanceFund(EIsAdvanceFund.NO.getCode());// 未垫资的垫资单
+        List<AdvanceFund> list = advanceFundBO.queryAdvanceFundList(condition);
+        res.setAdvanceFundlist(list);
+        long totalAdvanceFund = 0;
+        for (AdvanceFund data : list) {
+            totalAdvanceFund += data.getUseAmount();
+        }
+        res.setTotalAdvanceFund(String.valueOf(totalAdvanceFund));
+        ReqBudget reqBudgetCondition = new ReqBudget();
+        reqBudgetCondition.setUseDatetime(DateUtil.strToDate(
+            DateUtil.getToday(DateUtil.FRONT_DATE_FORMAT_STRING),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        reqBudgetCondition.setCompanyCode(companyCode);
+        List<ReqBudget> reqBudgetList = reqBudgetBO
+            .queryReqBudgetList(reqBudgetCondition);
+        long hasAdvanceFund = 0;
+        for (ReqBudget reqBudget : reqBudgetList) {
+            hasAdvanceFund += reqBudget.getDzAmount();
+        }
+        res.setHasAdvanceFund(String.valueOf(hasAdvanceFund));
+        res.setUnAdvanceFund(String.valueOf(totalAdvanceFund - hasAdvanceFund));
+        res.setAdvanceFund(String.valueOf(totalAdvanceFund - hasAdvanceFund));
+        return res;
+    }
+
     private AdvanceFund init(AdvanceFund data) {
         if (StringUtils.isNotBlank(data.getBudgetCode())) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
@@ -384,4 +421,5 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         return data;
 
     }
+
 }

@@ -18,8 +18,8 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget>
-        implements IReqBudgetBO {
+public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget> implements
+        IReqBudgetBO {
 
     @Autowired
     private IReqBudgetDAO reqBudgetDAO;
@@ -27,8 +27,8 @@ public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget>
     public String saveReqBudget(ReqBudget data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.REQBUDGET.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.REQBUDGET
+                .getCode());
             data.setCode(code);
             reqBudgetDAO.insert(data);
         }
@@ -87,7 +87,7 @@ public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget>
             data = reqBudgetDAO.select(condition);
             if (data == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "预算单不存在!");
+                    "请款预算单不存在!");
             }
         }
         return data;

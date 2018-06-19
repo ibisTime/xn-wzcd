@@ -53,7 +53,7 @@ public class AdvanceFund extends ABaseDO {
     // 制单意见说明
     private String makeBillNote;
 
-    // 垫资金额
+    // 垫资金额(财务打款界面填写的垫资金额)
     private Long advanceFundAmount;
 
     // 垫资日期
