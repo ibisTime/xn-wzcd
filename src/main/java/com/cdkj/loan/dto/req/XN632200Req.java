@@ -64,28 +64,28 @@ public class XN632200Req {
     private String guarantorMobile;
 
     // 银行卡号
+    @NotBlank
     private String bankCardNumber;
 
     // 对账单日
+    @NotBlank
     private String billDatetime;
 
-    // 月还款额
-    private String monthAmount;
-
     // 银行还款日
+    @NotBlank
     private String repayBankDate;
 
     // 首期还款金额
+    @NotBlank
     private String repayFirstMonthAmount;
 
     // 首期还款日期
+    @NotBlank
     private String repayFirstMonthDatetime;
 
     // 每期月供金额
+    @NotBlank
     private String repayMonthAmount;
-
-    // 身份证号
-    private String idNo;
 
     // 身份证照片
     private String idNoPic;
@@ -147,14 +147,6 @@ public class XN632200Req {
 
     public void setRepayMonthAmount(String repayMonthAmount) {
         this.repayMonthAmount = repayMonthAmount;
-    }
-
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
     }
 
     public String getInsuranceCompanyCode() {
@@ -299,14 +291,6 @@ public class XN632200Req {
 
     public void setBillDatetime(String billDatetime) {
         this.billDatetime = billDatetime;
-    }
-
-    public String getMonthAmount() {
-        return monthAmount;
-    }
-
-    public void setMonthAmount(String monthAmount) {
-        this.monthAmount = monthAmount;
     }
 
     public String getIdNoPic() {
