@@ -104,10 +104,10 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
     }
 
     @Override
-    public List<XN632290Res> showRepointDetail(XN632290Req req) {
-
+    public List<XN632290Res> showRepointDetail(XN632290Req req, Long loanAmount) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req
             .getBudgetOrderCode());
+        budgetOrder.setLoanAmount(loanAmount);
         // 返回数据 包括应退按揭款和协议内返点
         List<XN632290Res> resList = new ArrayList<XN632290Res>();
 
@@ -125,8 +125,6 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
             .getCarDealerProtocolByCarDealerCode(req.getCarDealerCode(),
                 eBankType.getCode());
 
-        // 贷款额
-        Long loanAmount = budgetOrder.getLoanAmount();
         // 服务费
         Long fee = StringValidater.toLong(req.getFee());
         // 银行利率
