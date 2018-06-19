@@ -1037,7 +1037,7 @@
 		,#{secondNumber}
 		,#{otherFilePdf}
 		,#{otherApplyNote}
-		,#{idNO}
+		,#{idNo}
 		,#{applyDatetime}
 		,#{curNodeCode}
 		,#{repayBizCode}
