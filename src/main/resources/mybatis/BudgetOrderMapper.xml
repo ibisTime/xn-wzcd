@@ -1278,9 +1278,6 @@
 		,repay_first_month_amount = #{repayFirstMonthAmount}
 		,repay_first_month_datetime = #{repayFirstMonthDatetime}
 		,repay_month_amount = #{repayMonthAmount}
-		,mobile = #{mobile}
-		,id_kind = #{idKind}
-		,id_no = #{idNo}
 		,id_no_pic = #{idNoPic}
 		
 		,file_list = #{fileList}
