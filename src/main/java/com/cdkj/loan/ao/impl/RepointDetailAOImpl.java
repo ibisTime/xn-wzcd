@@ -27,7 +27,7 @@ import com.cdkj.loan.domain.RepointDetail;
 import com.cdkj.loan.dto.req.XN632290Req;
 import com.cdkj.loan.dto.res.XN632290Res;
 import com.cdkj.loan.enums.EBankType;
-import com.cdkj.loan.enums.ECollectBankcard;
+import com.cdkj.loan.enums.ECollectBankcardType;
 import com.cdkj.loan.enums.EFeeWay;
 import com.cdkj.loan.enums.EGpsFeeWay;
 import com.cdkj.loan.enums.ELoanPeriod;
@@ -203,7 +203,7 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         // 获得汽车经销商返点账号集合
         CollectBankcard condition = new CollectBankcard();
         condition.setCompanyCode(req.getCarDealerCode());
-        condition.setType(ECollectBankcard.DEALER_REBATE.getCode());
+        condition.setType(ECollectBankcardType.DEALER_REBATE.getCode());
         List<CollectBankcard> list = collectBankcardBO
             .queryCollectBankcardByCompanyCodeAndType(condition);
         for (CollectBankcard collectBankcard : list) {
@@ -229,7 +229,7 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         res.setCompanyName(department.getName());
         CollectBankcard condition2 = new CollectBankcard();
         condition2.setCompanyCode(department.getCode());
-        condition2.setType(ECollectBankcard.PLATFORM.getCode());
+        condition2.setType(ECollectBankcardType.PLATFORM.getCode());
         List<CollectBankcard> list2 = collectBankcardBO
             .queryCollectBankcardByCompanyCodeAndType(condition2);
         CollectBankcard collectBankcard2 = list2.get(0);
