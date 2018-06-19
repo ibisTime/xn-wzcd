@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IReplaceRepayPlanBO;
+import com.cdkj.loan.bo.base.Page;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IReplaceRepayPlanDAO;
@@ -122,5 +124,24 @@ public class ReplaceRepayPlanBOImpl extends PaginableBOImpl<ReplaceRepayPlan>
     @Override
     public void updateConfirmLoan(ReplaceRepayPlan data) {
         replaceRepayPlanDAO.updateConfirmLoan(data);
+    }
+
+    @Override
+    public Paginable<ReplaceRepayPlan> getPaginableByRoleCode(int start,
+            int limit, ReplaceRepayPlan condition) {
+        prepare(condition);
+
+        long totalCount = replaceRepayPlanDAO
+            .selectTotalCountByRoleCode(condition);
+
+        Paginable<ReplaceRepayPlan> page = new Page<ReplaceRepayPlan>(start,
+            limit, totalCount);
+
+        List<ReplaceRepayPlan> dataList = replaceRepayPlanDAO
+            .selectReplaceRepayPlanByRoleCodeList(condition, page.getStart(),
+                page.getPageSize());
+
+        page.setList(dataList);
+        return page;
     }
 }

@@ -35,6 +35,9 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="roleCode != null and roleCode != '' ">
+				AND trn.role_code = #{roleCode}
+			</if>
 			<if test="bizCode != null and bizCode != '' ">
 				AND t.biz_code = #{bizCode}
 			</if>
@@ -82,11 +85,52 @@
 			</if>
 		</trim>
 	</select>
+	
+	<select id="select_replaceRepayPlan_byRoleCode" parameterType="replaceRepayPlan" resultMap="replaceRepayPlan_DB_Result">
+		SELECT
+		DISTINCT 
+		t.code
+		,t.type
+		,t.is_plat_issue
+		,t.take_way
+		,t.defer_days
+		,t.apply_reason
+		,t.apply_reason_note
+		,t.risk_note
+		,t.repay_rate
+		,t.repay_date
+		,t.repay_bankcard
+		,t.repay_bank
+		,t.repay_user
+		,t.repay_bill
+		,t.repay_note
+		,t.biz_code
+		,t.replace_apply_code
+		,t.customer_user_id
+		,t.cur_node_code
+		,t.updater
+		,t.update_datetime
+		,t.remark
+		FROM
+		tdh_replace_repay_plan t join tsys_role_node trn on t.cur_node_code = trn.node_code
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
 
 	<select id="select_replaceRepayPlan_count" parameterType="replaceRepayPlan"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tdh_replace_repay_plan t
 		<include refid="where_condition" />
+	</select>
+	
+	<select id="select_replaceRepayPlan_count_byRoleCode" parameterType="replaceRepayPlan"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM (SELECT distinct code FROM tdh_replace_repay_plan t join tsys_role_node trn on t.cur_node_code = trn.node_code
+		<include refid="where_condition" />) tb
 	</select>
 
 	<insert id="insert_replaceRepayPlan" parameterType="replaceRepayPlan">

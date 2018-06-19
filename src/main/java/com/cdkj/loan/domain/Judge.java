@@ -87,6 +87,17 @@ public class Judge extends ABaseDO {
     // 更新人
     private String updaterName;
 
+    // 执行申请人
+    private String exeApplyUserName;
+
+    public String getExeApplyUserName() {
+        return exeApplyUserName;
+    }
+
+    public void setExeApplyUserName(String exeApplyUserName) {
+        this.exeApplyUserName = exeApplyUserName;
+    }
+
     public String getUpdaterName() {
         return updaterName;
     }
