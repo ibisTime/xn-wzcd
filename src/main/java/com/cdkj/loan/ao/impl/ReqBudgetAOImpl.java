@@ -18,7 +18,6 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
-import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.domain.SYSUser;
@@ -214,7 +213,7 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         return budget;
     }
 
-    private ReqBudget init(ReqBudget data) {
+    private void init(ReqBudget data) {
 
         if (StringUtils.isNotBlank(data.getCompanyCode())) {
             Department department = departmentBO.getDepartment(data
@@ -230,16 +229,5 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
                 data.setApplyUserName(user.getRealName());
             }
         }
-
-        if (StringUtils.isNotBlank(data.getCollectionBank())) {
-            CollectBankcard bankcard = collectBankcardBO
-                .getCollectBankcard(data.getCollectionBank());
-            if (null != bankcard) {
-                data.setApplyUserName(bankcard.getBankName());
-            }
-        }
-
-        return data;
-
     }
 }

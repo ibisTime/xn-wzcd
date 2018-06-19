@@ -6,11 +6,11 @@ package com.cdkj.loan.enums;
  * @since: 2018年5月26日 下午5:17:07 
  * @history:
  */
-public enum ECollectBankcard {
+public enum ECollectBankcardType {
     PLATFORM("1", "平台普通账户"), DEALER_COLLECT("2", "经销商的收款账号"), DEALER_REBATE("3",
             "经销商返点账号");
 
-    ECollectBankcard(String code, String value) {
+    ECollectBankcardType(String code, String value) {
         this.code = code;
         this.value = value;
     }

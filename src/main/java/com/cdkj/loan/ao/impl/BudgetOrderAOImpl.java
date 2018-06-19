@@ -75,7 +75,7 @@ import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetFrozenStatus;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EButtonCode;
-import com.cdkj.loan.enums.ECollectBankcard;
+import com.cdkj.loan.enums.ECollectBankcardType;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EFbhStatus;
@@ -521,7 +521,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     .queryCollectBankcardList(condition);
                 String collectBankcardCode = null;
                 for (CollectBankcard collectBankcard : list) {
-                    if (ECollectBankcard.DEALER_COLLECT.getCode()
+                    if (ECollectBankcardType.DEALER_COLLECT.getCode()
                         .equals(collectBankcard.getType())) {
                         // 经销商的收款账号
                         collectBankcardCode = collectBankcard.getCode();
@@ -558,7 +558,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     .queryCollectBankcardList(condition);
                 String collectBankcardCode = null;
                 for (CollectBankcard collectBankcard : list) {
-                    if (ECollectBankcard.PLATFORM.getCode()
+                    if (ECollectBankcardType.PLATFORM.getCode()
                         .equals(collectBankcard.getType())) {
                         // 公司普通账户
                         collectBankcardCode = collectBankcard.getCode();
