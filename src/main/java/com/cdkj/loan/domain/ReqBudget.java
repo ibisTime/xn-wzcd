@@ -65,6 +65,26 @@ public class ReqBudget extends ABaseDO {
 
     private String roleCode; // 角色编号
 
+    private String companyName; // 公司编号
+
+    private String applyUserName; // 申请人姓名
+
+    public String getApplyUserName() {
+        return applyUserName;
+    }
+
+    public void setApplyUserName(String applyUserName) {
+        this.applyUserName = applyUserName;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
     public String getRoleCode() {
         return roleCode;
     }

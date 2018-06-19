@@ -4,7 +4,7 @@
 <mapper namespace="com.cdkj.loan.dao.IReqBudgetDAO">
 	<resultMap id="reqBudget_DB_Result" type="reqBudget">
 		<result column="code" property="code" />
-		<result column="company_code" property="back_node" />
+		<result column="company_code" property="companyCode" />
 		<result column="receipt_bank" property="receiptBank" />
 		<result column="receipt_account" property="receiptAccount" />
 		<result column="budget_amount" property="budgetAmount" />

@@ -17,12 +17,13 @@ import com.cdkj.loan.common.PwdUtil;
 import com.cdkj.loan.dao.ISYSUserDAO;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements
-        ISYSUserBO {
+public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
+        implements ISYSUserBO {
 
     @Autowired
     private ISYSUserDAO sysUserDAO;
@@ -79,8 +80,8 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements
     }
 
     @Override
-    public void refreshStatus(String userId, EUserStatus status,
-            String updater, String remark) {
+    public void refreshStatus(String userId, EUserStatus status, String updater,
+            String remark) {
         if (StringUtils.isNotBlank(userId)) {
             SYSUser data = new SYSUser();
             data.setUserId(userId);
@@ -101,7 +102,8 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements
             condition.setMobile(mobile);
             long count = getTotalCount(condition);
             if (count > 0) {
-                throw new BizException("li01003", "手机号已经存在");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "手机号已经存在");
             }
         }
     }
@@ -213,13 +215,13 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements
             data.setPostName(post.getName());
 
             // 获取部门
-            Department department = departmentBO.getDepartment(data
-                .getDepartmentCode());
+            Department department = departmentBO
+                .getDepartment(data.getDepartmentCode());
             data.setDepartmentName(department.getName());
 
             // 获取分公司
-            Department company = departmentBO.getDepartment(data
-                .getCompanyCode());
+            Department company = departmentBO
+                .getDepartment(data.getCompanyCode());
             data.setCompanyName(company.getName());
         }
         return data;
@@ -227,7 +229,8 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser> implements
 
     @Override
     public void checkLoginPwd(String userId, String loginPwd) {
-        if (StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(loginPwd)) {
+        if (StringUtils.isNotBlank(userId)
+                && StringUtils.isNotBlank(loginPwd)) {
             SYSUser condition = new SYSUser();
             condition.setUserId(userId);
             condition.setLoginPwd(MD5Util.md5(loginPwd));
