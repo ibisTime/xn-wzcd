@@ -52,24 +52,12 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
     private IBudgetOrderBO budgetOrderBO;
 
     @Override
-    public String addTotalAdvanceFund(XN632174Req req) {
+    public void addTotalAdvanceFund(XN632174Req req) {
+        // 制单意见说明未处理
 
-        TotalAdvanceFund data = new TotalAdvanceFund();
-        data.setType(ETotalAdvanceFundType.FIRST.getCode());
-        data.setCompanyCode(req.getCompanyCode());
-        data.setTotalAdvanceFund(StringValidater.toLong(req
-            .getTotalAdvanceFund()));
-        data.setPayAmount(StringValidater.toLong(req.getPayAmount()));
-        data.setMakeBillNote(req.getMakeBillNote());
-        data.setUpdater(req.getOperator());
-        data.setUpdateDatetime(new Date());
-        data.setStatus(ETotalAdvanceFundStatus.TODO.getCode());
-        String totalAdvanceFundCode = totalAdvanceFundBO
-            .saveTotalAdvanceFund(data);
         List<String> codeList = req.getCodeList();
         for (String code : codeList) {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
-            advanceFund.setTotalAdvanceFundCode(totalAdvanceFundCode);
             String preNodeCode = advanceFund.getCurNodeCode();
             advanceFund.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 preNodeCode).getNextNode());
@@ -80,12 +68,10 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
                     EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),
                     preNodeCode, node.getCode(), node.getValue(),
                     req.getOperator());
-
             advanceFundBO.branchMakeBill(advanceFund);
 
         }
 
-        return totalAdvanceFundCode;
     }
 
     @Override
@@ -122,10 +108,14 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
     }
 
     @Override
-    public void confirmPayBranchCompany(XN632176Req req) {
+    public String confirmPayBranchCompany(XN632176Req req) {
+        TotalAdvanceFund data = new TotalAdvanceFund();
+        data.setType(ETotalAdvanceFundType.FIRST.getCode());
+        data.setCompanyCode(req.getCompanyCode());
+        data.setTotalAdvanceFund(StringValidater.toLong(req
+            .getTotalAdvanceFund()));
+        data.setPayAmount(StringValidater.toLong(req.getPayAmount()));
 
-        TotalAdvanceFund data = totalAdvanceFundBO.getTotalAdvanceFund(req
-            .getCode());
         data.setPayDatetime(DateUtil.strToDate(req.getPayDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setPayBankcardCode(req.getPayBankcardCode());
@@ -133,12 +123,14 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         data.setPayNote(req.getPayNote());
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
-        data.setStatus(ETotalAdvanceFundStatus.HANDLED.getCode());
-        totalAdvanceFundBO.refreshTotalAdvanceFund(data);
+        data.setStatus(ETotalAdvanceFundStatus.HANDLED.getCode());// 待处理
+        String totalAdvanceFundCode = totalAdvanceFundBO
+            .saveTotalAdvanceFund(data);
 
         List<String> codeList = req.getCodeList();
         for (String code : codeList) {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
+            advanceFund.setTotalAdvanceFundCode(totalAdvanceFundCode);
             String preNodeCode = advanceFund.getCurNodeCode();
             advanceFund.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 preNodeCode).getNextNode());
@@ -150,6 +142,8 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
                 preNodeCode, node.getCode(), req.getPayNote(),
                 req.getOperator());
         }
+
+        return totalAdvanceFundCode;
 
     }
 

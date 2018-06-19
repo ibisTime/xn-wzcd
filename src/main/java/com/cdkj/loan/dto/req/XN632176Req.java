@@ -2,6 +2,8 @@ package com.cdkj.loan.dto.req;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 
  * @author: jiafr 
@@ -10,8 +12,15 @@ import java.util.List;
  */
 public class XN632176Req {
 
-    // 垫资汇总编号
-    private String code;
+    // 垫资总金额
+    private String totalAdvanceFund;
+
+    // 付款金额
+    private String payAmount;
+
+    // 业务公司编号
+    @NotBlank
+    private String companyCode;
 
     // 付款时间
     private String payDatetime;
@@ -31,12 +40,28 @@ public class XN632176Req {
     // 垫资单编号列表
     private List<String> codeList;
 
-    public String getCode() {
-        return code;
+    public String getCompanyCode() {
+        return companyCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public String getTotalAdvanceFund() {
+        return totalAdvanceFund;
+    }
+
+    public void setTotalAdvanceFund(String totalAdvanceFund) {
+        this.totalAdvanceFund = totalAdvanceFund;
+    }
+
+    public String getPayAmount() {
+        return payAmount;
+    }
+
+    public void setPayAmount(String payAmount) {
+        this.payAmount = payAmount;
     }
 
     public List<String> getCodeList() {

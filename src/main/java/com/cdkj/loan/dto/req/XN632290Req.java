@@ -16,6 +16,9 @@ public class XN632290Req {
     @NotBlank
     private String carDealerCode;
 
+    @NotBlank
+    private String loanAmount;
+
     // 服务费
     @NotBlank
     private String fee;
@@ -59,6 +62,14 @@ public class XN632290Req {
     // 厂家贴息
     @NotBlank
     private String carDealerSubsidy;
+
+    public String getLoanAmount() {
+        return loanAmount;
+    }
+
+    public void setLoanAmount(String loanAmount) {
+        this.loanAmount = loanAmount;
+    }
 
     public String getCarDealerSubsidy() {
         return carDealerSubsidy;
