@@ -56,7 +56,6 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
 
         TotalAdvanceFund data = new TotalAdvanceFund();
         data.setType(ETotalAdvanceFundType.FIRST.getCode());
-
         data.setCompanyCode(req.getCompanyCode());
         data.setTotalAdvanceFund(StringValidater.toLong(req
             .getTotalAdvanceFund()));
@@ -69,7 +68,6 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
             .saveTotalAdvanceFund(data);
         List<String> codeList = req.getCodeList();
         for (String code : codeList) {
-
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
             advanceFund.setTotalAdvanceFundCode(totalAdvanceFundCode);
             String preNodeCode = advanceFund.getCurNodeCode();

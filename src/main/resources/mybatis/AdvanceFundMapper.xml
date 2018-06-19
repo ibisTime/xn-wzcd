@@ -168,11 +168,11 @@
 		,company_code
 		,car_dealer_code
 		,use_amount
-		,t.loan_amount
-		,t.service_charge
-		,t.service_charge_way
-		,t.gps_fee
-		,t.gps_fee_way
+		,loan_amount
+		,service_charge
+		,service_charge_way
+		,gps_fee
+		,gps_fee_way
 		,loan_bank_code
 		,is_advance_fund
 		,collect_bankcard_code
