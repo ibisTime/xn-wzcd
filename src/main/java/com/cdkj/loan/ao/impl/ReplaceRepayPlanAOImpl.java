@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IReplaceRepayPlanAO;
 import com.cdkj.loan.bo.IBankBO;
+import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IReplaceRepayApplyBO;
 import com.cdkj.loan.bo.IReplaceRepayPlanBO;
 import com.cdkj.loan.bo.ISYSUserBO;
@@ -15,6 +16,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
+import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.ReplaceRepayApply;
 import com.cdkj.loan.domain.ReplaceRepayPlan;
 import com.cdkj.loan.domain.SYSUser;
@@ -44,6 +46,9 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
     @Autowired
     private ISYSUserBO sysUserBO;
 
+    @Autowired
+    private INodeFlowBO nodeFlowBO;
+
     @Override
     public String addReplaceRepayPlan(XN632330Req req) {
         ReplaceRepayPlan data = new ReplaceRepayPlan();
@@ -54,8 +59,8 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
             data.setCustomerUserId(replaceRepayApply.getApplyUser());
         }
 
-        data.setCurNodeCode(EReplaceRepayPlanNode.TO_RISK_MANAGE_APPROVE
-            .getCode());
+        data.setCurNodeCode(
+            EReplaceRepayPlanNode.RISK_MANAGE_APPROVE.getCode());
         data.setReplaceApplyCode(req.getReplaceApplyCode());
         data.setBizCode(req.getBizCode());
         data.setIsPlatIssue(req.getIsPlatIssue());
@@ -74,21 +79,15 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
             String riskNote, String remark, String operator) {
         ReplaceRepayPlan replaceRepayPlan = replaceRepayPlanBO
             .getReplaceRepayPlan(code);
-        if (!EReplaceRepayPlanNode.TO_RISK_MANAGE_APPROVE.getCode().equals(
-            replaceRepayPlan.getCurNodeCode())) {
+        if (!EReplaceRepayPlanNode.RISK_MANAGE_APPROVE.getCode()
+            .equals(replaceRepayPlan.getCurNodeCode())) {
             throw new BizException("xn0000", "代偿记录不在风控经理审核状态，无法审核！");
         }
 
-        String curNodeCode = null;
-        if (EBoolean.YES.getCode().equals(approveResult)) {
-            curNodeCode = EReplaceRepayPlanNode.RISK_MANAGE_APPROVE_YES
-                .getCode();
-        } else if (EBoolean.NO.getCode().equals(approveResult)) {
-            curNodeCode = EReplaceRepayPlanNode.RISK_MANAGE_APPROVE_NO
-                .getCode();
-        }
+        String nextNodeCode = getNextNodeCode(replaceRepayPlan.getCurNodeCode(),
+            approveResult);
 
-        replaceRepayPlanBO.updateRiskManageApprove(code, curNodeCode, riskNote,
+        replaceRepayPlanBO.updateRiskManageApprove(code, nextNodeCode, riskNote,
             remark, operator);
     }
 
@@ -97,19 +96,15 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
             String remark, String operator) {
         ReplaceRepayPlan replaceRepayPlan = replaceRepayPlanBO
             .getReplaceRepayPlan(code);
-        if (!EReplaceRepayPlanNode.RISK_MANAGE_APPROVE_YES.getCode().equals(
-            replaceRepayPlan.getCurNodeCode())) {
+        if (!EReplaceRepayPlanNode.SUBCOMP_APPROVE.getCode()
+            .equals(replaceRepayPlan.getCurNodeCode())) {
             throw new BizException("xn0000", "代偿记录不在分公司审核状态，无法审核！");
         }
 
-        String curNodeCode = null;
-        if (EBoolean.YES.getCode().equals(approveResult)) {
-            curNodeCode = EReplaceRepayPlanNode.SUBCOMP_APPROVE_YES.getCode();
-        } else if (EBoolean.NO.getCode().equals(approveResult)) {
-            curNodeCode = EReplaceRepayPlanNode.SUBCOMP_APPROVE_NO.getCode();
-        }
+        String nextNodeCode = getNextNodeCode(replaceRepayPlan.getCurNodeCode(),
+            approveResult);
 
-        replaceRepayPlanBO.updateSubcompApprove(code, curNodeCode, remark,
+        replaceRepayPlanBO.updateSubcompApprove(code, nextNodeCode, remark,
             operator);
     }
 
@@ -118,20 +113,15 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
             String remark, String operator) {
         ReplaceRepayPlan replaceRepayPlan = replaceRepayPlanBO
             .getReplaceRepayPlan(code);
-        if (!EReplaceRepayPlanNode.SUBCOMP_APPROVE_YES.getCode().equals(
-            replaceRepayPlan.getCurNodeCode())) {
+        if (!EReplaceRepayPlanNode.RISK_CHIEF_APPROVE.getCode()
+            .equals(replaceRepayPlan.getCurNodeCode())) {
             throw new BizException("xn0000", "代偿记录不在风控总监审核状态，无法审核！");
         }
 
-        String curNodeCode = null;
-        if (EBoolean.YES.getCode().equals(approveResult)) {
-            curNodeCode = EReplaceRepayPlanNode.RISK_CHIEF_APPROVE_YES
-                .getCode();
-        } else if (EBoolean.NO.getCode().equals(approveResult)) {
-            curNodeCode = EReplaceRepayPlanNode.RISK_CHIEF_APPROVE_NO.getCode();
-        }
+        String nextNodeCode = getNextNodeCode(replaceRepayPlan.getCurNodeCode(),
+            approveResult);
 
-        replaceRepayPlanBO.updateRiskChiefApprove(code, curNodeCode, remark,
+        replaceRepayPlanBO.updateRiskChiefApprove(code, nextNodeCode, remark,
             operator);
     }
 
@@ -140,19 +130,15 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
             String remark, String operator) {
         ReplaceRepayPlan replaceRepayPlan = replaceRepayPlanBO
             .getReplaceRepayPlan(code);
-        if (!EReplaceRepayPlanNode.RISK_CHIEF_APPROVE_YES.getCode().equals(
-            replaceRepayPlan.getCurNodeCode())) {
+        if (!EReplaceRepayPlanNode.FINANCE_APPROVE.getCode()
+            .equals(replaceRepayPlan.getCurNodeCode())) {
             throw new BizException("xn0000", "代偿记录不在财务审核状态，无法审核！");
         }
 
-        String curNodeCode = null;
-        if (EBoolean.YES.getCode().equals(approveResult)) {
-            curNodeCode = EReplaceRepayPlanNode.FINANCE_APPROVE_YES.getCode();
-        } else if (EBoolean.NO.getCode().equals(approveResult)) {
-            curNodeCode = EReplaceRepayPlanNode.FINANCE_APPROVE_NO.getCode();
-        }
+        String nextNodeCode = getNextNodeCode(replaceRepayPlan.getCurNodeCode(),
+            approveResult);
 
-        replaceRepayPlanBO.updateFianaceApprove(code, curNodeCode, remark,
+        replaceRepayPlanBO.updateFianaceApprove(code, nextNodeCode, remark,
             operator);
     }
 
@@ -160,14 +146,16 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
     public void updateConfirmLoan(XN632335Req req) {
         ReplaceRepayPlan replaceRepayPlan = replaceRepayPlanBO
             .getReplaceRepayPlan(req.getCode());
-        if (!EReplaceRepayPlanNode.FINANCE_APPROVE_YES.getCode().equals(
-            replaceRepayPlan.getCurNodeCode())) {
+        if (!EReplaceRepayPlanNode.CONFIRM_LOAN.getCode()
+            .equals(replaceRepayPlan.getCurNodeCode())) {
             throw new BizException("xn0000", "代偿记录不在确认放款状态，无法审核！");
         }
+        String nextNodeCode = getNextNodeCode(replaceRepayPlan.getCurNodeCode(),
+            EBoolean.YES.getCode());
 
         ReplaceRepayPlan data = new ReplaceRepayPlan();
         data.setCode(req.getCode());
-        data.setCurNodeCode(EReplaceRepayPlanNode.DONE.getCode());
+        data.setCurNodeCode(nextNodeCode);
         data.setRepayBank(req.getRepayBank());
         data.setRepayDate(DateUtil.strToDate(req.getRepayDate(),
             DateUtil.DATA_TIME_PATTERN_1));
@@ -182,11 +170,35 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
         replaceRepayPlanBO.updateConfirmLoan(data);
     }
 
+    // 获取下一个节点
+    public String getNextNodeCode(String curNodeCode, String approveResult) {
+        NodeFlow nodeFolw = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
+        String nextNodeCode = null;
+        if (EBoolean.YES.getCode().equals(approveResult)) {
+            nextNodeCode = nodeFolw.getNextNode();
+        } else if (EBoolean.NO.getCode().equals(approveResult)) {
+            nextNodeCode = nodeFolw.getBackNode();
+        }
+        return nextNodeCode;
+    }
+
     @Override
     public Paginable<ReplaceRepayPlan> queryReplaceRepayPlanPage(int start,
             int limit, ReplaceRepayPlan condition) {
-        Paginable<ReplaceRepayPlan> page = replaceRepayPlanBO.getPaginable(
-            start, limit, condition);
+        Paginable<ReplaceRepayPlan> page = replaceRepayPlanBO
+            .getPaginable(start, limit, condition);
+        List<ReplaceRepayPlan> list = page.getList();
+        for (ReplaceRepayPlan replaceRepayPlan : list) {
+            init(replaceRepayPlan);
+        }
+        return page;
+    }
+
+    @Override
+    public Paginable<ReplaceRepayPlan> queryReplaceRepayPlanPageByRoleCode(
+            int start, int limit, ReplaceRepayPlan condition) {
+        Paginable<ReplaceRepayPlan> page = replaceRepayPlanBO
+            .getPaginableByRoleCode(start, limit, condition);
         List<ReplaceRepayPlan> list = page.getList();
         for (ReplaceRepayPlan replaceRepayPlan : list) {
             init(replaceRepayPlan);

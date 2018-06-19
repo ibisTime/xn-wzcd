@@ -43,6 +43,9 @@ public interface IReplaceRepayPlanAO {
     public Paginable<ReplaceRepayPlan> queryReplaceRepayPlanPage(int start,
             int limit, ReplaceRepayPlan condition);
 
+    public Paginable<ReplaceRepayPlan> queryReplaceRepayPlanPageByRoleCode(
+            int start, int limit, ReplaceRepayPlan condition);
+
     public List<ReplaceRepayPlan> queryReplaceRepayPlanList(
             ReplaceRepayPlan condition);
 

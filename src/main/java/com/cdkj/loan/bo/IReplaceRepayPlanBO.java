@@ -3,6 +3,7 @@ package com.cdkj.loan.bo;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.ReplaceRepayPlan;
 
 public interface IReplaceRepayPlanBO extends IPaginableBO<ReplaceRepayPlan> {
@@ -29,6 +30,10 @@ public interface IReplaceRepayPlanBO extends IPaginableBO<ReplaceRepayPlan> {
 
     // 确认放款
     public void updateConfirmLoan(ReplaceRepayPlan data);
+
+    // 根据角色分页查
+    public Paginable<ReplaceRepayPlan> getPaginableByRoleCode(int start,
+            int limit, ReplaceRepayPlan condition);
 
     public List<ReplaceRepayPlan> queryReplaceRepayPlanList(
             ReplaceRepayPlan condition);

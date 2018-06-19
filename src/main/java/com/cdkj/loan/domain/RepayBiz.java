@@ -260,6 +260,17 @@ public class RepayBiz extends ABaseDO {
     // 司法诉讼
     private List<Judge> judgeList;
 
+    // 更新人姓名
+    private String updaterName;
+
+    public String getUpdaterName() {
+        return updaterName;
+    }
+
+    public void setUpdaterName(String updaterName) {
+        this.updaterName = updaterName;
+    }
+
     public String getCode() {
         return code;
     }

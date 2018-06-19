@@ -89,6 +89,16 @@ public class ReplaceRepayPlan extends ABaseDO {
 
     private String updaterName;
 
+    private String roleCode;
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
+
     public String getRepayBankName() {
         return repayBankName;
     }
