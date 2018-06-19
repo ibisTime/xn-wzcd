@@ -323,10 +323,6 @@ public class XN632120Req {
     @NotEmpty
     private List<XN632120ReqRepointDetail> repointDetailList;
 
-    // 征信人员收入
-    // @NotEmpty
-    // private List<XN632120ReqIncome> creditUserIncomeList;
-
     public String getBudgetOrderCode() {
         return budgetOrderCode;
     }

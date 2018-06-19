@@ -88,6 +88,7 @@ import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.EMakeCardStatus;
 import com.cdkj.loan.enums.ERateType;
 import com.cdkj.loan.enums.ERepointDetailStatus;
+import com.cdkj.loan.enums.ERepointDetailUseMoneyPurpose;
 import com.cdkj.loan.enums.EUseMoneyPurpose;
 import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.exception.BizException;
@@ -1126,6 +1127,23 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (CollectionUtils.isNotEmpty(budgetOrderGpsList)) {
             budgetOrder.setBudgetOrderGpsList(budgetOrderGpsList);
         }
+
+        // 获取返点列表
+        List<RepointDetail> shouldBackRepointList = repointDetailBO
+            .queryRepointDetailList(budgetOrder.getCode(),
+                ERepointDetailUseMoneyPurpose.SHOULD_BACK.getCode());
+        budgetOrder.setShouldBackRepointList(shouldBackRepointList);
+
+        List<RepointDetail> proInRepointList = repointDetailBO
+            .queryRepointDetailList(budgetOrder.getCode(),
+                ERepointDetailUseMoneyPurpose.PROIN_REPOINT.getCode());
+        budgetOrder.setProInRepointList(proInRepointList);
+
+        List<RepointDetail> proOutRepointList = repointDetailBO
+            .queryRepointDetailList(budgetOrder.getCode(),
+                ERepointDetailUseMoneyPurpose.PROOUT_REPOINT.getCode());
+        budgetOrder.setProOutRepointList(proOutRepointList);
+
     }
 
     @Override

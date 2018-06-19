@@ -23,6 +23,9 @@ public interface IRepointDetailBO extends IPaginableBO<RepointDetail> {
 
     public List<RepointDetail> queryRepointDetailList(RepointDetail condition);
 
+    public List<RepointDetail> queryRepointDetailList(String budgetOrder,
+            String useMoneyPurpose);
+
     public RepointDetail getRepointDetail(String code);
 
     // 更新返点明细状态

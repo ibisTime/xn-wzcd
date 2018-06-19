@@ -75,6 +75,15 @@ public class RepointDetailBOImpl extends PaginableBOImpl<RepointDetail>
     }
 
     @Override
+    public List<RepointDetail> queryRepointDetailList(String budgetOrder,
+            String useMoneyPurpose) {
+        RepointDetail condition = new RepointDetail();
+        condition.setBudgetCode(budgetOrder);
+        condition.setUseMoneyPurpose(useMoneyPurpose);
+        return repointDetailDAO.selectList(condition);
+    }
+
+    @Override
     public RepointDetail getRepointDetail(String code) {
         RepointDetail data = null;
         if (StringUtils.isNotBlank(code)) {

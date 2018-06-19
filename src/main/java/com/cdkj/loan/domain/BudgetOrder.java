@@ -644,6 +644,37 @@ public class BudgetOrder extends ABaseDO {
 
     private List<String> curNodeCodeList;// 节点
 
+    private List<RepointDetail> shouldBackRepointList;// 返点，1应退按揭款
+
+    private List<RepointDetail> proInRepointList;// 返点，2协议内返点
+
+    private List<RepointDetail> proOutRepointList; // 返点，3协议外返点
+
+    public List<RepointDetail> getShouldBackRepointList() {
+        return shouldBackRepointList;
+    }
+
+    public void setShouldBackRepointList(
+            List<RepointDetail> shouldBackRepointList) {
+        this.shouldBackRepointList = shouldBackRepointList;
+    }
+
+    public List<RepointDetail> getProInRepointList() {
+        return proInRepointList;
+    }
+
+    public void setProInRepointList(List<RepointDetail> proInRepointList) {
+        this.proInRepointList = proInRepointList;
+    }
+
+    public List<RepointDetail> getProOutRepointList() {
+        return proOutRepointList;
+    }
+
+    public void setProOutRepointList(List<RepointDetail> proOutRepointList) {
+        this.proOutRepointList = proOutRepointList;
+    }
+
     public String getCompanyName() {
         return companyName;
     }
