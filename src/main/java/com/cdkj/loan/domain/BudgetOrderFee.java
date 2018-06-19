@@ -18,6 +18,9 @@ public class BudgetOrderFee extends ABaseDO {
     // 编号
     private String code;
 
+    // 是否有效(1 有效 0 无效)
+    private String effect;
+
     // 公司编号
     private String companyCode;
 
@@ -61,6 +64,14 @@ public class BudgetOrderFee extends ABaseDO {
     private String updaterRealName;
 
     private String userName;
+
+    public String getEffect() {
+        return effect;
+    }
+
+    public void setEffect(String effect) {
+        this.effect = effect;
+    }
 
     public String getUserName() {
         return userName;

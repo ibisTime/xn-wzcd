@@ -237,8 +237,13 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     }
 
     @Override
-    public void twoApproveApply(BudgetOrder budgetOrder) {
-        budgetOrderDAO.twoApproveApply(budgetOrder);
+    public void twoApproveYes(BudgetOrder budgetOrder) {
+        budgetOrderDAO.twoApproveYes(budgetOrder);
+    }
+
+    @Override
+    public void twoApproveNo(BudgetOrder budgetOrder) {
+        budgetOrderDAO.twoApproveNo(budgetOrder);
     }
 
     @Override

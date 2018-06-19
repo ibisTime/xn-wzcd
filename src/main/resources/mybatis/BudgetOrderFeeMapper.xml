@@ -4,6 +4,7 @@
 <mapper namespace="com.cdkj.loan.dao.IBudgetOrderFeeDAO">
 	<resultMap id="budgetOrderFee_DB_Result" type="budgetOrderFee">
 		<result column="code" property="code" />
+		<result column="effect" property="effect" />
 		<result column="company_code" property="companyCode" />
 		<result column="user_id" property="userId" />
 		<result column="should_amount" property="shouldAmount" />
@@ -20,6 +21,9 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="effect != null and effect != '' ">
+				AND t.effect = #{effect}
+			</if>
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
@@ -34,6 +38,7 @@
 	<select id="select_budgetOrderFee" parameterType="budgetOrderFee" resultMap="budgetOrderFee_DB_Result">
 		SELECT
 		t.code
+		,t.effect
 		,t.company_code
 		,t.user_id
 		,t.should_amount
@@ -64,6 +69,7 @@
 		INSERT INTO
 		tdq_budget_order_fee(
 		code
+		,effect
 		,company_code
 		,user_id
 		,should_amount
@@ -77,6 +83,7 @@
 		)
 		VALUES(
 		#{code}
+		,#{effect}
 		,#{companyCode}
 		,#{userId}
 		,#{shouldAmount}
@@ -90,22 +97,6 @@
 		)
 	</insert>
 
-	<update id="update_budgetOrderFee" parameterType="budgetOrderFee">
-		UPDATE tdq_budget_order_fee
-		SET
-		company_code = #{companyCode}
-		,user_id = #{userId}
-		,should_amount = #{shouldAmount}
-		,real_amount = #{realAmount}
-		
-		,is_settled = #{isSettled}
-		,updater = #{updater}
-		,update_datetime = #{updateDatetime}
-		,remark = #{remark}
-		,budget_order = #{budgetOrder}
-		WHERE code = #{code}
-	</update>
-	
 	<update id="update_budgetOrderFeeRealAmount" parameterType="budgetOrderFee">
 		UPDATE tdq_budget_order_fee
 		SET
@@ -114,7 +105,10 @@
 		WHERE code = #{code}
 	</update>
 	
-	
-
-
+	<update id="update_notEffect" parameterType="budgetOrderFee">
+		UPDATE tdq_budget_order_fee
+		SET
+		effect = #{effect}
+		WHERE code = #{code}
+	</update>
 </mapper>

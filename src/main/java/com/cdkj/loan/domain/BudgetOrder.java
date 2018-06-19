@@ -56,6 +56,9 @@ public class BudgetOrder extends ABaseDO {
     // 贷款金额
     private Long loanAmount;
 
+    // 发票不匹配之前贷款金额
+    private Long preLoanAmount;
+
     // 是否需要贷前调查
     private String isSurvey;
 
@@ -700,6 +703,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setRepayBizCode(String repayBizCode) {
         this.repayBizCode = repayBizCode;
+    }
+
+    public Long getPreLoanAmount() {
+        return preLoanAmount;
+    }
+
+    public void setPreLoanAmount(Long preLoanAmount) {
+        this.preLoanAmount = preLoanAmount;
     }
 
     public String getBankReceiptName() {

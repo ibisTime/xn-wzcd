@@ -8,4 +8,7 @@ public interface IBudgetOrderFeeDAO extends IBaseDAO<BudgetOrderFee> {
     String NAMESPACE = IBudgetOrderFeeDAO.class.getName().concat(".");
 
     public int updateBudgetOrderFeeRealAmount(BudgetOrderFee data);
+
+    // 设置失效
+    public int updateNotEffect(BudgetOrderFee data);
 }

@@ -39,6 +39,7 @@ CREATE TABLE `tdq_budget_order` (
   `invoice_price` bigint(20) DEFAULT NULL COMMENT '发票价格',
   `shop_way` varchar(32) DEFAULT NULL COMMENT '购车途径',
   `rate_type` varchar(4) DEFAULT NULL COMMENT '利率类型',
+  `pre_loan_amount` bigint(20) DEFAULT NULL COMMENT '之前贷款金额',
   `loan_amount` bigint(20) DEFAULT NULL COMMENT '贷款金额',
   `is_survey` varchar(4) DEFAULT NULL COMMENT '是否需要贷前调查',
   `bank_rate` decimal(18,8) DEFAULT NULL COMMENT '银行利率',
@@ -230,6 +231,7 @@ CREATE TABLE `tdq_budget_order` (
 DROP TABLE IF EXISTS `tdq_budget_order_fee`;
 CREATE TABLE `tdq_budget_order_fee` (
   `code` varchar(32) NOT NULL COMMENT '编号',
+  `effect` char(1) NOT NULL COMMENT '是否有效 1是/0否',
   `company_code` varchar(32) DEFAULT NULL COMMENT '业务公司编号',
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
   `should_amount` bigint(20) DEFAULT NULL COMMENT '应收手续费总额',
