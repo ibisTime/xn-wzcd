@@ -650,6 +650,16 @@ public class BudgetOrder extends ABaseDO {
 
     private List<RepointDetail> proOutRepointList; // 返点，3协议外返点
 
+    private String companyLoanCsSection;// 我司贷款成数区间
+
+    public String getCompanyLoanCsSection() {
+        return companyLoanCsSection;
+    }
+
+    public void setCompanyLoanCsSection(String companyLoanCsSection) {
+        this.companyLoanCsSection = companyLoanCsSection;
+    }
+
     public List<RepointDetail> getShouldBackRepointList() {
         return shouldBackRepointList;
     }
