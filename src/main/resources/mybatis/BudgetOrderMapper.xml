@@ -1414,8 +1414,9 @@
 		SET
 		zf_sk_amount = #{zfSkAmount}
 		,zf_sk_bankcard_code = #{zfSkBankcardCode}
-		,zf_sk_receipt_datetime = #{frozenStatus}
+		,zf_sk_receipt_datetime = #{zfSkReceiptDatetime}
 		,zf_finance_remark = #{zfFinanceRemark}
+		,is_submit_cancel = #{isSubmitCancel}
 		WHERE code = #{code}
 	</update>
 

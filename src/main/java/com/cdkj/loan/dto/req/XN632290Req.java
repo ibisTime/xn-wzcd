@@ -56,6 +56,18 @@ public class XN632290Req {
     @NotBlank
     private String feeWay;
 
+    // 厂家贴息
+    @NotBlank
+    private String carDealerSubsidy;
+
+    public String getCarDealerSubsidy() {
+        return carDealerSubsidy;
+    }
+
+    public void setCarDealerSubsidy(String carDealerSubsidy) {
+        this.carDealerSubsidy = carDealerSubsidy;
+    }
+
     public String getGpsFeeWay() {
         return gpsFeeWay;
     }

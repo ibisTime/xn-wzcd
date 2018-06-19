@@ -29,6 +29,7 @@ import com.cdkj.loan.domain.Judge;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.dto.req.XN630511Req;
 import com.cdkj.loan.dto.req.XN630512Req;
@@ -109,24 +110,28 @@ public class RepayBizAOImpl implements IRepayBizAO {
     }
 
     private void setRefInfo(RepayBiz repayBiz) {
+        // 申请人信息
         repayBiz.setUser(userBO.getUser(repayBiz.getUserId()));
 
+        // 还款计划信息
         RepayPlan condition = new RepayPlan();
         condition.setOrder("cur_periods", true);
         condition.setRepayBizCode(repayBiz.getCode());
         List<RepayPlan> repayPlanList = repayPlanBO
             .queryRepayPlanList(condition);
-
         repayBiz.setRepayPlanList(repayPlanList);
+
+        // 预算单信息
         if (ERepayBizType.CAR.getCode().equals(repayBiz.getRefType())) {
             repayBiz.setBudgetOrder(budgetOrderAO.getBudgetOrder(repayBiz
                 .getRefCode()));
         } else {
             repayBiz.setMallOrder(orderAO.getOrder(repayBiz.getRefCode()));
         }
+
+        // 借款余额
         Long amount = 0L;
         for (RepayPlan repayPlan : repayPlanList) {
-            // 借款余额
             Long overplusAmount = repayPlan.getOverplusAmount();
             amount = amount + overplusAmount;
         }
@@ -136,9 +141,15 @@ public class RepayBizAOImpl implements IRepayBizAO {
         judgeCondition.setRepayBizCode(repayBiz.getCode());
         repayBiz.setJudgeList(judgeBO.queryJudgeList(judgeCondition));
 
+        //
         RepayPlan overdueRepayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
             repayBiz.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
         repayBiz.setOverdueRepayPlan(overdueRepayPlan);
+
+        SYSUser updater = sysUserBO.getUser(repayBiz.getUpdater());
+        if (null != updater) {
+            repayBiz.setUpdaterName(updater.getRealName());
+        }
     }
 
     @Override
