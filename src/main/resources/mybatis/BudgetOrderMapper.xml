@@ -287,6 +287,9 @@
 			<if test="fbhStatus != null and fbhStatus != '' ">
 				AND t.fbh_status = #{fbhStatus}
 			</if>
+			<if test="isSubmitCancel != null and isSubmitCancel != '' ">
+				AND t.is_submit_cancel = #{isSubmitCancel}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_budgetOrder" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
