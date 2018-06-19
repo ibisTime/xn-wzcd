@@ -206,12 +206,13 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
             .queryCollectBankcardByCompanyCodeAndType(condition);
 
         Bank bank2 = bankBO.getBankBySubbranch(budgetOrder.getLoanBankCode());
+
         String bankCode = null;
         if (null != bank2) {
             bankCode = bank2.getBankCode();
         }
         for (CollectBankcard collectBankcard : list) {
-            if (collectBankcard.getBankCode() == bankCode) {
+            if (collectBankcard.getBankCode().equals(bankCode)) {
                 XN632290Res res = new XN632290Res();
                 Double pointRate = collectBankcard.getPointRate();
                 res.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
