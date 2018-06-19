@@ -69,6 +69,16 @@ public class ReqBudget extends ABaseDO {
 
     private String applyUserName; // 申请人姓名
 
+    private String bankName; // 银行名称
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
     public String getApplyUserName() {
         return applyUserName;
     }

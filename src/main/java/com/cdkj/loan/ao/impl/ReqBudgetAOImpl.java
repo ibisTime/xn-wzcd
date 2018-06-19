@@ -235,7 +235,7 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
             CollectBankcard bankcard = collectBankcardBO
                 .getCollectBankcard(data.getCollectionBank());
             if (null != bankcard) {
-                data.setApplyUserName(bankcard.getBankName());
+                data.setBankName(bankcard.getBankName());
             }
         }
 
