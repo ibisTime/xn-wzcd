@@ -51,7 +51,7 @@ public class RepointDetail extends ABaseDO {
     // 用款用途（1应退按揭款2协议内返点3协议外返点）
     private String useMoneyPurpose;
 
-    // 返点金额(返点金额或应退按揭款)
+    // 返点金额(返点金额或应退按揭款金额)
     private Long repointAmount;
 
     // 账号编号（公司或车行的收款账号编号）

@@ -223,7 +223,28 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         // 2、应退按揭款
         XN632290Res res = new XN632290Res();
         res.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE.getCode());
-        res.setRepointAmount(budgetOrder.getLoanAmount());
+
+        Long carDealerSubsidy = StringValidater.toLong(req
+            .getCarDealerSubsidy());// 厂家贴息
+        Long shouldBackAmount = null;// 表里还是用的RepointAmount
+        if (EGpsFeeWay.REPOINT.getCode().equals(req.getGpsFeeWay())
+                && EFeeWay.REPOINT.getCode().equals(req.getFeeWay())) {
+            shouldBackAmount = loanAmount - sxFee
+                    - -StringValidater.toLong(req.getGpsFee())
+                    - carDealerSubsidy;
+        } else if (!EGpsFeeWay.REPOINT.getCode().equals(req.getGpsFeeWay())
+                && EFeeWay.REPOINT.getCode().equals(req.getFeeWay())) {
+            shouldBackAmount = loanAmount - sxFee - carDealerSubsidy;
+        } else if (EGpsFeeWay.REPOINT.getCode().equals(req.getGpsFeeWay())
+                && !EFeeWay.REPOINT.getCode().equals(req.getFeeWay())) {
+            shouldBackAmount = loanAmount
+                    - StringValidater.toLong(req.getGpsFee())
+                    - carDealerSubsidy;
+        } else if (!EGpsFeeWay.REPOINT.getCode().equals(req.getGpsFeeWay())
+                && !EFeeWay.REPOINT.getCode().equals(req.getFeeWay())) {
+            shouldBackAmount = loanAmount - carDealerSubsidy;
+        }
+        res.setRepointAmount(shouldBackAmount);// 应退按揭款金额=贷款金额-收客户手续费（按揭款扣）-GPS收费（按揭款扣）-厂家贴息
         Department department = departmentBO.getDepartment(budgetOrder
             .getCompanyCode());
         res.setCompanyName(department.getName());

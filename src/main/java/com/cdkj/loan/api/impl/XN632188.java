@@ -1,15 +1,11 @@
 package com.cdkj.loan.api.impl;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.cdkj.loan.ao.IAdvanceFundAO;
 import com.cdkj.loan.api.AProcessor;
-import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.core.StringValidater;
-import com.cdkj.loan.domain.AdvanceFund;
 import com.cdkj.loan.dto.req.XN632188Req;
+import com.cdkj.loan.dto.res.XN632188Res;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -29,23 +25,10 @@ public class XN632188 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        AdvanceFund condition = new AdvanceFund();
-        condition.setBudgetCode(req.getBudgetCode());
-        condition.setCustomerName(req.getCustomerName());
-        condition.setCompanyCode(req.getCompanyCode());
-        condition.setLoanBankCode(req.getLoanBankCode());
-        condition.setApplyDatetimeStart(DateUtil.strToDate(
-            req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setApplyDatetimeEnd(DateUtil.strToDate(
-            req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        String column = req.getOrderColumn();
-        if (StringUtils.isBlank(column)) {
-            column = IAdvanceFundAO.DEFAULT_ORDER_COLUMN;
-        }
-        condition.setOrder(column, req.getOrderDir());
-        int start = StringValidater.toInteger(req.getStart());
-        int limit = StringValidater.toInteger(req.getLimit());
-        return advanceFundAO.queryAdvanceFundPage(start, limit, condition);
+
+        XN632188Res res = advanceFundAO.branchMakeBill(req.getCompanyCode());
+
+        return res;
     }
 
     @Override

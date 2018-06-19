@@ -20,9 +20,10 @@ public enum EBudgetOrderNode {
             "007_07", "分公司内勤寄送银行材料待补件"), HEADQUARTERS_PENDING_PARTS("007_08",
             "总公司内勤寄送银行材料待补件"),
 
-     CAR_SEND_LOGISTICS("008_01","分公司内勤寄送银行材料"), CAR_COMPANY_COLLECTION_CHECK("008_02", "总公司内勤收件并核查"), CAR_SEND_BANK_MATERIALS(
-            "008_03", "总公司内勤寄送银行材料"), CAR_BANK_COLLECTION_CHECK("008_04",
-            "银行驻点收件并核查"),CAR_BANK_LOAN_COMMIT("008_05", "确认提交银行"), CAR_PLEDGE_CONFIRM("008_06", "抵押完成"), CAR_BRANCH_PENDING_PARTS(
+    CAR_SEND_LOGISTICS("008_01", "分公司内勤寄送银行材料"), CAR_COMPANY_COLLECTION_CHECK(
+            "008_02", "总公司内勤收件并核查"), CAR_SEND_BANK_MATERIALS("008_03",
+            "总公司内勤寄送银行材料"), CAR_BANK_COLLECTION_CHECK("008_04", "银行驻点收件并核查"), CAR_BANK_LOAN_COMMIT(
+            "008_05", "确认提交银行"), CAR_PLEDGE_CONFIRM("008_06", "抵押完成"), CAR_BRANCH_PENDING_PARTS(
             "008_07", "分公司内勤寄送银行材料待补件"), CAR_HEADQUARTERS_PENDING_PARTS(
             "008_08", "总公司内勤寄送银行材料待补件"),
 
@@ -35,10 +36,13 @@ public enum EBudgetOrderNode {
             "009_11", "总公司内勤寄送银行材料待补件"),
 
     PENDING_FILE("010_01", "待入档"), ALREADY_FILE("010_02", "已入档"),
-    
-    INVOICE_MISMATCH_APPLY("011_01","发票不匹配申请"),APPROVE_APPLY("011_02","审核申请"),TWO_APPROVE_APPLY("011_03","二审"),FINANCE_CONFIRM("011_04","财务确认"),
-    
-    TO_APPLY_CANCEL("012_00","待作废"),APPLY_CANCEL("012_01","申请作废"),APPROVE_CANCEL("012_02","审核"),FINANCE_CONFIRM_RECEIVABLES("012_03","财务确认收款"),CANCEL_APPLY_END("012_04","作废申请结束");
+
+    INVOICE_MISMATCH_APPLY("011_01", "发票不匹配申请"), APPROVE_APPLY("011_02", "审核申请"), TWO_APPROVE_APPLY(
+            "011_03", "二审"), FINANCE_CONFIRM("011_04", "财务确认"),
+
+    TO_APPLY_CANCEL("012_00", "待作废"), APPLY_CANCEL("012_01", "申请作废"), APPROVE_CANCEL(
+            "012_02", "审核"), FINANCE_CONFIRM_RECEIVABLES("012_03", "财务确认收款"), CANCEL_APPLY_END(
+            "012_04", "作废申请结束");
 
     public static Map<String, EBudgetOrderNode> getMap() {
         Map<String, EBudgetOrderNode> map = new HashMap<String, EBudgetOrderNode>();

@@ -12,6 +12,7 @@ import com.cdkj.loan.dto.req.XN632172Req;
 import com.cdkj.loan.dto.req.XN632173Req;
 import com.cdkj.loan.dto.req.XN632175Req;
 import com.cdkj.loan.dto.req.XN632177Req;
+import com.cdkj.loan.dto.res.XN632188Res;
 
 /**
  * 
@@ -55,5 +56,8 @@ public interface IAdvanceFundAO {
     // 分页查询垫资单根据角色编号
     public Object queryAdvanceFundPageByRoleCode(int start, int limit,
             AdvanceFund condition);
+
+    // 分公司制单查询 列表查
+    public XN632188Res branchMakeBill(String companyCode);
 
 }
