@@ -18,6 +18,7 @@
 		<result column="invoice_price" property="invoicePrice" />
 		<result column="shop_way" property="shopWay" />
 		<result column="rate_type" property="rateType" />
+		<result column="pre_loan_amount" property="preLoanAmount" />
 		<result column="loan_amount" property="loanAmount" />
 		<result column="is_survey" property="isSurvey" />
 		
@@ -303,6 +304,7 @@
 		,t.invoice_price
 		,t.shop_way
 		,t.rate_type
+		,t.pre_loan_amount
 		,t.loan_amount
 		,t.is_survey
 		,t.bank_rate
@@ -507,6 +509,7 @@
 	
 	<select id="select_budgetOrder_roleCode" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
 		SELECT
+		distinct
 		t.code
 		,t.credit_code
 		,t.customer_type
@@ -520,6 +523,7 @@
 		,t.invoice_price
 		,t.shop_way
 		,t.rate_type
+		,t.pre_loan_amount
 		,t.loan_amount
 		,t.is_survey
 		,t.bank_rate
@@ -771,6 +775,7 @@
 		,t.bank_receipt_note
 		,t.pledge_commit_datetime
 		,t.pledge_commit_note
+		,t.pre_loan_amount
 		,t.loan_amount
 		,t.loan_bank_code
 		,t.make_card_status
@@ -1326,6 +1331,7 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
+		,pre_loan_amount = #{preLoanAmount}
 		,loan_amount = #{loanAmount}
 		WHERE code = #{code}
 	</update>
@@ -1337,7 +1343,18 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_twoApproveApply" parameterType="budgetOrder">
+	<update id="update_twoApproveYes" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,gps_fee = #{gpsFee}
+		,ly_amount = #{lyAmount}
+		,fx_amount = #{fxAmount}
+		,other_fee = #{otherFee}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_twoApproveNo" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}

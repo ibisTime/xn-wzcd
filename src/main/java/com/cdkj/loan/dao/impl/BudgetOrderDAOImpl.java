@@ -149,8 +149,13 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
     }
 
     @Override
-    public void twoApproveApply(BudgetOrder condition) {
-        super.update(NAMESPACE.concat("update_twoApproveApply"), condition);
+    public void twoApproveYes(BudgetOrder condition) {
+        super.update(NAMESPACE.concat("update_twoApproveYes"), condition);
+    }
+
+    @Override
+    public void twoApproveNo(BudgetOrder condition) {
+        super.update(NAMESPACE.concat("update_twoApproveNo"), condition);
     }
 
     @Override

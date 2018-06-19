@@ -79,7 +79,7 @@ public interface IBudgetOrderAO {
 
     // 发票不匹配申请
     public void invoiceMismatchApply(String code, String loanAmount,
-            String dealType, String operator);
+            String operator);
 
     // 审核
     public void approveApply(String code, String approveResult,
