@@ -57,7 +57,8 @@ public interface IAdvanceFundAO {
     public Object queryAdvanceFundPageByRoleCode(int start, int limit,
             AdvanceFund condition);
 
-    // 分公司制单查询 列表查
-    public XN632188Res branchMakeBill(String companyCode);
+    // 分公司制单和确认打款给分公司的列表查询
+    public XN632188Res queryAdvanceFundListForBranch(String companyCode,
+            String curNodeCode);
 
 }

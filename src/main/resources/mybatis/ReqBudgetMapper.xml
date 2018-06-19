@@ -36,7 +36,7 @@
 				AND trn.role_code = #{roleCode}
 			</if>
 			<if test="companyCode != null and companyCode != '' ">
-				AND trn.company_code = #{companyCode}
+				AND t.company_code = #{companyCode}
 			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
 				<![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>

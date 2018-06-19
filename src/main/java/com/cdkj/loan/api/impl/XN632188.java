@@ -26,8 +26,8 @@ public class XN632188 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
 
-        XN632188Res res = advanceFundAO.branchMakeBill(req.getCompanyCode());
-
+        XN632188Res res = advanceFundAO.queryAdvanceFundListForBranch(
+            req.getCompanyCode(), req.getCurNodeCode());
         return res;
     }
 
