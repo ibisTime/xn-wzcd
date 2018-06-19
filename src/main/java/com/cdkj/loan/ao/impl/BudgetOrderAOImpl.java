@@ -44,7 +44,6 @@ import com.cdkj.loan.domain.AdvanceFund;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.domain.BudgetOrder;
-import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.CarDealerProtocol;
@@ -1237,19 +1236,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
 
         // 生成 收回手续费
-        BudgetOrderFee data = new BudgetOrderFee();
-        data.setCompanyCode(budgetOrder.getCompanyCode());
-        data.setUserId(budgetOrder.getSaleUserId());
-        // 收客户手续费合计：履约保证金+担保风险金+GPS收费+杂费
-        data.setShouldAmount(budgetOrder.getFee() + budgetOrder.getLyAmount()
-                + budgetOrder.getFxAmount() + budgetOrder.getGpsFee()
-                + budgetOrder.getOtherFee());
-        data.setRealAmount(0L);
-        data.setIsSettled(EBoolean.NO.getCode());
-        data.setUpdater(operator);
-        data.setUpdateDatetime(new Date());
-        data.setBudgetOrder(code);
-        budgetOrderFeeBO.saveBudgetOrderFee(data);
+        /*
+         * BudgetOrderFee data = new BudgetOrderFee();
+         * data.setCompanyCode(budgetOrder.getCompanyCode());
+         * data.setUserId(budgetOrder.getSaleUserId()); //
+         * 收客户手续费合计：履约保证金+担保风险金+GPS收费+杂费
+         * data.setShouldAmount(budgetOrder.getFee() + budgetOrder.getLyAmount()
+         * + budgetOrder.getFxAmount() + budgetOrder.getGpsFee() +
+         * budgetOrder.getOtherFee()); data.setRealAmount(0L);
+         * data.setIsSettled(EBoolean.NO.getCode()); data.setUpdater(operator);
+         * data.setUpdateDatetime(new Date()); data.setBudgetOrder(code);
+         * budgetOrderFeeBO.saveBudgetOrderFee(data);
+         */
 
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
