@@ -1408,8 +1408,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         budgetOrder.setZfSkBankcardCode(req.getZfSkBankcardCode());
         budgetOrder.setZfSkAmount(StringValidater.toLong(req.getZfSkAmount()));
-        budgetOrder.setZfSkReceiptDatetime(DateUtil.strToDate(
-            req.getZfSkReceiptDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setBankFkDatetime(DateUtil.strToDate(
+            req.getBankFkDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         budgetOrder.setZfFinanceRemark(req.getZfFinanceRemark());
         budgetOrder.setIsSubmitCancel(EBoolean.NO.getCode());
         budgetOrderBO.receiptAndReturn(budgetOrder);

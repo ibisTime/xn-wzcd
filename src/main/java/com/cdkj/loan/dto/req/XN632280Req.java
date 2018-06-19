@@ -11,8 +11,8 @@ public class XN632280Req {
     // 收款金额
     private String zfSkAmount;
 
-    // 收款时间
-    private String zfSkReceiptDatetime;
+    // 银行放款时间
+    private String bankFkDatetime;
 
     // 备注
     private String zfFinanceRemark;
@@ -41,12 +41,12 @@ public class XN632280Req {
         this.zfSkAmount = zfSkAmount;
     }
 
-    public String getZfSkReceiptDatetime() {
-        return zfSkReceiptDatetime;
+    public String getBankFkDatetime() {
+        return bankFkDatetime;
     }
 
-    public void setZfSkReceiptDatetime(String zfSkReceiptDatetime) {
-        this.zfSkReceiptDatetime = zfSkReceiptDatetime;
+    public void setBankFkDatetime(String bankFkDatetime) {
+        this.bankFkDatetime = bankFkDatetime;
     }
 
     public String getZfFinanceRemark() {
