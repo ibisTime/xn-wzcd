@@ -3,11 +3,13 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IReqBudgetAO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IReqBudgetBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
@@ -15,6 +17,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632100Req;
@@ -44,6 +47,9 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     @Autowired
     private ISYSUserBO sysUserBO;
 
+    @Autowired
+    private IDepartmentBO departmentBO;
+
     @Override
     @Transactional
     public String addReqBudget(XN632100Req req) {
@@ -63,10 +69,9 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         data.setCurNodeCode(currentNode.getCode());
         if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
             // 发送申请
-            currentNode = EReqBudgetNode.getMap()
-                .get(nodeFlowBO
-                    .getNodeFlowByCurrentNode(EReqBudgetNode.APPLY.getCode())
-                    .getNextNode());
+            currentNode = EReqBudgetNode.getMap().get(
+                nodeFlowBO.getNodeFlowByCurrentNode(
+                    EReqBudgetNode.APPLY.getCode()).getNextNode());
             data.setCurNodeCode(currentNode.getCode());
         }
         String code = reqBudgetBO.saveReqBudget(data);
@@ -81,27 +86,26 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     @Override
     public void collectionReqBudget(XN632103Req req) {
         ReqBudget reqBudget = reqBudgetBO.getReqBudget(req.getCode());
-        if (!EReqBudgetNode.ALREADY_CREDIT.getCode()
-            .equals(reqBudget.getCurNodeCode())) {
+        if (!EReqBudgetNode.ALREADY_CREDIT.getCode().equals(
+            reqBudget.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是已放款节点，不能操作");
         }
         reqBudget.setCollectionBank(req.getCollectionBank());
-        reqBudget.setCollectionAmount(
-            StringValidater.toLong(req.getCollectionAmount()));
+        reqBudget.setCollectionAmount(StringValidater.toLong(req
+            .getCollectionAmount()));
         reqBudget.setCollectionDatetime(new Date());
         reqBudget.setCollectionRemark(req.getCollectionRemark());
 
         // 之前节点
         String preCurrentNode = reqBudget.getCurNodeCode();
-        reqBudget.setCurNodeCode(nodeFlowBO
-            .getNodeFlowByCurrentNode(EReqBudgetNode.ALREADY_CREDIT.getCode())
-            .getNextNode());
+        reqBudget.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+            EReqBudgetNode.ALREADY_CREDIT.getCode()).getNextNode());
         reqBudgetBO.collectionReqBudget(reqBudget);
 
         // 日志记录
-        EReqBudgetNode currentNode = EReqBudgetNode.getMap()
-            .get(reqBudget.getCurNodeCode());
+        EReqBudgetNode currentNode = EReqBudgetNode.getMap().get(
+            reqBudget.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(reqBudget.getCode(),
             EBizLogType.REQ_BUDGET, reqBudget.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
@@ -111,8 +115,7 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     @Override
     public void audit(XN632101Req req) {
         ReqBudget reqBudget = reqBudgetBO.getReqBudget(req.getCode());
-        if (!EReqBudgetNode.AUDIT.getCode()
-            .equals(reqBudget.getCurNodeCode())) {
+        if (!EReqBudgetNode.AUDIT.getCode().equals(reqBudget.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是审核节点，不能操作");
         }
@@ -121,19 +124,17 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         String preCurrentNode = reqBudget.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             // 审核通过，改变节点
-            reqBudget.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(EReqBudgetNode.AUDIT.getCode())
-                .getNextNode());
+            reqBudget.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                EReqBudgetNode.AUDIT.getCode()).getNextNode());
         } else {
-            reqBudget.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(EReqBudgetNode.AUDIT.getCode())
-                .getBackNode());
+            reqBudget.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                EReqBudgetNode.AUDIT.getCode()).getBackNode());
         }
         reqBudgetBO.refreshReqBudgetNode(reqBudget);
 
         // 日志记录
-        EReqBudgetNode currentNode = EReqBudgetNode.getMap()
-            .get(reqBudget.getCurNodeCode());
+        EReqBudgetNode currentNode = EReqBudgetNode.getMap().get(
+            reqBudget.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(reqBudget.getCode(),
             EBizLogType.REQ_BUDGET, reqBudget.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
@@ -156,14 +157,13 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         reqBudget.setPayRemark(req.getPayRemark());
 
         String preNodeCode = reqBudget.getCurNodeCode();
-        reqBudget.setCurNodeCode(
-            nodeFlowBO.getNodeFlowByCurrentNode(EReqBudgetNode.LOAN.getCode())
-                .getNextNode());
+        reqBudget.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+            EReqBudgetNode.LOAN.getCode()).getNextNode());
         reqBudgetBO.loan(reqBudget);
 
         // 日志记录
-        EReqBudgetNode currentNode = EReqBudgetNode.getMap()
-            .get(reqBudget.getCurNodeCode());
+        EReqBudgetNode currentNode = EReqBudgetNode.getMap().get(
+            reqBudget.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(reqBudget.getCode(),
             EBizLogType.REQ_BUDGET, reqBudget.getCode(), preNodeCode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
@@ -172,22 +172,61 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     @Override
     public Paginable<ReqBudget> queryReqBudgetPage(int start, int limit,
             ReqBudget condition) {
-        return reqBudgetBO.getPaginable(start, limit, condition);
+        Paginable<ReqBudget> paginable = reqBudgetBO.getPaginable(start, limit,
+            condition);
+        List<ReqBudget> list = paginable.getList();
+        for (ReqBudget reqBudget : list) {
+            init(reqBudget);
+        }
+        return paginable;
     }
 
     @Override
     public Paginable<ReqBudget> queryReqBudgetPageByRoleCode(int start,
             int limit, ReqBudget condition) {
-        return reqBudgetBO.getPaginableByRoleCode(start, limit, condition);
+        Paginable<ReqBudget> paginable = reqBudgetBO.getPaginableByRoleCode(
+            start, limit, condition);
+        List<ReqBudget> list = paginable.getList();
+        for (ReqBudget reqBudget : list) {
+            init(reqBudget);
+        }
+        return paginable;
     }
 
     @Override
     public List<ReqBudget> queryReqBudgetList(ReqBudget condition) {
-        return reqBudgetBO.queryReqBudgetList(condition);
+        List<ReqBudget> list = reqBudgetBO.queryReqBudgetList(condition);
+        for (ReqBudget reqBudget : list) {
+            init(reqBudget);
+        }
+        return list;
     }
 
     @Override
     public ReqBudget getReqBudget(String code) {
-        return reqBudgetBO.getReqBudget(code);
+        ReqBudget budget = reqBudgetBO.getReqBudget(code);
+        init(budget);
+        return budget;
+    }
+
+    private ReqBudget init(ReqBudget data) {
+
+        if (StringUtils.isNotBlank(data.getCompanyCode())) {
+            Department department = departmentBO.getDepartment(data
+                .getCompanyCode());
+            if (null != department) {
+                data.setCompanyName(department.getName());
+            }
+        }
+
+        if (StringUtils.isNotBlank(data.getApplyUser())) {
+            SYSUser user = sysUserBO.getUser(data.getApplyUser());
+            if (null != user) {
+                data.setApplyUserName(user.getRealName());
+            }
+        }
+
+        return data;
+
     }
 }
