@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IReqBudgetAO;
+import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IReqBudgetBO;
@@ -17,6 +18,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.domain.SYSUser;
@@ -49,6 +51,9 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
 
     @Autowired
     private IDepartmentBO departmentBO;
+
+    @Autowired
+    private ICollectBankcardBO collectBankcardBO;
 
     @Override
     @Transactional
@@ -223,6 +228,14 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
             SYSUser user = sysUserBO.getUser(data.getApplyUser());
             if (null != user) {
                 data.setApplyUserName(user.getRealName());
+            }
+        }
+
+        if (StringUtils.isNotBlank(data.getCollectionBank())) {
+            CollectBankcard bankcard = collectBankcardBO
+                .getCollectBankcard(data.getCollectionBank());
+            if (null != bankcard) {
+                data.setApplyUserName(bankcard.getBankName());
             }
         }
 
