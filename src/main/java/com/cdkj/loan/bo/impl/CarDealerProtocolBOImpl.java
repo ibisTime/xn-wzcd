@@ -207,7 +207,7 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
 
         if (EGpsTypeProtocol.SINGLE.getCode().equals(
             carDealerProtocol.getGpsType())) {
-            res.setGpsFee(String.valueOf(carDealerProtocol.getGpsRate()));
+            res.setGpsFee(String.valueOf(carDealerProtocol.getGpsFee()));
         } else {
             res.setGpsFee(String.valueOf(AmountUtil.mul(loanAmount,
                 carDealerProtocol.getGpsRate())));
