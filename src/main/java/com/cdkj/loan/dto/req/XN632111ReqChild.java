@@ -24,7 +24,7 @@ public class XN632111ReqChild {
 
     // 贷款抵押近两年逾期次数
     @NotBlank
-    private String dkdy2yearOverTimes;
+    private String dkdy2YearOverTimes;
 
     // 贷款抵押最高逾期金额
     @NotBlank
@@ -36,7 +36,7 @@ public class XN632111ReqChild {
 
     // 贷款抵押近6个月平均月还
     @NotBlank
-    private String dkdy6monthAvgAmount;
+    private String dkdy6MonthAvgAmount;
 
     // 贷款信用未结清贷款笔数
     @NotBlank
@@ -48,7 +48,7 @@ public class XN632111ReqChild {
 
     // 贷款信用近两年逾期次数
     @NotBlank
-    private String hkxy2yearOverTimes;
+    private String hkxy2YearOverTimes;
 
     // 贷款信用单月最高逾期金额
     @NotBlank
@@ -56,7 +56,7 @@ public class XN632111ReqChild {
 
     // 贷款信用当前逾期金额
     @NotBlank
-    private String hkxy6monthAvgAmount;
+    private String hkxy6MonthAvgAmount;
 
     // 贷款信用近6个月平均月还
     @NotBlank
@@ -72,11 +72,11 @@ public class XN632111ReqChild {
 
     // 信用卡近6个月使用额
     @NotBlank
-    private String xyk6monthUseAmount;
+    private String xyk6MonthUseAmount;
 
     // 信用卡近两年逾期次数
     @NotBlank
-    private String xyk2yearOverTimes;
+    private String xyk2YearOverTimes;
 
     // 信用卡单月最高逾期金额
     @NotBlank
@@ -122,12 +122,12 @@ public class XN632111ReqChild {
         this.dkdyAmount = dkdyAmount;
     }
 
-    public String getDkdy2yearOverTimes() {
-        return dkdy2yearOverTimes;
+    public String getDkdy2YearOverTimes() {
+        return dkdy2YearOverTimes;
     }
 
-    public void setDkdy2yearOverTimes(String dkdy2yearOverTimes) {
-        this.dkdy2yearOverTimes = dkdy2yearOverTimes;
+    public void setDkdy2YearOverTimes(String dkdy2YearOverTimes) {
+        this.dkdy2YearOverTimes = dkdy2YearOverTimes;
     }
 
     public String getDkdyMaxOverAmount() {
@@ -146,12 +146,12 @@ public class XN632111ReqChild {
         this.dkdyCurrentOverAmount = dkdyCurrentOverAmount;
     }
 
-    public String getDkdy6monthAvgAmount() {
-        return dkdy6monthAvgAmount;
+    public String getDkdy6MonthAvgAmount() {
+        return dkdy6MonthAvgAmount;
     }
 
-    public void setDkdy6monthAvgAmount(String dkdy6monthAvgAmount) {
-        this.dkdy6monthAvgAmount = dkdy6monthAvgAmount;
+    public void setDkdy6MonthAvgAmount(String dkdy6MonthAvgAmount) {
+        this.dkdy6MonthAvgAmount = dkdy6MonthAvgAmount;
     }
 
     public String getHkxyUnsettleCount() {
@@ -170,12 +170,12 @@ public class XN632111ReqChild {
         this.hkxyUnsettleAmount = hkxyUnsettleAmount;
     }
 
-    public String getHkxy2yearOverTimes() {
-        return hkxy2yearOverTimes;
+    public String getHkxy2YearOverTimes() {
+        return hkxy2YearOverTimes;
     }
 
-    public void setHkxy2yearOverTimes(String hkxy2yearOverTimes) {
-        this.hkxy2yearOverTimes = hkxy2yearOverTimes;
+    public void setHkxy2YearOverTimes(String hkxy2YearOverTimes) {
+        this.hkxy2YearOverTimes = hkxy2YearOverTimes;
     }
 
     public String getHkxyMonthMaxOverAmount() {
@@ -186,12 +186,12 @@ public class XN632111ReqChild {
         this.hkxyMonthMaxOverAmount = hkxyMonthMaxOverAmount;
     }
 
-    public String getHkxy6monthAvgAmount() {
-        return hkxy6monthAvgAmount;
+    public String getHkxy6MonthAvgAmount() {
+        return hkxy6MonthAvgAmount;
     }
 
-    public void setHkxy6monthAvgAmount(String hkxy6monthAvgAmount) {
-        this.hkxy6monthAvgAmount = hkxy6monthAvgAmount;
+    public void setHkxy6MonthAvgAmount(String hkxy6MonthAvgAmount) {
+        this.hkxy6MonthAvgAmount = hkxy6MonthAvgAmount;
     }
 
     public String getHkxyCurrentOverAmount() {
@@ -218,20 +218,20 @@ public class XN632111ReqChild {
         this.xykCreditAmount = xykCreditAmount;
     }
 
-    public String getXyk6monthUseAmount() {
-        return xyk6monthUseAmount;
+    public String getXyk6MonthUseAmount() {
+        return xyk6MonthUseAmount;
     }
 
-    public void setXyk6monthUseAmount(String xyk6monthUseAmount) {
-        this.xyk6monthUseAmount = xyk6monthUseAmount;
+    public void setXyk6MonthUseAmount(String xyk6MonthUseAmount) {
+        this.xyk6MonthUseAmount = xyk6MonthUseAmount;
     }
 
-    public String getXyk2yearOverTimes() {
-        return xyk2yearOverTimes;
+    public String getXyk2YearOverTimes() {
+        return xyk2YearOverTimes;
     }
 
-    public void setXyk2yearOverTimes(String xyk2yearOverTimes) {
-        this.xyk2yearOverTimes = xyk2yearOverTimes;
+    public void setXyk2YearOverTimes(String xyk2YearOverTimes) {
+        this.xyk2YearOverTimes = xyk2YearOverTimes;
     }
 
     public String getXykMonthMaxOverAmount() {

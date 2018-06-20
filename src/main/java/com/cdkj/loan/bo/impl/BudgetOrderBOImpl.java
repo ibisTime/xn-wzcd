@@ -24,8 +24,8 @@ import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
-        IBudgetOrderBO {
+public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
+        implements IBudgetOrderBO {
 
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
@@ -161,13 +161,13 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     public void logicOrder(String code, String operator) {
         BudgetOrder budgetOrder = getBudgetOrder(code);
         // String preCurrentNode = budgetOrder.getCurNodeCode();
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
-            .getCurNodeCode());
+        NodeFlow nodeFlow = nodeFlowBO
+            .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
-        if (EBudgetOrderNode.COMPANY_COLLECTION_CHECK.getCode().equals(
-            nodeFlow.getCurrentNode())
+        if (EBudgetOrderNode.COMPANY_COLLECTION_CHECK.getCode()
+            .equals(nodeFlow.getCurrentNode())
                 || EBudgetOrderNode.CAR_COMPANY_COLLECTION_CHECK.getCode()
                     .equals(nodeFlow.getCurrentNode())
                 || EBudgetOrderNode.FEN_COMPANY_COLLECTION_CHECK.getCode()
