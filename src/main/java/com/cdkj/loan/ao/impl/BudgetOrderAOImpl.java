@@ -336,7 +336,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setOtherFilePdf(req.getOtherFilePdf());
         data.setOtherApplyNote(req.getOtherApplyNote());
         data.setApplyDatetime(new Date());
-        data.setMakeCardStatus(EMakeCardStatus.PENDING_CARD.getCode());
 
         String preNodeCode = data.getCurNodeCode();
         if (EButtonCode.SEND.getCode().equals(req.getDealType())) {
@@ -355,15 +354,48 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         for (XN632120ReqRepointDetail req1 : list) {
             // 生成返点明细数据(用款用途)
             RepointDetail data1 = new RepointDetail();
+
+            Bank bank = bankBO.getBankBySubbranch(req.getLoanBankSubbranch());
+            CarDealerProtocol protocol = carDealerProtocolBO
+                .getCarDealerProtocolByCarDealerCode(req.getCarDealerCode(),
+                    bank.getBankCode());
+
             if (EUseMoneyPurpose.MORTGAGE.getCode().equals(// 应退按揭款
                 req1.getUseMoneyPurpose())) {
-                data1.setCompanyCode(req1.getCompanyCode());
                 data1.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE.getCode());
             } else if (EUseMoneyPurpose.PROTOCOL_INNER.getCode().equals(
                 req1.getUseMoneyPurpose())) {// 协议内
-                data1.setCarDealerCode(req1.getCarDealerCode());
                 data1.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
                     .getCode());
+                if (ELoanPeriod.ONE_YEAER.getCode().equals(
+                    data.getLoanPeriods())) {
+                    if (ERateType.CT.getCode().equals(data.getRateType())) {
+                        data1.setBenchmarkRate(protocol.getPlatCtRate12());
+                    }
+                    if (ERateType.ZT.getCode().equals(data.getRateType())) {
+                        data1.setBenchmarkRate(protocol.getPlatZkRate12());
+                    }
+                }
+                if (ELoanPeriod.TWO_YEAR.getCode()
+                    .equals(data.getLoanPeriods())) {
+
+                    if (ERateType.CT.getCode().equals(data.getRateType())) {
+                        data1.setBenchmarkRate(protocol.getPlatCtRate24());
+                    }
+                    if (ERateType.ZT.getCode().equals(data.getRateType())) {
+                        data1.setBenchmarkRate(protocol.getPlatZkRate24());
+                    }
+
+                }
+                if (ELoanPeriod.THREE_YEAR.getCode().equals(
+                    data.getLoanPeriods())) {
+                    if (ERateType.CT.getCode().equals(data.getRateType())) {
+                        data1.setBenchmarkRate(protocol.getPlatCtRate36());
+                    }
+                    if (ERateType.ZT.getCode().equals(data.getRateType())) {
+                        data1.setBenchmarkRate(protocol.getPlatZkRate36());
+                    }
+                }
             } else if (EUseMoneyPurpose.MORTGAGE.getCode().equals(
                 req1.getUseMoneyPurpose())
                     && EIsAdvanceFund.NO.getCode().equals(
@@ -372,7 +404,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 data1.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
                     .getCode());
             } else if (EUseMoneyPurpose.PROTOCOL_OUTER.getCode().equals(
-                req1.getUseMoneyPurpose())) {
+                req1.getUseMoneyPurpose())) {// 协议外
                 data1.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_OUTER
                     .getCode());
             }
@@ -382,46 +414,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             CreditUser user = creditUserBO.getCreditUserByCreditCode(
                 data.getCreditCode(), ELoanRole.APPLY_USER);
             data1.setIdNo(user.getIdNo());
+            data1.setCarDealerCode(req1.getCarDealerCode());
+            data1.setCompanyCode(data.getCompanyCode());
             data1.setCarType(data.getCarType());
             data1.setLoanAmount(data.getLoanAmount());
             data1.setBankRate(data.getBankRate());
-            if (StringUtils.isNotBlank(req1.getProtocolId())) {
-                CarDealerProtocol condition = new CarDealerProtocol();
-                condition.setCarDealerCode(data.getCarDealerCode());
-                CarDealerProtocol protocol = carDealerProtocolBO
-                    .getCarDealerProtocol(Integer.valueOf(req1.getProtocolId()));
 
-                if (ELoanPeriod.ONE_YEAER.getCode().equals(
-                    data.getLoanPeriods())) {
-
-                    if (ERateType.CT.getCode().equals(data.getRateType())) {
-                        data1.setBenchmarkRate(protocol.getPlatCtRate12());
-                    } else if (ERateType.ZT.getCode()
-                        .equals(data.getRateType())) {
-                        data1.setBenchmarkRate(protocol.getPlatZkRate12());
-                    }
-
-                } else if (ELoanPeriod.TWO_YEAR.getCode().equals(
-                    data.getLoanPeriods())) {
-
-                    if (ERateType.CT.getCode().equals(data.getRateType())) {
-                        data1.setBenchmarkRate(protocol.getPlatCtRate24());
-                    } else if (ERateType.ZT.getCode()
-                        .equals(data.getRateType())) {
-                        data1.setBenchmarkRate(protocol.getPlatZkRate24());
-                    }
-
-                } else if (ELoanPeriod.THREE_YEAR.getCode().equals(
-                    data.getLoanPeriods())) {
-
-                    if (ERateType.CT.getCode().equals(data.getRateType())) {
-                        data1.setBenchmarkRate(protocol.getPlatCtRate36());
-                    } else if (ERateType.ZT.getCode()
-                        .equals(data.getRateType())) {
-                        data1.setBenchmarkRate(protocol.getPlatZkRate36());
-                    }
-                }
-            }
             data1.setFee(fee);
             data1.setRepointAmount(StringValidater.toLong(req1
                 .getRepointAmount()));
@@ -848,11 +846,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.refreshCarPledgeCommit(budgetOrder);
 
         // 生成资料传递
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
-            .getCurNodeCode());
-        logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-            budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
-            nextNodeCode, nodeFlow.getFileList());
+
+        // NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
+        // .getCurNodeCode());
+        // logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+        // budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
+        // nextNodeCode, nodeFlow.getFileList());
 
         // 日志记录
         String preCurrentNode = budgetOrder.getCurNodeCode();
