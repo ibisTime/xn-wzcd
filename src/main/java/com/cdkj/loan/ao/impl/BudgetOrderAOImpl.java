@@ -350,18 +350,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 node.getCode(), node.getValue(), req.getOperator());
         }
 
+        // 生成返点明细数据(用款用途)
         List<XN632120ReqRepointDetail> list = req.getRepointDetailList();
         for (XN632120ReqRepointDetail req1 : list) {
-            // 生成返点明细数据(用款用途)
             RepointDetail data1 = new RepointDetail();
-
             Bank bank = bankBO.getBankBySubbranch(req.getLoanBankSubbranch());
             CarDealerProtocol protocol = carDealerProtocolBO
                 .getCarDealerProtocolByCarDealerCode(req.getCarDealerCode(),
                     bank.getBankCode());
-
-            if (EUseMoneyPurpose.MORTGAGE.getCode().equals(// 应退按揭款
-                req1.getUseMoneyPurpose())) {
+            if (EUseMoneyPurpose.MORTGAGE.getCode().equals(// 应退按揭款 垫资
+                req1.getUseMoneyPurpose())
+                    && EIsAdvanceFund.YES.getCode().equals(
+                        data.getIsAdvanceFund())) {
                 data1.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE.getCode());
             } else if (EUseMoneyPurpose.PROTOCOL_INNER.getCode().equals(
                 req1.getUseMoneyPurpose())) {// 协议内
@@ -401,8 +401,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     && EIsAdvanceFund.NO.getCode().equals(
                         data.getIsAdvanceFund())) {// 应退按揭款 不垫资
                 data1.setMortgageAccountNo(req1.getMortgageAccountNo());
-                data1.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
-                    .getCode());
+                data1.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE.getCode());
             } else if (EUseMoneyPurpose.PROTOCOL_OUTER.getCode().equals(
                 req1.getUseMoneyPurpose())) {// 协议外
                 data1.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_OUTER
