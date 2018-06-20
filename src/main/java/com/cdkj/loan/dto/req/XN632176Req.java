@@ -40,14 +40,6 @@ public class XN632176Req {
     // 垫资单编号列表
     private List<String> codeList;
 
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
-
     public String getTotalAdvanceFund() {
         return totalAdvanceFund;
     }
@@ -64,12 +56,20 @@ public class XN632176Req {
         this.payAmount = payAmount;
     }
 
-    public List<String> getCodeList() {
-        return codeList;
+    public String getCompanyCode() {
+        return companyCode;
     }
 
-    public void setCodeList(List<String> codeList) {
-        this.codeList = codeList;
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public String getPayDatetime() {
+        return payDatetime;
+    }
+
+    public void setPayDatetime(String payDatetime) {
+        this.payDatetime = payDatetime;
     }
 
     public String getPayBankcardCode() {
@@ -104,12 +104,12 @@ public class XN632176Req {
         this.operator = operator;
     }
 
-    public String getPayDatetime() {
-        return payDatetime;
+    public List<String> getCodeList() {
+        return codeList;
     }
 
-    public void setPayDatetime(String payDatetime) {
-        this.payDatetime = payDatetime;
+    public void setCodeList(List<String> codeList) {
+        this.codeList = codeList;
     }
 
 }

@@ -1023,6 +1023,8 @@
 		,second_number
 		,other_file_pdf
 		,other_apply_note
+		,mobile
+		,id_kind
 		,id_no
 		,apply_datetime
 		,cur_node_code
@@ -1146,6 +1148,8 @@
 		,#{secondNumber}
 		,#{otherFilePdf}
 		,#{otherApplyNote}
+		,#{mobile}
+		,#{idKind}
 		,#{idNo}
 		,#{applyDatetime}
 		,#{curNodeCode}
