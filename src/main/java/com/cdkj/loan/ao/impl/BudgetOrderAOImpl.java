@@ -286,7 +286,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setLyAmount(StringValidater.toLong(xn632291Res.getLyAmount()));
         data.setFxAmount(StringValidater.toLong(xn632291Res.getFxAmount()));
         data.setOtherFee(StringValidater.toLong(xn632291Res.getOtherFee()));
-        data.setServiceChargeWay(req.getFeeWay());
+        data.setServiceChargeWay(req.getServiceChargeWay());
 
         Long serviceCharge = StringValidater.toLong(xn632291Res.getLyAmount())
                 + StringValidater.toLong(xn632291Res.getFxAmount())
