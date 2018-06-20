@@ -335,7 +335,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setOtherFilePdf(req.getOtherFilePdf());
         data.setOtherApplyNote(req.getOtherApplyNote());
         data.setApplyDatetime(new Date());
-        data.setMakeCardStatus(EMakeCardStatus.PENDING_CARD.getCode());
 
         String preNodeCode = data.getCurNodeCode();
         if (EButtonCode.SEND.getCode().equals(req.getDealType())) {
