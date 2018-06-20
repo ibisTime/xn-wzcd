@@ -185,15 +185,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 "当前预算单节点不能修改");
         }
 
+        data.setApplyUserCompany(req.getApplyUserCompany());
+        data.setApplyUserDuty(req.getApplyUserDuty());
         data.setCustomerType(req.getCustomerType());
         data.setCarDealerCode(req.getCarDealerCode());
         data.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
+
         data.setCarModel(req.getCarModel());
         data.setLoanPeriods(req.getLoanPeriods());
-
         data.setInvoicePrice(StringValidater.toLong(req.getInvoicePrice()));
         data.setRateType(req.getRateType());
         data.setIsSurvey(req.getIsSurvey());
+
         data.setBankRate(StringValidater.toDouble(req.getBankRate()));
         Long loanAmount = data.getLoanAmount();
         Long invoicePrice = StringValidater.toLong(req.getInvoicePrice());
