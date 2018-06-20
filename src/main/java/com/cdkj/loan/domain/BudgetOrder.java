@@ -644,11 +644,11 @@ public class BudgetOrder extends ABaseDO {
 
     private List<String> curNodeCodeList;// 节点
 
-    private List<RepointDetail> shouldBackRepointList;// 返点，1应退按揭款
+    private List<RepointDetail> repointDetailList1;// 返点，1应退按揭款
 
-    private List<RepointDetail> proInRepointList;// 返点，2协议内返点
+    private List<RepointDetail> repointDetailList2;// 返点，2协议内返点
 
-    private List<RepointDetail> proOutRepointList; // 返点，3协议外返点
+    private List<RepointDetail> repointDetailList3; // 返点，3协议外返点
 
     private String companyLoanCsSection;// 我司贷款成数区间
 
@@ -660,29 +660,28 @@ public class BudgetOrder extends ABaseDO {
         this.companyLoanCsSection = companyLoanCsSection;
     }
 
-    public List<RepointDetail> getShouldBackRepointList() {
-        return shouldBackRepointList;
+    public List<RepointDetail> getRepointDetailList1() {
+        return repointDetailList1;
     }
 
-    public void setShouldBackRepointList(
-            List<RepointDetail> shouldBackRepointList) {
-        this.shouldBackRepointList = shouldBackRepointList;
+    public void setRepointDetailList1(List<RepointDetail> repointDetailList1) {
+        this.repointDetailList1 = repointDetailList1;
     }
 
-    public List<RepointDetail> getProInRepointList() {
-        return proInRepointList;
+    public List<RepointDetail> getRepointDetailList2() {
+        return repointDetailList2;
     }
 
-    public void setProInRepointList(List<RepointDetail> proInRepointList) {
-        this.proInRepointList = proInRepointList;
+    public void setRepointDetailList2(List<RepointDetail> repointDetailList2) {
+        this.repointDetailList2 = repointDetailList2;
     }
 
-    public List<RepointDetail> getProOutRepointList() {
-        return proOutRepointList;
+    public List<RepointDetail> getRepointDetailList3() {
+        return repointDetailList3;
     }
 
-    public void setProOutRepointList(List<RepointDetail> proOutRepointList) {
-        this.proOutRepointList = proOutRepointList;
+    public void setRepointDetailList3(List<RepointDetail> repointDetailList3) {
+        this.repointDetailList3 = repointDetailList3;
     }
 
     public String getCompanyName() {
