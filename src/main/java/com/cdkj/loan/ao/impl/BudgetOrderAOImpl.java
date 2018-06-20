@@ -286,7 +286,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setLyAmount(StringValidater.toLong(xn632291Res.getLyAmount()));
         data.setFxAmount(StringValidater.toLong(xn632291Res.getFxAmount()));
         data.setOtherFee(StringValidater.toLong(xn632291Res.getOtherFee()));
-        data.setServiceChargeWay(req.getFeeWay());
+        data.setServiceChargeWay(req.getServiceChargeWay());
 
         Long serviceCharge = StringValidater.toLong(xn632291Res.getLyAmount())
                 + StringValidater.toLong(xn632291Res.getFxAmount())
@@ -805,8 +805,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.refreshBankLoanConfirm(budgetOrder);
 
         // 生成资料传递
-        NodeFlow nodeFlow = nodeFlowBO
-            .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
+            .getCurNodeCode());
         logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
             budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
             nextNodeCode, nodeFlow.getFileList());

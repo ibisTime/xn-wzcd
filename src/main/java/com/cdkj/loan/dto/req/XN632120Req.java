@@ -208,7 +208,7 @@ public class XN632120Req {
     private String gpsFeeWay;
 
     // 手续费收取方式
-    private String feeWay;
+    private String serviceChargeWay;
 
     // 结婚证离婚证
     private String marryDivorce;
@@ -322,6 +322,14 @@ public class XN632120Req {
     // 用款用途
     @NotEmpty
     private List<XN632120ReqRepointDetail> repointDetailList;
+
+    public String getServiceChargeWay() {
+        return serviceChargeWay;
+    }
+
+    public void setServiceChargeWay(String serviceChargeWay) {
+        this.serviceChargeWay = serviceChargeWay;
+    }
 
     public String getBudgetOrderCode() {
         return budgetOrderCode;
@@ -706,14 +714,6 @@ public class XN632120Req {
 
     public void setGpsFeeWay(String gpsFeeWay) {
         this.gpsFeeWay = gpsFeeWay;
-    }
-
-    public String getFeeWay() {
-        return feeWay;
-    }
-
-    public void setFeeWay(String feeWay) {
-        this.feeWay = feeWay;
     }
 
     public String getMarryDivorce() {
