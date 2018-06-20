@@ -764,6 +764,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 "当前节点不是银行放款节点，不能操作");
         }
 
+        // 当前节点
+        String curNodeCode = budgetOrder.getCurNodeCode();
+
         String nextNodeCode = null;
         Department department = departmentBO.getDepartment(budgetOrder
             .getCompanyCode());
@@ -800,6 +803,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 .getCode());
         }
         budgetOrderBO.refreshBankLoanConfirm(budgetOrder);
+
+        // 生成资料传递
+        NodeFlow nodeFlow = nodeFlowBO
+            .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
+        logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+            budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
+            nextNodeCode, nodeFlow.getFileList());
 
         // 日志记录
         String preCurrentNode = budgetOrder.getCurNodeCode();
