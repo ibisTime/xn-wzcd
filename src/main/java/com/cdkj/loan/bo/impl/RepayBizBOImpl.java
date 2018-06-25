@@ -503,4 +503,12 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     public void refreshMortgageInput(RepayBiz data) {
         repayBizDAO.updateMortgageInput(data);
     }
+
+    @Override
+    public void refreshRepayEndCommitSettle(String code) {
+        RepayBiz data = new RepayBiz();
+        data.setCode(code);
+        data.setCurNodeCode(ERepayBizNode.COMMIT_SETTLE.getCode());
+        repayBizDAO.updateRepayEndCommitSettle(data);
+    }
 }

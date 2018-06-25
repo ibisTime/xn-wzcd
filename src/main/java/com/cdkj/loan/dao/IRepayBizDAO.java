@@ -94,4 +94,8 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
 
     // 结果回录
     public int updateMortgageInput(RepayBiz data);
+
+    // 还款计划结束后更新为提交结算单
+    public int updateRepayEndCommitSettle(RepayBiz data);
+
 }

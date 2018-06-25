@@ -41,4 +41,7 @@ public interface IRepayPlanAO {
     public void repayAmount(String code, String operator, String payType,
             Long payAmount);
 
+    // 每天凌晨定时更新还款计划状态为已结清
+    public void doPayedDaily();
+
 }

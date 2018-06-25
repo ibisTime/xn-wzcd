@@ -55,4 +55,6 @@ public class SysConstants {
     // 公告范围类型
     public static String SCOPE_PEOPLE_TYPE = "scope_people_type";// 公告范围类型
 
+    // 每次处理的条数
+    public static String REPAYPLAN_STEP = "repayplan_step";// 每次处理的条数
 }

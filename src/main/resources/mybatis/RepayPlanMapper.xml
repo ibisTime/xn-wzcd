@@ -90,6 +90,9 @@
 			<if test="repayDatetime != null and repayDatetime != '' ">
 				AND t.repay_datetime=#{repayDatetime}
 			</if>
+			<if test="repayDatetimeEnd != null and repayDatetimeEnd != '' ">
+				<![CDATA[AND t.repay_datetime <= #{repayDatetimeEnd}]]>
+			</if>
 			<if test="repayBizCode != null and repayBizCode != '' ">
 				AND t.repay_biz_code=#{repayBizCode}
 			</if>
@@ -471,6 +474,13 @@
 		,updater=#{updater}
 		,update_datetime=#{updateDatetime}
 		,remark=#{remark}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_payedDaily" parameterType="repayPlan">
+		UPDATE tdh_repay_plan t 
+		SET
+		t.cur_node_code=#{curNodeCode}
 		WHERE code=#{code}
 	</update>
 </mapper>
