@@ -27,11 +27,11 @@ public class XN632715 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         GpsApply condition = new GpsApply();
-        condition.setCompanyCode(req.getCompany());
         condition.setApplyUser(req.getApplyUser());
+        condition.setCompanyCode(req.getCompanyCode());
         condition.setStatus(req.getStatus());
-
         String column = req.getOrderColumn();
+
         if (StringUtils.isBlank(column)) {
             column = IGpsApplyAO.DEFAULT_ORDER_COLUMN;
         }

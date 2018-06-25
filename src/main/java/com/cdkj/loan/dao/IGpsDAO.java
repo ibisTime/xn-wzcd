@@ -6,9 +6,13 @@ import com.cdkj.loan.domain.Gps;
 public interface IGpsDAO extends IBaseDAO<Gps> {
     String NAMESPACE = IGpsDAO.class.getName().concat(".");
 
-    int updateApply(Gps data);
+    public int updateCompanyApprove(Gps data);
 
-    int updateApplyStatus(Gps data);
+    public int updateCompanyReceive(Gps data);
 
-    int updateUseStatus(Gps data);
+    public int updateUserApply(Gps data);
+
+    public int updateUserApprove(Gps data);
+
+    public int updateUseStatus(Gps data);
 }

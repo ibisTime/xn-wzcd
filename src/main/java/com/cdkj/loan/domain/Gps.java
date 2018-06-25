@@ -26,17 +26,26 @@ public class Gps extends ABaseDO {
     // 公司编号
     private String companyCode;
 
-    // 申请单号
-    private String applyCode;
+    // 公司申领状态(0 待申领 1 已申领)
+    private String companyApplyStatus;
 
-    // 申请人
+    // 公司申领日期
+    private Date companyApplyDatetime;
+
+    // 公司申领编号
+    private String companyApplyCode;
+
+    // 申领人
     private String applyUser;
 
-    // 申请状态
+    // 申领日期
+    private Date applyDatetime;
+
+    // 申领状态(0 待申领 1 申领处理中 2 已申领)
     private String applyStatus;
 
-    // 申请日期
-    private Date applyDatetime;
+    // 申领单号
+    private String applyCode;
 
     // 使用状态
     private String useStatus;
@@ -53,6 +62,30 @@ public class Gps extends ABaseDO {
 
     // 申请人姓名
     private String applyUserName;
+
+    public String getCompanyApplyStatus() {
+        return companyApplyStatus;
+    }
+
+    public void setCompanyApplyStatus(String companyApplyStatus) {
+        this.companyApplyStatus = companyApplyStatus;
+    }
+
+    public Date getCompanyApplyDatetime() {
+        return companyApplyDatetime;
+    }
+
+    public void setCompanyApplyDatetime(Date companyApplyDatetime) {
+        this.companyApplyDatetime = companyApplyDatetime;
+    }
+
+    public String getCompanyApplyCode() {
+        return companyApplyCode;
+    }
+
+    public void setCompanyApplyCode(String companyApplyCode) {
+        this.companyApplyCode = companyApplyCode;
+    }
 
     public String getGpsType() {
         return gpsType;

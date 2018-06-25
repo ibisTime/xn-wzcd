@@ -23,11 +23,12 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
     private ICarDealerProtocolDAO carDealerProtocolDAO;
 
     @Override
-    public void saveCarDealerProtocolList(List<XN632060ReqProtocol> list) {
+    public void saveCarDealerProtocolList(List<XN632060ReqProtocol> list,
+            String code) {
         if (CollectionUtils.isNotEmpty(list)) {
             for (XN632060ReqProtocol req : list) {
                 CarDealerProtocol data = new CarDealerProtocol();
-                data.setCarDealerCode(req.getCarDealerCode());
+                data.setCarDealerCode(code);
                 data.setBankCode(req.getBankCode());
                 data.setPlatCtRate12(
                     StringValidater.toDouble(req.getPlatCtRate12()));

@@ -22,7 +22,6 @@ import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.dto.req.XN632060Req;
 import com.cdkj.loan.dto.req.XN632062Req;
 import com.cdkj.loan.enums.EApproveResult;
-import com.cdkj.loan.enums.EBankCode;
 import com.cdkj.loan.enums.ECarDealerNode;
 import com.cdkj.loan.enums.ECollectBankcard;
 import com.cdkj.loan.enums.EGeneratePrefix;
@@ -77,7 +76,7 @@ public class CarDealerAOImpl implements ICarDealerAO {
             ECollectBankcard.DEALER_COLLECT.getCode(), code);
         // 协议
         carDealerProtocolBO
-            .saveCarDealerProtocolList(req.getCarDealerProtocolList());
+            .saveCarDealerProtocolList(req.getCarDealerProtocolList(), code);
         // 工行返点账号
         collectBankcardBO.saveCollectBankcardList(
             req.getGsCollectBankcardList(),
@@ -138,8 +137,8 @@ public class CarDealerAOImpl implements ICarDealerAO {
             req.getJxsCollectBankcardList(),
             ECollectBankcard.DEALER_COLLECT.getCode(), req.getCode());
 
-        carDealerProtocolBO
-            .saveCarDealerProtocolList(req.getCarDealerProtocolList());
+        carDealerProtocolBO.saveCarDealerProtocolList(
+            req.getCarDealerProtocolList(), req.getCode());
 
         collectBankcardBO.saveCollectBankcardList(
             req.getGsCollectBankcardList(),
@@ -263,15 +262,15 @@ public class CarDealerAOImpl implements ICarDealerAO {
             List<CollectBankcard> jhList = new ArrayList<CollectBankcard>();
             for (CollectBankcard domain : queryCollectBankcardList) {
                 // 工行
-                if (EBankCode.ICBC.getCode().equals(domain.getBankCode())) {
+                if (domain.getBelongBank().equals(EbelongBank.GH.getCode())) {
                     ghList.add(domain);
                 }
                 // 中行
-                if (EBankCode.BOC.getCode().equals(domain.getBankCode())) {
+                if (domain.getBelongBank().equals(EbelongBank.ZH.getCode())) {
                     zhList.add(domain);
                 }
                 // 建行
-                if (EBankCode.CCB.getCode().equals(domain.getBankCode())) {
+                if (domain.getBelongBank().equals(EbelongBank.JH.getCode())) {
                     jhList.add(domain);
                 }
             }
@@ -306,21 +305,18 @@ public class CarDealerAOImpl implements ICarDealerAO {
         List<CollectBankcard> ghList = new ArrayList<CollectBankcard>();
         List<CollectBankcard> zhList = new ArrayList<CollectBankcard>();
         List<CollectBankcard> jhList = new ArrayList<CollectBankcard>();
-        for (CollectBankcard collectBankcard2 : queryCollectBankcardList) {
+        for (CollectBankcard domain : queryCollectBankcardList) {
             // 工行
-            if (collectBankcard2.getBankCode()
-                .equals(EBankCode.ICBC.getCode())) {
-                ghList.add(collectBankcard2);
+            if (domain.getBelongBank().equals(EbelongBank.GH.getCode())) {
+                ghList.add(domain);
             }
             // 中行
-            if (collectBankcard2.getBankCode()
-                .equals(EBankCode.BOC.getCode())) {
-                zhList.add(collectBankcard2);
+            if (domain.getBelongBank().equals(EbelongBank.ZH.getCode())) {
+                zhList.add(domain);
             }
             // 建行
-            if (collectBankcard2.getBankCode()
-                .equals(EBankCode.CCB.getCode())) {
-                jhList.add(collectBankcard2);
+            if (domain.getBelongBank().equals(EbelongBank.JH.getCode())) {
+                jhList.add(domain);
             }
         }
         carDealer.setGsCollectBankcardList(ghList);

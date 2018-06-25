@@ -11,6 +11,10 @@
 		
 		<result column="apply_reason" property="applyReason" />
 		<result column="apply_count" property="applyCount" />
+		<result column="approve_user" property="approveUser" />
+		<result column="approve_datetime" property="approveDatetime" />
+		<result column="approve_note" property="approveNote" />
+		
 		<result column="send_datetime" property="sendDatetime" />
 		<result column="receive_datetime" property="receiveDatetime" />
 		<result column="status" property="status" />
@@ -31,6 +35,9 @@
 			<if test="applyUser != null and applyUser != '' ">
 				AND t.apply_user = #{applyUser}
 			</if>
+			<if test="approveUser != null and approveUser != '' ">
+				AND t.approve_user = #{approveUser}
+			</if>
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
@@ -47,6 +54,10 @@
 		
 		,t.apply_reason
 		,t.apply_count
+		,t.approve_user
+		,t.approve_datetime
+		,t.approve_note
+		
 		,t.send_datetime
 		,t.receive_datetime
 		,t.status
@@ -99,7 +110,9 @@
 		UPDATE tb_gps_apply
 		SET
 		status = #{status}
-		,remark = #{remark}
+		,approve_user = #{approveUser}
+		,approve_datetime = #{approveDatetime}
+		,approve_note = #{approveNote}
 		WHERE code = #{code}
 	</update>
 	

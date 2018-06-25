@@ -6,45 +6,45 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * GPS申领审核
- * @author: silver 
- * @since: 2018年5月31日 上午12:33:49 
+ * GPS个人申领
+ * @author: xieyj 
+ * @since: 2018年6月18日 下午1:35:40 
  * @history:
  */
 public class XN632711Req {
-    // 编号
+    // 申请人
     @NotBlank
-    private String code;
-
-    // 备注
-    private String remark;
+    private String applyUser;
 
     // GPS列表
     @NotEmpty
-    private List<XN632711ReqChild> gpsList;
+    private List<XN632712ReqGps> gpsList;
 
-    public String getCode() {
-        return code;
+    // 申请原因
+    private String applyReason;
+
+    public String getApplyUser() {
+        return applyUser;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setApplyUser(String applyUser) {
+        this.applyUser = applyUser;
     }
 
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public List<XN632711ReqChild> getGpsList() {
+    public List<XN632712ReqGps> getGpsList() {
         return gpsList;
     }
 
-    public void setGpsList(List<XN632711ReqChild> gpsList) {
+    public void setGpsList(List<XN632712ReqGps> gpsList) {
         this.gpsList = gpsList;
+    }
+
+    public String getApplyReason() {
+        return applyReason;
+    }
+
+    public void setApplyReason(String applyReason) {
+        this.applyReason = applyReason;
     }
 
 }

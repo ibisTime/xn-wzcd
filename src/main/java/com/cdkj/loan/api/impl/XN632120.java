@@ -24,7 +24,7 @@ public class XN632120 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.addBudgetOrder(req);
+        budgetOrderAO.editBudgetOrder(req);
         return new BooleanRes(true);
     }
 

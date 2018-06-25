@@ -1,12 +1,6 @@
 package com.cdkj.loan.dto.req;
 
-/**
- * GPS列表
- * @author: silver 
- * @since: 2018年5月31日 上午12:33:49 
- * @history:
- */
-public class XN632711ReqChild {
+public class XN632712ReqGps {
     // gps编号
     private String code;
 

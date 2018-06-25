@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * GPS申领
+ * GPS公司申领
  * @author: silver 
  * @since: 2018年5月30日 下午11:45:04 
  * @history:
@@ -24,7 +24,7 @@ public class XN632710 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return new PKCodeRes(gpsApplyAO.addGpsApply(req));
+        return new PKCodeRes(gpsApplyAO.applyCompanyGps(req));
     }
 
     @Override

@@ -155,5 +155,7 @@
 		<typeAlias alias="repointDetail" type="com.cdkj.loan.domain.RepointDetail" />
 		<typeAlias alias="totalAdvanceFund" type="com.cdkj.loan.domain.TotalAdvanceFund" />
 		
+		<typeAlias alias="repoint" type="com.cdkj.loan.domain.Repoint" />
+		
 	</typeAliases>
 </configuration>

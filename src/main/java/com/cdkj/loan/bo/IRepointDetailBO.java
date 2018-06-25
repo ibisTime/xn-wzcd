@@ -25,4 +25,7 @@ public interface IRepointDetailBO extends IPaginableBO<RepointDetail> {
 
     public RepointDetail getRepointDetail(String code);
 
+    // 更新返点明细状态
+    public void updateCurNodeCode(RepointDetail data);
+
 }

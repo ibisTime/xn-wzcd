@@ -8,7 +8,8 @@ import com.cdkj.loan.dto.req.XN632060ReqProtocol;
 
 public interface ICarDealerProtocolBO extends IPaginableBO<CarDealerProtocol> {
 
-    public void saveCarDealerProtocolList(List<XN632060ReqProtocol> list);
+    public void saveCarDealerProtocolList(List<XN632060ReqProtocol> list,
+            String code);
 
     public int saveCarDealerProtocol(CarDealerProtocol data);
 

@@ -6,6 +6,8 @@ public class XN632060ReqCollectBankcard {
 
     private String type;// 类型
 
+    private String belongBank;// 三种银行
+
     private String companyCode;// 公司编号
 
     private String realName;// 户名
@@ -21,6 +23,36 @@ public class XN632060ReqCollectBankcard {
     private String pointRate;// 返点比例
 
     private String remark;// 备注
+
+    /*---------辅助字段----------*/
+
+    private String keyword;// 关键字
+
+    private String companyName;// 公司名称
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public String getBelongBank() {
+        return belongBank;
+    }
+
+    public void setBelongBank(String belongBank) {
+        this.belongBank = belongBank;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
     public String getCode() {
         return code;
