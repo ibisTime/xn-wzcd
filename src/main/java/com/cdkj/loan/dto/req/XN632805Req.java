@@ -10,17 +10,17 @@ public class XN632805Req extends APageReq {
 
     private static final long serialVersionUID = 5138736221155343722L;
 
-    private String realName;
+    private String realName;// 姓名
 
-    private String departmentCode;
+    private String departmentCode;// 部门编号
 
-    private String postCode;
+    private String postCode;// 职务岗位编号
 
-    private String entryDatetimeStart;
+    private String entryDatetimeStart;// 入职时间起
 
-    private String entryDatetimeEnd;
+    private String entryDatetimeEnd;// 入职时间止
 
-    private String workStatus;
+    private String workStatus;// 状态
 
     public String getRealName() {
         return realName;

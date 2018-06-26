@@ -122,7 +122,7 @@ public class SYSUserBOImpl extends PaginableBOImpl<SYSUser>
     @Override
     public void refreshLoginPwd(String userId, String loginPwd) {
         if (StringUtils.isNotBlank(userId)) {
-            SYSUser data = new SYSUser();
+            SYSUser data = getUser(userId);
             data.setLoginPwd(MD5Util.md5(loginPwd));
             data.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
             sysUserDAO.updateLoginPwd(data);

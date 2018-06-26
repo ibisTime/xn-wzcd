@@ -112,6 +112,9 @@ public class AdvanceFund extends ABaseDO {
     // 收款账号
     private String collectionAccountNo;
 
+    // 收款银行名称
+    private String collectBankName;
+
     // 打款账号
     private String payAccountNo;
 
@@ -138,6 +141,14 @@ public class AdvanceFund extends ABaseDO {
 
     public void setLoanAmount(Long loanAmount) {
         this.loanAmount = loanAmount;
+    }
+
+    public String getCollectBankName() {
+        return collectBankName;
+    }
+
+    public void setCollectBankName(String collectBankName) {
+        this.collectBankName = collectBankName;
     }
 
     public Long getServiceCharge() {
