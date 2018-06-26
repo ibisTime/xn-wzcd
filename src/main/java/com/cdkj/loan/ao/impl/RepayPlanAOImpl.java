@@ -21,6 +21,7 @@ import com.cdkj.loan.bo.ICreditscoreBO;
 import com.cdkj.loan.bo.IRemindLogBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
+import com.cdkj.loan.bo.IReplaceRepayApplyBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -33,6 +34,7 @@ import com.cdkj.loan.domain.Cost;
 import com.cdkj.loan.domain.RemindLog;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.domain.ReplaceRepayApply;
 import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.dto.req.XN630532Req;
 import com.cdkj.loan.dto.req.XN630535Req;
@@ -81,6 +83,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     @Autowired
     IBankcardBO bankcardBO;
+
+    @Autowired
+    IReplaceRepayApplyBO replaceRepayApplyBO;
 
     private static final Logger logger = LoggerFactory
         .getLogger(RepayPlan.class);
@@ -136,6 +141,13 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
         repayPlan
             .setRepayBiz(repayBizAO.getRepayBiz(repayPlan.getRepayBizCode()));
+
+        // 代偿
+        ReplaceRepayApply condition = new ReplaceRepayApply();
+        condition.setBizCode(repayPlan.getRepayBizCode());
+        List<ReplaceRepayApply> repayApplyList = replaceRepayApplyBO
+            .queryReplaceRepayApplyList(condition);
+        repayPlan.setReplaceRepayApply(repayApplyList.get(0));
 
         return repayPlan;
     }
@@ -458,8 +470,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             // 2、如果还款计划已全部完成，将还款业务更新为 提交结算单
             repayPlanBO.refreshPayedDaily(repayPlan.getCode());
             if (repayPlan.getPeriods() == repayPlan.getCurPeriods()) {
-                repayBizBO.refreshRepayEndCommitSettle(
-                    repayPlan.getRepayBizCode());
+                repayBizBO
+                    .refreshRepayEndCommitSettle(repayPlan.getRepayBizCode());
             }
         }
     }

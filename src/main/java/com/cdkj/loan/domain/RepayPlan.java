@@ -235,6 +235,17 @@ public class RepayPlan extends ABaseDO {
     // 还款结束时间
     private Date repayDatetimeEnd;
 
+    // 代偿申请单
+    private ReplaceRepayApply replaceRepayApply;
+
+    public ReplaceRepayApply getReplaceRepayApply() {
+        return replaceRepayApply;
+    }
+
+    public void setReplaceRepayApply(ReplaceRepayApply replaceRepayApply) {
+        this.replaceRepayApply = replaceRepayApply;
+    }
+
     public Date getRepayDatetimeEnd() {
         return repayDatetimeEnd;
     }
