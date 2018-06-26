@@ -117,37 +117,40 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     @Override
     public RepayPlan getRepayPlan(String code) {
+        // 获取用户信息和业务信息
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
         repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
         repayPlan
             .setRepayBiz(repayBizBO.getRepayBiz(repayPlan.getRepayBizCode()));
+
+        // 获取清收成本
         Cost cost = new Cost();
         cost.setRepayPlanCode(code);
         List<Cost> list = costBO.queryCostList(cost);
         repayPlan.setCostList(list);
 
-        RemindLog remindLog = new RemindLog();
-        remindLog.setRepayPlanCode(code);
+        // 获取催收记录
+        RemindLog rlCondition = new RemindLog();
+        rlCondition.setRepayPlanCode(code);
         List<RemindLog> remindLogList = remindLogBO
-            .queryRemindLogList(remindLog);
+            .queryRemindLogList(rlCondition);
         repayPlan.setRemindLogList(remindLogList);
 
+        // 获取银行卡号
         String bankcardCode = repayBizBO
             .getRepayBiz(repayPlan.getRepayBizCode()).getBankcardCode();
         String bankcardNumber = bankcardBO.getBankcard(bankcardCode)
             .getBankcardNumber();
         repayPlan.setBankcardNumber(bankcardNumber);
 
-        repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
-        repayPlan
-            .setRepayBiz(repayBizAO.getRepayBiz(repayPlan.getRepayBizCode()));
-
-        // 代偿
+        // 获取代偿记录
         ReplaceRepayApply condition = new ReplaceRepayApply();
-        condition.setBizCode(repayPlan.getRepayBizCode());
+        condition.setBizCode(repayPlan.getCode());
         List<ReplaceRepayApply> repayApplyList = replaceRepayApplyBO
             .queryReplaceRepayApplyList(condition);
-        repayPlan.setReplaceRepayApply(repayApplyList.get(0));
+        if (CollectionUtils.isNotEmpty(repayApplyList)) {
+            repayPlan.setReplaceRepayApply(repayApplyList.get(0));
+        }
 
         return repayPlan;
     }

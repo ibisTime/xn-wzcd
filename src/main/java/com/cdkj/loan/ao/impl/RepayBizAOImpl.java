@@ -115,7 +115,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             req.getUpdater(), req.getRemark());
     }
 
-    private void setRefInfo(RepayBiz repayBiz) {
+    private void initRepayBiz(RepayBiz repayBiz) {
         // 申请人信息
         repayBiz.setUser(userBO.getUser(repayBiz.getUserId()));
 
@@ -135,19 +135,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
             repayBiz.setMallOrder(orderAO.getOrder(repayBiz.getRefCode()));
         }
 
-        // 借款余额
-        Long amount = 0L;
-        for (RepayPlan repayPlan : repayPlanList) {
-            Long overplusAmount = repayPlan.getOverplusAmount();
-            amount = amount + overplusAmount;
-        }
-
         // 司法诉讼
         Judge judgeCondition = new Judge();
         judgeCondition.setRepayBizCode(repayBiz.getCode());
         repayBiz.setJudgeList(judgeBO.queryJudgeList(judgeCondition));
 
-        //
         RepayPlan overdueRepayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
             repayBiz.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
         repayBiz.setOverdueRepayPlan(overdueRepayPlan);
@@ -274,7 +266,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         Paginable<RepayBiz> results = repayBizBO.getPaginable(start, limit,
             condition);
         for (RepayBiz repayBiz : results.getList()) {
-            setRefInfo(repayBiz);
+            initRepayBiz(repayBiz);
         }
         return results;
     }
@@ -285,7 +277,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         Paginable<RepayBiz> paginable = repayBizBO.getPaginableByRoleCode(start,
             limit, condition);
         for (RepayBiz repayBiz : paginable.getList()) {
-            setRefInfo(repayBiz);
+            initRepayBiz(repayBiz);
         }
         return paginable;
     }
@@ -299,7 +291,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     public RepayBiz getRepayBiz(String code) {
         // 查询实际退款金额
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-        setRefInfo(repayBiz);
+        initRepayBiz(repayBiz);
         return repayBiz;
     }
 
