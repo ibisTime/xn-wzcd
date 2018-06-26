@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.ao.IRepayBizAO;
-import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IJudgeBO;
@@ -20,7 +19,6 @@ import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
-import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -79,12 +77,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
     private IOrderAO orderAO;
 
     @Autowired
-    private ISYSConfigBO sysConfigBO;
-
-    @Autowired
-    private IBankBO bankBO;
-
-    @Autowired
     private INodeFlowBO nodeFlowBO;
 
     @Autowired
@@ -141,7 +133,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setJudgeList(judgeBO.queryJudgeList(judgeCondition));
 
         RepayPlan overdueRepayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
-            repayBiz.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
+            repayBiz.getCode(), ERepayPlanNode.HANDLER_TO_RED);
         repayBiz.setOverdueRepayPlan(overdueRepayPlan);
 
         if (StringUtils.isNotBlank(repayBiz.getUpdater())) {
@@ -183,9 +175,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             .queryRepayPlanListByRepayBizCode(repayBiz.getCode());
         for (RepayPlan repayPlan : planList) {
             if (ERepayPlanNode.HANDLER_TO_RED.getCode()
-                .equals(repayPlan.getCurNodeCode())
-                    || ERepayPlanNode.QKCSB_APPLY_TC.getCode()
-                        .equals(repayPlan.getCurNodeCode())) {
+                .equals(repayPlan.getCurNodeCode())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前有逾期未处理完成的还款计划，不能提前还款！");
             }
@@ -444,7 +434,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
         // 还款计划变更节点
         RepayPlan repayPlan = repayPlanBO.getRepayPlanByRepayBizCode(code,
-            ERepayPlanNode.QKCSB_APPLY_TC);
+            ERepayPlanNode.HANDLER_TO_RED);
         repayPlanBO.takeCarSureFk(repayPlan, remitBankCode, remitBillPdf,
             remitDatetime, operator);
 
@@ -474,7 +464,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
         // 还款计划变更节点
         RepayPlan repayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
-            req.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
+            req.getCode(), ERepayPlanNode.HANDLER_TO_RED);
         repayPlanBO.takeCarInputResult(repayPlan, req);
 
         // 还款业务变更节点
@@ -503,7 +493,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
         // 还款计划变更节点
         RepayPlan repayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
-            req.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
+            req.getCode(), ERepayPlanNode.HANDLER_TO_RED);
         repayPlanBO.takeCarResultHandle(repayPlan, req);
 
         // 还款业务变更节点

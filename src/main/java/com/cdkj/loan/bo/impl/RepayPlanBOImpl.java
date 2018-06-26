@@ -276,8 +276,6 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
                 if (ERepayPlanNode.TO_REPAY.getCode()
                     .equals(repayPlan.getCurNodeCode())
                         || ERepayPlanNode.HANDLER_TO_RED.getCode()
-                            .equals(repayPlan.getCurNodeCode())
-                        || ERepayPlanNode.QKCSB_APPLY_TC.getCode()
                             .equals(repayPlan.getCurNodeCode())) {
                     flag = true;
                     break;
@@ -317,7 +315,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             ERepayPlanNode repayPlanNode) {
         List<String> nodeList = new ArrayList<String>();
         nodeList.add(ERepayPlanNode.TO_REPAY.getCode());
-        nodeList.add(ERepayPlanNode.QKCSB_APPLY_TC.getCode());
+        nodeList.add(ERepayPlanNode.HANDLER_TO_RED.getCode());
         List<RepayPlan> planList = queryRepayPlanListByRepayBizCode(
             repayBizCode, nodeList);
         for (RepayPlan repayPlan : planList) {
