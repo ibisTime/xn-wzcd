@@ -31,6 +31,7 @@ CREATE TABLE `tdh_judge` (
   `judge_pdf` varchar(255) DEFAULT NULL COMMENT '判决附件',
   `exe_case_number` varchar(32) DEFAULT NULL COMMENT '执行案号',
   `exe_apply_user` varchar(32) DEFAULT NULL COMMENT '执行申请人',
+  `execute_mark_amount` bigint(20) DEFAULT NULL COMMENT '执行标的额',
   `exe_datetime` datetime DEFAULT NULL COMMENT '执行日期',
   `exe_result` varchar(255) DEFAULT NULL COMMENT '执行结果',
   `sale_datetime` datetime DEFAULT NULL COMMENT '拍卖日期',
@@ -230,6 +231,7 @@ CREATE TABLE `tdh_repay_plan` (
   `pawnshop_name` varchar(255) DEFAULT NULL COMMENT '典当行名称',
   `ransom` varchar(255) DEFAULT NULL COMMENT '典当行赎金小写',
   `ts_car_amount` bigint(20) DEFAULT NULL COMMENT '拖车申请金额',
+  `ts_user_name` varchar(255) DEFAULT NULL COMMENT '拖车人姓名',
   `ts_bankcard_number` varchar(255) DEFAULT NULL COMMENT '拖车收款账号',
   
   `ts_bank_name` varchar(255) DEFAULT NULL COMMENT '拖车开户行',

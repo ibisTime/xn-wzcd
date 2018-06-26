@@ -62,6 +62,9 @@ public class Judge extends ABaseDO {
     // 执行申请人
     private String exeApplyUser;
 
+    // 执行标的额
+    private Long executeMarkAmount;
+
     // 执行日期
     private Date exeDatetime;
 
@@ -104,6 +107,14 @@ public class Judge extends ABaseDO {
 
     public void setUpdaterName(String updaterName) {
         this.updaterName = updaterName;
+    }
+
+    public Long getExecuteMarkAmount() {
+        return executeMarkAmount;
+    }
+
+    public void setExecuteMarkAmount(Long executeMarkAmount) {
+        this.executeMarkAmount = executeMarkAmount;
     }
 
     public String getCode() {

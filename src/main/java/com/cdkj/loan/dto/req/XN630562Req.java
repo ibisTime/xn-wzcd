@@ -1,7 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-import java.util.Date;
-
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -22,6 +20,10 @@ public class XN630562Req {
     // 执行申请人
     @NotBlank
     private String exeApplyUser;
+
+    // 执行标的额
+    @NotBlank
+    private String executeMarkAmount;
 
     // 执行日期
     @NotBlank
@@ -86,6 +88,14 @@ public class XN630562Req {
 
     public void setSaleDatetime(String saleDatetime) {
         this.saleDatetime = saleDatetime;
+    }
+
+    public String getExecuteMarkAmount() {
+        return executeMarkAmount;
+    }
+
+    public void setExecuteMarkAmount(String executeMarkAmount) {
+        this.executeMarkAmount = executeMarkAmount;
     }
 
     public String getExePdf() {

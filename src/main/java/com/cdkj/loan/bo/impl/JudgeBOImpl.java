@@ -44,8 +44,8 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
         data.setCaseSubject(req.getCaseSubject());
         data.setCaseStatus(ECaseStatus.RECORD.getCode());
         data.setCaseFee(StringValidater.toLong(req.getCaseFee()));
-        data.setCaseStartDatetime(DateUtil.strToDate(
-            req.getCaseStartDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setCaseStartDatetime(DateUtil.strToDate(req.getCaseStartDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCasePdf(req.getCasePdf());
 
         data.setStatus(EBoolean.NO.getCode());
@@ -76,6 +76,8 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
         Judge data = queryJudgeByRepayBizCode(req.getCode(), EBoolean.NO);
         data.setExeCaseNumber(req.getExeCaseNumber());
         data.setExeApplyUser(req.getExeApplyUser());
+        data.setExecuteMarkAmount(
+            StringValidater.toLong(req.getExecuteMarkAmount()));
         data.setExeDatetime(DateUtil.strToDate(req.getExeDatetime(),
             DateUtil.DB_DATE_FORMAT_STRING));
         data.setExeResult(req.getExeResult());
@@ -109,7 +111,8 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
     }
 
     @Override
-    public Judge queryJudgeByRepayBizCode(String repayBizCode, EBoolean status) {
+    public Judge queryJudgeByRepayBizCode(String repayBizCode,
+            EBoolean status) {
         Judge data = null;
 
         Judge condition = new Judge();
