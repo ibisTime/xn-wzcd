@@ -27,6 +27,10 @@ public class XN630550Req {
     @NotBlank
     private String tsCarAmount;
 
+    // 拖车人姓名
+    @NotBlank
+    private String tsUserName;
+
     // 拖车收款账号
     @NotBlank
     private String tsBankcardNumber;
@@ -117,6 +121,14 @@ public class XN630550Req {
 
     public void setTcApplyNote(String tcApplyNote) {
         this.tcApplyNote = tcApplyNote;
+    }
+
+    public String getTsUserName() {
+        return tsUserName;
+    }
+
+    public void setTsUserName(String tsUserName) {
+        this.tsUserName = tsUserName;
     }
 
     public String getOperator() {

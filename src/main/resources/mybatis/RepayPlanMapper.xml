@@ -50,6 +50,7 @@
 		<result column="pawnshop_name" property="pawnshopName" />
 		<result column="ransom" property="ransom" />
 		<result column="ts_car_amount" property="tsCarAmount" />
+		<result column="ts_user_name" property="tsUserName" />
 		<result column="ts_bankcard_number" property="tsBankcardNumber" />
 		
 		<result column="ts_bank_name" property="tsBankName" />
@@ -171,6 +172,7 @@
 		,t.pawnshop_name
 		,t.ransom
 		,t.ts_car_amount
+		,t.ts_user_name
 		,t.ts_bankcard_number
 		
 		,t.ts_bank_name
@@ -253,6 +255,7 @@
 		,t.pawnshop_name
 		,t.ransom
 		,t.ts_car_amount
+		,t.ts_user_name
 		,t.ts_bankcard_number
 		
 		,t.ts_bank_name
@@ -426,6 +429,7 @@
 		,pawnshop_name=#{pawnshopName}
 		,ransom=#{ransom}
 		,ts_car_amount=#{tsCarAmount}
+		,ts_user_name=#{tsUserName}
 		,ts_bankcard_number=#{tsBankcardNumber}
 		
 		,ts_bank_name=#{tsBankName}

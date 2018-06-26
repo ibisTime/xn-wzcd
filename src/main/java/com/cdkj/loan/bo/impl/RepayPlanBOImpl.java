@@ -361,6 +361,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         data.setPawnshopName(req.getPawnshopName());
         data.setRansom(req.getRansom());
         data.setTsCarAmount(StringValidater.toLong(req.getTsCarAmount()));
+        data.setTsUserName(req.getTsUserName());
         data.setTsBankcardNumber(req.getTsBankcardNumber());
         data.setTsBankName(req.getTsBankName());
         data.setTsSubbranch(req.getTsSubbranch());

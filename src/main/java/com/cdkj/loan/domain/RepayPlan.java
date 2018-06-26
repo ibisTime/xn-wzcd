@@ -136,6 +136,9 @@ public class RepayPlan extends ABaseDO {
     // 拖车申请费用
     private Long tsCarAmount;
 
+    // 拖车人姓名
+    private String tsUserName;
+
     // 拖车收款账号
     private String tsBankcardNumber;
 
@@ -708,6 +711,14 @@ public class RepayPlan extends ABaseDO {
 
     public void setSellPrice(Long sellPrice) {
         this.sellPrice = sellPrice;
+    }
+
+    public String getTsUserName() {
+        return tsUserName;
+    }
+
+    public void setTsUserName(String tsUserName) {
+        this.tsUserName = tsUserName;
     }
 
     public Long getDeposit() {
