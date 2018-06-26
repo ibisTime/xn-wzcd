@@ -23,8 +23,10 @@ import com.cdkj.loan.domain.RepointDetail;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632240Req;
 import com.cdkj.loan.dto.req.XN632241Req;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ERepointDetailStatus;
 import com.cdkj.loan.enums.ERepointStatus;
+import com.cdkj.loan.exception.BizException;
 
 /**
  * 
@@ -59,6 +61,10 @@ public class RepointAOImpl implements IRepointAO {
         data.setReason(req.getReason());
         data.setApplyUserId(req.getOperator());
         SYSUser user = sysUserBO.getUser(req.getOperator());
+        if (StringUtils.isBlank(user.getPostCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前用户还未设置岗位");
+        }
         data.setCompanyCode(user.getCompanyCode());
         data.setApplyDatetime(new Date());
         CarDealer carDealer = carDealerBO.getCarDealer(req.getCarDealerCode());
@@ -75,8 +81,7 @@ public class RepointAOImpl implements IRepointAO {
             repointDetail.setRepointCode(repointCode);
             repointDetailBO.updateCurNodeCode(repointDetail);
         }
-
-        return repointBO.saveRepoint(data);
+        return repointCode;
     }
 
     @Override

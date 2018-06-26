@@ -45,21 +45,24 @@ public class BizTeamAOImpl implements IBizTeamAO {
 
     @Override
     public String addBizTeam(XN630190Req req) {
+        doCheckCaptainOnlyOne(req.getCaptain());
+        SYSUser captain = sysUserBO.getUser(req.getCaptain());
+        if (StringUtils.isBlank(captain.getPostCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请先设置队长职位");
+        }
+
         BizTeam data = new BizTeam();
         data.setName(req.getName());
-        doCheckCaptainOnlyOne(req.getCaptain());
         data.setCaptain(req.getCaptain());
-        data.setAccountNo(req.getAccountNo());
-        data.setBank(req.getBank());
-
-        data.setSubbranch(req.getSubbranch());
-        data.setWaterBill(req.getWaterBill());
+        data.setCompanyCode(captain.getCompanyCode());
         data.setStatus(EBoolean.YES.getCode());
         data.setUpdater(req.getUpdater());
-        data.setUpdateDatetime(new Date());
 
-        SYSUser user = sysUserBO.getUser(data.getCaptain());
-        data.setCompanyCode(user.getCompanyCode());
+        data.setUpdateDatetime(new Date());
+        data.setAccountNo(req.getAccountNo());
+        data.setBank(req.getBank());
+        data.setSubbranch(req.getSubbranch());
+        data.setWaterBill(req.getWaterBill());
         return bizTeamBO.saveBizTeam(data);
     }
 
@@ -77,16 +80,21 @@ public class BizTeamAOImpl implements IBizTeamAO {
         if (!req.getCaptain().equals(data.getCaptain())) {
             doCheckCaptainOnlyOne(req.getCaptain());
         }
+        SYSUser captain = sysUserBO.getUser(req.getCaptain());
+        if (StringUtils.isBlank(captain.getPostCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请先设置队长职位");
+        }
+
         data.setName(req.getName());
         data.setCaptain(req.getCaptain());
+        data.setCompanyCode(captain.getCompanyCode());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
+
         data.setAccountNo(req.getAccountNo());
         data.setBank(req.getBank());
         data.setSubbranch(req.getSubbranch());
         data.setWaterBill(req.getWaterBill());
-        SYSUser user = sysUserBO.getUser(req.getCaptain());
-        data.setCompanyCode(user.getCompanyCode());
         bizTeamBO.refreshBizTeam(data);
     }
 
@@ -150,8 +158,8 @@ public class BizTeamAOImpl implements IBizTeamAO {
         bizTeam.setCompanyName(department.getName());
 
         String updater = bizTeam.getUpdater();
-        SYSUser user2 = sysUserBO.getUser(updater);
-        bizTeam.setUpdaterName(user2.getRealName());
+        SYSUser updateUser = sysUserBO.getUser(updater);
+        bizTeam.setUpdaterName(updateUser.getRealName());
 
     }
 }

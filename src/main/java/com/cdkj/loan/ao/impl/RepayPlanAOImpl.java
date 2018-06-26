@@ -88,7 +88,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     IReplaceRepayApplyBO replaceRepayApplyBO;
 
     private static final Logger logger = LoggerFactory
-        .getLogger(RepayPlan.class);
+        .getLogger(RepayPlanAOImpl.class);
 
     @Override
     public Paginable<RepayPlan> queryRepayPlanPage(int start, int limit,
