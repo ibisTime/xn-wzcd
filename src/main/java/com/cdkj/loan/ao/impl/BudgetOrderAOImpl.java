@@ -924,10 +924,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 "存放位置不能为空！");
         }
 
-        if (null != req.getContactMobile()) {
+        if (StringUtils.isNotBlank(req.getContactMobile())) {
             PhoneUtil.checkMobile(req.getContactMobile());
         }
-        if (null != req.getGuarantorMobile()) {
+        if (StringUtils.isNotBlank(req.getGuarantorMobile())) {
             PhoneUtil.checkMobile(req.getGuarantorMobile());
         }
 
