@@ -44,7 +44,6 @@ public class XN630550Req {
     private String tsSubbranch;
 
     // 拖车申请说明
-    @NotBlank
     private String tcApplyNote;
 
     // 操作人
