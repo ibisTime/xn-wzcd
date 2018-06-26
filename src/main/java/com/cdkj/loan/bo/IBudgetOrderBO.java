@@ -106,4 +106,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 改变预算单节点 公共
     public void refreshCurNodeCode(BudgetOrder budgetOrder);
 
+    // 更改预算单的业务编号
+    public void updateRepayBizCode(String code, String code2);
+
 }

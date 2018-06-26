@@ -1024,6 +1024,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         RepayBiz repayBiz = repayBizBO.generateCarLoanRepayBiz(budgetOrder,
             userId, bankcardCode, req.getOperator());
 
+        budgetOrderBO.updateRepayBizCode(budgetOrder.getCode(),
+            repayBiz.getCode());
+
         // 自动生成还款计划
         repayPlanBO.genereateNewRepayPlan(repayBiz);
 

@@ -291,6 +291,9 @@
 			<if test="isSubmitCancel != null and isSubmitCancel != '' ">
 				AND t.is_submit_cancel = #{isSubmitCancel}
 			</if>
+			<if test="repayBizCode != null and repayBizCode != '' ">
+				AND t.repay_biz_code = #{repayBizCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_budgetOrder" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
@@ -1592,6 +1595,13 @@
 		,insurance_remind_count = 0
 		,operator = #{operator}
 		,operate_datetime = #{operateDatetime}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_repayBizCode" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		repay_biz_code = #{repayBizCode}
 		WHERE code = #{code}
 	</update>
 		

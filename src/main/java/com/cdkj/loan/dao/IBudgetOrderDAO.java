@@ -97,4 +97,7 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 续保
     public int updateRenewInsurance(BudgetOrder data);
 
+    // 预算单修改还款业务编号
+    void updateRepayBizCode(BudgetOrder budgetOrder);
+
 }

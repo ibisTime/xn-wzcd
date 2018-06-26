@@ -310,4 +310,11 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
 
     }
 
+    @Override
+    public void updateRepayBizCode(String code, String repayBizCode) {
+        BudgetOrder budgetOrder = getBudgetOrder(code);
+        budgetOrder.setRepayBizCode(repayBizCode);
+        budgetOrderDAO.updateRepayBizCode(budgetOrder);
+    }
+
 }
