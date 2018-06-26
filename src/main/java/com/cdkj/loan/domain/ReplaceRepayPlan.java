@@ -91,6 +91,17 @@ public class ReplaceRepayPlan extends ABaseDO {
 
     private String roleCode;
 
+    // 还款计划
+    private RepayPlan repayPlan;
+
+    public RepayPlan getRepayPlan() {
+        return repayPlan;
+    }
+
+    public void setRepayPlan(RepayPlan repayPlan) {
+        this.repayPlan = repayPlan;
+    }
+
     public String getRoleCode() {
         return roleCode;
     }

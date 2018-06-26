@@ -3,12 +3,14 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IReplaceRepayPlanAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.IReplaceRepayApplyBO;
 import com.cdkj.loan.bo.IReplaceRepayPlanBO;
 import com.cdkj.loan.bo.ISYSUserBO;
@@ -17,6 +19,7 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.NodeFlow;
+import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.domain.ReplaceRepayApply;
 import com.cdkj.loan.domain.ReplaceRepayPlan;
 import com.cdkj.loan.domain.SYSUser;
@@ -48,6 +51,9 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
 
     @Autowired
     private INodeFlowBO nodeFlowBO;
+
+    @Autowired
+    private IRepayPlanBO repayPlanBO;
 
     @Override
     public String addReplaceRepayPlan(XN632330Req req) {
@@ -244,6 +250,12 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
         user = sysUserBO.getUser(replaceRepayPlan.getUpdater());
         if (null != user) {
             replaceRepayPlan.setUpdaterName(user.getRealName());
+        }
+
+        if (StringUtils.isNotBlank(replaceRepayPlan.getBizCode())) {
+            RepayPlan repayPlan = repayPlanBO
+                .getRepayPlan(replaceRepayPlan.getBizCode());
+            replaceRepayPlan.setRepayPlan(repayPlan);
         }
     }
 

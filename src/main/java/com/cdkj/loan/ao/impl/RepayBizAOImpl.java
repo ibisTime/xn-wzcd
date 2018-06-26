@@ -317,7 +317,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
         // 还款计划落地数据
         RepayPlan repayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
-            req.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
+            req.getCode(), ERepayPlanNode.HANDLER_TO_RED);
         repayPlanBO.takeCarApply(repayPlan, req);
 
         // 还款业务变更节点
