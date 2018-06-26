@@ -263,6 +263,17 @@ public class RepayBiz extends ABaseDO {
     // 更新人姓名
     private String updaterName;
 
+    // 贷款银行名称
+    private String loanBankName;
+
+    public String getLoanBankName() {
+        return loanBankName;
+    }
+
+    public void setLoanBankName(String loanBankName) {
+        this.loanBankName = loanBankName;
+    }
+
     public String getUpdaterName() {
         return updaterName;
     }

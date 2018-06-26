@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.bo.IBankBO;
+import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IJudgeBO;
 import com.cdkj.loan.bo.ILogisticsBO;
@@ -24,6 +26,7 @@ import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.domain.Judge;
 import com.cdkj.loan.domain.NodeFlow;
@@ -93,6 +96,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
 
+    @Autowired
+    private IBankSubbranchBO bankSubbranchBO;
+
     // 变更银行卡
     @Override
     public void editBankcardNew(XN630510Req req) {
@@ -146,9 +152,15 @@ public class RepayBizAOImpl implements IRepayBizAO {
             repayBiz.getCode(), ERepayPlanNode.QKCSB_APPLY_TC);
         repayBiz.setOverdueRepayPlan(overdueRepayPlan);
 
-        SYSUser updater = sysUserBO.getUser(repayBiz.getUpdater());
-        if (null != updater) {
+        if (StringUtils.isNotBlank(repayBiz.getUpdater())) {
+            SYSUser updater = sysUserBO.getUser(repayBiz.getUpdater());
             repayBiz.setUpdaterName(updater.getRealName());
+        }
+
+        if (StringUtils.isNotBlank(repayBiz.getLoanBank())) {
+            BankSubbranch bankSubbranch = bankSubbranchBO
+                .getBankSubbranch(repayBiz.getLoanBank());
+            repayBiz.setLoanBankName(bankSubbranch.getFullName());
         }
     }
 
