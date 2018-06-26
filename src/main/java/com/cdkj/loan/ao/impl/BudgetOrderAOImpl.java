@@ -961,8 +961,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setGuarantorName(req.getGuarantorName());
         budgetOrder.setGuarantorMobile(req.getGuarantorMobile());
         budgetOrder.setBankCardNumber(req.getBankCardNumber());
-        budgetOrder.setBillDatetime(DateUtil.strToDate(req.getBillDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder
+            .setBillDatetime(StringValidater.toInteger(req.getBillDatetime()));
 
         budgetOrder
             .setMonthAmount(StringValidater.toLong(req.getRepayMonthAmount()));
@@ -983,7 +983,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         budgetOrder.setOperator(req.getOperator());
         budgetOrder.setOperateDatetime(new Date());
-        budgetOrder.setOperateDepartment(req.getOperateDepartment());
+        SYSUser sysUser = sysUserBO.getUser(req.getOperator());
+        Department department = departmentBO
+            .getDepartment(sysUser.getDepartmentCode());
+        budgetOrder.setOperateDepartment(department.getName());
 
         if (null != req.getFileList()) {
             StringBuilder fileListBuilder = new StringBuilder();

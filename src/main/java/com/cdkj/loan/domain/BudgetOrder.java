@@ -465,7 +465,7 @@ public class BudgetOrder extends ABaseDO {
     private String bankCardNumber;
 
     // 对账单日
-    private Date billDatetime;
+    private Integer billDatetime;
 
     // 月还款额
     private Long monthAmount;
@@ -2060,11 +2060,11 @@ public class BudgetOrder extends ABaseDO {
         this.bankCardNumber = bankCardNumber;
     }
 
-    public Date getBillDatetime() {
+    public Integer getBillDatetime() {
         return billDatetime;
     }
 
-    public void setBillDatetime(Date billDatetime) {
+    public void setBillDatetime(Integer billDatetime) {
         this.billDatetime = billDatetime;
     }
 

@@ -106,9 +106,6 @@ public class XN632200Req {
     // 经办人
     private String operator;
 
-    // 经办部门
-    private String operateDepartment;
-
     public String getCode() {
         return code;
     }
@@ -339,14 +336,6 @@ public class XN632200Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
-    }
-
-    public String getOperateDepartment() {
-        return operateDepartment;
-    }
-
-    public void setOperateDepartment(String operateDepartment) {
-        this.operateDepartment = operateDepartment;
     }
 
 }
