@@ -19,9 +19,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
-import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Logistics;
-import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632150Req;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -91,18 +89,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
         if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             gpsApplyBO.sendGps(data.getBizCode(), logistics.getSendDatetime());
-        } else {
-            BudgetOrder budgetOrder = budgetOrderBO
-                .getBudgetOrder(data.getBizCode());
-            String curNodeCode = budgetOrder.getCurNodeCode();
-            NodeFlow nodeFlow = nodeFlowBO
-                .getNodeFlowByCurrentNode(curNodeCode);
-            String nextNode = nodeFlow.getNextNode();
-            budgetOrder.setCurNodeCode(nextNode);
-            budgetOrderBO.updateCurNodeCode(budgetOrder);
         }
-
-        // 操作人
     }
 
     @Override
