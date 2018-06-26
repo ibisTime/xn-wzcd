@@ -5,7 +5,6 @@ import java.util.List;
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.Repoint;
 
-//CHECK ��鲢��ע�� 
 public interface IRepointBO extends IPaginableBO<Repoint> {
 
     public boolean isRepointExist(String code);
