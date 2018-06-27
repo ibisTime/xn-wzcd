@@ -379,7 +379,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         data.setUpdater(operator);
         data.setUpdateDatetime(new Date());
         data.setRemark("确认收款");
-        repayPlanDAO.updateTakeCarApply(data);
+        repayPlanDAO.updateTakeCarSureFk(data);
     }
 
     @Override

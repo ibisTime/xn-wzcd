@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.cdkj.loan.ao.ICostAO;
 import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.ao.IRepayPlanAO;
 import com.cdkj.loan.bo.IAccountBO;
+import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.ICostBO;
 import com.cdkj.loan.bo.ICreditscoreBO;
@@ -29,6 +31,7 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Account;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.domain.Cost;
 import com.cdkj.loan.domain.RemindLog;
@@ -81,6 +84,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     @Autowired
     IRemindLogBO remindLogBO;
+
+    @Autowired
+    IBankBO bankBO;
 
     @Autowired
     IBankcardBO bankcardBO;
@@ -153,6 +159,11 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             .queryReplaceRepayApplyList(condition);
         if (CollectionUtils.isNotEmpty(repayApplyList)) {
             repayPlan.setReplaceRepayApply(repayApplyList.get(0));
+        }
+
+        if (StringUtils.isNotBlank(repayPlan.getRemitBankCode())) {
+            Bank bank = bankBO.getBank(repayPlan.getRemitBankCode());
+            repayPlan.setRemitBankName(bank.getBankName());
         }
 
         return repayPlan;

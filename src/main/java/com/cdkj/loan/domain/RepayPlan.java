@@ -241,6 +241,9 @@ public class RepayPlan extends ABaseDO {
     // 还款结束时间
     private Date repayDatetimeEnd;
 
+    // 打款银行名称
+    private String remitBankName;
+
     // 代偿申请单
     private ReplaceRepayApply replaceRepayApply;
 
@@ -250,6 +253,14 @@ public class RepayPlan extends ABaseDO {
 
     public void setReplaceRepayApply(ReplaceRepayApply replaceRepayApply) {
         this.replaceRepayApply = replaceRepayApply;
+    }
+
+    public String getRemitBankName() {
+        return remitBankName;
+    }
+
+    public void setRemitBankName(String remitBankName) {
+        this.remitBankName = remitBankName;
     }
 
     public Date getRepayDatetimeEnd() {
