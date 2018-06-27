@@ -415,6 +415,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
         String preNodeCode = repayBiz.getCurNodeCode();
         String nextNodeCode = getNextNodeCode(preNodeCode, approveResult);
         repayBiz.setCurNodeCode(nextNodeCode);
+        repayBiz.setUpdater(operator);
+        repayBiz.setUpdateDatetime(new Date());
+        repayBiz.setRemark(remark);
         repayBizBO.takeCarFinanceManageCheck(repayBiz);
 
         // 日志记录
