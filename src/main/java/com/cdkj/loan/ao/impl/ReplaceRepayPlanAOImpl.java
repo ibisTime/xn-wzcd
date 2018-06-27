@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.IReplaceRepayPlanAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.IReplaceRepayApplyBO;
 import com.cdkj.loan.bo.IReplaceRepayPlanBO;
@@ -19,6 +20,7 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.NodeFlow;
+import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.domain.ReplaceRepayApply;
 import com.cdkj.loan.domain.ReplaceRepayPlan;
@@ -51,6 +53,9 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
 
     @Autowired
     private INodeFlowBO nodeFlowBO;
+
+    @Autowired
+    private IRepayBizBO repayBizBO;
 
     @Autowired
     private IRepayPlanBO repayPlanBO;
@@ -232,23 +237,25 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
     }
 
     private void init(ReplaceRepayPlan replaceRepayPlan) {
-        Bank bank = bankBO.getBankBySubbranch(replaceRepayPlan.getRepayBank());
-        if (null != bank) {
+        if (StringUtils.isNotBlank(replaceRepayPlan.getRepayBank())) {
+            Bank bank = bankBO
+                .getBankBySubbranch(replaceRepayPlan.getRepayBank());
             replaceRepayPlan.setRepayBankName(bank.getBankName());
         }
 
-        SYSUser user = sysUserBO.getUser(replaceRepayPlan.getRepayUser());
-        if (null != user) {
+        if (StringUtils.isNotBlank(replaceRepayPlan.getRepayUser())) {
+            SYSUser user = sysUserBO.getUser(replaceRepayPlan.getRepayUser());
             replaceRepayPlan.setRepayUserName(user.getRealName());
         }
 
-        user = sysUserBO.getUser(replaceRepayPlan.getCustomerUserId());
-        if (null != user) {
+        if (StringUtils.isNotBlank(replaceRepayPlan.getCustomerUserId())) {
+            SYSUser user = sysUserBO
+                .getUser(replaceRepayPlan.getCustomerUserId());
             replaceRepayPlan.setCustomerUserName(user.getRealName());
         }
 
-        user = sysUserBO.getUser(replaceRepayPlan.getUpdater());
-        if (null != user) {
+        if (StringUtils.isNotBlank(replaceRepayPlan.getUpdater())) {
+            SYSUser user = sysUserBO.getUser(replaceRepayPlan.getUpdater());
             replaceRepayPlan.setUpdaterName(user.getRealName());
         }
 
@@ -256,6 +263,14 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
             RepayPlan repayPlan = repayPlanBO
                 .getRepayPlan(replaceRepayPlan.getBizCode());
             replaceRepayPlan.setRepayPlan(repayPlan);
+            RepayBiz repayBiz = repayBizBO
+                .getRepayBiz(repayPlan.getRepayBizCode());
+            replaceRepayPlan.setIdNo(repayBiz.getIdNo());
+        }
+        if (StringUtils.isNotBlank(replaceRepayPlan.getReplaceApplyCode())) {
+            ReplaceRepayApply replaceRepayApply = replaceRepayApplyBO
+                .getReplaceRepayApply(replaceRepayPlan.getReplaceApplyCode());
+            replaceRepayPlan.setAmount(replaceRepayApply.getAmount());
         }
     }
 

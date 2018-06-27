@@ -94,6 +94,28 @@ public class ReplaceRepayPlan extends ABaseDO {
     // 还款计划
     private RepayPlan repayPlan;
 
+    // 证件号
+    private String idNo;
+
+    // 预算金额
+    private Long amount;
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
+    }
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
+    }
+
     public RepayPlan getRepayPlan() {
         return repayPlan;
     }
