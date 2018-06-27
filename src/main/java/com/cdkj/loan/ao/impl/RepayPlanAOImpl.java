@@ -16,8 +16,8 @@ import com.cdkj.loan.ao.ICostAO;
 import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.ao.IRepayPlanAO;
 import com.cdkj.loan.bo.IAccountBO;
-import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankcardBO;
+import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.ICostBO;
 import com.cdkj.loan.bo.ICreditscoreBO;
 import com.cdkj.loan.bo.IRemindLogBO;
@@ -31,8 +31,8 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Account;
-import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.Bankcard;
+import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.Cost;
 import com.cdkj.loan.domain.RemindLog;
 import com.cdkj.loan.domain.RepayBiz;
@@ -86,7 +86,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
     IRemindLogBO remindLogBO;
 
     @Autowired
-    IBankBO bankBO;
+    ICollectBankcardBO collectBankcardBO;
 
     @Autowired
     IBankcardBO bankcardBO;
@@ -162,8 +162,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         }
 
         if (StringUtils.isNotBlank(repayPlan.getRemitBankCode())) {
-            Bank bank = bankBO.getBank(repayPlan.getRemitBankCode());
-            repayPlan.setRemitBankName(bank.getBankName());
+            CollectBankcard collectBankcard = collectBankcardBO
+                .getCollectBankcard(repayPlan.getRemitBankCode());
+            repayPlan.setRemitBankName(collectBankcard.getBankName());
         }
 
         return repayPlan;
