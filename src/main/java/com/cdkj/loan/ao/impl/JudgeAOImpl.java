@@ -61,7 +61,7 @@ public class JudgeAOImpl implements IJudgeAO {
             throw new BizException("xn0000", "当前还款业务不在司法诉讼节点！");
         }
 
-        repayBizBO.refreshJudgeApply(req.getRepayBizCode(), req.getOperator());
+        repayBizBO.refreshJudgeApply(req.getRepayBizCode());
         String code = judgeBO.saveJudge(req);
 
         // 日志记录

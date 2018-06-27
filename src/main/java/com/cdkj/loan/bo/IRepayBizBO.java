@@ -71,7 +71,7 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
     /********************************司法诉讼********************************/
     // 诉讼申请
-    public void refreshJudgeApply(String code, String operator);
+    public void refreshJudgeApply(String code);
 
     // 诉讼跟进
     public void refreshJudgeFollow(String code);
