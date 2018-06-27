@@ -130,7 +130,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(code);
         repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
         repayPlan
-            .setRepayBiz(repayBizBO.getRepayBiz(repayPlan.getRepayBizCode()));
+            .setRepayBiz(repayBizAO.getRepayBiz(repayPlan.getRepayBizCode()));// 要展示转义字段，所以调用AO层
 
         // 获取清收成本
         Cost cost = new Cost();
