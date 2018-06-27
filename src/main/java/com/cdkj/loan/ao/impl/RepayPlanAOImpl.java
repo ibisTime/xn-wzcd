@@ -36,6 +36,7 @@ import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.domain.ReplaceRepayApply;
 import com.cdkj.loan.domain.SYSConfig;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN630532Req;
 import com.cdkj.loan.dto.req.XN630535Req;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -96,7 +97,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         Paginable<RepayPlan> results = repayPlanBO.getPaginable(start, limit,
             condition);
         for (RepayPlan repayPlan : results.getList()) {
-            repayPlan.setUser(userBO.getUser(repayPlan.getUserId()));
+            User user = userBO.getUser(repayPlan.getUserId());
+            repayPlan.setUser(user);
+            repayPlan.setRealName(user.getRealName());
             repayPlan.setRepayBiz(
                 repayBizAO.getRepayBiz(repayPlan.getRepayBizCode()));
 

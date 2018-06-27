@@ -214,6 +214,9 @@ public class RepayPlan extends ABaseDO {
     // 用户信息
     private User user;
 
+    // 用户姓名
+    private String realName;
+
     // 还款业务
     private RepayBiz repayBiz;
 
@@ -375,6 +378,14 @@ public class RepayPlan extends ABaseDO {
 
     public void setOverdueAmount(Long overdueAmount) {
         this.overdueAmount = overdueAmount;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public String getCurNodeCode() {
