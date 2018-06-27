@@ -39,7 +39,7 @@ public class ReplaceRepayPlan extends ABaseDO {
     private String riskNote;
 
     // 代偿利率
-    private Long repayRate;
+    private double repayRate;
 
     // 付款日期
     private Date repayDate;
@@ -308,11 +308,11 @@ public class ReplaceRepayPlan extends ABaseDO {
         this.deferDays = deferDays;
     }
 
-    public Long getRepayRate() {
+    public double getRepayRate() {
         return repayRate;
     }
 
-    public void setRepayRate(Long repayRate) {
+    public void setRepayRate(double repayRate) {
         this.repayRate = repayRate;
     }
 

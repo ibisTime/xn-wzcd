@@ -171,7 +171,7 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
         data.setRepayDate(DateUtil.strToDate(req.getRepayDate(),
             DateUtil.DATA_TIME_PATTERN_1));
         data.setRepayBankcard(req.getRepayBankcard());
-        data.setRepayRate(StringValidater.toLong(req.getRepayRate()));
+        data.setRepayRate(StringValidater.toDouble(req.getRepayRate()));
         data.setRepayUser(req.getRepayUser());
         data.setRepayBill(req.getRepayBill());
         data.setRepayNote(req.getRepayNote());
