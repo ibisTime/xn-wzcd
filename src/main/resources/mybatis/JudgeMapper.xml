@@ -139,7 +139,7 @@
 		,#{exePdf}
 		,#{status}
 		,#{updater}
-		,#{update_datetime}
+		,#{updateDatetime}
 		)
 	</insert>
 	
