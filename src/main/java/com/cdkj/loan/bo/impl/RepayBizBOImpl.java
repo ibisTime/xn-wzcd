@@ -312,10 +312,12 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
-    public void refreshJudgeApply(String code) {
+    public void refreshJudgeApply(String code, String operator) {
         RepayBiz data = new RepayBiz();
         data.setCode(code);
         data.setCurNodeCode(ERepayBizNode.JUDGE_FOLLOW.getCode());
+        data.setUpdater(operator);
+        data.setUpdateDatetime(new Date());
         repayBizDAO.updateJudgeApply(data);
     }
 
