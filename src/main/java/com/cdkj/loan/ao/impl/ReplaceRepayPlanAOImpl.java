@@ -270,7 +270,7 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
         if (StringUtils.isNotBlank(replaceRepayPlan.getReplaceApplyCode())) {
             ReplaceRepayApply replaceRepayApply = replaceRepayApplyBO
                 .getReplaceRepayApply(replaceRepayPlan.getReplaceApplyCode());
-            replaceRepayPlan.setAmount(replaceRepayApply.getAmount());
+            replaceRepayPlan.setReplaceRepayApply(replaceRepayApply);
         }
     }
 

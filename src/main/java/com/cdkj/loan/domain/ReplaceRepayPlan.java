@@ -97,15 +97,15 @@ public class ReplaceRepayPlan extends ABaseDO {
     // 证件号
     private String idNo;
 
-    // 预算金额
-    private Long amount;
+    // 代偿申请单
+    private ReplaceRepayApply replaceRepayApply;
 
-    public Long getAmount() {
-        return amount;
+    public ReplaceRepayApply getReplaceRepayApply() {
+        return replaceRepayApply;
     }
 
-    public void setAmount(Long amount) {
-        this.amount = amount;
+    public void setReplaceRepayApply(ReplaceRepayApply replaceRepayApply) {
+        this.replaceRepayApply = replaceRepayApply;
     }
 
     public String getIdNo() {
