@@ -118,6 +118,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
         List<RepayPlan> repayPlanList = repayPlanBO
             .queryRepayPlanList(condition);
         repayBiz.setRepayPlanList(repayPlanList);
+        RepayPlan repayPlan = repayPlanBO
+            .getRepayPlanCurMonth(repayBiz.getCode());
+        repayBiz.setCurMonthRepayPlan(repayPlan);
 
         // 预算单信息
         if (ERepayBizType.CAR.getCode().equals(repayBiz.getRefType())) {

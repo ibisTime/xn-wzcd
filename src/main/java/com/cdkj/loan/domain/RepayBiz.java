@@ -239,6 +239,9 @@ public class RepayBiz extends ABaseDO {
     // 车贷订单
     private BudgetOrder budgetOrder;
 
+    // 当月还款计划
+    RepayPlan curMonthRepayPlan;
+
     // 还款计划列表
     List<RepayPlan> repayPlanList;
 
@@ -856,6 +859,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setBudgetOrder(BudgetOrder budgetOrder) {
         this.budgetOrder = budgetOrder;
+    }
+
+    public RepayPlan getCurMonthRepayPlan() {
+        return curMonthRepayPlan;
+    }
+
+    public void setCurMonthRepayPlan(RepayPlan curMonthRepayPlan) {
+        this.curMonthRepayPlan = curMonthRepayPlan;
     }
 
     public List<RepayPlan> getRepayPlanList() {

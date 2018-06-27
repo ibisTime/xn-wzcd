@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,7 +67,8 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
     public void refreshFinanceManageApprove(String code, String approveResult,
             String updater, String remark) {
         ReplaceRepayApply data = replaceRepayApplyBO.getReplaceRepayApply(code);
-        if (!EReplaceRepayStatus.TO_APPROVE.getCode().equals(data.getStatus())) {
+        if (!EReplaceRepayStatus.TO_APPROVE.getCode()
+            .equals(data.getStatus())) {
             throw new BizException("xn0000", "预算单不在财务经理审核状态！");
         }
 
@@ -88,8 +90,8 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
     @Override
     public Paginable<ReplaceRepayApply> queryReplaceRepayApplyPage(int start,
             int limit, ReplaceRepayApply condition) {
-        Paginable<ReplaceRepayApply> page = replaceRepayApplyBO.getPaginable(
-            start, limit, condition);
+        Paginable<ReplaceRepayApply> page = replaceRepayApplyBO
+            .getPaginable(start, limit, condition);
         List<ReplaceRepayApply> list = page.getList();
         for (ReplaceRepayApply replaceRepayApply : list) {
             init(replaceRepayApply);
@@ -118,19 +120,21 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
     }
 
     private void init(ReplaceRepayApply replaceRepayApply) {
-        SYSUser applyUser = sysUserBO.getUser(replaceRepayApply.getApplyUser());
-        if (null != applyUser) {
+        if (StringUtils.isNotBlank(replaceRepayApply.getApplyUser())) {
+            SYSUser applyUser = sysUserBO
+                .getUser(replaceRepayApply.getApplyUser());
             replaceRepayApply.setApplyUserName(applyUser.getRealName());
         }
 
-        SYSUser updaterUser = sysUserBO.getUser(replaceRepayApply.getUpdater());
-        if (null != updaterUser) {
+        if (StringUtils.isNotBlank(replaceRepayApply.getUpdater())) {
+            SYSUser updaterUser = sysUserBO
+                .getUser(replaceRepayApply.getUpdater());
             replaceRepayApply.setUpdaterName(updaterUser.getRealName());
         }
 
-        Bank bank = bankBO.getBankBySubbranch(replaceRepayApply
-            .getReceiptBank());
-        if (null != bank) {
+        if (StringUtils.isNotBlank(replaceRepayApply.getReceiptBank())) {
+            Bank bank = bankBO
+                .getBankBySubbranch(replaceRepayApply.getReceiptBank());
             replaceRepayApply.setReceiptBankName(bank.getBankName());
         }
     }

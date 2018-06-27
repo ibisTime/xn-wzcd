@@ -42,11 +42,14 @@ public class RepayPlan extends ABaseDO {
     // 本期利息
     private Long repayInterest;
 
+    // 本期还款金额
+    private Long monthRepayAmount;
+
     // 已还金额
     private Long payedAmount;
 
     // 剩余欠款
-    private long overplusAmount;
+    private Long overplusAmount;
 
     // 逾期金额
     private Long overdueAmount;
@@ -226,9 +229,6 @@ public class RepayPlan extends ABaseDO {
     // 未结清贷款金额
     private Long unsettledLoan;
 
-    // 本月还款金额
-    private Long monthRepayAmount;
-
     // 还款卡号
     private String bankcardNumber;
 
@@ -361,11 +361,11 @@ public class RepayPlan extends ABaseDO {
         this.payedAmount = payedAmount;
     }
 
-    public long getOverplusAmount() {
+    public Long getOverplusAmount() {
         return overplusAmount;
     }
 
-    public void setOverplusAmount(long overplusAmount) {
+    public void setOverplusAmount(Long overplusAmount) {
         this.overplusAmount = overplusAmount;
     }
 
