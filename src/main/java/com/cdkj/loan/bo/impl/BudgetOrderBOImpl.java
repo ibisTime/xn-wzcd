@@ -166,18 +166,20 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
-        if (EBudgetOrderNode.COMPANY_COLLECTION_CHECK.getCode()
-            .equals(nodeFlow.getCurrentNode())
-                || EBudgetOrderNode.CAR_COMPANY_COLLECTION_CHECK.getCode()
-                    .equals(nodeFlow.getCurrentNode())
-                || EBudgetOrderNode.FEN_COMPANY_COLLECTION_CHECK.getCode()
-                    .equals(nodeFlow.getCurrentNode())
-                || EBudgetOrderNode.HEADQUARTERS_CAR_COMPANY_COLLECTION_CHECK
-                    .getCode().equals(nodeFlow.getCurrentNode())) {
-            if (StringUtils.isNotBlank(nodeFlow.getFileList())) {
+        if (EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
+            .equals(budgetOrder.getCurNodeCode())
+                || EBudgetOrderNode.CAR_SEND_BANK_MATERIALS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                || EBudgetOrderNode.FEN_CAR_SEND_LOGISTICS.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                || EBudgetOrderNode.HEADQUARTERS_CAR_SEND_BANK_MATERIALS
+                    .getCode().equals(budgetOrder.getCurNodeCode())) {
+            NodeFlow nodeFlow2 = nodeFlowBO
+                .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
+            if (StringUtils.isNotBlank(nodeFlow2.getFileList())) {
                 logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                     budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                    nodeFlow.getCurrentNode(), nodeFlow.getNextNode(),
+                    budgetOrder.getCurNodeCode(), nodeFlow2.getNextNode(),
                     nodeFlow.getFileList());
             } else {
                 throw new BizException("xn0000", "当前节点材料清单不存在");

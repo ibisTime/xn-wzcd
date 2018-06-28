@@ -771,10 +771,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 "当前节点不是银行放款节点，不能操作");
         }
 
-        // 当前节点
-        String curNodeCode = budgetOrder.getCurNodeCode();
-
-        String nextNodeCode = null;
+        String curNodeCode = null;
         Department department = departmentBO
             .getDepartment(budgetOrder.getCompanyCode());
         String parentCode = department.getParentCode();
@@ -782,11 +779,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .getBankBySubbranch(budgetOrder.getLoanBankCode());
         if (EBoolean.YES.getCode().equals(parentCode) && EBankType.GH.getCode()
             .equals(bankBySubbranch.getBankCode())) {
-            nextNodeCode = EBudgetOrderNode.SENDING_CONTRACT.getCode();
+            curNodeCode = EBudgetOrderNode.SENDING_CONTRACT.getCode();
         }
-        nextNodeCode = EBudgetOrderNode.CAR_SEND_LOGISTICS.getCode();
+        curNodeCode = EBudgetOrderNode.CAR_SEND_LOGISTICS.getCode();
 
-        budgetOrder.setCurNodeCode(nextNodeCode);
+        budgetOrder.setCurNodeCode(curNodeCode);
         budgetOrder.setCode(req.getCode());
         budgetOrder
             .setBankFkAmount(StringValidater.toLong(req.getBankFkAmount()));
@@ -816,7 +813,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
         logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
             budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
-            nextNodeCode, nodeFlow.getFileList());
+            nodeFlow.getNextNode(), nodeFlow.getFileList());
 
         // 日志记录
         String preCurrentNode = budgetOrder.getCurNodeCode();
