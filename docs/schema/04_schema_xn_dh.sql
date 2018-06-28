@@ -195,6 +195,7 @@ CREATE TABLE `tdh_repay_plan` (
   `repay_datetime` datetime DEFAULT NULL COMMENT '还款时间',
   `repay_capital` bigint(20) DEFAULT NULL COMMENT '本期本金',
   `repay_interest` decimal(18,8) DEFAULT NULL COMMENT '本期利息',
+  `repay_amount` BIGINT(20) DEFAULT NULL COMMENT '本期还款金额',
   `payed_amount` bigint(20) DEFAULT NULL COMMENT '已还金额',
   
   `overplus_amount` bigint(20) DEFAULT NULL COMMENT '剩余欠款',

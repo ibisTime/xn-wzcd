@@ -43,7 +43,7 @@ public class RepayPlan extends ABaseDO {
     private Long repayInterest;
 
     // 本期还款金额
-    private Long monthRepayAmount;
+    private Long repayAmount;
 
     // 已还金额
     private Long payedAmount;
@@ -823,12 +823,12 @@ public class RepayPlan extends ABaseDO {
         this.unsettledLoan = unsettledLoan;
     }
 
-    public Long getMonthRepayAmount() {
-        return monthRepayAmount;
+    public Long getRepayAmount() {
+        return repayAmount;
     }
 
-    public void setMonthRepayAmount(Long monthRepayAmount) {
-        this.monthRepayAmount = monthRepayAmount;
+    public void setRepayAmount(Long repayAmount) {
+        this.repayAmount = repayAmount;
     }
 
     public String getBankcardNumber() {
