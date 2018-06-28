@@ -280,7 +280,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
                 repayBizBO.getRepayBiz(repayPlan.getRepayBizCode()));
             Long monthRepayAmount = repayPlan.getRepayCapital()
                     * repayPlan.getRepayInterest();
-            repayPlan.setMonthRepayAmount(monthRepayAmount);
+            repayPlan.setRepayAmount(monthRepayAmount);
         }
         return results;
     }

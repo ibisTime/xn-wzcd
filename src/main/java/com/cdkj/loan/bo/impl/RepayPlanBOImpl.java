@@ -152,7 +152,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             repayPlan.setRepayDatetime(repayDatetime);
             repayPlan.setRepayCapital(repayCapital);
             repayPlan.setRepayInterest(0L);
-            repayPlan.setMonthRepayAmount(repayCapital + 0L);
+            repayPlan.setRepayAmount(repayCapital + 0L);
             repayPlan.setPayedAmount(0L);
 
             // 每期应还金额
@@ -324,9 +324,9 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             if (repayPlan.getCurNodeCode()
                 .equals(ERepayPlanNode.BAD_DEBT.getCode())) {
                 repayPlan.setPayedAmount(0L);
-                repayPlan.setOverplusAmount(repayPlan.getMonthRepayAmount());
+                repayPlan.setOverplusAmount(repayPlan.getRepayAmount());
             } else {
-                repayPlan.setPayedAmount(repayPlan.getMonthRepayAmount());
+                repayPlan.setPayedAmount(repayPlan.getRepayAmount());
                 repayPlan.setOverplusAmount(0L);
             }
             repayPlanDAO.repayResultHandle(repayPlan);

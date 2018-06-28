@@ -13,7 +13,7 @@
 		<result column="repay_datetime" property="repayDatetime" />
 		<result column="repay_capital" property="repayCapital" />
 		<result column="repay_interest" property="repayInterest" />
-		<result column="month_repay_amount" property="monthRepayAmount" />
+		<result column="repay_amount" property="repayAmount" />
 		<result column="payed_amount" property="payedAmount" />
 		<result column="overplus_amount" property="overplusAmount" />
 		
@@ -137,7 +137,7 @@
 		,t.repay_datetime
 		,t.repay_capital
 		,t.repay_interest
-		,t.month_repay_amount
+		,t.repay_amount
 		,t.payed_amount
 		
 		,t.overplus_amount
@@ -221,7 +221,7 @@
 		,t.repay_datetime
 		,t.repay_capital
 		,t.repay_interest
-		,t.month_repay_amount
+		,t.repay_amount
 		,t.payed_amount
 		
 		,t.overplus_amount
@@ -317,7 +317,7 @@
 		,repay_datetime
 		,repay_capital
 		,repay_interest
-		,month_repay_amount
+		,repay_amount
 		,payed_amount
 		,overplus_amount
 		,overdue_amount
@@ -347,7 +347,7 @@
 		,#{repayPlan.repayDatetime}
 		,#{repayPlan.repayCapital}
 		,#{repayPlan.repayInterest}
-		,#{repayPlan.monthRepayAmount}
+		,#{repayPlan.repayAmount}
 		,#{repayPlan.payedAmount}
 		,#{repayPlan.overplusAmount}
 		,#{repayPlan.overdueAmount}
