@@ -152,6 +152,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             repayPlan.setRepayDatetime(repayDatetime);
             repayPlan.setRepayCapital(repayCapital);
             repayPlan.setRepayInterest(0L);
+            repayPlan.setMonthRepayAmount(repayCapital + 0L);
             repayPlan.setPayedAmount(0L);
 
             // 每期应还金额
