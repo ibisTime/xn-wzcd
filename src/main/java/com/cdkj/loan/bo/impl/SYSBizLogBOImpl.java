@@ -61,6 +61,14 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
         refreshPreSYSBizLog(refType.getCode(), refOrder, preDealNode);
     }
 
+    // 最后操作记录日志
+    @Override
+    public void onlyPreEndSYSBizLog(EBizLogType refType, String refOrder,
+            String preDealNode) {
+        // 处理之前节点
+        refreshPreSYSBizLog(refType.getCode(), refOrder, preDealNode);
+    }
+
     private void refreshPreSYSBizLog(String refType, String refOrder,
             String dealNode) {
         SYSBizLog data = getSYSBizLoglatest(refType, refOrder, dealNode);

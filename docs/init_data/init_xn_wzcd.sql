@@ -2717,7 +2717,6 @@ INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('021_16','诉讼
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('021_17','诉讼结果录入','021',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('021_18','财务确认收款','021',NULL);
 INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('021_19','坏账','021',NULL);
-INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('021_20','司法诉讼完成','021',NULL);
 
 /*
 -- Query: SELECT `type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark` FROM tsys_node_flow
@@ -2804,7 +2803,6 @@ INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`fil
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('021','021_15','021_16',NULL,NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('021','021_16','021_17',NULL,NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('021','021_17','021_18',NULL,NULL,NULL);
-INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('021','021_18','021_20',NULL,NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('012','012_01','012_02',NULL,NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('012','012_02','012_03','',NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('012','012_03','012_04',NULL,NULL,NULL);

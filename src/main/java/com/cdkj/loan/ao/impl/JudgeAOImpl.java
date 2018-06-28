@@ -20,6 +20,7 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630560Req;
 import com.cdkj.loan.dto.req.XN630561Req;
 import com.cdkj.loan.dto.req.XN630562Req;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.ECaseStatus;
 import com.cdkj.loan.enums.EExeResult;
@@ -104,8 +105,12 @@ public class JudgeAOImpl implements IJudgeAO {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
         if (!ERepayBizNode.JUDGE_RESULT_INPUT.getCode()
             .equals(repayBiz.getCurNodeCode())) {
-            throw new BizException("xn0000", "当前业务不在执行结果录入节点！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前业务不在执行结果录入节点！");
         }
+        // 当前节点
+        String curNodeCode = repayBiz.getCurNodeCode();
+
         judgeBO.refreshJudgeResultInput(req);
         // 结果为完毕，则用户已还欠款；结果为中止，则需要重新诉讼；结果为终结，则为坏账；
         if (EExeResult.FINISH_NORMAL.getCode().equals(req.getExeResult())) {// 还款计划设置为已还清
@@ -114,9 +119,20 @@ public class JudgeAOImpl implements IJudgeAO {
                 ERepayPlanNode.REPAY_YES);
             repayBizBO.refreshJudgePaid(req.getCode());
 
+            // 日志记录
+            sysBizLogBO.onlyPreEndSYSBizLog(EBizLogType.REPAY_BIZ,
+                req.getCode(), curNodeCode);
+
         } else if (EExeResult.ABORT.getCode().equals(req.getExeResult())) {// 还款计划不操作
 
             repayBizBO.refreshJudgeAgain(req.getCode());
+
+            // 日志记录
+            ERepayBizNode node = ERepayBizNode.getMap().get(
+                nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getNextNode());
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getCode(),
+                EBizLogType.REPAY_BIZ, req.getCode(), repayBiz.getCurNodeCode(),
+                node.getCode(), node.getValue(), req.getOperator());
 
         } else if (EExeResult.FINISH_BAD.getCode().equals(req.getExeResult())) {
 
@@ -125,14 +141,12 @@ public class JudgeAOImpl implements IJudgeAO {
                 ERepayPlanNode.BAD_DEBT);
             repayBizBO.refreshJudgeBad(req.getCode());
 
+            // 日志记录
+            sysBizLogBO.onlyPreEndSYSBizLog(EBizLogType.REPAY_BIZ,
+                req.getCode(), curNodeCode);
+
         }
 
-        // 日志记录
-        ERepayBizNode node = ERepayBizNode.getMap().get(nodeFlowBO
-            .getNodeFlowByCurrentNode(repayBiz.getCurNodeCode()).getNextNode());
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getCode(),
-            EBizLogType.REPAY_BIZ, req.getCode(), repayBiz.getCurNodeCode(),
-            node.getCode(), node.getValue(), req.getOperator());
     }
 
     @Override
