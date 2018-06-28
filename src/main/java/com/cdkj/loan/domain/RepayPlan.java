@@ -72,22 +72,22 @@ public class RepayPlan extends ABaseDO {
     // 已缴纳清收费用总额
     private Long payedFee;
 
-    // 再次逾期保证金
+    // 再次逾期保证金(违约押金,记录)
     private Long overdueDeposit;
 
-    // 再次逾期保证金收取方式
+    // 再次逾期保证金收取方式(线下收款)
     private String overdueDepositWay;
 
     // 是否部分还款
     private String repayIsPart;
 
-    // 实际还款金额
+    // 实际还款金额(部分还款时候用)
     private Long realRepayAmount;
 
     // 已催款次数
     private int remindCount;
 
-    // 实际代偿金额
+    // 实际代偿金额(代偿预算单填写多少，就是多少)
     private Long replaceRealRepayAmount;
 
     // 代偿是否缴纳

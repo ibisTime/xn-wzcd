@@ -39,7 +39,7 @@ public class RepayBiz extends ABaseDO {
     // 关联编号
     private String refCode;
 
-    // 业务总价
+    // 业务总价(?)
     private Long bizPrice;
 
     // 首付比例
@@ -72,7 +72,7 @@ public class RepayBiz extends ABaseDO {
     // 放款时间
     private Date bankFkDatetime;
 
-    // 风险保证金
+    // 风险保证金(准入单)
     private Long fxDeposit;
 
     // 首期还款日期
@@ -90,10 +90,10 @@ public class RepayBiz extends ABaseDO {
     // 每期月供金额
     private Long monthAmount;
 
-    // 履约保证金（可退）
+    // 履约保证金（准入单）
     private Long lyDeposit;
 
-    // 扣除履约保证金
+    // 扣除履约保证金（结清单申请）
     private Long cutLyDeposit;
 
     // 节点
