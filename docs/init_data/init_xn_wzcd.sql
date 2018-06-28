@@ -1104,7 +1104,7 @@ INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806200246142347949','录入','2','/enter','4','admin','2018-06-19 23:42:58','解除抵押','SM201805291035342036590');
 
 /*
--- Query: SELECT role_code, menu_code, updater,now() update_datetime, remark FROM tsys_menu_role
+-- Query: SELECT role_code, menu_code, updater,now() update_datetime, remark FROM tsys_menu_role where role_code='RO201800000000000001'
 -- Date: 2018-06-19 12:51
 */
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('SR201805291328573573955','SM201804241904336827315','admin','2018-06-19 04:50:32',NULL);
