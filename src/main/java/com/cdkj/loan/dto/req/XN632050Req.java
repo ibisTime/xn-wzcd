@@ -44,7 +44,7 @@ public class XN632050Req {
     private String autherName;
 
     // 授权人电话
-    private String autherPhone;
+    private String autherPhoneNumber;
 
     // 授权人身份证
     private String autherIdNo;
@@ -148,12 +148,12 @@ public class XN632050Req {
         this.autherName = autherName;
     }
 
-    public String getAutherPhone() {
-        return autherPhone;
+    public String getAutherPhoneNumber() {
+        return autherPhoneNumber;
     }
 
-    public void setAutherPhone(String autherPhone) {
-        this.autherPhone = autherPhone;
+    public void setAutherPhoneNumber(String autherPhoneNumber) {
+        this.autherPhoneNumber = autherPhoneNumber;
     }
 
     public String getAutherAddress() {

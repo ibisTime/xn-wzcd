@@ -149,7 +149,7 @@ CREATE TABLE `tb_car_dealer_protocol` (
   `insu_agency_year3_type` varchar(32) DEFAULT NULL COMMENT '3年保险代理费类型(1平台/2车行)',
   `insu_agency_year3_fee` bigint(20) DEFAULT NULL COMMENT '3年保险代理费',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='经销商协议表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='经销商协议表';
 
 -- ----------------------------
 --  Table structure for `tb_collect_bankcard`
@@ -223,7 +223,7 @@ CREATE TABLE `tb_id_no_area` (
   `area_no` varchar(32) CHARACTER SET utf8 COLLATE utf8_estonian_ci DEFAULT NULL COMMENT '身份证区域号',
   `area_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_estonian_ci DEFAULT NULL COMMENT '身份证区域名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='身份证区域表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='身份证区域表';
 
 -- ----------------------------
 --  Table structure for `tb_insurance_company`
@@ -260,7 +260,7 @@ CREATE TABLE `tb_province_no` (
   `province_no` varchar(32) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='省份编号表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='省份编号表';
 
 -- ----------------------------
 --  Table structure for `tbf_withhold`
@@ -2093,7 +2093,7 @@ CREATE TABLE `tstd_channel_bank` (
   `month_amount` bigint(32) DEFAULT NULL COMMENT '每月限额',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `tstd_charge`
@@ -2259,7 +2259,7 @@ CREATE TABLE `tsys_biz_log` (
   `end_datetime` datetime DEFAULT NULL COMMENT '操作结束时间',
   `speed_time` varchar(255) DEFAULT NULL COMMENT '花费时间(单位：秒)',
   PRIMARY KEY (`id`) COMMENT '业务日志跟踪表'
-) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `tsys_biz_team`
@@ -2295,7 +2295,7 @@ CREATE TABLE `tsys_config` (
   `company_code` varchar(96) DEFAULT NULL,
   `system_code` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `tsys_department`
@@ -2331,7 +2331,7 @@ CREATE TABLE `tsys_dict` (
   `company_code` varchar(96) DEFAULT NULL,
   `system_code` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=572 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `tsys_menu`
@@ -2361,7 +2361,7 @@ CREATE TABLE `tsys_menu_role` (
   `update_datetime` datetime DEFAULT NULL,
   `remark` varchar(765) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3346 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `tsys_node`
@@ -2388,7 +2388,7 @@ CREATE TABLE `tsys_node_flow` (
   `file_list` text,
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) COMMENT '节点流程配置'
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `tsys_role`
@@ -2412,7 +2412,7 @@ CREATE TABLE `tsys_role_node` (
   `role_code` varchar(32) DEFAULT NULL COMMENT '角色编号',
   `node_code` varchar(32) DEFAULT NULL COMMENT '节点编号',
   PRIMARY KEY (`id`) COMMENT '角色节点'
-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `tsys_user`
