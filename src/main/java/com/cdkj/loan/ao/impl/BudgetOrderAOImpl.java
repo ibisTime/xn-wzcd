@@ -981,9 +981,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setOperator(req.getOperator());
         budgetOrder.setOperateDatetime(new Date());
         SYSUser sysUser = sysUserBO.getUser(req.getOperator());
-        Department department = departmentBO
-            .getDepartment(sysUser.getDepartmentCode());
-        budgetOrder.setOperateDepartment(department.getName());
+        budgetOrder.setOperateDepartment(sysUser.getDepartmentCode());
 
         if (null != req.getFileList()) {
             StringBuilder fileListBuilder = new StringBuilder();
