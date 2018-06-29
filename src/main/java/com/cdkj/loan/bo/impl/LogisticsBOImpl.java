@@ -65,12 +65,6 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写编号");
         }
 
-        if (!ELogisticsStatus.TO_RECEIVE.getCode()
-            .equals(getLogistics(code).getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "资料不是待收件状态。");
-        }
-
         Logistics condition = new Logistics();
         condition.setCode(code);
         condition.setRemark(remark);

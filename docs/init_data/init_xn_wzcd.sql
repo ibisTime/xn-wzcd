@@ -1545,6 +1545,10 @@ INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_d
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','take_way','4','暂缓起诉','admin',now(),NULL,'CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','take_way','5','计划保管车辆','admin',now(),NULL,'CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','take_way','6','其他','admin',now(),NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'supplement_reason','补件原因','admin',now(),NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','supplement_reason','1','人民的利益','admin',now(),NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','supplement_reason','2','社会的需求','admin',now(),NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','supplement_reason','3','国家的号召','admin',now(),NULL,'CD-CWZCD000020','CD-CWZCD000020');
 
 /*
 -- Query: select `type`,`ckey`,`cvalue`,`updater`,now() as `update_datetime`,`remark`,`company_code`,`system_code` from tsys_config

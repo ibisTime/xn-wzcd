@@ -178,7 +178,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
                     budgetOrder.getCurNodeCode(), nodeFlow2.getNextNode(),
                     nodeFlow.getFileList());
             } else {
-                throw new BizException("xn0000", "当前节点材料清单不存在");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前节点材料清单不存在");
             }
         }
         budgetOrderDAO.updaterLogicNode(budgetOrder);
