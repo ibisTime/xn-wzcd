@@ -1566,6 +1566,7 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
+		,fbh_status = #{fbhStatus}
 		WHERE code = #{code}
 	</update>
 
