@@ -25,6 +25,7 @@ public class XN632120Req {
     private String carDealerCode;
 
     // 贷款支行编号
+    @NotBlank
     private String loanBankSubbranch;
 
     // 厂商指导价

@@ -245,6 +245,9 @@ public class BudgetOrder extends ABaseDO {
     // GPS收费方式
     private String gpsFeeWay;
 
+    // GPS安装位置
+    private String azLocation;
+
     // 履约保证金
     private Long lyAmount;
 
