@@ -240,13 +240,13 @@ public class BudgetOrder extends ABaseDO {
     private Long gpsFee;
 
     // GPS提成
-    private Double gpsDeduct;
+    private Long gpsDeduct;
 
     // GPS收费方式
     private String gpsFeeWay;
 
     // GPS安装位置
-    private String azLocation;
+    private String gpsLocation;
 
     // 履约保证金
     private Long lyAmount;
@@ -1319,6 +1319,14 @@ public class BudgetOrder extends ABaseDO {
         this.gpsFee = gpsFee;
     }
 
+    public String getGpsLocation() {
+        return gpsLocation;
+    }
+
+    public void setGpsLocation(String gpsLocation) {
+        this.gpsLocation = gpsLocation;
+    }
+
     public String getGpsFeeWay() {
         return gpsFeeWay;
     }
@@ -2159,11 +2167,11 @@ public class BudgetOrder extends ABaseDO {
         this.oilSubsidyKil = oilSubsidyKil;
     }
 
-    public Double getGpsDeduct() {
+    public Long getGpsDeduct() {
         return gpsDeduct;
     }
 
-    public void setGpsDeduct(Double gpsDeduct) {
+    public void setGpsDeduct(Long gpsDeduct) {
         this.gpsDeduct = gpsDeduct;
     }
 

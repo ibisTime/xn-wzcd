@@ -34,6 +34,9 @@ public class XN632120Req {
     // 车辆型号
     private String carModel;
 
+    // 车架号码
+    private String frameNo;
+
     // 贷款周期
     private String loanPeriods;
 
@@ -208,6 +211,9 @@ public class XN632120Req {
     // GPS收费方式
     private String gpsFeeWay;
 
+    // GPS安装位置
+    private String gpsLocation;
+
     // 手续费收取方式
     private String serviceChargeWay;
 
@@ -317,7 +323,6 @@ public class XN632120Req {
     private String applyDatetime;
 
     // gps列表编号
-    @NotEmpty
     private List<String> gpsList;
 
     // 用款用途
@@ -371,6 +376,14 @@ public class XN632120Req {
 
     public void setMarryState(String marryState) {
         this.marryState = marryState;
+    }
+
+    public String getFrameNo() {
+        return frameNo;
+    }
+
+    public void setFrameNo(String frameNo) {
+        this.frameNo = frameNo;
     }
 
     public String getOtherIncomeNote() {
@@ -699,6 +712,14 @@ public class XN632120Req {
 
     public void setIsPlatInsure(String isPlatInsure) {
         this.isPlatInsure = isPlatInsure;
+    }
+
+    public String getGpsLocation() {
+        return gpsLocation;
+    }
+
+    public void setGpsLocation(String gpsLocation) {
+        this.gpsLocation = gpsLocation;
     }
 
     public String getGpsDeduct() {

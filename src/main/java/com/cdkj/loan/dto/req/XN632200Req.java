@@ -24,9 +24,6 @@ public class XN632200Req {
     // 车辆品牌
     private String carBrand;
 
-    // 车架号码
-    private String frameNo;
-
     // 发动机号码
     private String engineNo;
 
@@ -168,14 +165,6 @@ public class XN632200Req {
 
     public void setCarBrand(String carBrand) {
         this.carBrand = carBrand;
-    }
-
-    public String getFrameNo() {
-        return frameNo;
-    }
-
-    public void setFrameNo(String frameNo) {
-        this.frameNo = frameNo;
     }
 
     public String getEngineNo() {

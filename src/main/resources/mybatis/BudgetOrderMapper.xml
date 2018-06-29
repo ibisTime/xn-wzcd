@@ -95,6 +95,7 @@
 		<result column="gps_deduct" property="gpsDeduct" />
 		
 		<result column="gps_fee_way" property="gpsFeeWay" />
+		<result column="gps_location" property="gpsLocation" />
 		<result column="ly_amount" property="lyAmount" />
 		<result column="fx_amount" property="fxAmount" />
 		<result column="other_fee" property="otherFee" />
@@ -375,6 +376,7 @@
 		,t.gps_fee
 		,t.gps_deduct
 		,t.gps_fee_way
+		,t.gps_location
 		,t.ly_amount
 		,t.fx_amount
 		,t.other_fee
@@ -595,6 +597,7 @@
 		,t.gps_fee
 		,t.gps_deduct
 		,t.gps_fee_way
+		,t.gps_location
 		,t.ly_amount
 		,t.fx_amount
 		,t.other_fee
@@ -792,6 +795,7 @@
 		,t.gps_fee
 		,t.gps_deduct
 		,t.gps_fee_way
+		,t.gps_location
 		,t.ly_amount
 		,t.fx_amount
 		,t.other_fee
@@ -918,6 +922,7 @@
 		,loan_bank_subbranch
 		,original_price
 		,car_model
+		,frame_no
 		,loan_periods
 		,invoice_price
 		,shop_way
@@ -987,6 +992,7 @@
 		,gps_fee
 		,gps_deduct
 		,gps_fee_way
+		,gps_location
 		,ly_amount
 		,fx_amount
 		,other_fee
@@ -1112,6 +1118,7 @@
 		,#{gpsFee}
 		,#{gpsDeduct}
 		,#{gpsFeeWay}
+		,#{gpsLocation}
 		,#{lyAmount}
 		,#{fxAmount}
 		,#{otherFee}
@@ -1244,6 +1251,7 @@
 		
 		,gps_deduct = #{gpsDeduct}
 		,gps_fee_way = #{gpsFeeWay}
+		,gps_location = #{gpsLocation}
 		,ly_amount = #{lyAmount}
 		,fx_amount = #{fxAmount}
 		,other_fee = #{otherFee}
