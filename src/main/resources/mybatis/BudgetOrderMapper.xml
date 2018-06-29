@@ -10,7 +10,6 @@
 		<result column="car_dealer_code" property="carDealerCode" />
 		
 		<result column="loan_bank_code" property="loanBankCode" />
-	    <result column="loan_bank_subbranch" property="loanBankSubbranch" />
 		<result column="original_price" property="originalPrice" />
 		<result column="car_model" property="carModel" />
 		<result column="loan_periods" property="loanPeriods" />
@@ -95,6 +94,7 @@
 		<result column="gps_deduct" property="gpsDeduct" />
 		
 		<result column="gps_fee_way" property="gpsFeeWay" />
+		<result column="gps_location" property="gpsLocation" />
 		<result column="ly_amount" property="lyAmount" />
 		<result column="fx_amount" property="fxAmount" />
 		<result column="other_fee" property="otherFee" />
@@ -304,7 +304,6 @@
 		,t.customer_name
 		,t.car_dealer_code
 		,t.loan_bank_code
-		,t.loan_bank_subbranch
 		,t.original_price
 		,t.car_model
 		,t.loan_periods
@@ -375,6 +374,7 @@
 		,t.gps_fee
 		,t.gps_deduct
 		,t.gps_fee_way
+		,t.gps_location
 		,t.ly_amount
 		,t.fx_amount
 		,t.other_fee
@@ -524,7 +524,6 @@
 		,t.customer_name
 		,t.car_dealer_code
 		,t.loan_bank_code
-		,t.loan_bank_subbranch
 		,t.original_price
 		,t.car_model
 		,t.loan_periods
@@ -595,6 +594,7 @@
 		,t.gps_fee
 		,t.gps_deduct
 		,t.gps_fee_way
+		,t.gps_location
 		,t.ly_amount
 		,t.fx_amount
 		,t.other_fee
@@ -731,7 +731,6 @@
 		,t.customer_name
 		,t.car_dealer_code
 		,t.loan_bank_code
-		,t.loan_bank_subbranch
 		,t.original_price
 		,t.car_model
 		,t.loan_periods
@@ -792,6 +791,7 @@
 		,t.gps_fee
 		,t.gps_deduct
 		,t.gps_fee_way
+		,t.gps_location
 		,t.ly_amount
 		,t.fx_amount
 		,t.other_fee
@@ -915,9 +915,9 @@
 		,customer_name
 		,car_dealer_code
 		,loan_bank_code
-		,loan_bank_subbranch
 		,original_price
 		,car_model
+		,frame_no
 		,loan_periods
 		,invoice_price
 		,shop_way
@@ -987,6 +987,7 @@
 		,gps_fee
 		,gps_deduct
 		,gps_fee_way
+		,gps_location
 		,ly_amount
 		,fx_amount
 		,other_fee
@@ -1040,7 +1041,6 @@
 		,#{customerName}
 		,#{carDealerCode}
 		,#{loanBankCode}
-		,#{loanBankSubbranch}
 		,#{originalPrice}
 		,#{carModel}
 		,#{loanPeriods}
@@ -1112,6 +1112,7 @@
 		,#{gpsFee}
 		,#{gpsDeduct}
 		,#{gpsFeeWay}
+		,#{gpsLocation}
 		,#{lyAmount}
 		,#{fxAmount}
 		,#{otherFee}
@@ -1165,7 +1166,6 @@
 		SET
 		customer_type = #{customerType}
 		,car_dealer_code = #{carDealerCode}
-		,loan_bank_subbranch = #{loanBankSubbranch}
 		,original_price = #{originalPrice}
 		,car_model = #{carModel}
 		
@@ -1244,6 +1244,7 @@
 		
 		,gps_deduct = #{gpsDeduct}
 		,gps_fee_way = #{gpsFeeWay}
+		,gps_location = #{gpsLocation}
 		,ly_amount = #{lyAmount}
 		,fx_amount = #{fxAmount}
 		,other_fee = #{otherFee}

@@ -32,9 +32,6 @@ public class BudgetOrder extends ABaseDO {
     // 贷款银行编号
     private String loanBankCode;
 
-    // 经办支行
-    private String loanBankSubbranch;
-
     // 厂商指导价
     private Long originalPrice;
 
@@ -240,10 +237,13 @@ public class BudgetOrder extends ABaseDO {
     private Long gpsFee;
 
     // GPS提成
-    private Double gpsDeduct;
+    private Long gpsDeduct;
 
     // GPS收费方式
     private String gpsFeeWay;
+
+    // GPS安装位置
+    private String gpsLocation;
 
     // 履约保证金
     private Long lyAmount;
@@ -940,14 +940,6 @@ public class BudgetOrder extends ABaseDO {
         this.loanBankCode = loanBankCode;
     }
 
-    public String getLoanBankSubbranch() {
-        return loanBankSubbranch;
-    }
-
-    public void setLoanBankSubbranch(String loanBankSubbranch) {
-        this.loanBankSubbranch = loanBankSubbranch;
-    }
-
     public Long getOriginalPrice() {
         return originalPrice;
     }
@@ -1314,6 +1306,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setGpsFee(Long gpsFee) {
         this.gpsFee = gpsFee;
+    }
+
+    public String getGpsLocation() {
+        return gpsLocation;
+    }
+
+    public void setGpsLocation(String gpsLocation) {
+        this.gpsLocation = gpsLocation;
     }
 
     public String getGpsFeeWay() {
@@ -2156,11 +2156,11 @@ public class BudgetOrder extends ABaseDO {
         this.oilSubsidyKil = oilSubsidyKil;
     }
 
-    public Double getGpsDeduct() {
+    public Long getGpsDeduct() {
         return gpsDeduct;
     }
 
-    public void setGpsDeduct(Double gpsDeduct) {
+    public void setGpsDeduct(Long gpsDeduct) {
         this.gpsDeduct = gpsDeduct;
     }
 

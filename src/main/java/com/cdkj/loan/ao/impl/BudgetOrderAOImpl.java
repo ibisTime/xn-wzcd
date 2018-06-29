@@ -33,6 +33,7 @@ import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.IRepointDetailBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISmsOutBO;
 import com.cdkj.loan.bo.IUserBO;
@@ -40,6 +41,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.PhoneUtil;
+import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.AdvanceFund;
 import com.cdkj.loan.domain.Bank;
@@ -56,6 +58,7 @@ import com.cdkj.loan.domain.LoanCs;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepointDetail;
+import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632120Req;
@@ -173,6 +176,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Autowired
     private ILoanCsBO loanCsBO;
 
+    @Autowired
+    private ISYSConfigBO sysConfigBO;
+
     @Override
     @Transactional
     public void editBudgetOrder(XN632120Req req) {
@@ -193,6 +199,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
 
         data.setCarModel(req.getCarModel());
+        data.setFrameNo(req.getFrameNo());
         data.setLoanPeriods(req.getLoanPeriods());
         data.setInvoicePrice(StringValidater.toLong(req.getInvoicePrice()));
         data.setRateType(req.getRateType());
@@ -272,16 +279,28 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setGuarantor2BirthAddress(req.getGuarantor2BirthAddress());
 
         data.setOtherNote(req.getOtherNote());
-        data.setOilSubsidy(StringValidater.toLong(req.getOilSubsidy()));
+        SYSConfig sysConfigoil = sysConfigBO
+            .getSYSConfig(SysConstants.BUDGET_OIL_SUBSIDY_RATE);
+        Double OilSubsidyBFB = StringValidater.toDouble(sysConfigoil
+            .getCvalue());
+        Long OilSubsidy = AmountUtil.mul(data.getLoanAmount(), OilSubsidyBFB);
+        data.setOilSubsidy(OilSubsidy);
         data.setOilSubsidyKil(StringValidater.toDouble(req.getOilSubsidyKil()));
         data.setIsPlatInsure(req.getIsPlatInsure());
 
         // 根据协议计算出各种手续费
+
         XN632291Res xn632291Res = carDealerProtocolBO.calProtocolFee(
             data.getCode(), data.getCarDealerCode());
+        SYSConfig sysConfig = sysConfigBO
+            .getSYSConfig(SysConstants.BUDGET_GPS_DEDUCT_RATE);
+        Double gpsBFB = StringValidater.toDouble((sysConfig.getCvalue()));
+        Long gpsDeduct = AmountUtil.mul(data.getLoanAmount(), gpsBFB);
+        data.setGpsDeduct(gpsDeduct);
+
         data.setGpsFee(StringValidater.toLong(xn632291Res.getGpsFee()));
-        data.setGpsDeduct(StringValidater.toDouble((req.getGpsDeduct())));
         data.setGpsFeeWay(req.getGpsFeeWay());
+        data.setGpsLocation(req.getGpsLocation());
 
         data.setLyAmount(StringValidater.toLong(xn632291Res.getLyAmount()));
         data.setFxAmount(StringValidater.toLong(xn632291Res.getFxAmount()));
@@ -354,7 +373,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         List<XN632120ReqRepointDetail> list = req.getRepointDetailList();
         for (XN632120ReqRepointDetail req1 : list) {
             RepointDetail data1 = new RepointDetail();
-            Bank bank = bankBO.getBankBySubbranch(req.getLoanBankSubbranch());
+            Bank bank = bankBO.getBankBySubbranch(data.getLoanBankCode());
             CarDealerProtocol protocol = carDealerProtocolBO
                 .getCarDealerProtocolByCarDealerCode(req.getCarDealerCode(),
                     bank.getBankCode());
@@ -928,7 +947,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCarColor(req.getCarColor());
         budgetOrder.setCarBrand(req.getCarBrand());
 
-        budgetOrder.setFrameNo(req.getFrameNo());
         budgetOrder.setEngineNo(req.getEngineNo());
         budgetOrder.setForceInsurance(StringValidater.toLong(req
             .getForceInsurance()));
@@ -1003,8 +1021,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 绑定用户银行卡
         String bankcardCode = bankcardBO.bind(userId,
             budgetOrder.getCustomerName(), budgetOrder.getBankCardNumber(),
-            budgetOrder.getLoanBankCode(), budgetOrder.getLoanBankName(),
-            budgetOrder.getLoanBankSubbranch());
+            budgetOrder.getLoanBankCode(), budgetOrder.getLoanBankName());
 
         // 自动生成还款业务
         RepayBiz repayBiz = repayBizBO.generateCarLoanRepayBiz(budgetOrder,
