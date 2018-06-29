@@ -319,11 +319,14 @@
 		,t.is_survey
 		,t.bank_rate
 		,t.company_loan_cs
+		,t.pre_company_loan_cs
 		,t.is_advance_fund
 		,t.global_rate
+		,t.pre_global_rate
 		,t.fee
 		,t.car_dealer_subsidy
 		,t.bank_loan_cs
+		,t.pre_bank_loan_cs
 		,t.company_code
 		,t.sale_user_id
 		,t.apply_user_company

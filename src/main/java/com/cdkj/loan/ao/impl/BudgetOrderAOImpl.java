@@ -763,6 +763,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 "当前节点不是银行放款节点，不能操作");
         }
 
+        // 如果是不垫资客户 更改预算单节点为 录入发保合
+        if (EIsAdvanceFund.NO.getCode().equals(budgetOrder.getIsAdvanceFund())) {
+
+        }
+
         // 当前节点
         String curNodeCode = budgetOrder.getCurNodeCode();
 
@@ -1268,15 +1273,51 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         Long loanAmount = budgetOrder.getLoanAmount();
         Long currentInvoicePrice = StringValidater.toLong(req
             .getCurrentInvoicePrice());
+
         // 现我司贷款成数
         double companyLoanCs = AmountUtil.div(loanAmount, currentInvoicePrice);
-        // 现发票价格和发票价格是否匹配
+
+        // 判断现发票价格和发票价格是否匹配
         if (currentInvoicePrice == budgetOrder.getInvoicePrice()) {
             budgetOrder.setIsRightInvoice(EBoolean.YES.getCode());
+
+            if (EIsAdvanceFund.YES.getCode().equals(
+                budgetOrder.getIsAdvanceFund())) {
+                // 垫资客户 进入银行放款流程的第一步 资料传递
+
+                // 更改节点为银行放款流程第一步
+                budgetOrder.setCurNodeCode(EBudgetOrderNode.SEND_LOGISTICS
+                    .getCode());
+                // 日志记录
+                sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+                    EBizLogType.BANK_LOAN_COMMIT, budgetOrder.getCode(),
+                    EBudgetOrderNode.SEND_LOGISTICS.getCode(),
+                    EBudgetOrderNode.SEND_LOGISTICS.getValue(),
+                    req.getOperator());
+
+                budgetOrderBO.bankLoanConfirmSubmitBank(budgetOrder);
+
+                // 从哪个节点来
+                String curNodeCode = budgetOrder.getCurNodeCode();
+                // 到哪个节点去
+                String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
+                    curNodeCode).getNextNode();
+                // 生成资料传递
+                NodeFlow nodeFlow = nodeFlowBO
+                    .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
+
+                logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                    budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                    curNodeCode, nextNodeCode, nodeFlow.getFileList());
+
+            } else {
+                // 不垫资客户 进入车辆抵押流程的第一步 资料传递
+            }
+
         } else {
             budgetOrder.setIsRightInvoice(EBoolean.NO.getCode());
 
-            // 获取我司贷款成数区间
+            // 获取我司贷款成数区间 标准
             LoanCs loanCsCondition = new LoanCs();
             loanCsCondition.setType(budgetOrder.getShopWay());
             List<LoanCs> loanCsList = loanCsBO.queryLoanCsList(loanCsCondition);
@@ -1285,9 +1326,20 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 resultCs = loanCsList.get(0);
             }
             if (null != resultCs) {
+                // 判断现我司贷款成数是否在标准内
                 if (companyLoanCs >= resultCs.getMaxCs()
                         || companyLoanCs <= resultCs.getMinCs()) {
                     // 不在我司准入贷款成数标准内 进入发票不匹配流程
+
+                } else {
+                    // 在标准区间内
+                    if (EIsAdvanceFund.YES.getCode().equals(
+                        budgetOrder.getIsAdvanceFund())) {
+                        // 垫资客户 进入银行放款流程的第一步 资料传递
+                    } else {
+                        // 不垫资客户 进入车辆抵押流程的第一步 资料传递
+                    }
+
                 }
             }
 
@@ -1369,6 +1421,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.APPROVE_APPLY.getCode()).getNextNode());
         } else {
+            // 审核不通过 重新填写预算单
+            // 把修改前的原数据从pre位置赋值到当前数据 覆盖修改后占用的当前位置数据
+            budgetOrder.setLoanAmount(budgetOrder.getPreLoanAmount());
+            budgetOrder.setCompanyLoanCs(budgetOrder.getPreCompanyLoanCs());
+            budgetOrder.setGlobalRate(budgetOrder.getPreGlobalRate());
+            budgetOrder.setBankLoanCs(budgetOrder.getPreBankLoanCs());
+            // 把pre位置的数据删除
+            budgetOrder.setPreLoanAmount(null);
+            budgetOrder.setPreCompanyLoanCs(0);
+            budgetOrder.setPreGlobalRate(0);
+            budgetOrder.setPreBankLoanCs(0);
+
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.APPROVE_APPLY.getCode()).getBackNode());
         }
@@ -1415,10 +1479,24 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrderFeeBO.refreshBudgetOrderNoEffect(budgetOrder.getCode());
             budgetOrderFeeBO.saveBudgetOrderFee(budgetOrder, operator);
             // TODO 将原来的返点设置为失效，新增返点
+
         } else {
+            // 审核不通过 重新填写预算单
+            // 把修改前的原数据从pre位置赋值到当前数据 覆盖修改后占用的当前位置数据
+            budgetOrder.setLoanAmount(budgetOrder.getPreLoanAmount());
+            budgetOrder.setCompanyLoanCs(budgetOrder.getPreCompanyLoanCs());
+            budgetOrder.setGlobalRate(budgetOrder.getPreGlobalRate());
+            budgetOrder.setBankLoanCs(budgetOrder.getPreBankLoanCs());
+            // 把pre位置的数据删除
+            budgetOrder.setPreLoanAmount(null);
+            budgetOrder.setPreCompanyLoanCs(0);
+            budgetOrder.setPreGlobalRate(0);
+            budgetOrder.setPreBankLoanCs(0);
+
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.TWO_APPROVE_APPLY.getCode()).getBackNode());
             budgetOrderBO.twoApproveNo(budgetOrder);
+
         }
 
         // 日志记录

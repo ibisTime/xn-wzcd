@@ -10,9 +10,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 详细查银行放款详细查
- * @author: silver 
- * @since: 2018年6月13日 下午3:02:04 
+ * 详情查询预算单
+ * @author: jiafr 
+ * @since: 2018年6月29日 上午9:38:57 
  * @history:
  */
 public class XN632146 extends AProcessor {
