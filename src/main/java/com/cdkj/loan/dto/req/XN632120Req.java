@@ -196,17 +196,11 @@ public class XN632120Req {
     // 其他情况说明
     private String otherNote;
 
-    // 油补
-    private String oilSubsidy;
-
     // 油补公里数
     private String oilSubsidyKil;
 
     // 是否我司续保
     private String isPlatInsure;
-
-    // GPS提成
-    private String gpsDeduct;
 
     // GPS收费方式
     private String gpsFeeWay;
@@ -690,14 +684,6 @@ public class XN632120Req {
         this.otherNote = otherNote;
     }
 
-    public String getOilSubsidy() {
-        return oilSubsidy;
-    }
-
-    public void setOilSubsidy(String oilSubsidy) {
-        this.oilSubsidy = oilSubsidy;
-    }
-
     public String getOilSubsidyKil() {
         return oilSubsidyKil;
     }
@@ -720,14 +706,6 @@ public class XN632120Req {
 
     public void setGpsLocation(String gpsLocation) {
         this.gpsLocation = gpsLocation;
-    }
-
-    public String getGpsDeduct() {
-        return gpsDeduct;
-    }
-
-    public void setGpsDeduct(String gpsDeduct) {
-        this.gpsDeduct = gpsDeduct;
     }
 
     public String getGpsFeeWay() {
