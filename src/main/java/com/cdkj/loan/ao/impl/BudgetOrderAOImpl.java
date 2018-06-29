@@ -769,16 +769,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         String nextNodeCode = null;
         Department department = departmentBO.getDepartment(budgetOrder
             .getCompanyCode());
+
         String parentCode = department.getParentCode();
+
         Bank bankBySubbranch = bankBO.getBankBySubbranch(budgetOrder
             .getLoanBankCode());
         if (EBoolean.YES.getCode().equals(parentCode)
                 && EBankType.GH.getCode().equals(bankBySubbranch.getBankCode())) {
             nextNodeCode = EBudgetOrderNode.SENDING_CONTRACT.getCode();
-        }
-        nextNodeCode = EBudgetOrderNode.CAR_SEND_LOGISTICS.getCode();
 
-        budgetOrder.setCurNodeCode(nextNodeCode);
+        }
+        curNodeCode = EBudgetOrderNode.CAR_SEND_LOGISTICS.getCode();
+
+        budgetOrder.setCurNodeCode(curNodeCode);
         budgetOrder.setCode(req.getCode());
         budgetOrder.setBankFkAmount(StringValidater.toLong(req
             .getBankFkAmount()));
@@ -808,7 +811,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .getCurNodeCode());
         logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
             budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
-            nextNodeCode, nodeFlow.getFileList());
+            nodeFlow.getNextNode(), nodeFlow.getFileList());
 
         // 日志记录
         String preCurrentNode = budgetOrder.getCurNodeCode();

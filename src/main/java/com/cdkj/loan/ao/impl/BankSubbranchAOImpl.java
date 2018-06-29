@@ -47,8 +47,8 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
         if (StringUtils.isNotBlank(req.getPhoneNumber())) {
             PhoneUtil.checkMobile(req.getPhoneNumber());
         }
-        if (StringUtils.isNotBlank(req.getAutherPhone())) {
-            PhoneUtil.checkMobile(req.getAutherPhone());
+        if (StringUtils.isNotBlank(req.getAutherPhoneNumber())) {
+            PhoneUtil.checkMobile(req.getAutherPhoneNumber());
         }
 
         BankSubbranch data = new BankSubbranch();
@@ -67,7 +67,7 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
             DateUtil.DATA_TIME_PATTERN_1));
         data.setAutherName(req.getAutherName());
 
-        data.setAutherPhoneNumber(req.getAutherPhone());
+        data.setAutherPhoneNumber(req.getAutherPhoneNumber());
         data.setAutherIdNo(req.getAutherIdNo());
         data.setAutherAddress(req.getAutherAddress());
         data.setCreditCardType(req.getCreditCardType());
