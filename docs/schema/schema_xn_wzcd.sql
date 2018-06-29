@@ -9,7 +9,7 @@
  Target Server Version : 50633
  File Encoding         : utf-8
 
- Date: 06/28/2018 13:57:53 PM
+ Date: 06/29/2018 15:20:11 PM
 */
 
 SET NAMES utf8;
@@ -220,8 +220,8 @@ CREATE TABLE `tb_gps_apply` (
 DROP TABLE IF EXISTS `tb_id_no_area`;
 CREATE TABLE `tb_id_no_area` (
   `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '编号',
-  `area_no` varchar(32) CHARACTER SET utf8 COLLATE utf8_estonian_ci DEFAULT NULL COMMENT '身份证区域号',
-  `area_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_estonian_ci DEFAULT NULL COMMENT '身份证区域名称',
+  `area_no` varchar(32) DEFAULT NULL COMMENT '身份证区域号',
+  `area_name` varchar(255) DEFAULT NULL COMMENT '身份证区域名称',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='身份证区域表';
 
@@ -647,11 +647,14 @@ CREATE TABLE `tdq_budget_order` (
   `is_survey` varchar(4) DEFAULT NULL COMMENT '是否需要贷前调查',
   `bank_rate` decimal(18,8) DEFAULT NULL COMMENT '银行利率',
   `company_loan_cs` decimal(18,8) DEFAULT NULL COMMENT '我司贷款成数',
+  `pre_company_loan_cs` decimal(18,8) DEFAULT NULL COMMENT '发票不匹配之前我司贷款成数',
   `is_advance_fund` varchar(4) DEFAULT NULL COMMENT '是否垫资',
   `global_rate` decimal(18,8) DEFAULT NULL COMMENT '综合利率',
+  `pre_global_rate` decimal(18,8) DEFAULT NULL COMMENT '发票不匹配之前综合利率',
   `fee` bigint(20) DEFAULT NULL COMMENT '手续费',
   `car_dealer_subsidy` bigint(20) DEFAULT NULL COMMENT '汽车经销商厂家贴息',
   `bank_loan_cs` decimal(18,8) DEFAULT NULL COMMENT '银行贷款成数',
+  `pre_bank_loan_cs` decimal(18,8) DEFAULT NULL COMMENT '发票不匹配之前银行贷款成数',
   `company_code` tinytext COMMENT '公司编号',
   `sale_user_id` varchar(32) DEFAULT NULL COMMENT '业务员编号',
   `apply_user_company` tinytext COMMENT '申请人就职单位',
@@ -773,7 +776,7 @@ CREATE TABLE `tdq_budget_order` (
   `guarantor_name` varchar(32) DEFAULT NULL COMMENT '担保人姓名',
   `guarantor_mobile` varchar(16) DEFAULT NULL COMMENT '担保人手机',
   `bank_card_number` varchar(32) DEFAULT NULL COMMENT '银行卡号',
-  `bill_datetime` datetime DEFAULT NULL COMMENT '对账单日',
+  `bill_datetime` int(11) DEFAULT NULL COMMENT '对账单日',
   `month_amount` bigint(20) DEFAULT NULL COMMENT '月还款额',
   `repay_bank_date` int(11) DEFAULT NULL COMMENT '银行还款日',
   `repay_first_month_amount` bigint(20) DEFAULT NULL COMMENT '首期还款金额',

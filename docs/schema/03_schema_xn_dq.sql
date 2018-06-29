@@ -169,7 +169,7 @@ CREATE TABLE `tdq_budget_order` (
   `guarantor_name` varchar(32) DEFAULT NULL COMMENT '担保人姓名',
   `guarantor_mobile` varchar(16) DEFAULT NULL COMMENT '担保人手机',
   `bank_card_number` varchar(32) DEFAULT NULL COMMENT '银行卡号',
-  `bill_datetime` datetime DEFAULT NULL COMMENT '对账单日',
+  `bill_datetime` int(11) DEFAULT NULL COMMENT '对账单日',
   `month_amount` bigint(20) DEFAULT NULL COMMENT '月还款额',
   `repay_bank_date` int(11) DEFAULT NULL COMMENT '银行还款日',
   `repay_first_month_amount` bigint(20) DEFAULT NULL COMMENT '首期还款金额',
