@@ -32,9 +32,6 @@ public class BudgetOrder extends ABaseDO {
     // 贷款银行编号
     private String loanBankCode;
 
-    // 经办支行
-    private String loanBankSubbranch;
-
     // 厂商指导价
     private Long originalPrice;
 
@@ -941,14 +938,6 @@ public class BudgetOrder extends ABaseDO {
 
     public void setLoanBankCode(String loanBankCode) {
         this.loanBankCode = loanBankCode;
-    }
-
-    public String getLoanBankSubbranch() {
-        return loanBankSubbranch;
-    }
-
-    public void setLoanBankSubbranch(String loanBankSubbranch) {
-        this.loanBankSubbranch = loanBankSubbranch;
     }
 
     public Long getOriginalPrice() {

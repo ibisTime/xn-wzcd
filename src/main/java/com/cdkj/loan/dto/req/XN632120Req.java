@@ -24,10 +24,6 @@ public class XN632120Req {
     @NotBlank
     private String carDealerCode;
 
-    // 贷款支行编号
-    @NotBlank
-    private String loanBankSubbranch;
-
     // 厂商指导价
     private String originalPrice;
 
@@ -610,14 +606,6 @@ public class XN632120Req {
 
     public void setDriceLicense(String driceLicense) {
         this.driceLicense = driceLicense;
-    }
-
-    public String getLoanBankSubbranch() {
-        return loanBankSubbranch;
-    }
-
-    public void setLoanBankSubbranch(String loanBankSubbranch) {
-        this.loanBankSubbranch = loanBankSubbranch;
     }
 
     public String getOtherPropertyNote() {

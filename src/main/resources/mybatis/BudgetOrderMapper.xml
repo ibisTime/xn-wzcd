@@ -10,7 +10,6 @@
 		<result column="car_dealer_code" property="carDealerCode" />
 		
 		<result column="loan_bank_code" property="loanBankCode" />
-	    <result column="loan_bank_subbranch" property="loanBankSubbranch" />
 		<result column="original_price" property="originalPrice" />
 		<result column="car_model" property="carModel" />
 		<result column="loan_periods" property="loanPeriods" />
@@ -305,7 +304,6 @@
 		,t.customer_name
 		,t.car_dealer_code
 		,t.loan_bank_code
-		,t.loan_bank_subbranch
 		,t.original_price
 		,t.car_model
 		,t.loan_periods
@@ -526,7 +524,6 @@
 		,t.customer_name
 		,t.car_dealer_code
 		,t.loan_bank_code
-		,t.loan_bank_subbranch
 		,t.original_price
 		,t.car_model
 		,t.loan_periods
@@ -734,7 +731,6 @@
 		,t.customer_name
 		,t.car_dealer_code
 		,t.loan_bank_code
-		,t.loan_bank_subbranch
 		,t.original_price
 		,t.car_model
 		,t.loan_periods
@@ -919,7 +915,6 @@
 		,customer_name
 		,car_dealer_code
 		,loan_bank_code
-		,loan_bank_subbranch
 		,original_price
 		,car_model
 		,frame_no
@@ -1046,7 +1041,6 @@
 		,#{customerName}
 		,#{carDealerCode}
 		,#{loanBankCode}
-		,#{loanBankSubbranch}
 		,#{originalPrice}
 		,#{carModel}
 		,#{loanPeriods}
@@ -1172,7 +1166,6 @@
 		SET
 		customer_type = #{customerType}
 		,car_dealer_code = #{carDealerCode}
-		,loan_bank_subbranch = #{loanBankSubbranch}
 		,original_price = #{originalPrice}
 		,car_model = #{carModel}
 		

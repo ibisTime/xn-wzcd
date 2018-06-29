@@ -369,7 +369,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         List<XN632120ReqRepointDetail> list = req.getRepointDetailList();
         for (XN632120ReqRepointDetail req1 : list) {
             RepointDetail data1 = new RepointDetail();
-            Bank bank = bankBO.getBankBySubbranch(req.getLoanBankSubbranch());
+            Bank bank = bankBO.getBankBySubbranch(data.getLoanBankCode());
             CarDealerProtocol protocol = carDealerProtocolBO
                 .getCarDealerProtocolByCarDealerCode(req.getCarDealerCode(),
                     bank.getBankCode());
@@ -1028,8 +1028,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 绑定用户银行卡
         String bankcardCode = bankcardBO.bind(userId,
             budgetOrder.getCustomerName(), budgetOrder.getBankCardNumber(),
-            budgetOrder.getLoanBankCode(), budgetOrder.getLoanBankName(),
-            budgetOrder.getLoanBankSubbranch());
+            budgetOrder.getLoanBankCode(), budgetOrder.getLoanBankName());
 
         // 自动生成还款业务
         RepayBiz repayBiz = repayBizBO.generateCarLoanRepayBiz(budgetOrder,
