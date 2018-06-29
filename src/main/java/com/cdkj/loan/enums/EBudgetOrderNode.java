@@ -14,24 +14,18 @@ public enum EBudgetOrderNode {
             "002_03", "省分公司总经理审核"), SECOND_AUDIT("002_04", "准入审核二审"), FILL_AGAIN(
             "002_05", "重新填写预算单"), ADVANCE_FUND_AUDIT("002_06", "垫资审核"),
 
-    SEND_LOGISTICS("007_01", "分公司内勤寄送银行材料"), SEND_BANK_MATERIALS("007_03", "总公司内勤收件并核查,寄送银行材料"),
-            BANK_LOAN_COMMIT("007_05", "银行驻点收件并核查,确认提交银行"), CONFIRM_RECEIVABLES(
-            "007_06", "确认收款"), BRANCH_PENDING_PARTS("007_07", "分公司内勤寄送银行材料待补件"), 
-            HEADQUARTERS_PENDING_PARTS("007_08", "总公司内勤寄送银行材料待补件"),
+    SEND_LOGISTICS("007_01", "分公司内勤寄送银行材料"), BANK_LOAN_PRINT("007_02", "打印岗打印"), SEND_BANK_MATERIALS(
+            "007_03", "总公司寄送银行材料"), BANK_LOAN_COMMIT("007_04", "确认提交银行"), CONFIRM_RECEIVABLES(
+            "007_05", "确认收款"),
 
-    CAR_SEND_LOGISTICS("008_01", "分公司内勤寄送银行材料"), CAR_SEND_BANK_MATERIALS("008_03",
-            "总公司内勤收件并核查,寄送银行材料"), CAR_BANK_LOAN_COMMIT("008_05", "银行驻点收件并核查,确认提交银行"), 
-            CAR_PLEDGE_CONFIRM("008_06", "抵押完成"), CAR_BRANCH_PENDING_PARTS(
-            "008_07", "分公司内勤寄送银行材料待补件"), CAR_HEADQUARTERS_PENDING_PARTS(
-            "008_08", "总公司内勤寄送银行材料待补件"),
+    CAR_SEND_LOGISTICS("008_01", "分公司内勤寄送银行材料"), CAR_PRINT("008_02", "打印岗打印"), CAR_SEND_BANK_MATERIALS(
+            "008_03", "总公司寄送银行材料"), CAR_BANK_LOAN_COMMIT("008_04", "确认提交银行"), CAR_PLEDGE_CONFIRM(
+            "008_05", "抵押完成"),
 
-    SENDING_CONTRACT("009_01", "总公司准备并寄送合同到分公司"), FEN_CAR_SEND_LOGISTICS("009_03",
-            "分公司内勤收件并核查,寄送抵押材料"), HEADQUARTERS_CAR_SEND_BANK_MATERIALS(
-            "009_05", "总公司内勤收件并核查,寄送银行材料"), CAR_FEN_BANK_LOAN_COMMIT("009_07", "银行驻点收件并核查,确认提交银行"),
-            CAR_FEN_PLEDGE_CONFIRM("009_08", "抵押完成"), HEADQUARTERS_SEND_CONTRACT("009_09",
-            "总公司寄送合同待补件"), FEN_CAR_BRANCH_PENDING_PARTS("009_10",
-            "分公司内勤寄送银行材料待补件"), HEADQUARTERS_CAR_PENDING_PARTS("009_11",
-            "总公司内勤寄送银行材料待补件"),
+    CAR_FEN_PRINT("009_01", "打印岗打印"), SENDING_CONTRACT("009_02",
+            "总公司准备并寄送合同到分公司"), FEN_CAR_SEND_LOGISTICS("009_03", "分公司内勤寄送抵押材料"), HEADQUARTERS_CAR_SEND_BANK_MATERIALS(
+            "009_04", "总公司内勤寄送银行材料"), CAR_FEN_BANK_LOAN_COMMIT("009_05",
+            "确认提交银行"), CAR_FEN_PLEDGE_CONFIRM("009_06", "抵押完成"),
 
     PENDING_FILE("010_01", "待入档"), ALREADY_FILE("010_02", "已入档"),
 
