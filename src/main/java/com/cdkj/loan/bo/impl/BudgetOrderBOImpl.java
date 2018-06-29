@@ -166,12 +166,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
-        if (EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
+        if (EBudgetOrderNode.FEN_CAR_SEND_LOGISTICS.getCode()
             .equals(budgetOrder.getCurNodeCode())
-                || EBudgetOrderNode.CAR_SEND_BANK_MATERIALS.getCode()
-                    .equals(budgetOrder.getCurNodeCode())
-                || EBudgetOrderNode.FEN_CAR_SEND_LOGISTICS.getCode()
-                    .equals(budgetOrder.getCurNodeCode())
                 || EBudgetOrderNode.HEADQUARTERS_CAR_SEND_BANK_MATERIALS
                     .getCode().equals(budgetOrder.getCurNodeCode())) {
             NodeFlow nodeFlow2 = nodeFlowBO
