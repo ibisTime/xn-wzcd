@@ -74,16 +74,19 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     }
 
     @Override
-    public void sendAgainLogistics(String code, String remark) {
+    public void sendAgainLogistics(String code, String supplementNote,
+            String supplementReason, String remark) {
         if (null == code) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写编号");
         }
 
         Logistics data = new Logistics();
         data.setCode(code);
-        data.setRemark(remark);
         data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
+        data.setSupplementReason(supplementReason);
+        data.setSupplementNote(supplementNote);
         data.setReceiptDatetime(new Date());
+        data.setRemark(remark);
         logisticsDAO.updateLogisticsReceive(data);
     }
 

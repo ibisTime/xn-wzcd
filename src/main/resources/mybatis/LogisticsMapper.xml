@@ -19,6 +19,8 @@
 		<result column="send_datetime" property="sendDatetime" />
 		<result column="send_note" property="sendNote" />
 		<result column="receipt_datetime" property="receiptDatetime" />
+		<result column="supplement_reason" property="supplementReason" />
+		<result column="supplement_note" property="supplementNote" />
 		<result column="status" property="status" />
 		<result column="remark" property="remark" />
 	</resultMap>
@@ -46,6 +48,9 @@
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
+			<if test="supplementNote != null and supplementNote != '' ">
+				AND t.supplement_note = #{supplementNote}
+			</if>
 		</trim>
 	</sql>
 	
@@ -67,6 +72,8 @@
 		,t.send_datetime
 		,t.send_note
 		,t.receipt_datetime
+		,t.supplement_reason
+		,t.supplement_note
 		,t.status
 		,t.remark
 		FROM
@@ -127,6 +134,8 @@
 		UPDATE tdq_logistics t
 		SET
 		t.receipt_datetime = #{receiptDatetime}
+		,t.supplement_reason = #{supplementReason}
+		,t.supplement_note = #{supplementNote}
 		,t.status = #{status}
 		,t.remark = #{remark}
 		WHERE code = #{code}
