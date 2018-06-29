@@ -68,11 +68,17 @@ public class BudgetOrder extends ABaseDO {
     // 我司贷款成数
     private double companyLoanCs;
 
+    // 发票不匹配之前我司贷款成数
+    private double preCompanyLoanCs;
+
     // 是否垫资
     private String isAdvanceFund;
 
     // 综合利率
     private double globalRate;
+
+    // 发票不匹配之前综合利率
+    private double preGlobalRate;
 
     // 服务费
     private Long fee;
@@ -82,6 +88,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 银行贷款成数
     private double bankLoanCs;
+
+    // 发票不匹配之前银行贷款成数
+    private double preBankLoanCs;
 
     // 业务公司编号
     private String companyCode;
@@ -2402,6 +2411,30 @@ public class BudgetOrder extends ABaseDO {
 
     public void setServiceCharge(Long serviceCharge) {
         this.serviceCharge = serviceCharge;
+    }
+
+    public double getPreCompanyLoanCs() {
+        return preCompanyLoanCs;
+    }
+
+    public void setPreCompanyLoanCs(double preCompanyLoanCs) {
+        this.preCompanyLoanCs = preCompanyLoanCs;
+    }
+
+    public double getPreGlobalRate() {
+        return preGlobalRate;
+    }
+
+    public void setPreGlobalRate(double preGlobalRate) {
+        this.preGlobalRate = preGlobalRate;
+    }
+
+    public double getPreBankLoanCs() {
+        return preBankLoanCs;
+    }
+
+    public void setPreBankLoanCs(double preBankLoanCs) {
+        this.preBankLoanCs = preBankLoanCs;
     }
 
 }

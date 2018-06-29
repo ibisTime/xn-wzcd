@@ -24,12 +24,15 @@
 		
 		<result column="bank_rate" property="bankRate" />
 		<result column="company_loan_cs" property="companyLoanCs" />
+		<result column="pre_company_loan_cs" property="preCompanyLoanCs" />
 		<result column="is_advance_fund" property="isAdvanceFund" />
 		<result column="global_rate" property="globalRate" />
+		<result column="pre_global_rate" property="preGlobalRate" />
 		<result column="fee" property="fee" />
 		
 		<result column="car_dealer_subsidy" property="carDealerSubsidy" />
 		<result column="bank_loan_cs" property="bankLoanCs" />
+		<result column="pre_bank_loan_cs" property="preBankLoanCs" />
 		<result column="company_code" property="companyCode" />
 		<result column="sale_user_id" property="saleUserId" />
 		<result column="apply_user_company" property="applyUserCompany" />
@@ -1463,9 +1466,16 @@
 	<update id="update_invoiceMismatchApply" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		cur_node_code = #{curNodeCode}
+		cur_node_code = #{curNodeCode}		
 		,pre_loan_amount = #{preLoanAmount}
-		,loan_amount = #{loanAmount}
+		,loan_amount = #{loanAmount}		
+		,company_loan_cs = #{companyLoanCs}
+		,pre_company_loan_cs = #{preCompanyLoanCs}
+		
+		,global_rate = #{globalRate}
+		,pre_global_rate = #{preGlobalRate}		
+		,bank_loan_cs = #{bankLoanCs}
+		,pre_bank_loan_cs = #{preBankLoanCs}
 		WHERE code = #{code}
 	</update>
 	

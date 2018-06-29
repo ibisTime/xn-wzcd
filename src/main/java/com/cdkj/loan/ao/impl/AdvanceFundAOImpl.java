@@ -305,27 +305,33 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             data.getCode(), preNodeCode, node.getCode(), req.getNote(),
             req.getOperator());
 
-        // 更改节点为银行放款流程第一步
+        // 如果是垫资客户 更改预算单节点为 录入发保合 锁住主流程
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
             .getBudgetCode());
-        budgetOrder.setCurNodeCode(EBudgetOrderNode.SEND_LOGISTICS.getCode());
-        sysBizLogBO.saveSYSBizLog(data.getBudgetCode(),
-            EBizLogType.BANK_LOAN_COMMIT, data.getBudgetCode(),
-            EBudgetOrderNode.SEND_LOGISTICS.getCode(),
-            EBudgetOrderNode.SEND_LOGISTICS.getValue(), req.getOperator());
-        budgetOrderBO.bankLoanConfirmSubmitBank(budgetOrder);
+        if (EIsAdvanceFund.YES.getCode().equals(budgetOrder.getIsAdvanceFund())) {
 
-        // 当前节点
-        String curNodeCode = budgetOrder.getCurNodeCode();
-        String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode)
-            .getNextNode();
+            // EBudgetOrderNode
 
-        // 生成资料传递
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
-            .getCurNodeCode());
-        logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-            budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
-            nextNodeCode, nodeFlow.getFileList());
+        }
+
+        /*
+         * // 更改节点为银行放款流程第一步 BudgetOrder budgetOrder =
+         * budgetOrderBO.getBudgetOrder(data .getBudgetCode());
+         * budgetOrder.setCurNodeCode
+         * (EBudgetOrderNode.SEND_LOGISTICS.getCode());
+         * sysBizLogBO.saveSYSBizLog(data.getBudgetCode(),
+         * EBizLogType.BANK_LOAN_COMMIT, data.getBudgetCode(),
+         * EBudgetOrderNode.SEND_LOGISTICS.getCode(),
+         * EBudgetOrderNode.SEND_LOGISTICS.getValue(), req.getOperator());
+         * budgetOrderBO.bankLoanConfirmSubmitBank(budgetOrder); // 当前节点 String
+         * curNodeCode = budgetOrder.getCurNodeCode(); String nextNodeCode =
+         * nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode) .getNextNode(); //
+         * 生成资料传递 NodeFlow nodeFlow =
+         * nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder .getCurNodeCode());
+         * logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+         * budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
+         * nextNodeCode, nodeFlow.getFileList());
+         */
 
     }
 

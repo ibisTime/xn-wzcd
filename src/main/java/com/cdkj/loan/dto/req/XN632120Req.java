@@ -323,6 +323,18 @@ public class XN632120Req {
     @NotEmpty
     private List<XN632120ReqRepointDetail> repointDetailList;
 
+    // 预算单类型（1正常单2外单）
+    @NotBlank
+    private String budgetOrderType;
+
+    public String getBudgetOrderType() {
+        return budgetOrderType;
+    }
+
+    public void setBudgetOrderType(String budgetOrderType) {
+        this.budgetOrderType = budgetOrderType;
+    }
+
     public String getServiceChargeWay() {
         return serviceChargeWay;
     }

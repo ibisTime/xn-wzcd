@@ -11,11 +11,13 @@ import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632200Req;
 import com.cdkj.loan.dto.req.XN632220Req;
+import com.cdkj.loan.dto.req.XN632230Req;
 import com.cdkj.loan.dto.req.XN632270Req;
 import com.cdkj.loan.dto.req.XN632271Req;
 import com.cdkj.loan.dto.req.XN632272Req;
 import com.cdkj.loan.dto.req.XN632280Req;
 import com.cdkj.loan.dto.req.XN632341Req;
+import com.cdkj.loan.dto.res.XN632234Res;
 
 @Component
 public interface IBudgetOrderAO {
@@ -78,8 +80,7 @@ public interface IBudgetOrderAO {
     public void entryPreservation(XN632220Req req);
 
     // 发票不匹配申请
-    public void invoiceMismatchApply(String code, String loanAmount,
-            String operator);
+    public void invoiceMismatchApply(XN632230Req req);
 
     // 审核
     public void approveApply(String code, String approveResult,
@@ -117,4 +118,8 @@ public interface IBudgetOrderAO {
     // 垫资超过1天未放款客户
     public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start,
             int limit, BudgetOrder condition);
+
+    // 修改贷款金额计算关联数据
+    public XN632234Res modifyLoanAmountCalculateData(String code,
+            String loanAmount);
 }
