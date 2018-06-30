@@ -1171,6 +1171,7 @@
 		,#{loanBankCode}
 		,#{originalPrice}
 		,#{carModel}
+		,#{frameNo}
 		,#{loanPeriods}
 		,#{invoicePrice}
 		,#{shopWay}

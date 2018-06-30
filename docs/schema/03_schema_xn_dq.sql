@@ -206,7 +206,7 @@ CREATE TABLE `tdq_budget_order` (
 
   `insurance_company_code` tinytext COMMENT '保险公司编号',
   `car_brand` tinytext COMMENT '车辆品牌',
-  `car_brand_model` varchar(32) DEFAULT NULL COMMENT '品牌型号',
+  `car_brand_model` tinytext DEFAULT NULL COMMENT '品牌型号',
   `car_number` varchar(255) COMMENT '车牌号码',
   `car_color` tinytext COMMENT '车辆颜色',
   
