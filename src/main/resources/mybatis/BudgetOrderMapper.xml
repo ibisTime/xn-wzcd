@@ -23,15 +23,22 @@
 		
 		<result column="bank_rate" property="bankRate" />
 		<result column="company_loan_cs" property="companyLoanCs" />
+		<result column="pre_company_loan_cs" property="preCompanyLoanCs" />
 		<result column="is_advance_fund" property="isAdvanceFund" />
 		<result column="global_rate" property="globalRate" />
+		<result column="pre_global_rate" property="preGlobalRate" />
 		<result column="fee" property="fee" />
 		
 		<result column="car_dealer_subsidy" property="carDealerSubsidy" />
 		<result column="bank_loan_cs" property="bankLoanCs" />
+		<result column="pre_bank_loan_cs" property="preBankLoanCs" />
 		<result column="company_code" property="companyCode" />
 		<result column="sale_user_id" property="saleUserId" />
+		<result column="postcode" property="postcode" />
+		<result column="family_phone" property="familyPhone" />
+		<result column="apply_user_id" property="applyUserId" />
 		<result column="apply_user_company" property="applyUserCompany" />
+		<result column="apply_user_company_phone" property="applyUserCompanyPhone" />
 		
 		<result column="apply_user_duty" property="applyUserDuty" />
 		<result column="apply_user_ghr_relation" property="applyUserGhrRelation" />
@@ -42,6 +49,9 @@
 		<result column="apply_user_balance" property="applyUserBalance" />
 		<result column="apply_user_jour_show_income" property="applyUserJourShowIncome" />
 		<result column="apply_user_is_print" property="applyUserIsPrint" />
+		<result column="gh_real_name" property="ghRealName" />
+		<result column="gh_mobile" property="ghMobile" />
+		<result column="gh_company_name" property="ghCompanyName" />
 		<result column="gh_month_income" property="ghMonthIncome" />
 		<result column="gh_settle_interest" property="ghSettleInterest" />
 		
@@ -88,16 +98,22 @@
 		<result column="other_note" property="otherNote" />
 		
 		<result column="oil_subsidy" property="oilSubsidy" />
+		<result column="pre_oil_subsidy" property="preOilSubsidy" />
 		<result column="oil_subsidy_kil" property="oilSubsidyKil" />
 		<result column="is_plat_insure" property="isPlatInsure" />
 		<result column="gps_fee" property="gpsFee" />
+		<result column="pregps_fee" property="preGpsFee " />
 		<result column="gps_deduct" property="gpsDeduct" />
+		<result column="pre_gps_deduct" property="preGpsDeduct " />
 		
 		<result column="gps_fee_way" property="gpsFeeWay" />
 		<result column="gps_location" property="gpsLocation" />
 		<result column="ly_amount" property="lyAmount" />
+		<result column="pre_ly_amount" property="preLyAmount " />
 		<result column="fx_amount" property="fxAmount" />
+		<result column="pre_fx_amount" property="preFxAmount " />
 		<result column="other_fee" property="otherFee" />
+		<result column="pre_other_fee" property="preOtherFee " />
 		<result column="service_charge_way" property="serviceChargeWay" />
 		<result column="service_charge" property="serviceCharge" />
 		
@@ -157,14 +173,20 @@
 		
 		<result column="pledge_commit_note" property="pledgeCommitNote" />
 		<result column="pledge_contract_code" property="pledgeContractCode" />
+		<result column="pledge_print_template_id" property="pledgePrintTemplateId" />
+		<result column="pledge_print_user" property="pledgePrintUser" />
+		<result column="pledge_print_datetime" property="pledgePrintDatetime" />
 		<result column="insurance_company_code" property="insuranceCompanyCode" />
 		<result column="car_color" property="carColor" />
 		<result column="car_brand" property="carBrand" />
+		<result column="car_brand_model" property="carBrandModel" />
+		<result column="car_number" property="carNumber" />
 		
 		<result column="frame_no" property="frameNo" />
 		<result column="engine_no" property="engineNo" />
 		<result column="commerce_insurance" property="commerceInsurance" />
 		<result column="insurance_effect_datetime" property="insuranceEffectDatetime" />
+		<result column="insurance_company" property="insuranceCompany" />
 		<result column="insurance_bank" property="insuranceBank" />
 		
 		<result column="insurance_remind_count" property="insuranceRemindCount" />
@@ -175,12 +197,22 @@
 		<result column="insurance_note" property="insuranceNote" />
 		
 		<result column="guarantee_contract_code" property="guaranteeContractCode" />
+		<result column="guarant_contract_deadline" property="guarantContractDeadline" />
+		<result column="guarant_month_fee_rate" property="guarantMonthFeeRate" />
 		<result column="reg_certificate_code" property="regCertificateCode" />
 		<result column="other_contact" property="otherContact" />
 		<result column="contact_mobile" property="contactMobile" />
 		<result column="guarantor_name" property="guarantorName" />
 		
 		<result column="guarantor_mobile" property="guarantorMobile" />
+		<result column="guarantor_family_phone" property="guarantorFamilyPhone" />
+		<result column="guarantor_company_name" property="guarantorCompanyName" />
+		<result column="guarantor_company_phone" property="guarantorCompanyPhone" />
+		<result column="guarantor_company_address" property="guarantorCompanyAddress" />
+		<result column="guarant_apply_user_note" property="guarantApplyUserNote" />
+		<result column="guarant_print_template_id" property="guarantPrintTemplateId" />
+		<result column="guarant_print_user" property="guarantPrintUser" />
+		<result column="guarant_print_datetime" property="guarantPrintDatetime" />
 		<result column="bank_card_number" property="bankCardNumber" />
 		<result column="bill_datetime" property="billDatetime" />
 		<result column="month_amount" property="monthAmount" />
@@ -315,14 +347,21 @@
 		,t.is_survey
 		,t.bank_rate
 		,t.company_loan_cs
+		,t.pre_company_loan_cs
 		,t.is_advance_fund
 		,t.global_rate
+		,t.pre_global_rate
 		,t.fee
 		,t.car_dealer_subsidy
 		,t.bank_loan_cs
+		,t.pre_bank_loan_cs
 		,t.company_code
 		,t.sale_user_id
+		,t.postcode
+		,t.family_phone
+		,t.apply_user_id
 		,t.apply_user_company
+		,t.apply_user_company_phone
 		,t.apply_user_duty
 		,t.apply_user_ghr_relation
 		,t.marry_state
@@ -331,6 +370,9 @@
 		,t.apply_user_balance
 		,t.apply_user_jour_show_income
 		,t.apply_user_is_print
+		,t.gh_real_name
+		,t.gh_mobile
+		,t.gh_company_name
 		,t.gh_month_income
 		,t.gh_settle_interest
 		,t.gh_balance
@@ -369,15 +411,21 @@
 		,t.guarantor2_birth_address
 		,t.other_note
 		,t.oil_subsidy
+		,t.pre_oil_subsidy
 		,t.oil_subsidy_kil
 		,t.is_plat_insure
 		,t.gps_fee
+		,t.pregps_fee
 		,t.gps_deduct
+		,t.pre_gps_deduct
 		,t.gps_fee_way
 		,t.gps_location
 		,t.ly_amount
+		,t.pre_ly_amount
 		,t.fx_amount
+		,t.pre_fx_amount
 		,t.other_fee
+		,t.pre_other_fee
 		,t.service_charge_way
 		,t.service_charge
 		,t.marry_divorce
@@ -427,13 +475,19 @@
 		,t.pledge_commit_datetime
 		,t.pledge_commit_note
 		,t.pledge_contract_code
+		,t.pledge_print_template_id
+		,t.pledge_print_user
+		,t.pledge_print_datetime
 		,t.insurance_company_code
 		,t.car_color
 		,t.car_brand
+		,t.car_brand_model
+		,t.car_number
 		,t.frame_no
 		,t.engine_no
 		,t.commerce_insurance
 		,t.insurance_effect_datetime
+		,t.insurance_company
 		,t.insurance_bank
 		,t.insurance_remind_count
 		,t.insurance_apply_datetime
@@ -442,11 +496,21 @@
 		,t.insurance_business_pdf
 		,t.insurance_note
 		,t.guarantee_contract_code
+		,t.guarant_contract_deadline
+		,t.guarant_month_fee_rate
 		,t.reg_certificate_code
 		,t.other_contact
 		,t.contact_mobile
 		,t.guarantor_name
 		,t.guarantor_mobile
+		,t.guarantor_family_phone
+		,t.guarantor_company_name
+		,t.guarantor_company_phone
+		,t.guarantor_company_address
+		,t.guarant_apply_user_note
+		,t.guarant_print_template_id
+		,t.guarant_print_user
+		,t.guarant_print_datetime
 		,t.bank_card_number
 		,t.bill_datetime
 		,t.month_amount
@@ -535,14 +599,21 @@
 		,t.is_survey
 		,t.bank_rate
 		,t.company_loan_cs
+		,t.pre_company_loan_cs
 		,t.is_advance_fund
 		,t.global_rate
+		,t.pre_global_rate
 		,t.fee
 		,t.car_dealer_subsidy
 		,t.bank_loan_cs
+		,t.pre_bank_loan_cs
 		,t.company_code
 		,t.sale_user_id
+		,t.postcode
+		,t.family_phone
+		,t.apply_user_id
 		,t.apply_user_company
+		,t.apply_user_company_phone
 		,t.apply_user_duty
 		,t.apply_user_ghr_relation
 		,t.marry_state
@@ -551,6 +622,9 @@
 		,t.apply_user_balance
 		,t.apply_user_jour_show_income
 		,t.apply_user_is_print
+		,t.gh_real_name
+		,t.gh_mobile
+		,t.gh_company_name
 		,t.gh_month_income
 		,t.gh_settle_interest
 		,t.gh_balance
@@ -589,15 +663,21 @@
 		,t.guarantor2_birth_address
 		,t.other_note
 		,t.oil_subsidy
+		,t.pre_oil_subsidy
 		,t.oil_subsidy_kil
 		,t.is_plat_insure
 		,t.gps_fee
+		,t.pregps_fee
 		,t.gps_deduct
+		,t.pre_gps_deduct
 		,t.gps_fee_way
 		,t.gps_location
 		,t.ly_amount
+		,t.pre_ly_amount
 		,t.fx_amount
+		,t.pre_fx_amount
 		,t.other_fee
+		,t.pre_other_fee
 		,t.service_charge_way
 		,t.service_charge
 		,t.marry_divorce
@@ -647,20 +727,36 @@
 		,t.pledge_commit_datetime
 		,t.pledge_commit_note
 		,t.pledge_contract_code
+		,t.pledge_print_template_id
+		,t.pledge_print_user
+		,t.pledge_print_datetime
 		,t.insurance_company_code
 		,t.car_color
 		,t.car_brand
+		,t.car_brand_model
+		,t.car_number
 		,t.frame_no
 		,t.engine_no
 		,t.commerce_insurance
 		,t.insurance_effect_datetime
+		,t.insurance_company
 		,t.insurance_bank
 		,t.guarantee_contract_code
+		,t.guarant_contract_deadline
+		,t.guarant_month_fee_rate
 		,t.reg_certificate_code
 		,t.other_contact
 		,t.contact_mobile
 		,t.guarantor_name
 		,t.guarantor_mobile
+		,t.guarantor_family_phone
+		,t.guarantor_company_name
+		,t.guarantor_company_phone
+		,t.guarantor_company_address
+		,t.guarant_apply_user_note
+		,t.guarant_print_template_id
+		,t.guarant_print_user
+		,t.guarant_print_datetime
 		,t.bank_card_number
 		,t.bill_datetime
 		,t.month_amount
@@ -742,14 +838,21 @@
 		,t.is_survey
 		,t.bank_rate
 		,t.company_loan_cs
+		,t.pre_company_loan_cs
 		,t.is_advance_fund
 		,t.global_rate
+		,t.pre_global_rate
 		,t.fee
 		,t.car_dealer_subsidy
 		,t.bank_loan_cs
+		,t.pre_bank_loan_cs
 		,t.company_code
 		,t.sale_user_id
+		,t.postcode
+		,t.family_phone
+		,t.apply_user_id
 		,t.apply_user_company
+		,t.apply_user_company_phone
 		,t.apply_user_duty
 		,t.apply_user_ghr_relation
 		,t.marry_state
@@ -758,6 +861,9 @@
 		,t.apply_user_balance
 		,t.apply_user_jour_show_income
 		,t.apply_user_is_print
+		,t.gh_real_name
+		,t.gh_mobile
+		,t.gh_company_name
 		,t.gh_month_income
 		,t.gh_settle_interest
 		,t.gh_balance
@@ -786,15 +892,21 @@
 		,t.guarantor2_birth_address
 		,t.other_note
 		,t.oil_subsidy
+		,t.pre_oil_subsidy
 		,t.oil_subsidy_kil
 		,t.is_plat_insure
 		,t.gps_fee
+		,t.pregps_fee
 		,t.gps_deduct
+		,t.pre_gps_deduct
 		,t.gps_fee_way
 		,t.gps_location
 		,t.ly_amount
+		,t.pre_ly_amount
 		,t.fx_amount
+		,t.pre_fx_amount
 		,t.other_fee
+		,t.pre_other_fee
 		,t.service_charge_way
 		,t.service_charge
 		,t.marry_divorce
@@ -824,20 +936,36 @@
 		,t.pledge_commit_datetime
 		,t.pledge_commit_note
 		,t.pledge_contract_code
+		,t.pledge_print_template_id
+		,t.pledge_print_user
+		,t.pledge_print_datetime
 		,t.insurance_company_code
 		,t.car_color
 		,t.car_brand
+		,t.car_brand_model
+		,t.car_number
 		,t.frame_no
 		,t.engine_no
 		,t.commerce_insurance
 		,t.insurance_effect_datetime
+		,t.insurance_company
 		,t.insurance_bank
 		,t.guarantee_contract_code
+		,t.guarant_contract_deadline
+		,t.guarant_month_fee_rate
 		,t.reg_certificate_code
 		,t.other_contact
 		,t.contact_mobile
 		,t.guarantor_name
 		,t.guarantor_mobile
+		,t.guarantor_family_phone
+		,t.guarantor_company_name
+		,t.guarantor_company_phone
+		,t.guarantor_company_address
+		,t.guarant_apply_user_note
+		,t.guarant_print_template_id
+		,t.guarant_print_user
+		,t.guarant_print_datetime
 		,t.bank_card_number
 		,t.bill_datetime
 		,t.month_amount
@@ -1052,7 +1180,7 @@
 		,#{bankRate}
 		,#{companyLoanCs}
 		,#{isAdvanceFund}
-		,#{globalRate}
+		,#{globalRate} 
 		,#{fee}
 		,#{carDealerSubsidy}
 		,#{bankLoanCs}
@@ -1604,6 +1732,44 @@
 		UPDATE tdq_budget_order
 		SET
 		repay_biz_code = #{repayBizCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_loanContractPrint" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		postcode = #{postcode}
+		,family_phone = #{familyPhone}
+		,apply_user_company_phone = #{applyUserCompanyPhone}
+		,gh_mobile = #{ghMobile}
+		,gh_company_name = #{ghCompanyName}
+		,car_brand_model = #{carBrandModel}
+		,car_number = #{carNumber}
+		,guarant_contract_deadline = #{guarantContractDeadline}
+		,guarant_month_fee_rate = #{guarantMonthFeeRate}
+		,guarantor_family_phone = #{guarantorFamilyPhone}
+		,guarantor_company_name = #{guarantorCompanyName}
+		,guarantor_company_phone = #{guarantorCompanyPhone}
+		,guarantor_company_address = #{guarantorCompanyAddress}
+		,insurance_company = #{insuranceCompany}
+		,guarant_apply_user_note = #{guarantApplyUserNote}
+		,guarant_print_template_id = #{guarantPrintTemplateId}
+		,guarant_print_user = #{guarantPrintUser}
+		,guarant_print_datetime = #{guarantPrintDatetime}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_pledgeContractPrint" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		car_number = #{carNumber}
+		,frame_no = #{frameNo}
+		,engine_no = #{engineNo}
+		,pledge_print_template_id = #{pledgePrintTemplateId}
+		,pledge_print_user = #{pledgePrintUser}
+		,pledge_print_datetime = #{pledgePrintDatetime}
+		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 		

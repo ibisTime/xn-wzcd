@@ -316,4 +316,15 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         budgetOrderDAO.updateRepayBizCode(budgetOrder);
     }
 
+    @Override
+    public void loanContractPrint(BudgetOrder budgetOrder) {
+        budgetOrderDAO.loanContractPrint(budgetOrder);
+
+    }
+
+    @Override
+    public void pledgeContractPrint(BudgetOrder budgetOrder) {
+        budgetOrderDAO.pledgeContractPrint(budgetOrder);
+    }
+
 }

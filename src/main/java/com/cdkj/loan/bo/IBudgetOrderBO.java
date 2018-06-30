@@ -109,4 +109,10 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 更改预算单的业务编号
     public void updateRepayBizCode(String code, String code2);
 
+    // 银行放款合同打印
+    public void loanContractPrint(BudgetOrder budgetOrder);
+
+    // 车辆抵押合同打印
+    public void pledgeContractPrint(BudgetOrder budgetOrder);
+
 }

@@ -9,6 +9,8 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632141Req;
+import com.cdkj.loan.dto.req.XN632142Req;
+import com.cdkj.loan.dto.req.XN632192Req;
 import com.cdkj.loan.dto.req.XN632200Req;
 import com.cdkj.loan.dto.req.XN632220Req;
 import com.cdkj.loan.dto.req.XN632270Req;
@@ -115,6 +117,12 @@ public interface IBudgetOrderAO {
     public void renewInsurance(XN632341Req req);
 
     // 垫资超过1天未放款客户
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start,
-            int limit, BudgetOrder condition);
+    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
+            BudgetOrder condition);
+
+    // 银行放款合同打印
+    public void loanContractPrint(XN632142Req req);
+
+    // 车辆抵押合同打印
+    public void pledgeContractPrint(XN632192Req req);
 }

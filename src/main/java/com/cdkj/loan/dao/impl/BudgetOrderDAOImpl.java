@@ -219,4 +219,14 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
         super.update(NAMESPACE.concat("update_repayBizCode"), data);
     }
 
+    @Override
+    public void loanContractPrint(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_loanContractPrint"), data);
+    }
+
+    @Override
+    public void pledgeContractPrint(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_pledgeContractPrint"), data);
+    }
+
 }
