@@ -11,4 +11,6 @@ public interface IBudgetOrderFeeDAO extends IBaseDAO<BudgetOrderFee> {
 
     // 设置失效
     public int updateNotEffect(BudgetOrderFee data);
+
+    public int updateShouldAmountAndIsSettled(BudgetOrderFee budgetOrderFee);
 }

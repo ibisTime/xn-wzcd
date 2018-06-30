@@ -21,6 +21,7 @@ import com.cdkj.loan.domain.BudgetOrderFeeDetail;
 import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -56,7 +57,7 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
     @Override
     public Paginable<BudgetOrderFee> queryBudgetOrderFeePage(int start,
             int limit, BudgetOrderFee condition) {
-
+        condition.setEffect(EBoolean.YES.getCode());
         Paginable<BudgetOrderFee> paginable = budgetOrderFeeBO.getPaginable(
             start, limit, condition);
 
@@ -82,6 +83,7 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
 
     @Override
     public List<BudgetOrderFee> queryBudgetOrderFeeList(BudgetOrderFee condition) {
+        condition.setEffect(EBoolean.YES.getCode());
         return budgetOrderFeeBO.queryBudgetOrderFeeList(condition);
     }
 

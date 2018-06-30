@@ -10,13 +10,16 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICarDealerProtocolBO;
+import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.AmountUtil;
+import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICarDealerProtocolDAO;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.CarDealerProtocol;
+import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.dto.req.XN632060ReqProtocol;
 import com.cdkj.loan.dto.res.XN632291Res;
 import com.cdkj.loan.enums.EAssureType;
@@ -38,6 +41,9 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
 
     @Autowired
     private IBankBO bankBO;
+
+    @Autowired
+    private ISYSConfigBO sysConfigBO;
 
     @Override
     public void saveCarDealerProtocolList(List<XN632060ReqProtocol> list,
@@ -220,6 +226,23 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
             res.setOtherFee(String.valueOf(AmountUtil.mul(loanAmount,
                 carDealerProtocol.getOtherRate())));
         }
+
+        SYSConfig sysConfigoil = sysConfigBO
+            .getSYSConfig(SysConstants.BUDGET_OIL_SUBSIDY_RATE);
+        Double oilSubsidyBFB = StringValidater.toDouble(sysConfigoil
+            .getCvalue());
+        Long oilSubsidy = AmountUtil.mul(budgetOrder.getLoanAmount(),
+            oilSubsidyBFB);
+        // 油补
+        res.setOilSubsidy(String.valueOf(oilSubsidy));
+
+        SYSConfig sysConfig = sysConfigBO
+            .getSYSConfig(SysConstants.BUDGET_GPS_DEDUCT_RATE);
+        Double gpsBFB = StringValidater.toDouble((sysConfig.getCvalue()));
+        Long gpsDeduct = AmountUtil.mul(budgetOrder.getLoanAmount(), gpsBFB);
+        // gps提成
+        res.setGpsDeduct(String.valueOf(gpsDeduct));
+
         return res;
     }
 }

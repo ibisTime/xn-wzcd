@@ -1618,7 +1618,7 @@
 		,motor_reg_certification = #{motorRegCertification}
 		,pd_pdf = #{pdPdf}
 		,fbh_remark = #{fbhRemark}
-		.fbh_status = #{fbhStatus}
+		,fbh_status = #{fbhStatus}
 		WHERE code = #{code}
 	</update>
 	
@@ -1631,10 +1631,30 @@
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_approveApply" parameterType="budgetOrder">
+	<update id="update_invoiceMismatchApprove" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		cur_node_code = #{curNodeCode}
+		pre_loan_amount = #{preLoanAmount}
+		,loan_amount = #{loanAmount}
+		,pre_company_loan_cs = #{preCompanyLoanCs}
+		,company_loan_cs = #{companyLoanCs}
+		,pre_bank_loan_cs = #{preBankLoanCs}
+		,bank_loan_cs = #{bankLoanCs}
+		,pre_global_rate = #{preGlobalRate}
+		,global_rate = #{globalRate}
+		,pre_fx_amount = #{preFxAmount}
+		,fx_amount = #{fxAmount}
+		,pre_ly_amount = #{preLyAmount}
+		,ly_amount = #{lyAmount}
+		,pre_gps_fee = #{preGpsFee}
+		,gps_fee = #{gpsFee}
+		,pre_other_fee = #{preOtherFee}
+		,other_fee = #{otherFee}
+		,pre_gps_deduct = #{preGpsDeduct}
+		,gps_deduct = #{gpsDeduct}
+		,pre_oil_subsidy = #{preOilSubsidy}
+		,oil_subsidy = #{oilSubsidy}
+		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 	
@@ -1768,6 +1788,33 @@
 		WHERE code = #{code}
 	</update>
 	
+	<update id="update_applyInvoiceMismatch" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		pre_loan_amount = #{preLoanAmount}
+		,loan_amount = #{loanAmount}
+		,pre_company_loan_cs = #{preCompanyLoanCs}
+		,company_loan_cs = #{companyLoanCs}
+		,pre_bank_loan_cs = #{preBankLoanCs}
+		,bank_loan_cs = #{bankLoanCs}
+		,pre_global_rate = #{preGlobalRate}
+		,global_rate = #{globalRate}
+		,pre_fx_amount = #{preFxAmount}
+		,fx_amount = #{fxAmount}
+		,pre_ly_amount = #{preLyAmount}
+		,ly_amount = #{lyAmount}
+		,pre_gps_fee = #{preGpsFee}
+		,gps_fee = #{gpsFee}
+		,pre_other_fee = #{preOtherFee}
+		,other_fee = #{otherFee}
+		,pre_gps_deduct = #{preGpsDeduct}
+		,gps_deduct = #{gpsDeduct}
+		,pre_oil_subsidy = #{preOilSubsidy}
+		,oil_subsidy = #{oilSubsidy}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+
 	<update id="update_loanContractPrint" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET

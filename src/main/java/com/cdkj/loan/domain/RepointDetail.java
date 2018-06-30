@@ -63,6 +63,9 @@ public class RepointDetail extends ABaseDO {
     // 节点(0待制单1已制单待打款2已打款)
     private String curNodeCode;
 
+    // 类型（1正常数据2发票不匹配产生的新数据）
+    private String type;
+
     public String getCompanyCode() {
         return companyCode;
     }
@@ -197,6 +200,14 @@ public class RepointDetail extends ABaseDO {
 
     public String getCurNodeCode() {
         return curNodeCode;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
 }

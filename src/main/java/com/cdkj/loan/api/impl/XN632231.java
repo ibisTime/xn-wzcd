@@ -11,9 +11,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 审核
- * @author: CYL 
- * @since: 2018年6月16日 下午7:07:16 
+ * 发票不匹配审核
+ * @author: jiafr 
+ * @since: 2018年6月30日 下午8:00:45 
  * @history:
  */
 public class XN632231 extends AProcessor {
@@ -24,8 +24,8 @@ public class XN632231 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.approveApply(req.getCode(), req.getApproveResult(),
-            req.getApproveNote(), req.getOperator());
+        budgetOrderAO.invoiceMismatchApprove(req.getCode(),
+            req.getApproveResult(), req.getApproveNote(), req.getOperator());
         return new BooleanRes(true);
     }
 

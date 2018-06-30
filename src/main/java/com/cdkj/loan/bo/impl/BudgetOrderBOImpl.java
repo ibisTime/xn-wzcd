@@ -24,8 +24,8 @@ import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
-        implements IBudgetOrderBO {
+public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
+        IBudgetOrderBO {
 
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
@@ -161,13 +161,13 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     public void logicOrder(String code, String operator) {
         BudgetOrder budgetOrder = getBudgetOrder(code);
         // String preCurrentNode = budgetOrder.getCurNodeCode();
-        NodeFlow nodeFlow = nodeFlowBO
-            .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
+            .getCurNodeCode());
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
-        if (EBudgetOrderNode.FEN_CAR_SEND_LOGISTICS.getCode()
-            .equals(budgetOrder.getCurNodeCode())
+        if (EBudgetOrderNode.FEN_CAR_SEND_LOGISTICS.getCode().equals(
+            budgetOrder.getCurNodeCode())
                 || EBudgetOrderNode.HEADQUARTERS_CAR_SEND_BANK_MATERIALS
                     .getCode().equals(budgetOrder.getCurNodeCode())) {
             NodeFlow nodeFlow2 = nodeFlowBO
@@ -231,8 +231,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     }
 
     @Override
-    public void approveApply(BudgetOrder budgetOrder) {
-        budgetOrderDAO.approveApply(budgetOrder);
+    public void invoiceMismatchApprove(BudgetOrder budgetOrder) {
+        budgetOrderDAO.invoiceMismatchApprove(budgetOrder);
     }
 
     @Override
@@ -317,6 +317,10 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     }
 
     @Override
+    public void applyInvoiceMismatch(BudgetOrder budgetOrder) {
+        budgetOrderDAO.applyInvoiceMismatch(budgetOrder);
+    }
+
     public void loanContractPrint(BudgetOrder budgetOrder) {
         budgetOrderDAO.loanContractPrint(budgetOrder);
 
@@ -325,6 +329,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     @Override
     public void pledgeContractPrint(BudgetOrder budgetOrder) {
         budgetOrderDAO.pledgeContractPrint(budgetOrder);
+
     }
 
 }

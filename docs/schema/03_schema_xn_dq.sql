@@ -522,6 +522,7 @@ CREATE TABLE `tdqt_repoint_detail` (
   `account_code` varchar(32) DEFAULT NULL COMMENT '账号编号（公司或车行的收款账号编号）',
   `mortgage_account_no` varchar(45) DEFAULT NULL COMMENT '收款账号（用于客户不垫资，手动输入的应退按揭款的收款账号 ）',
   `cur_node_code` varchar(32) DEFAULT NULL COMMENT '节点(0待制单1已制单待打款2已打款)',
+  `type` VARCHAR(4) DEFAULT NULL COMMENT '类型（1正常数据2发票不匹配产生的新数据）',
   PRIMARY KEY (`code`) COMMENT '返点明细表'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='返点明细表（用款用途）';
 

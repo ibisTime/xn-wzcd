@@ -20,6 +20,7 @@
 		<result column="account_code" property="accountCode" />
 		<result column="mortgage_account_no" property="mortgageAccountNo" />
 		<result column="cur_node_code" property="curNodeCode" />
+		<result column="type" property="type" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -40,6 +41,9 @@
 			</if>			
 			<if test="accountCode != null and accountCode != '' ">
 				AND t.account_code = #{accountCode}
+			</if>
+			<if test="type != null and type != '' ">
+				AND t.type = #{type}
 			</if>
 		</trim>
 	</sql>
@@ -62,6 +66,7 @@
 		,t.account_code
 		,t.mortgage_account_no
 		,t.cur_node_code
+		,t.type
 		FROM
 		tdqt_repoint_detail t
 		<include refid="where_condition" />
@@ -98,6 +103,7 @@
 		,account_code
 		,mortgage_account_no
 		,cur_node_code
+		,type
 		)
 		VALUES(
 		#{code}
@@ -117,6 +123,7 @@
 		,#{accountCode}
 		,#{mortgageAccountNo}
 		,#{curNodeCode}
+		,#{type}
 		)
 	</insert>
 
@@ -149,6 +156,18 @@
 		,repoint_code = #{repointCode}
 		WHERE code = #{code}
 	</update>
+	
+	<delete id="delete_repointDetail" parameterType="repointDetail">
+		DELETE FROM 
+		tdqt_repoint_detail 
+		<include refid="where_condition" />
+	</delete>
+	
+	<delete id="delete_preRepointDetail" parameterType="repointDetail">
+		DELETE FROM 
+		tdqt_repoint_detail 
+		<include refid="where_condition" />
+	</delete>
 
 
 </mapper>

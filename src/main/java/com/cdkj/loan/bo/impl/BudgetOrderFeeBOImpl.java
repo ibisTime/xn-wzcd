@@ -92,4 +92,12 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
             budgetOrderFeeDAO.updateBudgetOrderFeeRealAmount(budgetOrderFee);
         }
     }
+
+    @Override
+    public void updateShouldAmountAndIsSettled(BudgetOrderFee budgetOrderFee) {
+        if (null != budgetOrderFee) {
+            budgetOrderFeeDAO.updateShouldAmountAndIsSettled(budgetOrderFee);
+        }
+
+    }
 }
