@@ -1325,6 +1325,7 @@
 		,car_dealer_code = #{carDealerCode}
 		,original_price = #{originalPrice}
 		,car_model = #{carModel}
+		,frame_no = #{frameNo}
 		
 		,loan_periods = #{loanPeriods}
 		,invoice_price = #{invoicePrice}

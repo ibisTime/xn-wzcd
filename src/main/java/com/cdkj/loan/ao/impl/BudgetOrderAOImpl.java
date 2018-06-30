@@ -346,7 +346,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setCompanySaleCustomerPic(req.getCompanySaleCustomerPic());
         data.setSecondHgz(req.getSecondHgz());
         data.setSecondOdometer(req.getSecondOdometer());
-
+        data.setSecondCarFrontPic(req.getSecondCarFrontPic());
         data.setSecondConsolePic(req.getSecondConsolePic());
         data.setSecond300Pdf(req.getSecond300Pdf());
         data.setSecondQxbPic(req.getSecondQxbPic());
