@@ -65,4 +65,10 @@ public class RepointDetailDAOImpl extends AMybatisTemplate implements
         super.update(NAMESPACE.concat("update_cur_node_code"), data);
     }
 
+    @Override
+    public int deletePreRepointDetail(RepointDetail data) {
+        return super.delete(NAMESPACE.concat("delete_preRepointDetail"), data);
+
+    }
+
 }

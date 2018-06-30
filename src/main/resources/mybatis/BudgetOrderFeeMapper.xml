@@ -111,4 +111,12 @@
 		effect = #{effect}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_ShouldAmountAndIsSettled" parameterType="budgetOrderFee">
+		UPDATE tdq_budget_order_fee
+		SET
+		should_amount = #{shouldAmount}
+		,is_settled = #{isSettled}
+		WHERE code = #{code}
+	</update>
 </mapper>

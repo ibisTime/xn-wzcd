@@ -59,4 +59,10 @@ public class BudgetOrderFeeDAOImpl extends AMybatisTemplate implements
             start, count, condition, BudgetOrderFee.class);
     }
 
+    @Override
+    public int updateShouldAmountAndIsSettled(BudgetOrderFee data) {
+        return super.update(
+            NAMESPACE.concat("update_ShouldAmountAndIsSettled"), data);
+    }
+
 }

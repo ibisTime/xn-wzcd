@@ -10,4 +10,6 @@ public interface IRepointDetailDAO extends IBaseDAO<RepointDetail> {
     int update(RepointDetail data);
 
     void updateCurNodeCode(RepointDetail data);
+
+    int deletePreRepointDetail(RepointDetail data);
 }

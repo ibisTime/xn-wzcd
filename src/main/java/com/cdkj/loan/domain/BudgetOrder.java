@@ -236,6 +236,9 @@ public class BudgetOrder extends ABaseDO {
     // 油补
     private Long oilSubsidy;
 
+    // 发票不匹配之前油补
+    private Long preOilSubsidy;
+
     // 油补公里数
     private double oilSubsidyKil;
 
@@ -245,8 +248,14 @@ public class BudgetOrder extends ABaseDO {
     // GPS收费
     private Long gpsFee;
 
+    // 发票不匹配之前GPS收费
+    private Long preGpsFee;
+
     // GPS提成
     private Long gpsDeduct;
+
+    // 发票不匹配之前GPS提成
+    private Long preGpsDeduct;
 
     // GPS收费方式
     private String gpsFeeWay;
@@ -257,11 +266,20 @@ public class BudgetOrder extends ABaseDO {
     // 履约保证金
     private Long lyAmount;
 
+    // 发票不匹配之前履约保证金
+    private Long preLyAmount;
+
     // 担保风险金
     private Long fxAmount;
 
+    // 发票不匹配之前担保风险金
+    private Long preFxAmount;
+
     // 杂费
     private Long otherFee;
+
+    // 发票不匹配之前杂费
+    private Long preOtherFee;
 
     // 手续费收取方式
     private String serviceChargeWay;
@@ -2435,6 +2453,54 @@ public class BudgetOrder extends ABaseDO {
 
     public void setPreBankLoanCs(double preBankLoanCs) {
         PreBankLoanCs = preBankLoanCs;
+    }
+
+    public Long getPreOilSubsidy() {
+        return preOilSubsidy;
+    }
+
+    public void setPreOilSubsidy(Long preOilSubsidy) {
+        this.preOilSubsidy = preOilSubsidy;
+    }
+
+    public Long getPreGpsFee() {
+        return preGpsFee;
+    }
+
+    public void setPreGpsFee(Long preGpsFee) {
+        this.preGpsFee = preGpsFee;
+    }
+
+    public Long getPreGpsDeduct() {
+        return preGpsDeduct;
+    }
+
+    public void setPreGpsDeduct(Long preGpsDeduct) {
+        this.preGpsDeduct = preGpsDeduct;
+    }
+
+    public Long getPreLyAmount() {
+        return preLyAmount;
+    }
+
+    public void setPreLyAmount(Long preLyAmount) {
+        this.preLyAmount = preLyAmount;
+    }
+
+    public Long getPreFxAmount() {
+        return preFxAmount;
+    }
+
+    public void setPreFxAmount(Long preFxAmount) {
+        this.preFxAmount = preFxAmount;
+    }
+
+    public Long getPreOtherFee() {
+        return preOtherFee;
+    }
+
+    public void setPreOtherFee(Long preOtherFee) {
+        this.preOtherFee = preOtherFee;
     }
 
 }

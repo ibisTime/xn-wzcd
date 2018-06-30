@@ -104,4 +104,27 @@ public class RepointDetailBOImpl extends PaginableBOImpl<RepointDetail>
             repointDetailDAO.updateCurNodeCode(data);
         }
     }
+
+    @Override
+    public void delete(String budgetOrderCode) {
+
+        if (StringUtils.isNotBlank(budgetOrderCode)) {
+            RepointDetail data = new RepointDetail();
+            data.setBudgetCode(budgetOrderCode);
+            repointDetailDAO.delete(data);
+        }
+
+    }
+
+    @Override
+    public void deletePreRepointDetail(String budgetOrderCode, String type) {
+        if (StringUtils.isNotBlank(budgetOrderCode)
+                && StringUtils.isNotBlank(type)) {
+            RepointDetail data = new RepointDetail();
+            data.setBudgetCode(budgetOrderCode);
+            data.setType(type);
+            repointDetailDAO.deletePreRepointDetail(data);
+        }
+
+    }
 }

@@ -55,11 +55,11 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 发保合录入
     void entryPreservation(BudgetOrder budgetOrder);
 
-    // 发票不匹配申请
+    // 发票不匹配申请(录发保合时 改预算单状态)
     void invoiceMismatchApply(BudgetOrder budgetOrder);
 
-    // 审核
-    void approveApply(BudgetOrder budgetOrder);
+    // 发票不匹配审核
+    void invoiceMismatchApprove(BudgetOrder budgetOrder);
 
     // 二审通过
     void twoApproveYes(BudgetOrder condition);
@@ -99,5 +99,8 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
 
     // 预算单修改还款业务编号
     void updateRepayBizCode(BudgetOrder budgetOrder);
+
+    // 发票不匹配申请（申请发送）
+    void applyInvoiceMismatch(BudgetOrder budgetOrder);
 
 }

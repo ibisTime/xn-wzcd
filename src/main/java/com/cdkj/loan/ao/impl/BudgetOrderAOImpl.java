@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
+import com.cdkj.loan.ao.IRepointDetailAO;
 import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IAdvanceFundBO;
 import com.cdkj.loan.bo.IBankBO;
@@ -47,6 +48,7 @@ import com.cdkj.loan.domain.AdvanceFund;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.CarDealerProtocol;
@@ -66,33 +68,44 @@ import com.cdkj.loan.dto.req.XN632120ReqRepointDetail;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632200Req;
 import com.cdkj.loan.dto.req.XN632220Req;
+import com.cdkj.loan.dto.req.XN632230Req;
+import com.cdkj.loan.dto.req.XN632230ReqChild;
 import com.cdkj.loan.dto.req.XN632270Req;
 import com.cdkj.loan.dto.req.XN632271Req;
 import com.cdkj.loan.dto.req.XN632272Req;
 import com.cdkj.loan.dto.req.XN632280Req;
+import com.cdkj.loan.dto.req.XN632290Req;
 import com.cdkj.loan.dto.req.XN632341Req;
+import com.cdkj.loan.dto.res.XN632234Res;
+import com.cdkj.loan.dto.res.XN632290Res;
 import com.cdkj.loan.dto.res.XN632291Res;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EAdvanceType;
 import com.cdkj.loan.enums.EApproveResult;
+import com.cdkj.loan.enums.EAssureType;
 import com.cdkj.loan.enums.EBankType;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetFrozenStatus;
+import com.cdkj.loan.enums.EBudgetOrderFeeWay;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EButtonCode;
 import com.cdkj.loan.enums.ECollectBankcardType;
 import com.cdkj.loan.enums.ECurrency;
 import com.cdkj.loan.enums.EFbhStatus;
+import com.cdkj.loan.enums.EGpsTypeProtocol;
 import com.cdkj.loan.enums.EIsAdvanceFund;
 import com.cdkj.loan.enums.ELoanPeriod;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.enums.ELogisticsType;
+import com.cdkj.loan.enums.ELyAmountType;
 import com.cdkj.loan.enums.EMakeCardStatus;
+import com.cdkj.loan.enums.EOtherType;
 import com.cdkj.loan.enums.ERateType;
 import com.cdkj.loan.enums.ERepointDetailStatus;
+import com.cdkj.loan.enums.ERepointDetailType;
 import com.cdkj.loan.enums.ERepointDetailUseMoneyPurpose;
 import com.cdkj.loan.enums.EUseMoneyPurpose;
 import com.cdkj.loan.enums.EUserKind;
@@ -178,6 +191,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private ISYSConfigBO sysConfigBO;
+
+    @Autowired
+    private IRepointDetailAO repointDetailAO;
 
     @Override
     @Transactional
@@ -443,6 +459,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 .getRepointAmount()));
             data1.setAccountCode(req1.getAccountCode());
             data1.setCurNodeCode(ERepointDetailStatus.TODO_MAKE_BILL.getCode());
+            data1.setType(ERepointDetailType.NORMAL.getCode());
 
             repointDetailBO.saveRepointDetail(data1);
         }
@@ -1320,42 +1337,172 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void invoiceMismatchApply(String code, String loanAmount,
-            String operator) {
-        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+    public void invoiceMismatchApply(XN632230Req req) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         if (!EBudgetOrderNode.INVOICE_MISMATCH_APPLY.getCode().equals(
             budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是发票不匹配申请节点，不能操作！");
         }
+        // 1个贷款金额 3个贷款成数 6个费用
+        budgetOrder.setPreLoanAmount(budgetOrder.getLoanAmount());
+        budgetOrder.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
+        budgetOrder.setPreCompanyLoanCs(budgetOrder.getCompanyLoanCs());
+        budgetOrder.setCompanyLoanCs(StringValidater.toLong(req
+            .getCompanyLoanCs()));
+        budgetOrder.setPreBankLoanCs(budgetOrder.getBankLoanCs());
+        budgetOrder
+            .setBankLoanCs(StringValidater.toDouble(req.getBankLoanCs()));
+        budgetOrder.setPreGlobalRate(budgetOrder.getGlobalRate());
+        budgetOrder
+            .setGlobalRate(StringValidater.toDouble(req.getGlobalRate()));
+        if (null != req.getFxAmount() && !"".equals(req.getFxAmount())) {
+            budgetOrder.setPreFxAmount(budgetOrder.getFxAmount());
+            budgetOrder.setFxAmount(StringValidater.toLong(req.getFxAmount()));
+        }
+        if (null != req.getLyAmount() && !"".equals(req.getLyAmount())) {
+            budgetOrder.setPreLyAmount(budgetOrder.getLyAmount());
+            budgetOrder.setLyAmount(StringValidater.toLong(req.getLyAmount()));
+        }
+        if (null != req.getGpsFee() && !"".equals(req.getGpsFee())) {
+            budgetOrder.setPreGpsFee(budgetOrder.getGpsFee());
+            budgetOrder.setGpsFee(StringValidater.toLong(req.getGpsFee()));
+        }
+        if (null != req.getOtherFee() && !"".equals(req.getOtherFee())) {
+            budgetOrder.setPreOtherFee(budgetOrder.getOtherFee());
+            budgetOrder.setOtherFee(StringValidater.toLong(req.getOtherFee()));
+        }
+        budgetOrder.setPreGpsDeduct(budgetOrder.getGpsDeduct());
+        budgetOrder.setGpsDeduct(StringValidater.toLong(req.getGpsDeduct()));
+        budgetOrder.setPreOilSubsidy(budgetOrder.getOilSubsidy());
+        budgetOrder.setOilSubsidy(StringValidater.toLong(req.getOilSubsidy()));
+
         // 当前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         // 下个节点
         String nextNode = nodeFlowBO.getNodeFlowByCurrentNode(
             EBudgetOrderNode.INVOICE_MISMATCH_APPLY.getCode()).getNextNode();
-        budgetOrder.setPreLoanAmount(budgetOrder.getLoanAmount());
-        budgetOrder.setLoanAmount(StringValidater.toLong(loanAmount));
+
         budgetOrder.setCurNodeCode(nextNode);
-        budgetOrderBO.invoiceMismatchApply(budgetOrder);
 
         // 日志记录
         EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
             budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), operator);
+            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+
+        budgetOrderBO.applyInvoiceMismatch(budgetOrder);
+
+        // 生成新返点明细数据(用款用途)
+        List<XN632230ReqChild> list = req.getList();
+        for (XN632230ReqChild reqChild : list) {
+            RepointDetail repointDetail = new RepointDetail();
+            Bank bank = bankBO
+                .getBankBySubbranch(budgetOrder.getLoanBankCode());
+            CarDealerProtocol protocol = carDealerProtocolBO
+                .getCarDealerProtocolByCarDealerCode(
+                    budgetOrder.getCarDealerCode(), bank.getBankCode());
+            if (EUseMoneyPurpose.MORTGAGE.getCode().equals(// 应退按揭款 垫资
+                reqChild.getUseMoneyPurpose())
+                    && EIsAdvanceFund.YES.getCode().equals(
+                        budgetOrder.getIsAdvanceFund())) {
+                repointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
+                    .getCode());
+            } else if (EUseMoneyPurpose.PROTOCOL_INNER.getCode().equals(
+                reqChild.getUseMoneyPurpose())) {// 协议内
+                repointDetail
+                    .setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
+                        .getCode());
+                if (ELoanPeriod.ONE_YEAER.getCode().equals(
+                    budgetOrder.getLoanPeriods())) {
+                    if (ERateType.CT.getCode()
+                        .equals(budgetOrder.getRateType())) {
+                        repointDetail.setBenchmarkRate(protocol
+                            .getPlatCtRate12());
+                    }
+                    if (ERateType.ZT.getCode()
+                        .equals(budgetOrder.getRateType())) {
+                        repointDetail.setBenchmarkRate(protocol
+                            .getPlatZkRate12());
+                    }
+                }
+                if (ELoanPeriod.TWO_YEAR.getCode().equals(
+                    budgetOrder.getLoanPeriods())) {
+
+                    if (ERateType.CT.getCode()
+                        .equals(budgetOrder.getRateType())) {
+                        repointDetail.setBenchmarkRate(protocol
+                            .getPlatCtRate24());
+                    }
+                    if (ERateType.ZT.getCode()
+                        .equals(budgetOrder.getRateType())) {
+                        repointDetail.setBenchmarkRate(protocol
+                            .getPlatZkRate24());
+                    }
+
+                }
+                if (ELoanPeriod.THREE_YEAR.getCode().equals(
+                    budgetOrder.getLoanPeriods())) {
+                    if (ERateType.CT.getCode()
+                        .equals(budgetOrder.getRateType())) {
+                        repointDetail.setBenchmarkRate(protocol
+                            .getPlatCtRate36());
+                    }
+                    if (ERateType.ZT.getCode()
+                        .equals(budgetOrder.getRateType())) {
+                        repointDetail.setBenchmarkRate(protocol
+                            .getPlatZkRate36());
+                    }
+                }
+            } else if (EUseMoneyPurpose.MORTGAGE.getCode().equals(
+                reqChild.getUseMoneyPurpose())
+                    && EIsAdvanceFund.NO.getCode().equals(
+                        budgetOrder.getIsAdvanceFund())) {// 应退按揭款 不垫资
+                repointDetail.setMortgageAccountNo(reqChild
+                    .getMortgageAccountNo());
+                repointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
+                    .getCode());
+            } else if (EUseMoneyPurpose.PROTOCOL_OUTER.getCode().equals(
+                reqChild.getUseMoneyPurpose())) {// 协议外
+                repointDetail
+                    .setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_OUTER
+                        .getCode());
+            }
+
+            repointDetail.setBudgetCode(budgetOrder.getCode());
+            repointDetail.setUserName(budgetOrder.getCustomerName());
+            CreditUser user = creditUserBO.getCreditUserByCreditCode(
+                budgetOrder.getCreditCode(), ELoanRole.APPLY_USER);
+            repointDetail.setIdNo(user.getIdNo());
+            repointDetail.setCarDealerCode(reqChild.getCarDealerCode());
+            repointDetail.setCompanyCode(budgetOrder.getCompanyCode());
+            repointDetail.setCarType(budgetOrder.getCarType());
+            repointDetail.setLoanAmount(budgetOrder.getLoanAmount());
+            repointDetail.setBankRate(budgetOrder.getBankRate());
+
+            repointDetail.setFee(budgetOrder.getFee());
+            repointDetail.setRepointAmount(StringValidater.toLong(reqChild
+                .getRepointAmount()));
+            repointDetail.setAccountCode(reqChild.getAccountCode());
+            repointDetail.setCurNodeCode(ERepointDetailStatus.TODO_MAKE_BILL
+                .getCode());
+            repointDetail.setType(ERepointDetailType.NEW.getCode());
+
+            repointDetailBO.saveRepointDetail(repointDetail);
+        }
     }
 
     @Override
     @Transactional
-    public void approveApply(String code, String approveResult,
+    public void invoiceMismatchApprove(String code, String approveResult,
             String approveNote, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
         if (!EBudgetOrderNode.APPROVE_APPLY.getCode().equals(
             budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是审核节点，不能操作");
+                "当前节点不是发票不匹配审核节点，不能操作");
         }
 
         // 之前节点
@@ -1366,8 +1513,40 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         } else {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.APPROVE_APPLY.getCode()).getBackNode());
+            // 审核不通过
+            // 1.删除1个贷款金额3个贷款成数和6个费用的新数据 还原共10项原数据
+            budgetOrder.setLoanAmount(budgetOrder.getPreLoanAmount());
+            budgetOrder.setPreLoanAmount(null);
+
+            budgetOrder.setCompanyLoanCs(budgetOrder.getPreCompanyLoanCs());
+            budgetOrder.setPreCompanyLoanCs(0);
+            budgetOrder.setBankLoanCs(budgetOrder.getPreBankLoanCs());
+            budgetOrder.setPreBankLoanCs(0);
+            budgetOrder.setGlobalRate(budgetOrder.getPreGlobalRate());
+            budgetOrder.setPreGlobalRate(0);
+
+            budgetOrder.setFxAmount(budgetOrder.getPreFxAmount());
+            budgetOrder.setPreFxAmount(null);
+            budgetOrder.setLyAmount(budgetOrder.getPreLyAmount());
+            budgetOrder.setPreLyAmount(null);
+            budgetOrder.setGpsFee(budgetOrder.getPreGpsFee());
+            budgetOrder.setPreGpsFee(null);
+            budgetOrder.setOtherFee(budgetOrder.getPreOtherFee());
+            budgetOrder.setPreOtherFee(null);
+            budgetOrder.setOilSubsidy(budgetOrder.getPreOilSubsidy());
+            budgetOrder.setPreOilSubsidy(null);
+            budgetOrder.setGpsDeduct(budgetOrder.getPreGpsDeduct());
+            budgetOrder.setPreGpsDeduct(null);
+
+            // 2.将原来的手续费设置为失效
+            budgetOrderFeeBO.refreshBudgetOrderNoEffect(budgetOrder.getCode());
+
+            // 3.删除新返点数据和原返点数据
+            repointDetailBO.delete(budgetOrder.getCode());
+
         }
-        budgetOrderBO.approveApply(budgetOrder);
+
+        budgetOrderBO.invoiceMismatchApprove(budgetOrder);
 
         // 日志记录
         EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
@@ -1379,41 +1558,90 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void twoApproveApply(String code, String approveResult,
+    public void invoiceMismatchSecondApprove(String code, String approveResult,
             String approveNote, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
         if (!EBudgetOrderNode.TWO_APPROVE_APPLY.getCode().equals(
             budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是二审节点，不能操作");
+                "当前节点不是发票不匹配二审节点，不能操作");
         }
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            // 二审通过
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.TWO_APPROVE_APPLY.getCode()).getNextNode());
-            XN632291Res xn632291Res = carDealerProtocolBO.calProtocolFee(
-                budgetOrder.getCode(), budgetOrder.getCarDealerCode());
-            budgetOrder.setGpsFee(StringValidater.toLong(xn632291Res
-                .getGpsFee()));
-            budgetOrder.setLyAmount(StringValidater.toLong(xn632291Res
-                .getLyAmount()));
-            budgetOrder.setFxAmount(StringValidater.toLong(xn632291Res
-                .getFxAmount()));
+            // 计算出新应收手续费总额并且更新应收总额 履约保证金+担保风险金+GPS收费+杂费
+            if (EBudgetOrderFeeWay.TRANSFER.getCode().equals(
+                budgetOrder.getServiceChargeWay())) {
+                Long totalFee = budgetOrder.getFee()
+                        + budgetOrder.getLyAmount() + budgetOrder.getFxAmount()
+                        + budgetOrder.getGpsFee() + budgetOrder.getOtherFee();
+                BudgetOrderFee budgetOrderFee = new BudgetOrderFee();
+                budgetOrderFee.setShouldAmount(totalFee);
 
-            budgetOrder.setOtherFee(StringValidater.toLong(xn632291Res
-                .getOtherFee()));
-            budgetOrderBO.twoApproveYes(budgetOrder);
+                BudgetOrderFee condition = new BudgetOrderFee();
+                List<BudgetOrderFee> list = budgetOrderFeeBO
+                    .queryBudgetOrderFeeList(condition);
+                BudgetOrderFee preBudgetOrderFee = list.get(0);
 
-            // 将原来的手续设置为失效，新增手续费
-            budgetOrderFeeBO.refreshBudgetOrderNoEffect(budgetOrder.getCode());
-            budgetOrderFeeBO.saveBudgetOrderFee(budgetOrder, operator);
-            // TODO 将原来的返点设置为失效，新增返点
+                if (totalFee > preBudgetOrderFee.getShouldAmount()) {
+                    budgetOrderFee.setIsSettled(EBoolean.NO.getCode());
+                } else {
+                    budgetOrderFee.setIsSettled(preBudgetOrderFee
+                        .getIsSettled());
+                }
+
+                budgetOrderFeeBO.updateShouldAmountAndIsSettled(budgetOrderFee);
+            }
+            // TODO 手续费收取方式是按揭款扣 在退按揭款时使用新计算出的手续费
+
+            // 删除原返点数据
+            repointDetailBO.deletePreRepointDetail(budgetOrder.getCode(),
+                ERepointDetailType.NORMAL.getCode());
+
+            budgetOrderBO.twoApproveNo(budgetOrder);// TODO 暂用这个改节点
+
+            // budgetOrderBO.twoApproveYes(budgetOrder);
+
         } else {
+            // 二审不通过
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.TWO_APPROVE_APPLY.getCode()).getBackNode());
-            budgetOrderBO.twoApproveNo(budgetOrder);
+            // 1.删除1个贷款金额3个贷款成数和6个费用的新数据 还原共10项原数据
+            budgetOrder.setLoanAmount(budgetOrder.getPreLoanAmount());
+            budgetOrder.setPreLoanAmount(null);
+
+            budgetOrder.setCompanyLoanCs(budgetOrder.getPreCompanyLoanCs());
+            budgetOrder.setPreCompanyLoanCs(0);
+            budgetOrder.setBankLoanCs(budgetOrder.getPreBankLoanCs());
+            budgetOrder.setPreBankLoanCs(0);
+            budgetOrder.setGlobalRate(budgetOrder.getPreGlobalRate());
+            budgetOrder.setPreGlobalRate(0);
+
+            budgetOrder.setFxAmount(budgetOrder.getPreFxAmount());
+            budgetOrder.setPreFxAmount(null);
+            budgetOrder.setLyAmount(budgetOrder.getPreLyAmount());
+            budgetOrder.setPreLyAmount(null);
+            budgetOrder.setGpsFee(budgetOrder.getPreGpsFee());
+            budgetOrder.setPreGpsFee(null);
+            budgetOrder.setOtherFee(budgetOrder.getPreOtherFee());
+            budgetOrder.setPreOtherFee(null);
+            budgetOrder.setOilSubsidy(budgetOrder.getPreOilSubsidy());
+            budgetOrder.setPreOilSubsidy(null);
+            budgetOrder.setGpsDeduct(budgetOrder.getPreGpsDeduct());
+            budgetOrder.setPreGpsDeduct(null);
+            budgetOrderBO.invoiceMismatchApprove(budgetOrder);// 更新数据和更新节点
+
+            // 2.将原来的手续费设置为失效
+            budgetOrderFeeBO.refreshBudgetOrderNoEffect(budgetOrder.getCode());
+
+            // 3.删除新返点数据和原返点数据
+            repointDetailBO.delete(budgetOrder.getCode());
+
+            // budgetOrderBO.twoApproveNo(budgetOrder);
         }
 
         // 日志记录
@@ -1595,6 +1823,126 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start,
             int limit, BudgetOrder condition) {
         return budgetOrderBO.getPaginable(start, limit, condition);
+    }
+
+    @Override
+    public XN632234Res modifyLoanAmountCalculateData(String code,
+            String loanAmount) {
+
+        XN632234Res res = new XN632234Res();
+        BudgetOrder data = budgetOrderBO.getBudgetOrder(code);
+        Long invoicePrice = data.getCurrentInvoicePrice();// 现发票价
+        // 我司贷款成数：贷款金额 / 发票价格
+        res.setCompanyLoanCs(String.valueOf(AmountUtil.div(
+            StringValidater.toLong(loanAmount), invoicePrice)));
+        double feeRate = AmountUtil.div(data.getFee(),
+            StringValidater.toLong(loanAmount));
+        // 综合利率： 服务费/贷款金额+银行利率
+        res.setGlobalRate(String.valueOf(feeRate + data.getBankRate()));
+        Long totalAmount = StringValidater.toLong(loanAmount) + data.getFee();
+        // 银行贷款成数：(贷款金额+服务费) / 发票价格
+        res.setBankLoanCs(String.valueOf(AmountUtil.div(totalAmount,
+            invoicePrice)));
+
+        // 手续费:履约保证金+担保风险金+GPS收费+杂费
+        String carDealerCode = data.getCarDealerCode();
+        Bank bank = bankBO.getBankBySubbranch(data.getLoanBankCode());
+        EBankType eBankType = null;
+        if (EBankType.GH.getCode().equals(bank.getBankCode())) {
+            eBankType = EBankType.GH;
+        } else if (EBankType.ZH.getCode().equals(bank.getBankCode())) {
+            eBankType = EBankType.ZH;
+        } else if (EBankType.JH.getCode().equals(bank.getBankCode())) {
+            eBankType = EBankType.JH;
+        }
+        CarDealerProtocol carDealerProtocol = carDealerProtocolBO
+            .getCarDealerProtocolByCarDealerCode(carDealerCode,
+                eBankType.getCode());
+
+        XN632290Req req = new XN632290Req();
+
+        // 担保风险金
+        if (EAssureType.PERCENT.getCode().equals(
+            carDealerProtocol.getAssureType())) {
+            res.setFxAmount(String.valueOf(AmountUtil.mul(
+                StringValidater.toLong(loanAmount),
+                carDealerProtocol.getAssureRate())));
+            req.setFxAmount(String.valueOf(AmountUtil.mul(
+                StringValidater.toLong(loanAmount),
+                carDealerProtocol.getAssureRate())));
+        } else {
+            req.setFxAmount(String.valueOf(data.getFxAmount()));
+        }
+        // 履约保证金
+        if (ELyAmountType.PERCENT.getCode().equals(
+            carDealerProtocol.getLyAmountType())) {
+            res.setLyAmount(String.valueOf(AmountUtil.mul(
+                StringValidater.toLong(loanAmount),
+                carDealerProtocol.getLyAmountRate())));
+            req.setLyAmount(String.valueOf(AmountUtil.mul(
+                StringValidater.toLong(loanAmount),
+                carDealerProtocol.getLyAmountRate())));
+        } else {
+            req.setLyAmount(String.valueOf(data.getLyAmount()));
+        }
+        // gps收费
+        if (EGpsTypeProtocol.PERCENT.getCode().equals(
+            carDealerProtocol.getGpsType())) {
+            res.setGpsFee(String.valueOf(AmountUtil.mul(
+                StringValidater.toLong(loanAmount),
+                carDealerProtocol.getGpsRate())));
+            req.setGpsFee(String.valueOf(AmountUtil.mul(
+                StringValidater.toLong(loanAmount),
+                carDealerProtocol.getGpsRate())));
+        } else {
+            req.setGpsFee(String.valueOf(data.getGpsFee()));
+        }
+        // 杂费
+        if (EOtherType.PERCENT.getCode().equals(
+            carDealerProtocol.getOtherType())) {
+            res.setOtherFee(String.valueOf(AmountUtil.mul(
+                StringValidater.toLong(loanAmount),
+                carDealerProtocol.getOtherRate())));
+            req.setOtherFee(String.valueOf(AmountUtil.mul(
+                StringValidater.toLong(loanAmount),
+                carDealerProtocol.getOtherRate())));
+        } else {
+            req.setOtherFee(String.valueOf(data.getOtherFee()));
+        }
+
+        SYSConfig sysConfigoil = sysConfigBO
+            .getSYSConfig(SysConstants.BUDGET_OIL_SUBSIDY_RATE);
+        Double oilSubsidyBFB = StringValidater.toDouble(sysConfigoil
+            .getCvalue());
+        Long oilSubsidy = AmountUtil.mul(StringValidater.toLong(loanAmount),
+            oilSubsidyBFB);
+        // 油补
+        res.setOilSubsidy(String.valueOf(oilSubsidy));
+
+        SYSConfig sysConfig = sysConfigBO
+            .getSYSConfig(SysConstants.BUDGET_GPS_DEDUCT_RATE);
+        Double gpsBFB = StringValidater.toDouble((sysConfig.getCvalue()));
+        Long gpsDeduct = AmountUtil.mul(StringValidater.toLong(loanAmount),
+            gpsBFB);
+        // gps提成
+        res.setGpsDeduct(String.valueOf(gpsDeduct));
+
+        // 返点明细（用款用途）
+        req.setBudgetOrderCode(code);
+        req.setCarDealerCode(carDealerCode);
+        req.setLoanAmount(loanAmount);
+        req.setFee(String.valueOf(data.getFee()));
+        req.setLoanPeriods(data.getLoanPeriods());
+        req.setRateType(data.getRateType());
+        req.setBankRate(String.valueOf(data.getBankRate()));
+        req.setGpsFeeWay(data.getGpsFeeWay());
+        req.setFeeWay(data.getServiceChargeWay());
+        List<XN632290Res> list = repointDetailAO.showRepointDetail(req,
+            StringValidater.toLong(loanAmount));
+        res.setList(list);
+
+        return res;
+
     }
 
 }
