@@ -89,11 +89,14 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
     // 风控主管审核
     public int updateRiskManagerCheck(RepayBiz data);
 
+    // 打印岗打印
+    public int updateMortgagePrint(RepayBiz data);
+
     // 收件
     public int updateBankRecLogic(RepayBiz data);
 
     // 结果回录
-    public int updateMortgageInput(RepayBiz data);
+    public int updateMortgageCommit(RepayBiz data);
 
     // 还款计划结束后更新为提交结算单
     public int updateRepayEndCommitSettle(RepayBiz data);

@@ -16,9 +16,9 @@ public enum ERepayBizNode {
             "020_03", "财务审核"), FINANCE_CHECK_NO("020_04", "财务审核不通过"), CASH_REMIT(
             "020_05", "出纳打款"), RELEASE_MORTGAGE_APPLY("020_06", "解除抵押申请"), RISK_INDOOR_CHECK(
             "020_07", "风控内勤审核"), RISK_INDOOR_CHECK_NO("020_08", "风控内勤审核不通过"), RISK_MANAGER_CHECK(
-            "020_09", "风控经理审核"), RISK_MANAGER_CHECK_NO("020_10", "风控经理审核不通过"), BANK_REC_LOGIC(
-            "020_11", "驻行人员收件"), MORTGAGE_INPUT("020_12", "驻行人员回录抵押"), MORTGAGE_OVER(
-            "020_13", "抵押完成"),
+            "020_09", "风控经理审核"), RISK_MANAGER_CHECK_NO("020_10", "风控经理审核不通过"), MORTGAGE_PRINT(
+            "020_11", "打印岗打印"), BANK_REC_LOGIC("020_12", "寄送银行材料"), MORTGAGE_COMMIT_FILE(
+            "020_13", "驻行人员提交材料"), MORTGAGE_OVER("020_14", "抵押完成"),
 
     // 收车流程
     TC_APPLY("021_01", "申请收车"), TC_RISK_MANAGE_CHECK("021_02", "收车风控经理审核"), TC_RISK_MANAGE_CHECK_NO(

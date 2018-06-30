@@ -1,5 +1,6 @@
 package com.cdkj.loan.bo;
 
+import java.util.Date;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
@@ -110,11 +111,16 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     public void refreshRiskManagerCheck(String code, String curNodeCode,
             String remark, String updater);
 
+    // 打印岗打印
+    public void refreshMortgagePrint(RepayBiz data, String curNodeCode,
+            Date releaseDatetime, String releaseTemplateId, String releaseNote,
+            String updater);
+
     // 收件
     public void refreshBankRecLogic(String code, String updater);
 
     // 结果回录
-    public void refreshMortgageInput(RepayBiz data);
+    public void refreshMortgageCommit(RepayBiz data);
 
     // 还款计划结束后更新为提交结算单
     public void refreshRepayEndCommitSettle(String code);

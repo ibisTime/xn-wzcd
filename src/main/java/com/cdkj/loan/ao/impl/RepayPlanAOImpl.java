@@ -340,22 +340,27 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         } else if (ECollectionResult.REJUST_REPAY.getCode().equals(
             req.getCollectionResult())
                 || ECollectionResult.TAKE_CAR.getCode().equals(
-                    req.getCollectionResult())
-                || ECollectionResult.JUDGE.getCode().equals(
                     req.getCollectionResult())) {
             repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_RED.getCode());
         } else if (ECollectionResult.REPLACE_REPAY.getCode().equals(
             req.getCollectionResult())) {
             repayPlan
                 .setCurNodeCode(ERepayPlanNode.HANDLER_TO_YELLOW.getCode());
+        } else if (ECollectionResult.JUDGE.getCode().equals(
+            req.getCollectionResult())) {
+            repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_RED.getCode());
         }
         repayPlanBO.refreshOverdueHandle(repayPlan);
 
-        // 红名单更新收车节点
+        // 红名单更新收车节点,司法诉讼则直接进去诉讼，无需收车
         if (ERepayPlanNode.HANDLER_TO_RED.getCode().equals(
             repayPlan.getCurNodeCode())) {
-            repayBizBO.overdueRedMenuHandle(repayBiz,
-                ERepayBizNode.TC_APPLY.getCode());
+            String nextNode = ERepayBizNode.TC_APPLY.getCode();
+            if (ECollectionResult.JUDGE.getCode().equals(
+                req.getCollectionResult())) {
+                nextNode = ERepayBizNode.JUDGE.getCode();
+            }
+            repayBizBO.overdueRedMenuHandle(repayBiz, nextNode);
         }
     }
 

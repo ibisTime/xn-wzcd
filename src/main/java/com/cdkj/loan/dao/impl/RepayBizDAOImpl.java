@@ -29,8 +29,8 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
 
     @Override
     public long selectTotalCount(RepayBiz condition) {
-        return super.selectTotalCount(NAMESPACE.concat("select_repayBiz_count"),
-            condition);
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_repayBiz_count"), condition);
     }
 
     @Override
@@ -112,8 +112,8 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
 
     @Override
     public int updateTakeCarInputResult(RepayBiz data) {
-        return super.update(NAMESPACE.concat("update_takeCarInputResult"),
-            data);
+        return super
+            .update(NAMESPACE.concat("update_takeCarInputResult"), data);
     }
 
     @Override
@@ -198,19 +198,24 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
     }
 
     @Override
+    public int updateMortgagePrint(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_mortgagePrint"), data);
+    }
+
+    @Override
     public int updateBankRecLogic(RepayBiz data) {
         return super.update(NAMESPACE.concat("update_bankRecLogic"), data);
     }
 
     @Override
-    public int updateMortgageInput(RepayBiz data) {
-        return super.update(NAMESPACE.concat("update_mortgageInput"), data);
+    public int updateMortgageCommit(RepayBiz data) {
+        return super.update(NAMESPACE.concat("update_mortgageCommit"), data);
     }
 
     @Override
     public int updateRepayEndCommitSettle(RepayBiz data) {
-        return super.update(NAMESPACE.concat("update_repayPlanEndCommitSettle"),
-            data);
+        return super.update(
+            NAMESPACE.concat("update_repayPlanEndCommitSettle"), data);
     }
 
 }
