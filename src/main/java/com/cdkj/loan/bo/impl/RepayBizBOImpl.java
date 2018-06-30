@@ -123,12 +123,11 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         repayBiz.setLoanAmount(budgetOrder.getLoanAmount());
 
         repayBiz.setFxDeposit(0L);
-        repayBiz.setPeriods(StringValidater.toInteger(budgetOrder
-            .getLoanPeriods()));
+        repayBiz.setPeriods(budgetOrder.getLoanPeriods());
         repayBiz.setRestPeriods(repayBiz.getPeriods());
         repayBiz.setBankRate(0.0);// 作废
-
         repayBiz.setBankFkDatetime(budgetOrder.getBankFkDatetime());
+
         Date now = new Date();
         repayBiz.setLoanStartDatetime(now);
         Date addMonths = DateUtils.addMonths(now, repayBiz.getPeriods());

@@ -100,4 +100,10 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 预算单修改还款业务编号
     void updateRepayBizCode(BudgetOrder budgetOrder);
 
+    // 银行放款合同打印
+    void loanContractPrint(BudgetOrder budgetOrder);
+
+    // 车辆抵押合同打印
+    void pledgeContractPrint(BudgetOrder budgetOrder);
+
 }

@@ -319,6 +319,19 @@ public class CreditAOImpl implements ICreditAO {
             data.setMobile(customerUser.getMobile());
             data.setLoanBankCode(credit.getLoanBankCode());
 
+            CreditUser ghUser = creditUserBO
+                .getCreditUserByCreditCode(credit.getCode(), ELoanRole.GHR);
+            if (ghUser != null) {
+                data.setGhRealName(ghUser.getUserName());
+                data.setApplyUserGhrRelation(ghUser.getRelation());
+                data.setGhMobile(ghUser.getMobile());
+                data.setGhMonthIncome(ghUser.getMonthIncome());
+                data.setGhSettleInterest(ghUser.getSettleInterest());
+                data.setGhBalance(ghUser.getBalance());
+                data.setGhJourShowIncome(ghUser.getJourShowIncome());
+                data.setGhIsPrint(ghUser.getIsPrint());
+            }
+
             data.setCompanyCode(credit.getCompanyCode());
             data.setSaleUserId(credit.getSaleUserId());
             data.setShopWay(credit.getShopWay());
