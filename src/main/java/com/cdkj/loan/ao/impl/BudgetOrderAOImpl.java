@@ -1624,7 +1624,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public void loanContractPrint(XN632142Req req) {
+    @Transactional
+    public BudgetOrder loanContractPrint(XN632142Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         if (!EBudgetOrderNode.LOAN_PRINT.getCode()
             .equals(budgetOrder.getCurNodeCode())) {
@@ -1671,10 +1672,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), curNodeCode,
             nextNodeCode, EBoolean.YES.getCode(), req.getOperater());
+
+        return budgetOrder;
     }
 
     @Override
-    public void pledgeContractPrint(XN632192Req req) {
+    public BudgetOrder pledgeContractPrint(XN632192Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         if (!EBudgetOrderNode.PLEDGE_PRINT.getCode()
             .equals(budgetOrder.getCurNodeCode())
@@ -1708,6 +1711,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), curNodeCode,
             nextNodeCode, EBoolean.YES.getCode(), req.getOperator());
+
+        return budgetOrder;
     }
 
 }

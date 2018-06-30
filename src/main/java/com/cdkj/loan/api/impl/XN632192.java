@@ -5,7 +5,6 @@ import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN632192Req;
-import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -24,8 +23,7 @@ public class XN632192 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.pledgeContractPrint(req);
-        return new BooleanRes(true);
+        return budgetOrderAO.pledgeContractPrint(req);
     }
 
     @Override

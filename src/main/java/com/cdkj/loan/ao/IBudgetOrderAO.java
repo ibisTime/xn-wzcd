@@ -121,8 +121,8 @@ public interface IBudgetOrderAO {
             BudgetOrder condition);
 
     // 银行放款合同打印
-    public void loanContractPrint(XN632142Req req);
+    public BudgetOrder loanContractPrint(XN632142Req req);
 
     // 车辆抵押合同打印
-    public void pledgeContractPrint(XN632192Req req);
+    public BudgetOrder pledgeContractPrint(XN632192Req req);
 }
