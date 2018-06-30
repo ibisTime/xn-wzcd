@@ -1678,7 +1678,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         if (!EBudgetOrderNode.PLEDGE_PRINT.getCode()
             .equals(budgetOrder.getCurNodeCode())
-                || !EBudgetOrderNode.FEN_PLEDGE_PRINT.getCode()
+                && !EBudgetOrderNode.FEN_PLEDGE_PRINT.getCode()
                     .equals(budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是打印岗打印节点，不能操作");
