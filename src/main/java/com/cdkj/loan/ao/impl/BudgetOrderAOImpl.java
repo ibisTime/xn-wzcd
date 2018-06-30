@@ -1141,6 +1141,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .getCarDealer(budgetOrder.getCarDealerCode());
         if (null != carDealer) {
             budgetOrder.setCarDealerName(carDealer.getFullName());
+            budgetOrder.setCarDealerPhone(carDealer.getContactPhone());
         }
 
         InsuranceCompany insuranceCompany = insuranceCompanyBO

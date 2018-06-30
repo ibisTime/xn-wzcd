@@ -26,6 +26,12 @@ public class BudgetOrder extends ABaseDO {
     // 客户姓名
     private String customerName;
 
+    // 客户性别
+    private String customerSex;
+
+    // 客户生日
+    private String customerBirth;
+
     // 汽车经销商编号
     private String carDealerCode;
 
@@ -136,6 +142,12 @@ public class BudgetOrder extends ABaseDO {
 
     // 共还人姓名
     private String ghRealName;
+
+    // 共还人身份证号
+    private String ghIdNo;
+
+    // 共还人性别
+    private String ghSex;
 
     // 共还人电话
     private String ghMobile;
@@ -718,6 +730,8 @@ public class BudgetOrder extends ABaseDO {
 
     private String carDealerName;// 汽车经销商
 
+    private String carDealerPhone;// 汽车经销商电话
+
     private String insuranceCompanyName;// 保险公司
 
     private String loanBankName;// 贷款银行
@@ -834,6 +848,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setGuarantPrintTemplateId(String guarantPrintTemplateId) {
         this.guarantPrintTemplateId = guarantPrintTemplateId;
+    }
+
+    public String getCarDealerPhone() {
+        return carDealerPhone;
+    }
+
+    public void setCarDealerPhone(String carDealerPhone) {
+        this.carDealerPhone = carDealerPhone;
     }
 
     public String getPostcode() {
@@ -1086,6 +1108,30 @@ public class BudgetOrder extends ABaseDO {
 
     public void setShouldBackDatetime(Date shouldBackDatetime) {
         this.shouldBackDatetime = shouldBackDatetime;
+    }
+
+    public String getCustomerSex() {
+        return customerSex;
+    }
+
+    public void setCustomerSex(String customerSex) {
+        this.customerSex = customerSex;
+    }
+
+    public String getCustomerBirth() {
+        return customerBirth;
+    }
+
+    public void setCustomerBirth(String customerBirth) {
+        this.customerBirth = customerBirth;
+    }
+
+    public String getGhIdNo() {
+        return ghIdNo;
+    }
+
+    public void setGhIdNo(String ghIdNo) {
+        this.ghIdNo = ghIdNo;
     }
 
     public void setShouldBackStatus(String shouldBackStatus) {
@@ -1434,6 +1480,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setIsSiteProve(String isSiteProve) {
         this.isSiteProve = isSiteProve;
+    }
+
+    public String getGhSex() {
+        return ghSex;
+    }
+
+    public void setGhSex(String ghSex) {
+        this.ghSex = ghSex;
     }
 
     public String getSiteProve() {

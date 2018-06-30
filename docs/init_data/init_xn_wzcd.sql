@@ -1549,6 +1549,8 @@ INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_d
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','supplement_reason','1','人民的利益','admin',now(),NULL,'CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','supplement_reason','2','社会的需求','admin',now(),NULL,'CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','supplement_reason','3','国家的号召','admin',now(),NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'guarant_print_template_id','套打模板','admin',now(),NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','guarant_print_template_id','1','工行','admin',now(),NULL,'CD-CWZCD000020','CD-CWZCD000020');
 
 /*
 -- Query: select `type`,`ckey`,`cvalue`,`updater`,now() as `update_datetime`,`remark`,`company_code`,`system_code` from tsys_config
