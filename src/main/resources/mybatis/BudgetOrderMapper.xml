@@ -102,7 +102,7 @@
 		<result column="oil_subsidy_kil" property="oilSubsidyKil" />
 		<result column="is_plat_insure" property="isPlatInsure" />
 		<result column="gps_fee" property="gpsFee" />
-		<result column="pregps_fee" property="preGpsFee " />
+		<result column="pre_gps_fee" property="preGpsFee " />
 		<result column="gps_deduct" property="gpsDeduct" />
 		<result column="pre_gps_deduct" property="preGpsDeduct " />
 		
@@ -415,7 +415,7 @@
 		,t.oil_subsidy_kil
 		,t.is_plat_insure
 		,t.gps_fee
-		,t.pregps_fee
+		,t.pre_gps_fee
 		,t.gps_deduct
 		,t.pre_gps_deduct
 		,t.gps_fee_way
@@ -667,7 +667,7 @@
 		,t.oil_subsidy_kil
 		,t.is_plat_insure
 		,t.gps_fee
-		,t.pregps_fee
+		,t.pre_gps_fee
 		,t.gps_deduct
 		,t.pre_gps_deduct
 		,t.gps_fee_way
@@ -896,7 +896,7 @@
 		,t.oil_subsidy_kil
 		,t.is_plat_insure
 		,t.gps_fee
-		,t.pregps_fee
+		,t.pre_gps_fee
 		,t.gps_deduct
 		,t.pre_gps_deduct
 		,t.gps_fee_way

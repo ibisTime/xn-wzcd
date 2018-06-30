@@ -134,6 +134,7 @@ CREATE TABLE `tdq_budget_order` (
   `gps_deduct` bigint(20) DEFAULT NULL COMMENT 'GPS提成',
   `pre_gps_deduct` bigint(20) DEFAULT NULL COMMENT '发票不匹配之前GPS提成',
   `gps_fee_way` varchar(4) DEFAULT NULL COMMENT 'GPS收费方式（1转账2按揭款3返点4不收费）',
+  `gps_location` tinytext DEFAULT NULL COMMENT 'GPS安装位置',
   `ly_amount` bigint(20) DEFAULT NULL COMMENT '履约保证金',
   `pre_ly_amount` bigint(20) DEFAULT NULL COMMENT '发票不匹配之前履约保证金',
   `fx_amount` bigint(20) DEFAULT NULL COMMENT '担保风险金',
@@ -223,6 +224,7 @@ CREATE TABLE `tdq_budget_order` (
   `reg_certificate_code` varchar(32) DEFAULT NULL COMMENT '登记证书号',
   
   `other_contact` tinytext COMMENT '其他联系人',
+  `contact_mobile` varchar(32) COMMENT '联系人手机',
   `guarantor_name` varchar(32) DEFAULT NULL COMMENT '担保人姓名',
   `guarantor_mobile` varchar(16) DEFAULT NULL COMMENT '担保人手机',
 
