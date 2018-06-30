@@ -66,7 +66,7 @@ public class BudgetOrder extends ABaseDO {
     private double companyLoanCs;
 
     // 发票不匹配之前我司贷款成数
-    private double preCompanyLoanCs;
+    private double PreCompanyLoanCs;
 
     // 是否垫资
     private String isAdvanceFund;
@@ -692,7 +692,7 @@ public class BudgetOrder extends ABaseDO {
     // 冻结状态(0冻结 1正常)
     private String frozenStatus;
 
-    // 客户申请作废时的节点编号
+    // 客户申请作废时的主流程节点编号/发票不匹配申请时的主流程节点编号
     private String cancelNodeCode;
 
     // 是否提交作废申请
@@ -1578,30 +1578,6 @@ public class BudgetOrder extends ABaseDO {
 
     public void setGpsLocation(String gpsLocation) {
         this.gpsLocation = gpsLocation;
-    }
-
-    public double getPreCompanyLoanCs() {
-        return preCompanyLoanCs;
-    }
-
-    public void setPreCompanyLoanCs(double preCompanyLoanCs) {
-        this.preCompanyLoanCs = preCompanyLoanCs;
-    }
-
-    public double getPreGlobalRate() {
-        return preGlobalRate;
-    }
-
-    public void setPreGlobalRate(double preGlobalRate) {
-        this.preGlobalRate = preGlobalRate;
-    }
-
-    public double getPreBankLoanCs() {
-        return preBankLoanCs;
-    }
-
-    public void setPreBankLoanCs(double preBankLoanCs) {
-        this.preBankLoanCs = preBankLoanCs;
     }
 
     public String getPledgePrintUser() {
@@ -2754,6 +2730,30 @@ public class BudgetOrder extends ABaseDO {
 
     public void setServiceCharge(Long serviceCharge) {
         this.serviceCharge = serviceCharge;
+    }
+
+    public double getPreCompanyLoanCs() {
+        return PreCompanyLoanCs;
+    }
+
+    public void setPreCompanyLoanCs(double preCompanyLoanCs) {
+        PreCompanyLoanCs = preCompanyLoanCs;
+    }
+
+    public double getPreGlobalRate() {
+        return preGlobalRate;
+    }
+
+    public void setPreGlobalRate(double preGlobalRate) {
+        this.preGlobalRate = preGlobalRate;
+    }
+
+    public double getPreBankLoanCs() {
+        return preBankLoanCs;
+    }
+
+    public void setPreBankLoanCs(double preBankLoanCs) {
+        this.preBankLoanCs = preBankLoanCs;
     }
 
 }

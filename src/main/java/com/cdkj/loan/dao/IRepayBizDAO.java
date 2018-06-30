@@ -23,13 +23,13 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
     // 红名单处理
     public int updateOverdueRedHandle(RepayBiz data);
 
-    // 申请拖车
+    // 申请收车
     public int updateTakeCarApply(RepayBiz data);
 
-    // 拖车分控经理审核
+    // 收车分控经理审核
     public int updateTakeCarRiskManageCheck(RepayBiz data);
 
-    // 拖车分公司总公司审核
+    // 收车分公司总公司审核
     public int updateTakeCarCompanyManageCheck(RepayBiz data);
 
     // 风控总监审核
@@ -41,7 +41,7 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
     // 确认放款
     public int updateTakeCarSureFk(RepayBiz data);
 
-    // 录入拖车结果
+    // 录入收车结果
     public int updateTakeCarInputResult(RepayBiz data);
 
     // 结果处理

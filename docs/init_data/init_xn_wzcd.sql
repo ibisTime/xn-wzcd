@@ -1589,6 +1589,9 @@ INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`r
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('loan_cs','plat_loan_cs','0.5','admin',now(),'我司贷款层数','CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('repayplan','repayplan_step','50','admin',now(),'更新还款业务结清每次处理的条数','CD-CHTWT000020','CD-CHTWT000020');
 
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('budget_order','budget_gps_deduct_rate','0.5','admin',now(),'gps提成比例','CD-CHTWT000020','CD-CHTWT000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('budget_order','budget_oil_subsidy_rate','0.6','admin',now(),'油补提成比例','CD-CHTWT000020','CD-CHTWT000020');
+
 INSERT INTO `tstd_account` (`account_number`,`user_id`,`real_name`,`type`,`status`,`currency`,`amount`,`frozen_amount`,`md5`,`create_datetime`,`last_order`) VALUES ('SYS_ACOUNT_CNY','SYS_USER_HTWT','平台人民币盈亏账户','P','0','CNY',0,0,'b99e0407fedc3d160f73fec8d1fa9a0c',now(),NULL);
 INSERT INTO `tstd_account` (`account_number`,`user_id`,`real_name`,`type`,`status`,`currency`,`amount`,`frozen_amount`,`md5`,`create_datetime`,`last_order`) VALUES ('SYS_ACOUNT_CNY_TG','SYS_USER_HTWT','平台人民币托管账户','P','0','CNY',0,0,'b99e0407fedc3d160f73fec8d1fa9a0c',now(),NULL);
 INSERT INTO `tstd_account` (`account_number`,`user_id`,`real_name`,`type`,`status`,`currency`,`amount`,`frozen_amount`,`md5`,`create_datetime`,`last_order`) VALUES ('SYS_ACOUNT_JF','SYS_USER_HTWT','平台积分账户','P','0','JF',0,0,'b99e0407fedc3d160f73fec8d1fa9a0c',now(),NULL);

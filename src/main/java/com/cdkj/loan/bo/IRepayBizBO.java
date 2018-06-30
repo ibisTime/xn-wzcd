@@ -39,19 +39,18 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
             Long realWithholdAmount);
 
     // 车贷还款订单
-    public void refreshRepayCarLoan(String repayBizCode,
-            Long realWithholdAmount);
+    public void refreshRepayCarLoan(String repayBizCode, Long realWithholdAmount);
 
     // 车贷确认结算
     public void confirmSettledProduct(RepayBiz repayBiz);
 
-    // 申请拖车
+    // 申请收车
     public void takeCarApply(RepayBiz data);
 
-    // 拖车分控经理审核
+    // 收车分控经理审核
     public void takeCarRiskManageCheck(RepayBiz data);
 
-    // 拖车分公司总公司审核
+    // 收车分公司总公司审核
     public void takeCarCompanyManageCheck(RepayBiz data);
 
     // 风控总监审核
@@ -63,7 +62,7 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     // 确认放款
     public void takeCarSureFk(RepayBiz data);
 
-    // 录入拖车结果
+    // 录入收车结果
     public void takeCarInputResult(RepayBiz data);
 
     // 结果处理

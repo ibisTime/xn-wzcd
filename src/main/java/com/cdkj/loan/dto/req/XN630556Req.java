@@ -3,7 +3,7 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 录入拖车结果
+ * 录入收车结果
  * @author: silver 
  * @since: 2018年6月16日 下午3:07:44 
  * @history:
@@ -17,19 +17,19 @@ public class XN630556Req {
     @NotBlank
     private String takeCarAddress;
 
-    // 拖车时间
+    // 收车时间
     @NotBlank
     private String takeDatetime;
 
-    // 拖车人员
+    // 收车人员
     @NotBlank
     private String takeName;
 
-    // 拖车停放位置
+    // 收车停放位置
     @NotBlank
     private String takeLocation;
 
-    // 拖车说明
+    // 收车说明
     private String takeNote;
 
     // 操作人

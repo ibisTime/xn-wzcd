@@ -126,7 +126,7 @@ public class RepayPlan extends ABaseDO {
 
     // ******************处理数据******************
 
-    // ******************拖车数据******************
+    // ******************收车数据******************
     // 是否典当行赎回
     private String pawnshopIsRedeem;
 
@@ -136,25 +136,25 @@ public class RepayPlan extends ABaseDO {
     // 典当行赎金小写
     private String ransom;
 
-    // 拖车申请费用
+    // 收车申请费用
     private Long tsCarAmount;
 
-    // 拖车人姓名
+    // 收车人姓名
     private String tsUserName;
 
-    // 拖车收款账号
+    // 收车收款账号
     private String tsBankcardNumber;
 
-    // 拖车开户行
+    // 收车开户行
     private String tsBankName;
 
-    // 拖车开户支行
+    // 收车开户支行
     private String tsSubbranch;
 
-    // 拖车申请说明
+    // 收车申请说明
     private String tcApplyNote;
 
-    // ******************拖车数据******************
+    // ******************收车数据******************
 
     // 打款时间
     private Date remitDatetime;
@@ -171,16 +171,16 @@ public class RepayPlan extends ABaseDO {
     // 收车地点
     private String takeCarAddress;
 
-    // 拖车时间
+    // 收车时间
     private Date takeDatetime;
 
-    // 拖车人员
+    // 收车人员
     private String takeName;
 
-    // 拖车停放位置
+    // 收车停放位置
     private String takeLocation;
 
-    // 拖车说明
+    // 收车说明
     private String takeNote;
 
     // 处理结果
