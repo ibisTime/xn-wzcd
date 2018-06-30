@@ -314,6 +314,7 @@ public class CreditAOImpl implements ICreditAO {
             }
 
             data.setCustomerName(customerUser.getUserName());
+            data.setApplyUserGhrRelation(customerUser.getRelation());
             data.setIdKind(EIDKind.IDCard.getCode());
             data.setIdNo(customerUser.getIdNo());
             // 通过身份证获取生日和性别

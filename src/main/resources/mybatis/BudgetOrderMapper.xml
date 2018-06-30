@@ -7,6 +7,8 @@
 		<result column="credit_code" property="creditCode" />
 		<result column="customer_type" property="customerType" />
 		<result column="customer_name" property="customerName" />
+		<result column="customer_sex" property="customerSex" />
+		<result column="customer_birth" property="customerBirth" />
 		<result column="car_dealer_code" property="carDealerCode" />
 		
 		<result column="loan_bank_code" property="loanBankCode" />
@@ -50,6 +52,8 @@
 		<result column="apply_user_jour_show_income" property="applyUserJourShowIncome" />
 		<result column="apply_user_is_print" property="applyUserIsPrint" />
 		<result column="gh_real_name" property="ghRealName" />
+		<result column="gh_id_no" property="ghIdNo" />
+		<result column="gh_sex" property="ghSex" />
 		<result column="gh_mobile" property="ghMobile" />
 		<result column="gh_company_name" property="ghCompanyName" />
 		<result column="gh_month_income" property="ghMonthIncome" />
@@ -334,6 +338,8 @@
 		,t.credit_code
 		,t.customer_type
 		,t.customer_name
+		,t.customer_sex
+		,t.customer_birth
 		,t.car_dealer_code
 		,t.loan_bank_code
 		,t.original_price
@@ -371,6 +377,8 @@
 		,t.apply_user_jour_show_income
 		,t.apply_user_is_print
 		,t.gh_real_name
+		,t.gh_id_no
+		,t.gh_sex
 		,t.gh_mobile
 		,t.gh_company_name
 		,t.gh_month_income
@@ -586,6 +594,8 @@
 		,t.credit_code
 		,t.customer_type
 		,t.customer_name
+		,t.customer_sex
+		,t.customer_birth
 		,t.car_dealer_code
 		,t.loan_bank_code
 		,t.original_price
@@ -623,6 +633,8 @@
 		,t.apply_user_jour_show_income
 		,t.apply_user_is_print
 		,t.gh_real_name
+		,t.gh_id_no
+		,t.gh_sex
 		,t.gh_mobile
 		,t.gh_company_name
 		,t.gh_month_income
@@ -825,6 +837,8 @@
 		,t.credit_code
 		,t.customer_type
 		,t.customer_name
+		,t.customer_sex
+		,t.customer_birth
 		,t.car_dealer_code
 		,t.loan_bank_code
 		,t.original_price
@@ -862,6 +876,8 @@
 		,t.apply_user_jour_show_income
 		,t.apply_user_is_print
 		,t.gh_real_name
+		,t.gh_id_no
+		,t.gh_sex
 		,t.gh_mobile
 		,t.gh_company_name
 		,t.gh_month_income
@@ -1041,6 +1057,8 @@
 		,credit_code
 		,customer_type
 		,customer_name
+		,customer_sex
+		,customer_birth
 		,car_dealer_code
 		,loan_bank_code
 		,original_price
@@ -1071,6 +1089,10 @@
 		,apply_user_balance
 		,apply_user_jour_show_income
 		,apply_user_is_print
+		,gh_real_name
+		,gh_id_no
+		,gh_sex
+		,gh_mobile
 		,gh_month_income
 		,gh_settle_interest
 		,gh_balance
@@ -1167,6 +1189,8 @@
 		,#{creditCode}
 		,#{customerType}
 		,#{customerName}
+		,#{customerSex}
+		,#{customerBirth}
 		,#{carDealerCode}
 		,#{loanBankCode}
 		,#{originalPrice}
@@ -1197,6 +1221,10 @@
 		,#{applyUserBalance}
 		,#{applyUserJourShowIncome}
 		,#{applyUserIsPrint}
+		,#{ghRealName}
+		,#{ghIdNo}
+		,#{ghSex}
+		,#{ghMobile}
 		,#{ghMonthIncome}
 		,#{ghSettleInterest}
 		,#{ghBalance}

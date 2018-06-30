@@ -30,6 +30,8 @@ CREATE TABLE `tdq_budget_order` (
   `code` varchar(32) NOT NULL COMMENT '预算单编号',
   `customer_type` varchar(4) DEFAULT NULL COMMENT '客户类型',
   `customer_name` varchar(32) DEFAULT NULL COMMENT '客户姓名',
+  `customer_sex` varchar(32) DEFAULT NULL COMMENT '客户性别',
+  `customer_birth` varchar(32) DEFAULT NULL COMMENT '客户生日',
 
   `car_dealer_code` varchar(32) DEFAULT NULL COMMENT '汽车经销商编号',
   `loan_bank_code` varchar(32) DEFAULT NULL COMMENT '贷款银行编号',
@@ -76,6 +78,8 @@ CREATE TABLE `tdq_budget_order` (
   `apply_user_is_print` tinytext COMMENT '申请人是否打件',
   `apply_user_ghr_relation` tinytext COMMENT '申请人与共还人关系',
   `gh_real_name` varchar(32) COMMENT '共还人姓名',
+  `gh_id_no` varchar(32) COMMENT '共还人身份证号',
+  `gh_sex` varchar(32) COMMENT '共还人性别',
   `gh_mobile` varchar(32) COMMENT '共还人电话',
   `gh_company_name` varchar(32) COMMENT '共还人公司名称',
 
