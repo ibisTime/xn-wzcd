@@ -66,6 +66,8 @@ import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632120ReqRepointDetail;
 import com.cdkj.loan.dto.req.XN632141Req;
+import com.cdkj.loan.dto.req.XN632142Req;
+import com.cdkj.loan.dto.req.XN632192Req;
 import com.cdkj.loan.dto.req.XN632200Req;
 import com.cdkj.loan.dto.req.XN632220Req;
 import com.cdkj.loan.dto.req.XN632230Req;
@@ -216,7 +218,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         data.setCarModel(req.getCarModel());
         data.setFrameNo(req.getFrameNo());
-        data.setLoanPeriods(req.getLoanPeriods());
+        data.setLoanPeriods(StringValidater.toInteger(req.getLoanPeriods()));
         data.setInvoicePrice(StringValidater.toLong(req.getInvoicePrice()));
         data.setRateType(req.getRateType());
         data.setIsSurvey(req.getIsSurvey());
@@ -361,7 +363,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setCompanySaleCustomerPic(req.getCompanySaleCustomerPic());
         data.setSecondHgz(req.getSecondHgz());
         data.setSecondOdometer(req.getSecondOdometer());
-
+        data.setSecondCarFrontPic(req.getSecondCarFrontPic());
         data.setSecondConsolePic(req.getSecondConsolePic());
         data.setSecond300Pdf(req.getSecond300Pdf());
         data.setSecondQxbPic(req.getSecondQxbPic());
@@ -805,9 +807,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .getLoanBankCode());
         if (EBoolean.YES.getCode().equals(parentCode)
                 && EBankType.GH.getCode().equals(bankBySubbranch.getBankCode())) {
-            curNodeCode = EBudgetOrderNode.SENDING_CONTRACT.getCode();
+            curNodeCode = EBudgetOrderNode.FEN_PLEDGE_PRINT.getCode();
+        } else {
+            curNodeCode = EBudgetOrderNode.FEN_SEND_LOGISTICS.getCode();
+
+            // 生成资料传递
+            NodeFlow nodeFlow = nodeFlowBO
+                .getNodeFlowByCurrentNode(curNodeCode);
+            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                curNodeCode, nodeFlow.getNextNode(), nodeFlow.getFileList());
         }
-        curNodeCode = EBudgetOrderNode.CAR_SEND_LOGISTICS.getCode();
 
         budgetOrder.setCurNodeCode(curNodeCode);
         budgetOrder.setCode(req.getCode());
@@ -833,13 +843,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 .getCode());
         }
         budgetOrderBO.refreshBankLoanConfirm(budgetOrder);
-
-        // 生成资料传递
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
-            .getCurNodeCode());
-        logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-            budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
-            nodeFlow.getNextNode(), nodeFlow.getFileList());
 
         // 日志记录
         String preCurrentNode = budgetOrder.getCurNodeCode();
@@ -1146,6 +1149,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .getCarDealerCode());
         if (null != carDealer) {
             budgetOrder.setCarDealerName(carDealer.getFullName());
+            budgetOrder.setCarDealerPhone(carDealer.getContactPhone());
         }
 
         InsuranceCompany insuranceCompany = insuranceCompanyBO
@@ -1380,6 +1384,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 当前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         // 下个节点
+
         String nextNode = nodeFlowBO.getNodeFlowByCurrentNode(
             EBudgetOrderNode.INVOICE_MISMATCH_APPLY.getCode()).getNextNode();
 
@@ -1511,6 +1516,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.APPROVE_APPLY.getCode()).getNextNode());
         } else {
+
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.APPROVE_APPLY.getCode()).getBackNode());
             // 审核不通过
@@ -1543,7 +1549,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
             // 3.删除新返点数据和原返点数据
             repointDetailBO.delete(budgetOrder.getCode());
-
         }
 
         budgetOrderBO.invoiceMismatchApprove(budgetOrder);
@@ -1607,6 +1612,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             // budgetOrderBO.twoApproveYes(budgetOrder);
 
         } else {
+
             // 二审不通过
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.TWO_APPROVE_APPLY.getCode()).getBackNode());
@@ -1642,6 +1648,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             repointDetailBO.delete(budgetOrder.getCode());
 
             // budgetOrderBO.twoApproveNo(budgetOrder);
+
         }
 
         // 日志记录
@@ -1932,7 +1939,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         req.setCarDealerCode(carDealerCode);
         req.setLoanAmount(loanAmount);
         req.setFee(String.valueOf(data.getFee()));
-        req.setLoanPeriods(data.getLoanPeriods());
+        req.setLoanPeriods(String.valueOf(data.getLoanPeriods()));
         req.setRateType(data.getRateType());
         req.setBankRate(String.valueOf(data.getBankRate()));
         req.setGpsFeeWay(data.getGpsFeeWay());
@@ -1942,7 +1949,92 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         res.setList(list);
 
         return res;
+    }
 
+    public void loanContractPrint(XN632142Req req) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        if (!EBudgetOrderNode.LOAN_PRINT.getCode().equals(
+            budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是打印岗打印节点，不能操作");
+        }
+        // 当前节点
+        String curNodeCode = budgetOrder.getCurNodeCode();
+        String nextNodeCode = getNextNodeCode(curNodeCode,
+            EBoolean.YES.getCode());
+
+        budgetOrder.setPostcode(req.getPostcode());
+        budgetOrder.setFamilyPhone(req.getFamilyPhone());
+        budgetOrder.setApplyUserCompanyPhone(req.getApplyUserCompanyPhone());
+        budgetOrder.setGhMobile(req.getGhMobile());
+        budgetOrder.setGhCompanyName(req.getGhCompanyName());
+        budgetOrder.setCarBrandModel(req.getCarBrandModel());
+        budgetOrder.setCarNumber(req.getCarNumber());
+        budgetOrder
+            .setGuarantContractDeadline(req.getGuarantContractDeadline());
+        budgetOrder.setGuarantMonthFeeRate(StringValidater.toDouble(req
+            .getGuarantMonthFeeRate()));
+        budgetOrder.setGuarantorFamilyPhone(req.getGuarantorFamilyPhone());
+        budgetOrder.setGuarantorCompanyName(req.getGuarantorCompanyName());
+        budgetOrder.setGuarantorCompanyPhone(req.getGuarantorFamilyPhone());
+        budgetOrder
+            .setGuarantorCompanyAddress(req.getGuarantorCompanyAddress());
+        budgetOrder.setInsuranceCompany(req.getInsuranceCompany());
+        budgetOrder.setGuarantApplyUserNote(req.getGuarantApplyUserNote());
+        budgetOrder.setGuarantPrintTemplateId(req.getGuarantPrintTemplateId());
+        budgetOrder.setGuarantPrintUser(req.getOperater());
+        budgetOrder.setGuarantPrintDatetime(new Date());
+        budgetOrder.setCurNodeCode(nextNodeCode);
+        budgetOrderBO.loanContractPrint(budgetOrder);
+
+        // 生成资料传递
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
+            .getCurNodeCode());
+        logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+            budgetOrder.getCode(), budgetOrder.getSaleUserId(), nextNodeCode,
+            nodeFlow.getNextNode(), nodeFlow.getFileList());
+
+        // 写日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), curNodeCode,
+            nextNodeCode, EBoolean.YES.getCode(), req.getOperater());
+    }
+
+    @Override
+    public void pledgeContractPrint(XN632192Req req) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        if (!EBudgetOrderNode.PLEDGE_PRINT.getCode().equals(
+            budgetOrder.getCurNodeCode())
+                && !EBudgetOrderNode.FEN_PLEDGE_PRINT.getCode().equals(
+                    budgetOrder.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是打印岗打印节点，不能操作");
+        }
+        // 当前节点
+        String curNodeCode = budgetOrder.getCurNodeCode();
+        String nextNodeCode = getNextNodeCode(curNodeCode,
+            EBoolean.YES.getCode());
+
+        budgetOrder.setCarNumber(req.getCarNumber());
+        budgetOrder.setFrameNo(req.getFrameNo());
+        budgetOrder.setEngineNo(req.getEngineNo());
+        budgetOrder.setPledgePrintTemplateId(req.getPledgePrintTemplateId());
+        budgetOrder.setPledgePrintUser(req.getOperator());
+        budgetOrder.setPledgePrintDatetime(new Date());
+        budgetOrder.setCurNodeCode(nextNodeCode);
+        budgetOrderBO.pledgeContractPrint(budgetOrder);
+
+        // 生成资料传递
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
+            .getCurNodeCode());
+        logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+            budgetOrder.getCode(), budgetOrder.getSaleUserId(), nextNodeCode,
+            nodeFlow.getNextNode(), nodeFlow.getFileList());
+
+        // 写日志
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), curNodeCode,
+            nextNodeCode, EBoolean.YES.getCode(), req.getOperator());
     }
 
 }

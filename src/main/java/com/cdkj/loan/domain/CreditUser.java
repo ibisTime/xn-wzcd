@@ -115,7 +115,7 @@ public class CreditUser extends ABaseDO {
     private Long monthIncome;
 
     // 结息
-    private Double settleInterest;
+    private Long settleInterest;
 
     // 余额
     private Long balance;
@@ -390,11 +390,11 @@ public class CreditUser extends ABaseDO {
         this.monthIncome = monthIncome;
     }
 
-    public Double getSettleInterest() {
+    public Long getSettleInterest() {
         return settleInterest;
     }
 
-    public void setSettleInterest(Double settleInterest) {
+    public void setSettleInterest(Long settleInterest) {
         this.settleInterest = settleInterest;
     }
 

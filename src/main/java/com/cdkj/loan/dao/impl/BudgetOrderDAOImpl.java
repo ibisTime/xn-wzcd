@@ -226,4 +226,13 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
         super.update(NAMESPACE.concat("update_applyInvoiceMismatch"), data);
     }
 
+    public void loanContractPrint(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_loanContractPrint"), data);
+    }
+
+    @Override
+    public void pledgeContractPrint(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_pledgeContractPrint"), data);
+    }
+
 }

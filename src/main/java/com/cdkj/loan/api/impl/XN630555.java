@@ -14,7 +14,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 拖车确认放款
+ * 收车确认放款
  * @author: xieyj 
  * @since: 2018年6月17日 下午2:52:56 
  * @history:

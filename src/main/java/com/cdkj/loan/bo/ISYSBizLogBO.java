@@ -18,8 +18,8 @@ public interface ISYSBizLogBO extends IPaginableBO<SYSBizLog> {
             String nowDealNode, String nowDealNote, String operator);
 
     // 操作最后一步
-    public void onlyPreEndSYSBizLog(EBizLogType refType, String refOrder,
-            String preDealNode);
+    public void refreshPreSYSBizLog(EBizLogType refType, String refOrder,
+            String dealNode);
 
     public List<SYSBizLog> querySYSBizLogList(SYSBizLog condition);
 

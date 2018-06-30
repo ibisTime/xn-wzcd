@@ -15,7 +15,6 @@ import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.domain.CollectBankcard;
@@ -52,7 +51,7 @@ public class CarDealerAOImpl implements ICarDealerAO {
         data.setAddress(req.getAddress());
         data.setCarDealerType(req.getCarDealerType());
         data.setMainContact(req.getMainContact());
-        data.setContactPhone(StringValidater.toLong(req.getContactPhone()));
+        data.setContactPhone(req.getContactPhone());
         data.setMainBrand(req.getMainBrand());
         data.setParentGroup(req.getParentGroup());
         data.setAgreementValidDateStart(
@@ -80,18 +79,18 @@ public class CarDealerAOImpl implements ICarDealerAO {
         // 工行返点账号
         collectBankcardBO.saveCollectBankcardList(
             req.getGsCollectBankcardList(),
-            ECollectBankcardType.DEALER_REBATE.getCode(), EbelongBank.GH.getCode(),
-            code);
+            ECollectBankcardType.DEALER_REBATE.getCode(),
+            EbelongBank.GH.getCode(), code);
         // 中行返点账号
         collectBankcardBO.saveCollectBankcardList(
             req.getZhCollectBankcardList(),
-            ECollectBankcardType.DEALER_REBATE.getCode(), EbelongBank.ZH.getCode(),
-            code);
+            ECollectBankcardType.DEALER_REBATE.getCode(),
+            EbelongBank.ZH.getCode(), code);
         // 建行返点账号
         collectBankcardBO.saveCollectBankcardList(
             req.getJhCollectBankcardList(),
-            ECollectBankcardType.DEALER_REBATE.getCode(), EbelongBank.JH.getCode(),
-            code);
+            ECollectBankcardType.DEALER_REBATE.getCode(),
+            EbelongBank.JH.getCode(), code);
 
         return code;
     }
@@ -112,7 +111,7 @@ public class CarDealerAOImpl implements ICarDealerAO {
         data.setAddress(req.getAddress());
         data.setCarDealerType(req.getCarDealerType());
         data.setMainContact(req.getMainContact());
-        data.setContactPhone(StringValidater.toLong(req.getContactPhone()));
+        data.setContactPhone(req.getContactPhone());
         data.setMainBrand(req.getMainBrand());
         data.setParentGroup(req.getParentGroup());
         data.setAgreementValidDateStart(
@@ -141,18 +140,18 @@ public class CarDealerAOImpl implements ICarDealerAO {
 
         collectBankcardBO.saveCollectBankcardList(
             req.getGsCollectBankcardList(),
-            ECollectBankcardType.DEALER_REBATE.getCode(), EbelongBank.GH.getCode(),
-            req.getCode());
+            ECollectBankcardType.DEALER_REBATE.getCode(),
+            EbelongBank.GH.getCode(), req.getCode());
 
         collectBankcardBO.saveCollectBankcardList(
             req.getZhCollectBankcardList(),
-            ECollectBankcardType.DEALER_REBATE.getCode(), EbelongBank.ZH.getCode(),
-            req.getCode());
+            ECollectBankcardType.DEALER_REBATE.getCode(),
+            EbelongBank.ZH.getCode(), req.getCode());
 
         collectBankcardBO.saveCollectBankcardList(
             req.getJhCollectBankcardList(),
-            ECollectBankcardType.DEALER_REBATE.getCode(), EbelongBank.JH.getCode(),
-            req.getCode());
+            ECollectBankcardType.DEALER_REBATE.getCode(),
+            EbelongBank.JH.getCode(), req.getCode());
 
     }
 
@@ -239,7 +238,8 @@ public class CarDealerAOImpl implements ICarDealerAO {
             // 收款账号
             CollectBankcard collectBankcard = new CollectBankcard();
             collectBankcard.setCompanyCode(carDealer.getCode());
-            collectBankcard.setType(ECollectBankcardType.DEALER_COLLECT.getCode());
+            collectBankcard
+                .setType(ECollectBankcardType.DEALER_COLLECT.getCode());
             List<CollectBankcard> jxsCollectBankcardList = collectBankcardBO
                 .queryCollectBankcardList(collectBankcard);
             carDealer.setJxsCollectBankcardList(jxsCollectBankcardList);// 经销商收款账号
@@ -252,7 +252,8 @@ public class CarDealerAOImpl implements ICarDealerAO {
             carDealer.setCarDealerProtocolList(queryCarDealerProtocolList);
 
             // 返点账号
-            collectBankcard.setType(ECollectBankcardType.DEALER_REBATE.getCode());
+            collectBankcard
+                .setType(ECollectBankcardType.DEALER_REBATE.getCode());
             List<CollectBankcard> queryCollectBankcardList = collectBankcardBO
                 .queryCollectBankcardList(collectBankcard);
 

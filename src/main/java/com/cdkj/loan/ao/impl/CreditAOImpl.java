@@ -314,10 +314,32 @@ public class CreditAOImpl implements ICreditAO {
             }
 
             data.setCustomerName(customerUser.getUserName());
+            data.setApplyUserGhrRelation(customerUser.getRelation());
             data.setIdKind(EIDKind.IDCard.getCode());
             data.setIdNo(customerUser.getIdNo());
+            // 通过身份证获取生日和性别
+            String birth = getBirthByIdNo(customerUser.getIdNo());
+            String sex = getSexByIdNo(customerUser.getIdNo());
+            data.setCustomerBirth(birth);
+            data.setCustomerSex(sex);
             data.setMobile(customerUser.getMobile());
             data.setLoanBankCode(credit.getLoanBankCode());
+
+            CreditUser ghUser = creditUserBO
+                .getCreditUserByCreditCode(credit.getCode(), ELoanRole.GHR);
+            if (ghUser != null) {
+                data.setGhRealName(ghUser.getUserName());
+                data.setGhIdNo(ghUser.getIdNo());
+                String ghSex = getSexByIdNo(ghUser.getIdNo());
+                data.setGhSex(ghSex);
+                data.setApplyUserGhrRelation(ghUser.getRelation());
+                data.setGhMobile(ghUser.getMobile());
+                data.setGhMonthIncome(ghUser.getMonthIncome());
+                data.setGhSettleInterest(ghUser.getSettleInterest());
+                data.setGhBalance(ghUser.getBalance());
+                data.setGhJourShowIncome(ghUser.getJourShowIncome());
+                data.setGhIsPrint(ghUser.getIsPrint());
+            }
 
             data.setCompanyCode(credit.getCompanyCode());
             data.setSaleUserId(credit.getSaleUserId());
@@ -349,6 +371,33 @@ public class CreditAOImpl implements ICreditAO {
             EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
 
+    }
+
+    private String getSexByIdNo(String idNo) {
+        /**
+         * 根据身份编号获取性别
+         * @param idCard 身份编号
+         * @return 性别(M-男，F-女，N-未知)
+         */
+        String sGender = null;
+
+        String sCardNum = idNo.substring(16, 17);
+        if (Integer.parseInt(sCardNum) % 2 != 0) {
+            sGender = "男";
+        } else {
+            sGender = "女";
+        }
+        return sGender;
+    }
+
+    private String getBirthByIdNo(String idNo) {
+        /**
+         * 根据身份编号获取生日
+         * @param idCard 身份编号
+         * @return 生日(yyyyMMdd)
+         */
+        String birth = idNo.substring(6, 14);
+        return birth;
     }
 
     private void init(Credit credit) {

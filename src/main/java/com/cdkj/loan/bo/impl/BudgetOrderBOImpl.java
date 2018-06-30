@@ -319,6 +319,16 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     @Override
     public void applyInvoiceMismatch(BudgetOrder budgetOrder) {
         budgetOrderDAO.applyInvoiceMismatch(budgetOrder);
+    }
+
+    public void loanContractPrint(BudgetOrder budgetOrder) {
+        budgetOrderDAO.loanContractPrint(budgetOrder);
+
+    }
+
+    @Override
+    public void pledgeContractPrint(BudgetOrder budgetOrder) {
+        budgetOrderDAO.pledgeContractPrint(budgetOrder);
 
     }
 

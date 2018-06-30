@@ -112,4 +112,10 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 申请发票不匹配（发票不匹配界面的申请 发送）
     public void applyInvoiceMismatch(BudgetOrder budgetOrder);
 
+    // 银行放款合同打印
+    public void loanContractPrint(BudgetOrder budgetOrder);
+
+    // 车辆抵押合同打印
+    public void pledgeContractPrint(BudgetOrder budgetOrder);
+
 }

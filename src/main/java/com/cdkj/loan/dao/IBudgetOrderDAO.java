@@ -103,4 +103,10 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 发票不匹配申请（申请发送）
     void applyInvoiceMismatch(BudgetOrder budgetOrder);
 
+    // 银行放款合同打印
+    void loanContractPrint(BudgetOrder budgetOrder);
+
+    // 车辆抵押合同打印
+    void pledgeContractPrint(BudgetOrder budgetOrder);
+
 }

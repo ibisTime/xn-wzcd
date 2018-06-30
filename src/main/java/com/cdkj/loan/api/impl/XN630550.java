@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 拖车申请
+ * 收车申请
  * @author: xieyj 
  * @since: 2018年6月17日 下午1:46:42 
  * @history:
