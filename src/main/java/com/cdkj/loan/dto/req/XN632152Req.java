@@ -13,6 +13,13 @@ public class XN632152Req {
     @NotBlank
     private String code;
 
+    // 补件原因
+    @NotBlank
+    private String supplementReason;
+
+    // 补件说明
+    private String supplementNote;
+
     // 备注
     private String remark;
 
@@ -25,6 +32,22 @@ public class XN632152Req {
 
     public void setOperater(String operater) {
         this.operater = operater;
+    }
+
+    public String getSupplementReason() {
+        return supplementReason;
+    }
+
+    public void setSupplementReason(String supplementReason) {
+        this.supplementReason = supplementReason;
+    }
+
+    public String getSupplementNote() {
+        return supplementNote;
+    }
+
+    public void setSupplementNote(String supplementNote) {
+        this.supplementNote = supplementNote;
     }
 
     public String getCode() {

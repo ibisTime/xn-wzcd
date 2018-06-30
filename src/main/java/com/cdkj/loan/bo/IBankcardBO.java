@@ -27,6 +27,6 @@ public interface IBankcardBO extends IPaginableBO<Bankcard> {
     public List<Bankcard> queryBankcardList(String userId);
 
     public String bind(String userId, String realName, String bankcardNumber,
-            String bankCode, String bankName, String subbranch);
+            String bankCode, String bankName);
 
 }

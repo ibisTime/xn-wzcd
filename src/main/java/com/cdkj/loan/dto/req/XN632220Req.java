@@ -2,6 +2,12 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+/**
+ * 录发保合
+ * @author: jiafr 
+ * @since: 2018年6月30日 下午1:44:29 
+ * @history:
+ */
 public class XN632220Req {
 
     // 预算单编号

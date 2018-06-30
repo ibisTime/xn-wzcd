@@ -103,6 +103,7 @@ CREATE TABLE `tdq_budget_order` (
   `gps_fee` bigint(20) DEFAULT NULL COMMENT 'GPS收费',
   `gps_deduct` bigint(20) DEFAULT NULL COMMENT 'GPS提成',
   `gps_fee_way` varchar(4) DEFAULT NULL COMMENT 'GPS收费方式（1转账2按揭款3返点4不收费）',
+  `gps_location` tinytext DEFAULT NULL COMMENT 'GPS安装位置',
   `ly_amount` bigint(20) DEFAULT NULL COMMENT '履约保证金',
   `fx_amount` bigint(20) DEFAULT NULL COMMENT '担保风险金',
   `other_fee` bigint(20) DEFAULT NULL COMMENT '杂费',

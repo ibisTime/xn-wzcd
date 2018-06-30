@@ -111,14 +111,15 @@ public class LogisticsAOImpl implements ILogisticsAO {
     }
 
     @Override
-    public void sendAgainLogistics(String code, String operator,
-            String remark) {
+    public void sendAgainLogistics(String code, String supplementReason,
+            String supplementNote, String operator, String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "资料不是待收件状态!");
         }
-        logisticsBO.sendAgainLogistics(code, remark);
+        logisticsBO.sendAgainLogistics(code, remark, supplementNote,
+            supplementReason);
     }
 
     @Override

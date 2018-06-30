@@ -57,4 +57,11 @@ public class SysConstants {
 
     // 每次处理的条数
     public static String REPAYPLAN_STEP = "repayplan_step";// 每次处理的条数
+
+    // gps提成比例
+    public static String BUDGET_GPS_DEDUCT_RATE = "budget_gps_deduct_rate";
+
+    // 油补提成比例
+    public static String BUDGET_OIL_SUBSIDY_RATE = "budget_oil_subsidy_rate";
+
 }

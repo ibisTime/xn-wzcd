@@ -19,7 +19,8 @@ public interface ILogisticsAO {
 
     public void receiveLogistics(String code, String operator, String remark);
 
-    public void sendAgainLogistics(String code, String operator, String remark);
+    public void sendAgainLogistics(String code, String operator, String remark,
+            String supplementReason, String supplementNote);
 
     public Paginable<Logistics> queryLogisticsPage(int start, int limit,
             Logistics condition);

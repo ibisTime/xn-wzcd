@@ -140,7 +140,7 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
 
     @Override
     public String bind(String userId, String realName, String bankcardNumber,
-            String bankCode, String bankName, String subbranch) {
+            String bankCode, String bankName) {
 
         Bankcard data = new Bankcard();
 
@@ -154,7 +154,6 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
         data.setBankCode(bankCode);
 
         data.setBankName(bankName);
-        data.setSubbranch(subbranch);
         data.setCreateDatetime(new Date());
         data.setStatus(EBankcard.NORMAL.getCode());
 

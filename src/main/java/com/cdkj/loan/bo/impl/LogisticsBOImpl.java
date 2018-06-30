@@ -65,12 +65,6 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写编号");
         }
 
-        if (!ELogisticsStatus.TO_RECEIVE.getCode()
-            .equals(getLogistics(code).getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "资料不是待收件状态。");
-        }
-
         Logistics condition = new Logistics();
         condition.setCode(code);
         condition.setRemark(remark);
@@ -80,16 +74,19 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     }
 
     @Override
-    public void sendAgainLogistics(String code, String remark) {
+    public void sendAgainLogistics(String code, String supplementNote,
+            String supplementReason, String remark) {
         if (null == code) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写编号");
         }
 
         Logistics data = new Logistics();
         data.setCode(code);
-        data.setRemark(remark);
         data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
+        data.setSupplementReason(supplementReason);
+        data.setSupplementNote(supplementNote);
         data.setReceiptDatetime(new Date());
+        data.setRemark(remark);
         logisticsDAO.updateLogisticsReceive(data);
     }
 

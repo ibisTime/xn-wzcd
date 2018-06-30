@@ -23,7 +23,8 @@ public interface ILogisticsBO extends IPaginableBO<Logistics> {
     public void receiveLogistics(String code, String remark);
 
     // 补发
-    public void sendAgainLogistics(String code, String remark);
+    public void sendAgainLogistics(String code, String remark,
+            String supplementNote, String supplementReason);
 
     // 查询
     public Logistics getLogistics(String code);

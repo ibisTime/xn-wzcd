@@ -24,14 +24,14 @@ public class XN632120Req {
     @NotBlank
     private String carDealerCode;
 
-    // 贷款支行编号
-    private String loanBankSubbranch;
-
     // 厂商指导价
     private String originalPrice;
 
     // 车辆型号
     private String carModel;
+
+    // 车架号码
+    private String frameNo;
 
     // 贷款周期
     private String loanPeriods;
@@ -192,20 +192,17 @@ public class XN632120Req {
     // 其他情况说明
     private String otherNote;
 
-    // 油补
-    private String oilSubsidy;
-
     // 油补公里数
     private String oilSubsidyKil;
 
     // 是否我司续保
     private String isPlatInsure;
 
-    // GPS提成
-    private String gpsDeduct;
-
     // GPS收费方式
     private String gpsFeeWay;
+
+    // GPS安装位置
+    private String gpsLocation;
 
     // 手续费收取方式
     private String serviceChargeWay;
@@ -316,7 +313,6 @@ public class XN632120Req {
     private String applyDatetime;
 
     // gps列表编号
-    @NotEmpty
     private List<String> gpsList;
 
     // 用款用途
@@ -370,6 +366,14 @@ public class XN632120Req {
 
     public void setMarryState(String marryState) {
         this.marryState = marryState;
+    }
+
+    public String getFrameNo() {
+        return frameNo;
+    }
+
+    public void setFrameNo(String frameNo) {
+        this.frameNo = frameNo;
     }
 
     public String getOtherIncomeNote() {
@@ -604,14 +608,6 @@ public class XN632120Req {
         this.driceLicense = driceLicense;
     }
 
-    public String getLoanBankSubbranch() {
-        return loanBankSubbranch;
-    }
-
-    public void setLoanBankSubbranch(String loanBankSubbranch) {
-        this.loanBankSubbranch = loanBankSubbranch;
-    }
-
     public String getOtherPropertyNote() {
         return otherPropertyNote;
     }
@@ -676,14 +672,6 @@ public class XN632120Req {
         this.otherNote = otherNote;
     }
 
-    public String getOilSubsidy() {
-        return oilSubsidy;
-    }
-
-    public void setOilSubsidy(String oilSubsidy) {
-        this.oilSubsidy = oilSubsidy;
-    }
-
     public String getOilSubsidyKil() {
         return oilSubsidyKil;
     }
@@ -700,12 +688,12 @@ public class XN632120Req {
         this.isPlatInsure = isPlatInsure;
     }
 
-    public String getGpsDeduct() {
-        return gpsDeduct;
+    public String getGpsLocation() {
+        return gpsLocation;
     }
 
-    public void setGpsDeduct(String gpsDeduct) {
-        this.gpsDeduct = gpsDeduct;
+    public void setGpsLocation(String gpsLocation) {
+        this.gpsLocation = gpsLocation;
     }
 
     public String getGpsFeeWay() {
