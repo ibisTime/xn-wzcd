@@ -41,7 +41,6 @@ import com.cdkj.loan.dto.req.XN630557Req;
 import com.cdkj.loan.dto.req.XN630563Req;
 import com.cdkj.loan.dto.req.XN630570Req;
 import com.cdkj.loan.dto.req.XN630572Req;
-import com.cdkj.loan.dto.req.XN630576Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
@@ -739,26 +738,28 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     @Override
     @Transactional
-    public void settleMortgageInput(XN630576Req req) {
-        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        if (!ERepayBizNode.MORTGAGE_INPUT.getCode().equals(
+    public void settleMortgagePrint(String code, String releaseDatetimeStr,
+            String releaseTemplateId, String releaseNote, String operator) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizNode.MORTGAGE_PRINT.getCode().equals(
             repayBiz.getCurNodeCode())) {
-            throw new BizException("xn0000", "还款业务不在驻行人员回录抵押节点！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "还款业务不在打印岗打印节点！");
         }
-
-        RepayBiz data = new RepayBiz();
-        data.setCode(req.getCode());
-        data.setReleaseDatetime(DateUtil.strToDate(req.getReleaseDatetime(),
-            DateUtil.DATA_TIME_PATTERN_1));
-        data.setReleaseTemplateId(req.getReleaseTemplateId());
-        data.setReleaseNote(req.getReleaseNote());
-        data.setUpdater(req.getOperator());
-
-        data.setUpdateDatetime(new Date());
         String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
             EBoolean.YES.getCode());
-        data.setCurNodeCode(nextNodeCode);
-        repayBizBO.refreshMortgageInput(data);
+
+        Date releaseDatetime = DateUtil.strToDate(releaseDatetimeStr,
+            DateUtil.DATA_TIME_PATTERN_1);
+        repayBizBO.refreshMortgagePrint(repayBiz, nextNodeCode,
+            releaseDatetime, releaseTemplateId, releaseNote, operator);
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(repayBiz
+            .getCurNodeCode());
+
+        // 生成资料传递
+        logisticsBO.saveLogistics(ELogisticsType.REPAY_BIZ.getCode(), code,
+            operator, repayBiz.getCurNodeCode(), nextNodeCode,
+            nodeFlow.getFileList());
 
         // 日志记录
         ERepayBizNode currentNode = ERepayBizNode.getMap().get(
@@ -766,7 +767,32 @@ public class RepayBizAOImpl implements IRepayBizAO {
         sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
             EBizLogType.REPAY_BIZ, repayBiz.getCode(),
             repayBiz.getCurNodeCode(), nextNodeCode, currentNode.getValue(),
-            req.getOperator());
+            operator);
+    }
+
+    @Override
+    @Transactional
+    public void settleMortgageCommitFile(String code, String operator) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizNode.MORTGAGE_COMMIT_FILE.getCode().equals(
+            repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "还款业务不在驻行人员提交材料节点！");
+        }
+
+        String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
+            EBoolean.YES.getCode());
+        repayBiz.setCurNodeCode(nextNodeCode);
+        repayBiz.setUpdater(operator);
+        repayBiz.setUpdateDatetime(new Date());
+        repayBizBO.refreshMortgageCommit(repayBiz);
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap().get(
+            repayBiz.getCurNodeCode());
+
+        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REPAY_BIZ,
+            repayBiz.getCode(), currentNode.getValue());
     }
 
     private String getNextNodeCode(String curNodeCode, String approveResult) {

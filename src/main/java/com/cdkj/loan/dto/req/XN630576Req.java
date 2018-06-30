@@ -3,9 +3,9 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 结果回录
- * @author: silver 
- * @since: 2018年6月16日 下午3:39:21 
+ * 解除抵押-合同制作
+ * @author: xieyj 
+ * @since: 2018年6月30日 下午5:47:45 
  * @history:
  */
 public class XN630576Req {
@@ -43,6 +43,14 @@ public class XN630576Req {
         this.releaseDatetime = releaseDatetime;
     }
 
+    public String getReleaseTemplateId() {
+        return releaseTemplateId;
+    }
+
+    public void setReleaseTemplateId(String releaseTemplateId) {
+        this.releaseTemplateId = releaseTemplateId;
+    }
+
     public String getReleaseNote() {
         return releaseNote;
     }
@@ -58,13 +66,4 @@ public class XN630576Req {
     public void setOperator(String operator) {
         this.operator = operator;
     }
-
-    public String getReleaseTemplateId() {
-        return releaseTemplateId;
-    }
-
-    public void setReleaseTemplateId(String releaseTemplateId) {
-        this.releaseTemplateId = releaseTemplateId;
-    }
-
 }

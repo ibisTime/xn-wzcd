@@ -18,8 +18,8 @@ import com.cdkj.loan.enums.ESYSBizLogStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
-        implements ISYSBizLogBO {
+public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
+        ISYSBizLogBO {
 
     @Autowired
     private ISYSBizLogDAO sysBizLogDAO;
@@ -29,8 +29,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
 
     @Override
     public void saveSYSBizLog(String parentOrder, EBizLogType refType,
-            String refOrder, String dealNode, String dealNote,
-            String operator) {
+            String refOrder, String dealNode, String dealNote, String operator) {
         SYSUser sysUser = sysUserBO.getUser(operator);
         SYSBizLog data = new SYSBizLog();
         data.setParentOrder(parentOrder);
@@ -58,20 +57,15 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
         saveSYSBizLog(parentOrder, refType, refOrder, nowDealNode, nowDealNote,
             operator);
         // 处理之前节点
-        refreshPreSYSBizLog(refType.getCode(), refOrder, preDealNode);
+        refreshPreSYSBizLog(refType, refOrder, preDealNode);
     }
 
     // 最后操作记录日志
     @Override
-    public void onlyPreEndSYSBizLog(EBizLogType refType, String refOrder,
-            String preDealNode) {
-        // 处理之前节点
-        refreshPreSYSBizLog(refType.getCode(), refOrder, preDealNode);
-    }
-
-    private void refreshPreSYSBizLog(String refType, String refOrder,
+    public void refreshPreSYSBizLog(EBizLogType refType, String refOrder,
             String dealNode) {
-        SYSBizLog data = getSYSBizLoglatest(refType, refOrder, dealNode);
+        SYSBizLog data = getSYSBizLoglatest(refType.getCode(), refOrder,
+            dealNode);
 
         if (data != null) {
             data.setEndDatetime(new Date());
@@ -83,8 +77,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
             Long day = diff / (24 * 60 * 60 * 1000);
             Long hour = (diff / (60 * 60 * 1000) - day * 24);
             Long min = ((diff / (60 * 1000)) - day * 24 * 60 - hour * 60);
-            Long sec = (diff / 1000 - day * 24 * 60 * 60 - hour * 60 * 60
-                    - min * 60);
+            Long sec = (diff / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
             data.setSpeedTime(day + "天" + hour + "时" + min + "分" + sec + "秒");
 
             sysBizLogDAO.updateSpeedtime(data);

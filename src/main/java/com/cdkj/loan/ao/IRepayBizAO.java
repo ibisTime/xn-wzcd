@@ -15,7 +15,6 @@ import com.cdkj.loan.dto.req.XN630557Req;
 import com.cdkj.loan.dto.req.XN630563Req;
 import com.cdkj.loan.dto.req.XN630570Req;
 import com.cdkj.loan.dto.req.XN630572Req;
-import com.cdkj.loan.dto.req.XN630576Req;
 
 public interface IRepayBizAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
@@ -87,8 +86,12 @@ public interface IRepayBizAO {
     public void settleRiskManagerCheck(String code, String approveResult,
             String approveNote, String operator);
 
-    // 结果回录
-    public void settleMortgageInput(XN630576Req req);
+    // 抵押打印
+    public void settleMortgagePrint(String code, String releaseDatetime,
+            String releaseTemplateId, String releaseNote, String operator);
+
+    // 抵押解除确认
+    public void settleMortgageCommitFile(String code, String operator);
 
     // ********************************car********************************
 
