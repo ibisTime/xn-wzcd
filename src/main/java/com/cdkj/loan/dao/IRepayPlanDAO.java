@@ -22,13 +22,13 @@ public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
 
     public int repayAmount(RepayPlan repayPlan);
 
-    // 拖车申请
+    // 收车申请
     public int updateTakeCarApply(RepayPlan data);
 
     // 确认放款
     public int updateTakeCarSureFk(RepayPlan data);
 
-    // 录入拖车结果
+    // 录入收车结果
     public int updateTakeCarInputResult(RepayPlan data);
 
     // 结果处理

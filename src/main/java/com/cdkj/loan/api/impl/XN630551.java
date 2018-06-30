@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 拖车分控经理审核
+ * 收车分控经理审核
  * @author: xieyj 
  * @since: 2018年6月17日 下午2:47:43 
  * @history:

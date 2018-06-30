@@ -32,14 +32,14 @@ public interface IRepayBizAO {
 
     // ********************************car********************************
 
-    // 申请拖车
+    // 申请收车
     public void takeCarApply(XN630550Req req);
 
-    // 拖车分控经理审核
+    // 收车分控经理审核
     public void takeCarRiskManageCheck(String code, String approveResult,
             String operator, String remark);
 
-    // 拖车分公司总公司审核
+    // 收车分公司总公司审核
     public void takeCarCompanyManageCheck(String code, String approveResult,
             String operator, String remark);
 
@@ -55,7 +55,7 @@ public interface IRepayBizAO {
     public void takeCarSureFk(String code, String remitBankCode,
             String remitBillPdf, Date remitDatetime, String operator);
 
-    // 录入拖车结果
+    // 录入收车结果
     public void takeCarInputResult(XN630556Req req);
 
     // 结果处理
