@@ -1451,6 +1451,8 @@
 		delivery_datetime = #{deliveryDatetime}
 		,is_right_invoice = #{isRightInvoice}
 		,current_invoice_price = #{currentInvoicePrice}
+		,pre_company_loan_cs = #{PreCompanyLoanCs}
+		,company_loan_cs = #{companyLoanCs}
 		,invoice = #{invoice}
 		,certification = #{certification}
 		,force_insurance = #{forceInsurance}
@@ -1458,15 +1460,16 @@
 		,motor_reg_certification = #{motorRegCertification}
 		,pd_pdf = #{pdPdf}
 		,fbh_remark = #{fbhRemark}
+		.fbh_status = #{fbhStatus}
 		WHERE code = #{code}
 	</update>
 	
 	<update id="update_invoiceMismatchApply" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		cur_node_code = #{curNodeCode}
-		,pre_loan_amount = #{preLoanAmount}
-		,loan_amount = #{loanAmount}
+		cancel_node_code = #{cancelNodeCode}
+		,frozen_status = #{frozenStatus}
+		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 	

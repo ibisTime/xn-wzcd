@@ -65,11 +65,17 @@ public class BudgetOrder extends ABaseDO {
     // 我司贷款成数
     private double companyLoanCs;
 
+    // 发票不匹配之前我司贷款成数
+    private double PreCompanyLoanCs;
+
     // 是否垫资
     private String isAdvanceFund;
 
     // 综合利率
     private double globalRate;
+
+    // 发票不匹配之前综合利率
+    private double PreGlobalRate;
 
     // 服务费
     private Long fee;
@@ -79,6 +85,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 银行贷款成数
     private double bankLoanCs;
+
+    // 发票不匹配之前银行贷款成数
+    private double PreBankLoanCs;
 
     // 业务公司编号
     private String companyCode;
@@ -596,7 +605,7 @@ public class BudgetOrder extends ABaseDO {
     // 冻结状态(0冻结 1正常)
     private String frozenStatus;
 
-    // 客户申请作废时的节点编号
+    // 客户申请作废时的主流程节点编号/发票不匹配申请时的主流程节点编号
     private String cancelNodeCode;
 
     // 是否提交作废申请
@@ -2402,6 +2411,30 @@ public class BudgetOrder extends ABaseDO {
 
     public void setServiceCharge(Long serviceCharge) {
         this.serviceCharge = serviceCharge;
+    }
+
+    public double getPreCompanyLoanCs() {
+        return PreCompanyLoanCs;
+    }
+
+    public void setPreCompanyLoanCs(double preCompanyLoanCs) {
+        PreCompanyLoanCs = preCompanyLoanCs;
+    }
+
+    public double getPreGlobalRate() {
+        return PreGlobalRate;
+    }
+
+    public void setPreGlobalRate(double preGlobalRate) {
+        PreGlobalRate = preGlobalRate;
+    }
+
+    public double getPreBankLoanCs() {
+        return PreBankLoanCs;
+    }
+
+    public void setPreBankLoanCs(double preBankLoanCs) {
+        PreBankLoanCs = preBankLoanCs;
     }
 
 }
