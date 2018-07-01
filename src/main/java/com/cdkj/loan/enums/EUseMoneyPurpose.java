@@ -8,7 +8,7 @@ package com.cdkj.loan.enums;
  */
 public enum EUseMoneyPurpose {
 
-    MORTGAGE("1", "应退按揭款"), PROTOCOL_INNER("2", "协议内返点"), PROTOCOL_OUTER("2",
+    MORTGAGE("1", "应退按揭款"), PROTOCOL_INNER("2", "协议内返点"), PROTOCOL_OUTER("3",
             "协议外返点");
 
     EUseMoneyPurpose(String code, String value) {
