@@ -209,6 +209,7 @@
 		<result column="guarantor_name" property="guarantorName" />
 		
 		<result column="guarantor_mobile" property="guarantorMobile" />
+		<result column="guarantor_now_address" property="guarantorNowAddress" />
 		<result column="guarantor_family_phone" property="guarantorFamilyPhone" />
 		<result column="guarantor_company_name" property="guarantorCompanyName" />
 		<result column="guarantor_company_phone" property="guarantorCompanyPhone" />
@@ -512,6 +513,7 @@
 		,t.contact_mobile
 		,t.guarantor_name
 		,t.guarantor_mobile
+		,t.guarantor_now_address
 		,t.guarantor_family_phone
 		,t.guarantor_company_name
 		,t.guarantor_company_phone
@@ -763,6 +765,7 @@
 		,t.contact_mobile
 		,t.guarantor_name
 		,t.guarantor_mobile
+		,t.guarantor_now_address
 		,t.guarantor_family_phone
 		,t.guarantor_company_name
 		,t.guarantor_company_phone
@@ -977,6 +980,7 @@
 		,t.contact_mobile
 		,t.guarantor_name
 		,t.guarantor_mobile
+		,t.guarantor_now_address
 		,t.guarantor_family_phone
 		,t.guarantor_company_name
 		,t.guarantor_company_phone
@@ -1792,6 +1796,7 @@
 		UPDATE tdq_budget_order
 		SET
 		repay_biz_code = #{repayBizCode}
+		,apply_user_id = #{applyUserId}
 		WHERE code = #{code}
 	</update>
 	
@@ -1834,6 +1839,7 @@
 		,car_number = #{carNumber}
 		,guarant_contract_deadline = #{guarantContractDeadline}
 		,guarant_month_fee_rate = #{guarantMonthFeeRate}
+		,guarantor_now_address = #{guarantorNowAddress}
 		,guarantor_family_phone = #{guarantorFamilyPhone}
 		,guarantor_company_name = #{guarantorCompanyName}
 		,guarantor_company_phone = #{guarantorCompanyPhone}

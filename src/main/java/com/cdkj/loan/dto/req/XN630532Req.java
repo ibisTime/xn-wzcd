@@ -38,6 +38,17 @@ public class XN630532Req {
 
     private List<XN630535Req> costList; // 费用清单列表
 
+    @NotBlank
+    private String operator;// 操作人
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
     public String getCode() {
         return code;
     }

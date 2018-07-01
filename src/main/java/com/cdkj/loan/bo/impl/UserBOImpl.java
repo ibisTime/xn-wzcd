@@ -17,6 +17,7 @@ import com.cdkj.loan.dao.IUserDAO;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EUserKind;
+import com.cdkj.loan.enums.EUserSign;
 import com.cdkj.loan.enums.EUserStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -125,6 +126,54 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
             data.setUpdateDatetime(new Date());
             data.setRemark(remark);
             userDAO.updateStatus(data);
+        }
+    }
+
+    @Override
+    public void refreshGreenSign(User data, String updater) {
+        if (data != null) {
+            data.setSign(EUserSign.GREEN.getCode());
+            data.setSignDatetime(new Date());
+            data.setTotalGreenCount(data.getTotalGreenCount() + 1);
+            data.setUpdater(updater);
+            data.setUpdateDatetime(new Date());
+            userDAO.updateGreenSign(data);
+        }
+    }
+
+    @Override
+    public void refreshYellowSign(User data, String updater) {
+        if (data != null) {
+            data.setSign(EUserSign.YELLOW.getCode());
+            data.setSignDatetime(new Date());
+            data.setTotalYellowCount(data.getTotalYellowCount() + 1);
+            data.setUpdater(updater);
+            data.setUpdateDatetime(new Date());
+            userDAO.updateYellowSign(data);
+        }
+    }
+
+    @Override
+    public void refreshRedSign(User data, String updater) {
+        if (data != null) {
+            data.setSign(EUserSign.RED.getCode());
+            data.setSignDatetime(new Date());
+            data.setTotalRedCount(data.getTotalRedCount() + 1);
+            data.setUpdater(updater);
+            data.setUpdateDatetime(new Date());
+            userDAO.updateRedSign(data);
+        }
+    }
+
+    @Override
+    public void refreshBlackSign(User data, String updater) {
+        if (data != null) {
+            data.setSign(EUserSign.BLACK.getCode());
+            data.setSignDatetime(new Date());
+            data.setTotalBlackCount(data.getTotalBlackCount() + 1);
+            data.setUpdater(updater);
+            data.setUpdateDatetime(new Date());
+            userDAO.updateBlackSign(data);
         }
     }
 
@@ -314,6 +363,11 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         user.setIdNo(idNo);
         user.setRealName(realName);
         user.setStatus(EUserStatus.NORMAL.getCode());
+        user.setSign(EUserSign.WHITE.getCode());
+        user.setSignDatetime(new Date());
+        user.setTotalGreenCount(0);
+        user.setTotalYellowCount(0);
+        user.setTotalRedCount(0);
         user.setCreateDatetime(new Date());
         userDAO.insert(user);
         return userId;

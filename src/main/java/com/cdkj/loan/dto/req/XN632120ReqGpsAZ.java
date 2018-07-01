@@ -6,7 +6,7 @@ public class XN632120ReqGpsAZ {
     private String code;
 
     // GPS安装位置
-    private String gpsLocation;
+    private String azLocation;
 
     public String getCode() {
         return code;
@@ -16,12 +16,12 @@ public class XN632120ReqGpsAZ {
         this.code = code;
     }
 
-    public String getGpsLocation() {
-        return gpsLocation;
+    public String getAzLocation() {
+        return azLocation;
     }
 
-    public void setGpsLocation(String gpsLocation) {
-        this.gpsLocation = gpsLocation;
+    public void setAzLocation(String azLocation) {
+        this.azLocation = azLocation;
     }
 
 }

@@ -19,6 +19,13 @@
 		<result column="id_no" property="idNo" />
 		<result column="real_name" property="realName" />
 		<result column="status" property="status" />
+		<result column="sign" property="sign" />
+		<result column="sign_datetime" property="signDatetime" />
+		<result column="total_green_count" property="totalGreenCount" />
+		<result column="total_yellow_count" property="totalYellowCount" />
+		<result column="total_red_count" property="totalRedCount" />
+		<result column="total_black_count" property="totalBlackCount" />
+		
 		<result column="create_datetime" property="createDatetime" />
 		<result column="remark" property="remark" />
 	</resultMap>
@@ -84,6 +91,9 @@
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
+			<if test="sign != null and sign != '' ">
+				AND t.sign = #{sign}
+			</if>
 			<if test="createDatetime != null and createDatetime != '' ">
 				AND t.create_datetime = #{createDatetime}
 			</if>
@@ -110,12 +120,17 @@
 		,id_no
 		,real_name
 		,status
+		,sign
+		,sign_datetime
+		,total_green_count
+		,total_yellow_count
+		,total_red_count
+		,total_black_count
 		,create_datetime
 		,remark
 		FROM
 		tstd_user t
 		<include refid="where_condition" />
-		<!-- order by t.create_datetime desc -->
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
 				${order}
@@ -146,6 +161,12 @@
 		,id_no
 		,real_name
 		,status
+		,sign
+		,sign_datetime
+		,total_green_count
+		,total_yellow_count
+		,total_red_count
+		,total_black_count
 		,create_datetime
 		,remark
 		)
@@ -166,6 +187,12 @@
 		,#{idNo}
 		,#{realName}
 		,#{status}
+		,#{sign}
+		,#{signDatetime}
+		,#{totalGreenCount}
+		,#{totalYellowCount}
+		,#{totalRedCount}
+		,#{totalBlackCount}
 		,#{createDatetime}
 		,#{remark}
 		)
@@ -223,5 +250,54 @@
 		WHERE
 		user_id = #{userId}	
 	</update>
+	
+	<update id="update_green_sign" parameterType="user">
+		UPDATE tstd_user
+		SET
+		sign = #{sign}
+		,sign = #{signDatetime}
+		,total_green_count = #{totalGreenCount}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE
+		user_id = #{userId}	
+	</update>
+	
+	<update id="update_yellow_sign" parameterType="user">
+		UPDATE tstd_user
+		SET
+		sign = #{sign}
+		,sign = #{signDatetime}
+		,total_yellow_count = #{totalYellowCount}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE
+		user_id = #{userId}	
+	</update>
+	
+	<update id="update_red_sign" parameterType="user">
+		UPDATE tstd_user
+		SET
+		sign = #{sign}
+		,sign = #{signDatetime}
+		,total_red_count = #{totalRedCount}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE
+		user_id = #{userId}	
+	</update>
+	
+	<update id="update_black_sign" parameterType="user">
+		UPDATE tstd_user
+		SET
+		sign = #{sign}
+		,sign = #{signDatetime}
+		,total_black_count = #{totalBlackCount}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE
+		user_id = #{userId}	
+	</update>
+	
 	
 </mapper>

@@ -338,6 +338,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 正常单 根据协议计算出各种手续费
         XN632291Res xn632291Res = carDealerProtocolBO.calProtocolFee(
             data.getCode(), data.getCarDealerCode());
+
         SYSConfig sysConfig = sysConfigBO
             .getSYSConfig(SysConstants.BUDGET_GPS_DEDUCT_RATE);
         Double gpsBFB = StringValidater.toDouble((sysConfig.getCvalue()));
@@ -427,6 +428,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 data.setShouldBackStatus(EBoolean.NO.getCode());
                 repointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
                     .getCode());
+
             }
             // 协议外返点
             if (EUseMoneyPurpose.PROTOCOL_OUTER.getCode().equals(
@@ -463,6 +465,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             repointDetail.setAccountName(xn632120ReqRepointDetail
                 .getAccountName());
             repointDetailBO.saveRepointDetail(repointDetail);
+
         }
 
         // 协议内返点 和 垫资应退按揭款
@@ -1039,8 +1042,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCarBrand(req.getCarBrand());
 
         budgetOrder.setEngineNo(req.getEngineNo());
-        budgetOrder.setForceInsurance(StringValidater.toLong(req
-            .getForceInsurance()));
+        budgetOrder.setForceInsurance(req.getForceInsurance());
         budgetOrder.setCommerceInsurance(req.getCommerceInsurance());
         budgetOrder
             .setInsuranceEffectDatetime(DateUtil.strToDate(
@@ -1119,7 +1121,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             userId, bankcardCode, req.getOperator());
 
         budgetOrderBO.updateRepayBizCode(budgetOrder.getCode(),
-            repayBiz.getCode());
+            repayBiz.getCode(), userId);
 
         // 自动生成还款计划
         repayPlanBO.genereateNewRepayPlan(repayBiz);
@@ -1277,6 +1279,16 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setCredit(credit);
         }
 
+        if (StringUtils.isNotBlank(budgetOrder.getGuarantor1IdNo())) {
+            String sex = getSexByIdNo(budgetOrder.getGuarantor1IdNo());
+            budgetOrder.setGuarantor1Sex(sex);
+        }
+
+        if (StringUtils.isNotBlank(budgetOrder.getGuarantor2IdNo())) {
+            String sex = getSexByIdNo(budgetOrder.getGuarantor2IdNo());
+            budgetOrder.setGuarantor2Sex(sex);
+        }
+
         // 获取返点列表
         List<RepointDetail> shouldBackRepointList = repointDetailBO
             .queryRepointDetailList(budgetOrder.getCode(),
@@ -1292,6 +1304,23 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .queryRepointDetailList(budgetOrder.getCode(),
                 ERepointDetailUseMoneyPurpose.PROOUT_REPOINT.getCode());
         budgetOrder.setRepointDetailList3(proOutRepointList);
+    }
+
+    private String getSexByIdNo(String idNo) {
+        /**
+         * 根据身份编号获取性别
+         * @param idCard 身份编号
+         * @return 性别(M-男，F-女，N-未知)
+         */
+        String sGender = null;
+
+        String sCardNum = idNo.substring(16, 17);
+        if (Integer.parseInt(sCardNum) % 2 != 0) {
+            sGender = "男";
+        } else {
+            sGender = "女";
+        }
+        return sGender;
     }
 
     @Override
@@ -1407,10 +1436,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCompanyLoanCs(companyLoanCs);
         budgetOrder.setInvoice(req.getInvoice());
         budgetOrder.setCertification(req.getCertification());
-        budgetOrder.setForceInsurance(StringValidater.toLong(req
-            .getForceInsurance()));
-        budgetOrder.setBusinessInsurance(StringValidater.toLong(req
-            .getBusinessInsurance()));
+        budgetOrder.setForceInsurance(req.getForceInsurance());
+        budgetOrder.setBusinessInsurance(req.getBusinessInsurance());
         budgetOrder.setMotorRegCertification(req.getMotorRegCertification());
         budgetOrder.setPdPdf(req.getPdPdf());
         budgetOrder.setFbhRemark(req.getFbhRemark());
@@ -1488,6 +1515,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             RepointDetail repointDetail = new RepointDetail();
             if (EUseMoneyPurpose.MORTGAGE.getCode().equals(// 应退按揭款 垫资
                 xn632290Res.getUseMoneyPurpose())
+
                     && EIsAdvanceFund.YES.getCode().equals(
                         budgetOrder.getIsAdvanceFund())) {
                 repointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
@@ -1503,9 +1531,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
             } else if (EUseMoneyPurpose.PROTOCOL_INNER.getCode().equals(
                 xn632290Res.getUseMoneyPurpose())) {// 协议内
+
                 repointDetail
-                    .setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
-                        .getCode());
+
+                .setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER.getCode());
                 repointDetail.setCarDealerCode(budgetOrder.getCarDealerCode());
 
                 Double benchmarkRate = benchmarkRate(budgetOrder);
@@ -1518,9 +1547,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 xn632290Res.getUseMoneyPurpose())
                     && EIsAdvanceFund.NO.getCode().equals(
                         budgetOrder.getIsAdvanceFund())) {// 应退按揭款 不垫资
+
                 List<RepointDetail> repointDetailList = repointDetailBO
                     .queryRepointDetailList(budgetOrder.getCode(),
                         EUseMoneyPurpose.MORTGAGE.getCode());
+
                 repointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
                     .getCode());
                 if (null != repointDetailList.get(0)) {
@@ -1534,9 +1565,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
             } else if (EUseMoneyPurpose.PROTOCOL_OUTER.getCode().equals(
                 xn632290Res.getUseMoneyPurpose())) {// 协议外
+
                 repointDetail
-                    .setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_OUTER
-                        .getCode());
+
+                .setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_OUTER.getCode());
                 List<RepointDetail> repointDetailList = repointDetailBO
                     .queryRepointDetailList(budgetOrder.getCode(),
                         EUseMoneyPurpose.PROTOCOL_OUTER.getCode());
@@ -1561,6 +1593,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             repointDetail.setLoanAmount(budgetOrder.getLoanAmount());
             repointDetail.setBankRate(budgetOrder.getBankRate());
             repointDetail.setFee(budgetOrder.getFee());
+
             repointDetail.setRepointAmount(StringValidater.toLong(xn632290Res
                 .getRepointAmount()));
             repointDetail.setType(ERepointDetailType.NEW.getCode());
@@ -1942,42 +1975,50 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         XN632290Req req = new XN632290Req();
 
         // 担保风险金
+
         if (EAssureType.PERCENT.getCode().equals(
             carDealerProtocol.getAssureType())) {
             res.setFxAmount(String.valueOf(AmountUtil.mul(
                 StringValidater.toLong(loanAmount),
                 carDealerProtocol.getAssureRate())));
             req.setFxAmount(res.getFxAmount());
+
         } else {
             req.setFxAmount(String.valueOf(data.getFxAmount()));
         }
         // 履约保证金
+
         if (ELyAmountType.PERCENT.getCode().equals(
             carDealerProtocol.getLyAmountType())) {
             res.setLyAmount(String.valueOf(AmountUtil.mul(
                 StringValidater.toLong(loanAmount),
                 carDealerProtocol.getLyAmountRate())));
             req.setLyAmount(res.getLyAmount());
+
         } else {
             req.setLyAmount(String.valueOf(data.getLyAmount()));
         }
         // gps收费
+
         if (EGpsTypeProtocol.PERCENT.getCode().equals(
             carDealerProtocol.getGpsType())) {
             res.setGpsFee(String.valueOf(AmountUtil.mul(
                 StringValidater.toLong(loanAmount),
                 carDealerProtocol.getGpsRate())));
             req.setGpsFee(res.getGpsFee());
+
         } else {
             req.setGpsFee(String.valueOf(data.getGpsFee()));
         }
         // 杂费
+
         if (EOtherType.PERCENT.getCode().equals(
             carDealerProtocol.getOtherType())) {
             res.setOtherFee(String.valueOf(AmountUtil.mul(
                 StringValidater.toLong(loanAmount),
                 carDealerProtocol.getOtherRate())));
             req.setOtherFee(res.getOtherFee());
+
         } else {
             req.setOtherFee(String.valueOf(data.getOtherFee()));
         }
@@ -2049,6 +2090,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .setGuarantContractDeadline(req.getGuarantContractDeadline());
         budgetOrder.setGuarantMonthFeeRate(StringValidater.toDouble(req
             .getGuarantMonthFeeRate()));
+        budgetOrder.setGuarantorNowAddress(req.getGuarantorNowAddress());
         budgetOrder.setGuarantorFamilyPhone(req.getGuarantorFamilyPhone());
         budgetOrder.setGuarantorCompanyName(req.getGuarantorCompanyName());
         budgetOrder.setGuarantorCompanyPhone(req.getGuarantorFamilyPhone());

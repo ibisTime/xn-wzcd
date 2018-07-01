@@ -20,6 +20,12 @@ public class Department extends ABaseDO {
 
     private String type;// 类型(1=子公司，2=部门，3=职位)
 
+    private String provinceNo;// 省份编号
+
+    private String cityNo;// 市编号
+
+    private String areaNo;// 区编号
+
     private String status;// 状态
 
     private String updater;// 更新人
@@ -42,6 +48,22 @@ public class Department extends ABaseDO {
         this.typeList = typeList;
     }
 
+    public String getCityNo() {
+        return cityNo;
+    }
+
+    public void setCityNo(String cityNo) {
+        this.cityNo = cityNo;
+    }
+
+    public String getAreaNo() {
+        return areaNo;
+    }
+
+    public void setAreaNo(String areaNo) {
+        this.areaNo = areaNo;
+    }
+
     public String getKeyword() {
         return keyword;
     }
@@ -56,6 +78,14 @@ public class Department extends ABaseDO {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getProvinceNo() {
+        return provinceNo;
+    }
+
+    public void setProvinceNo(String provinceNo) {
+        this.provinceNo = provinceNo;
     }
 
     public String getName() {
