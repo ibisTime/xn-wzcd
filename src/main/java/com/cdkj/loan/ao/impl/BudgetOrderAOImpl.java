@@ -989,8 +989,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCarBrand(req.getCarBrand());
 
         budgetOrder.setEngineNo(req.getEngineNo());
-        budgetOrder
-            .setForceInsurance(StringValidater.toLong(req.getForceInsurance()));
+        budgetOrder.setForceInsurance(req.getForceInsurance());
         budgetOrder.setCommerceInsurance(req.getCommerceInsurance());
         budgetOrder.setInsuranceEffectDatetime(
             DateUtil.strToDate(req.getInsuranceEffectDatetime(),
@@ -1381,10 +1380,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCompanyLoanCs(companyLoanCs);
         budgetOrder.setInvoice(req.getInvoice());
         budgetOrder.setCertification(req.getCertification());
-        budgetOrder
-            .setForceInsurance(StringValidater.toLong(req.getForceInsurance()));
-        budgetOrder.setBusinessInsurance(
-            StringValidater.toLong(req.getBusinessInsurance()));
+        budgetOrder.setForceInsurance(req.getForceInsurance());
+        budgetOrder.setBusinessInsurance(req.getBusinessInsurance());
         budgetOrder.setMotorRegCertification(req.getMotorRegCertification());
         budgetOrder.setPdPdf(req.getPdPdf());
         budgetOrder.setFbhRemark(req.getFbhRemark());
