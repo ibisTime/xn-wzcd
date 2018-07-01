@@ -64,4 +64,13 @@ public class SysConstants {
     // 油补提成比例
     public static String BUDGET_OIL_SUBSIDY_RATE = "budget_oil_subsidy_rate";
 
+    // 阿里云请求url
+    public static String ALIYUN_HOST = "ALIYUN_HOST";
+
+    // 阿里云请求url编号
+    public static String ALIYUN_HOST_REST_PATH = "ALIYUN_HOST_REST_CODE";
+
+    // 阿里云appcode
+    public static String ALIYUN_APPCODE = "ALIYUN_APPCODE";
+
 }
