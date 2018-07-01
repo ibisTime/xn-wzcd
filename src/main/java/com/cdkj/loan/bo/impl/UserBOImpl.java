@@ -168,7 +168,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     @Override
     public void refreshBlackSign(User data, String updater) {
         if (data != null) {
-            data.setSign(EUserSign.RED.getCode());
+            data.setSign(EUserSign.BLACK.getCode());
             data.setSignDatetime(new Date());
             data.setTotalBlackCount(data.getTotalBlackCount() + 1);
             data.setUpdater(updater);
