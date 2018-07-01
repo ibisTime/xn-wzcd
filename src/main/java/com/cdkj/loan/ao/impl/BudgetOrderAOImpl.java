@@ -2094,44 +2094,44 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         Long fee = StringValidater.toLong(req.getFee());
         data.setFee(fee);
         double feeRate = AmountUtil.div(fee, loanAmount);
-        data.setGlobalRate(feeRate
-                + StringValidater.toDouble(req.getBankRate()));// 综合利率
-        data.setCarDealerSubsidy(StringValidater.toLong(req
-            .getCarDealerSubsidy()));
+        data.setGlobalRate(
+            feeRate + StringValidater.toDouble(req.getBankRate()));// 综合利率
+        data.setCarDealerSubsidy(
+            StringValidater.toLong(req.getCarDealerSubsidy()));
 
         Long totalAmount = loanAmount + fee;// 总费用 贷款总额
         data.setBankLoanCs(AmountUtil.div(totalAmount, invoicePrice));// 银行贷款成数
-        data.setApplyUserMonthIncome(StringValidater.toLong(req
-            .getApplyUserMonthIncome()));
-        data.setApplyUserSettleInterest(StringValidater.toLong(req
-            .getApplyUserSettleInterest()));
-        data.setApplyUserBalance(StringValidater.toLong(req
-            .getApplyUserBalance()));
+        data.setApplyUserMonthIncome(
+            StringValidater.toLong(req.getApplyUserMonthIncome()));
+        data.setApplyUserSettleInterest(
+            StringValidater.toLong(req.getApplyUserSettleInterest()));
+        data.setApplyUserBalance(
+            StringValidater.toLong(req.getApplyUserBalance()));
         data.setApplyUserJourShowIncome(req.getApplyUserJourShowIncome());
 
         data.setApplyUserIsPrint(req.getApplyUserIsPrint());
         data.setGhMonthIncome(StringValidater.toLong(req.getGhMonthIncome()));
-        data.setGhSettleInterest(StringValidater.toLong(req
-            .getGhSettleInterest()));
+        data.setGhSettleInterest(
+            StringValidater.toLong(req.getGhSettleInterest()));
         data.setGhBalance(StringValidater.toLong(req.getGhBalance()));
         data.setGhJourShowIncome(req.getGhJourShowIncome());
 
         data.setGhIsPrint(req.getGhIsPrint());
-        data.setGuarantor1MonthIncome(StringValidater.toLong(req
-            .getGuarantor1MonthIncome()));
-        data.setGuarantor1SettleInterest(StringValidater.toLong(req
-            .getGuarantor1SettleInterest()));
-        data.setGuarantor1Balance(StringValidater.toLong(req
-            .getGuarantor1Balance()));
+        data.setGuarantor1MonthIncome(
+            StringValidater.toLong(req.getGuarantor1MonthIncome()));
+        data.setGuarantor1SettleInterest(
+            StringValidater.toLong(req.getGuarantor1SettleInterest()));
+        data.setGuarantor1Balance(
+            StringValidater.toLong(req.getGuarantor1Balance()));
         data.setGuarantor1JourShowIncome(req.getGuarantor1JourShowIncome());
 
         data.setGuarantor1IsPrint(req.getGuarantor1IsPrint());
-        data.setGuarantor2MonthIncome(StringValidater.toLong(req
-            .getGuarantor2MonthIncome()));
-        data.setGuarantor2SettleInterest(StringValidater.toLong(req
-            .getGuarantor2SettleInterest()));
-        data.setGuarantor2Balance(StringValidater.toLong(req
-            .getGuarantor2Balance()));
+        data.setGuarantor2MonthIncome(
+            StringValidater.toLong(req.getGuarantor2MonthIncome()));
+        data.setGuarantor2SettleInterest(
+            StringValidater.toLong(req.getGuarantor2SettleInterest()));
+        data.setGuarantor2Balance(
+            StringValidater.toLong(req.getGuarantor2Balance()));
         data.setGuarantor2JourShowIncome(req.getGuarantor2JourShowIncome());
 
         data.setGuarantor2IsPrint(req.getGuarantor2IsPrint());
@@ -2161,8 +2161,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setOtherNote(req.getOtherNote());
         SYSConfig sysConfigoil = sysConfigBO
             .getSYSConfig(SysConstants.BUDGET_OIL_SUBSIDY_RATE);
-        Double OilSubsidyBFB = StringValidater.toDouble(sysConfigoil
-            .getCvalue());
+        Double OilSubsidyBFB = StringValidater
+            .toDouble(sysConfigoil.getCvalue());
         Long OilSubsidy = AmountUtil.mul(data.getLoanAmount(), OilSubsidyBFB);
         data.setOilSubsidy(OilSubsidy);// 油补
         data.setOilSubsidyKil(StringValidater.toDouble(req.getOilSubsidyKil()));
@@ -2176,7 +2176,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 外单手动填写手续费
         data.setGpsFee(req.getGpsFee());
         data.setGpsFeeWay(req.getGpsFeeWay());
-        data.setGpsLocation(req.getGpsLocation());
 
         data.setLyAmount(req.getLyAmount());
         data.setFxAmount(req.getFxAmount());
@@ -2232,9 +2231,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         String preNodeCode = data.getCurNodeCode();
         if (EButtonCode.SEND.getCode().equals(req.getDealType())) {
-            EBudgetOrderNode node = EBudgetOrderNode.getMap().get(
-                nodeFlowBO.getNodeFlowByCurrentNode(data.getCurNodeCode())
-                    .getNextNode());
+            EBudgetOrderNode node = EBudgetOrderNode.getMap().get(nodeFlowBO
+                .getNodeFlowByCurrentNode(data.getCurNodeCode()).getNextNode());
             data.setCurNodeCode(node.getCode());
 
             // 日志记录
@@ -2250,19 +2248,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
             if (EUseMoneyPurpose.MORTGAGE.getCode().equals(// 应退按揭款 垫资
                 req1.getUseMoneyPurpose())
-                    && EIsAdvanceFund.YES.getCode().equals(
-                        data.getIsAdvanceFund())) {
+                    && EIsAdvanceFund.YES.getCode()
+                        .equals(data.getIsAdvanceFund())) {
                 data1.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE.getCode());
-            } else if (EUseMoneyPurpose.MORTGAGE.getCode().equals(
-                req1.getUseMoneyPurpose())
-                    && EIsAdvanceFund.NO.getCode().equals(
-                        data.getIsAdvanceFund())) {// 应退按揭款 不垫资
+            } else if (EUseMoneyPurpose.MORTGAGE.getCode()
+                .equals(req1.getUseMoneyPurpose())
+                    && EIsAdvanceFund.NO.getCode()
+                        .equals(data.getIsAdvanceFund())) {// 应退按揭款 不垫资
                 data1.setMortgageAccountNo(req1.getMortgageAccountNo());
                 data1.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE.getCode());
-            } else if (EUseMoneyPurpose.PROTOCOL_OUTER.getCode().equals(
-                req1.getUseMoneyPurpose())) {// 手动填写返点（协议外）
-                data1.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_OUTER
-                    .getCode());
+            } else if (EUseMoneyPurpose.PROTOCOL_OUTER.getCode()
+                .equals(req1.getUseMoneyPurpose())) {// 手动填写返点（协议外）
+                data1.setUseMoneyPurpose(
+                    EUseMoneyPurpose.PROTOCOL_OUTER.getCode());
             }
             data1.setBudgetCode(data.getCode());
             data1.setUserName(data.getCustomerName());
@@ -2276,8 +2274,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             data1.setBankRate(data.getBankRate());
 
             data1.setFee(fee);
-            data1.setRepointAmount(StringValidater.toLong(req1
-                .getRepointAmount()));
+            data1.setRepointAmount(
+                StringValidater.toLong(req1.getRepointAmount()));
             data1.setOutAccountNo(req1.getOutAccountNo());
             data1.setCurNodeCode(ERepointDetailStatus.TODO_MAKE_BILL.getCode());
             data1.setType(ERepointDetailType.NORMAL.getCode());
@@ -2289,7 +2287,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderGpsBO.removeBudgetOrderGpsList(data.getCode());
         // 添加
         budgetOrderGpsBO.saveBudgetOrderGpsList(data.getCode(),
-            req.getGpsList());
+            req.getGpsList(), req.getGpsLocation());
 
         budgetOrderBO.refresh(data);
 
