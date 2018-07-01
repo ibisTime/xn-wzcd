@@ -161,6 +161,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     public void logicOrder(String code, String operator) {
         BudgetOrder budgetOrder = getBudgetOrder(code);
         // String preCurrentNode = budgetOrder.getCurNodeCode();
+
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
             .getCurNodeCode());
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
