@@ -217,8 +217,11 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
                 Double pointRate = collectBankcard.getPointRate();
                 res.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
                     .getCode());
-                res.setRepointAmount(AmountUtil.mul(actualRepointAmount,
-                    pointRate));
+                if (null == actualRepointAmount) {
+                    actualRepointAmount = 0L;
+                }
+                res.setRepointAmount(String.valueOf(AmountUtil.mul(
+                    actualRepointAmount, pointRate)));
                 res.setId(String.valueOf(carDealerProtocol.getId()));
                 res.setAccountCode(collectBankcard.getBankcardNumber());
                 CarDealer carDealer = carDealerBO.getCarDealer(req
@@ -257,7 +260,10 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
                 && !EFeeWay.MORTGAGE.getCode().equals(req.getFeeWay())) {
             shouldBackAmount = loanAmount - carDealerSubsidy;
         }
-        res.setRepointAmount(shouldBackAmount);// 应退按揭款金额=贷款金额-收客户手续费（按揭款扣）-GPS收费（按揭款扣）-厂家贴息
+        if (null == shouldBackAmount) {
+            shouldBackAmount = 0L;
+        }
+        res.setRepointAmount(String.valueOf(shouldBackAmount));// 应退按揭款金额=贷款金额-收客户手续费（按揭款扣）-GPS收费（按揭款扣）-厂家贴息
         Department department = departmentBO.getDepartment(budgetOrder
             .getCompanyCode());
         res.setCompanyName(department.getName());
