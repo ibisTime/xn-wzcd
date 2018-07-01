@@ -24,6 +24,12 @@ public class XN630102Req {
     private String provinceNo;// 省份编号
 
     @NotBlank
+    private String cityNo;// 市编号
+
+    @NotBlank
+    private String areaNo;// 区编号
+
+    @NotBlank
     private String updater;// 更新人
 
     private String remark;// 备注
@@ -34,6 +40,22 @@ public class XN630102Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getCityNo() {
+        return cityNo;
+    }
+
+    public void setCityNo(String cityNo) {
+        this.cityNo = cityNo;
+    }
+
+    public String getAreaNo() {
+        return areaNo;
+    }
+
+    public void setAreaNo(String areaNo) {
+        this.areaNo = areaNo;
     }
 
     public String getName() {

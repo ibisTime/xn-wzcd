@@ -642,10 +642,10 @@ public class BudgetOrder extends ABaseDO {
     private String certification;
 
     // 交强险
-    private Long forceInsurance;
+    private String forceInsurance;
 
     // 商业险
-    private Long businessInsurance;
+    private String businessInsurance;
 
     // 机动车登记证书
     private String motorRegCertification;
@@ -2614,19 +2614,19 @@ public class BudgetOrder extends ABaseDO {
         this.certification = certification;
     }
 
-    public Long getForceInsurance() {
+    public String getForceInsurance() {
         return forceInsurance;
     }
 
-    public void setForceInsurance(Long forceInsurance) {
+    public void setForceInsurance(String forceInsurance) {
         this.forceInsurance = forceInsurance;
     }
 
-    public Long getBusinessInsurance() {
+    public String getBusinessInsurance() {
         return businessInsurance;
     }
 
-    public void setBusinessInsurance(Long businessInsurance) {
+    public void setBusinessInsurance(String businessInsurance) {
         this.businessInsurance = businessInsurance;
     }
 

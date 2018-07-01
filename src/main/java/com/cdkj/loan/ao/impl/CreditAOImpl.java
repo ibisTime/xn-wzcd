@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -367,7 +368,7 @@ public class CreditAOImpl implements ICreditAO {
             List<CreditUser> dbUserList = creditUserBO
                 .getCreditUserListByCreditCode(credit.getCode(),
                     ELoanRole.GUARANTOR);
-            if (dbUserList != null) {
+            if (CollectionUtils.isNotEmpty(dbUserList)) {
                 CreditUser dbUser1 = dbUserList.get(0);
                 data.setGuarantor1IdNo(dbUser1.getIdNo());
                 data.setGuarantor1MonthIncome(dbUser1.getMonthIncome());

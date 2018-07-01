@@ -22,6 +22,10 @@ public class Department extends ABaseDO {
 
     private String provinceNo;// 省份编号
 
+    private String cityNo;// 市编号
+
+    private String areaNo;// 区编号
+
     private String status;// 状态
 
     private String updater;// 更新人
@@ -42,6 +46,22 @@ public class Department extends ABaseDO {
 
     public void setTypeList(List<String> typeList) {
         this.typeList = typeList;
+    }
+
+    public String getCityNo() {
+        return cityNo;
+    }
+
+    public void setCityNo(String cityNo) {
+        this.cityNo = cityNo;
+    }
+
+    public String getAreaNo() {
+        return areaNo;
+    }
+
+    public void setAreaNo(String areaNo) {
+        this.areaNo = areaNo;
     }
 
     public String getKeyword() {

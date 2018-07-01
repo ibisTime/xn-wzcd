@@ -268,8 +268,8 @@ CREATE TABLE `tdq_budget_order` (
   
   `invoice` tinytext COMMENT '发票',
   `certification` tinytext COMMENT '合格证',
-  `force_insurance` bigint(20) DEFAULT NULL COMMENT '交强险',
-  `business_insurance` bigint(20) DEFAULT NULL COMMENT '商业险',
+  `force_insurance` tinytext DEFAULT NULL COMMENT '交强险',
+  `business_insurance` tinytext DEFAULT NULL COMMENT '商业险',
   `motor_reg_certification` tinytext COMMENT '机动车登记证书',
   
   `pd_pdf` tinytext COMMENT '批单',

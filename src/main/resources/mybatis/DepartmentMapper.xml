@@ -10,6 +10,8 @@
 		<result column="parent_code" property="parentCode" />
 		<result column="type" property="type" />
 		<result column="province_no" property="provinceNo" />
+		<result column="city_no" property="cityNo" />
+		<result column="area_no" property="areaNo" />
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
@@ -52,6 +54,8 @@
 		,t.parent_code
 		,t.type
 		,t.province_no
+		,t.city_no
+		,t.area_no
 		,t.status
 		,t.updater
 		,t.update_datetime
@@ -82,6 +86,8 @@
 		,parent_code
 		,type
 		,province_no
+		,city_no
+		,area_no
 		,status
 		,updater
 		,update_datetime
@@ -95,6 +101,8 @@
 		,#{parentCode}
 		,#{type}
 		,#{provinceNo}
+		,#{cityNo}
+		,#{areaNo}
 		,#{status}
 		,#{updater}
 		,#{updateDatetime}
@@ -111,6 +119,8 @@
 		,parent_code = #{parentCode}
 		,type = #{type}
 		,province_no = #{provinceNo}
+		,city_no = #{cityNo}
+		,area_no = #{areaNo}
 		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
