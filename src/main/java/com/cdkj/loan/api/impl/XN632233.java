@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 发票不匹配财务审核
+ * 发票不匹配财务确认
  * @author: jiafr 
  * @since: 2018年6月18日 上午12:45:00 
  * @history:

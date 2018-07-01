@@ -15,11 +15,20 @@ public class RepointDetail extends ABaseDO {
     // 编号
     private String code;
 
-    // 预算单编号
-    private String budgetCode;
+    // 类型（1正常数据2发票不匹配产生的新数据）
+    private String type;
 
     // 返点编号
     private String repointCode;
+
+    // 业务公司编号
+    private String companyCode;
+
+    // 业务公司名称
+    private String companyName;
+
+    // 预算单编号
+    private String budgetCode;
 
     // 客户姓名
     private String userName;
@@ -30,11 +39,8 @@ public class RepointDetail extends ABaseDO {
     // 汽车经销商编号
     private String carDealerCode;
 
-    // 外单汽车经销商名称
-    private String outCarDealerName;
-
-    // 业务公司编号
-    private String companyCode;
+    // 汽车经销商名称
+    private String carDealerName;
 
     // 车辆型号
     private String carType;
@@ -54,26 +60,47 @@ public class RepointDetail extends ABaseDO {
     // 用款用途（1应退按揭款2协议内返点3协议外返点）
     private String useMoneyPurpose;
 
-    // 返点金额(返点金额或应退按揭款金额)
+    // 返点金额
     private Long repointAmount;
 
-    // 账号编号（公司或车行的收款账号编号）
+    // 账号编号（协议内返点）
     private String accountCode;
 
-    // 收款账号（用于客户不垫资，手动输入的应退按揭款的收款账号 ）
-    private String mortgageAccountNo;
-
-    // 收款账号（用于外单手动填写的汽车经销商收款账号 ）
-    private String outAccountNo;
+    // 收款账号
+    private String accountNo;
 
     // 开户行名称
     private String openBankName;
 
+    // 户名
+    private String accountName;
+
     // 节点(0待制单1已制单待打款2已打款)
     private String curNodeCode;
 
-    // 类型（1正常数据2发票不匹配产生的新数据）
-    private String type;
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getRepointCode() {
+        return repointCode;
+    }
+
+    public void setRepointCode(String repointCode) {
+        this.repointCode = repointCode;
+    }
 
     public String getCompanyCode() {
         return companyCode;
@@ -83,68 +110,52 @@ public class RepointDetail extends ABaseDO {
         this.companyCode = companyCode;
     }
 
-    public String getMortgageAccountNo() {
-        return mortgageAccountNo;
-    }
-
-    public void setMortgageAccountNo(String mortgageAccountNo) {
-        this.mortgageAccountNo = mortgageAccountNo;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getCode() {
-        return code;
+    public String getBudgetCode() {
+        return budgetCode;
     }
 
     public void setBudgetCode(String budgetCode) {
         this.budgetCode = budgetCode;
     }
 
-    public String getBudgetCode() {
-        return budgetCode;
-    }
-
-    public void setRepointCode(String repointCode) {
-        this.repointCode = repointCode;
-    }
-
-    public String getRepointCode() {
-        return repointCode;
+    public String getUserName() {
+        return userName;
     }
 
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getIdNo() {
+        return idNo;
     }
 
     public void setIdNo(String idNo) {
         this.idNo = idNo;
     }
 
-    public String getIdNo() {
-        return idNo;
+    public String getCarDealerCode() {
+        return carDealerCode;
     }
 
     public void setCarDealerCode(String carDealerCode) {
         this.carDealerCode = carDealerCode;
     }
 
-    public String getCarDealerCode() {
-        return carDealerCode;
+    public String getCarDealerName() {
+        return carDealerName;
     }
 
-    public void setCarType(String carType) {
-        this.carType = carType;
+    public void setCarDealerName(String carDealerName) {
+        this.carDealerName = carDealerName;
     }
 
     public String getCarType() {
         return carType;
+    }
+
+    public void setCarType(String carType) {
+        this.carType = carType;
     }
 
     public Long getLoanAmount() {
@@ -195,44 +206,20 @@ public class RepointDetail extends ABaseDO {
         this.repointAmount = repointAmount;
     }
 
-    public void setAccountCode(String accountCode) {
-        this.accountCode = accountCode;
-    }
-
     public String getAccountCode() {
         return accountCode;
     }
 
-    public void setCurNodeCode(String curNodeCode) {
-        this.curNodeCode = curNodeCode;
+    public void setAccountCode(String accountCode) {
+        this.accountCode = accountCode;
     }
 
-    public String getCurNodeCode() {
-        return curNodeCode;
+    public String getAccountNo() {
+        return accountNo;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getOutCarDealerName() {
-        return outCarDealerName;
-    }
-
-    public void setOutCarDealerName(String outCarDealerName) {
-        this.outCarDealerName = outCarDealerName;
-    }
-
-    public String getOutAccountNo() {
-        return outAccountNo;
-    }
-
-    public void setOutAccountNo(String outAccountNo) {
-        this.outAccountNo = outAccountNo;
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
     }
 
     public String getOpenBankName() {
@@ -241,6 +228,30 @@ public class RepointDetail extends ABaseDO {
 
     public void setOpenBankName(String openBankName) {
         this.openBankName = openBankName;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
 }

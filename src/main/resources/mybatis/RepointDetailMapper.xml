@@ -4,26 +4,31 @@
 <mapper namespace="com.cdkj.loan.dao.IRepointDetailDAO">
 	<resultMap id="repointDetail_DB_Result" type="repointDetail">
 		<result column="code" property="code" />
+		<result column="type" property="type" />
+	    <result column="repoint_code" property="repointCode" />
+	    <result column="company_code" property="companyCode" />
+	    <result column="company_name" property="companyName" />
 		<result column="budget_code" property="budgetCode" />
-		<result column="repoint_code" property="repointCode" />
+
 		<result column="user_name" property="userName" />
 		<result column="id_no" property="idNo" />
 		<result column="car_dealer_code" property="carDealerCode" />
-		<result column="out_car_dealer_name" property="outCarDealerName" />
-		<result column="company_code" property="companyCode" />
+		<result column="car_dealer_name" property="carDealerName" />
 		<result column="car_type" property="carType" />
+		
 		<result column="loan_amount" property="loanAmount" />
 		<result column="bank_rate" property="bankRate" />
 		<result column="benchmark_rate" property="benchmarkRate" />
 		<result column="fee" property="fee" />
 		<result column="use_money_purpose" property="useMoneyPurpose" />
+		
 		<result column="repoint_amount" property="repointAmount" />
 		<result column="account_code" property="accountCode" />
-		<result column="mortgage_account_no" property="mortgageAccountNo" />
-		<result column="out_account_no" property="outAccountNo" />
+		<result column="account_no" property="accountNo" />
 		<result column="open_bank_name" property="openBankName" />
+		<result column="account_name" property="accountName" />
 		<result column="cur_node_code" property="curNodeCode" />
-		<result column="type" property="type" />
+
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -53,26 +58,30 @@
 	<select id="select_repointDetail" parameterType="repointDetail" resultMap="repointDetail_DB_Result">
 		SELECT
 		t.code
+		,t.type
 		,t.budget_code
 		,t.repoint_code
+		,t.company_code
+		,t.company_name
+		
 		,t.user_name
 		,t.id_no
 		,t.car_dealer_code
-		,t.out_car_dealer_name
-		,t.company_code
+		,t.car_dealer_name
 		,t.car_type
+		
 		,t.loan_amount
 		,t.bank_rate
 		,t.benchmark_rate
 		,t.fee
 		,t.use_money_purpose
+		
 		,t.repoint_amount
 		,t.account_code
-		,t.mortgage_account_no
-		,t.out_account_no
+		,t.account_no
 		,t.open_bank_name
+		,t.account_name
 		,t.cur_node_code
-		,t.type
 		FROM
 		tdqt_repoint_detail t
 		<include refid="where_condition" />
@@ -93,49 +102,57 @@
 		INSERT INTO
 		tdqt_repoint_detail(
 		code
+		,type
 		,budget_code
 		,repoint_code
+		,company_code
+		,company_name
+		
 		,user_name
 		,id_no
 		,car_dealer_code
 		,out_car_dealer_name
-		,company_code
 		,car_type
+		
 		,loan_amount
 		,bank_rate
 		,benchmark_rate
 		,fee
 		,use_money_purpose
+		
 		,repoint_amount
 		,account_code
-		,mortgage_account_no
-		,out_account_no
+		,account_no
 		,open_bank_name
+		,account_name
 		,cur_node_code
-		,type
 		)
 		VALUES(
 		#{code}
+		,#{type}
 		,#{budgetCode}
 		,#{repointCode}
+		,#{companyCode}
+		,#{companyName}
+		
 		,#{userName}
 		,#{idNo}
 		,#{carDealerCode}
 		,#{outCarDealerName}
-		,#{companyCode}
 		,#{carType}
+		
 		,#{loanAmount}
 		,#{bankRate}
 		,#{benchmarkRate}
 		,#{fee}
 		,#{useMoneyPurpose}
+		
 		,#{repointAmount}
 		,#{accountCode}
-		,#{mortgageAccountNo}
-		,#{outAccountNo}
+		,#{accountNo}
 		,#{openBankName}
+		,#{accountName}
 		,#{curNodeCode}
-		,#{type}
 		)
 	</insert>
 
@@ -147,8 +164,9 @@
 		,user_name = #{userName}
 		,id_no = #{idNo}
 		,car_dealer_code = #{carDealerCode}
-		,out_car_dealer_name = #{outCarDealerName}
+		,car_dealer_name = #{carDealerName}
 		,company_code = #{companyCode}
+		,company_name = #{companyName}
 		,car_type = #{carType}
 		,loan_amount = #{loanAmount}
 		,bank_rate = #{bankRate}
@@ -157,9 +175,9 @@
 		,use_money_purpose = #{useMoneyPurpose}
 		,repoint_amount = #{repointAmount}
 		,account_code = #{accountCode}
-		,mortgage_account_no = #{mortgageAccountNo}
-		,out_account_no = #{outAccountNo}
+		,account_no = #{accountNo}
 		,open_bank_name = #{openBankName}
+		,account_name = #{accountName}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
