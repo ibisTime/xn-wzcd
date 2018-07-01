@@ -42,6 +42,9 @@ public class XN632142Req {
     // 月费率
     private String guarantMonthFeeRate;
 
+    // 担保人现住址
+    private String guarantorNowAddress;
+
     // 担保人家庭电话
     private String guarantorFamilyPhone;
 
@@ -82,6 +85,14 @@ public class XN632142Req {
 
     public void setPostcode(String postcode) {
         this.postcode = postcode;
+    }
+
+    public String getGuarantorNowAddress() {
+        return guarantorNowAddress;
+    }
+
+    public void setGuarantorNowAddress(String guarantorNowAddress) {
+        this.guarantorNowAddress = guarantorNowAddress;
     }
 
     public String getFamilyPhone() {

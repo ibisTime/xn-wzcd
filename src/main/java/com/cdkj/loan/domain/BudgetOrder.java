@@ -545,6 +545,9 @@ public class BudgetOrder extends ABaseDO {
     // 担保人手机
     private String guarantorMobile;
 
+    // 担保人现住址
+    private String guarantorNowAddress;
+
     // 担保人家庭电话
     private String guarantorFamilyPhone;
 
@@ -1897,6 +1900,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setIdNo(String idNo) {
         this.idNo = idNo;
+    }
+
+    public String getGuarantorNowAddress() {
+        return guarantorNowAddress;
+    }
+
+    public void setGuarantorNowAddress(String guarantorNowAddress) {
+        this.guarantorNowAddress = guarantorNowAddress;
     }
 
     public String getHouseCustomerPic() {

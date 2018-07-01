@@ -107,7 +107,8 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     public void refreshCurNodeCode(BudgetOrder budgetOrder);
 
     // 更改预算单的业务编号
-    public void updateRepayBizCode(String code, String code2);
+    public void updateRepayBizCode(String code, String repayBizCode,
+            String userId);
 
     // 申请发票不匹配（发票不匹配界面的申请 发送）
     public void applyInvoiceMismatch(BudgetOrder budgetOrder);

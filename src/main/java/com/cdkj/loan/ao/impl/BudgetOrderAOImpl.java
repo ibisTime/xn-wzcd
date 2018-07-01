@@ -1067,7 +1067,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             userId, bankcardCode, req.getOperator());
 
         budgetOrderBO.updateRepayBizCode(budgetOrder.getCode(),
-            repayBiz.getCode());
+            repayBiz.getCode(), userId);
 
         // 自动生成还款计划
         repayPlanBO.genereateNewRepayPlan(repayBiz);
@@ -2055,6 +2055,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .setGuarantContractDeadline(req.getGuarantContractDeadline());
         budgetOrder.setGuarantMonthFeeRate(
             StringValidater.toDouble(req.getGuarantMonthFeeRate()));
+        budgetOrder.setGuarantorNowAddress(req.getGuarantorNowAddress());
         budgetOrder.setGuarantorFamilyPhone(req.getGuarantorFamilyPhone());
         budgetOrder.setGuarantorCompanyName(req.getGuarantorCompanyName());
         budgetOrder.setGuarantorCompanyPhone(req.getGuarantorFamilyPhone());
