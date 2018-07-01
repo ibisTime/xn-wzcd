@@ -13,10 +13,12 @@ import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Judge;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN630560Req;
 import com.cdkj.loan.dto.req.XN630561Req;
 import com.cdkj.loan.dto.req.XN630562Req;
@@ -53,6 +55,9 @@ public class JudgeAOImpl implements IJudgeAO {
 
     @Autowired
     private INodeFlowBO nodeFlowBO;
+
+    @Autowired
+    private IUserBO userBO;
 
     @Override
     @Transactional
@@ -143,6 +148,9 @@ public class JudgeAOImpl implements IJudgeAO {
             repayPlanBO.refreshRepayPlanTakeCarHandle(req.getCode(),
                 ERepayPlanNode.BAD_DEBT);
             repayBizBO.refreshJudgeBad(req.getCode());
+
+            User user = userBO.getUser(repayBiz.getUserId());
+            userBO.refreshBlackSign(user, req.getOperator());
 
             // 日志记录
             sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REPAY_BIZ,

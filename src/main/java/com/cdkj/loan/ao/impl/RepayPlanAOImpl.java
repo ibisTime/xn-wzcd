@@ -108,7 +108,6 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             repayPlan.setRealName(user.getRealName());
             repayPlan.setRepayBiz(repayBizAO.getRepayBiz(repayPlan
                 .getRepayBizCode()));
-
         }
 
         // RepayPlan repayPlan = repayPlanBO.getRepayPlan(condition.getCode());
