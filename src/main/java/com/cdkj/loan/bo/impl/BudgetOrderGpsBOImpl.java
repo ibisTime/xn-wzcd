@@ -36,7 +36,8 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
     }
 
     @Override
-    public void saveBudgetOrderGpsList(String budgetOrder, List<String> gpsList) {
+    public void saveBudgetOrderGpsList(String budgetOrder, List<String> gpsList,
+            String gpsLocation) {
         if (CollectionUtils.isNotEmpty(gpsList)) {
             for (String gpsCode : gpsList) {
                 BudgetOrderGps data = new BudgetOrderGps();
@@ -44,6 +45,7 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
                 data.setCode(gps.getCode());
                 data.setGpsDevNo(gps.getGpsDevNo());
                 data.setGpsType(gps.getGpsType());
+                data.setAzLocation(gpsLocation);
                 data.setStatus(EBudgetOrderGpsStatus.USE_ING.getCode());
                 data.setBudgetOrder(budgetOrder);
                 saveBudgetOrderGps(data);
@@ -72,7 +74,8 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
     public void removeBudgetOrderGpsList(String budgetOrderCode) {
         BudgetOrderGps condition = new BudgetOrderGps();
         condition.setBudgetOrder(budgetOrderCode);
-        List<BudgetOrderGps> queryBudgetOrderGpsList = queryBudgetOrderGpsList(condition);
+        List<BudgetOrderGps> queryBudgetOrderGpsList = queryBudgetOrderGpsList(
+            condition);
         for (BudgetOrderGps budgetOrderGps : queryBudgetOrderGpsList) {
             budgetOrderGpsDAO.delete(budgetOrderGps);
             // 更新gps使用状态为未使用
@@ -95,7 +98,8 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
     }
 
     @Override
-    public List<BudgetOrderGps> queryBudgetOrderGpsList(BudgetOrderGps condition) {
+    public List<BudgetOrderGps> queryBudgetOrderGpsList(
+            BudgetOrderGps condition) {
         return budgetOrderGpsDAO.selectList(condition);
     }
 

@@ -293,9 +293,6 @@ public class BudgetOrder extends ABaseDO {
     // GPS收费方式
     private String gpsFeeWay;
 
-    // GPS安装位置
-    private String gpsLocation;
-
     // 履约保证金
     private Long lyAmount;
 
@@ -1624,14 +1621,6 @@ public class BudgetOrder extends ABaseDO {
 
     public void setGpsFee(Long gpsFee) {
         this.gpsFee = gpsFee;
-    }
-
-    public String getGpsLocation() {
-        return gpsLocation;
-    }
-
-    public void setGpsLocation(String gpsLocation) {
-        this.gpsLocation = gpsLocation;
     }
 
     public String getPledgePrintUser() {

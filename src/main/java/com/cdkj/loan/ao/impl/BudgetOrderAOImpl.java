@@ -318,7 +318,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         data.setGpsFee(StringValidater.toLong(xn632291Res.getGpsFee()));
         data.setGpsFeeWay(req.getGpsFeeWay());
-        data.setGpsLocation(req.getGpsLocation());
 
         data.setLyAmount(StringValidater.toLong(xn632291Res.getLyAmount()));
         data.setFxAmount(StringValidater.toLong(xn632291Res.getFxAmount()));
@@ -469,7 +468,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderGpsBO.removeBudgetOrderGpsList(data.getCode());
         // 添加
         budgetOrderGpsBO.saveBudgetOrderGpsList(data.getCode(),
-            req.getGpsList());
+            req.getGpsList(), req.getGpsLocation());
 
         budgetOrderBO.refresh(data);
     }
