@@ -46,7 +46,7 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
                 data.setCode(gps.getCode());
                 data.setGpsDevNo(gps.getGpsDevNo());
                 data.setGpsType(gps.getGpsType());
-                data.setAzLocation(gpsAz.getGpsLocation());
+                data.setAzLocation(gpsAz.getAzLocation());
                 data.setStatus(EBudgetOrderGpsStatus.USE_ING.getCode());
                 data.setBudgetOrder(budgetOrder);
                 saveBudgetOrderGps(data);

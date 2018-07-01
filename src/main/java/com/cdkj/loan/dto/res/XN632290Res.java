@@ -15,7 +15,7 @@ public class XN632290Res {
     private String useMoneyPurpose;
 
     // 返点金额(返点金额或应退按揭款)
-    private Long repointAmount;
+    private String repointAmount;
 
     // 账号编号（公司或车行的收款账号编号）
     private String accountCode;
@@ -45,11 +45,11 @@ public class XN632290Res {
         this.useMoneyPurpose = useMoneyPurpose;
     }
 
-    public Long getRepointAmount() {
+    public String getRepointAmount() {
         return repointAmount;
     }
 
-    public void setRepointAmount(Long repointAmount) {
+    public void setRepointAmount(String repointAmount) {
         this.repointAmount = repointAmount;
     }
 

@@ -545,6 +545,9 @@ public class BudgetOrder extends ABaseDO {
     // 担保人手机
     private String guarantorMobile;
 
+    // 担保人现住址
+    private String guarantorNowAddress;
+
     // 担保人家庭电话
     private String guarantorFamilyPhone;
 
@@ -723,6 +726,8 @@ public class BudgetOrder extends ABaseDO {
 
     private String roleCode;// 角色编号
 
+    private Credit credit;// 征信单
+
     private Date applyDatetimeStart;// 申请时间起始
 
     private Date applyDatetimeEnd;// 申请时间结束
@@ -764,6 +769,26 @@ public class BudgetOrder extends ABaseDO {
     private List<RepointDetail> repointDetailList3; // 返点，3协议外返点
 
     private String companyLoanCsSection;// 我司贷款成数区间
+
+    private String guarantor1Sex; // 担保人1性别
+
+    private String guarantor2Sex;// 担保人2性别
+
+    public String getGuarantor1Sex() {
+        return guarantor1Sex;
+    }
+
+    public void setGuarantor1Sex(String guarantor1Sex) {
+        this.guarantor1Sex = guarantor1Sex;
+    }
+
+    public String getGuarantor2Sex() {
+        return guarantor2Sex;
+    }
+
+    public void setGuarantor2Sex(String guarantor2Sex) {
+        this.guarantor2Sex = guarantor2Sex;
+    }
 
     public String getCompanyLoanCsSection() {
         return companyLoanCsSection;
@@ -1877,6 +1902,14 @@ public class BudgetOrder extends ABaseDO {
         this.idNo = idNo;
     }
 
+    public String getGuarantorNowAddress() {
+        return guarantorNowAddress;
+    }
+
+    public void setGuarantorNowAddress(String guarantorNowAddress) {
+        this.guarantorNowAddress = guarantorNowAddress;
+    }
+
     public String getHouseCustomerPic() {
         return houseCustomerPic;
     }
@@ -2211,6 +2244,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setOtherApplyNote(String otherApplyNote) {
         this.otherApplyNote = otherApplyNote;
+    }
+
+    public Credit getCredit() {
+        return credit;
+    }
+
+    public void setCredit(Credit credit) {
+        this.credit = credit;
     }
 
     public Date getApplyDatetime() {

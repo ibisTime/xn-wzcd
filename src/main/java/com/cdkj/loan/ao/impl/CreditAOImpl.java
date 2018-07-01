@@ -331,6 +331,7 @@ public class CreditAOImpl implements ICreditAO {
                     "征信人员信息中缺少申请本人信息，请打回");
             }
 
+            // 申请人信息
             data.setCustomerName(customerUser.getUserName());
             data.setApplyUserGhrRelation(customerUser.getRelation());
             data.setIdKind(EIDKind.IDCard.getCode());
@@ -344,6 +345,7 @@ public class CreditAOImpl implements ICreditAO {
             data.setLoanBankCode(credit.getLoanBankCode());
             data.setApplyBirthAddress(customerUser.getBirthAddress());
 
+            // 共还人信息
             CreditUser ghUser = creditUserBO
                 .getCreditUserByCreditCode(credit.getCode(), ELoanRole.GHR);
             if (ghUser != null) {
@@ -359,6 +361,29 @@ public class CreditAOImpl implements ICreditAO {
                 data.setGhJourShowIncome(ghUser.getJourShowIncome());
                 data.setGhIsPrint(ghUser.getIsPrint());
                 data.setGhBirthAddress(ghUser.getBirthAddress());
+            }
+
+            // 担保人信息
+            List<CreditUser> dbUserList = creditUserBO
+                .getCreditUserListByCreditCode(credit.getCode(),
+                    ELoanRole.GUARANTOR);
+            if (dbUserList != null) {
+                CreditUser dbUser1 = dbUserList.get(0);
+                data.setGuarantor1IdNo(dbUser1.getIdNo());
+                data.setGuarantor1MonthIncome(dbUser1.getMonthIncome());
+                data.setGuarantor1SettleInterest(dbUser1.getSettleInterest());
+                data.setGuarantor1Balance(dbUser1.getBalance());
+                data.setGuarantor1JourShowIncome(dbUser1.getJourShowIncome());
+                data.setGuarantor1IsPrint(dbUser1.getIsPrint());
+                data.setGuarantorName(dbUser1.getUserName());
+                data.setGuarantorMobile(dbUser1.getMobile());
+                CreditUser dbUser2 = dbUserList.get(1);
+                data.setGuarantor2IdNo(dbUser2.getIdNo());
+                data.setGuarantor2MonthIncome(dbUser2.getMonthIncome());
+                data.setGuarantor2SettleInterest(dbUser2.getSettleInterest());
+                data.setGuarantor2Balance(dbUser2.getBalance());
+                data.setGuarantor2JourShowIncome(dbUser2.getJourShowIncome());
+                data.setGuarantor2IsPrint(dbUser2.getIsPrint());
             }
 
             data.setCompanyCode(credit.getCompanyCode());

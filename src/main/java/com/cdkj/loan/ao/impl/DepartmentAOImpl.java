@@ -45,6 +45,7 @@ public class DepartmentAOImpl implements IDepartmentAO {
         data.setParentCode(req.getParentCode());
         data.setType(req.getType());
 
+        data.setProvinceNo(req.getProvinceNo());
         data.setStatus(EDepartmentStatus.AVAILABLE.getCode());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());

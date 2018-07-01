@@ -173,7 +173,7 @@
 		
 		,mobile
 		,id_no
-		,birth_Address
+		,birth_address
 		,id_no_front
 		,id_no_reverse
 		,auth_pdf
