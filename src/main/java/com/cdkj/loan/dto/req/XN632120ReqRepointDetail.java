@@ -11,6 +11,9 @@ public class XN632120ReqRepointDetail {
     // 汽车经销商编号
     private String carDealerCode;
 
+    // 汽车经销商名称（外单）
+    private String outCarDealerName;
+
     // 业务公司编号
     private String companyCode;
 
@@ -25,6 +28,9 @@ public class XN632120ReqRepointDetail {
 
     // 收款账号（用于客户不垫资，手动输入的应退按揭款的收款账号 ）
     private String mortgageAccountNo;
+
+    // 收款账号（用于外单手动填写的汽车经销商收款账号 ）
+    private String outAccountNo;
 
     public String getProtocolId() {
         return protocolId;
@@ -88,6 +94,22 @@ public class XN632120ReqRepointDetail {
 
     public void setMortgageAccountNo(String mortgageAccountNo) {
         this.mortgageAccountNo = mortgageAccountNo;
+    }
+
+    public String getOutCarDealerName() {
+        return outCarDealerName;
+    }
+
+    public void setOutCarDealerName(String outCarDealerName) {
+        this.outCarDealerName = outCarDealerName;
+    }
+
+    public String getOutAccountNo() {
+        return outAccountNo;
+    }
+
+    public void setOutAccountNo(String outAccountNo) {
+        this.outAccountNo = outAccountNo;
     }
 
 }

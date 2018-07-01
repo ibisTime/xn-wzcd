@@ -93,6 +93,7 @@ import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetFrozenStatus;
 import com.cdkj.loan.enums.EBudgetOrderFeeWay;
 import com.cdkj.loan.enums.EBudgetOrderNode;
+import com.cdkj.loan.enums.EBudgetType;
 import com.cdkj.loan.enums.EButtonCode;
 import com.cdkj.loan.enums.ECollectBankcardType;
 import com.cdkj.loan.enums.ECurrency;
@@ -207,6 +208,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     .equals(data.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前预算单节点不能修改");
+        }
+
+        if (EBudgetType.OUT.getCode().equals(req.getType())) {
+            editForeignBudgetOrder(data, req);
+            return;
         }
 
         data.setApplyUserCompany(req.getApplyUserCompany());
@@ -2062,6 +2068,231 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             nextNodeCode, EBoolean.YES.getCode(), req.getOperator());
 
         return budgetOrder;
+    }
+
+    private void editForeignBudgetOrder(BudgetOrder data, XN632120Req req) {
+
+        data.setApplyUserCompany(req.getApplyUserCompany());
+        data.setApplyUserDuty(req.getApplyUserDuty());
+        data.setCustomerType(req.getCustomerType());
+        data.setOutCarDealerName(req.getCarDealerCode());
+        data.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
+
+        data.setCarModel(req.getCarModel());
+        data.setFrameNo(req.getFrameNo());
+        data.setLoanPeriods(StringValidater.toInteger(req.getLoanPeriods()));
+        data.setInvoicePrice(StringValidater.toLong(req.getInvoicePrice()));
+        data.setRateType(req.getRateType());
+        data.setIsSurvey(req.getIsSurvey());
+
+        data.setBankRate(StringValidater.toDouble(req.getBankRate()));
+        Long loanAmount = data.getLoanAmount();
+        Long invoicePrice = StringValidater.toLong(req.getInvoicePrice());
+        data.setCompanyLoanCs(AmountUtil.div(loanAmount, invoicePrice));// 我司贷款成数
+
+        data.setIsAdvanceFund(req.getIsAdvanceFund());
+        Long fee = StringValidater.toLong(req.getFee());
+        data.setFee(fee);
+        double feeRate = AmountUtil.div(fee, loanAmount);
+        data.setGlobalRate(feeRate
+                + StringValidater.toDouble(req.getBankRate()));// 综合利率
+        data.setCarDealerSubsidy(StringValidater.toLong(req
+            .getCarDealerSubsidy()));
+
+        Long totalAmount = loanAmount + fee;// 总费用 贷款总额
+        data.setBankLoanCs(AmountUtil.div(totalAmount, invoicePrice));// 银行贷款成数
+        data.setApplyUserMonthIncome(StringValidater.toLong(req
+            .getApplyUserMonthIncome()));
+        data.setApplyUserSettleInterest(StringValidater.toLong(req
+            .getApplyUserSettleInterest()));
+        data.setApplyUserBalance(StringValidater.toLong(req
+            .getApplyUserBalance()));
+        data.setApplyUserJourShowIncome(req.getApplyUserJourShowIncome());
+
+        data.setApplyUserIsPrint(req.getApplyUserIsPrint());
+        data.setGhMonthIncome(StringValidater.toLong(req.getGhMonthIncome()));
+        data.setGhSettleInterest(StringValidater.toLong(req
+            .getGhSettleInterest()));
+        data.setGhBalance(StringValidater.toLong(req.getGhBalance()));
+        data.setGhJourShowIncome(req.getGhJourShowIncome());
+
+        data.setGhIsPrint(req.getGhIsPrint());
+        data.setGuarantor1MonthIncome(StringValidater.toLong(req
+            .getGuarantor1MonthIncome()));
+        data.setGuarantor1SettleInterest(StringValidater.toLong(req
+            .getGuarantor1SettleInterest()));
+        data.setGuarantor1Balance(StringValidater.toLong(req
+            .getGuarantor1Balance()));
+        data.setGuarantor1JourShowIncome(req.getGuarantor1JourShowIncome());
+
+        data.setGuarantor1IsPrint(req.getGuarantor1IsPrint());
+        data.setGuarantor2MonthIncome(StringValidater.toLong(req
+            .getGuarantor2MonthIncome()));
+        data.setGuarantor2SettleInterest(StringValidater.toLong(req
+            .getGuarantor2SettleInterest()));
+        data.setGuarantor2Balance(StringValidater.toLong(req
+            .getGuarantor2Balance()));
+        data.setGuarantor2JourShowIncome(req.getGuarantor2JourShowIncome());
+
+        data.setGuarantor2IsPrint(req.getGuarantor2IsPrint());
+        data.setIsHouseProperty(req.getIsHouseProperty());
+        data.setHouseProperty(req.getHouseProperty());
+        data.setIsHouseContract(req.getIsHouseContract());
+        data.setHouseInvoice(req.getHouseInvoice());
+
+        data.setIsLicense(req.getIsLicense());
+        data.setLicense(req.getLicense());
+        data.setIsSiteProve(req.getIsSiteProve());
+        data.setSiteProve(req.getSiteProve());
+        data.setSiteArea(req.getSiteArea());
+
+        data.setCarType(req.getCarType());
+        data.setIsDriceLicense(req.getIsDriceLicense());
+        data.setDriceLicense(req.getDriceLicense());
+        data.setOtherPropertyNote(req.getOtherPropertyNote());
+        data.setApplyBirthAddress(req.getApplyBirthAddress());
+
+        data.setApplyNowAddress(req.getApplyNowAddress());
+        data.setHouseType(req.getHouseType());
+        data.setGhBirthAddress(req.getGhBirthAddress());
+        data.setGuarantor1BirthAddress(req.getGuarantor1BirthAddress());
+        data.setGuarantor2BirthAddress(req.getGuarantor2BirthAddress());
+
+        data.setOtherNote(req.getOtherNote());
+        SYSConfig sysConfigoil = sysConfigBO
+            .getSYSConfig(SysConstants.BUDGET_OIL_SUBSIDY_RATE);
+        Double OilSubsidyBFB = StringValidater.toDouble(sysConfigoil
+            .getCvalue());
+        Long OilSubsidy = AmountUtil.mul(data.getLoanAmount(), OilSubsidyBFB);
+        data.setOilSubsidy(OilSubsidy);// 油补
+        data.setOilSubsidyKil(StringValidater.toDouble(req.getOilSubsidyKil()));
+        data.setIsPlatInsure(req.getIsPlatInsure());
+        SYSConfig sysConfig = sysConfigBO
+            .getSYSConfig(SysConstants.BUDGET_GPS_DEDUCT_RATE);
+        Double gpsBFB = StringValidater.toDouble((sysConfig.getCvalue()));
+        Long gpsDeduct = AmountUtil.mul(data.getLoanAmount(), gpsBFB);
+        data.setGpsDeduct(gpsDeduct);// GPS提成
+
+        // 外单手动填写手续费
+        data.setGpsFee(req.getGpsFee());
+        data.setGpsFeeWay(req.getGpsFeeWay());
+        data.setGpsLocation(req.getGpsLocation());
+
+        data.setLyAmount(req.getLyAmount());
+        data.setFxAmount(req.getFxAmount());
+        data.setOtherFee(req.getOtherFee());
+        data.setServiceChargeWay(req.getServiceChargeWay());
+
+        Long serviceCharge = data.getLyAmount() + data.getFxAmount()
+                + data.getGpsFee() + data.getOtherFee();
+        // 收客户手续费合计：履约保证金+担保风险金+GPS收费+杂费
+        data.setServiceCharge(serviceCharge);
+
+        data.setMarryDivorce(req.getMarryDivorce());
+
+        data.setApplyUserHkb(req.getApplyUserHkb());
+        data.setBankBillPdf(req.getBankBillPdf());
+        data.setSingleProvePdf(req.getSingleProvePdf());
+        data.setIncomeProvePdf(req.getIncomeProvePdf());
+        data.setLiveProvePdf(req.getLiveProvePdf());
+
+        data.setBuildProvePdf(req.getBuildProvePdf());
+        data.setHkbFirstPage(req.getHkbFirstPage());
+        data.setHkbMainPage(req.getHkbMainPage());
+        data.setGhHkb(req.getGhHkb());
+        data.setGuarantor1IdNo(req.getGuarantor1IdNo());
+
+        data.setGuarantor1Hkb(req.getGuarantor1Hkb());
+        data.setGuarantor2IdNo(req.getGuarantor2IdNo());
+        data.setGuarantor2Hkb(req.getGuarantor2Hkb());
+        data.setHousePic(req.getHousePic());
+        data.setHouseUnitPic(req.getHouseUnitPic());
+
+        data.setHouseDoorPic(req.getHouseDoorPic());
+        data.setHouseRoomPic(req.getHouseRoomPic());
+        data.setHouseCustomerPic(req.getHouseCustomerPic());
+        data.setHouseSaleCustomerPic(req.getHouseSaleCustomerPic());
+        data.setCompanyNamePic(req.getCompanyNamePic());
+
+        data.setCompanyPlacePic(req.getCompanyPlacePic());
+        data.setCompanyWorkshopPic(req.getCompanyWorkshopPic());
+        data.setCompanySaleCustomerPic(req.getCompanySaleCustomerPic());
+        data.setSecondHgz(req.getSecondHgz());
+        data.setSecondOdometer(req.getSecondOdometer());
+        data.setSecondCarFrontPic(req.getSecondCarFrontPic());
+        data.setSecondConsolePic(req.getSecondConsolePic());
+        data.setSecond300Pdf(req.getSecond300Pdf());
+        data.setSecondQxbPic(req.getSecondQxbPic());
+        data.setSecondCarInPic(req.getSecondCarInPic());
+        data.setSecondNumber(req.getSecondNumber());
+
+        data.setOtherFilePdf(req.getOtherFilePdf());
+        data.setOtherApplyNote(req.getOtherApplyNote());
+        data.setApplyDatetime(new Date());
+
+        String preNodeCode = data.getCurNodeCode();
+        if (EButtonCode.SEND.getCode().equals(req.getDealType())) {
+            EBudgetOrderNode node = EBudgetOrderNode.getMap().get(
+                nodeFlowBO.getNodeFlowByCurrentNode(data.getCurNodeCode())
+                    .getNextNode());
+            data.setCurNodeCode(node.getCode());
+
+            // 日志记录
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
+                EBizLogType.BUDGET_ORDER, data.getCode(), preNodeCode,
+                node.getCode(), node.getValue(), req.getOperator());
+        }
+
+        // 生成返点明细数据(用款用途)
+        List<XN632120ReqRepointDetail> list = req.getRepointDetailList();
+        for (XN632120ReqRepointDetail req1 : list) {
+            RepointDetail data1 = new RepointDetail();
+
+            if (EUseMoneyPurpose.MORTGAGE.getCode().equals(// 应退按揭款 垫资
+                req1.getUseMoneyPurpose())
+                    && EIsAdvanceFund.YES.getCode().equals(
+                        data.getIsAdvanceFund())) {
+                data1.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE.getCode());
+            } else if (EUseMoneyPurpose.MORTGAGE.getCode().equals(
+                req1.getUseMoneyPurpose())
+                    && EIsAdvanceFund.NO.getCode().equals(
+                        data.getIsAdvanceFund())) {// 应退按揭款 不垫资
+                data1.setMortgageAccountNo(req1.getMortgageAccountNo());
+                data1.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE.getCode());
+            } else if (EUseMoneyPurpose.PROTOCOL_OUTER.getCode().equals(
+                req1.getUseMoneyPurpose())) {// 手动填写返点（协议外）
+                data1.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_OUTER
+                    .getCode());
+            }
+            data1.setBudgetCode(data.getCode());
+            data1.setUserName(data.getCustomerName());
+            CreditUser user = creditUserBO.getCreditUserByCreditCode(
+                data.getCreditCode(), ELoanRole.APPLY_USER);
+            data1.setIdNo(user.getIdNo());
+            data1.setOutCarDealerName(req1.getOutCarDealerName());
+            data1.setCompanyCode(data.getCompanyCode());
+            data1.setCarType(data.getCarType());
+            data1.setLoanAmount(data.getLoanAmount());
+            data1.setBankRate(data.getBankRate());
+
+            data1.setFee(fee);
+            data1.setRepointAmount(StringValidater.toLong(req1
+                .getRepointAmount()));
+            data1.setOutAccountNo(req1.getOutAccountNo());
+            data1.setCurNodeCode(ERepointDetailStatus.TODO_MAKE_BILL.getCode());
+            data1.setType(ERepointDetailType.NORMAL.getCode());
+
+            repointDetailBO.saveRepointDetail(data1);
+        }
+
+        // 删除
+        budgetOrderGpsBO.removeBudgetOrderGpsList(data.getCode());
+        // 添加
+        budgetOrderGpsBO.saveBudgetOrderGpsList(data.getCode(),
+            req.getGpsList());
+
+        budgetOrderBO.refresh(data);
+
     }
 
 }

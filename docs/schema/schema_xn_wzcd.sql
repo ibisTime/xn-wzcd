@@ -634,6 +634,7 @@ CREATE TABLE `tdq_budget_order` (
   `customer_type` varchar(4) DEFAULT NULL COMMENT '客户类型',
   `customer_name` varchar(32) DEFAULT NULL COMMENT '客户姓名',
   `car_dealer_code` varchar(32) DEFAULT NULL COMMENT '汽车经销商编号',
+  `out_car_dealer_name` VARCHAR(255) DEFAULT NULL COMMENT '汽车经销商名称（外单）'
   `loan_bank_code` varchar(32) DEFAULT NULL COMMENT '贷款银行编号',
   
   `loan_bank_subbranch` tinytext COMMENT '贷款银行经办支行',
@@ -868,6 +869,7 @@ CREATE TABLE `tdq_budget_order` (
   `insurance_force_pdf` text COMMENT '交强险保单',
   `insurance_business_pdf` text COMMENT '商业险保单',
   `insurance_note` varchar(255) DEFAULT NULL COMMENT '续保说明',
+  `type` VARCHAR(4) DEFAULT NULL COMMENT '预算单类型 (1正常单2外单)'
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1106,6 +1108,7 @@ CREATE TABLE `tdqt_repoint_detail` (
   `user_name` varchar(255) DEFAULT NULL COMMENT '客户姓名',
   `id_no` varchar(255) DEFAULT NULL COMMENT '身份证号',
   `car_dealer_code` varchar(255) DEFAULT NULL COMMENT '汽车经销商编号',
+  `out_car_dealer_name` varchar(255) DEFAULT NULL COMMENT '汽车经销商名称（外单）',
   `company_code` varchar(45) DEFAULT NULL COMMENT '业务公司编号',
   `car_type` varchar(32) DEFAULT NULL COMMENT '车辆型号',
   `loan_amount` bigint(20) DEFAULT NULL COMMENT '贷款金额',
@@ -1116,6 +1119,8 @@ CREATE TABLE `tdqt_repoint_detail` (
   `repoint_amount` bigint(20) DEFAULT NULL COMMENT '返点金额（退按揭款金额）',
   `account_code` varchar(32) DEFAULT NULL COMMENT '账号编号（公司或车行的收款账号编号）',
   `mortgage_account_no` varchar(45) DEFAULT NULL COMMENT '收款账号（用于客户不垫资，手动输入的应退按揭款的收款账号 ）',
+  `out_account_no` varchar(45) DEFAULT NULL COMMENT '收款账号（外单手动填写汽车经销商收款账号 ）',
+  `open_bank_name` varchar(45) DEFAULT NULL COMMENT '开户行名称',
   `cur_node_code` varchar(32) DEFAULT NULL COMMENT '节点(0待制单1已制单待打款2已打款)',
   `type` VARCHAR(4) DEFAULT NULL COMMENT '类型（1正常数据2发票不匹配产生的新数据）',
   PRIMARY KEY (`code`) COMMENT '返点明细表'
