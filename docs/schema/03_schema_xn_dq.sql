@@ -378,6 +378,7 @@ CREATE TABLE `tdq_credit_user` (
   `relation` varchar(255) DEFAULT NULL COMMENT '与借款人关系',
   `mobile` varchar(11) DEFAULT NULL COMMENT '手机号',
   `id_no` varchar(18) DEFAULT NULL COMMENT '身份证号',
+  `birth_address` varchar(255) DEFAULT NULL COMMENT '户籍地',
   `dkdy_count` int(11) DEFAULT NULL COMMENT '贷款抵押笔数',
   `dkdy_amount` bigint(20) DEFAULT NULL COMMENT '贷款抵押贷款余额',
   `dkdy_2year_over_times` int(11) DEFAULT NULL COMMENT '贷款抵押近两年逾期次数',
