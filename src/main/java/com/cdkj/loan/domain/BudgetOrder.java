@@ -767,6 +767,26 @@ public class BudgetOrder extends ABaseDO {
 
     private String companyLoanCsSection;// 我司贷款成数区间
 
+    private String guarantor1Sex; // 担保人1性别
+
+    private String guarantor2Sex;// 担保人2性别
+
+    public String getGuarantor1Sex() {
+        return guarantor1Sex;
+    }
+
+    public void setGuarantor1Sex(String guarantor1Sex) {
+        this.guarantor1Sex = guarantor1Sex;
+    }
+
+    public String getGuarantor2Sex() {
+        return guarantor2Sex;
+    }
+
+    public void setGuarantor2Sex(String guarantor2Sex) {
+        this.guarantor2Sex = guarantor2Sex;
+    }
+
     public String getCompanyLoanCsSection() {
         return companyLoanCsSection;
     }
