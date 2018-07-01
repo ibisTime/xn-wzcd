@@ -24,6 +24,7 @@
 		<result column="total_green_count" property="totalGreenCount" />
 		<result column="total_yellow_count" property="totalYellowCount" />
 		<result column="total_red_count" property="totalRedCount" />
+		<result column="total_black_count" property="totalBlackCount" />
 		
 		<result column="create_datetime" property="createDatetime" />
 		<result column="remark" property="remark" />
@@ -124,6 +125,7 @@
 		,total_green_count
 		,total_yellow_count
 		,total_red_count
+		,total_black_count
 		,create_datetime
 		,remark
 		FROM
@@ -164,6 +166,7 @@
 		,total_green_count
 		,total_yellow_count
 		,total_red_count
+		,total_black_count
 		,create_datetime
 		,remark
 		)
@@ -189,6 +192,7 @@
 		,#{totalGreenCount}
 		,#{totalYellowCount}
 		,#{totalRedCount}
+		,#{totalBlackCount}
 		,#{createDatetime}
 		,#{remark}
 		)
@@ -277,6 +281,18 @@
 		sign = #{sign}
 		,sign = #{signDatetime}
 		,total_red_count = #{totalRedCount}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE
+		user_id = #{userId}	
+	</update>
+	
+	<update id="update_black_sign" parameterType="user">
+		UPDATE tstd_user
+		SET
+		sign = #{sign}
+		,sign = #{signDatetime}
+		,total_black_count = #{totalBlackCount}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE

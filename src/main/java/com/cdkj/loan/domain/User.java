@@ -74,6 +74,9 @@ public class User extends ABaseDO {
     // 红名单累计逾期次数
     private int totalRedCount;
 
+    // 黑名单累计逾期次数
+    private int totalBlackCount;
+
     // 注册时间
     private Date createDatetime;
 
@@ -114,6 +117,14 @@ public class User extends ABaseDO {
 
     // 是否设置交易密码
     private boolean tradepwdFlag;
+
+    public int getTotalBlackCount() {
+        return totalBlackCount;
+    }
+
+    public void setTotalBlackCount(int totalBlackCount) {
+        this.totalBlackCount = totalBlackCount;
+    }
 
     public Date getSignDatetime() {
         return signDatetime;

@@ -89,6 +89,11 @@ public class UserDAOImpl extends AMybatisTemplate implements IUserDAO {
     @Override
     public int updateRedSign(User data) {
         return super.update(NAMESPACE.concat("update_red_sign"), data);
-
     }
+
+    @Override
+    public int updateBlackSign(User data) {
+        return super.update(NAMESPACE.concat("update_black_sign"), data);
+    }
+
 }

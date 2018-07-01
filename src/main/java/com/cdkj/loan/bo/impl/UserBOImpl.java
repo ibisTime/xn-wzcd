@@ -146,7 +146,7 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         if (data != null) {
             data.setSign(EUserSign.YELLOW.getCode());
             data.setSignDatetime(new Date());
-            data.setTotalGreenCount(data.getTotalYellowCount() + 1);
+            data.setTotalYellowCount(data.getTotalYellowCount() + 1);
             data.setUpdater(updater);
             data.setUpdateDatetime(new Date());
             userDAO.updateYellowSign(data);
@@ -158,10 +158,22 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
         if (data != null) {
             data.setSign(EUserSign.RED.getCode());
             data.setSignDatetime(new Date());
-            data.setTotalGreenCount(data.getTotalRedCount() + 1);
+            data.setTotalRedCount(data.getTotalRedCount() + 1);
             data.setUpdater(updater);
             data.setUpdateDatetime(new Date());
             userDAO.updateRedSign(data);
+        }
+    }
+
+    @Override
+    public void refreshBlackSign(User data, String updater) {
+        if (data != null) {
+            data.setSign(EUserSign.BLACK.getCode());
+            data.setSignDatetime(new Date());
+            data.setTotalBlackCount(data.getTotalBlackCount() + 1);
+            data.setUpdater(updater);
+            data.setUpdateDatetime(new Date());
+            userDAO.updateBlackSign(data);
         }
     }
 

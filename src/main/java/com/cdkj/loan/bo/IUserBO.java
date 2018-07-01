@@ -50,6 +50,9 @@ public interface IUserBO extends IPaginableBO<User> {
     // 更新红名单标示
     public void refreshRedSign(User user, String updater);
 
+    // 更新黑名单标示
+    public void refreshBlackSign(User user, String updater);
+
     // 验证支付密码:拿tradePwd进行MD5后与数据库中userId得数据库支付密码比对
     public void checkTradePwd(String userId, String tradePwd);
 
