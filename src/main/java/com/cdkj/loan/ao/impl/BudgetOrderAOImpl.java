@@ -474,7 +474,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderGpsBO.removeBudgetOrderGpsList(data.getCode());
         // 添加
         budgetOrderGpsBO.saveBudgetOrderGpsList(data.getCode(),
-            req.getGpsList(), req.getGpsLocation());
+            req.getGpsList());
 
         budgetOrderBO.refresh(data);
     }
@@ -2287,7 +2287,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderGpsBO.removeBudgetOrderGpsList(data.getCode());
         // 添加
         budgetOrderGpsBO.saveBudgetOrderGpsList(data.getCode(),
-            req.getGpsList(), req.getGpsLocation());
+            req.getGpsList());
 
         budgetOrderBO.refresh(data);
 

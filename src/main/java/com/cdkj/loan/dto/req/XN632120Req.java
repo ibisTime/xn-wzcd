@@ -206,9 +206,6 @@ public class XN632120Req {
     // GPS收费方式
     private String gpsFeeWay;
 
-    // GPS安装位置
-    private String gpsLocation;
-
     // 履约保证金
     private Long lyAmount;
 
@@ -327,7 +324,7 @@ public class XN632120Req {
     private String applyDatetime;
 
     // gps列表编号
-    private List<String> gpsList;
+    private List<XN632120ReqGpsAZ> gpsList;
 
     // 预算单类型（1正常单2外单）
     private String type;
@@ -415,14 +412,6 @@ public class XN632120Req {
 
     public void setDealType(String dealType) {
         this.dealType = dealType;
-    }
-
-    public List<String> getGpsList() {
-        return gpsList;
-    }
-
-    public void setGpsList(List<String> gpsList) {
-        this.gpsList = gpsList;
     }
 
     public String getCustomerType() {
@@ -705,12 +694,12 @@ public class XN632120Req {
         this.isPlatInsure = isPlatInsure;
     }
 
-    public String getGpsLocation() {
-        return gpsLocation;
+    public List<XN632120ReqGpsAZ> getGpsList() {
+        return gpsList;
     }
 
-    public void setGpsLocation(String gpsLocation) {
-        this.gpsLocation = gpsLocation;
+    public void setGpsList(List<XN632120ReqGpsAZ> gpsList) {
+        this.gpsList = gpsList;
     }
 
     public String getGpsFeeWay() {

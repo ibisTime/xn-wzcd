@@ -13,6 +13,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.IBudgetOrderGpsDAO;
 import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.Gps;
+import com.cdkj.loan.dto.req.XN632120ReqGpsAZ;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBudgetOrderGpsStatus;
 import com.cdkj.loan.exception.BizException;
@@ -36,22 +37,22 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
     }
 
     @Override
-    public void saveBudgetOrderGpsList(String budgetOrder, List<String> gpsList,
-            String gpsLocation) {
+    public void saveBudgetOrderGpsList(String budgetOrder,
+            List<XN632120ReqGpsAZ> gpsList) {
         if (CollectionUtils.isNotEmpty(gpsList)) {
-            for (String gpsCode : gpsList) {
+            for (XN632120ReqGpsAZ gpsAz : gpsList) {
                 BudgetOrderGps data = new BudgetOrderGps();
-                Gps gps = gpsBO.getGps(gpsCode);
+                Gps gps = gpsBO.getGps(gpsAz.getCode());
                 data.setCode(gps.getCode());
                 data.setGpsDevNo(gps.getGpsDevNo());
                 data.setGpsType(gps.getGpsType());
-                data.setAzLocation(gpsLocation);
+                data.setAzLocation(gpsAz.getGpsLocation());
                 data.setStatus(EBudgetOrderGpsStatus.USE_ING.getCode());
                 data.setBudgetOrder(budgetOrder);
                 saveBudgetOrderGps(data);
 
                 // 更新gps使用状态为使用中
-                gpsBO.refreshUseGps(gpsCode, budgetOrder);
+                gpsBO.refreshUseGps(gpsAz.getCode(), budgetOrder);
             }
         } else {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
