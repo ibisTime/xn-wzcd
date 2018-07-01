@@ -63,3 +63,7 @@ INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`fil
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('021','021_15','021_16',NULL,NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('021','021_16','021_17',NULL,NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('021','021_17','021_18',NULL,NULL,NULL);
+
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('aliyun','ALIYUN_HOST','http://dm-51.data.aliyun.com','admin',now(),'阿里云api请求链接编号','CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('aliyun','ALIYUN_HOST_REST_CODE','/rest/160601/ocr/ocr_idcard.json','admin',now(),'阿里云api请求链接编号','CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('aliyun','ALIYUN_APPCODE','dd77a0dede12465f9ffc5d77265a1d46','admin',now(),'阿里云appcode编号','CD-CWZCD000020','CD-CWZCD000020');
