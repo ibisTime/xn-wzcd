@@ -112,7 +112,6 @@
 		<result column="pre_gps_deduct" property="preGpsDeduct" />
 		
 		<result column="gps_fee_way" property="gpsFeeWay" />
-		<result column="gps_location" property="gpsLocation" />
 		<result column="ly_amount" property="lyAmount" />
 		<result column="pre_ly_amount" property="preLyAmount" />
 		<result column="fx_amount" property="fxAmount" />
@@ -430,7 +429,6 @@
 		,t.gps_deduct
 		,t.pre_gps_deduct
 		,t.gps_fee_way
-		,t.gps_location
 		,t.ly_amount
 		,t.pre_ly_amount
 		,t.fx_amount
@@ -688,7 +686,6 @@
 		,t.gps_deduct
 		,t.pre_gps_deduct
 		,t.gps_fee_way
-		,t.gps_location
 		,t.ly_amount
 		,t.pre_ly_amount
 		,t.fx_amount
@@ -923,7 +920,6 @@
 		,t.gps_deduct
 		,t.pre_gps_deduct
 		,t.gps_fee_way
-		,t.gps_location
 		,t.ly_amount
 		,t.pre_ly_amount
 		,t.fx_amount
@@ -1146,7 +1142,6 @@
 		,gps_fee
 		,gps_deduct
 		,gps_fee_way
-		,gps_location
 		,ly_amount
 		,fx_amount
 		,other_fee
@@ -1280,7 +1275,6 @@
 		,#{gpsFee}
 		,#{gpsDeduct}
 		,#{gpsFeeWay}
-		,#{gpsLocation}
 		,#{lyAmount}
 		,#{fxAmount}
 		,#{otherFee}
@@ -1415,7 +1409,6 @@
 		
 		,gps_deduct = #{gpsDeduct}
 		,gps_fee_way = #{gpsFeeWay}
-		,gps_location = #{gpsLocation}
 		,ly_amount = #{lyAmount}
 		,fx_amount = #{fxAmount}
 		,other_fee = #{otherFee}

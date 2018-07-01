@@ -23,6 +23,7 @@ import com.cdkj.loan.bo.IBudgetOrderGpsBO;
 import com.cdkj.loan.bo.ICarDealerBO;
 import com.cdkj.loan.bo.ICarDealerProtocolBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
+import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IGpsBO;
@@ -53,6 +54,7 @@ import com.cdkj.loan.domain.BudgetOrderGps;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.domain.CollectBankcard;
+import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.InsuranceCompany;
@@ -197,6 +199,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Autowired
     private IRepointDetailAO repointDetailAO;
 
+    @Autowired
+    private ICreditBO creditBO;
+
     @Override
     @Transactional
     public void editBudgetOrder(XN632120Req req) {
@@ -324,7 +329,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         data.setGpsFee(StringValidater.toLong(xn632291Res.getGpsFee()));
         data.setGpsFeeWay(req.getGpsFeeWay());
-        data.setGpsLocation(req.getGpsLocation());
 
         data.setLyAmount(StringValidater.toLong(xn632291Res.getLyAmount()));
         data.setFxAmount(StringValidater.toLong(xn632291Res.getFxAmount()));
@@ -1151,34 +1155,37 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             }
         }
 
-        CarDealer carDealer = carDealerBO.getCarDealer(budgetOrder
-            .getCarDealerCode());
-        if (null != carDealer) {
+        if (StringUtils.isNotBlank(budgetOrder.getCarDealerCode())) {
+            CarDealer carDealer = carDealerBO.getCarDealer(budgetOrder
+                .getCarDealerCode());
+
             budgetOrder.setCarDealerName(carDealer.getFullName());
             budgetOrder.setCarDealerPhone(carDealer.getContactPhone());
         }
 
-        InsuranceCompany insuranceCompany = insuranceCompanyBO
-            .getInsuranceCompany(budgetOrder.getInsuranceCompanyCode());
-        if (null != insuranceCompany) {
+        if (StringUtils.isNotBlank(budgetOrder.getInsuranceCompanyCode())) {
+            InsuranceCompany insuranceCompany = insuranceCompanyBO
+                .getInsuranceCompany(budgetOrder.getInsuranceCompanyCode());
             budgetOrder.setInsuranceCompanyName(insuranceCompany.getName());
         }
 
-        Bank loanBank = bankBO
-            .getBankBySubbranch(budgetOrder.getLoanBankCode());
-        if (null != loanBank) {
+        if (StringUtils.isNotBlank(budgetOrder.getLoanBankCode())) {
+            Bank loanBank = bankBO.getBankBySubbranch(budgetOrder
+                .getLoanBankCode());
             budgetOrder.setLoanBankName(loanBank.getBankName());
         }
 
-        BankSubbranch subbranch = bankSubbranchBO.getBankSubbranch(budgetOrder
-            .getLoanBankCode());
-        if (null != subbranch) {
+        if (StringUtils.isNotBlank(budgetOrder.getLoanBankCode())) {
+            BankSubbranch subbranch = bankSubbranchBO
+                .getBankSubbranch(budgetOrder.getLoanBankCode());
+
             budgetOrder.setBankSubbranch(subbranch);
         }
 
-        Department department = departmentBO.getDepartment(budgetOrder
-            .getOperateDepartment());
-        if (null != department) {
+        if (StringUtils.isNotBlank(budgetOrder.getOperateDepartment())) {
+            Department department = departmentBO.getDepartment(budgetOrder
+                .getOperateDepartment());
+
             budgetOrder.setOperateDepartmentName(department.getName());
         }
 
@@ -1189,19 +1196,24 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setCompanyName(company.getName());
         }
 
-        SYSUser user = sysUserBO.getUser(budgetOrder.getOperator());
-        if (null != user) {
+        if (StringUtils.isNotBlank(budgetOrder.getOperator())) {
+            SYSUser user = sysUserBO.getUser(budgetOrder.getOperator());
             budgetOrder.setOperatorName(user.getRealName());
         }
 
-        SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
-        if (null != saleUser) {
+        if (StringUtils.isNotBlank(budgetOrder.getSaleUserId())) {
+            SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
             budgetOrder.setSaleUserName(saleUser.getRealName());
         }
         List<BudgetOrderGps> budgetOrderGpsList = budgetOrderGpsBO
             .queryBudgetOrderGpsList(budgetOrder.getCode());
         if (CollectionUtils.isNotEmpty(budgetOrderGpsList)) {
             budgetOrder.setBudgetOrderGpsList(budgetOrderGpsList);
+        }
+
+        if (StringUtils.isNotBlank(budgetOrder.getCreditCode())) {
+            Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
+            budgetOrder.setCredit(credit);
         }
 
         // 获取返点列表
@@ -2170,7 +2182,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 外单手动填写手续费
         data.setGpsFee(req.getGpsFee());
         data.setGpsFeeWay(req.getGpsFeeWay());
-        data.setGpsLocation(req.getGpsLocation());
 
         data.setLyAmount(req.getLyAmount());
         data.setFxAmount(req.getFxAmount());

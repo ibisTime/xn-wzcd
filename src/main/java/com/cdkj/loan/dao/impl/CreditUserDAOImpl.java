@@ -15,8 +15,8 @@ import com.cdkj.loan.domain.CreditUser;
  * @history:
  */
 @Repository("creditUserDAOImpl")
-public class CreditUserDAOImpl extends AMybatisTemplate implements
-        ICreditUserDAO {
+public class CreditUserDAOImpl extends AMybatisTemplate
+        implements ICreditUserDAO {
 
     @Override
     public int insert(CreditUser data) {
@@ -71,5 +71,11 @@ public class CreditUserDAOImpl extends AMybatisTemplate implements
     @Override
     public void updateCreditUserIncome(CreditUser creditUser) {
         super.update(NAMESPACE.concat("update_creditUserIncome"), creditUser);
+    }
+
+    @Override
+    public void refreshCourtNetworkResults(CreditUser creditUser) {
+        super.update(NAMESPACE.concat("update_courtNetworkResults"),
+            creditUser);
     }
 }

@@ -7,7 +7,8 @@ package com.cdkj.loan.enums;
  */
 public enum EConfigType {
 
-    QINIU("qiniu", "七牛"), TENCENT_IM("tencent_im", "腾讯IM");
+    QINIU("qiniu", "七牛"), TENCENT_IM("tencent_im", "腾讯IM"), ALIYUN("aliyun",
+            "阿里云");
 
     EConfigType(String code, String value) {
         this.code = code;
