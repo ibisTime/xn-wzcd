@@ -30,6 +30,17 @@ public class XN805120Req extends APageReq {
     // 状态(选填)
     private String status;
 
+    // 标示(选填)
+    private String sign;
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
     public String getLoginName() {
         return loginName;
     }

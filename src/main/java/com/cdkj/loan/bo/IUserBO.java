@@ -41,6 +41,15 @@ public interface IUserBO extends IPaginableBO<User> {
     public void refreshStatus(String userId, EUserStatus normal,
             String updater, String remark);
 
+    // 更新绿名单标示
+    public void refreshGreenSign(User user, String updater);
+
+    // 更新黄名单标示
+    public void refreshYellowSign(User user, String updater);
+
+    // 更新红名单标示
+    public void refreshRedSign(User user, String updater);
+
     // 验证支付密码:拿tradePwd进行MD5后与数据库中userId得数据库支付密码比对
     public void checkTradePwd(String userId, String tradePwd);
 

@@ -330,6 +330,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
         repayPlan.setTotalFee(totalFee);
         repayPlan.setCollectionNote(req.getCollectionNote());
+        User user = userBO.getUser(repayPlan.getUserId());
         if (ECollectionResult.ALL_REPAY.getCode().equals(
             req.getCollectionResult())
                 || ECollectionResult.PART_REPAY.getCode().equals(
@@ -337,18 +338,23 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
                 || ECollectionResult.PROVIDE_DEPOSIT.getCode().equals(
                     req.getCollectionResult())) {
             repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_GREEN.getCode());
+
+            userBO.refreshGreenSign(user, req.getOperator());
         } else if (ECollectionResult.REJUST_REPAY.getCode().equals(
             req.getCollectionResult())
                 || ECollectionResult.TAKE_CAR.getCode().equals(
+                    req.getCollectionResult())
+                || ECollectionResult.JUDGE.getCode().equals(
                     req.getCollectionResult())) {
             repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_RED.getCode());
+
+            userBO.refreshRedSign(user, req.getOperator());
         } else if (ECollectionResult.REPLACE_REPAY.getCode().equals(
             req.getCollectionResult())) {
             repayPlan
                 .setCurNodeCode(ERepayPlanNode.HANDLER_TO_YELLOW.getCode());
-        } else if (ECollectionResult.JUDGE.getCode().equals(
-            req.getCollectionResult())) {
-            repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_RED.getCode());
+
+            userBO.refreshYellowSign(user, req.getOperator());
         }
         repayPlanBO.refreshOverdueHandle(repayPlan);
 

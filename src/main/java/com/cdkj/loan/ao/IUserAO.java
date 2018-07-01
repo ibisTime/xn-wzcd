@@ -33,8 +33,7 @@ public interface IUserAO {
             String newLoginPwd);
 
     // 设置支付密码
-    public void doSetTradePwd(String userId, String tradePwd,
-            String smsCaptcha);
+    public void doSetTradePwd(String userId, String tradePwd, String smsCaptcha);
 
     // 重置支付密码
     public void doResetTradePwd(String userId, String newTradePwd,
