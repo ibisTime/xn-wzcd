@@ -9,6 +9,7 @@
 		<result column="user_name" property="userName" />
 		<result column="id_no" property="idNo" />
 		<result column="car_dealer_code" property="carDealerCode" />
+		<result column="out_car_dealer_name" property="outCarDealerName" />
 		<result column="company_code" property="companyCode" />
 		<result column="car_type" property="carType" />
 		<result column="loan_amount" property="loanAmount" />
@@ -19,6 +20,8 @@
 		<result column="repoint_amount" property="repointAmount" />
 		<result column="account_code" property="accountCode" />
 		<result column="mortgage_account_no" property="mortgageAccountNo" />
+		<result column="out_account_no" property="outAccountNo" />
+		<result column="open_bank_name" property="openBankName" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="type" property="type" />
 	</resultMap>
@@ -55,6 +58,7 @@
 		,t.user_name
 		,t.id_no
 		,t.car_dealer_code
+		,t.out_car_dealer_name
 		,t.company_code
 		,t.car_type
 		,t.loan_amount
@@ -65,6 +69,8 @@
 		,t.repoint_amount
 		,t.account_code
 		,t.mortgage_account_no
+		,t.out_account_no
+		,t.open_bank_name
 		,t.cur_node_code
 		,t.type
 		FROM
@@ -92,6 +98,7 @@
 		,user_name
 		,id_no
 		,car_dealer_code
+		,out_car_dealer_name
 		,company_code
 		,car_type
 		,loan_amount
@@ -102,6 +109,8 @@
 		,repoint_amount
 		,account_code
 		,mortgage_account_no
+		,out_account_no
+		,open_bank_name
 		,cur_node_code
 		,type
 		)
@@ -112,6 +121,7 @@
 		,#{userName}
 		,#{idNo}
 		,#{carDealerCode}
+		,#{outCarDealerName}
 		,#{companyCode}
 		,#{carType}
 		,#{loanAmount}
@@ -122,6 +132,8 @@
 		,#{repointAmount}
 		,#{accountCode}
 		,#{mortgageAccountNo}
+		,#{outAccountNo}
+		,#{openBankName}
 		,#{curNodeCode}
 		,#{type}
 		)
@@ -135,6 +147,7 @@
 		,user_name = #{userName}
 		,id_no = #{idNo}
 		,car_dealer_code = #{carDealerCode}
+		,out_car_dealer_name = #{outCarDealerName}
 		,company_code = #{companyCode}
 		,car_type = #{carType}
 		,loan_amount = #{loanAmount}
@@ -145,6 +158,8 @@
 		,repoint_amount = #{repointAmount}
 		,account_code = #{accountCode}
 		,mortgage_account_no = #{mortgageAccountNo}
+		,out_account_no = #{outAccountNo}
+		,open_bank_name = #{openBankName}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>

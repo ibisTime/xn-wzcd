@@ -10,6 +10,7 @@
 		<result column="customer_sex" property="customerSex" />
 		<result column="customer_birth" property="customerBirth" />
 		<result column="car_dealer_code" property="carDealerCode" />
+		<result column="out_car_dealer_name" property="outCarDealerName" />
 		
 		<result column="loan_bank_code" property="loanBankCode" />
 		<result column="original_price" property="originalPrice" />
@@ -276,6 +277,7 @@
 		<result column="is_submit_cancel" property="isSubmitCancel" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="repay_biz_code" property="repayBizCode" />
+		<result column="type" property="type" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -341,6 +343,7 @@
 		,t.customer_sex
 		,t.customer_birth
 		,t.car_dealer_code
+		,t.out_car_dealer_name
 		,t.loan_bank_code
 		,t.original_price
 		,t.car_model
@@ -571,6 +574,7 @@
 		
 		,t.cur_node_code
 		,t.repay_biz_code
+		,t.type
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -597,6 +601,7 @@
 		,t.customer_sex
 		,t.customer_birth
 		,t.car_dealer_code
+		,t.out_car_dealer_name
 		,t.loan_bank_code
 		,t.original_price
 		,t.car_model
@@ -821,6 +826,7 @@
 		
 		,t.cur_node_code
 		,t.repay_biz_code
+		,t.type
 		FROM
 		tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
 		<include refid="where_condition" />
@@ -840,6 +846,7 @@
 		,t.customer_sex
 		,t.customer_birth
 		,t.car_dealer_code
+		,t.out_car_dealer_name
 		,t.loan_bank_code
 		,t.original_price
 		,t.car_model
@@ -1034,6 +1041,7 @@
 		
 		,t.cur_node_code
 		,t.repay_biz_code
+		,t.type
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -1060,6 +1068,7 @@
 		,customer_sex
 		,customer_birth
 		,car_dealer_code
+		,out_car_dealer_name
 		,loan_bank_code
 		,original_price
 		,car_model
@@ -1183,6 +1192,7 @@
 		,apply_datetime
 		,cur_node_code
 		,repay_biz_code
+		,type
 		)
 		VALUES(
 		#{code}
@@ -1192,6 +1202,7 @@
 		,#{customerSex}
 		,#{customerBirth}
 		,#{carDealerCode}
+		,#{outCarDealerName}
 		,#{loanBankCode}
 		,#{originalPrice}
 		,#{carModel}
@@ -1315,6 +1326,7 @@
 		,#{applyDatetime}
 		,#{curNodeCode}
 		,#{repayBizCode}
+		,#{type}
 		)
 	</insert>
 	
@@ -1323,6 +1335,7 @@
 		SET
 		customer_type = #{customerType}
 		,car_dealer_code = #{carDealerCode}
+		,out_car_dealer_name = #{outCarDealerName}
 		,original_price = #{originalPrice}
 		,car_model = #{carModel}
 		,frame_no = #{frameNo}
@@ -1453,6 +1466,7 @@
 		,apply_datetime = #{applyDatetime}
 		,cur_node_code = #{curNodeCode}
 		,repay_biz_code = #{repayBizCode}
+		,type = #{type}
 		WHERE code = #{code}
 	</update>
 

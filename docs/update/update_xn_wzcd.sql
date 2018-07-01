@@ -63,3 +63,14 @@ INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`fil
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('021','021_15','021_16',NULL,NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('021','021_16','021_17',NULL,NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark`) VALUES ('021','021_17','021_18',NULL,NULL,NULL);
+
+ALTER TABLE `dev_xn_wzcd`.`tdq_budget_order` 
+ADD COLUMN `type` VARCHAR(4) NULL COMMENT '预算单类型 (1正常单2外单)' AFTER `insurance_note`,
+ADD COLUMN `out_car_dealer_name` VARCHAR(255) NULL COMMENT '汽车经销商名称（外单）' AFTER `car_dealer_code`;
+
+ALTER TABLE `dev_xn_wzcd`.`tdqt_repoint_detail` 
+ADD COLUMN `out_car_dealer_name` VARCHAR(255) NULL COMMENT '汽车经销商名称(外单)' AFTER `car_dealer_code`;
+ADD COLUMN `out_account_no` VARCHAR(45) NULL COMMENT '收款账号（外单手动填写的汽车经销商收款账号 ）' AFTER `out_account_no`;
+ADD COLUMN `open_bank_name` VARCHAR(255) NULL COMMENT '开户行名称' AFTER `out_account_no`;
+
+
