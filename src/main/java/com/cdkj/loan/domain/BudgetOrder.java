@@ -723,6 +723,8 @@ public class BudgetOrder extends ABaseDO {
 
     private String roleCode;// 角色编号
 
+    private Credit credit;// 征信单
+
     private Date applyDatetimeStart;// 申请时间起始
 
     private Date applyDatetimeEnd;// 申请时间结束
@@ -2211,6 +2213,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setOtherApplyNote(String otherApplyNote) {
         this.otherApplyNote = otherApplyNote;
+    }
+
+    public Credit getCredit() {
+        return credit;
+    }
+
+    public void setCredit(Credit credit) {
+        this.credit = credit;
     }
 
     public Date getApplyDatetime() {
