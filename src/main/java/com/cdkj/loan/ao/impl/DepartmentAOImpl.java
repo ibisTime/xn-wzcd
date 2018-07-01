@@ -13,6 +13,7 @@ import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.dto.req.XN630100Req;
 import com.cdkj.loan.dto.req.XN630102Req;
 import com.cdkj.loan.enums.EDepartmentStatus;
+import com.cdkj.loan.enums.EDepartmentType;
 
 @Service
 public class DepartmentAOImpl implements IDepartmentAO {
@@ -27,9 +28,12 @@ public class DepartmentAOImpl implements IDepartmentAO {
         data.setLeadName(req.getLeadName());
         data.setMobile(req.getMobile());
         data.setParentCode(req.getParentCode());
-        data.setCityNo(req.getCityNo());
-        data.setAreaNo(req.getAreaNo());
         data.setType(req.getType());
+        if (EDepartmentType.SUBBRANCH_COMPANY.getCode().equals(req.getType())) {
+            data.setProvinceNo(req.getProvinceNo());
+            data.setCityNo(req.getCityNo());
+            data.setAreaNo(req.getAreaNo());
+        }
         data.setStatus(EDepartmentStatus.AVAILABLE.getCode());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());

@@ -17,13 +17,10 @@ public class XN630100Req {
     @NotBlank
     private String type;// 类型
 
-    @NotBlank
     private String provinceNo;// 省份编号
 
-    @NotBlank
     private String cityNo;// 市编号
 
-    @NotBlank
     private String areaNo;// 区编号
 
     @NotBlank
