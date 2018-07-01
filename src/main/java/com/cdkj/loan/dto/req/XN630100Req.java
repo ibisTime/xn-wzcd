@@ -21,6 +21,12 @@ public class XN630100Req {
     private String provinceNo;// 省份编号
 
     @NotBlank
+    private String cityNo;// 市编号
+
+    @NotBlank
+    private String areaNo;// 区编号
+
+    @NotBlank
     private String updater;// 更新人
 
     private String remark;// 备注
@@ -39,6 +45,30 @@ public class XN630100Req {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getProvinceNo() {
+        return provinceNo;
+    }
+
+    public void setProvinceNo(String provinceNo) {
+        this.provinceNo = provinceNo;
+    }
+
+    public String getCityNo() {
+        return cityNo;
+    }
+
+    public void setCityNo(String cityNo) {
+        this.cityNo = cityNo;
+    }
+
+    public String getAreaNo() {
+        return areaNo;
+    }
+
+    public void setAreaNo(String areaNo) {
+        this.areaNo = areaNo;
     }
 
     public String getLeadName() {
@@ -63,14 +93,6 @@ public class XN630100Req {
 
     public void setParentCode(String parentCode) {
         this.parentCode = parentCode;
-    }
-
-    public String getProvinceNo() {
-        return provinceNo;
-    }
-
-    public void setProvinceNo(String provinceNo) {
-        this.provinceNo = provinceNo;
     }
 
     public String getUpdater() {
