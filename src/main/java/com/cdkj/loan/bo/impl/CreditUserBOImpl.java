@@ -96,6 +96,16 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
     }
 
     @Override
+    public List<CreditUser> getCreditUserListByCreditCode(String creditCode,
+            ELoanRole loanRole) {
+        CreditUser condition = new CreditUser();
+        condition.setCreditCode(creditCode);
+        condition.setRelation(loanRole.getCode());
+
+        return creditUserDAO.selectList(condition);
+    }
+
+    @Override
     public void refreshCourtNetworkResults(String code,
             String courtNetworkResults) {
         CreditUser creditUser = getCreditUser(code);

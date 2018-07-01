@@ -361,6 +361,21 @@ public class CreditAOImpl implements ICreditAO {
                 data.setGhBirthAddress(ghUser.getBirthAddress());
             }
 
+            List<CreditUser> dbUserList = creditUserBO
+                .getCreditUserListByCreditCode(credit.getCode(),
+                    ELoanRole.GUARANTOR);
+            if (dbUserList != null) {
+                CreditUser dbUser1 = dbUserList.get(0);
+                data.setGuarantor1IdNo(dbUser1.getIdNo());
+                data.setGuarantor1MonthIncome(dbUser1.getMonthIncome());
+                data.setGuarantor1SettleInterest(dbUser1.getSettleInterest());
+                data.setGuarantor1Balance(dbUser1.getBalance());
+                data.setGuarantor1JourShowIncome(dbUser1.getJourShowIncome());
+                data.setGuarantor1IsPrint(dbUser1.getIsPrint());
+                data.setGuarantorName(dbUser1.getUserName());
+                data.setGuarantorMobile(dbUser1.getMobile());
+            }
+
             data.setCompanyCode(credit.getCompanyCode());
             data.setSaleUserId(credit.getSaleUserId());
             data.setShopWay(credit.getShopWay());
