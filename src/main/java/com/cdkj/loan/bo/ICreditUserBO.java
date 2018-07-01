@@ -30,4 +30,8 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     public CreditUser getCreditUserByCreditCode(String creditCode,
             ELoanRole loanRole);
 
+    // 法院网查询结果录入
+    public void refreshCourtNetworkResults(String code,
+            String courtNetworkResults);
+
 }

@@ -33,6 +33,7 @@ import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632112ReqChild;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632114Req;
+import com.cdkj.loan.dto.req.XN632114ReqCNR;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -303,6 +304,23 @@ public class CreditAOImpl implements ICreditAO {
                 nodeFlowBO.getNodeFlowByCurrentNode(credit.getCurNodeCode())
                     .getNextNode());
 
+            // 法院网查询结果录入
+            for (XN632114ReqCNR courtNetworkResults : req
+                .getCourtNetworkResultsList()) {
+                if (StringUtils.isBlank(courtNetworkResults.getCode())) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "征信人员不能为空！");
+                }
+                if (StringUtils.isBlank(courtNetworkResults.getCode())) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "法院网查询结果不能为空！");
+                }
+                creditUserBO.refreshCourtNetworkResults(
+                    courtNetworkResults.getCode(),
+                    courtNetworkResults.getCourtNetworkResults());
+
+            }
+
             // 生成预算单
             BudgetOrder data = new BudgetOrder();
             data.setCreditCode(credit.getCode());
@@ -324,6 +342,7 @@ public class CreditAOImpl implements ICreditAO {
             data.setCustomerSex(sex);
             data.setMobile(customerUser.getMobile());
             data.setLoanBankCode(credit.getLoanBankCode());
+            data.setApplyBirthAddress(customerUser.getBirthAddress());
 
             CreditUser ghUser = creditUserBO
                 .getCreditUserByCreditCode(credit.getCode(), ELoanRole.GHR);
@@ -339,6 +358,7 @@ public class CreditAOImpl implements ICreditAO {
                 data.setGhBalance(ghUser.getBalance());
                 data.setGhJourShowIncome(ghUser.getJourShowIncome());
                 data.setGhIsPrint(ghUser.getIsPrint());
+                data.setGhBirthAddress(ghUser.getBirthAddress());
             }
 
             data.setCompanyCode(credit.getCompanyCode());
