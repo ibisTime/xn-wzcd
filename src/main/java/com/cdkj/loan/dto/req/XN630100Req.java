@@ -18,6 +18,9 @@ public class XN630100Req {
     private String type;// 类型
 
     @NotBlank
+    private String provinceNo;// 省份编号
+
+    @NotBlank
     private String updater;// 更新人
 
     private String remark;// 备注
@@ -60,6 +63,14 @@ public class XN630100Req {
 
     public void setParentCode(String parentCode) {
         this.parentCode = parentCode;
+    }
+
+    public String getProvinceNo() {
+        return provinceNo;
+    }
+
+    public void setProvinceNo(String provinceNo) {
+        this.provinceNo = provinceNo;
     }
 
     public String getUpdater() {

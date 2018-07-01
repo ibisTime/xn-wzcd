@@ -9,6 +9,7 @@
 		<result column="mobile" property="mobile" />
 		<result column="parent_code" property="parentCode" />
 		<result column="type" property="type" />
+		<result column="province_no" property="provinceNo" />
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
@@ -24,6 +25,9 @@
 			</if>
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
+			</if>
+			<if test="provinceNo != null and provinceNo != '' ">
+				AND t.province_no = #{provinceNo}
 			</if>
 			<if test="typeList != null and typeList.size() != 0 ">
 				AND t.type in 
@@ -47,6 +51,7 @@
 		,t.mobile
 		,t.parent_code
 		,t.type
+		,t.province_no
 		,t.status
 		,t.updater
 		,t.update_datetime
@@ -76,6 +81,7 @@
 		,mobile
 		,parent_code
 		,type
+		,province_no
 		,status
 		,updater
 		,update_datetime
@@ -88,6 +94,7 @@
 		,#{mobile}
 		,#{parentCode}
 		,#{type}
+		,#{provinceNo}
 		,#{status}
 		,#{updater}
 		,#{updateDatetime}
@@ -103,6 +110,7 @@
 		,mobile = #{mobile}
 		,parent_code = #{parentCode}
 		,type = #{type}
+		,province_no = #{provinceNo}
 		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}

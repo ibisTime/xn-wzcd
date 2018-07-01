@@ -20,6 +20,8 @@ public class Department extends ABaseDO {
 
     private String type;// 类型(1=子公司，2=部门，3=职位)
 
+    private String provinceNo;// 省份编号
+
     private String status;// 状态
 
     private String updater;// 更新人
@@ -56,6 +58,14 @@ public class Department extends ABaseDO {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getProvinceNo() {
+        return provinceNo;
+    }
+
+    public void setProvinceNo(String provinceNo) {
+        this.provinceNo = provinceNo;
     }
 
     public String getName() {
