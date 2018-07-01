@@ -21,8 +21,10 @@ public class XN632120Req {
     private String customerType;
 
     // 汽车经销商编号
-    @NotBlank
     private String carDealerCode;
+
+    // 汽车经销商名称（外单）
+    private String outCarDealerName;
 
     // 厂商指导价
     private String originalPrice;
@@ -198,11 +200,20 @@ public class XN632120Req {
     // 是否我司续保
     private String isPlatInsure;
 
+    // GPS收费
+    private Long gpsFee;
+
     // GPS收费方式
     private String gpsFeeWay;
 
-    // GPS安装位置
-    private String gpsLocation;
+    // 履约保证金
+    private Long lyAmount;
+
+    // 担保风险金
+    private Long fxAmount;
+
+    // 杂费
+    private Long otherFee;
 
     // 手续费收取方式
     private String serviceChargeWay;
@@ -313,7 +324,10 @@ public class XN632120Req {
     private String applyDatetime;
 
     // gps列表编号
-    private List<String> gpsList;
+    private List<XN632120ReqGpsAZ> gpsList;
+
+    // 预算单类型（1正常单2外单）
+    private String type;
 
     // 用款用途
     @NotEmpty
@@ -398,14 +412,6 @@ public class XN632120Req {
 
     public void setDealType(String dealType) {
         this.dealType = dealType;
-    }
-
-    public List<String> getGpsList() {
-        return gpsList;
-    }
-
-    public void setGpsList(List<String> gpsList) {
-        this.gpsList = gpsList;
     }
 
     public String getCustomerType() {
@@ -688,12 +694,12 @@ public class XN632120Req {
         this.isPlatInsure = isPlatInsure;
     }
 
-    public String getGpsLocation() {
-        return gpsLocation;
+    public List<XN632120ReqGpsAZ> getGpsList() {
+        return gpsList;
     }
 
-    public void setGpsLocation(String gpsLocation) {
-        this.gpsLocation = gpsLocation;
+    public void setGpsList(List<XN632120ReqGpsAZ> gpsList) {
+        this.gpsList = gpsList;
     }
 
     public String getGpsFeeWay() {
@@ -1142,6 +1148,54 @@ public class XN632120Req {
 
     public void setApplyDatetime(String applyDatetime) {
         this.applyDatetime = applyDatetime;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Long getGpsFee() {
+        return gpsFee;
+    }
+
+    public void setGpsFee(Long gpsFee) {
+        this.gpsFee = gpsFee;
+    }
+
+    public Long getLyAmount() {
+        return lyAmount;
+    }
+
+    public void setLyAmount(Long lyAmount) {
+        this.lyAmount = lyAmount;
+    }
+
+    public Long getFxAmount() {
+        return fxAmount;
+    }
+
+    public void setFxAmount(Long fxAmount) {
+        this.fxAmount = fxAmount;
+    }
+
+    public Long getOtherFee() {
+        return otherFee;
+    }
+
+    public void setOtherFee(Long otherFee) {
+        this.otherFee = otherFee;
+    }
+
+    public String getOutCarDealerName() {
+        return outCarDealerName;
+    }
+
+    public void setOutCarDealerName(String outCarDealerName) {
+        this.outCarDealerName = outCarDealerName;
     }
 
 }

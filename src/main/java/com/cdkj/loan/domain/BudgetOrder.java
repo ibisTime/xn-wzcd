@@ -35,6 +35,9 @@ public class BudgetOrder extends ABaseDO {
     // 汽车经销商编号
     private String carDealerCode;
 
+    // 汽车经销商名称(外单手动填写)
+    private String outCarDealerName;
+
     // 贷款银行编号
     private String loanBankCode;
 
@@ -292,9 +295,6 @@ public class BudgetOrder extends ABaseDO {
 
     // GPS收费方式
     private String gpsFeeWay;
-
-    // GPS安装位置
-    private String gpsLocation;
 
     // 履约保证金
     private Long lyAmount;
@@ -715,6 +715,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 还款业务编号
     private String repayBizCode;
+
+    // 预算单类型（1正常单2外单）
+    private String type;
 
     /*-------辅助字段-------*/
 
@@ -1624,14 +1627,6 @@ public class BudgetOrder extends ABaseDO {
 
     public void setGpsFee(Long gpsFee) {
         this.gpsFee = gpsFee;
-    }
-
-    public String getGpsLocation() {
-        return gpsLocation;
-    }
-
-    public void setGpsLocation(String gpsLocation) {
-        this.gpsLocation = gpsLocation;
     }
 
     public String getPledgePrintUser() {
@@ -2808,6 +2803,22 @@ public class BudgetOrder extends ABaseDO {
 
     public void setPreBankLoanCs(double preBankLoanCs) {
         this.preBankLoanCs = preBankLoanCs;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getOutCarDealerName() {
+        return outCarDealerName;
+    }
+
+    public void setOutCarDealerName(String outCarDealerName) {
+        this.outCarDealerName = outCarDealerName;
     }
 
 }

@@ -67,3 +67,14 @@ INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`fil
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('aliyun','ALIYUN_HOST','http://dm-51.data.aliyun.com','admin',now(),'阿里云api请求链接编号','CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('aliyun','ALIYUN_HOST_REST_CODE','/rest/160601/ocr/ocr_idcard.json','admin',now(),'阿里云api请求链接编号','CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_config` (`type`,`ckey`,`cvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('aliyun','ALIYUN_APPCODE','dd77a0dede12465f9ffc5d77265a1d46','admin',now(),'阿里云appcode编号','CD-CWZCD000020','CD-CWZCD000020');
+
+ALTER TABLE `tdq_budget_order` 
+ADD COLUMN `type` VARCHAR(4) NULL COMMENT '预算单类型 (1正常单2外单)' AFTER `insurance_note`,
+ADD COLUMN `out_car_dealer_name` VARCHAR(255) NULL COMMENT '汽车经销商名称（外单）' AFTER `car_dealer_code`;
+
+ALTER TABLE `tdqt_repoint_detail` 
+ADD COLUMN `out_car_dealer_name` VARCHAR(255) NULL COMMENT '汽车经销商名称(外单)' AFTER `car_dealer_code`;
+ADD COLUMN `out_account_no` VARCHAR(45) NULL COMMENT '收款账号（外单手动填写的汽车经销商收款账号 ）' AFTER `out_account_no`;
+ADD COLUMN `open_bank_name` VARCHAR(255) NULL COMMENT '开户行名称' AFTER `out_account_no`;
+
+

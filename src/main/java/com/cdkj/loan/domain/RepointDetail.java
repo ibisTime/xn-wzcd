@@ -30,6 +30,9 @@ public class RepointDetail extends ABaseDO {
     // 汽车经销商编号
     private String carDealerCode;
 
+    // 外单汽车经销商名称
+    private String outCarDealerName;
+
     // 业务公司编号
     private String companyCode;
 
@@ -59,6 +62,12 @@ public class RepointDetail extends ABaseDO {
 
     // 收款账号（用于客户不垫资，手动输入的应退按揭款的收款账号 ）
     private String mortgageAccountNo;
+
+    // 收款账号（用于外单手动填写的汽车经销商收款账号 ）
+    private String outAccountNo;
+
+    // 开户行名称
+    private String openBankName;
 
     // 节点(0待制单1已制单待打款2已打款)
     private String curNodeCode;
@@ -208,6 +217,30 @@ public class RepointDetail extends ABaseDO {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getOutCarDealerName() {
+        return outCarDealerName;
+    }
+
+    public void setOutCarDealerName(String outCarDealerName) {
+        this.outCarDealerName = outCarDealerName;
+    }
+
+    public String getOutAccountNo() {
+        return outAccountNo;
+    }
+
+    public void setOutAccountNo(String outAccountNo) {
+        this.outAccountNo = outAccountNo;
+    }
+
+    public String getOpenBankName() {
+        return openBankName;
+    }
+
+    public void setOpenBankName(String openBankName) {
+        this.openBankName = openBankName;
     }
 
 }

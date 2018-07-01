@@ -10,6 +10,7 @@
 		<result column="customer_sex" property="customerSex" />
 		<result column="customer_birth" property="customerBirth" />
 		<result column="car_dealer_code" property="carDealerCode" />
+		<result column="out_car_dealer_name" property="outCarDealerName" />
 		
 		<result column="loan_bank_code" property="loanBankCode" />
 		<result column="original_price" property="originalPrice" />
@@ -106,18 +107,17 @@
 		<result column="oil_subsidy_kil" property="oilSubsidyKil" />
 		<result column="is_plat_insure" property="isPlatInsure" />
 		<result column="gps_fee" property="gpsFee" />
-		<result column="pre_gps_fee" property="preGpsFee " />
+		<result column="pre_gps_fee" property="preGpsFee" />
 		<result column="gps_deduct" property="gpsDeduct" />
-		<result column="pre_gps_deduct" property="preGpsDeduct " />
+		<result column="pre_gps_deduct" property="preGpsDeduct" />
 		
 		<result column="gps_fee_way" property="gpsFeeWay" />
-		<result column="gps_location" property="gpsLocation" />
 		<result column="ly_amount" property="lyAmount" />
-		<result column="pre_ly_amount" property="preLyAmount " />
+		<result column="pre_ly_amount" property="preLyAmount" />
 		<result column="fx_amount" property="fxAmount" />
-		<result column="pre_fx_amount" property="preFxAmount " />
+		<result column="pre_fx_amount" property="preFxAmount" />
 		<result column="other_fee" property="otherFee" />
-		<result column="pre_other_fee" property="preOtherFee " />
+		<result column="pre_other_fee" property="preOtherFee" />
 		<result column="service_charge_way" property="serviceChargeWay" />
 		<result column="service_charge" property="serviceCharge" />
 		
@@ -276,6 +276,7 @@
 		<result column="is_submit_cancel" property="isSubmitCancel" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="repay_biz_code" property="repayBizCode" />
+		<result column="type" property="type" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -341,6 +342,7 @@
 		,t.customer_sex
 		,t.customer_birth
 		,t.car_dealer_code
+		,t.out_car_dealer_name
 		,t.loan_bank_code
 		,t.original_price
 		,t.car_model
@@ -427,7 +429,6 @@
 		,t.gps_deduct
 		,t.pre_gps_deduct
 		,t.gps_fee_way
-		,t.gps_location
 		,t.ly_amount
 		,t.pre_ly_amount
 		,t.fx_amount
@@ -571,6 +572,7 @@
 		
 		,t.cur_node_code
 		,t.repay_biz_code
+		,t.type
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -597,6 +599,7 @@
 		,t.customer_sex
 		,t.customer_birth
 		,t.car_dealer_code
+		,t.out_car_dealer_name
 		,t.loan_bank_code
 		,t.original_price
 		,t.car_model
@@ -683,7 +686,6 @@
 		,t.gps_deduct
 		,t.pre_gps_deduct
 		,t.gps_fee_way
-		,t.gps_location
 		,t.ly_amount
 		,t.pre_ly_amount
 		,t.fx_amount
@@ -821,6 +823,7 @@
 		
 		,t.cur_node_code
 		,t.repay_biz_code
+		,t.type
 		FROM
 		tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
 		<include refid="where_condition" />
@@ -840,6 +843,7 @@
 		,t.customer_sex
 		,t.customer_birth
 		,t.car_dealer_code
+		,t.out_car_dealer_name
 		,t.loan_bank_code
 		,t.original_price
 		,t.car_model
@@ -916,7 +920,6 @@
 		,t.gps_deduct
 		,t.pre_gps_deduct
 		,t.gps_fee_way
-		,t.gps_location
 		,t.ly_amount
 		,t.pre_ly_amount
 		,t.fx_amount
@@ -1034,6 +1037,7 @@
 		
 		,t.cur_node_code
 		,t.repay_biz_code
+		,t.type
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -1060,6 +1064,7 @@
 		,customer_sex
 		,customer_birth
 		,car_dealer_code
+		,out_car_dealer_name
 		,loan_bank_code
 		,original_price
 		,car_model
@@ -1137,7 +1142,6 @@
 		,gps_fee
 		,gps_deduct
 		,gps_fee_way
-		,gps_location
 		,ly_amount
 		,fx_amount
 		,other_fee
@@ -1183,6 +1187,7 @@
 		,apply_datetime
 		,cur_node_code
 		,repay_biz_code
+		,type
 		)
 		VALUES(
 		#{code}
@@ -1192,6 +1197,7 @@
 		,#{customerSex}
 		,#{customerBirth}
 		,#{carDealerCode}
+		,#{outCarDealerName}
 		,#{loanBankCode}
 		,#{originalPrice}
 		,#{carModel}
@@ -1269,7 +1275,6 @@
 		,#{gpsFee}
 		,#{gpsDeduct}
 		,#{gpsFeeWay}
-		,#{gpsLocation}
 		,#{lyAmount}
 		,#{fxAmount}
 		,#{otherFee}
@@ -1315,6 +1320,7 @@
 		,#{applyDatetime}
 		,#{curNodeCode}
 		,#{repayBizCode}
+		,#{type}
 		)
 	</insert>
 	
@@ -1323,6 +1329,7 @@
 		SET
 		customer_type = #{customerType}
 		,car_dealer_code = #{carDealerCode}
+		,out_car_dealer_name = #{outCarDealerName}
 		,original_price = #{originalPrice}
 		,car_model = #{carModel}
 		,frame_no = #{frameNo}
@@ -1402,7 +1409,6 @@
 		
 		,gps_deduct = #{gpsDeduct}
 		,gps_fee_way = #{gpsFeeWay}
-		,gps_location = #{gpsLocation}
 		,ly_amount = #{lyAmount}
 		,fx_amount = #{fxAmount}
 		,other_fee = #{otherFee}
@@ -1453,6 +1459,7 @@
 		,apply_datetime = #{applyDatetime}
 		,cur_node_code = #{curNodeCode}
 		,repay_biz_code = #{repayBizCode}
+		,type = #{type}
 		WHERE code = #{code}
 	</update>
 
