@@ -106,18 +106,18 @@
 		<result column="oil_subsidy_kil" property="oilSubsidyKil" />
 		<result column="is_plat_insure" property="isPlatInsure" />
 		<result column="gps_fee" property="gpsFee" />
-		<result column="pre_gps_fee" property="preGpsFee " />
+		<result column="pre_gps_fee" property="preGpsFee" />
 		<result column="gps_deduct" property="gpsDeduct" />
-		<result column="pre_gps_deduct" property="preGpsDeduct " />
+		<result column="pre_gps_deduct" property="preGpsDeduct" />
 		
 		<result column="gps_fee_way" property="gpsFeeWay" />
 		<result column="gps_location" property="gpsLocation" />
 		<result column="ly_amount" property="lyAmount" />
-		<result column="pre_ly_amount" property="preLyAmount " />
+		<result column="pre_ly_amount" property="preLyAmount" />
 		<result column="fx_amount" property="fxAmount" />
-		<result column="pre_fx_amount" property="preFxAmount " />
+		<result column="pre_fx_amount" property="preFxAmount" />
 		<result column="other_fee" property="otherFee" />
-		<result column="pre_other_fee" property="preOtherFee " />
+		<result column="pre_other_fee" property="preOtherFee" />
 		<result column="service_charge_way" property="serviceChargeWay" />
 		<result column="service_charge" property="serviceCharge" />
 		
