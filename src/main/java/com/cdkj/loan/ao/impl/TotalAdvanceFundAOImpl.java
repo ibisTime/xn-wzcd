@@ -23,6 +23,7 @@ import com.cdkj.loan.dto.req.XN632176Req;
 import com.cdkj.loan.dto.req.XN632233Req;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBudgetFrozenStatus;
 import com.cdkj.loan.enums.ETotalAdvanceFundStatus;
 import com.cdkj.loan.enums.ETotalAdvanceFundType;
 import com.cdkj.loan.exception.BizException;
@@ -59,15 +60,14 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         for (String code : codeList) {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
             String preNodeCode = advanceFund.getCurNodeCode();
-            advanceFund.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preNodeCode).getNextNode());
-            EAdvanceFundNode node = EAdvanceFundNode.getMap().get(
-                advanceFund.getCurNodeCode());
-            sysBizLogBO
-                .saveNewAndPreEndSYSBizLog(advanceFund.getCode(),
-                    EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),
-                    preNodeCode, node.getCode(), node.getValue(),
-                    req.getOperator());
+            advanceFund.setCurNodeCode(
+                nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode).getNextNode());
+            EAdvanceFundNode node = EAdvanceFundNode.getMap()
+                .get(advanceFund.getCurNodeCode());
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(advanceFund.getCode(),
+                EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),
+                preNodeCode, node.getCode(), node.getValue(),
+                req.getOperator());
             advanceFundBO.branchMakeBill(advanceFund);
 
         }
@@ -112,8 +112,8 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         TotalAdvanceFund data = new TotalAdvanceFund();
         data.setType(ETotalAdvanceFundType.FIRST.getCode());
         data.setCompanyCode(req.getCompanyCode());
-        data.setTotalAdvanceFund(StringValidater.toLong(req
-            .getTotalAdvanceFund()));
+        data.setTotalAdvanceFund(
+            StringValidater.toLong(req.getTotalAdvanceFund()));
         data.setPayAmount(StringValidater.toLong(req.getPayAmount()));
 
         data.setPayDatetime(DateUtil.strToDate(req.getPayDatetime(),
@@ -132,11 +132,11 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
             advanceFund.setTotalAdvanceFundCode(totalAdvanceFundCode);
             String preNodeCode = advanceFund.getCurNodeCode();
-            advanceFund.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preNodeCode).getNextNode());
+            advanceFund.setCurNodeCode(
+                nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode).getNextNode());
             advanceFundBO.confirmPayBranchCompany(advanceFund);
-            EAdvanceFundNode node = EAdvanceFundNode.getMap().get(
-                advanceFund.getCurNodeCode());
+            EAdvanceFundNode node = EAdvanceFundNode.getMap()
+                .get(advanceFund.getCurNodeCode());
             sysBizLogBO.saveNewAndPreEndSYSBizLog(advanceFund.getCode(),
                 EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),
                 preNodeCode, node.getCode(), req.getPayNote(),
@@ -163,15 +163,20 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
             data.setPayDatetime(DateUtil.strToDate(req.getPayDatetime(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setBillPdf(req.getPayBillPdf());
-        } else if (ETotalAdvanceFundType.COLLECTION.getCode().equals(
-            req.getType())) {
-            data.setCollectionAmount(StringValidater.toLong(req
-                .getCollectionAmount()));
+        } else if (ETotalAdvanceFundType.COLLECTION.getCode()
+            .equals(req.getType())) {
+            data.setCollectionAmount(
+                StringValidater.toLong(req.getCollectionAmount()));
             data.setCollectionBankcardCode(req.getCollectionBankcardCode());
-            data.setCollectionDatetime(DateUtil.strToDate(
-                req.getCollectionDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setCollectionDatetime(
+                DateUtil.strToDate(req.getCollectionDatetime(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setCollectionBillPdf(req.getCollectionBillPdf());
         }
+        // 改回之前节点
+        budgetOrder.setCurNodeCode(budgetOrder.getCancelNodeCode());
+        budgetOrder.setFrozenStatus(EBudgetFrozenStatus.NORMAL.getCode());
+        budgetOrderBO.cancelBizAudit(budgetOrder);
         totalAdvanceFundBO.saveTotalAdvanceFund(data);
 
     }
