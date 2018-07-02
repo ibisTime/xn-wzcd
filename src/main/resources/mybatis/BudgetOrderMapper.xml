@@ -1331,7 +1331,8 @@
 	<update id="update_budgetOrder" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		customer_type = #{customerType}
+		loan_amount = #{loanAmount}
+		,customer_type = #{customerType}
 		,car_dealer_code = #{carDealerCode}
 		,out_car_dealer_name = #{outCarDealerName}
 		,original_price = #{originalPrice}
