@@ -1075,7 +1075,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         budgetOrder.setInsuranceBank(req.getInsuranceBank());
         budgetOrder.setSaleUserId(req.getSaleUserId());
-        budgetOrder.setGuaranteeContractCode(req.getGuaranteeContractCode());
+        budgetOrder.setBankContractCode(req.getBankContractCode());
         budgetOrder.setRegCertificateCode(req.getRegCertificateCode());
         budgetOrder.setOtherContact(req.getOtherContact());
 

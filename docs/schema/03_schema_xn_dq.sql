@@ -224,6 +224,7 @@ CREATE TABLE `tdq_budget_order` (
   `guarantee_contract_code` varchar(32) DEFAULT NULL COMMENT '担保合同编号',
   `guarant_contract_deadline` varchar(32) DEFAULT NULL COMMENT '期限',
   `guarant_month_fee_rate` decimal(18,8) DEFAULT NULL COMMENT '月费率',
+  `bank_contract_code` varchar(32) DEFAULT NULL COMMENT '银行合同编号',
   `reg_certificate_code` varchar(32) DEFAULT NULL COMMENT '登记证书号',
   
   `other_contact` tinytext COMMENT '其他联系人',
