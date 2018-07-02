@@ -81,7 +81,7 @@ public class CreditUserAOImpl implements ICreditUserAO {
                 .setDkdyAmount(StringValidater.toLong(child.getDkdyAmount()));
             creditUser.setDkdy2YearOverTimes(
                 StringValidater.toInteger(child.getDkdy2YearOverTimes()));
-            creditUser.setDkdyCurrentOverAmount(
+            creditUser.setDkdyMaxOverAmount(
                 StringValidater.toLong(child.getDkdyMaxOverAmount()));
             creditUser.setDkdyCurrentOverAmount(
                 StringValidater.toLong(child.getDkdyCurrentOverAmount()));
