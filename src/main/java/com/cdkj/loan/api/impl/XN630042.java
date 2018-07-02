@@ -26,7 +26,7 @@ public class XN630042 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         sysConfigAO.editSYSConfig(StringValidater.toLong(req.getId()),
-            req.getCvalue(), req.getUpdater(), req.getRemark());
+            req.getCvalue(), req.getUpdater());
         return new BooleanRes(true);
     }
 
