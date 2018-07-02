@@ -334,77 +334,20 @@ public class XN632120Req {
     // 用款用途
     private List<XN632120ReqRepointDetail> repointDetailList;
 
-    public String getServiceChargeWay() {
-        return serviceChargeWay;
-    }
-
-    public void setServiceChargeWay(String serviceChargeWay) {
-        this.serviceChargeWay = serviceChargeWay;
-    }
-
-    public String getBudgetOrderCode() {
-        return budgetOrderCode;
-    }
-
-    public List<XN632120ReqRepointDetail> getRepointDetailList() {
-        return repointDetailList;
-    }
-
-    public void setRepointDetailList(
-            List<XN632120ReqRepointDetail> repointDetailList) {
-        this.repointDetailList = repointDetailList;
-    }
-
-    public void setBudgetOrderCode(String budgetOrderCode) {
-        this.budgetOrderCode = budgetOrderCode;
-    }
-
-    public String getApplyUserCompany() {
-        return applyUserCompany;
-    }
-
-    public void setApplyUserCompany(String applyUserCompany) {
-        this.applyUserCompany = applyUserCompany;
-    }
-
-    public String getApplyUserDuty() {
-        return applyUserDuty;
-    }
-
-    public void setApplyUserDuty(String applyUserDuty) {
-        this.applyUserDuty = applyUserDuty;
-    }
-
-    public String getMarryState() {
-        return marryState;
-    }
-
-    public void setMarryState(String marryState) {
-        this.marryState = marryState;
-    }
-
-    public String getFrameNo() {
-        return frameNo;
-    }
-
-    public void setFrameNo(String frameNo) {
-        this.frameNo = frameNo;
-    }
-
-    public String getOtherIncomeNote() {
-        return otherIncomeNote;
-    }
-
-    public void setOtherIncomeNote(String otherIncomeNote) {
-        this.otherIncomeNote = otherIncomeNote;
-    }
-
     public String getOperator() {
         return operator;
     }
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getBudgetOrderCode() {
+        return budgetOrderCode;
+    }
+
+    public void setBudgetOrderCode(String budgetOrderCode) {
+        this.budgetOrderCode = budgetOrderCode;
     }
 
     public String getDealType() {
@@ -431,6 +374,14 @@ public class XN632120Req {
         this.carDealerCode = carDealerCode;
     }
 
+    public String getOutCarDealerName() {
+        return outCarDealerName;
+    }
+
+    public void setOutCarDealerName(String outCarDealerName) {
+        this.outCarDealerName = outCarDealerName;
+    }
+
     public String getOriginalPrice() {
         return originalPrice;
     }
@@ -445,6 +396,14 @@ public class XN632120Req {
 
     public void setCarModel(String carModel) {
         this.carModel = carModel;
+    }
+
+    public String getFrameNo() {
+        return frameNo;
+    }
+
+    public void setFrameNo(String frameNo) {
+        this.frameNo = frameNo;
     }
 
     public String getLoanPeriods() {
@@ -469,6 +428,14 @@ public class XN632120Req {
 
     public void setRateType(String rateType) {
         this.rateType = rateType;
+    }
+
+    public String getLoanAmount() {
+        return loanAmount;
+    }
+
+    public void setLoanAmount(String loanAmount) {
+        this.loanAmount = loanAmount;
     }
 
     public String getIsSurvey() {
@@ -509,6 +476,198 @@ public class XN632120Req {
 
     public void setCarDealerSubsidy(String carDealerSubsidy) {
         this.carDealerSubsidy = carDealerSubsidy;
+    }
+
+    public String getApplyUserCompany() {
+        return applyUserCompany;
+    }
+
+    public void setApplyUserCompany(String applyUserCompany) {
+        this.applyUserCompany = applyUserCompany;
+    }
+
+    public String getApplyUserDuty() {
+        return applyUserDuty;
+    }
+
+    public void setApplyUserDuty(String applyUserDuty) {
+        this.applyUserDuty = applyUserDuty;
+    }
+
+    public String getMarryState() {
+        return marryState;
+    }
+
+    public void setMarryState(String marryState) {
+        this.marryState = marryState;
+    }
+
+    public String getApplyUserMonthIncome() {
+        return applyUserMonthIncome;
+    }
+
+    public void setApplyUserMonthIncome(String applyUserMonthIncome) {
+        this.applyUserMonthIncome = applyUserMonthIncome;
+    }
+
+    public String getApplyUserSettleInterest() {
+        return applyUserSettleInterest;
+    }
+
+    public void setApplyUserSettleInterest(String applyUserSettleInterest) {
+        this.applyUserSettleInterest = applyUserSettleInterest;
+    }
+
+    public String getApplyUserBalance() {
+        return applyUserBalance;
+    }
+
+    public void setApplyUserBalance(String applyUserBalance) {
+        this.applyUserBalance = applyUserBalance;
+    }
+
+    public String getApplyUserJourShowIncome() {
+        return applyUserJourShowIncome;
+    }
+
+    public void setApplyUserJourShowIncome(String applyUserJourShowIncome) {
+        this.applyUserJourShowIncome = applyUserJourShowIncome;
+    }
+
+    public String getApplyUserIsPrint() {
+        return applyUserIsPrint;
+    }
+
+    public void setApplyUserIsPrint(String applyUserIsPrint) {
+        this.applyUserIsPrint = applyUserIsPrint;
+    }
+
+    public String getGhMonthIncome() {
+        return ghMonthIncome;
+    }
+
+    public void setGhMonthIncome(String ghMonthIncome) {
+        this.ghMonthIncome = ghMonthIncome;
+    }
+
+    public String getGhSettleInterest() {
+        return ghSettleInterest;
+    }
+
+    public void setGhSettleInterest(String ghSettleInterest) {
+        this.ghSettleInterest = ghSettleInterest;
+    }
+
+    public String getGhBalance() {
+        return ghBalance;
+    }
+
+    public void setGhBalance(String ghBalance) {
+        this.ghBalance = ghBalance;
+    }
+
+    public String getGhJourShowIncome() {
+        return ghJourShowIncome;
+    }
+
+    public void setGhJourShowIncome(String ghJourShowIncome) {
+        this.ghJourShowIncome = ghJourShowIncome;
+    }
+
+    public String getGhIsPrint() {
+        return ghIsPrint;
+    }
+
+    public void setGhIsPrint(String ghIsPrint) {
+        this.ghIsPrint = ghIsPrint;
+    }
+
+    public String getGuarantor1MonthIncome() {
+        return guarantor1MonthIncome;
+    }
+
+    public void setGuarantor1MonthIncome(String guarantor1MonthIncome) {
+        this.guarantor1MonthIncome = guarantor1MonthIncome;
+    }
+
+    public String getGuarantor1SettleInterest() {
+        return guarantor1SettleInterest;
+    }
+
+    public void setGuarantor1SettleInterest(String guarantor1SettleInterest) {
+        this.guarantor1SettleInterest = guarantor1SettleInterest;
+    }
+
+    public String getGuarantor1Balance() {
+        return guarantor1Balance;
+    }
+
+    public void setGuarantor1Balance(String guarantor1Balance) {
+        this.guarantor1Balance = guarantor1Balance;
+    }
+
+    public String getGuarantor1JourShowIncome() {
+        return guarantor1JourShowIncome;
+    }
+
+    public void setGuarantor1JourShowIncome(String guarantor1JourShowIncome) {
+        this.guarantor1JourShowIncome = guarantor1JourShowIncome;
+    }
+
+    public String getGuarantor1IsPrint() {
+        return guarantor1IsPrint;
+    }
+
+    public void setGuarantor1IsPrint(String guarantor1IsPrint) {
+        this.guarantor1IsPrint = guarantor1IsPrint;
+    }
+
+    public String getGuarantor2MonthIncome() {
+        return guarantor2MonthIncome;
+    }
+
+    public void setGuarantor2MonthIncome(String guarantor2MonthIncome) {
+        this.guarantor2MonthIncome = guarantor2MonthIncome;
+    }
+
+    public String getGuarantor2SettleInterest() {
+        return guarantor2SettleInterest;
+    }
+
+    public void setGuarantor2SettleInterest(String guarantor2SettleInterest) {
+        this.guarantor2SettleInterest = guarantor2SettleInterest;
+    }
+
+    public String getGuarantor2Balance() {
+        return guarantor2Balance;
+    }
+
+    public void setGuarantor2Balance(String guarantor2Balance) {
+        this.guarantor2Balance = guarantor2Balance;
+    }
+
+    public String getGuarantor2JourShowIncome() {
+        return guarantor2JourShowIncome;
+    }
+
+    public void setGuarantor2JourShowIncome(String guarantor2JourShowIncome) {
+        this.guarantor2JourShowIncome = guarantor2JourShowIncome;
+    }
+
+    public String getGuarantor2IsPrint() {
+        return guarantor2IsPrint;
+    }
+
+    public void setGuarantor2IsPrint(String guarantor2IsPrint) {
+        this.guarantor2IsPrint = guarantor2IsPrint;
+    }
+
+    public String getOtherIncomeNote() {
+        return otherIncomeNote;
+    }
+
+    public void setOtherIncomeNote(String otherIncomeNote) {
+        this.otherIncomeNote = otherIncomeNote;
     }
 
     public String getIsHouseProperty() {
@@ -695,12 +854,12 @@ public class XN632120Req {
         this.isPlatInsure = isPlatInsure;
     }
 
-    public List<XN632120ReqGpsAZ> getGpsList() {
-        return gpsList;
+    public String getGpsFee() {
+        return gpsFee;
     }
 
-    public void setGpsList(List<XN632120ReqGpsAZ> gpsList) {
-        this.gpsList = gpsList;
+    public void setGpsFee(String gpsFee) {
+        this.gpsFee = gpsFee;
     }
 
     public String getGpsFeeWay() {
@@ -709,6 +868,38 @@ public class XN632120Req {
 
     public void setGpsFeeWay(String gpsFeeWay) {
         this.gpsFeeWay = gpsFeeWay;
+    }
+
+    public String getLyAmount() {
+        return lyAmount;
+    }
+
+    public void setLyAmount(String lyAmount) {
+        this.lyAmount = lyAmount;
+    }
+
+    public String getFxAmount() {
+        return fxAmount;
+    }
+
+    public void setFxAmount(String fxAmount) {
+        this.fxAmount = fxAmount;
+    }
+
+    public String getOtherFee() {
+        return otherFee;
+    }
+
+    public void setOtherFee(String otherFee) {
+        this.otherFee = otherFee;
+    }
+
+    public String getServiceChargeWay() {
+        return serviceChargeWay;
+    }
+
+    public void setServiceChargeWay(String serviceChargeWay) {
+        this.serviceChargeWay = serviceChargeWay;
     }
 
     public String getMarryDivorce() {
@@ -827,166 +1018,6 @@ public class XN632120Req {
         return housePic;
     }
 
-    public String getApplyUserMonthIncome() {
-        return applyUserMonthIncome;
-    }
-
-    public void setApplyUserMonthIncome(String applyUserMonthIncome) {
-        this.applyUserMonthIncome = applyUserMonthIncome;
-    }
-
-    public String getApplyUserSettleInterest() {
-        return applyUserSettleInterest;
-    }
-
-    public void setApplyUserSettleInterest(String applyUserSettleInterest) {
-        this.applyUserSettleInterest = applyUserSettleInterest;
-    }
-
-    public String getApplyUserBalance() {
-        return applyUserBalance;
-    }
-
-    public void setApplyUserBalance(String applyUserBalance) {
-        this.applyUserBalance = applyUserBalance;
-    }
-
-    public String getApplyUserJourShowIncome() {
-        return applyUserJourShowIncome;
-    }
-
-    public void setApplyUserJourShowIncome(String applyUserJourShowIncome) {
-        this.applyUserJourShowIncome = applyUserJourShowIncome;
-    }
-
-    public String getApplyUserIsPrint() {
-        return applyUserIsPrint;
-    }
-
-    public void setApplyUserIsPrint(String applyUserIsPrint) {
-        this.applyUserIsPrint = applyUserIsPrint;
-    }
-
-    public String getGhMonthIncome() {
-        return ghMonthIncome;
-    }
-
-    public void setGhMonthIncome(String ghMonthIncome) {
-        this.ghMonthIncome = ghMonthIncome;
-    }
-
-    public String getGhSettleInterest() {
-        return ghSettleInterest;
-    }
-
-    public void setGhSettleInterest(String ghSettleInterest) {
-        this.ghSettleInterest = ghSettleInterest;
-    }
-
-    public String getGhBalance() {
-        return ghBalance;
-    }
-
-    public void setGhBalance(String ghBalance) {
-        this.ghBalance = ghBalance;
-    }
-
-    public String getGhJourShowIncome() {
-        return ghJourShowIncome;
-    }
-
-    public void setGhJourShowIncome(String ghJourShowIncome) {
-        this.ghJourShowIncome = ghJourShowIncome;
-    }
-
-    public String getGhIsPrint() {
-        return ghIsPrint;
-    }
-
-    public void setGhIsPrint(String ghIsPrint) {
-        this.ghIsPrint = ghIsPrint;
-    }
-
-    public String getGuarantor1MonthIncome() {
-        return guarantor1MonthIncome;
-    }
-
-    public void setGuarantor1MonthIncome(String guarantor1MonthIncome) {
-        this.guarantor1MonthIncome = guarantor1MonthIncome;
-    }
-
-    public String getGuarantor1SettleInterest() {
-        return guarantor1SettleInterest;
-    }
-
-    public void setGuarantor1SettleInterest(String guarantor1SettleInterest) {
-        this.guarantor1SettleInterest = guarantor1SettleInterest;
-    }
-
-    public String getGuarantor1Balance() {
-        return guarantor1Balance;
-    }
-
-    public void setGuarantor1Balance(String guarantor1Balance) {
-        this.guarantor1Balance = guarantor1Balance;
-    }
-
-    public String getGuarantor1JourShowIncome() {
-        return guarantor1JourShowIncome;
-    }
-
-    public void setGuarantor1JourShowIncome(String guarantor1JourShowIncome) {
-        this.guarantor1JourShowIncome = guarantor1JourShowIncome;
-    }
-
-    public String getGuarantor1IsPrint() {
-        return guarantor1IsPrint;
-    }
-
-    public void setGuarantor1IsPrint(String guarantor1IsPrint) {
-        this.guarantor1IsPrint = guarantor1IsPrint;
-    }
-
-    public String getGuarantor2MonthIncome() {
-        return guarantor2MonthIncome;
-    }
-
-    public void setGuarantor2MonthIncome(String guarantor2MonthIncome) {
-        this.guarantor2MonthIncome = guarantor2MonthIncome;
-    }
-
-    public String getGuarantor2SettleInterest() {
-        return guarantor2SettleInterest;
-    }
-
-    public void setGuarantor2SettleInterest(String guarantor2SettleInterest) {
-        this.guarantor2SettleInterest = guarantor2SettleInterest;
-    }
-
-    public String getGuarantor2Balance() {
-        return guarantor2Balance;
-    }
-
-    public void setGuarantor2Balance(String guarantor2Balance) {
-        this.guarantor2Balance = guarantor2Balance;
-    }
-
-    public String getGuarantor2JourShowIncome() {
-        return guarantor2JourShowIncome;
-    }
-
-    public void setGuarantor2JourShowIncome(String guarantor2JourShowIncome) {
-        this.guarantor2JourShowIncome = guarantor2JourShowIncome;
-    }
-
-    public String getGuarantor2IsPrint() {
-        return guarantor2IsPrint;
-    }
-
-    public void setGuarantor2IsPrint(String guarantor2IsPrint) {
-        this.guarantor2IsPrint = guarantor2IsPrint;
-    }
-
     public void setHousePic(String housePic) {
         this.housePic = housePic;
     }
@@ -1079,14 +1110,6 @@ public class XN632120Req {
         this.secondOdometer = secondOdometer;
     }
 
-    public String getLoanAmount() {
-        return loanAmount;
-    }
-
-    public void setLoanAmount(String loanAmount) {
-        this.loanAmount = loanAmount;
-    }
-
     public String getSecondCarFrontPic() {
         return secondCarFrontPic;
     }
@@ -1159,6 +1182,14 @@ public class XN632120Req {
         this.applyDatetime = applyDatetime;
     }
 
+    public List<XN632120ReqGpsAZ> getGpsList() {
+        return gpsList;
+    }
+
+    public void setGpsList(List<XN632120ReqGpsAZ> gpsList) {
+        this.gpsList = gpsList;
+    }
+
     public String getType() {
         return type;
     }
@@ -1167,44 +1198,13 @@ public class XN632120Req {
         this.type = type;
     }
 
-    public String getGpsFee() {
-        return gpsFee;
+    public List<XN632120ReqRepointDetail> getRepointDetailList() {
+        return repointDetailList;
     }
 
-    public void setGpsFee(String gpsFee) {
-        this.gpsFee = gpsFee;
-    }
-
-    public String getLyAmount() {
-        return lyAmount;
-    }
-
-    public void setLyAmount(String lyAmount) {
-        this.lyAmount = lyAmount;
-    }
-
-    public String getFxAmount() {
-        return fxAmount;
-    }
-
-    public void setFxAmount(String fxAmount) {
-        this.fxAmount = fxAmount;
-    }
-
-    public String getOtherFee() {
-        return otherFee;
-    }
-
-    public void setOtherFee(String otherFee) {
-        this.otherFee = otherFee;
-    }
-
-    public String getOutCarDealerName() {
-        return outCarDealerName;
-    }
-
-    public void setOutCarDealerName(String outCarDealerName) {
-        this.outCarDealerName = outCarDealerName;
+    public void setRepointDetailList(
+            List<XN632120ReqRepointDetail> repointDetailList) {
+        this.repointDetailList = repointDetailList;
     }
 
 }
