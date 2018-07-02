@@ -688,6 +688,7 @@
 		,judge_note = #{judgeNote}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 	
