@@ -240,7 +240,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (null == req.getLoanAmount()) {
             loanAmount = data.getLoanAmount();
         } else {
-            loanAmount = req.getLoanAmount();
+            loanAmount = StringValidater.toLong(req.getLoanAmount());
             data.setLoanAmount(loanAmount);
         }
         Long invoicePrice = StringValidater.toLong(req.getInvoicePrice());
@@ -2311,12 +2311,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setGpsDeduct(gpsDeduct);// GPS提成
 
         // 外单手动填写手续费
-        data.setGpsFee(req.getGpsFee());
+        data.setGpsFee(StringValidater.toLong(req.getGpsFee()));
         data.setGpsFeeWay(req.getGpsFeeWay());
 
-        data.setLyAmount(req.getLyAmount());
-        data.setFxAmount(req.getFxAmount());
-        data.setOtherFee(req.getOtherFee());
+        data.setLyAmount(StringValidater.toLong(req.getLyAmount()));
+        data.setFxAmount(StringValidater.toLong(req.getFxAmount()));
+        data.setOtherFee(StringValidater.toLong(req.getOtherFee()));
         data.setServiceChargeWay(req.getServiceChargeWay());
 
         Long serviceCharge = data.getLyAmount() + data.getFxAmount()

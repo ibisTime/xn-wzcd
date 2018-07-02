@@ -44,7 +44,7 @@ public class XN632120Req {
     private String rateType;
 
     // 贷款金额
-    private Long loanAmount;
+    private String loanAmount;
 
     // 是否需要贷前调查
     private String isSurvey;
@@ -203,19 +203,19 @@ public class XN632120Req {
     private String isPlatInsure;
 
     // GPS收费
-    private Long gpsFee;
+    private String gpsFee;
 
     // GPS收费方式
     private String gpsFeeWay;
 
     // 履约保证金
-    private Long lyAmount;
+    private String lyAmount;
 
     // 担保风险金
-    private Long fxAmount;
+    private String fxAmount;
 
     // 杂费
-    private Long otherFee;
+    private String otherFee;
 
     // 手续费收取方式
     private String serviceChargeWay;
@@ -1079,11 +1079,11 @@ public class XN632120Req {
         this.secondOdometer = secondOdometer;
     }
 
-    public Long getLoanAmount() {
+    public String getLoanAmount() {
         return loanAmount;
     }
 
-    public void setLoanAmount(Long loanAmount) {
+    public void setLoanAmount(String loanAmount) {
         this.loanAmount = loanAmount;
     }
 
@@ -1167,35 +1167,35 @@ public class XN632120Req {
         this.type = type;
     }
 
-    public Long getGpsFee() {
+    public String getGpsFee() {
         return gpsFee;
     }
 
-    public void setGpsFee(Long gpsFee) {
+    public void setGpsFee(String gpsFee) {
         this.gpsFee = gpsFee;
     }
 
-    public Long getLyAmount() {
+    public String getLyAmount() {
         return lyAmount;
     }
 
-    public void setLyAmount(Long lyAmount) {
+    public void setLyAmount(String lyAmount) {
         this.lyAmount = lyAmount;
     }
 
-    public Long getFxAmount() {
+    public String getFxAmount() {
         return fxAmount;
     }
 
-    public void setFxAmount(Long fxAmount) {
+    public void setFxAmount(String fxAmount) {
         this.fxAmount = fxAmount;
     }
 
-    public Long getOtherFee() {
+    public String getOtherFee() {
         return otherFee;
     }
 
-    public void setOtherFee(Long otherFee) {
+    public void setOtherFee(String otherFee) {
         this.otherFee = otherFee;
     }
 
