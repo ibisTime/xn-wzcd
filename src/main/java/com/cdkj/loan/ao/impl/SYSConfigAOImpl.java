@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,12 @@ public class SYSConfigAOImpl implements ISYSConfigAO {
     ISYSConfigBO sysConfigBO;
 
     @Override
-    public void editSYSConfig(Long id, String cvalue, String updater,
-            String remark) {
-        sysConfigBO.refreshSYSConfig(id, cvalue, updater, remark);
+    public void editSYSConfig(Long id, String cvalue, String updater) {
+        SYSConfig sysConfig = sysConfigBO.getSYSConfig(id);
+        sysConfig.setCvalue(cvalue);
+        sysConfig.setUpdater(updater);
+        sysConfig.setUpdateDatetime(new Date());
+        sysConfigBO.refreshSYSConfig(sysConfig);
     }
 
     @Override
