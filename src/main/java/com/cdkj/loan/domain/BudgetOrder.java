@@ -774,6 +774,16 @@ public class BudgetOrder extends ABaseDO {
 
     private String guarantor2Sex;// 担保人2性别
 
+    private List<RepayPlan> repayPlansList;// 还款计划
+
+    public List<RepayPlan> getRepayPlansList() {
+        return repayPlansList;
+    }
+
+    public void setRepayPlansList(List<RepayPlan> repayPlansList) {
+        this.repayPlansList = repayPlansList;
+    }
+
     public String getGuarantor1Sex() {
         return guarantor1Sex;
     }

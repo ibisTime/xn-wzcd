@@ -1580,6 +1580,16 @@ INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_d
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','user_sign','3','红名单','admin',now(),'','CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','user_sign','4','黑名单','admin',now(),'','CD-CWZCD000020','CD-CWZCD000020');
 
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'az_location','gps安装位置','admin',now(),'','CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','az_location','1','前保险杠里','admin',now(),'','CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','az_location','2','后保险杠里','admin',now(),'','CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','az_location','3','车门杂物箱里','admin',now(),'','CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','az_location','4','副手位置杂物箱里','admin',now(),'','CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','az_location','5','扶手箱里','admin',now(),'','CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','az_location','6','副驾座下面','admin',now(),'','CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','az_location','7','内侧两边沟槽','admin',now(),'','CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','az_location','8','后挡风玻璃下面','admin',now(),'','CD-CWZCD000020','CD-CWZCD000020');
+
 /*
 -- Query: select `type`,`ckey`,`cvalue`,`updater`,now() as `update_datetime`,`remark`,`company_code`,`system_code` from tsys_config
 -- Date: 2018-06-29 15:33

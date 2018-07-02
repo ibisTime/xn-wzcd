@@ -13,6 +13,7 @@ import com.cdkj.loan.ao.IOrderAO;
 import com.cdkj.loan.ao.IRepayBizAO;
 import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.IBankcardBO;
+import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IJudgeBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
@@ -26,6 +27,7 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.domain.Bankcard;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Judge;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
@@ -71,6 +73,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     @Autowired
     private IBudgetOrderAO budgetOrderAO;
+
+    @Autowired
+    private IBudgetOrderBO budgetOrderBO;
 
     @Autowired
     private IOrderAO orderAO;
@@ -561,9 +566,20 @@ public class RepayBizAOImpl implements IRepayBizAO {
             preCurNodeCode).getNextNode());
         repayBizBO.refreshJudgeFinanceSureReceipt(repayBiz);
 
+        BudgetOrder condition = new BudgetOrder();
+        condition.setRepayBizCode(repayBiz.getCode());
+        List<BudgetOrder> budgetOrderList = budgetOrderAO
+            .queryBudgetOrderList(condition);
+        BudgetOrder budgetOrder = budgetOrderList.get(0);
+        budgetOrder
+            .setCurNodeCode(ERepayBizNode.FINANCE_SURE_RECEIPT.getCode());
+        budgetOrderBO.updateCurNodeCode(budgetOrder);
+
         // 日志记录
+
         ERepayBizNode node = ERepayBizNode.getMap().get(
             repayBiz.getCurNodeCode());
+
         sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getCode(),
             EBizLogType.REPAY_BIZ, req.getCode(), preCurNodeCode,
             node.getCode(), node.getValue(), req.getOperator());
