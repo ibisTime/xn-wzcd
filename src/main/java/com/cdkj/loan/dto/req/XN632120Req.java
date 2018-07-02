@@ -3,7 +3,6 @@ package com.cdkj.loan.dto.req;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 public class XN632120Req {
 
@@ -330,7 +329,6 @@ public class XN632120Req {
     private String type;
 
     // 用款用途
-    @NotEmpty
     private List<XN632120ReqRepointDetail> repointDetailList;
 
     public String getServiceChargeWay() {
