@@ -1641,8 +1641,8 @@
 		UPDATE tdq_budget_order
 		SET
 		cancel_node_code = #{cancelNodeCode}
-		,frozen_status = #{frozenStatus}
 		,cur_node_code = #{curNodeCode}
+		,frozen_status = #{frozenStatus}
 		WHERE code = #{code}
 	</update>
 	

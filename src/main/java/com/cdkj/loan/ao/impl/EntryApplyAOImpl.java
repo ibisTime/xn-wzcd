@@ -164,7 +164,7 @@ public class EntryApplyAOImpl implements IEntryApplyAO {
             String userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
                 entryApply.getMobile(), "888888", entryApply.getMobile(),
                 entryApply.getRealName(), SysConstants.COMMON_ROLE,
-                entryApply.getPosition());
+                entryApply.getPosition(), null);
             archive.setUserId(userId);
             archiveBO.saveArchive(archive);
 
