@@ -1434,7 +1434,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         double companyLoanCs = AmountUtil.div(loanAmount, currentInvoicePrice);
 
         // 判断现发票价格和发票价格是否匹配
-        if (currentInvoicePrice == budgetOrder.getInvoicePrice()) {
+        if (currentInvoicePrice.longValue() == budgetOrder.getInvoicePrice()
+            .longValue()) {
             // 匹配
             budgetOrder.setIsRightInvoice(EBoolean.YES.getCode());
         } else {
