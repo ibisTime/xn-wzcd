@@ -1706,6 +1706,7 @@
 		zf_reason = #{zfReason}
 		,frozen_status = #{frozenStatus}
 		,cancel_node_code = #{cancelNodeCode}
+		,is_submit_cancel = #{isSubmitCancel}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
