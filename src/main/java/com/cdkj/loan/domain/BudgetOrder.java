@@ -530,6 +530,9 @@ public class BudgetOrder extends ABaseDO {
     // 月费率
     private double guarantMonthFeeRate;
 
+    // 银行合同编号
+    private String bankContractCode;
+
     // 登记证书号
     private String regCertificateCode;
 
@@ -1878,6 +1881,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setRepayFirstMonthDatetime(Date repayFirstMonthDatetime) {
         this.repayFirstMonthDatetime = repayFirstMonthDatetime;
+    }
+
+    public String getBankContractCode() {
+        return bankContractCode;
+    }
+
+    public void setBankContractCode(String bankContractCode) {
+        this.bankContractCode = bankContractCode;
     }
 
     public Long getRepayMonthAmount() {
