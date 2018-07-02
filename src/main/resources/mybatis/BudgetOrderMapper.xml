@@ -1459,9 +1459,12 @@
 		,second_number = #{secondNumber}
 		,other_file_pdf = #{otherFilePdf}
 		
+		,should_back_amount = #{shouldBackAmount}
+		,should_back_status = #{shouldBackStatus}		
 		,other_apply_note = #{otherApplyNote}
 		,apply_datetime = #{applyDatetime}
 		,cur_node_code = #{curNodeCode}
+		
 		,repay_biz_code = #{repayBizCode}
 		,type = #{type}
 		WHERE code = #{code}
