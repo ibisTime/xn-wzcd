@@ -111,7 +111,7 @@
 		,user_name
 		,id_no
 		,car_dealer_code
-		,out_car_dealer_name
+		,car_dealer_name
 		,car_type
 		
 		,loan_amount
@@ -138,7 +138,7 @@
 		,#{userName}
 		,#{idNo}
 		,#{carDealerCode}
-		,#{outCarDealerName}
+		,#{carDealerName}
 		,#{carType}
 		
 		,#{loanAmount}
