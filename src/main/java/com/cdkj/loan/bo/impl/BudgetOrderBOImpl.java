@@ -58,9 +58,15 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             String year = today.substring(2, 4);
             String month = today.substring(4, 6);
             String day = today.substring(6);
-            Archive archive = archiveBO
-                .getArchiveByUserid(data.getSaleUserId());
-            String jobNo = archive.getJobNo();
+            /*
+             * Archive archive = archiveBO
+             * .getArchiveByUserid(data.getSaleUserId());
+             */
+            Archive condition = new Archive();
+            condition.setUserId(data.getSaleUserId());
+            List<Archive> archiveList = archiveBO.queryArchiveList(condition);
+            String jobNo = archiveList.get(0).getJobNo();// TODO
+
             data.setApplyDatetimeStart(DateUtil.getTodayStart());
             data.setApplyDatetimeEnd(DateUtil.getTodayEnd());
             long count = budgetOrderDAO.selectTotalCount(data) + 1;
