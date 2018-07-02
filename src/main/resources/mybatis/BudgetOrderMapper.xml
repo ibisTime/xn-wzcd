@@ -1715,8 +1715,9 @@
 	<update id="update_cancelBizAudit" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		frozen_status = #{frozenStatus}
-		,cur_node_code = #{curNodeCode}
+		cur_node_code = #{curNodeCode}
+		,frozen_status = #{frozenStatus}
+		,cancel_node_code = #{cancelNodeCode}
 		WHERE code = #{code}
 	</update>
 
