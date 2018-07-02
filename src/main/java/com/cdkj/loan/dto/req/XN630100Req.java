@@ -17,7 +17,6 @@ public class XN630100Req {
     @NotBlank
     private String type;// 类型
 
-    @NotBlank
     private String provinceNo;// 省份编号
 
     private String cityNo;// 市编号
