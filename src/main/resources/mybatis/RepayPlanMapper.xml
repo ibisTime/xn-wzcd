@@ -451,7 +451,7 @@
 		SET
 		remit_datetime=#{remitDatetime}
 		,remit_bank_code=#{remitBankCode}
-		,remitBillPdf=#{remitBillPdf}
+		,remit_bill_pdf=#{remitBillPdf}
 		,updater=#{updater}
 		,update_datetime=#{updateDatetime}
 		,remark=#{remark}
