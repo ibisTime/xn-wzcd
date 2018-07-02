@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IArchiveBO;
+import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ILogisticsBO;
@@ -19,10 +20,12 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.dao.IBudgetOrderDAO;
 import com.cdkj.loan.domain.Archive;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.Province;
+import com.cdkj.loan.enums.EBankType;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EBudgetOrderShopWay;
@@ -51,26 +54,40 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     @Autowired
     private IProvinceBO provinceBO;
 
+    @Autowired
+    private IBankBO bankBO;
+
     @Override
     public String saveBudgetOrder(BudgetOrder data) {
         String code = null;
         if (data != null) {
-            // OrderNoGenerater.generate(EGeneratePrefix.BUDGET.getCode());
+            Bank bank = bankBO.getBankBySubbranch(data.getLoanBankCode());
+            // 业务归属公司
+            String bizCompany = "H";
+            if (EBankType.ZH.getCode().equals(bank.getBankCode())) {
+                bizCompany = "B";
+            }
+            // 新车二手车
+            String shopWay = "X";
+            if (EBudgetOrderShopWay.OLD.getCode().equals(data.getShopWay())) {
+                shopWay = "R";
+            }
             Department company = departmentBO.getDepartment(data
                 .getCompanyCode());
-            String provinceNo = company.getProvinceNo();
             Province provinceCondition = new Province();
-            provinceCondition.setName(provinceNo);
+            provinceCondition.setName(company.getProvinceNo());
             Province province = provinceBO.getProvince(provinceCondition);
+            // 省份编号
+            String provinceNo = "33";
+            if (null != province) {
+                provinceNo = province.getProvinceNo();
+            }
 
             String today = DateUtil.getToday(DateUtil.DB_DATE_FORMAT_STRING);// yyyyMMdd
             String year = today.substring(2, 4);
             String month = today.substring(4, 6);
             String day = today.substring(6);
-            /*
-             * Archive archive = archiveBO
-             * .getArchiveByUserid(data.getSaleUserId());
-             */
+
             Archive condition = new Archive();
             condition.setUserId(data.getSaleUserId());
             List<Archive> archiveList = archiveBO.queryArchiveList(condition);
@@ -81,14 +98,12 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             long count = budgetOrderDAO.selectTotalCount(data) + 1;
             String bizNO = String.valueOf(count);
             if (bizNO.length() == 1) {
+                bizNO = "00" + bizNO;
+            } else if (bizNO.length() == 2) {
                 bizNO = "0" + bizNO;
             }
-            String shopWay = "A";
-            if (EBudgetOrderShopWay.OLD.getCode().equals(data.getShopWay())) {
-                shopWay = "B";
-            }
-            code = province.getProvinceNo() + year + month + day + jobNo
-                    + bizNO + shopWay;// 1118070200701A
+            code = bizCompany + shopWay + provinceNo + year + month + day
+                    + jobNo + bizNO;
             data.setCode(code);
             budgetOrderDAO.insert(data);
         }
