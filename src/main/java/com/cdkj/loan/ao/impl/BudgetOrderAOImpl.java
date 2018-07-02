@@ -506,6 +506,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 data.setShouldBackStatus(EBoolean.YES.getCode());
                 countRepointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
                     .getCode());
+                countRepointDetail.setCompanyName(xn632290Res.getCompanyName());
+                countRepointDetail
+                    .setAccountNo(xn632290Res.getBankcardNumber());
+                countRepointDetail.setOpenBankName(xn632290Res.getSubbranch());
+
             }
             // 协议内返点数据
             if (EUseMoneyPurpose.PROTOCOL_INNER.getCode().equals(
@@ -513,7 +518,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 countRepointDetail
                     .setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_OUTER
                         .getCode());
-                countRepointDetail.setType(ERepointDetailType.NORMAL.getCode());
+
                 countRepointDetail.setCompanyCode(data.getCompanyCode());
                 countRepointDetail.setBudgetCode(data.getCode());
                 CreditUser user = creditUserBO.getCreditUserByCreditCode(
@@ -530,6 +535,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 Double benchmarkRate = benchmarkRate(data);
                 countRepointDetail.setBenchmarkRate(benchmarkRate);
 
+                CollectBankcard bankcard = collectBankcardBO
+                    .getCollectBankcard(xn632290Res.getAccountCode());
+                countRepointDetail.setAccountNo(bankcard.getBankcardNumber());
+                countRepointDetail.setOpenBankName(bankcard.getBankName()
+                        + bankcard.getSubbranch());
+                countRepointDetail.setAccountName(bankcard.getRealName());
+                countRepointDetail.setAccountCode(xn632290Res.getAccountCode());
+
                 countRepointDetail.setFee(fee);
                 countRepointDetail
                     .setCurNodeCode(ERepointDetailStatus.TODO_MAKE_BILL
@@ -538,13 +551,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             countRepointDetail.setBudgetCode(data.getCode());
             countRepointDetail.setRepointAmount(StringValidater
                 .toLong(xn632290Res.getRepointAmount()));
-            countRepointDetail.setAccountCode(xn632290Res.getAccountCode());
-            CollectBankcard bankcard = collectBankcardBO
-                .getCollectBankcard(xn632290Res.getAccountCode());
-            countRepointDetail.setAccountNo(bankcard.getBankcardNumber());
-            countRepointDetail.setOpenBankName(bankcard.getBankName()
-                    + bankcard.getSubbranch());
-            countRepointDetail.setAccountName(bankcard.getRealName());
+            countRepointDetail.setType(ERepointDetailType.NORMAL.getCode());
+
             repointDetailBO.saveRepointDetail(countRepointDetail);
         }
         // 删除
