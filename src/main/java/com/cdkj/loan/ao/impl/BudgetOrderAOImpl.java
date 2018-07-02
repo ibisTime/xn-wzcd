@@ -482,19 +482,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 协议内返点 和 垫资应退按揭款
         XN632290Req xn632290Req = new XN632290Req();
         xn632290Req.setBudgetOrderCode(data.getCode());
-        xn632290Req.setCarDealerCode(data.getCarDealerCode());
-        xn632290Req.setLoanAmount(String.valueOf(data.getLoanAmount()));
-        xn632290Req.setFee(String.valueOf(data.getFee()));
+        xn632290Req.setCarDealerCode(req.getCarDealerCode());
+        xn632290Req.setLoanAmount(String.valueOf(req.getLoanAmount()));
+        xn632290Req.setFee(String.valueOf(req.getFee()));
         xn632290Req.setLoanPeriods(String.valueOf(data.getLoanPeriods()));
-        xn632290Req.setRateType(data.getRateType());
-        xn632290Req.setBankRate(String.valueOf(data.getBankRate()));
+        xn632290Req.setRateType(req.getRateType());
+        xn632290Req.setBankRate(String.valueOf(req.getBankRate()));
         xn632290Req.setGpsFee(String.valueOf(data.getGpsFee()));
         xn632290Req.setLyAmount(String.valueOf(data.getLyAmount()));
         xn632290Req.setFxAmount(String.valueOf(data.getFxAmount()));
         xn632290Req.setOtherFee(String.valueOf(data.getOtherFee()));
-        xn632290Req.setGpsFeeWay(data.getGpsFeeWay());
-        xn632290Req.setFeeWay(data.getServiceChargeWay());
-        xn632290Req.setCarDealerSubsidy(String.valueOf(data
+        xn632290Req.setGpsFeeWay(req.getGpsFeeWay());
+        xn632290Req.setFeeWay(req.getServiceChargeWay());
+        xn632290Req.setCarDealerSubsidy(String.valueOf(req
             .getCarDealerSubsidy()));
         List<XN632290Res> repointDetail = repointDetailAO.showRepointDetail(
             xn632290Req, loanAmount);

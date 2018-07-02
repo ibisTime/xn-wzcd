@@ -223,7 +223,7 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
                 res.setRepointAmount(String.valueOf(AmountUtil.mul(
                     actualRepointAmount, pointRate)));
                 res.setId(String.valueOf(carDealerProtocol.getId()));
-                res.setAccountCode(collectBankcard.getBankcardNumber());
+                res.setAccountCode(collectBankcard.getCode());
                 CarDealer carDealer = carDealerBO.getCarDealer(req
                     .getCarDealerCode());
                 res.setCompanyName(carDealer.getFullName());
@@ -266,6 +266,7 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         res.setRepointAmount(String.valueOf(shouldBackAmount));// 应退按揭款金额=贷款金额-收客户手续费（按揭款扣）-GPS收费（按揭款扣）-厂家贴息
         Department department = departmentBO.getDepartment(budgetOrder
             .getCompanyCode());
+
         res.setCompanyName(department.getName());
         CollectBankcard condition2 = new CollectBankcard();
         condition2.setCompanyCode(department.getCode());
@@ -273,6 +274,7 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         List<CollectBankcard> list2 = collectBankcardBO
             .queryCollectBankcardByCompanyCodeAndType(condition2);
         CollectBankcard collectBankcard2 = list2.get(0);
+        res.setAccountCode(collectBankcard2.getCode());
         res.setBankcardNumber(collectBankcard2.getBankcardNumber());
         res.setSubbranch(collectBankcard2.getRealName());
         resList.add(res);
