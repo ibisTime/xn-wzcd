@@ -54,9 +54,6 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
                 // 更新gps使用状态为使用中
                 gpsBO.refreshUseGps(gpsAz.getCode(), budgetOrder);
             }
-        } else {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "gps安装列表为空！");
         }
     }
 

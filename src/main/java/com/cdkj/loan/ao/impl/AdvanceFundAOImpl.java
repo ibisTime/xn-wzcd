@@ -443,6 +443,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
                 .getBudgetOrder(data.getBudgetCode());
             data.setCreditCode(budgetOrder.getCreditCode());
             data.setBudgetOrder(budgetOrder);
+            data.setApplyUserIdNo(budgetOrder.getIdNo());
         }
         if (StringUtils.isNotBlank(data.getCompanyCode())) {
             Department company = departmentBO

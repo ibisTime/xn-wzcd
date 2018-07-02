@@ -133,6 +133,9 @@ public class AdvanceFund extends ABaseDO {
     // 申请人
     private String applyName;
 
+    // 申请人
+    private String applyUserIdNo;
+
     private BudgetOrder budgetOrder;
 
     public Long getLoanAmount() {
@@ -141,6 +144,14 @@ public class AdvanceFund extends ABaseDO {
 
     public void setLoanAmount(Long loanAmount) {
         this.loanAmount = loanAmount;
+    }
+
+    public String getApplyUserIdNo() {
+        return applyUserIdNo;
+    }
+
+    public void setApplyUserIdNo(String applyUserIdNo) {
+        this.applyUserIdNo = applyUserIdNo;
     }
 
     public String getCollectBankName() {
