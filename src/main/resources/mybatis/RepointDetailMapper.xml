@@ -201,6 +201,13 @@
 		tdqt_repoint_detail  
 		WHERE budget_code = #{budgetCode} AND type = #{type}
 	</delete>
+	
+	<update id="update_repointDetailType">
+		UPDATE tdqt_repoint_detail
+		SET
+		type = #{type}
+		WHERE code = #{code}
+	</update>
 
 
 </mapper>

@@ -71,4 +71,10 @@ public class RepointDetailDAOImpl extends AMybatisTemplate implements
 
     }
 
+    @Override
+    public void updateRepointDetailType(RepointDetail data) {
+        super.update(NAMESPACE.concat("update_repointDetailType"), data);
+
+    }
+
 }
