@@ -43,6 +43,9 @@ public class XN632120Req {
     // 利率类型
     private String rateType;
 
+    // 贷款金额
+    private Long loanAmount;
+
     // 是否需要贷前调查
     private String isSurvey;
 
@@ -1074,6 +1077,14 @@ public class XN632120Req {
 
     public void setSecondOdometer(String secondOdometer) {
         this.secondOdometer = secondOdometer;
+    }
+
+    public Long getLoanAmount() {
+        return loanAmount;
+    }
+
+    public void setLoanAmount(Long loanAmount) {
+        this.loanAmount = loanAmount;
     }
 
     public String getSecondCarFrontPic() {

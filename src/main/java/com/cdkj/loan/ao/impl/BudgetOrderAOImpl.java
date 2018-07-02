@@ -236,7 +236,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setIsSurvey(req.getIsSurvey());
 
         data.setBankRate(StringValidater.toDouble(req.getBankRate()));
-        Long loanAmount = data.getLoanAmount();
+        Long loanAmount = null;
+        if (req.getLoanAmount() == null) {
+            loanAmount = data.getLoanAmount();
+        } else {
+            loanAmount = req.getLoanAmount();
+        }
         Long invoicePrice = StringValidater.toLong(req.getInvoicePrice());
         data.setCompanyLoanCs(AmountUtil.div(loanAmount, invoicePrice));// 我司贷款成数
 
@@ -504,6 +509,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 data.setShouldBackAmount(StringValidater.toLong(xn632290Res
                     .getRepointAmount()));
                 data.setShouldBackStatus(EBoolean.YES.getCode());
+
                 countRepointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
                     .getCode());
                 countRepointDetail.setCompanyName(xn632290Res.getCompanyName());
@@ -513,6 +519,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
             }
             // 协议内返点数据
+
             if (EUseMoneyPurpose.PROTOCOL_INNER.getCode().equals(
                 xn632290Res.getUseMoneyPurpose())) {
                 countRepointDetail
@@ -549,6 +556,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                         .getCode());
             }
             countRepointDetail.setBudgetCode(data.getCode());
+
             countRepointDetail.setRepointAmount(StringValidater
                 .toLong(xn632290Res.getRepointAmount()));
             countRepointDetail.setType(ERepointDetailType.NORMAL.getCode());
