@@ -91,7 +91,10 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             Archive condition = new Archive();
             condition.setUserId(data.getSaleUserId());
             List<Archive> archiveList = archiveBO.queryArchiveList(condition);
-            String jobNo = archiveList.get(0).getJobNo();// TODO
+            String jobNo = "000";
+            if (!archiveList.isEmpty()) {
+                jobNo = archiveList.get(0).getJobNo();// TODO
+            }
 
             BudgetOrder budgetOrderCondition = new BudgetOrder();
             budgetOrderCondition

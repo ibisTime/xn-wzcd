@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ISYSUserAO;
+import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ISYSRoleBO;
@@ -18,6 +19,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.common.PwdUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
+import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSRole;
 import com.cdkj.loan.domain.SYSUser;
@@ -41,9 +43,13 @@ public class SYSUserAOImpl implements ISYSUserAO {
     @Autowired
     private IBizTeamBO bizTeamBO;
 
+    @Autowired
+    private IArchiveBO archiveBO;
+
     @Override
     public String doAddUser(String type, String loginName, String loginPwd,
-            String mobile, String realName, String roleCode, String postCode) {
+            String mobile, String realName, String roleCode, String postCode,
+            String arvhiveCode) {
         SYSUser data = new SYSUser();
         String userId = OrderNoGenerater.generate("U");
         data.setUserId(userId);
@@ -66,7 +72,15 @@ public class SYSUserAOImpl implements ISYSUserAO {
 
         data.setCompanyCode(company.getParentCode());
         data.setStatus(EUserStatus.NORMAL.getCode());
+
         sysUserBO.saveUser(data);
+
+        if (StringUtils.isNotBlank(arvhiveCode)) {
+            Archive archive = archiveBO.getArchive(arvhiveCode);
+            archive.setUserId(userId);
+            archiveBO.refreshArchive(archive);
+        }
+
         return userId;
     }
 

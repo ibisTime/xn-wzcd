@@ -42,6 +42,9 @@ public class XN630050Req {
     // 备注（选填）
     private String remark;
 
+    @NotBlank(message = "人事档案编号不能为空")
+    private String archiveCode;
+
     public String getPostCode() {
         return postCode;
     }
@@ -112,6 +115,14 @@ public class XN630050Req {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getArchiveCode() {
+        return archiveCode;
+    }
+
+    public void setArchiveCode(String archiveCode) {
+        this.archiveCode = archiveCode;
     }
 
 }

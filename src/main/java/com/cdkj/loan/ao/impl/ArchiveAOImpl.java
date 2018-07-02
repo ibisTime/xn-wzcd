@@ -85,9 +85,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(
-            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
+            req.getSocialSecurityRegDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -133,7 +133,7 @@ public class ArchiveAOImpl implements IArchiveAO {
         if (sysUserLoginName == null && sysUserMobile == null) {
             userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
                 req.getMobile(), "888888", req.getMobile(), req.getRealName(),
-                SysConstants.COMMON_ROLE, req.getPostCode());
+                SysConstants.COMMON_ROLE, req.getPostCode(), null);
         } else {
             if (sysUserLoginName != null) {
                 userId = sysUserLoginName.getUserId();
@@ -195,9 +195,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(
-            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
+            req.getSocialSecurityRegDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
