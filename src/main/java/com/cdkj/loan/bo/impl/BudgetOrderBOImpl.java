@@ -93,9 +93,11 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             List<Archive> archiveList = archiveBO.queryArchiveList(condition);
             String jobNo = archiveList.get(0).getJobNo();// TODO
 
-            data.setApplyDatetimeStart(DateUtil.getTodayStart());
-            data.setApplyDatetimeEnd(DateUtil.getTodayEnd());
-            long count = budgetOrderDAO.selectTotalCount(data) + 1;
+            BudgetOrder budgetOrderCondition = new BudgetOrder();
+            budgetOrderCondition
+                .setApplyDatetimeStart(DateUtil.getTodayStart());
+            budgetOrderCondition.setApplyDatetimeEnd(DateUtil.getTodayEnd());
+            long count = budgetOrderDAO.selectTotalCount(budgetOrderCondition) + 1;
             String bizNO = String.valueOf(count);
             if (bizNO.length() == 1) {
                 bizNO = "00" + bizNO;
