@@ -1306,11 +1306,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
 
         if (StringUtils.isNotBlank(budgetOrder.getGuarantor1IdNo())) {
+            if (budgetOrder.getGuarantor1IdNo().length() != 18) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "担保人1身份证号不合法！");
+            }
             String sex = getSexByIdNo(budgetOrder.getGuarantor1IdNo());
             budgetOrder.setGuarantor1Sex(sex);
         }
 
         if (StringUtils.isNotBlank(budgetOrder.getGuarantor2IdNo())) {
+            if (budgetOrder.getGuarantor1IdNo().length() != 18) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "担保人2身份证号不合法！");
+            }
             String sex = getSexByIdNo(budgetOrder.getGuarantor2IdNo());
             budgetOrder.setGuarantor2Sex(sex);
         }
