@@ -61,6 +61,7 @@ import com.cdkj.loan.domain.InsuranceCompany;
 import com.cdkj.loan.domain.LoanCs;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
+import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.domain.RepointDetail;
 import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.domain.SYSUser;
@@ -1295,6 +1296,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (StringUtils.isNotBlank(budgetOrder.getGuarantor2IdNo())) {
             String sex = getSexByIdNo(budgetOrder.getGuarantor2IdNo());
             budgetOrder.setGuarantor2Sex(sex);
+        }
+
+        if (StringUtils.isNotBlank(budgetOrder.getRepayBizCode())) {
+            List<RepayPlan> planList = repayPlanBO
+                .queryRepayPlanListByRepayBizCode(
+                    budgetOrder.getRepayBizCode());
+            budgetOrder.setRepayPlansList(planList);
         }
 
         // 获取返点列表
