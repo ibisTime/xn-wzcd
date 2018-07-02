@@ -7,25 +7,29 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
-import com.cdkj.loan.core.OrderNoGenerater;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.dao.IBudgetOrderDAO;
+import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBudgetOrderNode;
-import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.EBudgetOrderShopWay;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
-        implements IBudgetOrderBO {
+public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
+        IBudgetOrderBO {
 
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
@@ -36,11 +40,39 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     @Autowired
     private ILogisticsBO logisticsBO;
 
+    @Autowired
+    private IDepartmentBO departmentBO;
+
+    @Autowired
+    private IArchiveBO archiveBO;
+
     @Override
     public String saveBudgetOrder(BudgetOrder data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.BUDGET.getCode());
+            // OrderNoGenerater.generate(EGeneratePrefix.BUDGET.getCode());
+            Department company = departmentBO.getDepartment(data
+                .getCompanyCode());
+            String provinceNo = company.getProvinceNo();
+            String today = DateUtil.getToday(DateUtil.DB_DATE_FORMAT_STRING);// yyyyMMdd
+            String year = today.substring(2, 4);
+            String month = today.substring(4, 6);
+            String day = today.substring(6);
+            Archive archive = archiveBO
+                .getArchiveByUserid(data.getSaleUserId());
+            String jobNo = archive.getJobNo();
+            data.setApplyDatetimeStart(DateUtil.getTodayStart());
+            data.setApplyDatetimeEnd(DateUtil.getTodayEnd());
+            long count = budgetOrderDAO.selectTotalCount(data) + 1;
+            String bizNO = String.valueOf(count);
+            if (bizNO.length() == 1) {
+                bizNO = "0" + bizNO;
+            }
+            String shopWay = "A";
+            if (EBudgetOrderShopWay.OLD.getCode().equals(data.getShopWay())) {
+                shopWay = "B";
+            }
+            code = provinceNo + year + month + day + jobNo + bizNO + shopWay;// 1118070200701A
             data.setCode(code);
             budgetOrderDAO.insert(data);
         }
@@ -162,13 +194,13 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         BudgetOrder budgetOrder = getBudgetOrder(code);
         // String preCurrentNode = budgetOrder.getCurNodeCode();
 
-        NodeFlow nodeFlow = nodeFlowBO
-            .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
+            .getCurNodeCode());
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
-        if (EBudgetOrderNode.FEN_CAR_SEND_LOGISTICS.getCode()
-            .equals(budgetOrder.getCurNodeCode())
+        if (EBudgetOrderNode.FEN_CAR_SEND_LOGISTICS.getCode().equals(
+            budgetOrder.getCurNodeCode())
                 || EBudgetOrderNode.HEADQUARTERS_CAR_SEND_BANK_MATERIALS
                     .getCode().equals(budgetOrder.getCurNodeCode())) {
             NodeFlow nodeFlow2 = nodeFlowBO

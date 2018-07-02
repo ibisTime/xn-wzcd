@@ -127,4 +127,12 @@ public class RepointDetailBOImpl extends PaginableBOImpl<RepointDetail>
         }
 
     }
+
+    @Override
+    public void updateRepointDetailType(RepointDetail data) {
+        if (null != data) {
+            repointDetailDAO.updateRepointDetailType(data);
+        }
+
+    }
 }
