@@ -12,6 +12,7 @@ import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.IProvinceBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
@@ -21,6 +22,7 @@ import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.NodeFlow;
+import com.cdkj.loan.domain.Province;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EBudgetOrderShopWay;
@@ -46,6 +48,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     @Autowired
     private IArchiveBO archiveBO;
 
+    @Autowired
+    private IProvinceBO provinceBO;
+
     @Override
     public String saveBudgetOrder(BudgetOrder data) {
         String code = null;
@@ -54,6 +59,10 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             Department company = departmentBO.getDepartment(data
                 .getCompanyCode());
             String provinceNo = company.getProvinceNo();
+            Province provinceCondition = new Province();
+            provinceCondition.setName(provinceNo);
+            Province province = provinceBO.getProvince(provinceCondition);
+
             String today = DateUtil.getToday(DateUtil.DB_DATE_FORMAT_STRING);// yyyyMMdd
             String year = today.substring(2, 4);
             String month = today.substring(4, 6);
@@ -78,7 +87,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             if (EBudgetOrderShopWay.OLD.getCode().equals(data.getShopWay())) {
                 shopWay = "B";
             }
-            code = provinceNo + year + month + day + jobNo + bizNO + shopWay;// 1118070200701A
+            code = province.getProvinceNo() + year + month + day + jobNo
+                    + bizNO + shopWay;// 1118070200701A
             data.setCode(code);
             budgetOrderDAO.insert(data);
         }
