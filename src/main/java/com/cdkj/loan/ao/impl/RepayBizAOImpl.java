@@ -555,14 +555,17 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setJudgeNote(req.getJudgeNote());
         repayBiz.setUpdater(req.getOperator());
         repayBiz.setUpdateDatetime(new Date());
+
+        String preCurNodeCode = repayBiz.getCurNodeCode();
+        repayBiz.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+            preCurNodeCode).getNextNode());
         repayBizBO.refreshJudgeFinanceSureReceipt(repayBiz);
 
         // 日志记录
         ERepayBizNode node = ERepayBizNode.getMap().get(
-            nodeFlowBO.getNodeFlowByCurrentNode(repayBiz.getCurNodeCode())
-                .getNextNode());
+            repayBiz.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getCode(),
-            EBizLogType.REPAY_BIZ, req.getCode(), repayBiz.getCurNodeCode(),
+            EBizLogType.REPAY_BIZ, req.getCode(), preCurNodeCode,
             node.getCode(), node.getValue(), req.getOperator());
     }
 
