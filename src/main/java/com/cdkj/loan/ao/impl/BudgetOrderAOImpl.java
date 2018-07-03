@@ -513,7 +513,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
                 countRepointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
                     .getCode());
-                countRepointDetail.setCompanyName(xn632290Res.getCompanyName());
+
                 countRepointDetail
                     .setAccountNo(xn632290Res.getBankcardNumber());
                 countRepointDetail.setOpenBankName(xn632290Res.getSubbranch());
@@ -524,7 +524,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             if (EUseMoneyPurpose.PROTOCOL_INNER.getCode().equals(
                 xn632290Res.getUseMoneyPurpose())) {
                 countRepointDetail
-                    .setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_OUTER
+                    .setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
                         .getCode());
 
                 countRepointDetail.setCompanyCode(data.getCompanyCode());
@@ -546,8 +546,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 CollectBankcard bankcard = collectBankcardBO
                     .getCollectBankcard(xn632290Res.getAccountCode());
                 countRepointDetail.setAccountNo(bankcard.getBankcardNumber());
-                countRepointDetail.setOpenBankName(bankcard.getBankName()
-                        + bankcard.getSubbranch());
+                countRepointDetail.setOpenBankName(bankcard.getSubbranch());
                 countRepointDetail.setAccountName(bankcard.getRealName());
                 countRepointDetail.setAccountCode(xn632290Res.getAccountCode());
 
@@ -557,7 +556,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                         .getCode());
             }
             countRepointDetail.setBudgetCode(data.getCode());
-
+            countRepointDetail.setCompanyName(xn632290Res.getCompanyName());
             countRepointDetail.setRepointAmount(StringValidater
                 .toLong(xn632290Res.getRepointAmount()));
             countRepointDetail.setType(ERepointDetailType.NORMAL.getCode());
