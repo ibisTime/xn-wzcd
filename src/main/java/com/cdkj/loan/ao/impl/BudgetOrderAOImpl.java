@@ -439,6 +439,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 data.setShouldBackStatus(EBoolean.NO.getCode());
                 repointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
                     .getCode());
+                repointDetail.setAccountNo(xn632120ReqRepointDetail
+                    .getAccountNO());
+                repointDetail.setCarDealerName(xn632120ReqRepointDetail
+                    .getCarDealerName());
+                repointDetail.setCompanyCode(data.getCompanyCode());
 
             }
             // 协议外返点
@@ -2414,7 +2419,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     .setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_OUTER
                         .getCode());
                 repointDetail.setType(ERepointDetailType.NORMAL.getCode());
-                repointDetail.setCompanyCode(data.getCompanyCode());
+
                 repointDetail.setBudgetCode(data.getCode());
                 CreditUser user = creditUserBO.getCreditUserByCreditCode(
                     data.getCreditCode(), ELoanRole.APPLY_USER);
@@ -2434,6 +2439,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     .setCurNodeCode(ERepointDetailStatus.TODO_MAKE_BILL
                         .getCode());
             }
+            repointDetail.setCompanyCode(data.getCompanyCode());
             repointDetail.setRepointAmount(StringValidater
                 .toLong(xn632120ReqRepointDetail.getRepointAmount()));
             repointDetail.setAccountNo(xn632120ReqRepointDetail.getAccountNO());
