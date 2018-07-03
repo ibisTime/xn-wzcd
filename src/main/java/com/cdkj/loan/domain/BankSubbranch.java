@@ -48,7 +48,7 @@ public class BankSubbranch extends ABaseDO {
     private String bankClient;
 
     // 委托有效期
-    private Date clientValidDate;
+    private Integer clientValidDate;
 
     // 授权人姓名
     private String autherName;
@@ -195,11 +195,11 @@ public class BankSubbranch extends ABaseDO {
         this.bankClient = bankClient;
     }
 
-    public Date getClientValidDate() {
+    public Integer getClientValidDate() {
         return clientValidDate;
     }
 
-    public void setClientValidDate(Date clientValidDate) {
+    public void setClientValidDate(Integer clientValidDate) {
         this.clientValidDate = clientValidDate;
     }
 
