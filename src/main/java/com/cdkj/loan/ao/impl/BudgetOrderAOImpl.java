@@ -440,7 +440,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 repointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
                     .getCode());
                 repointDetail.setAccountNo(xn632120ReqRepointDetail
-                    .getAccountNO());
+                    .getAccountNo());
                 repointDetail.setCarDealerName(xn632120ReqRepointDetail
                     .getCarDealerName());
                 repointDetail.setCompanyCode(data.getCompanyCode());
@@ -476,7 +476,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             repointDetail.setBudgetCode(data.getCode());
             repointDetail.setRepointAmount(StringValidater
                 .toLong(xn632120ReqRepointDetail.getRepointAmount()));
-            repointDetail.setAccountNo(xn632120ReqRepointDetail.getAccountNO());
+            repointDetail.setAccountNo(xn632120ReqRepointDetail.getAccountNo());
             repointDetail.setOpenBankName(xn632120ReqRepointDetail
                 .getOpenBankName());
             repointDetail.setAccountName(xn632120ReqRepointDetail
@@ -2442,7 +2442,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             repointDetail.setCompanyCode(data.getCompanyCode());
             repointDetail.setRepointAmount(StringValidater
                 .toLong(xn632120ReqRepointDetail.getRepointAmount()));
-            repointDetail.setAccountNo(xn632120ReqRepointDetail.getAccountNO());
+            repointDetail.setAccountNo(xn632120ReqRepointDetail.getAccountNo());
             repointDetail.setOpenBankName(xn632120ReqRepointDetail
                 .getOpenBankName());
             repointDetail.setAccountName(xn632120ReqRepointDetail
