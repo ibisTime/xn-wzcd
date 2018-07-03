@@ -13,10 +13,10 @@
 				AND t.id = #{id}
 			</if>
 			<if test="areaNoForQuery != null and areaNoForQuery != '' ">
-				AND t.area_no like "%"#{areaNo}%
+				AND t.area_no like "%"#{areaNoForQuery}"%"
 			</if>
 			<if test="areaNameForQuery != null and areaNameForQuery != '' ">
-				AND t.area_name like "%"#{areaName}%
+				AND t.area_name like "%"#{areaNameForQuery}"%"
 			</if>
 		</trim>
 	</sql>
