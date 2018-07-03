@@ -18,7 +18,7 @@ public class XN632120ReqRepointDetail {
     private String carDealerName;
 
     // 账号
-    private String accountNO;
+    private String accountNo;
 
     // 开户行
     private String openBankName;
@@ -50,12 +50,12 @@ public class XN632120ReqRepointDetail {
         this.carDealerName = carDealerName;
     }
 
-    public String getAccountNO() {
-        return accountNO;
+    public String getAccountNo() {
+        return accountNo;
     }
 
-    public void setAccountNO(String accountNO) {
-        this.accountNO = accountNO;
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
     }
 
     public String getOpenBankName() {
