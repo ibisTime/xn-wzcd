@@ -27,8 +27,8 @@ public class XN632017 extends AProcessor {
     public Object doBusiness() throws BizException {
         Area condition = new Area();
         condition.setId(StringValidater.toInteger(req.getId()));
-        condition.setAreaNo(req.getAreaNo());
-        condition.setAreaName(req.getAreaName());
+        condition.setAreaNoForQuery(req.getAreaNo());
+        condition.setAreaNameForQuery(req.getAreaName());
         return areaAO.queryAreaList(condition);
     }
 

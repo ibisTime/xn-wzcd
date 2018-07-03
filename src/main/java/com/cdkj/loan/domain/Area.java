@@ -24,12 +24,36 @@ public class Area extends ABaseDO {
     // 身份证区域名称
     private String areaName;
 
+    /*-----------辅助字段-------------*/
+
+    // 身份证区域号模糊查
+    private String areaNoForQuery;
+
+    // 身份证区域名称模糊查
+    private String areaNameForQuery;
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getAreaNoForQuery() {
+        return areaNoForQuery;
+    }
+
+    public void setAreaNoForQuery(String areaNoForQuery) {
+        this.areaNoForQuery = areaNoForQuery;
+    }
+
+    public String getAreaNameForQuery() {
+        return areaNameForQuery;
+    }
+
+    public void setAreaNameForQuery(String areaNameForQuery) {
+        this.areaNameForQuery = areaNameForQuery;
     }
 
     public String getAreaNo() {
