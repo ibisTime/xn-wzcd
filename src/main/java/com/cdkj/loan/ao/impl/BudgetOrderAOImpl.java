@@ -505,7 +505,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             if (EUseMoneyPurpose.MORTGAGE.getCode().equals(
                 xn632290Res.getUseMoneyPurpose())) {
                 if (EIsAdvanceFund.NO.getCode().equals(data.getIsAdvanceFund())) {
-                    break;
+                    continue;
                 }
                 data.setShouldBackAmount(StringValidater.toLong(xn632290Res
                     .getRepointAmount()));
