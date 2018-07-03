@@ -64,7 +64,7 @@ CREATE TABLE `tb_bank_subbranch` (
   `phone_number` varchar(32) DEFAULT NULL COMMENT '电话号码',
   `post_code` varchar(32) DEFAULT NULL COMMENT '邮编',
   `bank_client` varchar(255) DEFAULT NULL COMMENT '银行委托人',
-  `client_valid_date` datetime DEFAULT NULL COMMENT '委托有效期',
+  `client_valid_date` int(11) DEFAULT NULL COMMENT '委托有效期',
   `auther_name` varchar(255) DEFAULT NULL COMMENT '授权人姓名',
   `auther_phone_number` varchar(32) DEFAULT NULL COMMENT '授权人电话',
   `auther_id_no` varchar(255) DEFAULT NULL COMMENT '授权人身份证',
