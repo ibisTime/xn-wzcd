@@ -27,6 +27,7 @@ import com.cdkj.loan.domain.RepointDetail;
 import com.cdkj.loan.dto.req.XN632290Req;
 import com.cdkj.loan.dto.res.XN632290Res;
 import com.cdkj.loan.enums.EBankType;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ECollectBankcardType;
 import com.cdkj.loan.enums.EFeeWay;
 import com.cdkj.loan.enums.EGpsFeeWay;
@@ -155,6 +156,10 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
             } else if (ERateType.ZT.getCode().equals(req.getRateType())) {
                 benchmarkRate = carDealerProtocol.getPlatZkRate36();
             }
+        }
+        if (bankRate < benchmarkRate) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "银行利率小于我司基准利率，不符合贷前准入单提交条件！");
         }
         // 返点支付总金额
         Long repointAmount = null;
