@@ -2194,7 +2194,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setApplyUserCompany(req.getApplyUserCompany());
         data.setApplyUserDuty(req.getApplyUserDuty());
         data.setCustomerType(req.getCustomerType());
-        data.setOutCarDealerName(req.getCarDealerCode());
+        data.setOutCarDealerName(req.getOutCarDealerName());
         data.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
 
         data.setCarModel(req.getCarModel());
