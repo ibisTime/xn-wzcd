@@ -87,10 +87,10 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
 
     @Override
     public CreditUser getCreditUserByCreditCode(String creditCode,
-            ELoanRole creditUserRelation) {
+            ELoanRole loanRole) {
         CreditUser condition = new CreditUser();
         condition.setCreditCode(creditCode);
-        condition.setLoanRole(creditUserRelation.getCode());
+        condition.setLoanRole(loanRole.getCode());
 
         return creditUserDAO.select(condition);
     }
