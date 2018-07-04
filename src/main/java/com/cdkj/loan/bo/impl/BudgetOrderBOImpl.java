@@ -7,25 +7,34 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.IArchiveBO;
+import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.IProvinceBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
-import com.cdkj.loan.core.OrderNoGenerater;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.dao.IBudgetOrderDAO;
+import com.cdkj.loan.domain.Archive;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.NodeFlow;
+import com.cdkj.loan.domain.Province;
+import com.cdkj.loan.enums.EBankType;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBudgetOrderNode;
-import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.EBudgetOrderShopWay;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
-        implements IBudgetOrderBO {
+public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
+        IBudgetOrderBO {
 
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
@@ -36,11 +45,70 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     @Autowired
     private ILogisticsBO logisticsBO;
 
+    @Autowired
+    private IDepartmentBO departmentBO;
+
+    @Autowired
+    private IArchiveBO archiveBO;
+
+    @Autowired
+    private IProvinceBO provinceBO;
+
+    @Autowired
+    private IBankBO bankBO;
+
     @Override
     public String saveBudgetOrder(BudgetOrder data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.BUDGET.getCode());
+            Bank bank = bankBO.getBankBySubbranch(data.getLoanBankCode());
+            // 业务归属公司
+            String bizCompany = "H";
+            if (EBankType.ZH.getCode().equals(bank.getBankCode())) {
+                bizCompany = "B";
+            }
+            // 新车二手车
+            String shopWay = "X";
+            if (EBudgetOrderShopWay.OLD.getCode().equals(data.getShopWay())) {
+                shopWay = "R";
+            }
+            Department company = departmentBO.getDepartment(data
+                .getCompanyCode());
+            Province provinceCondition = new Province();
+            provinceCondition.setName(company.getProvinceNo());
+            Province province = provinceBO.getProvince(provinceCondition);
+            // 省份编号
+            String provinceNo = "33";
+            if (null != province) {
+                provinceNo = province.getProvinceNo();
+            }
+
+            String today = DateUtil.getToday(DateUtil.DB_DATE_FORMAT_STRING);// yyyyMMdd
+            String year = today.substring(2, 4);
+            String month = today.substring(4, 6);
+            String day = today.substring(6);
+
+            Archive condition = new Archive();
+            condition.setUserId(data.getSaleUserId());
+            List<Archive> archiveList = archiveBO.queryArchiveList(condition);
+            String jobNo = "000";
+            if (!archiveList.isEmpty()) {
+                jobNo = archiveList.get(0).getJobNo();// TODO
+            }
+
+            BudgetOrder budgetOrderCondition = new BudgetOrder();
+            budgetOrderCondition
+                .setApplyDatetimeStart(DateUtil.getTodayStart());
+            budgetOrderCondition.setApplyDatetimeEnd(DateUtil.getTodayEnd());
+            long count = budgetOrderDAO.selectTotalCount(budgetOrderCondition) + 1;
+            String bizNO = String.valueOf(count);
+            if (bizNO.length() == 1) {
+                bizNO = "00" + bizNO;
+            } else if (bizNO.length() == 2) {
+                bizNO = "0" + bizNO;
+            }
+            code = bizCompany + shopWay + provinceNo + year + month + day
+                    + jobNo + bizNO;
             data.setCode(code);
             budgetOrderDAO.insert(data);
         }
@@ -161,17 +229,14 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     public void logicOrder(String code, String operator) {
         BudgetOrder budgetOrder = getBudgetOrder(code);
         // String preCurrentNode = budgetOrder.getCurNodeCode();
-        NodeFlow nodeFlow = nodeFlowBO
-            .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
+
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
+            .getCurNodeCode());
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
-        if (EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
-            .equals(budgetOrder.getCurNodeCode())
-                || EBudgetOrderNode.CAR_SEND_BANK_MATERIALS.getCode()
-                    .equals(budgetOrder.getCurNodeCode())
-                || EBudgetOrderNode.FEN_CAR_SEND_LOGISTICS.getCode()
-                    .equals(budgetOrder.getCurNodeCode())
+        if (EBudgetOrderNode.FEN_CAR_SEND_LOGISTICS.getCode().equals(
+            budgetOrder.getCurNodeCode())
                 || EBudgetOrderNode.HEADQUARTERS_CAR_SEND_BANK_MATERIALS
                     .getCode().equals(budgetOrder.getCurNodeCode())) {
             NodeFlow nodeFlow2 = nodeFlowBO
@@ -182,7 +247,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
                     budgetOrder.getCurNodeCode(), nodeFlow2.getNextNode(),
                     nodeFlow.getFileList());
             } else {
-                throw new BizException("xn0000", "当前节点材料清单不存在");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前节点材料清单不存在");
             }
         }
         budgetOrderDAO.updaterLogicNode(budgetOrder);
@@ -234,8 +300,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     }
 
     @Override
-    public void approveApply(BudgetOrder budgetOrder) {
-        budgetOrderDAO.approveApply(budgetOrder);
+    public void invoiceMismatchApprove(BudgetOrder budgetOrder) {
+        budgetOrderDAO.invoiceMismatchApprove(budgetOrder);
     }
 
     @Override
@@ -313,10 +379,28 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     }
 
     @Override
-    public void updateRepayBizCode(String code, String repayBizCode) {
+    public void updateRepayBizCode(String code, String repayBizCode,
+            String userId) {
         BudgetOrder budgetOrder = getBudgetOrder(code);
         budgetOrder.setRepayBizCode(repayBizCode);
+        budgetOrder.setApplyUserId(userId);
         budgetOrderDAO.updateRepayBizCode(budgetOrder);
+    }
+
+    @Override
+    public void applyInvoiceMismatch(BudgetOrder budgetOrder) {
+        budgetOrderDAO.applyInvoiceMismatch(budgetOrder);
+    }
+
+    public void loanContractPrint(BudgetOrder budgetOrder) {
+        budgetOrderDAO.loanContractPrint(budgetOrder);
+
+    }
+
+    @Override
+    public void pledgeContractPrint(BudgetOrder budgetOrder) {
+        budgetOrderDAO.pledgeContractPrint(budgetOrder);
+
     }
 
 }

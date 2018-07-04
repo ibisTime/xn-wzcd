@@ -10,11 +10,13 @@
 		<result column="loan_role" property="loanRole" />
 		
 		<result column="id_no" property="idNo" />
+		<result column="birth_address" property="birthAddress" />
 		<result column="mobile" property="mobile" />
 		<result column="id_no_front" property="idNoFront" />
 		<result column="id_no_reverse" property="idNoReverse" />
 		<result column="auth_pdf" property="authPdf" />
 		<result column="interview_pic" property="interviewPic" />
+		<result column="court_network_results" property="courtNetworkResults" />
 		
 		<result column="dkdy_count" property="dkdyCount" />
 		<result column="dkdy_amount" property="dkdyAmount" />
@@ -56,8 +58,8 @@
 			<if test="creditCode != null and creditCode != '' ">
 				AND t.credit_code = #{creditCode}
 			</if>
-			<if test="relation != null and relation != '' ">
-				AND t.relation = #{relation}
+			<if test="loanRole != null and loanRole != '' ">
+				AND t.loan_role = #{loanRole}
 			</if>
 		</trim>
 	</sql>
@@ -70,11 +72,13 @@
 		,t.loan_role
 		,t.mobile
 		,t.id_no
+		,t.birth_address
 		
 		,t.id_no_front
 		,t.id_no_reverse
 		,t.auth_pdf
 		,t.interview_pic
+		,t.court_network_results
 		,t.dkdy_count
 		
 		,t.dkdy_amount
@@ -133,6 +137,7 @@
 		
 		,mobile
 		,id_no
+		,birth_address
 		,id_no_front
 		,id_no_reverse
 		,auth_pdf
@@ -148,6 +153,7 @@
 		
 		,#{mobile}
 		,#{idNo}
+		,#{birthAddress}
 		,#{idNoFront}	
 		,#{idNoReverse}
 		,#{authPdf}
@@ -167,6 +173,7 @@
 		
 		,mobile
 		,id_no
+		,birth_address
 		,id_no_front
 		,id_no_reverse
 		,auth_pdf
@@ -183,6 +190,7 @@
 			
 			,#{mobile}
 			,#{idNo}
+			,#{birthAddress}
 			,#{idNoFront}	
 			,#{idNoReverse}
 			,#{authPdf}
@@ -249,6 +257,14 @@
 		,balance = #{balance}
 		,jour_show_income = #{jourShowIncome}
 		,is_print = #{isPrint}
+		WHERE
+		code = #{code}
+	</update>
+	
+	<update id="update_courtNetworkResults" parameterType="creditUser">
+		UPDATE tdq_credit_user
+		SET
+		court_network_results = #{courtNetworkResults}
 		WHERE
 		code = #{code}
 	</update>

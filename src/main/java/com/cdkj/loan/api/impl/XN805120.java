@@ -36,8 +36,9 @@ public class XN805120 extends AProcessor {
         condition.setIdKind(req.getIdKind());
 
         condition.setIdNo(req.getIdNo());
-        condition.setRealName(req.getRealName());
+        condition.setRealNameForQuery(req.getRealName());
         condition.setStatus(req.getStatus());
+        condition.setSign(req.getSign());
         condition.setCreateDatetimeStart(DateUtil.getFrontDate(
             req.getCreateDatetimeStart(), false));
         condition.setCreateDatetimeEnd(DateUtil.getFrontDate(

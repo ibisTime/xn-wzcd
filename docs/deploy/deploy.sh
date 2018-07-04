@@ -1,13 +1,11 @@
 
 #!/usr/bin/expect
 
-set tomcat_path "/mnt/www/wzcd/tomcat_xn_htwt"
+set tomcat_path "/mnt/www/wzcd/tomcat_xn_wzcd"
 set war_name "xn-wzcd"
-#set host_ip "47.96.161.183"
-#set host_pwd "cdkjqwertyQ01"
 
-set host_ip "120.26.6.213"
-set host_pwd "cdkj123456Q"
+set host_ip "47.96.161.183"
+set host_pwd "cdkjqwertyQ01"
 
 ######## 1.传输文件至服务器根目录 ########
 spawn scp ./${war_name}.war root@${host_ip}:~/

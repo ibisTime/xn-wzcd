@@ -115,6 +115,9 @@ public class AdvanceFund extends ABaseDO {
     // 收款银行名称
     private String collectBankName;
 
+    // 支行名称
+    private String subbranch;
+
     // 打款账号
     private String payAccountNo;
 
@@ -133,6 +136,9 @@ public class AdvanceFund extends ABaseDO {
     // 申请人
     private String applyName;
 
+    // 申请人
+    private String applyUserIdNo;
+
     private BudgetOrder budgetOrder;
 
     public Long getLoanAmount() {
@@ -141,6 +147,22 @@ public class AdvanceFund extends ABaseDO {
 
     public void setLoanAmount(Long loanAmount) {
         this.loanAmount = loanAmount;
+    }
+
+    public String getSubbranch() {
+        return subbranch;
+    }
+
+    public void setSubbranch(String subbranch) {
+        this.subbranch = subbranch;
+    }
+
+    public String getApplyUserIdNo() {
+        return applyUserIdNo;
+    }
+
+    public void setApplyUserIdNo(String applyUserIdNo) {
+        this.applyUserIdNo = applyUserIdNo;
     }
 
     public String getCollectBankName() {

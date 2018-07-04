@@ -3,7 +3,6 @@ package com.cdkj.loan.dto.req;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 public class XN632120Req {
 
@@ -21,17 +20,19 @@ public class XN632120Req {
     private String customerType;
 
     // 汽车经销商编号
-    @NotBlank
     private String carDealerCode;
 
-    // 贷款支行编号
-    private String loanBankSubbranch;
+    // 汽车经销商名称（外单）
+    private String outCarDealerName;
 
     // 厂商指导价
     private String originalPrice;
 
     // 车辆型号
     private String carModel;
+
+    // 车架号码
+    private String frameNo;
 
     // 贷款周期
     private String loanPeriods;
@@ -41,6 +42,9 @@ public class XN632120Req {
 
     // 利率类型
     private String rateType;
+
+    // 贷款金额
+    private String loanAmount;
 
     // 是否需要贷前调查
     private String isSurvey;
@@ -192,20 +196,26 @@ public class XN632120Req {
     // 其他情况说明
     private String otherNote;
 
-    // 油补
-    private String oilSubsidy;
-
     // 油补公里数
     private String oilSubsidyKil;
 
     // 是否我司续保
     private String isPlatInsure;
 
-    // GPS提成
-    private String gpsDeduct;
+    // GPS收费
+    private String gpsFee;
 
     // GPS收费方式
     private String gpsFeeWay;
+
+    // 履约保证金
+    private String lyAmount;
+
+    // 担保风险金
+    private String fxAmount;
+
+    // 杂费
+    private String otherFee;
 
     // 手续费收取方式
     private String serviceChargeWay;
@@ -316,81 +326,13 @@ public class XN632120Req {
     private String applyDatetime;
 
     // gps列表编号
-    @NotEmpty
-    private List<String> gpsList;
-
-    // 用款用途
-    @NotEmpty
-    private List<XN632120ReqRepointDetail> repointDetailList;
+    private List<XN632120ReqGpsAZ> gpsList;
 
     // 预算单类型（1正常单2外单）
-    @NotBlank
-    private String budgetOrderType;
+    private String type;
 
-    public String getBudgetOrderType() {
-        return budgetOrderType;
-    }
-
-    public void setBudgetOrderType(String budgetOrderType) {
-        this.budgetOrderType = budgetOrderType;
-    }
-
-    public String getServiceChargeWay() {
-        return serviceChargeWay;
-    }
-
-    public void setServiceChargeWay(String serviceChargeWay) {
-        this.serviceChargeWay = serviceChargeWay;
-    }
-
-    public String getBudgetOrderCode() {
-        return budgetOrderCode;
-    }
-
-    public List<XN632120ReqRepointDetail> getRepointDetailList() {
-        return repointDetailList;
-    }
-
-    public void setRepointDetailList(
-            List<XN632120ReqRepointDetail> repointDetailList) {
-        this.repointDetailList = repointDetailList;
-    }
-
-    public void setBudgetOrderCode(String budgetOrderCode) {
-        this.budgetOrderCode = budgetOrderCode;
-    }
-
-    public String getApplyUserCompany() {
-        return applyUserCompany;
-    }
-
-    public void setApplyUserCompany(String applyUserCompany) {
-        this.applyUserCompany = applyUserCompany;
-    }
-
-    public String getApplyUserDuty() {
-        return applyUserDuty;
-    }
-
-    public void setApplyUserDuty(String applyUserDuty) {
-        this.applyUserDuty = applyUserDuty;
-    }
-
-    public String getMarryState() {
-        return marryState;
-    }
-
-    public void setMarryState(String marryState) {
-        this.marryState = marryState;
-    }
-
-    public String getOtherIncomeNote() {
-        return otherIncomeNote;
-    }
-
-    public void setOtherIncomeNote(String otherIncomeNote) {
-        this.otherIncomeNote = otherIncomeNote;
-    }
+    // 用款用途
+    private List<XN632120ReqRepointDetail> repointDetailList;
 
     public String getOperator() {
         return operator;
@@ -400,20 +342,20 @@ public class XN632120Req {
         this.operator = operator;
     }
 
+    public String getBudgetOrderCode() {
+        return budgetOrderCode;
+    }
+
+    public void setBudgetOrderCode(String budgetOrderCode) {
+        this.budgetOrderCode = budgetOrderCode;
+    }
+
     public String getDealType() {
         return dealType;
     }
 
     public void setDealType(String dealType) {
         this.dealType = dealType;
-    }
-
-    public List<String> getGpsList() {
-        return gpsList;
-    }
-
-    public void setGpsList(List<String> gpsList) {
-        this.gpsList = gpsList;
     }
 
     public String getCustomerType() {
@@ -432,6 +374,14 @@ public class XN632120Req {
         this.carDealerCode = carDealerCode;
     }
 
+    public String getOutCarDealerName() {
+        return outCarDealerName;
+    }
+
+    public void setOutCarDealerName(String outCarDealerName) {
+        this.outCarDealerName = outCarDealerName;
+    }
+
     public String getOriginalPrice() {
         return originalPrice;
     }
@@ -446,6 +396,14 @@ public class XN632120Req {
 
     public void setCarModel(String carModel) {
         this.carModel = carModel;
+    }
+
+    public String getFrameNo() {
+        return frameNo;
+    }
+
+    public void setFrameNo(String frameNo) {
+        this.frameNo = frameNo;
     }
 
     public String getLoanPeriods() {
@@ -470,6 +428,14 @@ public class XN632120Req {
 
     public void setRateType(String rateType) {
         this.rateType = rateType;
+    }
+
+    public String getLoanAmount() {
+        return loanAmount;
+    }
+
+    public void setLoanAmount(String loanAmount) {
+        this.loanAmount = loanAmount;
     }
 
     public String getIsSurvey() {
@@ -512,336 +478,28 @@ public class XN632120Req {
         this.carDealerSubsidy = carDealerSubsidy;
     }
 
-    public String getIsHouseProperty() {
-        return isHouseProperty;
+    public String getApplyUserCompany() {
+        return applyUserCompany;
     }
 
-    public void setIsHouseProperty(String isHouseProperty) {
-        this.isHouseProperty = isHouseProperty;
+    public void setApplyUserCompany(String applyUserCompany) {
+        this.applyUserCompany = applyUserCompany;
     }
 
-    public String getHouseProperty() {
-        return houseProperty;
+    public String getApplyUserDuty() {
+        return applyUserDuty;
     }
 
-    public void setHouseProperty(String houseProperty) {
-        this.houseProperty = houseProperty;
+    public void setApplyUserDuty(String applyUserDuty) {
+        this.applyUserDuty = applyUserDuty;
     }
 
-    public String getIsHouseContract() {
-        return isHouseContract;
+    public String getMarryState() {
+        return marryState;
     }
 
-    public void setIsHouseContract(String isHouseContract) {
-        this.isHouseContract = isHouseContract;
-    }
-
-    public String getHouseContract() {
-        return houseContract;
-    }
-
-    public void setHouseContract(String houseContract) {
-        this.houseContract = houseContract;
-    }
-
-    public String getHouseInvoice() {
-        return houseInvoice;
-    }
-
-    public void setHouseInvoice(String houseInvoice) {
-        this.houseInvoice = houseInvoice;
-    }
-
-    public String getIsLicense() {
-        return isLicense;
-    }
-
-    public void setIsLicense(String isLicense) {
-        this.isLicense = isLicense;
-    }
-
-    public String getLicense() {
-        return license;
-    }
-
-    public void setLicense(String license) {
-        this.license = license;
-    }
-
-    public String getIsSiteProve() {
-        return isSiteProve;
-    }
-
-    public void setIsSiteProve(String isSiteProve) {
-        this.isSiteProve = isSiteProve;
-    }
-
-    public String getSiteProve() {
-        return siteProve;
-    }
-
-    public void setSiteProve(String siteProve) {
-        this.siteProve = siteProve;
-    }
-
-    public String getSiteArea() {
-        return siteArea;
-    }
-
-    public void setSiteArea(String siteArea) {
-        this.siteArea = siteArea;
-    }
-
-    public String getCarType() {
-        return carType;
-    }
-
-    public void setCarType(String carType) {
-        this.carType = carType;
-    }
-
-    public String getIsDriceLicense() {
-        return isDriceLicense;
-    }
-
-    public void setIsDriceLicense(String isDriceLicense) {
-        this.isDriceLicense = isDriceLicense;
-    }
-
-    public String getDriceLicense() {
-        return driceLicense;
-    }
-
-    public void setDriceLicense(String driceLicense) {
-        this.driceLicense = driceLicense;
-    }
-
-    public String getLoanBankSubbranch() {
-        return loanBankSubbranch;
-    }
-
-    public void setLoanBankSubbranch(String loanBankSubbranch) {
-        this.loanBankSubbranch = loanBankSubbranch;
-    }
-
-    public String getOtherPropertyNote() {
-        return otherPropertyNote;
-    }
-
-    public void setOtherPropertyNote(String otherPropertyNote) {
-        this.otherPropertyNote = otherPropertyNote;
-    }
-
-    public String getApplyBirthAddress() {
-        return applyBirthAddress;
-    }
-
-    public void setApplyBirthAddress(String applyBirthAddress) {
-        this.applyBirthAddress = applyBirthAddress;
-    }
-
-    public String getApplyNowAddress() {
-        return applyNowAddress;
-    }
-
-    public void setApplyNowAddress(String applyNowAddress) {
-        this.applyNowAddress = applyNowAddress;
-    }
-
-    public String getHouseType() {
-        return houseType;
-    }
-
-    public void setHouseType(String houseType) {
-        this.houseType = houseType;
-    }
-
-    public String getGhBirthAddress() {
-        return ghBirthAddress;
-    }
-
-    public void setGhBirthAddress(String ghBirthAddress) {
-        this.ghBirthAddress = ghBirthAddress;
-    }
-
-    public String getGuarantor1BirthAddress() {
-        return guarantor1BirthAddress;
-    }
-
-    public void setGuarantor1BirthAddress(String guarantor1BirthAddress) {
-        this.guarantor1BirthAddress = guarantor1BirthAddress;
-    }
-
-    public String getGuarantor2BirthAddress() {
-        return guarantor2BirthAddress;
-    }
-
-    public void setGuarantor2BirthAddress(String guarantor2BirthAddress) {
-        this.guarantor2BirthAddress = guarantor2BirthAddress;
-    }
-
-    public String getOtherNote() {
-        return otherNote;
-    }
-
-    public void setOtherNote(String otherNote) {
-        this.otherNote = otherNote;
-    }
-
-    public String getOilSubsidy() {
-        return oilSubsidy;
-    }
-
-    public void setOilSubsidy(String oilSubsidy) {
-        this.oilSubsidy = oilSubsidy;
-    }
-
-    public String getOilSubsidyKil() {
-        return oilSubsidyKil;
-    }
-
-    public void setOilSubsidyKil(String oilSubsidyKil) {
-        this.oilSubsidyKil = oilSubsidyKil;
-    }
-
-    public String getIsPlatInsure() {
-        return isPlatInsure;
-    }
-
-    public void setIsPlatInsure(String isPlatInsure) {
-        this.isPlatInsure = isPlatInsure;
-    }
-
-    public String getGpsDeduct() {
-        return gpsDeduct;
-    }
-
-    public void setGpsDeduct(String gpsDeduct) {
-        this.gpsDeduct = gpsDeduct;
-    }
-
-    public String getGpsFeeWay() {
-        return gpsFeeWay;
-    }
-
-    public void setGpsFeeWay(String gpsFeeWay) {
-        this.gpsFeeWay = gpsFeeWay;
-    }
-
-    public String getMarryDivorce() {
-        return marryDivorce;
-    }
-
-    public void setMarryDivorce(String marryDivorce) {
-        this.marryDivorce = marryDivorce;
-    }
-
-    public String getApplyUserHkb() {
-        return applyUserHkb;
-    }
-
-    public void setApplyUserHkb(String applyUserHkb) {
-        this.applyUserHkb = applyUserHkb;
-    }
-
-    public String getBankBillPdf() {
-        return bankBillPdf;
-    }
-
-    public void setBankBillPdf(String bankBillPdf) {
-        this.bankBillPdf = bankBillPdf;
-    }
-
-    public String getSingleProvePdf() {
-        return singleProvePdf;
-    }
-
-    public void setSingleProvePdf(String singleProvePdf) {
-        this.singleProvePdf = singleProvePdf;
-    }
-
-    public String getIncomeProvePdf() {
-        return incomeProvePdf;
-    }
-
-    public void setIncomeProvePdf(String incomeProvePdf) {
-        this.incomeProvePdf = incomeProvePdf;
-    }
-
-    public String getLiveProvePdf() {
-        return liveProvePdf;
-    }
-
-    public void setLiveProvePdf(String liveProvePdf) {
-        this.liveProvePdf = liveProvePdf;
-    }
-
-    public String getBuildProvePdf() {
-        return buildProvePdf;
-    }
-
-    public void setBuildProvePdf(String buildProvePdf) {
-        this.buildProvePdf = buildProvePdf;
-    }
-
-    public String getHkbFirstPage() {
-        return hkbFirstPage;
-    }
-
-    public void setHkbFirstPage(String hkbFirstPage) {
-        this.hkbFirstPage = hkbFirstPage;
-    }
-
-    public String getHkbMainPage() {
-        return hkbMainPage;
-    }
-
-    public void setHkbMainPage(String hkbMainPage) {
-        this.hkbMainPage = hkbMainPage;
-    }
-
-    public String getGhHkb() {
-        return ghHkb;
-    }
-
-    public void setGhHkb(String ghHkb) {
-        this.ghHkb = ghHkb;
-    }
-
-    public String getGuarantor1IdNo() {
-        return guarantor1IdNo;
-    }
-
-    public void setGuarantor1IdNo(String guarantor1IdNo) {
-        this.guarantor1IdNo = guarantor1IdNo;
-    }
-
-    public String getGuarantor1Hkb() {
-        return guarantor1Hkb;
-    }
-
-    public void setGuarantor1Hkb(String guarantor1Hkb) {
-        this.guarantor1Hkb = guarantor1Hkb;
-    }
-
-    public String getGuarantor2IdNo() {
-        return guarantor2IdNo;
-    }
-
-    public void setGuarantor2IdNo(String guarantor2IdNo) {
-        this.guarantor2IdNo = guarantor2IdNo;
-    }
-
-    public String getGuarantor2Hkb() {
-        return guarantor2Hkb;
-    }
-
-    public void setGuarantor2Hkb(String guarantor2Hkb) {
-        this.guarantor2Hkb = guarantor2Hkb;
-    }
-
-    public String getHousePic() {
-        return housePic;
+    public void setMarryState(String marryState) {
+        this.marryState = marryState;
     }
 
     public String getApplyUserMonthIncome() {
@@ -1002,6 +660,362 @@ public class XN632120Req {
 
     public void setGuarantor2IsPrint(String guarantor2IsPrint) {
         this.guarantor2IsPrint = guarantor2IsPrint;
+    }
+
+    public String getOtherIncomeNote() {
+        return otherIncomeNote;
+    }
+
+    public void setOtherIncomeNote(String otherIncomeNote) {
+        this.otherIncomeNote = otherIncomeNote;
+    }
+
+    public String getIsHouseProperty() {
+        return isHouseProperty;
+    }
+
+    public void setIsHouseProperty(String isHouseProperty) {
+        this.isHouseProperty = isHouseProperty;
+    }
+
+    public String getHouseProperty() {
+        return houseProperty;
+    }
+
+    public void setHouseProperty(String houseProperty) {
+        this.houseProperty = houseProperty;
+    }
+
+    public String getIsHouseContract() {
+        return isHouseContract;
+    }
+
+    public void setIsHouseContract(String isHouseContract) {
+        this.isHouseContract = isHouseContract;
+    }
+
+    public String getHouseContract() {
+        return houseContract;
+    }
+
+    public void setHouseContract(String houseContract) {
+        this.houseContract = houseContract;
+    }
+
+    public String getHouseInvoice() {
+        return houseInvoice;
+    }
+
+    public void setHouseInvoice(String houseInvoice) {
+        this.houseInvoice = houseInvoice;
+    }
+
+    public String getIsLicense() {
+        return isLicense;
+    }
+
+    public void setIsLicense(String isLicense) {
+        this.isLicense = isLicense;
+    }
+
+    public String getLicense() {
+        return license;
+    }
+
+    public void setLicense(String license) {
+        this.license = license;
+    }
+
+    public String getIsSiteProve() {
+        return isSiteProve;
+    }
+
+    public void setIsSiteProve(String isSiteProve) {
+        this.isSiteProve = isSiteProve;
+    }
+
+    public String getSiteProve() {
+        return siteProve;
+    }
+
+    public void setSiteProve(String siteProve) {
+        this.siteProve = siteProve;
+    }
+
+    public String getSiteArea() {
+        return siteArea;
+    }
+
+    public void setSiteArea(String siteArea) {
+        this.siteArea = siteArea;
+    }
+
+    public String getCarType() {
+        return carType;
+    }
+
+    public void setCarType(String carType) {
+        this.carType = carType;
+    }
+
+    public String getIsDriceLicense() {
+        return isDriceLicense;
+    }
+
+    public void setIsDriceLicense(String isDriceLicense) {
+        this.isDriceLicense = isDriceLicense;
+    }
+
+    public String getDriceLicense() {
+        return driceLicense;
+    }
+
+    public void setDriceLicense(String driceLicense) {
+        this.driceLicense = driceLicense;
+    }
+
+    public String getOtherPropertyNote() {
+        return otherPropertyNote;
+    }
+
+    public void setOtherPropertyNote(String otherPropertyNote) {
+        this.otherPropertyNote = otherPropertyNote;
+    }
+
+    public String getApplyBirthAddress() {
+        return applyBirthAddress;
+    }
+
+    public void setApplyBirthAddress(String applyBirthAddress) {
+        this.applyBirthAddress = applyBirthAddress;
+    }
+
+    public String getApplyNowAddress() {
+        return applyNowAddress;
+    }
+
+    public void setApplyNowAddress(String applyNowAddress) {
+        this.applyNowAddress = applyNowAddress;
+    }
+
+    public String getHouseType() {
+        return houseType;
+    }
+
+    public void setHouseType(String houseType) {
+        this.houseType = houseType;
+    }
+
+    public String getGhBirthAddress() {
+        return ghBirthAddress;
+    }
+
+    public void setGhBirthAddress(String ghBirthAddress) {
+        this.ghBirthAddress = ghBirthAddress;
+    }
+
+    public String getGuarantor1BirthAddress() {
+        return guarantor1BirthAddress;
+    }
+
+    public void setGuarantor1BirthAddress(String guarantor1BirthAddress) {
+        this.guarantor1BirthAddress = guarantor1BirthAddress;
+    }
+
+    public String getGuarantor2BirthAddress() {
+        return guarantor2BirthAddress;
+    }
+
+    public void setGuarantor2BirthAddress(String guarantor2BirthAddress) {
+        this.guarantor2BirthAddress = guarantor2BirthAddress;
+    }
+
+    public String getOtherNote() {
+        return otherNote;
+    }
+
+    public void setOtherNote(String otherNote) {
+        this.otherNote = otherNote;
+    }
+
+    public String getOilSubsidyKil() {
+        return oilSubsidyKil;
+    }
+
+    public void setOilSubsidyKil(String oilSubsidyKil) {
+        this.oilSubsidyKil = oilSubsidyKil;
+    }
+
+    public String getIsPlatInsure() {
+        return isPlatInsure;
+    }
+
+    public void setIsPlatInsure(String isPlatInsure) {
+        this.isPlatInsure = isPlatInsure;
+    }
+
+    public String getGpsFee() {
+        return gpsFee;
+    }
+
+    public void setGpsFee(String gpsFee) {
+        this.gpsFee = gpsFee;
+    }
+
+    public String getGpsFeeWay() {
+        return gpsFeeWay;
+    }
+
+    public void setGpsFeeWay(String gpsFeeWay) {
+        this.gpsFeeWay = gpsFeeWay;
+    }
+
+    public String getLyAmount() {
+        return lyAmount;
+    }
+
+    public void setLyAmount(String lyAmount) {
+        this.lyAmount = lyAmount;
+    }
+
+    public String getFxAmount() {
+        return fxAmount;
+    }
+
+    public void setFxAmount(String fxAmount) {
+        this.fxAmount = fxAmount;
+    }
+
+    public String getOtherFee() {
+        return otherFee;
+    }
+
+    public void setOtherFee(String otherFee) {
+        this.otherFee = otherFee;
+    }
+
+    public String getServiceChargeWay() {
+        return serviceChargeWay;
+    }
+
+    public void setServiceChargeWay(String serviceChargeWay) {
+        this.serviceChargeWay = serviceChargeWay;
+    }
+
+    public String getMarryDivorce() {
+        return marryDivorce;
+    }
+
+    public void setMarryDivorce(String marryDivorce) {
+        this.marryDivorce = marryDivorce;
+    }
+
+    public String getApplyUserHkb() {
+        return applyUserHkb;
+    }
+
+    public void setApplyUserHkb(String applyUserHkb) {
+        this.applyUserHkb = applyUserHkb;
+    }
+
+    public String getBankBillPdf() {
+        return bankBillPdf;
+    }
+
+    public void setBankBillPdf(String bankBillPdf) {
+        this.bankBillPdf = bankBillPdf;
+    }
+
+    public String getSingleProvePdf() {
+        return singleProvePdf;
+    }
+
+    public void setSingleProvePdf(String singleProvePdf) {
+        this.singleProvePdf = singleProvePdf;
+    }
+
+    public String getIncomeProvePdf() {
+        return incomeProvePdf;
+    }
+
+    public void setIncomeProvePdf(String incomeProvePdf) {
+        this.incomeProvePdf = incomeProvePdf;
+    }
+
+    public String getLiveProvePdf() {
+        return liveProvePdf;
+    }
+
+    public void setLiveProvePdf(String liveProvePdf) {
+        this.liveProvePdf = liveProvePdf;
+    }
+
+    public String getBuildProvePdf() {
+        return buildProvePdf;
+    }
+
+    public void setBuildProvePdf(String buildProvePdf) {
+        this.buildProvePdf = buildProvePdf;
+    }
+
+    public String getHkbFirstPage() {
+        return hkbFirstPage;
+    }
+
+    public void setHkbFirstPage(String hkbFirstPage) {
+        this.hkbFirstPage = hkbFirstPage;
+    }
+
+    public String getHkbMainPage() {
+        return hkbMainPage;
+    }
+
+    public void setHkbMainPage(String hkbMainPage) {
+        this.hkbMainPage = hkbMainPage;
+    }
+
+    public String getGhHkb() {
+        return ghHkb;
+    }
+
+    public void setGhHkb(String ghHkb) {
+        this.ghHkb = ghHkb;
+    }
+
+    public String getGuarantor1IdNo() {
+        return guarantor1IdNo;
+    }
+
+    public void setGuarantor1IdNo(String guarantor1IdNo) {
+        this.guarantor1IdNo = guarantor1IdNo;
+    }
+
+    public String getGuarantor1Hkb() {
+        return guarantor1Hkb;
+    }
+
+    public void setGuarantor1Hkb(String guarantor1Hkb) {
+        this.guarantor1Hkb = guarantor1Hkb;
+    }
+
+    public String getGuarantor2IdNo() {
+        return guarantor2IdNo;
+    }
+
+    public void setGuarantor2IdNo(String guarantor2IdNo) {
+        this.guarantor2IdNo = guarantor2IdNo;
+    }
+
+    public String getGuarantor2Hkb() {
+        return guarantor2Hkb;
+    }
+
+    public void setGuarantor2Hkb(String guarantor2Hkb) {
+        this.guarantor2Hkb = guarantor2Hkb;
+    }
+
+    public String getHousePic() {
+        return housePic;
     }
 
     public void setHousePic(String housePic) {
@@ -1166,6 +1180,31 @@ public class XN632120Req {
 
     public void setApplyDatetime(String applyDatetime) {
         this.applyDatetime = applyDatetime;
+    }
+
+    public List<XN632120ReqGpsAZ> getGpsList() {
+        return gpsList;
+    }
+
+    public void setGpsList(List<XN632120ReqGpsAZ> gpsList) {
+        this.gpsList = gpsList;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public List<XN632120ReqRepointDetail> getRepointDetailList() {
+        return repointDetailList;
+    }
+
+    public void setRepointDetailList(
+            List<XN632120ReqRepointDetail> repointDetailList) {
+        this.repointDetailList = repointDetailList;
     }
 
 }

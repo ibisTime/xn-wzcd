@@ -7,10 +7,12 @@
 		<result column="credit_code" property="creditCode" />
 		<result column="customer_type" property="customerType" />
 		<result column="customer_name" property="customerName" />
+		<result column="customer_sex" property="customerSex" />
+		<result column="customer_birth" property="customerBirth" />
 		<result column="car_dealer_code" property="carDealerCode" />
+		<result column="out_car_dealer_name" property="outCarDealerName" />
 		
 		<result column="loan_bank_code" property="loanBankCode" />
-	    <result column="loan_bank_subbranch" property="loanBankSubbranch" />
 		<result column="original_price" property="originalPrice" />
 		<result column="car_model" property="carModel" />
 		<result column="loan_periods" property="loanPeriods" />
@@ -35,7 +37,11 @@
 		<result column="pre_bank_loan_cs" property="preBankLoanCs" />
 		<result column="company_code" property="companyCode" />
 		<result column="sale_user_id" property="saleUserId" />
+		<result column="postcode" property="postcode" />
+		<result column="family_phone" property="familyPhone" />
+		<result column="apply_user_id" property="applyUserId" />
 		<result column="apply_user_company" property="applyUserCompany" />
+		<result column="apply_user_company_phone" property="applyUserCompanyPhone" />
 		
 		<result column="apply_user_duty" property="applyUserDuty" />
 		<result column="apply_user_ghr_relation" property="applyUserGhrRelation" />
@@ -46,6 +52,11 @@
 		<result column="apply_user_balance" property="applyUserBalance" />
 		<result column="apply_user_jour_show_income" property="applyUserJourShowIncome" />
 		<result column="apply_user_is_print" property="applyUserIsPrint" />
+		<result column="gh_real_name" property="ghRealName" />
+		<result column="gh_id_no" property="ghIdNo" />
+		<result column="gh_sex" property="ghSex" />
+		<result column="gh_mobile" property="ghMobile" />
+		<result column="gh_company_name" property="ghCompanyName" />
 		<result column="gh_month_income" property="ghMonthIncome" />
 		<result column="gh_settle_interest" property="ghSettleInterest" />
 		
@@ -92,15 +103,21 @@
 		<result column="other_note" property="otherNote" />
 		
 		<result column="oil_subsidy" property="oilSubsidy" />
+		<result column="pre_oil_subsidy" property="preOilSubsidy" />
 		<result column="oil_subsidy_kil" property="oilSubsidyKil" />
 		<result column="is_plat_insure" property="isPlatInsure" />
 		<result column="gps_fee" property="gpsFee" />
+		<result column="pre_gps_fee" property="preGpsFee" />
 		<result column="gps_deduct" property="gpsDeduct" />
+		<result column="pre_gps_deduct" property="preGpsDeduct" />
 		
 		<result column="gps_fee_way" property="gpsFeeWay" />
 		<result column="ly_amount" property="lyAmount" />
+		<result column="pre_ly_amount" property="preLyAmount" />
 		<result column="fx_amount" property="fxAmount" />
+		<result column="pre_fx_amount" property="preFxAmount" />
 		<result column="other_fee" property="otherFee" />
+		<result column="pre_other_fee" property="preOtherFee" />
 		<result column="service_charge_way" property="serviceChargeWay" />
 		<result column="service_charge" property="serviceCharge" />
 		
@@ -160,14 +177,20 @@
 		
 		<result column="pledge_commit_note" property="pledgeCommitNote" />
 		<result column="pledge_contract_code" property="pledgeContractCode" />
+		<result column="pledge_print_template_id" property="pledgePrintTemplateId" />
+		<result column="pledge_print_user" property="pledgePrintUser" />
+		<result column="pledge_print_datetime" property="pledgePrintDatetime" />
 		<result column="insurance_company_code" property="insuranceCompanyCode" />
 		<result column="car_color" property="carColor" />
 		<result column="car_brand" property="carBrand" />
+		<result column="car_brand_model" property="carBrandModel" />
+		<result column="car_number" property="carNumber" />
 		
 		<result column="frame_no" property="frameNo" />
 		<result column="engine_no" property="engineNo" />
 		<result column="commerce_insurance" property="commerceInsurance" />
 		<result column="insurance_effect_datetime" property="insuranceEffectDatetime" />
+		<result column="insurance_company" property="insuranceCompany" />
 		<result column="insurance_bank" property="insuranceBank" />
 		
 		<result column="insurance_remind_count" property="insuranceRemindCount" />
@@ -178,12 +201,25 @@
 		<result column="insurance_note" property="insuranceNote" />
 		
 		<result column="guarantee_contract_code" property="guaranteeContractCode" />
+		<result column="guarant_contract_deadline" property="guarantContractDeadline" />
+		<result column="guarant_month_fee_rate" property="guarantMonthFeeRate" />
+		
+		<result column="bank_contract_code" property="bankContractCode" />
 		<result column="reg_certificate_code" property="regCertificateCode" />
 		<result column="other_contact" property="otherContact" />
 		<result column="contact_mobile" property="contactMobile" />
 		<result column="guarantor_name" property="guarantorName" />
 		
 		<result column="guarantor_mobile" property="guarantorMobile" />
+		<result column="guarantor_now_address" property="guarantorNowAddress" />
+		<result column="guarantor_family_phone" property="guarantorFamilyPhone" />
+		<result column="guarantor_company_name" property="guarantorCompanyName" />
+		<result column="guarantor_company_phone" property="guarantorCompanyPhone" />
+		<result column="guarantor_company_address" property="guarantorCompanyAddress" />
+		<result column="guarant_apply_user_note" property="guarantApplyUserNote" />
+		<result column="guarant_print_template_id" property="guarantPrintTemplateId" />
+		<result column="guarant_print_user" property="guarantPrintUser" />
+		<result column="guarant_print_datetime" property="guarantPrintDatetime" />
 		<result column="bank_card_number" property="bankCardNumber" />
 		<result column="bill_datetime" property="billDatetime" />
 		<result column="month_amount" property="monthAmount" />
@@ -243,6 +279,7 @@
 		<result column="is_submit_cancel" property="isSubmitCancel" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="repay_biz_code" property="repayBizCode" />
+		<result column="type" property="type" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -305,9 +342,11 @@
 		,t.credit_code
 		,t.customer_type
 		,t.customer_name
+		,t.customer_sex
+		,t.customer_birth
 		,t.car_dealer_code
+		,t.out_car_dealer_name
 		,t.loan_bank_code
-		,t.loan_bank_subbranch
 		,t.original_price
 		,t.car_model
 		,t.loan_periods
@@ -329,7 +368,11 @@
 		,t.pre_bank_loan_cs
 		,t.company_code
 		,t.sale_user_id
+		,t.postcode
+		,t.family_phone
+		,t.apply_user_id
 		,t.apply_user_company
+		,t.apply_user_company_phone
 		,t.apply_user_duty
 		,t.apply_user_ghr_relation
 		,t.marry_state
@@ -338,6 +381,11 @@
 		,t.apply_user_balance
 		,t.apply_user_jour_show_income
 		,t.apply_user_is_print
+		,t.gh_real_name
+		,t.gh_id_no
+		,t.gh_sex
+		,t.gh_mobile
+		,t.gh_company_name
 		,t.gh_month_income
 		,t.gh_settle_interest
 		,t.gh_balance
@@ -376,14 +424,20 @@
 		,t.guarantor2_birth_address
 		,t.other_note
 		,t.oil_subsidy
+		,t.pre_oil_subsidy
 		,t.oil_subsidy_kil
 		,t.is_plat_insure
 		,t.gps_fee
+		,t.pre_gps_fee
 		,t.gps_deduct
+		,t.pre_gps_deduct
 		,t.gps_fee_way
 		,t.ly_amount
+		,t.pre_ly_amount
 		,t.fx_amount
+		,t.pre_fx_amount
 		,t.other_fee
+		,t.pre_other_fee
 		,t.service_charge_way
 		,t.service_charge
 		,t.marry_divorce
@@ -433,13 +487,19 @@
 		,t.pledge_commit_datetime
 		,t.pledge_commit_note
 		,t.pledge_contract_code
+		,t.pledge_print_template_id
+		,t.pledge_print_user
+		,t.pledge_print_datetime
 		,t.insurance_company_code
 		,t.car_color
 		,t.car_brand
+		,t.car_brand_model
+		,t.car_number
 		,t.frame_no
 		,t.engine_no
 		,t.commerce_insurance
 		,t.insurance_effect_datetime
+		,t.insurance_company
 		,t.insurance_bank
 		,t.insurance_remind_count
 		,t.insurance_apply_datetime
@@ -448,11 +508,23 @@
 		,t.insurance_business_pdf
 		,t.insurance_note
 		,t.guarantee_contract_code
+		,t.guarant_contract_deadline
+		,t.guarant_month_fee_rate
+		,t.bank_contract_code
 		,t.reg_certificate_code
 		,t.other_contact
 		,t.contact_mobile
 		,t.guarantor_name
 		,t.guarantor_mobile
+		,t.guarantor_now_address
+		,t.guarantor_family_phone
+		,t.guarantor_company_name
+		,t.guarantor_company_phone
+		,t.guarantor_company_address
+		,t.guarant_apply_user_note
+		,t.guarant_print_template_id
+		,t.guarant_print_user
+		,t.guarant_print_datetime
 		,t.bank_card_number
 		,t.bill_datetime
 		,t.month_amount
@@ -505,6 +577,7 @@
 		
 		,t.cur_node_code
 		,t.repay_biz_code
+		,t.type
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -528,9 +601,11 @@
 		,t.credit_code
 		,t.customer_type
 		,t.customer_name
+		,t.customer_sex
+		,t.customer_birth
 		,t.car_dealer_code
+		,t.out_car_dealer_name
 		,t.loan_bank_code
-		,t.loan_bank_subbranch
 		,t.original_price
 		,t.car_model
 		,t.loan_periods
@@ -542,14 +617,21 @@
 		,t.is_survey
 		,t.bank_rate
 		,t.company_loan_cs
+		,t.pre_company_loan_cs
 		,t.is_advance_fund
 		,t.global_rate
+		,t.pre_global_rate
 		,t.fee
 		,t.car_dealer_subsidy
 		,t.bank_loan_cs
+		,t.pre_bank_loan_cs
 		,t.company_code
 		,t.sale_user_id
+		,t.postcode
+		,t.family_phone
+		,t.apply_user_id
 		,t.apply_user_company
+		,t.apply_user_company_phone
 		,t.apply_user_duty
 		,t.apply_user_ghr_relation
 		,t.marry_state
@@ -558,6 +640,11 @@
 		,t.apply_user_balance
 		,t.apply_user_jour_show_income
 		,t.apply_user_is_print
+		,t.gh_real_name
+		,t.gh_id_no
+		,t.gh_sex
+		,t.gh_mobile
+		,t.gh_company_name
 		,t.gh_month_income
 		,t.gh_settle_interest
 		,t.gh_balance
@@ -596,14 +683,20 @@
 		,t.guarantor2_birth_address
 		,t.other_note
 		,t.oil_subsidy
+		,t.pre_oil_subsidy
 		,t.oil_subsidy_kil
 		,t.is_plat_insure
 		,t.gps_fee
+		,t.pre_gps_fee
 		,t.gps_deduct
+		,t.pre_gps_deduct
 		,t.gps_fee_way
 		,t.ly_amount
+		,t.pre_ly_amount
 		,t.fx_amount
+		,t.pre_fx_amount
 		,t.other_fee
+		,t.pre_other_fee
 		,t.service_charge_way
 		,t.service_charge
 		,t.marry_divorce
@@ -653,20 +746,38 @@
 		,t.pledge_commit_datetime
 		,t.pledge_commit_note
 		,t.pledge_contract_code
+		,t.pledge_print_template_id
+		,t.pledge_print_user
+		,t.pledge_print_datetime
 		,t.insurance_company_code
 		,t.car_color
 		,t.car_brand
+		,t.car_brand_model
+		,t.car_number
 		,t.frame_no
 		,t.engine_no
 		,t.commerce_insurance
 		,t.insurance_effect_datetime
+		,t.insurance_company
 		,t.insurance_bank
 		,t.guarantee_contract_code
+		,t.guarant_contract_deadline
+		,t.guarant_month_fee_rate
+		,t.bank_contract_code
 		,t.reg_certificate_code
 		,t.other_contact
 		,t.contact_mobile
 		,t.guarantor_name
 		,t.guarantor_mobile
+		,t.guarantor_now_address
+		,t.guarantor_family_phone
+		,t.guarantor_company_name
+		,t.guarantor_company_phone
+		,t.guarantor_company_address
+		,t.guarant_apply_user_note
+		,t.guarant_print_template_id
+		,t.guarant_print_user
+		,t.guarant_print_datetime
 		,t.bank_card_number
 		,t.bill_datetime
 		,t.month_amount
@@ -719,6 +830,7 @@
 		
 		,t.cur_node_code
 		,t.repay_biz_code
+		,t.type
 		FROM
 		tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
 		<include refid="where_condition" />
@@ -735,9 +847,11 @@
 		,t.credit_code
 		,t.customer_type
 		,t.customer_name
+		,t.customer_sex
+		,t.customer_birth
 		,t.car_dealer_code
+		,t.out_car_dealer_name
 		,t.loan_bank_code
-		,t.loan_bank_subbranch
 		,t.original_price
 		,t.car_model
 		,t.loan_periods
@@ -749,14 +863,21 @@
 		,t.is_survey
 		,t.bank_rate
 		,t.company_loan_cs
+		,t.pre_company_loan_cs
 		,t.is_advance_fund
 		,t.global_rate
+		,t.pre_global_rate
 		,t.fee
 		,t.car_dealer_subsidy
 		,t.bank_loan_cs
+		,t.pre_bank_loan_cs
 		,t.company_code
 		,t.sale_user_id
+		,t.postcode
+		,t.family_phone
+		,t.apply_user_id
 		,t.apply_user_company
+		,t.apply_user_company_phone
 		,t.apply_user_duty
 		,t.apply_user_ghr_relation
 		,t.marry_state
@@ -765,6 +886,11 @@
 		,t.apply_user_balance
 		,t.apply_user_jour_show_income
 		,t.apply_user_is_print
+		,t.gh_real_name
+		,t.gh_id_no
+		,t.gh_sex
+		,t.gh_mobile
+		,t.gh_company_name
 		,t.gh_month_income
 		,t.gh_settle_interest
 		,t.gh_balance
@@ -793,14 +919,20 @@
 		,t.guarantor2_birth_address
 		,t.other_note
 		,t.oil_subsidy
+		,t.pre_oil_subsidy
 		,t.oil_subsidy_kil
 		,t.is_plat_insure
 		,t.gps_fee
+		,t.pre_gps_fee
 		,t.gps_deduct
+		,t.pre_gps_deduct
 		,t.gps_fee_way
 		,t.ly_amount
+		,t.pre_ly_amount
 		,t.fx_amount
+		,t.pre_fx_amount
 		,t.other_fee
+		,t.pre_other_fee
 		,t.service_charge_way
 		,t.service_charge
 		,t.marry_divorce
@@ -830,20 +962,38 @@
 		,t.pledge_commit_datetime
 		,t.pledge_commit_note
 		,t.pledge_contract_code
+		,t.pledge_print_template_id
+		,t.pledge_print_user
+		,t.pledge_print_datetime
 		,t.insurance_company_code
 		,t.car_color
 		,t.car_brand
+		,t.car_brand_model
+		,t.car_number
 		,t.frame_no
 		,t.engine_no
 		,t.commerce_insurance
 		,t.insurance_effect_datetime
+		,t.insurance_company
 		,t.insurance_bank
 		,t.guarantee_contract_code
+		,t.guarant_contract_deadline
+		,t.guarant_month_fee_rate
+		,t.bank_contract_code
 		,t.reg_certificate_code
 		,t.other_contact
 		,t.contact_mobile
 		,t.guarantor_name
 		,t.guarantor_mobile
+		,t.guarantor_now_address
+		,t.guarantor_family_phone
+		,t.guarantor_company_name
+		,t.guarantor_company_phone
+		,t.guarantor_company_address
+		,t.guarant_apply_user_note
+		,t.guarant_print_template_id
+		,t.guarant_print_user
+		,t.guarant_print_datetime
 		,t.bank_card_number
 		,t.bill_datetime
 		,t.month_amount
@@ -896,6 +1046,7 @@
 		
 		,t.cur_node_code
 		,t.repay_biz_code
+		,t.type
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -919,11 +1070,14 @@
 		,credit_code
 		,customer_type
 		,customer_name
+		,customer_sex
+		,customer_birth
 		,car_dealer_code
+		,out_car_dealer_name
 		,loan_bank_code
-		,loan_bank_subbranch
 		,original_price
 		,car_model
+		,frame_no
 		,loan_periods
 		,invoice_price
 		,shop_way
@@ -949,6 +1103,10 @@
 		,apply_user_balance
 		,apply_user_jour_show_income
 		,apply_user_is_print
+		,gh_real_name
+		,gh_id_no
+		,gh_sex
+		,gh_mobile
 		,gh_month_income
 		,gh_settle_interest
 		,gh_balance
@@ -1038,17 +1196,21 @@
 		,apply_datetime
 		,cur_node_code
 		,repay_biz_code
+		,type
 		)
 		VALUES(
 		#{code}
 		,#{creditCode}
 		,#{customerType}
 		,#{customerName}
+		,#{customerSex}
+		,#{customerBirth}
 		,#{carDealerCode}
+		,#{outCarDealerName}
 		,#{loanBankCode}
-		,#{loanBankSubbranch}
 		,#{originalPrice}
 		,#{carModel}
+		,#{frameNo}
 		,#{loanPeriods}
 		,#{invoicePrice}
 		,#{shopWay}
@@ -1058,7 +1220,7 @@
 		,#{bankRate}
 		,#{companyLoanCs}
 		,#{isAdvanceFund}
-		,#{globalRate}
+		,#{globalRate} 
 		,#{fee}
 		,#{carDealerSubsidy}
 		,#{bankLoanCs}
@@ -1074,6 +1236,10 @@
 		,#{applyUserBalance}
 		,#{applyUserJourShowIncome}
 		,#{applyUserIsPrint}
+		,#{ghRealName}
+		,#{ghIdNo}
+		,#{ghSex}
+		,#{ghMobile}
 		,#{ghMonthIncome}
 		,#{ghSettleInterest}
 		,#{ghBalance}
@@ -1163,17 +1329,20 @@
 		,#{applyDatetime}
 		,#{curNodeCode}
 		,#{repayBizCode}
+		,#{type}
 		)
 	</insert>
 	
 	<update id="update_budgetOrder" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		customer_type = #{customerType}
+		loan_amount = #{loanAmount}
+		,customer_type = #{customerType}
 		,car_dealer_code = #{carDealerCode}
-		,loan_bank_subbranch = #{loanBankSubbranch}
+		,out_car_dealer_name = #{outCarDealerName}
 		,original_price = #{originalPrice}
 		,car_model = #{carModel}
+		,frame_no = #{frameNo}
 		
 		,loan_periods = #{loanPeriods}
 		,invoice_price = #{invoicePrice}
@@ -1296,10 +1465,14 @@
 		,second_number = #{secondNumber}
 		,other_file_pdf = #{otherFilePdf}
 		
+		,should_back_amount = #{shouldBackAmount}
+		,should_back_status = #{shouldBackStatus}		
 		,other_apply_note = #{otherApplyNote}
 		,apply_datetime = #{applyDatetime}
 		,cur_node_code = #{curNodeCode}
+		
 		,repay_biz_code = #{repayBizCode}
+		,type = #{type}
 		WHERE code = #{code}
 	</update>
 
@@ -1397,6 +1570,7 @@
 		,sale_user_id = #{saleUserId}
 		
 		,guarantee_contract_code = #{guaranteeContractCode}
+		,bank_contract_code = #{bankContractCode}
 		,reg_certificate_code = #{regCertificateCode}
 		,other_contact = #{otherContact}
 		,contact_mobile = #{contactMobile}
@@ -1456,6 +1630,8 @@
 		delivery_datetime = #{deliveryDatetime}
 		,is_right_invoice = #{isRightInvoice}
 		,current_invoice_price = #{currentInvoicePrice}
+		,pre_company_loan_cs = #{PreCompanyLoanCs}
+		,company_loan_cs = #{companyLoanCs}
 		,invoice = #{invoice}
 		,certification = #{certification}
 		,force_insurance = #{forceInsurance}
@@ -1463,29 +1639,43 @@
 		,motor_reg_certification = #{motorRegCertification}
 		,pd_pdf = #{pdPdf}
 		,fbh_remark = #{fbhRemark}
+		,fbh_status = #{fbhStatus}
 		WHERE code = #{code}
 	</update>
 	
 	<update id="update_invoiceMismatchApply" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		cur_node_code = #{curNodeCode}		
-		,pre_loan_amount = #{preLoanAmount}
-		,loan_amount = #{loanAmount}		
-		,company_loan_cs = #{companyLoanCs}
-		,pre_company_loan_cs = #{preCompanyLoanCs}
-		
-		,global_rate = #{globalRate}
-		,pre_global_rate = #{preGlobalRate}		
-		,bank_loan_cs = #{bankLoanCs}
-		,pre_bank_loan_cs = #{preBankLoanCs}
+		cancel_node_code = #{cancelNodeCode}
+		,cur_node_code = #{curNodeCode}
+		,frozen_status = #{frozenStatus}
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_approveApply" parameterType="budgetOrder">
+	<update id="update_invoiceMismatchApprove" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		cur_node_code = #{curNodeCode}
+		pre_loan_amount = #{preLoanAmount}
+		,loan_amount = #{loanAmount}
+		,pre_company_loan_cs = #{preCompanyLoanCs}
+		,company_loan_cs = #{companyLoanCs}
+		,pre_bank_loan_cs = #{preBankLoanCs}
+		,bank_loan_cs = #{bankLoanCs}
+		,pre_global_rate = #{preGlobalRate}
+		,global_rate = #{globalRate}
+		,pre_fx_amount = #{preFxAmount}
+		,fx_amount = #{fxAmount}
+		,pre_ly_amount = #{preLyAmount}
+		,ly_amount = #{lyAmount}
+		,pre_gps_fee = #{preGpsFee}
+		,gps_fee = #{gpsFee}
+		,pre_other_fee = #{preOtherFee}
+		,other_fee = #{otherFee}
+		,pre_gps_deduct = #{preGpsDeduct}
+		,gps_deduct = #{gpsDeduct}
+		,pre_oil_subsidy = #{preOilSubsidy}
+		,oil_subsidy = #{oilSubsidy}
+		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 	
@@ -1523,6 +1713,7 @@
 		zf_reason = #{zfReason}
 		,frozen_status = #{frozenStatus}
 		,cancel_node_code = #{cancelNodeCode}
+		,is_submit_cancel = #{isSubmitCancel}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
@@ -1530,8 +1721,9 @@
 	<update id="update_cancelBizAudit" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		frozen_status = #{frozenStatus}
-		,cur_node_code = #{curNodeCode}
+		cur_node_code = #{curNodeCode}
+		,frozen_status = #{frozenStatus}
+		,cancel_node_code = #{cancelNodeCode}
 		WHERE code = #{code}
 	</update>
 
@@ -1540,7 +1732,7 @@
 		SET
 		zf_sk_amount = #{zfSkAmount}
 		,zf_sk_bankcard_code = #{zfSkBankcardCode}
-		,zf_sk_receipt_datetime = #{frozenStatus}
+		,zf_sk_receipt_datetime = #{zfSkReceiptDatetime}
 		,zf_finance_remark = #{zfFinanceRemark}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
@@ -1578,6 +1770,7 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
+		,fbh_status = #{fbhStatus}
 		WHERE code = #{code}
 	</update>
 
@@ -1615,6 +1808,73 @@
 		UPDATE tdq_budget_order
 		SET
 		repay_biz_code = #{repayBizCode}
+		,apply_user_id = #{applyUserId}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_applyInvoiceMismatch" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		pre_loan_amount = #{preLoanAmount}
+		,loan_amount = #{loanAmount}
+		,pre_company_loan_cs = #{preCompanyLoanCs}
+		,company_loan_cs = #{companyLoanCs}
+		,pre_bank_loan_cs = #{preBankLoanCs}
+		,bank_loan_cs = #{bankLoanCs}
+		,pre_global_rate = #{preGlobalRate}
+		,global_rate = #{globalRate}
+		,pre_fx_amount = #{preFxAmount}
+		,fx_amount = #{fxAmount}
+		,pre_ly_amount = #{preLyAmount}
+		,ly_amount = #{lyAmount}
+		,pre_gps_fee = #{preGpsFee}
+		,gps_fee = #{gpsFee}
+		,pre_other_fee = #{preOtherFee}
+		,other_fee = #{otherFee}
+		,pre_gps_deduct = #{preGpsDeduct}
+		,gps_deduct = #{gpsDeduct}
+		,pre_oil_subsidy = #{preOilSubsidy}
+		,oil_subsidy = #{oilSubsidy}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_loanContractPrint" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		postcode = #{postcode}
+		,family_phone = #{familyPhone}
+		,apply_user_company_phone = #{applyUserCompanyPhone}
+		,gh_mobile = #{ghMobile}
+		,gh_company_name = #{ghCompanyName}
+		,car_brand_model = #{carBrandModel}
+		,car_number = #{carNumber}
+		,guarant_contract_deadline = #{guarantContractDeadline}
+		,guarant_month_fee_rate = #{guarantMonthFeeRate}
+		,guarantor_now_address = #{guarantorNowAddress}
+		,guarantor_family_phone = #{guarantorFamilyPhone}
+		,guarantor_company_name = #{guarantorCompanyName}
+		,guarantor_company_phone = #{guarantorCompanyPhone}
+		,guarantor_company_address = #{guarantorCompanyAddress}
+		,insurance_company = #{insuranceCompany}
+		,guarant_apply_user_note = #{guarantApplyUserNote}
+		,guarant_print_template_id = #{guarantPrintTemplateId}
+		,guarant_print_user = #{guarantPrintUser}
+		,guarant_print_datetime = #{guarantPrintDatetime}
+		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_pledgeContractPrint" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		car_number = #{carNumber}
+		,frame_no = #{frameNo}
+		,engine_no = #{engineNo}
+		,pledge_print_template_id = #{pledgePrintTemplateId}
+		,pledge_print_user = #{pledgePrintUser}
+		,pledge_print_datetime = #{pledgePrintDatetime}
+		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 		

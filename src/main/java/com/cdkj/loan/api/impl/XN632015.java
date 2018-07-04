@@ -31,8 +31,8 @@ public class XN632015 extends AProcessor {
         if (StringUtils.isNotBlank(req.getId())) {
             condition.setId(StringValidater.toInteger(req.getId()));
         }
-        condition.setAreaNo(req.getAreaNo());
-        condition.setAreaName(req.getAreaName());
+        condition.setAreaNoForQuery(req.getAreaNo());
+        condition.setAreaNameForQuery(req.getAreaName());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

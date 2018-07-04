@@ -16,7 +16,6 @@ public class XN630042Req {
     @NotBlank(message = "修改人不能为空")
     private String updater;
 
-    // 备注（选填）
     private String remark;
 
     public String getId() {

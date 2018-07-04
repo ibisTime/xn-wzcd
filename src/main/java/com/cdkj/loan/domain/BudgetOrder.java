@@ -26,14 +26,20 @@ public class BudgetOrder extends ABaseDO {
     // 客户姓名
     private String customerName;
 
+    // 客户性别
+    private String customerSex;
+
+    // 客户生日
+    private String customerBirth;
+
     // 汽车经销商编号
     private String carDealerCode;
 
+    // 汽车经销商名称(外单手动填写)
+    private String outCarDealerName;
+
     // 贷款银行编号
     private String loanBankCode;
-
-    // 经办支行
-    private String loanBankSubbranch;
 
     // 厂商指导价
     private Long originalPrice;
@@ -42,7 +48,7 @@ public class BudgetOrder extends ABaseDO {
     private String carModel;
 
     // 贷款周期
-    private String loanPeriods;
+    private Integer loanPeriods;
 
     // 发票价格
     private Long invoicePrice;
@@ -69,7 +75,7 @@ public class BudgetOrder extends ABaseDO {
     private double companyLoanCs;
 
     // 发票不匹配之前我司贷款成数
-    private double preCompanyLoanCs;
+    private double PreCompanyLoanCs;
 
     // 是否垫资
     private String isAdvanceFund;
@@ -98,8 +104,20 @@ public class BudgetOrder extends ABaseDO {
     // 业务员编号
     private String saleUserId;
 
+    // 邮政编码
+    private String postcode;
+
+    // 家庭电话
+    private String familyPhone;
+
+    // 申请人编号
+    private String applyUserId;
+
     // 申请人就职单位
     private String applyUserCompany;
+
+    // 申请人就职单位电话
+    private String applyUserCompanyPhone;
 
     // 申请人职位
     private String applyUserDuty;
@@ -124,6 +142,21 @@ public class BudgetOrder extends ABaseDO {
 
     // 申请人是否打件
     private String applyUserIsPrint;
+
+    // 共还人姓名
+    private String ghRealName;
+
+    // 共还人身份证号
+    private String ghIdNo;
+
+    // 共还人性别
+    private String ghSex;
+
+    // 共还人电话
+    private String ghMobile;
+
+    // 共还人公司名称
+    private String ghCompanyName;
 
     // 共还人月收入
     private Long ghMonthIncome;
@@ -239,6 +272,9 @@ public class BudgetOrder extends ABaseDO {
     // 油补
     private Long oilSubsidy;
 
+    // 发票不匹配之前油补
+    private Long preOilSubsidy;
+
     // 油补公里数
     private double oilSubsidyKil;
 
@@ -248,8 +284,14 @@ public class BudgetOrder extends ABaseDO {
     // GPS收费
     private Long gpsFee;
 
+    // 发票不匹配之前GPS收费
+    private Long preGpsFee;
+
     // GPS提成
-    private Double gpsDeduct;
+    private Long gpsDeduct;
+
+    // 发票不匹配之前GPS提成
+    private Long preGpsDeduct;
 
     // GPS收费方式
     private String gpsFeeWay;
@@ -257,11 +299,20 @@ public class BudgetOrder extends ABaseDO {
     // 履约保证金
     private Long lyAmount;
 
+    // 发票不匹配之前履约保证金
+    private Long preLyAmount;
+
     // 担保风险金
     private Long fxAmount;
 
+    // 发票不匹配之前担保风险金
+    private Long preFxAmount;
+
     // 杂费
     private Long otherFee;
+
+    // 发票不匹配之前杂费
+    private Long preOtherFee;
 
     // 手续费收取方式
     private String serviceChargeWay;
@@ -410,14 +461,29 @@ public class BudgetOrder extends ABaseDO {
     // 抵押合同编号
     private String pledgeContractCode;
 
+    // 抵押套打模板
+    private String pledgePrintTemplateId;
+
+    // 抵押打印人
+    private String pledgePrintUser;
+
+    // 抵押打印日期
+    private Date pledgePrintDatetime;
+
     // 保险公司编号
     private String insuranceCompanyCode;
 
-    // 车辆颜色
-    private String carColor;
-
     // 车辆品牌
     private String carBrand;
+
+    // 品牌型号
+    private String carBrandModel;
+
+    // 车牌号码
+    private String carNumber;
+
+    // 车辆颜色
+    private String carColor;
 
     // 车架号码
     private String frameNo;
@@ -430,6 +496,9 @@ public class BudgetOrder extends ABaseDO {
 
     // 保险生效日期
     private Date insuranceEffectDatetime;
+
+    // 承保公司
+    private String insuranceCompany;
 
     // 保险经办银行
     private String insuranceBank;
@@ -455,6 +524,15 @@ public class BudgetOrder extends ABaseDO {
     // 担保合同编号
     private String guaranteeContractCode;
 
+    // 期限
+    private String guarantContractDeadline;
+
+    // 月费率
+    private double guarantMonthFeeRate;
+
+    // 银行合同编号
+    private String bankContractCode;
+
     // 登记证书号
     private String regCertificateCode;
 
@@ -469,6 +547,33 @@ public class BudgetOrder extends ABaseDO {
 
     // 担保人手机
     private String guarantorMobile;
+
+    // 担保人现住址
+    private String guarantorNowAddress;
+
+    // 担保人家庭电话
+    private String guarantorFamilyPhone;
+
+    // 担保人单位
+    private String guarantorCompanyName;
+
+    // 担保人就职单位电话
+    private String guarantorCompanyPhone;
+
+    // 担保人就职单位地址
+    private String guarantorCompanyAddress;
+
+    // 担保客户说明
+    private String guarantApplyUserNote;
+
+    // 套打模板
+    private String guarantPrintTemplateId;
+
+    // 担保打印人
+    private String guarantPrintUser;
+
+    // 担保打印日期
+    private Date guarantPrintDatetime;
 
     // 银行卡号
     private String bankCardNumber;
@@ -540,10 +645,10 @@ public class BudgetOrder extends ABaseDO {
     private String certification;
 
     // 交强险
-    private Long forceInsurance;
+    private String forceInsurance;
 
     // 商业险
-    private Long businessInsurance;
+    private String businessInsurance;
 
     // 机动车登记证书
     private String motorRegCertification;
@@ -605,7 +710,7 @@ public class BudgetOrder extends ABaseDO {
     // 冻结状态(0冻结 1正常)
     private String frozenStatus;
 
-    // 客户申请作废时的节点编号
+    // 客户申请作废时的主流程节点编号/发票不匹配申请时的主流程节点编号
     private String cancelNodeCode;
 
     // 是否提交作废申请
@@ -617,9 +722,14 @@ public class BudgetOrder extends ABaseDO {
     // 还款业务编号
     private String repayBizCode;
 
+    // 预算单类型（1正常单2外单）
+    private String type;
+
     /*-------辅助字段-------*/
 
     private String roleCode;// 角色编号
+
+    private Credit credit;// 征信单
 
     private Date applyDatetimeStart;// 申请时间起始
 
@@ -630,6 +740,8 @@ public class BudgetOrder extends ABaseDO {
     private String bankReceiptName;// 收款银行
 
     private String carDealerName;// 汽车经销商
+
+    private String carDealerPhone;// 汽车经销商电话
 
     private String insuranceCompanyName;// 保险公司
 
@@ -661,6 +773,36 @@ public class BudgetOrder extends ABaseDO {
 
     private String companyLoanCsSection;// 我司贷款成数区间
 
+    private String guarantor1Sex; // 担保人1性别
+
+    private String guarantor2Sex;// 担保人2性别
+
+    private List<RepayPlan> repayPlansList;// 还款计划
+
+    public List<RepayPlan> getRepayPlansList() {
+        return repayPlansList;
+    }
+
+    public void setRepayPlansList(List<RepayPlan> repayPlansList) {
+        this.repayPlansList = repayPlansList;
+    }
+
+    public String getGuarantor1Sex() {
+        return guarantor1Sex;
+    }
+
+    public void setGuarantor1Sex(String guarantor1Sex) {
+        this.guarantor1Sex = guarantor1Sex;
+    }
+
+    public String getGuarantor2Sex() {
+        return guarantor2Sex;
+    }
+
+    public void setGuarantor2Sex(String guarantor2Sex) {
+        this.guarantor2Sex = guarantor2Sex;
+    }
+
     public String getCompanyLoanCsSection() {
         return companyLoanCsSection;
     }
@@ -691,6 +833,150 @@ public class BudgetOrder extends ABaseDO {
 
     public void setRepointDetailList3(List<RepointDetail> repointDetailList3) {
         this.repointDetailList3 = repointDetailList3;
+    }
+
+    public String getFamilyPhone() {
+        return familyPhone;
+    }
+
+    public void setFamilyPhone(String familyPhone) {
+        this.familyPhone = familyPhone;
+    }
+
+    public String getInsuranceCompany() {
+        return insuranceCompany;
+    }
+
+    public void setInsuranceCompany(String insuranceCompany) {
+        this.insuranceCompany = insuranceCompany;
+    }
+
+    public String getGuarantorCompanyName() {
+        return guarantorCompanyName;
+    }
+
+    public void setGuarantorCompanyName(String guarantorCompanyName) {
+        this.guarantorCompanyName = guarantorCompanyName;
+    }
+
+    public String getGuarantorCompanyPhone() {
+        return guarantorCompanyPhone;
+    }
+
+    public void setGuarantorCompanyPhone(String guarantorCompanyPhone) {
+        this.guarantorCompanyPhone = guarantorCompanyPhone;
+    }
+
+    public String getGuarantorCompanyAddress() {
+        return guarantorCompanyAddress;
+    }
+
+    public void setGuarantorCompanyAddress(String guarantorCompanyAddress) {
+        this.guarantorCompanyAddress = guarantorCompanyAddress;
+    }
+
+    public String getGuarantApplyUserNote() {
+        return guarantApplyUserNote;
+    }
+
+    public void setGuarantApplyUserNote(String guarantApplyUserNote) {
+        this.guarantApplyUserNote = guarantApplyUserNote;
+    }
+
+    public String getGuarantPrintTemplateId() {
+        return guarantPrintTemplateId;
+    }
+
+    public void setGuarantPrintTemplateId(String guarantPrintTemplateId) {
+        this.guarantPrintTemplateId = guarantPrintTemplateId;
+    }
+
+    public String getCarDealerPhone() {
+        return carDealerPhone;
+    }
+
+    public void setCarDealerPhone(String carDealerPhone) {
+        this.carDealerPhone = carDealerPhone;
+    }
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    public String getApplyUserCompanyPhone() {
+        return applyUserCompanyPhone;
+    }
+
+    public void setApplyUserCompanyPhone(String applyUserCompanyPhone) {
+        this.applyUserCompanyPhone = applyUserCompanyPhone;
+    }
+
+    public String getGhMobile() {
+        return ghMobile;
+    }
+
+    public void setGhMobile(String ghMobile) {
+        this.ghMobile = ghMobile;
+    }
+
+    public String getGhCompanyName() {
+        return ghCompanyName;
+    }
+
+    public void setGhCompanyName(String ghCompanyName) {
+        this.ghCompanyName = ghCompanyName;
+    }
+
+    public void setLoanPeriods(Integer loanPeriods) {
+        this.loanPeriods = loanPeriods;
+    }
+
+    public void setGhRealName(String ghRealName) {
+        this.ghRealName = ghRealName;
+    }
+
+    public String getCarBrandModel() {
+        return carBrandModel;
+    }
+
+    public void setCarBrandModel(String carBrandModel) {
+        this.carBrandModel = carBrandModel;
+    }
+
+    public String getCarNumber() {
+        return carNumber;
+    }
+
+    public void setCarNumber(String carNumber) {
+        this.carNumber = carNumber;
+    }
+
+    public String getGuarantContractDeadline() {
+        return guarantContractDeadline;
+    }
+
+    public void setGuarantContractDeadline(String guarantContractDeadline) {
+        this.guarantContractDeadline = guarantContractDeadline;
+    }
+
+    public double getGuarantMonthFeeRate() {
+        return guarantMonthFeeRate;
+    }
+
+    public void setGuarantMonthFeeRate(double guarantMonthFeeRate) {
+        this.guarantMonthFeeRate = guarantMonthFeeRate;
+    }
+
+    public String getGuarantorFamilyPhone() {
+        return guarantorFamilyPhone;
+    }
+
+    public void setGuarantorFamilyPhone(String guarantorFamilyPhone) {
+        this.guarantorFamilyPhone = guarantorFamilyPhone;
     }
 
     public String getCompanyName() {
@@ -765,6 +1051,22 @@ public class BudgetOrder extends ABaseDO {
         this.preLoanAmount = preLoanAmount;
     }
 
+    public String getGuarantPrintUser() {
+        return guarantPrintUser;
+    }
+
+    public void setGuarantPrintUser(String guarantPrintUser) {
+        this.guarantPrintUser = guarantPrintUser;
+    }
+
+    public Date getGuarantPrintDatetime() {
+        return guarantPrintDatetime;
+    }
+
+    public void setGuarantPrintDatetime(Date guarantPrintDatetime) {
+        this.guarantPrintDatetime = guarantPrintDatetime;
+    }
+
     public String getBankReceiptName() {
         return bankReceiptName;
     }
@@ -791,6 +1093,14 @@ public class BudgetOrder extends ABaseDO {
 
     public String getMakeCardOperator() {
         return makeCardOperator;
+    }
+
+    public String getApplyUserId() {
+        return applyUserId;
+    }
+
+    public void setApplyUserId(String applyUserId) {
+        this.applyUserId = applyUserId;
     }
 
     public void setMakeCardOperator(String makeCardOperator) {
@@ -839,6 +1149,30 @@ public class BudgetOrder extends ABaseDO {
 
     public void setShouldBackDatetime(Date shouldBackDatetime) {
         this.shouldBackDatetime = shouldBackDatetime;
+    }
+
+    public String getCustomerSex() {
+        return customerSex;
+    }
+
+    public void setCustomerSex(String customerSex) {
+        this.customerSex = customerSex;
+    }
+
+    public String getCustomerBirth() {
+        return customerBirth;
+    }
+
+    public void setCustomerBirth(String customerBirth) {
+        this.customerBirth = customerBirth;
+    }
+
+    public String getGhIdNo() {
+        return ghIdNo;
+    }
+
+    public void setGhIdNo(String ghIdNo) {
+        this.ghIdNo = ghIdNo;
     }
 
     public void setShouldBackStatus(String shouldBackStatus) {
@@ -949,14 +1283,6 @@ public class BudgetOrder extends ABaseDO {
         this.loanBankCode = loanBankCode;
     }
 
-    public String getLoanBankSubbranch() {
-        return loanBankSubbranch;
-    }
-
-    public void setLoanBankSubbranch(String loanBankSubbranch) {
-        this.loanBankSubbranch = loanBankSubbranch;
-    }
-
     public Long getOriginalPrice() {
         return originalPrice;
     }
@@ -973,12 +1299,12 @@ public class BudgetOrder extends ABaseDO {
         this.carModel = carModel;
     }
 
-    public String getLoanPeriods() {
+    public Integer getLoanPeriods() {
         return loanPeriods;
     }
 
-    public void setLoanPeriods(String loanPeriods) {
-        this.loanPeriods = loanPeriods;
+    public String getGhRealName() {
+        return ghRealName;
     }
 
     public Long getInvoicePrice() {
@@ -1197,6 +1523,14 @@ public class BudgetOrder extends ABaseDO {
         this.isSiteProve = isSiteProve;
     }
 
+    public String getGhSex() {
+        return ghSex;
+    }
+
+    public void setGhSex(String ghSex) {
+        this.ghSex = ghSex;
+    }
+
     public String getSiteProve() {
         return siteProve;
     }
@@ -1317,12 +1651,36 @@ public class BudgetOrder extends ABaseDO {
         this.isPlatInsure = isPlatInsure;
     }
 
+    public String getPledgePrintTemplateId() {
+        return pledgePrintTemplateId;
+    }
+
+    public void setPledgePrintTemplateId(String pledgePrintTemplateId) {
+        this.pledgePrintTemplateId = pledgePrintTemplateId;
+    }
+
     public Long getGpsFee() {
         return gpsFee;
     }
 
     public void setGpsFee(Long gpsFee) {
         this.gpsFee = gpsFee;
+    }
+
+    public String getPledgePrintUser() {
+        return pledgePrintUser;
+    }
+
+    public void setPledgePrintUser(String pledgePrintUser) {
+        this.pledgePrintUser = pledgePrintUser;
+    }
+
+    public Date getPledgePrintDatetime() {
+        return pledgePrintDatetime;
+    }
+
+    public void setPledgePrintDatetime(Date pledgePrintDatetime) {
+        this.pledgePrintDatetime = pledgePrintDatetime;
     }
 
     public String getGpsFeeWay() {
@@ -1525,6 +1883,14 @@ public class BudgetOrder extends ABaseDO {
         this.repayFirstMonthDatetime = repayFirstMonthDatetime;
     }
 
+    public String getBankContractCode() {
+        return bankContractCode;
+    }
+
+    public void setBankContractCode(String bankContractCode) {
+        this.bankContractCode = bankContractCode;
+    }
+
     public Long getRepayMonthAmount() {
         return repayMonthAmount;
     }
@@ -1555,6 +1921,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setIdNo(String idNo) {
         this.idNo = idNo;
+    }
+
+    public String getGuarantorNowAddress() {
+        return guarantorNowAddress;
+    }
+
+    public void setGuarantorNowAddress(String guarantorNowAddress) {
+        this.guarantorNowAddress = guarantorNowAddress;
     }
 
     public String getHouseCustomerPic() {
@@ -1737,6 +2111,54 @@ public class BudgetOrder extends ABaseDO {
         return companyNamePic;
     }
 
+    public Long getPreOilSubsidy() {
+        return preOilSubsidy;
+    }
+
+    public void setPreOilSubsidy(Long preOilSubsidy) {
+        this.preOilSubsidy = preOilSubsidy;
+    }
+
+    public Long getPreGpsFee() {
+        return preGpsFee;
+    }
+
+    public void setPreGpsFee(Long preGpsFee) {
+        this.preGpsFee = preGpsFee;
+    }
+
+    public Long getPreGpsDeduct() {
+        return preGpsDeduct;
+    }
+
+    public void setPreGpsDeduct(Long preGpsDeduct) {
+        this.preGpsDeduct = preGpsDeduct;
+    }
+
+    public Long getPreLyAmount() {
+        return preLyAmount;
+    }
+
+    public void setPreLyAmount(Long preLyAmount) {
+        this.preLyAmount = preLyAmount;
+    }
+
+    public Long getPreFxAmount() {
+        return preFxAmount;
+    }
+
+    public void setPreFxAmount(Long preFxAmount) {
+        this.preFxAmount = preFxAmount;
+    }
+
+    public Long getPreOtherFee() {
+        return preOtherFee;
+    }
+
+    public void setPreOtherFee(Long preOtherFee) {
+        this.preOtherFee = preOtherFee;
+    }
+
     public void setCompanyNamePic(String companyNamePic) {
         this.companyNamePic = companyNamePic;
     }
@@ -1843,6 +2265,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setOtherApplyNote(String otherApplyNote) {
         this.otherApplyNote = otherApplyNote;
+    }
+
+    public Credit getCredit() {
+        return credit;
+    }
+
+    public void setCredit(Credit credit) {
+        this.credit = credit;
     }
 
     public Date getApplyDatetime() {
@@ -2165,11 +2595,11 @@ public class BudgetOrder extends ABaseDO {
         this.oilSubsidyKil = oilSubsidyKil;
     }
 
-    public Double getGpsDeduct() {
+    public Long getGpsDeduct() {
         return gpsDeduct;
     }
 
-    public void setGpsDeduct(Double gpsDeduct) {
+    public void setGpsDeduct(Long gpsDeduct) {
         this.gpsDeduct = gpsDeduct;
     }
 
@@ -2205,19 +2635,19 @@ public class BudgetOrder extends ABaseDO {
         this.certification = certification;
     }
 
-    public Long getForceInsurance() {
+    public String getForceInsurance() {
         return forceInsurance;
     }
 
-    public void setForceInsurance(Long forceInsurance) {
+    public void setForceInsurance(String forceInsurance) {
         this.forceInsurance = forceInsurance;
     }
 
-    public Long getBusinessInsurance() {
+    public String getBusinessInsurance() {
         return businessInsurance;
     }
 
-    public void setBusinessInsurance(Long businessInsurance) {
+    public void setBusinessInsurance(String businessInsurance) {
         this.businessInsurance = businessInsurance;
     }
 
@@ -2414,11 +2844,12 @@ public class BudgetOrder extends ABaseDO {
     }
 
     public double getPreCompanyLoanCs() {
-        return preCompanyLoanCs;
+
+        return PreCompanyLoanCs;
     }
 
     public void setPreCompanyLoanCs(double preCompanyLoanCs) {
-        this.preCompanyLoanCs = preCompanyLoanCs;
+        PreCompanyLoanCs = preCompanyLoanCs;
     }
 
     public double getPreGlobalRate() {
@@ -2435,6 +2866,23 @@ public class BudgetOrder extends ABaseDO {
 
     public void setPreBankLoanCs(double preBankLoanCs) {
         this.preBankLoanCs = preBankLoanCs;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getOutCarDealerName() {
+        return outCarDealerName;
+    }
+
+    public void setOutCarDealerName(String outCarDealerName) {
+        this.outCarDealerName = outCarDealerName;
+
     }
 
 }

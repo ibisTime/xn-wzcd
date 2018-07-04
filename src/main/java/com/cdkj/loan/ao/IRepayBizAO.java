@@ -15,7 +15,6 @@ import com.cdkj.loan.dto.req.XN630557Req;
 import com.cdkj.loan.dto.req.XN630563Req;
 import com.cdkj.loan.dto.req.XN630570Req;
 import com.cdkj.loan.dto.req.XN630572Req;
-import com.cdkj.loan.dto.req.XN630576Req;
 
 public interface IRepayBizAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
@@ -32,14 +31,14 @@ public interface IRepayBizAO {
 
     // ********************************car********************************
 
-    // 申请拖车
+    // 申请收车
     public void takeCarApply(XN630550Req req);
 
-    // 拖车分控经理审核
+    // 收车分控经理审核
     public void takeCarRiskManageCheck(String code, String approveResult,
             String operator, String remark);
 
-    // 拖车分公司总公司审核
+    // 收车分公司总公司审核
     public void takeCarCompanyManageCheck(String code, String approveResult,
             String operator, String remark);
 
@@ -55,7 +54,7 @@ public interface IRepayBizAO {
     public void takeCarSureFk(String code, String remitBankCode,
             String remitBillPdf, Date remitDatetime, String operator);
 
-    // 录入拖车结果
+    // 录入收车结果
     public void takeCarInputResult(XN630556Req req);
 
     // 结果处理
@@ -87,8 +86,12 @@ public interface IRepayBizAO {
     public void settleRiskManagerCheck(String code, String approveResult,
             String approveNote, String operator);
 
-    // 结果回录
-    public void settleMortgageInput(XN630576Req req);
+    // 抵押打印
+    public void settleMortgagePrint(String code, String releaseDatetime,
+            String releaseTemplateId, String releaseNote, String operator);
+
+    // 抵押解除确认
+    public void settleMortgageCommitFile(String code, String operator);
 
     // ********************************car********************************
 

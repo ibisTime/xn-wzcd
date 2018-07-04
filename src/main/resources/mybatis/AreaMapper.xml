@@ -12,11 +12,11 @@
 			<if test="id != null and id != '' ">
 				AND t.id = #{id}
 			</if>
-			<if test="areaNo != null and areaNo != '' ">
-				AND t.area_no = #{areaNo}
+			<if test="areaNoForQuery != null and areaNoForQuery != '' ">
+				AND t.area_no like "%"#{areaNoForQuery}"%"
 			</if>
-			<if test="areaName != null and areaName != '' ">
-				AND t.area_name = #{areaName}
+			<if test="areaNameForQuery != null and areaNameForQuery != '' ">
+				AND t.area_name like "%"#{areaNameForQuery}"%"
 			</if>
 		</trim>
 	</sql>

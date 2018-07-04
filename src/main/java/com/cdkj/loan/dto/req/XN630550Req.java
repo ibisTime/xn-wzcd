@@ -3,7 +3,7 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 申请拖车
+ * 申请收车
  * @author: silver 
  * @since: 2018年6月16日 下午2:48:11 
  * @history:
@@ -23,27 +23,27 @@ public class XN630550Req {
     // 典当行赎金小写
     private String ransom;
 
-    // 拖车申请费用
+    // 收车申请费用
     @NotBlank
     private String tsCarAmount;
 
-    // 拖车人姓名
+    // 收车人姓名
     @NotBlank
     private String tsUserName;
 
-    // 拖车收款账号
+    // 收车收款账号
     @NotBlank
     private String tsBankcardNumber;
 
-    // 拖车开户行
+    // 收车开户行
     @NotBlank
     private String tsBankName;
 
-    // 拖车开户支行
+    // 收车开户支行
     @NotBlank
     private String tsSubbranch;
 
-    // 拖车申请说明
+    // 收车申请说明
     private String tcApplyNote;
 
     // 操作人

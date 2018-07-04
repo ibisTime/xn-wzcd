@@ -7,16 +7,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IJudgeAO;
+import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IJudgeBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Judge;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN630560Req;
 import com.cdkj.loan.dto.req.XN630561Req;
 import com.cdkj.loan.dto.req.XN630562Req;
@@ -53,6 +57,12 @@ public class JudgeAOImpl implements IJudgeAO {
 
     @Autowired
     private INodeFlowBO nodeFlowBO;
+
+    @Autowired
+    private IUserBO userBO;
+
+    @Autowired
+    private IBudgetOrderBO budgetOrderBO;
 
     @Override
     @Transactional
@@ -120,7 +130,7 @@ public class JudgeAOImpl implements IJudgeAO {
             repayBizBO.refreshJudgePaid(req.getCode());
 
             // 日志记录
-            sysBizLogBO.onlyPreEndSYSBizLog(EBizLogType.REPAY_BIZ,
+            sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REPAY_BIZ,
                 req.getCode(), curNodeCode);
 
         } else if (EExeResult.ABORT.getCode().equals(req.getExeResult())) {// 还款计划不操作
@@ -141,10 +151,21 @@ public class JudgeAOImpl implements IJudgeAO {
                 ERepayPlanNode.BAD_DEBT);
             repayBizBO.refreshJudgeBad(req.getCode());
 
-            // 日志记录
-            sysBizLogBO.onlyPreEndSYSBizLog(EBizLogType.REPAY_BIZ,
-                req.getCode(), curNodeCode);
+            // 更新预算单节点
+            BudgetOrder condition = new BudgetOrder();
+            condition.setRepayBizCode(repayBiz.getCode());
+            List<BudgetOrder> budgetOrderList = budgetOrderBO
+                .queryBudgetOrderList(condition);
+            BudgetOrder budgetOrder = budgetOrderList.get(0);
+            budgetOrder.setCurNodeCode(ERepayBizNode.JUDGE_BAD.getCode());
+            budgetOrderBO.updateCurNodeCode(budgetOrder);
 
+            User user = userBO.getUser(repayBiz.getUserId());
+            userBO.refreshBlackSign(user, req.getOperator());
+
+            // 日志记录
+            sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REPAY_BIZ,
+                req.getCode(), curNodeCode);
         }
 
     }

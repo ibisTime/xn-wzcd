@@ -123,12 +123,11 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setLoanAmount(budgetOrder.getLoanAmount());
 
         repayBiz.setFxDeposit(0L);
-        repayBiz.setPeriods(
-            StringValidater.toInteger(budgetOrder.getLoanPeriods()));
+        repayBiz.setPeriods(budgetOrder.getLoanPeriods());
         repayBiz.setRestPeriods(repayBiz.getPeriods());
         repayBiz.setBankRate(0.0);// 作废
-
         repayBiz.setBankFkDatetime(budgetOrder.getBankFkDatetime());
+
         Date now = new Date();
         repayBiz.setLoanStartDatetime(now);
         Date addMonths = DateUtils.addMonths(now, repayBiz.getPeriods());
@@ -225,7 +224,6 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setIdNo(applyUser.getIdNo());
 
         repayBiz.setBankcardCode(order.getBankcardCode());
-        repayBiz.setRefType(ERepayBizType.PRODUCT.getCode());
         repayBiz.setRefCode(order.getCode());
 
         repayBiz.setBizPrice(order.getAmount());
@@ -490,18 +488,31 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
+    public void refreshMortgagePrint(RepayBiz data, String curNodeCode,
+            Date releaseDatetime, String releaseTemplateId, String releaseNote,
+            String updater) {
+        data.setCurNodeCode(ERepayBizNode.MORTGAGE_PRINT.getCode());
+        data.setReleaseDatetime(releaseDatetime);
+        data.setReleaseTemplateId(releaseTemplateId);
+        data.setReleaseNote(releaseNote);
+        data.setUpdater(updater);
+        data.setUpdateDatetime(new Date());
+        repayBizDAO.updateMortgagePrint(data);
+    }
+
+    @Override
     public void refreshBankRecLogic(String code, String updater) {
         RepayBiz data = new RepayBiz();
         data.setCode(code);
-        data.setCurNodeCode(ERepayBizNode.MORTGAGE_INPUT.getCode());
+        data.setCurNodeCode(ERepayBizNode.MORTGAGE_COMMIT_FILE.getCode());
         data.setUpdater(updater);
         data.setUpdateDatetime(new Date());
         repayBizDAO.updateBankRecLogic(data);
     }
 
     @Override
-    public void refreshMortgageInput(RepayBiz data) {
-        repayBizDAO.updateMortgageInput(data);
+    public void refreshMortgageCommit(RepayBiz data) {
+        repayBizDAO.updateMortgageCommit(data);
     }
 
     @Override

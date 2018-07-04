@@ -20,8 +20,7 @@ import com.cdkj.loan.domain.SYSConfig;
  * @history:
  */
 public interface ISYSConfigBO extends IPaginableBO<SYSConfig> {
-    public int refreshSYSConfig(Long id, String cvalue, String updater,
-            String remark);
+    public int refreshSYSConfig(SYSConfig data);
 
     public SYSConfig getSYSConfig(Long id);
 

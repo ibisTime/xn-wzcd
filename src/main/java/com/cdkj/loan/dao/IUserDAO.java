@@ -25,4 +25,16 @@ public interface IUserDAO extends IBaseDAO<User> {
     // 更新状态
     public int updateStatus(User data);
 
+    // 更新绿名单标记
+    public int updateGreenSign(User data);
+
+    // 更新黄名单标记
+    public int updateYellowSign(User data);
+
+    // 更新红名单标记
+    public int updateRedSign(User data);
+
+    // 更新黑名单标记
+    public int updateBlackSign(User data);
+
 }

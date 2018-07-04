@@ -87,12 +87,30 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
 
     @Override
     public CreditUser getCreditUserByCreditCode(String creditCode,
-            ELoanRole creditUserRelation) {
+            ELoanRole loanRole) {
         CreditUser condition = new CreditUser();
         condition.setCreditCode(creditCode);
-        condition.setRelation(creditUserRelation.getCode());
+        condition.setLoanRole(loanRole.getCode());
 
         return creditUserDAO.select(condition);
+    }
+
+    @Override
+    public List<CreditUser> getCreditUserListByCreditCode(String creditCode,
+            ELoanRole loanRole) {
+        CreditUser condition = new CreditUser();
+        condition.setCreditCode(creditCode);
+        condition.setRelation(loanRole.getCode());
+
+        return creditUserDAO.selectList(condition);
+    }
+
+    @Override
+    public void refreshCourtNetworkResults(String code,
+            String courtNetworkResults) {
+        CreditUser creditUser = getCreditUser(code);
+        creditUser.setCourtNetworkResults(courtNetworkResults);
+        creditUserDAO.refreshCourtNetworkResults(creditUser);
     }
 
 }

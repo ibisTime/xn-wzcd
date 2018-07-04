@@ -688,6 +688,7 @@
 		,judge_note = #{judgeNote}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 	
@@ -763,6 +764,18 @@
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_mortgagePrint" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,release_template_id = #{releaseTemplateId}
+		,release_note = #{releaseNote}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
 
 	<update id="update_bankRecLogic" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
@@ -770,18 +783,17 @@
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
-	<update id="update_mortgageInput" parameterType="repayBiz">
+	<update id="update_mortgageCommit" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
-		,release_datetime = #{releaseDatetime}
-		,release_note = #{releaseNote}
-		,release_template_id = #{releaseTemplateId}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 

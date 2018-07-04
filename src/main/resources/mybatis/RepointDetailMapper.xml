@@ -4,22 +4,31 @@
 <mapper namespace="com.cdkj.loan.dao.IRepointDetailDAO">
 	<resultMap id="repointDetail_DB_Result" type="repointDetail">
 		<result column="code" property="code" />
+		<result column="type" property="type" />
+	    <result column="repoint_code" property="repointCode" />
+	    <result column="company_code" property="companyCode" />
+	    <result column="company_name" property="companyName" />
 		<result column="budget_code" property="budgetCode" />
-		<result column="repoint_code" property="repointCode" />
+
 		<result column="user_name" property="userName" />
 		<result column="id_no" property="idNo" />
 		<result column="car_dealer_code" property="carDealerCode" />
-		<result column="company_code" property="companyCode" />
+		<result column="car_dealer_name" property="carDealerName" />
 		<result column="car_type" property="carType" />
+		
 		<result column="loan_amount" property="loanAmount" />
 		<result column="bank_rate" property="bankRate" />
 		<result column="benchmark_rate" property="benchmarkRate" />
 		<result column="fee" property="fee" />
 		<result column="use_money_purpose" property="useMoneyPurpose" />
+		
 		<result column="repoint_amount" property="repointAmount" />
 		<result column="account_code" property="accountCode" />
-		<result column="mortgage_account_no" property="mortgageAccountNo" />
+		<result column="account_no" property="accountNo" />
+		<result column="open_bank_name" property="openBankName" />
+		<result column="account_name" property="accountName" />
 		<result column="cur_node_code" property="curNodeCode" />
+
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -41,26 +50,37 @@
 			<if test="accountCode != null and accountCode != '' ">
 				AND t.account_code = #{accountCode}
 			</if>
+			<if test="type != null and type != '' ">
+				AND t.type = #{type}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_repointDetail" parameterType="repointDetail" resultMap="repointDetail_DB_Result">
 		SELECT
 		t.code
+		,t.type
 		,t.budget_code
 		,t.repoint_code
+		,t.company_code
+		,t.company_name
+		
 		,t.user_name
 		,t.id_no
 		,t.car_dealer_code
-		,t.company_code
+		,t.car_dealer_name
 		,t.car_type
+		
 		,t.loan_amount
 		,t.bank_rate
 		,t.benchmark_rate
 		,t.fee
 		,t.use_money_purpose
+		
 		,t.repoint_amount
 		,t.account_code
-		,t.mortgage_account_no
+		,t.account_no
+		,t.open_bank_name
+		,t.account_name
 		,t.cur_node_code
 		FROM
 		tdqt_repoint_detail t
@@ -82,40 +102,56 @@
 		INSERT INTO
 		tdqt_repoint_detail(
 		code
+		,type
 		,budget_code
 		,repoint_code
+		,company_code
+		,company_name
+		
 		,user_name
 		,id_no
 		,car_dealer_code
-		,company_code
+		,car_dealer_name
 		,car_type
+		
 		,loan_amount
 		,bank_rate
 		,benchmark_rate
 		,fee
 		,use_money_purpose
+		
 		,repoint_amount
 		,account_code
-		,mortgage_account_no
+		,account_no
+		,open_bank_name
+		,account_name
 		,cur_node_code
 		)
 		VALUES(
 		#{code}
+		,#{type}
 		,#{budgetCode}
 		,#{repointCode}
+		,#{companyCode}
+		,#{companyName}
+		
 		,#{userName}
 		,#{idNo}
 		,#{carDealerCode}
-		,#{companyCode}
+		,#{carDealerName}
 		,#{carType}
+		
 		,#{loanAmount}
 		,#{bankRate}
 		,#{benchmarkRate}
 		,#{fee}
 		,#{useMoneyPurpose}
+		
 		,#{repointAmount}
 		,#{accountCode}
-		,#{mortgageAccountNo}
+		,#{accountNo}
+		,#{openBankName}
+		,#{accountName}
 		,#{curNodeCode}
 		)
 	</insert>
@@ -128,7 +164,9 @@
 		,user_name = #{userName}
 		,id_no = #{idNo}
 		,car_dealer_code = #{carDealerCode}
+		,car_dealer_name = #{carDealerName}
 		,company_code = #{companyCode}
+		,company_name = #{companyName}
 		,car_type = #{carType}
 		,loan_amount = #{loanAmount}
 		,bank_rate = #{bankRate}
@@ -137,7 +175,9 @@
 		,use_money_purpose = #{useMoneyPurpose}
 		,repoint_amount = #{repointAmount}
 		,account_code = #{accountCode}
-		,mortgage_account_no = #{mortgageAccountNo}
+		,account_no = #{accountNo}
+		,open_bank_name = #{openBankName}
+		,account_name = #{accountName}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
@@ -147,6 +187,25 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,repoint_code = #{repointCode}
+		WHERE code = #{code}
+	</update>
+	
+	<delete id="delete_repointDetail" parameterType="repointDetail">
+		DELETE FROM 
+		tdqt_repoint_detail  
+		WHERE budget_code = #{budgetCode}
+	</delete>
+	
+	<delete id="delete_preRepointDetail" parameterType="repointDetail">
+		DELETE FROM 
+		tdqt_repoint_detail  
+		WHERE budget_code = #{budgetCode} AND type = #{type}
+	</delete>
+	
+	<update id="update_repointDetailType">
+		UPDATE tdqt_repoint_detail
+		SET
+		type = #{type}
 		WHERE code = #{code}
 	</update>
 

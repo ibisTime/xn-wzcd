@@ -42,6 +42,7 @@ import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBudgetOrderNode;
+import com.cdkj.loan.enums.EFbhStatus;
 import com.cdkj.loan.enums.EIsAdvanceFund;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
@@ -305,16 +306,43 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             data.getCode(), preNodeCode, node.getCode(), req.getNote(),
             req.getOperator());
 
-        // 如果是垫资客户 更改预算单节点为 录入发保合
+        // 更改节点为银行放款流程第一步
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
             .getBudgetCode());
-        if (EIsAdvanceFund.YES.getCode().equals(budgetOrder.getIsAdvanceFund())) {
 
-            budgetOrder.setCurNodeCode(EBudgetOrderNode.INPUT_FBH.getCode());
+        if (EAdvanceType.PARENT_BIZ.getCode().equals(data.getType())) {
+            // 总公司业务 预算单 007_03银行放款流程第2步打印岗打印
+            budgetOrder.setCurNodeCode(EBudgetOrderNode.LOAN_PRINT.getCode());
+            sysBizLogBO.saveSYSBizLog(data.getBudgetCode(),
+                EBizLogType.BANK_LOAN_COMMIT, data.getBudgetCode(),
+                EBudgetOrderNode.LOAN_PRINT.getCode(),
+                EBudgetOrderNode.LOAN_PRINT.getValue(), req.getOperator());
+        } else if (EAdvanceType.BRANCH_BIZ.getCode().equals(data.getType())) {
+            // 分公司业务 预算单 007_01银行放款流程第1步
+            budgetOrder.setCurNodeCode(EBudgetOrderNode.SEND_LOGISTICS
+                .getCode());
+            sysBizLogBO.saveSYSBizLog(data.getBudgetCode(),
+                EBizLogType.BANK_LOAN_COMMIT, data.getBudgetCode(),
+                EBudgetOrderNode.SEND_LOGISTICS.getCode(),
+                EBudgetOrderNode.SEND_LOGISTICS.getValue(), req.getOperator());
 
-            budgetOrder.inputFBH(budgetOrder);
+            // 当前节点
+            String curNodeCode = budgetOrder.getCurNodeCode();
+            String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
+                curNodeCode).getNextNode();
+
+            // 生成资料传递
+            NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
+                .getCurNodeCode());
+            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                curNodeCode, nextNodeCode, nodeFlow.getFileList());
 
         }
+        // 垫资流程结束 预算单 的 发保合状态 改成 待录入发保合
+        budgetOrder.setFbhStatus(EFbhStatus.PENDING_ENTRY.getCode());
+
+        budgetOrderBO.bankLoanConfirmSubmitBank(budgetOrder);
 
     }
 
@@ -418,6 +446,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
                 .getBudgetCode());
             data.setCreditCode(budgetOrder.getCreditCode());
             data.setBudgetOrder(budgetOrder);
+            data.setApplyUserIdNo(budgetOrder.getIdNo());
         }
         if (StringUtils.isNotBlank(data.getCompanyCode())) {
             Department company = departmentBO.getDepartment(data
@@ -443,10 +472,11 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             CollectBankcard collectBankcard = collectBankcardBO
                 .getCollectBankcard(data.getCollectBankcardCode());
             if (null != collectBankcard) {
+
                 data.setCollectionAccountNo(collectBankcard.getBankcardNumber());
-            }
-            if (null != collectBankcard) {
+
                 data.setCollectBankName(collectBankcard.getBankName());
+                data.setSubbranch(collectBankcard.getSubbranch());
             }
         }
         if (StringUtils.isNotBlank(data.getPayBankcardCode())) {

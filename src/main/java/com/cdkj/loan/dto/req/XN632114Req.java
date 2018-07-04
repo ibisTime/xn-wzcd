@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -24,6 +26,9 @@ public class XN632114Req {
 
     // 审核说明
     private String approveNote;
+
+    // 法院网查询结果
+    private List<XN632114ReqCNR> courtNetworkResultsList;
 
     public String getCode() {
         return code;
@@ -55,6 +60,15 @@ public class XN632114Req {
 
     public void setApproveNote(String approveNote) {
         this.approveNote = approveNote;
+    }
+
+    public List<XN632114ReqCNR> getCourtNetworkResultsList() {
+        return courtNetworkResultsList;
+    }
+
+    public void setCourtNetworkResultsList(
+            List<XN632114ReqCNR> courtNetworkResultsList) {
+        this.courtNetworkResultsList = courtNetworkResultsList;
     }
 
 }

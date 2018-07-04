@@ -12,8 +12,8 @@ import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
-import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.PhoneUtil;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.domain.SYSUser;
@@ -63,8 +63,8 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
         data.setPhoneNumber(req.getPhoneNumber());
         data.setPostCode(req.getPostCode());
         data.setBankClient(req.getBankClient());
-        data.setClientValidDate(DateUtil.strToDate(req.getClientValidDate(),
-            DateUtil.DATA_TIME_PATTERN_1));
+        data.setClientValidDate(
+            StringValidater.toInteger(req.getClientValidDate()));
         data.setAutherName(req.getAutherName());
 
         data.setAutherPhoneNumber(req.getAutherPhoneNumber());
@@ -107,8 +107,8 @@ public class BankSubbranchAOImpl implements IBankSubbranchAO {
         data.setPhoneNumber(req.getPhoneNumber());
         data.setPostCode(req.getPostCode());
         data.setBankClient(req.getBankClient());
-        data.setClientValidDate(DateUtil.strToDate(req.getClientValidDate(),
-            DateUtil.DATA_TIME_PATTERN_1));
+        data.setClientValidDate(
+            StringValidater.toInteger(req.getClientValidDate()));
 
         data.setAutherName(req.getAutherName());
         data.setAutherPhoneNumber(req.getAutherPhone());

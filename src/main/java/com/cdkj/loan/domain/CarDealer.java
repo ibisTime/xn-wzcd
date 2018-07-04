@@ -26,7 +26,7 @@ public class CarDealer extends ABaseDO {
 
     private String mainContact;// 主要联系人
 
-    private Long contactPhone;// 联系人电话
+    private String contactPhone;// 联系人电话
 
     private String mainBrand;// 主营品牌
 
@@ -178,11 +178,11 @@ public class CarDealer extends ABaseDO {
         this.mainContact = mainContact;
     }
 
-    public Long getContactPhone() {
+    public String getContactPhone() {
         return contactPhone;
     }
 
-    public void setContactPhone(Long contactPhone) {
+    public void setContactPhone(String contactPhone) {
         this.contactPhone = contactPhone;
     }
 

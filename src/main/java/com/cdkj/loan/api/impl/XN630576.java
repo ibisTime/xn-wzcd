@@ -11,9 +11,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 结果回录
- * @author: silver 
- * @since: 2018年6月17日 下午6:39:22 
+ * 解除抵押-合同制作
+ * @author: xieyj 
+ * @since: 2018年6月30日 下午5:51:45 
  * @history:
  */
 public class XN630576 extends AProcessor {
@@ -24,7 +24,10 @@ public class XN630576 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repayBizAO.settleMortgageInput(req);
+        repayBizAO
+            .settleMortgagePrint(req.getCode(), req.getReleaseDatetime(),
+                req.getReleaseTemplateId(), req.getReleaseNote(),
+                req.getOperator());
         return new BooleanRes(true);
     }
 

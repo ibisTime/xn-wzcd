@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IReplaceRepayPlanAO;
 import com.cdkj.loan.bo.IBankBO;
+import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
@@ -18,7 +19,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
-import com.cdkj.loan.domain.Bank;
+import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
@@ -47,6 +48,9 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
 
     @Autowired
     private IBankBO bankBO;
+
+    @Autowired
+    private ICollectBankcardBO collectBankcardBO;
 
     @Autowired
     private ISYSUserBO sysUserBO;
@@ -238,9 +242,9 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
 
     private void init(ReplaceRepayPlan replaceRepayPlan) {
         if (StringUtils.isNotBlank(replaceRepayPlan.getRepayBank())) {
-            Bank bank = bankBO
-                .getBankBySubbranch(replaceRepayPlan.getRepayBank());
-            replaceRepayPlan.setRepayBankName(bank.getBankName());
+            CollectBankcard collectBankcard = collectBankcardBO
+                .getCollectBankcard(replaceRepayPlan.getRepayBank());
+            replaceRepayPlan.setRepayBankName(collectBankcard.getBankName());
         }
 
         if (StringUtils.isNotBlank(replaceRepayPlan.getRepayUser())) {

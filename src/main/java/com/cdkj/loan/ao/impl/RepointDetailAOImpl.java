@@ -27,6 +27,7 @@ import com.cdkj.loan.domain.RepointDetail;
 import com.cdkj.loan.dto.req.XN632290Req;
 import com.cdkj.loan.dto.res.XN632290Res;
 import com.cdkj.loan.enums.EBankType;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ECollectBankcardType;
 import com.cdkj.loan.enums.EFeeWay;
 import com.cdkj.loan.enums.EGpsFeeWay;
@@ -156,6 +157,10 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
                 benchmarkRate = carDealerProtocol.getPlatZkRate36();
             }
         }
+        if (bankRate < benchmarkRate) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "银行利率小于我司基准利率，不符合贷前准入单提交条件！");
+        }
         // 返点支付总金额
         Long repointAmount = null;
         if (ERateType.CT.getCode().equals(req.getRateType())) {
@@ -217,10 +222,13 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
                 Double pointRate = collectBankcard.getPointRate();
                 res.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
                     .getCode());
-                res.setRepointAmount(AmountUtil.mul(actualRepointAmount,
-                    pointRate));
+                if (null == actualRepointAmount) {
+                    actualRepointAmount = 0L;
+                }
+                res.setRepointAmount(String.valueOf(AmountUtil.mul(
+                    actualRepointAmount, pointRate)));
                 res.setId(String.valueOf(carDealerProtocol.getId()));
-                res.setAccountCode(collectBankcard.getBankcardNumber());
+                res.setAccountCode(collectBankcard.getCode());
                 CarDealer carDealer = carDealerBO.getCarDealer(req
                     .getCarDealerCode());
                 res.setCompanyName(carDealer.getFullName());
@@ -233,29 +241,37 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         XN632290Res res = new XN632290Res();
         res.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE.getCode());
 
-        Long carDealerSubsidy = StringValidater.toLong(req
-            .getCarDealerSubsidy());// 厂家贴息
+        Long carDealerSubsidy = 0L;
+        if (null != StringValidater.toLong(req.getCarDealerSubsidy())) {
+            carDealerSubsidy = StringValidater
+                .toLong(req.getCarDealerSubsidy());// 厂家贴息
+        }
+
         Long shouldBackAmount = null;// 表里还是用的RepointAmount
-        if (EGpsFeeWay.REPOINT.getCode().equals(req.getGpsFeeWay())
-                && EFeeWay.REPOINT.getCode().equals(req.getFeeWay())) {
+        if (EGpsFeeWay.MORTGAGE.getCode().equals(req.getGpsFeeWay())
+                && EFeeWay.MORTGAGE.getCode().equals(req.getFeeWay())) {
             shouldBackAmount = loanAmount - sxFee
                     - -StringValidater.toLong(req.getGpsFee())
                     - carDealerSubsidy;
-        } else if (!EGpsFeeWay.REPOINT.getCode().equals(req.getGpsFeeWay())
-                && EFeeWay.REPOINT.getCode().equals(req.getFeeWay())) {
+        } else if (!EGpsFeeWay.MORTGAGE.getCode().equals(req.getGpsFeeWay())
+                && EFeeWay.MORTGAGE.getCode().equals(req.getFeeWay())) {
             shouldBackAmount = loanAmount - sxFee - carDealerSubsidy;
-        } else if (EGpsFeeWay.REPOINT.getCode().equals(req.getGpsFeeWay())
-                && !EFeeWay.REPOINT.getCode().equals(req.getFeeWay())) {
+        } else if (EGpsFeeWay.MORTGAGE.getCode().equals(req.getGpsFeeWay())
+                && !EFeeWay.MORTGAGE.getCode().equals(req.getFeeWay())) {
             shouldBackAmount = loanAmount
                     - StringValidater.toLong(req.getGpsFee())
                     - carDealerSubsidy;
-        } else if (!EGpsFeeWay.REPOINT.getCode().equals(req.getGpsFeeWay())
-                && !EFeeWay.REPOINT.getCode().equals(req.getFeeWay())) {
+        } else if (!EGpsFeeWay.MORTGAGE.getCode().equals(req.getGpsFeeWay())
+                && !EFeeWay.MORTGAGE.getCode().equals(req.getFeeWay())) {
             shouldBackAmount = loanAmount - carDealerSubsidy;
         }
-        res.setRepointAmount(shouldBackAmount);// 应退按揭款金额=贷款金额-收客户手续费（按揭款扣）-GPS收费（按揭款扣）-厂家贴息
+        if (null == shouldBackAmount) {
+            shouldBackAmount = 0L;
+        }
+        res.setRepointAmount(String.valueOf(shouldBackAmount));// 应退按揭款金额=贷款金额-收客户手续费（按揭款扣）-GPS收费（按揭款扣）-厂家贴息
         Department department = departmentBO.getDepartment(budgetOrder
             .getCompanyCode());
+
         res.setCompanyName(department.getName());
         CollectBankcard condition2 = new CollectBankcard();
         condition2.setCompanyCode(department.getCode());
@@ -263,6 +279,7 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         List<CollectBankcard> list2 = collectBankcardBO
             .queryCollectBankcardByCompanyCodeAndType(condition2);
         CollectBankcard collectBankcard2 = list2.get(0);
+        res.setAccountCode(collectBankcard2.getCode());
         res.setBankcardNumber(collectBankcard2.getBankcardNumber());
         res.setSubbranch(collectBankcard2.getRealName());
         resList.add(res);

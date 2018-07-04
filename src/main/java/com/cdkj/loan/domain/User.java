@@ -59,6 +59,24 @@ public class User extends ABaseDO {
     // 状态
     private String status;
 
+    // 标记(0=白名单 1=绿名单 2=黄名单 3=红名单)
+    private String sign;
+
+    // 标记日期
+    private Date signDatetime;
+
+    // 绿名单累计逾期次数
+    private int totalGreenCount;
+
+    // 黄名单累计逾期次数
+    private int totalYellowCount;
+
+    // 红名单累计逾期次数
+    private int totalRedCount;
+
+    // 黑名单累计逾期次数
+    private int totalBlackCount;
+
     // 注册时间
     private Date createDatetime;
 
@@ -99,6 +117,54 @@ public class User extends ABaseDO {
 
     // 是否设置交易密码
     private boolean tradepwdFlag;
+
+    public int getTotalBlackCount() {
+        return totalBlackCount;
+    }
+
+    public void setTotalBlackCount(int totalBlackCount) {
+        this.totalBlackCount = totalBlackCount;
+    }
+
+    public Date getSignDatetime() {
+        return signDatetime;
+    }
+
+    public void setSignDatetime(Date signDatetime) {
+        this.signDatetime = signDatetime;
+    }
+
+    public int getTotalGreenCount() {
+        return totalGreenCount;
+    }
+
+    public void setTotalGreenCount(int totalGreenCount) {
+        this.totalGreenCount = totalGreenCount;
+    }
+
+    public int getTotalYellowCount() {
+        return totalYellowCount;
+    }
+
+    public void setTotalYellowCount(int totalYellowCount) {
+        this.totalYellowCount = totalYellowCount;
+    }
+
+    public int getTotalRedCount() {
+        return totalRedCount;
+    }
+
+    public void setTotalRedCount(int totalRedCount) {
+        this.totalRedCount = totalRedCount;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
 
     public String getUserId() {
         return userId;

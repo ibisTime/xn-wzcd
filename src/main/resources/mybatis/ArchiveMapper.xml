@@ -358,6 +358,7 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
+		,user_id = #{userId}
 		WHERE code = #{code}
 	</update>
 	

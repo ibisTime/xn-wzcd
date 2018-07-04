@@ -23,6 +23,7 @@ import com.cdkj.loan.dto.req.XN632176Req;
 import com.cdkj.loan.dto.req.XN632233Req;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBudgetFrozenStatus;
 import com.cdkj.loan.enums.ETotalAdvanceFundStatus;
 import com.cdkj.loan.enums.ETotalAdvanceFundType;
 import com.cdkj.loan.exception.BizException;
@@ -172,6 +173,11 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
                 req.getCollectionDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setCollectionBillPdf(req.getCollectionBillPdf());
         }
+        // 改回之前节点
+        budgetOrder.setCurNodeCode(budgetOrder.getCancelNodeCode());
+        budgetOrder.setCancelNodeCode(null);
+        budgetOrder.setFrozenStatus(EBudgetFrozenStatus.NORMAL.getCode());
+        budgetOrderBO.cancelBizAudit(budgetOrder);
         totalAdvanceFundBO.saveTotalAdvanceFund(data);
 
     }

@@ -64,11 +64,11 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 发保合录入
     public void entryPreservation(BudgetOrder budgetOrder);
 
-    // 发票不匹配申请
+    // 发票不匹配申请(录发保合时不匹配且影响贷款额时改变预算单节点为发票不匹配申请)
     public void invoiceMismatchApply(BudgetOrder budgetOrder);
 
-    // 审核
-    public void approveApply(BudgetOrder budgetOrder);
+    // 发票不匹配审核
+    public void invoiceMismatchApprove(BudgetOrder budgetOrder);
 
     // 二审
     public void twoApproveYes(BudgetOrder budgetOrder);
@@ -107,6 +107,16 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     public void refreshCurNodeCode(BudgetOrder budgetOrder);
 
     // 更改预算单的业务编号
-    public void updateRepayBizCode(String code, String code2);
+    public void updateRepayBizCode(String code, String repayBizCode,
+            String userId);
+
+    // 申请发票不匹配（发票不匹配界面的申请 发送）
+    public void applyInvoiceMismatch(BudgetOrder budgetOrder);
+
+    // 银行放款合同打印
+    public void loanContractPrint(BudgetOrder budgetOrder);
+
+    // 车辆抵押合同打印
+    public void pledgeContractPrint(BudgetOrder budgetOrder);
 
 }

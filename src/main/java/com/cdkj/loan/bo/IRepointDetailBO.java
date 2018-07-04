@@ -31,4 +31,12 @@ public interface IRepointDetailBO extends IPaginableBO<RepointDetail> {
     // 更新返点明细状态
     public void updateCurNodeCode(RepointDetail data);
 
+    // 发票不匹配重填预算单 删除所有返点数据
+    public void delete(String budgetOrderCode);
+
+    // 发票不匹配审核通过 删除原返点数据
+    public void deletePreRepointDetail(String budgetOrderCode, String type);
+
+    public void updateRepointDetailType(RepointDetail data);
+
 }

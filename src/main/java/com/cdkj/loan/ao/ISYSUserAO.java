@@ -59,7 +59,8 @@ public interface ISYSUserAO {
     public SYSUser getUser(String code);
 
     public String doAddUser(String type, String loginName, String loginPwd,
-            String mobile, String realName, String roleCode, String postCode);
+            String mobile, String realName, String roleCode, String postCode,
+            String archiveCode);
 
     // 设置团队
     public void doModifyTeam(String userId, String teamCode, String updater);

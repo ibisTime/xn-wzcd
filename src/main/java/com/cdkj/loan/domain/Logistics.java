@@ -19,7 +19,7 @@ public class Logistics extends ABaseDO {
     // 编号
     private String code;
 
-    // 类型(1 预算单 2 gps)
+    // 类型(1 预算单 2 gps 3 还款业务)
     private String type;
 
     // 业务编号
@@ -58,6 +58,12 @@ public class Logistics extends ABaseDO {
     // 收件时间
     private Date receiptDatetime;
 
+    // 补件原因
+    private String supplementReason;
+
+    // 补件说明
+    private String supplementNote;
+
     // 状态(0 待发件 1已发件待收件 2已收件审核 3已收件待补件)
     private String status;
 
@@ -75,6 +81,22 @@ public class Logistics extends ABaseDO {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getSupplementReason() {
+        return supplementReason;
+    }
+
+    public void setSupplementReason(String supplementReason) {
+        this.supplementReason = supplementReason;
+    }
+
+    public String getSupplementNote() {
+        return supplementNote;
+    }
+
+    public void setSupplementNote(String supplementNote) {
+        this.supplementNote = supplementNote;
     }
 
     public String getType() {

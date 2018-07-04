@@ -36,6 +36,9 @@ public class CreditUser extends ABaseDO {
     // 身份证号
     private String idNo;
 
+    // 户籍地
+    private String birthAddress;
+
     // 身份证正面
     private String idNoFront;
 
@@ -47,6 +50,9 @@ public class CreditUser extends ABaseDO {
 
     // 面签照片
     private String interviewPic;
+
+    // 法院网查询结果
+    private String courtNetworkResults;
 
     // 贷款抵押笔数
     private Integer dkdyCount;
@@ -115,7 +121,7 @@ public class CreditUser extends ABaseDO {
     private Long monthIncome;
 
     // 结息
-    private Double settleInterest;
+    private Long settleInterest;
 
     // 余额
     private Long balance;
@@ -220,6 +226,22 @@ public class CreditUser extends ABaseDO {
 
     public void setDkdyCount(Integer dkdyCount) {
         this.dkdyCount = dkdyCount;
+    }
+
+    public String getBirthAddress() {
+        return birthAddress;
+    }
+
+    public void setBirthAddress(String birthAddress) {
+        this.birthAddress = birthAddress;
+    }
+
+    public String getCourtNetworkResults() {
+        return courtNetworkResults;
+    }
+
+    public void setCourtNetworkResults(String courtNetworkResults) {
+        this.courtNetworkResults = courtNetworkResults;
     }
 
     public Long getDkdyAmount() {
@@ -390,11 +412,11 @@ public class CreditUser extends ABaseDO {
         this.monthIncome = monthIncome;
     }
 
-    public Double getSettleInterest() {
+    public Long getSettleInterest() {
         return settleInterest;
     }
 
-    public void setSettleInterest(Double settleInterest) {
+    public void setSettleInterest(Long settleInterest) {
         this.settleInterest = settleInterest;
     }
 

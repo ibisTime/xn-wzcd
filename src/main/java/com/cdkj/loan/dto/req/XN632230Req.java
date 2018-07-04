@@ -3,12 +3,12 @@ package com.cdkj.loan.dto.req;
 /**
  * 发票不匹配申请
  * @author: jiafr 
- * @since: 2018年6月28日 下午10:41:19 
+ * @since: 2018年6月30日 下午1:45:37 
  * @history:
  */
 public class XN632230Req {
 
-    // 编号
+    // 预算单编号
     private String code;
 
     // 贷款金额

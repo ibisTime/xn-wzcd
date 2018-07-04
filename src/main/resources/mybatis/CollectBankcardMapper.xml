@@ -28,7 +28,7 @@
 			</if>
 			<if test="keyword != null and keyword != '' ">
 				AND t.real_name like "%"#{keyword}"%" OR  t.bank_name like "%"#{keyword}"%"
-				OR  t.bankcardNumber like "%"#{keyword}"%" OR  t.subbranch like "%"#{keyword}"%"
+				OR  t.bankcard_number like "%"#{keyword}"%" OR  t.subbranch like "%"#{keyword}"%"
 			</if>
 			<if test="companyCode != null and companyCode != '' ">
 				AND t.company_code = #{companyCode}

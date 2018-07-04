@@ -41,7 +41,8 @@ public class SYSMenuRoleAOImpl implements ISYSMenuRoleAO {
         if (CollectionUtils.isNotEmpty(data.getMenuCodeList())) {
             for (String sysMenuCode : data.getMenuCodeList()) {
                 if (!sysMenuBO.isSYSMenuExist(sysMenuCode)) {
-                    throw new BizException("lh0000", "菜单不存在！");
+                    throw new BizException("lh0000", "[" + sysMenuCode
+                            + "]菜单不存在！");
                 }
                 SYSMenuRole sysMenuRole = new SYSMenuRole();
                 sysMenuRole.setMenuCode(sysMenuCode);

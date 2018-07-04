@@ -1,62 +1,30 @@
 package com.cdkj.loan.dto.req;
 
+/**
+ * 应退按揭款（不垫资） 和 协议外返点
+ * @author: jiafr 
+ * @since: 2018年7月1日 下午8:53:58 
+ * @history:
+ */
 public class XN632120ReqRepointDetail {
 
-    // 协议id
-    private String protocolId;
-
-    // 预算单编号
-    private String budgetCode;
-
-    // 汽车经销商编号
-    private String carDealerCode;
-
-    // 业务公司编号
-    private String companyCode;
-
-    // 用款用途
+    // 用款用途（1应退按揭款（不垫资） 3协议外返点
     private String useMoneyPurpose;
 
-    // 返点金额(返点金额或应退按揭款)
+    // 金额(返点金额或应退按揭款)
     private String repointAmount;
 
-    // 账号编号（公司或车行的收款账号编号）
-    private String accountCode;
+    // 单位名称
+    private String carDealerName;
 
-    // 收款账号（用于客户不垫资，手动输入的应退按揭款的收款账号 ）
-    private String mortgageAccountNo;
+    // 账号
+    private String accountNo;
 
-    public String getProtocolId() {
-        return protocolId;
-    }
+    // 开户行
+    private String openBankName;
 
-    public void setProtocolId(String protocolId) {
-        this.protocolId = protocolId;
-    }
-
-    public String getBudgetCode() {
-        return budgetCode;
-    }
-
-    public void setBudgetCode(String budgetCode) {
-        this.budgetCode = budgetCode;
-    }
-
-    public String getCarDealerCode() {
-        return carDealerCode;
-    }
-
-    public void setCarDealerCode(String carDealerCode) {
-        this.carDealerCode = carDealerCode;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
+    // 户名
+    private String accountName;
 
     public String getUseMoneyPurpose() {
         return useMoneyPurpose;
@@ -74,20 +42,36 @@ public class XN632120ReqRepointDetail {
         this.repointAmount = repointAmount;
     }
 
-    public String getAccountCode() {
-        return accountCode;
+    public String getCarDealerName() {
+        return carDealerName;
     }
 
-    public void setAccountCode(String accountCode) {
-        this.accountCode = accountCode;
+    public void setCarDealerName(String carDealerName) {
+        this.carDealerName = carDealerName;
     }
 
-    public String getMortgageAccountNo() {
-        return mortgageAccountNo;
+    public String getAccountNo() {
+        return accountNo;
     }
 
-    public void setMortgageAccountNo(String mortgageAccountNo) {
-        this.mortgageAccountNo = mortgageAccountNo;
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
+    }
+
+    public String getOpenBankName() {
+        return openBankName;
+    }
+
+    public void setOpenBankName(String openBankName) {
+        this.openBankName = openBankName;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
 }

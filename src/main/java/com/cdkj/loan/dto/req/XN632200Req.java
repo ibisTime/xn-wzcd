@@ -24,9 +24,6 @@ public class XN632200Req {
     // 车辆品牌
     private String carBrand;
 
-    // 车架号码
-    private String frameNo;
-
     // 发动机号码
     private String engineNo;
 
@@ -45,8 +42,8 @@ public class XN632200Req {
     // 业务员编号
     private String saleUserId;
 
-    // 担保合同编号
-    private String guaranteeContractCode;
+    // 银行合同编号
+    private String bankContractCode;
 
     // 登记证书号
     private String regCertificateCode;
@@ -170,14 +167,6 @@ public class XN632200Req {
         this.carBrand = carBrand;
     }
 
-    public String getFrameNo() {
-        return frameNo;
-    }
-
-    public void setFrameNo(String frameNo) {
-        this.frameNo = frameNo;
-    }
-
     public String getEngineNo() {
         return engineNo;
     }
@@ -226,12 +215,12 @@ public class XN632200Req {
         this.saleUserId = saleUserId;
     }
 
-    public String getGuaranteeContractCode() {
-        return guaranteeContractCode;
+    public String getBankContractCode() {
+        return bankContractCode;
     }
 
-    public void setGuaranteeContractCode(String guaranteeContractCode) {
-        this.guaranteeContractCode = guaranteeContractCode;
+    public void setBankContractCode(String bankContractCode) {
+        this.bankContractCode = bankContractCode;
     }
 
     public String getRegCertificateCode() {

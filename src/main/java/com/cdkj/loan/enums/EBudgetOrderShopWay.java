@@ -1,16 +1,15 @@
-
 package com.cdkj.loan.enums;
 
 /**
- * 拖车管理处理结果
- * @author: CYL 
- * @since: 2018年6月10日 下午8:10:05 
+ * 预算单购车途径
+ * @author: jiafr 
+ * @since: 2018年7月2日 下午4:48:20 
  * @history:
  */
-public enum EtrailerManageResult {
-    USER_REDEEM("0", "待用户赎回"), JUDICIAL_LAWSUIT("1", "司法诉讼");
+public enum EBudgetOrderShopWay {
+    NEW("1", "新车"), OLD("2", "二手车");
 
-    EtrailerManageResult(String code, String value) {
+    EBudgetOrderShopWay(String code, String value) {
         this.code = code;
         this.value = value;
     }

@@ -1,7 +1,6 @@
 package com.cdkj.loan.bo.impl;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +26,8 @@ import com.cdkj.loan.exception.BizException;
  */
 
 @Component
-public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig>
-        implements ISYSConfigBO {
+public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig> implements
+        ISYSConfigBO {
 
     static Logger logger = Logger.getLogger(SYSConfigBOImpl.class);
 
@@ -36,15 +35,8 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig>
     private ISYSConfigDAO sysConfigDAO;
 
     @Override
-    public int refreshSYSConfig(Long id, String cvalue, String updater,
-            String remark) {
-        SYSConfig data = new SYSConfig();
-        data.setId(id);
-        data.setCvalue(cvalue);
+    public int refreshSYSConfig(SYSConfig data) {
 
-        data.setUpdater(updater);
-        data.setUpdateDatetime(new Date());
-        data.setRemark(remark);
         return sysConfigDAO.updateValue(data);
     }
 
@@ -86,8 +78,8 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig>
             if (CollectionUtils.isNotEmpty(sysConfigList)) {
                 sysConfig = sysConfigList.get(0);
             } else {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "系统参数" + key + "不存在");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "系统参数"
+                        + key + "不存在");
             }
         }
         return sysConfig;
@@ -100,8 +92,8 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig>
         try {
             result = Double.valueOf(config.getCvalue());
         } catch (Exception e) {
-            logger.error(
-                "参数名为" + key + "的配置转换成Double类型发生错误, 原因：" + e.getMessage());
+            logger.error("参数名为" + key + "的配置转换成Double类型发生错误, 原因："
+                    + e.getMessage());
         }
         return result;
     }
@@ -113,8 +105,8 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig>
         try {
             result = Integer.valueOf(config.getCvalue());
         } catch (Exception e) {
-            logger.error(
-                "参数名为" + key + "的配置转换成Integer类型发生错误, 原因：" + e.getMessage());
+            logger.error("参数名为" + key + "的配置转换成Integer类型发生错误, 原因："
+                    + e.getMessage());
         }
         return result;
     }
@@ -132,8 +124,8 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig>
         try {
             result = Long.valueOf(config.getCvalue());
         } catch (Exception e) {
-            logger
-                .error("参数名为" + key + "的配置转换成Long类型发生错误, 原因：" + e.getMessage());
+            logger.error("参数名为" + key + "的配置转换成Long类型发生错误, 原因："
+                    + e.getMessage());
         }
         return result;
     }
@@ -145,8 +137,8 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig>
         try {
             result = new BigDecimal(config.getCvalue());
         } catch (Exception e) {
-            logger.error(
-                "参数名为" + key + "的配置转换成BigDecimal类型发生错误, 原因：" + e.getMessage());
+            logger.error("参数名为" + key + "的配置转换成BigDecimal类型发生错误, 原因："
+                    + e.getMessage());
         }
         return result;
     }

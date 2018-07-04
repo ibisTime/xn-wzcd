@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,7 @@ import com.cdkj.loan.dto.req.XN632112Req;
 import com.cdkj.loan.dto.req.XN632112ReqChild;
 import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632114Req;
+import com.cdkj.loan.dto.req.XN632114ReqCNR;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -303,6 +305,23 @@ public class CreditAOImpl implements ICreditAO {
                 nodeFlowBO.getNodeFlowByCurrentNode(credit.getCurNodeCode())
                     .getNextNode());
 
+            // 法院网查询结果录入
+            for (XN632114ReqCNR courtNetworkResults : req
+                .getCourtNetworkResultsList()) {
+                if (StringUtils.isBlank(courtNetworkResults.getCode())) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "征信人员不能为空！");
+                }
+                if (StringUtils.isBlank(courtNetworkResults.getCode())) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "法院网查询结果不能为空！");
+                }
+                creditUserBO.refreshCourtNetworkResults(
+                    courtNetworkResults.getCode(),
+                    courtNetworkResults.getCourtNetworkResults());
+
+            }
+
             // 生成预算单
             BudgetOrder data = new BudgetOrder();
             data.setCreditCode(credit.getCode());
@@ -313,11 +332,60 @@ public class CreditAOImpl implements ICreditAO {
                     "征信人员信息中缺少申请本人信息，请打回");
             }
 
+            // 申请人信息
             data.setCustomerName(customerUser.getUserName());
+            data.setApplyUserGhrRelation(customerUser.getRelation());
             data.setIdKind(EIDKind.IDCard.getCode());
             data.setIdNo(customerUser.getIdNo());
+            // 通过身份证获取生日和性别
+            String birth = getBirthByIdNo(customerUser.getIdNo());
+            String sex = getSexByIdNo(customerUser.getIdNo());
+            data.setCustomerBirth(birth);
+            data.setCustomerSex(sex);
             data.setMobile(customerUser.getMobile());
             data.setLoanBankCode(credit.getLoanBankCode());
+            data.setApplyBirthAddress(customerUser.getBirthAddress());
+
+            // 共还人信息
+            CreditUser ghUser = creditUserBO
+                .getCreditUserByCreditCode(credit.getCode(), ELoanRole.GHR);
+            if (ghUser != null) {
+                data.setGhRealName(ghUser.getUserName());
+                data.setGhIdNo(ghUser.getIdNo());
+                String ghSex = getSexByIdNo(ghUser.getIdNo());
+                data.setGhSex(ghSex);
+                data.setApplyUserGhrRelation(ghUser.getRelation());
+                data.setGhMobile(ghUser.getMobile());
+                data.setGhMonthIncome(ghUser.getMonthIncome());
+                data.setGhSettleInterest(ghUser.getSettleInterest());
+                data.setGhBalance(ghUser.getBalance());
+                data.setGhJourShowIncome(ghUser.getJourShowIncome());
+                data.setGhIsPrint(ghUser.getIsPrint());
+                data.setGhBirthAddress(ghUser.getBirthAddress());
+            }
+
+            // 担保人信息
+            List<CreditUser> dbUserList = creditUserBO
+                .getCreditUserListByCreditCode(credit.getCode(),
+                    ELoanRole.GUARANTOR);
+            if (CollectionUtils.isNotEmpty(dbUserList)) {
+                CreditUser dbUser1 = dbUserList.get(0);
+                data.setGuarantor1IdNo(dbUser1.getIdNo());
+                data.setGuarantor1MonthIncome(dbUser1.getMonthIncome());
+                data.setGuarantor1SettleInterest(dbUser1.getSettleInterest());
+                data.setGuarantor1Balance(dbUser1.getBalance());
+                data.setGuarantor1JourShowIncome(dbUser1.getJourShowIncome());
+                data.setGuarantor1IsPrint(dbUser1.getIsPrint());
+                data.setGuarantorName(dbUser1.getUserName());
+                data.setGuarantorMobile(dbUser1.getMobile());
+                CreditUser dbUser2 = dbUserList.get(1);
+                data.setGuarantor2IdNo(dbUser2.getIdNo());
+                data.setGuarantor2MonthIncome(dbUser2.getMonthIncome());
+                data.setGuarantor2SettleInterest(dbUser2.getSettleInterest());
+                data.setGuarantor2Balance(dbUser2.getBalance());
+                data.setGuarantor2JourShowIncome(dbUser2.getJourShowIncome());
+                data.setGuarantor2IsPrint(dbUser2.getIsPrint());
+            }
 
             data.setCompanyCode(credit.getCompanyCode());
             data.setSaleUserId(credit.getSaleUserId());
@@ -349,6 +417,33 @@ public class CreditAOImpl implements ICreditAO {
             EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
 
+    }
+
+    private String getSexByIdNo(String idNo) {
+        /**
+         * 根据身份编号获取性别
+         * @param idCard 身份编号
+         * @return 性别(M-男，F-女，N-未知)
+         */
+        String sGender = null;
+
+        String sCardNum = idNo.substring(16, 17);
+        if (Integer.parseInt(sCardNum) % 2 != 0) {
+            sGender = "男";
+        } else {
+            sGender = "女";
+        }
+        return sGender;
+    }
+
+    private String getBirthByIdNo(String idNo) {
+        /**
+         * 根据身份编号获取生日
+         * @param idCard 身份编号
+         * @return 生日(yyyyMMdd)
+         */
+        String birth = idNo.substring(6, 14);
+        return birth;
     }
 
     private void init(Credit credit) {
