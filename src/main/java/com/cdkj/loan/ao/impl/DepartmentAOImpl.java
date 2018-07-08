@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.IDepartmentAO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.dto.req.XN630100Req;
 import com.cdkj.loan.dto.req.XN630102Req;
@@ -25,8 +26,7 @@ public class DepartmentAOImpl implements IDepartmentAO {
     public String addDepartment(XN630100Req req) {
         Department data = new Department();
         data.setName(req.getName());
-        data.setLeadName(req.getLeadName());
-        data.setMobile(req.getMobile());
+        data.setLeadUserId(req.getLeadUserId());
         data.setParentCode(req.getParentCode());
         data.setType(req.getType());
         if (EDepartmentType.SUBBRANCH_COMPANY.getCode().equals(req.getType())) {
@@ -34,6 +34,7 @@ public class DepartmentAOImpl implements IDepartmentAO {
             data.setCityNo(req.getCityNo());
             data.setAreaNo(req.getAreaNo());
         }
+        data.setOrderNo(StringValidater.toInteger(req.getOrderNo()));
         data.setStatus(EDepartmentStatus.AVAILABLE.getCode());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
@@ -46,8 +47,7 @@ public class DepartmentAOImpl implements IDepartmentAO {
         Department data = departmentBO.getDepartment(req.getCode());
 
         data.setName(req.getName());
-        data.setLeadName(req.getLeadName());
-        data.setMobile(req.getMobile());
+        data.setLeadUserId(req.getLeadUserId());
         data.setParentCode(req.getParentCode());
         data.setType(req.getType());
 
