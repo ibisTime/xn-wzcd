@@ -144,6 +144,7 @@ public class CreditAOImpl implements ICreditAO {
     }
 
     @Override
+    @Transactional
     public void editCredit(XN632112Req req) {
         Credit credit = creditBO.getCredit(req.getCreditCode());
         if (null == credit) {
@@ -173,18 +174,33 @@ public class CreditAOImpl implements ICreditAO {
         List<XN632112ReqChild> list = req.getCreditUserList();
         for (XN632112ReqChild reqChild : list) {
             CreditUser creditUser = creditUserBO
-                .getCreditUser(reqChild.getCreditUserCode());
-            creditUser.setUserName(reqChild.getUserName());
-            creditUser.setLoanRole(reqChild.getLoanRole());
-            creditUser.setRelation(reqChild.getRelation());
-            creditUser.setMobile(reqChild.getMobile());
-            creditUser.setIdNo(reqChild.getIdNo());
+                .getCreditUserNotNull(reqChild.getCode());
+            if (creditUser == null) {
+                CreditUser data = new CreditUser();
+                data.setCreditCode(credit.getCode());
+                data.setUserName(reqChild.getUserName());
+                data.setRelation(reqChild.getRelation());
+                data.setLoanRole(reqChild.getLoanRole());
+                data.setIdNo(reqChild.getIdNo());
+                data.setMobile(reqChild.getMobile());
+                data.setIdNoFront(reqChild.getIdNoFront());
+                data.setIdNoReverse(reqChild.getIdNoReverse());
+                data.setAuthPdf(reqChild.getAuthPdf());
+                data.setInterviewPic(reqChild.getInterviewPic());
+                creditUserBO.saveCreditUser(data);
+            } else {
+                creditUser.setUserName(reqChild.getUserName());
+                creditUser.setLoanRole(reqChild.getLoanRole());
+                creditUser.setRelation(reqChild.getRelation());
+                creditUser.setMobile(reqChild.getMobile());
+                creditUser.setIdNo(reqChild.getIdNo());
 
-            creditUser.setIdNoFront(reqChild.getIdNoFront());
-            creditUser.setIdNoReverse(reqChild.getIdNoReverse());
-            creditUser.setAuthPdf(reqChild.getAuthPdf());
-            creditUser.setInterviewPic(reqChild.getInterviewPic());
-            creditUserBO.refreshCreditUser(creditUser);
+                creditUser.setIdNoFront(reqChild.getIdNoFront());
+                creditUser.setIdNoReverse(reqChild.getIdNoReverse());
+                creditUser.setAuthPdf(reqChild.getAuthPdf());
+                creditUser.setInterviewPic(reqChild.getInterviewPic());
+                creditUserBO.refreshCreditUser(creditUser);
+            }
         }
 
         // 日志记录

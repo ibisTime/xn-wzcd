@@ -27,6 +27,8 @@ public class XN632727 extends AProcessor {
         Notice condition = new Notice();
         condition.setTitle(req.getTitle());
         condition.setType(req.getType());
+        condition.setStatus(req.getStatus());
+        condition.setUrgentStatus(req.getUrgentStatus());
         condition.setPublishDepartmentCode(req.getPublishDepartmentCode());
         return noticeAO.queryNoticeList(condition);
     }

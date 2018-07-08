@@ -1,3 +1,9 @@
+insert into `tb_bank` (`code`, `bank_code`, `bank_name`, `subbranch`, `rate12`, `rate18`, `rate24`, `rate36`, `status`, `updater`, `update_datetime`, `remark`) values('BA201806060405534759680','CMB','招商银行','乌鲁木齐支行','0','0','0','0','1','hss','2018-06-06 04:05:53',NULL);
+insert into `tb_bank` (`code`, `bank_code`, `bank_name`, `subbranch`, `rate12`, `rate18`, `rate24`, `rate36`, `status`, `updater`, `update_datetime`, `remark`) values('BA201806060406039453855','ICBC','中国工商银行','科创支行','0','0','0','0','1','wlq','2018-06-06 04:06:03',NULL);
+
+insert into `tb_collect_bankcard` (`code`, `type`, `company_code`, `real_name`, `bank_code`, `bank_name`, `subbranch`, `bankcard_number`, `remark`) values('CB201806060405380712648','1','DP201800000000000000001','财务部','CMB','招商银行','乌鲁木齐支行','612313241234123','');
+
+insert  into `tb_province_no`(`id`,`province_no`,`name`) values (4,'11','北京市'),(5,'12','天津市'),(6,'13','河北省'),(7,'14','山西省'),(8,'15','内蒙古自治区'),(9,'21','辽宁省'),(10,'22','吉林省'),(11,'23','黑龙江省'),(12,'31','上海市'),(13,'32','江苏省'),(14,'33','浙江省'),(15,'34','安徽省'),(16,'35','福建省'),(17,'36','江西省'),(18,'37','山东省'),(19,'41','河南省'),(20,'42','湖北省'),(21,'43','湖南省'),(22,'44','广东省'),(23,'45','广西壮族自治区'),(24,'46','海南省'),(25,'50','重庆市'),(26,'51','四川省'),(27,'52','贵州省'),(28,'53','云南省'),(29,'54','西藏自治区'),(30,'61','陕西省'),(31,'62','甘肃省'),(32,'63','青海省'),(33,'64','宁夏回族自治区'),(34,'65','新疆维吾尔自治区');
 /*
 -- Query: select `code`,`type`,`min_cs`,`max_cs`,`remark` from tb_loan_cs
 -- Date: 2018-06-29 15:23
@@ -9,7 +15,7 @@ INSERT INTO `tb_loan_cs` (`code`,`type`,`min_cs`,`max_cs`,`remark`) VALUES ('02'
 -- Query: SELECT `code`,`name`,`lead_name`,`mobile`,`parent_code`,`type`,`status`,`updater`,`update_datetime`,`remark` FROM tsys_department where code ='DP201800000000000000001'
 -- Date: 2018-06-01 07:28
 */
-INSERT INTO `tsys_department` (`code`,`name`,`lead_name`,`mobile`,`parent_code`,`type`,`status`,`updater`,`update_datetime`,`remark`) VALUES ('DP201800000000000000001','温州浩源有限公司','wlq','18868824532','0','1','1','admin',NULL,'');
+INSERT INTO `tsys_department` (`code`,`name`,`lead_user_id`,`parent_code`,`type`,`status`,`updater`,`update_datetime`,`remark`) VALUES ('DP201800000000000000001','温州浩源有限公司','USYS201800000000001','0','1','1','admin',NULL,'');
 
 /* 首页导航 */
 INSERT INTO `tstd_cnavigate` (`code`,`name`,`type`,`url`,`pic`,`status`,`location`,`order_no`,`belong`,`parent_code`,`remark`,`content_type`,`company_code`,`system_code`) VALUES ('DH201711271342486662078','banner1','2','','FpqRhLEfxuaHgpXuv6fVUZfLPbjV','1','0',1,'1','0','','1','CD-CWZCD000020','CD-CWZCD000020');

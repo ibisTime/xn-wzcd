@@ -4,14 +4,15 @@
 <mapper namespace="com.cdkj.loan.dao.IDepartmentDAO">
 	<resultMap id="department_DB_Result" type="department">
 		<result column="code" property="code" />
-		<result column="name" property="name" />
-		<result column="lead_name" property="leadName" />
-		<result column="mobile" property="mobile" />
-		<result column="parent_code" property="parentCode" />
 		<result column="type" property="type" />
+		<result column="name" property="name" />
+		<result column="lead_user_id" property="leadUserId" />
+		<result column="parent_code" property="parentCode" />
 		<result column="province_no" property="provinceNo" />
 		<result column="city_no" property="cityNo" />
 		<result column="area_no" property="areaNo" />
+		
+		<result column="order_no" property="orderNo" />
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
@@ -22,14 +23,8 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
-			<if test="parentCode != null and parentCode != '' ">
-				AND t.parent_code = #{parentCode}
-			</if>
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
-			</if>
-			<if test="provinceNo != null and provinceNo != '' ">
-				AND t.province_no = #{provinceNo}
 			</if>
 			<if test="typeList != null and typeList.size() != 0 ">
 				AND t.type in 
@@ -37,25 +32,33 @@
 	            	#{item}
                 </foreach> 
 			</if>
+			<if test="leadUserId != null and leadUserId != '' ">
+				AND t.lead_user_id = #{leadUserId}
+			</if>
+			<if test="parentCode != null and parentCode != '' ">
+				AND t.parent_code = #{parentCode}
+			</if>
+			
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
 			</if>
 			<if test="keyword != null and keyword != '' ">
-				t.name LIKE "%"#{keyword}"%" OR t.mobile LIKE "%"#{keyword}"%" OR t.lead_name LIKE "%"#{keyword}"%" 
+				AND t.name like "%"#{keyword}"%"
 			</if>
 		</trim>
 	</sql>
 	<select id="select_department" parameterType="department" resultMap="department_DB_Result">
 		SELECT
 		t.code
-		,t.name
-		,t.lead_name
-		,t.mobile
-		,t.parent_code
 		,t.type
+		,t.name
+		,t.lead_user_id
+		,t.parent_code
 		,t.province_no
 		,t.city_no
 		,t.area_no
+		
+		,t.order_no
 		,t.status
 		,t.updater
 		,t.update_datetime
@@ -80,14 +83,15 @@
 		INSERT INTO
 		tsys_department(
 		code
-		,name
-		,lead_name
-		,mobile
-		,parent_code
 		,type
+		,name
+		,lead_user_id
+		,parent_code
 		,province_no
 		,city_no
 		,area_no
+		
+		,order_no
 		,status
 		,updater
 		,update_datetime
@@ -95,14 +99,15 @@
 		)
 		VALUES(
 		#{code}
-		,#{name}
-		,#{leadName}
-		,#{mobile}
-		,#{parentCode}
 		,#{type}
+		,#{name}
+		,#{leadUserId}
+		,#{parentCode}
 		,#{provinceNo}
 		,#{cityNo}
 		,#{areaNo}
+		
+		,#{orderNo}
 		,#{status}
 		,#{updater}
 		,#{updateDatetime}
@@ -113,15 +118,15 @@
 	<update id="update_department" parameterType="department">
 		UPDATE tsys_department
 		SET
-		name = #{name}
-		,lead_name = #{leadName}
-		,mobile = #{mobile}
+		type = #{type}
+		,name = #{name}
+		,lead_user_id = #{leadUserId}
 		,parent_code = #{parentCode}
-		,type = #{type}
 		,province_no = #{provinceNo}
 		,city_no = #{cityNo}
 		,area_no = #{areaNo}
-		,status = #{status}
+		,order_no = #{orderNo}
+		
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
@@ -134,8 +139,4 @@
 		status = #{status}
 		WHERE code = #{code}
 	</update>
-	
-	
-
-
 </mapper>
