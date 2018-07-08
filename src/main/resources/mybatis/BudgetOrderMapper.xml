@@ -206,8 +206,13 @@
 		
 		<result column="bank_contract_code" property="bankContractCode" />
 		<result column="reg_certificate_code" property="regCertificateCode" />
-		<result column="other_contact" property="otherContact" />
-		<result column="contact_mobile" property="contactMobile" />
+		<result column="emergency_name1" property="emergencyName1" />
+		<result column="emergency_relation1" property="emergencyRelation1" />
+		<result column="emergency_mobile1" property="emergencyMobile1" />
+		<result column="emergency_name2" property="emergencyName2" />
+		<result column="emergency_relation2" property="emergencyRelation2" />
+		
+		<result column="emergency_mobile2" property="emergencyMobile2" />
 		<result column="guarantor_name" property="guarantorName" />
 		
 		<result column="guarantor_mobile" property="guarantorMobile" />
@@ -512,8 +517,13 @@
 		,t.guarant_month_fee_rate
 		,t.bank_contract_code
 		,t.reg_certificate_code
-		,t.other_contact
-		,t.contact_mobile
+		,t.emergency_name1
+		,t.emergency_relation1
+		,t.emergency_mobile1
+		,t.emergency_name2
+		
+		,t.emergency_relation2
+		,t.emergency_mobile2
 		,t.guarantor_name
 		,t.guarantor_mobile
 		,t.guarantor_now_address
@@ -765,8 +775,13 @@
 		,t.guarant_month_fee_rate
 		,t.bank_contract_code
 		,t.reg_certificate_code
-		,t.other_contact
-		,t.contact_mobile
+		,t.emergency_name1
+		,t.emergency_relation1
+		,t.emergency_mobile1
+		,t.emergency_name2
+		
+		,t.emergency_relation2
+		,t.emergency_mobile2
 		,t.guarantor_name
 		,t.guarantor_mobile
 		,t.guarantor_now_address
@@ -981,8 +996,13 @@
 		,t.guarant_month_fee_rate
 		,t.bank_contract_code
 		,t.reg_certificate_code
-		,t.other_contact
-		,t.contact_mobile
+		,t.emergency_name1
+		,t.emergency_relation1
+		,t.emergency_mobile1
+		,t.emergency_name2
+		
+		,t.emergency_relation2
+		,t.emergency_mobile2
 		,t.guarantor_name
 		,t.guarantor_mobile
 		,t.guarantor_now_address
@@ -1572,8 +1592,13 @@
 		,guarantee_contract_code = #{guaranteeContractCode}
 		,bank_contract_code = #{bankContractCode}
 		,reg_certificate_code = #{regCertificateCode}
-		,other_contact = #{otherContact}
-		,contact_mobile = #{contactMobile}
+		,emergency_name1 = #{emergencyName1}
+		,emergency_relation1 = #{emergencyRelation1}
+		,emergency_mobile1 = #{emergencyMobile1}
+		,emergency_name2 = #{emergencyName2}
+		,emergency_relation2 = #{emergencyRelation2}
+		
+		,emergency_mobile2 = #{emergencyMobile2}
 		,guarantor_name = #{guarantorName}
 		
 		,guarantor_mobile = #{guarantorMobile}

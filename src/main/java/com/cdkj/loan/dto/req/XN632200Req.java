@@ -48,11 +48,23 @@ public class XN632200Req {
     // 登记证书号
     private String regCertificateCode;
 
-    // 其他联系人
-    private String otherContact;
+    // 家庭紧急联系人信息1 姓名
+    private String emergencyName1;
 
-    // 联系人手机
-    private String contactMobile;
+    // 家庭紧急联系人信息1 与申请人关系
+    private String emergencyRelation1;
+
+    // 家庭紧急联系人信息1 手机号码
+    private String emergencyMobile1;
+
+    // 家庭紧急联系人信息2 姓名
+    private String emergencyName2;
+
+    // 家庭紧急联系人信息2 与申请人关系
+    private String emergencyRelation2;
+
+    // 家庭紧急联系人信息2 手机号码
+    private String emergencyMobile2;
 
     // 担保人姓名
     private String guarantorName;
@@ -231,20 +243,52 @@ public class XN632200Req {
         this.regCertificateCode = regCertificateCode;
     }
 
-    public String getOtherContact() {
-        return otherContact;
+    public String getEmergencyName1() {
+        return emergencyName1;
     }
 
-    public void setOtherContact(String otherContact) {
-        this.otherContact = otherContact;
+    public void setEmergencyName1(String emergencyName1) {
+        this.emergencyName1 = emergencyName1;
     }
 
-    public String getContactMobile() {
-        return contactMobile;
+    public String getEmergencyRelation1() {
+        return emergencyRelation1;
     }
 
-    public void setContactMobile(String contactMobile) {
-        this.contactMobile = contactMobile;
+    public void setEmergencyRelation1(String emergencyRelation1) {
+        this.emergencyRelation1 = emergencyRelation1;
+    }
+
+    public String getEmergencyMobile1() {
+        return emergencyMobile1;
+    }
+
+    public void setEmergencyMobile1(String emergencyMobile1) {
+        this.emergencyMobile1 = emergencyMobile1;
+    }
+
+    public String getEmergencyName2() {
+        return emergencyName2;
+    }
+
+    public void setEmergencyName2(String emergencyName2) {
+        this.emergencyName2 = emergencyName2;
+    }
+
+    public String getEmergencyRelation2() {
+        return emergencyRelation2;
+    }
+
+    public void setEmergencyRelation2(String emergencyRelation2) {
+        this.emergencyRelation2 = emergencyRelation2;
+    }
+
+    public String getEmergencyMobile2() {
+        return emergencyMobile2;
+    }
+
+    public void setEmergencyMobile2(String emergencyMobile2) {
+        this.emergencyMobile2 = emergencyMobile2;
     }
 
     public String getGuarantorName() {

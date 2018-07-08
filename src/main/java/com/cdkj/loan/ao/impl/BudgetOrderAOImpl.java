@@ -232,7 +232,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setLoanPeriods(StringValidater.toInteger(req.getLoanPeriods()));
         data.setInvoicePrice(StringValidater.toLong(req.getInvoicePrice()));
         data.setRateType(req.getRateType());
-        data.setIsSurvey(req.getIsSurvey());
 
         data.setBankRate(StringValidater.toDouble(req.getBankRate()));
         Long loanAmount = 0L;
@@ -1062,8 +1061,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 "存放位置不能为空！");
         }
 
-        if (StringUtils.isNotBlank(req.getContactMobile())) {
-            PhoneUtil.checkMobile(req.getContactMobile());
+        if (StringUtils.isNotBlank(req.getEmergencyMobile1())) {
+            PhoneUtil.checkMobile(req.getEmergencyMobile1());
+        }
+        if (StringUtils.isNotBlank(req.getEmergencyMobile2())) {
+            PhoneUtil.checkMobile(req.getEmergencyMobile2());
         }
         if (StringUtils.isNotBlank(req.getGuarantorMobile())) {
             PhoneUtil.checkMobile(req.getGuarantorMobile());
@@ -1091,9 +1093,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setSaleUserId(req.getSaleUserId());
         budgetOrder.setBankContractCode(req.getBankContractCode());
         budgetOrder.setRegCertificateCode(req.getRegCertificateCode());
-        budgetOrder.setOtherContact(req.getOtherContact());
+        budgetOrder.setEmergencyName1(req.getEmergencyName1());
+        budgetOrder.setEmergencyRelation1(req.getEmergencyRelation1());
+        budgetOrder.setEmergencyMobile1(req.getEmergencyMobile1());
 
-        budgetOrder.setContactMobile(req.getContactMobile());
+        budgetOrder.setEmergencyName2(req.getEmergencyName2());
+        budgetOrder.setEmergencyRelation2(req.getEmergencyRelation2());
+        budgetOrder.setEmergencyMobile2(req.getEmergencyMobile2());
         budgetOrder.setGuarantorName(req.getGuarantorName());
         budgetOrder.setGuarantorMobile(req.getGuarantorMobile());
         budgetOrder.setBankCardNumber(req.getBankCardNumber());
@@ -2236,7 +2242,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setLoanPeriods(StringValidater.toInteger(req.getLoanPeriods()));
         data.setInvoicePrice(StringValidater.toLong(req.getInvoicePrice()));
         data.setRateType(req.getRateType());
-        data.setIsSurvey(req.getIsSurvey());
 
         data.setBankRate(StringValidater.toDouble(req.getBankRate()));
         Long loanAmount = 0L;

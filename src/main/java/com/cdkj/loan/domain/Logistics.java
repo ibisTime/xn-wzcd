@@ -28,6 +28,9 @@ public class Logistics extends ABaseDO {
     // 用户编号
     private String userId;
 
+    // 用户姓名
+    private String userName;
+
     // 业务节点1
     private String fromNodeCode;
 
@@ -69,11 +72,6 @@ public class Logistics extends ABaseDO {
 
     // 备注
     private String remark;
-
-    // ***********db properties***********
-
-    // 用户姓名
-    private String userName;
 
     public String getCode() {
         return code;
