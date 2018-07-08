@@ -14,11 +14,11 @@ public enum EBudgetOrderNode {
             "002_03", "省分公司总经理审核"), SECOND_AUDIT("002_04", "准入审核二审"), FILL_AGAIN(
             "002_05", "重新填写预算单"), ADVANCE_FUND_AUDIT("002_06", "垫资审核"),
 
-    SEND_LOGISTICS("007_01", "分公司内勤寄送银行材料"), LOAN_PRINT("007_02", "打印岗打印"), SEND_BANK_MATERIALS(
+    SEND_LOGISTICS("007_01", "分公司内勤寄送银行材料"), HEADQUARTERS_SEND_PRINT("007_06","总公司寄送打印材料"), LOAN_PRINT("007_02", "打印岗打印"), SEND_BANK_MATERIALS(
             "007_03", "总公司寄送银行材料"), BANK_LOAN_COMMIT("007_04", "确认提交银行"), CONFIRM_RECEIVABLES(
             "007_05", "确认收款"),
 
-    FEN_SEND_LOGISTICS("008_01", "分公司内勤寄送银行材料"), PLEDGE_PRINT("008_02", "打印岗打印"), 
+    FEN_SEND_LOGISTICS("008_01", "分公司内勤寄送银行材料"), CAR_HEADQUARTERS_SEND_PRINT("008_06","总公司寄送打印材料"), PLEDGE_PRINT("008_02", "打印岗打印"), 
             CAR_SEND_BANK_MATERIALS("008_03", "总公司寄送银行材料"), CAR_BANK_LOAN_COMMIT("008_04", "确认提交银行"),
             CAR_PLEDGE_CONFIRM("008_05", "确认抵押完成"),
 

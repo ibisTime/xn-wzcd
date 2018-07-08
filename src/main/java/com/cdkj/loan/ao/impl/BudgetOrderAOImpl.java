@@ -509,6 +509,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     .equals(data.getIsAdvanceFund())) {
                     continue;
                 }
+                // 柴
                 data.setShouldBackAmount(loanAmount - serviceCharge
                         - data.getGpsFee() - data.getCarDealerSubsidy());
                 // data.setShouldBackAmount(StringValidater.toLong(xn632290Res
@@ -1340,6 +1341,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 .queryRepayPlanListByRepayBizCode(
                     budgetOrder.getRepayBizCode());
             budgetOrder.setRepayPlansList(planList);
+        }
+        // 担保打印人
+        if (StringUtils.isNotBlank(budgetOrder.getGuarantPrintUser())) {
+            SYSUser user = sysUserBO.getUser(budgetOrder.getGuarantPrintUser());
+            budgetOrder.setGuarantPrintName(user.getRealName());
         }
 
         // 获取返点列表

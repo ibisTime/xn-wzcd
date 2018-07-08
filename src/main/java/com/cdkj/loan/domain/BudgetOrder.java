@@ -779,6 +779,17 @@ public class BudgetOrder extends ABaseDO {
 
     private List<RepayPlan> repayPlansList;// 还款计划
 
+    // 担保打印人姓名
+    private String guarantPrintName;
+
+    public String getGuarantPrintName() {
+        return guarantPrintName;
+    }
+
+    public void setGuarantPrintName(String guarantPrintName) {
+        this.guarantPrintName = guarantPrintName;
+    }
+
     public List<RepayPlan> getRepayPlansList() {
         return repayPlansList;
     }
