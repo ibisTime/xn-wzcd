@@ -16,6 +16,9 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="archiveCode != null and archiveCode != '' ">
+				AND t.archive_code = #{archiveCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_socialRelation" parameterType="socialRelation" resultMap="SocialRelation_DB_Result">

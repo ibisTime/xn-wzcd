@@ -33,7 +33,7 @@ public class XN632116 extends AProcessor {
         condition.setCode(req.getCreditCode());
         condition.setLoanBankCode(req.getLoanBankCode());
         condition.setSaleUserId(req.getSaleUserId());
-
+        condition.setCurNodeCodeList(req.getCurNodeCodeList());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setApplyDatetimeEnd(DateUtil.strToDate(

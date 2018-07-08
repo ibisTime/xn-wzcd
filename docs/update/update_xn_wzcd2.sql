@@ -7,3 +7,4 @@ DROP COLUMN `lead_name`,
 DROP COLUMN `lead_mobile`,
 ADD COLUMN `lead_user_id` VARCHAR(32) NULL  COMMENT '负责人用户编号' AFTER `name`,
 ADD COLUMN `order_no` int(11) NULL  COMMENT '序号' AFTER `area_no`;
+

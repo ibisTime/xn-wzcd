@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 /**
  * 征信分页查询 （按角色权限）
  * @author: jiafr 
@@ -30,6 +32,16 @@ public class XN632116Req extends APageReq {
 
     // 征信单编号
     private String creditCode;
+
+    private List<String> curNodeCodeList;// 节点
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
+    }
 
     public String getApplyDatetimeStart() {
         return applyDatetimeStart;
