@@ -22,7 +22,6 @@
 		<result column="rate_type" property="rateType" />
 		<result column="pre_loan_amount" property="preLoanAmount" />
 		<result column="loan_amount" property="loanAmount" />
-		<result column="is_survey" property="isSurvey" />
 		
 		<result column="bank_rate" property="bankRate" />
 		<result column="company_loan_cs" property="companyLoanCs" />
@@ -360,7 +359,6 @@
 		,t.rate_type
 		,t.pre_loan_amount
 		,t.loan_amount
-		,t.is_survey
 		,t.bank_rate
 		,t.company_loan_cs
 		,t.pre_company_loan_cs
@@ -624,7 +622,6 @@
 		,t.rate_type
 		,t.pre_loan_amount
 		,t.loan_amount
-		,t.is_survey
 		,t.bank_rate
 		,t.company_loan_cs
 		,t.pre_company_loan_cs
@@ -875,7 +872,6 @@
 		,t.rate_type
 		,t.pre_loan_amount
 		,t.loan_amount
-		,t.is_survey
 		,t.bank_rate
 		,t.company_loan_cs
 		,t.pre_company_loan_cs
@@ -1103,7 +1099,6 @@
 		,shop_way
 		,rate_type
 		,loan_amount
-		,is_survey
 		,bank_rate
 		,company_loan_cs
 		,is_advance_fund
@@ -1238,7 +1233,6 @@
 		,#{shopWay}
 		,#{rateType}
 		,#{loanAmount}
-		,#{isSurvey}
 		,#{bankRate}
 		,#{companyLoanCs}
 		,#{isAdvanceFund}
@@ -1371,7 +1365,6 @@
 		,loan_periods = #{loanPeriods}
 		,invoice_price = #{invoicePrice}
 		,rate_type = #{rateType}
-		,is_survey = #{isSurvey}
 		,bank_rate = #{bankRate}
 		
 		,company_loan_cs = #{companyLoanCs}
