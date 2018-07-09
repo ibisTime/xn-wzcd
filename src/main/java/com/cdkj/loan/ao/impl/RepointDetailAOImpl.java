@@ -277,9 +277,19 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
     @Override
     public List<RepointDetail> queryRepointDetailListByCarDealerCode(
             RepointDetail condition) {
+        List<RepointDetail> list = new ArrayList<RepointDetail>();
         condition.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER.getCode());// TODO
-        List<RepointDetail> queryRepointDetailListByCarDealerCode = repointDetailBO
+        List<RepointDetail> listInner = repointDetailBO
             .queryRepointDetailListByCarDealerCode(condition);
-        return queryRepointDetailListByCarDealerCode;
+        for (RepointDetail repointDetailInner : listInner) {
+            list.add(repointDetailInner);
+        }
+        condition.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_OUTER.getCode());// TODO
+        List<RepointDetail> listOuter = repointDetailBO
+            .queryRepointDetailListByCarDealerCode(condition);
+        for (RepointDetail repointDetailOuter : listOuter) {
+            list.add(repointDetailOuter);
+        }
+        return list;
     }
 }
