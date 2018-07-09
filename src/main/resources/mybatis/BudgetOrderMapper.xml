@@ -1391,6 +1391,13 @@
 		,gh_jour_show_income = #{ghJourShowIncome}
 		,gh_is_print = #{ghIsPrint}
 		
+		,emergency_name1 = #{emergencyName1}
+		,emergency_relation1 = #{emergencyRelation1}
+		,emergency_mobile1 = #{emergencyMobile1}
+		,emergency_name2 = #{emergencyName2}
+		,emergency_relation2 = #{emergencyRelation2}
+		,emergency_mobile2 = #{emergencyMobile2}
+		
 		,guarantor1_month_income = #{guarantor1MonthIncome}
 		,guarantor1_settle_interest = #{guarantor1SettleInterest}
 		,guarantor1_balance = #{guarantor1Balance}
@@ -1589,13 +1596,7 @@
 		,guarantee_contract_code = #{guaranteeContractCode}
 		,bank_contract_code = #{bankContractCode}
 		,reg_certificate_code = #{regCertificateCode}
-		,emergency_name1 = #{emergencyName1}
-		,emergency_relation1 = #{emergencyRelation1}
-		,emergency_mobile1 = #{emergencyMobile1}
-		,emergency_name2 = #{emergencyName2}
-		,emergency_relation2 = #{emergencyRelation2}
 		
-		,emergency_mobile2 = #{emergencyMobile2}
 		,guarantor_name = #{guarantorName}
 		
 		,guarantor_mobile = #{guarantorMobile}

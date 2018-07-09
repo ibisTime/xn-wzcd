@@ -288,8 +288,16 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .getGhSettleInterest()));
         data.setGhBalance(StringValidater.toLong(req.getGhBalance()));
         data.setGhJourShowIncome(req.getGhJourShowIncome());
-
         data.setGhIsPrint(req.getGhIsPrint());
+
+        data.setEmergencyName1(req.getEmergencyName1());
+        data.setEmergencyRelation1(req.getEmergencyRelation1());
+        data.setEmergencyMobile1(req.getEmergencyMobile1());
+
+        data.setEmergencyName2(req.getEmergencyName2());
+        data.setEmergencyRelation2(req.getEmergencyRelation2());
+        data.setEmergencyMobile2(req.getEmergencyMobile2());
+
         data.setGuarantor1MonthIncome(StringValidater.toLong(req
             .getGuarantor1MonthIncome()));
         data.setGuarantor1SettleInterest(StringValidater.toLong(req
@@ -1077,13 +1085,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setSaleUserId(req.getSaleUserId());
         budgetOrder.setBankContractCode(req.getBankContractCode());
         budgetOrder.setRegCertificateCode(req.getRegCertificateCode());
-        budgetOrder.setEmergencyName1(req.getEmergencyName1());
-        budgetOrder.setEmergencyRelation1(req.getEmergencyRelation1());
-        budgetOrder.setEmergencyMobile1(req.getEmergencyMobile1());
 
-        budgetOrder.setEmergencyName2(req.getEmergencyName2());
-        budgetOrder.setEmergencyRelation2(req.getEmergencyRelation2());
-        budgetOrder.setEmergencyMobile2(req.getEmergencyMobile2());
         budgetOrder.setGuarantorName(req.getGuarantorName());
         budgetOrder.setGuarantorMobile(req.getGuarantorMobile());
         budgetOrder.setBankCardNumber(req.getBankCardNumber());
