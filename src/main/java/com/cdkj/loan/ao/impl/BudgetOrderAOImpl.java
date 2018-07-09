@@ -423,7 +423,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         // 协议外返点 和 不垫资应退按揭款
         List<XN632120ReqRepointDetail> repointDetailList = req
-            .getRepointDetailList();
+            .getRepointDetailList();// 前端填写的 不垫资应退按揭款 和 协议外返点
         for (XN632120ReqRepointDetail xn632120ReqRepointDetail : repointDetailList) {
             RepointDetail repointDetail = new RepointDetail();
             // 不垫资 应退按揭款
@@ -435,7 +435,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 }
                 data.setShouldBackAmount(StringValidater
                     .toLong(xn632120ReqRepointDetail.getRepointAmount()));
-                data.setShouldBackStatus(EBoolean.NO.getCode());
+                data.setShouldBackStatus(EBoolean.NO.getCode());// 待退
                 repointDetail
                     .setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE.getCode());
                 repointDetail
@@ -472,7 +472,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             }
             repointDetail.setBudgetCode(data.getCode());
             repointDetail.setRepointAmount(StringValidater
-                .toLong(xn632120ReqRepointDetail.getRepointAmount()));
+                .toLong(xn632120ReqRepointDetail.getRepointAmount()));// 应退按揭款或返点金额
             repointDetail.setAccountNo(xn632120ReqRepointDetail.getAccountNo());
             repointDetail
                 .setOpenBankName(xn632120ReqRepointDetail.getOpenBankName());
@@ -513,22 +513,23 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 data.setShouldBackAmount(
                     StringValidater.toLong(xn632290Res.getRepointAmount()));
                 data.setShouldBackStatus(EBoolean.YES.getCode());
-
+                countRepointDetail
+                    .setCarDealerName(xn632290Res.getCompanyName());
                 countRepointDetail
                     .setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE.getCode());
-
+                CollectBankcard bankcard = collectBankcardBO
+                    .getCollectBankcard(data.getCompanyCode());
+                countRepointDetail.setAccountName(bankcard.getRealName());
                 countRepointDetail
                     .setAccountNo(xn632290Res.getBankcardNumber());
                 countRepointDetail.setOpenBankName(xn632290Res.getSubbranch());
 
             }
             // 协议内返点数据
-
             if (EUseMoneyPurpose.PROTOCOL_INNER.getCode()
                 .equals(xn632290Res.getUseMoneyPurpose())) {
                 countRepointDetail.setUseMoneyPurpose(
                     EUseMoneyPurpose.PROTOCOL_INNER.getCode());
-
                 countRepointDetail.setCompanyCode(data.getCompanyCode());
                 countRepointDetail.setBudgetCode(data.getCode());
                 CreditUser user = creditUserBO.getCreditUserByCreditCode(
