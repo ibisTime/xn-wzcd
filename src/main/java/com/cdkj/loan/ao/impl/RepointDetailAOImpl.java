@@ -275,8 +275,11 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
     }
 
     @Override
-    public Object queryRepointDetailListByCarDealerCode(RepointDetail condition) {
-
-        return repointDetailBO.queryRepointDetailList(condition);
+    public List<RepointDetail> queryRepointDetailListByCarDealerCode(
+            RepointDetail condition) {
+        condition.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER.getCode());// TODO
+        List<RepointDetail> queryRepointDetailListByCarDealerCode = repointDetailBO
+            .queryRepointDetailListByCarDealerCode(condition);
+        return queryRepointDetailListByCarDealerCode;
     }
 }

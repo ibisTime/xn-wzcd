@@ -39,4 +39,7 @@ public interface IRepointDetailBO extends IPaginableBO<RepointDetail> {
 
     public void updateRepointDetailType(RepointDetail data);
 
+    public List<RepointDetail> queryRepointDetailListByCarDealerCode(
+            RepointDetail condition);
+
 }

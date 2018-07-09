@@ -135,4 +135,11 @@ public class RepointDetailBOImpl extends PaginableBOImpl<RepointDetail>
         }
 
     }
+
+    @Override
+    public List<RepointDetail> queryRepointDetailListByCarDealerCode(
+            RepointDetail condition) {
+
+        return repointDetailDAO.selectList(condition);
+    }
 }

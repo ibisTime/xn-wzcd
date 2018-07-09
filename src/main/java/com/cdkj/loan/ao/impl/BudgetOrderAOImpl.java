@@ -552,6 +552,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 countRepointDetail
                     .setCurNodeCode(ERepointDetailStatus.TODO_MAKE_BILL
                         .getCode());
+                countRepointDetail.setCarType(data.getCarModel());
             }
             countRepointDetail.setBudgetCode(data.getCode());
             countRepointDetail.setCompanyName(xn632290Res.getCompanyName());
