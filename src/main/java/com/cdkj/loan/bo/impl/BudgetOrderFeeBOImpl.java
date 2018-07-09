@@ -29,13 +29,12 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
     @Override
     public String saveBudgetOrderFee(BudgetOrder budgetOrder, String operator) {
         String code = null;
-        if (budgetOrder != null
-                && StringUtils.isNotBlank(operator)
-                && EBudgetOrderFeeWay.TRANSFER.getCode().equals(
-                    budgetOrder.getServiceChargeWay())) {// 当手续费收取方式是转账时产生手续费
+        if (budgetOrder != null && StringUtils.isNotBlank(operator)
+                && EBudgetOrderFeeWay.TRANSFER.getCode()
+                    .equals(budgetOrder.getServiceChargeWay())) {// 当手续费收取方式是转账时产生手续费
             BudgetOrderFee budgetOrderFee = new BudgetOrderFee();
-            code = OrderNoGenerater.generate(EGeneratePrefix.BUDGET_ORDER_FEE
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.BUDGET_ORDER_FEE.getCode());
             budgetOrderFee.setCode(code);
             budgetOrderFee.setEffect(EBoolean.YES.getCode());
             budgetOrderFee.setCompanyCode(budgetOrder.getCompanyCode());
@@ -51,7 +50,7 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
             budgetOrderFee.setIsSettled(EBoolean.NO.getCode());
             budgetOrderFee.setUpdater(operator);
             budgetOrderFee.setUpdateDatetime(new Date());
-            budgetOrderFee.setBudgetOrder(code);
+            budgetOrderFee.setBudgetOrder(budgetOrder.getCode());
             budgetOrderFeeDAO.insert(budgetOrderFee);
         }
         return code;
@@ -68,7 +67,8 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
     }
 
     @Override
-    public List<BudgetOrderFee> queryBudgetOrderFeeList(BudgetOrderFee condition) {
+    public List<BudgetOrderFee> queryBudgetOrderFeeList(
+            BudgetOrderFee condition) {
         return budgetOrderFeeDAO.selectList(condition);
     }
 
