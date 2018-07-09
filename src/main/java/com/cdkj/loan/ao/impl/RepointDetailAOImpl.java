@@ -247,28 +247,16 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
                 .toLong(req.getCarDealerSubsidy());// 厂家贴息
         }
 
-        Long shouldBackAmount = null;// 表里还是用的RepointAmount
-        if (EGpsFeeWay.MORTGAGE.getCode().equals(req.getGpsFeeWay())
-                && EFeeWay.MORTGAGE.getCode().equals(req.getFeeWay())) {
-            shouldBackAmount = loanAmount - sxFee
-                    - -StringValidater.toLong(req.getGpsFee())
-                    - carDealerSubsidy;
-        } else if (!EGpsFeeWay.MORTGAGE.getCode().equals(req.getGpsFeeWay())
-                && EFeeWay.MORTGAGE.getCode().equals(req.getFeeWay())) {
-            shouldBackAmount = loanAmount - sxFee - carDealerSubsidy;
-        } else if (EGpsFeeWay.MORTGAGE.getCode().equals(req.getGpsFeeWay())
-                && !EFeeWay.MORTGAGE.getCode().equals(req.getFeeWay())) {
+        // 应退按揭款金额=贷款金额-收客户手续费（按揭款扣）-GPS收费（按揭款扣）-厂家贴息
+        Long shouldBackAmount = loanAmount - carDealerSubsidy;// 垫资表的RepointAmount
+        if (EFeeWay.MORTGAGE.getCode().equals(req.getFeeWay())) {
+            shouldBackAmount = loanAmount - sxFee;
+        }
+        if (EGpsFeeWay.MORTGAGE.getCode().equals(req.getGpsFeeWay())) {
             shouldBackAmount = loanAmount
-                    - StringValidater.toLong(req.getGpsFee())
-                    - carDealerSubsidy;
-        } else if (!EGpsFeeWay.MORTGAGE.getCode().equals(req.getGpsFeeWay())
-                && !EFeeWay.MORTGAGE.getCode().equals(req.getFeeWay())) {
-            shouldBackAmount = loanAmount - carDealerSubsidy;
+                    - StringValidater.toLong(req.getGpsFee());
         }
-        if (null == shouldBackAmount) {
-            shouldBackAmount = 0L;
-        }
-        res.setRepointAmount(String.valueOf(shouldBackAmount));// 应退按揭款金额=贷款金额-收客户手续费（按揭款扣）-GPS收费（按揭款扣）-厂家贴息
+        res.setRepointAmount(String.valueOf(shouldBackAmount));
         Department department = departmentBO.getDepartment(budgetOrder
             .getCompanyCode());
 
