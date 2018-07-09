@@ -1142,6 +1142,8 @@
 		,guarantor2_balance
 		,guarantor2_jour_show_income     
 		,guarantor2_is_print 
+		,guarantor_name 
+		,guarantor_mobile 
 		,other_income_note
 		
 		,is_house_property
@@ -1275,6 +1277,8 @@
 		,#{guarantor2Balance}
 		,#{guarantor2JourShowIncome}
 		,#{guarantor2IsPrint} 
+		,#{guarantorName} 
+		,#{guarantorMobile} 
 		,#{otherIncomeNote}
 		
 		,#{isHouseProperty}
