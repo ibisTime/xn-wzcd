@@ -1876,6 +1876,7 @@
 		,apply_user_company_phone = #{applyUserCompanyPhone}
 		,gh_mobile = #{ghMobile}
 		,gh_company_name = #{ghCompanyName}
+		,car_brand = #{carBrand}
 		,car_brand_model = #{carBrandModel}
 		,car_number = #{carNumber}
 		,guarant_contract_deadline = #{guarantContractDeadline}
