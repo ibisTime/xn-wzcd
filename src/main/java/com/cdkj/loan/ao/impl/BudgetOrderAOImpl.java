@@ -526,7 +526,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 countRepointDetail
                     .setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
                         .getCode());
-
                 countRepointDetail.setCompanyCode(data.getCompanyCode());
                 countRepointDetail.setBudgetCode(data.getCode());
                 CreditUser user = creditUserBO.getCreditUserByCreditCode(
@@ -2126,6 +2125,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setApplyUserCompanyPhone(req.getApplyUserCompanyPhone());
         budgetOrder.setGhMobile(req.getGhMobile());
         budgetOrder.setGhCompanyName(req.getGhCompanyName());
+        budgetOrder.setCarBrand(req.getCarBrand());
         budgetOrder.setCarBrandModel(req.getCarBrandModel());
         budgetOrder.setCarNumber(req.getCarNumber());
         budgetOrder
