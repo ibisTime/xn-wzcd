@@ -512,9 +512,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     .getCompanyName());
                 countRepointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
                     .getCode());
-                CollectBankcard bankcard = collectBankcardBO
-                    .getCollectBankcard(data.getCompanyCode());
-                countRepointDetail.setAccountName(bankcard.getRealName());
+                countRepointDetail.setAccountName(xn632290Res.getCompanyName());
                 countRepointDetail
                     .setAccountNo(xn632290Res.getBankcardNumber());
                 countRepointDetail.setOpenBankName(xn632290Res.getSubbranch());
