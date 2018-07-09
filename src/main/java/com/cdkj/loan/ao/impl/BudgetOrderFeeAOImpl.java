@@ -2,6 +2,7 @@ package com.cdkj.loan.ao.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,31 +59,35 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
     public Paginable<BudgetOrderFee> queryBudgetOrderFeePage(int start,
             int limit, BudgetOrderFee condition) {
         condition.setEffect(EBoolean.YES.getCode());
-        Paginable<BudgetOrderFee> paginable = budgetOrderFeeBO.getPaginable(
-            start, limit, condition);
+        Paginable<BudgetOrderFee> paginable = budgetOrderFeeBO
+            .getPaginable(start, limit, condition);
 
         List<BudgetOrderFee> list = paginable.getList();
 
         for (BudgetOrderFee budgetOrderFee : list) {
-            String companyCode = budgetOrderFee.getCompanyCode();
-            Department department = departmentBO.getDepartment(companyCode);
-            if (null != department) {
+            if (StringUtils.isNotBlank(budgetOrderFee.getCompanyCode())) {
+                Department department = departmentBO
+                    .getDepartment(budgetOrderFee.getCompanyCode());
                 budgetOrderFee.setCompanyName(department.getName());
             }
-            SYSUser user = sysUserBO.getUser(budgetOrderFee.getUpdater());
-            if (null != user) {
-                budgetOrderFee.setUpdater(user.getRealName());
+            if (StringUtils.isNotBlank(budgetOrderFee.getUpdater())) {
+                SYSUser saleUser = sysUserBO
+                    .getUser(budgetOrderFee.getUpdater());
+                budgetOrderFee.setUpdater(saleUser.getRealName());
             }
-
-            SYSUser saleUser = sysUserBO.getUser(budgetOrderFee.getUserId());
-            budgetOrderFee.setUserName(saleUser.getRealName());
+            if (StringUtils.isNotBlank(budgetOrderFee.getBudgetOrder())) {
+                BudgetOrder budgetOrder = budgetOrderBO
+                    .getBudgetOrder(budgetOrderFee.getBudgetOrder());
+                budgetOrderFee.setCustomerName(budgetOrder.getCustomerName());
+            }
         }
 
         return paginable;
     }
 
     @Override
-    public List<BudgetOrderFee> queryBudgetOrderFeeList(BudgetOrderFee condition) {
+    public List<BudgetOrderFee> queryBudgetOrderFeeList(
+            BudgetOrderFee condition) {
         condition.setEffect(EBoolean.YES.getCode());
         return budgetOrderFeeBO.queryBudgetOrderFeeList(condition);
     }
@@ -102,12 +107,11 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
         }
 
         // 设置业务公司真实姓名
-        Department department = departmentBO.getDepartment(budgetOrderFee
-            .getCompanyCode());
-        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(budgetOrderFee
-            .getBudgetOrder());
-        SYSUser saleUser = sysUserBO.getUser(budgetOrderFee.getUserId());
-        budgetOrderFee.setUserName(saleUser.getRealName());
+        Department department = departmentBO
+            .getDepartment(budgetOrderFee.getCompanyCode());
+        BudgetOrder budgetOrder = budgetOrderBO
+            .getBudgetOrder(budgetOrderFee.getBudgetOrder());
+        budgetOrderFee.setCustomerName(budgetOrder.getCustomerName());
 
         // 设置贷款银行和贷款金额
         if (null != budgetOrder) {
@@ -130,8 +134,8 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
             CollectBankcard collectBankcard = collectBankcardBO
                 .getCollectBankcard(platBankcard);
             budgetOrderFeeDetail.setCollectBankcard(collectBankcard);
-            SYSUser updateUser = sysUserBO.getUser(budgetOrderFeeDetail
-                .getUpdater());
+            SYSUser updateUser = sysUserBO
+                .getUser(budgetOrderFeeDetail.getUpdater());
             if (null != updateUser) {
                 budgetOrderFeeDetail.setUpdater(updateUser.getRealName());
             }

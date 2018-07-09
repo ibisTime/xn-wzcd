@@ -73,12 +73,25 @@ public class Logistics extends ABaseDO {
     // 备注
     private String remark;
 
+    /*----------辅助字段---------------*/
+
+    // 客户姓名
+    private String customerName;
+
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getSupplementReason() {
