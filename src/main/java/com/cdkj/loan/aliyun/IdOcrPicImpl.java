@@ -152,7 +152,7 @@ public class IdOcrPicImpl {
             }
         } catch (Exception e) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "请上传清晰的身份证照片！");
+                "识别身份证照片失败！");
         }
 
         return idOcrRes;

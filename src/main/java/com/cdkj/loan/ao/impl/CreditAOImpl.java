@@ -353,6 +353,8 @@ public class CreditAOImpl implements ICreditAO {
             data.setApplyUserGhrRelation(customerUser.getRelation());
             data.setIdKind(EIDKind.IDCard.getCode());
             data.setIdNo(customerUser.getIdNo());
+            data.setIdNoPicz(customerUser.getIdNoFront());
+            data.setIdNoPicf(customerUser.getIdNoReverse());
             // 通过身份证获取生日和性别
             String birth = getBirthByIdNo(customerUser.getIdNo());
             String sex = getSexByIdNo(customerUser.getIdNo());
@@ -368,6 +370,8 @@ public class CreditAOImpl implements ICreditAO {
             if (ghUser != null) {
                 data.setGhRealName(ghUser.getUserName());
                 data.setGhIdNo(ghUser.getIdNo());
+                data.setGhIdPicz(ghUser.getIdNoFront());
+                data.setGhIdPicf(ghUser.getIdNoReverse());
                 String ghSex = getSexByIdNo(ghUser.getIdNo());
                 data.setGhSex(ghSex);
                 data.setApplyUserGhrRelation(ghUser.getRelation());
@@ -387,6 +391,8 @@ public class CreditAOImpl implements ICreditAO {
             if (CollectionUtils.isNotEmpty(dbUserList)) {
                 CreditUser dbUser1 = dbUserList.get(0);
                 data.setGuarantor1IdNo(dbUser1.getIdNo());
+                data.setGuarantor1IdPicz(dbUser1.getIdNoFront());
+                data.setGuarantor1IdPicf(dbUser1.getIdNoReverse());
                 data.setGuarantor1MonthIncome(dbUser1.getMonthIncome());
                 data.setGuarantor1SettleInterest(dbUser1.getSettleInterest());
                 data.setGuarantor1Balance(dbUser1.getBalance());
@@ -397,6 +403,8 @@ public class CreditAOImpl implements ICreditAO {
                 if (dbUserList.size() > 1) {
                     CreditUser dbUser2 = dbUserList.get(1);
                     data.setGuarantor2IdNo(dbUser2.getIdNo());
+                    data.setGuarantor2IdPicz(dbUser2.getIdNoFront());
+                    data.setGuarantor2IdPicf(dbUser2.getIdNoReverse());
                     data.setGuarantor2MonthIncome(dbUser2.getMonthIncome());
                     data.setGuarantor2SettleInterest(
                         dbUser2.getSettleInterest());
