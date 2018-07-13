@@ -112,7 +112,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
             ELoanRole loanRole) {
         CreditUser condition = new CreditUser();
         condition.setCreditCode(creditCode);
-        condition.setRelation(loanRole.getCode());
+        condition.setLoanRole(loanRole.getCode());
 
         return creditUserDAO.selectList(condition);
     }
