@@ -30,6 +30,8 @@ public class XN632725 extends AProcessor {
         Notice condition = new Notice();
         condition.setTitle(req.getTitle());
         condition.setType(req.getType());
+        condition.setStatus(req.getStatus());
+        condition.setUrgentStatus(req.getUrgentStatus());
         condition.setPublishDepartmentCode(req.getPublishDepartmentCode());
 
         String orderColumn = req.getOrderColumn();

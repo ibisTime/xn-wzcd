@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.INoticeAO;
+import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.INoticeBO;
 import com.cdkj.loan.bo.IScopePeopleBO;
@@ -37,6 +38,9 @@ public class NoticeAOImpl implements INoticeAO {
 
     @Autowired
     private IScopePeopleBO scopePeopleBO;
+
+    @Autowired
+    private IArchiveBO archiveBO;
 
     @Override
     @Transactional

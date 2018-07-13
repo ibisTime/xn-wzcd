@@ -11,12 +11,13 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IDepartmentDAO;
 import com.cdkj.loan.domain.Department;
+import com.cdkj.loan.enums.EDepartmentType;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class DepartmentBOImpl extends PaginableBOImpl<Department> implements
-        IDepartmentBO {
+public class DepartmentBOImpl extends PaginableBOImpl<Department>
+        implements IDepartmentBO {
 
     @Autowired
     private IDepartmentDAO departmentDAO;
@@ -24,8 +25,8 @@ public class DepartmentBOImpl extends PaginableBOImpl<Department> implements
     public String saveDepartment(Department data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.DEPARTMENT
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.DEPARTMENT.getCode());
             data.setCode(code);
             departmentDAO.insert(data);
         }
@@ -49,6 +50,40 @@ public class DepartmentBOImpl extends PaginableBOImpl<Department> implements
     @Override
     public List<Department> queryDepartmentList(Department condition) {
         return departmentDAO.selectList(condition);
+    }
+
+    @Override
+    public String getDepartmentByPost(String postCode) {
+        String departmentCode = postCode;
+        // 部门编号
+        while (true) {
+            Department department = getDepartment(departmentCode);
+            if (EDepartmentType.DEPARTMENT.getCode()
+                .equals(department.getType())) {
+                departmentCode = department.getCode();
+                break;
+            } else {
+                departmentCode = department.getParentCode();
+            }
+        }
+        return departmentCode;
+    }
+
+    @Override
+    public String getCompanyByDepartment(String departmentCode) {
+        // 公司编号
+        String companyCode = departmentCode;
+        while (true) {
+            Department company = getDepartment(companyCode);
+            if (EDepartmentType.SUBBRANCH_COMPANY.getCode()
+                .equals(company.getType())) {
+                companyCode = company.getCode();
+                break;
+            } else {
+                companyCode = company.getParentCode();
+            }
+        }
+        return companyCode;
     }
 
     @Override

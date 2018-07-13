@@ -22,7 +22,6 @@
 		<result column="rate_type" property="rateType" />
 		<result column="pre_loan_amount" property="preLoanAmount" />
 		<result column="loan_amount" property="loanAmount" />
-		<result column="is_survey" property="isSurvey" />
 		
 		<result column="bank_rate" property="bankRate" />
 		<result column="company_loan_cs" property="companyLoanCs" />
@@ -206,8 +205,13 @@
 		
 		<result column="bank_contract_code" property="bankContractCode" />
 		<result column="reg_certificate_code" property="regCertificateCode" />
-		<result column="other_contact" property="otherContact" />
-		<result column="contact_mobile" property="contactMobile" />
+		<result column="emergency_name1" property="emergencyName1" />
+		<result column="emergency_relation1" property="emergencyRelation1" />
+		<result column="emergency_mobile1" property="emergencyMobile1" />
+		<result column="emergency_name2" property="emergencyName2" />
+		<result column="emergency_relation2" property="emergencyRelation2" />
+		
+		<result column="emergency_mobile2" property="emergencyMobile2" />
 		<result column="guarantor_name" property="guarantorName" />
 		
 		<result column="guarantor_mobile" property="guarantorMobile" />
@@ -355,7 +359,6 @@
 		,t.rate_type
 		,t.pre_loan_amount
 		,t.loan_amount
-		,t.is_survey
 		,t.bank_rate
 		,t.company_loan_cs
 		,t.pre_company_loan_cs
@@ -512,8 +515,13 @@
 		,t.guarant_month_fee_rate
 		,t.bank_contract_code
 		,t.reg_certificate_code
-		,t.other_contact
-		,t.contact_mobile
+		,t.emergency_name1
+		,t.emergency_relation1
+		,t.emergency_mobile1
+		,t.emergency_name2
+		
+		,t.emergency_relation2
+		,t.emergency_mobile2
 		,t.guarantor_name
 		,t.guarantor_mobile
 		,t.guarantor_now_address
@@ -614,7 +622,6 @@
 		,t.rate_type
 		,t.pre_loan_amount
 		,t.loan_amount
-		,t.is_survey
 		,t.bank_rate
 		,t.company_loan_cs
 		,t.pre_company_loan_cs
@@ -765,8 +772,13 @@
 		,t.guarant_month_fee_rate
 		,t.bank_contract_code
 		,t.reg_certificate_code
-		,t.other_contact
-		,t.contact_mobile
+		,t.emergency_name1
+		,t.emergency_relation1
+		,t.emergency_mobile1
+		,t.emergency_name2
+		
+		,t.emergency_relation2
+		,t.emergency_mobile2
 		,t.guarantor_name
 		,t.guarantor_mobile
 		,t.guarantor_now_address
@@ -860,7 +872,6 @@
 		,t.rate_type
 		,t.pre_loan_amount
 		,t.loan_amount
-		,t.is_survey
 		,t.bank_rate
 		,t.company_loan_cs
 		,t.pre_company_loan_cs
@@ -981,8 +992,13 @@
 		,t.guarant_month_fee_rate
 		,t.bank_contract_code
 		,t.reg_certificate_code
-		,t.other_contact
-		,t.contact_mobile
+		,t.emergency_name1
+		,t.emergency_relation1
+		,t.emergency_mobile1
+		,t.emergency_name2
+		
+		,t.emergency_relation2
+		,t.emergency_mobile2
 		,t.guarantor_name
 		,t.guarantor_mobile
 		,t.guarantor_now_address
@@ -1083,7 +1099,6 @@
 		,shop_way
 		,rate_type
 		,loan_amount
-		,is_survey
 		,bank_rate
 		,company_loan_cs
 		,is_advance_fund
@@ -1122,6 +1137,8 @@
 		,guarantor2_balance
 		,guarantor2_jour_show_income     
 		,guarantor2_is_print 
+		,guarantor_name 
+		,guarantor_mobile 
 		,other_income_note
 		
 		,is_house_property
@@ -1216,7 +1233,6 @@
 		,#{shopWay}
 		,#{rateType}
 		,#{loanAmount}
-		,#{isSurvey}
 		,#{bankRate}
 		,#{companyLoanCs}
 		,#{isAdvanceFund}
@@ -1255,6 +1271,8 @@
 		,#{guarantor2Balance}
 		,#{guarantor2JourShowIncome}
 		,#{guarantor2IsPrint} 
+		,#{guarantorName} 
+		,#{guarantorMobile} 
 		,#{otherIncomeNote}
 		
 		,#{isHouseProperty}
@@ -1347,7 +1365,6 @@
 		,loan_periods = #{loanPeriods}
 		,invoice_price = #{invoicePrice}
 		,rate_type = #{rateType}
-		,is_survey = #{isSurvey}
 		,bank_rate = #{bankRate}
 		
 		,company_loan_cs = #{companyLoanCs}
@@ -1373,6 +1390,13 @@
 		,gh_balance = #{ghBalance}
 		,gh_jour_show_income = #{ghJourShowIncome}
 		,gh_is_print = #{ghIsPrint}
+		
+		,emergency_name1 = #{emergencyName1}
+		,emergency_relation1 = #{emergencyRelation1}
+		,emergency_mobile1 = #{emergencyMobile1}
+		,emergency_name2 = #{emergencyName2}
+		,emergency_relation2 = #{emergencyRelation2}
+		,emergency_mobile2 = #{emergencyMobile2}
 		
 		,guarantor1_month_income = #{guarantor1MonthIncome}
 		,guarantor1_settle_interest = #{guarantor1SettleInterest}
@@ -1572,8 +1596,7 @@
 		,guarantee_contract_code = #{guaranteeContractCode}
 		,bank_contract_code = #{bankContractCode}
 		,reg_certificate_code = #{regCertificateCode}
-		,other_contact = #{otherContact}
-		,contact_mobile = #{contactMobile}
+		
 		,guarantor_name = #{guarantorName}
 		
 		,guarantor_mobile = #{guarantorMobile}
@@ -1847,6 +1870,7 @@
 		,apply_user_company_phone = #{applyUserCompanyPhone}
 		,gh_mobile = #{ghMobile}
 		,gh_company_name = #{ghCompanyName}
+		,car_brand = #{carBrand}
 		,car_brand_model = #{carBrandModel}
 		,car_number = #{carNumber}
 		,guarant_contract_deadline = #{guarantContractDeadline}

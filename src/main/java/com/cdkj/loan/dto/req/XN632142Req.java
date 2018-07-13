@@ -30,6 +30,9 @@ public class XN632142Req {
     // 共还人公司名称
     private String ghCompanyName;
 
+    // 车辆品牌
+    private String carBrand;
+
     // 品牌型号
     private String carBrandModel;
 
@@ -101,6 +104,14 @@ public class XN632142Req {
 
     public void setFamilyPhone(String familyPhone) {
         this.familyPhone = familyPhone;
+    }
+
+    public String getCarBrand() {
+        return carBrand;
+    }
+
+    public void setCarBrand(String carBrand) {
+        this.carBrand = carBrand;
     }
 
     public String getApplyUserCompanyPhone() {

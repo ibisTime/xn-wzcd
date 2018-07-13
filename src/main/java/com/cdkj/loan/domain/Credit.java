@@ -77,6 +77,8 @@ public class Credit extends ABaseDO {
     // 征信人员中的贷款角色为主申请人的信息 ： 客户姓名 手机号 身份证号...
     private CreditUser creditUser;
 
+    private List<String> curNodeCodeList;// 节点
+
     // 征信人员信息
     private List<CreditUser> creditUserList;
 
@@ -86,6 +88,14 @@ public class Credit extends ABaseDO {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
     }
 
     public String getBudgetCode() {

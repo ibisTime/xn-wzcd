@@ -2,6 +2,12 @@ package com.cdkj.loan.domain;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
+/**
+ * 经销商协议表
+ * @author: CYL 
+ * @since: 2018年7月8日 下午9:56:49 
+ * @history:
+ */
 public class CarDealerProtocol extends ABaseDO {
 
     /** 

@@ -63,7 +63,8 @@ public class BudgetOrderFee extends ABaseDO {
 
     private String updaterRealName;
 
-    private String userName;
+    // 客户姓名
+    private String customerName;
 
     public String getEffect() {
         return effect;
@@ -73,12 +74,12 @@ public class BudgetOrderFee extends ABaseDO {
         this.effect = effect;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getCode() {

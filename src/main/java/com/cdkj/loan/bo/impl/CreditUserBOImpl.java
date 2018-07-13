@@ -23,8 +23,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
-        ICreditUserBO {
+public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
+        implements ICreditUserBO {
 
     @Autowired
     private ICreditUserDAO creditUserDAO;
@@ -33,8 +33,8 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
     public void saveCreditUser(CreditUser creditUser) {
         String code = null;
         if (creditUser != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.CREDITUSER
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.CREDITUSER.getCode());
             creditUser.setCode(code);
             creditUserDAO.insert(creditUser);
         }
@@ -53,6 +53,18 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser> implements
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "征信人员编号不存在!");
             }
+        }
+        return data;
+    }
+
+    @Override
+    public CreditUser getCreditUserNotNull(String code) {
+
+        CreditUser data = null;
+        if (StringUtils.isNotBlank(code)) {
+            CreditUser creditUser = new CreditUser();
+            creditUser.setCode(code);
+            data = creditUserDAO.select(creditUser);
         }
         return data;
     }

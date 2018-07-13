@@ -10,9 +10,7 @@ public class XN630102Req {
     @NotBlank
     private String name;// 部门名称
 
-    private String leadName;// 负责人
-
-    private String mobile;// 负责人手机号
+    private String leadUserId;// 负责人编号
 
     @NotBlank
     private String parentCode;// 上级部门编号
@@ -71,20 +69,12 @@ public class XN630102Req {
         this.provinceNo = provinceNo;
     }
 
-    public String getLeadName() {
-        return leadName;
+    public String getLeadUserId() {
+        return leadUserId;
     }
 
-    public void setLeadName(String leadName) {
-        this.leadName = leadName;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setLeadUserId(String leadUserId) {
+        this.leadUserId = leadUserId;
     }
 
     public String getParentCode() {

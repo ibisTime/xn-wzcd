@@ -17,4 +17,8 @@ public interface IDepartmentBO extends IPaginableBO<Department> {
 
     public Department getDepartment(String code);
 
+    public String getDepartmentByPost(String postCode);
+
+    public String getCompanyByDepartment(String departmentCode);
+
 }

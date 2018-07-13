@@ -33,8 +33,8 @@ import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
-        IBudgetOrderBO {
+public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
+        implements IBudgetOrderBO {
 
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
@@ -72,8 +72,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             if (EBudgetOrderShopWay.OLD.getCode().equals(data.getShopWay())) {
                 shopWay = "R";
             }
-            Department company = departmentBO.getDepartment(data
-                .getCompanyCode());
+            Department company = departmentBO
+                .getDepartment(data.getCompanyCode());
             Province provinceCondition = new Province();
             provinceCondition.setName(company.getProvinceNo());
             Province province = provinceBO.getProvince(provinceCondition);
@@ -100,7 +100,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             budgetOrderCondition
                 .setApplyDatetimeStart(DateUtil.getTodayStart());
             budgetOrderCondition.setApplyDatetimeEnd(DateUtil.getTodayEnd());
-            long count = budgetOrderDAO.selectTotalCount(budgetOrderCondition) + 1;
+            long count = budgetOrderDAO.selectTotalCount(budgetOrderCondition)
+                    + 1;
             String bizNO = String.valueOf(count);
             if (bizNO.length() == 1) {
                 bizNO = "00" + bizNO;
@@ -230,18 +231,23 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         BudgetOrder budgetOrder = getBudgetOrder(code);
         // String preCurrentNode = budgetOrder.getCurNodeCode();
 
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
-            .getCurNodeCode());
+        NodeFlow nodeFlow = nodeFlowBO
+            .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
-        if (EBudgetOrderNode.FEN_CAR_SEND_LOGISTICS.getCode().equals(
-            budgetOrder.getCurNodeCode())
+        if (EBudgetOrderNode.FEN_CAR_SEND_LOGISTICS.getCode()
+            .equals(budgetOrder.getCurNodeCode())
+                || EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                || EBudgetOrderNode.CAR_HEADQUARTERS_SEND_PRINT.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
                 || EBudgetOrderNode.HEADQUARTERS_CAR_SEND_BANK_MATERIALS
                     .getCode().equals(budgetOrder.getCurNodeCode())) {
             NodeFlow nodeFlow2 = nodeFlowBO
                 .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
             if (StringUtils.isNotBlank(nodeFlow2.getFileList())) {
+                // 生成资料传递
                 logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                     budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                     budgetOrder.getCurNodeCode(), nodeFlow2.getNextNode(),

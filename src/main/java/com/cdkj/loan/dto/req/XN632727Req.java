@@ -18,6 +18,12 @@ public class XN632727Req extends AListReq {
     // 类型
     private String type;
 
+    // 状态
+    private String status;
+
+    // 紧急程度
+    private String urgentStatus;
+
     // 发布部门
     private String publishDepartmentCode;
 
@@ -35,6 +41,22 @@ public class XN632727Req extends AListReq {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getUrgentStatus() {
+        return urgentStatus;
+    }
+
+    public void setUrgentStatus(String urgentStatus) {
+        this.urgentStatus = urgentStatus;
     }
 
     public String getPublishDepartmentCode() {

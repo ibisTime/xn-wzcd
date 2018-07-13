@@ -19,6 +19,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632150Req;
@@ -138,6 +139,13 @@ public class LogisticsAOImpl implements ILogisticsAO {
         if (StringUtils.isNotBlank(logistics.getUserId())) {
             SYSUser sysUser = sysUserBO.getUser(logistics.getUserId());
             logistics.setUserName(sysUser.getRealName());
+        }
+        if (StringUtils.isNotBlank(logistics.getBizCode())) {
+            if (ELogisticsType.BUDGET.getCode().equals(logistics.getType())) {
+                BudgetOrder budgetOrder = budgetOrderBO
+                    .getBudgetOrder(logistics.getBizCode());
+                logistics.setCustomerName(budgetOrder.getCustomerName());
+            }
         }
     }
 

@@ -12,9 +12,7 @@ public class Department extends ABaseDO {
 
     private String name;// 部门名称
 
-    private String leadName;// 负责人
-
-    private String mobile;// 负责人手机号
+    private String leadUserId; // 负责人用户编号
 
     private String parentCode;// 上级部门编号
 
@@ -26,6 +24,8 @@ public class Department extends ABaseDO {
 
     private String areaNo;// 区编号
 
+    private int orderNo;// 序号
+
     private String status;// 状态
 
     private String updater;// 更新人
@@ -35,6 +35,10 @@ public class Department extends ABaseDO {
     private String remark;// 备注
 
     /*-----------辅助字段------------*/
+
+    private String leadName;// 负责人名称
+
+    private String leadMobile;// 负责人手机号
 
     private String keyword;// 关键字
 
@@ -46,6 +50,14 @@ public class Department extends ABaseDO {
 
     public void setTypeList(List<String> typeList) {
         this.typeList = typeList;
+    }
+
+    public int getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(int orderNo) {
+        this.orderNo = orderNo;
     }
 
     public String getCityNo() {
@@ -104,12 +116,20 @@ public class Department extends ABaseDO {
         this.leadName = leadName;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getLeadUserId() {
+        return leadUserId;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setLeadUserId(String leadUserId) {
+        this.leadUserId = leadUserId;
+    }
+
+    public String getLeadMobile() {
+        return leadMobile;
+    }
+
+    public void setLeadMobile(String leadMobile) {
+        this.leadMobile = leadMobile;
     }
 
     public String getType() {

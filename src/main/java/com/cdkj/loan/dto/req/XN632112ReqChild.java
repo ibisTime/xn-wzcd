@@ -3,7 +3,7 @@ package com.cdkj.loan.dto.req;
 public class XN632112ReqChild {
 
     // 征信人员编号
-    private String creditUserCode;
+    private String code;
 
     // 姓名
     private String userName;
@@ -32,12 +32,12 @@ public class XN632112ReqChild {
     // 面签照片
     private String interviewPic;
 
-    public String getCreditUserCode() {
-        return creditUserCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setCreditUserCode(String creditUserCode) {
-        this.creditUserCode = creditUserCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getUserName() {

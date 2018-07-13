@@ -28,6 +28,9 @@ public class Logistics extends ABaseDO {
     // 用户编号
     private String userId;
 
+    // 用户姓名
+    private String userName;
+
     // 业务节点1
     private String fromNodeCode;
 
@@ -70,10 +73,10 @@ public class Logistics extends ABaseDO {
     // 备注
     private String remark;
 
-    // ***********db properties***********
+    /*----------辅助字段---------------*/
 
-    // 用户姓名
-    private String userName;
+    // 客户姓名
+    private String customerName;
 
     public String getCode() {
         return code;
@@ -81,6 +84,14 @@ public class Logistics extends ABaseDO {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getSupplementReason() {
