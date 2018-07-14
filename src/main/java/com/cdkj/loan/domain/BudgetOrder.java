@@ -734,6 +734,9 @@ public class BudgetOrder extends ABaseDO {
     // 预算单类型（1正常单2外单）
     private String type;
 
+    // 入档状态（0待入档1待补录2已入档）
+    private String enterFileStatus;
+
     /*-------辅助字段-------*/
 
     private String roleCode;// 角色编号
@@ -2927,6 +2930,14 @@ public class BudgetOrder extends ABaseDO {
     public void setOutCarDealerName(String outCarDealerName) {
         this.outCarDealerName = outCarDealerName;
 
+    }
+
+    public String getEnterFileStatus() {
+        return enterFileStatus;
+    }
+
+    public void setEnterFileStatus(String enterFileStatus) {
+        this.enterFileStatus = enterFileStatus;
     }
 
 }

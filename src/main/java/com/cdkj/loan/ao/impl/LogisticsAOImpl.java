@@ -68,10 +68,10 @@ public class LogisticsAOImpl implements ILogisticsAO {
     public void sendLogistics(XN632150Req req) {
         Logistics data = logisticsBO.getLogistics(req.getCode());
         if (!ELogisticsStatus.TO_SEND.getCode().equals(data.getStatus())
-                && !ELogisticsStatus.TO_SEND_AGAIN.getCode()
-                    .equals(data.getStatus())) {
+                && !ELogisticsStatus.TO_SEND_AGAIN.getCode().equals(
+                    data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "资料不是待发货状态!");
+                "资料不是待发件状态!");
         }
 
         // 发件

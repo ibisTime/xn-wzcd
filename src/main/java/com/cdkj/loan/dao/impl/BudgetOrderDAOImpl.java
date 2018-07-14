@@ -235,4 +235,14 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
         super.update(NAMESPACE.concat("update_pledgeContractPrint"), data);
     }
 
+    @Override
+    public void collateAchieve(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_collateAchieve"), data);
+    }
+
+    @Override
+    public void updateEnterFileStatus(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_enterFileStatus"), data);
+    }
+
 }

@@ -109,4 +109,10 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 车辆抵押合同打印
     void pledgeContractPrint(BudgetOrder budgetOrder);
 
+    // 车辆抵押理件完成
+    void collateAchieve(BudgetOrder budgetOrder);
+
+    // 更改入档状态
+    void updateEnterFileStatus(BudgetOrder budgetOrder);
+
 }

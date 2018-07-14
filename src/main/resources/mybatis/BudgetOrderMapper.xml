@@ -284,6 +284,7 @@
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="repay_biz_code" property="repayBizCode" />
 		<result column="type" property="type" />
+		<result column="enter_file_status" property="enterFileStatus"/>
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -337,6 +338,9 @@
 			</if>
 			<if test="repayBizCode != null and repayBizCode != '' ">
 				AND t.repay_biz_code = #{repayBizCode}
+			</if>
+			<if test="enterFileStatus != null and enterFileStatus != '' ">
+				AND t.enter_file_status = #{enterFileStatus}
 			</if>
 		</trim>
 	</sql>
@@ -1572,6 +1576,7 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
+		,enter_file_status = #{enterFileStatus}
 		,operator = #{operator}
 		,operate_datetime = #{operateDatetime}
 		WHERE code = #{code}
@@ -1899,6 +1904,20 @@
 		,pledge_print_user = #{pledgePrintUser}
 		,pledge_print_datetime = #{pledgePrintDatetime}
 		,cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_collateAchieve" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_enterFileStatus" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		enter_file_status = #{enterFileStatus}
 		WHERE code = #{code}
 	</update>
 		

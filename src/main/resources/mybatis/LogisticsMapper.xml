@@ -134,8 +134,6 @@
 		UPDATE tdq_logistics t
 		SET
 		t.receipt_datetime = #{receiptDatetime}
-		,t.supplement_reason = #{supplementReason}
-		,t.supplement_note = #{supplementNote}
 		,t.status = #{status}
 		,t.remark = #{remark}
 		WHERE code = #{code}
@@ -145,7 +143,8 @@
 		UPDATE tdq_logistics t
 		SET
 		t.send_datetime = #{sendDatetime}
-		,t.send_note = #{sendNote}
+		,t.supplement_reason = #{supplementReason}
+		,t.supplement_note = #{supplementNote}
 		,t.status = #{status}
 		WHERE code = #{code}
 	</update>

@@ -11,9 +11,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 确认抵押完成
- * @author: silver 
- * @since: 2018年6月13日 下午2:42:47 
+ * 车辆抵押确认抵押完成
+ * @author: jiafr 
+ * @since: 2018年7月14日 下午5:44:59 
  * @history:
  */
 public class XN632191 extends AProcessor {

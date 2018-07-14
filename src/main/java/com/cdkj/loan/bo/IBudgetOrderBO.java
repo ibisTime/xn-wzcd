@@ -119,4 +119,10 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 车辆抵押合同打印
     public void pledgeContractPrint(BudgetOrder budgetOrder);
 
+    // 车辆抵押理件完成
+    public void collateAchieve(BudgetOrder budgetOrder);
+
+    // 更改入档状态
+    public void updateEnterFileStatus(BudgetOrder budgetOrder);
+
 }

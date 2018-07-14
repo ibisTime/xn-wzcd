@@ -13,8 +13,8 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 车辆抵押确认提交银行
- * @author: silver 
- * @since: 2018年6月13日 下午2:42:47 
+ * @author: jiafr 
+ * @since: 2018年7月14日 下午5:40:08 
  * @history:
  */
 public class XN632190 extends AProcessor {
@@ -25,9 +25,8 @@ public class XN632190 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.carPledgeCommit(req.getCode(),
-            DateUtil.strToDate(req.getPledgeCommitDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING),
+        budgetOrderAO.carPledgeCommit(req.getCode(), DateUtil.strToDate(
+            req.getPledgeCommitDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING),
             req.getPledgeCommitNote(), req.getOperator());
         return new BooleanRes(true);
     }

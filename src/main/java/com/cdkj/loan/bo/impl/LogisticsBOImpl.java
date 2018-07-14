@@ -26,8 +26,8 @@ import com.cdkj.loan.exception.BizException;
  */
 
 @Component
-public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
-        implements ILogisticsBO {
+public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
+        ILogisticsBO {
     @Autowired
     private ILogisticsDAO logisticsDAO;
 
@@ -37,8 +37,8 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     @Override
     public String saveLogistics(String type, String bizCode, String userId,
             String fromNodeCode, String toNodeCode, String refFileList) {
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.LOGISTICS.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.LOGISTICS
+            .getCode());
         Logistics data = new Logistics();
         data.setCode(code);
         data.setType(type);
@@ -64,7 +64,6 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
         if (null == code) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写编号");
         }
-
         Logistics condition = new Logistics();
         condition.setCode(code);
         condition.setRemark(remark);
@@ -79,7 +78,6 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
         if (null == code) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写编号");
         }
-
         Logistics data = new Logistics();
         data.setCode(code);
         data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
@@ -87,7 +85,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
         data.setSupplementNote(supplementNote);
         data.setReceiptDatetime(new Date());
         data.setRemark(remark);
-        logisticsDAO.updateLogisticsReceive(data);
+        logisticsDAO.updateLogisticsSendAgain(data);
     }
 
     @Override

@@ -11,6 +11,8 @@ import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632142Req;
 import com.cdkj.loan.dto.req.XN632192Req;
+import com.cdkj.loan.dto.req.XN632193Req;
+import com.cdkj.loan.dto.req.XN632194Req;
 import com.cdkj.loan.dto.req.XN632200Req;
 import com.cdkj.loan.dto.req.XN632220Req;
 import com.cdkj.loan.dto.req.XN632230Req;
@@ -131,5 +133,11 @@ public interface IBudgetOrderAO {
 
     // 车辆抵押合同打印
     public BudgetOrder pledgeContractPrint(XN632192Req req);
+
+    // 车辆抵押理件完成
+    public void collateAchieve(XN632193Req req);
+
+    // 车辆抵押开始
+    public void pledgeBegin(XN632194Req req);
 
 }
