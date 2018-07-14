@@ -113,7 +113,7 @@
 	<update id="update_logistics_send" parameterType="logistics">
 		UPDATE tdq_logistics t
 		SET
-		,t.send_type = #{sendType}
+		t.send_type = #{sendType}
 		,t.logistics_company = #{logisticsCompany}
 		,t.logistics_code = #{logisticsCode}
 		,t.send_datetime = #{sendDatetime}
