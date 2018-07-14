@@ -38,6 +38,7 @@ import com.cdkj.loan.dto.req.XN632114ReqCNR;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ECreditNode;
 import com.cdkj.loan.enums.EIDKind;
@@ -134,6 +135,7 @@ public class CreditAOImpl implements ICreditAO {
             creditUser.setIdNoReverse(child.getIdNoReverse());
             creditUser.setAuthPdf(child.getAuthPdf());
             creditUser.setInterviewPic(child.getInterviewPic());
+            creditUser.setIsFirstAudit(EBoolean.NO.getCode());
             creditUserBO.saveCreditUser(creditUser);
         }
 
@@ -283,6 +285,12 @@ public class CreditAOImpl implements ICreditAO {
             credit.setCurNodeCode(
                 nodeFlowBO.getNodeFlowByCurrentNode(credit.getCurNodeCode())
                     .getNextNode());
+            // 征信人员
+            List<CreditUser> userList = req.getCreditUserList();
+            for (CreditUser creditUser : userList) {
+                creditUser.setIsFirstAudit(EBoolean.YES.getCode());
+                creditUserBO.refreshCreditUserIsFirstAudit(creditUser);
+            }
             // 选填了附件
             if (null != req.getAccessory() && !"".equals(req.getAccessory())) {
                 credit.setAccessory(req.getAccessory());
@@ -412,6 +420,8 @@ public class CreditAOImpl implements ICreditAO {
                     data.setGuarantor2JourShowIncome(
                         dbUser2.getJourShowIncome());
                     data.setGuarantor2IsPrint(dbUser2.getIsPrint());
+                    // 修改担保人是否一审
+                    creditUserBO.refreshCreditUserIsFirstAudit(dbUser2);
                 }
             }
 

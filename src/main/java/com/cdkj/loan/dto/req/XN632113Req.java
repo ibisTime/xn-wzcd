@@ -1,6 +1,10 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.cdkj.loan.domain.CreditUser;
 
 /**
  * 征信初审
@@ -14,6 +18,9 @@ public class XN632113Req {
     @NotBlank
     private String code;
 
+    // 征信人员
+    private List<CreditUser> creditUserList;
+
     // 审核结果
     @NotBlank
     private String approveResult;
@@ -24,6 +31,14 @@ public class XN632113Req {
 
     // 附件
     private String accessory;
+
+    public List<CreditUser> getCreditUserList() {
+        return creditUserList;
+    }
+
+    public void setCreditUserList(List<CreditUser> creditUserList) {
+        this.creditUserList = creditUserList;
+    }
 
     public String getCode() {
         return code;

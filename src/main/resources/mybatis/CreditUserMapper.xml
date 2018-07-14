@@ -47,6 +47,7 @@
 		<result column="settle_interest" property="settleInterest" />		
 		<result column="balance" property="balance" />		
 		<result column="jour_show_income" property="jourShowIncome" />		
+		<result column="is_first_audit" property="isFirstAudit" />		
 		<result column="is_print" property="isPrint" />		
 	</resultMap>
 	
@@ -60,6 +61,9 @@
 			</if>
 			<if test="loanRole != null and loanRole != '' ">
 				AND t.loan_role = #{loanRole}
+			</if>
+			<if test="isFirstAudit != null and isFirstAudit != '' ">
+				AND t.is_first_audit = #{isFirstAudit}
 			</if>
 		</trim>
 	</sql>
@@ -109,6 +113,7 @@
 		,t.settle_interest
 		,t.balance
 		,t.jour_show_income
+		,t.is_first_audit
 		,t.is_print
 		
 		from tdq_credit_user t
@@ -143,6 +148,7 @@
 		,auth_pdf
 		
 		,interview_pic		
+		,is_first_audit		
 		)
 		VALUES(
 		#{code}
@@ -159,6 +165,7 @@
 		,#{authPdf}
 		
 		,#{interviewPic}
+		,#{isFirstAudit}
 		)
 	</insert>
 	
@@ -178,7 +185,8 @@
 		,id_no_reverse
 		,auth_pdf
 		
-		,interview_pic			
+		,interview_pic
+		,is_first_audit
 		)
 		VALUES(
 		<foreach collection="list" item="creditUser" separator=",">
@@ -196,6 +204,7 @@
 			,#{authPdf}
 			
 			,#{interviewPic}
+			,#{isFirstAudit}
 		</foreach>
 		)
 	</insert>
@@ -265,6 +274,14 @@
 		UPDATE tdq_credit_user
 		SET
 		court_network_results = #{courtNetworkResults}
+		WHERE
+		code = #{code}
+	</update>
+	
+	<update id="update_creditUserIsFirstAudit" parameterType="creditUser">
+		UPDATE tdq_credit_user
+		SET
+		is_first_audit = #{isFirstAudit}
 		WHERE
 		code = #{code}
 	</update>

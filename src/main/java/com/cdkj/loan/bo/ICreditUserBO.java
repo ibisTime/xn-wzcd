@@ -19,6 +19,9 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     // 修改征信人员信息
     public void refreshCreditUser(CreditUser creditUser);
 
+    // 修改征信人员是否一审
+    public void refreshCreditUserIsFirstAudit(CreditUser creditUser);
+
     // 录入银行征信结果
     public void inputBankCreditResult(CreditUser creditUser);
 

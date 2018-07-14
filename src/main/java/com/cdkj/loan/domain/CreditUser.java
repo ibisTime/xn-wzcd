@@ -129,6 +129,9 @@ public class CreditUser extends ABaseDO {
     // 流水是否体现月收入
     private String jourShowIncome;
 
+    // 是否初审
+    private String isFirstAudit;
+
     // 是否打件
     private String isPrint;
 
@@ -138,6 +141,14 @@ public class CreditUser extends ABaseDO {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getIsFirstAudit() {
+        return isFirstAudit;
+    }
+
+    public void setIsFirstAudit(String isFirstAudit) {
+        this.isFirstAudit = isFirstAudit;
     }
 
     public String getCreditCode() {

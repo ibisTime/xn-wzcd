@@ -12,6 +12,7 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ICreditUserDAO;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.exception.BizException;
@@ -103,6 +104,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
         CreditUser condition = new CreditUser();
         condition.setCreditCode(creditCode);
         condition.setLoanRole(loanRole.getCode());
+        condition.setIsFirstAudit(EBoolean.YES.getCode());
 
         return creditUserDAO.select(condition);
     }
@@ -113,6 +115,7 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
         CreditUser condition = new CreditUser();
         condition.setCreditCode(creditCode);
         condition.setLoanRole(loanRole.getCode());
+        condition.setIsFirstAudit(EBoolean.YES.getCode());
 
         return creditUserDAO.selectList(condition);
     }
@@ -123,6 +126,12 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
         CreditUser creditUser = getCreditUser(code);
         creditUser.setCourtNetworkResults(courtNetworkResults);
         creditUserDAO.refreshCourtNetworkResults(creditUser);
+    }
+
+    @Override
+    public void refreshCreditUserIsFirstAudit(CreditUser creditUser) {
+        creditUser.setIsFirstAudit(EBoolean.YES.getCode());
+        creditUserDAO.updateCreditUserIsFirstAudit(creditUser);
     }
 
 }
