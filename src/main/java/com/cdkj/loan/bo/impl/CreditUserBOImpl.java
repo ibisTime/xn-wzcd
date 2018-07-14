@@ -104,6 +104,16 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
         CreditUser condition = new CreditUser();
         condition.setCreditCode(creditCode);
         condition.setLoanRole(loanRole.getCode());
+
+        return creditUserDAO.select(condition);
+    }
+
+    @Override
+    public CreditUser getCreditUserByIsFirstAudit(String creditCode,
+            ELoanRole loanRole) {
+        CreditUser condition = new CreditUser();
+        condition.setCreditCode(creditCode);
+        condition.setLoanRole(loanRole.getCode());
         condition.setIsFirstAudit(EBoolean.YES.getCode());
 
         return creditUserDAO.select(condition);
@@ -111,6 +121,16 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
 
     @Override
     public List<CreditUser> getCreditUserListByCreditCode(String creditCode,
+            ELoanRole loanRole) {
+        CreditUser condition = new CreditUser();
+        condition.setCreditCode(creditCode);
+        condition.setLoanRole(loanRole.getCode());
+
+        return creditUserDAO.selectList(condition);
+    }
+
+    @Override
+    public List<CreditUser> getCreditUserListByIsFirstAudit(String creditCode,
             ELoanRole loanRole) {
         CreditUser condition = new CreditUser();
         condition.setCreditCode(creditCode);

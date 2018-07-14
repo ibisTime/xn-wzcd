@@ -35,8 +35,16 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     public CreditUser getCreditUserByCreditCode(String creditCode,
             ELoanRole loanRole);
 
+    // 查询征信单共还人，担保人，本人通过是否一审
+    public CreditUser getCreditUserByIsFirstAudit(String creditCode,
+            ELoanRole loanRole);
+
     // 查询征信单担保人
     public List<CreditUser> getCreditUserListByCreditCode(String creditCode,
+            ELoanRole loanRole);
+
+    // 查询征信单担保人
+    public List<CreditUser> getCreditUserListByIsFirstAudit(String creditCode,
             ELoanRole loanRole);
 
     // 法院网查询结果录入

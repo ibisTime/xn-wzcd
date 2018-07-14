@@ -349,7 +349,7 @@ public class CreditAOImpl implements ICreditAO {
             // 生成预算单
             BudgetOrder data = new BudgetOrder();
             data.setCreditCode(credit.getCode());
-            CreditUser customerUser = creditUserBO.getCreditUserByCreditCode(
+            CreditUser customerUser = creditUserBO.getCreditUserByIsFirstAudit(
                 credit.getCode(), ELoanRole.APPLY_USER);
             if (customerUser == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -374,7 +374,7 @@ public class CreditAOImpl implements ICreditAO {
 
             // 共还人信息
             CreditUser ghUser = creditUserBO
-                .getCreditUserByCreditCode(credit.getCode(), ELoanRole.GHR);
+                .getCreditUserByIsFirstAudit(credit.getCode(), ELoanRole.GHR);
             if (ghUser != null) {
                 data.setGhRealName(ghUser.getUserName());
                 data.setGhIdNo(ghUser.getIdNo());
@@ -394,7 +394,7 @@ public class CreditAOImpl implements ICreditAO {
 
             // 担保人信息
             List<CreditUser> dbUserList = creditUserBO
-                .getCreditUserListByCreditCode(credit.getCode(),
+                .getCreditUserListByIsFirstAudit(credit.getCode(),
                     ELoanRole.GUARANTOR);
             if (CollectionUtils.isNotEmpty(dbUserList)) {
                 CreditUser dbUser1 = dbUserList.get(0);
