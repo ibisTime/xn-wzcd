@@ -15,6 +15,10 @@ public class XN632176Req {
     // 垫资总金额
     private String totalAdvanceFund;
 
+    // 垫资日期
+    @NotBlank
+    private String advanceFundDatetime;
+
     // 付款金额
     private String payAmount;
 
@@ -46,6 +50,14 @@ public class XN632176Req {
 
     public void setTotalAdvanceFund(String totalAdvanceFund) {
         this.totalAdvanceFund = totalAdvanceFund;
+    }
+
+    public String getAdvanceFundDatetime() {
+        return advanceFundDatetime;
+    }
+
+    public void setAdvanceFundDatetime(String advanceFundDatetime) {
+        this.advanceFundDatetime = advanceFundDatetime;
     }
 
     public String getPayAmount() {

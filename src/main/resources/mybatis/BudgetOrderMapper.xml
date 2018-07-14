@@ -53,6 +53,8 @@
 		<result column="apply_user_is_print" property="applyUserIsPrint" />
 		<result column="gh_real_name" property="ghRealName" />
 		<result column="gh_id_no" property="ghIdNo" />
+		<result column="gh_id_picz" property="ghIdPicz" />
+		<result column="gh_id_picf" property="ghIdPicf" />
 		<result column="gh_sex" property="ghSex" />
 		<result column="gh_mobile" property="ghMobile" />
 		<result column="gh_company_name" property="ghCompanyName" />
@@ -133,8 +135,12 @@
 		<result column="gh_hkb" property="ghHkb" />
 		
 		<result column="guarantor1_id_no" property="guarantor1IdNo" />
+		<result column="guarantor1_id_picz" property="guarantor1IdPicz" />
+		<result column="guarantor1_id_picf" property="guarantor1IdPicf" />
 		<result column="guarantor1_hkb" property="guarantor1Hkb" />
 		<result column="guarantor2_id_no" property="guarantor2IdNo" />
+		<result column="guarantor2_id_picz" property="guarantor2IdPicz" />
+		<result column="guarantor2_id_picf" property="guarantor2IdPicf" />
 		<result column="guarantor2_hkb" property="guarantor2Hkb" />
 		<result column="house_pic" property="housePic" />
 		
@@ -235,7 +241,8 @@
 		<result column="mobile" property="mobile" />
 		<result column="id_kind" property="idKind" />
 		<result column="id_no" property="idNo" />
-		<result column="id_no_pic" property="idNoPic" />
+		<result column="id_no_picz" property="idNoPicz" />
+		<result column="id_no_picf" property="idNoPicf" />
 		
 		<result column="file_list" property="fileList" />
 		<result column="is_complete" property="isComplete" />
@@ -390,6 +397,8 @@
 		,t.apply_user_is_print
 		,t.gh_real_name
 		,t.gh_id_no
+		,t.gh_id_picz
+		,t.gh_id_picf
 		,t.gh_sex
 		,t.gh_mobile
 		,t.gh_company_name
@@ -458,8 +467,12 @@
 		,t.hkb_main_page
 		,t.gh_hkb
 		,t.guarantor1_id_no
+		,t.guarantor1_id_picz
+		,t.guarantor1_id_picf
 		,t.guarantor1_hkb
 		,t.guarantor2_id_no
+		,t.guarantor2_id_picz
+		,t.guarantor2_id_picf
 		,t.guarantor2_hkb
 		,t.house_pic
 		,t.house_unit_pic
@@ -547,7 +560,8 @@
 		,t.mobile
 		,t.id_kind
 		,t.id_no
-		,t.id_no_pic
+		,t.id_no_picz
+		,t.id_no_picf
 		,t.file_list
 		,t.is_complete
 		,t.store_place
@@ -653,6 +667,8 @@
 		,t.apply_user_is_print
 		,t.gh_real_name
 		,t.gh_id_no
+		,t.gh_id_picz
+		,t.gh_id_picf
 		,t.gh_sex
 		,t.gh_mobile
 		,t.gh_company_name
@@ -721,8 +737,12 @@
 		,t.hkb_main_page
 		,t.gh_hkb
 		,t.guarantor1_id_no
+		,t.guarantor1_id_picz
+		,t.guarantor1_id_picf
 		,t.guarantor1_hkb
 		,t.guarantor2_id_no
+		,t.guarantor2_id_picz
+		,t.guarantor2_id_picf
 		,t.guarantor2_hkb
 		,t.house_pic
 		,t.house_unit_pic
@@ -804,7 +824,8 @@
 		,t.mobile
 		,t.id_kind
 		,t.id_no
-		,t.id_no_pic
+		,t.id_no_picz
+		,t.id_no_picf
 		,t.file_list
 		,t.is_complete
 		,t.store_place
@@ -903,6 +924,8 @@
 		,t.apply_user_is_print
 		,t.gh_real_name
 		,t.gh_id_no
+		,t.gh_id_picz
+		,t.gh_id_picf
 		,t.gh_sex
 		,t.gh_mobile
 		,t.gh_company_name
@@ -1024,7 +1047,8 @@
 		,t.mobile
 		,t.id_kind
 		,t.id_no
-		,t.id_no_pic
+		,t.id_no_picz
+		,t.id_no_picf
 		,t.file_list
 		,t.is_complete
 		,t.store_place
@@ -1124,6 +1148,8 @@
 		,apply_user_is_print
 		,gh_real_name
 		,gh_id_no
+		,gh_id_picz
+		,gh_id_picf
 		,gh_sex
 		,gh_mobile
 		,gh_month_income
@@ -1188,8 +1214,12 @@
 		,hkb_main_page
 		,gh_hkb
 		,guarantor1_id_no
+		,guarantor1_id_picz
+		,guarantor1_id_picf
 		,guarantor1_hkb
 		,guarantor2_id_no
+		,guarantor2_id_picz
+		,guarantor2_id_picf
 		,guarantor2_hkb
 		,house_pic
 		,house_unit_pic
@@ -1258,6 +1288,8 @@
 		,#{applyUserIsPrint}
 		,#{ghRealName}
 		,#{ghIdNo}
+		,#{ghIdPicz}
+		,#{ghIdPicf}
 		,#{ghSex}
 		,#{ghMobile}
 		,#{ghMonthIncome}
@@ -1322,8 +1354,12 @@
 		,#{hkbMainPage}
 		,#{ghHkb}
 		,#{guarantor1IdNo}
+		,#{guarantor1IdPicz}
+		,#{guarantor1IdPicf}
 		,#{guarantor1Hkb}
 		,#{guarantor2IdNo}
+		,#{guarantor2IdPicz}
+		,#{guarantor2IdPicf}
 		,#{guarantor2Hkb}
 		,#{housePic}
 		,#{houseUnitPic}
@@ -1466,8 +1502,12 @@
 		,hkb_main_page = #{hkbMainPage}
 		,gh_hkb = #{ghHkb}
 		,guarantor1_id_no = #{guarantor1IdNo}
+		,guarantor1_id_picz = #{guarantor1IdPicz}
+		,guarantor1_id_picf = #{guarantor1IdPicf}
 		,guarantor1_hkb = #{guarantor1Hkb}
 		,guarantor2_id_no = #{guarantor2IdNo}
+		,guarantor2_id_picz = #{guarantor2IdPicz}
+		,guarantor2_id_picf = #{guarantor2IdPicf}
 		
 		,guarantor2_hkb = #{guarantor2Hkb}
 		,house_pic = #{housePic}
@@ -1613,7 +1653,8 @@
 		,repay_first_month_amount = #{repayFirstMonthAmount}
 		,repay_first_month_datetime = #{repayFirstMonthDatetime}
 		,repay_month_amount = #{repayMonthAmount}
-		,id_no_pic = #{idNoPic}
+		,id_no_picz = #{idNoPicz}
+		,id_no_picf = #{idNoPicf}
 		
 		,file_list = #{fileList}
 		,is_complete = #{isComplete}

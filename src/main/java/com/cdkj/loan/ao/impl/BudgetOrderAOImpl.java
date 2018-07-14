@@ -853,8 +853,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.refreshBankLoanCommit(budgetOrder);
 
         // 日志记录
+
         EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
             budgetOrder.getCurNodeCode());
+
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), operator);
@@ -887,6 +889,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                 curNodeCode, nodeFlow.getNextNode(), nodeFlow.getFileList());
+
         }
         budgetOrder.setCurNodeCode(curNodeCode);
         budgetOrder.setCode(req.getCode());
@@ -1093,6 +1096,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setBillDatetime(StringValidater.toInteger(req
             .getBillDatetime()));
 
+        if (EBoolean.YES.getCode().equals(req.getIsComplete())) {
+            budgetOrder.setEnterFileStatus(EEnterFileStatus.ACHIEVE.getCode());
+        } else {
+            budgetOrder.setEnterFileStatus(EEnterFileStatus.TODO_MAKEUP
+                .getCode());
+        }
         budgetOrder.setMonthAmount(StringValidater.toLong(req
             .getRepayMonthAmount()));
         budgetOrder.setRepayBankDate(StringValidater.toInteger(req
@@ -1106,13 +1115,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setRepayMonthAmount(StringValidater.toLong(req
             .getRepayMonthAmount()));
 
-        budgetOrder.setIdNoPic(req.getIdNoPic());
-        if (EBoolean.YES.getCode().equals(req.getIsComplete())) {
-            budgetOrder.setEnterFileStatus(EEnterFileStatus.ACHIEVE.getCode());
-        } else {
-            budgetOrder.setEnterFileStatus(EEnterFileStatus.TODO_MAKEUP
-                .getCode());
-        }
         budgetOrder.setIsComplete(req.getIsComplete());
         budgetOrder.setStorePlace(req.getStorePlace());
         budgetOrder.setFileRemark(req.getFileRemark());
@@ -1135,6 +1137,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
 
         budgetOrderBO.refreshCarLoanArchive(budgetOrder);
+
     }
 
     // 分配账号

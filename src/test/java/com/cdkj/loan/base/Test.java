@@ -9,23 +9,21 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "askForApply";
+    private static String key = "supplementReason";
 
     // 实体名称
-    private static String keyName = "领导请示申请";
+    private static String keyName = "补件原因";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tp_ask_for_apply";
+    private static String dbname = "tdp_supplement_reason";
 
-    private static String[] DBwords = { "code", "apply_user", "apply_datetime",
-            "lead_user_id", "content", "status", "updater", "update_datetime",
-            "remark" };
+    private static String[] DBwords = { "id", "logistics_code", "type",
+            "reason" };
 
-    private static String[] DBwordsName = { "编号", "申请人", "申请时间", "请示领导", "请示内容",
-            " 状态", "更新人", "更新时间", "备注" };
+    private static String[] DBwordsName = { "id", "物流单编号", "类型", "原因" };
 
     private static String[] DOwords = getDOwords();
 
@@ -35,35 +33,35 @@ public class Test {
     public static void main(String[] args) {
 
         File DOMAINfile = new File(
-            "C:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/domain",
+            "C:/Users/CYL/git/xn-wzcd/src/main/java/com/cdkj/loan/domain",
             Key + ".java");
 
         File Mapperfile = new File(
-            "C:/Users/CYL/git/xn-htwt/src/main/resources/mybatis",
+            "C:/Users/CYL/git/xn-wzcd/src/main/resources/mybatis",
             Key + "Mapper.xml");
 
         File IDAOfile = new File(
-            "C:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/dao",
+            "C:/Users/CYL/git/xn-wzcd/src/main/java/com/cdkj/loan/dao",
             "I" + Key + "DAO.java");
 
         File DAOImplfile = new File(
-            "C:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/dao/impl",
+            "C:/Users/CYL/git/xn-wzcd/src/main/java/com/cdkj/loan/dao/impl",
             Key + "DAOImpl.java");
 
         File IBOfile = new File(
-            "C:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/bo",
+            "C:/Users/CYL/git/xn-wzcd/src/main/java/com/cdkj/loan/bo",
             "I" + Key + "BO.java");
 
         File BOImplfile = new File(
-            "C:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/bo/impl",
+            "C:/Users/CYL/git/xn-wzcd/src/main/java/com/cdkj/loan/bo/impl",
             Key + "BOImpl.java");
 
         File IAOfile = new File(
-            "C:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/ao",
+            "C:/Users/CYL/git/xn-wzcd/src/main/java/com/cdkj/loan/ao",
             "I" + Key + "AO.java");
 
         File AOImplfile = new File(
-            "C:/Users/CYL/git/xn-htwt/src/main/java/com/cdkj/loan/ao/impl",
+            "C:/Users/CYL/git/xn-wzcd/src/main/java/com/cdkj/loan/ao/impl",
             Key + "AOImpl.java");
         try {
             DOMAINfile.createNewFile();
@@ -406,7 +404,7 @@ public class Test {
                 + "();\n\t\t\tcondition.setCode(code);\n\t\t\t" + "data = "
                 + key
                 + "DAO.select(condition);\n\t\t\tif (data == null) {\n\t\t\t\t"
-                + "throw new BizException(\"xn0000\", \"�� ��Ų�����\");\n\t\t\t"
+                + "throw new BizException(\"xn0000\", \"编号不存在！\");\n\t\t\t"
                 + "}\n\t\t}\n\t\treturn data;\n\t}\n}";
         return str;
     }
@@ -415,8 +413,8 @@ public class Test {
         String str = "package " + packge + "ao;\n\n"
                 + "import java.util.List;\n\n" + "import " + packge
                 + "bo.base.Paginable;\n" + "import " + packge + "domain." + Key
-                + ";\n\n\n\n" + "//CHECK ��鲢��ע�� \n@Component\n"
-                + "public interface I" + Key + "AO {\n\t"
+                + ";\n\n\n\n" + "//@Component\n" + "public interface I" + Key
+                + "AO {\n\t"
                 + "static final String DEFAULT_ORDER_COLUMN = \"code\";\n\n\n\t"
                 + "public String add" + Key + "(" + Key + " data);\n\n\t"
                 + "public int drop" + Key + "(String code);\n\n\t"
@@ -438,14 +436,13 @@ public class Test {
                 + packge + "bo.I" + Key + "BO;\n" + "import " + packge
                 + "bo.base.Paginable;\n" + "import " + packge + "domain." + Key
                 + ";\n" + "import " + packge + "exception.BizException;\n\n\n\n"
-                + "//CHECK ��鲢��ע�� \n@Service\n" + "public class " + Key
-                + "AOImpl implements I" + Key + "AO {\n\n\t"
-                + "@Autowired\n\tprivate I" + Key + "BO " + key + "BO;\n\n\t"
-                + "@Override\n\tpublic String add" + Key + "(" + Key
-                + " data) {\n\t\t" + "return " + key + "BO.save" + Key
-                + "(data);\n\t}\n\n\t" + "@Override\n\tpublic int edit" + Key
-                + "(" + Key + " data) {\n\t\t" + "if (!" + key + "BO.is" + Key
-                + "Exist(data.getCode())) {\n\t\t\t"
+                + "//@Service\n" + "public class " + Key + "AOImpl implements I"
+                + Key + "AO {\n\n\t" + "@Autowired\n\tprivate I" + Key + "BO "
+                + key + "BO;\n\n\t" + "@Override\n\tpublic String add" + Key
+                + "(" + Key + " data) {\n\t\t" + "return " + key + "BO.save"
+                + Key + "(data);\n\t}\n\n\t" + "@Override\n\tpublic int edit"
+                + Key + "(" + Key + " data) {\n\t\t" + "if (!" + key + "BO.is"
+                + Key + "Exist(data.getCode())) {\n\t\t\t"
                 + "throw new BizException(\"xn0000\", \"记录编号不存在\");\n\t\t"
                 + "}\n\t\treturn " + key + "BO.refresh" + Key
                 + "(data);\n\t}\n\n\t" + "@Override\n\tpublic int drop" + Key

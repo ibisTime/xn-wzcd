@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -61,7 +62,7 @@ public class Logistics extends ABaseDO {
     // 收件时间
     private Date receiptDatetime;
 
-    // 补件原因
+    // gps补件原因
     private String supplementReason;
 
     // 补件说明
@@ -78,12 +79,24 @@ public class Logistics extends ABaseDO {
     // 客户姓名
     private String customerName;
 
+    // 补件原因
+    private List<SupplementReason> supplementReasonList;
+
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public List<SupplementReason> getSupplementReasonList() {
+        return supplementReasonList;
+    }
+
+    public void setSupplementReasonList(
+            List<SupplementReason> supplementReasonList) {
+        this.supplementReasonList = supplementReasonList;
     }
 
     public String getCustomerName() {

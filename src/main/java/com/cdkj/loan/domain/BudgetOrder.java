@@ -146,6 +146,12 @@ public class BudgetOrder extends ABaseDO {
     // 共还人身份证号
     private String ghIdNo;
 
+    // 共还人身份证照片正
+    private String ghIdPicz;
+
+    // 共还人身份证照片反
+    private String ghIdPicf;
+
     // 共还人性别
     private String ghSex;
 
@@ -350,11 +356,23 @@ public class BudgetOrder extends ABaseDO {
     // 担保人1身份证
     private String guarantor1IdNo;
 
+    // 担保人1身份证照片正
+    private String guarantor1IdPicz;
+
+    // 担保人1身份证照片反
+    private String guarantor1IdPicf;
+
     // 担保人1户口本
     private String guarantor1Hkb;
 
     // 担保人2身份证
     private String guarantor2IdNo;
+
+    // 担保人2身份证照片正
+    private String guarantor2IdPicz;
+
+    // 担保人2身份证照片反
+    private String guarantor2IdPicf;
 
     // 担保人2户口本
     private String guarantor2Hkb;
@@ -614,8 +632,11 @@ public class BudgetOrder extends ABaseDO {
     // 身份证号
     private String idNo;
 
-    // 身份证照片
-    private String idNoPic;
+    // 身份证照片正
+    private String idNoPicz;
+
+    // 身份证照片反
+    private String idNoPicf;
 
     // 已入档清单
     private String fileList;
@@ -2562,12 +2583,36 @@ public class BudgetOrder extends ABaseDO {
         this.monthAmount = monthAmount;
     }
 
-    public String getIdNoPic() {
-        return idNoPic;
+    public String getGhIdPicz() {
+        return ghIdPicz;
     }
 
-    public void setIdNoPic(String idNoPic) {
-        this.idNoPic = idNoPic;
+    public void setGhIdPicz(String ghIdPicz) {
+        this.ghIdPicz = ghIdPicz;
+    }
+
+    public String getGhIdPicf() {
+        return ghIdPicf;
+    }
+
+    public void setGhIdPicf(String ghIdPicf) {
+        this.ghIdPicf = ghIdPicf;
+    }
+
+    public String getIdNoPicz() {
+        return idNoPicz;
+    }
+
+    public void setIdNoPicz(String idNoPicz) {
+        this.idNoPicz = idNoPicz;
+    }
+
+    public String getIdNoPicf() {
+        return idNoPicf;
+    }
+
+    public void setIdNoPicf(String idNoPicf) {
+        this.idNoPicf = idNoPicf;
     }
 
     public String getFileList() {
@@ -2921,6 +2966,38 @@ public class BudgetOrder extends ABaseDO {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getGuarantor1IdPicz() {
+        return guarantor1IdPicz;
+    }
+
+    public void setGuarantor1IdPicz(String guarantor1IdPicz) {
+        this.guarantor1IdPicz = guarantor1IdPicz;
+    }
+
+    public String getGuarantor1IdPicf() {
+        return guarantor1IdPicf;
+    }
+
+    public void setGuarantor1IdPicf(String guarantor1IdPicf) {
+        this.guarantor1IdPicf = guarantor1IdPicf;
+    }
+
+    public String getGuarantor2IdPicz() {
+        return guarantor2IdPicz;
+    }
+
+    public void setGuarantor2IdPicz(String guarantor2IdPicz) {
+        this.guarantor2IdPicz = guarantor2IdPicz;
+    }
+
+    public String getGuarantor2IdPicf() {
+        return guarantor2IdPicf;
+    }
+
+    public void setGuarantor2IdPicf(String guarantor2IdPicf) {
+        this.guarantor2IdPicf = guarantor2IdPicf;
     }
 
     public String getOutCarDealerName() {

@@ -216,6 +216,10 @@
 		<property name="paginableDAO" ref="logisticsDAOImpl"/>
 	</bean>
 	
+	<bean id="supplementReasonBO" class="com.cdkj.loan.bo.impl.SupplementReasonBOImpl">
+		<property name="paginableDAO" ref="supplementReasonDAOImpl"/>
+	</bean>
+	
 	<bean id="gpsApplyBO" class="com.cdkj.loan.bo.impl.GpsApplyBOImpl">
 		<property name="paginableDAO" ref="gpsApplyDAOImpl"/>
 	</bean>

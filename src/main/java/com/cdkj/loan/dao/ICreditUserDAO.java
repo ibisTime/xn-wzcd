@@ -25,4 +25,7 @@ public interface ICreditUserDAO extends IBaseDAO<CreditUser> {
     // 法院网查询结果录入
     public void refreshCourtNetworkResults(CreditUser user);
 
+    // 修改征信人员是否一审
+    public void updateCreditUserIsFirstAudit(CreditUser creditUser);
+
 }

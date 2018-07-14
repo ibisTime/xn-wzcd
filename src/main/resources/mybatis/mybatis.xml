@@ -84,6 +84,7 @@
 
 		<!-- 资料传递 -->
 		<typeAlias alias="logistics" type="com.cdkj.loan.domain.Logistics" />
+		<typeAlias alias="supplementReason" type="com.cdkj.loan.domain.SupplementReason" />
 		
 		<!-- 贷前 -->
 		<typeAlias alias="gps" type="com.cdkj.loan.domain.Gps" />

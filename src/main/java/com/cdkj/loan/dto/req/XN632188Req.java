@@ -11,7 +11,6 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN632188Req {
 
     // 业务公司编号
-    @NotBlank
     private String companyCode;
 
     // 1分公司制单2确认打款分公司

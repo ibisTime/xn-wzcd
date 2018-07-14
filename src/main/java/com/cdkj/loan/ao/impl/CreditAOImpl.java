@@ -38,8 +38,10 @@ import com.cdkj.loan.dto.req.XN632114ReqCNR;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ECreditNode;
+import com.cdkj.loan.enums.ECreditUserRelation;
 import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.exception.BizException;
@@ -84,6 +86,7 @@ public class CreditAOImpl implements ICreditAO {
     private ICollectBankcardBO collectBankcardBO;
 
     @Override
+    @Transactional
     public String addCredit(XN632110Req req) {
         // 操作人编号
         SYSUser sysUser = sysUserBO.getUser(req.getOperator());
@@ -121,10 +124,15 @@ public class CreditAOImpl implements ICreditAO {
 
         // 新增征信人员
         List<XN632110ReqChild> childList = req.getCreditUserList();
+        int applyuser = 0;
         for (XN632110ReqChild child : childList) {
             CreditUser creditUser = new CreditUser();
             creditUser.setCreditCode(creditCode);
             creditUser.setRelation(child.getRelation());
+            if (ECreditUserRelation.SELF.getCode()
+                .equals(child.getRelation())) {
+                applyuser++;
+            }
             creditUser.setUserName(child.getUserName());
             creditUser.setLoanRole(child.getLoanRole());
             creditUser.setMobile(child.getMobile());
@@ -134,7 +142,12 @@ public class CreditAOImpl implements ICreditAO {
             creditUser.setIdNoReverse(child.getIdNoReverse());
             creditUser.setAuthPdf(child.getAuthPdf());
             creditUser.setInterviewPic(child.getInterviewPic());
+            creditUser.setIsFirstAudit(EBoolean.NO.getCode());
             creditUserBO.saveCreditUser(creditUser);
+        }
+        if (applyuser == 0) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "征信申请人不能为空！");
         }
 
         // 日志记录
@@ -283,6 +296,12 @@ public class CreditAOImpl implements ICreditAO {
             credit.setCurNodeCode(
                 nodeFlowBO.getNodeFlowByCurrentNode(credit.getCurNodeCode())
                     .getNextNode());
+            // 征信人员
+            List<CreditUser> userList = req.getCreditUserList();
+            for (CreditUser creditUser : userList) {
+                creditUser.setIsFirstAudit(EBoolean.YES.getCode());
+                creditUserBO.refreshCreditUserIsFirstAudit(creditUser);
+            }
             // 选填了附件
             if (null != req.getAccessory() && !"".equals(req.getAccessory())) {
                 credit.setAccessory(req.getAccessory());
@@ -341,7 +360,7 @@ public class CreditAOImpl implements ICreditAO {
             // 生成预算单
             BudgetOrder data = new BudgetOrder();
             data.setCreditCode(credit.getCode());
-            CreditUser customerUser = creditUserBO.getCreditUserByCreditCode(
+            CreditUser customerUser = creditUserBO.getCreditUserByIsFirstAudit(
                 credit.getCode(), ELoanRole.APPLY_USER);
             if (customerUser == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -353,6 +372,8 @@ public class CreditAOImpl implements ICreditAO {
             data.setApplyUserGhrRelation(customerUser.getRelation());
             data.setIdKind(EIDKind.IDCard.getCode());
             data.setIdNo(customerUser.getIdNo());
+            data.setIdNoPicz(customerUser.getIdNoFront());
+            data.setIdNoPicf(customerUser.getIdNoReverse());
             // 通过身份证获取生日和性别
             String birth = getBirthByIdNo(customerUser.getIdNo());
             String sex = getSexByIdNo(customerUser.getIdNo());
@@ -364,10 +385,12 @@ public class CreditAOImpl implements ICreditAO {
 
             // 共还人信息
             CreditUser ghUser = creditUserBO
-                .getCreditUserByCreditCode(credit.getCode(), ELoanRole.GHR);
+                .getCreditUserByIsFirstAudit(credit.getCode(), ELoanRole.GHR);
             if (ghUser != null) {
                 data.setGhRealName(ghUser.getUserName());
                 data.setGhIdNo(ghUser.getIdNo());
+                data.setGhIdPicz(ghUser.getIdNoFront());
+                data.setGhIdPicf(ghUser.getIdNoReverse());
                 String ghSex = getSexByIdNo(ghUser.getIdNo());
                 data.setGhSex(ghSex);
                 data.setApplyUserGhrRelation(ghUser.getRelation());
@@ -382,11 +405,13 @@ public class CreditAOImpl implements ICreditAO {
 
             // 担保人信息
             List<CreditUser> dbUserList = creditUserBO
-                .getCreditUserListByCreditCode(credit.getCode(),
+                .getCreditUserListByIsFirstAudit(credit.getCode(),
                     ELoanRole.GUARANTOR);
             if (CollectionUtils.isNotEmpty(dbUserList)) {
                 CreditUser dbUser1 = dbUserList.get(0);
                 data.setGuarantor1IdNo(dbUser1.getIdNo());
+                data.setGuarantor1IdPicz(dbUser1.getIdNoFront());
+                data.setGuarantor1IdPicf(dbUser1.getIdNoReverse());
                 data.setGuarantor1MonthIncome(dbUser1.getMonthIncome());
                 data.setGuarantor1SettleInterest(dbUser1.getSettleInterest());
                 data.setGuarantor1Balance(dbUser1.getBalance());
@@ -397,6 +422,8 @@ public class CreditAOImpl implements ICreditAO {
                 if (dbUserList.size() > 1) {
                     CreditUser dbUser2 = dbUserList.get(1);
                     data.setGuarantor2IdNo(dbUser2.getIdNo());
+                    data.setGuarantor2IdPicz(dbUser2.getIdNoFront());
+                    data.setGuarantor2IdPicf(dbUser2.getIdNoReverse());
                     data.setGuarantor2MonthIncome(dbUser2.getMonthIncome());
                     data.setGuarantor2SettleInterest(
                         dbUser2.getSettleInterest());
@@ -404,6 +431,8 @@ public class CreditAOImpl implements ICreditAO {
                     data.setGuarantor2JourShowIncome(
                         dbUser2.getJourShowIncome());
                     data.setGuarantor2IsPrint(dbUser2.getIsPrint());
+                    // 修改担保人是否一审
+                    creditUserBO.refreshCreditUserIsFirstAudit(dbUser2);
                 }
             }
 

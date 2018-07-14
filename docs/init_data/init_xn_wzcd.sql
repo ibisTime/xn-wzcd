@@ -3,7 +3,39 @@ insert into `tb_bank` (`code`, `bank_code`, `bank_name`, `subbranch`, `rate12`, 
 
 insert into `tb_collect_bankcard` (`code`, `type`, `company_code`, `real_name`, `bank_code`, `bank_name`, `subbranch`, `bankcard_number`, `remark`) values('CB201806060405380712648','1','DP201800000000000000001','财务部','CMB','招商银行','乌鲁木齐支行','612313241234123','');
 
-insert  into `tb_province_no`(`id`,`province_no`,`name`) values (4,'11','北京市'),(5,'12','天津市'),(6,'13','河北省'),(7,'14','山西省'),(8,'15','内蒙古自治区'),(9,'21','辽宁省'),(10,'22','吉林省'),(11,'23','黑龙江省'),(12,'31','上海市'),(13,'32','江苏省'),(14,'33','浙江省'),(15,'34','安徽省'),(16,'35','福建省'),(17,'36','江西省'),(18,'37','山东省'),(19,'41','河南省'),(20,'42','湖北省'),(21,'43','湖南省'),(22,'44','广东省'),(23,'45','广西壮族自治区'),(24,'46','海南省'),(25,'50','重庆市'),(26,'51','四川省'),(27,'52','贵州省'),(28,'53','云南省'),(29,'54','西藏自治区'),(30,'61','陕西省'),(31,'62','甘肃省'),(32,'63','青海省'),(33,'64','宁夏回族自治区'),(34,'65','新疆维吾尔自治区');
+insert into `tb_province_no` (`province_no`, `name`) values('11','北京市');
+insert into `tb_province_no` (`province_no`, `name`) values('12','天津市');
+insert into `tb_province_no` (`province_no`, `name`) values('13','河北省');
+insert into `tb_province_no` (`province_no`, `name`) values('14','山西省');
+insert into `tb_province_no` (`province_no`, `name`) values('15','内蒙古自治区');
+insert into `tb_province_no` (`province_no`, `name`) values('21','辽宁省');
+insert into `tb_province_no` (`province_no`, `name`) values('22','吉林省');
+insert into `tb_province_no` (`province_no`, `name`) values('23','黑龙江省');
+insert into `tb_province_no` (`province_no`, `name`) values('31','上海市');
+insert into `tb_province_no` (`province_no`, `name`) values('32','江苏省');
+insert into `tb_province_no` (`province_no`, `name`) values('33','浙江省');
+insert into `tb_province_no` (`province_no`, `name`) values('34','安徽省');
+insert into `tb_province_no` (`province_no`, `name`) values('35','福建省');
+insert into `tb_province_no` (`province_no`, `name`) values('36','江西省');
+insert into `tb_province_no` (`province_no`, `name`) values('37','山东省');
+insert into `tb_province_no` (`province_no`, `name`) values('41','河南省');
+insert into `tb_province_no` (`province_no`, `name`) values('42','湖北省');
+insert into `tb_province_no` (`province_no`, `name`) values('43','湖南省');
+insert into `tb_province_no` (`province_no`, `name`) values('44','广东省');
+insert into `tb_province_no` (`province_no`, `name`) values('45','广西壮族自治区');
+insert into `tb_province_no` (`province_no`, `name`) values('46','海南省');
+insert into `tb_province_no` (`province_no`, `name`) values('50','重庆市');
+insert into `tb_province_no` (`province_no`, `name`) values('51','四川省');
+insert into `tb_province_no` (`province_no`, `name`) values('52','贵州省');
+insert into `tb_province_no` (`province_no`, `name`) values('53','云南省');
+insert into `tb_province_no` (`province_no`, `name`) values('54','西藏自治区');
+insert into `tb_province_no` (`province_no`, `name`) values('61','陕西省');
+insert into `tb_province_no` (`province_no`, `name`) values('62','甘肃省');
+insert into `tb_province_no` (`province_no`, `name`) values('63','青海省');
+insert into `tb_province_no` (`province_no`, `name`) values('64','宁夏回族自治区');
+insert into `tb_province_no` (`province_no`, `name`) values('65','新疆维吾尔自治区');
+
+
 /*
 -- Query: select `code`,`type`,`min_cs`,`max_cs`,`remark` from tb_loan_cs
 -- Date: 2018-06-29 15:23
