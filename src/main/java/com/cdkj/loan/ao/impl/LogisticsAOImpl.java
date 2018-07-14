@@ -83,7 +83,6 @@ public class LogisticsAOImpl implements ILogisticsAO {
         // 发件
         Logistics logistics = new Logistics();
         logistics.setCode(req.getCode());
-        logistics.setSendFileList(req.getSendFileList());
         logistics.setSendType(req.getSendType());
         logistics.setLogisticsCompany(req.getLogisticsCompany());
         logistics.setLogisticsCode(req.getLogisticsCode());
@@ -103,13 +102,13 @@ public class LogisticsAOImpl implements ILogisticsAO {
     @Transactional
     public void supplementAndSend(XN632153Req req) {
         Logistics data = logisticsBO.getLogistics(req.getCode());
-        if (!ELogisticsStatus.TO_SEND_AGAIN.getCode().equals(data.getStatus())) {
+        if (!ELogisticsStatus.TO_SEND_AGAIN.getCode()
+            .equals(data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "资料不是补件待发货状态!");
         }
 
         // 发件
-        data.setSendFileList(req.getSendFileList());
         data.setSendType(req.getSendType());
         data.setLogisticsCompany(req.getLogisticsCompany());
         data.setLogisticsCode(req.getLogisticsCode());

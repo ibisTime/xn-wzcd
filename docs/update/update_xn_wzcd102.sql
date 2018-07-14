@@ -21,8 +21,9 @@ CREATE TABLE `tdp_supplement_reason` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='补件原因';
 
-ALTER TABLE `dev_xn_wzcd`.`tdq_budget_order` 
+ALTER TABLE `tdq_budget_order` 
 ADD COLUMN `enter_file_status` VARCHAR(4) NULL COMMENT '入档状态（0待入档1待补录2已入档）' AFTER `type`;
+
 
 
 INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('008_01', '打印岗打印', '008');
@@ -67,3 +68,8 @@ INSERT INTO `dev_xn_wzcd`.`tsys_node_flow` (`type`, `current_node`, `next_node`)
 
 ALTER TABLE `dev_xn_wzcd`.`tdq_budget_order` 
 ADD COLUMN `pledge_cur_node_code` VARCHAR(32) NULL COMMENT '抵押流程节点编号' AFTER `cur_node_code`;
+
+ALTER TABLE `tdq_logistics` 
+DROP COLUMN `send_file_list`,
+DROP COLUMN `ref_file_list`;
+
