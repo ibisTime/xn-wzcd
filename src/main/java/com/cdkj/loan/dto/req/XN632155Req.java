@@ -24,12 +24,23 @@ public class XN632155Req extends APageReq {
     // 状态
     private String status;
 
+    // 类型
+    private String type;
+
     public String getBizCode() {
         return bizCode;
     }
 
     public void setBizCode(String bizCode) {
         this.bizCode = bizCode;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getUserId() {

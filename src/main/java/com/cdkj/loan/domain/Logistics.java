@@ -38,12 +38,6 @@ public class Logistics extends ABaseDO {
     // 业务节点2
     private String toNodeCode;
 
-    // 参考材料清单(逗号隔开)
-    private String refFileList;
-
-    // 寄送材料清单(逗号隔开)
-    private String sendFileList;
-
     // 寄送方式(1 线下 2 快递)
     private String sendType;
 
@@ -161,22 +155,6 @@ public class Logistics extends ABaseDO {
 
     public void setToNodeCode(String toNodeCode) {
         this.toNodeCode = toNodeCode;
-    }
-
-    public String getRefFileList() {
-        return refFileList;
-    }
-
-    public void setRefFileList(String refFileList) {
-        this.refFileList = refFileList;
-    }
-
-    public String getSendFileList() {
-        return sendFileList;
-    }
-
-    public void setSendFileList(String sendFileList) {
-        this.sendFileList = sendFileList;
     }
 
     public String getSendType() {

@@ -21,5 +21,9 @@ CREATE TABLE `tdp_supplement_reason` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='补件原因';
 
-ALTER TABLE `dev_xn_wzcd`.`tdq_budget_order` 
+ALTER TABLE `tdq_budget_order` 
 ADD COLUMN `enter_file_status` VARCHAR(4) NULL COMMENT '入档状态（0待入档1待补录2已入档）' AFTER `type`;
+
+ALTER TABLE `tdq_logistics` 
+DROP COLUMN `send_file_list`,
+DROP COLUMN `ref_file_list`;
