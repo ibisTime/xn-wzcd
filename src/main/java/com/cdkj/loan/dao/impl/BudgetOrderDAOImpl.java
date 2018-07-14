@@ -245,4 +245,9 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
         super.update(NAMESPACE.concat("update_enterFileStatus"), data);
     }
 
+    @Override
+    public void loanBankCollateAchieve(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_loanBankCollateAchieve"), data);
+    }
+
 }

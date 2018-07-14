@@ -10,6 +10,7 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632142Req;
+import com.cdkj.loan.dto.req.XN632143Req;
 import com.cdkj.loan.dto.req.XN632192Req;
 import com.cdkj.loan.dto.req.XN632193Req;
 import com.cdkj.loan.dto.req.XN632194Req;
@@ -139,5 +140,8 @@ public interface IBudgetOrderAO {
 
     // 车辆抵押开始
     public void pledgeBegin(XN632194Req req);
+
+    // 银行放款理件完成
+    public void bankLoanCollateAchieve(XN632143Req req);
 
 }

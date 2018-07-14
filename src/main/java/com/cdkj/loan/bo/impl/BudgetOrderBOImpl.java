@@ -430,4 +430,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         budgetOrderDAO.updateEnterFileStatus(budgetOrder);
     }
 
+    @Override
+    public void loanBankCollateAchieve(BudgetOrder budgetOrder) {
+        budgetOrderDAO.loanBankCollateAchieve(budgetOrder);
+    }
+
 }

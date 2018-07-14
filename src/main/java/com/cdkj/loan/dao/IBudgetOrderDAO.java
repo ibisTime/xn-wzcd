@@ -115,4 +115,7 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 更改入档状态
     void updateEnterFileStatus(BudgetOrder budgetOrder);
 
+    // 银行放款理件完成
+    void loanBankCollateAchieve(BudgetOrder budgetOrder);
+
 }

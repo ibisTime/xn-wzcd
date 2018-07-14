@@ -70,6 +70,7 @@ import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632120ReqRepointDetail;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632142Req;
+import com.cdkj.loan.dto.req.XN632143Req;
 import com.cdkj.loan.dto.req.XN632192Req;
 import com.cdkj.loan.dto.req.XN632193Req;
 import com.cdkj.loan.dto.req.XN632194Req;
@@ -2526,6 +2527,34 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
                 budgetOrder.getCurNodeCode());
             budgetOrderBO.collateAchieve(budgetOrder);
+            // 日志记录
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+                EBizLogType.BUDGET_ORDER, budgetOrder.getCode(),
+                preCurNodeCode, currentNode.getCode(), currentNode.getValue(),
+                req.getOperator());
+        }
+    }
+
+    @Override
+    public void bankLoanCollateAchieve(XN632143Req req) {
+
+        List<String> list = req.getList();
+        for (String code : list) {
+            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+            if (!EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode()
+                .equals(budgetOrder.getCurNodeCode())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前节点不是银行放款理件完成节点，不能操作");
+            }
+        }
+        for (String code : list) {
+            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+            String preCurNodeCode = budgetOrder.getCurNodeCode();
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                preCurNodeCode).getNextNode());
+            EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+                budgetOrder.getCurNodeCode());
+            budgetOrderBO.loanBankCollateAchieve(budgetOrder);
             // 日志记录
             sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
                 EBizLogType.BUDGET_ORDER, budgetOrder.getCode(),
