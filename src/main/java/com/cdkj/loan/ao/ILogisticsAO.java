@@ -5,6 +5,8 @@ import java.util.List;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.dto.req.XN632150Req;
+import com.cdkj.loan.dto.req.XN632152Req;
+import com.cdkj.loan.dto.req.XN632153Req;
 
 /**
  * 资料传递
@@ -17,10 +19,11 @@ public interface ILogisticsAO {
 
     public void sendLogistics(XN632150Req req);
 
+    public void supplementAndSend(XN632153Req req);
+
     public void receiveLogistics(String code, String operator, String remark);
 
-    public void sendAgainLogistics(String code, String operator, String remark,
-            String supplementReason, String supplementNote);
+    public void sendAgainLogistics(XN632152Req req);
 
     public Paginable<Logistics> queryLogisticsPage(int start, int limit,
             Logistics condition);
@@ -28,4 +31,5 @@ public interface ILogisticsAO {
     public List<Logistics> queryLogisticsList(Logistics condition);
 
     public Logistics getLogistics(String code);
+
 }

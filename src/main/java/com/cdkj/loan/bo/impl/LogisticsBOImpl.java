@@ -8,11 +8,14 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.ISupplementReasonBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ILogisticsDAO;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.SupplementReason;
+import com.cdkj.loan.dto.req.XN632152Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELogisticsStatus;
@@ -33,6 +36,9 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
 
     @Autowired
     private ISYSUserBO sysUserBO;
+
+    @Autowired
+    private ISupplementReasonBO supplementReasonBO;
 
     @Override
     public String saveLogistics(String type, String bizCode, String userId,
@@ -74,20 +80,29 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     }
 
     @Override
-    public void sendAgainLogistics(String code, String supplementNote,
-            String supplementReason, String remark) {
-        if (null == code) {
+    public void sendAgainLogistics(XN632152Req req) {
+        if (null == req.getCode()) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写编号");
         }
 
         Logistics data = new Logistics();
-        data.setCode(code);
+        data.setCode(req.getCode());
         data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
-        data.setSupplementReason(supplementReason);
-        data.setSupplementNote(supplementNote);
+        data.setSupplementReason(req.getSupplementReason());
+        data.setSupplementNote(req.getSupplementNote());
         data.setReceiptDatetime(new Date());
-        data.setRemark(remark);
+        data.setRemark(req.getRemark());
         logisticsDAO.updateLogisticsReceive(data);
+
+        // 补件原因
+        List<SupplementReason> reasonList = req.getSupplementReasonList();
+        for (SupplementReason reason : reasonList) {
+            SupplementReason supplementReason = new SupplementReason();
+            supplementReason.setLogisticsCode(reason.getLogisticsCode());
+            supplementReason.setType(reason.getType());
+            supplementReason.setReason(reason.getReason());
+            supplementReasonBO.saveSupplementReason(supplementReason);
+        }
     }
 
     @Override

@@ -308,6 +308,7 @@
 		UPDATE tdq_advance_fund
 		SET
 		cur_node_code = #{curNodeCode}
+		,advance_fund_datetime = #{advanceFundDatetime}
 		WHERE code = #{code}
 	</update>
 	

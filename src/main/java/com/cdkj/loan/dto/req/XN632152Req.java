@@ -1,6 +1,10 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.cdkj.loan.domain.SupplementReason;
 
 /**
  * 资料传递收件并补发
@@ -14,8 +18,10 @@ public class XN632152Req {
     private String code;
 
     // 补件原因
-    @NotBlank
     private String supplementReason;
+
+    // 补件原因
+    private List<SupplementReason> supplementReasonList;
 
     // 补件说明
     private String supplementNote;
@@ -32,6 +38,15 @@ public class XN632152Req {
 
     public void setOperater(String operater) {
         this.operater = operater;
+    }
+
+    public List<SupplementReason> getSupplementReasonList() {
+        return supplementReasonList;
+    }
+
+    public void setSupplementReasonList(
+            List<SupplementReason> supplementReasonList) {
+        this.supplementReasonList = supplementReasonList;
     }
 
     public String getSupplementReason() {

@@ -2,6 +2,7 @@ package com.cdkj.loan.ao.impl;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,13 +17,17 @@ import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.ISupplementReasonBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.SupplementReason;
 import com.cdkj.loan.dto.req.XN632150Req;
+import com.cdkj.loan.dto.req.XN632152Req;
+import com.cdkj.loan.dto.req.XN632153Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
@@ -63,13 +68,14 @@ public class LogisticsAOImpl implements ILogisticsAO {
     @Autowired
     private IRepayBizBO repayBizBO;
 
+    @Autowired
+    private ISupplementReasonBO supplementReasonBO;
+
     @Override
     @Transactional
     public void sendLogistics(XN632150Req req) {
         Logistics data = logisticsBO.getLogistics(req.getCode());
-        if (!ELogisticsStatus.TO_SEND.getCode().equals(data.getStatus())
-                && !ELogisticsStatus.TO_SEND_AGAIN.getCode()
-                    .equals(data.getStatus())) {
+        if (!ELogisticsStatus.TO_SEND.getCode().equals(data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "资料不是待发货状态!");
         }
@@ -95,6 +101,39 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Override
     @Transactional
+    public void supplementAndSend(XN632153Req req) {
+        Logistics data = logisticsBO.getLogistics(req.getCode());
+        if (!ELogisticsStatus.TO_SEND_AGAIN.getCode()
+            .equals(data.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "资料不是补件待发货状态!");
+        }
+
+        // 发件
+        data.setSendFileList(req.getSendFileList());
+        data.setSendType(req.getSendType());
+        data.setLogisticsCompany(req.getLogisticsCompany());
+        data.setLogisticsCode(req.getLogisticsCode());
+
+        data.setSendDatetime(DateUtil.strToDate(req.getSendDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSendNote(req.getSendNote());
+        data.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
+        if (ELogisticsType.GPS.getCode().equals(data.getType())) {
+            gpsApplyBO.sendGps(data.getBizCode(), data.getSendDatetime());
+        } else if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
+            int size = data.getSupplementReasonList().size();
+            int size2 = req.getSupplementReasonList().size();
+            if (size != size2) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "补件原因未补齐，请重新补件！");
+            }
+        }
+        logisticsBO.sendLogistics(data);
+    }
+
+    @Override
+    @Transactional
     public void receiveLogistics(String code, String operator, String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
@@ -112,15 +151,13 @@ public class LogisticsAOImpl implements ILogisticsAO {
     }
 
     @Override
-    public void sendAgainLogistics(String code, String supplementReason,
-            String supplementNote, String operator, String remark) {
-        Logistics data = logisticsBO.getLogistics(code);
+    public void sendAgainLogistics(XN632152Req req) {
+        Logistics data = logisticsBO.getLogistics(req.getCode());
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "资料不是待收件状态!");
         }
-        logisticsBO.sendAgainLogistics(code, remark, supplementNote,
-            supplementReason);
+        logisticsBO.sendAgainLogistics(req);
     }
 
     @Override
@@ -147,6 +184,13 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 logistics.setCustomerName(budgetOrder.getCustomerName());
             }
         }
+        SupplementReason domain = new SupplementReason();
+        domain.setLogisticsCode(logistics.getCode());
+        List<SupplementReason> reasonList = supplementReasonBO
+            .querySupplementReasonList(domain);
+        if (CollectionUtils.isNotEmpty(reasonList)) {
+            logistics.setSupplementReasonList(reasonList);
+        }
     }
 
     @Override
@@ -166,4 +210,5 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
         return logistics;
     }
+
 }

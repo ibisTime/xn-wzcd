@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.Logistics;
+import com.cdkj.loan.dto.req.XN632152Req;
 
 /**
  * 资料传递
@@ -23,8 +24,7 @@ public interface ILogisticsBO extends IPaginableBO<Logistics> {
     public void receiveLogistics(String code, String remark);
 
     // 补发
-    public void sendAgainLogistics(String code, String remark,
-            String supplementNote, String supplementReason);
+    public void sendAgainLogistics(XN632152Req req);
 
     // 查询
     public Logistics getLogistics(String code);
