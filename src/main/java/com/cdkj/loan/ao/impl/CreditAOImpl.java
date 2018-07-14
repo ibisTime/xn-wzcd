@@ -41,6 +41,7 @@ import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ECreditNode;
+import com.cdkj.loan.enums.ECreditUserRelation;
 import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.exception.BizException;
@@ -85,6 +86,7 @@ public class CreditAOImpl implements ICreditAO {
     private ICollectBankcardBO collectBankcardBO;
 
     @Override
+    @Transactional
     public String addCredit(XN632110Req req) {
         // 操作人编号
         SYSUser sysUser = sysUserBO.getUser(req.getOperator());
@@ -122,10 +124,15 @@ public class CreditAOImpl implements ICreditAO {
 
         // 新增征信人员
         List<XN632110ReqChild> childList = req.getCreditUserList();
+        int applyuser = 0;
         for (XN632110ReqChild child : childList) {
             CreditUser creditUser = new CreditUser();
             creditUser.setCreditCode(creditCode);
             creditUser.setRelation(child.getRelation());
+            if (ECreditUserRelation.SELF.getCode()
+                .equals(child.getRelation())) {
+                applyuser++;
+            }
             creditUser.setUserName(child.getUserName());
             creditUser.setLoanRole(child.getLoanRole());
             creditUser.setMobile(child.getMobile());
@@ -137,6 +144,10 @@ public class CreditAOImpl implements ICreditAO {
             creditUser.setInterviewPic(child.getInterviewPic());
             creditUser.setIsFirstAudit(EBoolean.NO.getCode());
             creditUserBO.saveCreditUser(creditUser);
+        }
+        if (applyuser == 0) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "征信申请人不能为空！");
         }
 
         // 日志记录
