@@ -23,3 +23,47 @@ CREATE TABLE `tdp_supplement_reason` (
 
 ALTER TABLE `dev_xn_wzcd`.`tdq_budget_order` 
 ADD COLUMN `enter_file_status` VARCHAR(4) NULL COMMENT '入档状态（0待入档1待补录2已入档）' AFTER `type`;
+
+
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('008_01', '打印岗打印', '008');
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('008_02', '理件岗理件', '008');
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('008_03', '寄件岗寄送银行', '008');
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('008_04', '提交银行', '008');
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('008_05', '待提交抵押完成', '008');
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('008_06', '抵押完成', '008');
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('009_01', '银行驻点发送抵押合同给总公司', '009');
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('009_02', '总公司寄送合同给分公司', '009');
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('009_03', '车辆抵押开始', '009');
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('009_04', '待提交抵押完成', '009');
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('009_05', '分公司寄送抵押材料给总公司', '009');
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('009_06', '理件岗理件', '009');
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('009_07', '寄件岗寄送银行', '009');
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('009_08', '提交银行', '009');
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('009_09', '车辆抵押完成', '009');
+
+UPDATE `dev_xn_wzcd`.`tsys_node` SET `name`='打印岗打印' WHERE `code`='007_03';
+UPDATE `dev_xn_wzcd`.`tsys_node` SET `name`='理件岗理件' WHERE `code`='007_04';
+UPDATE `dev_xn_wzcd`.`tsys_node` SET `name`='总公司寄送银行材料给银行驻点' WHERE `code`='007_05';
+UPDATE `dev_xn_wzcd`.`tsys_node` SET `name`='分公司内勤寄送银行材料给总公司' WHERE `code`='007_01';
+UPDATE `dev_xn_wzcd`.`tsys_node` SET `name`='确认提交银行' WHERE `code`='007_06';
+UPDATE `dev_xn_wzcd`.`tsys_node` SET `name`='总公司寄送银行材料给打印岗' WHERE `code`='007_02';
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('007_07', '财务确认收款', '007');
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('007_08', '银行放款完成', '007');
+
+DELETE FROM `dev_xn_wzcd`.`tsys_node_flow` WHERE `id`='1';
+DELETE FROM `dev_xn_wzcd`.`tsys_node_flow` WHERE `id`='2';
+DELETE FROM `dev_xn_wzcd`.`tsys_node_flow` WHERE `id`='3';
+DELETE FROM `dev_xn_wzcd`.`tsys_node_flow` WHERE `id`='4';
+DELETE FROM `dev_xn_wzcd`.`tsys_node_flow` WHERE `id`='5';
+
+
+INSERT INTO `dev_xn_wzcd`.`tsys_node_flow` (`type`, `current_node`, `next_node`, `file_list`) VALUES ('007', '007_01', '007_02', '材料');
+INSERT INTO `dev_xn_wzcd`.`tsys_node_flow` (`type`, `current_node`, `next_node`, `file_list`) VALUES ('007', '007_02', '007_03', '材料');
+INSERT INTO `dev_xn_wzcd`.`tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('007', '007_03', '007_04');
+INSERT INTO `dev_xn_wzcd`.`tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('007', '007_04', '007_05');
+INSERT INTO `dev_xn_wzcd`.`tsys_node_flow` (`type`, `current_node`, `next_node`, `file_list`) VALUES ('007', '007_05', '007_06', '材料');
+INSERT INTO `dev_xn_wzcd`.`tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('007', '007_06', '007_07');
+INSERT INTO `dev_xn_wzcd`.`tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('007', '007_07', '007_08');
+
+ALTER TABLE `dev_xn_wzcd`.`tdq_budget_order` 
+ADD COLUMN `pledge_cur_node_code` VARCHAR(32) NULL COMMENT '抵押流程节点编号' AFTER `cur_node_code`;

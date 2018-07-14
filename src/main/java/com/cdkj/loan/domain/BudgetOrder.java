@@ -749,6 +749,9 @@ public class BudgetOrder extends ABaseDO {
     // 节点编号
     private String curNodeCode;
 
+    // 抵押流程节点编号
+    private String pledgeCurNodeCode;
+
     // 还款业务编号
     private String repayBizCode;
 
@@ -3015,6 +3018,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setEnterFileStatus(String enterFileStatus) {
         this.enterFileStatus = enterFileStatus;
+    }
+
+    public String getPledgeCurNodeCode() {
+        return pledgeCurNodeCode;
+    }
+
+    public void setPledgeCurNodeCode(String pledgeCurNodeCode) {
+        this.pledgeCurNodeCode = pledgeCurNodeCode;
     }
 
 }

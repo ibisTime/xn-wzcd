@@ -15,10 +15,10 @@ public enum EBudgetOrderNode {
             "002_05", "重新填写预算单"), ADVANCE_FUND_AUDIT("002_06", "垫资审核"), INPUT_FBH(
             "002_07", "录入发保合"),
 
-    SEND_LOGISTICS("007_01", "分公司内勤寄送银行材料"), HEADQUARTERS_SEND_PRINT("007_06",
-            "总公司寄送打印材料"), LOAN_PRINT("007_02", "打印岗打印"), BANK_LOAN_COLLATEPOST_COLLATE(
-            "007_03", "理件岗理件"), SEND_BANK_MATERIALS("007_04", "总公司寄送银行材料"), BANK_LOAN_COMMIT(
-            "007_05", "确认提交银行"), CONFIRM_RECEIVABLES("007_06", "确认收款"),
+    SEND_LOGISTICS("007_01", "分公司内勤寄送银行材料给总公司"), HEADQUARTERS_SEND_PRINT(
+            "007_02", "总公司寄送银行材料给打印岗"), LOAN_PRINT("007_03", "打印岗打印"), BANK_LOAN_COLLATEPOST_COLLATE(
+            "007_04", "理件岗理件"), SEND_BANK_MATERIALS("007_05", "总公司寄送银行材料给银行驻点"), BANK_LOAN_COMMIT(
+            "007_06", "确认提交银行"), CONFIRM_RECEIVABLES("007_07", "财务确认收款"),
 
     LOCAL_PRINTPOST_PRINT("008_01", "打印岗打印"), LOCAL_COLLATEPOST_COLLATE(
             "008_02", "理件岗理件"), LOCAL_SENDPOST_SEND_BANK("008_03", "寄件岗寄送银行"), LOCAL_SUBMIT_BANK(
