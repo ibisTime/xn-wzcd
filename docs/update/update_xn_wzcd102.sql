@@ -10,3 +10,13 @@ ADD COLUMN `id_no_picf` tinytext NULL  COMMENT '身份证照片反' AFTER `id_no
 
 ALTER TABLE `tdq_credit_user`
 ADD COLUMN `is_first_audit` VARCHAR(4) NULL DEFAULT NULL COMMENT '是否一审' AFTER `jour_show_income`;
+
+
+DROP TABLE IF EXISTS `tdp_supplement_reason`;
+CREATE TABLE `tdp_supplement_reason` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `logistics_code` varchar(32) DEFAULT NULL COMMENT '物流单编号',
+  `type` varchar(4) DEFAULT NULL COMMENT '类型',
+  `reason` tinytext COMMENT '原因',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='补件原因';
