@@ -27,7 +27,9 @@ CHANGE COLUMN `guarantor_name` `guarantor1_name` VARCHAR(32) NULL DEFAULT NULL C
 CHANGE COLUMN `guarantor_mobile` `guarantor1_mobile` VARCHAR(16) NULL DEFAULT NULL COMMENT '担保人1手机' ,
 ADD COLUMN `guarantor2_name` VARCHAR(32) NULL COMMENT '担保人2姓名' AFTER `guarantor1_mobile`,
 ADD COLUMN `guarantor2_mobile` VARCHAR(16) NULL COMMENT '担保人2手机号' AFTER `guarantor2_name`,
-ADD COLUMN `create_datetime` datetime NULL COMMENT '创建时间' AFTER `other_apply_note`;
+ADD COLUMN `create_datetime` datetime NULL COMMENT '创建时间' AFTER `other_apply_note`,
+DROP COLUMN `guarant_contract_deadline`,
+DROP COLUMN `guarant_month_fee_rate`;
 
 
 

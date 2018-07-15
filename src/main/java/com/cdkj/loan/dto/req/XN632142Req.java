@@ -42,9 +42,6 @@ public class XN632142Req {
     // 期限
     private String guarantContractDeadline;
 
-    // 月费率
-    private String guarantMonthFeeRate;
-
     // 担保人现住址
     private String guarantorNowAddress;
 
@@ -144,14 +141,6 @@ public class XN632142Req {
 
     public void setGuarantContractDeadline(String guarantContractDeadline) {
         this.guarantContractDeadline = guarantContractDeadline;
-    }
-
-    public String getGuarantMonthFeeRate() {
-        return guarantMonthFeeRate;
-    }
-
-    public void setGuarantMonthFeeRate(String guarantMonthFeeRate) {
-        this.guarantMonthFeeRate = guarantMonthFeeRate;
     }
 
     public String getGuarantorFamilyPhone() {

@@ -2105,10 +2105,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCarBrand(req.getCarBrand());
         budgetOrder.setCarBrandModel(req.getCarBrandModel());
         budgetOrder.setCarNumber(req.getCarNumber());
-        budgetOrder
-            .setGuarantContractDeadline(req.getGuarantContractDeadline());
-        budgetOrder.setGuarantMonthFeeRate(StringValidater.toDouble(req
-            .getGuarantMonthFeeRate()));
         budgetOrder.setGuarantorNowAddress(req.getGuarantorNowAddress());
         budgetOrder.setGuarantorFamilyPhone(req.getGuarantorFamilyPhone());
         budgetOrder.setGuarantorCompanyName(req.getGuarantorCompanyName());

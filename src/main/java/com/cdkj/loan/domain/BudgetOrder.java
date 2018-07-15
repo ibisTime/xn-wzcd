@@ -542,12 +542,6 @@ public class BudgetOrder extends ABaseDO {
     // 担保合同编号
     private String guaranteeContractCode;
 
-    // 期限
-    private String guarantContractDeadline;
-
-    // 月费率
-    private double guarantMonthFeeRate;
-
     // 银行合同编号
     private String bankContractCode;
 
@@ -1013,22 +1007,6 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCarNumber(String carNumber) {
         this.carNumber = carNumber;
-    }
-
-    public String getGuarantContractDeadline() {
-        return guarantContractDeadline;
-    }
-
-    public void setGuarantContractDeadline(String guarantContractDeadline) {
-        this.guarantContractDeadline = guarantContractDeadline;
-    }
-
-    public double getGuarantMonthFeeRate() {
-        return guarantMonthFeeRate;
-    }
-
-    public void setGuarantMonthFeeRate(double guarantMonthFeeRate) {
-        this.guarantMonthFeeRate = guarantMonthFeeRate;
     }
 
     public String getGuarantorFamilyPhone() {

@@ -207,9 +207,6 @@
 		<result column="insurance_note" property="insuranceNote" />
 		
 		<result column="guarantee_contract_code" property="guaranteeContractCode" />
-		<result column="guarant_contract_deadline" property="guarantContractDeadline" />
-		<result column="guarant_month_fee_rate" property="guarantMonthFeeRate" />
-		
 		<result column="bank_contract_code" property="bankContractCode" />
 		<result column="reg_certificate_code" property="regCertificateCode" />
 		<result column="emergency_name1" property="emergencyName1" />
@@ -538,8 +535,6 @@
 		,t.insurance_business_pdf
 		,t.insurance_note
 		,t.guarantee_contract_code
-		,t.guarant_contract_deadline
-		,t.guarant_month_fee_rate
 		,t.bank_contract_code
 		,t.reg_certificate_code
 		,t.emergency_name1
@@ -805,8 +800,6 @@
 		,t.insurance_company
 		,t.insurance_bank
 		,t.guarantee_contract_code
-		,t.guarant_contract_deadline
-		,t.guarant_month_fee_rate
 		,t.bank_contract_code
 		,t.reg_certificate_code
 		,t.emergency_name1
@@ -1031,8 +1024,6 @@
 		,t.insurance_company
 		,t.insurance_bank
 		,t.guarantee_contract_code
-		,t.guarant_contract_deadline
-		,t.guarant_month_fee_rate
 		,t.bank_contract_code
 		,t.reg_certificate_code
 		,t.emergency_name1
@@ -1939,8 +1930,6 @@
 		,car_brand = #{carBrand}
 		,car_brand_model = #{carBrandModel}
 		,car_number = #{carNumber}
-		,guarant_contract_deadline = #{guarantContractDeadline}
-		,guarant_month_fee_rate = #{guarantMonthFeeRate}
 		,guarantor_now_address = #{guarantorNowAddress}
 		,guarantor_family_phone = #{guarantorFamilyPhone}
 		,guarantor_company_name = #{guarantorCompanyName}
