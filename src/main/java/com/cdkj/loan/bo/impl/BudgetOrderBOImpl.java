@@ -238,17 +238,28 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     @Override
     public void logicOrder(String code, String operator) {
         BudgetOrder budgetOrder = getBudgetOrder(code);
-        String preCurrentNode = budgetOrder.getCurNodeCode();
+        String preCurrentNode = budgetOrder.getCurNodeCode();// 主流程当前节点
 
         if (EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode()
-            .equals(preCurrentNode)) {
-            // 抵押流程 外地 009_05分公司寄送抵押材料给总公司 收件并审核通过 改预算单入档状态为待入档
+            .equals(budgetOrder.getPledgeCurNodeCode())) {
+            // 当前抵押流程节点如果是车辆抵押流程 外地 009_05分公司寄送抵押材料给总公司
+            // 收件并审核通过后 改预算单入档状态为待入档
             budgetOrder.setEnterFileStatus(EEnterFileStatus.TODO.getCode());
             budgetOrderBO.updateEnterFileStatus(budgetOrder);
         }
+        if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
+            .equals(preCurrentNode)) {
+            // 当前主流程节点如果是银行放款流程 007_02 总公司寄送银行材料给打印岗
+            // 收件审核并通过后 抵押流程开始（主流程外的）
+            // 设置抵押流程节点为车辆抵押本地第一步008_01打印岗打印
+            budgetOrder.setPledgeCurNodeCode(
+                EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode());
 
+        }
         NodeFlow nodeFlow = nodeFlowBO
             .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
+        // 主流程是银行放款
+        // 收件并审核通过后走到下一个节点 打印岗打印
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
