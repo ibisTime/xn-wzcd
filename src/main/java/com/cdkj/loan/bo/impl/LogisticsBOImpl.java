@@ -31,8 +31,8 @@ import com.cdkj.loan.exception.BizException;
  */
 
 @Component
-public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
-        implements ILogisticsBO {
+public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
+        ILogisticsBO {
     @Autowired
     private ILogisticsDAO logisticsDAO;
 
@@ -44,9 +44,9 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
 
     @Override
     public String saveLogistics(String type, String bizCode, String userId,
-            String fromNodeCode, String toNodeCode, String refFileList) {
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.LOGISTICS.getCode());
+            String fromNodeCode, String toNodeCode) {
+        String code = OrderNoGenerater.generate(EGeneratePrefix.LOGISTICS
+            .getCode());
         Logistics data = new Logistics();
         data.setCode(code);
         data.setType(type);

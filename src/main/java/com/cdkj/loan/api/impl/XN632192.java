@@ -11,8 +11,8 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 车辆抵押合同打印
- * @author: CYL 
- * @since: 2018年6月30日 下午1:55:34 
+ * @author: jiafr 
+ * @since: 2018年7月15日 下午4:04:30 
  * @history:
  */
 public class XN632192 extends AProcessor {

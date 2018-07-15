@@ -247,6 +247,12 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
                 budgetOrder.setEnterFileStatus(EEnterFileStatus.TODO.getCode());
                 budgetOrderBO.updateEnterFileStatus(budgetOrder);
             }
+            if (EBudgetOrderNode.LOCAL_SENDPOST_SEND_BANK.getCode().equals(
+                pledgeCurNodeCode)) {
+                // 抵押流程本地 寄件岗寄送银行 收件并审核通过 更新抵押流程节点 到下一个 提交银行
+                budgetOrder.setPledgeCurNodeCode(nodeFlowBO
+                    .getNodeFlowByCurrentNode(pledgeCurNodeCode).getNextNode());
+            }
         }
         if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode().equals(
             preCurrentNode)) {
@@ -271,8 +277,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             // 生成资料传递
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                pledgeNodeFlow.getCurrentNode(), pledgeNodeFlow.getNextNode(),
-                pledgeNodeFlow.getFileList());
+                pledgeNodeFlow.getCurrentNode(), pledgeNodeFlow.getNextNode());
         }
         // 获取当前主流程节点
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
@@ -283,18 +288,14 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             budgetOrder.getCurNodeCode())
                 || EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode().equals(
                     budgetOrder.getPledgeCurNodeCode())) {// 连续发件情况 再生成一条资料传递
-            NodeFlow nodeFlow2 = nodeFlowBO
-                .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
-            if (StringUtils.isNotBlank(nodeFlow2.getFileList())) {
-                // 生成资料传递
-                logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-                    budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                    nodeFlow2.getCurrentNode(), nodeFlow2.getNextNode(),
-                    nodeFlow.getFileList());
-            } else {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前节点材料清单不存在");
-            }
+            NodeFlow nodeFlowNext = nodeFlowBO
+                .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());// 获取当前节点的下一个节点
+            // 生成资料传递
+            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                nodeFlowNext.getCurrentNode(), nodeFlowNext.getNextNode());
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点材料清单不存在");
         }
         budgetOrderDAO.updaterLogicNode(budgetOrder);
 

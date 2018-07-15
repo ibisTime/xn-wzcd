@@ -15,7 +15,7 @@ import com.cdkj.loan.dto.req.XN632152Req;
 public interface ILogisticsBO extends IPaginableBO<Logistics> {
     // 添加资料传递记录
     public String saveLogistics(String type, String bizCode, String userId,
-            String fromNodeCode, String toNodeCode, String refFileList);
+            String fromNodeCode, String toNodeCode);
 
     // 发货
     public void sendLogistics(Logistics data);
