@@ -383,10 +383,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setHkbFirstPage(req.getHkbFirstPage());
         data.setHkbMainPage(req.getHkbMainPage());
         data.setGhHkb(req.getGhHkb());
-        data.setGuarantor1IdNo(req.getGuarantor1IdNo());
 
         data.setGuarantor1Hkb(req.getGuarantor1Hkb());
-        data.setGuarantor2IdNo(req.getGuarantor2IdNo());
         data.setGuarantor2Hkb(req.getGuarantor2Hkb());
         data.setHousePic(req.getHousePic());
         data.setHouseUnitPic(req.getHouseUnitPic());
@@ -2348,10 +2346,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setHkbFirstPage(req.getHkbFirstPage());
         data.setHkbMainPage(req.getHkbMainPage());
         data.setGhHkb(req.getGhHkb());
-        data.setGuarantor1IdNo(req.getGuarantor1IdNo());
 
         data.setGuarantor1Hkb(req.getGuarantor1Hkb());
-        data.setGuarantor2IdNo(req.getGuarantor2IdNo());
         data.setGuarantor2Hkb(req.getGuarantor2Hkb());
         data.setHousePic(req.getHousePic());
         data.setHouseUnitPic(req.getHouseUnitPic());

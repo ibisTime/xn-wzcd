@@ -1525,14 +1525,7 @@
 		
 		,hkb_main_page = #{hkbMainPage}
 		,gh_hkb = #{ghHkb}
-		,guarantor1_id_no = #{guarantor1IdNo}
-		,guarantor1_id_picz = #{guarantor1IdPicz}
-		,guarantor1_id_picf = #{guarantor1IdPicf}
 		,guarantor1_hkb = #{guarantor1Hkb}
-		,guarantor2_id_no = #{guarantor2IdNo}
-		,guarantor2_id_picz = #{guarantor2IdPicz}
-		,guarantor2_id_picf = #{guarantor2IdPicf}
-		
 		,guarantor2_hkb = #{guarantor2Hkb}
 		,house_pic = #{housePic}
 		,house_unit_pic = #{houseUnitPic}
