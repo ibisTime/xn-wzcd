@@ -660,29 +660,32 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             // 产生手续费
             budgetOrderFeeBO.saveBudgetOrderFee(budgetOrder, operator);
-
             // 预算单节点改为垫资审核
             budgetOrder.setCurNodeCode(EBudgetOrderNode.ADVANCE_FUND_AUDIT
                 .getCode());
             // 判断是否预算单是否垫资
             if (EIsAdvanceFund.NO.getCode().equals(
                 budgetOrder.getIsAdvanceFund())) {
-
                 // 不垫资 进入银行放款流程第一步
-                // 更改节点为银行放款流程第一步
-                budgetOrder.setCurNodeCode(EBudgetOrderNode.SEND_LOGISTICS
-                    .getCode());
+                EBudgetOrderNode bankLoanNode = null;
+                Department company = departmentBO.getDepartment(budgetOrder
+                    .getCompanyCode());
+                if ("温州市".equals(company.getCityNo())) {
+                    // 本地
+                    bankLoanNode = EBudgetOrderNode.SALESMAN_SEND_LOGISTICS;
+                } else {
+                    // 外地
+                    bankLoanNode = EBudgetOrderNode.BRANCH_SEND_LOGISTICS;
+                }
+                budgetOrder.setCurNodeCode(bankLoanNode.getCode());
                 sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
                     EBizLogType.BANK_LOAN_COMMIT, budgetOrder.getCode(),
-                    EBudgetOrderNode.SEND_LOGISTICS.getCode(),
-                    EBudgetOrderNode.SEND_LOGISTICS.getValue(), operator);
+                    bankLoanNode.getCode(), bankLoanNode.getValue(), operator);
                 budgetOrderBO.bankLoanConfirmSubmitBank(budgetOrder);
-
                 // 当前节点
                 String curNodeCode = budgetOrder.getCurNodeCode();
                 String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
                     curNodeCode).getNextNode();
-
                 // 生成资料传递
                 logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                     budgetOrder.getCode(), budgetOrder.getSaleUserId(),
