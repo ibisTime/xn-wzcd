@@ -285,8 +285,6 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         budgetOrder.setOperateDatetime(new Date());
         if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
             .equals(budgetOrder.getCurNodeCode())
-                || EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
-                    .equals(budgetOrder.getCurNodeCode())
                 || EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode()
                     .equals(budgetOrder.getPledgeCurNodeCode())) {// 连续发件情况
                                                                   // 再生成一条资料传递
