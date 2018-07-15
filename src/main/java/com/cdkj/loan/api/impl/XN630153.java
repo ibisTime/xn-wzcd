@@ -27,7 +27,6 @@ public class XN630153 extends AProcessor {
      */
     @Override
     public Object doBusiness() throws BizException {
-        nodeFlowAO.doModifyFileList(req.getId(), req.getFileStrs());
         return new BooleanRes(true);
     }
 

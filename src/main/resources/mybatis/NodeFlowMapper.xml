@@ -8,7 +8,6 @@
 		<result column="current_node" property="currentNode" />
 		<result column="next_node" property="nextNode" />
 		<result column="back_node" property="backNode" />
-		<result column="file_list" property="fileList" />
 		<result column="remark" property="remark" />
 	</resultMap>
 	<sql id="where_condition">
@@ -37,7 +36,6 @@
 		,t.current_node
 		,t.next_node
 		,t.back_node
-		,t.file_list
 		,t.remark
 		FROM
 		tsys_node_flow t
@@ -62,7 +60,6 @@
 		,current_node
 		,next_node
 		,back_node
-		,file_list
 		,remark
 		)
 		VALUES(
@@ -70,7 +67,6 @@
 		,#{currentNode}
 		,#{nextNode}
 		,#{backNode}
-		,#{fileList}
 		,#{remark}
 		)
 	</insert>
@@ -81,13 +77,6 @@
 		next_node = #{nextNode}
 		,back_node = #{backNode}
 		,remark = #{remark}
-		WHERE id = #{id}
-	</update>
-	
-	<update id="update_fileList" parameterType="nodeFlow">
-		UPDATE tsys_node_flow
-		SET
-		file_list = #{fileList}
 		WHERE id = #{id}
 	</update>
 </mapper>
