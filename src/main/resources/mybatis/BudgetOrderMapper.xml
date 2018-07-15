@@ -166,6 +166,7 @@
 		<result column="second_number" property="secondNumber" />
 		<result column="other_file_pdf" property="otherFilePdf" />
 		<result column="other_apply_note" property="otherApplyNote" />
+		<result column="credit_datetime" property="creditDatetime" />
 		<result column="apply_datetime" property="applyDatetime" />
 		
 		<result column="cancel_reason" property="cancelReason" />
@@ -320,6 +321,12 @@
 			</if>
 			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
 				<![CDATA[AND t.apply_datetime < #{applyDatetimeEnd}]]>
+			</if>
+			<if test="creditDatetimeStart != null and creditDatetimeStart != '' ">
+				<![CDATA[AND t.credit_datetime > #{creditDatetimeStart}]]>
+			</if>
+			<if test="creditDatetimeEnd != null and creditDatetimeEnd != '' ">
+				<![CDATA[AND t.credit_datetime < #{creditDatetimeEnd}]]>
 			</if>
 			<if test="carDealerCode != null and carDealerCode != '' ">
 				AND t.car_dealer_code = #{carDealerCode}
@@ -496,6 +503,7 @@
 		,t.second_number
 		,t.other_file_pdf
 		,t.other_apply_note
+		,t.credit_datetime
 		,t.apply_datetime
 		,t.cancel_reason
 		,t.bank_commit_datetime
@@ -768,6 +776,7 @@
 		,t.second_number
 		,t.other_file_pdf
 		,t.other_apply_note
+		,t.credit_datetime
 		,t.apply_datetime
 		,t.cancel_reason
 		,t.bank_commit_datetime
@@ -993,6 +1002,7 @@
 		,t.second_number
 		,t.other_file_pdf
 		,t.other_apply_note
+		,t.credit_datetime
 		,t.apply_datetime
 		,t.cancel_reason
 		,t.bank_commit_datetime
@@ -1254,6 +1264,7 @@
 		,mobile
 		,id_kind
 		,id_no
+		,credit_datetime
 		,apply_datetime
 		,cur_node_code
 		,repay_biz_code
@@ -1396,6 +1407,7 @@
 		,#{mobile}
 		,#{idKind}
 		,#{idNo}
+		,#{creditDatetime}
 		,#{applyDatetime}
 		,#{curNodeCode}
 		,#{repayBizCode}
@@ -1513,14 +1525,7 @@
 		
 		,hkb_main_page = #{hkbMainPage}
 		,gh_hkb = #{ghHkb}
-		,guarantor1_id_no = #{guarantor1IdNo}
-		,guarantor1_id_picz = #{guarantor1IdPicz}
-		,guarantor1_id_picf = #{guarantor1IdPicf}
 		,guarantor1_hkb = #{guarantor1Hkb}
-		,guarantor2_id_no = #{guarantor2IdNo}
-		,guarantor2_id_picz = #{guarantor2IdPicz}
-		,guarantor2_id_picf = #{guarantor2IdPicf}
-		
 		,guarantor2_hkb = #{guarantor2Hkb}
 		,house_pic = #{housePic}
 		,house_unit_pic = #{houseUnitPic}
@@ -1548,6 +1553,7 @@
 		,should_back_amount = #{shouldBackAmount}
 		,should_back_status = #{shouldBackStatus}		
 		,other_apply_note = #{otherApplyNote}
+		,credit_datetime = #{creditDatetime}
 		,apply_datetime = #{applyDatetime}
 		,cur_node_code = #{curNodeCode}
 		

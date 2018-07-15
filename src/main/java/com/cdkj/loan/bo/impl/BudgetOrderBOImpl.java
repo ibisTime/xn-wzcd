@@ -106,9 +106,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             }
 
             BudgetOrder budgetOrderCondition = new BudgetOrder();
-            budgetOrderCondition
-                .setApplyDatetimeStart(DateUtil.getTodayStart());
-            budgetOrderCondition.setApplyDatetimeEnd(DateUtil.getTodayEnd());
+            budgetOrderCondition.setCreditDatetimeStart(DateUtil
+                .getTodayStart());
+            budgetOrderCondition.setCreditDatetimeEnd(DateUtil.getTodayEnd());
             long count = budgetOrderDAO.selectTotalCount(budgetOrderCondition) + 1;
             String bizNO = String.valueOf(count);
             if (bizNO.length() == 1) {

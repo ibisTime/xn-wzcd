@@ -268,14 +268,8 @@ public class XN632120Req {
     // 家庭紧急联系人信息2 手机号码
     private String emergencyMobile2;
 
-    // 担保人1身份证
-    private String guarantor1IdNo;
-
     // 担保人1户口本
     private String guarantor1Hkb;
-
-    // 担保人2身份证
-    private String guarantor2IdNo;
 
     // 担保人2户口本
     private String guarantor2Hkb;
@@ -1000,28 +994,12 @@ public class XN632120Req {
         this.ghHkb = ghHkb;
     }
 
-    public String getGuarantor1IdNo() {
-        return guarantor1IdNo;
-    }
-
-    public void setGuarantor1IdNo(String guarantor1IdNo) {
-        this.guarantor1IdNo = guarantor1IdNo;
-    }
-
     public String getGuarantor1Hkb() {
         return guarantor1Hkb;
     }
 
     public void setGuarantor1Hkb(String guarantor1Hkb) {
         this.guarantor1Hkb = guarantor1Hkb;
-    }
-
-    public String getGuarantor2IdNo() {
-        return guarantor2IdNo;
-    }
-
-    public void setGuarantor2IdNo(String guarantor2IdNo) {
-        this.guarantor2IdNo = guarantor2IdNo;
     }
 
     public String getGuarantor2Hkb() {
