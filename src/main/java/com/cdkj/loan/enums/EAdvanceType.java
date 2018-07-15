@@ -8,7 +8,7 @@ package com.cdkj.loan.enums;
  */
 public enum EAdvanceType {
 
-    PARENT_BIZ("1", "总公司业务"), BRANCH_BIZ("2", "分公司业务");
+    PARENT_BIZ("1", "本地公司业务"), BRANCH_BIZ("2", "外地公司业务");
 
     EAdvanceType(String code, String value) {
         this.code = code;

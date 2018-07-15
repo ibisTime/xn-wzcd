@@ -438,7 +438,7 @@ public class BudgetOrder extends ABaseDO {
     private String otherApplyNote;
 
     // 创建时间
-    private Date creditDatetime;
+    private Date createDatetime;
 
     // 申请时间
     private Date applyDatetime;
@@ -494,9 +494,6 @@ public class BudgetOrder extends ABaseDO {
     // 车辆品牌
     private String carBrand;
 
-    // 品牌型号
-    private String carBrandModel;
-
     // 车牌号码
     private String carNumber;
 
@@ -541,12 +538,6 @@ public class BudgetOrder extends ABaseDO {
 
     // 担保合同编号
     private String guaranteeContractCode;
-
-    // 期限
-    private String guarantContractDeadline;
-
-    // 月费率
-    private double guarantMonthFeeRate;
 
     // 银行合同编号
     private String bankContractCode;
@@ -780,9 +771,9 @@ public class BudgetOrder extends ABaseDO {
 
     private Date applyDatetimeEnd;// 申请时间结束
 
-    private Date creditDatetimeStart;// 创建时间起始
+    private Date createDatetimeStart;// 创建时间起始
 
-    private Date creditDatetimeEnd;// 创建时间结束
+    private Date createDatetimeEnd;// 创建时间结束
 
     private List<String> fileListArray;
 
@@ -999,36 +990,12 @@ public class BudgetOrder extends ABaseDO {
         this.ghRealName = ghRealName;
     }
 
-    public String getCarBrandModel() {
-        return carBrandModel;
-    }
-
-    public void setCarBrandModel(String carBrandModel) {
-        this.carBrandModel = carBrandModel;
-    }
-
     public String getCarNumber() {
         return carNumber;
     }
 
     public void setCarNumber(String carNumber) {
         this.carNumber = carNumber;
-    }
-
-    public String getGuarantContractDeadline() {
-        return guarantContractDeadline;
-    }
-
-    public void setGuarantContractDeadline(String guarantContractDeadline) {
-        this.guarantContractDeadline = guarantContractDeadline;
-    }
-
-    public double getGuarantMonthFeeRate() {
-        return guarantMonthFeeRate;
-    }
-
-    public void setGuarantMonthFeeRate(double guarantMonthFeeRate) {
-        this.guarantMonthFeeRate = guarantMonthFeeRate;
     }
 
     public String getGuarantorFamilyPhone() {
@@ -1151,12 +1118,12 @@ public class BudgetOrder extends ABaseDO {
         this.makeCardStatus = makeCardStatus;
     }
 
-    public Date getCreditDatetime() {
-        return creditDatetime;
+    public Date getCreateDatetime() {
+        return createDatetime;
     }
 
-    public void setCreditDatetime(Date creditDatetime) {
-        this.creditDatetime = creditDatetime;
+    public void setCreateDatetime(Date createDatetime) {
+        this.createDatetime = createDatetime;
     }
 
     public String getMakeCardOperator() {
@@ -1927,20 +1894,20 @@ public class BudgetOrder extends ABaseDO {
         this.repayBankDate = repayBankDate;
     }
 
-    public Date getCreditDatetimeStart() {
-        return creditDatetimeStart;
+    public Date getCreateDatetimeStart() {
+        return createDatetimeStart;
     }
 
-    public void setCreditDatetimeStart(Date creditDatetimeStart) {
-        this.creditDatetimeStart = creditDatetimeStart;
+    public void setCreateDatetimeStart(Date createDatetimeStart) {
+        this.createDatetimeStart = createDatetimeStart;
     }
 
-    public Date getCreditDatetimeEnd() {
-        return creditDatetimeEnd;
+    public Date getCreateDatetimeEnd() {
+        return createDatetimeEnd;
     }
 
-    public void setCreditDatetimeEnd(Date creditDatetimeEnd) {
-        this.creditDatetimeEnd = creditDatetimeEnd;
+    public void setCreateDatetimeEnd(Date createDatetimeEnd) {
+        this.createDatetimeEnd = createDatetimeEnd;
     }
 
     public Long getRepayFirstMonthAmount() {

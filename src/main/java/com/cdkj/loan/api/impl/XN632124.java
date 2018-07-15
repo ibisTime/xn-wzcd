@@ -11,9 +11,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 准入审核二审
- * @author: CYL 
- * @since: 2018年6月19日 下午11:23:26 
+ * 准入审核二审（预算单准入流程最后一步）
+ * @author: jiafr 
+ * @since: 2018年7月15日 下午8:49:31 
  * @history:
  */
 public class XN632124 extends AProcessor {

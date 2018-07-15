@@ -33,17 +33,14 @@ public class XN632142Req {
     // 车辆品牌
     private String carBrand;
 
-    // 品牌型号
-    private String carBrandModel;
-
     // 车牌号码
     private String carNumber;
 
+    // 发动机号码
+    private String engineNo;
+
     // 期限
     private String guarantContractDeadline;
-
-    // 月费率
-    private String guarantMonthFeeRate;
 
     // 担保人现住址
     private String guarantorNowAddress;
@@ -122,14 +119,6 @@ public class XN632142Req {
         this.applyUserCompanyPhone = applyUserCompanyPhone;
     }
 
-    public String getCarBrandModel() {
-        return carBrandModel;
-    }
-
-    public void setCarBrandModel(String carBrandModel) {
-        this.carBrandModel = carBrandModel;
-    }
-
     public String getCarNumber() {
         return carNumber;
     }
@@ -138,20 +127,20 @@ public class XN632142Req {
         this.carNumber = carNumber;
     }
 
+    public String getEngineNo() {
+        return engineNo;
+    }
+
+    public void setEngineNo(String engineNo) {
+        this.engineNo = engineNo;
+    }
+
     public String getGuarantContractDeadline() {
         return guarantContractDeadline;
     }
 
     public void setGuarantContractDeadline(String guarantContractDeadline) {
         this.guarantContractDeadline = guarantContractDeadline;
-    }
-
-    public String getGuarantMonthFeeRate() {
-        return guarantMonthFeeRate;
-    }
-
-    public void setGuarantMonthFeeRate(String guarantMonthFeeRate) {
-        this.guarantMonthFeeRate = guarantMonthFeeRate;
     }
 
     public String getGuarantorFamilyPhone() {

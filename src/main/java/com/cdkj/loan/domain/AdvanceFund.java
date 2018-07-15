@@ -23,7 +23,7 @@ public class AdvanceFund extends ABaseDO {
     // 垫资汇总单编号(分公司业务才有)
     private String totalAdvanceFundCode;
 
-    // 类型(1总公司业务 2分公司业务)
+    // 类型(1本地公司业务 2外地公司业务)
     private String type;
 
     // 客户姓名

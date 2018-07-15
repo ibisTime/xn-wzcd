@@ -621,9 +621,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (!EBudgetOrderNode.COMPANY_AUDIT.getCode().equals(
             budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是省分公司总经理审核节点，不能操作");
+                "当前节点不是准入审查省分公司总经理审核节点，不能操作");
         }
-
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
@@ -648,22 +647,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public void approveGlobalManager(String code, String operator,
             String approveResult, String approveNote) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
-
         if (!EBudgetOrderNode.SECOND_AUDIT.getCode().equals(
             budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是二审节点，不能操作");
+                "当前节点不是准入审查二审节点，不能操作");
         }
-
-        // 之前节点
-        String preCurrentNode = budgetOrder.getCurNodeCode();
+        String preCurrentNode = budgetOrder.getCurNodeCode();// 当前节点
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            // 审核通过
             // 产生手续费
             budgetOrderFeeBO.saveBudgetOrderFee(budgetOrder, operator);
-            // 预算单节点改为垫资审核
-            budgetOrder.setCurNodeCode(EBudgetOrderNode.ADVANCE_FUND_AUDIT
-                .getCode());
-            // 判断是否预算单是否垫资
+            // 判断预算单是否垫资
             if (EIsAdvanceFund.NO.getCode().equals(
                 budgetOrder.getIsAdvanceFund())) {
                 // 不垫资 进入银行放款流程第一步
@@ -690,17 +684,16 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                     budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                     curNodeCode, nextNodeCode);
-            }
-            if (EIsAdvanceFund.YES.getCode().equals(
-                budgetOrder.getIsAdvanceFund())) {
+            } else {
                 // 垫资 预算单节点改为垫资审核
-                // 生成垫资单判断是总公司业务还是分公司业务
+                // 预算单节点改为垫资审核（进入垫资审核流程）
                 budgetOrder.setCurNodeCode(EBudgetOrderNode.ADVANCE_FUND_AUDIT
                     .getCode());
-                Department department = departmentBO.getDepartment(budgetOrder
+                // 生成垫资单判断是本地公司业务还是外地公司业务
+                Department company = departmentBO.getDepartment(budgetOrder
                     .getCompanyCode());
-                if (EBoolean.NO.getCode().equals(department.getParentCode())) {
-                    // 总公司业务 打款给汽车经销商
+                if ("温州市".equals(company.getCityNo())) {
+                    // 本地业务 打款给汽车经销商
                     AdvanceFund data = new AdvanceFund();
                     data.setBudgetCode(budgetOrder.getCode());
                     data.setType(EAdvanceType.PARENT_BIZ.getCode());
@@ -750,7 +743,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                         EAdvanceFundNode.PARENT_CONFIRM.getValue(), operator);
 
                 } else {
-                    // 分公司的业务 打款给分公司
+                    // 外地业务 打款给分公司
                     AdvanceFund data = new AdvanceFund();
                     data.setBudgetCode(budgetOrder.getCode());
                     data.setType(EAdvanceType.BRANCH_BIZ.getCode());
@@ -792,11 +785,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                         EBizLogType.ADVANCE_FUND_BRANCH, advanceFundCode,
                         EAdvanceFundNode.BRANCH_CONFIRM.getCode(),
                         EAdvanceFundNode.BRANCH_CONFIRM.getValue(), operator);
-
                 }
             }
-
         } else {
+            // 审核不通过
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.SECOND_AUDIT.getCode()).getBackNode());
         }
@@ -2106,12 +2098,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setGhMobile(req.getGhMobile());
         budgetOrder.setGhCompanyName(req.getGhCompanyName());
         budgetOrder.setCarBrand(req.getCarBrand());
-        budgetOrder.setCarBrandModel(req.getCarBrandModel());
         budgetOrder.setCarNumber(req.getCarNumber());
-        budgetOrder
-            .setGuarantContractDeadline(req.getGuarantContractDeadline());
-        budgetOrder.setGuarantMonthFeeRate(StringValidater.toDouble(req
-            .getGuarantMonthFeeRate()));
+        budgetOrder.setEngineNo(req.getEngineNo());
         budgetOrder.setGuarantorNowAddress(req.getGuarantorNowAddress());
         budgetOrder.setGuarantorFamilyPhone(req.getGuarantorFamilyPhone());
         budgetOrder.setGuarantorCompanyName(req.getGuarantorCompanyName());
@@ -2127,11 +2115,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.loanContractPrint(budgetOrder);
 
         // 生成资料传递
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
-            .getCurNodeCode());
         logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-            budgetOrder.getCode(), budgetOrder.getSaleUserId(), nextNodeCode,
-            nodeFlow.getNextNode());
+            budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
+            nextNodeCode);
 
         // 写日志
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
@@ -2550,11 +2536,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         for (String code : list) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
             String preCurNodeCode = budgetOrder.getCurNodeCode();
-            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preCurNodeCode).getNextNode());
             EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
                 budgetOrder.getCurNodeCode());
             budgetOrderBO.loanBankCollateAchieve(budgetOrder);
+
+            // 生成资料传递(柴)
+            String curNodeCode = budgetOrder.getCurNodeCode();
+            NodeFlow nodeFlow = nodeFlowBO
+                .getNodeFlowByCurrentNode(curNodeCode);
+            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                curNodeCode, nodeFlow.getNextNode());
+
             // 日志记录
             sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
                 EBizLogType.BUDGET_ORDER, budgetOrder.getCode(),

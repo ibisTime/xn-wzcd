@@ -166,7 +166,7 @@
 		<result column="second_number" property="secondNumber" />
 		<result column="other_file_pdf" property="otherFilePdf" />
 		<result column="other_apply_note" property="otherApplyNote" />
-		<result column="credit_datetime" property="creditDatetime" />
+		<result column="create_datetime" property="createDatetime" />
 		<result column="apply_datetime" property="applyDatetime" />
 		
 		<result column="cancel_reason" property="cancelReason" />
@@ -189,7 +189,6 @@
 		<result column="insurance_company_code" property="insuranceCompanyCode" />
 		<result column="car_color" property="carColor" />
 		<result column="car_brand" property="carBrand" />
-		<result column="car_brand_model" property="carBrandModel" />
 		<result column="car_number" property="carNumber" />
 		
 		<result column="frame_no" property="frameNo" />
@@ -207,9 +206,6 @@
 		<result column="insurance_note" property="insuranceNote" />
 		
 		<result column="guarantee_contract_code" property="guaranteeContractCode" />
-		<result column="guarant_contract_deadline" property="guarantContractDeadline" />
-		<result column="guarant_month_fee_rate" property="guarantMonthFeeRate" />
-		
 		<result column="bank_contract_code" property="bankContractCode" />
 		<result column="reg_certificate_code" property="regCertificateCode" />
 		<result column="emergency_name1" property="emergencyName1" />
@@ -322,11 +318,11 @@
 			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
 				<![CDATA[AND t.apply_datetime < #{applyDatetimeEnd}]]>
 			</if>
-			<if test="creditDatetimeStart != null and creditDatetimeStart != '' ">
-				<![CDATA[AND t.credit_datetime > #{creditDatetimeStart}]]>
+			<if test="createDatetimeStart != null and createDatetimeStart != '' ">
+				<![CDATA[AND t.create_datetime > #{createDatetimeStart}]]>
 			</if>
-			<if test="creditDatetimeEnd != null and creditDatetimeEnd != '' ">
-				<![CDATA[AND t.credit_datetime < #{creditDatetimeEnd}]]>
+			<if test="createDatetimeEnd != null and createDatetimeEnd != '' ">
+				<![CDATA[AND t.create_datetime < #{createDatetimeEnd}]]>
 			</if>
 			<if test="carDealerCode != null and carDealerCode != '' ">
 				AND t.car_dealer_code = #{carDealerCode}
@@ -503,7 +499,7 @@
 		,t.second_number
 		,t.other_file_pdf
 		,t.other_apply_note
-		,t.credit_datetime
+		,t.create_datetime
 		,t.apply_datetime
 		,t.cancel_reason
 		,t.bank_commit_datetime
@@ -523,7 +519,6 @@
 		,t.insurance_company_code
 		,t.car_color
 		,t.car_brand
-		,t.car_brand_model
 		,t.car_number
 		,t.frame_no
 		,t.engine_no
@@ -538,8 +533,6 @@
 		,t.insurance_business_pdf
 		,t.insurance_note
 		,t.guarantee_contract_code
-		,t.guarant_contract_deadline
-		,t.guarant_month_fee_rate
 		,t.bank_contract_code
 		,t.reg_certificate_code
 		,t.emergency_name1
@@ -776,7 +769,7 @@
 		,t.second_number
 		,t.other_file_pdf
 		,t.other_apply_note
-		,t.credit_datetime
+		,t.create_datetime
 		,t.apply_datetime
 		,t.cancel_reason
 		,t.bank_commit_datetime
@@ -796,7 +789,6 @@
 		,t.insurance_company_code
 		,t.car_color
 		,t.car_brand
-		,t.car_brand_model
 		,t.car_number
 		,t.frame_no
 		,t.engine_no
@@ -805,8 +797,6 @@
 		,t.insurance_company
 		,t.insurance_bank
 		,t.guarantee_contract_code
-		,t.guarant_contract_deadline
-		,t.guarant_month_fee_rate
 		,t.bank_contract_code
 		,t.reg_certificate_code
 		,t.emergency_name1
@@ -1002,7 +992,7 @@
 		,t.second_number
 		,t.other_file_pdf
 		,t.other_apply_note
-		,t.credit_datetime
+		,t.create_datetime
 		,t.apply_datetime
 		,t.cancel_reason
 		,t.bank_commit_datetime
@@ -1022,7 +1012,6 @@
 		,t.insurance_company_code
 		,t.car_color
 		,t.car_brand
-		,t.car_brand_model
 		,t.car_number
 		,t.frame_no
 		,t.engine_no
@@ -1031,8 +1020,6 @@
 		,t.insurance_company
 		,t.insurance_bank
 		,t.guarantee_contract_code
-		,t.guarant_contract_deadline
-		,t.guarant_month_fee_rate
 		,t.bank_contract_code
 		,t.reg_certificate_code
 		,t.emergency_name1
@@ -1264,7 +1251,7 @@
 		,mobile
 		,id_kind
 		,id_no
-		,credit_datetime
+		,create_datetime
 		,apply_datetime
 		,cur_node_code
 		,repay_biz_code
@@ -1407,7 +1394,7 @@
 		,#{mobile}
 		,#{idKind}
 		,#{idNo}
-		,#{creditDatetime}
+		,#{createDatetime}
 		,#{applyDatetime}
 		,#{curNodeCode}
 		,#{repayBizCode}
@@ -1553,7 +1540,7 @@
 		,should_back_amount = #{shouldBackAmount}
 		,should_back_status = #{shouldBackStatus}		
 		,other_apply_note = #{otherApplyNote}
-		,credit_datetime = #{creditDatetime}
+		,create_datetime = #{createDatetime}
 		,apply_datetime = #{applyDatetime}
 		,cur_node_code = #{curNodeCode}
 		
@@ -1937,10 +1924,8 @@
 		,gh_mobile = #{ghMobile}
 		,gh_company_name = #{ghCompanyName}
 		,car_brand = #{carBrand}
-		,car_brand_model = #{carBrandModel}
 		,car_number = #{carNumber}
-		,guarant_contract_deadline = #{guarantContractDeadline}
-		,guarant_month_fee_rate = #{guarantMonthFeeRate}
+		,engine_no = #{engineNo}
 		,guarantor_now_address = #{guarantorNowAddress}
 		,guarantor_family_phone = #{guarantorFamilyPhone}
 		,guarantor_company_name = #{guarantorCompanyName}
