@@ -1698,6 +1698,7 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
+		,pledge_cur_node_code = #{pledgeCurNodeCode}
 		,operator = #{operator}
 		,operate_datetime = #{operateDatetime}
 		WHERE code = #{code}
