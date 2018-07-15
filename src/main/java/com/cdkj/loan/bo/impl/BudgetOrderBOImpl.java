@@ -36,8 +36,8 @@ import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
-        implements IBudgetOrderBO {
+public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
+        IBudgetOrderBO {
 
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
@@ -81,8 +81,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             if (EBudgetOrderShopWay.OLD.getCode().equals(data.getShopWay())) {
                 shopWay = "R";
             }
-            Department company = departmentBO
-                .getDepartment(data.getCompanyCode());
+            Department company = departmentBO.getDepartment(data
+                .getCompanyCode());
             Province provinceCondition = new Province();
             provinceCondition.setName(company.getProvinceNo());
             Province province = provinceBO.getProvince(provinceCondition);
@@ -109,8 +109,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             budgetOrderCondition
                 .setCreateDatetimeStart(DateUtil.getTodayStart());
             budgetOrderCondition.setCreateDatetimeEnd(DateUtil.getTodayEnd());
-            long count = budgetOrderDAO.selectTotalCount(budgetOrderCondition)
-                    + 1;
+            long count = budgetOrderDAO.selectTotalCount(budgetOrderCondition)+ 1;
             String bizNO = String.valueOf(count);
             if (bizNO.length() == 1) {
                 bizNO = "00" + bizNO;
@@ -241,66 +240,68 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         String preCurrentNode = budgetOrder.getCurNodeCode();// 主流程当前节点
         if (StringUtils.isNotBlank(budgetOrder.getPledgeCurNodeCode())) {
             String pledgeCurNodeCode = budgetOrder.getPledgeCurNodeCode();// 抵押流程当前节点
-            if (EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode()
-                .equals(pledgeCurNodeCode)) {
+            if (EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode().equals(
+                pledgeCurNodeCode)) {
                 // 当前抵押流程节点如果是车辆抵押流程 外地 009_05分公司寄送抵押材料给总公司
                 // 收件并审核通过后 改预算单入档状态为待入档
                 budgetOrder.setEnterFileStatus(EEnterFileStatus.TODO.getCode());
                 budgetOrderBO.updateEnterFileStatus(budgetOrder);
             }
+            if (EBudgetOrderNode.LOCAL_SENDPOST_SEND_BANK.getCode().equals(
+                pledgeCurNodeCode)) {
+                // 抵押流程本地 寄件岗寄送银行 收件并审核通过 更新抵押流程节点 到下一个 提交银行
+                budgetOrder.setPledgeCurNodeCode(nodeFlowBO
+                    .getNodeFlowByCurrentNode(pledgeCurNodeCode).getNextNode());
+            }
         }
-        if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
-            .equals(preCurrentNode)) {
+        if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode().equals(
+            preCurrentNode)) {
             // 当前主流程节点如果是银行放款流程 007_02 总公司寄送银行材料给打印岗
             // 收件审核并通过后 抵押流程本地开始（主流程外的）
             // 设置抵押流程节点为车辆抵押本地第一步008_01打印岗打印
-            budgetOrder.setPledgeCurNodeCode(
-                EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode());
+            budgetOrder
+                .setPledgeCurNodeCode(EBudgetOrderNode.LOCAL_PRINTPOST_PRINT
+                    .getCode());
         }
-        if (EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
-            .equals(preCurrentNode)) {
+        if (EBudgetOrderNode.SEND_BANK_MATERIALS.getCode().equals(
+            preCurrentNode)) {
             // 当前主流程节点是银行放款流程 007_05 总公司寄送银行材料给银行驻点
             // 收件并审核通过后 抵押流程外地开始（主流程外的）
             // 设置抵押流程节点为车辆抵押外地第一步009_01银行驻点发送抵押合同给总公司
-            budgetOrder.setPledgeCurNodeCode(
-                EBudgetOrderNode.OUT_BANKPOINT_SEND_PARENT.getCode());
+            budgetOrder
+                .setPledgeCurNodeCode(EBudgetOrderNode.OUT_BANKPOINT_SEND_PARENT
+                    .getCode());
             // 获取当前抵押流程节点
             NodeFlow pledgeNodeFlow = nodeFlowBO
                 .getNodeFlowByCurrentNode(budgetOrder.getPledgeCurNodeCode());
             // 生成资料传递
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                pledgeNodeFlow.getCurrentNode(), pledgeNodeFlow.getNextNode(),
-                pledgeNodeFlow.getFileList());
+                pledgeNodeFlow.getCurrentNode(), pledgeNodeFlow.getNextNode());
         }
         // 获取当前主流程节点
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
-        if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
-            .equals(budgetOrder.getCurNodeCode())
-                || EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode()
-                    .equals(budgetOrder.getPledgeCurNodeCode())) {// 连续发件情况
-                                                                  // 再生成一条资料传递
-            NodeFlow nodeFlow2 = nodeFlowBO
-                .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
-            if (StringUtils.isNotBlank(nodeFlow2.getFileList())) {
-                // 生成资料传递
-                logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-                    budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                    nodeFlow2.getCurrentNode(), nodeFlow2.getNextNode(),
-                    nodeFlow.getFileList());
-            } else {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前节点材料清单不存在");
-            }
+        if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode().equals(
+            budgetOrder.getCurNodeCode())
+                || EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode().equals(
+                    budgetOrder.getPledgeCurNodeCode())) {// 连续发件情况 再生成一条资料传递
+            NodeFlow nodeFlowNext = nodeFlowBO
+                .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());// 获取当前节点的下一个节点
+            // 生成资料传递
+            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                nodeFlowNext.getCurrentNode(), nodeFlowNext.getNextNode());
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点材料清单不存在");
         }
         budgetOrderDAO.updaterLogicNode(budgetOrder);
 
         // 日志记录 主流程
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-            .get(budgetOrder.getCurNodeCode());
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+            budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), operator);

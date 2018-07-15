@@ -27,7 +27,6 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.Department;
-import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.dto.req.XN632170Req;
 import com.cdkj.loan.dto.req.XN632171Req;
@@ -213,11 +212,9 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
                     curNodeCode).getNextNode();
 
                 // 生成资料传递
-                NodeFlow nodeFlow = nodeFlowBO
-                    .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
                 logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                     budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                    curNodeCode, nextNodeCode, nodeFlow.getFileList());
+                    curNodeCode, nextNodeCode);
 
                 // 垫资单垫资流程结束
                 if (EAdvanceType.PARENT_BIZ.getCode().equals(
@@ -332,11 +329,9 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
                 curNodeCode).getNextNode();
 
             // 生成资料传递
-            NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
-                .getCurNodeCode());
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                curNodeCode, nextNodeCode, nodeFlow.getFileList());
+                curNodeCode, nextNodeCode);
 
         }
         // 垫资流程结束 预算单 的 发保合状态 改成 待录入发保合

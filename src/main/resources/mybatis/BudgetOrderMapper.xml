@@ -1622,7 +1622,7 @@
 	<update id="update_carPledgeCommit" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		cur_node_code = #{curNodeCode}
+		pledge_cur_node_code = #{pledgeCurNodeCode}
 		,pledge_commit_datetime = #{pledgeCommitDatetime}
 		,pledge_commit_note = #{pledgeCommitNote}
 		,operator = #{operator}
@@ -1633,7 +1633,7 @@
 	<update id="update_carPledgeConfirm" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		cur_node_code = #{curNodeCode}
+		pledge_cur_node_code = #{pledgeCurNodeCode}
 		,enter_file_status = #{enterFileStatus}
 		,operator = #{operator}
 		,operate_datetime = #{operateDatetime}
@@ -1964,14 +1964,14 @@
 		,pledge_print_template_id = #{pledgePrintTemplateId}
 		,pledge_print_user = #{pledgePrintUser}
 		,pledge_print_datetime = #{pledgePrintDatetime}
-		,cur_node_code = #{curNodeCode}
+		,pledge_cur_node_code = #{pledgeCurNodeCode}
 		WHERE code = #{code}
 	</update>
 	
 	<update id="update_collateAchieve" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		cur_node_code = #{curNodeCode}
+		pledge_cur_node_code = #{pledgeCurNodeCode}
 		WHERE code = #{code}
 	</update>
 	

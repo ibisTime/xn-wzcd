@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 车辆抵押理件完成
+ * 车辆抵押理件岗理件完成
  * @author: jiafr 
  * @since: 2018年7月14日 下午3:18:19 
  * @history:
