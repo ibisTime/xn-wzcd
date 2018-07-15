@@ -78,3 +78,13 @@ ALTER TABLE `tdq_logistics`
 DROP COLUMN `send_file_list`,
 DROP COLUMN `ref_file_list`;
 
+UPDATE `dev_xn_wzcd`.`tsys_node` SET `code`='007_01B' WHERE `code`='007_01';
+INSERT INTO `dev_xn_wzcd`.`tsys_node` (`code`, `name`, `type`) VALUES ('007_01A', '业务员寄送银行材料给总公司', '007');
+
+INSERT INTO `dev_xn_wzcd`.`tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('007', '007_01B', '007_02');
+UPDATE `dev_xn_wzcd`.`tsys_node_flow` SET `current_node`='007_01A' WHERE `id`='69';
+
+ALTER TABLE `dev_xn_wzcd`.`tsys_node_flow` 
+DROP COLUMN `file_list`;
+
+
