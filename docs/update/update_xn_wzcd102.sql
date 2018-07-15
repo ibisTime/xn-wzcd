@@ -29,7 +29,8 @@ ADD COLUMN `guarantor2_name` VARCHAR(32) NULL COMMENT '担保人2姓名' AFTER `
 ADD COLUMN `guarantor2_mobile` VARCHAR(16) NULL COMMENT '担保人2手机号' AFTER `guarantor2_name`,
 ADD COLUMN `create_datetime` datetime NULL COMMENT '创建时间' AFTER `other_apply_note`,
 DROP COLUMN `guarant_contract_deadline`,
-DROP COLUMN `guarant_month_fee_rate`;
+DROP COLUMN `guarant_month_fee_rate`,
+DROP COLUMN `car_brand_model`;
 
 
 

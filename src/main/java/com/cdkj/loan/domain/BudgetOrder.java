@@ -494,9 +494,6 @@ public class BudgetOrder extends ABaseDO {
     // 车辆品牌
     private String carBrand;
 
-    // 品牌型号
-    private String carBrandModel;
-
     // 车牌号码
     private String carNumber;
 
@@ -991,14 +988,6 @@ public class BudgetOrder extends ABaseDO {
 
     public void setGhRealName(String ghRealName) {
         this.ghRealName = ghRealName;
-    }
-
-    public String getCarBrandModel() {
-        return carBrandModel;
-    }
-
-    public void setCarBrandModel(String carBrandModel) {
-        this.carBrandModel = carBrandModel;
     }
 
     public String getCarNumber() {

@@ -33,9 +33,6 @@ public class XN632142Req {
     // 车辆品牌
     private String carBrand;
 
-    // 品牌型号
-    private String carBrandModel;
-
     // 车牌号码
     private String carNumber;
 
@@ -120,14 +117,6 @@ public class XN632142Req {
 
     public void setApplyUserCompanyPhone(String applyUserCompanyPhone) {
         this.applyUserCompanyPhone = applyUserCompanyPhone;
-    }
-
-    public String getCarBrandModel() {
-        return carBrandModel;
-    }
-
-    public void setCarBrandModel(String carBrandModel) {
-        this.carBrandModel = carBrandModel;
     }
 
     public String getCarNumber() {

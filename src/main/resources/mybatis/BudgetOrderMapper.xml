@@ -189,7 +189,6 @@
 		<result column="insurance_company_code" property="insuranceCompanyCode" />
 		<result column="car_color" property="carColor" />
 		<result column="car_brand" property="carBrand" />
-		<result column="car_brand_model" property="carBrandModel" />
 		<result column="car_number" property="carNumber" />
 		
 		<result column="frame_no" property="frameNo" />
@@ -520,7 +519,6 @@
 		,t.insurance_company_code
 		,t.car_color
 		,t.car_brand
-		,t.car_brand_model
 		,t.car_number
 		,t.frame_no
 		,t.engine_no
@@ -791,7 +789,6 @@
 		,t.insurance_company_code
 		,t.car_color
 		,t.car_brand
-		,t.car_brand_model
 		,t.car_number
 		,t.frame_no
 		,t.engine_no
@@ -1015,7 +1012,6 @@
 		,t.insurance_company_code
 		,t.car_color
 		,t.car_brand
-		,t.car_brand_model
 		,t.car_number
 		,t.frame_no
 		,t.engine_no
@@ -1928,7 +1924,6 @@
 		,gh_mobile = #{ghMobile}
 		,gh_company_name = #{ghCompanyName}
 		,car_brand = #{carBrand}
-		,car_brand_model = #{carBrandModel}
 		,car_number = #{carNumber}
 		,engine_no = #{engineNo}
 		,guarantor_now_address = #{guarantorNowAddress}
