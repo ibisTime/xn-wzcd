@@ -2105,6 +2105,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCarBrand(req.getCarBrand());
         budgetOrder.setCarBrandModel(req.getCarBrandModel());
         budgetOrder.setCarNumber(req.getCarNumber());
+        budgetOrder.setEngineNo(req.getEngineNo());
         budgetOrder.setGuarantorNowAddress(req.getGuarantorNowAddress());
         budgetOrder.setGuarantorFamilyPhone(req.getGuarantorFamilyPhone());
         budgetOrder.setGuarantorCompanyName(req.getGuarantorCompanyName());
@@ -2120,11 +2121,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.loanContractPrint(budgetOrder);
 
         // 生成资料传递
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
-            .getCurNodeCode());
         logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-            budgetOrder.getCode(), budgetOrder.getSaleUserId(), nextNodeCode,
-            nodeFlow.getNextNode());
+            budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
+            nextNodeCode);
 
         // 写日志
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
@@ -2543,11 +2542,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         for (String code : list) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
             String preCurNodeCode = budgetOrder.getCurNodeCode();
-            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preCurNodeCode).getNextNode());
             EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
                 budgetOrder.getCurNodeCode());
             budgetOrderBO.loanBankCollateAchieve(budgetOrder);
+            
+            // 生成资料传递(柴)
+            String curNodeCode = budgetOrder.getCurNodeCode();
+            NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
+            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
+                nodeFlow.getNextNode());
+            
             // 日志记录
             sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
                 EBizLogType.BUDGET_ORDER, budgetOrder.getCode(),

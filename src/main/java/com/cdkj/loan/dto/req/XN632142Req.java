@@ -39,6 +39,9 @@ public class XN632142Req {
     // 车牌号码
     private String carNumber;
 
+    // 发动机号码
+    private String engineNo;
+
     // 期限
     private String guarantContractDeadline;
 
@@ -133,6 +136,14 @@ public class XN632142Req {
 
     public void setCarNumber(String carNumber) {
         this.carNumber = carNumber;
+    }
+
+    public String getEngineNo() {
+        return engineNo;
+    }
+
+    public void setEngineNo(String engineNo) {
+        this.engineNo = engineNo;
     }
 
     public String getGuarantContractDeadline() {

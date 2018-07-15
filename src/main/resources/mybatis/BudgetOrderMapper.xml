@@ -1930,6 +1930,7 @@
 		,car_brand = #{carBrand}
 		,car_brand_model = #{carBrandModel}
 		,car_number = #{carNumber}
+		,engine_no = #{engineNo}
 		,guarantor_now_address = #{guarantorNowAddress}
 		,guarantor_family_phone = #{guarantorFamilyPhone}
 		,guarantor_company_name = #{guarantorCompanyName}
