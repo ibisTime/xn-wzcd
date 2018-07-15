@@ -66,11 +66,17 @@ public class XN632200Req {
     // 家庭紧急联系人信息2 手机号码
     private String emergencyMobile2;
 
-    // 担保人姓名
-    private String guarantorName;
+    // 担保人1姓名
+    private String guarantor1Name;
 
-    // 担保人手机
-    private String guarantorMobile;
+    // 担保人1手机
+    private String guarantor1Mobile;
+
+    // 担保人2姓名
+    private String guarantor2Name;
+
+    // 担保人2手机
+    private String guarantor2Mobile;
 
     // 银行卡号
     @NotBlank
@@ -291,20 +297,36 @@ public class XN632200Req {
         this.emergencyMobile2 = emergencyMobile2;
     }
 
-    public String getGuarantorName() {
-        return guarantorName;
+    public String getGuarantor1Name() {
+        return guarantor1Name;
     }
 
-    public void setGuarantorName(String guarantorName) {
-        this.guarantorName = guarantorName;
+    public void setGuarantor1Name(String guarantor1Name) {
+        this.guarantor1Name = guarantor1Name;
     }
 
-    public String getGuarantorMobile() {
-        return guarantorMobile;
+    public String getGuarantor1Mobile() {
+        return guarantor1Mobile;
     }
 
-    public void setGuarantorMobile(String guarantorMobile) {
-        this.guarantorMobile = guarantorMobile;
+    public void setGuarantor1Mobile(String guarantor1Mobile) {
+        this.guarantor1Mobile = guarantor1Mobile;
+    }
+
+    public String getGuarantor2Name() {
+        return guarantor2Name;
+    }
+
+    public void setGuarantor2Name(String guarantor2Name) {
+        this.guarantor2Name = guarantor2Name;
+    }
+
+    public String getGuarantor2Mobile() {
+        return guarantor2Mobile;
+    }
+
+    public void setGuarantor2Mobile(String guarantor2Mobile) {
+        this.guarantor2Mobile = guarantor2Mobile;
     }
 
     public String getBankCardNumber() {

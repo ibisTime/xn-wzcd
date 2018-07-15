@@ -417,10 +417,12 @@ public class CreditAOImpl implements ICreditAO {
                 data.setGuarantor1Balance(dbUser1.getBalance());
                 data.setGuarantor1JourShowIncome(dbUser1.getJourShowIncome());
                 data.setGuarantor1IsPrint(dbUser1.getIsPrint());
-                data.setGuarantorName(dbUser1.getUserName());
-                data.setGuarantorMobile(dbUser1.getMobile());
+                data.setGuarantor1Name(dbUser1.getUserName());
+                data.setGuarantor1Mobile(dbUser1.getMobile());
                 if (dbUserList.size() > 1) {
                     CreditUser dbUser2 = dbUserList.get(1);
+                    data.setGuarantor2Name(dbUser2.getUserName());
+                    data.setGuarantor2Mobile(dbUser2.getMobile());
                     data.setGuarantor2IdNo(dbUser2.getIdNo());
                     data.setGuarantor2IdPicz(dbUser2.getIdNoFront());
                     data.setGuarantor2IdPicf(dbUser2.getIdNoReverse());

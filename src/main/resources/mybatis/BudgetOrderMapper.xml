@@ -218,9 +218,10 @@
 		<result column="emergency_relation2" property="emergencyRelation2" />
 		
 		<result column="emergency_mobile2" property="emergencyMobile2" />
-		<result column="guarantor_name" property="guarantorName" />
-		
-		<result column="guarantor_mobile" property="guarantorMobile" />
+		<result column="guarantor1_name" property="guarantor1Name" />
+		<result column="guarantor1_mobile" property="guarantor1Mobile" />
+		<result column="guarantor2_name" property="guarantor2Name" />
+		<result column="guarantor2_mobile" property="guarantor2Mobile" />
 		<result column="guarantor_now_address" property="guarantorNowAddress" />
 		<result column="guarantor_family_phone" property="guarantorFamilyPhone" />
 		<result column="guarantor_company_name" property="guarantorCompanyName" />
@@ -540,8 +541,10 @@
 		
 		,t.emergency_relation2
 		,t.emergency_mobile2
-		,t.guarantor_name
-		,t.guarantor_mobile
+		,t.guarantor1_name
+		,t.guarantor1_mobile
+		,t.guarantor2_name
+		,t.guarantor2_mobile
 		,t.guarantor_now_address
 		,t.guarantor_family_phone
 		,t.guarantor_company_name
@@ -804,8 +807,10 @@
 		
 		,t.emergency_relation2
 		,t.emergency_mobile2
-		,t.guarantor_name
-		,t.guarantor_mobile
+		,t.guarantor1_name
+		,t.guarantor1_mobile
+		,t.guarantor2_name
+		,t.guarantor2_mobile
 		,t.guarantor_now_address
 		,t.guarantor_family_phone
 		,t.guarantor_company_name
@@ -1027,8 +1032,10 @@
 		
 		,t.emergency_relation2
 		,t.emergency_mobile2
-		,t.guarantor_name
-		,t.guarantor_mobile
+		,t.guarantor1_name
+		,t.guarantor1_mobile
+		,t.guarantor2_name
+		,t.guarantor2_mobile
 		,t.guarantor_now_address
 		,t.guarantor_family_phone
 		,t.guarantor_company_name
@@ -1168,8 +1175,10 @@
 		,guarantor2_balance
 		,guarantor2_jour_show_income     
 		,guarantor2_is_print 
-		,guarantor_name 
-		,guarantor_mobile 
+		,guarantor1_name 
+		,guarantor1_mobile 
+		,guarantor2_name 
+		,guarantor2_mobile 
 		,other_income_note
 		
 		,is_house_property
@@ -1308,8 +1317,10 @@
 		,#{guarantor2Balance}
 		,#{guarantor2JourShowIncome}
 		,#{guarantor2IsPrint} 
-		,#{guarantorName} 
-		,#{guarantorMobile} 
+		,#{guarantor1Name} 
+		,#{guarantor1Mobile} 
+		,#{guarantor2Name} 
+		,#{guarantor2Mobile} 
 		,#{otherIncomeNote}
 		
 		,#{isHouseProperty}
@@ -1643,9 +1654,10 @@
 		,bank_contract_code = #{bankContractCode}
 		,reg_certificate_code = #{regCertificateCode}
 		
-		,guarantor_name = #{guarantorName}
-		
-		,guarantor_mobile = #{guarantorMobile}
+		,guarantor1_name = #{guarantor1Name}
+		,guarantor1_mobile = #{guarantor1Mobile}
+		,guarantor2_name = #{guarantor2Name}
+		,guarantor2_mobile = #{guarantor2Mobile}
 		,bank_card_number = #{bankCardNumber}
 		,bill_datetime = #{billDatetime}
 		,month_amount = #{monthAmount}

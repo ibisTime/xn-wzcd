@@ -16,6 +16,9 @@ public class XN632715Req extends APageReq {
     // 申领人
     private String applyUser;
 
+    // 类型(1 公司 2 个人)
+    private String type;
+
     // 所属公司
     private String companyCode;
 
@@ -28,6 +31,14 @@ public class XN632715Req extends APageReq {
 
     public void setApplyUser(String applyUser) {
         this.applyUser = applyUser;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getCompanyCode() {

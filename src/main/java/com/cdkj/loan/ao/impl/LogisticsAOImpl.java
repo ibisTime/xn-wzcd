@@ -88,7 +88,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
         logistics.setLogisticsCode(req.getLogisticsCode());
 
         logistics.setSendDatetime(DateUtil.strToDate(req.getSendDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+            DateUtil.DATA_TIME_PATTERN_1));
         logistics.setSendNote(req.getSendNote());
         logistics.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
         logisticsBO.sendLogistics(logistics);
@@ -114,7 +114,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
         data.setLogisticsCode(req.getLogisticsCode());
 
         data.setSendDatetime(DateUtil.strToDate(req.getSendDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+            DateUtil.DATA_TIME_PATTERN_1));
         data.setSendNote(req.getSendNote());
         data.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
         if (ELogisticsType.GPS.getCode().equals(data.getType())) {
