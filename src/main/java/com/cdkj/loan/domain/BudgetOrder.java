@@ -437,6 +437,9 @@ public class BudgetOrder extends ABaseDO {
     // 申请说明事项
     private String otherApplyNote;
 
+    // 创建时间
+    private Date creditDatetime;
+
     // 申请时间
     private Date applyDatetime;
 
@@ -776,6 +779,10 @@ public class BudgetOrder extends ABaseDO {
     private Date applyDatetimeStart;// 申请时间起始
 
     private Date applyDatetimeEnd;// 申请时间结束
+
+    private Date creditDatetimeStart;// 创建时间起始
+
+    private Date creditDatetimeEnd;// 创建时间结束
 
     private List<String> fileListArray;
 
@@ -1142,6 +1149,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setMakeCardStatus(String makeCardStatus) {
         this.makeCardStatus = makeCardStatus;
+    }
+
+    public Date getCreditDatetime() {
+        return creditDatetime;
+    }
+
+    public void setCreditDatetime(Date creditDatetime) {
+        this.creditDatetime = creditDatetime;
     }
 
     public String getMakeCardOperator() {
@@ -1910,6 +1925,22 @@ public class BudgetOrder extends ABaseDO {
 
     public void setRepayBankDate(int repayBankDate) {
         this.repayBankDate = repayBankDate;
+    }
+
+    public Date getCreditDatetimeStart() {
+        return creditDatetimeStart;
+    }
+
+    public void setCreditDatetimeStart(Date creditDatetimeStart) {
+        this.creditDatetimeStart = creditDatetimeStart;
+    }
+
+    public Date getCreditDatetimeEnd() {
+        return creditDatetimeEnd;
+    }
+
+    public void setCreditDatetimeEnd(Date creditDatetimeEnd) {
+        this.creditDatetimeEnd = creditDatetimeEnd;
     }
 
     public Long getRepayFirstMonthAmount() {

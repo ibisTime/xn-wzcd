@@ -36,8 +36,8 @@ import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
-        IBudgetOrderBO {
+public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
+        implements IBudgetOrderBO {
 
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
@@ -81,8 +81,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             if (EBudgetOrderShopWay.OLD.getCode().equals(data.getShopWay())) {
                 shopWay = "R";
             }
-            Department company = departmentBO.getDepartment(data
-                .getCompanyCode());
+            Department company = departmentBO
+                .getDepartment(data.getCompanyCode());
             Province provinceCondition = new Province();
             provinceCondition.setName(company.getProvinceNo());
             Province province = provinceBO.getProvince(provinceCondition);
@@ -107,9 +107,10 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
 
             BudgetOrder budgetOrderCondition = new BudgetOrder();
             budgetOrderCondition
-                .setApplyDatetimeStart(DateUtil.getTodayStart());
-            budgetOrderCondition.setApplyDatetimeEnd(DateUtil.getTodayEnd());
-            long count = budgetOrderDAO.selectTotalCount(budgetOrderCondition) + 1;
+                .setCreditDatetimeStart(DateUtil.getTodayStart());
+            budgetOrderCondition.setCreditDatetimeEnd(DateUtil.getTodayEnd());
+            long count = budgetOrderDAO.selectTotalCount(budgetOrderCondition)
+                    + 1;
             String bizNO = String.valueOf(count);
             if (bizNO.length() == 1) {
                 bizNO = "00" + bizNO;
@@ -239,22 +240,22 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         BudgetOrder budgetOrder = getBudgetOrder(code);
         String preCurrentNode = budgetOrder.getCurNodeCode();
 
-        if (EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode().equals(
-            preCurrentNode)) {
+        if (EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode()
+            .equals(preCurrentNode)) {
             // 抵押流程 外地 009_05分公司寄送抵押材料给总公司 收件并审核通过 改预算单入档状态为待入档
             budgetOrder.setEnterFileStatus(EEnterFileStatus.TODO.getCode());
             budgetOrderBO.updateEnterFileStatus(budgetOrder);
         }
 
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
-            .getCurNodeCode());
+        NodeFlow nodeFlow = nodeFlowBO
+            .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
-        if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode().equals(
-            budgetOrder.getCurNodeCode())
-                || EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode().equals(
-                    budgetOrder.getCurNodeCode())) {// 连续发件情况 再生成一条资料传递
+        if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
+            .equals(budgetOrder.getCurNodeCode())
+                || EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode()
+                    .equals(budgetOrder.getCurNodeCode())) {// 连续发件情况 再生成一条资料传递
             NodeFlow nodeFlow2 = nodeFlowBO
                 .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
             if (StringUtils.isNotBlank(nodeFlow2.getFileList())) {
@@ -271,8 +272,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         budgetOrderDAO.updaterLogicNode(budgetOrder);
 
         // 日志记录
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
-            budgetOrder.getCurNodeCode());
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), operator);

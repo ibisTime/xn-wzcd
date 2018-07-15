@@ -445,6 +445,7 @@ public class CreditAOImpl implements ICreditAO {
             EBudgetOrderNode node = EBudgetOrderNode.START_NODE;
 
             data.setCurNodeCode(node.getCode());
+            data.setCreditDatetime(new Date());
             String budgetOrderCode = budgetOrderBO.saveBudgetOrder(data);
             // 日志记录
             sysBizLogBO.saveSYSBizLog(budgetOrderCode, EBizLogType.BUDGET_ORDER,

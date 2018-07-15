@@ -26,7 +26,8 @@ ADD COLUMN `enter_file_status` VARCHAR(4) NULL COMMENT '入档状态（0待入�
 CHANGE COLUMN `guarantor_name` `guarantor1_name` VARCHAR(32) NULL DEFAULT NULL COMMENT '担保人1姓名' ,
 CHANGE COLUMN `guarantor_mobile` `guarantor1_mobile` VARCHAR(16) NULL DEFAULT NULL COMMENT '担保人1手机' ,
 ADD COLUMN `guarantor2_name` VARCHAR(32) NULL COMMENT '担保人2姓名' AFTER `guarantor1_mobile`,
-ADD COLUMN `guarantor2_mobile` VARCHAR(16) NULL COMMENT '担保人2手机号' AFTER `guarantor2_name`;
+ADD COLUMN `guarantor2_mobile` VARCHAR(16) NULL COMMENT '担保人2手机号' AFTER `guarantor2_name`,
+ADD COLUMN `credit_datetime` datetime NULL COMMENT '创建时间' AFTER `other_apply_note`;
 
 
 
