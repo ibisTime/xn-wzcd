@@ -2111,7 +2111,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setGuarantPrintTemplateId(req.getGuarantPrintTemplateId());
         budgetOrder.setGuarantPrintUser(req.getOperater());
         budgetOrder.setGuarantPrintDatetime(new Date());
-        budgetOrder.setCurNodeCode(nextNodeCode);
         budgetOrderBO.loanContractPrint(budgetOrder);
 
         // 生成资料传递
