@@ -135,7 +135,7 @@
 	<update id="update_logistics_sendAgain" parameterType="logistics">
 		UPDATE tdq_logistics t
 		SET
-		t.send_datetime = #{sendDatetime}
+		t.receipt_datetime = #{receiptDatetime}
 		,t.supplement_reason = #{supplementReason}
 		,t.supplement_note = #{supplementNote}
 		,t.status = #{status}

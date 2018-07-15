@@ -105,7 +105,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
             // gps补件原因
             data.setSupplementReason(req.getSupplementReason());
         }
-        logisticsDAO.updateLogisticsReceive(data);
+        logisticsDAO.updateLogisticsSendAgain(data);
     }
 
     @Override

@@ -7,11 +7,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.IChannelBankBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICollectBankcardDAO;
+import com.cdkj.loan.domain.ChannelBank;
 import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.dto.req.XN632060ReqCollectBankcard;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -24,6 +26,9 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
 
     @Autowired
     private ICollectBankcardDAO collectBankcardDAO;
+
+    @Autowired
+    private IChannelBankBO channelBankBO;
 
     @Override
     public void saveCollectBankcardList(
@@ -39,6 +44,9 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
                 data.setCompanyCode(code);
                 data.setRealName(collectBankcard.getRealName());
                 data.setBankCode(collectBankcard.getBankCode());
+                ChannelBank channelBank = channelBankBO
+                    .getChannelBank(collectBankcard.getBankCode());
+                data.setBankName(channelBank.getBankName());
                 data.setSubbranch(collectBankcard.getSubbranch());
                 data.setBankcardNumber(collectBankcard.getBankcardNumber());
                 data.setRemark(collectBankcard.getRemark());
@@ -63,6 +71,9 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
                 data.setCompanyCode(code);
                 data.setRealName(collectBankcard.getRealName());
                 data.setBankCode(collectBankcard.getBankCode());
+                ChannelBank channelBank = channelBankBO
+                    .getChannelBank(collectBankcard.getBankCode());
+                data.setBankName(channelBank.getBankName());
                 data.setSubbranch(collectBankcard.getSubbranch());
                 data.setBankcardNumber(collectBankcard.getBankcardNumber());
                 data.setPointRate(

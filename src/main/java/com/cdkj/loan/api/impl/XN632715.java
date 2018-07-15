@@ -28,6 +28,7 @@ public class XN632715 extends AProcessor {
     public Object doBusiness() throws BizException {
         GpsApply condition = new GpsApply();
         condition.setApplyUser(req.getApplyUser());
+        condition.setType(req.getType());
         condition.setCompanyCode(req.getCompanyCode());
         condition.setStatus(req.getStatus());
         String column = req.getOrderColumn();
