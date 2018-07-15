@@ -438,7 +438,7 @@ public class BudgetOrder extends ABaseDO {
     private String otherApplyNote;
 
     // 创建时间
-    private Date creditDatetime;
+    private Date createDatetime;
 
     // 申请时间
     private Date applyDatetime;
@@ -780,9 +780,9 @@ public class BudgetOrder extends ABaseDO {
 
     private Date applyDatetimeEnd;// 申请时间结束
 
-    private Date creditDatetimeStart;// 创建时间起始
+    private Date createDatetimeStart;// 创建时间起始
 
-    private Date creditDatetimeEnd;// 创建时间结束
+    private Date createDatetimeEnd;// 创建时间结束
 
     private List<String> fileListArray;
 
@@ -1151,12 +1151,12 @@ public class BudgetOrder extends ABaseDO {
         this.makeCardStatus = makeCardStatus;
     }
 
-    public Date getCreditDatetime() {
-        return creditDatetime;
+    public Date getCreateDatetime() {
+        return createDatetime;
     }
 
-    public void setCreditDatetime(Date creditDatetime) {
-        this.creditDatetime = creditDatetime;
+    public void setCreateDatetime(Date createDatetime) {
+        this.createDatetime = createDatetime;
     }
 
     public String getMakeCardOperator() {
@@ -1927,20 +1927,20 @@ public class BudgetOrder extends ABaseDO {
         this.repayBankDate = repayBankDate;
     }
 
-    public Date getCreditDatetimeStart() {
-        return creditDatetimeStart;
+    public Date getCreateDatetimeStart() {
+        return createDatetimeStart;
     }
 
-    public void setCreditDatetimeStart(Date creditDatetimeStart) {
-        this.creditDatetimeStart = creditDatetimeStart;
+    public void setCreateDatetimeStart(Date createDatetimeStart) {
+        this.createDatetimeStart = createDatetimeStart;
     }
 
-    public Date getCreditDatetimeEnd() {
-        return creditDatetimeEnd;
+    public Date getCreateDatetimeEnd() {
+        return createDatetimeEnd;
     }
 
-    public void setCreditDatetimeEnd(Date creditDatetimeEnd) {
-        this.creditDatetimeEnd = creditDatetimeEnd;
+    public void setCreateDatetimeEnd(Date createDatetimeEnd) {
+        this.createDatetimeEnd = createDatetimeEnd;
     }
 
     public Long getRepayFirstMonthAmount() {
