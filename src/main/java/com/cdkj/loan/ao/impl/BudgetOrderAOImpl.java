@@ -1237,9 +1237,45 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
 
         // 获取返点列表
-        List<RepointDetail> shouldBackRepointList = repointDetailBO
-            .queryRepointDetailList(budgetOrder.getCode(),
-                ERepointDetailUseMoneyPurpose.SHOULD_BACK.getCode());
+        /*
+         * List<RepointDetail> shouldBackRepointList = repointDetailBO
+         * .queryRepointDetailList(budgetOrder.getCode(),
+         * ERepointDetailUseMoneyPurpose.SHOULD_BACK.getCode());
+         */
+        ArrayList<RepointDetail> shouldBackRepointList = new ArrayList<RepointDetail>();
+        RepointDetail mortgageRepointDetail = new RepointDetail();
+        mortgageRepointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
+            .getCode());
+        mortgageRepointDetail.setRepointAmount(budgetOrder
+            .getShouldBackAmount());
+        if (EIsAdvanceFund.YES.getCode().equals(budgetOrder.getIsAdvanceFund())) {
+            // 垫资
+            CollectBankcard condition = new CollectBankcard();
+            condition.setCompanyCode(budgetOrder.getCarDealerCode());
+            condition.setType(ECollectBankcardType.DEALER_COLLECT.getCode());
+            List<CollectBankcard> list = collectBankcardBO
+                .queryCollectBankcardByCompanyCodeAndType(condition);
+            CollectBankcard collectBankcard = list.get(0);
+            CarDealer carDealer = carDealerBO.getCarDealer(budgetOrder
+                .getCarDealerCode());
+            mortgageRepointDetail.setCarDealerName(carDealer.getFullName());
+            mortgageRepointDetail.setAccountName(collectBankcard.getRealName());
+            mortgageRepointDetail.setAccountNo(collectBankcard
+                .getBankcardNumber());
+            mortgageRepointDetail.setOpenBankName(collectBankcard
+                .getSubbranch());
+        } else {
+            // 不垫资
+            mortgageRepointDetail.setCarDealerName(budgetOrder
+                .getShouldBackUserName());
+            mortgageRepointDetail.setAccountName(budgetOrder
+                .getShouldBackAccountName());
+            mortgageRepointDetail.setAccountNo(budgetOrder
+                .getShouldBackAccountNo());
+            mortgageRepointDetail.setOpenBankName(budgetOrder
+                .getShouldBackOpenBankName());
+        }
+        shouldBackRepointList.add(mortgageRepointDetail);
         budgetOrder.setRepointDetailList1(shouldBackRepointList);
 
         List<RepointDetail> proInRepointList = repointDetailBO
