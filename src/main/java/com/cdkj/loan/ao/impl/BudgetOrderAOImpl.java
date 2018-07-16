@@ -2038,7 +2038,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public BudgetOrder pledgeContractPrint(XN632192Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         if (!EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode()
-            .equals(budgetOrder.getCurNodeCode())) {
+            .equals(budgetOrder.getPledgeCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是车辆抵押（本地）打印岗打印节点，不能操作");
         }
