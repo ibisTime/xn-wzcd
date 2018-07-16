@@ -113,7 +113,7 @@ public class CreditAOImpl implements ICreditAO {
                 .getNextNode());
         credit.setCurNodeCode(currentNode.getCode());
 
-        String creditCode = creditBO.saveCredit(credit);
+        String creditCode = creditBO.saveCredit(credit);// 返回按规则生成的业务编号
 
         // 新增征信人员
         List<XN632110ReqChild> childList = req.getCreditUserList();
@@ -240,21 +240,16 @@ public class CreditAOImpl implements ICreditAO {
     @Override
     public Paginable<Credit> queryCreditPage(int start, int limit,
             Credit condition) {
-
         Paginable<Credit> paginable = creditBO.getPaginable(start, limit,
             condition);
-
         List<Credit> list = paginable.getList();
-
         for (Credit credit : list) {
             // 从征信人员表查申请人的客户姓名 手机号 身份证号
             credit.setCreditUser(creditUserBO.getCreditUserByCreditCode(
                 credit.getCode(), ELoanRole.APPLY_USER));
             init(credit);
         }
-
         return paginable;
-
     }
 
     @Override
@@ -327,7 +322,6 @@ public class CreditAOImpl implements ICreditAO {
             // 审核通过，改变节点
             credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 credit.getCurNodeCode()).getNextNode());
-
             // 法院网查询结果录入
             for (XN632114ReqCNR courtNetworkResults : req
                 .getCourtNetworkResultsList()) {
@@ -342,9 +336,7 @@ public class CreditAOImpl implements ICreditAO {
                 creditUserBO.refreshCourtNetworkResults(
                     courtNetworkResults.getCode(),
                     courtNetworkResults.getCourtNetworkResults());
-
             }
-
             // 生成预算单
             BudgetOrder data = new BudgetOrder();
             data.setCreditCode(credit.getCode());
@@ -354,7 +346,6 @@ public class CreditAOImpl implements ICreditAO {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "征信人员信息中缺少申请本人信息，驳回");
             }
-
             // 申请人信息
             data.setCustomerName(customerUser.getUserName());
             data.setApplyUserGhrRelation(customerUser.getRelation());
@@ -434,12 +425,12 @@ public class CreditAOImpl implements ICreditAO {
 
             data.setCurNodeCode(node.getCode());
             data.setCreateDatetime(new Date());
+            data.setCode(credit.getCode());
             String budgetOrderCode = budgetOrderBO.saveBudgetOrder(data);
             // 日志记录
             sysBizLogBO.saveSYSBizLog(budgetOrderCode,
                 EBizLogType.BUDGET_ORDER, budgetOrderCode, node.getCode(),
                 node.getValue(), req.getOperator());
-
             // 征信单回写预算单编号
             credit.setBudgetCode(budgetOrderCode);
             creditBO.refreshCredit(credit);
@@ -493,12 +484,10 @@ public class CreditAOImpl implements ICreditAO {
                 credit.setCompanyName(department.getName());
             }
         }
-
         if (StringUtils.isNotBlank(credit.getSaleUserId())) {
             SYSUser user = sysUserBO.getUser(credit.getSaleUserId());
             credit.setSalesmanName(user.getRealName());
         }
-
         if (StringUtils.isNotBlank(credit.getLoanBankCode())) {
             Bank bank = bankBO.getBankBySubbranch(credit.getLoanBankCode());
             credit.setLoanBankName(bank.getBankName());
