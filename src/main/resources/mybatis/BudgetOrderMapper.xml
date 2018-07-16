@@ -328,6 +328,12 @@
 	            	#{item}
                 </foreach> 
 			</if>
+			<if test="enterFileStatusList != null and enterFileStatusList.size() != 0 ">
+				AND t.enter_file_status in 
+                <foreach item="item" index="index" collection="enterFileStatusList" open="(" separator="," close=")">
+	            	#{item}
+                </foreach> 
+			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
 				<![CDATA[AND t.apply_datetime > #{applyDatetimeStart}]]>
 			</if>
