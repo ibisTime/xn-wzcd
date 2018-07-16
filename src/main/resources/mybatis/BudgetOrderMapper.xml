@@ -633,6 +633,7 @@
 		,t.pledge_cur_node_code
 		,t.repay_biz_code
 		,t.type
+		,t.enter_file_status
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -899,6 +900,7 @@
 		,t.pledge_cur_node_code
 		,t.repay_biz_code
 		,t.type
+		,t.enter_file_status
 		FROM
 		tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
 		<include refid="where_condition" />
@@ -1124,6 +1126,7 @@
 		,t.pledge_cur_node_code
 		,t.repay_biz_code
 		,t.type
+		,t.enter_file_status
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
