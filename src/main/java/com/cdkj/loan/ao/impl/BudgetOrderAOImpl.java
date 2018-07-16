@@ -1806,6 +1806,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setZfFinanceRemark(req.getZfFinanceRemark());
         budgetOrder.setIsSubmitCancel(EBoolean.NO.getCode());
         budgetOrderBO.receiptAndReturn(budgetOrder);
+        /*
+         * if (ETakeBackAdvanceFundType.CUSTOMER_CANCEL.getCode().equals(
+         * req.getType())) { // 客户作废 } if
+         * (ETakeBackAdvanceFundType.ADVANCE_FUND_RETURN.getCode().equals(
+         * req.getType())) { // 垫资款退回 }
+         */
     }
 
     @Override
@@ -1813,7 +1819,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
         if (!EBoolean.NO.getCode().equals(budgetOrder.getIsSubmitCancel())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "提交作废申请不为否，不能操作！");
+                "不是未提交作废申请状态，不能操作！");
         }
         budgetOrder.setIsSubmitCancel(EBoolean.YES.getCode());
         budgetOrder.setCurNodeCode(EBudgetOrderNode.TO_APPLY_CANCEL.getCode());
@@ -2380,7 +2386,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             // 生成资料传递
             NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
                 .getPledgeCurNodeCode());
-            NodeFlow flow = nodeFlowBO.getNodeFlowByCurrentNode(nodeFlow.getNextNode());
+            NodeFlow flow = nodeFlowBO.getNodeFlowByCurrentNode(nodeFlow
+                .getNextNode());
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                 nodeFlow.getNextNode(), flow.getNextNode());

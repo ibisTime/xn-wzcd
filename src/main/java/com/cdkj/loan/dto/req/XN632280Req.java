@@ -2,6 +2,9 @@ package com.cdkj.loan.dto.req;
 
 public class XN632280Req {
 
+    // 收回垫资款类型(1、客户作废；2、垫资款退回)
+    private String type;
+
     // 预算单编号
     private String code;
 
@@ -55,6 +58,14 @@ public class XN632280Req {
 
     public void setZfFinanceRemark(String zfFinanceRemark) {
         this.zfFinanceRemark = zfFinanceRemark;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
 }
