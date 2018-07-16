@@ -470,6 +470,9 @@ public class BudgetOrder extends ABaseDO {
     // 收款说明
     private String bankReceiptNote;
 
+    // 绿大本扫描件
+    private String greenBigSmj;
+
     // 抵押提交时间
     private Date pledgeCommitDatetime;
 
@@ -1677,6 +1680,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setGuarantor2BirthAddress(String guarantor2BirthAddress) {
         this.guarantor2BirthAddress = guarantor2BirthAddress;
+    }
+
+    public String getGreenBigSmj() {
+        return greenBigSmj;
+    }
+
+    public void setGreenBigSmj(String greenBigSmj) {
+        this.greenBigSmj = greenBigSmj;
     }
 
     public String getOtherNote() {

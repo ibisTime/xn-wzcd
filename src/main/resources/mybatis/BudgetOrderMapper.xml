@@ -179,6 +179,7 @@
 		<result column="bank_receipt_number" property="bankReceiptNumber" />
 		<result column="bank_receipt_pdf" property="bankReceiptPdf" />
 		<result column="bank_receipt_note" property="bankReceiptNote" />
+		<result column="green_big_smj" property="greenBigSmj" />
 		<result column="pledge_commit_datetime" property="pledgeCommitDatetime" />
 		
 		<result column="pledge_commit_note" property="pledgeCommitNote" />
@@ -525,6 +526,7 @@
 		,t.bank_receipt_number
 		,t.bank_receipt_pdf
 		,t.bank_receipt_note
+		,t.green_big_smj
 		,t.pledge_commit_datetime
 		,t.pledge_commit_note
 		,t.pledge_contract_code
@@ -796,6 +798,7 @@
 		,t.bank_receipt_number
 		,t.bank_receipt_pdf
 		,t.bank_receipt_note
+		,t.green_big_smj
 		,t.pledge_commit_datetime
 		,t.pledge_commit_note
 		,t.pledge_contract_code
@@ -1020,6 +1023,7 @@
 		,t.bank_receipt_number
 		,t.bank_receipt_pdf
 		,t.bank_receipt_note
+		,t.green_big_smj
 		,t.pledge_commit_datetime
 		,t.pledge_commit_note
 		,t.pledge_contract_code
@@ -1648,6 +1652,7 @@
 		,enter_file_status = #{enterFileStatus}
 		,operator = #{operator}
 		,operate_datetime = #{operateDatetime}
+		,green_big_smj = #{greenBigSmj}
 		WHERE code = #{code}
 	</update>
 	

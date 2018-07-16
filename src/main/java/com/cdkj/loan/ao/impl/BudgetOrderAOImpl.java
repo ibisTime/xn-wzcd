@@ -909,7 +909,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void carPledgeConfirm(String code, String operator) {
+    public void carPledgeConfirm(String code, String operator,
+            String greenBigSmj) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
         String preCurrentNode = budgetOrder.getPledgeCurNodeCode();// 当前抵押流程节点
 
@@ -944,6 +945,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCode(code);
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
+        budgetOrder.setGreenBigSmj(greenBigSmj);
         SYSUser user = sysUserBO.getUser(operator);
         budgetOrder.setOperateDepartment(user.getDepartmentCode());
         budgetOrderBO.refreshCarPledgeConfirm(budgetOrder);
@@ -2023,7 +2025,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public BudgetOrder pledgeContractPrint(XN632192Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         if (!EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode().equals(
-            budgetOrder.getCurNodeCode())) {
+            budgetOrder.getPledgeCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是车辆抵押（本地）打印岗打印节点，不能操作");
         }
