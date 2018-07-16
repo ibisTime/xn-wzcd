@@ -57,7 +57,8 @@ public interface IBudgetOrderAO {
             String pledgeCommitNote, String operator);
 
     // 确认抵押完成
-    public void carPledgeConfirm(String code, String operator);
+    public void carPledgeConfirm(String code, String operator,
+            String greenBigSmj);
 
     // 车贷入档补录
     public void carLoanArchive(XN632200Req req);
@@ -126,8 +127,8 @@ public interface IBudgetOrderAO {
     public XN632234Res modifyLoanAmountCalculateData(String code,
             String loanAmount);
 
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start,
-            int limit, BudgetOrder condition);
+    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
+            BudgetOrder condition);
 
     // 银行放款合同打印
     public BudgetOrder loanContractPrint(XN632142Req req);

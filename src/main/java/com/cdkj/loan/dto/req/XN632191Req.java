@@ -11,6 +11,9 @@ public class XN632191Req {
     // 预算单编号
     private String code;
 
+    // 绿大本扫描件
+    private String greenBigSmj;
+
     // 操作人
     private String operator;
 
@@ -20,6 +23,14 @@ public class XN632191Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getGreenBigSmj() {
+        return greenBigSmj;
+    }
+
+    public void setGreenBigSmj(String greenBigSmj) {
+        this.greenBigSmj = greenBigSmj;
     }
 
     public String getOperator() {

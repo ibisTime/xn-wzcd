@@ -24,7 +24,8 @@ public class XN632191 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.carPledgeConfirm(req.getCode(), req.getOperator());
+        budgetOrderAO.carPledgeConfirm(req.getCode(), req.getOperator(),
+            req.getGreenBigSmj());
         return new BooleanRes(true);
     }
 

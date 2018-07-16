@@ -913,7 +913,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void carPledgeConfirm(String code, String operator) {
+    public void carPledgeConfirm(String code, String operator,
+            String greenBigSmj) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
         String preCurrentNode = budgetOrder.getPledgeCurNodeCode();// 当前抵押流程节点
 
@@ -948,6 +949,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCode(code);
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
+        budgetOrder.setGreenBigSmj(greenBigSmj);
         SYSUser user = sysUserBO.getUser(operator);
         budgetOrder.setOperateDepartment(user.getDepartmentCode());
         budgetOrderBO.refreshCarPledgeConfirm(budgetOrder);
