@@ -280,11 +280,38 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                 pledgeNodeFlow.getCurrentNode(), pledgeNodeFlow.getNextNode());
         }
-        // 获取当前主流程节点
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode);
-        budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
-        budgetOrder.setOperator(operator);
-        budgetOrder.setOperateDatetime(new Date());
+        String pledgeCurNodeCode = budgetOrder.getPledgeCurNodeCode();
+        if (EBudgetOrderNode.BANK_LOAN_ACHIEVE.getCode().equals(preCurrentNode)
+                && (EBudgetOrderNode.LOCAL_SENDPOST_SEND_BANK.getCode()
+                    .equals(pledgeCurNodeCode)
+                        || EBudgetOrderNode.OUT_BANKPOINT_SEND_PARENT.getCode()
+                            .equals(pledgeCurNodeCode)
+                        || EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode()
+                            .equals(pledgeCurNodeCode)
+                        || EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode()
+                            .equals(pledgeCurNodeCode)
+                        || EBudgetOrderNode.OUT_SENDPOST_SEND_BANK.getCode()
+                            .equals(pledgeCurNodeCode))) {
+            NodeFlow nodeFlow = nodeFlowBO
+                .getNodeFlowByCurrentNode(pledgeCurNodeCode);
+            budgetOrder.setPledgeCurNodeCode(nodeFlow.getNextNode());
+            budgetOrder.setOperator(operator);
+            budgetOrder.setOperateDatetime(new Date());
+        } else if (EBudgetOrderNode.SALESMAN_SEND_LOGISTICS.getCode()
+            .equals(preCurrentNode)
+                || EBudgetOrderNode.BRANCH_SEND_LOGISTICS.getCode()
+                    .equals(preCurrentNode)
+                || EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
+                    .equals(preCurrentNode)
+                || EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
+                    .equals(preCurrentNode)) {
+            // 获取当前主流程节点
+            NodeFlow nodeFlow = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode);
+            budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+            budgetOrder.setOperator(operator);
+            budgetOrder.setOperateDatetime(new Date());
+        }
         if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
             .equals(budgetOrder.getCurNodeCode())
                 || EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode()
