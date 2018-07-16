@@ -809,6 +809,8 @@
 		SET
 		sf_amount = #{sfAmount}
 		,first_repay_amount = #{firstRepayAmount}
+		,month_datetime = #{monthDatetime}
+		,month_amount = #{monthAmount}
 		,bill_datetime = #{billDatetime}
 		WHERE code = #{code}
 	</update>	

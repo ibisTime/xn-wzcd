@@ -17,6 +17,7 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.IRepayPlanDAO;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN630550Req;
@@ -415,6 +416,17 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
         repayPlanDAO.updateTakeCarInputResult(data);
+    }
+
+    @Override
+    public void refreshRepayPlan(BudgetOrder budgetOrder) {
+        List<RepayPlan> repayPlanList = queryRepayPlanListByRepayBizCode(
+            budgetOrder.getRepayBizCode());
+
+        for (RepayPlan repayPlan : repayPlanList) {
+            repayPlan.setRepayCapital(budgetOrder.getMonthAmount());
+            repayPlanDAO.updateRepayPlan(repayPlan);
+        }
     }
 
 }

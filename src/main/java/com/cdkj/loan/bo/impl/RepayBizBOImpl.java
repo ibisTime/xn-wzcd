@@ -560,7 +560,9 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     public void refreshRepayBiz(BudgetOrder budgetOrder) {
         RepayBiz repayBiz = getRepayBiz(budgetOrder.getRepayBizCode());
         repayBiz.setSfAmount(budgetOrder.getRepayFirstMonthAmount());
-        repayBiz.setFirstRepayAmount(budgetOrder.getRepayMonthAmount());
+        repayBiz.setFirstRepayAmount(budgetOrder.getRepayFirstMonthAmount());
+        repayBiz.setMonthAmount(budgetOrder.getMonthAmount());
+        repayBiz.setMonthDatetime(budgetOrder.getRepayBankDate());
         repayBiz
             .setFirstRepayDatetime(budgetOrder.getRepayFirstMonthDatetime());
         repayBiz.setBillDatetime(budgetOrder.getBillDatetime());

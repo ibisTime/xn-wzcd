@@ -487,9 +487,16 @@
 	</update>
 	
 	<update id="update_payedDaily" parameterType="repayPlan">
-		UPDATE tdh_repay_plan t 
+		UPDATE tdh_repay_plan 
 		SET
-		t.cur_node_code=#{curNodeCode}
+		cur_node_code=#{curNodeCode}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_repayPlan" parameterType="repayPlan">
+		UPDATE tdh_repay_plan
+		SET
+		repay_capital=#{repayCapital}
 		WHERE code=#{code}
 	</update>
 </mapper>
