@@ -258,8 +258,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
         if (null != resultCs) {
             // 判断新我司贷款成数是否在标准内
-            if (data.getCompanyLoanCs() >= resultCs.getMaxCs()
-                    || data.getCompanyLoanCs() <= resultCs.getMinCs()) {
+            if (data.getCompanyLoanCs() > resultCs.getMaxCs()
+                    || data.getCompanyLoanCs() < resultCs.getMinCs()) {
                 // 不在我司准入贷款成数标准内
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "贷款成数不在我司贷款成数有效范围");
