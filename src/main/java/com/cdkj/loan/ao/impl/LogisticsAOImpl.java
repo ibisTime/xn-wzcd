@@ -120,7 +120,11 @@ public class LogisticsAOImpl implements ILogisticsAO {
         if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             gpsApplyBO.sendGps(data.getBizCode(), data.getSendDatetime());
         } else if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
-            int size = data.getSupplementReasonList().size();
+            SupplementReason supplementReason = new SupplementReason();
+            supplementReason.setLogisticsCode(req.getCode());
+            List<SupplementReason> reasonList = supplementReasonBO
+                .querySupplementReasonList(supplementReason);
+            int size = reasonList.size();
             int size2 = req.getSupplementReasonList().size();
             if (size != size2) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),

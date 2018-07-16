@@ -262,8 +262,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
         if (null != resultCs) {
             // 判断新我司贷款成数是否在标准内
-            if (data.getCompanyLoanCs() >= resultCs.getMaxCs()
-                    || data.getCompanyLoanCs() <= resultCs.getMinCs()) {
+            if (data.getCompanyLoanCs() > resultCs.getMaxCs()
+                    || data.getCompanyLoanCs() < resultCs.getMinCs()) {
                 // 不在我司准入贷款成数标准内
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前贷款成数不在我司贷款成数有效范围内");
@@ -2019,12 +2019,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setGuarantPrintTemplateId(req.getGuarantPrintTemplateId());
         budgetOrder.setGuarantPrintUser(req.getOperater());
         budgetOrder.setGuarantPrintDatetime(new Date());
+        budgetOrder.setCurNodeCode(nextNodeCode);
         budgetOrderBO.loanContractPrint(budgetOrder);
-
-        // 生成资料传递
-        logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-            budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
-            nextNodeCode);
 
         // 写日志
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
@@ -2443,17 +2439,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         for (String code : list) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
             String preCurNodeCode = budgetOrder.getCurNodeCode();
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                preCurNodeCode).getNextNode());
             EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
                 budgetOrder.getCurNodeCode());
             budgetOrderBO.loanBankCollateAchieve(budgetOrder);
 
-            // 生成资料传递(柴)
-            String curNodeCode = budgetOrder.getCurNodeCode();
-            NodeFlow nodeFlow = nodeFlowBO
-                .getNodeFlowByCurrentNode(curNodeCode);
+            // 生成资料传递
+            NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
+                .getCurNodeCode());
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                curNodeCode, nodeFlow.getNextNode());
+                budgetOrder.getCurNodeCode(), nodeFlow.getNextNode());
 
             // 日志记录
             sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),

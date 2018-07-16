@@ -238,6 +238,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     public void logicOrder(String code, String operator) {
         BudgetOrder budgetOrder = getBudgetOrder(code);
         String preCurrentNode = budgetOrder.getCurNodeCode();// 主流程当前节点
+        Department department = departmentBO.getDepartment(budgetOrder
+            .getCompanyCode());// 获取公司
         if (StringUtils.isNotBlank(budgetOrder.getPledgeCurNodeCode())) {
             String pledgeCurNodeCode = budgetOrder.getPledgeCurNodeCode();// 抵押流程当前节点
             if (EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode().equals(
@@ -248,7 +250,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
                 budgetOrderBO.updateEnterFileStatus(budgetOrder);
             }
             if (EBudgetOrderNode.LOCAL_SENDPOST_SEND_BANK.getCode().equals(
-                pledgeCurNodeCode)) {
+                pledgeCurNodeCode)
+                    && "温州市".equals(department.getCityNo())) {
                 // 抵押流程本地 寄件岗寄送银行 收件并审核通过 更新抵押流程节点 到下一个 提交银行
                 budgetOrder.setPledgeCurNodeCode(nodeFlowBO
                     .getNodeFlowByCurrentNode(pledgeCurNodeCode).getNextNode());
@@ -264,7 +267,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
                     .getCode());
         }
         if (EBudgetOrderNode.SEND_BANK_MATERIALS.getCode().equals(
-            preCurrentNode)) {
+            preCurrentNode)
+                && !"温州市".equals(department.getCityNo())) {
             // 当前主流程节点是银行放款流程 007_05 总公司寄送银行材料给银行驻点
             // 收件并审核通过后 抵押流程外地开始（主流程外的）
             // 设置抵押流程节点为车辆抵押外地第一步009_01银行驻点发送抵押合同给总公司
@@ -287,15 +291,16 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode().equals(
             budgetOrder.getCurNodeCode())
                 || EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode().equals(
-                    budgetOrder.getPledgeCurNodeCode())) {// 连续发件情况 再生成一条资料传递
+                    budgetOrder.getPledgeCurNodeCode())) {// 连续发件情况
+                                                          // 再生成一条资料传递
             NodeFlow nodeFlowNext = nodeFlowBO
                 .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());// 获取当前节点的下一个节点
             // 生成资料传递
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                 nodeFlowNext.getCurrentNode(), nodeFlowNext.getNextNode());
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点材料清单不存在");
+            // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+            // "当前节点材料清单不存在");
         }
         budgetOrderDAO.updaterLogicNode(budgetOrder);
 
