@@ -1053,9 +1053,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setOperator(req.getOperator());
         budgetOrder.setOperateDatetime(new Date());
         SYSUser sysUser = sysUserBO.getUser(req.getOperator());
-        Department department = departmentBO
-            .getDepartment(sysUser.getDepartmentCode());
-        budgetOrder.setOperateDepartment(department.getName());
+        budgetOrder.setOperateDepartment(sysUser.getDepartmentCode());
 
         if (CollectionUtils.isNotEmpty(req.getFileList())) {
             StringBuilder fileListBuilder = new StringBuilder();
@@ -1818,6 +1816,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void receiptAndReturn(XN632280Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         budgetOrder.setZfSkBankcardCode(req.getZfSkBankcardCode());
@@ -1830,6 +1829,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void remindingProcess(String code) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
         if (!EBoolean.NO.getCode().equals(budgetOrder.getIsSubmitCancel())) {
@@ -1880,6 +1880,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public XN632234Res modifyLoanAmountCalculateData(String code,
             String loanAmount) {
         XN632234Res res = new XN632234Res();
@@ -2371,6 +2372,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void collateAchieve(XN632193Req req) {
         List<String> list = req.getList();
         for (String code : list) {
@@ -2406,6 +2408,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void pledgeBegin(XN632194Req req) {
 
         List<String> list = req.getList();
@@ -2434,6 +2437,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void bankLoanCollateAchieve(XN632143Req req) {
 
         List<String> list = req.getList();
