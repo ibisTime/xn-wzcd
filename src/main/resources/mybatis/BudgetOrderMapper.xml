@@ -622,6 +622,7 @@
 		,t.is_submit_cancel
 		
 		,t.cur_node_code
+		,t.pledge_cur_node_code
 		,t.repay_biz_code
 		,t.type
 		FROM
@@ -886,6 +887,7 @@
 		,t.is_submit_cancel
 		
 		,t.cur_node_code
+		,t.pledge_cur_node_code
 		,t.repay_biz_code
 		,t.type
 		FROM
@@ -1109,6 +1111,7 @@
 		,t.is_submit_cancel
 		
 		,t.cur_node_code
+		,t.pledge_cur_node_code
 		,t.repay_biz_code
 		,t.type
 		FROM
