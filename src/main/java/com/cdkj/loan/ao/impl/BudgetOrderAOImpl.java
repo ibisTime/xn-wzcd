@@ -2367,8 +2367,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         for (String code : list) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
             String preCurNodeCode = budgetOrder.getPledgeCurNodeCode();
-            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preCurNodeCode).getNextNode());
+            budgetOrder.setPledgeCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurNodeCode).getNextNode());
             EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
                 budgetOrder.getPledgeCurNodeCode());
             budgetOrderBO.collateAchieve(budgetOrder);
@@ -2380,9 +2380,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             // 生成资料传递
             NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
                 .getPledgeCurNodeCode());
+            NodeFlow flow = nodeFlowBO.getNodeFlowByCurrentNode(nodeFlow.getNextNode());
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                nodeFlow.getCurrentNode(), nodeFlow.getNextNode());
+                nodeFlow.getNextNode(), flow.getNextNode());
         }
     }
 
