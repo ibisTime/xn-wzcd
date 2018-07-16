@@ -2555,6 +2555,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
                 .get(budgetOrder.getCurNodeCode());
             budgetOrderBO.loanBankCollateAchieve(budgetOrder);
+            
+            // 生成资料传递
+            NodeFlow nodeFlow = nodeFlowBO
+                .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
+            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                budgetOrder.getCurNodeCode(), nodeFlow.getNextNode());
 
             // 日志记录
             sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),

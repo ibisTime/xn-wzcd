@@ -239,6 +239,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     public void logicOrder(String code, String operator) {
         BudgetOrder budgetOrder = getBudgetOrder(code);
         String preCurrentNode = budgetOrder.getCurNodeCode();// 主流程当前节点
+        Department department = departmentBO.getDepartment(budgetOrder.getCompanyCode());//获取公司
         if (StringUtils.isNotBlank(budgetOrder.getPledgeCurNodeCode())) {
             String pledgeCurNodeCode = budgetOrder.getPledgeCurNodeCode();// 抵押流程当前节点
             if (EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode()
@@ -249,7 +250,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
                 budgetOrderBO.updateEnterFileStatus(budgetOrder);
             }
             if (EBudgetOrderNode.LOCAL_SENDPOST_SEND_BANK.getCode()
-                .equals(pledgeCurNodeCode)) {
+                .equals(pledgeCurNodeCode) && "温州市".equals(department.getCityNo())) {
                 // 抵押流程本地 寄件岗寄送银行 收件并审核通过 更新抵押流程节点 到下一个 提交银行
                 budgetOrder.setPledgeCurNodeCode(nodeFlowBO
                     .getNodeFlowByCurrentNode(pledgeCurNodeCode).getNextNode());
@@ -264,7 +265,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
                 EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode());
         }
         if (EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
-            .equals(preCurrentNode)) {
+            .equals(preCurrentNode) && !"温州市".equals(department.getCityNo())) {
             // 当前主流程节点是银行放款流程 007_05 总公司寄送银行材料给银行驻点
             // 收件并审核通过后 抵押流程外地开始（主流程外的）
             // 设置抵押流程节点为车辆抵押外地第一步009_01银行驻点发送抵押合同给总公司
