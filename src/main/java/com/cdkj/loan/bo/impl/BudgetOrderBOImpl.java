@@ -295,9 +295,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             NodeFlow nodeFlow = nodeFlowBO
                 .getNodeFlowByCurrentNode(pledgeCurNodeCode);
             budgetOrder.setPledgeCurNodeCode(nodeFlow.getNextNode());
-            budgetOrder.setOperator(operator);
-            budgetOrder.setOperateDatetime(new Date());
-        } else if (EBudgetOrderNode.SALESMAN_SEND_LOGISTICS.getCode()
+        }
+        if (EBudgetOrderNode.SALESMAN_SEND_LOGISTICS.getCode()
             .equals(preCurrentNode)
                 || EBudgetOrderNode.BRANCH_SEND_LOGISTICS.getCode()
                     .equals(preCurrentNode)
@@ -309,16 +308,28 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             NodeFlow nodeFlow = nodeFlowBO
                 .getNodeFlowByCurrentNode(preCurrentNode);
             budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
-            budgetOrder.setOperator(operator);
-            budgetOrder.setOperateDatetime(new Date());
         }
+        budgetOrder.setOperator(operator);
+        budgetOrder.setOperateDatetime(new Date());
+        // 主流程
         if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
-            .equals(budgetOrder.getCurNodeCode())
-                || EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode()
-                    .equals(budgetOrder.getPledgeCurNodeCode())) {// 连续发件情况
+            .equals(budgetOrder.getCurNodeCode())) {// 连续发件情况
             // 再生成一条资料传递
             NodeFlow nodeFlowNext = nodeFlowBO
                 .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());// 获取当前节点的下一个节点
+            // 生成资料传递
+            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                nodeFlowNext.getCurrentNode(), nodeFlowNext.getNextNode());
+            // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+            // "当前节点材料清单不存在");
+        }
+        // 抵押流程
+        if (EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode()
+            .equals(budgetOrder.getPledgeCurNodeCode())) {// 连续发件情况
+            // 再生成一条资料传递
+            NodeFlow nodeFlowNext = nodeFlowBO
+                .getNodeFlowByCurrentNode(budgetOrder.getPledgeCurNodeCode());// 获取当前节点的下一个节点
             // 生成资料传递
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
