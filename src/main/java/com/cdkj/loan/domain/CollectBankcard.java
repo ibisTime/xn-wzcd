@@ -23,7 +23,7 @@ public class CollectBankcard extends ABaseDO {
 
     private String bankName;// 银行名称
 
-    private String subbranch;// 支行编号
+    private String subbranch;// 支行名称
 
     private String bankcardNumber;// 账号
 

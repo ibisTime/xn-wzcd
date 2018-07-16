@@ -66,13 +66,13 @@ public class RepointDetail extends ABaseDO {
     // 收款账号编号（协议内返点）
     private String accountCode;
 
-    // 收款账号(协议外返点)
+    // 收款账号(协议外返点手填)
     private String accountNo;
 
-    // 收款开户行名称(协议外返点)
+    // 收款开户行名称(协议外返点手填)
     private String openBankName;
 
-    // 收款户名(协议外返点)
+    // 收款户名(协议外返点手填)
     private String accountName;
 
     // 节点(0待制单1已制单待打款2已打款)

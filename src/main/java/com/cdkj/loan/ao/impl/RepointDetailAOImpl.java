@@ -111,29 +111,29 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         double globalRate = data.getGlobalRate(); // 综合利率（银行实际利率）
         double benchmarkRate = 0;// 基准利率
         String rateType = data.getRateType();// 利率类型
-        if (ELoanPeriod.ONE_YEAER.getCode().equals(data.getLoanPeriods())) {
-            if (ERateType.CT.getCode().equals(rateType)) {
-                benchmarkRate = carDealerProtocol.getPlatCtRate12();
-            }
-            if (ERateType.ZT.getCode().equals(rateType)) {
-                benchmarkRate = carDealerProtocol.getPlatZkRate12();
-            }
+        if (ELoanPeriod.ONE_YEAER.getCode().equals(data.getLoanPeriods())
+                && ERateType.CT.getCode().equals(rateType)) {
+            benchmarkRate = carDealerProtocol.getPlatCtRate12();
         }
-        if (ELoanPeriod.TWO_YEAR.getCode().equals(data.getLoanPeriods())) {
-            if (ERateType.CT.getCode().equals(rateType)) {
-                benchmarkRate = carDealerProtocol.getPlatCtRate24();
-            }
-            if (ERateType.ZT.getCode().equals(rateType)) {
-                benchmarkRate = carDealerProtocol.getPlatZkRate24();
-            }
+        if (ELoanPeriod.ONE_YEAER.getCode().equals(data.getLoanPeriods())
+                && ERateType.ZK.getCode().equals(rateType)) {
+            benchmarkRate = carDealerProtocol.getPlatZkRate12();
         }
-        if (ELoanPeriod.THREE_YEAR.getCode().equals(data.getLoanPeriods())) {
-            if (ERateType.CT.getCode().equals(rateType)) {
-                benchmarkRate = carDealerProtocol.getPlatCtRate36();
-            }
-            if (ERateType.ZT.getCode().equals(rateType)) {
-                benchmarkRate = carDealerProtocol.getPlatZkRate36();
-            }
+        if (ELoanPeriod.TWO_YEAR.getCode().equals(data.getLoanPeriods())
+                && ERateType.CT.getCode().equals(rateType)) {
+            benchmarkRate = carDealerProtocol.getPlatCtRate24();
+        }
+        if (ELoanPeriod.TWO_YEAR.getCode().equals(data.getLoanPeriods())
+                && ERateType.ZK.getCode().equals(rateType)) {
+            benchmarkRate = carDealerProtocol.getPlatZkRate24();
+        }
+        if (ELoanPeriod.THREE_YEAR.getCode().equals(data.getLoanPeriods())
+                && ERateType.CT.getCode().equals(rateType)) {
+            benchmarkRate = carDealerProtocol.getPlatCtRate36();
+        }
+        if (ELoanPeriod.THREE_YEAR.getCode().equals(data.getLoanPeriods())
+                && ERateType.ZK.getCode().equals(rateType)) {
+            benchmarkRate = carDealerProtocol.getPlatZkRate36();
         }
         if (bankRate < benchmarkRate) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -145,7 +145,7 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
             repointAmount = AmountUtil.mul(loanAmount,
                 (globalRate - benchmarkRate));
         }
-        if (ERateType.ZT.getCode().equals(rateType)) {
+        if (ERateType.ZK.getCode().equals(rateType)) {
             // 直客返点支付总金额 :贷款额*基准利率
             repointAmount = AmountUtil.mul(loanAmount, benchmarkRate);
         }
