@@ -871,26 +871,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是银行放款确认收款节点，不能操作");
         }
-        String curNodeCode = null;
-        Department department = departmentBO
-            .getDepartment(budgetOrder.getCompanyCode());
-        String city = department.getCityNo();
-        if ("温州市".equals(city)) {
-            // 本地 抵押第一步 打印岗打印
-            curNodeCode = EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode();
-        } else {
-            // 外地 抵押第一步 银行驻点发送抵押合同给总公司（产生物流单）
-            curNodeCode = EBudgetOrderNode.OUT_BANKPOINT_SEND_PARENT.getCode();
-
-            // 生成资料传递
-            NodeFlow nodeFlow = nodeFlowBO
-                .getNodeFlowByCurrentNode(curNodeCode);
-            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-                budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
-                nodeFlow.getNextNode());
-
-        }
-        budgetOrder.setCurNodeCode(curNodeCode);
+        // 当前节点
+        String curNodeCode = budgetOrder.getCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
+        budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         budgetOrder.setCode(req.getCode());
         budgetOrder
             .setBankFkAmount(StringValidater.toLong(req.getBankFkAmount()));
@@ -948,12 +932,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         /****** 生成还款业务 ******/
 
         // 日志记录
-        String preCurrentNode = budgetOrder.getCurNodeCode();
         EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
             .get(budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), curNodeCode,
+            nodeFlow.getNextNode(), currentNode.getValue(), req.getOperator());
     }
 
     @Override
@@ -2555,7 +2538,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
                 .get(budgetOrder.getCurNodeCode());
             budgetOrderBO.loanBankCollateAchieve(budgetOrder);
-            
+
             // 生成资料传递
             NodeFlow nodeFlow = nodeFlowBO
                 .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());

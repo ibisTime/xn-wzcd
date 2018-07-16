@@ -239,7 +239,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     public void logicOrder(String code, String operator) {
         BudgetOrder budgetOrder = getBudgetOrder(code);
         String preCurrentNode = budgetOrder.getCurNodeCode();// 主流程当前节点
-        Department department = departmentBO.getDepartment(budgetOrder.getCompanyCode());//获取公司
+        Department department = departmentBO
+            .getDepartment(budgetOrder.getCompanyCode());// 获取公司
         if (StringUtils.isNotBlank(budgetOrder.getPledgeCurNodeCode())) {
             String pledgeCurNodeCode = budgetOrder.getPledgeCurNodeCode();// 抵押流程当前节点
             if (EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode()
@@ -250,14 +251,14 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
                 budgetOrderBO.updateEnterFileStatus(budgetOrder);
             }
             if (EBudgetOrderNode.LOCAL_SENDPOST_SEND_BANK.getCode()
-                .equals(pledgeCurNodeCode) && "温州市".equals(department.getCityNo())) {
+                .equals(pledgeCurNodeCode)) {
                 // 抵押流程本地 寄件岗寄送银行 收件并审核通过 更新抵押流程节点 到下一个 提交银行
                 budgetOrder.setPledgeCurNodeCode(nodeFlowBO
                     .getNodeFlowByCurrentNode(pledgeCurNodeCode).getNextNode());
             }
         }
         if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
-            .equals(preCurrentNode)) {
+            .equals(preCurrentNode) && "温州市".equals(department.getCityNo())) {
             // 当前主流程节点如果是银行放款流程 007_02 总公司寄送银行材料给打印岗
             // 收件审核并通过后 抵押流程本地开始（主流程外的）
             // 设置抵押流程节点为车辆抵押本地第一步008_01打印岗打印
@@ -284,7 +285,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
-        if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
+        if (EBudgetOrderNode.LOAN_PRINT.getCode()
             .equals(budgetOrder.getCurNodeCode())
                 || EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode()
                     .equals(budgetOrder.getPledgeCurNodeCode())) {// 连续发件情况
