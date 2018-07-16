@@ -627,7 +627,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                     curNodeCode, nextNodeCode);
             } else {
-                // 垫资 预算单节点改为垫资审核
+                // 垫资
                 // 预算单节点改为垫资审核（进入垫资审核流程）
                 budgetOrder.setCurNodeCode(EBudgetOrderNode.ADVANCE_FUND_AUDIT
                     .getCode());
@@ -686,7 +686,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     data.setCompanyCode(budgetOrder.getCompanyCode());
                     data.setCarDealerCode(budgetOrder.getCarDealerCode());
                     // 用款应该是预算单的应退按揭款 现在暂时用贷款金额 用款用途做完后换成用款用途的应退按揭款
-                    data.setUseAmount(budgetOrder.getLoanAmount());
+                    data.setUseAmount(budgetOrder.getShouldBackAmount());
                     data.setLoanAmount(budgetOrder.getLoanAmount());
                     data.setServiceCharge(budgetOrder.getServiceCharge());
                     data.setServiceChargeWay(budgetOrder.getServiceChargeWay());
