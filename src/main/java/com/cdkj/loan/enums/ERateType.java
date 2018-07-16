@@ -8,7 +8,7 @@ package com.cdkj.loan.enums;
  */
 public enum ERateType {
 
-    CT("1", "传统"), ZT("2", "直客");
+    CT("1", "传统"), ZK("2", "直客");
 
     ERateType(String code, String value) {
         this.code = code;
