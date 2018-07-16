@@ -77,7 +77,7 @@ public class BudgetOrder extends ABaseDO {
     // 是否垫资
     private String isAdvanceFund;
 
-    // 综合利率
+    // 综合利率（返点计算公式里的银行实际利率）
     private double globalRate;
 
     // 发票不匹配之前综合利率
@@ -695,16 +695,31 @@ public class BudgetOrder extends ABaseDO {
     // 发保合状态（已录入/待录入）
     private String fbhStatus;
 
-    // 应退按揭款
+    // 应退按揭款金额
     private Long shouldBackAmount;
+
+    // 发票不匹配之前的应退按揭款金额
+    private Long preShouldBackAmount;
 
     // 退按揭款状态(0无需退款1银行已放款待财务退款2财务已退垫资款)
     private String shouldBackStatus;
 
+    // 退按揭款收款人姓名（个人）
+    private String shouldBackUserName;
+
+    // 退按揭款收款人账号（个人）
+    private String shouldBackAccountNo;
+
+    // 退按揭款收款人账户开户行（个人）
+    private String shouldBackOpenBankName;
+
+    // 退按揭款收款人户名（个人）
+    private String shouldBackAccountName;
+
     // 退按揭款付款时间
     private Date shouldBackDatetime;
 
-    // 退按揭款付款账号
+    // 退按揭款付款账号编号（平台维护的公司账号）
     private String shouldBackBankcardCode;
 
     // 退按揭款付款凭证
@@ -3056,6 +3071,46 @@ public class BudgetOrder extends ABaseDO {
 
     public void setPledgeCurNodeCode(String pledgeCurNodeCode) {
         this.pledgeCurNodeCode = pledgeCurNodeCode;
+    }
+
+    public String getShouldBackUserName() {
+        return shouldBackUserName;
+    }
+
+    public void setShouldBackUserName(String shouldBackUserName) {
+        this.shouldBackUserName = shouldBackUserName;
+    }
+
+    public String getShouldBackAccountNo() {
+        return shouldBackAccountNo;
+    }
+
+    public void setShouldBackAccountNo(String shouldBackAccountNo) {
+        this.shouldBackAccountNo = shouldBackAccountNo;
+    }
+
+    public String getShouldBackOpenBankName() {
+        return shouldBackOpenBankName;
+    }
+
+    public void setShouldBackOpenBankName(String shouldBackOpenBankName) {
+        this.shouldBackOpenBankName = shouldBackOpenBankName;
+    }
+
+    public String getShouldBackAccountName() {
+        return shouldBackAccountName;
+    }
+
+    public void setShouldBackAccountName(String shouldBackAccountName) {
+        this.shouldBackAccountName = shouldBackAccountName;
+    }
+
+    public Long getPreShouldBackAmount() {
+        return preShouldBackAmount;
+    }
+
+    public void setPreShouldBackAmount(Long preShouldBackAmount) {
+        this.preShouldBackAmount = preShouldBackAmount;
     }
 
 }

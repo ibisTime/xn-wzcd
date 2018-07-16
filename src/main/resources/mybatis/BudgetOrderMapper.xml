@@ -267,6 +267,12 @@
 		<result column="fbh_status" property="fbhStatus" />
 		<result column="should_back_amount" property="shouldBackAmount" />
 		
+		<result column="pre_should_back_amount" property="preShouldBackAmount" />
+		<result column="should_back_user_name" property="shouldBackUserName" />
+		<result column="should_back_account_no" property="shouldBackAccountNo" />
+		<result column="should_back_open_bank_name" property="shouldBackOpenBankName" />
+		<result column="should_back_account_name" property="shouldBackAccountName" />
+		
 		<result column="should_back_status" property="shouldBackStatus" />
 		<result column="should_back_datetime" property="shouldBackDatetime" />
 		<result column="should_back_bankcard_code" property="shouldBackBankcardCode" />
@@ -1547,6 +1553,12 @@
 		,other_file_pdf = #{otherFilePdf}
 		
 		,should_back_amount = #{shouldBackAmount}
+		,pre_should_back_amount = #{preShouldBackAmount}
+		,should_back_user_name = #{shouldBackUserName}
+		,should_back_account_no = #{shouldBackAccountNo}
+		,should_back_open_bank_name = #{shouldBackOpenBankName}
+		,should_back_account_name = #{shouldBackAccountName}
+		
 		,should_back_status = #{shouldBackStatus}		
 		,other_apply_note = #{otherApplyNote}
 		,create_datetime = #{createDatetime}
@@ -1920,6 +1932,8 @@
 		,gps_deduct = #{gpsDeduct}
 		,pre_oil_subsidy = #{preOilSubsidy}
 		,oil_subsidy = #{oilSubsidy}
+		,pre_should_back_amount = #{preShouldBackAmount}
+		,should_back_amount = #{shouldBackAmount}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>

@@ -25,7 +25,7 @@ public class XN632234Res {
     // 履约保证金
     private String lyAmount;
 
-    // gps收费
+    // GPS收费
     private String gpsFee;
 
     // 杂费
@@ -34,10 +34,10 @@ public class XN632234Res {
     // 油补
     private String oilSubsidy;
 
-    // gps提成
+    // GPS提成
     private String gpsDeduct;
 
-    // 返点明细（用款用途）
+    // 返点明细（协议内返点 和 应退按揭款）
     private List<XN632290Res> list;
 
     public String getCompanyLoanCs() {

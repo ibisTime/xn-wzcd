@@ -8,9 +8,6 @@ package com.cdkj.loan.dto.res;
  */
 public class XN632290Res {
 
-    // 协议id
-    private String id;
-
     // 用款用途
     private String useMoneyPurpose;
 
@@ -29,12 +26,26 @@ public class XN632290Res {
     // 开户支行
     private String subbranch;
 
-    public String getId() {
-        return id;
+    // 户名
+    private String accountName;
+
+    // 基准利率
+    private String benchmarkRate;
+
+    public String getBenchmarkRate() {
+        return benchmarkRate;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setBenchmarkRate(String benchmarkRate) {
+        this.benchmarkRate = benchmarkRate;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public String getUseMoneyPurpose() {

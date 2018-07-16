@@ -48,7 +48,7 @@ public class RepointDetail extends ABaseDO {
     // 贷款金额
     private Long loanAmount;
 
-    // 银行实际利率
+    // 银行实际利率(预算单里的综合利率)
     private Double bankRate;
 
     // 基准利率
@@ -63,16 +63,16 @@ public class RepointDetail extends ABaseDO {
     // 返点金额
     private Long repointAmount;
 
-    // 账号编号（协议内返点）
+    // 收款账号编号（协议内返点）
     private String accountCode;
 
-    // 收款账号
+    // 收款账号(协议外返点)
     private String accountNo;
 
-    // 开户行名称
+    // 收款开户行名称(协议外返点)
     private String openBankName;
 
-    // 户名
+    // 收款户名(协议外返点)
     private String accountName;
 
     // 节点(0待制单1已制单待打款2已打款)

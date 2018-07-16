@@ -90,4 +90,12 @@ UPDATE `dev_xn_wzcd`.`tsys_node_flow` SET `current_node`='007_01A' WHERE `id`='6
 ALTER TABLE `dev_xn_wzcd`.`tsys_node_flow` 
 DROP COLUMN `file_list`;
 
+ALTER TABLE `dev_xn_wzcd`.`tdq_budget_order` 
+ADD COLUMN `pre_should_back_amount` BIGINT(20) NULL DEFAULT NULL COMMENT '发票不匹配之前的应退按揭款金额' AFTER `should_back_amount`,
+ADD COLUMN `should_back_user_name` VARCHAR(255) NULL DEFAULT NULL COMMENT '退按揭款收款人姓名（个人）' AFTER `should_back_status`,
+ADD COLUMN `should_back_account_no` VARCHAR(32) NULL DEFAULT NULL COMMENT '退按揭款收款人账号（个人）' AFTER `should_back_user_name`,
+ADD COLUMN `should_back_open_bank_name` VARCHAR(255) NULL DEFAULT NULL COMMENT '退按揭款收款人账户开户行（个人）' AFTER `should_back_account_no`,
+ADD COLUMN `should_back_account_name` VARCHAR(255) NULL DEFAULT NULL COMMENT '退按揭款收款人户名（个人）' AFTER `should_back_open_bank_name`;
 
+ALTER TABLE `dev_xn_wzcd`.`tdq_budget_order` 
+CHANGE COLUMN `should_back_status` `should_back_status` VARCHAR(4) NULL DEFAULT NULL COMMENT '退按揭款状态(0无需退款1银行已放款待财务退款2财务已退垫资款)' AFTER `pre_should_back_amount`,

@@ -65,7 +65,7 @@ public class Credit extends ABaseDO {
     // 角色编号
     private String roleCode;
 
-    // 业务公司
+    // 业务公司名称
     private String companyName;
 
     // 贷款银行

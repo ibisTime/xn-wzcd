@@ -20,7 +20,7 @@ public class AdvanceFund extends ABaseDO {
     // 预算单编号
     private String budgetCode;
 
-    // 垫资汇总单编号(分公司业务才有)
+    // 垫资汇总单编号(外地公司业务才有)
     private String totalAdvanceFundCode;
 
     // 类型(1本地公司业务 2外地公司业务)
@@ -133,10 +133,10 @@ public class AdvanceFund extends ABaseDO {
     // 汽车经销商名称
     private String carDealerName;
 
-    // 申请人
+    // 申请人姓名
     private String applyName;
 
-    // 申请人
+    // 申请人身份证号
     private String applyUserIdNo;
 
     private BudgetOrder budgetOrder;

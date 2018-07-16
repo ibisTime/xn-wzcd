@@ -11,9 +11,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 应退按揭款
- * @author: CYL 
- * @since: 2018年6月16日 下午9:25:39 
+ * 应退按揭款确认放款
+ * @author: jiafr 
+ * @since: 2018年7月16日 上午10:30:21 
  * @history:
  */
 public class XN632260 extends AProcessor {

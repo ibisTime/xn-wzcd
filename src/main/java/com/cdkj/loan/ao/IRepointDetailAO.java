@@ -5,9 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.RepointDetail;
-import com.cdkj.loan.dto.req.XN632290Req;
-import com.cdkj.loan.dto.res.XN632290Res;
 
 /**
  * 
@@ -32,8 +31,8 @@ public interface IRepointDetailAO {
 
     public RepointDetail getRepointDetail(String code);
 
-    // 展示返点明细
-    public List<XN632290Res> showRepointDetail(XN632290Req req, Long loanAmount);
+    // 计算返点
+    public RepointDetail calculateRepointDetail(BudgetOrder data);
 
     // 列表查询返点明细 按汽车经销商编号和返点账号编号
     public Object queryRepointDetailListByCarDealerCode(RepointDetail condition);
