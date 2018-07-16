@@ -83,6 +83,9 @@
 			<if test="code != null and code != '' ">
 				AND t.code=#{code}
 			</if>
+			<if test="curPeriods != null and curPeriods != '' ">
+				AND t.cur_periods=#{curPeriods}
+			</if>
 			<if test="refType != null and refType != '' ">
 				AND t.ref_type=#{refType}
 			</if>

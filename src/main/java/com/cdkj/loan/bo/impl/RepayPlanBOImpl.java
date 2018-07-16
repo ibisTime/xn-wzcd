@@ -422,10 +422,20 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
     public void refreshRepayPlan(BudgetOrder budgetOrder) {
         List<RepayPlan> repayPlanList = queryRepayPlanListByRepayBizCode(
             budgetOrder.getRepayBizCode());
+        // 获取首月的
+        RepayPlan condition = new RepayPlan();
+        condition.setRepayBizCode(budgetOrder.getRepayBizCode());
+        condition.setCurPeriods(1);
+        List<RepayPlan> planList = queryRepayPlanList(condition);
+        RepayPlan repayPlan = planList.get(0);
+        repayPlan.setRepayCapital(budgetOrder.getRepayFirstMonthAmount());
+        repayPlanDAO.updateRepayPlan(repayPlan);
 
-        for (RepayPlan repayPlan : repayPlanList) {
-            repayPlan.setRepayCapital(budgetOrder.getMonthAmount());
-            repayPlanDAO.updateRepayPlan(repayPlan);
+        for (RepayPlan repayPlan2 : repayPlanList) {
+            if (!repayPlan2.getCode().equals(repayPlan.getCode())) {
+                repayPlan2.setRepayCapital(budgetOrder.getMonthAmount());
+                repayPlanDAO.updateRepayPlan(repayPlan2);
+            }
         }
     }
 
