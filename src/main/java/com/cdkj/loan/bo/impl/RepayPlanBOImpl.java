@@ -133,7 +133,8 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             String code = OrderNoGenerater
                 .generate(EGeneratePrefix.REPAY_PLAN.getCode()) + curPeriod;
 
-            Long repayCapital = repayBiz.getMonthAmount();
+            Long repayCapital = 0L;
+            repayCapital = repayBiz.getMonthAmount();
             if (i == 0) {
                 repayCapital = repayBiz.getFirstRepayAmount();
             }
@@ -156,7 +157,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             // repayPlan.setRepayAmount(repayCapital + 0L);
             repayPlan.setPayedAmount(0L);
 
-            // 每期应还金额
+            // 每期应还金额getRepayCapital
             long shouldRepayAmount = repayPlan.getRepayCapital()
                     + repayPlan.getRepayInterest();
             repayPlan.setOverplusAmount(shouldRepayAmount);

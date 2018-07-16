@@ -805,6 +805,8 @@ public class BudgetOrder extends ABaseDO {
 
     private List<String> curNodeCodeList;// 节点
 
+    private List<String> pledgeCurNodeCodeList;// 抵押流程节点编号
+
     private List<RepointDetail> repointDetailList1;// 返点，1应退按揭款
 
     private List<RepointDetail> repointDetailList2;// 返点，2协议内返点
@@ -828,6 +830,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setGuarantPrintName(String guarantPrintName) {
         this.guarantPrintName = guarantPrintName;
+    }
+
+    public List<String> getPledgeCurNodeCodeList() {
+        return pledgeCurNodeCodeList;
+    }
+
+    public void setPledgeCurNodeCodeList(List<String> pledgeCurNodeCodeList) {
+        this.pledgeCurNodeCodeList = pledgeCurNodeCodeList;
     }
 
     public List<RepayPlan> getRepayPlansList() {

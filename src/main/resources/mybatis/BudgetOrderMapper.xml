@@ -306,9 +306,18 @@
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
 			</if>
+			<if test="pledgeCurNodeCode != null and pledgeCurNodeCode != '' ">
+				AND t.pledge_cur_node_code = #{pledgeCurNodeCode}
+			</if>
 			<if test="curNodeCodeList != null and curNodeCodeList.size() != 0 ">
 				AND t.cur_node_code in 
                 <foreach item="item" index="index" collection="curNodeCodeList" open="(" separator="," close=")">
+	            	#{item}
+                </foreach> 
+			</if>
+			<if test="pledgeCurNodeCodeList != null and pledgeCurNodeCodeList.size() != 0 ">
+				AND t.pledge_cur_node_code in 
+                <foreach item="item" index="index" collection="pledgeCurNodeCodeList" open="(" separator="," close=")">
 	            	#{item}
                 </foreach> 
 			</if>
