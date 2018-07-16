@@ -843,13 +843,13 @@ public class BudgetOrder extends ABaseDO {
     private String guarantPrintName;
 
     // 入档状态List
-    private String enterFileStatusList;
+    private List<String> enterFileStatusList;
 
-    public String getEnterFileStatusList() {
+    public List<String> getEnterFileStatusList() {
         return enterFileStatusList;
     }
 
-    public void setEnterFileStatusList(String enterFileStatusList) {
+    public void setEnterFileStatusList(List<String> enterFileStatusList) {
         this.enterFileStatusList = enterFileStatusList;
     }
 

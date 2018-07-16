@@ -1706,6 +1706,7 @@
 		,operator = #{operator}
 		,operate_datetime = #{operateDatetime}
 		,operate_department = #{operateDepartment}
+		,enter_file_status = #{enterFileStatus}
 		WHERE code = #{code}
 	</update>
 	
@@ -1716,6 +1717,7 @@
 		,pledge_cur_node_code = #{pledgeCurNodeCode}
 		,operator = #{operator}
 		,operate_datetime = #{operateDatetime}
+		,enter_file_status = #{enterFileStatus}
 		WHERE code = #{code}
 	</update>
 	

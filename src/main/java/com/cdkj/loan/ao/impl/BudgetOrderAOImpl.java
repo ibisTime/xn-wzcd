@@ -943,9 +943,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             // 外地 生成资料传递（分公司寄送抵押材料给总公司）
             NodeFlow nodeFlow = nodeFlowBO
                 .getNodeFlowByCurrentNode(preCurrentNode);
+            NodeFlow flow = nodeFlowBO
+                .getNodeFlowByCurrentNode(nodeFlow.getNextNode());
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                nodeFlow.getCurrentNode(), nodeFlow.getNextNode());
+                nodeFlow.getNextNode(), flow.getNextNode());
         }
         // 更改预算单车辆抵押流程节点
         String nextNodeCode = getNextNodeCode(preCurrentNode,
