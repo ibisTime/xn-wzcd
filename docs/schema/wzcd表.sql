@@ -2,7 +2,8 @@
 SQLyog Ultimate v12.08 (32 bit)
 MySQL - 5.6.33 : Database - dev_xn_wzcd
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -12,9 +13,9 @@ MySQL - 5.6.33 : Database - dev_xn_wzcd
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`dev_xn_wzcd` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`test_xn_wzcd` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
-USE `dev_xn_wzcd`;
+USE `test_xn_wzcd`;
 
 /*Table structure for table `tb_bank` */
 
@@ -47,7 +48,7 @@ CREATE TABLE `tb_bank_rate` (
   `rate` decimal(18,8) DEFAULT NULL COMMENT '利率',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='银行利率明细表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='银行利率明细表';
 
 /*Table structure for table `tb_bank_subbranch` */
 
@@ -150,7 +151,7 @@ CREATE TABLE `tb_car_dealer_protocol` (
   `insu_agency_year3_type` varchar(32) DEFAULT NULL COMMENT '3年保险代理费类型(1平台/2车行)',
   `insu_agency_year3_fee` bigint(20) DEFAULT NULL COMMENT '3年保险代理费',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='经销商协议表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='经销商协议表';
 
 /*Table structure for table `tb_collect_bankcard` */
 
@@ -224,7 +225,7 @@ CREATE TABLE `tb_id_no_area` (
   `area_no` varchar(32) CHARACTER SET utf8 COLLATE utf8_estonian_ci DEFAULT NULL COMMENT '身份证区域号',
   `area_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_estonian_ci DEFAULT NULL COMMENT '身份证区域名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='身份证区域表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='身份证区域表';
 
 /*Table structure for table `tb_insurance_company` */
 
@@ -261,7 +262,7 @@ CREATE TABLE `tb_province_no` (
   `province_no` varchar(32) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COMMENT='省份编号表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='省份编号表';
 
 /*Table structure for table `tbf_withhold` */
 
@@ -591,6 +592,18 @@ CREATE TABLE `tdh_replace_repay_plan` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='代偿还款计划单';
 
+/*Table structure for table `tdp_supplement_reason` */
+
+DROP TABLE IF EXISTS `tdp_supplement_reason`;
+
+CREATE TABLE `tdp_supplement_reason` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `logistics_code` varchar(32) DEFAULT NULL COMMENT '物流单编号',
+  `type` varchar(4) DEFAULT NULL COMMENT '类型',
+  `reason` tinytext COMMENT '原因',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='补件原因';
+
 /*Table structure for table `tdq_advance_fund` */
 
 DROP TABLE IF EXISTS `tdq_advance_fund`;
@@ -648,7 +661,6 @@ CREATE TABLE `tdq_budget_order` (
   `rate_type` varchar(4) DEFAULT NULL COMMENT '利率类型',
   `pre_loan_amount` bigint(20) DEFAULT NULL COMMENT '之前贷款金额',
   `loan_amount` bigint(20) DEFAULT NULL COMMENT '贷款金额',
-  `is_survey` varchar(4) DEFAULT NULL COMMENT '是否需要贷前调查',
   `bank_rate` decimal(18,8) DEFAULT NULL COMMENT '银行利率',
   `company_loan_cs` decimal(18,8) DEFAULT NULL COMMENT '我司贷款成数',
   `pre_company_loan_cs` decimal(18,8) DEFAULT NULL COMMENT '发票不匹配之前我司贷款成数',
@@ -676,6 +688,8 @@ CREATE TABLE `tdq_budget_order` (
   `apply_user_ghr_relation` tinytext COMMENT '申请人与共还人关系',
   `gh_real_name` varchar(32) DEFAULT NULL COMMENT '共还人姓名',
   `gh_id_no` varchar(32) DEFAULT NULL COMMENT '共还人身份证号',
+  `gh_id_picz` tinytext COMMENT '共还人身份证照片正',
+  `gh_id_picf` tinytext COMMENT '共还人身份证照片反',
   `gh_sex` varchar(32) DEFAULT NULL COMMENT '共还人性别',
   `gh_mobile` varchar(32) DEFAULT NULL COMMENT '共还人电话',
   `gh_company_name` varchar(32) DEFAULT NULL COMMENT '共还人公司名称',
@@ -744,8 +758,12 @@ CREATE TABLE `tdq_budget_order` (
   `hkb_main_page` tinytext COMMENT '户口本（户主页）',
   `gh_hkb` tinytext COMMENT '共还人户口本',
   `guarantor1_id_no` tinytext COMMENT '担保人1身份证',
+  `guarantor1_id_picz` tinytext COMMENT '担保人1身份证照片正',
+  `guarantor1_id_picf` tinytext COMMENT '担保人1身份证照片反',
   `guarantor1_hkb` tinytext COMMENT '担保人1户口本',
   `guarantor2_id_no` tinytext COMMENT '担保人2身份证',
+  `guarantor2_id_picz` tinytext COMMENT '担保人2身份证照片正',
+  `guarantor2_id_picf` tinytext COMMENT '担保人2身份证照片反',
   `guarantor2_hkb` tinytext COMMENT '担保人2户口本',
   `house_pic` tinytext COMMENT '小区外观',
   `house_unit_pic` tinytext COMMENT '单元楼照片',
@@ -767,6 +785,7 @@ CREATE TABLE `tdq_budget_order` (
   `second_number` tinytext COMMENT '铭牌',
   `other_file_pdf` tinytext COMMENT '其他材料附件',
   `other_apply_note` tinytext COMMENT '申请说明事项',
+  `create_datetime` datetime DEFAULT NULL COMMENT '创建时间',
   `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
   `cancel_reason` tinytext COMMENT '撤销理由',
   `bank_commit_datetime` datetime DEFAULT NULL COMMENT '银行提交时间',
@@ -777,6 +796,7 @@ CREATE TABLE `tdq_budget_order` (
   `bank_receipt_number` varchar(32) DEFAULT NULL COMMENT '收款银行账号',
   `bank_receipt_pdf` tinytext COMMENT '收款凭证',
   `bank_receipt_note` text COMMENT '收款说明',
+  `green_big_smj` tinytext COMMENT '绿大本扫描件',
   `pledge_commit_datetime` datetime DEFAULT NULL COMMENT '抵押提交时间',
   `pledge_commit_note` tinytext COMMENT '抵押提交说明',
   `pledge_contract_code` varchar(32) DEFAULT NULL COMMENT '抵押合同编号',
@@ -785,7 +805,6 @@ CREATE TABLE `tdq_budget_order` (
   `pledge_print_datetime` datetime DEFAULT NULL COMMENT '抵押打印日期',
   `insurance_company_code` tinytext COMMENT '保险公司编号',
   `car_brand` tinytext COMMENT '车辆品牌',
-  `car_brand_model` tinytext COMMENT '品牌型号',
   `car_number` varchar(255) DEFAULT NULL COMMENT '车牌号码',
   `car_color` tinytext COMMENT '车辆颜色',
   `frame_no` varchar(32) DEFAULT NULL COMMENT '车架号码',
@@ -795,14 +814,20 @@ CREATE TABLE `tdq_budget_order` (
   `insurance_company` tinytext COMMENT '承保公司',
   `insurance_bank` tinytext COMMENT '保险经办银行',
   `guarantee_contract_code` varchar(32) DEFAULT NULL COMMENT '担保合同编号',
-  `guarant_contract_deadline` varchar(32) DEFAULT NULL COMMENT '期限',
-  `guarant_month_fee_rate` decimal(18,8) DEFAULT NULL COMMENT '月费率',
   `bank_contract_code` varchar(32) DEFAULT NULL COMMENT '银行合同编号',
   `reg_certificate_code` varchar(32) DEFAULT NULL COMMENT '登记证书号',
+  `emergency_name1` tinytext COMMENT '家庭紧急联系人信息1 姓名',
+  `emergency_relation1` tinytext COMMENT '家庭紧急联系人信息1 与申请人关系',
+  `emergency_mobile1` tinytext COMMENT '家庭紧急联系人信息1 手机号码',
+  `emergency_name2` tinytext COMMENT '家庭紧急联系人信息2 姓名',
+  `emergency_relation2` tinytext COMMENT '家庭紧急联系人信息2 与申请人关系',
+  `emergency_mobile2` tinytext COMMENT '家庭紧急联系人信息2 手机号码',
   `other_contact` tinytext COMMENT '其他联系人',
   `contact_mobile` varchar(32) DEFAULT NULL COMMENT '联系人手机',
-  `guarantor_name` varchar(32) DEFAULT NULL COMMENT '担保人姓名',
-  `guarantor_mobile` varchar(16) DEFAULT NULL COMMENT '担保人手机',
+  `guarantor1_name` varchar(32) DEFAULT NULL COMMENT '担保人1姓名',
+  `guarantor1_mobile` varchar(16) DEFAULT NULL COMMENT '担保人1手机',
+  `guarantor2_name` varchar(32) DEFAULT NULL COMMENT '担保人2姓名',
+  `guarantor2_mobile` varchar(16) DEFAULT NULL COMMENT '担保人2手机号',
   `guarantor_now_address` varchar(255) DEFAULT NULL COMMENT '担保人现住址',
   `guarantor_family_phone` varchar(32) DEFAULT NULL COMMENT '担保人家庭电话',
   `guarantor_company_name` tinytext COMMENT '担保人单位',
@@ -822,7 +847,8 @@ CREATE TABLE `tdq_budget_order` (
   `mobile` varchar(32) DEFAULT NULL COMMENT '手机号',
   `id_kind` varchar(4) DEFAULT NULL COMMENT '证件类型',
   `id_no` varchar(32) DEFAULT NULL COMMENT '身份证号',
-  `id_no_pic` varchar(32) DEFAULT NULL COMMENT '身份证照片',
+  `id_no_picz` tinytext COMMENT '身份证照片正',
+  `id_no_picf` tinytext COMMENT '身份证照片反',
   `file_list` tinytext COMMENT '已入档清单',
   `is_complete` varchar(4) DEFAULT NULL COMMENT '资料是否完善',
   `store_place` tinytext COMMENT '存放位置',
@@ -844,9 +870,14 @@ CREATE TABLE `tdq_budget_order` (
   `fbh_warn_day` int(11) DEFAULT NULL COMMENT '发保合预警天数',
   `fbh_status` varchar(4) DEFAULT NULL COMMENT '发保合状态',
   `should_back_amount` bigint(20) DEFAULT NULL COMMENT '应退按揭款',
+  `pre_should_back_amount` bigint(20) DEFAULT NULL COMMENT '发票不匹配之前的应退按揭款金额',
+  `should_back_status` varchar(4) DEFAULT NULL COMMENT '退按揭款状态(0无需退款1银行已放款待财务退款2财务已退垫资款)',
+  `should_back_user_name` varchar(255) DEFAULT NULL COMMENT '退按揭款收款人姓名（个人）',
+  `should_back_account_no` varchar(32) DEFAULT NULL COMMENT '退按揭款收款人账号（个人）',
+  `should_back_open_bank_name` varchar(255) DEFAULT NULL COMMENT '退按揭款收款人账户开户行（个人）',
+  `should_back_account_name` varchar(255) DEFAULT NULL COMMENT '退按揭款收款人户名（个人）',
   `should_back_datetime` datetime DEFAULT NULL COMMENT '付款时间',
   `should_back_bankcard_code` varchar(32) DEFAULT NULL COMMENT '付款银行',
-  `should_back_status` varchar(4) DEFAULT NULL COMMENT '付款账号',
   `should_back_bill_pdf` tinytext COMMENT '付款凭证',
   `zf_apply_datetime` datetime DEFAULT NULL COMMENT '申请日期',
   `zf_reason` tinytext COMMENT '作废原因',
@@ -861,6 +892,7 @@ CREATE TABLE `tdq_budget_order` (
   `cancel_node_code` varchar(32) DEFAULT NULL COMMENT '客户申请作废时的节点编号',
   `is_submit_cancel` varchar(32) DEFAULT NULL COMMENT '是否提交作废申请',
   `cur_node_code` varchar(32) DEFAULT NULL COMMENT '节点编号',
+  `pledge_cur_node_code` varchar(32) DEFAULT NULL COMMENT '抵押流程节点编号',
   `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '业务编号',
   `credit_code` varchar(32) DEFAULT NULL COMMENT '预算单编号',
   `insurance_remind_count` int(11) DEFAULT NULL COMMENT '续保提醒次数',
@@ -870,6 +902,7 @@ CREATE TABLE `tdq_budget_order` (
   `insurance_business_pdf` text COMMENT '商业险保单',
   `insurance_note` varchar(255) DEFAULT NULL COMMENT '续保说明',
   `type` varchar(4) DEFAULT NULL COMMENT '预算单类型 (1正常单2外单)',
+  `enter_file_status` varchar(4) DEFAULT NULL COMMENT '入档状态（0待入档1待补录2已入档）',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -989,6 +1022,7 @@ CREATE TABLE `tdq_credit_user` (
   `settle_interest` decimal(18,8) DEFAULT NULL COMMENT '结息',
   `balance` bigint(20) DEFAULT NULL COMMENT '余额',
   `jour_show_income` char(1) DEFAULT NULL COMMENT '流水是否体现月收入',
+  `is_first_audit` varchar(4) DEFAULT NULL COMMENT '是否一审',
   `is_print` char(1) DEFAULT NULL COMMENT '是否打件',
   `id_no_front` varchar(255) DEFAULT NULL COMMENT '身份证正面',
   `id_no_reverse` varchar(255) DEFAULT NULL COMMENT '身份证反面',
@@ -1006,8 +1040,6 @@ CREATE TABLE `tdq_logistics` (
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
   `from_node_code` varchar(255) DEFAULT NULL COMMENT '来方节点',
   `to_node_code` varchar(255) DEFAULT NULL COMMENT '去方节点',
-  `ref_file_list` varchar(255) DEFAULT NULL COMMENT '参考材料清单(逗号隔开)',
-  `send_file_list` varchar(255) DEFAULT NULL COMMENT '寄送材料清单(逗号隔开)',
   `send_type` varchar(4) DEFAULT NULL COMMENT '寄送方式(1 线下 2 快递)',
   `logistics_company` varchar(32) DEFAULT NULL COMMENT '快递公司',
   `logistics_code` varchar(255) DEFAULT NULL COMMENT '快递单号',
@@ -2143,7 +2175,7 @@ CREATE TABLE `tstd_channel_bank` (
   `month_amount` bigint(32) DEFAULT NULL COMMENT '每月限额',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `tstd_charge` */
 
@@ -2315,7 +2347,7 @@ CREATE TABLE `tsys_biz_log` (
   `end_datetime` datetime DEFAULT NULL COMMENT '操作结束时间',
   `speed_time` varchar(255) DEFAULT NULL COMMENT '花费时间(单位：秒)',
   PRIMARY KEY (`id`) COMMENT '业务日志跟踪表'
-) ENGINE=InnoDB AUTO_INCREMENT=311 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `tsys_biz_team` */
 
@@ -2351,7 +2383,7 @@ CREATE TABLE `tsys_config` (
   `company_code` varchar(96) DEFAULT NULL,
   `system_code` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `tsys_department` */
 
@@ -2360,12 +2392,12 @@ DROP TABLE IF EXISTS `tsys_department`;
 CREATE TABLE `tsys_department` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `name` varchar(255) DEFAULT NULL COMMENT '部门名称',
+  `lead_user_id` varchar(255) DEFAULT NULL COMMENT '负责人用户编号',
   `type` varchar(32) DEFAULT NULL COMMENT '类型(1=子公司，2=部门，3=岗位)',
-  `lead_name` varchar(255) DEFAULT NULL COMMENT '负责人',
-  `mobile` varchar(16) DEFAULT NULL COMMENT '负责人手机号',
   `province_no` varchar(32) DEFAULT NULL COMMENT '省份编号',
   `city_no` varchar(32) DEFAULT NULL COMMENT '市编号',
   `area_no` varchar(32) DEFAULT NULL COMMENT '区编号',
+  `order_no` int(11) DEFAULT NULL COMMENT '序号',
   `parent_code` varchar(32) DEFAULT NULL COMMENT '上级部门编号',
   `status` varchar(4) DEFAULT NULL COMMENT '状态',
   `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
@@ -2390,7 +2422,7 @@ CREATE TABLE `tsys_dict` (
   `company_code` varchar(96) DEFAULT NULL,
   `system_code` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=619 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `tsys_menu` */
 
@@ -2420,7 +2452,7 @@ CREATE TABLE `tsys_menu_role` (
   `update_datetime` datetime DEFAULT NULL,
   `remark` varchar(765) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5008 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `tsys_node` */
 
@@ -2444,10 +2476,9 @@ CREATE TABLE `tsys_node_flow` (
   `current_node` varchar(32) NOT NULL COMMENT '当前节点',
   `next_node` varchar(32) DEFAULT NULL COMMENT '下一个节点',
   `back_node` varchar(32) DEFAULT NULL COMMENT '返回节点',
-  `file_list` text,
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) COMMENT '节点流程配置'
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `tsys_role` */
 
@@ -2471,7 +2502,7 @@ CREATE TABLE `tsys_role_node` (
   `role_code` varchar(32) DEFAULT NULL COMMENT '角色编号',
   `node_code` varchar(32) DEFAULT NULL COMMENT '节点编号',
   PRIMARY KEY (`id`) COMMENT '角色节点'
-) ENGINE=InnoDB AUTO_INCREMENT=354 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `tsys_user` */
 
