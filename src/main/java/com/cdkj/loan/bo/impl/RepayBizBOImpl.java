@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.bo.IRepayBizBO;
@@ -22,6 +23,7 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.IRepayBizDAO;
+import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.RepayBiz;
@@ -50,6 +52,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     private IUserBO userBO;
 
     @Override
+    @Transactional
     public void refreshBankcardNew(String code, String bankcardCode,
             String updater, String remark) {
         RepayBiz repayBiz = new RepayBiz();
@@ -62,6 +65,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
+    @Transactional
     public void refreshBankcardModify(String code, String bankcardCode,
             String updater, String remark) {
         RepayBiz repayBiz = new RepayBiz();
@@ -99,6 +103,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
+    @Transactional
     public RepayBiz generateCarLoanRepayBiz(BudgetOrder budgetOrder,
             String userId, String bankcardCode, String operator) {
         RepayBiz repayBiz = new RepayBiz();
@@ -177,6 +182,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
+    @Transactional
     public void refreshRepayCarLoan(String repayBizCode,
             Long realWithholdAmount) {
         RepayBiz repayBiz = getRepayBiz(repayBizCode);
@@ -203,6 +209,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
+    @Transactional
     public void refreshAdvanceRepayCarLoan(XN630512Req req, RepayBiz repayBiz,
             Long realWithholdAmount) {
         repayBiz.setCutLyDeposit(StringValidater.toLong(req.getCutLyDeposit()));
@@ -227,6 +234,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
+    @Transactional
     public RepayBiz generateProductLoanRepayBiz(Order order) {
         RepayBiz repayBiz = new RepayBiz();
         String code = OrderNoGenerater
@@ -452,6 +460,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
+    @Transactional
     public void refreshFinanceCheck(String code, String curNodeCode,
             String remark, String updater) {
         RepayBiz data = new RepayBiz();
@@ -469,6 +478,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
+    @Transactional
     public void refreshReleaseMortgageApply(String code, String curNodeCode,
             String applyNote, String updater) {
         RepayBiz data = new RepayBiz();
@@ -481,6 +491,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
+    @Transactional
     public void refreshRiskIndoorCheck(String code, String curNodeCode,
             String remark, String updater) {
         RepayBiz data = new RepayBiz();
@@ -493,6 +504,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
+    @Transactional
     public void refreshRiskManagerCheck(String code, String curNodeCode,
             String remark, String updater) {
         RepayBiz data = new RepayBiz();
@@ -505,6 +517,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
+    @Transactional
     public void refreshMortgagePrint(RepayBiz data, String curNodeCode,
             Date releaseDatetime, String releaseTemplateId, String releaseNote,
             String updater) {
@@ -518,6 +531,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
+    @Transactional
     public void refreshBankRecLogic(String code, String updater) {
         RepayBiz data = new RepayBiz();
         data.setCode(code);
@@ -533,10 +547,26 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     }
 
     @Override
+    @Transactional
     public void refreshRepayEndCommitSettle(String code) {
         RepayBiz data = new RepayBiz();
         data.setCode(code);
         data.setCurNodeCode(ERepayBizNode.COMMIT_SETTLE.getCode());
         repayBizDAO.updateRepayEndCommitSettle(data);
+    }
+
+    @Override
+    @Transactional
+    public void refreshRepayBiz(BudgetOrder budgetOrder) {
+        RepayBiz repayBiz = getRepayBiz(budgetOrder.getRepayBizCode());
+        repayBiz.setSfAmount(budgetOrder.getRepayFirstMonthAmount());
+        repayBiz.setFirstRepayAmount(budgetOrder.getRepayMonthAmount());
+        repayBiz
+            .setFirstRepayDatetime(budgetOrder.getRepayFirstMonthDatetime());
+        repayBiz.setBillDatetime(budgetOrder.getBillDatetime());
+        Bankcard bankcard = bankcardAO.getBankcard(repayBiz.getBankcardCode());
+        bankcard.setBankcardNumber(budgetOrder.getBankCardNumber());
+        bankcardAO.editBankcardNumber(bankcard);
+        repayBizDAO.updateRepayBiz(repayBiz);
     }
 }

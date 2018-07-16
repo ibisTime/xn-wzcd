@@ -150,4 +150,9 @@ public class BankcardAOImpl implements IBankcardAO {
     public Bankcard getBankcard(String code) {
         return bankcardBO.getBankcard(code);
     }
+
+    @Override
+    public void editBankcardNumber(Bankcard bankcard) {
+        bankcardBO.refreshBankcardNumber(bankcard);
+    }
 }

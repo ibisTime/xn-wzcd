@@ -803,4 +803,13 @@
 		cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>	
+
+	<update id="update_repayBiz" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		sf_amount = #{sfAmount}
+		,first_repay_amount = #{firstRepayAmount}
+		,bill_datetime = #{billDatetime}
+		WHERE code = #{code}
+	</update>	
 </mapper>

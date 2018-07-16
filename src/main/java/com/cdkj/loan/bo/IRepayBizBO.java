@@ -40,7 +40,8 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
             Long realWithholdAmount);
 
     // 车贷还款订单
-    public void refreshRepayCarLoan(String repayBizCode, Long realWithholdAmount);
+    public void refreshRepayCarLoan(String repayBizCode,
+            Long realWithholdAmount);
 
     // 车贷确认结算
     public void confirmSettledProduct(RepayBiz repayBiz);
@@ -153,6 +154,9 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
     // 更新逾期金额
     public void repayOverdue(RepayBiz repayBiz);
+
+    // 更新还款业务
+    public void refreshRepayBiz(BudgetOrder budgetOrder);
 
     // ********************************common********************************
 }

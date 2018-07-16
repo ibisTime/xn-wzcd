@@ -101,4 +101,7 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
     // 还款计划结束后更新为提交结算单
     public int updateRepayEndCommitSettle(RepayBiz data);
 
+    // 入档更新还款业务
+    public void updateRepayBiz(RepayBiz repayBiz);
+
 }

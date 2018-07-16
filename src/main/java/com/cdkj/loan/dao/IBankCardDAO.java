@@ -14,4 +14,6 @@ public interface IBankCardDAO extends IBaseDAO<Bankcard> {
 
     public int update(Bankcard data);
 
+    public void updateBankcardNumber(Bankcard bankcard);
+
 }

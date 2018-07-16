@@ -161,4 +161,9 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
 
         return code;
     }
+
+    @Override
+    public void refreshBankcardNumber(Bankcard bankcard) {
+        bankcardDAO.updateBankcardNumber(bankcard);
+    }
 }

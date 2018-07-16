@@ -119,6 +119,13 @@
 		WHERE code = #{code}
 	</update>
 
+	<update id="update_bankcardNumber" parameterType="bankcard">
+		UPDATE tstd_bankcard
+		SET
+		bankcard_number = #{bankcardNumber}
+		WHERE code = #{code}
+	</update>
+
 	<delete id="delete_bankcard" parameterType="bankcard">
 		DELETE FROM
 		tstd_bankcard

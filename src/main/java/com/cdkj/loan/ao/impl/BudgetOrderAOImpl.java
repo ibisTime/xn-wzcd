@@ -1066,7 +1066,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
 
         budgetOrderBO.refreshCarLoanArchive(budgetOrder);
-
+        // 更新还款业务
+        repayBizBO.refreshRepayBiz(budgetOrder);
     }
 
     // 分配账号
