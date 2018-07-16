@@ -879,9 +879,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
 
         if (!EBudgetOrderNode.LOCAL_SUBMIT_BANK.getCode().equals(
-            budgetOrder.getCurNodeCode())
+            budgetOrder.getPledgeCurNodeCode())
                 && !EBudgetOrderNode.OUT_SUBMIT_BANK.getCode().equals(
-                    budgetOrder.getCurNodeCode())) {
+                    budgetOrder.getPledgeCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是车辆抵押确认提交银行节点，不能操作");
         }
@@ -922,21 +922,23 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 "当前节点不是车辆抵押流程待提交抵押完成节点，不能操作");
         }
 
-        if (EBudgetOrderNode.LOCAL_PLEDGE_ACHIEVE.getCode().equals(
+        if (EBudgetOrderNode.TODO_LOCAL_PLEDGE_ACHIEVE.getCode().equals(
             preCurrentNode)) {
             // 温州本地 抵押完成后预算单入档状态改为待入档
             budgetOrder.setEnterFileStatus(EEnterFileStatus.TODO.getCode());
             budgetOrderBO.updateEnterFileStatus(budgetOrder);
         }
 
-        if (EBudgetOrderNode.OUT_PLEDGE_ACHIEVE.getCode()
-            .equals(preCurrentNode)) {
+        if (EBudgetOrderNode.TODO_OUT_PLEDGE_ACHIEVE.getCode().equals(
+            preCurrentNode)) {
             // 外地 生成资料传递（分公司寄送抵押材料给总公司）
             NodeFlow nodeFlow = nodeFlowBO
                 .getNodeFlowByCurrentNode(preCurrentNode);
+            NodeFlow flow = nodeFlowBO.getNodeFlowByCurrentNode(nodeFlow
+                .getNextNode());
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                nodeFlow.getCurrentNode(), nodeFlow.getNextNode());
+                nodeFlow.getNextNode(), flow.getNextNode());
         }
         // 更改预算单车辆抵押流程节点
         String nextNodeCode = getNextNodeCode(preCurrentNode,
@@ -2386,11 +2388,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             // 生成资料传递
             NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
                 .getPledgeCurNodeCode());
-            NodeFlow flow = nodeFlowBO.getNodeFlowByCurrentNode(nodeFlow
-                .getNextNode());
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                nodeFlow.getNextNode(), flow.getNextNode());
+                budgetOrder.getPledgeCurNodeCode(), nodeFlow.getNextNode());
         }
     }
 
@@ -2401,18 +2401,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         for (String code : list) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
             if (!EBudgetOrderNode.OUT_PLEDGE_BEGIN.getCode().equals(
-                budgetOrder.getCurNodeCode())) {
+                budgetOrder.getPledgeCurNodeCode())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是车辆抵押开始节点，不能操作");
             }
         }
         for (String code : list) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
-            String preCurNodeCode = budgetOrder.getCurNodeCode();
-            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preCurNodeCode).getNextNode());
+            String preCurNodeCode = budgetOrder.getPledgeCurNodeCode();
+            budgetOrder.setPledgeCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurNodeCode).getNextNode());
             EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
-                budgetOrder.getCurNodeCode());
+                budgetOrder.getPledgeCurNodeCode());
             budgetOrderBO.collateAchieve(budgetOrder);
             // 日志记录
             sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),

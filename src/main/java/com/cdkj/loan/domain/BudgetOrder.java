@@ -842,6 +842,17 @@ public class BudgetOrder extends ABaseDO {
     // 担保打印人姓名
     private String guarantPrintName;
 
+    // 入档状态List
+    private List<String> enterFileStatusList;
+
+    public List<String> getEnterFileStatusList() {
+        return enterFileStatusList;
+    }
+
+    public void setEnterFileStatusList(List<String> enterFileStatusList) {
+        this.enterFileStatusList = enterFileStatusList;
+    }
+
     public String getGuarantPrintName() {
         return guarantPrintName;
     }

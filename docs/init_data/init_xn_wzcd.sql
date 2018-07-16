@@ -1641,6 +1641,10 @@ insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','az_location','6','副驾座下面','admin','2018-07-08 07:34:26','','CD-CWZCD000020','CD-CWZCD000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','az_location','7','内侧两边沟槽','admin','2018-07-08 07:34:26','','CD-CWZCD000020','CD-CWZCD000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','az_location','8','后挡风玻璃下面','admin','2018-07-08 07:34:26','','CD-CWZCD000020','CD-CWZCD000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'enter_file_status','入档状态','admin','2018-07-08 07:34:26','','CD-CWZCD000020','CD-CWZCD000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','enter_file_status','0','待入档','admin','2018-07-08 07:34:26','','CD-CWZCD000020','CD-CWZCD000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','enter_file_status','1','待补录','admin','2018-07-08 07:34:26','','CD-CWZCD000020','CD-CWZCD000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','enter_file_status','2','已入档','admin','2018-07-08 07:34:26','','CD-CWZCD000020','CD-CWZCD000020');
 
 insert  into `tsys_dict`(`id`,`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) values 
 (1,'0',NULL,'kd_company','物流公司','admin','2018-06-28 08:01:18','','CD-CWZCD000020','CD-CWZCD000020'),

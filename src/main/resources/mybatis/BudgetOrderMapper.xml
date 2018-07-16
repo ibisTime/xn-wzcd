@@ -328,6 +328,12 @@
 	            	#{item}
                 </foreach> 
 			</if>
+			<if test="enterFileStatusList != null and enterFileStatusList.size() != 0 ">
+				AND t.enter_file_status in 
+                <foreach item="item" index="index" collection="enterFileStatusList" open="(" separator="," close=")">
+	            	#{item}
+                </foreach> 
+			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
 				<![CDATA[AND t.apply_datetime > #{applyDatetimeStart}]]>
 			</if>
@@ -1700,6 +1706,7 @@
 		,operator = #{operator}
 		,operate_datetime = #{operateDatetime}
 		,operate_department = #{operateDepartment}
+		,enter_file_status = #{enterFileStatus}
 		WHERE code = #{code}
 	</update>
 	
@@ -1710,6 +1717,7 @@
 		,pledge_cur_node_code = #{pledgeCurNodeCode}
 		,operator = #{operator}
 		,operate_datetime = #{operateDatetime}
+		,enter_file_status = #{enterFileStatus}
 		WHERE code = #{code}
 	</update>
 	

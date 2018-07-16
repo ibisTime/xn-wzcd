@@ -41,6 +41,17 @@ public class XN632148Req extends APageReq {
     @NotBlank
     private String roleCode;// 角色编号
 
+    // 入档状态List
+    private List<String> enterFileStatusList;
+
+    public List<String> getEnterFileStatusList() {
+        return enterFileStatusList;
+    }
+
+    public void setEnterFileStatusList(List<String> enterFileStatusList) {
+        this.enterFileStatusList = enterFileStatusList;
+    }
+
     public String getCarDealerCode() {
         return carDealerCode;
     }
