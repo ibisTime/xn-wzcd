@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 确认用款单
+ * 垫资确认用款单
  * @author: jiafr 
  * @since: 2018年6月15日 下午10:33:06 
  * @history:

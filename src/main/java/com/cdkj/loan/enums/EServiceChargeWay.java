@@ -6,12 +6,12 @@ package com.cdkj.loan.enums;
  * @since: 2018年6月16日 下午3:26:38 
  * @history:
  */
-public enum EFeeWay {
+public enum EServiceChargeWay {
 
-    TRANSFER_ACCOUNTS("1", "转账"), MORTGAGE("2", "按揭款"), REPOINT("3", "返点"), NO_FEE(
+    TRANSFER_ACCOUNTS("1", "转账"), MORTGAGE("2", "按揭款扣"), REPOINT("3", "返点扣"), NO_FEE(
             "4", "不收费");
 
-    EFeeWay(String code, String value) {
+    EServiceChargeWay(String code, String value) {
         this.code = code;
         this.value = value;
     }

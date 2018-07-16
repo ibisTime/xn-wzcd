@@ -107,13 +107,6 @@ public class CreditAOImpl implements ICreditAO {
         credit.setXszReverse(req.getXszReverse());
         credit.setApplyDatetime(new Date());
 
-        // if (null != sysUser.getCompanyCode()
-        // && !"".equals(sysUser.getCompanyCode())) {
-        // Department department = departmentBO.getDepartment(sysUser
-        // .getCompanyCode());
-        // credit.setCompanyName(department.getName());
-        // }
-
         // 设置当前节点
         ECreditNode currentNode = ECreditNode.getMap().get(
             nodeFlowBO.getNodeFlowByCurrentNode(ECreditNode.START.getCode())
@@ -129,8 +122,7 @@ public class CreditAOImpl implements ICreditAO {
             CreditUser creditUser = new CreditUser();
             creditUser.setCreditCode(creditCode);
             creditUser.setRelation(child.getRelation());
-            if (ECreditUserRelation.SELF.getCode()
-                .equals(child.getRelation())) {
+            if (ECreditUserRelation.SELF.getCode().equals(child.getRelation())) {
                 applyuser++;
             }
             creditUser.setUserName(child.getUserName());
@@ -179,15 +171,15 @@ public class CreditAOImpl implements ICreditAO {
         // 之前节点
         String PrecurNodeCode = credit.getCurNodeCode();
         // 更新当前节点
-        credit.setCurNodeCode(
-            nodeFlowBO.getNodeFlowByCurrentNode(PrecurNodeCode).getNextNode());
+        credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+            PrecurNodeCode).getNextNode());
         creditBO.refreshCredit(credit);
 
         // 修改征信人员
         List<XN632112ReqChild> list = req.getCreditUserList();
         for (XN632112ReqChild reqChild : list) {
-            CreditUser creditUser = creditUserBO
-                .getCreditUserNotNull(reqChild.getCode());
+            CreditUser creditUser = creditUserBO.getCreditUserNotNull(reqChild
+                .getCode());
             if (creditUser == null) {
                 CreditUser data = new CreditUser();
                 data.setCreditCode(credit.getCode());
@@ -217,8 +209,8 @@ public class CreditAOImpl implements ICreditAO {
         }
 
         // 日志记录
-        ECreditNode currentNode = ECreditNode.getMap()
-            .get(credit.getCurNodeCode());
+        ECreditNode currentNode = ECreditNode.getMap().get(
+            credit.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), PrecurNodeCode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
@@ -268,8 +260,8 @@ public class CreditAOImpl implements ICreditAO {
     @Override
     public Paginable<Credit> queryCreditPageByRoleCode(int start, int limit,
             Credit condition) {
-        Paginable<Credit> result = creditBO.getPaginableByRoleCode(start, limit,
-            condition);
+        Paginable<Credit> result = creditBO.getPaginableByRoleCode(start,
+            limit, condition);
         List<Credit> list = result.getList();
         for (Credit credit : list) {
             // 从征信人员表查申请人的客户姓名 手机号 身份证号
@@ -284,8 +276,7 @@ public class CreditAOImpl implements ICreditAO {
     public void primaryAudit(XN632113Req req) {
         Credit credit = creditBO.getCredit(req.getCode());
 
-        if (!ECreditNode.PRIMARYAUDIT.getCode()
-            .equals(credit.getCurNodeCode())) {
+        if (!ECreditNode.PRIMARYAUDIT.getCode().equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是业务员初审节点，不能操作");
         }
@@ -293,9 +284,8 @@ public class CreditAOImpl implements ICreditAO {
         String preCurrentNode = credit.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             // 审核通过，改变节点
-            credit.setCurNodeCode(
-                nodeFlowBO.getNodeFlowByCurrentNode(credit.getCurNodeCode())
-                    .getNextNode());
+            credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                credit.getCurNodeCode()).getNextNode());
             // 征信人员
             List<CreditUser> userList = req.getCreditUserList();
             for (CreditUser creditUser : userList) {
@@ -309,15 +299,14 @@ public class CreditAOImpl implements ICreditAO {
 
             }
         } else {
-            credit.setCurNodeCode(
-                nodeFlowBO.getNodeFlowByCurrentNode(credit.getCurNodeCode())
-                    .getBackNode());
+            credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                credit.getCurNodeCode()).getBackNode());
         }
         creditBO.refreshCreditNode(credit);
 
         // 日志记录
-        ECreditNode currentNode = ECreditNode.getMap()
-            .get(credit.getCurNodeCode());
+        ECreditNode currentNode = ECreditNode.getMap().get(
+            credit.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
@@ -336,9 +325,8 @@ public class CreditAOImpl implements ICreditAO {
         String preCurrentNode = credit.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             // 审核通过，改变节点
-            credit.setCurNodeCode(
-                nodeFlowBO.getNodeFlowByCurrentNode(credit.getCurNodeCode())
-                    .getNextNode());
+            credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                credit.getCurNodeCode()).getNextNode());
 
             // 法院网查询结果录入
             for (XN632114ReqCNR courtNetworkResults : req
@@ -364,7 +352,7 @@ public class CreditAOImpl implements ICreditAO {
                 credit.getCode(), ELoanRole.APPLY_USER);
             if (customerUser == null) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "征信人员信息中缺少申请本人信息，请打回");
+                    "征信人员信息中缺少申请本人信息，驳回");
             }
 
             // 申请人信息
@@ -384,8 +372,8 @@ public class CreditAOImpl implements ICreditAO {
             data.setApplyBirthAddress(customerUser.getBirthAddress());
 
             // 共还人信息
-            CreditUser ghUser = creditUserBO
-                .getCreditUserByIsFirstAudit(credit.getCode(), ELoanRole.GHR);
+            CreditUser ghUser = creditUserBO.getCreditUserByIsFirstAudit(
+                credit.getCode(), ELoanRole.GHR);
             if (ghUser != null) {
                 data.setGhRealName(ghUser.getUserName());
                 data.setGhIdNo(ghUser.getIdNo());
@@ -427,11 +415,11 @@ public class CreditAOImpl implements ICreditAO {
                     data.setGuarantor2IdPicz(dbUser2.getIdNoFront());
                     data.setGuarantor2IdPicf(dbUser2.getIdNoReverse());
                     data.setGuarantor2MonthIncome(dbUser2.getMonthIncome());
-                    data.setGuarantor2SettleInterest(
-                        dbUser2.getSettleInterest());
+                    data.setGuarantor2SettleInterest(dbUser2
+                        .getSettleInterest());
                     data.setGuarantor2Balance(dbUser2.getBalance());
-                    data.setGuarantor2JourShowIncome(
-                        dbUser2.getJourShowIncome());
+                    data.setGuarantor2JourShowIncome(dbUser2
+                        .getJourShowIncome());
                     data.setGuarantor2IsPrint(dbUser2.getIsPrint());
                     // 修改担保人是否一审
                     creditUserBO.refreshCreditUserIsFirstAudit(dbUser2);
@@ -448,23 +436,22 @@ public class CreditAOImpl implements ICreditAO {
             data.setCreateDatetime(new Date());
             String budgetOrderCode = budgetOrderBO.saveBudgetOrder(data);
             // 日志记录
-            sysBizLogBO.saveSYSBizLog(budgetOrderCode, EBizLogType.BUDGET_ORDER,
-                budgetOrderCode, node.getCode(), node.getValue(),
-                req.getOperator());
+            sysBizLogBO.saveSYSBizLog(budgetOrderCode,
+                EBizLogType.BUDGET_ORDER, budgetOrderCode, node.getCode(),
+                node.getValue(), req.getOperator());
 
             // 征信单回写预算单编号
             credit.setBudgetCode(budgetOrderCode);
             creditBO.refreshCredit(credit);
         } else {
-            credit.setCurNodeCode(
-                nodeFlowBO.getNodeFlowByCurrentNode(credit.getCurNodeCode())
-                    .getBackNode());
+            credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                credit.getCurNodeCode()).getBackNode());
         }
         creditBO.refreshCreditNode(credit);
 
         // 日志记录
-        ECreditNode currentNode = ECreditNode.getMap()
-            .get(credit.getCurNodeCode());
+        ECreditNode currentNode = ECreditNode.getMap().get(
+            credit.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
             EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), req.getOperator());
@@ -500,8 +487,8 @@ public class CreditAOImpl implements ICreditAO {
 
     private void init(Credit credit) {
         if (StringUtils.isNotBlank(credit.getCompanyCode())) {
-            Department department = departmentBO
-                .getDepartment(credit.getCompanyCode());
+            Department department = departmentBO.getDepartment(credit
+                .getCompanyCode());
             if (null != department) {
                 credit.setCompanyName(department.getName());
             }

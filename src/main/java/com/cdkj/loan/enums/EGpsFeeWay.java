@@ -8,7 +8,7 @@ package com.cdkj.loan.enums;
  */
 public enum EGpsFeeWay {
 
-    TRANSFER_ACCOUNTS("1", "转账"), MORTGAGE("2", "按揭款"), REPOINT("3", "返点"), NO_FEE(
+    TRANSFER_ACCOUNTS("1", "转账"), MORTGAGE("2", "按揭款扣"), REPOINT("3", "返点扣"), NO_FEE(
             "4", "不收费");
 
     EGpsFeeWay(String code, String value) {

@@ -343,7 +343,7 @@ public class XN632120Req {
     // 预算单类型（1正常单2外单）
     private String type;
 
-    // 用款用途
+    // 用款用途（协议外返点和应退按揭款）
     private List<XN632120ReqRepointDetail> repointDetailList;
 
     public String getOperator() {
