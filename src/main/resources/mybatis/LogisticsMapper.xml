@@ -132,11 +132,18 @@
 		WHERE code = #{code}
 	</update>
 	
+	<update id="update_logistics_audite" parameterType="logistics">
+		UPDATE tdq_logistics t
+		SET
+		t.status = #{status}
+		,t.remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
 	<update id="update_logistics_sendAgain" parameterType="logistics">
 		UPDATE tdq_logistics t
 		SET
-		t.receipt_datetime = #{receiptDatetime}
-		,t.supplement_reason = #{supplementReason}
+		t.supplement_reason = #{supplementReason}
 		,t.supplement_note = #{supplementNote}
 		,t.status = #{status}
 		WHERE code = #{code}
