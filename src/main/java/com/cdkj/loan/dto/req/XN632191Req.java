@@ -11,6 +11,12 @@ public class XN632191Req {
     // 预算单编号
     private String code;
 
+    // 车牌号码
+    private String carNumber;
+
+    // 绿大本编号
+    private String greenBigCode;
+
     // 绿大本扫描件
     private String greenBigSmj;
 
@@ -23,6 +29,22 @@ public class XN632191Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getCarNumber() {
+        return carNumber;
+    }
+
+    public void setCarNumber(String carNumber) {
+        this.carNumber = carNumber;
+    }
+
+    public String getGreenBigCode() {
+        return greenBigCode;
+    }
+
+    public void setGreenBigCode(String greenBigCode) {
+        this.greenBigCode = greenBigCode;
     }
 
     public String getGreenBigSmj() {

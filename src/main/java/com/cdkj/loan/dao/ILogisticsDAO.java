@@ -25,4 +25,7 @@ public interface ILogisticsDAO extends IBaseDAO<Logistics> {
     // 收件待补件
     public void updateLogisticsSendAgain(Logistics data);
 
+    // 退件
+    public void updateLogisticsBackPiece(Logistics data);
+
 }

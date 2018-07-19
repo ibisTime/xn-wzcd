@@ -13,9 +13,6 @@ public class XN632151Req {
     @NotBlank
     private String code;
 
-    // 收件结果（1收件，0退件）
-    private String approveResult;
-
     // 备注
     private String remark;
 
@@ -28,14 +25,6 @@ public class XN632151Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
-    }
-
-    public String getApproveResult() {
-        return approveResult;
-    }
-
-    public void setApproveResult(String approveResult) {
-        this.approveResult = approveResult;
     }
 
     public String getCode() {

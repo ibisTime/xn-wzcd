@@ -132,6 +132,14 @@
 		WHERE code = #{code}
 	</update>
 	
+	<update id="update_logistics_backPiece" parameterType="logistics">
+		UPDATE tdq_logistics t
+		SET
+		t.status = #{status}
+		,t.remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
 	<update id="update_logistics_audite" parameterType="logistics">
 		UPDATE tdq_logistics t
 		SET

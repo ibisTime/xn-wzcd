@@ -179,6 +179,7 @@
 		<result column="bank_receipt_number" property="bankReceiptNumber" />
 		<result column="bank_receipt_pdf" property="bankReceiptPdf" />
 		<result column="bank_receipt_note" property="bankReceiptNote" />
+		<result column="green_big_code" property="greenBigCode" />
 		<result column="green_big_smj" property="greenBigSmj" />
 		<result column="pledge_commit_datetime" property="pledgeCommitDatetime" />
 		
@@ -532,6 +533,7 @@
 		,t.bank_receipt_number
 		,t.bank_receipt_pdf
 		,t.bank_receipt_note
+		,t.green_big_code
 		,t.green_big_smj
 		,t.pledge_commit_datetime
 		,t.pledge_commit_note
@@ -805,6 +807,7 @@
 		,t.bank_receipt_number
 		,t.bank_receipt_pdf
 		,t.bank_receipt_note
+		,t.green_big_code
 		,t.green_big_smj
 		,t.pledge_commit_datetime
 		,t.pledge_commit_note
@@ -1031,6 +1034,7 @@
 		,t.bank_receipt_number
 		,t.bank_receipt_pdf
 		,t.bank_receipt_note
+		,t.green_big_code
 		,t.green_big_smj
 		,t.pledge_commit_datetime
 		,t.pledge_commit_note
@@ -1661,6 +1665,8 @@
 		,enter_file_status = #{enterFileStatus}
 		,operator = #{operator}
 		,operate_datetime = #{operateDatetime}
+		,car_number = #{carNumber}
+		,green_big_code = #{greenBigCode}
 		,green_big_smj = #{greenBigSmj}
 		WHERE code = #{code}
 	</update>
@@ -1985,8 +1991,7 @@
 	<update id="update_pledgeContractPrint" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		car_number = #{carNumber}
-		,frame_no = #{frameNo}
+		frame_no = #{frameNo}
 		,engine_no = #{engineNo}
 		,pledge_print_template_id = #{pledgePrintTemplateId}
 		,pledge_print_user = #{pledgePrintUser}

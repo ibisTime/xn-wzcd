@@ -71,6 +71,11 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     }
 
     @Override
+    public void backPieceLogistics(Logistics data) {
+        logisticsDAO.updateLogisticsBackPiece(data);
+    }
+
+    @Override
     public void auditePassLogistics(String code, String remark) {
         if (null == code) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写编号");

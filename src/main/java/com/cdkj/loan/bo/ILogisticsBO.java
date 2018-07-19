@@ -34,4 +34,7 @@ public interface ILogisticsBO extends IPaginableBO<Logistics> {
 
     // 列表查
     public List<Logistics> queryLogisticsList(Logistics condition);
+
+    // 退件
+    public void backPieceLogistics(Logistics data);
 }

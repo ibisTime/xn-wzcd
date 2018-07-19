@@ -67,6 +67,11 @@ public class LogisticsDAOImpl extends AMybatisTemplate
     }
 
     @Override
+    public void updateLogisticsBackPiece(Logistics data) {
+        super.update(NAMESPACE.concat("update_logistics_backPiece"), data);
+    }
+
+    @Override
     public void updateLogisticsAudite(Logistics data) {
         super.update(NAMESPACE.concat("update_logistics_audite"), data);
 
@@ -76,4 +81,5 @@ public class LogisticsDAOImpl extends AMybatisTemplate
     public void updateLogisticsSendAgain(Logistics data) {
         super.update(NAMESPACE.concat("update_logistics_sendAgain"), data);
     }
+
 }

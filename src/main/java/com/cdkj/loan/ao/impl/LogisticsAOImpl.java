@@ -30,7 +30,6 @@ import com.cdkj.loan.domain.SupplementReason;
 import com.cdkj.loan.dto.req.XN632150Req;
 import com.cdkj.loan.dto.req.XN632152Req;
 import com.cdkj.loan.dto.req.XN632153Req;
-import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBudgetOrderNode;
@@ -144,18 +143,13 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Override
     @Transactional
-    public void receiveLogistics(String code, String approveResult,
-            String operator, String remark) {
+    public void receiveLogistics(String code, String operator, String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "资料不是待收件状态!");
         }
-        if (EApproveResult.PASS.getCode().equals(approveResult)) {
-            data.setStatus(ELogisticsStatus.RECEIVED.getCode());
-        } else {
-            data.setStatus(ELogisticsStatus.BACK_PIECE.getCode());
-        }
+        data.setStatus(ELogisticsStatus.RECEIVED.getCode());
         data.setReceiptDatetime(new Date());
         data.setRemark(remark);
         logisticsBO.receiveLogistics(data);
@@ -188,6 +182,28 @@ public class LogisticsAOImpl implements ILogisticsAO {
         } else if (ELogisticsType.REPAY_BIZ.getCode().equals(data.getType())) {
             repayBizBO.refreshBankRecLogic(data.getBizCode(), operator);
         }
+    }
+
+    @Override
+    public void backPiece(String code, String operator, String remark) {
+        Logistics data = logisticsBO.getLogistics(code);
+        if (!ELogisticsStatus.RECEIVED.getCode().equals(data.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "资料不是待审核状态!");
+        }
+        data.setStatus(ELogisticsStatus.RECEIVED.getCode());
+        data.setRemark(remark);
+        logisticsBO.backPieceLogistics(data);
+
+        BudgetOrder budgetOrder = budgetOrderBO
+            .getBudgetOrder(data.getBizCode());
+        // 日志记录 主流程
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(),
+            budgetOrder.getCurNodeCode(), currentNode.getCode(),
+            currentNode.getValue(), operator);
     }
 
     @Override

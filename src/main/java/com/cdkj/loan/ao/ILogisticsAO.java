@@ -21,8 +21,7 @@ public interface ILogisticsAO {
 
     public void supplementAndSend(XN632153Req req);
 
-    public void receiveLogistics(String code, String approveResult,
-            String operator, String remark);
+    public void receiveLogistics(String code, String operator, String remark);
 
     public void auditePassLogistics(String code, String operator,
             String remark);
@@ -35,5 +34,7 @@ public interface ILogisticsAO {
     public List<Logistics> queryLogisticsList(Logistics condition);
 
     public Logistics getLogistics(String code);
+
+    public void backPiece(String code, String operator, String remark);
 
 }
