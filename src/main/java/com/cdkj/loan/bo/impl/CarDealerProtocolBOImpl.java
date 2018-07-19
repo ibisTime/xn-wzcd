@@ -179,18 +179,17 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
     public XN632291Res calProtocolFee(String budgetOrderCode,
             String carDealerCode) {
         XN632291Res res = new XN632291Res();
-
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(budgetOrderCode);
-
         Long loanAmount = budgetOrder.getLoanAmount();
-
         Bank bank = bankBO.getBankBySubbranch(budgetOrder.getLoanBankCode());
         EBankType eBankType = null;
         if (EBankType.GH.getCode().equals(bank.getBankCode())) {
             eBankType = EBankType.GH;
-        } else if (EBankType.ZH.getCode().equals(bank.getBankCode())) {
+        }
+        if (EBankType.ZH.getCode().equals(bank.getBankCode())) {
             eBankType = EBankType.ZH;
-        } else if (EBankType.JH.getCode().equals(bank.getBankCode())) {
+        }
+        if (EBankType.JH.getCode().equals(bank.getBankCode())) {
             eBankType = EBankType.JH;
         }
         CarDealerProtocol carDealerProtocol = getCarDealerProtocolByCarDealerCode(
@@ -202,7 +201,6 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
             res.setFxAmount(String.valueOf(AmountUtil.mul(loanAmount,
                 carDealerProtocol.getAssureRate())));
         }
-
         if (ELyAmountType.SINGLE.getCode().equals(
             carDealerProtocol.getLyAmountType())) {
             res.setLyAmount(String.valueOf(carDealerProtocol.getLyAmountFee()));
@@ -210,7 +208,6 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
             res.setLyAmount(String.valueOf(AmountUtil.mul(loanAmount,
                 carDealerProtocol.getLyAmountRate())));
         }
-
         if (EGpsTypeProtocol.SINGLE.getCode().equals(
             carDealerProtocol.getGpsType())) {
             res.setGpsFee(String.valueOf(carDealerProtocol.getGpsFee()));
@@ -218,7 +215,6 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
             res.setGpsFee(String.valueOf(AmountUtil.mul(loanAmount,
                 carDealerProtocol.getGpsRate())));
         }
-
         if (EOtherType.SINGLE.getCode()
             .equals(carDealerProtocol.getOtherType())) {
             res.setOtherFee(String.valueOf(carDealerProtocol.getOtherFee()));
@@ -226,23 +222,18 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
             res.setOtherFee(String.valueOf(AmountUtil.mul(loanAmount,
                 carDealerProtocol.getOtherRate())));
         }
-
         SYSConfig sysConfigoil = sysConfigBO
             .getSYSConfig(SysConstants.BUDGET_OIL_SUBSIDY_RATE);
         Double oilSubsidyBFB = StringValidater.toDouble(sysConfigoil
             .getCvalue());
         Long oilSubsidy = AmountUtil.mul(budgetOrder.getLoanAmount(),
             oilSubsidyBFB);
-        // 油补
-        res.setOilSubsidy(String.valueOf(oilSubsidy));
-
+        res.setOilSubsidy(String.valueOf(oilSubsidy));// 油补
         SYSConfig sysConfig = sysConfigBO
             .getSYSConfig(SysConstants.BUDGET_GPS_DEDUCT_RATE);
         Double gpsBFB = StringValidater.toDouble((sysConfig.getCvalue()));
         Long gpsDeduct = AmountUtil.mul(budgetOrder.getLoanAmount(), gpsBFB);
-        // gps提成
-        res.setGpsDeduct(String.valueOf(gpsDeduct));
-
+        res.setGpsDeduct(String.valueOf(gpsDeduct));// GPS提成
         return res;
     }
 }
