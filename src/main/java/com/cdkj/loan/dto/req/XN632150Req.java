@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -11,7 +13,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN632150Req {
     // 编号
     @NotBlank
-    private String code;
+    private List<String> codeList;
 
     // 寄送方式(1 线下 2 快递)
     @NotBlank
@@ -73,12 +75,12 @@ public class XN632150Req {
         this.sendNote = sendNote;
     }
 
-    public String getCode() {
-        return code;
+    public List<String> getCodeList() {
+        return codeList;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCodeList(List<String> codeList) {
+        this.codeList = codeList;
     }
 
     public String getSendDatetime() {

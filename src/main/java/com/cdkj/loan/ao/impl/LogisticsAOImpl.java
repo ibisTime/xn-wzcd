@@ -74,36 +74,41 @@ public class LogisticsAOImpl implements ILogisticsAO {
     @Override
     @Transactional
     public void sendLogistics(XN632150Req req) {
-        Logistics data = logisticsBO.getLogistics(req.getCode());
-        if (!ELogisticsStatus.TO_SEND.getCode().equals(data.getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "资料不是待发件状态!");
+        List<String> codeList = req.getCodeList();
+        for (String code : codeList) {
+            Logistics data = logisticsBO.getLogistics(code);
+            if (!ELogisticsStatus.TO_SEND.getCode().equals(data.getStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "业务编号"
+                        + data.getBizCode() + "的资料不是待发件状态!");
+            }
+        }
+        for (String code : codeList) {
+            // 发件
+            Logistics logistics = logisticsBO.getLogistics(code);
+            logistics.setCode(code);
+            logistics.setSendType(req.getSendType());
+            logistics.setLogisticsCompany(req.getLogisticsCompany());
+            logistics.setLogisticsCode(req.getLogisticsCode());
+
+            logistics.setSendDatetime(DateUtil.strToDate(req.getSendDatetime(),
+                DateUtil.DATA_TIME_PATTERN_1));
+            logistics.setSendNote(req.getSendNote());
+            logistics.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
+            logisticsBO.sendLogistics(logistics);
+
+            if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
+                gpsApplyBO.sendGps(logistics.getBizCode(),
+                    logistics.getSendDatetime());
+            }
         }
 
-        // 发件
-        Logistics logistics = new Logistics();
-        logistics.setCode(req.getCode());
-        logistics.setSendType(req.getSendType());
-        logistics.setLogisticsCompany(req.getLogisticsCompany());
-        logistics.setLogisticsCode(req.getLogisticsCode());
-
-        logistics.setSendDatetime(DateUtil.strToDate(req.getSendDatetime(),
-            DateUtil.DATA_TIME_PATTERN_1));
-        logistics.setSendNote(req.getSendNote());
-        logistics.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
-        logisticsBO.sendLogistics(logistics);
-
-        if (ELogisticsType.GPS.getCode().equals(data.getType())) {
-            gpsApplyBO.sendGps(data.getBizCode(), logistics.getSendDatetime());
-        }
     }
 
     @Override
     @Transactional
     public void supplementAndSend(XN632153Req req) {
         Logistics data = logisticsBO.getLogistics(req.getCode());
-        if (!ELogisticsStatus.TO_SEND_AGAIN.getCode()
-            .equals(data.getStatus())) {
+        if (!ELogisticsStatus.TO_SEND_AGAIN.getCode().equals(data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "资料不是补件待发货状态!");
         }
