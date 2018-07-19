@@ -487,9 +487,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             CollectBankcard collectBankcard = collectBankcardBO
                 .getCollectBankcard(data.getCollectBankcardCode());
             if (null != collectBankcard) {
-
                 data.setCollectionAccountNo(collectBankcard.getBankcardNumber());
-
                 data.setCollectBankName(collectBankcard.getBankName());
                 data.setSubbranch(collectBankcard.getSubbranch());
             }

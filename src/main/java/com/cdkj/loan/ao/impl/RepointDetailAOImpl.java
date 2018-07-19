@@ -102,38 +102,38 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
     public RepointDetail calculateRepointDetail(BudgetOrder data) {
         // 返回数据 只有协议内返点
         RepointDetail repointDetail = new RepointDetail();
-        Long loanAmount = data.getLoanAmount();// 贷款金额
+        Long loanAmount = getLong(data.getLoanAmount());// 贷款金额
         Bank bank = bankBO.getBankBySubbranch(data.getLoanBankCode());
         CarDealerProtocol carDealerProtocol = carDealerProtocolBO
             .getCarDealerProtocolByCarDealerCode(data.getCarDealerCode(),
                 bank.getBankCode());
-        double bankRate = data.getBankRate(); // 银行利率
-        double globalRate = data.getGlobalRate(); // 综合利率（银行实际利率）
-        double benchmarkRate = 0;// 基准利率
+        Double bankRate = getDouble(data.getBankRate()); // 银行利率
+        Double globalRate = getDouble(data.getGlobalRate()); // 综合利率（银行实际利率）
+        Double benchmarkRate = 0D;// 基准利率
         String rateType = data.getRateType();// 利率类型
         if (ELoanPeriod.ONE_YEAER.getCode().equals(data.getLoanPeriods())
                 && ERateType.CT.getCode().equals(rateType)) {
-            benchmarkRate = carDealerProtocol.getPlatCtRate12();
+            benchmarkRate = getDouble(carDealerProtocol.getPlatCtRate12());
         }
         if (ELoanPeriod.ONE_YEAER.getCode().equals(data.getLoanPeriods())
                 && ERateType.ZK.getCode().equals(rateType)) {
-            benchmarkRate = carDealerProtocol.getPlatZkRate12();
+            benchmarkRate = getDouble(carDealerProtocol.getPlatZkRate12());
         }
         if (ELoanPeriod.TWO_YEAR.getCode().equals(data.getLoanPeriods())
                 && ERateType.CT.getCode().equals(rateType)) {
-            benchmarkRate = carDealerProtocol.getPlatCtRate24();
+            benchmarkRate = getDouble(carDealerProtocol.getPlatCtRate24());
         }
         if (ELoanPeriod.TWO_YEAR.getCode().equals(data.getLoanPeriods())
                 && ERateType.ZK.getCode().equals(rateType)) {
-            benchmarkRate = carDealerProtocol.getPlatZkRate24();
+            benchmarkRate = getDouble(carDealerProtocol.getPlatZkRate24());
         }
         if (ELoanPeriod.THREE_YEAR.getCode().equals(data.getLoanPeriods())
                 && ERateType.CT.getCode().equals(rateType)) {
-            benchmarkRate = carDealerProtocol.getPlatCtRate36();
+            benchmarkRate = getDouble(carDealerProtocol.getPlatCtRate36());
         }
         if (ELoanPeriod.THREE_YEAR.getCode().equals(data.getLoanPeriods())
                 && ERateType.ZK.getCode().equals(rateType)) {
-            benchmarkRate = carDealerProtocol.getPlatZkRate36();
+            benchmarkRate = getDouble(carDealerProtocol.getPlatZkRate36());
         }
         if (bankRate < benchmarkRate) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -153,18 +153,9 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         // 协议里的返点类型是百分比:（返点支付总金额-手续费（返点扣）-GPS（返点扣））*（1- 返点税点）
         // 协议里的返点类型是单笔 :（返点支付总金额-手续费（返点扣）-GPS（返点扣））-单笔
         Long actualRepointAmount = 0L;// 实际返点金额
-        Long lyAmount = 0L;
-        if (null != data.getLyAmount()) {
-            lyAmount = data.getLyAmount();
-        }
-        Long fxAmount = 0L;
-        if (null != data.getFxAmount()) {
-            fxAmount = data.getFxAmount();
-        }
-        Long otherFee = 0L;
-        if (null != data.getOtherFee()) {
-            otherFee = data.getOtherFee();
-        }
+        Long lyAmount = getLong(data.getLyAmount());
+        Long fxAmount = getLong(data.getFxAmount());
+        Long otherFee = getLong(data.getOtherFee());
         Long sxFee = 0L;// 收客户手续费合计：履约保证金+担保风险金+杂费
         if (EServiceChargeWay.REPOINT.getCode().equals(
             data.getServiceChargeWay())) {
@@ -172,18 +163,18 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         }
         Long gpsFee = 0L;// GPS费
         if (EGpsFeeWay.REPOINT.getCode().equals(data.getGpsFeeWay())) {
-            gpsFee = data.getGpsFee();
+            gpsFee = getLong(data.getGpsFee());
         }
         actualRepointAmount = repointAmount - sxFee - gpsFee;
         if (ERepointType.SINGLE.getCode().equals(
             carDealerProtocol.getReturnPointType())) {
             actualRepointAmount = actualRepointAmount
-                    - carDealerProtocol.getReturnPointFee();
+                    - getLong(carDealerProtocol.getReturnPointFee());
         }
         if (ERepointType.PERCENT.getCode().equals(
             carDealerProtocol.getReturnPointType())) {
             actualRepointAmount = AmountUtil.mul(actualRepointAmount,
-                (1 - carDealerProtocol.getReturnPointRate()));
+                (1 - getLong(carDealerProtocol.getReturnPointRate())));
         }
         // 获得汽车经销商返点账号集合
         CollectBankcard condition = new CollectBankcard();
@@ -193,12 +184,12 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
             .queryCollectBankcardByCompanyCodeAndType(condition);
         for (CollectBankcard collectBankcard : list) {
             if (collectBankcard.getBankCode().equals(bank.getBankCode())) {
-                Double pointRate = collectBankcard.getPointRate();
+                Double pointRate = getDouble(collectBankcard.getPointRate());
                 repointDetail
                     .setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
                         .getCode());
                 repointDetail.setRepointAmount(AmountUtil.mul(
-                    actualRepointAmount, pointRate));// 实际返点金额*返点比例
+                    actualRepointAmount, pointRate));// 实际返点金额*返点比例=实际给汽车经销商返点的金额
                 repointDetail.setAccountCode(collectBankcard.getCode());
                 repointDetail.setBenchmarkRate(benchmarkRate);
             }
@@ -224,5 +215,21 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
             list.add(repointDetailOuter);
         }
         return list;
+    }
+
+    private Long getLong(Object obj) {
+        if (null == obj) {
+            return 0L;
+        } else {
+            return (Long) obj;
+        }
+    }
+
+    private Double getDouble(Object obj) {
+        if (null == obj) {
+            return 0D;
+        } else {
+            return (Double) obj;
+        }
     }
 }
