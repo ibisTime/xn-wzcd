@@ -11,6 +11,7 @@ import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632142Req;
 import com.cdkj.loan.dto.req.XN632143Req;
+import com.cdkj.loan.dto.req.XN632191Req;
 import com.cdkj.loan.dto.req.XN632192Req;
 import com.cdkj.loan.dto.req.XN632193Req;
 import com.cdkj.loan.dto.req.XN632194Req;
@@ -57,8 +58,7 @@ public interface IBudgetOrderAO {
             String pledgeCommitNote, String operator);
 
     // 确认抵押完成
-    public void carPledgeConfirm(String code, String operator,
-            String greenBigSmj);
+    public void carPledgeConfirm(XN632191Req req);
 
     // 车贷入档补录
     public void carLoanArchive(XN632200Req req);

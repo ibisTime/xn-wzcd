@@ -33,8 +33,6 @@ public class XN632142Req {
     // 车辆品牌
     private String carBrand;
 
-    // 车牌号码
-    private String carNumber;
 
     // 发动机号码
     private String engineNo;
@@ -119,13 +117,6 @@ public class XN632142Req {
         this.applyUserCompanyPhone = applyUserCompanyPhone;
     }
 
-    public String getCarNumber() {
-        return carNumber;
-    }
-
-    public void setCarNumber(String carNumber) {
-        this.carNumber = carNumber;
-    }
 
     public String getEngineNo() {
         return engineNo;

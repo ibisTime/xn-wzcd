@@ -23,6 +23,9 @@ public interface ILogisticsAO {
 
     public void receiveLogistics(String code, String operator, String remark);
 
+    public void auditePassLogistics(String code, String operator,
+            String remark);
+
     public void sendAgainLogistics(XN632152Req req);
 
     public Paginable<Logistics> queryLogisticsPage(int start, int limit,
@@ -31,5 +34,7 @@ public interface ILogisticsAO {
     public List<Logistics> queryLogisticsList(Logistics condition);
 
     public Logistics getLogistics(String code);
+
+    public void backPiece(String code, String operator, String remark);
 
 }

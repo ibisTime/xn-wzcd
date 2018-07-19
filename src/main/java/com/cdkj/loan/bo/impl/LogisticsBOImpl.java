@@ -1,6 +1,5 @@
 package com.cdkj.loan.bo.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,16 +66,25 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     }
 
     @Override
-    public void receiveLogistics(String code, String remark) {
+    public void receiveLogistics(Logistics data) {
+        logisticsDAO.updateLogisticsReceive(data);
+    }
+
+    @Override
+    public void backPieceLogistics(Logistics data) {
+        logisticsDAO.updateLogisticsBackPiece(data);
+    }
+
+    @Override
+    public void auditePassLogistics(String code, String remark) {
         if (null == code) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写编号");
         }
         Logistics condition = new Logistics();
         condition.setCode(code);
         condition.setRemark(remark);
-        condition.setReceiptDatetime(new Date());
-        condition.setStatus(ELogisticsStatus.RECEIVED.getCode());
-        logisticsDAO.updateLogisticsReceive(condition);
+        condition.setStatus(ELogisticsStatus.AUDITE_PASS.getCode());
+        logisticsDAO.updateLogisticsAudite(condition);
     }
 
     @Override
@@ -88,7 +96,6 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
         Logistics data = getLogistics(req.getCode());
         data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
         data.setSupplementNote(req.getSupplementNote());
-        data.setReceiptDatetime(new Date());
         data.setRemark(req.getRemark());
 
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {

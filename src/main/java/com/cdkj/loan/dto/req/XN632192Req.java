@@ -14,9 +14,6 @@ public class XN632192Req {
     @NotBlank
     private String code;
 
-    // 车牌号码
-    private String carNumber;
-
     // 车架号码
     private String frameNo;
 
@@ -37,14 +34,6 @@ public class XN632192Req {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getCarNumber() {
-        return carNumber;
-    }
-
-    public void setCarNumber(String carNumber) {
-        this.carNumber = carNumber;
     }
 
     public String getFrameNo() {

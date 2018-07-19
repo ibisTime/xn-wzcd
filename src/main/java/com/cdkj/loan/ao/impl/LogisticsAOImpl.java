@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -16,6 +17,7 @@ import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISupplementReasonBO;
 import com.cdkj.loan.bo.IUserBO;
@@ -29,6 +31,8 @@ import com.cdkj.loan.dto.req.XN632150Req;
 import com.cdkj.loan.dto.req.XN632152Req;
 import com.cdkj.loan.dto.req.XN632153Req;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
@@ -70,6 +74,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Autowired
     private ISupplementReasonBO supplementReasonBO;
+
+    @Autowired
+    private ISYSBizLogBO sysBizLogBO;
 
     @Override
     @Transactional
@@ -147,7 +154,32 @@ public class LogisticsAOImpl implements ILogisticsAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "资料不是待收件状态!");
         }
-        logisticsBO.receiveLogistics(code, remark);
+        data.setStatus(ELogisticsStatus.RECEIVED.getCode());
+        data.setReceiptDatetime(new Date());
+        data.setRemark(remark);
+        logisticsBO.receiveLogistics(data);
+
+        BudgetOrder budgetOrder = budgetOrderBO
+            .getBudgetOrder(data.getBizCode());
+        // 日志记录 主流程
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(),
+            budgetOrder.getCurNodeCode(), currentNode.getCode(),
+            currentNode.getValue(), operator);
+    }
+
+    @Override
+    @Transactional
+    public void auditePassLogistics(String code, String operator,
+            String remark) {
+        Logistics data = logisticsBO.getLogistics(code);
+        if (!ELogisticsStatus.RECEIVED.getCode().equals(data.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "资料不是待审核状态!");
+        }
+        logisticsBO.auditePassLogistics(code, remark);
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
             budgetOrderBO.logicOrder(data.getBizCode(), operator);
         } else if (ELogisticsType.GPS.getCode().equals(data.getType())) {
@@ -158,11 +190,33 @@ public class LogisticsAOImpl implements ILogisticsAO {
     }
 
     @Override
+    public void backPiece(String code, String operator, String remark) {
+        Logistics data = logisticsBO.getLogistics(code);
+        if (!ELogisticsStatus.RECEIVED.getCode().equals(data.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "资料不是待审核状态!");
+        }
+        data.setStatus(ELogisticsStatus.RECEIVED.getCode());
+        data.setRemark(remark);
+        logisticsBO.backPieceLogistics(data);
+
+        BudgetOrder budgetOrder = budgetOrderBO
+            .getBudgetOrder(data.getBizCode());
+        // 日志记录 主流程
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(),
+            budgetOrder.getCurNodeCode(), currentNode.getCode(),
+            currentNode.getValue(), operator);
+    }
+
+    @Override
     public void sendAgainLogistics(XN632152Req req) {
         Logistics data = logisticsBO.getLogistics(req.getCode());
-        if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
+        if (!ELogisticsStatus.RECEIVED.getCode().equals(data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "资料不是待收件状态!");
+                "资料不是收件待审核状态!");
         }
         logisticsBO.sendAgainLogistics(req);
     }

@@ -3,12 +3,12 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 资料传递收件
+ * 资料传递收件并审核通过
  * @author: silver 
  * @since: 2018年5月29日 下午11:02:18 
  * @history:
  */
-public class XN632151Req {
+public class XN632154Req {
     // 编号
     @NotBlank
     private String code;

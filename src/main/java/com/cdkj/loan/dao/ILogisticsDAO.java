@@ -16,10 +16,16 @@ public interface ILogisticsDAO extends IBaseDAO<Logistics> {
     // 发件
     public void updateLogisticsSend(Logistics data);
 
-    // 收件并审核通过
+    // 收件
     public void updateLogisticsReceive(Logistics data);
+
+    // 收件并审核通过
+    public void updateLogisticsAudite(Logistics data);
 
     // 收件待补件
     public void updateLogisticsSendAgain(Logistics data);
+
+    // 退件
+    public void updateLogisticsBackPiece(Logistics data);
 
 }

@@ -21,7 +21,10 @@ public interface ILogisticsBO extends IPaginableBO<Logistics> {
     public void sendLogistics(Logistics data);
 
     // 收货
-    public void receiveLogistics(String code, String remark);
+    public void receiveLogistics(Logistics data);
+
+    // 审核通过
+    public void auditePassLogistics(String code, String remark);
 
     // 补发
     public void sendAgainLogistics(XN632152Req req);
@@ -31,4 +34,7 @@ public interface ILogisticsBO extends IPaginableBO<Logistics> {
 
     // 列表查
     public List<Logistics> queryLogisticsList(Logistics condition);
+
+    // 退件
+    public void backPieceLogistics(Logistics data);
 }

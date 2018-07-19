@@ -470,6 +470,9 @@ public class BudgetOrder extends ABaseDO {
     // 收款说明
     private String bankReceiptNote;
 
+    // 绿大本编号
+    private String greenBigCode;
+
     // 绿大本扫描件
     private String greenBigSmj;
 
@@ -1691,6 +1694,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setGuarantor2BirthAddress(String guarantor2BirthAddress) {
         this.guarantor2BirthAddress = guarantor2BirthAddress;
+    }
+
+    public String getGreenBigCode() {
+        return greenBigCode;
+    }
+
+    public void setGreenBigCode(String greenBigCode) {
+        this.greenBigCode = greenBigCode;
     }
 
     public String getGreenBigSmj() {

@@ -1,37 +1,38 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.IBudgetOrderAO;
+import com.cdkj.loan.ao.ILogisticsAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN632191Req;
+import com.cdkj.loan.dto.req.XN632154Req;
 import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 车辆抵押确认抵押完成
+ * 收件并审核通过
  * @author: jiafr 
- * @since: 2018年7月14日 下午5:44:59 
+ * @since: 2018年7月15日 下午3:15:34 
  * @history:
  */
-public class XN632191 extends AProcessor {
-    private IBudgetOrderAO budgetOrderAO = SpringContextHolder
-        .getBean(IBudgetOrderAO.class);
+public class XN632154 extends AProcessor {
+    private ILogisticsAO logisticsAO = SpringContextHolder
+        .getBean(ILogisticsAO.class);
 
-    private XN632191Req req = null;
+    private XN632154Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.carPledgeConfirm(req);
+        logisticsAO.auditePassLogistics(req.getCode(), req.getOperator(),
+            req.getRemark());
         return new BooleanRes(true);
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632191Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632154Req.class);
         ObjValidater.validateReq(req);
     }
 
