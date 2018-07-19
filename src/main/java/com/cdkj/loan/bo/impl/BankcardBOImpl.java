@@ -8,10 +8,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IBankCardDAO;
+import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.dto.req.XN630510Req;
 import com.cdkj.loan.enums.EBankcard;
@@ -30,6 +32,9 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
 
     @Autowired
     private IBankCardDAO bankcardDAO;
+
+    @Autowired
+    private IBankSubbranchBO bankSubbranchBO;
 
     @Override
     public String saveBankcard(Bankcard data) {
@@ -54,7 +59,9 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
         data.setCode(code);
         data.setBankcardNumber(req.getBankcardNumber());
         data.setBankCode(req.getBankCode());
-        data.setBankName(req.getBankName());
+        BankSubbranch bankSubbranch = bankSubbranchBO
+            .getBankSubbranch(req.getBankCode());
+        data.setBankName(bankSubbranch.getFullName());
         data.setSubbranch(req.getSubbranch());
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
@@ -153,12 +160,19 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
         data.setBankcardNumber(bankcardNumber);
         data.setBankCode(bankCode);
 
-        data.setBankName(bankName);
+        BankSubbranch bankSubbranch = bankSubbranchBO
+            .getBankSubbranch(bankCode);
+        data.setBankName(bankSubbranch.getFullName());
         data.setCreateDatetime(new Date());
         data.setStatus(EBankcard.NORMAL.getCode());
 
         saveBankcard(data);
 
         return code;
+    }
+
+    @Override
+    public void refreshBankcardNumber(Bankcard bankcard) {
+        bankcardDAO.updateBankcardNumber(bankcard);
     }
 }

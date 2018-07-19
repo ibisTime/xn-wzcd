@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBankcardAO;
+import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.OrderNoGenerater;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.dto.req.XN802010Req;
 import com.cdkj.loan.dto.req.XN802012Req;
@@ -32,6 +34,9 @@ public class BankcardAOImpl implements IBankcardAO {
 
     @Autowired
     private IBankcardBO bankcardBO;
+
+    @Autowired
+    private IBankBO bankBO;
 
     @Autowired
     private IUserBO userBO;
@@ -95,7 +100,8 @@ public class BankcardAOImpl implements IBankcardAO {
         }
         data.setBankcardNumber(req.getBankcardNumber());
         data.setBankCode(req.getBankCode());
-        data.setBankName(req.getBankName());
+        Bank bank = bankBO.getBank(req.getBankCode());
+        data.setBankName(bank.getBankName());
         data.setSubbranch(req.getSubbranch());
         data.setBindMobile(req.getBindMobile());
         data.setUpdater(req.getUpdater());
@@ -128,7 +134,8 @@ public class BankcardAOImpl implements IBankcardAO {
         data.setCode(req.getCode());
         data.setBankcardNumber(req.getBankcardNumber());
         data.setBankCode(req.getBankCode());
-        data.setBankName(req.getBankName());
+        Bank bank = bankBO.getBank(req.getBankCode());
+        data.setBankName(bank.getBankName());
         data.setSubbranch(req.getSubbranch());
         data.setBindMobile(req.getBindMobile());
         data.setRemark(req.getRemark());
@@ -149,5 +156,10 @@ public class BankcardAOImpl implements IBankcardAO {
     @Override
     public Bankcard getBankcard(String code) {
         return bankcardBO.getBankcard(code);
+    }
+
+    @Override
+    public void editBankcardNumber(Bankcard bankcard) {
+        bankcardBO.refreshBankcardNumber(bankcard);
     }
 }

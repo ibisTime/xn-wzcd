@@ -83,6 +83,9 @@
 			<if test="code != null and code != '' ">
 				AND t.code=#{code}
 			</if>
+			<if test="curPeriods != null and curPeriods != '' ">
+				AND t.cur_periods=#{curPeriods}
+			</if>
 			<if test="refType != null and refType != '' ">
 				AND t.ref_type=#{refType}
 			</if>
@@ -487,9 +490,16 @@
 	</update>
 	
 	<update id="update_payedDaily" parameterType="repayPlan">
-		UPDATE tdh_repay_plan t 
+		UPDATE tdh_repay_plan 
 		SET
-		t.cur_node_code=#{curNodeCode}
+		cur_node_code=#{curNodeCode}
+		WHERE code=#{code}
+	</update>
+	
+	<update id="update_repayPlan" parameterType="repayPlan">
+		UPDATE tdh_repay_plan
+		SET
+		repay_capital=#{repayCapital}
 		WHERE code=#{code}
 	</update>
 </mapper>

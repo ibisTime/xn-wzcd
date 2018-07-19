@@ -1057,7 +1057,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
 
         budgetOrderBO.refreshCarLoanArchive(budgetOrder);
-
+        // 更新还款业务
+        repayBizBO.refreshRepayBiz(budgetOrder);
+        // 更新还款计划
+        repayPlanBO.refreshRepayPlan(budgetOrder);
     }
 
     // 分配账号
@@ -1241,11 +1244,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
          */
         ArrayList<RepointDetail> shouldBackRepointList = new ArrayList<RepointDetail>();
         RepointDetail mortgageRepointDetail = new RepointDetail();
-        mortgageRepointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
-            .getCode());
-        mortgageRepointDetail.setRepointAmount(budgetOrder
-            .getShouldBackAmount());
-        if (EIsAdvanceFund.YES.getCode().equals(budgetOrder.getIsAdvanceFund())) {
+        mortgageRepointDetail
+            .setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE.getCode());
+        mortgageRepointDetail
+            .setRepointAmount(budgetOrder.getShouldBackAmount());
+        if (EIsAdvanceFund.YES.getCode()
+            .equals(budgetOrder.getIsAdvanceFund())) {
             // 垫资
             CollectBankcard condition = new CollectBankcard();
             condition.setCompanyCode(budgetOrder.getCarDealerCode());
@@ -1253,24 +1257,24 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             List<CollectBankcard> list = collectBankcardBO
                 .queryCollectBankcardByCompanyCodeAndType(condition);
             CollectBankcard collectBankcard = list.get(0);
-            CarDealer carDealer = carDealerBO.getCarDealer(budgetOrder
-                .getCarDealerCode());
+            CarDealer carDealer = carDealerBO
+                .getCarDealer(budgetOrder.getCarDealerCode());
             mortgageRepointDetail.setCarDealerName(carDealer.getFullName());
             mortgageRepointDetail.setAccountName(collectBankcard.getRealName());
-            mortgageRepointDetail.setAccountNo(collectBankcard
-                .getBankcardNumber());
-            mortgageRepointDetail.setOpenBankName(collectBankcard
-                .getSubbranch());
+            mortgageRepointDetail
+                .setAccountNo(collectBankcard.getBankcardNumber());
+            mortgageRepointDetail
+                .setOpenBankName(collectBankcard.getSubbranch());
         } else {
             // 不垫资
-            mortgageRepointDetail.setCarDealerName(budgetOrder
-                .getShouldBackUserName());
-            mortgageRepointDetail.setAccountName(budgetOrder
-                .getShouldBackAccountName());
-            mortgageRepointDetail.setAccountNo(budgetOrder
-                .getShouldBackAccountNo());
-            mortgageRepointDetail.setOpenBankName(budgetOrder
-                .getShouldBackOpenBankName());
+            mortgageRepointDetail
+                .setCarDealerName(budgetOrder.getShouldBackUserName());
+            mortgageRepointDetail
+                .setAccountName(budgetOrder.getShouldBackAccountName());
+            mortgageRepointDetail
+                .setAccountNo(budgetOrder.getShouldBackAccountNo());
+            mortgageRepointDetail
+                .setOpenBankName(budgetOrder.getShouldBackOpenBankName());
         }
         shouldBackRepointList.add(mortgageRepointDetail);
         budgetOrder.setRepointDetailList1(shouldBackRepointList);

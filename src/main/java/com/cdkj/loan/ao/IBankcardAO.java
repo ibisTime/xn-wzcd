@@ -35,4 +35,7 @@ public interface IBankcardAO {
 
     public Bankcard getBankcard(String code);
 
+    // 入档更改卡号
+    public void editBankcardNumber(Bankcard bankcard);
+
 }
