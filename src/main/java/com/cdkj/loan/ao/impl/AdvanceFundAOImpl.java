@@ -286,8 +286,14 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
 
     @Override
     public void confirmPayCarDealer(XN632175Req req) {
-
         AdvanceFund data = advanceFundBO.getAdvanceFund(req.getCode());
+        if (!EAdvanceFundNode.PARENT_CAR_DEALER.getCode().equals(
+            data.getCurNodeCode())
+                && !EAdvanceFundNode.PARENT_CAR_DEALER.getCode().equals(
+                    data.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是确认打款给车行节点，不能操作");
+        }
 
         data.setAdvanceFundAmount(StringValidater.toLong(req
             .getAdvanceFundAmount()));

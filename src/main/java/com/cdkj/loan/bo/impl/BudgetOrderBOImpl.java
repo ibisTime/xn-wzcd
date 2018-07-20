@@ -463,4 +463,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         budgetOrderDAO.loanBankCollateAchieve(budgetOrder);
     }
 
+    @Override
+    public void bankPointPushHasLoanList(BudgetOrder budgetOrder) {
+        budgetOrderDAO.bankPointPushHasLoanList(budgetOrder);
+    }
+
 }

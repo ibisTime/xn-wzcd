@@ -458,6 +458,9 @@ public class BudgetOrder extends ABaseDO {
     // 银行放款时间
     private Date bankFkDatetime;
 
+    // 已放款名单
+    private String hasLoanListPic;
+
     // 收款银行
     private String bankReceiptCode;
 
@@ -3144,6 +3147,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setPreShouldBackAmount(Long preShouldBackAmount) {
         this.preShouldBackAmount = preShouldBackAmount;
+    }
+
+    public String getHasLoanListPic() {
+        return hasLoanListPic;
+    }
+
+    public void setHasLoanListPic(String hasLoanListPic) {
+        this.hasLoanListPic = hasLoanListPic;
     }
 
 }

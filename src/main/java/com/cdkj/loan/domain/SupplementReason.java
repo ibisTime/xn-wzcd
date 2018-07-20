@@ -24,7 +24,7 @@ public class SupplementReason extends ABaseDO {
     // 原因
     private String reason;
 
-    // 是否已补件
+    // 是否已补件（0未补件1已补件）
     private String isPartSupt;
 
     public Long getId() {

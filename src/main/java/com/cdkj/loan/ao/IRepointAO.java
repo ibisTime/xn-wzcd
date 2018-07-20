@@ -8,6 +8,8 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.dto.req.XN632240Req;
 import com.cdkj.loan.dto.req.XN632241Req;
+import com.cdkj.loan.dto.req.XN632242Req;
+import com.cdkj.loan.dto.req.XN632243Req;
 
 /**
  * 
@@ -30,5 +32,11 @@ public interface IRepointAO {
 
     // 确认放款
     public void confirmLoan(XN632241Req req);
+
+    // 分公司总经理审批
+    public void branchCompanyManagerApprove(XN632242Req req);
+
+    // 财务确认
+    public void financeConfirm(XN632243Req req);
 
 }
