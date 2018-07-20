@@ -37,6 +37,8 @@ public class XN632145Req extends APageReq {
 
     private List<String> curNodeCodeList;// 节点
 
+    private String enterFileStatus;// 入档状态（0待入档1待补录2已入档）
+
     // 是否提交作废申请
     private String isSubmitCancel;
 
@@ -134,6 +136,14 @@ public class XN632145Req extends APageReq {
 
     public void setIsAdvanceFund(String isAdvanceFund) {
         this.isAdvanceFund = isAdvanceFund;
+    }
+
+    public String getEnterFileStatus() {
+        return enterFileStatus;
+    }
+
+    public void setEnterFileStatus(String enterFileStatus) {
+        this.enterFileStatus = enterFileStatus;
     }
 
 }

@@ -41,6 +41,7 @@ import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBudgetOrderNode;
+import com.cdkj.loan.enums.ECity;
 import com.cdkj.loan.enums.EFbhStatus;
 import com.cdkj.loan.enums.EIsAdvanceFund;
 import com.cdkj.loan.enums.ELogisticsType;
@@ -317,7 +318,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             .getBudgetCode());
         Department company = departmentBO.getDepartment(budgetOrder
             .getCompanyCode());
-        if ("温州市".equals(company.getCityNo())) {
+        if (ECity.WENZHOU.getValue().equals(company.getCityNo())) {
             // 本地业务
             budgetOrder.setCurNodeCode(EBudgetOrderNode.SALESMAN_SEND_LOGISTICS
                 .getCode());
@@ -338,20 +339,19 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             // 外地业务
             budgetOrder.setCurNodeCode(EBudgetOrderNode.BRANCH_SEND_LOGISTICS
                 .getCode());
+            String curNodeCode = budgetOrder.getCurNodeCode();
+            String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
+                curNodeCode).getNextNode();
+            // 生成资料传递
+            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                curNodeCode, nextNodeCode);
+            // 记录日志
             sysBizLogBO.saveSYSBizLog(data.getBudgetCode(),
                 EBizLogType.BANK_LOAN_COMMIT, data.getBudgetCode(),
                 EBudgetOrderNode.BRANCH_SEND_LOGISTICS.getCode(),
                 EBudgetOrderNode.BRANCH_SEND_LOGISTICS.getValue(),
                 req.getOperator());
-            // 当前节点
-            String curNodeCode = budgetOrder.getCurNodeCode();
-            String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
-                curNodeCode).getNextNode();
-
-            // 生成资料传递
-            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                curNodeCode, nextNodeCode);
         }
 
         // 垫资流程结束 预算单 的 发保合状态 改成 待录入发保合

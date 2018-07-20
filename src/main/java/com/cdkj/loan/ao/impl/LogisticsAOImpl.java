@@ -119,7 +119,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
         if (!ELogisticsStatus.TO_SEND_AGAIN.getCode()
             .equals(data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "资料不是补件待发货状态!");
+                "资料不是补件待发件状态!");
         }
 
         // 发件
@@ -185,19 +185,6 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 budgetOrderBO.updateCurNodeCode(budgetOrder);
                 data.setStatus(ELogisticsStatus.RECEIVED_NOT_AUDITE.getCode());
             }
-            // if (EBudgetOrderNode.LOAN_PRINT.getCode()
-            // .equals(budgetOrder.getCurNodeCode())
-            // || EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode()
-            // .equals(budgetOrder.getCurNodeCode())) {// 连续发件情况
-            // // 再生成一条资料传递
-            // NodeFlow nodeFlowNext = nodeFlowBO
-            // .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());//
-            // 获取当前节点的下一个节点
-            // // 生成资料传递
-            // logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-            // budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-            // budgetOrder.getCurNodeCode(), nodeFlowNext.getNextNode());
-            // }
 
             logisticsBO.receiveLogistics(data);
 
