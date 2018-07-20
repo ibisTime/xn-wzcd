@@ -25,6 +25,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Logistics;
+import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.SupplementReason;
 import com.cdkj.loan.dto.req.XN632150Req;
@@ -32,11 +33,9 @@ import com.cdkj.loan.dto.req.XN632152Req;
 import com.cdkj.loan.dto.req.XN632153Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
-import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
-import com.cdkj.loan.enums.ESupplementReasonType;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -135,42 +134,16 @@ public class LogisticsAOImpl implements ILogisticsAO {
         if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             gpsApplyBO.sendGps(data.getBizCode(), data.getSendDatetime());
         } else if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
-            // 判断紧急的补件原因是否补全
+            // 判断补件原因是否补全
             SupplementReason supplementReason = new SupplementReason();
             supplementReason.setLogisticsCode(req.getCode());
-            supplementReason.setType(ESupplementReasonType.URGENT.getCode());
             List<SupplementReason> reasonList = supplementReasonBO
                 .querySupplementReasonList(supplementReason);
-            int size = reasonList.size();// 要补件的紧急的补件条数
-            int sizeJJ = 0;// 补件时紧急的补件条数
-            int sizeBJJ = 0;// 补件时不紧急的补件条数
-            for (SupplementReason reqSR : req.getSupplementReasonList()) {
-                if (ESupplementReasonType.URGENT.getCode()
-                    .equals(reqSR.getType())) {
-                    sizeJJ++;
-                } else {
-                    sizeBJJ++;
-                }
-                // 已补件的原因改为已补件
-                SupplementReason reason = supplementReasonBO
-                    .getSupplementReason(reqSR.getId());
-                reason.setIsPartSupt(EBoolean.YES.getCode());
-                supplementReasonBO.refreshSupplementReason(reason);
-            }
-            if (size != sizeJJ) {
+            int size = reasonList.size();// 要补件的条数
+            int size2 = req.getSupplementReasonList().size();
+            if (size != size2) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "紧急类型的补件原因未补齐，请重新补件！");
-            }
-            supplementReason.setType(ESupplementReasonType.URGENT.getCode());
-            List<SupplementReason> list = supplementReasonBO
-                .querySupplementReasonList(supplementReason);
-            int size2 = list.size();// 要补件的不紧急的补件条数
-            // 不紧急的补件原因不全时
-            if (size2 != sizeBJJ) {
-                // 产生物流单
-                logisticsBO.saveLogisticsToSupplement(data.getType(),
-                    data.getBizCode(), data.getUserId(), data.getFromNodeCode(),
-                    data.getToNodeCode());
+                    "补件原因未补齐，请重新补件！");
             }
         }
         logisticsBO.sendLogistics(data);
@@ -190,10 +163,44 @@ public class LogisticsAOImpl implements ILogisticsAO {
             data.setStatus(ELogisticsStatus.RECEIVED.getCode());
             data.setReceiptDatetime(new Date());
             data.setRemark(remark);
-            logisticsBO.receiveLogistics(data);
 
             BudgetOrder budgetOrder = budgetOrderBO
                 .getBudgetOrder(data.getBizCode());
+            // 当前节点
+            String curNodeCode = budgetOrder.getCurNodeCode();
+            NodeFlow nodeFlow = nodeFlowBO
+                .getNodeFlowByCurrentNode(curNodeCode);
+            // 无需审核，直接到下一节点
+            if (EBudgetOrderNode.LOAN_PRINT.getCode()
+                .equals(budgetOrder.getCurNodeCode())
+                    || EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode()
+                        .equals(budgetOrder.getCurNodeCode())
+                    || EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode()
+                        .equals(budgetOrder.getCurNodeCode())
+                    || EBudgetOrderNode.LOCAL_COLLATEPOST_COLLATE.getCode()
+                        .equals(budgetOrder.getCurNodeCode())
+                    || EBudgetOrderNode.OUT_COLLATEPOST_COLLATE.getCode()
+                        .equals(budgetOrder.getCurNodeCode())) {
+                budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+                budgetOrderBO.updateCurNodeCode(budgetOrder);
+                data.setStatus(ELogisticsStatus.RECEIVED_NOT_AUDITE.getCode());
+            }
+            // if (EBudgetOrderNode.LOAN_PRINT.getCode()
+            // .equals(budgetOrder.getCurNodeCode())
+            // || EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode()
+            // .equals(budgetOrder.getCurNodeCode())) {// 连续发件情况
+            // // 再生成一条资料传递
+            // NodeFlow nodeFlowNext = nodeFlowBO
+            // .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());//
+            // 获取当前节点的下一个节点
+            // // 生成资料传递
+            // logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+            // budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+            // budgetOrder.getCurNodeCode(), nodeFlowNext.getNextNode());
+            // }
+
+            logisticsBO.receiveLogistics(data);
+
             // 日志记录 主流程
             EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
                 .get(budgetOrder.getCurNodeCode());
@@ -202,6 +209,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 budgetOrder.getCurNodeCode(), currentNode.getCode(),
                 currentNode.getValue(), operator);
         }
+
     }
 
     @Override

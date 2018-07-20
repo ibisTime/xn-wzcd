@@ -2078,8 +2078,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setGuarantPrintTemplateId(req.getGuarantPrintTemplateId());
         budgetOrder.setGuarantPrintUser(req.getOperater());
         budgetOrder.setGuarantPrintDatetime(new Date());
-        budgetOrder.setCurNodeCode(nextNodeCode);
+        // budgetOrder.setCurNodeCode(nextNodeCode);
         budgetOrderBO.loanContractPrint(budgetOrder);
+
+        // 生成资料传递
+        logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+            budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
+            nextNodeCode);
 
         // 写日志
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
@@ -2108,8 +2113,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setPledgePrintTemplateId(req.getPledgePrintTemplateId());
         budgetOrder.setPledgePrintUser(req.getOperator());
         budgetOrder.setPledgePrintDatetime(new Date());
-        budgetOrder.setPledgeCurNodeCode(nextNodeCode);
+        // budgetOrder.setPledgeCurNodeCode(nextNodeCode);
         budgetOrderBO.pledgeContractPrint(budgetOrder);
+
+        // 生成资料传递
+        logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+            budgetOrder.getCode(), budgetOrder.getSaleUserId(), preNodeCode,
+            nextNodeCode);
 
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
@@ -2433,8 +2443,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         for (String code : list) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
             String preCurNodeCode = budgetOrder.getPledgeCurNodeCode();
-            budgetOrder.setPledgeCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(preCurNodeCode).getNextNode());
+            // budgetOrder.setPledgeCurNodeCode(nodeFlowBO
+            // .getNodeFlowByCurrentNode(preCurNodeCode).getNextNode());
             EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
                 .get(budgetOrder.getPledgeCurNodeCode());
             budgetOrderBO.collateAchieve(budgetOrder);
@@ -2497,8 +2507,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         for (String code : list) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
             String preCurNodeCode = budgetOrder.getCurNodeCode();
-            budgetOrder.setCurNodeCode(nodeFlowBO
-                .getNodeFlowByCurrentNode(preCurNodeCode).getNextNode());
+            // budgetOrder.setCurNodeCode(nodeFlowBO
+            // .getNodeFlowByCurrentNode(preCurNodeCode).getNextNode());
             EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
                 .get(budgetOrder.getCurNodeCode());
             budgetOrderBO.loanBankCollateAchieve(budgetOrder);
