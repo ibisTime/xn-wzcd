@@ -87,8 +87,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
         for (String code : codeList) {
             Logistics data = logisticsBO.getLogistics(code);
             if (!ELogisticsStatus.TO_SEND.getCode().equals(data.getStatus())) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "业务编号" + data.getBizCode() + "的资料不是待发件状态!");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "业务编号"
+                        + data.getBizCode() + "的资料不是待发件状态!");
             }
         }
         for (String code : codeList) {
@@ -117,10 +117,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
     @Transactional
     public void supplementAndSend(XN632153Req req) {
         Logistics data = logisticsBO.getLogistics(req.getCode());
-        if (!ELogisticsStatus.TO_SEND_AGAIN.getCode()
-            .equals(data.getStatus())) {
+        if (!ELogisticsStatus.TO_SEND_AGAIN.getCode().equals(data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "资料不是补件待发货状态!");
+                "资料不是补件待发件状态!");
         }
 
         // 发件
@@ -145,8 +144,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
             int sizeJJ = 0;// 补件时紧急的补件条数
             int sizeBJJ = 0;// 补件时不紧急的补件条数
             for (SupplementReason reqSR : req.getSupplementReasonList()) {
-                if (ESupplementReasonType.URGENT.getCode()
-                    .equals(reqSR.getType())) {
+                if (ESupplementReasonType.URGENT.getCode().equals(
+                    reqSR.getType())) {
                     sizeJJ++;
                 } else {
                     sizeBJJ++;
@@ -169,8 +168,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
             if (size2 != sizeBJJ) {
                 // 产生物流单
                 logisticsBO.saveLogisticsToSupplement(data.getType(),
-                    data.getBizCode(), data.getUserId(), data.getFromNodeCode(),
-                    data.getToNodeCode());
+                    data.getBizCode(), data.getUserId(),
+                    data.getFromNodeCode(), data.getToNodeCode());
             }
         }
         logisticsBO.sendLogistics(data);
@@ -182,8 +181,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
             String remark) {
         for (String code : list) {
             Logistics data = logisticsBO.getLogistics(code);
-            if (!ELogisticsStatus.TO_RECEIVE.getCode()
-                .equals(data.getStatus())) {
+            if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "资料不是待收件状态!");
             }
@@ -192,11 +190,11 @@ public class LogisticsAOImpl implements ILogisticsAO {
             data.setRemark(remark);
             logisticsBO.receiveLogistics(data);
 
-            BudgetOrder budgetOrder = budgetOrderBO
-                .getBudgetOrder(data.getBizCode());
+            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
+                .getBizCode());
             // 日志记录 主流程
-            EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-                .get(budgetOrder.getCurNodeCode());
+            EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+                budgetOrder.getCurNodeCode());
             sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
                 EBizLogType.BUDGET_ORDER, budgetOrder.getCode(),
                 budgetOrder.getCurNodeCode(), currentNode.getCode(),
@@ -206,8 +204,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Override
     @Transactional
-    public void auditePassLogistics(String code, String operator,
-            String remark) {
+    public void auditePassLogistics(String code, String operator, String remark) {
         Logistics data = logisticsBO.getLogistics(code);
         if (!ELogisticsStatus.RECEIVED.getCode().equals(data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -234,11 +231,11 @@ public class LogisticsAOImpl implements ILogisticsAO {
         data.setRemark(remark);
         logisticsBO.backPieceLogistics(data);
 
-        BudgetOrder budgetOrder = budgetOrderBO
-            .getBudgetOrder(data.getBizCode());
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
+            .getBizCode());
         // 日志记录 主流程
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-            .get(budgetOrder.getCurNodeCode());
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+            budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(),
             budgetOrder.getCurNodeCode(), currentNode.getCode(),
