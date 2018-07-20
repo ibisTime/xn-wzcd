@@ -83,28 +83,34 @@ public class LogisticsAOImpl implements ILogisticsAO {
     @Override
     @Transactional
     public void sendLogistics(XN632150Req req) {
-        for (String code : req.getCodeList()) {
+        List<String> codeList = req.getCodeList();
+        for (String code : codeList) {
             Logistics data = logisticsBO.getLogistics(code);
             if (!ELogisticsStatus.TO_SEND.getCode().equals(data.getStatus())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "资料不是待发件状态!");
-            }
-
-            // 发件
-            data.setSendType(req.getSendType());
-            data.setLogisticsCompany(req.getLogisticsCompany());
-            data.setLogisticsCode(req.getLogisticsCode());
-
-            data.setSendDatetime(DateUtil.strToDate(req.getSendDatetime(),
-                DateUtil.DATA_TIME_PATTERN_1));
-            data.setSendNote(req.getSendNote());
-            data.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
-            logisticsBO.sendLogistics(data);
-
-            if (ELogisticsType.GPS.getCode().equals(data.getType())) {
-                gpsApplyBO.sendGps(data.getBizCode(), data.getSendDatetime());
+                    "业务编号" + data.getBizCode() + "的资料不是待发件状态!");
             }
         }
+        for (String code : codeList) {
+            // 发件
+            Logistics logistics = logisticsBO.getLogistics(code);
+            logistics.setCode(code);
+            logistics.setSendType(req.getSendType());
+            logistics.setLogisticsCompany(req.getLogisticsCompany());
+            logistics.setLogisticsCode(req.getLogisticsCode());
+
+            logistics.setSendDatetime(DateUtil.strToDate(req.getSendDatetime(),
+                DateUtil.DATA_TIME_PATTERN_1));
+            logistics.setSendNote(req.getSendNote());
+            logistics.setStatus(ELogisticsStatus.TO_RECEIVE.getCode());
+            logisticsBO.sendLogistics(logistics);
+
+            if (ELogisticsType.GPS.getCode().equals(logistics.getType())) {
+                gpsApplyBO.sendGps(logistics.getBizCode(),
+                    logistics.getSendDatetime());
+            }
+        }
+
     }
 
     @Override
