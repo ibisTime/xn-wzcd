@@ -5,3 +5,6 @@ insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 
 ALTER TABLE `tdq_budget_order` 
 ADD COLUMN `green_big_code` VARCHAR(32) NULL COMMENT '绿大本编号' AFTER `bank_receipt_note`;
+
+ALTER TABLE `tdp_supplement_reason` 
+ADD COLUMN `is_part_supt` VARCHAR(4) NULL COMMENT '是否已补件' AFTER `reason`;

@@ -44,4 +44,9 @@ public class SupplementReasonBOImpl extends PaginableBOImpl<SupplementReason>
         }
         return data;
     }
+
+    @Override
+    public void refreshSupplementReason(SupplementReason reason) {
+        supplementReasonDAO.updateSupplementReason(reason);
+    }
 }

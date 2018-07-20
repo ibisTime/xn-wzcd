@@ -10,6 +10,7 @@ import com.cdkj.loan.bo.ISupplementReasonBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.SupplementReason;
 import com.cdkj.loan.dto.req.XN632130Req;
+import com.cdkj.loan.enums.EBoolean;
 
 @Service
 public class SupplementReasonAOImpl implements ISupplementReasonAO {
@@ -23,6 +24,7 @@ public class SupplementReasonAOImpl implements ISupplementReasonAO {
         data.setLogisticsCode(req.getLogisticsCode());
         data.setType(req.getType());
         data.setReason(req.getReason());
+        data.setIsPartSupt(EBoolean.NO.getCode());
         return supplementReasonBO.saveSupplementReason(data);
     }
 

@@ -7,6 +7,7 @@
 		<result column="logistics_code" property="logisticsCode" />
 		<result column="type" property="type" />
 		<result column="reason" property="reason" />
+		<result column="is_part_supt" property="isPartSupt" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -19,6 +20,9 @@
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
 			</if>
+			<if test="isPartSupt != null and isPartSupt != '' ">
+				AND t.is_part_supt = #{isPartSupt}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_supplementReason" parameterType="supplementReason" resultMap="supplementReason_DB_Result">
@@ -27,6 +31,7 @@
 		,t.logistics_code
 		,t.type
 		,t.reason
+		,t.is_part_supt
 		FROM
 		tdp_supplement_reason t
 		<include refid="where_condition" />
@@ -50,15 +55,23 @@
 		,logistics_code
 		,type
 		,reason
+		,is_part_supt
 		)
 		VALUES(
 		#{id}
 		,#{logisticsCode}
 		,#{type}
 		,#{reason}
+		,#{isPartSupt}
 		)
 	</insert>
 
-
+	<update id="update_supplementReason" parameterType="supplementReason">
+		UPDATE tdp_supplement_reason
+		SET
+		is_part_supt = #{isPartSupt}
+		WHERE
+		id = #{id}	
+	</update>
 
 </mapper>

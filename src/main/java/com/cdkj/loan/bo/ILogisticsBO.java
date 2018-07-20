@@ -17,6 +17,10 @@ public interface ILogisticsBO extends IPaginableBO<Logistics> {
     public String saveLogistics(String type, String bizCode, String userId,
             String fromNodeCode, String toNodeCode);
 
+    // 添加状态为待补件的资料传递记录
+    public String saveLogisticsToSupplement(String type, String bizCode,
+            String userId, String fromNodeCode, String toNodeCode);
+
     // 发货
     public void sendLogistics(Logistics data);
 

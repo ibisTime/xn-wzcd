@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -16,6 +18,9 @@ public class XN632151Req {
     // 备注
     private String remark;
 
+    // 编号List
+    private List<String> codeList;
+
     // 操作人
     private String operator;
 
@@ -25,6 +30,14 @@ public class XN632151Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public List<String> getCodeList() {
+        return codeList;
+    }
+
+    public void setCodeList(List<String> codeList) {
+        this.codeList = codeList;
     }
 
     public String getCode() {
