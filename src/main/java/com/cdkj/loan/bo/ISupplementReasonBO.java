@@ -14,4 +14,7 @@ public interface ISupplementReasonBO extends IPaginableBO<SupplementReason> {
 
     public SupplementReason getSupplementReason(Long id);
 
+    // 改变是否已补件
+    public void refreshSupplementReason(SupplementReason reason);
+
 }

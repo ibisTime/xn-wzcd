@@ -47,4 +47,9 @@ public class SupplementReasonDAOImpl extends AMybatisTemplate
             start, count, condition, SupplementReason.class);
     }
 
+    @Override
+    public void updateSupplementReason(SupplementReason data) {
+        super.update(NAMESPACE.concat("update_supplementReason"), data);
+    }
+
 }

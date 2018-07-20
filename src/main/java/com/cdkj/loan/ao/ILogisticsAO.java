@@ -21,7 +21,8 @@ public interface ILogisticsAO {
 
     public void supplementAndSend(XN632153Req req);
 
-    public void receiveLogistics(String code, String operator, String remark);
+    public void receiveLogistics(List<String> list, String operator,
+            String remark);
 
     public void auditePassLogistics(String code, String operator,
             String remark);

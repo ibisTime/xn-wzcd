@@ -61,6 +61,25 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     }
 
     @Override
+    public String saveLogisticsToSupplement(String type, String bizCode,
+            String userId, String fromNodeCode, String toNodeCode) {
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.LOGISTICS.getCode());
+        Logistics data = new Logistics();
+        data.setCode(code);
+        data.setType(type);
+        data.setBizCode(bizCode);
+        data.setUserId(userId);
+        SYSUser user = sysUserBO.getUser(userId);
+        data.setLogisticsCompany(user.getCompanyCode());
+        data.setFromNodeCode(fromNodeCode);
+        data.setToNodeCode(toNodeCode);
+        data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
+        logisticsDAO.insert(data);
+        return code;
+    }
+
+    @Override
     public void sendLogistics(Logistics data) {
         logisticsDAO.updateLogisticsSend(data);
     }

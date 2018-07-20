@@ -7,4 +7,6 @@ import com.cdkj.loan.domain.SupplementReason;
 public interface ISupplementReasonDAO extends IBaseDAO<SupplementReason> {
     String NAMESPACE = ISupplementReasonDAO.class.getName().concat(".");
 
+    void updateSupplementReason(SupplementReason reason);
+
 }

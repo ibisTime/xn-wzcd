@@ -7,8 +7,8 @@ package com.cdkj.loan.enums;
  */
 public enum EOrderStatus {
     TO_PAY("1", "待支付"), PAY_YES("2", "已支付"), SEND("4", "已发货"), RECEIVE("5",
-            "已收货"), COMMENT("6", "已评论"), YHYC("91", "用户异常"), SHYC("92",
-                    "商户异常"), KDYC("93", "快递异常"), RECYCLE("94", "用户删除");
+            "已收货"), COMMENT("6", "已评论"), YHYC("91", "用户取消订单"), SHYC("92",
+                    "商户取消订单"), KDYC("93", "快递异常"), RECYCLE("94", "用户删除");
 
     EOrderStatus(String code, String value) {
         this.code = code;

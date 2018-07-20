@@ -32,9 +32,11 @@ import com.cdkj.loan.dto.req.XN632152Req;
 import com.cdkj.loan.dto.req.XN632153Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
+import com.cdkj.loan.enums.ESupplementReasonType;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -85,8 +87,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
         for (String code : codeList) {
             Logistics data = logisticsBO.getLogistics(code);
             if (!ELogisticsStatus.TO_SEND.getCode().equals(data.getStatus())) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "业务编号"
-                        + data.getBizCode() + "的资料不是待发件状态!");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "业务编号" + data.getBizCode() + "的资料不是待发件状态!");
             }
         }
         for (String code : codeList) {
@@ -115,7 +117,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
     @Transactional
     public void supplementAndSend(XN632153Req req) {
         Logistics data = logisticsBO.getLogistics(req.getCode());
-        if (!ELogisticsStatus.TO_SEND_AGAIN.getCode().equals(data.getStatus())) {
+        if (!ELogisticsStatus.TO_SEND_AGAIN.getCode()
+            .equals(data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "资料不是补件待发货状态!");
         }
@@ -132,15 +135,42 @@ public class LogisticsAOImpl implements ILogisticsAO {
         if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             gpsApplyBO.sendGps(data.getBizCode(), data.getSendDatetime());
         } else if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
+            // 判断紧急的补件原因是否补全
             SupplementReason supplementReason = new SupplementReason();
             supplementReason.setLogisticsCode(req.getCode());
+            supplementReason.setType(ESupplementReasonType.URGENT.getCode());
             List<SupplementReason> reasonList = supplementReasonBO
                 .querySupplementReasonList(supplementReason);
-            int size = reasonList.size();
-            int size2 = req.getSupplementReasonList().size();
-            if (size != size2) {
+            int size = reasonList.size();// 要补件的紧急的补件条数
+            int sizeJJ = 0;// 补件时紧急的补件条数
+            int sizeBJJ = 0;// 补件时不紧急的补件条数
+            for (SupplementReason reqSR : req.getSupplementReasonList()) {
+                if (ESupplementReasonType.URGENT.getCode()
+                    .equals(reqSR.getType())) {
+                    sizeJJ++;
+                } else {
+                    sizeBJJ++;
+                }
+                // 已补件的原因改为已补件
+                SupplementReason reason = supplementReasonBO
+                    .getSupplementReason(reqSR.getId());
+                reason.setIsPartSupt(EBoolean.YES.getCode());
+                supplementReasonBO.refreshSupplementReason(reason);
+            }
+            if (size != sizeJJ) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "补件原因未补齐，请重新补件！");
+                    "紧急类型的补件原因未补齐，请重新补件！");
+            }
+            supplementReason.setType(ESupplementReasonType.URGENT.getCode());
+            List<SupplementReason> list = supplementReasonBO
+                .querySupplementReasonList(supplementReason);
+            int size2 = list.size();// 要补件的不紧急的补件条数
+            // 不紧急的补件原因不全时
+            if (size2 != sizeBJJ) {
+                // 产生物流单
+                logisticsBO.saveLogisticsToSupplement(data.getType(),
+                    data.getBizCode(), data.getUserId(), data.getFromNodeCode(),
+                    data.getToNodeCode());
             }
         }
         logisticsBO.sendLogistics(data);
@@ -148,26 +178,30 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Override
     @Transactional
-    public void receiveLogistics(String code, String operator, String remark) {
-        Logistics data = logisticsBO.getLogistics(code);
-        if (!ELogisticsStatus.TO_RECEIVE.getCode().equals(data.getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "资料不是待收件状态!");
-        }
-        data.setStatus(ELogisticsStatus.RECEIVED.getCode());
-        data.setReceiptDatetime(new Date());
-        data.setRemark(remark);
-        logisticsBO.receiveLogistics(data);
+    public void receiveLogistics(List<String> list, String operator,
+            String remark) {
+        for (String code : list) {
+            Logistics data = logisticsBO.getLogistics(code);
+            if (!ELogisticsStatus.TO_RECEIVE.getCode()
+                .equals(data.getStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "资料不是待收件状态!");
+            }
+            data.setStatus(ELogisticsStatus.RECEIVED.getCode());
+            data.setReceiptDatetime(new Date());
+            data.setRemark(remark);
+            logisticsBO.receiveLogistics(data);
 
-        BudgetOrder budgetOrder = budgetOrderBO
-            .getBudgetOrder(data.getBizCode());
-        // 日志记录 主流程
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-            .get(budgetOrder.getCurNodeCode());
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(),
-            budgetOrder.getCurNodeCode(), currentNode.getCode(),
-            currentNode.getValue(), operator);
+            BudgetOrder budgetOrder = budgetOrderBO
+                .getBudgetOrder(data.getBizCode());
+            // 日志记录 主流程
+            EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+                .get(budgetOrder.getCurNodeCode());
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+                EBizLogType.BUDGET_ORDER, budgetOrder.getCode(),
+                budgetOrder.getCurNodeCode(), currentNode.getCode(),
+                currentNode.getValue(), operator);
+        }
     }
 
     @Override

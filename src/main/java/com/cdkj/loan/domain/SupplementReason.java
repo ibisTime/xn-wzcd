@@ -24,12 +24,23 @@ public class SupplementReason extends ABaseDO {
     // 原因
     private String reason;
 
+    // 是否已补件
+    private String isPartSupt;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIsPartSupt() {
+        return isPartSupt;
+    }
+
+    public void setIsPartSupt(String isPartSupt) {
+        this.isPartSupt = isPartSupt;
     }
 
     public void setLogisticsCode(String logisticsCode) {
