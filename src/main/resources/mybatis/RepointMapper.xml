@@ -137,6 +137,19 @@
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
-
+	
+	<update id="update_branch_company_manager_approve" parameterType="repoint">
+		UPDATE tdqt_repoint
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_finance_confirm" parameterType="repoint">
+		UPDATE tdqt_repoint
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
 
 </mapper>

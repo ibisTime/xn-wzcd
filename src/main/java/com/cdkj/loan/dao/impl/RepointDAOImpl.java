@@ -61,4 +61,15 @@ public class RepointDAOImpl extends AMybatisTemplate implements IRepointDAO {
         super.update(NAMESPACE.concat("confirm_loan"), data);
     }
 
+    @Override
+    public void branchCompanyManagerApprove(Repoint data) {
+        super.update(NAMESPACE.concat("update_branch_company_manager_approve"),
+            data);
+    }
+
+    @Override
+    public void financeConfirm(Repoint data) {
+        super.update(NAMESPACE.concat("update_finance_confirm"), data);
+    }
+
 }

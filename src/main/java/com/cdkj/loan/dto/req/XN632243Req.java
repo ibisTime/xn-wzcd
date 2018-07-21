@@ -1,7 +1,5 @@
 package com.cdkj.loan.dto.req;
 
-import java.util.List;
-
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -14,18 +12,26 @@ public class XN632243Req {
 
     // 返点编号
     @NotBlank
-    private List<String> codeList;
+    private String code;
+
+    // 财务审核说明
+    @NotBlank
+    private String approveNote;
+
+    // 财务审核结果
+    @NotBlank
+    private String approveResult;
 
     // 操作人
     @NotBlank
     private String operator;
 
-    public List<String> getCodeList() {
-        return codeList;
+    public String getCode() {
+        return code;
     }
 
-    public void setCodeList(List<String> codeList) {
-        this.codeList = codeList;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getOperator() {
@@ -34,6 +40,22 @@ public class XN632243Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getApproveNote() {
+        return approveNote;
+    }
+
+    public void setApproveNote(String approveNote) {
+        this.approveNote = approveNote;
+    }
+
+    public String getApproveResult() {
+        return approveResult;
+    }
+
+    public void setApproveResult(String approveResult) {
+        this.approveResult = approveResult;
     }
 
 }

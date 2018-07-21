@@ -10,4 +10,8 @@ public interface IRepointDAO extends IBaseDAO<Repoint> {
     void update(Repoint data);
 
     void confirmLoan(Repoint data);
+
+    void branchCompanyManagerApprove(Repoint data);
+
+    void financeConfirm(Repoint data);
 }

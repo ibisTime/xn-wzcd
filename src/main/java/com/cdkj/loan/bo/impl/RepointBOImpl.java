@@ -87,10 +87,22 @@ public class RepointBOImpl extends PaginableBOImpl<Repoint> implements
 
     @Override
     public void confirmLoan(Repoint data) {
-
         if (null != data) {
             repointDAO.confirmLoan(data);
         }
+    }
 
+    @Override
+    public void branchCompanyManagerApprove(Repoint data) {
+        if (null != data) {
+            repointDAO.branchCompanyManagerApprove(data);
+        }
+    }
+
+    @Override
+    public void financeConfirm(Repoint data) {
+        if (null != data) {
+            repointDAO.financeConfirm(data);
+        }
     }
 }

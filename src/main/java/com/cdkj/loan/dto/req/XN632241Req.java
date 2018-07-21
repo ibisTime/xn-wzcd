@@ -23,7 +23,7 @@ public class XN632241Req {
     // 付款备注
     private String payRemark;
 
-    // 付款备注
+    // 操作人
     private String operator;
 
     public String getCode() {
