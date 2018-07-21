@@ -782,6 +782,9 @@ public class BudgetOrder extends ABaseDO {
     // 入档状态（0待入档1待补录2已入档）
     private String enterFileStatus;
 
+    // 是否是资料传递中（1是，0否）
+    private String isLogistics;
+
     /*-------辅助字段-------*/
 
     private String roleCode;// 角色编号
@@ -847,6 +850,14 @@ public class BudgetOrder extends ABaseDO {
 
     // 入档状态List
     private List<String> enterFileStatusList;
+
+    public String getIsLogistics() {
+        return isLogistics;
+    }
+
+    public void setIsLogistics(String isLogistics) {
+        this.isLogistics = isLogistics;
+    }
 
     public List<String> getEnterFileStatusList() {
         return enterFileStatusList;

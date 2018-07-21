@@ -604,6 +604,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是准入审查二审节点，不能操作");
         }
+        if (EBoolean.YES.getCode().equals(budgetOrder.getIsLogistics())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点处于物流传递中，不能操作");
+        }
         String preCurrentNode = budgetOrder.getCurNodeCode();// 当前节点
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             // 审核通过
@@ -636,6 +640,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                     budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                     curNodeCode, nextNodeCode);
+                // 产生物流单后改变状态为物流传递中
+                budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+                budgetOrderBO.updateIsLogistics(budgetOrder);
             } else {
                 // 垫资
                 // 预算单节点改为垫资审核（进入垫资审核流程）
@@ -929,6 +936,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是车辆抵押流程待提交抵押完成节点，不能操作");
         }
+        if (EBoolean.YES.getCode().equals(budgetOrder.getIsLogistics())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点处于物流传递中，不能操作");
+        }
 
         if (EBudgetOrderNode.TODO_LOCAL_PLEDGE_ACHIEVE.getCode()
             .equals(preCurrentNode)) {
@@ -947,6 +958,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                 nodeFlow.getNextNode(), flow.getNextNode());
+            // 产生物流单后改变状态为物流传递中
+            budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+            budgetOrderBO.updateIsLogistics(budgetOrder);
         }
         // 更改预算单车辆抵押流程节点
         String nextNodeCode = getNextNodeCode(preCurrentNode,
@@ -2048,6 +2062,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是打印岗打印节点，不能操作");
         }
+        if (EBoolean.YES.getCode().equals(budgetOrder.getIsLogistics())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点处于物流传递中，不能操作");
+        }
 
         if (EFbhStatus.PENDING_ENTRY.getCode()
             .equals(budgetOrder.getFbhStatus())) {
@@ -2085,6 +2103,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
             budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
             nextNodeCode);
+        // 产生物流单后改变状态为物流传递中
+        budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+        budgetOrderBO.updateIsLogistics(budgetOrder);
 
         // 写日志
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
@@ -2103,6 +2124,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是车辆抵押（本地）打印岗打印节点，不能操作");
         }
+        if (EBoolean.YES.getCode().equals(budgetOrder.getIsLogistics())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点处于物流传递中，不能操作");
+        }
         // 当前抵押流程节点
         String preNodeCode = budgetOrder.getPledgeCurNodeCode();
         String nextNodeCode = getNextNodeCode(preNodeCode,
@@ -2120,6 +2145,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
             budgetOrder.getCode(), budgetOrder.getSaleUserId(), preNodeCode,
             nextNodeCode);
+        // 产生物流单后改变状态为物流传递中
+        budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+        budgetOrderBO.updateIsLogistics(budgetOrder);
 
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
@@ -2439,6 +2467,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是车辆抵押理件岗理件节点，不能操作");
             }
+            if (EBoolean.YES.getCode().equals(budgetOrder.getIsLogistics())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前节点处于物流传递中，不能操作");
+            }
         }
         for (String code : list) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
@@ -2447,7 +2479,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             // .getNodeFlowByCurrentNode(preCurNodeCode).getNextNode());
             EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
                 .get(budgetOrder.getPledgeCurNodeCode());
-            budgetOrderBO.collateAchieve(budgetOrder);
+            // budgetOrderBO.collateAchieve(budgetOrder);
             // 日志记录
             sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
                 EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
@@ -2459,6 +2491,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                 budgetOrder.getPledgeCurNodeCode(), nodeFlow.getNextNode());
+            // 产生物流单后改变状态为物流传递中
+            budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+            budgetOrderBO.updateIsLogistics(budgetOrder);
         }
     }
 
@@ -2503,6 +2538,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不是银行放款理件完成节点，不能操作");
             }
+            if (EBoolean.YES.getCode().equals(budgetOrder.getIsLogistics())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前节点处于物流传递中，不能操作");
+            }
         }
         for (String code : list) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
@@ -2519,6 +2558,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                 budgetOrder.getCode(), budgetOrder.getSaleUserId(),
                 budgetOrder.getCurNodeCode(), nodeFlow.getNextNode());
+            // 产生物流单后改变状态为物流传递中
+            budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+            budgetOrderBO.updateIsLogistics(budgetOrder);
 
             // 日志记录
             sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),

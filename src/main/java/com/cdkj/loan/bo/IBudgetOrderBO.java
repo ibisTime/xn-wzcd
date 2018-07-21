@@ -128,4 +128,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 银行放款理件完成
     public void loanBankCollateAchieve(BudgetOrder budgetOrder);
 
+    // 物流传递中
+    public void updateIsLogistics(BudgetOrder budgetOrder);
+
 }
