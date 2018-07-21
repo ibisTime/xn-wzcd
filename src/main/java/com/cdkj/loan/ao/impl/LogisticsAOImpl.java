@@ -226,7 +226,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
         }
         logisticsBO.auditePassLogistics(code, remark);
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
-            budgetOrderBO.logicOrder(data.getBizCode(), operator);
+            budgetOrderBO.logicOrder(data.getBizCode(), code, operator);
         } else if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             gpsApplyBO.receiveGps(data.getBizCode());
         } else if (ELogisticsType.REPAY_BIZ.getCode().equals(data.getType())) {
@@ -241,12 +241,14 @@ public class LogisticsAOImpl implements ILogisticsAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "资料不是待审核状态!");
         }
-        data.setStatus(ELogisticsStatus.RECEIVED.getCode());
+        data.setStatus(ELogisticsStatus.BACK_PIECE.getCode());
         data.setRemark(remark);
         logisticsBO.backPieceLogistics(data);
 
         BudgetOrder budgetOrder = budgetOrderBO
             .getBudgetOrder(data.getBizCode());
+        budgetOrder.setCurNodeCode(EBudgetOrderNode.CANCEL_APPLY_END.getCode());
+        budgetOrderBO.updateCurNodeCode(budgetOrder);
         // 日志记录 主流程
         EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
             .get(budgetOrder.getCurNodeCode());

@@ -3,6 +3,7 @@ package com.cdkj.loan.bo.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IProvinceBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.ISupplementReasonBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
@@ -22,6 +24,7 @@ import com.cdkj.loan.dao.IBudgetOrderDAO;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.NodeFlow;
+import com.cdkj.loan.domain.SupplementReason;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
@@ -60,6 +63,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
 
     @Autowired
     private IBudgetOrderBO budgetOrderBO;
+
+    @Autowired
+    private ISupplementReasonBO supplementReasonBO;
 
     @Override
     public String saveBudgetOrder(BudgetOrder data) {
@@ -182,7 +188,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
      * @see com.cdkj.loan.bo.IBudgetOrderBO#logicOrder(com.cdkj.loan.domain.BudgetOrder)
      */
     @Override
-    public void logicOrder(String code, String operator) {
+    public void logicOrder(String code, String logisticsCode, String operator) {
         BudgetOrder budgetOrder = getBudgetOrder(code);
         // 准入单改回不在物流传递中
         budgetOrder.setIsLogistics(EBoolean.NO.getCode());
@@ -253,14 +259,29 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             .equals(preCurrentNode)
                 || EBudgetOrderNode.BRANCH_SEND_LOGISTICS.getCode()
                     .equals(preCurrentNode)
-                || EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
-                    .equals(preCurrentNode)
                 || EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
                     .equals(preCurrentNode)) {
             // 获取当前主流程节点
             NodeFlow nodeFlow = nodeFlowBO
                 .getNodeFlowByCurrentNode(preCurrentNode);
             budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+        }
+        if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
+            .equals(preCurrentNode)) {
+            // 获取当前主流程节点
+            NodeFlow nodeFlow = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode);
+            List<SupplementReason> supplementReason = supplementReasonBO
+                .getSupplementReasonByLogisticsCode(logisticsCode);
+            // 补件原因不为空，说明是补件，跳过打印岗
+            if (CollectionUtils.isNotEmpty(supplementReason)) {
+                NodeFlow nodeFlow2 = nodeFlowBO
+                    .getNodeFlowByCurrentNode(nodeFlow.getNextNode());
+                budgetOrder.setCurNodeCode(nodeFlow2.getNextNode());
+            } else {
+                // 补件原因为空，走正常流程
+                budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+            }
         }
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
