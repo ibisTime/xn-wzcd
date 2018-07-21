@@ -13,7 +13,7 @@ public interface IRepointBO extends IPaginableBO<Repoint> {
 
     public int removeRepoint(String code);
 
-    public int refreshRepoint(Repoint data);
+    public void refreshRepoint(Repoint data);
 
     public List<Repoint> queryRepointList(Repoint condition);
 
@@ -21,5 +21,11 @@ public interface IRepointBO extends IPaginableBO<Repoint> {
 
     // 确认打款
     public void confirmLoan(Repoint data);
+
+    // 分公司总经理审批
+    public void branchCompanyManagerApprove(Repoint repoint);
+
+    // 财务确认
+    public void financeConfirm(Repoint repoint);
 
 }

@@ -76,8 +76,8 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
                 data.setBankName(channelBank.getBankName());
                 data.setSubbranch(collectBankcard.getSubbranch());
                 data.setBankcardNumber(collectBankcard.getBankcardNumber());
-                data.setPointRate(
-                    StringValidater.toDouble(collectBankcard.getPointRate()));
+                data.setPointRate(StringValidater.toDouble(collectBankcard
+                    .getPointRate()));
                 data.setRemark(collectBankcard.getRemark());
                 collectBankcardDAO.insert(data);
             }
@@ -88,8 +88,8 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
     public String saveCollectBankcard(CollectBankcard data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.COLLECTBANKCARD.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.COLLECTBANKCARD
+                .getCode());
             data.setCode(code);
             collectBankcardDAO.insert(data);
         }
@@ -141,8 +141,7 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
     public void removeCollectBankcardByCompanyCode(String companyCode) {
         CollectBankcard condition = new CollectBankcard();
         condition.setCompanyCode(companyCode);
-        List<CollectBankcard> collectBankcardList = queryCollectBankcardList(
-            condition);
+        List<CollectBankcard> collectBankcardList = queryCollectBankcardList(condition);
         if (CollectionUtils.isNotEmpty(collectBankcardList)) {
             for (CollectBankcard collectBankcard : collectBankcardList) {
                 collectBankcardDAO.delete(collectBankcard);
@@ -158,12 +157,23 @@ public class CollectBankcardBOImpl extends PaginableBOImpl<CollectBankcard>
                 && StringUtils.isNotBlank(condition.getType())) {
             list = collectBankcardDAO
                 .selectCollectBankcardByCompanyCodeAndTypeList(condition);
-            if (CollectionUtils.isEmpty(list)) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "收款账号不存在");
-            }
         }
+        return list;
+    }
 
+    @Override
+    public List<CollectBankcard> queryCollectBankcardByCompanyCodeAndTypeAndBankCode(
+            String carDealerCode, String type, String bankCode) {
+        List<CollectBankcard> list = null;
+        if (StringUtils.isNotBlank(carDealerCode)
+                && StringUtils.isNotBlank(type)
+                && StringUtils.isNotBlank(bankCode)) {
+            CollectBankcard condition = new CollectBankcard();
+            condition.setCompanyCode(carDealerCode);
+            condition.setType(type);
+            condition.setBankCode(bankCode);
+            list = collectBankcardDAO.selectList(condition);
+        }
         return list;
     }
 

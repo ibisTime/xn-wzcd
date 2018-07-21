@@ -37,7 +37,7 @@ public class XN632234Res {
     // GPS提成
     private String gpsDeduct;
 
-    // 返点明细（协议内返点 和 应退按揭款）
+    // 协议内返点 和 应退按揭款
     private List<XN632290Res> list;
 
     public String getCompanyLoanCs() {

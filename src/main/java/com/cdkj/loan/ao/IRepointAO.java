@@ -21,7 +21,7 @@ import com.cdkj.loan.dto.req.XN632243Req;
 public interface IRepointAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addRepoint(XN632240Req req);
+    public void addRepoint(XN632240Req req);
 
     public Paginable<Repoint> queryRepointPage(int start, int limit,
             Repoint condition);

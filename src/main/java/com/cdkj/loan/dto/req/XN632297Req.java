@@ -1,9 +1,7 @@
 package com.cdkj.loan.dto.req;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 /**
- * 列表查询返点明细 通过汽车经销编号和返点账号编号
+ * 列表查询返点明细 
  * @author: jiafr 
  * @since: 2018年6月18日 下午5:32:52 
  * @history:
@@ -14,8 +12,10 @@ public class XN632297Req {
     private String accountCode;
 
     // 汽车经销商编号
-    @NotBlank
     private String carDealerCode;
+
+    // 节点
+    private String curNodeCode;
 
     public String getAccountCode() {
         return accountCode;
@@ -31,6 +31,14 @@ public class XN632297Req {
 
     public void setCarDealerCode(String carDealerCode) {
         this.carDealerCode = carDealerCode;
+    }
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
     }
 
 }

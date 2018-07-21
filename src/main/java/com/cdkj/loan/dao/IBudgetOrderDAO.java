@@ -124,4 +124,7 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 银行驻点推送已放款名单
     void bankPointPushHasLoanList(BudgetOrder budgetOrder);
 
+    // 发票不匹配财务确认
+    void invoiceMismatchFinanceConfirm(BudgetOrder budgetOrder);
+
 }

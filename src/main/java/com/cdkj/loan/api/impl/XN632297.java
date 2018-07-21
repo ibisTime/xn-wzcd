@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 列表查询返点明细 按汽车经销商编号和返点账号编号
+ * 列表查询返点明细 
  * @author: jiafr 
  * @since: 2018年6月18日 下午5:35:50 
  * @history:
@@ -28,6 +28,7 @@ public class XN632297 extends AProcessor {
         RepointDetail condition = new RepointDetail();
         condition.setCarDealerCode(req.getCarDealerCode());
         condition.setAccountCode(req.getAccountCode());
+        condition.setCurNodeCode(req.getCurNodeCode());
         return repointDetailAO.queryRepointDetailListByCarDealerCode(condition);
     }
 

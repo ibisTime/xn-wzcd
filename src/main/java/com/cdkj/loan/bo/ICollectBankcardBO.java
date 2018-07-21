@@ -24,12 +24,15 @@ public interface ICollectBankcardBO extends IPaginableBO<CollectBankcard> {
             String code);
 
     public void saveCollectBankcardList(
-            List<XN632060ReqCollectBankcard> gsCollectBankcardList, String type,
-            String belongBank, String code);
+            List<XN632060ReqCollectBankcard> gsCollectBankcardList,
+            String type, String belongBank, String code);
 
     public void removeCollectBankcardByCompanyCode(String companyCode);
 
     public List<CollectBankcard> queryCollectBankcardByCompanyCodeAndType(
             CollectBankcard condition);
+
+    public List<CollectBankcard> queryCollectBankcardByCompanyCodeAndTypeAndBankCode(
+            String carDealerCode, String type, String bankCode);
 
 }

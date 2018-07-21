@@ -134,4 +134,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 银行驻点推送已放款名单
     public void bankPointPushHasLoanList(BudgetOrder budgetOrder);
 
+    // 发票不匹配财务确认
+    public void invoiceMismatchFinanceConfirm(BudgetOrder budgetOrder);
+
 }

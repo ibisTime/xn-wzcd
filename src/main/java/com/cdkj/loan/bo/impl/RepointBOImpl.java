@@ -60,12 +60,10 @@ public class RepointBOImpl extends PaginableBOImpl<Repoint> implements
     }
 
     @Override
-    public int refreshRepoint(Repoint data) {
-        int count = 0;
+    public void refreshRepoint(Repoint data) {
         if (StringUtils.isNotBlank(data.getCode())) {
-            count = repointDAO.update(data);
+            repointDAO.update(data);
         }
-        return count;
     }
 
     @Override
@@ -89,10 +87,22 @@ public class RepointBOImpl extends PaginableBOImpl<Repoint> implements
 
     @Override
     public void confirmLoan(Repoint data) {
-
         if (null != data) {
             repointDAO.confirmLoan(data);
         }
+    }
 
+    @Override
+    public void branchCompanyManagerApprove(Repoint data) {
+        if (null != data) {
+            repointDAO.branchCompanyManagerApprove(data);
+        }
+    }
+
+    @Override
+    public void financeConfirm(Repoint data) {
+        if (null != data) {
+            repointDAO.financeConfirm(data);
+        }
     }
 }

@@ -1861,6 +1861,16 @@
 		,cancel_node_code = #{cancelNodeCode}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_invoice_mismatch_finance_confirm" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,frozen_status = #{frozenStatus}
+		,cancel_node_code = #{cancelNodeCode}
+		,fbh_status = #{fbhStatus}
+		WHERE code = #{code}
+	</update>
 
 	<update id="update_financeConfirm" parameterType="budgetOrder">
 		UPDATE tdq_budget_order

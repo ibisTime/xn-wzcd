@@ -8,7 +8,8 @@ package com.cdkj.loan.enums;
  */
 public enum ERepointNode {
     MAKE_BILL("010_01", "制单"), BRANCH_MANAGER_APPROVE("010_02", "分公司总经理审批"), FINANCE_CONFIRM(
-            "010_03", "财务确认"), CONFIRM_PAY("010_04", "确认放款(出纳打款)");
+            "010_03", "财务确认"), CONFIRM_PAY("010_04", "确认放款(出纳打款)"), HAS_PAY(
+            "010_05", "已支付");
 
     ERepointNode(String code, String value) {
         this.code = code;

@@ -7,7 +7,11 @@ import com.cdkj.loan.domain.Repoint;
 public interface IRepointDAO extends IBaseDAO<Repoint> {
     String NAMESPACE = IRepointDAO.class.getName().concat(".");
 
-    int update(Repoint data);
+    void update(Repoint data);
 
     void confirmLoan(Repoint data);
+
+    void branchCompanyManagerApprove(Repoint data);
+
+    void financeConfirm(Repoint data);
 }
