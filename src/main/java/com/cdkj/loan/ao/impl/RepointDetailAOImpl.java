@@ -99,9 +99,9 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
     }
 
     @Override
-    public RepointDetail calculateRepointDetail(BudgetOrder data) {
+    public List<RepointDetail> calculateRepointDetail(BudgetOrder data) {
         // 返回数据 只有协议内返点
-        RepointDetail repointDetail = new RepointDetail();
+        ArrayList<RepointDetail> returnList = new ArrayList<RepointDetail>();
         Long loanAmount = getLong(data.getLoanAmount());// 贷款金额
         Bank bank = bankBO.getBankBySubbranch(data.getLoanBankCode());
         CarDealerProtocol carDealerProtocol = carDealerProtocolBO
@@ -174,16 +174,17 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         if (ERepointType.PERCENT.getCode().equals(
             carDealerProtocol.getReturnPointType())) {
             actualRepointAmount = AmountUtil.mul(actualRepointAmount,
-                (1 - getLong(carDealerProtocol.getReturnPointRate())));
+                (1 - getDouble(carDealerProtocol.getReturnPointRate())));
         }
-        // 获得汽车经销商返点账号集合
-        CollectBankcard condition = new CollectBankcard();
-        condition.setCompanyCode(data.getCarDealerCode());
-        condition.setType(ECollectBankcardType.DEALER_REBATE.getCode());
+        // 获得与业务单贷款银行对应的汽车经销商返点账号
         List<CollectBankcard> list = collectBankcardBO
-            .queryCollectBankcardByCompanyCodeAndType(condition);
+            .queryCollectBankcardByCompanyCodeAndTypeAndBankCode(
+                data.getCarDealerCode(),
+                ECollectBankcardType.DEALER_REBATE.getCode(),
+                bank.getBankCode());
         for (CollectBankcard collectBankcard : list) {
-            if (collectBankcard.getBankCode().equals(bank.getBankCode())) {
+            if (collectBankcard.getBankCode().equals(bank.getBankCode())) {// 与业务单贷款银行对应的返点收款账号
+                RepointDetail repointDetail = new RepointDetail();
                 Double pointRate = getDouble(collectBankcard.getPointRate());
                 repointDetail
                     .setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
@@ -192,9 +193,10 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
                     actualRepointAmount, pointRate));// 实际返点金额*返点比例=实际给汽车经销商返点的金额
                 repointDetail.setAccountCode(collectBankcard.getCode());
                 repointDetail.setBenchmarkRate(benchmarkRate);
+                returnList.add(repointDetail);
             }
         }
-        return repointDetail;
+        return returnList;
     }
 
     @Override

@@ -32,7 +32,7 @@ public interface IRepointDetailAO {
     public RepointDetail getRepointDetail(String code);
 
     // 计算返点
-    public RepointDetail calculateRepointDetail(BudgetOrder data);
+    public List<RepointDetail> calculateRepointDetail(BudgetOrder data);
 
     // 列表查询返点明细 按汽车经销商编号和返点账号编号
     public Object queryRepointDetailListByCarDealerCode(RepointDetail condition);

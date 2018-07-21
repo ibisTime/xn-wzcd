@@ -24,9 +24,7 @@ public class XN632242 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-
         repointAO.branchCompanyManagerApprove(req);
-
         return new BooleanRes(true);
     }
 

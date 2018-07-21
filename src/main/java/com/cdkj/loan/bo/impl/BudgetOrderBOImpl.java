@@ -468,4 +468,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         budgetOrderDAO.bankPointPushHasLoanList(budgetOrder);
     }
 
+    @Override
+    public void invoiceMismatchFinanceConfirm(BudgetOrder budgetOrder) {
+        budgetOrderDAO.invoiceMismatchFinanceConfirm(budgetOrder);
+    }
+
 }

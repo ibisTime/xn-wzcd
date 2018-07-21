@@ -7,7 +7,8 @@ package com.cdkj.loan.enums;
  * @history:
  */
 public enum EFbhStatus {
-    PENDING_ENTRY("0", "待录入"), TO_PENDING_ENTRY("1", "已录入");
+    PENDING_ENTRY("0", "待录入"), INVOICE_MISMATCH_TODO("1", "发票不匹配处理中"), TO_PENDING_ENTRY(
+            "2", "已录入");
 
     EFbhStatus(String code, String value) {
         this.code = code;

@@ -13,7 +13,7 @@ public interface IRepointBO extends IPaginableBO<Repoint> {
 
     public int removeRepoint(String code);
 
-    public int refreshRepoint(Repoint data);
+    public void refreshRepoint(Repoint data);
 
     public List<Repoint> queryRepointList(Repoint condition);
 

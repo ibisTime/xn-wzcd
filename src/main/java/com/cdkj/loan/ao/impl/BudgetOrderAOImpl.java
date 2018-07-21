@@ -484,37 +484,49 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     .getOpenBankName());// 开户行
                 repointDetail.setAccountName(xn632120ReqRepointDetail
                     .getAccountName());// 户名
-                repointDetail
-                    .setCurNodeCode(ERepointDetailStatus.TODO_MAKE_BILL
-                        .getCode());
+                repointDetail.setCurNodeCode(ERepointDetailStatus.GENERATE
+                    .getCode());
                 repointDetailBO.saveRepointDetail(repointDetail);
             }
         }
         // 计算协议内返点（返回的返点明细对象里只有 ：返点用款用途 汽车经销商收款账号编号 和这个账号对应比例的返点金额 基准利率）
-        RepointDetail innerRepointDetail = repointDetailAO
-            .calculateRepointDetail(data);
-        innerRepointDetail.setType(ERepointDetailType.NORMAL.getCode());
-        innerRepointDetail.setCompanyCode(data.getCompanyCode());
-        innerRepointDetail.setCompanyName(company.getName());
-        innerRepointDetail.setBudgetCode(data.getCode());
-        innerRepointDetail.setUserName(data.getCustomerName());
+        Bank bank = bankBO.getBankBySubbranch(data.getLoanBankCode());
+        List<CollectBankcard> carDealerCollectBankcard = collectBankcardBO
+            .queryCollectBankcardByCompanyCodeAndTypeAndBankCode(
+                data.getCarDealerCode(),
+                ECollectBankcardType.DEALER_REBATE.getCode(),
+                bank.getBankCode());
+        if (null != carDealerCollectBankcard) {
+            List<RepointDetail> innerRepointDetailList = repointDetailAO
+                .calculateRepointDetail(data);
+            for (RepointDetail innerRepointDetail : innerRepointDetailList) {
+                innerRepointDetail.setType(ERepointDetailType.NORMAL.getCode());
+                innerRepointDetail.setCompanyCode(data.getCompanyCode());
+                innerRepointDetail.setCompanyName(company.getName());
+                innerRepointDetail.setBudgetCode(data.getCode());
+                innerRepointDetail.setUserName(data.getCustomerName());
 
-        innerRepointDetail.setIdNo(user.getIdNo());
-        innerRepointDetail.setCarDealerCode(data.getCarDealerCode());
-        innerRepointDetail.setCarDealerName(carDealer.getFullName());
-        innerRepointDetail.setCarType(data.getCarModel());
-        innerRepointDetail.setLoanAmount(data.getLoanAmount());
+                innerRepointDetail.setIdNo(user.getIdNo());
+                innerRepointDetail.setCarDealerCode(data.getCarDealerCode());
+                innerRepointDetail.setCarDealerName(carDealer.getFullName());
+                innerRepointDetail.setCarType(data.getCarModel());
+                innerRepointDetail.setLoanAmount(data.getLoanAmount());
 
-        innerRepointDetail.setBankRate(data.getGlobalRate());
-        innerRepointDetail.setFee(fee);
-        CollectBankcard collectBankcard = collectBankcardBO
-            .getCollectBankcard(innerRepointDetail.getAccountCode());
-        innerRepointDetail.setAccountNo(collectBankcard.getBankcardNumber());
-        innerRepointDetail.setOpenBankName(collectBankcard.getSubbranch());
-        innerRepointDetail.setAccountName(collectBankcard.getRealName());
-        innerRepointDetail.setCurNodeCode(ERepointDetailStatus.TODO_MAKE_BILL
-            .getCode());
-        repointDetailBO.saveRepointDetail(innerRepointDetail);
+                innerRepointDetail.setBankRate(data.getGlobalRate());
+                innerRepointDetail.setFee(fee);
+                CollectBankcard collectBankcard = collectBankcardBO
+                    .getCollectBankcard(innerRepointDetail.getAccountCode());
+                innerRepointDetail.setAccountNo(collectBankcard
+                    .getBankcardNumber());
+                innerRepointDetail.setOpenBankName(collectBankcard
+                    .getSubbranch());
+                innerRepointDetail
+                    .setAccountName(collectBankcard.getRealName());
+                innerRepointDetail.setCurNodeCode(ERepointDetailStatus.GENERATE
+                    .getCode());
+                repointDetailBO.saveRepointDetail(innerRepointDetail);
+            }
+        }
         // 垫资应退按揭款 直接生成 不能手填 并且就是垫资金额
         if (EIsAdvanceFund.YES.getCode().equals(data.getIsAdvanceFund())) {
             calculateShouldBackMorgage(data);
@@ -1289,14 +1301,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             List<CollectBankcard> list = collectBankcardBO
                 .queryCollectBankcardByCompanyCodeAndType(condition);
             CollectBankcard collectBankcard = list.get(0);
+            if (null != collectBankcard) {
+                mortgageRepointDetail.setAccountName(collectBankcard
+                    .getRealName());
+                mortgageRepointDetail.setAccountNo(collectBankcard
+                    .getBankcardNumber());
+                mortgageRepointDetail.setOpenBankName(collectBankcard
+                    .getSubbranch());
+            }
             CarDealer carDealer = carDealerBO.getCarDealer(budgetOrder
                 .getCarDealerCode());
             mortgageRepointDetail.setCarDealerName(carDealer.getFullName());
-            mortgageRepointDetail.setAccountName(collectBankcard.getRealName());
-            mortgageRepointDetail.setAccountNo(collectBankcard
-                .getBankcardNumber());
-            mortgageRepointDetail.setOpenBankName(collectBankcard
-                .getSubbranch());
         } else {
             // 不垫资
             mortgageRepointDetail.setCarDealerName(budgetOrder
@@ -1401,22 +1416,24 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Transactional
     public void entryPreservation(XN632220Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        if (!EFbhStatus.PENDING_ENTRY.getCode().equals(
+            budgetOrder.getFbhStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前不是待录入发保合状态，不能操作！");
+        }
         budgetOrder.setDeliveryDatetime(DateUtil.strToDate(
             req.getDeliveryDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        budgetOrder.setFbhStatus(EFbhStatus.TO_PENDING_ENTRY.getCode());
         Long loanAmount = budgetOrder.getLoanAmount();
         Long currentInvoicePrice = StringValidater.toLong(req
             .getCurrentInvoicePrice());
-
         // 新我司贷款成数
         double companyLoanCs = AmountUtil.div(loanAmount, currentInvoicePrice);
-
         // 判断现发票价格和发票价格是否匹配
-
         if (currentInvoicePrice.longValue() == budgetOrder.getInvoicePrice()
             .longValue()) {
             // 匹配
             budgetOrder.setIsRightInvoice(EBoolean.YES.getCode());
-
         } else {
             // 不匹配
             budgetOrder.setIsRightInvoice(EBoolean.NO.getCode());
@@ -1441,14 +1458,16 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                             .getCode());
                     EBudgetOrderNode node = EBudgetOrderNode.getMap().get(
                         budgetOrder.getCurNodeCode());
+                    // 记录日志
                     sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
                         EBizLogType.INVOICE_MISMATCH, budgetOrder.getCode(),
                         node.getCode(), node.getValue(), req.getOperator());
                     budgetOrderBO.invoiceMismatchApply(budgetOrder);
+                    budgetOrder.setFbhStatus(EFbhStatus.INVOICE_MISMATCH_TODO
+                        .getCode());
                 }
             }
         }
-
         budgetOrder.setCurrentInvoicePrice(StringValidater.toLong(req
             .getCurrentInvoicePrice()));
         // 原贷款成数
@@ -1463,8 +1482,20 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setMotorRegCertification(req.getMotorRegCertification());
         budgetOrder.setPdPdf(req.getPdPdf());
         budgetOrder.setFbhRemark(req.getFbhRemark());
-        budgetOrder.setFbhStatus(EFbhStatus.TO_PENDING_ENTRY.getCode());
         budgetOrderBO.entryPreservation(budgetOrder);
+        // 已录入发保合 把返点明细状态改为待打款
+        if (EFbhStatus.TO_PENDING_ENTRY.getCode().equals(
+            budgetOrder.getFbhStatus())) {
+            RepointDetail condition = new RepointDetail();
+            condition.setBudgetCode(budgetOrder.getCode());
+            List<RepointDetail> list = repointDetailBO
+                .queryRepointDetailList(condition);
+            for (RepointDetail repointDetail : list) {
+                repointDetail.setCurNodeCode(ERepointDetailStatus.TODO_PAY
+                    .getCode());
+                repointDetailBO.updateCurNodeCode(repointDetail);
+            }
+        }
     }
 
     @Override
@@ -1553,9 +1584,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 repointDetail.setRepointAmount(StringValidater
                     .toLong(xn632290Res.getRepointAmount()));
                 repointDetail.setAccountCode(xn632290Res.getAccountCode());
-                repointDetail
-                    .setCurNodeCode(ERepointDetailStatus.TODO_MAKE_BILL
-                        .getCode());
+                repointDetail.setCurNodeCode(ERepointDetailStatus.GENERATE
+                    .getCode());
                 repointDetailBO.saveRepointDetail(repointDetail);
             }
         }
@@ -1651,7 +1681,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public void invoiceMismatchSecondApprove(String code, String approveResult,
             String approveNote, String operator) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
-
         if (!EBudgetOrderNode.TWO_APPROVE_APPLY.getCode().equals(
             budgetOrder.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -1697,7 +1726,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             // budgetOrderBO.twoApproveYes(budgetOrder);
 
         } else {
-
             // 二审不通过
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.TWO_APPROVE_APPLY.getCode()).getBackNode());
@@ -1731,9 +1759,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
             // 3.删除新返点数据和原返点数据
             repointDetailBO.delete(budgetOrder.getCode());
-
-            // budgetOrderBO.twoApproveNo(budgetOrder);
-
         }
 
         // 日志记录
@@ -2011,26 +2036,38 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             gpsBFB);
         // gps提成
         res.setGpsDeduct(String.valueOf(gpsDeduct));
-        // 协议内返点明细
-        RepointDetail repointDetail = repointDetailAO
-            .calculateRepointDetail(data);
         ArrayList<XN632290Res> list = new ArrayList<XN632290Res>();
-        CarDealer carDealer = carDealerBO.getCarDealer(data.getCarDealerCode());
-        XN632290Res innerRepointDetail = new XN632290Res();
-        innerRepointDetail.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
-            .getCode());
-        innerRepointDetail.setRepointAmount(String.valueOf(repointDetail
-            .getRepointAmount()));
-        innerRepointDetail.setAccountCode(repointDetail.getAccountCode());
-        innerRepointDetail.setCompanyName(carDealer.getFullName());
-        CollectBankcard collectBankcard = collectBankcardBO
-            .getCollectBankcard(repointDetail.getAccountCode());
-        innerRepointDetail.setBankcardNumber(collectBankcard
-            .getBankcardNumber());
-        innerRepointDetail.setSubbranch(collectBankcard.getBankName());
-        innerRepointDetail.setBenchmarkRate(String.valueOf(repointDetail
-            .getBenchmarkRate()));
-        list.add(innerRepointDetail);
+        // 协议内返点明细
+        List<CollectBankcard> carDealerCollectBankcard = collectBankcardBO
+            .queryCollectBankcardByCompanyCodeAndTypeAndBankCode(
+                data.getCarDealerCode(),
+                ECollectBankcardType.DEALER_REBATE.getCode(),
+                bank.getBankCode());
+        if (null != carDealerCollectBankcard) {
+            List<RepointDetail> repointDetailList = repointDetailAO
+                .calculateRepointDetail(data);
+            for (RepointDetail repointDetail : repointDetailList) {
+                CarDealer carDealer = carDealerBO.getCarDealer(data
+                    .getCarDealerCode());
+                XN632290Res innerRepointDetail = new XN632290Res();
+                innerRepointDetail
+                    .setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
+                        .getCode());
+                innerRepointDetail.setRepointAmount(String
+                    .valueOf(repointDetail.getRepointAmount()));
+                innerRepointDetail.setAccountCode(repointDetail
+                    .getAccountCode());
+                innerRepointDetail.setCompanyName(carDealer.getFullName());
+                CollectBankcard collectBankcard = collectBankcardBO
+                    .getCollectBankcard(repointDetail.getAccountCode());
+                innerRepointDetail.setBankcardNumber(collectBankcard
+                    .getBankcardNumber());
+                innerRepointDetail.setSubbranch(collectBankcard.getBankName());
+                innerRepointDetail.setBenchmarkRate(String
+                    .valueOf(repointDetail.getBenchmarkRate()));
+                list.add(innerRepointDetail);
+            }
+        }
         // 应退按揭款
         calculateShouldBackMorgage(data);// 重新计算
         XN632290Res shouldBackMortgage = new XN632290Res();
@@ -2045,6 +2082,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             shouldBackMortgage.setSubbranch(data.getShouldBackOpenBankName());
             shouldBackMortgage.setAccountName(data.getShouldBackAccountName());
         }
+        list.add(shouldBackMortgage);
         res.setList(list);
         return res;
     }
@@ -2058,13 +2096,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是打印岗打印节点，不能操作");
         }
-
         if (EFbhStatus.PENDING_ENTRY.getCode().equals(
             budgetOrder.getFbhStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "未录入发保合，不能操作");
         }
-
         // 当前节点
         String curNodeCode = budgetOrder.getCurNodeCode();
         String nextNodeCode = getNextNodeCode(curNodeCode,
@@ -2378,9 +2414,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 repointDetail.setBenchmarkRate(benchmarkRate);
 
                 repointDetail.setFee(fee);
-                repointDetail
-                    .setCurNodeCode(ERepointDetailStatus.TODO_MAKE_BILL
-                        .getCode());
+                repointDetail.setCurNodeCode(ERepointDetailStatus.GENERATE
+                    .getCode());
             }
             repointDetail.setCompanyCode(data.getCompanyCode());
             repointDetail.setRepointAmount(StringValidater

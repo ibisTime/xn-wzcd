@@ -61,7 +61,6 @@ public class RepointDetailDAOImpl extends AMybatisTemplate implements
 
     @Override
     public void updateCurNodeCode(RepointDetail data) {
-
         super.update(NAMESPACE.concat("update_cur_node_code"), data);
     }
 

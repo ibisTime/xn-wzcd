@@ -10,6 +10,7 @@ import com.cdkj.loan.ao.ITotalAdvanceFundAO;
 import com.cdkj.loan.bo.IAdvanceFundBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.IRepointDetailBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ITotalAdvanceFundBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -17,6 +18,7 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.AdvanceFund;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.RepointDetail;
 import com.cdkj.loan.domain.TotalAdvanceFund;
 import com.cdkj.loan.dto.req.XN632174Req;
 import com.cdkj.loan.dto.req.XN632176Req;
@@ -24,6 +26,8 @@ import com.cdkj.loan.dto.req.XN632233Req;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBudgetFrozenStatus;
+import com.cdkj.loan.enums.EFbhStatus;
+import com.cdkj.loan.enums.ERepointDetailStatus;
 import com.cdkj.loan.enums.ETotalAdvanceFundStatus;
 import com.cdkj.loan.enums.ETotalAdvanceFundType;
 import com.cdkj.loan.exception.BizException;
@@ -52,6 +56,9 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
     @Autowired
     private IBudgetOrderBO budgetOrderBO;
 
+    @Autowired
+    private IRepointDetailBO repointDetailBO;
+
     @Override
     public void addTotalAdvanceFund(XN632174Req req) {
         // 制单意见说明未处理
@@ -60,14 +67,15 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         for (String code : codeList) {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
             String preNodeCode = advanceFund.getCurNodeCode();
-            advanceFund.setCurNodeCode(
-                nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode).getNextNode());
-            EAdvanceFundNode node = EAdvanceFundNode.getMap()
-                .get(advanceFund.getCurNodeCode());
-            sysBizLogBO.saveNewAndPreEndSYSBizLog(advanceFund.getCode(),
-                EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),
-                preNodeCode, node.getCode(), node.getValue(),
-                req.getOperator());
+            advanceFund.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                preNodeCode).getNextNode());
+            EAdvanceFundNode node = EAdvanceFundNode.getMap().get(
+                advanceFund.getCurNodeCode());
+            sysBizLogBO
+                .saveNewAndPreEndSYSBizLog(advanceFund.getCode(),
+                    EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),
+                    preNodeCode, node.getCode(), node.getValue(),
+                    req.getOperator());
             advanceFundBO.branchMakeBill(advanceFund);
 
         }
@@ -112,8 +120,8 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         TotalAdvanceFund data = new TotalAdvanceFund();
         data.setType(ETotalAdvanceFundType.FIRST.getCode());
         data.setCompanyCode(req.getCompanyCode());
-        data.setTotalAdvanceFund(
-            StringValidater.toLong(req.getTotalAdvanceFund()));
+        data.setTotalAdvanceFund(StringValidater.toLong(req
+            .getTotalAdvanceFund()));
         data.setPayAmount(StringValidater.toLong(req.getPayAmount()));
 
         data.setPayDatetime(DateUtil.strToDate(req.getPayDatetime(),
@@ -131,15 +139,16 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         for (String code : codeList) {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
             advanceFund.setTotalAdvanceFundCode(totalAdvanceFundCode);
-            advanceFund.setAdvanceFundDatetime(
-                DateUtil.strToDate(req.getAdvanceFundDatetime(),
+            advanceFund
+                .setAdvanceFundDatetime(DateUtil.strToDate(
+                    req.getAdvanceFundDatetime(),
                     DateUtil.FRONT_DATE_FORMAT_STRING));
             String preNodeCode = advanceFund.getCurNodeCode();
-            advanceFund.setCurNodeCode(
-                nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode).getNextNode());
+            advanceFund.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                preNodeCode).getNextNode());
             advanceFundBO.confirmPayBranchCompany(advanceFund);
-            EAdvanceFundNode node = EAdvanceFundNode.getMap()
-                .get(advanceFund.getCurNodeCode());
+            EAdvanceFundNode node = EAdvanceFundNode.getMap().get(
+                advanceFund.getCurNodeCode());
             sysBizLogBO.saveNewAndPreEndSYSBizLog(advanceFund.getCode(),
                 EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),
                 preNodeCode, node.getCode(), req.getPayNote(),
@@ -166,22 +175,35 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
             data.setPayDatetime(DateUtil.strToDate(req.getPayDatetime(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setBillPdf(req.getPayBillPdf());
-        } else if (ETotalAdvanceFundType.COLLECTION.getCode()
-            .equals(req.getType())) {
-            data.setCollectionAmount(
-                StringValidater.toLong(req.getCollectionAmount()));
+        }
+        if (ETotalAdvanceFundType.COLLECTION.getCode().equals(req.getType())) {
+            data.setCollectionAmount(StringValidater.toLong(req
+                .getCollectionAmount()));
             data.setCollectionBankcardCode(req.getCollectionBankcardCode());
-            data.setCollectionDatetime(
-                DateUtil.strToDate(req.getCollectionDatetime(),
-                    DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setCollectionDatetime(DateUtil.strToDate(
+                req.getCollectionDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setCollectionBillPdf(req.getCollectionBillPdf());
         }
         // 改回之前节点
         budgetOrder.setCurNodeCode(budgetOrder.getCancelNodeCode());
         budgetOrder.setCancelNodeCode(null);
         budgetOrder.setFrozenStatus(EBudgetFrozenStatus.NORMAL.getCode());
-        budgetOrderBO.cancelBizAudit(budgetOrder);
+        budgetOrder.setFbhStatus(EFbhStatus.TO_PENDING_ENTRY.getCode());// 发保合状态改为已录入发保合
+        budgetOrderBO.invoiceMismatchFinanceConfirm(budgetOrder);
         totalAdvanceFundBO.saveTotalAdvanceFund(data);
+        if (EFbhStatus.TO_PENDING_ENTRY.getCode().equals(
+            budgetOrder.getFbhStatus())) {
+            // 已录入发保合 把返点明细状态改为待打款
+            RepointDetail condition = new RepointDetail();
+            condition.setBudgetCode(budgetOrder.getCode());
+            List<RepointDetail> list = repointDetailBO
+                .queryRepointDetailList(condition);
+            for (RepointDetail repointDetail : list) {
+                repointDetail.setCurNodeCode(ERepointDetailStatus.TODO_PAY
+                    .getCode());
+                repointDetailBO.updateCurNodeCode(repointDetail);
+            }
+        }
 
     }
 }

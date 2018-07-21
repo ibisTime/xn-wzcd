@@ -52,15 +52,13 @@ public class RepointDAOImpl extends AMybatisTemplate implements IRepointDAO {
     }
 
     @Override
-    public int update(Repoint data) {
-        // TODO Auto-generated method stub
-        return 0;
+    public void update(Repoint data) {
+        super.update(NAMESPACE.concat("update_repoint"), data);
     }
 
     @Override
     public void confirmLoan(Repoint data) {
         super.update(NAMESPACE.concat("confirm_loan"), data);
-
     }
 
 }

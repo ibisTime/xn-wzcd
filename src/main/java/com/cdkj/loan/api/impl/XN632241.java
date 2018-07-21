@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- *  返点确认放款
+ *  返点确认放款（出纳打款）
  * @author: jiafr 
  * @since: 2018年6月18日 下午2:39:53 
  * @history:
@@ -24,9 +24,7 @@ public class XN632241 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-
         repointAO.confirmLoan(req);
-
         return new BooleanRes(true);
     }
 

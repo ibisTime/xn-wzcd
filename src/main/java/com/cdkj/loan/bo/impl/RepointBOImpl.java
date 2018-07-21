@@ -60,12 +60,10 @@ public class RepointBOImpl extends PaginableBOImpl<Repoint> implements
     }
 
     @Override
-    public int refreshRepoint(Repoint data) {
-        int count = 0;
+    public void refreshRepoint(Repoint data) {
         if (StringUtils.isNotBlank(data.getCode())) {
-            count = repointDAO.update(data);
+            repointDAO.update(data);
         }
-        return count;
     }
 
     @Override

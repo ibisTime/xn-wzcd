@@ -175,6 +175,13 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
     }
 
     @Override
+    public void invoiceMismatchFinanceConfirm(BudgetOrder condition) {
+        super.update(
+            NAMESPACE.concat("update_invoice_mismatch_finance_confirm"),
+            condition);
+    }
+
+    @Override
     public void financeConfirm(BudgetOrder condition) {
         super.update(NAMESPACE.concat("update_financeConfirm"), condition);
     }

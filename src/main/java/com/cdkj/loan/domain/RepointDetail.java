@@ -57,7 +57,7 @@ public class RepointDetail extends ABaseDO {
     // 服务费
     private Long fee;
 
-    // 用款用途（1应退按揭款2协议内返点3协议外返点）
+    // 用款用途（2协议内返点3协议外返点）
     private String useMoneyPurpose;
 
     // 返点金额
@@ -75,7 +75,7 @@ public class RepointDetail extends ABaseDO {
     // 收款户名(协议外返点手填)
     private String accountName;
 
-    // 节点(0待制单1已制单待打款2已打款)
+    // 节点
     private String curNodeCode;
 
     public String getCode() {

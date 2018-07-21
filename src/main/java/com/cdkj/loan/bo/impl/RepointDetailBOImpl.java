@@ -99,7 +99,6 @@ public class RepointDetailBOImpl extends PaginableBOImpl<RepointDetail>
 
     @Override
     public void updateCurNodeCode(RepointDetail data) {
-
         if (null != data) {
             repointDetailDAO.updateCurNodeCode(data);
         }

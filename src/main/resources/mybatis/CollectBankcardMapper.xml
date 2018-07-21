@@ -33,6 +33,9 @@
 			<if test="companyCode != null and companyCode != '' ">
 				AND t.company_code = #{companyCode}
 			</if>
+			<if test="bankCode != null and bankCode != '' ">
+				AND t.bank_code = #{bankCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_collectBankcard" parameterType="collectBankcard" resultMap="collectBankcard_DB_Result">

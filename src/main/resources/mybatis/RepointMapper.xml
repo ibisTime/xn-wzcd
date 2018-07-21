@@ -137,8 +137,6 @@
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
-	
-	
 
 
 </mapper>

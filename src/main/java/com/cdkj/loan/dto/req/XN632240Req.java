@@ -10,6 +10,9 @@ import java.util.List;
  */
 public class XN632240Req {
 
+    // 返点编号（选填 ：第一次制单不填 审核不通过的第二次制单必填）
+    private String code;
+
     // 汽车经销商编号
     private String carDealerCode;
 
@@ -25,7 +28,16 @@ public class XN632240Req {
     // 申请人编号
     private String operator;
 
+    // 返点明细列表
     private List<String> repointDetailCodeList;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getCarDealerCode() {
         return carDealerCode;
