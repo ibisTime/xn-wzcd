@@ -3,6 +3,7 @@ package com.cdkj.loan.dto.req;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 资料传递发送
@@ -12,7 +13,7 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN632150Req {
     // 编号
-    @NotBlank
+    @NotEmpty
     private List<String> codeList;
 
     // 寄送方式(1 线下 2 快递)
