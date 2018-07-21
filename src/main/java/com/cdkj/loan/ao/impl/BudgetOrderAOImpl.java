@@ -71,6 +71,7 @@ import com.cdkj.loan.dto.req.XN632120ReqRepointDetail;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632142Req;
 import com.cdkj.loan.dto.req.XN632143Req;
+import com.cdkj.loan.dto.req.XN632144Req;
 import com.cdkj.loan.dto.req.XN632191Req;
 import com.cdkj.loan.dto.req.XN632192Req;
 import com.cdkj.loan.dto.req.XN632193Req;
@@ -808,6 +809,36 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), currentNode.getValue(), operator);
+    }
+
+    @Override
+    public void bankPointPushHasLoanList(XN632144Req req) {
+        List<String> codeList = req.getCodeList();
+        for (String code : codeList) {
+            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+            if (!EBudgetOrderNode.BANK_POINT_PUSH_LOAN_LIST.getCode()
+                .equals(budgetOrder.getCurNodeCode())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前节点不是银行驻点推送已放款名单节点，不能操作");
+            }
+        }
+        for (String code : codeList) {
+            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+            budgetOrder.setHasLoanListPic(req.getHasLoanListPic());
+            String preCurNodeCode = budgetOrder.getCurNodeCode();// 当前节点
+            NodeFlow nodeFlow = nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurNodeCode);
+            budgetOrder.setCurNodeCode(nodeFlow.getNextNode());// 当前节点的下一个节点
+            budgetOrderBO.bankPointPushHasLoanList(budgetOrder);
+            // 日志记录
+            EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+                .get(budgetOrder.getCurNodeCode());
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+                EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurNodeCode,
+                nodeFlow.getNextNode(), currentNode.getValue(),
+                req.getOperator());
+        }
+
     }
 
     @Override
@@ -2590,4 +2621,5 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setShouldBackAmount(shouldBackAmount);
         return data;
     }
+
 }

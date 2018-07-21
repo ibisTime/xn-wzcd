@@ -131,4 +131,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 物流传递中
     public void updateIsLogistics(BudgetOrder budgetOrder);
 
+    // 银行驻点推送已放款名单
+    public void bankPointPushHasLoanList(BudgetOrder budgetOrder);
+
 }

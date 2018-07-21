@@ -23,6 +23,8 @@ import com.cdkj.loan.domain.RepointDetail;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632240Req;
 import com.cdkj.loan.dto.req.XN632241Req;
+import com.cdkj.loan.dto.req.XN632242Req;
+import com.cdkj.loan.dto.req.XN632243Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.ERepointDetailStatus;
 import com.cdkj.loan.enums.ERepointStatus;
@@ -170,6 +172,16 @@ public class RepointAOImpl implements IRepointAO {
         }
 
         return data;
+
+    }
+
+    @Override
+    public void branchCompanyManagerApprove(XN632242Req req) {
+
+    }
+
+    @Override
+    public void financeConfirm(XN632243Req req) {
 
     }
 }

@@ -254,4 +254,9 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
         super.update(NAMESPACE.concat("update_isLogistics"), data);
     }
 
+    @Override
+    public void bankPointPushHasLoanList(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_bankPointPushHasLoanList"), data);
+    }
+
 }

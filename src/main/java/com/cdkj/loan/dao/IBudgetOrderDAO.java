@@ -121,4 +121,7 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 物流传递中
     void updateIsLogistics(BudgetOrder budgetOrder);
 
+    // 银行驻点推送已放款名单
+    void bankPointPushHasLoanList(BudgetOrder budgetOrder);
+
 }

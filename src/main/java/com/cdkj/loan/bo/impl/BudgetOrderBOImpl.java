@@ -473,4 +473,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         budgetOrderDAO.updateIsLogistics(budgetOrder);
     }
 
+    @Override
+    public void bankPointPushHasLoanList(BudgetOrder budgetOrder) {
+        budgetOrderDAO.bankPointPushHasLoanList(budgetOrder);
+    }
+
 }

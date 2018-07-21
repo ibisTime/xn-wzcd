@@ -11,6 +11,7 @@ import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632142Req;
 import com.cdkj.loan.dto.req.XN632143Req;
+import com.cdkj.loan.dto.req.XN632144Req;
 import com.cdkj.loan.dto.req.XN632191Req;
 import com.cdkj.loan.dto.req.XN632192Req;
 import com.cdkj.loan.dto.req.XN632193Req;
@@ -127,8 +128,8 @@ public interface IBudgetOrderAO {
     public XN632234Res modifyLoanAmountCalculateData(String code,
             String loanAmount);
 
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
-            BudgetOrder condition);
+    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start,
+            int limit, BudgetOrder condition);
 
     // 银行放款合同打印
     public BudgetOrder loanContractPrint(XN632142Req req);
@@ -144,5 +145,8 @@ public interface IBudgetOrderAO {
 
     // 银行放款理件完成
     public void bankLoanCollateAchieve(XN632143Req req);
+
+    // 银行驻点推送已放款名单
+    public void bankPointPushHasLoanList(XN632144Req req);
 
 }
