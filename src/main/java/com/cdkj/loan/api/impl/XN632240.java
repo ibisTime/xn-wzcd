@@ -24,7 +24,6 @@ public class XN632240 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-
         return new PKCodeRes(repointAO.addRepoint(req));
     }
 

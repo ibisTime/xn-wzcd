@@ -40,7 +40,7 @@ public class CarDealer extends ABaseDO {
 
     private String agreementPic;// 车商合作协议
 
-    private String settleWay;// 结算方式
+    private String settleWay;// 结算方式(1现结2月结3季结)
 
     private String businessArea;// 业务区域
 
@@ -72,8 +72,7 @@ public class CarDealer extends ABaseDO {
         return collectBankcardList;
     }
 
-    public void setCollectBankcardList(
-            List<CollectBankcard> collectBankcardList) {
+    public void setCollectBankcardList(List<CollectBankcard> collectBankcardList) {
         this.collectBankcardList = collectBankcardList;
     }
 
