@@ -6,17 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ILogisticsBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISupplementReasonBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ILogisticsDAO;
+import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.SupplementReason;
 import com.cdkj.loan.dto.req.XN632152Req;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
@@ -40,6 +47,15 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
 
     @Autowired
     private ISupplementReasonBO supplementReasonBO;
+
+    @Autowired
+    private IBudgetOrderBO budgetOrderBO;
+
+    @Autowired
+    private IDepartmentBO departmentBO;
+
+    @Autowired
+    private ISYSBizLogBO sysBizLogBO;
 
     @Override
     public String saveLogistics(String type, String bizCode, String userId,
@@ -127,10 +143,36 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
                 supplementReason.setReason(reason.getReason());
                 supplementReasonBO.saveSupplementReason(supplementReason);
             }
+            // 判断节点是否是007_05，是的话补件返回007_01
+            BudgetOrder budgetOrder = budgetOrderBO
+                .getBudgetOrder(data.getBizCode());
+            String preCurrentNode = budgetOrder.getCurNodeCode();
+            if (EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
+                .equals(budgetOrder.getCurNodeCode())) {
+                Department company = departmentBO
+                    .getDepartment(budgetOrder.getCompanyCode());
+                if ("温州市".equals(company.getCityNo())) {
+                    // 本地
+                    budgetOrder.setCurNodeCode(
+                        EBudgetOrderNode.SALESMAN_SEND_LOGISTICS.getCode());
+                } else {
+                    // 外地
+                    budgetOrder.setCurNodeCode(
+                        EBudgetOrderNode.BRANCH_SEND_LOGISTICS.getCode());
+                }
+                budgetOrderBO.updateCurNodeCode(budgetOrder);
+            }
+            // 日志记录
+            EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+                .get(budgetOrder.getCurNodeCode());
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+                EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
+                currentNode.getCode(), req.getRemark(), req.getOperater());
         } else if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             // gps补件原因
             data.setSupplementReason(req.getSupplementReason());
         }
+
         logisticsDAO.updateLogisticsSendAgain(data);
     }
 

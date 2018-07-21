@@ -118,9 +118,13 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 银行放款理件完成
     void loanBankCollateAchieve(BudgetOrder budgetOrder);
 
-    // 发票不匹配财务确认
+    // 物流传递中
+    void updateIsLogistics(BudgetOrder budgetOrder);
+
+    // 银行驻点推送已放款名单
     void bankPointPushHasLoanList(BudgetOrder budgetOrder);
 
+    // 发票不匹配财务确认
     void invoiceMismatchFinanceConfirm(BudgetOrder budgetOrder);
 
 }

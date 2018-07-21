@@ -49,4 +49,12 @@ public class SupplementReasonBOImpl extends PaginableBOImpl<SupplementReason>
     public void refreshSupplementReason(SupplementReason reason) {
         supplementReasonDAO.updateSupplementReason(reason);
     }
+
+    @Override
+    public List<SupplementReason> getSupplementReasonByLogisticsCode(
+            String logisticsCode) {
+        SupplementReason supplementReason = new SupplementReason();
+        supplementReason.setLogisticsCode(logisticsCode);
+        return supplementReasonDAO.selectList(supplementReason);
+    }
 }

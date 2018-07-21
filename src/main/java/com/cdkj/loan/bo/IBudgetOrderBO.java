@@ -46,7 +46,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     public BudgetOrder getBudgetOrderByRepayBizCode(String repayBizCode);
 
-    public void logicOrder(String code, String operator);
+    public void logicOrder(String code, String logisticsCode, String operator);
 
     // 发件，改变节点
     public void updateCurNodeCode(BudgetOrder budgetOrder);
@@ -127,6 +127,9 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     // 银行放款理件完成
     public void loanBankCollateAchieve(BudgetOrder budgetOrder);
+
+    // 物流传递中
+    public void updateIsLogistics(BudgetOrder budgetOrder);
 
     // 银行驻点推送已放款名单
     public void bankPointPushHasLoanList(BudgetOrder budgetOrder);

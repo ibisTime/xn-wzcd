@@ -41,7 +41,7 @@ public enum EBudgetOrderNode {
 
     TO_APPLY_CANCEL("012_00", "待作废"), APPLY_CANCEL("012_01", "申请作废"), APPROVE_CANCEL(
             "012_02", "审核"), FINANCE_CONFIRM_RECEIVABLES("012_03", "财务确认收款"), CANCEL_APPLY_END(
-            "012_04", "作废申请结束");
+            "012_04", "已作废");
 
     public static Map<String, EBudgetOrderNode> getMap() {
         Map<String, EBudgetOrderNode> map = new HashMap<String, EBudgetOrderNode>();

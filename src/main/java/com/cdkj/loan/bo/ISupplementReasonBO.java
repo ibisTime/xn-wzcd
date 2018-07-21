@@ -17,4 +17,8 @@ public interface ISupplementReasonBO extends IPaginableBO<SupplementReason> {
     // 改变是否已补件
     public void refreshSupplementReason(SupplementReason reason);
 
+    // 通过物流单编号查询补件原因
+    public List<SupplementReason> getSupplementReasonByLogisticsCode(
+            String logisticsCode);
+
 }

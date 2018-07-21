@@ -443,6 +443,7 @@ public class CreditAOImpl implements ICreditAO {
             data.setCurNodeCode(node.getCode());
             data.setCreateDatetime(new Date());
             data.setCode(credit.getCode());
+            data.setIsLogistics(EBoolean.NO.getCode());
             String budgetOrderCode = budgetOrderBO.saveBudgetOrder(data);
             // 日志记录
             sysBizLogBO.saveSYSBizLog(budgetOrderCode, EBizLogType.BUDGET_ORDER,

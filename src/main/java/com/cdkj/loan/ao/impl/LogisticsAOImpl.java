@@ -33,6 +33,7 @@ import com.cdkj.loan.dto.req.XN632152Req;
 import com.cdkj.loan.dto.req.XN632153Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
@@ -164,26 +165,41 @@ public class LogisticsAOImpl implements ILogisticsAO {
             data.setReceiptDatetime(new Date());
             data.setRemark(remark);
 
+            // 无需审核，直接到下一节点
             BudgetOrder budgetOrder = budgetOrderBO
                 .getBudgetOrder(data.getBizCode());
+            // 银行放款
             // 当前节点
             String curNodeCode = budgetOrder.getCurNodeCode();
             NodeFlow nodeFlow = nodeFlowBO
                 .getNodeFlowByCurrentNode(curNodeCode);
-            // 无需审核，直接到下一节点
             if (EBudgetOrderNode.LOAN_PRINT.getCode()
                 .equals(budgetOrder.getCurNodeCode())
                     || EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode()
-                        .equals(budgetOrder.getCurNodeCode())
-                    || EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode()
-                        .equals(budgetOrder.getCurNodeCode())
-                    || EBudgetOrderNode.LOCAL_COLLATEPOST_COLLATE.getCode()
-                        .equals(budgetOrder.getCurNodeCode())
-                    || EBudgetOrderNode.OUT_COLLATEPOST_COLLATE.getCode()
                         .equals(budgetOrder.getCurNodeCode())) {
                 budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
                 budgetOrderBO.updateCurNodeCode(budgetOrder);
                 data.setStatus(ELogisticsStatus.RECEIVED_NOT_AUDITE.getCode());
+                // 准入单改回不在物流传递中
+                budgetOrder.setIsLogistics(EBoolean.NO.getCode());
+                budgetOrderBO.updateIsLogistics(budgetOrder);
+            }
+            // 车辆抵押
+            String pledgeCurNodeCode = budgetOrder.getPledgeCurNodeCode();
+            NodeFlow pledgeNodeFlow = nodeFlowBO
+                .getNodeFlowByCurrentNode(pledgeCurNodeCode);
+            if (EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode()
+                .equals(budgetOrder.getCurNodeCode())
+                    || EBudgetOrderNode.LOCAL_COLLATEPOST_COLLATE.getCode()
+                        .equals(budgetOrder.getCurNodeCode())
+                    || EBudgetOrderNode.OUT_COLLATEPOST_COLLATE.getCode()
+                        .equals(budgetOrder.getCurNodeCode())) {
+                budgetOrder.setPledgeCurNodeCode(pledgeNodeFlow.getNextNode());
+                budgetOrderBO.collateAchieve(budgetOrder);
+                data.setStatus(ELogisticsStatus.RECEIVED_NOT_AUDITE.getCode());
+                // 准入单改回不在物流传递中
+                budgetOrder.setIsLogistics(EBoolean.NO.getCode());
+                budgetOrderBO.updateIsLogistics(budgetOrder);
             }
 
             logisticsBO.receiveLogistics(data);
@@ -210,7 +226,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
         }
         logisticsBO.auditePassLogistics(code, remark);
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
-            budgetOrderBO.logicOrder(data.getBizCode(), operator);
+            budgetOrderBO.logicOrder(data.getBizCode(), code, operator);
         } else if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             gpsApplyBO.receiveGps(data.getBizCode());
         } else if (ELogisticsType.REPAY_BIZ.getCode().equals(data.getType())) {
@@ -225,12 +241,14 @@ public class LogisticsAOImpl implements ILogisticsAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "资料不是待审核状态!");
         }
-        data.setStatus(ELogisticsStatus.RECEIVED.getCode());
+        data.setStatus(ELogisticsStatus.BACK_PIECE.getCode());
         data.setRemark(remark);
         logisticsBO.backPieceLogistics(data);
 
         BudgetOrder budgetOrder = budgetOrderBO
             .getBudgetOrder(data.getBizCode());
+        budgetOrder.setCurNodeCode(EBudgetOrderNode.CANCEL_APPLY_END.getCode());
+        budgetOrderBO.updateCurNodeCode(budgetOrder);
         // 日志记录 主流程
         EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
             .get(budgetOrder.getCurNodeCode());
