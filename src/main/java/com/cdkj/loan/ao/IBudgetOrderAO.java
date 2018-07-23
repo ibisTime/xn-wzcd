@@ -23,6 +23,7 @@ import com.cdkj.loan.dto.req.XN632270Req;
 import com.cdkj.loan.dto.req.XN632271Req;
 import com.cdkj.loan.dto.req.XN632272Req;
 import com.cdkj.loan.dto.req.XN632280Req;
+import com.cdkj.loan.dto.req.XN632292Req;
 import com.cdkj.loan.dto.req.XN632341Req;
 import com.cdkj.loan.dto.res.XN632234Res;
 
@@ -148,5 +149,8 @@ public interface IBudgetOrderAO {
 
     // 银行驻点推送已放款名单
     public void bankPointPushHasLoanList(XN632144Req req);
+
+    // 银行返点（批量改变状态）
+    public void bankRepoint(XN632292Req req);
 
 }
