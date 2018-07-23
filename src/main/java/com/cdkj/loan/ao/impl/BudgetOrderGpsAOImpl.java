@@ -46,7 +46,7 @@ public class BudgetOrderGpsAOImpl implements IBudgetOrderGpsAO {
 
     @Override
     public void abandonBudgetOrderGps(String code, String remark,
-            String operater) {
+            String operator) {
         BudgetOrderGps data = budgetOrderGpsBO.getBudgetOrderGps(code);
         if (EBudgetOrderGpsStatus.INVALID.getCode().equals(data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前gps已作废");
@@ -63,7 +63,8 @@ public class BudgetOrderGpsAOImpl implements IBudgetOrderGpsAO {
     }
 
     @Override
-    public List<BudgetOrderGps> queryBudgetOrderGpsList(BudgetOrderGps condition) {
+    public List<BudgetOrderGps> queryBudgetOrderGpsList(
+            BudgetOrderGps condition) {
         return budgetOrderGpsBO.queryBudgetOrderGpsList(condition);
     }
 

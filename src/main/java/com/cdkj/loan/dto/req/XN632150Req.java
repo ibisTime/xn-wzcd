@@ -34,14 +34,14 @@ public class XN632150Req {
     private String sendNote;
 
     // 操作人
-    private String operater;
+    private String operator;
 
-    public String getOperater() {
-        return operater;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setOperater(String operater) {
-        this.operater = operater;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
     public String getSendType() {

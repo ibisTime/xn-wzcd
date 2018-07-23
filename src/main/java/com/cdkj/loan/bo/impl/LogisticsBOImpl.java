@@ -167,7 +167,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
                 .get(budgetOrder.getCurNodeCode());
             sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
                 EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-                currentNode.getCode(), req.getRemark(), req.getOperater());
+                currentNode.getCode(), req.getRemark(), req.getOperator());
         } else if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             // gps补件原因
             data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());

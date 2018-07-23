@@ -33,7 +33,6 @@ public class XN632142Req {
     // 车辆品牌
     private String carBrand;
 
-
     // 发动机号码
     private String engineNo;
 
@@ -67,7 +66,7 @@ public class XN632142Req {
 
     // 操作人
     @NotBlank
-    private String operater;
+    private String operator;
 
     public String getCode() {
         return code;
@@ -116,7 +115,6 @@ public class XN632142Req {
     public void setApplyUserCompanyPhone(String applyUserCompanyPhone) {
         this.applyUserCompanyPhone = applyUserCompanyPhone;
     }
-
 
     public String getEngineNo() {
         return engineNo;
@@ -206,12 +204,12 @@ public class XN632142Req {
         this.guarantPrintTemplateId = guarantPrintTemplateId;
     }
 
-    public String getOperater() {
-        return operater;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setOperater(String operater) {
-        this.operater = operater;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
 }

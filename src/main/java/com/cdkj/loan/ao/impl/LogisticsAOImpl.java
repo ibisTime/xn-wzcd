@@ -272,7 +272,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
             }
         } else if (ELogisticsType.REPAY_BIZ.getCode().equals(data.getType())) {
             repayBizBO.refreshBankRecLogic(data.getBizCode(),
-                req.getOperater());
+                req.getOperator());
         }
 
         logisticsBO.sendAgainLogistics(req);

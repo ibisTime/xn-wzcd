@@ -15,7 +15,7 @@ public interface IBudgetOrderGpsAO {
     public String saveBudgetOrderGps(XN632342Req req);
 
     public void abandonBudgetOrderGps(String code, String remark,
-            String operater);
+            String operator);
 
     public Paginable<BudgetOrderGps> queryBudgetOrderGpsPage(int start,
             int limit, BudgetOrderGps condition);
