@@ -2,7 +2,7 @@ package com.cdkj.loan.dto.req;
 
 import java.util.List;
 
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 资料传递收件
@@ -11,14 +11,11 @@ import org.hibernate.validator.constraints.NotBlank;
  * @history:
  */
 public class XN632151Req {
-    // 编号
-    @NotBlank
-    private String code;
-
     // 备注
     private String remark;
 
     // 编号List
+    @NotEmpty
     private List<String> codeList;
 
     // 操作人
@@ -38,14 +35,6 @@ public class XN632151Req {
 
     public void setCodeList(List<String> codeList) {
         this.codeList = codeList;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public String getRemark() {
