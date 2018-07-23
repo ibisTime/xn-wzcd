@@ -155,10 +155,20 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
                     // 本地
                     budgetOrder.setCurNodeCode(
                         EBudgetOrderNode.SALESMAN_SEND_LOGISTICS.getCode());
+                    // 改变发收节点
+                    data.setFromNodeCode(
+                        EBudgetOrderNode.SALESMAN_SEND_LOGISTICS.getCode());
+                    data.setToNodeCode(
+                        EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode());
                 } else {
                     // 外地
                     budgetOrder.setCurNodeCode(
                         EBudgetOrderNode.BRANCH_SEND_LOGISTICS.getCode());
+                    // 改变发收节点
+                    data.setFromNodeCode(
+                        EBudgetOrderNode.BRANCH_SEND_LOGISTICS.getCode());
+                    data.setToNodeCode(
+                        EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode());
                 }
                 budgetOrderBO.updateCurNodeCode(budgetOrder);
             }

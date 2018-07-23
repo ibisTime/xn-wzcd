@@ -166,9 +166,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 NodeFlow nodeFlow = nodeFlowBO
                     .getNodeFlowByCurrentNode(curNodeCode);
                 if (EBudgetOrderNode.LOAN_PRINT.getCode()
-                    .equals(budgetOrder.getCurNodeCode())
-                        || EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE
-                            .getCode().equals(budgetOrder.getCurNodeCode())) {
+                    .equals(budgetOrder.getCurNodeCode())) {
                     budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
                     budgetOrderBO.updateCurNodeCode(budgetOrder);
                     data.setStatus(
@@ -176,6 +174,22 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     // 准入单改回不在物流传递中
                     budgetOrder.setIsLogistics(EBoolean.NO.getCode());
                     budgetOrderBO.updateIsLogistics(budgetOrder);
+                }
+                if (EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                        || EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
+                            .equals(budgetOrder.getCurNodeCode())) {
+                    budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+                    budgetOrderBO.updateCurNodeCode(budgetOrder);
+                    data.setStatus(
+                        ELogisticsStatus.RECEIVED_NOT_AUDITE.getCode());
+                    // 生成资料传递
+                    NodeFlow nodeFlowNext = nodeFlowBO
+                        .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());// 获取当前节点的下一个节点
+                    logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+                        budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                        nodeFlowNext.getCurrentNode(),
+                        nodeFlowNext.getNextNode());
                 }
                 // 车辆抵押
                 String pledgeCurNodeCode = budgetOrder.getPledgeCurNodeCode();

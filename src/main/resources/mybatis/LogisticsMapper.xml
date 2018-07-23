@@ -153,6 +153,8 @@
 		SET
 		t.supplement_reason = #{supplementReason}
 		,t.supplement_note = #{supplementNote}
+		,t.from_node_code = #{fromNodeCode}
+		,t.to_node_code = #{toNodeCode}
 		,t.status = #{status}
 		WHERE code = #{code}
 	</update>
