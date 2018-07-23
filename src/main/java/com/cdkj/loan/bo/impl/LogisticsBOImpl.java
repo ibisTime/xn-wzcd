@@ -25,7 +25,6 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EGeneratePrefix;
-import com.cdkj.loan.enums.EGpsApplyStatus;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
@@ -171,7 +170,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
                 currentNode.getCode(), req.getRemark(), req.getOperater());
         } else if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             // gps补件原因
-            data.setStatus(EGpsApplyStatus.TO_SEND_AGAIN.getCode());
+            data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
             data.setSupplementReason(req.getSupplementReason());
         }
 
