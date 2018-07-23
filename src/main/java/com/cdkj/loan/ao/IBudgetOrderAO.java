@@ -129,8 +129,8 @@ public interface IBudgetOrderAO {
     public XN632234Res modifyLoanAmountCalculateData(String code,
             String loanAmount);
 
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start,
-            int limit, BudgetOrder condition);
+    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
+            BudgetOrder condition);
 
     // 银行放款合同打印
     public BudgetOrder loanContractPrint(XN632142Req req);
@@ -152,5 +152,8 @@ public interface IBudgetOrderAO {
 
     // 银行返点（批量改变状态）
     public void bankRepoint(XN632292Req req);
+
+    // list查询预算单
+    public List<BudgetOrder> queryBudgetOrderByList(List<String> list);
 
 }

@@ -13,6 +13,12 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
+/**
+ * 还款业务分页查
+ * @author: CYL 
+ * @since: 2018年7月23日 下午5:32:32 
+ * @history:
+ */
 public class XN630520 extends AProcessor {
 
     private IRepayBizAO repayBizAO = SpringContextHolder

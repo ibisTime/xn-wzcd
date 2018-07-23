@@ -1197,6 +1197,27 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         return budgetOrder;
     }
 
+    @Override
+    public List<BudgetOrder> queryBudgetOrderByList(List<String> list) {
+        List<BudgetOrder> budgetOrderList = new ArrayList<BudgetOrder>();
+        for (String code : list) {
+            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+            initBudget(budgetOrder);
+
+            // 获取我司贷款成数区间
+            LoanCs loanCsCondition = new LoanCs();
+            loanCsCondition.setType(budgetOrder.getShopWay());
+            List<LoanCs> loanCsList = loanCsBO.queryLoanCsList(loanCsCondition);
+            if (CollectionUtils.isNotEmpty(loanCsList)) {
+                LoanCs resultCs = loanCsList.get(0);
+                budgetOrder.setCompanyLoanCsSection(
+                    resultCs.getMinCs() + "-" + resultCs.getMaxCs());
+            }
+            budgetOrderList.add(budgetOrder);
+        }
+        return budgetOrderList;
+    }
+
     private void initBudget(BudgetOrder budgetOrder) {
         String file = budgetOrder.getFileList();
         if (StringUtils.isNotBlank(file)) {
