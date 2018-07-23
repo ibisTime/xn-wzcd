@@ -83,6 +83,7 @@ import com.cdkj.loan.dto.req.XN632270Req;
 import com.cdkj.loan.dto.req.XN632271Req;
 import com.cdkj.loan.dto.req.XN632272Req;
 import com.cdkj.loan.dto.req.XN632280Req;
+import com.cdkj.loan.dto.req.XN632292Req;
 import com.cdkj.loan.dto.req.XN632341Req;
 import com.cdkj.loan.dto.res.XN632234Res;
 import com.cdkj.loan.dto.res.XN632290Res;
@@ -92,6 +93,7 @@ import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EAdvanceType;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EAssureType;
+import com.cdkj.loan.enums.EBankRepointStatus;
 import com.cdkj.loan.enums.EBankType;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -2636,6 +2638,21 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
         data.setShouldBackAmount(shouldBackAmount);
         return data;
+    }
+
+    @Override
+    public void bankRepoint(XN632292Req req) {
+        List<String> codeList = req.getCodeList();
+        for (String code : codeList) {
+            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+            if (!EBankRepointStatus.NO.getCode().equals(
+                budgetOrder.getBankRepointStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前业务不是待返点状态，不能操作！");
+            }
+            budgetOrder.setBankRepointStatus(EBankRepointStatus.YES.getCode());
+            budgetOrderBO.bankRepoint(budgetOrder);
+        }
     }
 
 }

@@ -788,6 +788,9 @@ public class BudgetOrder extends ABaseDO {
     // 是否是资料传递中（1是，0否）
     private String isLogistics;
 
+    // 银行返点状态(0未返点1已返点)
+    private String bankRepointStatus;
+
     /*-------辅助字段-------*/
 
     private String roleCode;// 角色编号
@@ -3166,6 +3169,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setHasLoanListPic(String hasLoanListPic) {
         this.hasLoanListPic = hasLoanListPic;
+    }
+
+    public String getBankRepointStatus() {
+        return bankRepointStatus;
+    }
+
+    public void setBankRepointStatus(String bankRepointStatus) {
+        this.bankRepointStatus = bankRepointStatus;
     }
 
 }
