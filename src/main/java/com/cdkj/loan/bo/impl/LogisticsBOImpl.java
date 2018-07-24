@@ -203,4 +203,9 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
         return logisticsDAO.selectList(condition);
     }
 
+    @Override
+    public void updateLogistics(Logistics condition) {
+        logisticsDAO.updateLogistics(condition);
+    }
+
 }

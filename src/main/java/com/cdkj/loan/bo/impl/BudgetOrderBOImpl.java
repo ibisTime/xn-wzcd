@@ -23,6 +23,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.IBudgetOrderDAO;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Department;
+import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SupplementReason;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -278,6 +279,10 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
             NodeFlow nodeFlow2 = nodeFlowBO
                 .getNodeFlowByCurrentNode(nodeFlow.getNextNode());
             budgetOrder.setCurNodeCode(nodeFlow2.getNextNode());
+            Logistics logistics = logisticsBO.getLogistics(logisticsCode);
+            logistics.setToNodeCode(
+                EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode());
+            logisticsBO.updateLogistics(logistics);
         }
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());

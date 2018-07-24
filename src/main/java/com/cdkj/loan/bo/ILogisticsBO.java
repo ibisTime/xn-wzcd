@@ -41,4 +41,7 @@ public interface ILogisticsBO extends IPaginableBO<Logistics> {
 
     // 退件
     public void backPieceLogistics(Logistics data);
+
+    // 修改收发节点
+    public void updateLogistics(Logistics logistics);
 }
