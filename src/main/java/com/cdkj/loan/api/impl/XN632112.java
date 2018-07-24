@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 
+ * 修改征信
  * @author: jiafr 
  * @since: 2018年5月25日 下午9:46:37 
  * @history:
@@ -24,9 +24,7 @@ public class XN632112 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-
         creditAO.editCredit(req);
-
         return new BooleanRes(true);
 
     }

@@ -13,9 +13,15 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class XN632112Req {
 
+    // 操作类型 0保存1发送
+    @NotBlank
+    private String buttonCode;
+
+    // 操作人
     @NotBlank
     private String operator;
 
+    // 征信单编号
     @NotBlank
     private String creditCode;
 
@@ -97,6 +103,14 @@ public class XN632112Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getButtonCode() {
+        return buttonCode;
+    }
+
+    public void setButtonCode(String buttonCode) {
+        this.buttonCode = buttonCode;
     }
 
 }

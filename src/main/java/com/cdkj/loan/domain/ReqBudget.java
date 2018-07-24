@@ -33,7 +33,7 @@ public class ReqBudget extends ABaseDO {
 
     private String waterBill;// 水单
 
-    private Date payDatetime;// 打款时间
+    private Date payDatetime;// 打款时间(当天打款当天用 没用完收回来 用款日期当天没打款该请款单作废)
 
     private String applyUser;// 申请人
 

@@ -2,8 +2,10 @@ package com.cdkj.loan.dto.req;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
- * 分公司制单（批量）
+ * 垫资流程分公司制单（批量）
  * @author: jiafr 
  * @since: 2018年6月17日 上午11:08:47 
  * @history:
@@ -11,18 +13,14 @@ import java.util.List;
 public class XN632174Req {
 
     // 业务公司编号
+    @NotBlank
     private String companyCode;
-
-    // 垫资总金额
-    private String totalAdvanceFund;
-
-    // 付款金额
-    private String payAmount;
 
     // 制单意见说明
     private String makeBillNote;
 
-    // 更新人
+    // 操作人
+    @NotBlank
     private String operator;
 
     // 垫资单编号列表
@@ -42,22 +40,6 @@ public class XN632174Req {
 
     public void setCompanyCode(String companyCode) {
         this.companyCode = companyCode;
-    }
-
-    public String getTotalAdvanceFund() {
-        return totalAdvanceFund;
-    }
-
-    public void setTotalAdvanceFund(String totalAdvanceFund) {
-        this.totalAdvanceFund = totalAdvanceFund;
-    }
-
-    public String getPayAmount() {
-        return payAmount;
-    }
-
-    public void setPayAmount(String payAmount) {
-        this.payAmount = payAmount;
     }
 
     public String getMakeBillNote() {

@@ -10,4 +10,6 @@ public interface ISYSBizLogDAO extends IBaseDAO<SYSBizLog> {
     public int updateSpeedtime(SYSBizLog data);
 
     public SYSBizLog selectSysBizLogLatest(SYSBizLog condition);
+
+    public void updateSysBizLog(SYSBizLog data);
 }

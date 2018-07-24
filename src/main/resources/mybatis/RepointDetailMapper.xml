@@ -193,13 +193,13 @@
 	<delete id="delete_repointDetail" parameterType="repointDetail">
 		DELETE FROM 
 		tdqt_repoint_detail  
-		WHERE budget_code = #{budgetCode}
+		WHERE budget_code = #{budgetCode} AND code != '';
 	</delete>
 	
 	<delete id="delete_preRepointDetail" parameterType="repointDetail">
 		DELETE FROM 
 		tdqt_repoint_detail  
-		WHERE budget_code = #{budgetCode} AND type = #{type}
+		WHERE budget_code = #{budgetCode} AND type = #{type} AND code != '';
 	</delete>
 	
 	<update id="update_repointDetailType">

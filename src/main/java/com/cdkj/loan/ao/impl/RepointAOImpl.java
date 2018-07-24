@@ -141,7 +141,7 @@ public class RepointAOImpl implements IRepointAO {
             String repointCode = repointBO.saveRepoint(data);
             // 日志记录
             sysBizLogBO.saveSYSBizLog(repointCode, EBizLogType.REPOINT,
-                repointCode, data.getCurNodeCode(), null, req.getOperator());
+                repointCode, data.getCurNodeCode());
             // 更改返点明细数据的节点
             List<String> list = req.getRepointDetailCodeList();
             for (String code : list) {

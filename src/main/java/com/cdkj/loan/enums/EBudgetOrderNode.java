@@ -12,8 +12,7 @@ import java.util.Map;
 public enum EBudgetOrderNode {
     START_NODE("002_01", "填写预算单"), AREA_AUDIT("002_02", "区域总经理准入审核"), COMPANY_AUDIT(
             "002_03", "省分公司总经理审核"), SECOND_AUDIT("002_04", "准入审核二审"), FILL_AGAIN(
-            "002_05", "重新填写预算单"), ADVANCE_FUND_AUDIT("002_06", "垫资审核"), INPUT_FBH(
-            "002_07", "录入发保合"),
+            "002_05", "重新填写预算单"), ADVANCE_FUND_AUDIT("002_06", "垫资审核中"),
 
     SALESMAN_SEND_LOGISTICS("007_01A", "业务员准备并寄送银行材料给总公司"), BRANCH_SEND_LOGISTICS(
             "007_01B", "分公司内勤寄送银行材料给总公司"), HEADQUARTERS_SEND_PRINT("007_02",

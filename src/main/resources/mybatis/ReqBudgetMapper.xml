@@ -243,5 +243,36 @@
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
+	
+	<select id="select_today_reqBudget" parameterType="reqBudget">
+		SELECT
+		t.code
+		,t.company_code
+		,t.receipt_bank
+		,t.receipt_account
+		,t.budget_amount
+		,t.use_datetime
+		,t.finance_check_note
+		,t.pay_amount
+		,t.pay_bank
+		,t.pay_account
+		,t.water_bill
+		,t.pay_datetime
+		,t.apply_user
+		,t.apply_datetime
+		,t.pay_remark
+		,t.dz_amount
+		,t.dz_datetime
+		,t.collection_bank
+		,t.collection_amount
+		,t.collection_account
+		,t.collection_datetime
+		,t.collection_remark
+		,t.cur_node_code
+		FROM
+		tdq_req_budget t
+		WHERE t.company_code= #{companyCode} 
+		AND to_days(t.pay_datetime) = to_days(now());
+	</select>
 
 </mapper>

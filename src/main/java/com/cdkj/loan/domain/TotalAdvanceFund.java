@@ -23,10 +23,10 @@ public class TotalAdvanceFund extends ABaseDO {
     // 业务公司编号
     private String companyCode;
 
-    // 垫资总金额
+    // 垫资总金额（制单时通过审核的所有垫资单相加总金额）
     private Long totalAdvanceFund;
 
-    // 付款金额
+    // 付款金额（垫资总金额-请款预算单金额=本次垫资金额）
     private Long payAmount;
 
     // 制单意见说明

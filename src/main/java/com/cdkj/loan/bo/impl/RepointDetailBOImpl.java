@@ -124,7 +124,6 @@ public class RepointDetailBOImpl extends PaginableBOImpl<RepointDetail>
             data.setType(type);
             repointDetailDAO.deletePreRepointDetail(data);
         }
-
     }
 
     @Override
@@ -132,13 +131,20 @@ public class RepointDetailBOImpl extends PaginableBOImpl<RepointDetail>
         if (null != data) {
             repointDetailDAO.updateRepointDetailType(data);
         }
-
     }
 
     @Override
     public List<RepointDetail> queryRepointDetailListByCarDealerCode(
             RepointDetail condition) {
-
         return repointDetailDAO.selectList(condition);
+    }
+
+    @Override
+    public void deleteRepointDetailByBudgetOrderCode(String code) {
+        if (StringUtils.isNotBlank(code)) {
+            RepointDetail data = new RepointDetail();
+            data.setBudgetCode(code);
+            repointDetailDAO.delete(data);
+        }
     }
 }
