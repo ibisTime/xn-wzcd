@@ -270,8 +270,11 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         // 补件跳过打印岗
         List<SupplementReason> supplementReason = supplementReasonBO
             .getSupplementReasonByLogisticsCode(logisticsCode);
-        if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode().equals(
-            preCurrentNode) && CollectionUtils.isNotEmpty(supplementReason)) {
+        if ((EBudgetOrderNode.SALESMAN_SEND_LOGISTICS.getCode()
+            .equals(preCurrentNode)
+                || EBudgetOrderNode.BRANCH_SEND_LOGISTICS.getCode()
+                    .equals(preCurrentNode))
+                && CollectionUtils.isNotEmpty(supplementReason)) {
             // 获取当前主流程节点
             NodeFlow nodeFlow = nodeFlowBO
                 .getNodeFlowByCurrentNode(preCurrentNode);
