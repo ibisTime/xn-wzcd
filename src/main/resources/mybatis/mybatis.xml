@@ -157,6 +157,7 @@
 		<typeAlias alias="totalAdvanceFund" type="com.cdkj.loan.domain.TotalAdvanceFund" />
 		
 		<typeAlias alias="repoint" type="com.cdkj.loan.domain.Repoint" />
+		<typeAlias alias="contractImport" type="com.cdkj.loan.domain.ContractImport" />
 		
 	</typeAliases>
 </configuration>

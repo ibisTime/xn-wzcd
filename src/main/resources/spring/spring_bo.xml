@@ -401,5 +401,9 @@
 	<bean id="repointBO" class="com.cdkj.loan.bo.impl.RepointBOImpl">
 		<property name="paginableDAO" ref="repointDAOImpl"/>
 	</bean>
+	
+	<bean id="contractImportBO" class="com.cdkj.loan.bo.impl.ContractImportBOImpl">
+		<property name="paginableDAO" ref="contractImportDAOImpl"/>
+	</bean>
 
 </beans>
