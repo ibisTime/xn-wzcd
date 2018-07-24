@@ -11,6 +11,7 @@ import com.cdkj.loan.bo.IAdvanceFundBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepointDetailBO;
+import com.cdkj.loan.bo.IReqBudgetBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ITotalAdvanceFundBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -19,15 +20,19 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.AdvanceFund;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.RepointDetail;
+import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.domain.TotalAdvanceFund;
 import com.cdkj.loan.dto.req.XN632174Req;
 import com.cdkj.loan.dto.req.XN632176Req;
 import com.cdkj.loan.dto.req.XN632233Req;
 import com.cdkj.loan.enums.EAdvanceFundNode;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetFrozenStatus;
 import com.cdkj.loan.enums.EFbhStatus;
 import com.cdkj.loan.enums.ERepointDetailStatus;
+import com.cdkj.loan.enums.EReqBudgetNode;
 import com.cdkj.loan.enums.ETotalAdvanceFundStatus;
 import com.cdkj.loan.enums.ETotalAdvanceFundType;
 import com.cdkj.loan.exception.BizException;
@@ -59,27 +64,67 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
     @Autowired
     private IRepointDetailBO repointDetailBO;
 
+    @Autowired
+    private IReqBudgetBO reqBudgetBO;
+
     @Override
     public void addTotalAdvanceFund(XN632174Req req) {
-        // 制单意见说明未处理
-
         List<String> codeList = req.getCodeList();
         for (String code : codeList) {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
-            String preNodeCode = advanceFund.getCurNodeCode();
+            if (!EAdvanceFundNode.BRANCH_MAKE_BILL.getCode().equals(
+                advanceFund.getCurNodeCode())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前不是分公司制单节点，不能操作！");
+            }
+        }
+        Long totalAdvanceFund = 0L;// 待垫资金额（制单时通过审核的所有垫资单相加总金额）
+        for (String code : codeList) {
+            AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
+            String preNodeCode = advanceFund.getCurNodeCode();// 当前节点
             advanceFund.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 preNodeCode).getNextNode());
-            EAdvanceFundNode node = EAdvanceFundNode.getMap().get(
-                advanceFund.getCurNodeCode());
-            sysBizLogBO
-                .saveNewAndPreEndSYSBizLog(advanceFund.getCode(),
-                    EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),
-                    preNodeCode, node.getCode(), node.getValue(),
-                    req.getOperator());
-            advanceFundBO.branchMakeBill(advanceFund);
-
+            // 日志
+            sysBizLogBO.refreshPreSYSBizLog(EBizLogType.ADVANCE_FUND_BRANCH,
+                advanceFund.getCode(), preNodeCode, req.getMakeBillNote(),
+                req.getOperator());
+            advanceFundBO.branchMakeBill(advanceFund);// 垫资汇总表的编号未放入 TODO
+            totalAdvanceFund += getLong(advanceFund.getUseAmount());
         }
-
+        TotalAdvanceFund data = new TotalAdvanceFund();
+        data.setType(ETotalAdvanceFundType.FIRST.getCode());
+        data.setCompanyCode(req.getCompanyCode());
+        data.setTotalAdvanceFund(totalAdvanceFund);// 待垫资金额（制单时通过审核的所有垫资单相加总金额）
+        ReqBudget reqBudget = reqBudgetBO.getTodayReqBudget(req
+            .getCompanyCode());
+        Long reqBudgetAmount = getLong(reqBudget.getPayAmount());
+        Long payAmount = totalAdvanceFund - reqBudgetAmount;
+        if (payAmount < 0) {
+            payAmount = 0L;
+            // 生成待收回预算款
+            reqBudget.setCollectionAmount(reqBudgetAmount - totalAdvanceFund);
+            reqBudget.setCurNodeCode(EReqBudgetNode.COLLECTION.getCode());
+            // 生成日志
+            sysBizLogBO.saveSYSBizLog(reqBudget.getCode(),
+                EBizLogType.REQ_BUDGET, reqBudget.getCode(),
+                EReqBudgetNode.COLLECTION.getCode());
+            reqBudgetBO.refreshReqBudget(reqBudget);
+        }
+        data.setPayAmount(payAmount);// 付款金额（垫资总金额-请款预算单金额=本次垫资金额）
+        data.setMakeBillNote(req.getMakeBillNote());
+        data.setUpdater(req.getOperator());
+        data.setUpdateDatetime(new Date());
+        data.setStatus(EBoolean.NO.getCode());
+        String totalAdvanceCode = totalAdvanceFundBO.saveTotalAdvanceFund(data);
+        for (String code : codeList) {
+            AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
+            advanceFund.setTotalAdvanceFundCode(totalAdvanceCode);// 垫资单回写垫资汇总单编号
+            advanceFundBO.branchMakeBill(advanceFund);
+        }
+        // 产生日志
+        sysBizLogBO.saveSYSBizLog(data.getCode(),
+            EBizLogType.ADVANCE_FUND_BRANCH, data.getCode(),
+            EAdvanceFundNode.BRANCH_COMPANY.getCode());
     }
 
     @Override
@@ -117,6 +162,7 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
 
     @Override
     public String confirmPayBranchCompany(XN632176Req req) {
+
         TotalAdvanceFund data = new TotalAdvanceFund();
         data.setType(ETotalAdvanceFundType.FIRST.getCode());
         data.setCompanyCode(req.getCompanyCode());
@@ -206,4 +252,13 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         }
 
     }
+
+    private Long getLong(Object obj) {
+        if (null == obj) {
+            return 0L;
+        } else {
+            return (Long) obj;
+        }
+    }
+
 }

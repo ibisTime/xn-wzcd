@@ -28,7 +28,6 @@ import com.cdkj.loan.dto.req.XN632103Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
-import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EReqBudgetNode;
 import com.cdkj.loan.exception.BizException;
 
@@ -68,21 +67,13 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
 
         data.setApplyUser(user.getUserId());
         data.setApplyDatetime(new Date());
-        // 当前节点
-        EReqBudgetNode currentNode = EReqBudgetNode.STARTNODE;
-        data.setCurNodeCode(currentNode.getCode());
-        if (EDealType.SEND.getCode().equals(req.getButtonCode())) {
-            // 发送申请
-            currentNode = EReqBudgetNode.getMap().get(
-                nodeFlowBO.getNodeFlowByCurrentNode(
-                    EReqBudgetNode.APPLY.getCode()).getNextNode());
-            data.setCurNodeCode(currentNode.getCode());
-        }
+        data.setCurNodeCode(EReqBudgetNode.AUDIT.getCode());
         String code = reqBudgetBO.saveReqBudget(data);
-
         // 日志记录
+        sysBizLogBO.recordCurrentSYSBizLog(code, EBizLogType.REQ_BUDGET, code,
+            EReqBudgetNode.APPLY.getCode(), null, req.getApplyUser());
         sysBizLogBO.saveSYSBizLog(code, EBizLogType.REQ_BUDGET, code,
-            currentNode.getCode(), currentNode.getValue(), req.getApplyUser());
+            data.getCurNodeCode());
         return code;
     }
 
@@ -90,10 +81,10 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     @Override
     public void collectionReqBudget(XN632103Req req) {
         ReqBudget reqBudget = reqBudgetBO.getReqBudget(req.getCode());
-        if (!EReqBudgetNode.ALREADY_CREDIT.getCode().equals(
+        if (!EReqBudgetNode.COLLECTION.getCode().equals(
             reqBudget.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是已放款节点，不能操作");
+                "当前不是财务确认收回预算款节点，不能操作");
         }
         reqBudget.setCollectionBank(req.getCollectionBank());
         reqBudget.setCollectionAmount(StringValidater.toLong(req
@@ -104,15 +95,13 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         // 之前节点
         String preCurrentNode = reqBudget.getCurNodeCode();
         reqBudget.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-            EReqBudgetNode.ALREADY_CREDIT.getCode()).getNextNode());
+            preCurrentNode).getNextNode());
         reqBudgetBO.collectionReqBudget(reqBudget);
 
         // 日志记录
-        EReqBudgetNode currentNode = EReqBudgetNode.getMap().get(
-            reqBudget.getCurNodeCode());
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(reqBudget.getCode(),
-            EBizLogType.REQ_BUDGET, reqBudget.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REQ_BUDGET,
+            reqBudget.getCode(), preCurrentNode, req.getCollectionRemark(),
+            req.getOperator());
     }
 
     // 财务经理审核

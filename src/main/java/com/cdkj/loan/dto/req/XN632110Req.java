@@ -35,6 +35,10 @@ public class XN632110Req {
     @NotBlank
     private String operator;
 
+    // 操作类型 0保存1发送
+    @NotBlank
+    private String buttonCode;
+
     @NotEmpty
     private List<XN632110ReqChild> creditUserList;
 
@@ -92,6 +96,14 @@ public class XN632110Req {
 
     public void setCreditUserList(List<XN632110ReqChild> creditUserList) {
         this.creditUserList = creditUserList;
+    }
+
+    public String getButtonCode() {
+        return buttonCode;
+    }
+
+    public void setButtonCode(String buttonCode) {
+        this.buttonCode = buttonCode;
     }
 
 }

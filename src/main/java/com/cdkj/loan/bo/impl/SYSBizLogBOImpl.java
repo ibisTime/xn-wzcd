@@ -29,22 +29,35 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
 
     @Override
     public void saveSYSBizLog(String parentOrder, EBizLogType refType,
+            String refOrder, String dealNode) {
+        SYSBizLog data = new SYSBizLog();
+        data.setParentOrder(parentOrder);
+        data.setRefType(refType.getCode());
+        data.setRefOrder(refOrder);
+        data.setDealNode(dealNode);
+        data.setStatus(ESYSBizLogStatus.WAIT_HANDLE.getCode());// 待处理
+        data.setStartDatetime(new Date());
+        sysBizLogDAO.insert(data);
+    }
+
+    @Override
+    public void recordCurrentSYSBizLog(String parentOrder, EBizLogType refType,
             String refOrder, String dealNode, String dealNote, String operator) {
-        SYSUser sysUser = sysUserBO.getUser(operator);
         SYSBizLog data = new SYSBizLog();
         data.setParentOrder(parentOrder);
         data.setRefType(refType.getCode());
         data.setRefOrder(refOrder);
         data.setDealNode(dealNode);
         data.setDealNote(dealNote);
-
-        data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());
+        data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());// 已处理
+        SYSUser sysUser = sysUserBO.getUser(operator);
         data.setOperateRole(sysUser.getRoleCode());
         data.setOperator(sysUser.getUserId());
         data.setOperatorName(sysUser.getLoginName());
         data.setOperatorMobile(sysUser.getMobile());
-
         data.setStartDatetime(new Date());
+        data.setEndDatetime(new Date());
+        data.setSpeedTime("0天0时0分0秒");
         sysBizLogDAO.insert(data);
     }
 
@@ -53,23 +66,21 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
     public void saveNewAndPreEndSYSBizLog(String parentOrder,
             EBizLogType refType, String refOrder, String preDealNode,
             String nowDealNode, String nowDealNote, String operator) {
-        // 保存新节点
-        saveSYSBizLog(parentOrder, refType, refOrder, nowDealNode, nowDealNote,
-            operator);
+        // 保存新节点（为下一个节点生成的 有开始时间 待填入操作人和结束时间）
+        saveSYSBizLog(parentOrder, refType, refOrder, nowDealNode);
         // 处理之前节点
-        refreshPreSYSBizLog(refType, refOrder, preDealNode);
+        refreshPreSYSBizLog(refType, refOrder, preDealNode, nowDealNote,
+            operator);
     }
 
     // 最后操作记录日志
     @Override
     public void refreshPreSYSBizLog(EBizLogType refType, String refOrder,
-            String dealNode) {
+            String dealNode, String dealNote, String operator) {
         SYSBizLog data = getSYSBizLoglatest(refType.getCode(), refOrder,
             dealNode);
-
         if (data != null) {
             data.setEndDatetime(new Date());
-
             // 计算花费时间
             Long start = data.getStartDatetime().getTime();
             Long end = data.getEndDatetime().getTime();
@@ -79,8 +90,14 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
             Long min = ((diff / (60 * 1000)) - day * 24 * 60 - hour * 60);
             Long sec = (diff / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
             data.setSpeedTime(day + "天" + hour + "时" + min + "分" + sec + "秒");
-
-            sysBizLogDAO.updateSpeedtime(data);
+            data.setDealNote(dealNote);
+            data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());// 已处理
+            SYSUser sysUser = sysUserBO.getUser(operator);
+            data.setOperateRole(sysUser.getRoleCode());
+            data.setOperator(sysUser.getUserId());
+            data.setOperatorName(sysUser.getLoginName());
+            data.setOperatorMobile(sysUser.getMobile());
+            sysBizLogDAO.updateSysBizLog(data);
         }
     }
 
@@ -112,4 +129,5 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
         }
         return data;
     }
+
 }

@@ -12,8 +12,8 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 收回预算款
- * @author: CYL 
- * @since: 2018年5月23日 下午7:22:13 
+ * @author: jiafr 
+ * @since: 2018年7月24日 下午9:18:57 
  * @history:
  */
 public class XN632103 extends AProcessor {

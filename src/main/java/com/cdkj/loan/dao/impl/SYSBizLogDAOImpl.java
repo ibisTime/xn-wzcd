@@ -56,4 +56,9 @@ public class SYSBizLogDAOImpl extends AMybatisTemplate implements ISYSBizLogDAO 
         return super.update(NAMESPACE.concat("update_datetime"), condition);
     }
 
+    @Override
+    public void updateSysBizLog(SYSBizLog data) {
+        super.update(NAMESPACE.concat("update_sysBizLog"), data);
+    }
+
 }

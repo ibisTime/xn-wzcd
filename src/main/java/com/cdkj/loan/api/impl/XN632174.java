@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 分公司制单（批量）
+ * 垫资流程分公司制单（批量）
  * @author: jiafr 
  * @since: 2018年6月17日 上午11:21:48 
  * @history:

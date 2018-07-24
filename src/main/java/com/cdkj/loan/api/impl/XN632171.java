@@ -24,9 +24,7 @@ public class XN632171 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-
         advanceFundAO.areaAudit(req);
-
         return new BooleanRes(true);
     }
 

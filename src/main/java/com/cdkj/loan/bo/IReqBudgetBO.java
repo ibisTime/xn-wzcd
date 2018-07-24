@@ -27,4 +27,7 @@ public interface IReqBudgetBO extends IPaginableBO<ReqBudget> {
 
     public int collectionReqBudget(ReqBudget data);
 
+    // 查询今天的请款预算单（打款时间是今天的）
+    public ReqBudget getTodayReqBudget(String companyCode);
+
 }

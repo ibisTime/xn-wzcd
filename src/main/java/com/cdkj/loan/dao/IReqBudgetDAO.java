@@ -22,4 +22,6 @@ public interface IReqBudgetDAO extends IBaseDAO<ReqBudget> {
 
     int collectionReqBudget(ReqBudget data);
 
+    ReqBudget selectTodayReqBudget(ReqBudget condition);
+
 }

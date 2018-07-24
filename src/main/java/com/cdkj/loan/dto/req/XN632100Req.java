@@ -18,9 +18,6 @@ public class XN632100Req {
     @NotBlank
     private String applyUser;// 申请人
 
-    @NotBlank
-    private String buttonCode;// 按钮标识
-
     public String getReceiptBank() {
         return receiptBank;
     }
@@ -59,14 +56,6 @@ public class XN632100Req {
 
     public void setApplyUser(String applyUser) {
         this.applyUser = applyUser;
-    }
-
-    public String getButtonCode() {
-        return buttonCode;
-    }
-
-    public void setButtonCode(String buttonCode) {
-        this.buttonCode = buttonCode;
     }
 
 }
