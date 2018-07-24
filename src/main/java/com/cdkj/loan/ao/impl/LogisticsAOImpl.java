@@ -176,9 +176,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     budgetOrderBO.updateIsLogistics(budgetOrder);
                 }
                 if (EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode()
-                    .equals(budgetOrder.getCurNodeCode())
-                        || EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
-                            .equals(budgetOrder.getCurNodeCode())) {
+                    .equals(budgetOrder.getCurNodeCode())) {
                     budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
                     budgetOrderBO.updateCurNodeCode(budgetOrder);
                     data.setStatus(
