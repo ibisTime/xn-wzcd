@@ -38,6 +38,7 @@ import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISmsOutBO;
+import com.cdkj.loan.bo.ISupplementReasonBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.AmountUtil;
@@ -59,12 +60,14 @@ import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.InsuranceCompany;
 import com.cdkj.loan.domain.LoanCs;
+import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.domain.RepointDetail;
 import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.SupplementReason;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632120ReqRepointDetail;
@@ -213,6 +216,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private ICreditBO creditBO;
+
+    @Autowired
+    private ISupplementReasonBO supplementReasonBO;
 
     @Override
     @Transactional
@@ -2628,9 +2634,26 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             // 生成资料传递
             NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(budgetOrder
                 .getCurNodeCode());
-            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                budgetOrder.getCurNodeCode(), nodeFlow.getNextNode());
+            List<SupplementReason> supplementReason = supplementReasonBO
+                .getSupplementReasonByLogisticsCode(code);
+            String loCode = logisticsBO.saveLogistics(
+                ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
+                budgetOrder.getSaleUserId(), budgetOrder.getCurNodeCode(),
+                nodeFlow.getNextNode());
+            // 传递补件原因
+            if (CollectionUtils.isNotEmpty(supplementReason)) {
+                Logistics logistics = logisticsBO.getLogistics(loCode);
+                logistics
+                    .setFromNodeCode(EBudgetOrderNode.HEADQUARTERS_SEND_PRINT
+                        .getCode());
+                logistics
+                    .setToNodeCode(EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE
+                        .getCode());
+                for (SupplementReason reason : supplementReason) {
+                    supplementReasonBO.refreshLogisticsCode(reason.getId(),
+                        loCode);
+                }
+            }
             // 产生物流单后改变状态为物流传递中
             budgetOrder.setIsLogistics(EBoolean.YES.getCode());
             budgetOrderBO.updateIsLogistics(budgetOrder);

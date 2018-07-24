@@ -52,4 +52,9 @@ public class SupplementReasonDAOImpl extends AMybatisTemplate
         super.update(NAMESPACE.concat("update_supplementReason"), data);
     }
 
+    @Override
+    public void updateLogisticsCode(SupplementReason data) {
+        super.update(NAMESPACE.concat("update_logisticsCode"), data);
+    }
+
 }

@@ -82,4 +82,9 @@ public class LogisticsDAOImpl extends AMybatisTemplate
         super.update(NAMESPACE.concat("update_logistics_sendAgain"), data);
     }
 
+    @Override
+    public void updateLogistics(Logistics data) {
+        super.update(NAMESPACE.concat("update_logistics"), data);
+    }
+
 }

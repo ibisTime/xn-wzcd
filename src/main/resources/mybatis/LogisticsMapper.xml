@@ -148,6 +148,14 @@
 		WHERE code = #{code}
 	</update>
 	
+	<update id="update_logistics" parameterType="logistics">
+		UPDATE tdq_logistics t
+		SET
+		t.from_node_code = #{fromNodeCode}
+		,t.to_node_code = #{toNodeCode}
+		WHERE code = #{code}
+	</update>
+	
 	<update id="update_logistics_sendAgain" parameterType="logistics">
 		UPDATE tdq_logistics t
 		SET
