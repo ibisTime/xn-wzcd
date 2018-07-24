@@ -73,5 +73,13 @@
 		WHERE
 		id = #{id}	
 	</update>
+	
+	<update id="update_logisticsCode" parameterType="supplementReason">
+		UPDATE tdp_supplement_reason
+		SET
+		logistics_code = #{logisticsCode}
+		WHERE
+		id = #{id}	
+	</update>
 
 </mapper>

@@ -57,4 +57,11 @@ public class SupplementReasonBOImpl extends PaginableBOImpl<SupplementReason>
         supplementReason.setLogisticsCode(logisticsCode);
         return supplementReasonDAO.selectList(supplementReason);
     }
+
+    @Override
+    public void refreshLogisticsCode(Long id, String loCode) {
+        SupplementReason reason = getSupplementReason(id);
+        reason.setLogisticsCode(loCode);
+        supplementReasonDAO.updateLogisticsCode(reason);
+    }
 }

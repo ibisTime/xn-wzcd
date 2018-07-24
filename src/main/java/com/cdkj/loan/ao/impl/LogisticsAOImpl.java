@@ -165,9 +165,21 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 String curNodeCode = budgetOrder.getCurNodeCode();
                 NodeFlow nodeFlow = nodeFlowBO
                     .getNodeFlowByCurrentNode(curNodeCode);
-                if (EBudgetOrderNode.LOAN_PRINT.getCode()
-                    .equals(budgetOrder.getCurNodeCode())) {
-                    budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+                NodeFlow nodeFlow2 = nodeFlowBO
+                    .getNodeFlowByCurrentNode(nodeFlow.getNextNode());
+                if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
+                    .equals(budgetOrder.getCurNodeCode())
+                        || EBudgetOrderNode.LOAN_PRINT.getCode()
+                            .equals(budgetOrder.getCurNodeCode())) {
+                    List<SupplementReason> logisticsList = supplementReasonBO
+                        .getSupplementReasonByLogisticsCode(code);
+                    if (CollectionUtils.isNotEmpty(logisticsList)) {
+                        // 如果是补件，跳过打印岗
+                        budgetOrder.setCurNodeCode(nodeFlow2.getNextNode());
+                    } else {
+                        // 走正常流程
+                        budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+                    }
                     budgetOrderBO.updateCurNodeCode(budgetOrder);
                     data.setStatus(
                         ELogisticsStatus.RECEIVED_NOT_AUDITE.getCode());
@@ -175,19 +187,37 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     budgetOrder.setIsLogistics(EBoolean.NO.getCode());
                     budgetOrderBO.updateIsLogistics(budgetOrder);
                 }
+                List<SupplementReason> supplementReason = supplementReasonBO
+                    .getSupplementReasonByLogisticsCode(code);
                 if (EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode()
                     .equals(budgetOrder.getCurNodeCode())) {
                     budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
                     budgetOrderBO.updateCurNodeCode(budgetOrder);
                     data.setStatus(
                         ELogisticsStatus.RECEIVED_NOT_AUDITE.getCode());
+                    // 获取当前节点的下一个节点
                     // 生成资料传递
                     NodeFlow nodeFlowNext = nodeFlowBO
-                        .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());// 获取当前节点的下一个节点
-                    logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-                        budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                        .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
+                    String loCode = logisticsBO.saveLogistics(
+                        ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
+                        budgetOrder.getSaleUserId(),
                         nodeFlowNext.getCurrentNode(),
                         nodeFlowNext.getNextNode());
+
+                    // 传递补件原因
+                    if (CollectionUtils.isNotEmpty(supplementReason)) {
+                        Logistics logistics = logisticsBO.getLogistics(loCode);
+                        logistics.setFromNodeCode(
+                            EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode());
+                        logistics.setToNodeCode(
+                            EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE
+                                .getCode());
+                        for (SupplementReason reason : supplementReason) {
+                            supplementReasonBO
+                                .refreshLogisticsCode(reason.getId(), loCode);
+                        }
+                    }
                 }
                 // 车辆抵押
                 String pledgeCurNodeCode = budgetOrder.getPledgeCurNodeCode();

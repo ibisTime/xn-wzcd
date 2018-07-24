@@ -267,42 +267,34 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
                 .getNodeFlowByCurrentNode(preCurrentNode);
             budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
         }
-        // 补件跳过打印岗
-        List<SupplementReason> supplementReason = supplementReasonBO
-            .getSupplementReasonByLogisticsCode(logisticsCode);
-        if ((EBudgetOrderNode.SALESMAN_SEND_LOGISTICS.getCode()
-            .equals(preCurrentNode)
-                || EBudgetOrderNode.BRANCH_SEND_LOGISTICS.getCode()
-                    .equals(preCurrentNode))
-                && CollectionUtils.isNotEmpty(supplementReason)) {
-            // 获取当前主流程节点
-            NodeFlow nodeFlow = nodeFlowBO
-                .getNodeFlowByCurrentNode(preCurrentNode);
-            // 补件原因不为空，说明是补件，跳过打印岗
-            NodeFlow nodeFlow2 = nodeFlowBO
-                .getNodeFlowByCurrentNode(nodeFlow.getNextNode());
-            budgetOrder.setCurNodeCode(nodeFlow2.getNextNode());
-            Logistics logistics = logisticsBO.getLogistics(logisticsCode);
-            logistics.setToNodeCode(
-                EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode());
-            logisticsBO.updateLogistics(logistics);
-        }
         budgetOrder.setOperator(operator);
         budgetOrder.setOperateDatetime(new Date());
         // 主流程
+        List<SupplementReason> supplementReason = supplementReasonBO
+            .getSupplementReasonByLogisticsCode(logisticsCode);
         if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
-            .equals(budgetOrder.getCurNodeCode()))
-
-        {// 连续发件情况
-         // 再生成一条资料传递
+            .equals(budgetOrder.getCurNodeCode())) {
+            // 连续发件情况
+            // 再生成一条资料传递
             NodeFlow nodeFlowNext = nodeFlowBO
                 .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());// 获取当前节点的下一个节点
             // 生成资料传递
-            logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-                budgetOrder.getCode(), budgetOrder.getSaleUserId(),
-                nodeFlowNext.getCurrentNode(), nodeFlowNext.getNextNode());
-            // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-            // "当前节点材料清单不存在");
+            String loCode = logisticsBO.saveLogistics(
+                ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
+                budgetOrder.getSaleUserId(), nodeFlowNext.getCurrentNode(),
+                nodeFlowNext.getNextNode());
+            if (CollectionUtils.isNotEmpty(supplementReason)) {
+                Logistics logistics = logisticsBO.getLogistics(loCode);
+                logistics.setFromNodeCode(
+                    EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode());
+                logistics.setToNodeCode(
+                    EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode());
+                for (SupplementReason reason : supplementReason) {
+                    supplementReasonBO.refreshLogisticsCode(reason.getId(),
+                        loCode);
+                }
+                logisticsBO.updateLogistics(logistics);
+            }
         }
         // 抵押流程
         if (EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode()
