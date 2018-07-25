@@ -4,14 +4,18 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IContractImportAO;
+import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IContractImportBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.ContractImport;
 import com.cdkj.loan.dto.req.XN632250ReqContract;
@@ -28,7 +32,11 @@ public class ContractImportAOImpl implements IContractImportAO {
     @Autowired
     private IBudgetOrderBO budgetOrderBO;
 
+    @Autowired
+    private IBankSubbranchBO bankSubbranchBO;
+
     @Override
+    @Transactional
     public void importContract(String loanBankCode,
             List<XN632250ReqContract> contractList, String operator) {
         // 遍历
@@ -66,6 +74,7 @@ public class ContractImportAOImpl implements IContractImportAO {
     }
 
     @Override
+    @Transactional
     public void handleContract(String code, String budgetOrderCode,
             String operator) {
         ContractImport contractImport = contractImportBO
@@ -105,7 +114,12 @@ public class ContractImportAOImpl implements IContractImportAO {
     @Override
     public Paginable<ContractImport> queryContractImportPage(int start,
             int limit, ContractImport condition) {
-        return contractImportBO.getPaginable(start, limit, condition);
+        Paginable<ContractImport> paginable = contractImportBO
+            .getPaginable(start, limit, condition);
+        for (ContractImport contractImport : paginable.getList()) {
+            initContractImport(contractImport);
+        }
+        return paginable;
     }
 
     @Override
@@ -116,7 +130,18 @@ public class ContractImportAOImpl implements IContractImportAO {
 
     @Override
     public ContractImport getContractImport(String code) {
-        return contractImportBO.getContractImport(code);
+        ContractImport contractImport = contractImportBO
+            .getContractImport(code);
+        initContractImport(contractImport);
+        return contractImport;
+    }
+
+    private void initContractImport(ContractImport contractImport) {
+        if (StringUtils.isNotBlank(contractImport.getBankCode())) {
+            BankSubbranch bankSubbranch = bankSubbranchBO
+                .getBankSubbranch(contractImport.getBankCode());
+            contractImport.setBankName(bankSubbranch.getFullName());
+        }
     }
 
 }

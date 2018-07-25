@@ -59,6 +59,19 @@ public class ContractImport extends ABaseDO {
     // 备注
     private String remark;
 
+    /*-------------辅助字段------------*/
+
+    // 银行名称
+    private String bankName;
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }

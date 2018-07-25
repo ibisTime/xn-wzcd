@@ -2056,7 +2056,7 @@
 		UPDATE tdq_budget_order
 		SET
 		has_loan_list_pic = #{hasLoanListPic}
-		cur_node_code = #{curNodeCode}
+		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 		
