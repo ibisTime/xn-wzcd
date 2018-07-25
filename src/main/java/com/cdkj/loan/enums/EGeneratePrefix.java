@@ -56,7 +56,8 @@ public enum EGeneratePrefix {
             "WA", "福利发放"), WELFARE_USER("WU", "福利发放人员"), BIZ_TEAM("BT", "业务团队"), REPOINT(
             "RE", "返点"), REPLACE_REPAY_APPLY("RRA", "代偿预算单"), REPLACE_REPAY_PLAN(
             "PPP", "代偿预算审核"), ADVANCE_FUND("AF", "垫资单"), REPOINT_DETAIL("RD",
-            "返点明细"), JUDGE("J", "司法诉讼"), TOTAL_ADVANCE_FUND("TAF", "垫资汇总");
+            "返点明细"), JUDGE("J", "司法诉讼"), TOTAL_ADVANCE_FUND("TAF", "垫资汇总"),
+    CONTRACT_IMPORT("CI","银行合同导入");
 
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();

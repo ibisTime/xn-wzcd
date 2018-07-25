@@ -17,7 +17,7 @@ public enum EBudgetOrderNode {
     SALESMAN_SEND_LOGISTICS("007_01A", "业务员准备并寄送银行材料给总公司"), BRANCH_SEND_LOGISTICS(
             "007_01B", "分公司内勤寄送银行材料给总公司"), HEADQUARTERS_SEND_PRINT("007_02",
             "总公司寄送银行材料"), LOAN_PRINT("007_03", "打印岗打印"), BANK_LOAN_COLLATEPOST_COLLATE(
-            "007_04", "理件岗理件"), SEND_BANK_MATERIALS("007_05", "总公司寄送银行材料给银行驻点"), BANK_LOAN_COMMIT(
+            "007_04", "理件岗理件"), SEND_BANK_MATERIALS("007_05", "改成寄件岗寄件"), BANK_LOAN_COMMIT(
             "007_06", "确认提交银行"), BANK_POINT_PUSH_LOAN_LIST("007_07",
             "银行驻点推送已放款名单"), CONFIRM_RECEIVABLES("007_08", "财务确认收款"), BANK_LOAN_ACHIEVE(
             "007_09", "还款中"),

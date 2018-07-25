@@ -187,38 +187,38 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     budgetOrder.setIsLogistics(EBoolean.NO.getCode());
                     budgetOrderBO.updateIsLogistics(budgetOrder);
                 }
-                // List<SupplementReason> supplementReason = supplementReasonBO
-                // .getSupplementReasonByLogisticsCode(code);
-                // if (EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode()
-                // .equals(budgetOrder.getCurNodeCode())) {
-                // budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
-                // budgetOrderBO.updateCurNodeCode(budgetOrder);
-                // data.setStatus(
-                // ELogisticsStatus.RECEIVED_NOT_AUDITE.getCode());
-                // // 获取当前节点的下一个节点
-                // // 生成资料传递
-                // NodeFlow nodeFlowNext = nodeFlowBO
-                // .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
-                // String loCode = logisticsBO.saveLogistics(
-                // ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
-                // budgetOrder.getSaleUserId(),
-                // nodeFlowNext.getCurrentNode(),
-                // nodeFlowNext.getNextNode());
-                //
-                // // 传递补件原因
-                // if (CollectionUtils.isNotEmpty(supplementReason)) {
-                // Logistics logistics = logisticsBO.getLogistics(loCode);
-                // logistics.setFromNodeCode(
-                // EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode());
-                // logistics.setToNodeCode(
-                // EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE
-                // .getCode());
-                // for (SupplementReason reason : supplementReason) {
-                // supplementReasonBO
-                // .refreshLogisticsCode(reason.getId(), loCode);
-                // }
-                // }
-                // }
+                List<SupplementReason> supplementReason = supplementReasonBO
+                    .getSupplementReasonByLogisticsCode(code);
+                if (EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode()
+                    .equals(curNodeCode)) {
+                    budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+                    budgetOrderBO.updateCurNodeCode(budgetOrder);
+                    data.setStatus(
+                        ELogisticsStatus.RECEIVED_NOT_AUDITE.getCode());
+                    // 获取当前节点的下一个节点
+                    // 生成资料传递
+                    NodeFlow nodeFlowNext = nodeFlowBO
+                        .getNodeFlowByCurrentNode(budgetOrder.getCurNodeCode());
+                    String loCode = logisticsBO.saveLogistics(
+                        ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
+                        budgetOrder.getSaleUserId(),
+                        nodeFlowNext.getCurrentNode(),
+                        nodeFlowNext.getNextNode());
+
+                    // 传递补件原因
+                    if (CollectionUtils.isNotEmpty(supplementReason)) {
+                        Logistics logistics = logisticsBO.getLogistics(loCode);
+                        logistics.setFromNodeCode(
+                            EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode());
+                        logistics.setToNodeCode(
+                            EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE
+                                .getCode());
+                        for (SupplementReason reason : supplementReason) {
+                            supplementReasonBO
+                                .refreshLogisticsCode(reason.getId(), loCode);
+                        }
+                    }
+                }
                 // 车辆抵押
                 String pledgeCurNodeCode = budgetOrder.getPledgeCurNodeCode();
                 NodeFlow pledgeNodeFlow = nodeFlowBO
