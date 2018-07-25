@@ -2,7 +2,7 @@ package com.cdkj.loan.dto.req;
 
 public class XN632280Req {
 
-    // 收回垫资款类型(1、客户作废；2、垫资款退回)
+    // 收回垫资款类型(1、客户作废2、垫资款退回)
     private String type;
 
     // 预算单编号
