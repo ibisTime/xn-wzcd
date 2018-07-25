@@ -67,7 +67,7 @@ public class ContractImportAOImpl implements IContractImportAO {
             contractImport.setBankCardNumber(contract.getBankCardNumber());
             contractImport.setContractSignDate(
                 DateUtil.strToDate(contract.getContractSignDate(),
-                    DateUtil.FRONT_DATE_FORMAT_STRING));
+                    DateUtil.DB_DATE_FORMAT_STRING));
             contractImport.setImportDatetime(new Date());
             contractImport.setOperator(operator);
             contractImportBO.saveContractImport(contractImport);
