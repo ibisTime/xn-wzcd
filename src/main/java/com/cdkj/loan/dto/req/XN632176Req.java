@@ -12,27 +12,20 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN632176Req {
 
-    // 垫资总金额
-    private String totalAdvanceFund;
+    // 业务公司编号
+    @NotBlank
+    private String companyCode;
 
     // 垫资日期
     @NotBlank
     private String advanceFundDatetime;
 
-    // 付款金额
-    private String payAmount;
-
-    // 业务公司编号
-    @NotBlank
-    private String companyCode;
-
-    // 付款时间
-    private String payDatetime;
-
     // 付款账号编号
+    @NotBlank
     private String payBankcardCode;
 
     // 付款凭证（水单）
+    @NotBlank
     private String billPdf;
 
     // 付款意见说明
@@ -41,32 +34,8 @@ public class XN632176Req {
     // 更新人
     private String operator;
 
-    // 垫资单编号列表
+    // 垫资单编号列表(通过制单的)
     private List<String> codeList;
-
-    public String getTotalAdvanceFund() {
-        return totalAdvanceFund;
-    }
-
-    public void setTotalAdvanceFund(String totalAdvanceFund) {
-        this.totalAdvanceFund = totalAdvanceFund;
-    }
-
-    public String getAdvanceFundDatetime() {
-        return advanceFundDatetime;
-    }
-
-    public void setAdvanceFundDatetime(String advanceFundDatetime) {
-        this.advanceFundDatetime = advanceFundDatetime;
-    }
-
-    public String getPayAmount() {
-        return payAmount;
-    }
-
-    public void setPayAmount(String payAmount) {
-        this.payAmount = payAmount;
-    }
 
     public String getCompanyCode() {
         return companyCode;
@@ -76,12 +45,12 @@ public class XN632176Req {
         this.companyCode = companyCode;
     }
 
-    public String getPayDatetime() {
-        return payDatetime;
+    public String getAdvanceFundDatetime() {
+        return advanceFundDatetime;
     }
 
-    public void setPayDatetime(String payDatetime) {
-        this.payDatetime = payDatetime;
+    public void setAdvanceFundDatetime(String advanceFundDatetime) {
+        this.advanceFundDatetime = advanceFundDatetime;
     }
 
     public String getPayBankcardCode() {

@@ -28,7 +28,6 @@ import com.cdkj.loan.dto.req.XN632233Req;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
-import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetFrozenStatus;
 import com.cdkj.loan.enums.EFbhStatus;
 import com.cdkj.loan.enums.ERepointDetailStatus;
@@ -68,7 +67,7 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
     private IReqBudgetBO reqBudgetBO;
 
     @Override
-    public void addTotalAdvanceFund(XN632174Req req) {
+    public String addTotalAdvanceFund(XN632174Req req) {
         List<String> codeList = req.getCodeList();
         for (String code : codeList) {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
@@ -84,11 +83,11 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
             String preNodeCode = advanceFund.getCurNodeCode();// 当前节点
             advanceFund.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 preNodeCode).getNextNode());
-            // 日志
+            // 补全分公司制单日志
             sysBizLogBO.refreshPreSYSBizLog(EBizLogType.ADVANCE_FUND_BRANCH,
                 advanceFund.getCode(), preNodeCode, req.getMakeBillNote(),
                 req.getOperator());
-            advanceFundBO.branchMakeBill(advanceFund);// 垫资汇总表的编号未放入 TODO
+            advanceFundBO.branchMakeBill(advanceFund);
             totalAdvanceFund += getLong(advanceFund.getUseAmount());
         }
         TotalAdvanceFund data = new TotalAdvanceFund();
@@ -114,17 +113,13 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         data.setMakeBillNote(req.getMakeBillNote());
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
-        data.setStatus(EBoolean.NO.getCode());
+        data.setStatus(ETotalAdvanceFundStatus.TODO.getCode());// 0待打款给分公司
         String totalAdvanceCode = totalAdvanceFundBO.saveTotalAdvanceFund(data);
-        for (String code : codeList) {
-            AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
-            advanceFund.setTotalAdvanceFundCode(totalAdvanceCode);// 垫资单回写垫资汇总单编号
-            advanceFundBO.branchMakeBill(advanceFund);
-        }
-        // 产生日志
+        // 生成 下一步确认打款给分公司日志
         sysBizLogBO.saveSYSBizLog(data.getCode(),
             EBizLogType.ADVANCE_FUND_BRANCH, data.getCode(),
             EAdvanceFundNode.BRANCH_COMPANY.getCode());
+        return totalAdvanceCode;
     }
 
     @Override
@@ -161,48 +156,47 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
     }
 
     @Override
-    public String confirmPayBranchCompany(XN632176Req req) {
+    public void confirmPayBranchCompany(XN632176Req req) {
 
-        TotalAdvanceFund data = new TotalAdvanceFund();
-        data.setType(ETotalAdvanceFundType.FIRST.getCode());
-        data.setCompanyCode(req.getCompanyCode());
-        data.setTotalAdvanceFund(StringValidater.toLong(req
-            .getTotalAdvanceFund()));
-        data.setPayAmount(StringValidater.toLong(req.getPayAmount()));
+        List<String> codeList = req.getCodeList();
+        for (String code : codeList) {
+            AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
+            if (!EAdvanceFundNode.BRANCH_COMPANY.getCode().equals(
+                advanceFund.getCurNodeCode())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前不是垫资流程确认打款给分公司节点，不能操作！");
+            }
+        }
+        TotalAdvanceFund data = totalAdvanceFundBO
+            .getTotalAdvanceFundByCompanyCodeAndStatus(req.getCompanyCode(),
+                ETotalAdvanceFundStatus.TODO.getCode());
 
-        data.setPayDatetime(DateUtil.strToDate(req.getPayDatetime(),
+        data.setPayDatetime(DateUtil.strToDate(req.getAdvanceFundDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setPayBankcardCode(req.getPayBankcardCode());
         data.setBillPdf(req.getBillPdf());
         data.setPayNote(req.getPayNote());
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
-        data.setStatus(ETotalAdvanceFundStatus.HANDLED.getCode());// 待处理
-        String totalAdvanceFundCode = totalAdvanceFundBO
-            .saveTotalAdvanceFund(data);
+        data.setStatus(ETotalAdvanceFundStatus.HANDLED.getCode());// 已打款给分公司
+        totalAdvanceFundBO.refreshTotalAdvanceFund(data);
+        // 补全确认打款给分公司的日志
+        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.ADVANCE_FUND_BRANCH,
+            data.getCode(), EAdvanceFundNode.BRANCH_COMPANY.getCode(),
+            req.getPayNote(), req.getOperator());
 
-        List<String> codeList = req.getCodeList();
         for (String code : codeList) {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
-            advanceFund.setTotalAdvanceFundCode(totalAdvanceFundCode);
-            advanceFund
-                .setAdvanceFundDatetime(DateUtil.strToDate(
-                    req.getAdvanceFundDatetime(),
-                    DateUtil.FRONT_DATE_FORMAT_STRING));
+            advanceFund.setTotalAdvanceFundCode(data.getCode());
             String preNodeCode = advanceFund.getCurNodeCode();
             advanceFund.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 preNodeCode).getNextNode());
             advanceFundBO.confirmPayBranchCompany(advanceFund);
-            EAdvanceFundNode node = EAdvanceFundNode.getMap().get(
-                advanceFund.getCurNodeCode());
-            sysBizLogBO.saveNewAndPreEndSYSBizLog(advanceFund.getCode(),
+            // 生成下一步操作日志 确认打款给车行
+            sysBizLogBO.saveSYSBizLog(advanceFund.getBudgetCode(),
                 EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),
-                preNodeCode, node.getCode(), req.getPayNote(),
-                req.getOperator());
+                advanceFund.getCurNodeCode());
         }
-
-        return totalAdvanceFundCode;
-
     }
 
     @Override

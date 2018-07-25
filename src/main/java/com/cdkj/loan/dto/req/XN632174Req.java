@@ -23,7 +23,7 @@ public class XN632174Req {
     @NotBlank
     private String operator;
 
-    // 垫资单编号列表
+    // 垫资单编号列表（通过垫资审核的）
     private List<String> codeList;
 
     public String getOperator() {

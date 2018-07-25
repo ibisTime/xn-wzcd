@@ -12,28 +12,17 @@ import com.cdkj.loan.domain.AdvanceFund;
  */
 public class XN632188Res {
 
-    // 垫资总金额
+    // 待垫资总金额（制单时通过审核的所有垫资单相加总金额 或 确认打款给分公司时通过制单的的所有垫资单相加的总金额）
     private String totalAdvanceFund;
 
-    // 已垫资金额
+    // 已垫资金额（今天请款预算单的金额）
     private String hasAdvanceFund;
 
     // 未垫资金额
     private String unAdvanceFund;
 
-    // 未垫资金额
-    private String advanceFund;
-
     // 垫资单列表
     private List<AdvanceFund> advanceFundlist;
-
-    public String getAdvanceFund() {
-        return advanceFund;
-    }
-
-    public void setAdvanceFund(String advanceFund) {
-        this.advanceFund = advanceFund;
-    }
 
     public String getTotalAdvanceFund() {
         return totalAdvanceFund;

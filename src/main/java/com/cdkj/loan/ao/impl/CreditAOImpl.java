@@ -120,18 +120,14 @@ public class CreditAOImpl implements ICreditAO {
         credit.setCurNodeCode(currentNodeCode);
         String creditCode = creditBO.saveCredit(credit);// 返回按规则生成的业务编号
         // 日志记录
+        sysBizLogBO.recordCurrentSYSBizLog(creditCode, EBizLogType.CREDIT,
+            creditCode, ECreditNode.START.getCode(), null, req.getOperator());
         if (EButtonCode.SAVE.getCode().equals(req.getButtonCode())) {
             // 保存
-            sysBizLogBO.recordCurrentSYSBizLog(creditCode, EBizLogType.CREDIT,
-                creditCode, ECreditNode.START.getCode(), null,
-                req.getOperator());
             sysBizLogBO.saveSYSBizLog(creditCode, EBizLogType.CREDIT,
                 creditCode, ECreditNode.START.getCode());
         } else {
             // 发送
-            sysBizLogBO.recordCurrentSYSBizLog(creditCode, EBizLogType.CREDIT,
-                creditCode, ECreditNode.START.getCode(), null,
-                req.getOperator());
             sysBizLogBO.saveSYSBizLog(creditCode, EBizLogType.CREDIT,
                 creditCode, ECreditNode.LRZXY.getCode());
         }
@@ -166,12 +162,15 @@ public class CreditAOImpl implements ICreditAO {
             creditUser.setIsFirstAudit(EBoolean.NO.getCode());
             creditUserBO.saveCreditUser(creditUser);
         }
-        if (applyuser == 0) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "征信申请人不能为空！");
-        }
-        if (applyuser > 1) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "主贷人只能有一个！");
+        if (EButtonCode.SEND.getCode().equals(req.getButtonCode())) {
+            if (applyuser == 0) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "征信申请人不能为空！");
+            }
+            if (applyuser > 1) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "主贷人只能有一个！");
+            }
         }
         return creditCode;
     }

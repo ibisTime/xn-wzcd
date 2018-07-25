@@ -326,7 +326,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         data.setUpdater(req.getOperator());
         String preNodeCode = data.getCurNodeCode();// 当前节点
         data.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
-            .getNextNode());// 更新节点为垫资完成 收尾确认打款车行的日志 不生成新日志
+            .getNextNode());// 更新节点为垫资完成 补全确认打款车行的日志 不生成新日志
         advanceFundBO.confirmPayCarDealer(data);
         EBizLogType refType = null;
         if (EAdvanceType.PARENT_BIZ.getCode().equals(data.getType())) {
@@ -334,7 +334,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         } else if (EAdvanceType.BRANCH_BIZ.getCode().equals(data.getType())) {
             refType = EBizLogType.ADVANCE_FUND_BRANCH;
         }
-        // 收尾垫资单日志
+        // 补全垫资单确认打款给车行的日志
         sysBizLogBO.refreshPreSYSBizLog(refType, data.getCode(), preNodeCode,
             req.getNote(), req.getOperator());
 
@@ -437,32 +437,21 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         }
         List<AdvanceFund> list = advanceFundBO.queryAdvanceFundList(condition);
         res.setAdvanceFundlist(list);
-        long totalAdvanceFund = 0;
+        long totalAdvanceFund = 0;// 待垫资总金额（制单时通过审核的总金额 或 确认打款给分公司时通过制单的总垫资金额）
         for (AdvanceFund data : list) {
             totalAdvanceFund += data.getUseAmount();
         }
         res.setTotalAdvanceFund(String.valueOf(totalAdvanceFund));
-        ReqBudget reqBudgetCondition = new ReqBudget();
-        reqBudgetCondition.setUseDatetime(DateUtil.strToDate(
-            DateUtil.getToday(DateUtil.FRONT_DATE_FORMAT_STRING),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-        reqBudgetCondition.setCompanyCode(companyCode);
-        List<ReqBudget> reqBudgetList = reqBudgetBO
-            .queryReqBudgetList(reqBudgetCondition);
-        long hasAdvanceFund = 0;
-        if (!reqBudgetList.isEmpty()) {
-            for (ReqBudget reqBudget : reqBudgetList) {
-                long dzAmount = 0;
-                if (null != reqBudget.getDzAmount()
-                        && !"".equals(reqBudget.getDzAmount())) {
-                    dzAmount = reqBudget.getDzAmount();
-                }
-                hasAdvanceFund += dzAmount;
-            }
+        ReqBudget reqBudget = reqBudgetBO.getTodayReqBudget(companyCode);
+        Long reqBudgetAmount = getLong(reqBudget.getPayAmount());// 已垫资金额（请款预算单的金额）
+
+        res.setHasAdvanceFund(String.valueOf(reqBudgetAmount));
+        if (totalAdvanceFund - reqBudgetAmount < 0) {
+            res.setUnAdvanceFund("0");
+        } else {
+            res.setUnAdvanceFund(String.valueOf(totalAdvanceFund
+                    - reqBudgetAmount));
         }
-        res.setHasAdvanceFund(String.valueOf(hasAdvanceFund));
-        res.setUnAdvanceFund(String.valueOf(totalAdvanceFund - hasAdvanceFund));
-        res.setAdvanceFund(String.valueOf(totalAdvanceFund - hasAdvanceFund));
         return res;
     }
 
@@ -515,4 +504,11 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
 
     }
 
+    private Long getLong(Object obj) {
+        if (null == obj) {
+            return 0L;
+        } else {
+            return (Long) obj;
+        }
+    }
 }

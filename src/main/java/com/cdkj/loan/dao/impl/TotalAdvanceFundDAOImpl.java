@@ -55,8 +55,7 @@ public class TotalAdvanceFundDAOImpl extends AMybatisTemplate implements
 
     @Override
     public int update(TotalAdvanceFund data) {
-        // TODO Auto-generated method stub
-        return 0;
+        return super.update(NAMESPACE.concat("update_totalAdvanceFund"), data);
     }
 
 }
