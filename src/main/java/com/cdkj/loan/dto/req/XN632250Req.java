@@ -20,6 +20,7 @@ public class XN632250Req {
     private List<XN632250ReqContract> contractList;// 合同
 
     // 操作人
+    @NotBlank
     private String operator;
 
     public String getLoanBankCode() {
