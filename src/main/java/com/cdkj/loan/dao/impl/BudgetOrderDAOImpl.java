@@ -9,8 +9,8 @@ import com.cdkj.loan.dao.base.support.AMybatisTemplate;
 import com.cdkj.loan.domain.BudgetOrder;
 
 @Repository("budgetOrderDAOImpl")
-public class BudgetOrderDAOImpl extends AMybatisTemplate implements
-        IBudgetOrderDAO {
+public class BudgetOrderDAOImpl extends AMybatisTemplate
+        implements IBudgetOrderDAO {
 
     @Override
     public void update(BudgetOrder data) {
@@ -29,8 +29,8 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
 
     @Override
     public int updateAreaManagerApprove(BudgetOrder data) {
-        return super
-            .update(NAMESPACE.concat("update_areaManagerApprove"), data);
+        return super.update(NAMESPACE.concat("update_areaManagerApprove"),
+            data);
     }
 
     @Override
@@ -120,9 +120,8 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
     @Override
     public List<BudgetOrder> selectBudgetOrderByRoleCodeList(
             BudgetOrder condition, int start, int pageSize) {
-        return super.selectList(
-            NAMESPACE.concat("select_budgetOrder_roleCode"), start, pageSize,
-            condition, BudgetOrder.class);
+        return super.selectList(NAMESPACE.concat("select_budgetOrder_roleCode"),
+            start, pageSize, condition, BudgetOrder.class);
     }
 
     @Override
@@ -137,8 +136,8 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
 
     @Override
     public void invoiceMismatchApply(BudgetOrder condition) {
-        super
-            .update(NAMESPACE.concat("update_invoiceMismatchApply"), condition);
+        super.update(NAMESPACE.concat("update_invoiceMismatchApply"),
+            condition);
     }
 
     @Override
@@ -268,6 +267,11 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
     @Override
     public void bankRepoint(BudgetOrder data) {
         super.update(NAMESPACE.concat("update_bankRepoint"), data);
+    }
+
+    @Override
+    public void importContract(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_importContract"), data);
     }
 
 }

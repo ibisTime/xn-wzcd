@@ -140,4 +140,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 银行返点
     public void bankRepoint(BudgetOrder budgetOrder);
 
+    // 银行合同导入
+    public void importContract(BudgetOrder budgetOrder);
+
 }

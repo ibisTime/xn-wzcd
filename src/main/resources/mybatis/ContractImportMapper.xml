@@ -115,20 +115,9 @@
 	<update id="update_contractImport" parameterType="contractImport">
 		UPDATE tdq_contract_import
 		SET
-		contract_code = #{contractCode}
-		,budget_order_code = #{budgetOrderCode}
-		,customer_name = #{customerName}
-		,id_no = #{idNo}
-		,loan_amount = #{loanAmount}
-		,bank_code = #{bankCode}
-		,bill_datetime = #{billDatetime}
-		,repay_bank_date = #{repayBankDate}
-		,bank_card_number = #{bankCardNumber}
-		,contract_sign_date = #{contractSignDate}
-		,import_datetime = #{importDatetime}
+		budget_order_code = #{budgetOrderCode}
 		,status = #{status}
 		,operator = #{operator}
-		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 

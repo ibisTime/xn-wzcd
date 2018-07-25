@@ -210,6 +210,7 @@
 		
 		<result column="guarantee_contract_code" property="guaranteeContractCode" />
 		<result column="bank_contract_code" property="bankContractCode" />
+		<result column="contract_sign_date" property="contractSignDate" />
 		<result column="reg_certificate_code" property="regCertificateCode" />
 		<result column="emergency_name1" property="emergencyName1" />
 		<result column="emergency_relation1" property="emergencyRelation1" />
@@ -573,6 +574,7 @@
 		,t.insurance_note
 		,t.guarantee_contract_code
 		,t.bank_contract_code
+		,t.contract_sign_date
 		,t.reg_certificate_code
 		,t.emergency_name1
 		,t.emergency_relation1
@@ -844,6 +846,7 @@
 		,t.insurance_bank
 		,t.guarantee_contract_code
 		,t.bank_contract_code
+		,t.contract_sign_date
 		,t.reg_certificate_code
 		,t.emergency_name1
 		,t.emergency_relation1
@@ -1074,6 +1077,7 @@
 		,t.insurance_bank
 		,t.guarantee_contract_code
 		,t.bank_contract_code
+		,t.contract_sign_date
 		,t.reg_certificate_code
 		,t.emergency_name1
 		,t.emergency_relation1
@@ -2074,6 +2078,17 @@
 		UPDATE tdq_budget_order
 		SET
 		bank_repoint_status = #{bankRepointStatus}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_importContract" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		bank_contract_code = #{bankContractCode}
+		,contract_sign_date = #{contractSignDate}
+		,bank_card_number = #{bankCardNumber}
+		,bill_datetime = #{billDatetime}
+		,repay_bank_date = #{repayBankDate}
 		WHERE code = #{code}
 	</update>
 		

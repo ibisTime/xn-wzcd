@@ -8,3 +8,7 @@ UPDATE `tsys_node` SET `name`='驻行人员提交材料' WHERE `code`='020_11';
 UPDATE `tsys_node` SET `name`='抵押完成' WHERE `code`='020_12';
 DELETE FROM `tsys_node` WHERE `code`='020_13';
 DELETE FROM `tsys_node` WHERE `code`='020_14';
+
+
+ALTER TABLE `tdq_budget_order` 
+ADD COLUMN `contract_sign_date` datetime COMMENT '合同签订日' AFTER `bank_contract_code`;

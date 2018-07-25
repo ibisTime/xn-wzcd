@@ -551,6 +551,9 @@ public class BudgetOrder extends ABaseDO {
     // 银行合同编号
     private String bankContractCode;
 
+    // 合同签订日
+    private Date contractSignDate;
+
     // 登记证书号
     private String regCertificateCode;
 
@@ -1841,6 +1844,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setApplyUserHkb(String applyUserHkb) {
         this.applyUserHkb = applyUserHkb;
+    }
+
+    public Date getContractSignDate() {
+        return contractSignDate;
+    }
+
+    public void setContractSignDate(Date contractSignDate) {
+        this.contractSignDate = contractSignDate;
     }
 
     public String getBankBillPdf() {
