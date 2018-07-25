@@ -3,7 +3,6 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,16 +50,18 @@ public class ContractImportAOImpl implements IContractImportAO {
             ContractImport contractImport = new ContractImport();
             contractImport.setStatus(EContractImportStatus.NOT_MATCH.getCode());
             // 不为空，待处理，否则都是不匹配
-            if (CollectionUtils.isNotEmpty(budgetOrderList)) {
+            if (budgetOrderList.size() == 1) {
                 BudgetOrder budgetOrder = budgetOrderList.get(0);
                 contractImport.setBudgetOrderCode(budgetOrder.getCode());
-                contractImport.setCustomerName(budgetOrder.getCustomerName());
-                contractImport.setIdNo(budgetOrder.getIdNo());
-                contractImport.setLoanAmount(budgetOrder.getLoanAmount());
-                contractImport.setBillDatetime(budgetOrder.getBillDatetime());
-                contractImport.setRepayBankDate(budgetOrder.getRepayBankDate());
                 contractImport.setStatus(EContractImportStatus.MATCH.getCode());
             }
+            contractImport.setBillDatetime(contract.getBillDatetime());
+            if (contract.getRepayBankDate() != null) {
+                contractImport.setRepayBankDate(contract.getRepayBankDate());
+            }
+            contractImport.setCustomerName(contract.getCustomerName());
+            contractImport.setIdNo(contract.getIdNo());
+            contractImport.setLoanAmount(contract.getLoanAmount());
             contractImport.setBankCode(loanBankCode);
             contractImport.setContractCode(contract.getContractCode());
             contractImport.setBankCardNumber(contract.getBankCardNumber());

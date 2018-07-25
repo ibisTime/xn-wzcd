@@ -11,6 +11,18 @@ public class XN632250ReqContract {
     // 身份证号
     private String idNo;
 
+    // 贷款金额
+    private Long loanAmount;
+
+    // 银行
+    private String bankCode;
+
+    // 账单日
+    private Integer billDatetime;
+
+    // 还款日
+    private Integer repayBankDate;
+
     // 信用卡号
     private String bankCardNumber;
 
@@ -23,6 +35,38 @@ public class XN632250ReqContract {
 
     public void setContractCode(String contractCode) {
         this.contractCode = contractCode;
+    }
+
+    public Long getLoanAmount() {
+        return loanAmount;
+    }
+
+    public void setLoanAmount(Long loanAmount) {
+        this.loanAmount = loanAmount;
+    }
+
+    public String getBankCode() {
+        return bankCode;
+    }
+
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
+    }
+
+    public Integer getBillDatetime() {
+        return billDatetime;
+    }
+
+    public void setBillDatetime(Integer billDatetime) {
+        this.billDatetime = billDatetime;
+    }
+
+    public Integer getRepayBankDate() {
+        return repayBankDate;
+    }
+
+    public void setRepayBankDate(Integer repayBankDate) {
+        this.repayBankDate = repayBankDate;
     }
 
     public String getBankCardNumber() {
