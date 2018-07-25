@@ -43,6 +43,7 @@ public class XN632145 extends AProcessor {
         condition.setCurNodeCodeList(req.getCurNodeCodeList());
         condition.setIsSubmitCancel(req.getIsSubmitCancel());
         condition.setEnterFileStatus(req.getEnterFileStatus());
+        condition.setBackAdvanceFundPage(req.getBackAdvanceFundPage());// 收回垫资款页面分页查询标识
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

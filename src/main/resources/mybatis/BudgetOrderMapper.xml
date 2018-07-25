@@ -387,6 +387,9 @@
 			<if test="bankRepointStatus != null and bankRepointStatus != '' ">
 				AND t.bank_repoint_status = #{bankRepointStatus}
 			</if>
+			<if test="backAdvanceFundPage != null and backAdvanceFundPage != '' ">
+				AND t.is_submit_cancel is not null
+			</if>
 		</trim>
 	</sql>
 	<select id="select_budgetOrder" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
