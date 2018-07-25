@@ -26,4 +26,8 @@ public interface ITotalAdvanceFundBO extends IPaginableBO<TotalAdvanceFund> {
 
     public TotalAdvanceFund getTotalAdvanceFund(String code);
 
+    // 查询垫资汇总单 通过公司编号和状态
+    public TotalAdvanceFund getTotalAdvanceFundByCompanyCodeAndStatus(
+            String companyCode, String status);
+
 }

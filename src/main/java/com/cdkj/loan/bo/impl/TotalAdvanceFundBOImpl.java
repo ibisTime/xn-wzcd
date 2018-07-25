@@ -89,4 +89,20 @@ public class TotalAdvanceFundBOImpl extends PaginableBOImpl<TotalAdvanceFund>
         return data;
     }
 
+    @Override
+    public TotalAdvanceFund getTotalAdvanceFundByCompanyCodeAndStatus(
+            String companyCode, String status) {
+        TotalAdvanceFund data = null;
+        if (StringUtils.isNotBlank(companyCode)
+                && StringUtils.isNotBlank(status)) {
+            TotalAdvanceFund condition = new TotalAdvanceFund();
+            condition.setCompanyCode(companyCode);
+            condition.setStatus(status);
+            data = totalAdvanceFundDAO.select(condition);
+            if (null == data) {
+                throw new BizException("xn0000", "垫资汇总数据不存在");
+            }
+        }
+        return data;
+    }
 }

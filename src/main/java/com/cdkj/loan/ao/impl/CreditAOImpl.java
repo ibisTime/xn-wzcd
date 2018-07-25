@@ -120,18 +120,14 @@ public class CreditAOImpl implements ICreditAO {
         credit.setCurNodeCode(currentNodeCode);
         String creditCode = creditBO.saveCredit(credit);// 返回按规则生成的业务编号
         // 日志记录
+        sysBizLogBO.recordCurrentSYSBizLog(creditCode, EBizLogType.CREDIT,
+            creditCode, ECreditNode.START.getCode(), null, req.getOperator());
         if (EButtonCode.SAVE.getCode().equals(req.getButtonCode())) {
             // 保存
-            sysBizLogBO.recordCurrentSYSBizLog(creditCode, EBizLogType.CREDIT,
-                creditCode, ECreditNode.START.getCode(), null,
-                req.getOperator());
             sysBizLogBO.saveSYSBizLog(creditCode, EBizLogType.CREDIT,
                 creditCode, ECreditNode.START.getCode());
         } else {
             // 发送
-            sysBizLogBO.recordCurrentSYSBizLog(creditCode, EBizLogType.CREDIT,
-                creditCode, ECreditNode.START.getCode(), null,
-                req.getOperator());
             sysBizLogBO.saveSYSBizLog(creditCode, EBizLogType.CREDIT,
                 creditCode, ECreditNode.LRZXY.getCode());
         }

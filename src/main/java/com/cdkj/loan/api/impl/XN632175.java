@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 确认打款给车行
+ * 垫资流程确认打款给车行
  * @author: jiafr 
  * @since: 2018年6月17日 下午12:17:04 
  * @history:
