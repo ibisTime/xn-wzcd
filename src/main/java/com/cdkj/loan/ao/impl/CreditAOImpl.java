@@ -471,7 +471,7 @@ public class CreditAOImpl implements ICreditAO {
         } else {
             credit.setCurNodeCode(nodeFlowBO
                 .getNodeFlowByCurrentNode(preCurrentNode).getBackNode());
-            sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getBudgetCode(),
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
                 EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
                 credit.getCurNodeCode(), req.getApproveNote(),
                 req.getOperator());

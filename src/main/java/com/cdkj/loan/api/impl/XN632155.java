@@ -31,6 +31,7 @@ public class XN632155 extends AProcessor {
         condition.setBizCode(req.getBizCode());
         condition.setUserId(req.getUserId());
         condition.setStatus(req.getStatus());
+        condition.setStatusList(req.getStatusList());
         condition.setType(req.getType());
 
         String orderColumn = req.getOrderColumn();
