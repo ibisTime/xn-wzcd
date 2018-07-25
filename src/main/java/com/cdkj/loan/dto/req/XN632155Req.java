@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 /**
  * 分页查询资料传递
  * @author: jiafr 
@@ -24,8 +26,19 @@ public class XN632155Req extends APageReq {
     // 状态
     private String status;
 
+    // 状态List
+    private List<String> statusList;
+
     // 类型
     private String type;
+
+    public List<String> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
+    }
 
     public String getBizCode() {
         return bizCode;

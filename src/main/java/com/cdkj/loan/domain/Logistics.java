@@ -76,6 +76,17 @@ public class Logistics extends ABaseDO {
     // 补件原因
     private List<SupplementReason> supplementReasonList;
 
+    // 状态List
+    private List<String> statusList;
+
+    public List<String> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
+    }
+
     public String getCode() {
         return code;
     }

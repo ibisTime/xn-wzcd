@@ -835,6 +835,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
+    @Transactional
     public void bankPointPushHasLoanList(XN632144Req req) {
         List<String> codeList = req.getCodeList();
         for (String code : codeList) {
