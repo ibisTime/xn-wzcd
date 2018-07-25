@@ -857,6 +857,16 @@ public class BudgetOrder extends ABaseDO {
     // 入档状态List
     private List<String> enterFileStatusList;
 
+    private String backAdvanceFundPage;// 收回垫资款页面分页查询标识
+
+    public String getBackAdvanceFundPage() {
+        return backAdvanceFundPage;
+    }
+
+    public void setBackAdvanceFundPage(String backAdvanceFundPage) {
+        this.backAdvanceFundPage = backAdvanceFundPage;
+    }
+
     public String getIsLogistics() {
         return isLogistics;
     }

@@ -41,6 +41,16 @@ public class XN632145Req extends APageReq {
 
     private String isSubmitCancel;// 是否提交作废申请
 
+    private String backAdvanceFundPage;// 收回垫资款页页面分页查询标识
+
+    public String getBackAdvanceFundPage() {
+        return backAdvanceFundPage;
+    }
+
+    public void setBackAdvanceFundPage(String backAdvanceFundPage) {
+        this.backAdvanceFundPage = backAdvanceFundPage;
+    }
+
     public String getIsSubmitCancel() {
         return isSubmitCancel;
     }
