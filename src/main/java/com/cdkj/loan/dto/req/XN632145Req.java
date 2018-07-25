@@ -43,6 +43,16 @@ public class XN632145Req extends APageReq {
 
     private String backAdvanceFundPage;// 收回垫资款页页面分页查询标识
 
+    private String bankRepointPage;// 收回垫资款页页面分页查询标识
+
+    public String getBankRepointPage() {
+        return bankRepointPage;
+    }
+
+    public void setBankRepointPage(String bankRepointPage) {
+        this.bankRepointPage = bankRepointPage;
+    }
+
     public String getBackAdvanceFundPage() {
         return backAdvanceFundPage;
     }
