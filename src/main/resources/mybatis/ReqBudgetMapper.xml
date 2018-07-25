@@ -244,7 +244,7 @@
 		WHERE code = #{code}
 	</update>
 	
-	<select id="select_today_reqBudget" parameterType="reqBudget">
+	<select id="select_today_reqBudget" parameterType="reqBudget" resultMap="reqBudget_DB_Result">
 		SELECT
 		t.code
 		,t.company_code
