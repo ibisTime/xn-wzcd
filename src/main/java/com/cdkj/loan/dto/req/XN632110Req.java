@@ -3,7 +3,6 @@ package com.cdkj.loan.dto.req;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 征信新增
@@ -14,15 +13,12 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class XN632110Req {
 
     // 贷款银行编号
-    @NotBlank
     private String loanBankCode;
 
     // 购车途径
-    @NotBlank
     private String shopWay;
 
     // 贷款金额
-    @NotBlank
     private String loanAmount;
 
     // 行驶证正面
@@ -39,7 +35,6 @@ public class XN632110Req {
     @NotBlank
     private String buttonCode;
 
-    @NotEmpty
     private List<XN632110ReqChild> creditUserList;
 
     public String getOperator() {
