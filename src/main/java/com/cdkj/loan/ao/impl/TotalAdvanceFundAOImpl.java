@@ -171,8 +171,8 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
             .getTotalAdvanceFundByCompanyCodeAndStatus(req.getCompanyCode(),
                 ETotalAdvanceFundStatus.TODO.getCode());
 
-        data.setPayDatetime(DateUtil.strToDate(req.getAdvanceFundDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setPayDatetime(DateUtil.strToDate(req.getPayDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));// 界面的垫资日期 垫资表的付款时间（付款给分公司的时间）
         data.setPayBankcardCode(req.getPayBankcardCode());
         data.setBillPdf(req.getBillPdf());
         data.setPayNote(req.getPayNote());

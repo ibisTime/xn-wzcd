@@ -18,7 +18,7 @@ public class XN632176Req {
 
     // 垫资日期
     @NotBlank
-    private String advanceFundDatetime;
+    private String payDatetime;
 
     // 付款账号编号
     @NotBlank
@@ -31,7 +31,7 @@ public class XN632176Req {
     // 付款意见说明
     private String payNote;
 
-    // 更新人
+    // 操作人
     private String operator;
 
     // 垫资单编号列表(通过制单的)
@@ -45,12 +45,12 @@ public class XN632176Req {
         this.companyCode = companyCode;
     }
 
-    public String getAdvanceFundDatetime() {
-        return advanceFundDatetime;
+    public String getPayDatetime() {
+        return payDatetime;
     }
 
-    public void setAdvanceFundDatetime(String advanceFundDatetime) {
-        this.advanceFundDatetime = advanceFundDatetime;
+    public void setPayDatetime(String payDatetime) {
+        this.payDatetime = payDatetime;
     }
 
     public String getPayBankcardCode() {
