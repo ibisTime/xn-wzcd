@@ -39,6 +39,7 @@ import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISmsOutBO;
 import com.cdkj.loan.bo.ISupplementReasonBO;
+import com.cdkj.loan.bo.ITotalAdvanceFundBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.AmountUtil;
@@ -68,6 +69,7 @@ import com.cdkj.loan.domain.RepointDetail;
 import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.SupplementReason;
+import com.cdkj.loan.domain.TotalAdvanceFund;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632120ReqRepointDetail;
@@ -126,6 +128,7 @@ import com.cdkj.loan.enums.ERepointDetailType;
 import com.cdkj.loan.enums.ERepointDetailUseMoneyPurpose;
 import com.cdkj.loan.enums.EServiceChargeWay;
 import com.cdkj.loan.enums.EShouldBackStatus;
+import com.cdkj.loan.enums.ETakeBackAdvanceFundType;
 import com.cdkj.loan.enums.EUseMoneyPurpose;
 import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.exception.BizException;
@@ -219,6 +222,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private ISupplementReasonBO supplementReasonBO;
+
+    @Autowired
+    private ITotalAdvanceFundBO totalAdvanceFundBO;
 
     @Override
     @Transactional
@@ -1958,20 +1964,43 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     @Transactional
     public void receiptAndReturn(XN632280Req req) {
-        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
-        budgetOrder.setZfSkBankcardCode(req.getZfSkBankcardCode());
-        budgetOrder.setZfSkAmount(StringValidater.toLong(req.getZfSkAmount()));
-        budgetOrder.setZfSkReceiptDatetime(DateUtil.strToDate(
-            req.getZfSkReceiptDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder.setZfFinanceRemark(req.getZfFinanceRemark());
-        budgetOrder.setIsSubmitCancel(EBoolean.NO.getCode());
-        budgetOrderBO.receiptAndReturn(budgetOrder);
-        /*
-         * if (ETakeBackAdvanceFundType.CUSTOMER_CANCEL.getCode().equals(
-         * req.getType())) { // 客户作废 } if
-         * (ETakeBackAdvanceFundType.ADVANCE_FUND_RETURN.getCode().equals(
-         * req.getType())) { // 垫资款退回 }
-         */
+        if (ETakeBackAdvanceFundType.CUSTOMER_CANCEL.getCode().equals(
+            req.getType())) {
+            // 客户作废
+            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req
+                .getCode());
+            budgetOrder.setZfSkBankcardCode(req.getZfSkBankcardCode());
+            budgetOrder.setZfSkAmount(StringValidater.toLong(req
+                .getZfSkAmount()));
+            budgetOrder
+                .setZfSkReceiptDatetime(DateUtil.strToDate(
+                    req.getZfSkReceiptDatetime(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
+            budgetOrder.setZfFinanceRemark(req.getZfFinanceRemark());
+            budgetOrder.setIsSubmitCancel(EBoolean.NO.getCode());
+            budgetOrderBO.receiptAndReturn(budgetOrder);
+        } else {
+            // 垫资款退回（仅限外地公司业务）
+            // 1 垫资单回到确认用款单节点
+            AdvanceFund advanceFund = advanceFundBO
+                .getAdvanceFundByBudgetOrderCode(req.getCode());
+            advanceFund.setCurNodeCode(EAdvanceFundNode.BRANCH_CONFIRM
+                .getCode());
+            // 生成日志
+            sysBizLogBO.saveSYSBizLog(advanceFund.getBudgetCode(),
+                EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),
+                advanceFund.getCurNodeCode());
+            // 2 垫资汇总单减去该笔业务的金额
+            TotalAdvanceFund totalAdvanceFund = totalAdvanceFundBO
+                .getTotalAdvanceFund(advanceFund.getTotalAdvanceFundCode());
+            totalAdvanceFund.setTotalAdvanceFund(getLong(totalAdvanceFund
+                .getTotalAdvanceFund()) - getLong(advanceFund.getUseAmount()));
+            totalAdvanceFund.setPayAmount(getLong(totalAdvanceFund
+                .getPayAmount()) - getLong(advanceFund.getUseAmount()));
+            totalAdvanceFundBO.refreshTotalAdvanceFund(totalAdvanceFund);
+            // 3 记录页面填写的数据 TODO
+
+        }
     }
 
     @Override
@@ -2714,6 +2743,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             }
             budgetOrder.setBankRepointStatus(EBankRepointStatus.YES.getCode());
             budgetOrderBO.bankRepoint(budgetOrder);
+        }
+    }
+
+    private Long getLong(Object obj) {
+        if (null == obj) {
+            return 0L;
+        } else {
+            return (Long) obj;
         }
     }
 

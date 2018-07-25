@@ -54,4 +54,7 @@ public interface IAdvanceFundBO extends IPaginableBO<AdvanceFund> {
     public Paginable<AdvanceFund> queryAdvanceFundPageByRoleCode(int start,
             int limit, AdvanceFund condition);
 
+    // 查询垫资单根据预算单编号
+    public AdvanceFund getAdvanceFundByBudgetOrderCode(String code);
+
 }

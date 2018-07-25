@@ -166,4 +166,16 @@ public class AdvanceFundBOImpl extends PaginableBOImpl<AdvanceFund> implements
         page.setList(dataList);
         return page;
     }
+
+    @Override
+    public AdvanceFund getAdvanceFundByBudgetOrderCode(String code) {
+        AdvanceFund advanceFund = null;
+        if (StringUtils.isNotBlank(code)) {
+            AdvanceFund condition = new AdvanceFund();
+            condition.setBudgetCode(code);
+            advanceFund = advanceFundDAO.select(condition);
+
+        }
+        return advanceFund;
+    }
 }
