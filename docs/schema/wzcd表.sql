@@ -1,18 +1,3 @@
-/*
-SQLyog Ultimate v12.08 (32 bit)
-MySQL - 5.6.33 : Database - dev_xn_wzcd
-*********************************************************************
-*/
-
-
-/*!40101 SET NAMES utf8 */;
-
-/*!40101 SET SQL_MODE=''*/;
-
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`test_xn_wzcd` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `test_xn_wzcd`;
@@ -601,6 +586,7 @@ CREATE TABLE `tdp_supplement_reason` (
   `logistics_code` varchar(32) DEFAULT NULL COMMENT '物流单编号',
   `type` varchar(4) DEFAULT NULL COMMENT '类型',
   `reason` tinytext COMMENT '原因',
+  `is_part_supt` varchar(4) DEFAULT NULL COMMENT '是否已补件（0未补件1已补件）',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='补件原因';
 
@@ -792,10 +778,12 @@ CREATE TABLE `tdq_budget_order` (
   `bank_commit_note` tinytext COMMENT '银行提交说明',
   `bank_fk_amount` bigint(20) DEFAULT NULL COMMENT '银行放款金额',
   `bank_fk_datetime` datetime DEFAULT NULL COMMENT '银行放款时间',
+  `has_loan_list_pic` varchar(255) DEFAULT NULL COMMENT '已放款名单',
   `bank_receipt_code` varchar(32) DEFAULT NULL COMMENT '收款银行',
   `bank_receipt_number` varchar(32) DEFAULT NULL COMMENT '收款银行账号',
   `bank_receipt_pdf` tinytext COMMENT '收款凭证',
   `bank_receipt_note` text COMMENT '收款说明',
+  `green_big_code` varchar(32) DEFAULT NULL COMMENT '绿大本编号',
   `green_big_smj` tinytext COMMENT '绿大本扫描件',
   `pledge_commit_datetime` datetime DEFAULT NULL COMMENT '抵押提交时间',
   `pledge_commit_note` tinytext COMMENT '抵押提交说明',
@@ -903,6 +891,8 @@ CREATE TABLE `tdq_budget_order` (
   `insurance_note` varchar(255) DEFAULT NULL COMMENT '续保说明',
   `type` varchar(4) DEFAULT NULL COMMENT '预算单类型 (1正常单2外单)',
   `enter_file_status` varchar(4) DEFAULT NULL COMMENT '入档状态（0待入档1待补录2已入档）',
+  `is_logistics` varchar(4) DEFAULT NULL COMMENT '是否是资料传递中',
+  `bank_repoint_status` varchar(4) DEFAULT NULL COMMENT '银行返点状态(0未返点1已返点)',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -960,6 +950,29 @@ CREATE TABLE `tdq_budget_order_gps` (
   `budget_order` varchar(32) NOT NULL COMMENT '预算单编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `tdq_contract_import` */
+
+DROP TABLE IF EXISTS `tdq_contract_import`;
+
+CREATE TABLE `tdq_contract_import` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `contract_code` varchar(32) NOT NULL COMMENT '合同号',
+  `budget_order_code` varchar(32) DEFAULT NULL COMMENT '预算单编号',
+  `customer_name` varchar(255) DEFAULT NULL COMMENT '客户姓名',
+  `id_no` varchar(32) DEFAULT NULL COMMENT '身份证号',
+  `loan_amount` bigint(20) DEFAULT NULL COMMENT '贷款金额',
+  `bank_code` varchar(32) DEFAULT NULL COMMENT '银行',
+  `bill_datetime` int(11) DEFAULT NULL COMMENT '账单日',
+  `repay_bank_date` int(11) DEFAULT NULL COMMENT '还款日',
+  `bank_card_number` varchar(32) DEFAULT NULL COMMENT '信用卡号',
+  `contract_sign_date` datetime DEFAULT NULL COMMENT '合同签订日',
+  `import_datetime` datetime DEFAULT NULL COMMENT '导入日期',
+  `status` varchar(4) DEFAULT NULL COMMENT '状态',
+  `operator` varchar(32) DEFAULT NULL COMMENT '操作人',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`code`) COMMENT '银行合同导入'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='银行合同导入';
 
 /*Table structure for table `tdq_credit` */
 
@@ -1129,7 +1142,7 @@ CREATE TABLE `tdqt_repoint` (
   `bill_pdf` varchar(255) DEFAULT NULL COMMENT '水单',
   `pay_remark` varchar(255) DEFAULT NULL COMMENT '付款备注',
   `settle_type` varchar(255) DEFAULT NULL COMMENT '结算方式',
-  `cur_node_code` varchar(255) DEFAULT NULL COMMENT '节点（0待打款1已打款）',
+  `cur_node_code` varchar(255) DEFAULT NULL COMMENT '节点',
   PRIMARY KEY (`code`) COMMENT '返点表'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='返点表';
 
@@ -1140,6 +1153,7 @@ DROP TABLE IF EXISTS `tdqt_repoint_detail`;
 CREATE TABLE `tdqt_repoint_detail` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(4) DEFAULT NULL COMMENT '类型（1正常数据2发票不匹配产生的新数据）',
+  `use_money_purpose` varchar(4) DEFAULT NULL COMMENT '用款用途（2协议内返点3协议外返点）',
   `repoint_code` varchar(32) DEFAULT NULL COMMENT '返点编号',
   `company_code` varchar(32) DEFAULT NULL COMMENT '业务公司编号',
   `company_name` varchar(255) DEFAULT NULL COMMENT '业务公司名称',
@@ -1153,13 +1167,12 @@ CREATE TABLE `tdqt_repoint_detail` (
   `bank_rate` decimal(18,8) DEFAULT NULL COMMENT '银行实际利率',
   `benchmark_rate` decimal(18,8) DEFAULT NULL COMMENT '基准利率',
   `fee` bigint(20) DEFAULT NULL COMMENT '服务费',
-  `use_money_purpose` varchar(4) DEFAULT NULL COMMENT '用款用途（1协议内返点2协议外返点）',
   `repoint_amount` bigint(20) DEFAULT NULL COMMENT '返点金额（退按揭款金额）',
   `account_code` varchar(32) DEFAULT NULL COMMENT '账号编号（车行的收款账号编号）',
   `account_no` varchar(32) DEFAULT NULL COMMENT '收款账号（外单手动填写的汽车经销商收款账号 ）',
   `open_bank_name` varchar(255) DEFAULT NULL COMMENT '开户行名称',
   `account_name` varchar(255) DEFAULT NULL COMMENT '户名',
-  `cur_node_code` varchar(32) DEFAULT NULL COMMENT '节点(0待制单1已制单待打款2已打款)',
+  `cur_node_code` varchar(32) DEFAULT NULL COMMENT '节点',
   PRIMARY KEY (`code`) COMMENT '返点明细表'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='返点明细表（用款用途）';
 
@@ -2339,8 +2352,8 @@ CREATE TABLE `tsys_biz_log` (
   `deal_node` varchar(32) NOT NULL COMMENT '处理节点',
   `deal_note` varchar(255) DEFAULT NULL COMMENT '处理说明',
   `status` varchar(32) NOT NULL COMMENT '状态(0 待处理 1 已完成)',
-  `operate_role` varchar(32) NOT NULL COMMENT '操作角色',
-  `operator` varchar(32) NOT NULL COMMENT '操作人',
+  `operate_role` varchar(32) DEFAULT NULL COMMENT '操作角色',
+  `operator` varchar(32) DEFAULT NULL COMMENT '操作人',
   `operator_name` varchar(32) DEFAULT NULL COMMENT '操作人姓名',
   `operator_mobile` varchar(32) DEFAULT NULL COMMENT '操作人手机号',
   `start_datetime` datetime NOT NULL COMMENT '操作开始时间',
