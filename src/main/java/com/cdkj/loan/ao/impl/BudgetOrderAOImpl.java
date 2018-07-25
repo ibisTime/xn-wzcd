@@ -129,6 +129,7 @@ import com.cdkj.loan.enums.ERepointDetailUseMoneyPurpose;
 import com.cdkj.loan.enums.EServiceChargeWay;
 import com.cdkj.loan.enums.EShouldBackStatus;
 import com.cdkj.loan.enums.ETakeBackAdvanceFundType;
+import com.cdkj.loan.enums.ETotalAdvanceFundType;
 import com.cdkj.loan.enums.EUseMoneyPurpose;
 import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.exception.BizException;
@@ -1477,7 +1478,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
         budgetOrder.setDeliveryDatetime(DateUtil.strToDate(
             req.getDeliveryDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder.setFbhStatus(EFbhStatus.TO_PENDING_ENTRY.getCode());
+        budgetOrder.setFbhStatus(EFbhStatus.TO_PENDING_ENTRY.getCode());// 已录入
         Long loanAmount = budgetOrder.getLoanAmount();
         Long currentInvoicePrice = StringValidater.toLong(req
             .getCurrentInvoicePrice());
@@ -1508,13 +1509,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     budgetOrder
                         .setCurNodeCode(EBudgetOrderNode.INVOICE_MISMATCH_APPLY
                             .getCode());
+                    budgetOrder.setFrozenStatus(EBudgetFrozenStatus.FROZEN
+                        .getCode());
+                    budgetOrderBO.invoiceMismatchApply(budgetOrder);
                     // 记录日志
                     sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
                         EBizLogType.INVOICE_MISMATCH, budgetOrder.getCode(),
                         budgetOrder.getCurNodeCode());
-                    budgetOrderBO.invoiceMismatchApply(budgetOrder);
                     budgetOrder.setFbhStatus(EFbhStatus.INVOICE_MISMATCH_TODO
-                        .getCode());
+                        .getCode());// 发票不匹配处理中
                 }
             }
         }
@@ -1572,19 +1575,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setPreGlobalRate(budgetOrder.getGlobalRate());
         budgetOrder
             .setGlobalRate(StringValidater.toDouble(res.getGlobalRate()));
-        if (null != res.getFxAmount() && !"".equals(res.getFxAmount())) {
+        if (StringUtils.isNotBlank(res.getFxAmount())) {
             budgetOrder.setPreFxAmount(budgetOrder.getFxAmount());
             budgetOrder.setFxAmount(StringValidater.toLong(res.getFxAmount()));
         }
-        if (null != res.getLyAmount() && !"".equals(res.getLyAmount())) {
+        if (StringUtils.isNotBlank(res.getLyAmount())) {
             budgetOrder.setPreLyAmount(budgetOrder.getLyAmount());
             budgetOrder.setLyAmount(StringValidater.toLong(res.getLyAmount()));
         }
-        if (null != res.getGpsFee() && !"".equals(res.getGpsFee())) {
+        if (StringUtils.isNotBlank(res.getGpsFee())) {
             budgetOrder.setPreGpsFee(budgetOrder.getGpsFee());
             budgetOrder.setGpsFee(StringValidater.toLong(res.getGpsFee()));
         }
-        if (null != res.getOtherFee() && !"".equals(res.getOtherFee())) {
+        if (StringUtils.isNotBlank(res.getOtherFee())) {
             budgetOrder.setPreOtherFee(budgetOrder.getOtherFee());
             budgetOrder.setOtherFee(StringValidater.toLong(res.getOtherFee()));
         }
@@ -1639,21 +1642,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 repointDetailBO.saveRepointDetail(repointDetail);
             }
         }
-        // 当前节点
-        String preCurrentNode = budgetOrder.getCurNodeCode();
+        String preCurrentNode = budgetOrder.getCurNodeCode();// 当前节点
         // 下个节点
-        String nextNode = nodeFlowBO.getNodeFlowByCurrentNode(
-            EBudgetOrderNode.INVOICE_MISMATCH_APPLY.getCode()).getNextNode();
-        budgetOrder.setCurNodeCode(nextNode);
+        budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+            preCurrentNode).getNextNode());
         // 日志记录
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
-            budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+            EBizLogType.INVOICE_MISMATCH, budgetOrder.getCode(),
+            preCurrentNode, budgetOrder.getCurNodeCode(), null,
+            req.getOperator());
         budgetOrderBO.applyInvoiceMismatch(budgetOrder);
 
-        // 协议外返点 不重新计算 更改原返点数据的状态为发票不匹配产生的新数据 为了审核过后批量处理数据
+        // 协议外返点不用重新计算 更改原返点数据的状态为发票不匹配产生的新数据 为了审核过后批量处理数据
         List<RepointDetail> repointDetailList = repointDetailBO
             .queryRepointDetailList(budgetOrder.getCode(),
                 EUseMoneyPurpose.PROTOCOL_OUTER.getCode());
@@ -1678,14 +1678,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 之前节点
         String preCurrentNode = budgetOrder.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            // 审核通过
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                EBudgetOrderNode.APPROVE_APPLY.getCode()).getNextNode());
+                preCurrentNode).getNextNode());
         } else {
-
-            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                EBudgetOrderNode.APPROVE_APPLY.getCode()).getBackNode());
             // 审核不通过
-            // 1.删除1个贷款金额3个贷款成数和6个费用的新数据 还原共10项原数据
+            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                preCurrentNode).getBackNode());
+            // 1、还原1个贷款金额3个贷款成数和6个费用的新数据 共还原10项原数据
             budgetOrder.setLoanAmount(budgetOrder.getPreLoanAmount());
             budgetOrder.setPreLoanAmount(null);
 
@@ -1719,11 +1719,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrderBO.invoiceMismatchApprove(budgetOrder);
 
         // 日志记录
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
-            budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), operator);
+            budgetOrder.getCurNodeCode(), approveNote, operator);
     }
 
     @Override
@@ -1945,6 +1943,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     @Transactional
     public void receiptAndReturn(XN632280Req req) {
+        // 收回垫资款有两种情况：1客户作废 记录到预算单 2分公司当天未垫资 记录到垫资汇总表
         if (ETakeBackAdvanceFundType.CUSTOMER_CANCEL.getCode().equals(
             req.getType())) {
             // 客户作废
@@ -1961,7 +1960,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setIsSubmitCancel(EBoolean.NO.getCode());
             budgetOrderBO.receiptAndReturn(budgetOrder);
         } else {
-            // 垫资款退回（仅限外地公司业务）
+            // 垫资款退回（仅限分公司业务）
             // 1 垫资单回到确认用款单节点
             AdvanceFund advanceFund = advanceFundBO
                 .getAdvanceFundByBudgetOrderCode(req.getCode());
@@ -1979,8 +1978,23 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             totalAdvanceFund.setPayAmount(getLong(totalAdvanceFund
                 .getPayAmount()) - getLong(advanceFund.getUseAmount()));
             totalAdvanceFundBO.refreshTotalAdvanceFund(totalAdvanceFund);
-            // 3 记录页面填写的数据 TODO
-
+            // 3 记录页面填写的数据到垫资汇总表 类型是4收回垫资款
+            TotalAdvanceFund unAdvanceCollect = new TotalAdvanceFund();
+            unAdvanceCollect.setType(ETotalAdvanceFundType.ADVANCE_FUND_BACK
+                .getCode());
+            unAdvanceCollect.setCompanyCode(advanceFund.getCompanyCode());
+            unAdvanceCollect.setCollectionAmount(StringValidater.toLong(req
+                .getZfSkAmount()));
+            unAdvanceCollect
+                .setCollectionDatetime(DateUtil.strToDate(
+                    req.getZfSkReceiptDatetime(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
+            unAdvanceCollect.setCollectionBankcardCode(req
+                .getZfSkBankcardCode());
+            unAdvanceCollect.setCollectionNote(req.getZfFinanceRemark());
+            unAdvanceCollect.setUpdater(req.getOperator());
+            unAdvanceCollect.setUpdateDatetime(new Date());
+            totalAdvanceFundBO.saveTotalAdvanceFund(unAdvanceCollect);
         }
     }
 

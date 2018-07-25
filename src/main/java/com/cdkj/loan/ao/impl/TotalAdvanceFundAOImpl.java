@@ -203,46 +203,44 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
     public void financeConfirm(XN632233Req req) {
         TotalAdvanceFund data = new TotalAdvanceFund();
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
-
-        data.setType(req.getType());
+        data.setType(req.getType());// 类型（2发票不匹配补打款3发票不匹配收回款）
         data.setCompanyCode(budgetOrder.getCompanyCode());
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
-
-        if (ETotalAdvanceFundType.SECOND.getCode().equals(req.getType())) {
-            data.setPayAmount(StringValidater.toLong(req.getPayAmount()));
-            data.setPayBankcardCode(req.getPayBankcardCode());
-            data.setPayDatetime(DateUtil.strToDate(req.getPayDatetime(),
+        if (ETotalAdvanceFundType.SECOND.getCode().equals(req.getType())) {// 发票不匹配补打款
+            data.setPayAmount(StringValidater.toLong(req.getAmount()));
+            data.setPayDatetime(DateUtil.strToDate(req.getDatetime(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
-            data.setBillPdf(req.getPayBillPdf());
+            data.setPayBankcardCode(req.getBankcardCode());
+            data.setBillPdf(req.getBillPdf());
+            data.setPayNote(req.getRemark());
+        } else {// 发票不匹配收回款
+            data.setCollectionAmount(StringValidater.toLong(req.getAmount()));
+            data.setCollectionDatetime(DateUtil.strToDate(req.getDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+            data.setCollectionBankcardCode(req.getBankcardCode());
+            data.setCollectionBillPdf(req.getBillPdf());
+            data.setCollectionNote(req.getRemark());
         }
-        if (ETotalAdvanceFundType.COLLECTION.getCode().equals(req.getType())) {
-            data.setCollectionAmount(StringValidater.toLong(req
-                .getCollectionAmount()));
-            data.setCollectionBankcardCode(req.getCollectionBankcardCode());
-            data.setCollectionDatetime(DateUtil.strToDate(
-                req.getCollectionDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
-            data.setCollectionBillPdf(req.getCollectionBillPdf());
-        }
-        // 改回之前节点
+        data.setUpdater(req.getOperator());
+        data.setUpdateDatetime(new Date());
+        totalAdvanceFundBO.saveTotalAdvanceFund(data);
+        // 改回发票不匹配时冻结的主流程节点
         budgetOrder.setCurNodeCode(budgetOrder.getCancelNodeCode());
         budgetOrder.setCancelNodeCode(null);
         budgetOrder.setFrozenStatus(EBudgetFrozenStatus.NORMAL.getCode());
         budgetOrder.setFbhStatus(EFbhStatus.TO_PENDING_ENTRY.getCode());// 发保合状态改为已录入发保合
         budgetOrderBO.invoiceMismatchFinanceConfirm(budgetOrder);
-        totalAdvanceFundBO.saveTotalAdvanceFund(data);
-        if (EFbhStatus.TO_PENDING_ENTRY.getCode().equals(
-            budgetOrder.getFbhStatus())) {
-            // 已录入发保合 把返点明细状态改为待打款
-            RepointDetail condition = new RepointDetail();
-            condition.setBudgetCode(budgetOrder.getCode());
-            List<RepointDetail> list = repointDetailBO
-                .queryRepointDetailList(condition);
-            for (RepointDetail repointDetail : list) {
-                repointDetail.setCurNodeCode(ERepointDetailStatus.TODO_PAY
-                    .getCode());
-                repointDetailBO.updateCurNodeCode(repointDetail);
-            }
+
+        // 已录入发保合 把返点明细状态改为待打款
+        RepointDetail condition = new RepointDetail();
+        condition.setBudgetCode(budgetOrder.getCode());
+        List<RepointDetail> list = repointDetailBO
+            .queryRepointDetailList(condition);
+        for (RepointDetail repointDetail : list) {
+            repointDetail.setCurNodeCode(ERepointDetailStatus.TODO_PAY
+                .getCode());
+            repointDetailBO.updateCurNodeCode(repointDetail);
         }
 
     }

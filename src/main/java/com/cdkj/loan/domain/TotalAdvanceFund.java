@@ -5,7 +5,7 @@ import java.util.Date;
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
-* 垫资汇总表
+* 垫资汇总表（总公司（财务）与分公司之间的财务往来）
 * @author: jiafr 
 * @since: 2018-06-17 11:16:01
 * @history:
@@ -17,7 +17,7 @@ public class TotalAdvanceFund extends ABaseDO {
     // 编号
     private String code;
 
-    // 类型(1第一次打款2发票不匹配补打款3发票不匹配收回款)
+    // 类型(1垫资打款给分公司2发票不匹配补打款给分公司3发票不匹配从分公司收回垫资款4分公司当天未垫资从分公司收回垫资款)
     private String type;
 
     // 业务公司编号

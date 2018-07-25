@@ -20,6 +20,9 @@ public class XN632280Req {
     // 备注
     private String zfFinanceRemark;
 
+    // 操作人
+    private String operator;
+
     public String getCode() {
         return code;
     }
@@ -66,6 +69,14 @@ public class XN632280Req {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
 }

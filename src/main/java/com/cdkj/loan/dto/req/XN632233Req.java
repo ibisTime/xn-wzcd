@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 发票不匹配财务确认
  * @author: jiafr 
@@ -8,40 +10,34 @@ package com.cdkj.loan.dto.req;
  */
 public class XN632233Req {
 
-    // 类型
+    // 类型（2发票不匹配补打款3发票不匹配收回款）
+    @NotBlank
     private String type;
 
     // 预算单编号
+    @NotBlank
     private String code;
 
     // 付款金额
-    private String payAmount;
+    @NotBlank
+    private String amount;
 
     // 付款时间
-    private String payDatetime;
+    @NotBlank
+    private String datetime;
 
     // 付款账号编号
-    private String payBankcardCode;
+    @NotBlank
+    private String bankcardCode;
 
     // 付款凭证（水单）
-    private String payBillPdf;
+    @NotBlank
+    private String billPdf;
 
-    // 收款金额
-    private String collectionAmount;
-
-    // 收款时间
-    private String collectionDatetime;
-
-    // 收款银行（收款账号编号）
-    private String collectionBankcardCode;
-
-    // 收款凭证（水单）
-    private String collectionBillPdf;
-
-    // 收款意见说明
+    // 备注
     private String remark;
 
-    // 更新人
+    // 操作人
     private String operator;
 
     public String getType() {
@@ -60,68 +56,36 @@ public class XN632233Req {
         this.code = code;
     }
 
-    public String getPayAmount() {
-        return payAmount;
+    public String getAmount() {
+        return amount;
     }
 
-    public void setPayAmount(String payAmount) {
-        this.payAmount = payAmount;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
-    public String getPayDatetime() {
-        return payDatetime;
+    public String getDatetime() {
+        return datetime;
     }
 
-    public void setPayDatetime(String payDatetime) {
-        this.payDatetime = payDatetime;
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 
-    public String getPayBankcardCode() {
-        return payBankcardCode;
+    public String getBankcardCode() {
+        return bankcardCode;
     }
 
-    public void setPayBankcardCode(String payBankcardCode) {
-        this.payBankcardCode = payBankcardCode;
+    public void setBankcardCode(String bankcardCode) {
+        this.bankcardCode = bankcardCode;
     }
 
-    public String getPayBillPdf() {
-        return payBillPdf;
+    public String getBillPdf() {
+        return billPdf;
     }
 
-    public void setPayBillPdf(String payBillPdf) {
-        this.payBillPdf = payBillPdf;
-    }
-
-    public String getCollectionAmount() {
-        return collectionAmount;
-    }
-
-    public void setCollectionAmount(String collectionAmount) {
-        this.collectionAmount = collectionAmount;
-    }
-
-    public String getCollectionDatetime() {
-        return collectionDatetime;
-    }
-
-    public void setCollectionDatetime(String collectionDatetime) {
-        this.collectionDatetime = collectionDatetime;
-    }
-
-    public String getCollectionBankcardCode() {
-        return collectionBankcardCode;
-    }
-
-    public void setCollectionBankcardCode(String collectionBankcardCode) {
-        this.collectionBankcardCode = collectionBankcardCode;
-    }
-
-    public String getCollectionBillPdf() {
-        return collectionBillPdf;
-    }
-
-    public void setCollectionBillPdf(String collectionBillPdf) {
-        this.collectionBillPdf = collectionBillPdf;
+    public void setBillPdf(String billPdf) {
+        this.billPdf = billPdf;
     }
 
     public String getRemark() {
