@@ -39,8 +39,7 @@ public class XN632145Req extends APageReq {
 
     private String enterFileStatus;// 入档状态（0待入档1待补录2已入档）
 
-    // 是否提交作废申请
-    private String isSubmitCancel;
+    private String isSubmitCancel;// 是否提交作废申请
 
     public String getIsSubmitCancel() {
         return isSubmitCancel;

@@ -94,6 +94,10 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         if (!EAdvanceFundNode.PARENT_CONFIRM.getCode().equals(
             data.getCurNodeCode())
                 && !EAdvanceFundNode.BRANCH_CONFIRM.getCode().equals(
+                    data.getCurNodeCode())
+                && !EAdvanceFundNode.PARENT_AGAIN.getCode().equals(
+                    data.getCurNodeCode())
+                && !EAdvanceFundNode.BRANCH_AGAIN.getCode().equals(
                     data.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是垫资流程确认用款单节点，不能操作");

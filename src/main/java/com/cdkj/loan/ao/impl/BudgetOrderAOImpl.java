@@ -1600,7 +1600,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 生成新返点明细数据
         List<XN632290Res> list = res.getList();
         for (XN632290Res xn632290Res : list) {
-            if (EUseMoneyPurpose.MORTGAGE.getCode().equals(// 应退按揭款 垫资
+            if (EUseMoneyPurpose.MORTGAGE.getCode().equals(// 应退按揭款（客户 垫资）
                 xn632290Res.getUseMoneyPurpose())) {
                 budgetOrder.setPreShouldBackAmount(budgetOrder
                     .getShouldBackAmount());// 原来的应退按揭款
@@ -1735,12 +1735,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是发票不匹配二审节点，不能操作");
         }
-        // 之前节点
-        String preCurrentNode = budgetOrder.getCurNodeCode();
+        String preCurrentNode = budgetOrder.getCurNodeCode();// 当前节点
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             // 二审通过
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                EBudgetOrderNode.TWO_APPROVE_APPLY.getCode()).getNextNode());
+                preCurrentNode).getNextNode());
             // 计算出新应收手续费总额并且更新应收总额 履约保证金+担保风险金+GPS收费+杂费
             if (EBudgetOrderFeeWay.TRANSFER.getCode().equals(
                 budgetOrder.getServiceChargeWay())) {
@@ -1811,11 +1810,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
 
         // 日志记录
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
-            budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-            currentNode.getCode(), currentNode.getValue(), operator);
+            budgetOrder.getCurNodeCode(), approveNote, operator);
     }
 
     @Override
@@ -2010,6 +2007,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setIsSubmitCancel(EBoolean.YES.getCode());
         budgetOrder.setCurNodeCode(EBudgetOrderNode.TO_APPLY_CANCEL.getCode());
         budgetOrderBO.remindingProcess(budgetOrder);
+        sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_CANCEL, budgetOrder.getCode(),
+            EBudgetOrderNode.TO_APPLY_CANCEL.getCode());
     }
 
     @Override
