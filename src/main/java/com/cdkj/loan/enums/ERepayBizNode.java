@@ -12,25 +12,22 @@ import java.util.Map;
 public enum ERepayBizNode {
 
     // 车贷正常流程
-    TO_REPAY("020_01", "还款中"), COMMIT_SETTLE("020_02", "提交结算单"), FINANCE_CHECK(
-            "020_03", "财务审核"), FINANCE_CHECK_NO("020_04", "财务审核不通过"), CASH_REMIT(
-            "020_05", "出纳打款"), RELEASE_MORTGAGE_APPLY("020_06", "解除抵押申请"), RISK_INDOOR_CHECK(
-            "020_07", "风控内勤审核"), RISK_INDOOR_CHECK_NO("020_08", "风控内勤审核不通过"), RISK_MANAGER_CHECK(
-            "020_09", "风控经理审核"), RISK_MANAGER_CHECK_NO("020_10", "风控经理审核不通过"), MORTGAGE_PRINT(
-            "020_11", "打印岗打印"), BANK_REC_LOGIC("020_12", "寄送银行材料"), MORTGAGE_COMMIT_FILE(
-            "020_13", "驻行人员提交材料"), MORTGAGE_OVER("020_14", "抵押完成"),
+    TO_REPAY("020_01", "还款中"), COMMIT_SETTLE("020_02", "提交结算单"), RISK_MANAGE_AUDIT(
+            "020_03", "风控总监理审核"), FINANCE_CHECK("020_04", "财务审核"), CASH_REMIT(
+            "020_05", "确认付款"), RELEASE_MORTGAGE_APPLY("020_06", "解除抵押申请"), RISK_INDOOR_CHECK(
+            "020_07", "风控内勤审核"), RISK_MANAGER_CHECK("020_08", "风控经理审核"), MORTGAGE_PRINT(
+            "020_09", "打印岗打印"), PHYSICAL_PARTS("020_10", "理件岗理件"), BANK_REC_LOGIC(
+            "020_11", "寄送银行材料"), MORTGAGE_COMMIT_FILE("020_12", "驻行人员提交材料"), MORTGAGE_OVER(
+            "020_13", "解除抵押完成"),
 
     // 收车流程
-    TC_APPLY("021_01", "申请收车"), TC_RISK_MANAGE_CHECK("021_02", "收车风控经理审核"), TC_RISK_MANAGE_CHECK_NO(
-            "021_03", "风控经理审核不通过"), TC_COMPANY_MANAGE_CHECK("021_04",
-            "分公司总经理审核"), TC_COMPANY_MANAGE_CHECK_NO("021_05", "分公司总经理审核不通过"), TC_RISK_LEADER_CHECK(
-            "021_06", "风控总监审核"), TC_RISK_LEADER_CHECK_NO("021_07", "风控总监审核不通过"), TC_FINANCE_CHECK(
-            "021_08", "财务经理审核"), TC_FINANCE_CHECK_NO("021_09", "财务经理审核不通过"), TC_SURE_FK(
-            "021_10", "确认放款"), TC_RESULT_INPUT("021_11", "录入收车结果"), TC_TO_HANDLE(
-            "021_12", "已录入待处理"), SELLED("021_14", "出售"), JUDGE("021_15", "司法诉讼"), JUDGE_FOLLOW(
-            "021_16", "诉讼跟进"), JUDGE_RESULT_INPUT("021_17", "诉讼结果录入"), FINANCE_SURE_RECEIPT(
-            "021_18", "财务收款"), JUDGE_BAD("021_19", "坏账"), LAWSUIT_FINISH(
-            "021_20", "司法诉讼完成"),
+    TC_APPLY("021_01", "申请收车"), TC_RISK_MANAGE_CHECK("021_02", "收车风控经理审核"), TC_COMPANY_MANAGE_CHECK(
+            "021_03", "分公司总经理审核"), TC_RISK_LEADER_CHECK("021_04","风控总监审核"), TC_FINANCE_CHECK(
+            "021_05", "财务经理审核"), TC_SURE_FK("021_06", "确认放款"), TC_RESULT_INPUT(
+            "021_07", "录入收车结果"), TC_TO_HANDLE("021_08","已录入待处理"), SELLED("021_09", "转卖"), JUDGE(
+            "021_10", "司法诉讼"), JUDGE_FOLLOW("021_11", "诉讼跟进"), JUDGE_RESULT_INPUT(
+            "021_12", "诉讼结果录入"), FINANCE_SURE_RECEIPT("021_13", "财务收款"), LAWSUIT_FINISH(
+            "021_14", "司法诉讼完成"), JUDGE_BAD("021_15", "坏账"),
 
     // 商品分期的节点
     PRO_TO_REPAY("005_01", "还款中"), PRO_SETTLED("005_02", "已结清"), PRO_CONFIRM_SETTLE(

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ILogisticsBO;
+import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISupplementReasonBO;
@@ -57,6 +58,12 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private INodeFlowBO nodeFlowBO;
+
+    @Autowired
+    private ILogisticsBO logisticsBO;
 
     @Override
     public String saveLogistics(String type, String bizCode, String userId,
@@ -174,6 +181,36 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
                     data.setIsBankPointPartSupt(EBoolean.YES.getCode());
                 }
                 budgetOrderBO.updateCurNodeCode(budgetOrder);
+            }
+
+            String pledgeCurrentNode = budgetOrder.getPledgeCurNodeCode();
+            // 判断节点是否是008_03，是的话补件返回008_01
+            if (EBudgetOrderNode.LOCAL_SENDPOST_SEND_BANK.getCode()
+                .equals(pledgeCurrentNode)) {
+                budgetOrder.setPledgeCurNodeCode(
+                    EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode());
+                budgetOrderBO.collateAchieve(budgetOrder);
+                // 是否在资料传递中改成否
+                budgetOrder.setIsLogistics(EBoolean.NO.getCode());
+                budgetOrderBO.updateIsLogistics(budgetOrder);
+                // 改变发收节点
+                data.setFromNodeCode(
+                    EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode());
+                data.setToNodeCode(
+                    EBudgetOrderNode.LOCAL_COLLATEPOST_COLLATE.getCode());
+                data.setIsBankPointPartSupt(EBoolean.YES.getCode());
+            }
+            // 判断节点是否是009_07，是的话补件返回009_05
+            if (EBudgetOrderNode.OUT_SENDPOST_SEND_BANK.getCode()
+                .equals(pledgeCurrentNode)) {
+                budgetOrder.setPledgeCurNodeCode(
+                    EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode());
+                budgetOrderBO.collateAchieve(budgetOrder);
+                // 改变发收节点
+                data.setFromNodeCode(
+                    EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode());
+                data.setToNodeCode(
+                    EBudgetOrderNode.OUT_COLLATEPOST_COLLATE.getCode());
             }
             // 日志记录
             EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
