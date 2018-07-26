@@ -41,9 +41,6 @@ public class XN632060Req {
     private String agreementValidDateEnd;// 合作协议有效期止
 
     @NotBlank
-    private String agreementStatus;// 协议状态
-
-    @NotBlank
     private String agreementPic;// 车商合作协议
 
     @NotBlank
@@ -55,7 +52,7 @@ public class XN632060Req {
     @NotBlank
     private String belongBranchCompany;// 归属分公司
 
-    private String approveNote;// 审核说明
+    private String operator;// 操作人
 
     private String policyNote;// 政策说明
 
@@ -209,14 +206,6 @@ public class XN632060Req {
         this.agreementValidDateEnd = agreementValidDateEnd;
     }
 
-    public String getAgreementStatus() {
-        return agreementStatus;
-    }
-
-    public void setAgreementStatus(String agreementStatus) {
-        this.agreementStatus = agreementStatus;
-    }
-
     public String getAgreementPic() {
         return agreementPic;
     }
@@ -249,12 +238,12 @@ public class XN632060Req {
         this.belongBranchCompany = belongBranchCompany;
     }
 
-    public String getApproveNote() {
-        return approveNote;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setApproveNote(String approveNote) {
-        this.approveNote = approveNote;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
     public String getPolicyNote() {

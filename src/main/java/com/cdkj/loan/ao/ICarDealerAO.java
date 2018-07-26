@@ -29,4 +29,6 @@ public interface ICarDealerAO {
     public void audit(String code, String auditResult, String auditor,
             String approveNote);
 
+    public List<CarDealer> expireWarning(String year, String month);
+
 }

@@ -58,7 +58,7 @@ public class XN632062Req {
     @NotBlank
     private String belongBranchCompany;// 归属分公司
 
-    private String approveNote;// 审核说明
+    private String operator;// 操作人
 
     private String policyNote;// 政策说明
 
@@ -223,12 +223,12 @@ public class XN632062Req {
         this.belongBranchCompany = belongBranchCompany;
     }
 
-    public String getApproveNote() {
-        return approveNote;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setApproveNote(String approveNote) {
-        this.approveNote = approveNote;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
     public String getRemark() {
