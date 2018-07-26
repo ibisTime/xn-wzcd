@@ -70,10 +70,10 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 发票不匹配审核
     public void invoiceMismatchApprove(BudgetOrder budgetOrder);
 
-    // 二审
+    // 二审通过
     public void twoApproveYes(BudgetOrder budgetOrder);
 
-    // 二审
+    // 二审不通过
     public void twoApproveNo(BudgetOrder budgetOrder);
 
     // 应退按揭款

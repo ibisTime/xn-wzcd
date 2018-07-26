@@ -1656,16 +1656,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             preCurrentNode, budgetOrder.getCurNodeCode(), null,
             req.getOperator());
         budgetOrderBO.applyInvoiceMismatch(budgetOrder);
-
-        /*
-         * // 协议外返点暂不处理！ // 协议外返点不用重新计算 更改原返点数据的状态为发票不匹配产生的新数据 为了审核过后批量处理数据
-         * List<RepointDetail> repointDetailList = repointDetailBO
-         * .queryRepointDetailList(budgetOrder.getCode(),
-         * EUseMoneyPurpose.PROTOCOL_OUTER.getCode()); for (RepointDetail
-         * outRepointDetail : repointDetailList) {
-         * outRepointDetail.setType(ERepointDetailType.NEW.getCode());
-         * repointDetailBO.updateRepointDetailType(outRepointDetail); }
-         */
+        // 协议外返点暂不处理
     }
 
     @Override
@@ -1687,10 +1678,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 preCurrentNode).getNextNode());
         } else {
-            // 审核不通过
+            // 审核不通过 重新填写预算单
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 preCurrentNode).getBackNode());
-            // 1、还原1个贷款金额3个贷款成数和6个费用的新数据 共还原10项原数据
+            // 1、还原1个贷款金额3个贷款成数6个费用的新数据 共还原10项原数据
             budgetOrder.setLoanAmount(budgetOrder.getPreLoanAmount());
             budgetOrder.setPreLoanAmount(null);
 
@@ -1714,10 +1705,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setGpsDeduct(budgetOrder.getPreGpsDeduct());
             budgetOrder.setPreGpsDeduct(null);
 
-            // 2.将原来的手续费设置为失效
+            // 2.将原来的手续费设置为失效 （手续费明细没处理）
             budgetOrderFeeBO.refreshBudgetOrderNoEffect(budgetOrder.getCode());
 
-            // 3.删除新返点数据和原返点数据
+            // 3.删除返点数据
             repointDetailBO.delete(budgetOrder.getCode());
         }
 
@@ -1744,41 +1735,31 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             // 二审通过
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 preCurrentNode).getNextNode());
-            // 计算出新应收手续费总额并且更新应收总额 履约保证金+担保风险金+GPS收费+杂费
+            // 计算出新应收手续费总额 更新手续费单的应收总额 （履约保证金+担保风险金+GPS收费+杂费）
             if (EBudgetOrderFeeWay.TRANSFER.getCode().equals(
                 budgetOrder.getServiceChargeWay())) {
                 Long totalFee = budgetOrder.getFee()
                         + budgetOrder.getLyAmount() + budgetOrder.getFxAmount()
                         + budgetOrder.getGpsFee() + budgetOrder.getOtherFee();
-                BudgetOrderFee budgetOrderFee = new BudgetOrderFee();
-                budgetOrderFee.setShouldAmount(totalFee);
-
-                BudgetOrderFee condition = new BudgetOrderFee();
-                List<BudgetOrderFee> list = budgetOrderFeeBO
-                    .queryBudgetOrderFeeList(condition);
-                BudgetOrderFee preBudgetOrderFee = list.get(0);
-
-                if (totalFee > preBudgetOrderFee.getShouldAmount()) {
-                    budgetOrderFee.setIsSettled(EBoolean.NO.getCode());
+                BudgetOrderFee budgetOrderFee = budgetOrderFeeBO
+                    .getBudgetOrderFeeByBudgetOrder(code);
+                if (totalFee > budgetOrderFee.getShouldAmount()) {
+                    budgetOrderFee.setIsSettled(EBoolean.NO.getCode());// 未结清
                 } else {
-                    budgetOrderFee.setIsSettled(preBudgetOrderFee
-                        .getIsSettled());
+                    budgetOrderFee.setIsSettled(budgetOrderFee.getIsSettled());
                 }
-
+                budgetOrderFee.setShouldAmount(totalFee);
+                budgetOrderFee.setUpdateDatetime(new Date());
                 budgetOrderFeeBO.updateShouldAmountAndIsSettled(budgetOrderFee);
             }
             // TODO 手续费收取方式是按揭款扣 在退按揭款时使用新计算出的手续费
-
             // 删除原返点数据
             repointDetailBO.deletePreRepointDetail(budgetOrder.getCode(),
                 ERepointDetailType.NORMAL.getCode());
 
-            budgetOrderBO.twoApproveNo(budgetOrder);// TODO 暂用这个改节点
-
-            // budgetOrderBO.twoApproveYes(budgetOrder);
-
+            budgetOrderBO.updateCurNodeCode(budgetOrder);
         } else {
-            // 二审不通过
+            // 二审不通过 重新填写预算单
             budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 EBudgetOrderNode.TWO_APPROVE_APPLY.getCode()).getBackNode());
             // 1.删除1个贷款金额3个贷款成数和6个费用的新数据 还原共10项原数据
@@ -1806,10 +1787,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setPreGpsDeduct(null);
             budgetOrderBO.invoiceMismatchApprove(budgetOrder);// 更新数据和更新节点
 
-            // 2.将原来的手续费设置为失效
+            // 2.将原来的手续费设置为失效（手续费明细未处理）
             budgetOrderFeeBO.refreshBudgetOrderNoEffect(budgetOrder.getCode());
 
-            // 3.删除新返点数据和原返点数据
+            // 3.删除返点数据
             repointDetailBO.delete(budgetOrder.getCode());
         }
 

@@ -117,6 +117,7 @@
 		SET
 		should_amount = #{shouldAmount}
 		,is_settled = #{isSettled}
+		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>
 </mapper>

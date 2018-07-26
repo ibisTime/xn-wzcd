@@ -335,7 +335,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
 
     @Override
     public void updateCurNodeCode(BudgetOrder budgetOrder) {
-        budgetOrderDAO.updateCurNodeCode(budgetOrder);
+        if (null != budgetOrder) {
+            budgetOrderDAO.updateCurNodeCode(budgetOrder);
+        }
     }
 
     @Override

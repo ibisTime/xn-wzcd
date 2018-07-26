@@ -106,13 +106,11 @@ public class RepointDetailBOImpl extends PaginableBOImpl<RepointDetail>
 
     @Override
     public void delete(String budgetOrderCode) {
-
         if (StringUtils.isNotBlank(budgetOrderCode)) {
             RepointDetail data = new RepointDetail();
             data.setBudgetCode(budgetOrderCode);
             repointDetailDAO.delete(data);
         }
-
     }
 
     @Override
