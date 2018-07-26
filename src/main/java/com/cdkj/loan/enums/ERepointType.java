@@ -1,8 +1,7 @@
 package com.cdkj.loan.enums;
 
-
 /**
- * 返点类型(1单笔/2贷款额百分比)
+ * 汽车经销商协议里的返点类型(1单笔/2贷款额百分比)
  * @author: jiafr 
  * @since: 2018年6月19日 上午3:04:55 
  * @history:

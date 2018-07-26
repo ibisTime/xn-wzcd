@@ -44,6 +44,7 @@ public class XN632145 extends AProcessor {
         condition.setIsSubmitCancel(req.getIsSubmitCancel());
         condition.setEnterFileStatus(req.getEnterFileStatus());
         condition.setBackAdvanceFundPage(req.getBackAdvanceFundPage());// 收回垫资款页面分页查询标识
+        condition.setBankRepointPage(req.getBankRepointPage());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

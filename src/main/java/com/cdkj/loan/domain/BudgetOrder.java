@@ -873,6 +873,16 @@ public class BudgetOrder extends ABaseDO {
         this.advanceFund = advanceFund;
     }
 
+    private String bankRepointPage;// 银行返点页面分页查询标识
+
+    public String getBankRepointPage() {
+        return bankRepointPage;
+    }
+
+    public void setBankRepointPage(String bankRepointPage) {
+        this.bankRepointPage = bankRepointPage;
+    }
+
     public String getBackAdvanceFundPage() {
         return backAdvanceFundPage;
     }

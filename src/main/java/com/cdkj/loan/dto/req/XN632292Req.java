@@ -2,7 +2,7 @@ package com.cdkj.loan.dto.req;
 
 import java.util.List;
 
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 银行返点（批量）
@@ -13,7 +13,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN632292Req {
 
     // 预算单编号列表(必填)
-    @NotBlank(message = "编号列表不能为空")
+    @NotEmpty(message = "编号列表不能为空")
     private List<String> codeList;
 
     public List<String> getCodeList() {
