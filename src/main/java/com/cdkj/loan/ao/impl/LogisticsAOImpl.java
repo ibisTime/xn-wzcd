@@ -206,6 +206,15 @@ public class LogisticsAOImpl implements ILogisticsAO {
                         budgetOrderBO.collateAchieve(budgetOrder);
                     }
                 }
+                if (EBudgetOrderNode.LOAN_PRINT.getCode().equals(curNodeCode)) {
+                    budgetOrder.setCurNodeCode(nodeFlow.getNextNode());
+                    budgetOrderBO.updateCurNodeCode(budgetOrder);
+                    data.setStatus(
+                        ELogisticsStatus.RECEIVED_NOT_AUDITE.getCode());
+                    // 准入单改回不在物流传递中
+                    budgetOrder.setIsLogistics(EBoolean.NO.getCode());
+                    budgetOrderBO.updateIsLogistics(budgetOrder);
+                }
                 List<SupplementReason> supplementReason = supplementReasonBO
                     .getSupplementReasonByLogisticsCode(code);
                 if (EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode()
