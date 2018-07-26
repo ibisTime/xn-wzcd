@@ -165,6 +165,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 // 无需审核，直接到下一节点
                 BudgetOrder budgetOrder = budgetOrderBO
                     .getBudgetOrder(data.getBizCode());
+                String pledgeCurNodeCode = budgetOrder.getPledgeCurNodeCode();// 车辆抵押节点
                 // 银行放款
                 // 当前节点
                 String curNodeCode = budgetOrder.getCurNodeCode();
@@ -237,16 +238,16 @@ public class LogisticsAOImpl implements ILogisticsAO {
                         }
                     }
                 }
+
                 // 车辆抵押
-                String pledgeCurNodeCode = budgetOrder.getPledgeCurNodeCode();
                 NodeFlow pledgeNodeFlow = nodeFlowBO
                     .getNodeFlowByCurrentNode(pledgeCurNodeCode);
                 if (EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode()
-                    .equals(budgetOrder.getPledgeCurNodeCode())
+                    .equals(pledgeCurNodeCode)
                         || EBudgetOrderNode.LOCAL_COLLATEPOST_COLLATE.getCode()
-                            .equals(budgetOrder.getPledgeCurNodeCode())
+                            .equals(pledgeCurNodeCode)
                         || EBudgetOrderNode.OUT_COLLATEPOST_COLLATE.getCode()
-                            .equals(budgetOrder.getPledgeCurNodeCode())) {
+                            .equals(pledgeCurNodeCode)) {
                     budgetOrder
                         .setPledgeCurNodeCode(pledgeNodeFlow.getNextNode());
                     budgetOrderBO.collateAchieve(budgetOrder);
