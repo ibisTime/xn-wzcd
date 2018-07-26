@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrderFeeDetail;
+import com.cdkj.loan.dto.req.XN632160Req;
 
 /**
  * 手续费明细
@@ -18,7 +19,7 @@ public interface IBudgetOrderFeeDetailAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
     // 新增手续费明细
-    public String addBudgetOrderFeeDetail(BudgetOrderFeeDetail data);
+    public String addBudgetOrderFeeDetail(XN632160Req req);
 
     public Paginable<BudgetOrderFeeDetail> queryBudgetOrderFeeDetailPage(
             int start, int limit, BudgetOrderFeeDetail condition);

@@ -34,7 +34,7 @@ public interface IRepointDetailBO extends IPaginableBO<RepointDetail> {
     // 发票不匹配重填预算单 删除所有返点数据
     public void delete(String budgetOrderCode);
 
-    // 发票不匹配审核通过 删除原返点数据
+    // 删除返点明细数据 根据预算编号和类型（1正常数据2发票不匹配产生的新返点数据）
     public void deletePreRepointDetail(String budgetOrderCode, String type);
 
     public void updateRepointDetailType(RepointDetail data);

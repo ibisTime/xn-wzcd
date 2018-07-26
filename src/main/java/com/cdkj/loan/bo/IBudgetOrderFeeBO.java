@@ -29,4 +29,7 @@ public interface IBudgetOrderFeeBO extends IPaginableBO<BudgetOrderFee> {
     // 发票不匹配审核通过 更新应收手续费总额 和 是否结清状态
     public void updateShouldAmountAndIsSettled(BudgetOrderFee budgetOrderFee);
 
+    // 查询手续费单 根据预算单编号
+    public BudgetOrderFee getBudgetOrderFeeByBudgetOrder(String budgetOrder);
+
 }
