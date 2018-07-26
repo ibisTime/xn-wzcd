@@ -57,4 +57,7 @@ public interface IAdvanceFundBO extends IPaginableBO<AdvanceFund> {
     // 查询垫资单根据预算单编号
     public AdvanceFund getAdvanceFundByBudgetOrderCode(String code);
 
+    // 通过预算单查垫资单
+    public AdvanceFund getAdvanceFundPageByBudgetOrder(String code);
+
 }

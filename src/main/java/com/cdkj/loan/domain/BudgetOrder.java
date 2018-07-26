@@ -857,10 +857,21 @@ public class BudgetOrder extends ABaseDO {
     // 担保打印人姓名
     private String guarantPrintName;
 
+    // 垫资单
+    private AdvanceFund advanceFund;
+
     // 入档状态List
     private List<String> enterFileStatusList;
 
     private String backAdvanceFundPage;// 收回垫资款页面分页查询标识
+
+    public AdvanceFund getAdvanceFund() {
+        return advanceFund;
+    }
+
+    public void setAdvanceFund(AdvanceFund advanceFund) {
+        this.advanceFund = advanceFund;
+    }
 
     public String getBackAdvanceFundPage() {
         return backAdvanceFundPage;
