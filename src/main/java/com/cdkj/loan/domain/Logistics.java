@@ -56,6 +56,9 @@ public class Logistics extends ABaseDO {
     // 收件时间
     private Date receiptDatetime;
 
+    // 是否为银行驻点补件
+    private String isBankPointPartSupt;
+
     // gps补件原因
     private String supplementReason;
 
@@ -78,6 +81,14 @@ public class Logistics extends ABaseDO {
 
     // 状态List
     private List<String> statusList;
+
+    public String getIsBankPointPartSupt() {
+        return isBankPointPartSupt;
+    }
+
+    public void setIsBankPointPartSupt(String isBankPointPartSupt) {
+        this.isBankPointPartSupt = isBankPointPartSupt;
+    }
 
     public List<String> getStatusList() {
         return statusList;

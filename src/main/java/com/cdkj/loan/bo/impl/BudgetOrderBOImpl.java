@@ -3,7 +3,6 @@ package com.cdkj.loan.bo.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -283,7 +282,11 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
                 ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
                 budgetOrder.getSaleUserId(), nodeFlowNext.getCurrentNode(),
                 nodeFlowNext.getNextNode());
-            if (CollectionUtils.isNotEmpty(supplementReason)) {
+            // 判断是否为银行驻点补件
+            Logistics condition = logisticsBO.getLogistics(logisticsCode);
+            if (StringUtils.isNotBlank(condition.getIsBankPointPartSupt())
+                    && EBoolean.YES.getCode()
+                        .equals(condition.getIsBankPointPartSupt())) {
                 Logistics logistics = logisticsBO.getLogistics(loCode);
                 logistics.setFromNodeCode(
                     EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode());

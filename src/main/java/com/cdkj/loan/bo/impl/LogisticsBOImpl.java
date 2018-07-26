@@ -23,6 +23,7 @@ import com.cdkj.loan.domain.SupplementReason;
 import com.cdkj.loan.dto.req.XN632152Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELogisticsStatus;
@@ -160,6 +161,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
                         EBudgetOrderNode.SALESMAN_SEND_LOGISTICS.getCode());
                     data.setToNodeCode(
                         EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode());
+                    data.setIsBankPointPartSupt(EBoolean.YES.getCode());
                 } else {
                     // 外地
                     budgetOrder.setCurNodeCode(
@@ -169,6 +171,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
                         EBudgetOrderNode.BRANCH_SEND_LOGISTICS.getCode());
                     data.setToNodeCode(
                         EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode());
+                    data.setIsBankPointPartSupt(EBoolean.YES.getCode());
                 }
                 budgetOrderBO.updateCurNodeCode(budgetOrder);
             }
