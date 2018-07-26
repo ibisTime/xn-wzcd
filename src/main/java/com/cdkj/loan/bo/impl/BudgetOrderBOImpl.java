@@ -213,14 +213,14 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
                     .getNodeFlowByCurrentNode(pledgeCurNodeCode).getNextNode());
             }
         }
-        if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
-            .equals(preCurrentNode) && "温州市".equals(department.getCityNo())) {
-            // 当前主流程节点如果是银行放款流程 007_02 总公司寄送银行材料给打印岗
-            // 收件审核并通过后 抵押流程本地开始（主流程外的）
-            // 设置抵押流程节点为车辆抵押本地第一步008_01打印岗打印
-            budgetOrder.setPledgeCurNodeCode(
-                EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode());
-        }
+        // if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
+        // .equals(preCurrentNode) && "温州市".equals(department.getCityNo())) {
+        // // 当前主流程节点如果是银行放款流程 007_02 总公司寄送银行材料给打印岗
+        // // 收件审核并通过后 抵押流程本地开始（主流程外的）
+        // // 设置抵押流程节点为车辆抵押本地第一步008_01打印岗打印
+        // budgetOrder.setPledgeCurNodeCode(
+        // EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode());
+        // }
         if (EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
             .equals(preCurrentNode) && !"温州市".equals(department.getCityNo())) {
             // 当前主流程节点是银行放款流程 007_05 总公司寄送银行材料给银行驻点
@@ -282,7 +282,7 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
                 ELogisticsType.BUDGET.getCode(), budgetOrder.getCode(),
                 budgetOrder.getSaleUserId(), nodeFlowNext.getCurrentNode(),
                 nodeFlowNext.getNextNode());
-            // 判断是否为银行驻点补件
+            // 判断是否为银行驻点补件(改变收发点)
             Logistics condition = logisticsBO.getLogistics(logisticsCode);
             if (StringUtils.isNotBlank(condition.getIsBankPointPartSupt())
                     && EBoolean.YES.getCode()

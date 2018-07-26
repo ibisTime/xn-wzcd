@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ILogisticsAO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IGpsApplyBO;
 import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.ILogisticsBO;
@@ -22,6 +23,7 @@ import com.cdkj.loan.bo.ISupplementReasonBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SYSUser;
@@ -71,6 +73,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private IDepartmentBO departmentBO;
 
     @Override
     @Transactional
@@ -168,12 +173,12 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 NodeFlow nodeFlow2 = nodeFlowBO
                     .getNodeFlowByCurrentNode(nodeFlow.getNextNode());
                 if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
-                    .equals(budgetOrder.getCurNodeCode())
-                        || EBudgetOrderNode.LOAN_PRINT.getCode()
-                            .equals(budgetOrder.getCurNodeCode())) {
-                    List<SupplementReason> logisticsList = supplementReasonBO
-                        .getSupplementReasonByLogisticsCode(code);
-                    if (CollectionUtils.isNotEmpty(logisticsList)) {
+                    .equals(budgetOrder.getCurNodeCode())) {
+                    Logistics logistics = logisticsBO.getLogistics(code);
+                    if (StringUtils
+                        .isNotBlank(logistics.getIsBankPointPartSupt())
+                            && EBoolean.YES.getCode()
+                                .equals(logistics.getIsBankPointPartSupt())) {
                         // 如果是补件，跳过打印岗
                         budgetOrder.setCurNodeCode(nodeFlow2.getNextNode());
                     } else {
@@ -186,6 +191,19 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     // 准入单改回不在物流传递中
                     budgetOrder.setIsLogistics(EBoolean.NO.getCode());
                     budgetOrderBO.updateIsLogistics(budgetOrder);
+
+                    Department department = departmentBO
+                        .getDepartment(budgetOrder.getCompanyCode());// 获取公司
+                    if ("温州市".equals(department.getCityNo())
+                            && EBudgetOrderNode.LOAN_PRINT.getCode()
+                                .equals(data.getToNodeCode())) {
+                        // 当前主流程节点如果是银行放款流程 007_02 总公司寄送银行材料给打印岗
+                        // 收件审核并通过后 抵押流程本地开始（主流程外的）
+                        // 设置抵押流程节点为车辆抵押本地第一步008_01打印岗打印
+                        budgetOrder.setPledgeCurNodeCode(
+                            EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode());
+                        budgetOrderBO.collateAchieve(budgetOrder);
+                    }
                 }
                 List<SupplementReason> supplementReason = supplementReasonBO
                     .getSupplementReasonByLogisticsCode(code);

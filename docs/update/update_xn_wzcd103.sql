@@ -12,3 +12,6 @@ DELETE FROM `tsys_node` WHERE `code`='020_14';
 
 ALTER TABLE `tdq_budget_order` 
 ADD COLUMN `contract_sign_date` datetime COMMENT '合同签订日' AFTER `bank_contract_code`;
+
+ALTER TABLE `tdq_logistics` 
+ADD COLUMN `is_bank_point_part_supt` varchar(4) COMMENT '是否为银行驻点补件' AFTER `receipt_datetime`;
