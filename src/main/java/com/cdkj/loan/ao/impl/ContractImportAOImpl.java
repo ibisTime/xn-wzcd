@@ -49,9 +49,18 @@ public class ContractImportAOImpl implements IContractImportAO {
 
             ContractImport contractImport = new ContractImport();
             contractImport.setStatus(EContractImportStatus.NOT_MATCH.getCode());
-            // 不为空，待处理，否则都是不匹配
+            // 不为空，已匹配，否则，不匹配
             if (budgetOrderList.size() == 1) {
                 BudgetOrder budgetOrder = budgetOrderList.get(0);
+                budgetOrder.setBankContractCode(contract.getContractCode());
+                budgetOrder.setBillDatetime(contract.getBillDatetime());
+                budgetOrder.setRepayBankDate(contract.getRepayBankDate());
+                budgetOrder.setBankCardNumber(contract.getBankCardNumber());
+                budgetOrder.setContractSignDate(
+                    DateUtil.strToDate(contract.getContractSignDate(),
+                        DateUtil.DB_DATE_FORMAT_STRING));
+                budgetOrderBO.importContract(budgetOrder);
+
                 contractImport.setBudgetOrderCode(budgetOrder.getCode());
                 contractImport.setStatus(EContractImportStatus.MATCH.getCode());
             }
@@ -67,7 +76,7 @@ public class ContractImportAOImpl implements IContractImportAO {
             contractImport.setBankCardNumber(contract.getBankCardNumber());
             contractImport.setContractSignDate(
                 DateUtil.strToDate(contract.getContractSignDate(),
-                    DateUtil.FRONT_DATE_FORMAT_STRING));
+                    DateUtil.DB_DATE_FORMAT_STRING));
             contractImport.setImportDatetime(new Date());
             contractImport.setOperator(operator);
             contractImportBO.saveContractImport(contractImport);
@@ -86,12 +95,16 @@ public class ContractImportAOImpl implements IContractImportAO {
                 "该合同不处于不匹配状态，不能操作！");
         }
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(budgetOrderCode);
-        contractImport.setBudgetOrderCode(budgetOrder.getCode());
-        contractImport.setCustomerName(budgetOrder.getCustomerName());
-        contractImport.setIdNo(budgetOrder.getIdNo());
-        contractImport.setLoanAmount(budgetOrder.getLoanAmount());
-        contractImport.setBillDatetime(budgetOrder.getBillDatetime());
-        contractImport.setRepayBankDate(budgetOrder.getRepayBankDate());
+        budgetOrder.setBankContractCode(contractImport.getContractCode());
+        budgetOrder.setBillDatetime(contractImport.getBillDatetime());
+        if (contractImport.getRepayBankDate() != null) {
+            budgetOrder.setRepayBankDate(contractImport.getRepayBankDate());
+        }
+        budgetOrder.setBankCardNumber(contractImport.getBankCardNumber());
+        budgetOrder.setContractSignDate(contractImport.getContractSignDate());
+        budgetOrderBO.importContract(budgetOrder);
+
+        contractImport.setBudgetOrderCode(budgetOrderCode);
         contractImport.setStatus(EContractImportStatus.HANDLE.getCode());
         contractImport.setOperator(operator);
         contractImportBO.refreshContractImport(contractImport);

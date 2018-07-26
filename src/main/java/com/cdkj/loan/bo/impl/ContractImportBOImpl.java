@@ -47,7 +47,7 @@ public class ContractImportBOImpl extends PaginableBOImpl<ContractImport>
     public int refreshContractImport(ContractImport data) {
         int count = 0;
         if (StringUtils.isNotBlank(data.getCode())) {
-            // count = contractImportDAO.update(data);
+            count = contractImportDAO.update(data);
         }
         return count;
     }

@@ -26,7 +26,6 @@ import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IDepartmentBO;
-import com.cdkj.loan.bo.IGpsBO;
 import com.cdkj.loan.bo.IInsuranceCompanyBO;
 import com.cdkj.loan.bo.ILoanCsBO;
 import com.cdkj.loan.bo.ILogisticsBO;
@@ -169,9 +168,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private IUserBO userBO;
-
-    @Autowired
-    private IGpsBO gpsBO;
 
     @Autowired
     private IBudgetOrderGpsBO budgetOrderGpsBO;
@@ -1335,6 +1331,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (StringUtils.isNotBlank(budgetOrder.getGuarantPrintUser())) {
             SYSUser user = sysUserBO.getUser(budgetOrder.getGuarantPrintUser());
             budgetOrder.setGuarantPrintName(user.getRealName());
+        }
+
+        // 垫资表
+        AdvanceFund advanceFund = advanceFundBO
+            .getAdvanceFundPageByBudgetOrder(budgetOrder.getCode());
+        if (advanceFund != null) {
+            budgetOrder.setAdvanceFund(advanceFund);
         }
 
         // 获取返点列表

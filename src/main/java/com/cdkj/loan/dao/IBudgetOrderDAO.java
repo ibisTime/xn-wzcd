@@ -130,4 +130,7 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 银行返点
     void bankRepoint(BudgetOrder budgetOrder);
 
+    // 银行合同导入
+    void importContract(BudgetOrder budgetOrder);
+
 }

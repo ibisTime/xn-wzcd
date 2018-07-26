@@ -506,4 +506,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
     public void bankRepoint(BudgetOrder budgetOrder) {
         budgetOrderDAO.bankRepoint(budgetOrder);
     }
+
+    @Override
+    public void importContract(BudgetOrder budgetOrder) {
+        budgetOrderDAO.importContract(budgetOrder);
+    }
 }

@@ -23,8 +23,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class AdvanceFundBOImpl extends PaginableBOImpl<AdvanceFund> implements
-        IAdvanceFundBO {
+public class AdvanceFundBOImpl extends PaginableBOImpl<AdvanceFund>
+        implements IAdvanceFundBO {
 
     @Autowired
     private IAdvanceFundDAO advanceFundDAO;
@@ -43,8 +43,8 @@ public class AdvanceFundBOImpl extends PaginableBOImpl<AdvanceFund> implements
     public String saveAdvanceFund(AdvanceFund data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.ADVANCE_FUND
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.ADVANCE_FUND.getCode());
             data.setCode(code);
             advanceFundDAO.insert(data);
         }
@@ -176,6 +176,14 @@ public class AdvanceFundBOImpl extends PaginableBOImpl<AdvanceFund> implements
             advanceFund = advanceFundDAO.select(condition);
 
         }
+        return advanceFund;
+    }
+
+    @Override
+    public AdvanceFund getAdvanceFundPageByBudgetOrder(String code) {
+        AdvanceFund condition = new AdvanceFund();
+        condition.setBudgetCode(code);
+        AdvanceFund advanceFund = advanceFundDAO.select(condition);
         return advanceFund;
     }
 }

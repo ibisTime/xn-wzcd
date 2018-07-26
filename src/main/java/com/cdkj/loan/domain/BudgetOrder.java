@@ -551,6 +551,9 @@ public class BudgetOrder extends ABaseDO {
     // 银行合同编号
     private String bankContractCode;
 
+    // 合同签订日
+    private Date contractSignDate;
+
     // 登记证书号
     private String regCertificateCode;
 
@@ -854,10 +857,21 @@ public class BudgetOrder extends ABaseDO {
     // 担保打印人姓名
     private String guarantPrintName;
 
+    // 垫资单
+    private AdvanceFund advanceFund;
+
     // 入档状态List
     private List<String> enterFileStatusList;
 
     private String backAdvanceFundPage;// 收回垫资款页面分页查询标识
+
+    public AdvanceFund getAdvanceFund() {
+        return advanceFund;
+    }
+
+    public void setAdvanceFund(AdvanceFund advanceFund) {
+        this.advanceFund = advanceFund;
+    }
 
     private String bankRepointPage;// 银行返点页面分页查询标识
 
@@ -1851,6 +1865,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setApplyUserHkb(String applyUserHkb) {
         this.applyUserHkb = applyUserHkb;
+    }
+
+    public Date getContractSignDate() {
+        return contractSignDate;
+    }
+
+    public void setContractSignDate(Date contractSignDate) {
+        this.contractSignDate = contractSignDate;
     }
 
     public String getBankBillPdf() {
