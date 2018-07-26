@@ -17,6 +17,7 @@
 		<result column="send_datetime" property="sendDatetime" />
 		<result column="send_note" property="sendNote" />
 		<result column="receipt_datetime" property="receiptDatetime" />
+		<result column="is_bank_point_part_supt" property="isBankPointPartSupt" />
 		<result column="supplement_reason" property="supplementReason" />
 		<result column="supplement_note" property="supplementNote" />
 		<result column="status" property="status" />
@@ -74,6 +75,7 @@
 		,t.send_datetime
 		,t.send_note
 		,t.receipt_datetime
+		,t.is_bank_point_part_supt
 		,t.supplement_reason
 		,t.supplement_note
 		,t.status
@@ -123,7 +125,6 @@
 		,t.logistics_company = #{logisticsCompany}
 		,t.logistics_code = #{logisticsCode}
 		,t.send_datetime = #{sendDatetime}
-		
 		,t.send_note = #{sendNote}
 		,t.status = #{status}
 		WHERE code = #{code}
@@ -169,6 +170,7 @@
 		,t.supplement_note = #{supplementNote}
 		,t.from_node_code = #{fromNodeCode}
 		,t.to_node_code = #{toNodeCode}
+		,t.is_bank_point_part_supt = #{isBankPointPartSupt}
 		,t.status = #{status}
 		WHERE code = #{code}
 	</update>
