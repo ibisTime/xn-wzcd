@@ -1600,7 +1600,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 生成新返点明细数据
         List<XN632290Res> list = res.getList();
         for (XN632290Res xn632290Res : list) {
-            if (EUseMoneyPurpose.MORTGAGE.getCode().equals(// 应退按揭款（客户 垫资）
+            if (EUseMoneyPurpose.MORTGAGE.getCode().equals(// 应退按揭款（ 垫资）
                 xn632290Res.getUseMoneyPurpose())) {
                 budgetOrder.setPreShouldBackAmount(budgetOrder
                     .getShouldBackAmount());// 原来的应退按揭款
@@ -1654,14 +1654,15 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             req.getOperator());
         budgetOrderBO.applyInvoiceMismatch(budgetOrder);
 
-        // 协议外返点不用重新计算 更改原返点数据的状态为发票不匹配产生的新数据 为了审核过后批量处理数据
-        List<RepointDetail> repointDetailList = repointDetailBO
-            .queryRepointDetailList(budgetOrder.getCode(),
-                EUseMoneyPurpose.PROTOCOL_OUTER.getCode());
-        for (RepointDetail outRepointDetail : repointDetailList) {
-            outRepointDetail.setType(ERepointDetailType.NEW.getCode());
-            repointDetailBO.updateRepointDetailType(outRepointDetail);
-        }
+        /*
+         * // 协议外返点暂不处理！ // 协议外返点不用重新计算 更改原返点数据的状态为发票不匹配产生的新数据 为了审核过后批量处理数据
+         * List<RepointDetail> repointDetailList = repointDetailBO
+         * .queryRepointDetailList(budgetOrder.getCode(),
+         * EUseMoneyPurpose.PROTOCOL_OUTER.getCode()); for (RepointDetail
+         * outRepointDetail : repointDetailList) {
+         * outRepointDetail.setType(ERepointDetailType.NEW.getCode());
+         * repointDetailBO.updateRepointDetailType(outRepointDetail); }
+         */
     }
 
     @Override
@@ -1964,6 +1965,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 .getAdvanceFundByBudgetOrderCode(req.getCode());
             advanceFund.setCurNodeCode(EAdvanceFundNode.BRANCH_CONFIRM
                 .getCode());
+            advanceFundBO.refreshAdvanceFund(advanceFund);
             // 生成日志
             sysBizLogBO.saveSYSBizLog(advanceFund.getBudgetCode(),
                 EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),

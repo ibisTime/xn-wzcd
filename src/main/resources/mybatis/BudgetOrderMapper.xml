@@ -390,6 +390,9 @@
 			<if test="backAdvanceFundPage != null and backAdvanceFundPage != '' ">
 				AND t.is_submit_cancel is not null
 			</if>
+			<if test="bankRepointPage != null and bankRepointPage != '' ">
+				AND t.bank_repoint_status is not null
+			</if>
 		</trim>
 	</sql>
 	<select id="select_budgetOrder" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
