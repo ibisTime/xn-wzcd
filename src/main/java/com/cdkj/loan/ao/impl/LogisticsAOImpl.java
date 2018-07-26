@@ -162,7 +162,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
             // 预算单
             if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
                 String fromNodeCode = data.getFromNodeCode();
-                String string = fromNodeCode.substring(0, 2);
+                String string = fromNodeCode.substring(0, 3);
                 data.setStatus(ELogisticsStatus.RECEIVED.getCode());// 普通物流改为待审核
                 // 无需审核，直接到下一节点
                 BudgetOrder budgetOrder = budgetOrderBO

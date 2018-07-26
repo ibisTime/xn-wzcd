@@ -292,6 +292,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
                     EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode());
                 logistics.setToNodeCode(
                     EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode());
+                logistics.setIsBankPointPartSupt(EBoolean.YES.getCode());
+                // 补件原因带过来
                 for (SupplementReason reason : supplementReason) {
                     supplementReasonBO.refreshLogisticsCode(reason.getId(),
                         loCode);
