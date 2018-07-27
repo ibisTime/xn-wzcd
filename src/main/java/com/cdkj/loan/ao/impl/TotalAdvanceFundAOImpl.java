@@ -207,15 +207,16 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         data.setCompanyCode(budgetOrder.getCompanyCode());
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
+        String amount = req.getAmount();
         if (ETotalAdvanceFundType.SECOND.getCode().equals(req.getType())) {// 发票不匹配补打款
-            data.setPayAmount(StringValidater.toLong(req.getAmount()));
+            data.setPayAmount(StringValidater.toLong(amount));
             data.setPayDatetime(DateUtil.strToDate(req.getDatetime(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setPayBankcardCode(req.getBankcardCode());
             data.setBillPdf(req.getBillPdf());
             data.setPayNote(req.getRemark());
         } else {// 发票不匹配收回款
-            data.setCollectionAmount(StringValidater.toLong(req.getAmount()));
+            data.setCollectionAmount(StringValidater.toLong(amount));
             data.setCollectionDatetime(DateUtil.strToDate(req.getDatetime(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
             data.setCollectionBankcardCode(req.getBankcardCode());

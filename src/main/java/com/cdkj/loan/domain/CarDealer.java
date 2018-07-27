@@ -36,7 +36,7 @@ public class CarDealer extends ABaseDO {
 
     private Date agreementValidDateEnd;// 合作协议有效期止
 
-    private String agreementStatus;// 协议状态
+    private String agreementStatus;// 协议状态(0下架1上架)
 
     private String agreementPic;// 车商合作协议
 
@@ -67,6 +67,12 @@ public class CarDealer extends ABaseDO {
     private List<CollectBankcard> zhCollectBankcardList;// 中行银行返点账号列表
 
     private List<CollectBankcard> jhCollectBankcardList;// 建行银行返点账号列表
+
+    // 到期预警查询开始时间
+    private Date warnDatetimeStart;
+
+    // 到期预警查询结束时间
+    private Date warnDatetimeEnd;
 
     public List<CollectBankcard> getCollectBankcardList() {
         return collectBankcardList;
@@ -287,6 +293,22 @@ public class CarDealer extends ABaseDO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Date getWarnDatetimeStart() {
+        return warnDatetimeStart;
+    }
+
+    public void setWarnDatetimeStart(Date warnDatetimeStart) {
+        this.warnDatetimeStart = warnDatetimeStart;
+    }
+
+    public Date getWarnDatetimeEnd() {
+        return warnDatetimeEnd;
+    }
+
+    public void setWarnDatetimeEnd(Date warnDatetimeEnd) {
+        this.warnDatetimeEnd = warnDatetimeEnd;
     }
 
 }

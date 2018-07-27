@@ -38,6 +38,12 @@
 			<if test="curNodeCode != null and curNodeCode != '' ">
 				AND t.cur_node_code = #{curNodeCode}
 			</if>
+			<if test="warnDatetimeStart != null and warnDatetimeStart != '' ">
+				AND t.agreement_valid_date_end &gt;= #{warnDatetimeStart}
+			</if>
+			<if test="warnDatetimeEnd != null and warnDatetimeEnd != '' ">
+				AND t.agreement_valid_date_end &lt;= #{warnDatetimeEnd}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_carDealer" parameterType="carDealer" resultMap="carDealer_DB_Result">

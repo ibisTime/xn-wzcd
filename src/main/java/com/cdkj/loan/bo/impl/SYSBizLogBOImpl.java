@@ -101,7 +101,8 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
         }
     }
 
-    private SYSBizLog getSYSBizLoglatest(String refType, String refOrder,
+    @Override
+    public SYSBizLog getSYSBizLoglatest(String refType, String refOrder,
             String dealNode) {
         SYSBizLog condition = new SYSBizLog();
         condition.setRefOrder(refOrder);

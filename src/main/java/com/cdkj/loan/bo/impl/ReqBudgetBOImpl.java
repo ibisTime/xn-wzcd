@@ -126,10 +126,6 @@ public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget> implements
             ReqBudget condition = new ReqBudget();
             condition.setCompanyCode(companyCode);
             data = reqBudgetDAO.selectTodayReqBudget(condition);
-            if (data == null) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "今天的请款预算单不存在!");
-            }
         }
         return data;
     }

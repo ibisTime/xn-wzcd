@@ -14,8 +14,8 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class CarDealerBOImpl extends PaginableBOImpl<CarDealer>
-        implements ICarDealerBO {
+public class CarDealerBOImpl extends PaginableBOImpl<CarDealer> implements
+        ICarDealerBO {
 
     @Autowired
     private ICarDealerDAO carDealerDAO;
@@ -23,7 +23,6 @@ public class CarDealerBOImpl extends PaginableBOImpl<CarDealer>
     public String saveCarDealer(CarDealer data) {
         String code = null;
         if (data != null) {
-
             carDealerDAO.insert(data);
         }
         return code;

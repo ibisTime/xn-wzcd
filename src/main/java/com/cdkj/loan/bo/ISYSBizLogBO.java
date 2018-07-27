@@ -29,4 +29,7 @@ public interface ISYSBizLogBO extends IPaginableBO<SYSBizLog> {
 
     public SYSBizLog getSYSBizLog(int id);
 
+    public SYSBizLog getSYSBizLoglatest(String refType, String refOrder,
+            String dealNode);
+
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.dto.req.XN632060Req;
+import com.cdkj.loan.dto.req.XN632061Req;
 import com.cdkj.loan.dto.req.XN632062Req;
 
 @Component
@@ -28,5 +29,10 @@ public interface ICarDealerAO {
 
     public void audit(String code, String auditResult, String auditor,
             String approveNote);
+
+    public List<CarDealer> expireWarning(String year, String month);
+
+    // 汽车经销商协议下架
+    public void carDealerProtocolDown(XN632061Req req);
 
 }
