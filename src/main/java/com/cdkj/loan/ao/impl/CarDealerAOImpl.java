@@ -25,6 +25,7 @@ import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.dto.req.XN632060Req;
 import com.cdkj.loan.dto.req.XN632061Req;
 import com.cdkj.loan.dto.req.XN632062Req;
+import com.cdkj.loan.dto.req.XN632064Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -73,20 +74,19 @@ public class CarDealerAOImpl implements ICarDealerAO {
             req.getAgreementValidDateStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setAgreementValidDateEnd(DateUtil.strToDate(
             req.getAgreementValidDateEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setAgreementStatus(ECarDealerProtocolStatus.UP.getCode());// 新增汽车经商协议状态默认是上架
         data.setAgreementPic(req.getAgreementPic());
         data.setSettleWay(req.getSettleWay());
         data.setBusinessArea(req.getBusinessArea());
         data.setBelongBranchCompany(req.getBelongBranchCompany());
-        data.setCurNodeCode(ECarDealerNode.TODO_AUDIT.getCode());
+        data.setCurNodeCode(ECarDealerNode.TODO_AUDIT.getCode());// 新增之后待审核
         data.setPolicyNote(req.getPolicyNote());
         data.setRemark(req.getRemark());
         carDealerBO.saveCarDealer(data);
         // 日志记录
-        // 本次操作日志
+        // 记录本次新增操作日志
         sysBizLogBO.recordCurrentSYSBizLog(code, EBizLogType.CAR_DEALER_AUDIT,
             code, ECarDealerNode.NEW_ADD.getCode(), null, req.getOperator());
-        // 下个节点操作日志
+        // 下个节点审核的操作日志
         sysBizLogBO.saveSYSBizLog(code, EBizLogType.CAR_DEALER_AUDIT, code,
             ECarDealerNode.TODO_AUDIT.getCode());
         // 经销商收款账号
@@ -138,7 +138,6 @@ public class CarDealerAOImpl implements ICarDealerAO {
             req.getAgreementValidDateStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setAgreementValidDateEnd(DateUtil.strToDate(
             req.getAgreementValidDateEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setAgreementStatus(req.getAgreementStatus());
         data.setAgreementPic(req.getAgreementPic());
         data.setSettleWay(req.getSettleWay());
         data.setBusinessArea(req.getBusinessArea());
@@ -147,6 +146,7 @@ public class CarDealerAOImpl implements ICarDealerAO {
         data.setApproveNote(req.getOperator());
         data.setPolicyNote(req.getPolicyNote());
         data.setRemark(req.getRemark());
+        data.setCurNodeCode(ECarDealerNode.TODO_AUDIT.getCode());// 修改之后待审核
         carDealerBO.refreshCarDealer(data);
 
         // 日志
@@ -155,11 +155,13 @@ public class CarDealerAOImpl implements ICarDealerAO {
             ECarDealerNode.AUDIT_NOT_PASS.getCode());
         if (null != sysBizLog && null == sysBizLog.getOperator()
                 && null == sysBizLog.getEndDatetime()) {
+            // 审核不通过进来的修改
             sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
                 EBizLogType.CAR_DEALER_AUDIT, data.getCode(),
                 ECarDealerNode.AUDIT_NOT_PASS.getCode(),
                 ECarDealerNode.TODO_AUDIT.getCode(), null, req.getOperator());
         } else {
+            // 修改
             sysBizLogBO.saveSYSBizLog(data.getCode(),
                 EBizLogType.CAR_DEALER_AUDIT, data.getCode(),
                 ECarDealerNode.TODO_AUDIT.getCode());
@@ -201,6 +203,9 @@ public class CarDealerAOImpl implements ICarDealerAO {
                 "当前节点不是汽车经销商审核节点，不能操作");
         }
         if (EApproveResult.PASS.getCode().equals(auditResult)) {
+            // 审核通过
+            carDealer.setAgreementStatus(ECarDealerProtocolStatus.UP.getCode());// 审核通过之后汽车经商协议状态默认改为上架
+            carDealerBO.refreshCarDealer(carDealer);
             carDealer.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 preCurNodeCode).getNextNode());
             // 日志
@@ -216,7 +221,7 @@ public class CarDealerAOImpl implements ICarDealerAO {
                 auditor);
         }
         carDealer.setApproveNote(approveNote);
-        carDealerBO.refreshCarDealerNode(carDealer);
+        carDealerBO.refreshCarDealerNode(carDealer);// 更新节点
     }
 
     @Override
@@ -391,8 +396,33 @@ public class CarDealerAOImpl implements ICarDealerAO {
     @Override
     public void carDealerProtocolDown(XN632061Req req) {
         CarDealer carDealer = carDealerBO.getCarDealer(req.getCode());
+        if (ECarDealerProtocolStatus.DOWN.getCode().equals(
+            carDealer.getAgreementStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前汽车经销商协议已下架，不能操作");
+        }
         carDealer.setAgreementStatus(ECarDealerProtocolStatus.DOWN.getCode());
         carDealerBO.refreshCarDealer(carDealer);
+        sysBizLogBO.recordCurrentSYSBizLog(carDealer.getCode(),
+            EBizLogType.CAR_DEALER_AUDIT, carDealer.getCode(),
+            ECarDealerNode.DOWN.getCode(), null, req.getOperator());
     }
 
+    @Override
+    public void carDealerProtocolUp(XN632064Req req) {
+        CarDealer carDealer = carDealerBO.getCarDealer(req.getCode());
+        if (ECarDealerProtocolStatus.UP.getCode().equals(
+            carDealer.getAgreementStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前汽车经销商协议已上架，不能操作");
+        }
+        carDealer.setCurNodeCode(ECarDealerNode.TODO_AUDIT.getCode());// 上架之后待审核审核通过之后改为上架
+        carDealerBO.refreshCarDealerNode(carDealer);
+        sysBizLogBO.recordCurrentSYSBizLog(carDealer.getCode(),
+            EBizLogType.CAR_DEALER_AUDIT, carDealer.getCode(),
+            ECarDealerNode.UP.getCode(), null, req.getOperator());
+        sysBizLogBO.saveSYSBizLog(carDealer.getCode(),
+            EBizLogType.CAR_DEALER_AUDIT, carDealer.getCode(),
+            ECarDealerNode.TODO_AUDIT.getCode());
+    }
 }

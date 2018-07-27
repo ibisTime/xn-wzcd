@@ -10,13 +10,13 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class XN632064Req {
 
+    // 汽车经销商编号
     @NotBlank
-    private String code;// 准入单编号
+    private String code;
 
-    private String makeCardRemark;// 制卡备注
-
+    // 操作人
     @NotBlank
-    private String operator;// 操作人
+    private String operator;
 
     public String getCode() {
         return code;
@@ -24,14 +24,6 @@ public class XN632064Req {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getMakeCardRemark() {
-        return makeCardRemark;
-    }
-
-    public void setMakeCardRemark(String makeCardRemark) {
-        this.makeCardRemark = makeCardRemark;
     }
 
     public String getOperator() {
