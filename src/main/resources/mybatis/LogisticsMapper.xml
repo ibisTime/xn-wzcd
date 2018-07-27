@@ -160,6 +160,7 @@
 		SET
 		t.from_node_code = #{fromNodeCode}
 		,t.to_node_code = #{toNodeCode}
+		,t.is_bank_point_part_supt = #{isBankPointPartSupt}
 		WHERE code = #{code}
 	</update>
 	
