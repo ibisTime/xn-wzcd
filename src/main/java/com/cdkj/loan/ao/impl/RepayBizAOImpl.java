@@ -503,7 +503,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         // 还款业务变更节点
         String preNodeCode = repayBiz.getCurNodeCode();
         String nextNodeCode = null;
-        if (EDealResult.SELLED.getCode().equals(req.getDealResult())) {// 出售
+        if (EDealResult.SELLED.getCode().equals(req.getDealResult())) {// 转卖
             nextNodeCode = ERepayBizNode.SELLED.getCode();
             // 还款计划处理为坏账
             repayPlanBO.refreshRepayPlanTakeCarHandle(

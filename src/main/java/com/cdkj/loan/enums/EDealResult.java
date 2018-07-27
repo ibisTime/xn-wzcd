@@ -7,8 +7,8 @@ package com.cdkj.loan.enums;
  * @history:
  */
 public enum EDealResult {
-    REDEEM("1", "已赎回"), SELLED("2", "出售"), GREEN("3", "偿还逾期金额并提供保证金"), JUDGE(
-            "4", "司法诉讼");
+    REDEEM("1", "用户赎回"), SELLED("2", "转卖"), GREEN("3", "结清"), JUDGE("4",
+            "司法诉讼");
 
     EDealResult(String code, String value) {
         this.code = code;
