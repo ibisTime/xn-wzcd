@@ -23,6 +23,7 @@ import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.dto.req.XN632060Req;
+import com.cdkj.loan.dto.req.XN632061Req;
 import com.cdkj.loan.dto.req.XN632062Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -385,6 +386,13 @@ public class CarDealerAOImpl implements ICarDealerAO {
         List<CarDealer> queryCarDealerList = carDealerBO
             .queryCarDealerList(condition);
         return queryCarDealerList;
+    }
+
+    @Override
+    public void carDealerProtocolDown(XN632061Req req) {
+        CarDealer carDealer = carDealerBO.getCarDealer(req.getCode());
+        carDealer.setAgreementStatus(ECarDealerProtocolStatus.DOWN.getCode());
+        carDealerBO.refreshCarDealer(carDealer);
     }
 
 }
