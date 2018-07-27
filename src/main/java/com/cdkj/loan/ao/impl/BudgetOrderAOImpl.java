@@ -1027,7 +1027,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCode(req.getCode());
         budgetOrder.setOperator(req.getOperator());
         budgetOrder.setOperateDatetime(new Date());
-        budgetOrder.setCarNumber(req.getCarNumber());
         budgetOrder.setGreenBigCode(req.getGreenBigCode());
         budgetOrder.setGreenBigSmj(req.getGreenBigSmj());
         SYSUser user = sysUserBO.getUser(req.getOperator());
@@ -1090,7 +1089,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         budgetOrder.setInsuranceBank(req.getInsuranceBank());
         budgetOrder.setSaleUserId(req.getSaleUserId());
-        budgetOrder.setBankContractCode(req.getBankContractCode());
         budgetOrder.setRegCertificateCode(req.getRegCertificateCode());
 
         budgetOrder.setGuarantor1Name(req.getGuarantor1Name());
@@ -2248,6 +2246,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         String nextNodeCode = getNextNodeCode(preNodeCode,
             EBoolean.YES.getCode());
 
+        budgetOrder.setCarNumber(req.getCarNumber());
         budgetOrder.setFrameNo(req.getFrameNo());
         budgetOrder.setEngineNo(req.getEngineNo());
         budgetOrder.setPledgePrintTemplateId(req.getPledgePrintTemplateId());

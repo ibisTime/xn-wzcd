@@ -281,6 +281,17 @@ public class RepayBizAOImpl implements IRepayBizAO {
     }
 
     @Override
+    public Object queryRepayBizByTotalOverdueCount(int start, int limit,
+            RepayBiz condition) {
+        Paginable<RepayBiz> paginable = repayBizBO
+            .getPaginableByTotalOverdueCount(start, limit, condition);
+        for (RepayBiz repayBiz : paginable.getList()) {
+            initRepayBiz(repayBiz);
+        }
+        return paginable;
+    }
+
+    @Override
     public List<RepayBiz> queryRepayBizList(RepayBiz condition) {
         return repayBizBO.queryRepayBizList(condition);
     }

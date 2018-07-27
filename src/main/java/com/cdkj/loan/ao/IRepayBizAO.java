@@ -118,4 +118,8 @@ public interface IRepayBizAO {
     public Paginable<RepayBiz> queryRepayBizPageByRoleCode(int start, int limit,
             RepayBiz condition);
 
+    // 通过累计逾期次数查询业务
+    public Object queryRepayBizByTotalOverdueCount(int start, int limit,
+            RepayBiz condition);
+
 }

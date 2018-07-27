@@ -21,7 +21,7 @@ public enum ERepayBizNode {
             "020_13", "解除抵押完成"),
 
     // 收车流程
-    TC_APPLY("021_01", "申请收车"), TC_RISK_MANAGE_CHECK("021_02", "收车风控经理审核"), TC_COMPANY_MANAGE_CHECK(
+    TC_APPLY("021_01", "申请收车"), TC_RISK_MANAGE_CHECK("021_02", "风控经理审核"), TC_COMPANY_MANAGE_CHECK(
             "021_03", "分公司总经理审核"), TC_RISK_LEADER_CHECK("021_04","风控总监审核"), TC_FINANCE_CHECK(
             "021_05", "财务经理审核"), TC_SURE_FK("021_06", "确认放款"), TC_RESULT_INPUT(
             "021_07", "录入收车结果"), TC_TO_HANDLE("021_08","已录入待处理"), SELLED("021_09", "转卖"), JUDGE(

@@ -1696,7 +1696,6 @@
 		,enter_file_status = #{enterFileStatus}
 		,operator = #{operator}
 		,operate_datetime = #{operateDatetime}
-		,car_number = #{carNumber}
 		,green_big_code = #{greenBigCode}
 		,green_big_smj = #{greenBigSmj}
 		WHERE code = #{code}
@@ -2033,6 +2032,7 @@
 		UPDATE tdq_budget_order
 		SET
 		frame_no = #{frameNo}
+		,car_number = #{carNumber}
 		,engine_no = #{engineNo}
 		,pledge_print_template_id = #{pledgePrintTemplateId}
 		,pledge_print_user = #{pledgePrintUser}
