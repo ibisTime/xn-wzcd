@@ -43,6 +43,7 @@ import com.cdkj.loan.dto.req.XN630557Req;
 import com.cdkj.loan.dto.req.XN630563Req;
 import com.cdkj.loan.dto.req.XN630570Req;
 import com.cdkj.loan.dto.req.XN630572Req;
+import com.cdkj.loan.dto.req.XN630578Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
@@ -585,7 +586,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         RepayBiz data = repayBizBO.getRepayBiz(req.getCode());
         if (!ERepayBizNode.COMMIT_SETTLE.getCode()
             .equals(data.getCurNodeCode())) {
-            throw new BizException("xn0000", "还款业务不在结算单申请节点！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "还款业务不在结算单申请节点！");
         }
 
         data.setCutLyDeposit(StringValidater.toLong(req.getCutLyDeposit()));
@@ -618,12 +620,37 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     @Override
     @Transactional
+    public void riskManageAudit(XN630578Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
+        if (!ERepayBizNode.RISK_MANAGE_AUDIT.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "还款业务不在风控总监理审核节点，不能操作！");
+        }
+        String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
+            req.getApproveNote());
+
+        repayBizBO.riskManageAudit(req.getCode(), nextNodeCode,
+            req.getApproveNote(), req.getOperator());
+
+        // 日志记录
+        ERepayBizNode currentNode = ERepayBizNode.getMap()
+            .get(repayBiz.getCurNodeCode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(),
+            repayBiz.getCurNodeCode(), nextNodeCode, currentNode.getValue(),
+            req.getOperator());
+    }
+
+    @Override
+    @Transactional
     public void settleFinanceCheck(String code, String approveResult,
             String approveNote, String operator) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
         if (!ERepayBizNode.FINANCE_CHECK.getCode()
             .equals(repayBiz.getCurNodeCode())) {
-            throw new BizException("xn0000", "还款业务不在财务审核节点！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "还款业务不在财务审核节点！");
         }
 
         String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
@@ -810,4 +837,5 @@ public class RepayBizAOImpl implements IRepayBizAO {
         }
         return nextNodeCode;
     }
+
 }

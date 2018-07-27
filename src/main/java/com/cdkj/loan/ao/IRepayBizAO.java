@@ -15,6 +15,7 @@ import com.cdkj.loan.dto.req.XN630557Req;
 import com.cdkj.loan.dto.req.XN630563Req;
 import com.cdkj.loan.dto.req.XN630570Req;
 import com.cdkj.loan.dto.req.XN630572Req;
+import com.cdkj.loan.dto.req.XN630578Req;
 
 public interface IRepayBizAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
@@ -67,6 +68,9 @@ public interface IRepayBizAO {
     // 结算单申请
     public void commitSettle(XN630570Req req);
 
+    // 风控总监理审核
+    public void riskManageAudit(XN630578Req req);
+
     // 财务审核
     public void settleFinanceCheck(String code, String approveResult,
             String approveNote, String operator);
@@ -111,7 +115,7 @@ public interface IRepayBizAO {
 
     public RepayBiz getRepayBiz(String code);
 
-    public Paginable<RepayBiz> queryRepayBizPageByRoleCode(int start,
-            int limit, RepayBiz condition);
+    public Paginable<RepayBiz> queryRepayBizPageByRoleCode(int start, int limit,
+            RepayBiz condition);
 
 }

@@ -11,6 +11,9 @@ insert into `tb_car_dealer_protocol` (`car_dealer_code`, `bank_code`, `plat_ct_r
 insert into `tb_bank` (`code`, `bank_code`, `bank_name`, `subbranch`, `rate12`, `rate18`, `rate24`, `rate36`, `status`, `updater`, `update_datetime`, `remark`) values('BA201806060405534759680','BOC','中国银行',NULL,'0','0','0','0',NULL,'U201807171419188821682','2018-07-21 17:17:34','');
 insert into `tb_bank` (`code`, `bank_code`, `bank_name`, `subbranch`, `rate12`, `rate18`, `rate24`, `rate36`, `status`, `updater`, `update_datetime`, `remark`) values('BA201806060406039453855','ICBC','中国工商银行',NULL,'0','0','0','0',NULL,'U201807171419188821682','2018-07-17 14:30:50','备注');
 
+insert into `tb_bank_subbranch` (`code`, `bank_code`, `bank_type`, `abbr_name`, `full_name`, `open_bank`, `address`, `phone_number`, `post_code`, `bank_client`, `client_valid_date`, `auther_name`, `auther_phone_number`, `auther_id_no`, `auther_address`, `credit_card_type`, `credit_card_name`, `belong_area`, `updater`, `update_datetime`, `remark`) values('BS201807171350293781303','BA201806060406039453855','ICBC','中国工商银行简称1','中国工商银行支行全称','中国工商银行开户行','中国工商银行银行地址','13222222222','000000','中国工商银行银行委托人','3','中国工商银行授权人姓名','13222222222','150404199806080808','中国工商银行授权人地址','1','中国工商银行用卡名称','中国工商银行所属地区','USYS201800000000001','2018-07-17 13:50:29','备注');
+insert into `tb_bank_subbranch` (`code`, `bank_code`, `bank_type`, `abbr_name`, `full_name`, `open_bank`, `address`, `phone_number`, `post_code`, `bank_client`, `client_valid_date`, `auther_name`, `auther_phone_number`, `auther_id_no`, `auther_address`, `credit_card_type`, `credit_card_name`, `belong_area`, `updater`, `update_datetime`, `remark`) values('BS201807171352476874184','BA201806060405534759680','BOC','中国银行支行简称','中国银行支行全称','中国银行开户行','中国银行银行地址','13222222222','000000','中国银行银行委托人','3','中国银行授权人姓名',NULL,'150404199806080808','中国银行授权人地址','1','中国银行信用卡名称','中国银行所属地区','USYS201800000000001','2018-07-21 17:20:18','');
+
 insert into `tb_bank_rate` (`bank_code`, `period`, `rate`, `remark`) values('BA201806291550584978017','24','0.33000000','');
 insert into `tb_bank_rate` (`bank_code`, `period`, `rate`, `remark`) values('BA201806291550584978017','12','0.05000000','');
 insert into `tb_bank_rate` (`bank_code`, `period`, `rate`, `remark`) values('BA201806291550584978017','36','0.50000000','');
@@ -24,6 +27,12 @@ insert into `tb_bank_rate` (`bank_code`, `period`, `rate`, `remark`) values('BA2
 insert into `tb_bank_rate` (`bank_code`, `period`, `rate`, `remark`) values('BA201806060405534759680','24','0.20000000','');
 
 insert into `tb_collect_bankcard` (`code`, `type`, `company_code`, `real_name`, `bank_code`, `bank_name`, `subbranch`, `bankcard_number`, `remark`) values('CB201806060405380712648','1','DP201800000000000000001','财务部','CMB','招商银行','乌鲁木齐支行','612313241234123','');
+insert into `tb_collect_bankcard` (`code`, `type`, `belong_bank`, `company_code`, `real_name`, `bank_code`, `bank_name`, `subbranch`, `bankcard_number`, `point_rate`, `remark`) values('CB201807171502440319899','3','1','CD201807151436370142124','悟空','ICBC','中国工商银行','悟空支行','222222222222222','0.10000000',NULL);
+insert into `tb_collect_bankcard` (`code`, `type`, `belong_bank`, `company_code`, `real_name`, `bank_code`, `bank_name`, `subbranch`, `bankcard_number`, `point_rate`, `remark`) values('CB201807171502440346880','3','2','CD201807151436370142124','悟空','ICBC','中国工商银行','悟空支行','222222222222222','0.20000000',NULL);
+insert into `tb_collect_bankcard` (`code`, `type`, `belong_bank`, `company_code`, `real_name`, `bank_code`, `bank_name`, `subbranch`, `bankcard_number`, `point_rate`, `remark`) values('CB201807171502440378594','3','3','CD201807151436370142124','悟空','ICBC','中国工商银行','悟空支行','222222222222222','0.20000000',NULL);
+insert into `tb_collect_bankcard` (`code`, `type`, `belong_bank`, `company_code`, `real_name`, `bank_code`, `bank_name`, `subbranch`, `bankcard_number`, `point_rate`, `remark`) values('CB201807171503278616078','3','1','CD201807081628275712800','悟空','ICBC','中国工商银行','悟空支行','222222222222222','0.20000000',NULL);
+insert into `tb_collect_bankcard` (`code`, `type`, `belong_bank`, `company_code`, `real_name`, `bank_code`, `bank_name`, `subbranch`, `bankcard_number`, `point_rate`, `remark`) values('CB201807171503278633456','3','2','CD201807081628275712800','悟空','ICBC','中国工商银行','悟空支行','222222222222222','0.20000000',NULL);
+insert into `tb_collect_bankcard` (`code`, `type`, `belong_bank`, `company_code`, `real_name`, `bank_code`, `bank_name`, `subbranch`, `bankcard_number`, `point_rate`, `remark`) values('CB201807171503278661502','3','3','CD201807081628275712800','悟空','ICBC','中国工商银行','悟空支行','222222222222222','0.20000000',NULL);
 
 insert into `tb_province_no` (`province_no`, `name`) values('11','北京市');
 insert into `tb_province_no` (`province_no`, `name`) values('12','天津市');
@@ -70,7 +79,7 @@ INSERT INTO `tb_loan_cs` (`code`,`type`,`min_cs`,`max_cs`,`remark`) VALUES ('02'
 -- Date: 2018-06-01 07:28
 */
 insert into `tsys_department` (`code`, `name`, `lead_user_id`, `type`, `province_no`, `city_no`, `area_no`, `order_no`, `parent_code`, `status`, `updater`, `update_datetime`, `remark`) values('DP201800000000000000001','温州浩源有限公司','USYS201800000000001','1','浙江省','温州市','鹿城区','0','0','1','18868824532','2018-07-17 05:03:46',NULL);
-insert into `tsys_department` (`code`, `name`, `lead_user_id`, `type`, `province_no`, `city_no`, `area_no`, `order_no`, `parent_code`, `status`, `updater`, `update_datetime`, `remark`) values('DP201807170504370111263','业务部','USYS201800000000001','2',NULL,NULL,NULL,'1','DP201807170505026456075','1','18868824532','2018-07-17 13:28:59',NULL);
+insert into `tsys_department` (`code`, `name`, `lead_user_id`, `type`, `province_no`, `city_no`, `area_no`, `order_no`, `parent_code`, `status`, `updater`, `update_datetime`, `remark`) values('DP201807170504370111263','业务部','USYS201800000000001','2',NULL,NULL,NULL,'1','DP201800000000000000001','1','18868824532','2018-07-17 13:28:59',NULL);
 insert into `tsys_department` (`code`, `name`, `lead_user_id`, `type`, `province_no`, `city_no`, `area_no`, `order_no`, `parent_code`, `status`, `updater`, `update_datetime`, `remark`) values('DP201807170508487789432','业务员',NULL,'3',NULL,NULL,NULL,'0','DP201807170504370111263','1','U201807111419138821136','2018-07-17 05:08:48',NULL);
 
 /* 首页导航 */
