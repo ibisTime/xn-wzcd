@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ITotalAdvanceFundAO;
 import com.cdkj.loan.bo.IAdvanceFundBO;
@@ -67,12 +68,13 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
     private IReqBudgetBO reqBudgetBO;
 
     @Override
+    @Transactional
     public String addTotalAdvanceFund(XN632174Req req) {
         List<String> codeList = req.getCodeList();
         for (String code : codeList) {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
-            if (!EAdvanceFundNode.BRANCH_MAKE_BILL.getCode().equals(
-                advanceFund.getCurNodeCode())) {
+            if (!EAdvanceFundNode.BRANCH_MAKE_BILL.getCode()
+                .equals(advanceFund.getCurNodeCode())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前不是分公司制单节点，不能操作！");
             }
@@ -81,8 +83,8 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         for (String code : codeList) {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
             String preNodeCode = advanceFund.getCurNodeCode();// 当前节点
-            advanceFund.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preNodeCode).getNextNode());
+            advanceFund.setCurNodeCode(
+                nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode).getNextNode());
             // 补全分公司制单日志
             sysBizLogBO.refreshPreSYSBizLog(EBizLogType.ADVANCE_FUND_BRANCH,
                 advanceFund.getCode(), preNodeCode, req.getMakeBillNote(),
@@ -94,8 +96,12 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         data.setType(ETotalAdvanceFundType.FIRST.getCode());
         data.setCompanyCode(req.getCompanyCode());
         data.setTotalAdvanceFund(totalAdvanceFund);// 待垫资金额（制单时通过审核的所有垫资单相加总金额）
-        ReqBudget reqBudget = reqBudgetBO.getTodayReqBudget(req
-            .getCompanyCode());
+        ReqBudget reqBudget = reqBudgetBO
+            .getTodayReqBudget(req.getCompanyCode());
+        if (reqBudget == null) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "该公司未提交没有请款预算单！");
+        }
         Long reqBudgetAmount = getLong(reqBudget.getPayAmount());
         Long payAmount = totalAdvanceFund - reqBudgetAmount;
         if (payAmount < 0) {
@@ -161,8 +167,8 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         List<String> codeList = req.getCodeList();
         for (String code : codeList) {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
-            if (!EAdvanceFundNode.BRANCH_COMPANY.getCode().equals(
-                advanceFund.getCurNodeCode())) {
+            if (!EAdvanceFundNode.BRANCH_COMPANY.getCode()
+                .equals(advanceFund.getCurNodeCode())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前不是垫资流程确认打款给分公司节点，不能操作！");
             }
@@ -189,8 +195,8 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
             advanceFund.setTotalAdvanceFundCode(data.getCode());
             String preNodeCode = advanceFund.getCurNodeCode();
-            advanceFund.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preNodeCode).getNextNode());
+            advanceFund.setCurNodeCode(
+                nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode).getNextNode());
             advanceFundBO.confirmPayBranchCompany(advanceFund);
             // 生成下一步操作日志 确认打款给车行
             sysBizLogBO.saveSYSBizLog(advanceFund.getBudgetCode(),
@@ -239,8 +245,8 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         List<RepointDetail> list = repointDetailBO
             .queryRepointDetailList(condition);
         for (RepointDetail repointDetail : list) {
-            repointDetail.setCurNodeCode(ERepointDetailStatus.TODO_PAY
-                .getCode());
+            repointDetail
+                .setCurNodeCode(ERepointDetailStatus.TODO_PAY.getCode());
             repointDetailBO.updateCurNodeCode(repointDetail);
         }
 

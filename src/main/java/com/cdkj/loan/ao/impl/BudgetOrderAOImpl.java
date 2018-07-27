@@ -1365,8 +1365,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             condition.setType(ECollectBankcardType.DEALER_COLLECT.getCode());
             List<CollectBankcard> list = collectBankcardBO
                 .queryCollectBankcardByCompanyCodeAndType(condition);
-            CollectBankcard collectBankcard = list.get(0);
-            if (null != collectBankcard) {
+            if (CollectionUtils.isNotEmpty(list)) {
+                CollectBankcard collectBankcard = list.get(0);
                 mortgageRepointDetail
                     .setAccountName(collectBankcard.getRealName());
                 mortgageRepointDetail
