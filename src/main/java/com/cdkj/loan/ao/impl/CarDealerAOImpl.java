@@ -204,7 +204,7 @@ public class CarDealerAOImpl implements ICarDealerAO {
         }
         if (EApproveResult.PASS.getCode().equals(auditResult)) {
             // 审核通过
-            carDealer.setAgreementStatus(ECarDealerProtocolStatus.UP.getCode());// 审核通过之后汽车经商协议状态默认改为上架
+            carDealer.setAgreementStatus(ECarDealerProtocolStatus.UP.getCode());// 审核通过之后汽车经商协议状态改为上架
             carDealerBO.refreshCarDealer(carDealer);
             carDealer.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 preCurNodeCode).getNextNode());
@@ -415,6 +415,11 @@ public class CarDealerAOImpl implements ICarDealerAO {
             carDealer.getAgreementStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前汽车经销商协议已上架，不能操作");
+        }
+        if (ECarDealerNode.TODO_AUDIT.getCode().equals(
+            carDealer.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前汽车经销商待审核中，不能操作");
         }
         carDealer.setCurNodeCode(ECarDealerNode.TODO_AUDIT.getCode());// 上架之后待审核审核通过之后改为上架
         carDealerBO.refreshCarDealerNode(carDealer);

@@ -29,7 +29,7 @@ public class XN632297 extends AProcessor {
         condition.setCarDealerCode(req.getCarDealerCode());
         condition.setAccountCode(req.getAccountCode());
         condition.setCurNodeCode(req.getCurNodeCode());
-        return repointDetailAO.queryRepointDetailListByCarDealerCode(condition);
+        return repointDetailAO.queryRepointDetailList(condition);
     }
 
     @Override
