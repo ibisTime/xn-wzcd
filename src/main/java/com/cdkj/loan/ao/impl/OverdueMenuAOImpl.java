@@ -136,9 +136,11 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
      */
     private void refreshRepayInfo(OverdueMenu overdueMenu, RepayBiz repayBiz,
             RepayPlan overDueRepayPlan) {
+        // 原：本金和利息相加是逾期金额
         // long totalRepayAmount = overDueRepayPlan.getRepayCapital()
         // + overDueRepayPlan.getRepayInterest();
         // overDueRepayPlan.setOverdueAmount(totalRepayAmount);
+        // 现：导入逾期客户中的逾期金额
         overDueRepayPlan.setOverdueAmount(overdueMenu.getOverdueAmount());
         repayPlanBO.refreshRepayPlanOverdue(overDueRepayPlan);// 更新还款计划逾期金额
 
