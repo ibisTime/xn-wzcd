@@ -1817,9 +1817,12 @@ insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('005_04','重�
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('005_05','已放款','005',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('005_06','财务确认收回预算款','005',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('005_07','已收回预算款','005',NULL);
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('006_01','待审核','006',NULL);
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('006_02','审核通过','006',NULL);
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('006_03','审核不通过','006',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('006_01','新增','006',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('006_02','待审核','006',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('006_03','审核通过','006',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('006_04','审核不通过待修改','006',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('006_05','协议上架','006',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('006_06','协议下架','006',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('007_01A','业务员寄送银行材料给总公司','007',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('007_01B','分公司内勤寄送银行材料给总公司','007',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('007_02','总公司寄送银行材料','007',NULL);
