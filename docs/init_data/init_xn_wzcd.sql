@@ -2017,15 +2017,25 @@ INSERT INTO `tmall_category` (`code`,`parent_code`,`name`,`pic`,`order_no`,`stat
 INSERT INTO `tmall_category` (`code`,`parent_code`,`name`,`pic`,`order_no`,`status`) VALUES ('FL201805291323588834254','1','电脑',NULL,3,'1');
 
 /*
--- Query: SELECT bank_code,bank_name,channel_type,status,channel_bank,max_order,order_amount,day_amount,month_amount,remark FROM std_account.tstd_channel_bank
-LIMIT 0, 50000
-
--- Date: 2017-01-15 20:50
+-- Query: SELECT bank_code,bank_name,channel_type,status,channel_bank,max_order,order_amount,day_amount,month_amount,remark FROM tstd_channel_bank
+-- Date: 2018-07-28 19:24
 */
-
-insert into `tstd_channel_bank` (`bank_code`, `bank_name`, `channel_type`, `status`, `channel_bank`, `max_order`, `order_amount`, `day_amount`, `month_amount`, `remark`) values('ICBC','中国工商银行','40','1','102100099996',NULL,NULL,NULL,NULL,NULL);
-insert into `tstd_channel_bank` (`bank_code`, `bank_name`, `channel_type`, `status`, `channel_bank`, `max_order`, `order_amount`, `day_amount`, `month_amount`, `remark`) values('CCB','中国建设银行','40','1','105100000017',NULL,NULL,NULL,NULL,NULL);
-insert into `tstd_channel_bank` (`bank_code`, `bank_name`, `channel_type`, `status`, `channel_bank`, `max_order`, `order_amount`, `day_amount`, `month_amount`, `remark`) values('BOC','中国银行','40','1','104100000004',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,`max_order`,`order_amount`,`day_amount`,`month_amount`,`remark`) VALUES ('CMBC','中国民生银行','40','1','305100000013',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,`max_order`,`order_amount`,`day_amount`,`month_amount`,`remark`) VALUES ('ZJTLCB','浙江泰隆商业银行','40','1','313345010019',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,`max_order`,`order_amount`,`day_amount`,`month_amount`,`remark`) VALUES ('ZJCZCB','浙江稠州商业银行','40','1','313338707013',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,`max_order`,`order_amount`,`day_amount`,`month_amount`,`remark`) VALUES ('CMB','招商银行','40','1','308584000013',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,`max_order`,`order_amount`,`day_amount`,`month_amount`,`remark`) VALUES ('SHB','上海银行','40','1','325290000012',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,`max_order`,`order_amount`,`day_amount`,`month_amount`,`remark`) VALUES ('PAB','平安银行','40','1','307584007998',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,`max_order`,`order_amount`,`day_amount`,`month_amount`,`remark`) VALUES ('SPDB','浦发银行','40','1','310290000013',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,`max_order`,`order_amount`,`day_amount`,`month_amount`,`remark`) VALUES ('CIB','兴业银行','40','1','309391000011',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,`max_order`,`order_amount`,`day_amount`,`month_amount`,`remark`) VALUES ('ICBC','中国工商银行','40','1','102100099996',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,`max_order`,`order_amount`,`day_amount`,`month_amount`,`remark`) VALUES ('CEB','中国光大银行','40','1','303100000006',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,`max_order`,`order_amount`,`day_amount`,`month_amount`,`remark`) VALUES ('CCB','中国建设银行','40','1','105100000017',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,`max_order`,`order_amount`,`day_amount`,`month_amount`,`remark`) VALUES ('BCM','中国交通银行','40','1','301290000007',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,`max_order`,`order_amount`,`day_amount`,`month_amount`,`remark`) VALUES ('ABC','中国农业银行','40','1','103100000026',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,`max_order`,`order_amount`,`day_amount`,`month_amount`,`remark`) VALUES ('BOC','中国银行','40','1','104100000004',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,`max_order`,`order_amount`,`day_amount`,`month_amount`,`remark`) VALUES ('PSBC','中国邮政储蓄银行','40','1','403100000004',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `tstd_channel_bank` (`bank_code`,`bank_name`,`channel_type`,`status`,`channel_bank`,`max_order`,`order_amount`,`day_amount`,`month_amount`,`remark`) VALUES ('CITIC','中信银行','40','1','302100011000',NULL,NULL,NULL,NULL,NULL);
 
 /*
 -- Query: SELECT * FROM tht_series
