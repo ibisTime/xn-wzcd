@@ -31,4 +31,6 @@ public interface IBankcardBO extends IPaginableBO<Bankcard> {
 
     public void refreshBankcardNumber(Bankcard bankcard);
 
+    public Bankcard getBankcardByUserId(String userId);
+
 }

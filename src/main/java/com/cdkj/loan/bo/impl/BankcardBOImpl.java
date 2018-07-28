@@ -27,8 +27,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
-        implements IBankcardBO {
+public class BankcardBOImpl extends PaginableBOImpl<Bankcard> implements
+        IBankcardBO {
 
     @Autowired
     private IBankCardDAO bankcardDAO;
@@ -59,8 +59,8 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
         data.setCode(code);
         data.setBankcardNumber(req.getBankcardNumber());
         data.setBankCode(req.getBankCode());
-        BankSubbranch bankSubbranch = bankSubbranchBO
-            .getBankSubbranch(req.getBankCode());
+        BankSubbranch bankSubbranch = bankSubbranchBO.getBankSubbranch(req
+            .getBankCode());
         data.setBankName(bankSubbranch.getFullName());
         data.setSubbranch(req.getSubbranch());
         data.setUpdater(req.getUpdater());
@@ -151,8 +151,8 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
 
         Bankcard data = new Bankcard();
 
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.BANKCARD.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.BANKCARD
+            .getCode());
 
         data.setCode(code);
         data.setUserId(userId);
@@ -174,5 +174,16 @@ public class BankcardBOImpl extends PaginableBOImpl<Bankcard>
     @Override
     public void refreshBankcardNumber(Bankcard bankcard) {
         bankcardDAO.updateBankcardNumber(bankcard);
+    }
+
+    @Override
+    public Bankcard getBankcardByUserId(String userId) {
+        Bankcard data = null;
+        if (StringUtils.isNotBlank(userId)) {
+            Bankcard condition = new Bankcard();
+            condition.setUserId(userId);
+            data = bankcardDAO.select(condition);
+        }
+        return data;
     }
 }
