@@ -398,7 +398,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
     public void takeCarInputResult(RepayPlan data, XN630556Req req) {
         data.setTakeCarAddress(req.getTakeCarAddress());
         data.setTakeDatetime(DateUtil.strToDate(req.getTakeDatetime(),
-            DateUtil.DATA_TIME_PATTERN_1));
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setTakeName(req.getTakeName());
         data.setTakeLocation(req.getTakeLocation());
         data.setTakeNote(req.getTakeNote());

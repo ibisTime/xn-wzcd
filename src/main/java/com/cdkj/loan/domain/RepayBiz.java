@@ -269,6 +269,17 @@ public class RepayBiz extends ABaseDO {
     // 贷款银行名称
     private String loanBankName;
 
+    // 最新的收车时间
+    private Date newestTakeDatetime;
+
+    public Date getNewestTakeDatetime() {
+        return newestTakeDatetime;
+    }
+
+    public void setNewestTakeDatetime(Date newestTakeDatetime) {
+        this.newestTakeDatetime = newestTakeDatetime;
+    }
+
     public String getLoanBankName() {
         return loanBankName;
     }

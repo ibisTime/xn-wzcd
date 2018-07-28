@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -153,6 +154,27 @@ public class RepayBizAOImpl implements IRepayBizAO {
             BankSubbranch bankSubbranch = bankSubbranchBO
                 .getBankSubbranch(repayBiz.getLoanBank());
             repayBiz.setLoanBankName(bankSubbranch.getFullName());
+        }
+
+        // 最新收车时间
+        List<RepayPlan> planList = repayPlanBO
+            .queryRepayPlanListByRepayBizCode(repayBiz.getCode());
+        Integer newestTakeDate = 0;
+        Date newestTakeDatetime = new Date();
+        for (RepayPlan domain : planList) {
+            if (domain.getTakeDatetime() != null) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+                String takeDatetime = dateFormat
+                    .format(domain.getTakeDatetime());
+                Integer take = Integer.parseInt(takeDatetime);
+                if (take > newestTakeDate) {
+                    newestTakeDate = take;
+                    newestTakeDatetime = domain.getTakeDatetime();
+                }
+            }
+        }
+        if (newestTakeDatetime != null) {
+            repayBiz.setNewestTakeDatetime(newestTakeDatetime);
         }
     }
 
@@ -520,11 +542,10 @@ public class RepayBizAOImpl implements IRepayBizAO {
             repayPlanBO.refreshRepayPlanTakeCarHandle(
                 repayPlan.getRepayBizCode(), ERepayPlanNode.BAD_DEBT);
 
-        } else if (EDealResult.REDEEM.getCode().equals(req.getDealResult())
-                || EDealResult.GREEN.getCode().equals(req.getDealResult())) {// 赎回或缴纳押金
+        } else if (EDealResult.REDEEM.getCode().equals(req.getDealResult())) {// 赎回或缴纳押金
             if (repayPlan.getCurPeriods() == repayPlan.getPeriods()) {// 最后一期
                 nextNodeCode = ERepayBizNode.COMMIT_SETTLE.getCode();
-                // 还款计划处理为已结清
+                // 还款计划处理为已还款
                 repayPlanBO.refreshRepayPlanTakeCarHandle(
                     repayPlan.getRepayBizCode(), ERepayPlanNode.REPAY_YES);
 
@@ -533,6 +554,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 // 还款计划处理为继续还款中
                 repayPlanBO.repaySuccess(repayPlan, repayPlan.getRepayAmount());
             }
+        } else if (EDealResult.GREEN.getCode().equals(req.getDealResult())) {// 申请结清
+            nextNodeCode = ERepayBizNode.COMMIT_SETTLE.getCode();
+            // 还款计划处理为已还款
+            repayPlanBO.refreshRepayPlanTakeCarHandle(
+                repayPlan.getRepayBizCode(), ERepayPlanNode.REPAY_YES);
         } else if (EDealResult.JUDGE.getCode().equals(req.getDealResult())) {// 司法诉讼，还款计划暂不处理
             nextNodeCode = ERepayBizNode.JUDGE.getCode();
         }
