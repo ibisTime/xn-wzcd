@@ -36,7 +36,7 @@ public class BudgetOrderGpsAOImpl implements IBudgetOrderGpsAO {
         data.setAzLocation(req.getAzLocation());
 
         data.setAzDatetime(DateUtil.strToDate(req.getAzDatetime(),
-            DateUtil.DATA_TIME_PATTERN_1));
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setAzUser(req.getAzUser());
         data.setRemark(req.getRemark());
         data.setBudgetOrder(req.getBudgetOrder());

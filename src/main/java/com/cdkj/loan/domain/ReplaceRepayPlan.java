@@ -83,8 +83,6 @@ public class ReplaceRepayPlan extends ABaseDO {
     // **********db properties**************
     private String repayBankName;
 
-    private String repayUserName;
-
     private String customerUserName;
 
     private String updaterName;
@@ -138,14 +136,6 @@ public class ReplaceRepayPlan extends ABaseDO {
 
     public void setRepayBankName(String repayBankName) {
         this.repayBankName = repayBankName;
-    }
-
-    public String getRepayUserName() {
-        return repayUserName;
-    }
-
-    public void setRepayUserName(String repayUserName) {
-        this.repayUserName = repayUserName;
     }
 
     public String getCustomerUserName() {

@@ -28,6 +28,7 @@ public class XN632335Req {
     private String repayUser;
 
     // 付款凭证
+    @NotBlank
     private String repayBill;
 
     // 付款说明

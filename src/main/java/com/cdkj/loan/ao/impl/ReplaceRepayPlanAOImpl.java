@@ -247,11 +247,6 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
             replaceRepayPlan.setRepayBankName(collectBankcard.getBankName());
         }
 
-        if (StringUtils.isNotBlank(replaceRepayPlan.getRepayUser())) {
-            SYSUser user = sysUserBO.getUser(replaceRepayPlan.getRepayUser());
-            replaceRepayPlan.setRepayUserName(user.getRealName());
-        }
-
         if (StringUtils.isNotBlank(replaceRepayPlan.getCustomerUserId())) {
             SYSUser user = sysUserBO
                 .getUser(replaceRepayPlan.getCustomerUserId());
