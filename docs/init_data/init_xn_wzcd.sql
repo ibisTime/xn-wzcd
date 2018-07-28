@@ -88,7 +88,7 @@ insert into `tstd_cnavigate` (`code`, `name`, `type`, `url`, `pic`, `status`, `l
 insert into `tstd_cnavigate` (`code`, `name`, `type`, `url`, `pic`, `status`, `location`, `order_no`, `belong`, `parent_code`, `remark`, `content_type`, `company_code`, `system_code`) values('DH201711271344255452497','banner3','2','','FjBmqZAnp0H25x5eYOclk70iI-tW','1','0','3','1','0','','1','CD-CWZCD000020','CD-CWZCD000020');
 
 /* 最高权限用户admin */
-insert into `tsys_user` (`user_id`, `type`, `photo`, `login_name`, `mobile`, `real_name`, `login_pwd`, `login_pwd_strength`, `create_datetme`, `role_code`, `company_code`, `department_code`, `post_code`, `updater`, `update_datetime`, `status`, `remark`, `team_code`) values('USYS201800000000001','P',NULL,'admin',NULL,NULL,'fb62579e990da4e2a8f15c3d1e123438','1','2018-07-08 07:34:04','RO201800000000000001','DP201800000000000000001','DP201807170504370111263','DP201807170508487789432','USYS201800000000001','2018-07-17 13:54:59','0',NULL,NULL);
+insert into `tsys_user` (`user_id`, `type`, `photo`, `login_name`, `mobile`, `real_name`, `login_pwd`, `login_pwd_strength`, `create_datetme`, `role_code`, `company_code`, `department_code`, `post_code`, `updater`, `update_datetime`, `status`, `remark`, `team_code`) values('USYS201800000000001','P',NULL,'admin',NULL,'admin','fb62579e990da4e2a8f15c3d1e123438','1','2018-07-08 07:34:04','RO201800000000000001','DP201800000000000000001','DP201807170504370111263','DP201807170508487789432','USYS201800000000001','2018-07-17 13:54:59','0',NULL,NULL);
 
 /*
 -- Query: SELECT code,name,level,updater,now() update_datetime,remark FROM tsys_role
