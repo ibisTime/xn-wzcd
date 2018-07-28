@@ -21,14 +21,6 @@ public class XN630563Req {
     @NotBlank
     private String judgeReceiptAmount;
 
-    // 司法诉讼收款银行
-    @NotBlank
-    private String judgeReceiptBank;
-
-    // 司法诉讼收款银行账号
-    @NotBlank
-    private String judgeReceiptBankcard;
-
     // 司法诉讼收款凭证
     @NotBlank
     private String judgeBillPdf;
@@ -61,22 +53,6 @@ public class XN630563Req {
 
     public void setJudgeReceiptAmount(String judgeReceiptAmount) {
         this.judgeReceiptAmount = judgeReceiptAmount;
-    }
-
-    public String getJudgeReceiptBank() {
-        return judgeReceiptBank;
-    }
-
-    public void setJudgeReceiptBank(String judgeReceiptBank) {
-        this.judgeReceiptBank = judgeReceiptBank;
-    }
-
-    public String getJudgeReceiptBankcard() {
-        return judgeReceiptBankcard;
-    }
-
-    public void setJudgeReceiptBankcard(String judgeReceiptBankcard) {
-        this.judgeReceiptBankcard = judgeReceiptBankcard;
     }
 
     public String getJudgeBillPdf() {

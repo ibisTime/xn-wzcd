@@ -182,10 +182,7 @@ public class RepayBiz extends ABaseDO {
     // 司法诉讼收款金额
     private Long judgeReceiptAmount;
 
-    // 司法诉讼收款银行
-    private String judgeReceiptBank;
-
-    // 司法诉讼收款银行账号
+    // 司法诉讼收款银行账号编号
     private String judgeReceiptBankcard;
 
     // 司法诉讼备注
@@ -734,14 +731,6 @@ public class RepayBiz extends ABaseDO {
 
     public void setJudgeReceiptAmount(Long judgeReceiptAmount) {
         this.judgeReceiptAmount = judgeReceiptAmount;
-    }
-
-    public String getJudgeReceiptBank() {
-        return judgeReceiptBank;
-    }
-
-    public void setJudgeReceiptBank(String judgeReceiptBank) {
-        this.judgeReceiptBank = judgeReceiptBank;
     }
 
     public String getJudgeReceiptBankcard() {

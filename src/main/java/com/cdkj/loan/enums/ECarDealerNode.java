@@ -9,8 +9,8 @@ package com.cdkj.loan.enums;
 public enum ECarDealerNode {
 
     NEW_ADD("006_01", "新增"), TODO_AUDIT("006_02", "待审核"), AUDIT_PASS("006_03",
-            "审核通过"), AUDIT_NOT_PASS("006_04", "审核不通过待修改"), UP("006_05", "上架"), DOWN(
-            "006_06", "下架");
+            "审核通过"), AUDIT_NOT_PASS("006_04", "审核不通过待修改"), UP("006_05", "协议上架"), DOWN(
+            "006_06", "协议下架");
 
     ECarDealerNode(String code, String value) {
         this.code = code;

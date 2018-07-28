@@ -67,7 +67,6 @@
 						
 	    <result column="judge_receipt_datetime" property="judgeReceiptDatetime" />
 		<result column="judge_receipt_amount" property="judgeReceiptAmount" />
-		<result column="judge_receipt_bank" property="judgeReceiptBank" />
 		<result column="judge_receipt_bankcard" property="judgeReceiptBankcard" />
 		<result column="judge_note" property="judgeNote" />
 		<result column="judge_bill_pdf" property="judgeBillPdf" />
@@ -213,7 +212,6 @@
 		,t.judge_receipt_datetime
 		,t.judge_receipt_amount
 		
-		,t.judge_receipt_bank
 		,t.judge_receipt_bankcard
 		,t.judge_note
 		,t.judge_bill_pdf
@@ -306,7 +304,6 @@
 		,t.judge_receipt_datetime
 		,t.judge_receipt_amount
 		
-		,t.judge_receipt_bank
 		,t.judge_receipt_bankcard
 		,t.judge_note
 		,t.judge_bill_pdf
@@ -399,7 +396,6 @@
 		,t.judge_receipt_datetime
 		,t.judge_receipt_amount
 		
-		,t.judge_receipt_bank
 		,t.judge_receipt_bankcard
 		,t.judge_note
 		,t.judge_bill_pdf
@@ -781,7 +777,6 @@
 		cur_node_code = #{curNodeCode}
 		,judge_receipt_datetime = #{judgeReceiptDatetime}
 		,judge_receipt_amount = #{judgeReceiptAmount}
-		,judge_receipt_bank = #{judgeReceiptBank}
 		,judge_receipt_bankcard = #{judgeReceiptBankcard}
 		,judge_bill_pdf = #{judgeBillPdf}
 		,judge_note = #{judgeNote}
