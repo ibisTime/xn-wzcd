@@ -196,26 +196,6 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         return returnList;
     }
 
-    @Override
-    public List<RepointDetail> queryRepointDetailListByCarDealerCode(
-            RepointDetail condition) {
-        // 查询协议内和协议外返点
-        List<RepointDetail> list = new ArrayList<RepointDetail>();
-        condition.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER.getCode());
-        List<RepointDetail> listInner = repointDetailBO
-            .queryRepointDetailListByCarDealerCode(condition);
-        for (RepointDetail repointDetailInner : listInner) {
-            list.add(repointDetailInner);
-        }
-        condition.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_OUTER.getCode());
-        List<RepointDetail> listOuter = repointDetailBO
-            .queryRepointDetailListByCarDealerCode(condition);
-        for (RepointDetail repointDetailOuter : listOuter) {
-            list.add(repointDetailOuter);
-        }
-        return list;
-    }
-
     private Long getLong(Object obj) {
         if (null == obj) {
             return 0L;

@@ -17,6 +17,7 @@ public interface ICarDealerBO extends IPaginableBO<CarDealer> {
 
     public CarDealer getCarDealer(String code);
 
+    // 更新节点（ 包括审核说明）
     public int refreshCarDealerNode(CarDealer data);
 
 }
