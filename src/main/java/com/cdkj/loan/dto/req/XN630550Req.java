@@ -32,15 +32,12 @@ public class XN630550Req {
     private String tsUserName;
 
     // 收车收款账号
-    @NotBlank
     private String tsBankcardNumber;
 
     // 收车开户行
-    @NotBlank
     private String tsBankName;
 
     // 收车开户支行
-    @NotBlank
     private String tsSubbranch;
 
     // 收车申请说明
