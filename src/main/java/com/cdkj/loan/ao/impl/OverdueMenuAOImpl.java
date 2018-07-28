@@ -136,9 +136,10 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
      */
     private void refreshRepayInfo(OverdueMenu overdueMenu, RepayBiz repayBiz,
             RepayPlan overDueRepayPlan) {
-        long totalRepayAmount = overDueRepayPlan.getRepayCapital()
-                + overDueRepayPlan.getRepayInterest();
-        overDueRepayPlan.setOverdueAmount(totalRepayAmount);
+        // long totalRepayAmount = overDueRepayPlan.getRepayCapital()
+        // + overDueRepayPlan.getRepayInterest();
+        // overDueRepayPlan.setOverdueAmount(totalRepayAmount);
+        overDueRepayPlan.setOverdueAmount(overdueMenu.getOverdueAmount());
         repayPlanBO.refreshRepayPlanOverdue(overDueRepayPlan);// 更新还款计划逾期金额
 
         // 更新还款业务逾期金额
