@@ -8,7 +8,7 @@ public class XN632320Req {
     private String amount;// 预算金额
 
     @NotBlank
-    private String bizCode;// 业务编号
+    private String bizCode;// 业务编号(还款业务编号)
 
     @NotBlank
     private String isUrgent;// 是否加急

@@ -10,13 +10,14 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.IReplaceRepayApplyAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankcardBO;
+import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.IReplaceRepayApplyBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bankcard;
-import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.ReplaceRepayApply;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632320Req;
@@ -46,6 +47,9 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
     private IRepayPlanBO repayPlanBO;
 
     @Autowired
+    private IRepayBizBO repayBizBO;
+
+    @Autowired
     private IBankcardBO bankcardBO;
 
     @Override
@@ -60,9 +64,9 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
         data.setAmount(StringValidater.toLong(req.getAmount()));
         data.setBizCode(req.getBizCode());
 
-        RepayPlan repayPlan = repayPlanBO.getRepayPlan(req.getBizCode());
-        Bankcard bankcard = bankcardBO.getBankcardByUserId(repayPlan
-            .getUserId());
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getBizCode());
+        Bankcard bankcard = bankcardBO
+            .getBankcardByUserId(repayBiz.getUserId());
         data.setReceiptBank(bankcard.getBankName());
         data.setReceiptAccount(bankcard.getBankcardNumber());
         data.setReceiptRealName(bankcard.getRealName());
@@ -80,7 +84,8 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
     public void refreshFinanceManageApprove(String code, String approveResult,
             String updater, String remark) {
         ReplaceRepayApply data = replaceRepayApplyBO.getReplaceRepayApply(code);
-        if (!EReplaceRepayStatus.TO_APPROVE.getCode().equals(data.getStatus())) {
+        if (!EReplaceRepayStatus.TO_APPROVE.getCode()
+            .equals(data.getStatus())) {
             throw new BizException("xn0000", "预算单不在财务经理审核状态！");
         }
 
@@ -102,8 +107,8 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
     @Override
     public Paginable<ReplaceRepayApply> queryReplaceRepayApplyPage(int start,
             int limit, ReplaceRepayApply condition) {
-        Paginable<ReplaceRepayApply> page = replaceRepayApplyBO.getPaginable(
-            start, limit, condition);
+        Paginable<ReplaceRepayApply> page = replaceRepayApplyBO
+            .getPaginable(start, limit, condition);
         List<ReplaceRepayApply> list = page.getList();
         for (ReplaceRepayApply replaceRepayApply : list) {
             init(replaceRepayApply);
@@ -133,14 +138,14 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
 
     private void init(ReplaceRepayApply replaceRepayApply) {
         if (StringUtils.isNotBlank(replaceRepayApply.getApplyUser())) {
-            SYSUser applyUser = sysUserBO.getUser(replaceRepayApply
-                .getApplyUser());
+            SYSUser applyUser = sysUserBO
+                .getUser(replaceRepayApply.getApplyUser());
             replaceRepayApply.setApplyUserName(applyUser.getRealName());
         }
 
         if (StringUtils.isNotBlank(replaceRepayApply.getUpdater())) {
-            SYSUser updaterUser = sysUserBO.getUser(replaceRepayApply
-                .getUpdater());
+            SYSUser updaterUser = sysUserBO
+                .getUser(replaceRepayApply.getUpdater());
             replaceRepayApply.setUpdaterName(updaterUser.getRealName());
         }
     }
