@@ -260,9 +260,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     NodeFlow pledgeNodeFlow = nodeFlowBO
                         .getNodeFlowByCurrentNode(pledgeCurNodeCode);
                     if (EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode()
-                        .equals(pledgeCurNodeCode)
-                            || EBudgetOrderNode.OUT_COLLATEPOST_COLLATE
-                                .getCode().equals(pledgeCurNodeCode)) {
+                        .equals(pledgeCurNodeCode)) {
                         budgetOrder
                             .setPledgeCurNodeCode(pledgeNodeFlow.getNextNode());
                         budgetOrderBO.collateAchieve(budgetOrder);
@@ -271,6 +269,23 @@ public class LogisticsAOImpl implements ILogisticsAO {
                         // 准入单改回不在物流传递中
                         budgetOrder.setIsLogistics(EBoolean.NO.getCode());
                         budgetOrderBO.updateIsLogistics(budgetOrder);
+                    }
+                    if (EBudgetOrderNode.OUT_COLLATEPOST_COLLATE.getCode()
+                        .equals(pledgeCurNodeCode)) {
+                        budgetOrder
+                            .setPledgeCurNodeCode(pledgeNodeFlow.getNextNode());
+                        budgetOrderBO.collateAchieve(budgetOrder);
+                        data.setStatus(
+                            ELogisticsStatus.RECEIVED_NOT_AUDITE.getCode());
+                        // 生成资料传递
+                        NodeFlow nodeFlowNext = nodeFlowBO
+                            .getNodeFlowByCurrentNode(
+                                budgetOrder.getPledgeCurNodeCode());
+                        logisticsBO.saveLogistics(
+                            ELogisticsType.BUDGET.getCode(),
+                            budgetOrder.getCode(), budgetOrder.getSaleUserId(),
+                            budgetOrder.getPledgeCurNodeCode(),
+                            nodeFlowNext.getNextNode());
                     }
                     if (EBudgetOrderNode.LOCAL_COLLATEPOST_COLLATE.getCode()
                         .equals(pledgeCurNodeCode)) {

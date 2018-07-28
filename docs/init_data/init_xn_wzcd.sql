@@ -602,7 +602,6 @@ INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807191327375537803','历史业务','1','/history/historyRecords','3','admin','2018-07-24 14:54:30','业务管理','SM201806141531382288620');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807191945293796987','详情','2','/detail','1','admin','2018-07-24 14:54:30','历史业务','SM201807191327375537803');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807201122587522956','审核','2','/check','2','admin','2018-07-24 14:54:30','备注','SM201807141646233698103');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807201123387071777','审核','2','/check','2','admin','2018-07-24 14:54:30','','SM201807141649454641790');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807211417290619053','发送放款名单','2','/sendList','2','admin','2018-07-24 14:54:30','放款审核','SM201805242225549063562');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807241623140274264','银行返点','1','/finance/rebate.htm','5','admin','2018-07-24 14:54:30','备注','SM201805280128096684231');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807241624080938516','银行返点菜单','1','#','1','admin','2018-07-24 14:54:30','','SM201807241623140274264');
@@ -1663,9 +1662,9 @@ insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','credit_card_type','1','普通','admin','2018-07-08 07:34:26',NULL,'CD-CWZCD000020','CD-CWZCD000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','credit_card_type','2','白金','admin','2018-07-08 07:34:26',NULL,'CD-CWZCD000020','CD-CWZCD000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'deal_result','催收方式','admin','2018-07-08 07:34:26','','CD-CWZCD000020','CD-CWZCD000020');
-insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','deal_result','1','已赎回','admin','2018-07-08 07:34:26','','CD-CWZCD000020','CD-CWZCD000020');
-insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','deal_result','2','出售','admin','2018-07-08 07:34:26','','CD-CWZCD000020','CD-CWZCD000020');
-insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','deal_result','3','偿还逾期金额并提供保证金','admin','2018-07-08 07:34:26','','CD-CWZCD000020','CD-CWZCD000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','deal_result','1','用户赎回','admin','2018-07-08 07:34:26','','CD-CWZCD000020','CD-CWZCD000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','deal_result','2','转卖','admin','2018-07-08 07:34:26','','CD-CWZCD000020','CD-CWZCD000020');
+insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','deal_result','3','结清','admin','2018-07-08 07:34:26','','CD-CWZCD000020','CD-CWZCD000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','deal_result','4','司法诉讼','admin','2018-07-08 07:34:26','','CD-CWZCD000020','CD-CWZCD000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'template_id','模板ID','admin','2018-07-08 07:34:26',NULL,'CD-CWZCD000020','CD-CWZCD000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','template_id','1','工行解除','admin','2018-07-08 07:34:26',NULL,'CD-CWZCD000020','CD-CWZCD000020');
@@ -1897,6 +1896,13 @@ insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_12','诉�
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_13','财务收款','021',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_14','司法诉讼完成','021',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_15','坏账','021',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('022_01','待还款','022',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('022_02','已还款','022',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('022_03','已逾期待处理','022',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('022_04','已还款,进绿名单','022',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('022_05','已代偿，进黄名单','022',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('022_06','催收失败，进红名单处理中','022',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('022_08','坏账','022',NULL);
 
 /*
 -- Query: SELECT `type`,`current_node`,`next_node`,`back_node`,`file_list`,`remark` FROM tsys_node_flow

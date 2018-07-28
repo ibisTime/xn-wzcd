@@ -22,6 +22,10 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     public Paginable<RepayBiz> getPaginableByRoleCode(int start, int limit,
             RepayBiz condition);
 
+    // 通过累计逾期次数查询业务
+    public Paginable<RepayBiz> getPaginableByTotalOverdueCount(int start,
+            int limit, RepayBiz condition);
+
     public List<RepayBiz> queryRepayBizList(RepayBiz condition);
 
     public RepayBiz getRepayBiz(String code);

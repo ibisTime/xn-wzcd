@@ -42,9 +42,6 @@ public class XN632200Req {
     // 业务员编号
     private String saleUserId;
 
-    // 银行合同编号
-    private String bankContractCode;
-
     // 登记证书号
     private String regCertificateCode;
 
@@ -231,14 +228,6 @@ public class XN632200Req {
 
     public void setSaleUserId(String saleUserId) {
         this.saleUserId = saleUserId;
-    }
-
-    public String getBankContractCode() {
-        return bankContractCode;
-    }
-
-    public void setBankContractCode(String bankContractCode) {
-        this.bankContractCode = bankContractCode;
     }
 
     public String getRegCertificateCode() {

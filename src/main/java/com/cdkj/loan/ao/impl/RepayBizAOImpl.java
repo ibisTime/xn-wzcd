@@ -281,6 +281,17 @@ public class RepayBizAOImpl implements IRepayBizAO {
     }
 
     @Override
+    public Object queryRepayBizByTotalOverdueCount(int start, int limit,
+            RepayBiz condition) {
+        Paginable<RepayBiz> paginable = repayBizBO
+            .getPaginableByTotalOverdueCount(start, limit, condition);
+        for (RepayBiz repayBiz : paginable.getList()) {
+            initRepayBiz(repayBiz);
+        }
+        return paginable;
+    }
+
+    @Override
     public List<RepayBiz> queryRepayBizList(RepayBiz condition) {
         return repayBizBO.queryRepayBizList(condition);
     }
@@ -503,7 +514,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         // 还款业务变更节点
         String preNodeCode = repayBiz.getCurNodeCode();
         String nextNodeCode = null;
-        if (EDealResult.SELLED.getCode().equals(req.getDealResult())) {// 出售
+        if (EDealResult.SELLED.getCode().equals(req.getDealResult())) {// 转卖
             nextNodeCode = ERepayBizNode.SELLED.getCode();
             // 还款计划处理为坏账
             repayPlanBO.refreshRepayPlanTakeCarHandle(

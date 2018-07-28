@@ -465,6 +465,17 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         return page;
     }
 
+    public Paginable<RepayBiz> getPaginableByTotalOverdueCount(int start,
+            int limit, RepayBiz condition) {
+        prepare(condition);
+        long totalCount = repayBizDAO.selectTotalCount(condition);
+        Page<RepayBiz> page = new Page<RepayBiz>(start, limit, totalCount);
+        List<RepayBiz> dataList = repayBizDAO.selectRepayBizByTotalOverdueCount(
+            condition, page.getStart(), page.getPageSize());
+        page.setList(dataList);
+        return page;
+    }
+
     @Override
     public void refreshCommitSettle(RepayBiz data) {
         repayBizDAO.updateCommitSettle(data);

@@ -54,6 +54,10 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
     public List<RepayBiz> selectRepayBizByRoleCode(RepayBiz condition,
             int start, int pageSize);
 
+    // 根据逾期次数查集合
+    public List<RepayBiz> selectRepayBizByTotalOverdueCount(RepayBiz condition,
+            int start, int pageSize);
+
     // 更新逾期金额和次数
     public int repayOverDue(RepayBiz repayBiz);
 

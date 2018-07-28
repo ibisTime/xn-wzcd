@@ -91,6 +91,9 @@
 			<if test="refType != null and refType != '' ">
 				AND t.ref_type = #{refType}
 			</if>
+			<if test="refCode != null and refCode != '' ">
+				AND t.ref_code = #{refCode}
+			</if>
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
@@ -133,6 +136,9 @@
 			</if>
 			<if test="bankFkDatetimeEnd != null and bankFkDatetimeEnd != '' ">
 				<![CDATA[AND t.bank_fk_datetime <= #{bankFkDatetimeEnd}]]>
+			</if>
+			<if test="curOverdueCount != null and curOverdueCount != '' ">
+				AND t.cur_overdue_count = #{curOverdueCount}
 			</if>
 			<if test="teamCode != null and teamCode != '' ">
 				AND t.team_code = #{teamCode}
@@ -224,6 +230,99 @@
 		,t.team_code
 		FROM
 		tdh_repay_biz t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="select_repayBiz_byTotalOverdueCount" parameterType="repayBiz" resultMap="repayBiz_DB_Result">
+		SELECT
+		t.code
+		,t.user_id
+		,t.real_name
+		,t.id_kind
+		,t.id_no
+		
+		,t.bankcard_code
+		,t.ref_type
+		,t.ref_code
+		,t.biz_price
+		,t.sf_rate
+		
+		,t.sf_amount
+		,t.loan_bank
+		,t.loan_amount
+		,t.periods
+		,t.rest_periods
+		
+		,t.bank_rate
+		,t.loan_start_datetime
+		,t.loan_end_datetime
+		,t.bank_fk_datetime
+		,t.fx_deposit
+		
+		,t.first_repay_datetime
+		,t.first_repay_amount
+		,t.bill_datetime
+		,t.month_datetime
+		,t.month_amount
+		
+		,t.ly_deposit
+		,t.cut_ly_deposit
+		,t.cur_node_code
+		,t.rest_amount
+		,t.rest_total_cost
+		
+		,t.overdue_total_deposit
+		,t.overdue_total_deposit_income
+		,t.total_in_deposit
+		,t.rest_overdue_amount
+		,t.total_overdue_count
+		
+		,t.cur_overdue_count
+		,t.rest_replace_repay_amount
+		,t.total_replace_repay_count
+		,t.cur_replace_repay_count
+		,t.black_handle_note
+		
+		,t.is_advance_settled
+		,t.settle_attach
+		,t.settle_datetime
+		,t.deposit_receipt
+		,t.refund_bank_subbranch
+		
+		,t.refund_bank_real_name
+		,t.refund_bankcard
+		,t.second_company_insurance
+		,t.third_company_insurance
+		,t.release_apply_note
+		
+		,t.release_datetime
+		,t.release_note
+		,t.release_template_id
+		,t.judge_receipt_datetime
+		,t.judge_receipt_amount
+		
+		,t.judge_receipt_bank
+		,t.judge_receipt_bankcard
+		,t.judge_note
+		,t.judge_bill_pdf
+		,t.settle_pay_datetime
+		,t.settle_bank
+		
+		,t.settle_bankcard
+		,t.settle_pdf
+		,t.settle_note
+		,t.updater
+		,t.update_datetime
+		
+		,t.remark
+		,t.team_code
+		FROM
+		tdh_repay_biz t where t.total_overdue_count != 0
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -336,7 +435,7 @@
 		SELECT count(1) FROM (SELECT distinct code FROM tdh_repay_biz t left join tsys_role_node r on t.cur_node_code = r.node_code
 		<include refid="where_condition" />) tb
 	</select>
-
+	
 	<insert id="insert_repayBiz" parameterType="repayBiz">
 		INSERT INTO
 		tdh_repay_biz(
