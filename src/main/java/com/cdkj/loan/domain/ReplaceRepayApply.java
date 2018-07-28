@@ -71,8 +71,6 @@ public class ReplaceRepayApply extends ABaseDO {
 
     private String updaterName;
 
-    private String receiptBankName;
-
     public String getApplyUserName() {
         return applyUserName;
     }
@@ -87,14 +85,6 @@ public class ReplaceRepayApply extends ABaseDO {
 
     public void setUpdaterName(String updaterName) {
         this.updaterName = updaterName;
-    }
-
-    public String getReceiptBankName() {
-        return receiptBankName;
-    }
-
-    public void setReceiptBankName(String receiptBankName) {
-        this.receiptBankName = receiptBankName;
     }
 
     public Date getStartDatetime() {

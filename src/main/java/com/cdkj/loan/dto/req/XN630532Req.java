@@ -13,7 +13,7 @@ public class XN630532Req {
     private String collectionWay;// 催收方式
 
     @NotBlank
-    private String collectionTarget;// 催收对象
+    private String collectionTarget;// 催收对象列表
 
     @NotBlank
     private String collectionProcess;// 催收过程

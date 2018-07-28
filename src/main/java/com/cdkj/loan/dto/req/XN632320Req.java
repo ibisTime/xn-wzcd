@@ -11,15 +11,6 @@ public class XN632320Req {
     private String bizCode;// 业务编号
 
     @NotBlank
-    private String receiptBank;// 收款人开户行
-
-    @NotBlank
-    private String receiptAccount;// 收款人账号
-
-    @NotBlank
-    private String receiptRealName;// 收款人名称
-
-    @NotBlank
     private String isUrgent;// 是否加急
 
     @NotBlank
@@ -41,30 +32,6 @@ public class XN632320Req {
 
     public void setBizCode(String bizCode) {
         this.bizCode = bizCode;
-    }
-
-    public String getReceiptBank() {
-        return receiptBank;
-    }
-
-    public void setReceiptBank(String receiptBank) {
-        this.receiptBank = receiptBank;
-    }
-
-    public String getReceiptAccount() {
-        return receiptAccount;
-    }
-
-    public void setReceiptAccount(String receiptAccount) {
-        this.receiptAccount = receiptAccount;
-    }
-
-    public String getReceiptRealName() {
-        return receiptRealName;
-    }
-
-    public void setReceiptRealName(String receiptRealName) {
-        this.receiptRealName = receiptRealName;
     }
 
     public String getIsUrgent() {
