@@ -82,6 +82,17 @@ public class Logistics extends ABaseDO {
     // 状态List
     private List<String> statusList;
 
+    // 类型List
+    private List<String> typeList;
+
+    public List<String> getTypeList() {
+        return typeList;
+    }
+
+    public void setTypeList(List<String> typeList) {
+        this.typeList = typeList;
+    }
+
     public String getIsBankPointPartSupt() {
         return isBankPointPartSupt;
     }
