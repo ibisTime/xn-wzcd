@@ -2,6 +2,12 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+/**
+ * 代偿审核确认放款
+ * @author: jiafr 
+ * @since: 2018年7月30日 上午10:24:35 
+ * @history:
+ */
 public class XN632335Req {
     // 编号
     @NotBlank
@@ -14,14 +20,6 @@ public class XN632335Req {
     // 付款日期
     @NotBlank
     private String repayDate;
-
-    // 付款银行卡
-    @NotBlank
-    private String repayBankcard;
-
-    // 付款银行
-    @NotBlank
-    private String repayBank;
 
     // 付款人
     @NotBlank
@@ -60,22 +58,6 @@ public class XN632335Req {
 
     public void setRepayDate(String repayDate) {
         this.repayDate = repayDate;
-    }
-
-    public String getRepayBankcard() {
-        return repayBankcard;
-    }
-
-    public void setRepayBankcard(String repayBankcard) {
-        this.repayBankcard = repayBankcard;
-    }
-
-    public String getRepayBank() {
-        return repayBank;
-    }
-
-    public void setRepayBank(String repayBank) {
-        this.repayBank = repayBank;
     }
 
     public String getRepayUser() {

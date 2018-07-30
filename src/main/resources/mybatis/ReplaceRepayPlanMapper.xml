@@ -16,7 +16,6 @@
 		<result column="repay_date" property="repayDate" />
 		
 		<result column="repay_bankcard" property="repayBankcard" />
-		<result column="repay_bank" property="repayBank" />
 		<result column="repay_user" property="repayUser" />
 		<result column="repay_bill" property="repayBill" />
 		<result column="repay_note" property="repayNote" />
@@ -65,7 +64,6 @@
 		,t.repay_rate
 		,t.repay_date
 		,t.repay_bankcard
-		,t.repay_bank
 		,t.repay_user
 		,t.repay_bill
 		,t.repay_note
@@ -100,7 +98,6 @@
 		,t.repay_rate
 		,t.repay_date
 		,t.repay_bankcard
-		,t.repay_bank
 		,t.repay_user
 		,t.repay_bill
 		,t.repay_note
@@ -147,7 +144,6 @@
 		,repay_rate
 		,repay_date
 		,repay_bankcard
-		,repay_bank
 		,repay_user
 		,repay_bill
 		,repay_note
@@ -171,7 +167,6 @@
 		,#{repayRate}
 		,#{repayDate}
 		,#{repayBankcard}
-		,#{repayBank}
 		,#{repayUser}
 		,#{repayBill}
 		,#{repayNote}
@@ -232,7 +227,6 @@
 		repay_rate = #{repayRate}
 		,repay_date = #{repayDate}
 		,repay_bankcard = #{repayBankcard}
-		,repay_bank = #{repayBank}
 		,repay_user = #{repayUser}
 		,repay_bill = #{repayBill}
 		,repay_note = #{repayNote}
