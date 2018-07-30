@@ -44,11 +44,8 @@ public class ReplaceRepayPlan extends ABaseDO {
     // 付款日期
     private Date repayDate;
 
-    // 付款银行卡
+    // 付款账号编号
     private String repayBankcard;
-
-    // 付款银行
-    private String repayBank;
 
     // 付款人
     private String repayUser;
@@ -81,7 +78,6 @@ public class ReplaceRepayPlan extends ABaseDO {
     private String remark;
 
     // **********db properties**************
-    private String repayBankName;
 
     private String customerUserName;
 
@@ -128,14 +124,6 @@ public class ReplaceRepayPlan extends ABaseDO {
 
     public void setRoleCode(String roleCode) {
         this.roleCode = roleCode;
-    }
-
-    public String getRepayBankName() {
-        return repayBankName;
-    }
-
-    public void setRepayBankName(String repayBankName) {
-        this.repayBankName = repayBankName;
     }
 
     public String getCustomerUserName() {
@@ -216,14 +204,6 @@ public class ReplaceRepayPlan extends ABaseDO {
 
     public String getRepayBankcard() {
         return repayBankcard;
-    }
-
-    public void setRepayBank(String repayBank) {
-        this.repayBank = repayBank;
-    }
-
-    public String getRepayBank() {
-        return repayBank;
     }
 
     public void setRepayUser(String repayUser) {

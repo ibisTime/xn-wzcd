@@ -36,7 +36,7 @@ public class RepayBiz extends ABaseDO {
     // 关联类型
     private String refType;
 
-    // 关联编号
+    // 关联编号(预算单编号)
     private String refCode;
 
     // 业务总价(?)
@@ -197,10 +197,7 @@ public class RepayBiz extends ABaseDO {
     // 结清付款时间
     private Date settlePayDatetime;
 
-    // 结清付款银行
-    private String settleBank;
-
-    // 结清付款账号
+    // 结清付款账号编号
     private String settleBankcard;
 
     // 结清打款凭证
@@ -763,14 +760,6 @@ public class RepayBiz extends ABaseDO {
 
     public void setSettlePayDatetime(Date settlePayDatetime) {
         this.settlePayDatetime = settlePayDatetime;
-    }
-
-    public String getSettleBank() {
-        return settleBank;
-    }
-
-    public void setSettleBank(String settleBank) {
-        this.settleBank = settleBank;
     }
 
     public String getSettleBankcard() {

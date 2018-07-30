@@ -72,7 +72,6 @@
 		<result column="judge_bill_pdf" property="judgeBillPdf" />
 			
 		<result column="settle_pay_datetime" property="settlePayDatetime" />
-		<result column="settle_bank" property="settleBank" />
 		<result column="settle_bankcard" property="settleBankcard" />
 		<result column="settle_pdf" property="settlePdf" />
 		<result column="settle_note" property="settleNote" />
@@ -216,7 +215,6 @@
 		,t.judge_note
 		,t.judge_bill_pdf
 		,t.settle_pay_datetime
-		,t.settle_bank
 		
 		,t.settle_bankcard
 		,t.settle_pdf
@@ -308,7 +306,6 @@
 		,t.judge_note
 		,t.judge_bill_pdf
 		,t.settle_pay_datetime
-		,t.settle_bank
 		
 		,t.settle_bankcard
 		,t.settle_pdf
@@ -400,7 +397,6 @@
 		,t.judge_note
 		,t.judge_bill_pdf
 		,t.settle_pay_datetime
-		,t.settle_bank
 		
 		,t.settle_bankcard
 		,t.settle_pdf
@@ -820,7 +816,6 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,settle_pay_datetime = #{settlePayDatetime}
-		,settle_bank = #{settleBank}
 		,settle_bankcard = #{settleBankcard}
 		,settle_pdf = #{settlePdf}
 		,settle_note = #{settleNote}

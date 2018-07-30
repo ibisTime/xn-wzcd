@@ -726,11 +726,20 @@ public class RepayBizAOImpl implements IRepayBizAO {
         if (!ERepayBizNode.CASH_REMIT.getCode().equals(data.getCurNodeCode())) {
             throw new BizException("xn0000", "还款业务不在出纳打款节点！");
         }
-
         data.setSettlePayDatetime(DateUtil.strToDate(
             req.getSettlePayDatetime(), DateUtil.DATA_TIME_PATTERN_1));
-        data.setSettleBank(req.getSettleBank());
-        data.setSettleBankcard(req.getSettleBankcard());
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
+            .getRefCode());
+        CollectBankcard condition = new CollectBankcard();
+        condition.setCompanyCode(budgetOrder.getCompanyCode());
+        List<CollectBankcard> list = collectBankcardBO
+            .queryCollectBankcardList(condition);
+        for (CollectBankcard collectBankcard : list) {
+            if (ECollectBankcardType.PLATFORM.getCode().equals(
+                collectBankcard.getType())) {
+                data.setSettleBankcard(collectBankcard.getCode());
+            }
+        }
         data.setSettlePdf(req.getSettlePdf());
 
         data.setSettleNote(req.getSettleNote());

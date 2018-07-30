@@ -3,9 +3,9 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 确认付款
- * @author: silver 
- * @since: 2018年6月16日 下午3:39:21 
+ * 结清审核确认付款
+ * @author: jiafr 
+ * @since: 2018年7月30日 上午10:24:05 
  * @history:
  */
 public class XN630572Req {
@@ -16,14 +16,6 @@ public class XN630572Req {
     // 结清付款时间
     @NotBlank
     private String settlePayDatetime;
-
-    // 结清付款银行
-    @NotBlank
-    private String settleBank;
-
-    // 结清付款账号
-    @NotBlank
-    private String settleBankcard;
 
     // 结清打款凭证
     @NotBlank
@@ -50,22 +42,6 @@ public class XN630572Req {
 
     public void setSettlePayDatetime(String settlePayDatetime) {
         this.settlePayDatetime = settlePayDatetime;
-    }
-
-    public String getSettleBank() {
-        return settleBank;
-    }
-
-    public void setSettleBank(String settleBank) {
-        this.settleBank = settleBank;
-    }
-
-    public String getSettleBankcard() {
-        return settleBankcard;
-    }
-
-    public void setSettleBankcard(String settleBankcard) {
-        this.settleBankcard = settleBankcard;
     }
 
     public String getSettlePdf() {
