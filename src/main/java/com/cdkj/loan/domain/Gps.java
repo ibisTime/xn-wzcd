@@ -20,7 +20,7 @@ public class Gps extends ABaseDO {
     // gps编号
     private String gpsDevNo;
 
-    // gps类型
+    // gps类型(1有限0无线)
     private String gpsType;
 
     // 公司编号
@@ -47,7 +47,7 @@ public class Gps extends ABaseDO {
     // 申领单号
     private String applyCode;
 
-    // 使用状态
+    // 使用状态(0待使用1使用中2已损坏)
     private String useStatus;
 
     // 使用日期

@@ -20,7 +20,7 @@ public class BudgetOrderGps extends ABaseDO {
     // gps设备号
     private String gpsDevNo;
 
-    // gps类型
+    // gps类型(1有限0无线)
     private String gpsType;
 
     // 安装位置
