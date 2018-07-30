@@ -862,9 +862,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     @Override
     @Transactional
-    public void settleMortgagePrint(String code, String releaseDatetimeStr,
+    public RepayBiz settleMortgagePrint(String code, String releaseDatetimeStr,
             String releaseTemplateId, String releaseNote, String operator) {
-        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        RepayBiz repayBiz = getRepayBiz(code);
         if (!ERepayBizNode.MORTGAGE_PRINT.getCode()
             .equals(repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -908,6 +908,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             EBizLogType.REPAY_BIZ, repayBiz.getCode(),
             repayBiz.getCurNodeCode(), nextNodeCode, currentNode.getValue(),
             operator);
+        return repayBiz;
     }
 
     @Override

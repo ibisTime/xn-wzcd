@@ -91,7 +91,7 @@ public interface IRepayBizAO {
             String approveNote, String operator);
 
     // 抵押打印
-    public void settleMortgagePrint(String code, String releaseDatetime,
+    public RepayBiz settleMortgagePrint(String code, String releaseDatetime,
             String releaseTemplateId, String releaseNote, String operator);
 
     // 抵押解除确认

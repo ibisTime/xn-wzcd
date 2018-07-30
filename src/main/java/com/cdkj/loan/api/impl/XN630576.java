@@ -5,7 +5,6 @@ import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN630576Req;
-import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -24,11 +23,9 @@ public class XN630576 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repayBizAO
-            .settleMortgagePrint(req.getCode(), req.getReleaseDatetime(),
-                req.getReleaseTemplateId(), req.getReleaseNote(),
-                req.getOperator());
-        return new BooleanRes(true);
+        return repayBizAO.settleMortgagePrint(req.getCode(),
+            req.getReleaseDatetime(), req.getReleaseTemplateId(),
+            req.getReleaseNote(), req.getOperator());
     }
 
     @Override

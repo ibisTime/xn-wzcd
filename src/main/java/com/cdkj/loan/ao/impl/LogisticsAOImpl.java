@@ -330,26 +330,25 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     // 还款业务改回不在物流传递中
                     repayBiz.setIsLogistics(EBoolean.NO.getCode());
                     repayBizBO.updateIsLogistics(repayBiz);
-                    // 如果是理件岗，再产生一条物流单
-                    if (!ERepayBizNode.PHYSICAL_PARTS.getCode()
-                        .equals(repayBiz.getCurNodeCode())) {
-                        // 生成资料传递
-                        NodeFlow nodeFlowNext = nodeFlowBO
-                            .getNodeFlowByCurrentNode(
-                                repayBiz.getCurNodeCode());
-                        // 取下下个节点
-                        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(
-                            nodeFlowNext.getNextNode());
-                        logisticsBO.saveLogistics(
-                            ELogisticsType.REPAY_BIZ.getCode(),
-                            repayBiz.getCode(), operator,
-                            nodeFlowNext.getNextNode(), nodeFlow.getNextNode());
-                        // 还款业务改回在物流传递中
-                        repayBiz.setIsLogistics(EBoolean.YES.getCode());
-                        repayBizBO.updateIsLogistics(repayBiz);
-                    }
-                    repayBizBO.refreshBankRecLogic(data.getBizCode(), operator);
                 }
+                if (ERepayBizNode.PHYSICAL_PARTS.getCode()
+                    .equals(repayBiz.getCurNodeCode())) {
+                    data.setStatus(
+                        ELogisticsStatus.RECEIVED_NOT_AUDITE.getCode());
+                    // 再生成一条资料传递
+                    NodeFlow nodeFlowNext = nodeFlowBO
+                        .getNodeFlowByCurrentNode(repayBiz.getCurNodeCode());
+                    NodeFlow nodeFlow = nodeFlowBO
+                        .getNodeFlowByCurrentNode(nodeFlowNext.getNextNode());
+                    logisticsBO.saveLogistics(
+                        ELogisticsType.REPAY_BIZ.getCode(), repayBiz.getCode(),
+                        operator, nodeFlowNext.getNextNode(),
+                        nodeFlow.getNextNode());
+                    // 还款业务改回在物流传递中
+                    repayBiz.setIsLogistics(EBoolean.YES.getCode());
+                    repayBizBO.updateIsLogistics(repayBiz);
+                }
+                repayBizBO.refreshBankRecLogic(data.getBizCode(), operator);
             }
             logisticsBO.receiveLogistics(data);
         }
@@ -444,6 +443,11 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 BudgetOrder budgetOrder = budgetOrderBO
                     .getBudgetOrder(logistics.getBizCode());
                 logistics.setCustomerName(budgetOrder.getCustomerName());
+            } else if (ELogisticsType.REPAY_BIZ.getCode()
+                .equals(logistics.getType())) {
+                RepayBiz repayBiz = repayBizBO
+                    .getRepayBiz(logistics.getBizCode());
+                logistics.setCustomerName(repayBiz.getRealName());
             }
         }
         SupplementReason domain = new SupplementReason();

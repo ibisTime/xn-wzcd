@@ -28,6 +28,7 @@ public class BudgetOrderGpsBOImpl extends PaginableBOImpl<BudgetOrderGps>
     @Autowired
     private IGpsBO gpsBO;
 
+    @Override
     public String saveBudgetOrderGps(BudgetOrderGps data) {
         String code = null;
         if (data != null) {
