@@ -116,6 +116,12 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         List<RepayPlan> list = repayPlanDAO.selectList(condition);
         if (CollectionUtils.isNotEmpty(list)) {
             data = list.get(0);
+            if (StringUtils.isNotBlank(data.getTsBankCode())) {
+                Bank domain = new Bank();
+                domain.setBankCode(data.getTsBankCode());
+                Bank bank = bankDAO.select(domain);
+                data.setTsBankName(bank.getBankName());
+            }
         }
         return data;
     }
