@@ -342,7 +342,7 @@ public class LogisticsAOImpl implements ILogisticsAO {
                             nodeFlowNext.getNextNode());
                         logisticsBO.saveLogistics(
                             ELogisticsType.REPAY_BIZ.getCode(),
-                            repayBiz.getCode(), repayBiz.getUserId(),
+                            repayBiz.getCode(), operator,
                             nodeFlowNext.getNextNode(), nodeFlow.getNextNode());
                         // 还款业务改回在物流传递中
                         repayBiz.setIsLogistics(EBoolean.YES.getCode());
