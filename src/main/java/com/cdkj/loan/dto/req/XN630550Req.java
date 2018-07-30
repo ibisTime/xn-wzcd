@@ -35,7 +35,7 @@ public class XN630550Req {
     private String tsBankcardNumber;
 
     // 收车开户行
-    private String tsBankName;
+    private String tsBankCode;
 
     // 收车开户支行
     private String tsSubbranch;
@@ -95,12 +95,12 @@ public class XN630550Req {
         this.tsBankcardNumber = tsBankcardNumber;
     }
 
-    public String getTsBankName() {
-        return tsBankName;
+    public String getTsBankCode() {
+        return tsBankCode;
     }
 
-    public void setTsBankName(String tsBankName) {
-        this.tsBankName = tsBankName;
+    public void setTsBankCode(String tsBankCode) {
+        this.tsBankCode = tsBankCode;
     }
 
     public String getTsSubbranch() {

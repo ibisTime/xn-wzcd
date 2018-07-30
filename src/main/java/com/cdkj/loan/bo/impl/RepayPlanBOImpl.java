@@ -16,7 +16,9 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.dao.IBankDAO;
 import com.cdkj.loan.dao.IRepayPlanDAO;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
@@ -38,9 +40,21 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
     @Autowired
     private IRepayPlanDAO repayPlanDAO;
 
+    @Autowired
+    private IBankDAO bankDAO;
+
     @Override
     public List<RepayPlan> queryRepayPlanList(RepayPlan condition) {
-        return repayPlanDAO.selectList(condition);
+        List<RepayPlan> selectList = repayPlanDAO.selectList(condition);
+        for (RepayPlan repayPlan : selectList) {
+            if (StringUtils.isNotBlank(repayPlan.getTsBankCode())) {
+                Bank data = new Bank();
+                data.setBankCode(repayPlan.getTsBankCode());
+                Bank bank = bankDAO.select(data);
+                repayPlan.setTsBankName(bank.getBankName());
+            }
+        }
+        return selectList;
     }
 
     @Override
@@ -365,7 +379,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         data.setTsCarAmount(StringValidater.toLong(req.getTsCarAmount()));
         data.setTsUserName(req.getTsUserName());
         data.setTsBankcardNumber(req.getTsBankcardNumber());
-        data.setTsBankName(req.getTsBankName());
+        data.setTsBankCode(req.getTsBankCode());
         data.setTsSubbranch(req.getTsSubbranch());
         data.setTcApplyNote(req.getTcApplyNote());
         data.setUpdater(req.getOperator());

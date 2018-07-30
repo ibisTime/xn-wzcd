@@ -146,7 +146,7 @@ public class RepayPlan extends ABaseDO {
     private String tsBankcardNumber;
 
     // 收车开户行
-    private String tsBankName;
+    private String tsBankCode;
 
     // 收车开户支行
     private String tsSubbranch;
@@ -216,6 +216,9 @@ public class RepayPlan extends ABaseDO {
 
     // 用户姓名
     private String realName;
+
+    // 收车开户行名称
+    private String tsBankName;
 
     // 还款业务
     private RepayBiz repayBiz;
@@ -729,6 +732,14 @@ public class RepayPlan extends ABaseDO {
 
     public Long getSellPrice() {
         return sellPrice;
+    }
+
+    public String getTsBankCode() {
+        return tsBankCode;
+    }
+
+    public void setTsBankCode(String tsBankCode) {
+        this.tsBankCode = tsBankCode;
     }
 
     public void setSellPrice(Long sellPrice) {
