@@ -1895,8 +1895,8 @@ insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_07','录�
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_08','已录入待处理','021',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_09','转卖','021',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_10','司法诉讼','021',NULL);
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_11','诉讼跟进','021',NULL);
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_12','诉讼结果录入','021',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_11','诉讼结果录入','021',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_12','重新申请执行','021',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_13','财务收款','021',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_14','司法诉讼完成','021',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_15','坏账','021',NULL);

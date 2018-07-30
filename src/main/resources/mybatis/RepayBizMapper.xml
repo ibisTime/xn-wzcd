@@ -80,6 +80,7 @@
 		<result column="update_datetime" property="updateDatetime" />
 		<result column="remark" property="remark" />
 		<result column="team_code" property="teamCode" />
+		<result column="is_logistics" property="isLogistics"/>
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -140,6 +141,9 @@
 			</if>
 			<if test="teamCode != null and teamCode != '' ">
 				AND t.team_code = #{teamCode}
+			</if>
+			<if test="isLogistics != null and isLogistics != '' ">
+				AND t.is_logistics = #{isLogistics}
 			</if>
 		</trim>
 	</sql>
@@ -224,6 +228,7 @@
 		
 		,t.remark
 		,t.team_code
+		,t.is_logistics
 		FROM
 		tdh_repay_biz t
 		<include refid="where_condition" />
@@ -315,6 +320,7 @@
 		
 		,t.remark
 		,t.team_code
+		,t.is_logistics
 		FROM
 		tdh_repay_biz t where t.total_overdue_count != 0
 		<include refid="where_condition" />
@@ -406,6 +412,7 @@
 		
 		,t.remark
 		,t.team_code
+		,t.is_logistics
 		FROM
 		tdh_repay_biz t left join tsys_role_node r on t.cur_node_code = r.node_code
 		<include refid="where_condition" />
@@ -892,6 +899,13 @@
 		cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>	
+	
+	<update id="update_isLogistics" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		is_logistics = #{isLogistics}
+		WHERE code = #{code}
+	</update>	
 
 	<update id="update_repayBiz" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
@@ -903,4 +917,11 @@
 		,bill_datetime = #{billDatetime}
 		WHERE code = #{code}
 	</update>	
+	
+	<update id="update_curNodeCode" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
 </mapper>

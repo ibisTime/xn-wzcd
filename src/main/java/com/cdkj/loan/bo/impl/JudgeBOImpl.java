@@ -16,11 +16,11 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.IJudgeDAO;
 import com.cdkj.loan.domain.Judge;
 import com.cdkj.loan.dto.req.XN630560Req;
-import com.cdkj.loan.dto.req.XN630561Req;
 import com.cdkj.loan.dto.req.XN630562Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECaseStatus;
+import com.cdkj.loan.enums.EExeResult;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -56,22 +56,6 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
     }
 
     @Override
-    public void refreshJudgeFollow(XN630561Req req) {
-        Judge data = queryJudgeByRepayBizCode(req.getCode(), EBoolean.NO);
-        data.setCaseFee(StringValidater.toLong(req.getCaseFee()));
-        data.setCaseStatus(req.getCaseStatus());
-        data.setCourtDatetime(DateUtil.strToDate(req.getCourtDatetime(),
-            DateUtil.DB_DATE_FORMAT_STRING));
-        data.setJudgeDatetime(DateUtil.strToDate(req.getJudgeDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-
-        data.setJudgePdf(req.getJudgePdf());
-        data.setUpdater(req.getOperator());
-        data.setUpdateDatetime(new Date());
-        judgeDAO.updateJudgeFollow(data);
-    }
-
-    @Override
     public void refreshJudgeResultInput(XN630562Req req) {
         Judge data = queryJudgeByRepayBizCode(req.getCode(), EBoolean.NO);
         data.setExeCaseNumber(req.getExeCaseNumber());
@@ -85,7 +69,9 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
         data.setSaleDatetime(DateUtil.strToDate(req.getSaleDatetime(),
             DateUtil.DB_DATE_FORMAT_STRING));
         data.setExePdf(req.getExePdf());
-        data.setStatus(EBoolean.YES.getCode());
+        if (!EExeResult.ABORT.getCode().equals(req.getExeResult())) {
+            data.setStatus(EBoolean.YES.getCode());
+        }
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
         judgeDAO.updateJudgeResultInput(data);
@@ -127,4 +113,5 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
         }
         return data;
     }
+
 }

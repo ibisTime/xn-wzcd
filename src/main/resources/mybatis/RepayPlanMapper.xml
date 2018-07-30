@@ -54,7 +54,7 @@
 		<result column="ts_user_name" property="tsUserName" />
 		<result column="ts_bankcard_number" property="tsBankcardNumber" />
 		
-		<result column="ts_bank_name" property="tsBankName" />
+		<result column="ts_bank_code" property="tsBankCode" />
 		<result column="ts_subbranch" property="tsSubbranch" />
 		<result column="tc_apply_note" property="tcApplyNote" />
 		<result column="remit_datetime" property="remitDatetime" />
@@ -180,7 +180,7 @@
 		,t.ts_user_name
 		,t.ts_bankcard_number
 		
-		,t.ts_bank_name
+		,t.ts_bank_code
 		,t.ts_subbranch
 		,t.tc_apply_note
 		,t.remit_datetime
@@ -264,7 +264,7 @@
 		,t.ts_user_name
 		,t.ts_bankcard_number
 		
-		,t.ts_bank_name
+		,t.ts_bank_code
 		,t.ts_subbranch
 		,t.tc_apply_note
 		,t.remit_datetime
@@ -440,7 +440,7 @@
 		,ts_user_name=#{tsUserName}
 		,ts_bankcard_number=#{tsBankcardNumber}
 		
-		,ts_bank_name=#{tsBankName}
+		,ts_bank_code=#{tsBankCode}
 		,ts_subbranch=#{tsSubbranch}
 		,tc_apply_note=#{tcApplyNote}
 		,updater=#{updater}

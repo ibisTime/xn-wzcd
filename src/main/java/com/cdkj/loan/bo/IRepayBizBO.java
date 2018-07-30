@@ -81,8 +81,8 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     // 诉讼申请
     public void refreshJudgeApply(String code);
 
-    // 诉讼跟进
-    public void refreshJudgeFollow(String code);
+    // 重新申请执行
+    public void resultInputAgain(String code);
 
     // 执行结果录入用户已还清
     public void refreshJudgePaid(String code);
@@ -168,6 +168,15 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
 
     // 更新还款业务
     public void refreshRepayBiz(BudgetOrder budgetOrder);
+
+    // 改变资料传递中的状态
+    public void updateIsLogistics(RepayBiz repayBiz);
+
+    // 收件审核通过
+    public void logicOrder(String code, String remark, String operator);
+
+    // 改变节点
+    public void updateCurNodeCode(RepayBiz repayBiz);
 
     // ********************************common********************************
 }

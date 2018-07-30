@@ -25,8 +25,8 @@ public enum ERepayBizNode {
             "021_03", "分公司总经理审核"), TC_RISK_LEADER_CHECK("021_04","风控总监审核"), TC_FINANCE_CHECK(
             "021_05", "财务经理审核"), TC_SURE_FK("021_06", "确认放款"), TC_RESULT_INPUT(
             "021_07", "录入收车结果"), TC_TO_HANDLE("021_08","已录入待处理"), SELLED("021_09", "转卖"), JUDGE(
-            "021_10", "司法诉讼"), JUDGE_FOLLOW("021_11", "诉讼跟进"), JUDGE_RESULT_INPUT(
-            "021_12", "诉讼结果录入"), FINANCE_SURE_RECEIPT("021_13", "财务收款"), LAWSUIT_FINISH(
+            "021_10", "司法诉讼"), JUDGE_RESULT_INPUT("021_11", "诉讼结果录入"), RESULT_INPUT_AGAIN(
+            "021_12", "重新申请执行"), FINANCE_SURE_RECEIPT("021_13", "财务收款"), LAWSUIT_FINISH(
             "021_14", "司法诉讼完成"), JUDGE_BAD("021_15", "坏账"),
 
     // 商品分期的节点

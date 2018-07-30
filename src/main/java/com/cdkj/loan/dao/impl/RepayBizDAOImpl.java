@@ -231,4 +231,14 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
         super.update(NAMESPACE.concat("update_repayBiz"), data);
     }
 
+    @Override
+    public void updateIsLogistics(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_isLogistics"), data);
+    }
+
+    @Override
+    public void updateCurNodeCode(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_curNodeCode"), data);
+    }
+
 }

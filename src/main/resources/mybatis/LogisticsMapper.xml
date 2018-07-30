@@ -53,6 +53,12 @@
 		            #{item}
 		        </foreach>
 			</if>
+			<if test="typeList != null and typeList != '' ">
+				AND t.type in 
+				<foreach collection="typeList" index="type" item="item" open="(" separator="," close=")">
+		            #{item}
+		        </foreach>
+			</if>
 			<if test="supplementNote != null and supplementNote != '' ">
 				AND t.supplement_note = #{supplementNote}
 			</if>

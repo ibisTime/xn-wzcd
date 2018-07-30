@@ -13,7 +13,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBankcardAO;
+import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
@@ -25,11 +27,13 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.IRepayBizDAO;
 import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.Order;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN630512Req;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EIDKind;
@@ -50,6 +54,12 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
     @Autowired
     private IUserBO userBO;
+
+    @Autowired
+    private INodeFlowBO nodeFlowBO;
+
+    @Autowired
+    private ISYSBizLogBO sysBizLogBO;
 
     @Override
     @Transactional
@@ -234,7 +244,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setRefundBankcard(req.getRefundBankcard());
         repayBiz.setSecondCompanyInsurance(req.getSecondCompanyInsurance());
         repayBiz.setThirdCompanyInsurance(req.getThirdCompanyInsurance());
-        repayBiz.setCurNodeCode(ERepayBizNode.FINANCE_CHECK.getCode());
+        repayBiz.setCurNodeCode(ERepayBizNode.RISK_MANAGE_AUDIT.getCode());
 
         repayBiz.setIsAdvanceSettled(EBoolean.YES.getCode());
         repayBiz.setRestAmount(0L);
@@ -349,12 +359,12 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     public void refreshJudgeApply(String code) {
         RepayBiz data = new RepayBiz();
         data.setCode(code);
-        data.setCurNodeCode(ERepayBizNode.JUDGE_FOLLOW.getCode());
+        data.setCurNodeCode(ERepayBizNode.JUDGE_RESULT_INPUT.getCode());
         repayBizDAO.updateJudgeApply(data);
     }
 
     @Override
-    public void refreshJudgeFollow(String code) {
+    public void resultInputAgain(String code) {
         RepayBiz data = new RepayBiz();
         data.setCode(code);
         data.setCurNodeCode(ERepayBizNode.JUDGE_RESULT_INPUT.getCode());
@@ -375,7 +385,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     public void refreshJudgeAgain(String code) {
         RepayBiz data = new RepayBiz();
         data.setCode(code);
-        data.setCurNodeCode(ERepayBizNode.JUDGE.getCode());
+        data.setCurNodeCode(ERepayBizNode.RESULT_INPUT_AGAIN.getCode());
         repayBizDAO.updateJudgeResultInput(data);
     }
 
@@ -556,7 +566,6 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     public void refreshMortgagePrint(RepayBiz data, String curNodeCode,
             Date releaseDatetime, String releaseTemplateId, String releaseNote,
             String updater) {
-        data.setCurNodeCode(ERepayBizNode.MORTGAGE_PRINT.getCode());
         data.setReleaseDatetime(releaseDatetime);
         data.setReleaseTemplateId(releaseTemplateId);
         data.setReleaseNote(releaseNote);
@@ -570,7 +579,9 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     public void refreshBankRecLogic(String code, String updater) {
         RepayBiz data = new RepayBiz();
         data.setCode(code);
-        data.setCurNodeCode(ERepayBizNode.MORTGAGE_COMMIT_FILE.getCode());
+        String curNodeCode = data.getCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
+        data.setCurNodeCode(nodeFlow.getNextNode());
         data.setUpdater(updater);
         data.setUpdateDatetime(new Date());
         repayBizDAO.updateBankRecLogic(data);
@@ -605,6 +616,31 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         bankcard.setBankcardNumber(budgetOrder.getBankCardNumber());
         bankcardAO.editBankcardNumber(bankcard);
         repayBizDAO.updateRepayBiz(repayBiz);
+    }
+
+    @Override
+    public void updateIsLogistics(RepayBiz repayBiz) {
+        repayBizDAO.updateIsLogistics(repayBiz);
+    }
+
+    @Override
+    @Transactional
+    public void logicOrder(String code, String remark, String operator) {
+        RepayBiz repayBiz = getRepayBiz(code);
+        String curNodeCode = repayBiz.getCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
+        repayBiz.setCurNodeCode(nodeFlow.getNextNode());
+        repayBizDAO.updateCurNodeCode(repayBiz);
+
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), curNodeCode,
+            nodeFlow.getNextNode(), remark, operator);
+    }
+
+    @Override
+    public void updateCurNodeCode(RepayBiz repayBiz) {
+        repayBizDAO.updateCurNodeCode(repayBiz);
     }
 
 }

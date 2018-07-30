@@ -220,6 +220,9 @@ public class RepayBiz extends ABaseDO {
     // 团队编号
     private String teamCode;
 
+    // 是否在物流传递中
+    private String IsLogistics;
+
     // ****** 辅助字段 ******
     // 预算单编号
     private String budgetOrderCode;
@@ -496,6 +499,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setMonthAmount(Long monthAmount) {
         this.monthAmount = monthAmount;
+    }
+
+    public String getIsLogistics() {
+        return IsLogistics;
+    }
+
+    public void setIsLogistics(String isLogistics) {
+        IsLogistics = isLogistics;
     }
 
     public Long getLyDeposit() {

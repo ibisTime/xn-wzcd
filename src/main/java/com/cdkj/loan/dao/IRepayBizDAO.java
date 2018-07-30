@@ -108,4 +108,10 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
     // 入档更新还款业务
     public void updateRepayBiz(RepayBiz repayBiz);
 
+    // 改变资料传递中的状态
+    public void updateIsLogistics(RepayBiz repayBiz);
+
+    // 改变节点
+    public void updateCurNodeCode(RepayBiz repayBiz);
+
 }
