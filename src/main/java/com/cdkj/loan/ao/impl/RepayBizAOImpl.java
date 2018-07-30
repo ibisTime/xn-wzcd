@@ -689,7 +689,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 "还款业务不在风控总监理审核节点，不能操作！");
         }
         String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
-            req.getApproveNote());
+            req.getApproveResult());
 
         repayBizBO.riskManageAudit(req.getCode(), nextNodeCode,
             req.getApproveNote(), req.getOperator());
