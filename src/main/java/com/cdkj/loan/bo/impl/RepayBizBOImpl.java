@@ -349,12 +349,12 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     public void refreshJudgeApply(String code) {
         RepayBiz data = new RepayBiz();
         data.setCode(code);
-        data.setCurNodeCode(ERepayBizNode.JUDGE_FOLLOW.getCode());
+        data.setCurNodeCode(ERepayBizNode.JUDGE_RESULT_INPUT.getCode());
         repayBizDAO.updateJudgeApply(data);
     }
 
     @Override
-    public void refreshJudgeFollow(String code) {
+    public void resultInputAgain(String code) {
         RepayBiz data = new RepayBiz();
         data.setCode(code);
         data.setCurNodeCode(ERepayBizNode.JUDGE_RESULT_INPUT.getCode());
@@ -375,7 +375,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     public void refreshJudgeAgain(String code) {
         RepayBiz data = new RepayBiz();
         data.setCode(code);
-        data.setCurNodeCode(ERepayBizNode.JUDGE.getCode());
+        data.setCurNodeCode(ERepayBizNode.RESULT_INPUT_AGAIN.getCode());
         repayBizDAO.updateJudgeResultInput(data);
     }
 

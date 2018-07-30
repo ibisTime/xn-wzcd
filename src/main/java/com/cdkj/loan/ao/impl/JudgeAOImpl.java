@@ -22,11 +22,9 @@ import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN630560Req;
-import com.cdkj.loan.dto.req.XN630561Req;
 import com.cdkj.loan.dto.req.XN630562Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
-import com.cdkj.loan.enums.ECaseStatus;
 import com.cdkj.loan.enums.EExeResult;
 import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayPlanNode;
@@ -76,9 +74,8 @@ public class JudgeAOImpl implements IJudgeAO {
         String code = judgeBO.saveJudge(req);
 
         // 日志记录
-        ERepayBizNode node = ERepayBizNode.getMap().get(
-            nodeFlowBO.getNodeFlowByCurrentNode(repayBiz.getCurNodeCode())
-                .getNextNode());
+        ERepayBizNode node = ERepayBizNode.getMap().get(nodeFlowBO
+            .getNodeFlowByCurrentNode(repayBiz.getCurNodeCode()).getNextNode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getRepayBizCode(),
             EBizLogType.REPAY_BIZ, req.getRepayBizCode(),
             repayBiz.getCurNodeCode(), node.getCode(), node.getValue(),
@@ -88,35 +85,10 @@ public class JudgeAOImpl implements IJudgeAO {
 
     @Override
     @Transactional
-    public void judgeFollow(XN630561Req req) {
-        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        if (!ERepayBizNode.JUDGE_FOLLOW.getCode().equals(
-            repayBiz.getCurNodeCode())) {
-            throw new BizException("xn0000", "当前还款业务不在诉讼跟进节点！");
-        }
-
-        // 判决时修改还款业务状态
-        if (ECaseStatus.JUDGE.getCode().equals(req.getCaseStatus())) {
-            repayBizBO.refreshJudgeFollow(repayBiz.getCode());
-        }
-
-        judgeBO.refreshJudgeFollow(req);
-
-        // 日志记录
-        ERepayBizNode node = ERepayBizNode.getMap().get(
-            nodeFlowBO.getNodeFlowByCurrentNode(repayBiz.getCurNodeCode())
-                .getNextNode());
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getCode(),
-            EBizLogType.REPAY_BIZ, req.getCode(), repayBiz.getCurNodeCode(),
-            node.getCode(), node.getValue(), req.getOperator());
-    }
-
-    @Override
-    @Transactional
     public void judgeResultInput(XN630562Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        if (!ERepayBizNode.JUDGE_RESULT_INPUT.getCode().equals(
-            repayBiz.getCurNodeCode())) {
+        if (!ERepayBizNode.JUDGE_RESULT_INPUT.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前业务不在执行结果录入节点！");
         }
@@ -143,9 +115,8 @@ public class JudgeAOImpl implements IJudgeAO {
             ERepayBizNode node = ERepayBizNode.getMap().get(
                 nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getNextNode());
             sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getCode(),
-                EBizLogType.REPAY_BIZ, req.getCode(),
-                repayBiz.getCurNodeCode(), node.getCode(), node.getValue(),
-                req.getOperator());
+                EBizLogType.REPAY_BIZ, req.getCode(), repayBiz.getCurNodeCode(),
+                node.getCode(), node.getValue(), req.getOperator());
 
         } else if (EExeResult.FINISH_BAD.getCode().equals(req.getExeResult())) {
 
@@ -174,7 +145,28 @@ public class JudgeAOImpl implements IJudgeAO {
     }
 
     @Override
-    public Paginable<Judge> queryJudgePage(int start, int limit, Judge condition) {
+    public void resultInputAgain(String code, String operator) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizNode.RESULT_INPUT_AGAIN.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前业务不在重新申请执行节点，不能操作！");
+        }
+        // 当前节点
+        String curNodeCode = repayBiz.getCurNodeCode();
+
+        repayBizBO.resultInputAgain(code);
+
+        // 日志记录
+        ERepayBizNode node = ERepayBizNode.getMap().get(
+            nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getNextNode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(code, EBizLogType.REPAY_BIZ, code,
+            repayBiz.getCurNodeCode(), node.getCode(), null, operator);
+    }
+
+    @Override
+    public Paginable<Judge> queryJudgePage(int start, int limit,
+            Judge condition) {
         Paginable<Judge> page = judgeBO.getPaginable(start, limit, condition);
         List<Judge> list = page.getList();
         for (Judge judge : list) {
@@ -210,4 +202,5 @@ public class JudgeAOImpl implements IJudgeAO {
             judge.setExeApplyUserName(exeApplyUser.getRealName());
         }
     }
+
 }

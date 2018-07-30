@@ -16,7 +16,6 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.IJudgeDAO;
 import com.cdkj.loan.domain.Judge;
 import com.cdkj.loan.dto.req.XN630560Req;
-import com.cdkj.loan.dto.req.XN630561Req;
 import com.cdkj.loan.dto.req.XN630562Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
@@ -53,22 +52,6 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
         data.setUpdateDatetime(new Date());
         judgeDAO.insert(data);
         return code;
-    }
-
-    @Override
-    public void refreshJudgeFollow(XN630561Req req) {
-        Judge data = queryJudgeByRepayBizCode(req.getCode(), EBoolean.NO);
-        data.setCaseFee(StringValidater.toLong(req.getCaseFee()));
-        data.setCaseStatus(req.getCaseStatus());
-        data.setCourtDatetime(DateUtil.strToDate(req.getCourtDatetime(),
-            DateUtil.DB_DATE_FORMAT_STRING));
-        data.setJudgeDatetime(DateUtil.strToDate(req.getJudgeDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-
-        data.setJudgePdf(req.getJudgePdf());
-        data.setUpdater(req.getOperator());
-        data.setUpdateDatetime(new Date());
-        judgeDAO.updateJudgeFollow(data);
     }
 
     @Override
@@ -127,4 +110,5 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
         }
         return data;
     }
+
 }
