@@ -826,6 +826,10 @@ public class RepayBizAOImpl implements IRepayBizAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "还款业务不在风控经理审核节点！");
         }
+        if (EBoolean.YES.getCode().equals(repayBiz.getIsLogistics())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点处于物流传递中，不能操作");
+        }
         repayBiz.setRemark(approveNote);
         repayBiz.setUpdater(operator);
         repayBiz.setUpdateDatetime(new Date());

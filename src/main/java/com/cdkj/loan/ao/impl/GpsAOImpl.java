@@ -19,6 +19,7 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EGpsUseStatus;
+import com.cdkj.loan.enums.EGpsUserApplyStatus;
 
 @Service
 public class GpsAOImpl implements IGpsAO {
@@ -43,7 +44,7 @@ public class GpsAOImpl implements IGpsAO {
         data.setGpsDevNo(gpsDevNo);
         data.setGpsType(gpsType);
         data.setCompanyApplyStatus(EBoolean.NO.getCode());
-        data.setApplyStatus(EBoolean.NO.getCode());
+        data.setApplyStatus(EGpsUserApplyStatus.APPLYING.getCode());
         data.setUseStatus(EGpsUseStatus.UN_USE.getCode());
         gpsBO.saveGps(data);
         return code;

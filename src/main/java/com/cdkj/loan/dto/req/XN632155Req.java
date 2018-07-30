@@ -32,6 +32,17 @@ public class XN632155Req extends APageReq {
     // 类型
     private String type;
 
+    // 类型List
+    private List<String> typeList;
+
+    public List<String> getTypeList() {
+        return typeList;
+    }
+
+    public void setTypeList(List<String> typeList) {
+        this.typeList = typeList;
+    }
+
     public List<String> getStatusList() {
         return statusList;
     }
