@@ -2658,7 +2658,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             if (!EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode()
                 .equals(budgetOrder.getCurNodeCode())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "当前节点不是银行放款理件完成节点，不能操作");
+                    "当前节点不是银行放款理件节点，不能操作");
             }
             if (EBoolean.YES.getCode().equals(budgetOrder.getIsLogistics())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),

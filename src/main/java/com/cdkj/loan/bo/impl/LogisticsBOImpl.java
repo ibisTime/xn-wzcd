@@ -10,6 +10,7 @@ import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISupplementReasonBO;
@@ -19,6 +20,7 @@ import com.cdkj.loan.dao.ILogisticsDAO;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Logistics;
+import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.SupplementReason;
 import com.cdkj.loan.dto.req.XN632152Req;
@@ -29,6 +31,7 @@ import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
+import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -64,6 +67,9 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
 
     @Autowired
     private ILogisticsBO logisticsBO;
+
+    @Autowired
+    private IRepayBizBO repayBizBO;
 
     @Override
     public String saveLogistics(String type, String bizCode, String userId,
@@ -222,6 +228,29 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
             // gps补件原因
             data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
             data.setSupplementReason(req.getSupplementReason());
+        } else {
+            RepayBiz repayBiz = repayBizBO.getRepayBiz(data.getBizCode());
+            if (ERepayBizNode.BANK_REC_LOGIC.getCode()
+                .equals(repayBiz.getCurNodeCode())) {
+                repayBiz.setCurNodeCode(ERepayBizNode.MORTGAGE_PRINT.getCode());
+                repayBizBO.updateCurNodeCode(repayBiz);
+                // 补件原因
+                List<SupplementReason> reasonList = req
+                    .getSupplementReasonList();
+                for (SupplementReason reason : reasonList) {
+                    SupplementReason supplementReason = new SupplementReason();
+                    supplementReason.setLogisticsCode(req.getCode());
+                    supplementReason.setType(reason.getType());
+                    supplementReason.setReason(reason.getReason());
+                    supplementReasonBO.saveSupplementReason(supplementReason);
+                }
+                data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
+                data.setFromNodeCode(ERepayBizNode.MORTGAGE_PRINT.getCode());
+                data.setToNodeCode(ERepayBizNode.PHYSICAL_PARTS.getCode());
+            }
+            // 产生物流单后改变状态为不在物流传递中
+            repayBiz.setIsLogistics(EBoolean.NO.getCode());
+            repayBizBO.updateIsLogistics(repayBiz);
         }
 
         logisticsDAO.updateLogisticsSendAgain(data);

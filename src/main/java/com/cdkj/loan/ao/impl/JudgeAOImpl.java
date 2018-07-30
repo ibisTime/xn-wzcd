@@ -95,7 +95,6 @@ public class JudgeAOImpl implements IJudgeAO {
         // 当前节点
         String curNodeCode = repayBiz.getCurNodeCode();
 
-        judgeBO.refreshJudgeResultInput(req);
         // 结果为完毕，则用户已还欠款；结果为中止，则需要重新诉讼；结果为终结，则为坏账；
         if (EExeResult.FINISH_NORMAL.getCode().equals(req.getExeResult())) {// 还款计划设置为已还清
 
@@ -141,6 +140,8 @@ public class JudgeAOImpl implements IJudgeAO {
             sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REPAY_BIZ,
                 req.getCode(), curNodeCode, null, req.getOperator());
         }
+
+        judgeBO.refreshJudgeResultInput(req);
 
     }
 

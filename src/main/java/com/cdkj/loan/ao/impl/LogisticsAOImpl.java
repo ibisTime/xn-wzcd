@@ -26,6 +26,7 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.NodeFlow;
+import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.SupplementReason;
 import com.cdkj.loan.dto.req.XN632150Req;
@@ -37,6 +38,7 @@ import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
+import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -318,7 +320,36 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 gpsApplyBO.receiveGps(data.getBizCode());
             } else if (ELogisticsType.REPAY_BIZ.getCode()
                 .equals(data.getType())) {
-                repayBizBO.refreshBankRecLogic(data.getBizCode(), operator);
+                data.setStatus(ELogisticsStatus.RECEIVED.getCode());// 普通物流改为待审核
+                RepayBiz repayBiz = repayBizBO.getRepayBiz(data.getBizCode());
+                // 如果是打印岗理件岗寄件刚，无需审核，直接收件
+                if (!ERepayBizNode.BANK_REC_LOGIC.getCode()
+                    .equals(repayBiz.getCurNodeCode())) {
+                    data.setStatus(
+                        ELogisticsStatus.RECEIVED_NOT_AUDITE.getCode());
+                    // 还款业务改回不在物流传递中
+                    repayBiz.setIsLogistics(EBoolean.NO.getCode());
+                    repayBizBO.updateIsLogistics(repayBiz);
+                    // 如果是理件岗，再产生一条物流单
+                    if (!ERepayBizNode.PHYSICAL_PARTS.getCode()
+                        .equals(repayBiz.getCurNodeCode())) {
+                        // 生成资料传递
+                        NodeFlow nodeFlowNext = nodeFlowBO
+                            .getNodeFlowByCurrentNode(
+                                repayBiz.getCurNodeCode());
+                        // 取下下个节点
+                        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(
+                            nodeFlowNext.getNextNode());
+                        logisticsBO.saveLogistics(
+                            ELogisticsType.REPAY_BIZ.getCode(),
+                            repayBiz.getCode(), repayBiz.getUserId(),
+                            nodeFlowNext.getNextNode(), nodeFlow.getNextNode());
+                        // 还款业务改回在物流传递中
+                        repayBiz.setIsLogistics(EBoolean.YES.getCode());
+                        repayBizBO.updateIsLogistics(repayBiz);
+                    }
+                    repayBizBO.refreshBankRecLogic(data.getBizCode(), operator);
+                }
             }
             logisticsBO.receiveLogistics(data);
         }
@@ -337,6 +368,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
         logisticsBO.auditePassLogistics(code, remark);
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
             budgetOrderBO.logicOrder(data.getBizCode(), code, operator);
+        } else if (ELogisticsType.REPAY_BIZ.getCode().equals(data.getType())) {
+            repayBizBO.logicOrder(data.getBizCode(), operator, remark);
         }
     }
 
@@ -379,8 +412,10 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     "资料不是待收件状态!");
             }
         } else if (ELogisticsType.REPAY_BIZ.getCode().equals(data.getType())) {
-            repayBizBO.refreshBankRecLogic(data.getBizCode(),
-                req.getOperator());
+            if (!ELogisticsStatus.RECEIVED.getCode().equals(data.getStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "资料不是收件待审核状态!");
+            }
         }
 
         logisticsBO.sendAgainLogistics(req);

@@ -169,5 +169,14 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     // 更新还款业务
     public void refreshRepayBiz(BudgetOrder budgetOrder);
 
+    // 改变资料传递中的状态
+    public void updateIsLogistics(RepayBiz repayBiz);
+
+    // 收件审核通过
+    public void logicOrder(String code, String remark, String operator);
+
+    // 改变节点
+    public void updateCurNodeCode(RepayBiz repayBiz);
+
     // ********************************common********************************
 }

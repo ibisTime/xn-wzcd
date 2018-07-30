@@ -20,6 +20,7 @@ import com.cdkj.loan.dto.req.XN630562Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECaseStatus;
+import com.cdkj.loan.enums.EExeResult;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -68,7 +69,9 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
         data.setSaleDatetime(DateUtil.strToDate(req.getSaleDatetime(),
             DateUtil.DB_DATE_FORMAT_STRING));
         data.setExePdf(req.getExePdf());
-        data.setStatus(EBoolean.YES.getCode());
+        if (!EExeResult.ABORT.getCode().equals(req.getExeResult())) {
+            data.setStatus(EBoolean.YES.getCode());
+        }
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
         judgeDAO.updateJudgeResultInput(data);

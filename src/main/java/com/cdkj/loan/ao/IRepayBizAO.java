@@ -122,4 +122,7 @@ public interface IRepayBizAO {
     public Object queryRepayBizByTotalOverdueCount(int start, int limit,
             RepayBiz condition);
 
+    // 理件岗理件
+    public void physicalParts(List<String> codeList, String operator);
+
 }
