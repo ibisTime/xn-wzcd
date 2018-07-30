@@ -32,6 +32,10 @@ public class XN632113Req {
     // 附件
     private String accessory;
 
+    // 审核说明
+    @NotBlank
+    private String approveNote;
+
     public List<CreditUser> getCreditUserList() {
         return creditUserList;
     }
@@ -70,6 +74,14 @@ public class XN632113Req {
 
     public void setAccessory(String accessory) {
         this.accessory = accessory;
+    }
+
+    public String getApproveNote() {
+        return approveNote;
+    }
+
+    public void setApproveNote(String approveNote) {
+        this.approveNote = approveNote;
     }
 
 }

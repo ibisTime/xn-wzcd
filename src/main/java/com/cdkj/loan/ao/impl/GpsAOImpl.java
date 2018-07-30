@@ -10,16 +10,21 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.IGpsAO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IGpsBO;
+import com.cdkj.loan.bo.ILogisticsBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.dto.req.XN632701Req;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.EGpsSendBackReason;
 import com.cdkj.loan.enums.EGpsUseStatus;
 import com.cdkj.loan.enums.EGpsUserApplyStatus;
+import com.cdkj.loan.enums.ELogisticsType;
 
 @Service
 public class GpsAOImpl implements IGpsAO {
@@ -32,6 +37,12 @@ public class GpsAOImpl implements IGpsAO {
 
     @Autowired
     private ISYSUserBO sysUserBO;
+
+    @Autowired
+    private ILogisticsBO logisticsBO;
+
+    @Autowired
+    private ISYSBizLogBO sysBizLogBO;
 
     @Override
     public String addGps(String gpsDevNo, String gpsType) {
@@ -96,5 +107,19 @@ public class GpsAOImpl implements IGpsAO {
             SYSUser sysUser = sysUserBO.getUser(gps.getApplyUser());
             gps.setApplyUserName(sysUser.getRealName());
         }
+    }
+
+    @Override
+    public void gpsSendBackApply(XN632701Req req) {
+        Gps gps = gpsBO.getGps(req.getCode());
+        if (EGpsSendBackReason.DAMAGE.getCode().equals(req.getReason())) {// gps损坏
+            gps.setUseStatus(EGpsUseStatus.DAMAGE.getCode());
+        }
+        if (EGpsSendBackReason.EMPLOYEE_LEAVE.getCode().equals(req.getReason())) {// 员工离职
+            gps.setApplyStatus(EGpsUserApplyStatus.TO_APPLY.getCode());
+        }
+        // 资料传递待发件
+        logisticsBO.saveLogistics(ELogisticsType.GPS.getCode(), gps.getCode(),
+            gps.getApplyUser(), null, null);
     }
 }

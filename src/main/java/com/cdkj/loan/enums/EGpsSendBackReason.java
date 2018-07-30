@@ -1,15 +1,16 @@
 package com.cdkj.loan.enums;
 
 /**
- * gps使用
- * @author: xieyj 
- * @since: 2018年5月31日 上午6:19:51 
+ * GPS回退原因
+ * @author: jiafr 
+ * @since: 2018年7月30日 下午4:01:55 
  * @history:
  */
-public enum EGpsUseStatus {
-    UN_USE("0", "待使用"), USED("1", "使用中"), DAMAGE("2", "GPS损坏");
+public enum EGpsSendBackReason {
 
-    EGpsUseStatus(String code, String value) {
+    DAMAGE("1", "GPS损坏"), EMPLOYEE_LEAVE("2", "员工离职");
+
+    EGpsSendBackReason(String code, String value) {
         this.code = code;
         this.value = value;
     }
