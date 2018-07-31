@@ -604,8 +604,8 @@ INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807191945293796987','详情','2','/detail','1','admin','2018-07-24 14:54:30','历史业务','SM201807191327375537803');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807201122587522956','审核','2','/check','2','admin','2018-07-24 14:54:30','备注','SM201807141646233698103');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807211417290619053','发送放款名单','2','/sendList','2','admin','2018-07-24 14:54:30','放款审核','SM201805242225549063562');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807241623140274264','银行返点','1','/finance/rebate.htm','5','admin','2018-07-24 14:54:30','备注','SM201805280128096684231');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807241624080938516','银行返点菜单','1','#','1','admin','2018-07-24 14:54:30','','SM201807241623140274264');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807241623140274264','银行返点','1','#','5','admin','2018-07-24 14:54:30','备注','SM201805280128096684231');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807241624080938516','银行返点菜单','1','/finance/rebate.htm','1','admin','2018-07-24 14:54:30','','SM201807241623140274264');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807252205109665385','已返点','2','/apply','1','admin','2018-08-02 01:19:23','','SM201807241624080938516');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807242005272144457','分公司总经理审批','2','/companyCheck','2','admin','2018-07-24 14:54:30','返点支付','SM201805250055062803007');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201807242006050008888','财务确认','2','/finance','3','admin','2018-07-24 14:54:30','','SM201805250055062803007');
@@ -1122,12 +1122,14 @@ INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201805291037383171866','U201807171419188821682','2018-07-24 15:00:45',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201807242005272144457','U201807171419188821682','2018-07-24 15:00:45',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201807242006050008888','U201807171419188821682','2018-07-24 15:00:45',NULL);
-INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201807252205109665385','U201807171419188821682','2018-08-02 02:18:05',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201807281602414524431','U201807171419188821682','2018-08-02 02:18:05',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201807302032144892983','U201807171419188821682','2018-08-02 02:18:05',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201807302103549607629','U201807171419188821682','2018-08-02 02:18:05',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201807302212213699070','U201807171419188821682','2018-08-02 02:18:05',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201807302349551913660','U201807171419188821682','2018-08-02 02:18:05',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201807241623140274264','U201807201611084152555','2018-07-31 13:30:51',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201807241624080938516','U201807201611084152555','2018-07-31 13:30:51',NULL);
+INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201807252205109665385','U201807201611084152555','2018-07-31 13:30:51',NULL);
 /*
 -- Query: SELECT `type`, `parent_key`, `dkey`, `dvalue`,'admin' `updater`, now() `update_datetime`, `remark`, `company_code`, `system_code` FROM tsys_dict
 -- Date: 2018-06-29 15:32

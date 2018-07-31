@@ -148,6 +148,11 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
                 .getUser(replaceRepayApply.getUpdater());
             replaceRepayApply.setUpdaterName(updaterUser.getRealName());
         }
+        if (StringUtils.isNotBlank(replaceRepayApply.getBizCode())) {
+            RepayBiz repayBiz = repayBizBO
+                .getRepayBiz(replaceRepayApply.getBizCode());
+            replaceRepayApply.setBudgetOrderCode(repayBiz.getBudgetOrderCode());
+        }
     }
 
 }
