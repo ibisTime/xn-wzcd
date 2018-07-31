@@ -1,11 +1,13 @@
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`test_xn_wzcd` /*!40100 DEFAULT CHARACTER SET utf8 */;
-
-USE `test_xn_wzcd`;
-
-/*Table structure for table `tb_bank` */
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+--
+-- Host: 47.96.161.183    Database: dev_xn_wzcd
+-- ------------------------------------------------------
+-- Server version	5.6.33
+--
+-- Table structure for table `tb_bank`
+--
 
 DROP TABLE IF EXISTS `tb_bank`;
-
 CREATE TABLE `tb_bank` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `bank_code` varchar(32) DEFAULT NULL COMMENT '银行编号',
@@ -21,11 +23,13 @@ CREATE TABLE `tb_bank` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='平台银行信息表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tb_bank_rate` */
+--
+-- Table structure for table `tb_bank_rate`
+--
 
 DROP TABLE IF EXISTS `tb_bank_rate`;
-
 CREATE TABLE `tb_bank_rate` (
   `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `bank_code` varchar(32) DEFAULT NULL COMMENT '银行编号',
@@ -34,11 +38,13 @@ CREATE TABLE `tb_bank_rate` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='银行利率明细表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tb_bank_subbranch` */
+--
+-- Table structure for table `tb_bank_subbranch`
+--
 
 DROP TABLE IF EXISTS `tb_bank_subbranch`;
-
 CREATE TABLE `tb_bank_subbranch` (
   `code` varchar(32) NOT NULL COMMENT '序号',
   `bank_code` varchar(255) DEFAULT NULL COMMENT '银行编号',
@@ -63,11 +69,13 @@ CREATE TABLE `tb_bank_subbranch` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='银行支行信息表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tb_car_dealer` */
+--
+-- Table structure for table `tb_car_dealer`
+--
 
 DROP TABLE IF EXISTS `tb_car_dealer`;
-
 CREATE TABLE `tb_car_dealer` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `full_name` varchar(255) DEFAULT NULL COMMENT '全称',
@@ -81,7 +89,7 @@ CREATE TABLE `tb_car_dealer` (
   `parent_group` varchar(255) DEFAULT NULL COMMENT '所属集团',
   `agreement_valid_date_start` datetime DEFAULT NULL COMMENT '合作协议有效期起',
   `agreement_valid_date_end` datetime DEFAULT NULL COMMENT '合作协议有效期止',
-  `agreement_status` varchar(4) DEFAULT NULL COMMENT '协议状态',
+  `agreement_status` varchar(4) DEFAULT NULL COMMENT '协议状态(1上架0下架)',
   `agreement_pic` varchar(255) DEFAULT NULL COMMENT '车商合作协议',
   `settle_way` varchar(255) DEFAULT NULL COMMENT '结算方式(1现结2月结3季结)',
   `business_area` varchar(255) DEFAULT NULL COMMENT '业务区域',
@@ -92,11 +100,13 @@ CREATE TABLE `tb_car_dealer` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='经销商信息表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tb_car_dealer_protocol` */
+--
+-- Table structure for table `tb_car_dealer_protocol`
+--
 
 DROP TABLE IF EXISTS `tb_car_dealer_protocol`;
-
 CREATE TABLE `tb_car_dealer_protocol` (
   `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '序号',
   `car_dealer_code` varchar(32) DEFAULT NULL COMMENT '经销商编号',
@@ -137,11 +147,13 @@ CREATE TABLE `tb_car_dealer_protocol` (
   `insu_agency_year3_fee` bigint(20) DEFAULT NULL COMMENT '3年保险代理费',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='经销商协议表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tb_collect_bankcard` */
+--
+-- Table structure for table `tb_collect_bankcard`
+--
 
 DROP TABLE IF EXISTS `tb_collect_bankcard`;
-
 CREATE TABLE `tb_collect_bankcard` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(4) DEFAULT NULL COMMENT '类型(1 普通账户 2 经销商的收款账号 3 经销商返点账号)',
@@ -156,11 +168,13 @@ CREATE TABLE `tb_collect_bankcard` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收款账号表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tb_gps` */
+--
+-- Table structure for table `tb_gps`
+--
 
 DROP TABLE IF EXISTS `tb_gps`;
-
 CREATE TABLE `tb_gps` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `gps_dev_no` varchar(32) NOT NULL COMMENT 'gps编号',
@@ -173,16 +187,18 @@ CREATE TABLE `tb_gps` (
   `apply_status` varchar(32) DEFAULT NULL COMMENT '申领人申领状态(0 待申领 1 已申领)',
   `apply_datetime` datetime DEFAULT NULL COMMENT '申领日期',
   `apply_code` varchar(32) DEFAULT NULL COMMENT '申领编号',
-  `use_status` varchar(32) DEFAULT NULL COMMENT '使用状态(0 待使用 1 已使用)',
+  `use_status` varchar(32) DEFAULT NULL COMMENT '使用状态(0 待使用 1 已使用2已损坏)',
   `use_datetime` datetime DEFAULT NULL COMMENT '使用日期',
   `biz_code` varchar(32) DEFAULT NULL COMMENT '业务编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='gps库存管理';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tb_gps_apply` */
+--
+-- Table structure for table `tb_gps_apply`
+--
 
 DROP TABLE IF EXISTS `tb_gps_apply`;
-
 CREATE TABLE `tb_gps_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(32) NOT NULL COMMENT '类型(1 公司 2 个人)',
@@ -200,22 +216,26 @@ CREATE TABLE `tb_gps_apply` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='gps申领管理';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tb_id_no_area` */
+--
+-- Table structure for table `tb_id_no_area`
+--
 
 DROP TABLE IF EXISTS `tb_id_no_area`;
-
 CREATE TABLE `tb_id_no_area` (
   `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `area_no` varchar(32) CHARACTER SET utf8 COLLATE utf8_estonian_ci DEFAULT NULL COMMENT '身份证区域号',
   `area_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_estonian_ci DEFAULT NULL COMMENT '身份证区域名称',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='身份证区域表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tb_insurance_company` */
+--
+-- Table structure for table `tb_insurance_company`
+--
 
 DROP TABLE IF EXISTS `tb_insurance_company`;
-
 CREATE TABLE `tb_insurance_company` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
@@ -224,11 +244,13 @@ CREATE TABLE `tb_insurance_company` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='保险公司信息表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tb_loan_cs` */
+--
+-- Table structure for table `tb_loan_cs`
+--
 
 DROP TABLE IF EXISTS `tb_loan_cs`;
-
 CREATE TABLE `tb_loan_cs` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(32) NOT NULL COMMENT '类型(1 新车 2 二手车)',
@@ -237,22 +259,26 @@ CREATE TABLE `tb_loan_cs` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='我司贷款成数';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tb_province_no` */
+--
+-- Table structure for table `tb_province_no`
+--
 
 DROP TABLE IF EXISTS `tb_province_no`;
-
 CREATE TABLE `tb_province_no` (
   `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `province_no` varchar(32) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='省份编号表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tbf_withhold` */
+--
+-- Table structure for table `tbf_withhold`
+--
 
 DROP TABLE IF EXISTS `tbf_withhold`;
-
 CREATE TABLE `tbf_withhold` (
   `trans_id` varchar(32) NOT NULL COMMENT '商户订单号',
   `bank_code` varchar(32) DEFAULT NULL COMMENT '银行编码',
@@ -275,11 +301,13 @@ CREATE TABLE `tbf_withhold` (
   `trans_serial_no` varchar(32) DEFAULT NULL COMMENT '商户流水号',
   PRIMARY KEY (`trans_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdh_cost` */
+--
+-- Table structure for table `tdh_cost`
+--
 
 DROP TABLE IF EXISTS `tdh_cost`;
-
 CREATE TABLE `tdh_cost` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `repay_plan_code` varchar(32) DEFAULT NULL COMMENT '还款计划编号',
@@ -293,11 +321,13 @@ CREATE TABLE `tdh_cost` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdh_judge` */
+--
+-- Table structure for table `tdh_judge`
+--
 
 DROP TABLE IF EXISTS `tdh_judge`;
-
 CREATE TABLE `tdh_judge` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',
@@ -325,11 +355,13 @@ CREATE TABLE `tdh_judge` (
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='司法审判表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdh_overdue_menu` */
+--
+-- Table structure for table `tdh_overdue_menu`
+--
 
 DROP TABLE IF EXISTS `tdh_overdue_menu`;
-
 CREATE TABLE `tdh_overdue_menu` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `batch_datetime` datetime DEFAULT NULL COMMENT '批量日期',
@@ -352,22 +384,26 @@ CREATE TABLE `tdh_overdue_menu` (
   `repay_plan_code` varchar(32) DEFAULT NULL COMMENT '还款计划编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='导入逾期名单';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdh_overdue_repay` */
+--
+-- Table structure for table `tdh_overdue_repay`
+--
 
 DROP TABLE IF EXISTS `tdh_overdue_repay`;
-
 CREATE TABLE `tdh_overdue_repay` (
   `id` int(32) NOT NULL AUTO_INCREMENT,
   `overdue_code` varchar(32) DEFAULT NULL COMMENT '逾期名单编号',
   `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='逾期名单关联表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdh_remind_log` */
+--
+-- Table structure for table `tdh_remind_log`
+--
 
 DROP TABLE IF EXISTS `tdh_remind_log`;
-
 CREATE TABLE `tdh_remind_log` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `repay_plan_code` varchar(32) DEFAULT NULL COMMENT '还款计划编号',
@@ -377,11 +413,13 @@ CREATE TABLE `tdh_remind_log` (
   `create_datetime` datetime DEFAULT NULL COMMENT '催收时间',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdh_repay_biz` */
+--
+-- Table structure for table `tdh_repay_biz`
+--
 
 DROP TABLE IF EXISTS `tdh_repay_biz`;
-
 CREATE TABLE `tdh_repay_biz` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `user_id` varchar(32) DEFAULT NULL COMMENT '申请人编号',
@@ -438,26 +476,27 @@ CREATE TABLE `tdh_repay_biz` (
   `release_template_id` varchar(32) DEFAULT NULL COMMENT '解除抵押模板',
   `judge_receipt_datetime` datetime DEFAULT NULL COMMENT '司法诉讼收款时间',
   `judge_receipt_amount` bigint(20) DEFAULT NULL COMMENT '司法诉讼收款金额',
-  `judge_receipt_bank` varchar(255) DEFAULT NULL COMMENT '司法诉讼收款银行',
-  `judge_receipt_bankcard` varchar(255) DEFAULT NULL COMMENT '司法诉讼收款银行账号',
+  `judge_receipt_bankcard` varchar(255) DEFAULT NULL COMMENT '司法诉讼收款银行账号编号',
   `judge_note` varchar(255) DEFAULT NULL COMMENT '司法诉讼备注',
   `judge_bill_pdf` varchar(255) DEFAULT NULL COMMENT '司法诉讼收款凭证',
   `settle_pay_datetime` datetime DEFAULT NULL COMMENT '结清付款时间',
-  `settle_bank` varchar(255) DEFAULT NULL COMMENT '结清付款银行',
-  `settle_bankcard` varchar(255) DEFAULT NULL COMMENT '结清付款账号',
+  `settle_bankcard` varchar(255) DEFAULT NULL COMMENT '结清付款账号编号',
   `settle_pdf` text COMMENT '结清打款凭证',
   `settle_note` text COMMENT '结清说明',
   `updater` varchar(255) DEFAULT NULL COMMENT '最近修改人',
   `update_datetime` datetime DEFAULT NULL COMMENT '最近修改时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `team_code` varchar(32) DEFAULT NULL COMMENT '团队编号',
+  `is_logistics` varchar(4) DEFAULT NULL COMMENT '是否在物流传递中',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='还款业务表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdh_repay_plan` */
+--
+-- Table structure for table `tdh_repay_plan`
+--
 
 DROP TABLE IF EXISTS `tdh_repay_plan`;
-
 CREATE TABLE `tdh_repay_plan` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `ref_type` varchar(32) DEFAULT NULL COMMENT '类型',
@@ -502,7 +541,7 @@ CREATE TABLE `tdh_repay_plan` (
   `ts_car_amount` bigint(20) DEFAULT NULL COMMENT '拖车申请金额',
   `ts_user_name` varchar(255) DEFAULT NULL COMMENT '拖车人姓名',
   `ts_bankcard_number` varchar(255) DEFAULT NULL COMMENT '拖车收款账号',
-  `ts_bank_name` varchar(255) DEFAULT NULL COMMENT '拖车开户行',
+  `ts_bank_code` varchar(32) DEFAULT NULL COMMENT '拖车开户行',
   `ts_subbranch` varchar(255) DEFAULT NULL COMMENT '拖车开户支行',
   `tc_apply_note` varchar(255) DEFAULT NULL COMMENT '拖车申请说明',
   `remit_datetime` datetime DEFAULT NULL COMMENT '打款时间',
@@ -523,11 +562,13 @@ CREATE TABLE `tdh_repay_plan` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='还款计划表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdh_replace_repay_apply` */
+--
+-- Table structure for table `tdh_replace_repay_apply`
+--
 
 DROP TABLE IF EXISTS `tdh_replace_repay_apply`;
-
 CREATE TABLE `tdh_replace_repay_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(32) NOT NULL COMMENT '代偿性质',
@@ -546,11 +587,13 @@ CREATE TABLE `tdh_replace_repay_apply` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='代偿申请单';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdh_replace_repay_plan` */
+--
+-- Table structure for table `tdh_replace_repay_plan`
+--
 
 DROP TABLE IF EXISTS `tdh_replace_repay_plan`;
-
 CREATE TABLE `tdh_replace_repay_plan` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(32) NOT NULL COMMENT '类型',
@@ -562,9 +605,8 @@ CREATE TABLE `tdh_replace_repay_plan` (
   `risk_note` varchar(255) DEFAULT NULL COMMENT '风控经理意见',
   `repay_rate` decimal(18,8) DEFAULT NULL COMMENT '代偿利率',
   `repay_date` datetime DEFAULT NULL COMMENT '付款日期',
-  `repay_bankcard` varchar(255) DEFAULT NULL COMMENT '付款银行卡',
-  `repay_bank` varchar(32) DEFAULT NULL COMMENT '付款银行',
-  `repay_user` varchar(32) DEFAULT NULL COMMENT '付款人',
+  `repay_bankcard` varchar(255) DEFAULT NULL COMMENT '付款账号编号',
+  `repay_user` varchar(32) DEFAULT NULL COMMENT '付款银行',
   `repay_bill` varchar(255) DEFAULT NULL COMMENT '付款凭证',
   `repay_note` varchar(255) DEFAULT NULL COMMENT '付款说明',
   `biz_code` varchar(32) NOT NULL COMMENT '业务编号(还款计划)',
@@ -576,11 +618,13 @@ CREATE TABLE `tdh_replace_repay_plan` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='代偿还款计划单';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdp_supplement_reason` */
+--
+-- Table structure for table `tdp_supplement_reason`
+--
 
 DROP TABLE IF EXISTS `tdp_supplement_reason`;
-
 CREATE TABLE `tdp_supplement_reason` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `logistics_code` varchar(32) DEFAULT NULL COMMENT '物流单编号',
@@ -589,11 +633,13 @@ CREATE TABLE `tdp_supplement_reason` (
   `is_part_supt` varchar(4) DEFAULT NULL COMMENT '是否已补件（0未补件1已补件）',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='补件原因';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdq_advance_fund` */
+--
+-- Table structure for table `tdq_advance_fund`
+--
 
 DROP TABLE IF EXISTS `tdq_advance_fund`;
-
 CREATE TABLE `tdq_advance_fund` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `budget_code` varchar(32) NOT NULL COMMENT '预算单编号',
@@ -624,11 +670,13 @@ CREATE TABLE `tdq_advance_fund` (
   `gps_fee` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`code`) COMMENT '垫资表'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='垫资表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdq_budget_order` */
+--
+-- Table structure for table `tdq_budget_order`
+--
 
 DROP TABLE IF EXISTS `tdq_budget_order`;
-
 CREATE TABLE `tdq_budget_order` (
   `code` varchar(32) NOT NULL COMMENT '预算单编号',
   `customer_type` varchar(4) DEFAULT NULL COMMENT '客户类型',
@@ -803,6 +851,7 @@ CREATE TABLE `tdq_budget_order` (
   `insurance_bank` tinytext COMMENT '保险经办银行',
   `guarantee_contract_code` varchar(32) DEFAULT NULL COMMENT '担保合同编号',
   `bank_contract_code` varchar(32) DEFAULT NULL COMMENT '银行合同编号',
+  `contract_sign_date` datetime DEFAULT NULL COMMENT '合同签订日',
   `reg_certificate_code` varchar(32) DEFAULT NULL COMMENT '登记证书号',
   `emergency_name1` tinytext COMMENT '家庭紧急联系人信息1 姓名',
   `emergency_relation1` tinytext COMMENT '家庭紧急联系人信息1 与申请人关系',
@@ -895,11 +944,13 @@ CREATE TABLE `tdq_budget_order` (
   `bank_repoint_status` varchar(4) DEFAULT NULL COMMENT '银行返点状态(0未返点1已返点)',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdq_budget_order_fee` */
+--
+-- Table structure for table `tdq_budget_order_fee`
+--
 
 DROP TABLE IF EXISTS `tdq_budget_order_fee`;
-
 CREATE TABLE `tdq_budget_order_fee` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `effect` char(1) DEFAULT NULL COMMENT '1有效 0 失效',
@@ -914,11 +965,13 @@ CREATE TABLE `tdq_budget_order_fee` (
   `budget_order` varchar(32) NOT NULL COMMENT '预算单编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdq_budget_order_fee_detail` */
+--
+-- Table structure for table `tdq_budget_order_fee_detail`
+--
 
 DROP TABLE IF EXISTS `tdq_budget_order_fee_detail`;
-
 CREATE TABLE `tdq_budget_order_fee_detail` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `remit_type` varchar(32) NOT NULL COMMENT '交款类型',
@@ -933,11 +986,13 @@ CREATE TABLE `tdq_budget_order_fee_detail` (
   `fee_code` varchar(32) NOT NULL COMMENT '手续费编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdq_budget_order_gps` */
+--
+-- Table structure for table `tdq_budget_order_gps`
+--
 
 DROP TABLE IF EXISTS `tdq_budget_order_gps`;
-
 CREATE TABLE `tdq_budget_order_gps` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `gps_dev_no` varchar(32) DEFAULT NULL COMMENT 'gps设备号',
@@ -950,11 +1005,13 @@ CREATE TABLE `tdq_budget_order_gps` (
   `budget_order` varchar(32) NOT NULL COMMENT '预算单编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdq_contract_import` */
+--
+-- Table structure for table `tdq_contract_import`
+--
 
 DROP TABLE IF EXISTS `tdq_contract_import`;
-
 CREATE TABLE `tdq_contract_import` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `contract_code` varchar(32) NOT NULL COMMENT '合同号',
@@ -973,11 +1030,13 @@ CREATE TABLE `tdq_contract_import` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`) COMMENT '银行合同导入'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='银行合同导入';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdq_credit` */
+--
+-- Table structure for table `tdq_credit`
+--
 
 DROP TABLE IF EXISTS `tdq_credit`;
-
 CREATE TABLE `tdq_credit` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `budget_code` varchar(32) DEFAULT NULL COMMENT '预算单编号',
@@ -993,11 +1052,13 @@ CREATE TABLE `tdq_credit` (
   `accessory` varchar(255) DEFAULT NULL COMMENT '附件',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='征信表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdq_credit_user` */
+--
+-- Table structure for table `tdq_credit_user`
+--
 
 DROP TABLE IF EXISTS `tdq_credit_user`;
-
 CREATE TABLE `tdq_credit_user` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `credit_code` varchar(32) DEFAULT NULL COMMENT '征信单编号',
@@ -1041,11 +1102,13 @@ CREATE TABLE `tdq_credit_user` (
   `id_no_reverse` varchar(255) DEFAULT NULL COMMENT '身份证反面',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='征信人员表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdq_logistics` */
+--
+-- Table structure for table `tdq_logistics`
+--
 
 DROP TABLE IF EXISTS `tdq_logistics`;
-
 CREATE TABLE `tdq_logistics` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(4) NOT NULL COMMENT '类型(1 贷前)',
@@ -1059,17 +1122,20 @@ CREATE TABLE `tdq_logistics` (
   `send_datetime` datetime DEFAULT NULL COMMENT '发货时间',
   `send_note` varchar(255) DEFAULT NULL COMMENT '发货说明',
   `receipt_datetime` datetime DEFAULT NULL COMMENT '收件时间',
+  `is_bank_point_part_supt` varchar(4) DEFAULT NULL COMMENT '是否为银行驻点补件',
   `supplement_reason` varchar(255) DEFAULT NULL COMMENT '补件原因',
   `supplement_note` varchar(255) DEFAULT NULL COMMENT '补件说明',
   `status` varchar(4) DEFAULT NULL COMMENT '状态(0 待发件 1已发件待收件 2已收件审核 3已收件待补件)',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdq_req_budget` */
+--
+-- Table structure for table `tdq_req_budget`
+--
 
 DROP TABLE IF EXISTS `tdq_req_budget`;
-
 CREATE TABLE `tdq_req_budget` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `company_code` varchar(32) DEFAULT NULL COMMENT '业务公司编号',
@@ -1096,11 +1162,13 @@ CREATE TABLE `tdq_req_budget` (
   `cur_node_code` varchar(32) DEFAULT NULL COMMENT '节点编号',
   PRIMARY KEY (`code`) COMMENT '请款预算单'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdq_total_advance_fund` */
+--
+-- Table structure for table `tdq_total_advance_fund`
+--
 
 DROP TABLE IF EXISTS `tdq_total_advance_fund`;
-
 CREATE TABLE `tdq_total_advance_fund` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(4) NOT NULL COMMENT '类型(1第一次打款2发票不匹配补打款3发票不匹配收回款)',
@@ -1122,11 +1190,13 @@ CREATE TABLE `tdq_total_advance_fund` (
   `status` varchar(4) DEFAULT NULL COMMENT '状态（0待打款给分公司 1已打款给分公司）',
   PRIMARY KEY (`code`) COMMENT '垫资汇总表'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdqt_repoint` */
+--
+-- Table structure for table `tdqt_repoint`
+--
 
 DROP TABLE IF EXISTS `tdqt_repoint`;
-
 CREATE TABLE `tdqt_repoint` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `effect` char(1) DEFAULT NULL COMMENT '1有效 0 失效',
@@ -1145,11 +1215,13 @@ CREATE TABLE `tdqt_repoint` (
   `cur_node_code` varchar(255) DEFAULT NULL COMMENT '节点',
   PRIMARY KEY (`code`) COMMENT '返点表'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='返点表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tdqt_repoint_detail` */
+--
+-- Table structure for table `tdqt_repoint_detail`
+--
 
 DROP TABLE IF EXISTS `tdqt_repoint_detail`;
-
 CREATE TABLE `tdqt_repoint_detail` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(4) DEFAULT NULL COMMENT '类型（1正常数据2发票不匹配产生的新数据）',
@@ -1175,11 +1247,13 @@ CREATE TABLE `tdqt_repoint_detail` (
   `cur_node_code` varchar(32) DEFAULT NULL COMMENT '节点',
   PRIMARY KEY (`code`) COMMENT '返点明细表'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='返点明细表（用款用途）';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tht_brand` */
+--
+-- Table structure for table `tht_brand`
+--
 
 DROP TABLE IF EXISTS `tht_brand`;
-
 CREATE TABLE `tht_brand` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `letter` varchar(32) DEFAULT NULL COMMENT '字母序号',
@@ -1192,11 +1266,13 @@ CREATE TABLE `tht_brand` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`) COMMENT '品牌'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tht_car` */
+--
+-- Table structure for table `tht_car`
+--
 
 DROP TABLE IF EXISTS `tht_car`;
-
 CREATE TABLE `tht_car` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
@@ -1219,11 +1295,13 @@ CREATE TABLE `tht_car` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`) COMMENT '车型'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tht_car_order` */
+--
+-- Table structure for table `tht_car_order`
+--
 
 DROP TABLE IF EXISTS `tht_car_order`;
-
 CREATE TABLE `tht_car_order` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `user_id` varchar(32) DEFAULT NULL COMMENT '申请人编号',
@@ -1246,11 +1324,13 @@ CREATE TABLE `tht_car_order` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`) COMMENT '购车意向'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tht_series` */
+--
+-- Table structure for table `tht_series`
+--
 
 DROP TABLE IF EXISTS `tht_series`;
-
 CREATE TABLE `tht_series` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `brand_code` varchar(32) DEFAULT NULL COMMENT '品牌编号',
@@ -1266,11 +1346,13 @@ CREATE TABLE `tht_series` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`) COMMENT '车系'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tmall_category` */
+--
+-- Table structure for table `tmall_category`
+--
 
 DROP TABLE IF EXISTS `tmall_category`;
-
 CREATE TABLE `tmall_category` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `parent_code` varchar(32) DEFAULT NULL COMMENT '父节点',
@@ -1280,11 +1362,13 @@ CREATE TABLE `tmall_category` (
   `status` varchar(4) DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (`code`) COMMENT '分类'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tmall_order` */
+--
+-- Table structure for table `tmall_order`
+--
 
 DROP TABLE IF EXISTS `tmall_order`;
-
 CREATE TABLE `tmall_order` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `repay_biz_code` varchar(32) DEFAULT NULL COMMENT '还款业务编号',
@@ -1320,11 +1404,13 @@ CREATE TABLE `tmall_order` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`) COMMENT '订单'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tmall_product` */
+--
+-- Table structure for table `tmall_product`
+--
 
 DROP TABLE IF EXISTS `tmall_product`;
-
 CREATE TABLE `tmall_product` (
   `code` varchar(32) NOT NULL COMMENT '商品编号',
   `category` varchar(32) DEFAULT NULL COMMENT '大类',
@@ -1347,11 +1433,13 @@ CREATE TABLE `tmall_product` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`) COMMENT '产品'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tmall_product_order` */
+--
+-- Table structure for table `tmall_product_order`
+--
 
 DROP TABLE IF EXISTS `tmall_product_order`;
-
 CREATE TABLE `tmall_product_order` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `order_code` varchar(32) DEFAULT NULL COMMENT '订单编号',
@@ -1366,11 +1454,13 @@ CREATE TABLE `tmall_product_order` (
   `bank_rate` decimal(18,8) DEFAULT NULL COMMENT '银行利率',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tmall_product_specs` */
+--
+-- Table structure for table `tmall_product_specs`
+--
 
 DROP TABLE IF EXISTS `tmall_product_specs`;
-
 CREATE TABLE `tmall_product_specs` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `name` varchar(255) DEFAULT NULL COMMENT '规格名称',
@@ -1387,11 +1477,13 @@ CREATE TABLE `tmall_product_specs` (
   `order_no` int(11) DEFAULT NULL COMMENT '相对位置编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_archive` */
+--
+-- Table structure for table `tp_archive`
+--
 
 DROP TABLE IF EXISTS `tp_archive`;
-
 CREATE TABLE `tp_archive` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `real_name` varchar(255) DEFAULT NULL COMMENT '姓名',
@@ -1454,11 +1546,13 @@ CREATE TABLE `tp_archive` (
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='人事档案';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_archive_location` */
+--
+-- Table structure for table `tp_archive_location`
+--
 
 DROP TABLE IF EXISTS `tp_archive_location`;
-
 CREATE TABLE `tp_archive_location` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `name` varchar(255) DEFAULT NULL COMMENT '位置名称',
@@ -1467,11 +1561,13 @@ CREATE TABLE `tp_archive_location` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='档案存放位置';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_ask_for_apply` */
+--
+-- Table structure for table `tp_ask_for_apply`
+--
 
 DROP TABLE IF EXISTS `tp_ask_for_apply`;
-
 CREATE TABLE `tp_ask_for_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `apply_user` varchar(32) DEFAULT NULL COMMENT '申请人',
@@ -1484,11 +1580,13 @@ CREATE TABLE `tp_ask_for_apply` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='领导请示申请';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_assert_apply` */
+--
+-- Table structure for table `tp_assert_apply`
+--
 
 DROP TABLE IF EXISTS `tp_assert_apply`;
-
 CREATE TABLE `tp_assert_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` char(1) DEFAULT NULL COMMENT '类型(1=办公 2=固定资产)',
@@ -1503,11 +1601,13 @@ CREATE TABLE `tp_assert_apply` (
   `apply_datetime` datetime DEFAULT NULL COMMENT '申请时间',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='办公用品/固定资产';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_assert_goods` */
+--
+-- Table structure for table `tp_assert_goods`
+--
 
 DROP TABLE IF EXISTS `tp_assert_goods`;
-
 CREATE TABLE `tp_assert_goods` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `assert_code` varchar(32) DEFAULT NULL COMMENT '办公用品编号',
@@ -1518,11 +1618,13 @@ CREATE TABLE `tp_assert_goods` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='办公物品列表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_assert_user` */
+--
+-- Table structure for table `tp_assert_user`
+--
 
 DROP TABLE IF EXISTS `tp_assert_user`;
-
 CREATE TABLE `tp_assert_user` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `assert_code` varchar(32) DEFAULT NULL COMMENT '办公用品编号',
@@ -1530,11 +1632,13 @@ CREATE TABLE `tp_assert_user` (
   `print_quantity` varchar(32) DEFAULT NULL COMMENT '印刷数量',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='办公用户列表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_car_break` */
+--
+-- Table structure for table `tp_car_break`
+--
 
 DROP TABLE IF EXISTS `tp_car_break`;
-
 CREATE TABLE `tp_car_break` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `user_id` varchar(32) DEFAULT NULL COMMENT '违章人编号',
@@ -1552,11 +1656,13 @@ CREATE TABLE `tp_car_break` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='车辆违章处理';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_check_project` */
+--
+-- Table structure for table `tp_check_project`
+--
 
 DROP TABLE IF EXISTS `tp_check_project`;
-
 CREATE TABLE `tp_check_project` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `name` varchar(255) DEFAULT NULL COMMENT '项目名称',
@@ -1566,11 +1672,13 @@ CREATE TABLE `tp_check_project` (
   `employ_apply_code` varchar(32) NOT NULL COMMENT '应聘岗位编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='考核项目';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_comp_category` */
+--
+-- Table structure for table `tp_comp_category`
+--
 
 DROP TABLE IF EXISTS `tp_comp_category`;
-
 CREATE TABLE `tp_comp_category` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `name` varchar(32) DEFAULT NULL COMMENT '名称',
@@ -1580,11 +1688,13 @@ CREATE TABLE `tp_comp_category` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='类别管理';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_comp_product` */
+--
+-- Table structure for table `tp_comp_product`
+--
 
 DROP TABLE IF EXISTS `tp_comp_product`;
-
 CREATE TABLE `tp_comp_product` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `category_code` varchar(32) DEFAULT NULL COMMENT '类别编号',
@@ -1597,11 +1707,13 @@ CREATE TABLE `tp_comp_product` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='品名管理';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_comp_regime` */
+--
+-- Table structure for table `tp_comp_regime`
+--
 
 DROP TABLE IF EXISTS `tp_comp_regime`;
-
 CREATE TABLE `tp_comp_regime` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(4) NOT NULL COMMENT '类型(1行政事务类 2 人力资源管理类 3 财务管理类 4 营销管理类 5 生产管理类)',
@@ -1615,11 +1727,13 @@ CREATE TABLE `tp_comp_regime` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公司制度';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_contract` */
+--
+-- Table structure for table `tp_contract`
+--
 
 DROP TABLE IF EXISTS `tp_contract`;
-
 CREATE TABLE `tp_contract` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(255) DEFAULT NULL COMMENT '合同类型',
@@ -1633,11 +1747,13 @@ CREATE TABLE `tp_contract` (
   `is_delete` char(1) DEFAULT NULL COMMENT '0删除 1正常',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_convert_apply` */
+--
+-- Table structure for table `tp_convert_apply`
+--
 
 DROP TABLE IF EXISTS `tp_convert_apply`;
-
 CREATE TABLE `tp_convert_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `entry_code` varchar(32) DEFAULT NULL COMMENT '入职编号',
@@ -1653,11 +1769,13 @@ CREATE TABLE `tp_convert_apply` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='转正申请';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_day_rest` */
+--
+-- Table structure for table `tp_day_rest`
+--
 
 DROP TABLE IF EXISTS `tp_day_rest`;
-
 CREATE TABLE `tp_day_rest` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '序号',
   `date` datetime DEFAULT NULL COMMENT '日期',
@@ -1667,11 +1785,13 @@ CREATE TABLE `tp_day_rest` (
   `company_code` varchar(32) DEFAULT NULL COMMENT '公司编号',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='休息日记录';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_employ_apply` */
+--
+-- Table structure for table `tp_employ_apply`
+--
 
 DROP TABLE IF EXISTS `tp_employ_apply`;
-
 CREATE TABLE `tp_employ_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `real_name` varchar(255) DEFAULT NULL COMMENT '真实姓名',
@@ -1713,11 +1833,13 @@ CREATE TABLE `tp_employ_apply` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='应聘岗位';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_entry_apply` */
+--
+-- Table structure for table `tp_entry_apply`
+--
 
 DROP TABLE IF EXISTS `tp_entry_apply`;
-
 CREATE TABLE `tp_entry_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `position` varchar(255) DEFAULT NULL COMMENT '入职岗位',
@@ -1770,11 +1892,13 @@ CREATE TABLE `tp_entry_apply` (
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='入职申请';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_fee_advance_apply` */
+--
+-- Table structure for table `tp_fee_advance_apply`
+--
 
 DROP TABLE IF EXISTS `tp_fee_advance_apply`;
-
 CREATE TABLE `tp_fee_advance_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(32) DEFAULT NULL COMMENT '类型',
@@ -1797,11 +1921,13 @@ CREATE TABLE `tp_fee_advance_apply` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='费用预支申请';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_leave_apply` */
+--
+-- Table structure for table `tp_leave_apply`
+--
 
 DROP TABLE IF EXISTS `tp_leave_apply`;
-
 CREATE TABLE `tp_leave_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `apply_user` varchar(32) DEFAULT NULL COMMENT '申请人编号',
@@ -1818,11 +1944,13 @@ CREATE TABLE `tp_leave_apply` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='请假申请';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_notice` */
+--
+-- Table structure for table `tp_notice`
+--
 
 DROP TABLE IF EXISTS `tp_notice`;
-
 CREATE TABLE `tp_notice` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(4) NOT NULL COMMENT '类型(1 公司动态 2 公司文件 3 培训说明)',
@@ -1838,11 +1966,13 @@ CREATE TABLE `tp_notice` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公告管理';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_notice_read` */
+--
+-- Table structure for table `tp_notice_read`
+--
 
 DROP TABLE IF EXISTS `tp_notice_read`;
-
 CREATE TABLE `tp_notice_read` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '序号',
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
@@ -1851,11 +1981,13 @@ CREATE TABLE `tp_notice_read` (
   `ref_type` varchar(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公告阅读记录';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_overtime_apply` */
+--
+-- Table structure for table `tp_overtime_apply`
+--
 
 DROP TABLE IF EXISTS `tp_overtime_apply`;
-
 CREATE TABLE `tp_overtime_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `apply_user` varchar(32) DEFAULT NULL COMMENT '申请人',
@@ -1871,11 +2003,13 @@ CREATE TABLE `tp_overtime_apply` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='加班申请';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_probation_assess` */
+--
+-- Table structure for table `tp_probation_assess`
+--
 
 DROP TABLE IF EXISTS `tp_probation_assess`;
-
 CREATE TABLE `tp_probation_assess` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `convert_code` varchar(32) DEFAULT NULL COMMENT '转正申请编号',
@@ -1883,11 +2017,13 @@ CREATE TABLE `tp_probation_assess` (
   `grade` decimal(18,8) DEFAULT NULL COMMENT '评估分数',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='试用期评估';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_recruit_apply` */
+--
+-- Table structure for table `tp_recruit_apply`
+--
 
 DROP TABLE IF EXISTS `tp_recruit_apply`;
-
 CREATE TABLE `tp_recruit_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `department_code` varchar(32) DEFAULT NULL COMMENT '申请部门编号',
@@ -1919,11 +2055,13 @@ CREATE TABLE `tp_recruit_apply` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用人申请';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_scope_people` */
+--
+-- Table structure for table `tp_scope_people`
+--
 
 DROP TABLE IF EXISTS `tp_scope_people`;
-
 CREATE TABLE `tp_scope_people` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '序号',
   `type` varchar(32) NOT NULL COMMENT '类型(所有人员=-1,分公司=1，部门=2,职位=3，具体人=4)',
@@ -1931,11 +2069,13 @@ CREATE TABLE `tp_scope_people` (
   `ref_code` varchar(32) DEFAULT NULL COMMENT '参考编号',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公告或制度人员范围';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_social_relation` */
+--
+-- Table structure for table `tp_social_relation`
+--
 
 DROP TABLE IF EXISTS `tp_social_relation`;
-
 CREATE TABLE `tp_social_relation` (
   `code` varchar(32) NOT NULL,
   `archive_code` varchar(32) DEFAULT NULL COMMENT '人事档案编号',
@@ -1947,11 +2087,13 @@ CREATE TABLE `tp_social_relation` (
   `is_delete` char(1) DEFAULT NULL COMMENT '0删除1正常',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='社会关系';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_storage_in` */
+--
+-- Table structure for table `tp_storage_in`
+--
 
 DROP TABLE IF EXISTS `tp_storage_in`;
-
 CREATE TABLE `tp_storage_in` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `category_code` varchar(32) DEFAULT NULL COMMENT '类别编号',
@@ -1966,11 +2108,13 @@ CREATE TABLE `tp_storage_in` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='入库管理';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_storage_out` */
+--
+-- Table structure for table `tp_storage_out`
+--
 
 DROP TABLE IF EXISTS `tp_storage_out`;
-
 CREATE TABLE `tp_storage_out` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `category_code` varchar(32) DEFAULT NULL COMMENT '类别编号',
@@ -1984,11 +2128,13 @@ CREATE TABLE `tp_storage_out` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='出库管理';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_supple_sign_apply` */
+--
+-- Table structure for table `tp_supple_sign_apply`
+--
 
 DROP TABLE IF EXISTS `tp_supple_sign_apply`;
-
 CREATE TABLE `tp_supple_sign_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `apply_user` varchar(32) DEFAULT NULL COMMENT '申请人编号',
@@ -2000,11 +2146,13 @@ CREATE TABLE `tp_supple_sign_apply` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='补签申请';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_supple_sign_apply_detail` */
+--
+-- Table structure for table `tp_supple_sign_apply_detail`
+--
 
 DROP TABLE IF EXISTS `tp_supple_sign_apply_detail`;
-
 CREATE TABLE `tp_supple_sign_apply_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '序号',
   `supply_sign_apply_code` varchar(32) DEFAULT NULL COMMENT '补签申请编号',
@@ -2012,11 +2160,13 @@ CREATE TABLE `tp_supple_sign_apply_detail` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='补签申请明细';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_transfer_position_apply` */
+--
+-- Table structure for table `tp_transfer_position_apply`
+--
 
 DROP TABLE IF EXISTS `tp_transfer_position_apply`;
-
 CREATE TABLE `tp_transfer_position_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `apply_user` varchar(32) DEFAULT NULL COMMENT '申请人',
@@ -2032,11 +2182,13 @@ CREATE TABLE `tp_transfer_position_apply` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='调岗申请';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_travel_apply` */
+--
+-- Table structure for table `tp_travel_apply`
+--
 
 DROP TABLE IF EXISTS `tp_travel_apply`;
-
 CREATE TABLE `tp_travel_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `type` varchar(32) DEFAULT NULL COMMENT '类型(1=出差,2=公出)',
@@ -2051,11 +2203,13 @@ CREATE TABLE `tp_travel_apply` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='出差/公出申请';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_travel_apply_detail` */
+--
+-- Table structure for table `tp_travel_apply_detail`
+--
 
 DROP TABLE IF EXISTS `tp_travel_apply_detail`;
-
 CREATE TABLE `tp_travel_apply_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `travel_apply_code` varchar(32) DEFAULT NULL COMMENT '出差申请编号',
@@ -2065,11 +2219,13 @@ CREATE TABLE `tp_travel_apply_detail` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='时间申请明细';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_welfare_apply` */
+--
+-- Table structure for table `tp_welfare_apply`
+--
 
 DROP TABLE IF EXISTS `tp_welfare_apply`;
-
 CREATE TABLE `tp_welfare_apply` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `apply_user` varchar(32) DEFAULT NULL COMMENT '申请人',
@@ -2081,11 +2237,13 @@ CREATE TABLE `tp_welfare_apply` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='福利发放申请';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_welfare_user` */
+--
+-- Table structure for table `tp_welfare_user`
+--
 
 DROP TABLE IF EXISTS `tp_welfare_user`;
-
 CREATE TABLE `tp_welfare_user` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `welfare_code` varchar(255) DEFAULT NULL COMMENT '福利编号',
@@ -2093,11 +2251,13 @@ CREATE TABLE `tp_welfare_user` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='福利关联人员';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tp_work_experience` */
+--
+-- Table structure for table `tp_work_experience`
+--
 
 DROP TABLE IF EXISTS `tp_work_experience`;
-
 CREATE TABLE `tp_work_experience` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `parent_code` varchar(32) DEFAULT NULL COMMENT '父级编号',
@@ -2110,11 +2270,13 @@ CREATE TABLE `tp_work_experience` (
   `prover_mobile` varchar(255) DEFAULT NULL COMMENT '证明人联系电话',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工作经历';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tstd_account` */
+--
+-- Table structure for table `tstd_account`
+--
 
 DROP TABLE IF EXISTS `tstd_account`;
-
 CREATE TABLE `tstd_account` (
   `account_number` varchar(32) NOT NULL DEFAULT '' COMMENT '账号',
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
@@ -2132,11 +2294,13 @@ CREATE TABLE `tstd_account` (
   `last_order` varchar(32) DEFAULT NULL COMMENT '最近一次变动对应的流水编号',
   PRIMARY KEY (`account_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tstd_address` */
+--
+-- Table structure for table `tstd_address`
+--
 
 DROP TABLE IF EXISTS `tstd_address`;
-
 CREATE TABLE `tstd_address` (
   `code` varchar(32) NOT NULL COMMENT '收件编号',
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
@@ -2149,11 +2313,13 @@ CREATE TABLE `tstd_address` (
   `is_default` char(1) DEFAULT NULL COMMENT '是否默认地址',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tstd_bankcard` */
+--
+-- Table structure for table `tstd_bankcard`
+--
 
 DROP TABLE IF EXISTS `tstd_bankcard`;
-
 CREATE TABLE `tstd_bankcard` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
@@ -2170,11 +2336,13 @@ CREATE TABLE `tstd_bankcard` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tstd_channel_bank` */
+--
+-- Table structure for table `tstd_channel_bank`
+--
 
 DROP TABLE IF EXISTS `tstd_channel_bank`;
-
 CREATE TABLE `tstd_channel_bank` (
   `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '编号（自增长）',
   `bank_code` varchar(32) DEFAULT NULL COMMENT '银行编号',
@@ -2189,11 +2357,13 @@ CREATE TABLE `tstd_channel_bank` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tstd_charge` */
+--
+-- Table structure for table `tstd_charge`
+--
 
 DROP TABLE IF EXISTS `tstd_charge`;
-
 CREATE TABLE `tstd_charge` (
   `code` varchar(32) NOT NULL COMMENT '针对编号',
   `pay_group` varchar(32) DEFAULT NULL COMMENT '支付组号',
@@ -2217,11 +2387,13 @@ CREATE TABLE `tstd_charge` (
   `channel_type` varchar(32) DEFAULT NULL COMMENT '支付渠道',
   PRIMARY KEY (`code`) COMMENT '充值订单'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tstd_cnavigate` */
+--
+-- Table structure for table `tstd_cnavigate`
+--
 
 DROP TABLE IF EXISTS `tstd_cnavigate`;
-
 CREATE TABLE `tstd_cnavigate` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
@@ -2239,11 +2411,13 @@ CREATE TABLE `tstd_cnavigate` (
   `system_code` varchar(32) DEFAULT NULL COMMENT '系统编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tstd_jour` */
+--
+-- Table structure for table `tstd_jour`
+--
 
 DROP TABLE IF EXISTS `tstd_jour`;
-
 CREATE TABLE `tstd_jour` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `kind` varchar(32) DEFAULT NULL COMMENT '流水类型（余额流水、冻结流水）',
@@ -2273,11 +2447,13 @@ CREATE TABLE `tstd_jour` (
   `adjust_datetime` datetime DEFAULT NULL COMMENT '调账时间',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tstd_user` */
+--
+-- Table structure for table `tstd_user`
+--
 
 DROP TABLE IF EXISTS `tstd_user`;
-
 CREATE TABLE `tstd_user` (
   `user_id` varchar(32) NOT NULL COMMENT '编号',
   `kind` varchar(4) DEFAULT NULL COMMENT '用户类型',
@@ -2307,11 +2483,13 @@ CREATE TABLE `tstd_user` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`) COMMENT '用户'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tstd_withdraw` */
+--
+-- Table structure for table `tstd_withdraw`
+--
 
 DROP TABLE IF EXISTS `tstd_withdraw`;
-
 CREATE TABLE `tstd_withdraw` (
   `code` varchar(32) NOT NULL COMMENT '针对编号',
   `account_number` varchar(32) DEFAULT NULL COMMENT '针对账号',
@@ -2339,11 +2517,13 @@ CREATE TABLE `tstd_withdraw` (
   `pay_datetime` datetime DEFAULT NULL COMMENT '支付回录时间',
   PRIMARY KEY (`code`) COMMENT '取现订单'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tsys_biz_log` */
+--
+-- Table structure for table `tsys_biz_log`
+--
 
 DROP TABLE IF EXISTS `tsys_biz_log`;
-
 CREATE TABLE `tsys_biz_log` (
   `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '序号',
   `parent_order` varchar(32) NOT NULL COMMENT '上级订单编号',
@@ -2361,11 +2541,13 @@ CREATE TABLE `tsys_biz_log` (
   `speed_time` varchar(255) DEFAULT NULL COMMENT '花费时间(单位：秒)',
   PRIMARY KEY (`id`) COMMENT '业务日志跟踪表'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tsys_biz_team` */
+--
+-- Table structure for table `tsys_biz_team`
+--
 
 DROP TABLE IF EXISTS `tsys_biz_team`;
-
 CREATE TABLE `tsys_biz_team` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `name` varchar(255) DEFAULT NULL COMMENT '团队名称',
@@ -2380,11 +2562,13 @@ CREATE TABLE `tsys_biz_team` (
   `water_bill` varchar(255) DEFAULT NULL COMMENT '水单',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='业务团队';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tsys_config` */
+--
+-- Table structure for table `tsys_config`
+--
 
 DROP TABLE IF EXISTS `tsys_config`;
-
 CREATE TABLE `tsys_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(96) DEFAULT NULL,
@@ -2397,11 +2581,13 @@ CREATE TABLE `tsys_config` (
   `system_code` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tsys_department` */
+--
+-- Table structure for table `tsys_department`
+--
 
 DROP TABLE IF EXISTS `tsys_department`;
-
 CREATE TABLE `tsys_department` (
   `code` varchar(32) NOT NULL COMMENT '编号',
   `name` varchar(255) DEFAULT NULL COMMENT '部门名称',
@@ -2418,11 +2604,13 @@ CREATE TABLE `tsys_department` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`) COMMENT '部门表'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tsys_dict` */
+--
+-- Table structure for table `tsys_dict`
+--
 
 DROP TABLE IF EXISTS `tsys_dict`;
-
 CREATE TABLE `tsys_dict` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` char(3) DEFAULT NULL,
@@ -2436,11 +2624,13 @@ CREATE TABLE `tsys_dict` (
   `system_code` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tsys_menu` */
+--
+-- Table structure for table `tsys_menu`
+--
 
 DROP TABLE IF EXISTS `tsys_menu`;
-
 CREATE TABLE `tsys_menu` (
   `code` varchar(96) DEFAULT NULL,
   `name` varchar(96) DEFAULT NULL,
@@ -2452,11 +2642,13 @@ CREATE TABLE `tsys_menu` (
   `remark` varchar(765) DEFAULT NULL,
   `parent_code` varchar(96) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tsys_menu_role` */
+--
+-- Table structure for table `tsys_menu_role`
+--
 
 DROP TABLE IF EXISTS `tsys_menu_role`;
-
 CREATE TABLE `tsys_menu_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `role_code` varchar(96) DEFAULT NULL,
@@ -2466,11 +2658,13 @@ CREATE TABLE `tsys_menu_role` (
   `remark` varchar(765) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tsys_node` */
+--
+-- Table structure for table `tsys_node`
+--
 
 DROP TABLE IF EXISTS `tsys_node`;
-
 CREATE TABLE `tsys_node` (
   `code` varchar(32) NOT NULL COMMENT '节点编号',
   `name` varchar(255) DEFAULT NULL COMMENT '节点名称',
@@ -2478,11 +2672,13 @@ CREATE TABLE `tsys_node` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`) COMMENT '流程'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tsys_node_flow` */
+--
+-- Table structure for table `tsys_node_flow`
+--
 
 DROP TABLE IF EXISTS `tsys_node_flow`;
-
 CREATE TABLE `tsys_node_flow` (
   `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '序号',
   `type` varchar(4) DEFAULT NULL COMMENT '类型',
@@ -2492,11 +2688,13 @@ CREATE TABLE `tsys_node_flow` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) COMMENT '节点流程配置'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tsys_role` */
+--
+-- Table structure for table `tsys_role`
+--
 
 DROP TABLE IF EXISTS `tsys_role`;
-
 CREATE TABLE `tsys_role` (
   `code` varchar(96) DEFAULT NULL,
   `name` varchar(96) DEFAULT NULL,
@@ -2505,22 +2703,26 @@ CREATE TABLE `tsys_role` (
   `update_datetime` datetime DEFAULT NULL,
   `remark` varchar(765) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tsys_role_node` */
+--
+-- Table structure for table `tsys_role_node`
+--
 
 DROP TABLE IF EXISTS `tsys_role_node`;
-
 CREATE TABLE `tsys_role_node` (
   `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '序号',
   `role_code` varchar(32) DEFAULT NULL COMMENT '角色编号',
   `node_code` varchar(32) DEFAULT NULL COMMENT '节点编号',
   PRIMARY KEY (`id`) COMMENT '角色节点'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Table structure for table `tsys_user` */
+--
+-- Table structure for table `tsys_user`
+--
 
 DROP TABLE IF EXISTS `tsys_user`;
-
 CREATE TABLE `tsys_user` (
   `user_id` varchar(32) NOT NULL COMMENT '用户ID',
   `type` varchar(4) DEFAULT NULL COMMENT '类型',
@@ -2543,7 +2745,4 @@ CREATE TABLE `tsys_user` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+-- Dump completed on 2018-07-31 11:16:12
