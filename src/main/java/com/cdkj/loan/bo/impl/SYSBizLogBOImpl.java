@@ -18,8 +18,8 @@ import com.cdkj.loan.enums.ESYSBizLogStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
-        ISYSBizLogBO {
+public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
+        implements ISYSBizLogBO {
 
     @Autowired
     private ISYSBizLogDAO sysBizLogDAO;
@@ -42,7 +42,8 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
 
     @Override
     public void recordCurrentSYSBizLog(String parentOrder, EBizLogType refType,
-            String refOrder, String dealNode, String dealNote, String operator) {
+            String refOrder, String dealNode, String dealNote,
+            String operator) {
         SYSBizLog data = new SYSBizLog();
         data.setParentOrder(parentOrder);
         data.setRefType(refType.getCode());
@@ -53,7 +54,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
         SYSUser sysUser = sysUserBO.getUser(operator);
         data.setOperateRole(sysUser.getRoleCode());
         data.setOperator(sysUser.getUserId());
-        data.setOperatorName(sysUser.getLoginName());
+        data.setOperatorName(sysUser.getRealName());
         data.setOperatorMobile(sysUser.getMobile());
         data.setStartDatetime(new Date());
         data.setEndDatetime(new Date());
@@ -88,14 +89,15 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
             Long day = diff / (24 * 60 * 60 * 1000);
             Long hour = (diff / (60 * 60 * 1000) - day * 24);
             Long min = ((diff / (60 * 1000)) - day * 24 * 60 - hour * 60);
-            Long sec = (diff / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+            Long sec = (diff / 1000 - day * 24 * 60 * 60 - hour * 60 * 60
+                    - min * 60);
             data.setSpeedTime(day + "天" + hour + "时" + min + "分" + sec + "秒");
             data.setDealNote(dealNote);
             data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());// 已处理
             SYSUser sysUser = sysUserBO.getUser(operator);
             data.setOperateRole(sysUser.getRoleCode());
             data.setOperator(sysUser.getUserId());
-            data.setOperatorName(sysUser.getLoginName());
+            data.setOperatorName(sysUser.getRealName());
             data.setOperatorMobile(sysUser.getMobile());
             sysBizLogDAO.updateSysBizLog(data);
         }

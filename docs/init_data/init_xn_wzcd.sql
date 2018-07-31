@@ -135,7 +135,6 @@ INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804251644341488287','新增','2','/add','1','admin','2018-07-24 14:54:30','','SM201804242141231816698');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804251646149125308','删除','2','/delete','2','admin','2018-07-24 14:54:30','','SM201804242141231816698');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804251647429608504','修改','2','/edit','3','admin','2018-07-24 14:54:30','','SM201804242141231816698');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804251720368955246','新增','2','/add','1','admin','2018-07-24 14:54:30','','SM201804242142138278448');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804251721516584466','重置密码','2','/reset','3','admin','2018-07-24 14:54:30','','SM201804242142138278448');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804251731271739441','修改','2','/edit','1','admin','2018-07-24 14:54:30','','SM201804242144385705547');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201804251900329131980','新增','2','/add','1','admin','2018-07-24 14:54:30','','SM201804251637301909818');
@@ -232,7 +231,7 @@ INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201805311013495606615','补充材料清单','2','/setMateriallist','0','admin','2018-07-24 14:54:30','','SM201805310347411931086');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201805311923406644904','新增','2','/add','1','admin','2018-07-24 14:54:30','','SM201805310551120968650');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806041128375806577','确认付款','2','/certain','5','admin','2018-07-24 14:54:30','结清审核','SM201805291034405409203');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806041132346191499','详情','2','/detail','5','admin','2018-07-24 14:54:30','解除抵押','SM201805291035342036590');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806041132346191499','详情','2','/detail','6','admin','2018-07-24 14:54:30','解除抵押','SM201805291035342036590');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806042259475308530','导入','2','/import','1','admin','2018-07-24 14:54:30','导入逾期名单','SM201805291117032851555');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806042300129597474','处理','2','/dispose','2','admin','2018-07-24 14:54:30','导入逾期名单','SM201805291117032851555');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806042300273383652','详情','2','/detail','3','admin','2018-07-24 14:54:30','导入逾期名单','SM201805291117032851555');
@@ -636,7 +635,6 @@ INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201804251637301909818','U201807171419188821682','2018-07-24 15:00:45',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201804251641205262986','U201807171419188821682','2018-07-24 15:00:45',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201804251644341488287','U201807171419188821682','2018-07-24 15:00:45',NULL);
-INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201804251720368955246','U201807171419188821682','2018-07-24 15:00:45',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201804251731271739441','U201807171419188821682','2018-07-24 15:00:45',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201804251900329131980','U201807171419188821682','2018-07-24 15:00:45',NULL);
 INSERT INTO `tsys_menu_role` (`role_code`,`menu_code`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','SM201804251904256377856','U201807171419188821682','2018-07-24 15:00:45',NULL);
@@ -1862,11 +1860,11 @@ insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('009_01','银�
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('009_02','总公司寄送合同给分公司','009',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('009_03','车辆抵押开始','009',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('009_04','待提交抵押完成','009',NULL);
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('009_05','分公司寄送抵押材料给总公司','009',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('009_05','分公司寄送抵押材料','009',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('009_06','理件岗理件','009',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('009_07','寄件岗寄送银行','009',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('009_08','提交银行','009',NULL);
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('009_09','车辆抵押完成','009',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('009_09','抵押完成','009',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('010_01','制单','010',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('010_02','分公司总经理审批','010',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('010_03','财务确认','010',NULL);

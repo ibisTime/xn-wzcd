@@ -25,14 +25,14 @@ public enum EBudgetOrderNode {
     LOCAL_PRINTPOST_PRINT("008_01", "打印岗打印"), LOCAL_COLLATEPOST_COLLATE(
             "008_02", "理件岗理件"), LOCAL_SENDPOST_SEND_BANK("008_03",
             "寄件岗寄送材料给银行驻点"), LOCAL_SUBMIT_BANK("008_04", "提交银行"), TODO_LOCAL_PLEDGE_ACHIEVE(
-            "008_05", "待提交抵押完成"), LOCAL_PLEDGE_ACHIEVE("008_06", "车辆抵押完成"),
+            "008_05", "待提交抵押完成"), LOCAL_PLEDGE_ACHIEVE("008_06", "抵押完成"),
 
     OUT_BANKPOINT_SEND_PARENT("009_01", "银行驻点发送抵押合同给总公司"), OUT_PARENT_SEND_BRANCH(
             "009_02", "总公司寄送合同给分公司"), OUT_PLEDGE_BEGIN("009_03", "抵押开始"), TODO_OUT_PLEDGE_ACHIEVE(
             "009_04", "待提交抵押完成"), OUT_BRANCH_SEND_PARENT("009_05",
             "分公司寄送抵押材料给总公司"), OUT_COLLATEPOST_COLLATE("009_06", "理件岗理件"), OUT_SENDPOST_SEND_BANK(
             "009_07", "寄件岗寄送材料给银行驻点"), OUT_SUBMIT_BANK("009_08", "提交银行"), OUT_PLEDGE_ACHIEVE(
-            "009_09", "车辆抵押完成"),
+            "009_09", "抵押完成"),
 
     INVOICE_MISMATCH_APPLY("011_01", "发票不匹配申请"), APPROVE_APPLY("011_02",
             "发票不匹配审核"), TWO_APPROVE_APPLY("011_03", "发票不匹配二审"), FINANCE_CONFIRM(

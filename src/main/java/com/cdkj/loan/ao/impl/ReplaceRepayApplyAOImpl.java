@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.IReplaceRepayApplyAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankcardBO;
+import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.IReplaceRepayApplyBO;
@@ -17,6 +18,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bankcard;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.ReplaceRepayApply;
 import com.cdkj.loan.domain.SYSUser;
@@ -51,6 +53,9 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
 
     @Autowired
     private IBankcardBO bankcardBO;
+
+    @Autowired
+    private IBudgetOrderBO budgetOrderBO;
 
     @Override
     public String addReplaceRepayApply(XN632320Req req) {
@@ -149,9 +154,9 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
             replaceRepayApply.setUpdaterName(updaterUser.getRealName());
         }
         if (StringUtils.isNotBlank(replaceRepayApply.getBizCode())) {
-            RepayBiz repayBiz = repayBizBO
-                .getRepayBiz(replaceRepayApply.getBizCode());
-            replaceRepayApply.setBudgetOrderCode(repayBiz.getBudgetOrderCode());
+            BudgetOrder budgetOrder = budgetOrderBO
+                .getBudgetOrderByRepayBizCode(replaceRepayApply.getBizCode());
+            replaceRepayApply.setBudgetOrderCode(budgetOrder.getCode());
         }
     }
 
