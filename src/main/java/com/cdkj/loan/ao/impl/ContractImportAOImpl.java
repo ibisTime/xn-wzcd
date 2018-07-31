@@ -54,7 +54,9 @@ public class ContractImportAOImpl implements IContractImportAO {
                 BudgetOrder budgetOrder = budgetOrderList.get(0);
                 budgetOrder.setBankContractCode(contract.getContractCode());
                 budgetOrder.setBillDatetime(contract.getBillDatetime());
-                budgetOrder.setRepayBankDate(contract.getRepayBankDate());
+                if (contract.getRepayBankDate() != null) {
+                    budgetOrder.setRepayBankDate(contract.getRepayBankDate());
+                }
                 budgetOrder.setBankCardNumber(contract.getBankCardNumber());
                 budgetOrder.setContractSignDate(
                     DateUtil.strToDate(contract.getContractSignDate(),

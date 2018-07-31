@@ -322,7 +322,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 .equals(data.getType())) {
                 data.setStatus(ELogisticsStatus.RECEIVED.getCode());// 普通物流改为待审核
                 RepayBiz repayBiz = repayBizBO.getRepayBiz(data.getBizCode());
-                // 如果是打印岗理件岗寄件刚，无需审核，直接收件
+                String curNodeCode = repayBiz.getCurNodeCode();
+                // 如果是打印岗理件岗寄件刚，无需审核，直接收件。并走到下一节点
                 if (!ERepayBizNode.BANK_REC_LOGIC.getCode()
                     .equals(repayBiz.getCurNodeCode())) {
                     data.setStatus(
@@ -330,11 +331,13 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     // 还款业务改回不在物流传递中
                     repayBiz.setIsLogistics(EBoolean.NO.getCode());
                     repayBizBO.updateIsLogistics(repayBiz);
+
+                    NodeFlow nodeFlow = nodeFlowBO
+                        .getNodeFlowByCurrentNode(curNodeCode);
+                    curNodeCode = nodeFlow.getNextNode();
                 }
                 if (ERepayBizNode.PHYSICAL_PARTS.getCode()
                     .equals(repayBiz.getCurNodeCode())) {
-                    data.setStatus(
-                        ELogisticsStatus.RECEIVED_NOT_AUDITE.getCode());
                     // 再生成一条资料传递
                     NodeFlow nodeFlowNext = nodeFlowBO
                         .getNodeFlowByCurrentNode(repayBiz.getCurNodeCode());
@@ -348,7 +351,8 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     repayBiz.setIsLogistics(EBoolean.YES.getCode());
                     repayBizBO.updateIsLogistics(repayBiz);
                 }
-                repayBizBO.refreshBankRecLogic(data.getBizCode(), operator);
+                repayBizBO.refreshBankRecLogic(data.getBizCode(), curNodeCode,
+                    operator);
             }
             logisticsBO.receiveLogistics(data);
         }

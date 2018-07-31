@@ -271,8 +271,7 @@
 		,t.cur_node_code
 		FROM
 		tdq_req_budget t
-		WHERE t.company_code= #{companyCode} 
-		AND to_days(t.pay_datetime) = to_days(now());
+		WHERE t.company_code= #{companyCode}
 	</select>
 
 </mapper>
