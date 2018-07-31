@@ -1,6 +1,8 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -16,8 +18,6 @@ import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.ICarDealerProtocolDAO;
-import com.cdkj.loan.domain.Bank;
-import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.dto.req.XN632060ReqProtocol;
@@ -176,20 +176,17 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
     }
 
     @Override
-    public XN632291Res calProtocolFee(String budgetOrderCode,
+    public XN632291Res calProtocolFee(Long loanAmount, String bankCode,
             String carDealerCode) {
         XN632291Res res = new XN632291Res();
-        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(budgetOrderCode);
-        Long loanAmount = budgetOrder.getLoanAmount();
-        Bank bank = bankBO.getBankBySubbranch(budgetOrder.getLoanBankCode());
         EBankType eBankType = null;
-        if (EBankType.GH.getCode().equals(bank.getBankCode())) {
+        if (EBankType.GH.getCode().equals(bankCode)) {
             eBankType = EBankType.GH;
         }
-        if (EBankType.ZH.getCode().equals(bank.getBankCode())) {
+        if (EBankType.ZH.getCode().equals(bankCode)) {
             eBankType = EBankType.ZH;
         }
-        if (EBankType.JH.getCode().equals(bank.getBankCode())) {
+        if (EBankType.JH.getCode().equals(bankCode)) {
             eBankType = EBankType.JH;
         }
         CarDealerProtocol carDealerProtocol = getCarDealerProtocolByCarDealerCode(
@@ -222,18 +219,26 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
             res.setOtherFee(String.valueOf(AmountUtil.mul(loanAmount,
                 carDealerProtocol.getOtherRate())));
         }
+        Map<String, Long> map = calculateOilSubsidyGpsDeduct(loanAmount);
+        res.setOilSubsidy(String.valueOf(map.get("oilSubsidy")));// 油补
+        res.setGpsDeduct(String.valueOf(map.get("gpsDeduct")));// GPS提成
+        return res;
+    }
+
+    @Override
+    public Map<String, Long> calculateOilSubsidyGpsDeduct(Long loanAmount) {
+        HashMap<String, Long> map = new HashMap<String, Long>();
         SYSConfig sysConfigoil = sysConfigBO
             .getSYSConfig(SysConstants.BUDGET_OIL_SUBSIDY_RATE);
         Double oilSubsidyBFB = StringValidater.toDouble(sysConfigoil
             .getCvalue());
-        Long oilSubsidy = AmountUtil.mul(budgetOrder.getLoanAmount(),
-            oilSubsidyBFB);
-        res.setOilSubsidy(String.valueOf(oilSubsidy));// 油补
+        Long oilSubsidy = AmountUtil.mul(loanAmount, oilSubsidyBFB);
+        map.put("oilSubsidy", oilSubsidy);
         SYSConfig sysConfig = sysConfigBO
             .getSYSConfig(SysConstants.BUDGET_GPS_DEDUCT_RATE);
         Double gpsBFB = StringValidater.toDouble((sysConfig.getCvalue()));
-        Long gpsDeduct = AmountUtil.mul(budgetOrder.getLoanAmount(), gpsBFB);
-        res.setGpsDeduct(String.valueOf(gpsDeduct));// GPS提成
-        return res;
+        Long gpsDeduct = AmountUtil.mul(loanAmount, gpsBFB);
+        map.put("gpsDeduct", gpsDeduct);
+        return map;
     }
 }

@@ -13,7 +13,6 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.dto.req.XN632060ReqProtocol;
-import com.cdkj.loan.dto.res.XN632291Res;
 
 @Service
 public class CarDealerProtocolAOImpl implements ICarDealerProtocolAO {
@@ -93,13 +92,5 @@ public class CarDealerProtocolAOImpl implements ICarDealerProtocolAO {
     @Override
     public CarDealerProtocol getCarDealerProtocol(int id) {
         return carDealerProtocolBO.getCarDealerProtocol(id);
-    }
-
-    @Override
-    public XN632291Res calProtocolFee(String budgetOrderCode,
-            String carDealerCode) {
-        return carDealerProtocolBO.calProtocolFee(budgetOrderCode,
-            carDealerCode);
-
     }
 }
