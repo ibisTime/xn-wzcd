@@ -35,10 +35,10 @@ public class BudgetOrder extends ABaseDO {
     // 汽车经销商编号
     private String carDealerCode;
 
-    // 汽车经销商名称(外单手动填写)
+    // 汽车经销商名称(外单填写)
     private String outCarDealerName;
 
-    // 贷款银行编号
+    // 贷款银行编号（支行编号）
     private String loanBankCode;
 
     // 厂商指导价

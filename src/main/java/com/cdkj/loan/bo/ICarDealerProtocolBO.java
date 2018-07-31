@@ -1,6 +1,7 @@
 package com.cdkj.loan.bo;
 
 import java.util.List;
+import java.util.Map;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.CarDealerProtocol;
@@ -28,7 +29,10 @@ public interface ICarDealerProtocolBO extends IPaginableBO<CarDealerProtocol> {
             String carDealerCode, String bankCode);
 
     // 根据协议计算各种费用
-    public XN632291Res calProtocolFee(String budgetOrderCode,
+    public XN632291Res calProtocolFee(Long loanAmount, String bankCode,
             String carDealerCode);
+
+    // 计算油补和GPS提成
+    public Map<String, Long> calculateOilSubsidyGpsDeduct(Long loanAmount);
 
 }
