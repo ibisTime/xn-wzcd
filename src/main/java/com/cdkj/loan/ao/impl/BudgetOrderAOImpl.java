@@ -1100,7 +1100,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 DateUtil.FRONT_DATE_FORMAT_STRING));
 
         budgetOrder.setInsuranceBank(req.getInsuranceBank());
-        budgetOrder.setSaleUserId(req.getSaleUserId());
         budgetOrder.setRegCertificateCode(req.getRegCertificateCode());
 
         budgetOrder.setGuarantor1Name(req.getGuarantor1Name());

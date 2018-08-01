@@ -39,9 +39,6 @@ public class XN632200Req {
     // 保险经办银行
     private String insuranceBank;
 
-    // 业务员编号
-    private String saleUserId;
-
     // 登记证书号
     private String regCertificateCode;
 
@@ -220,14 +217,6 @@ public class XN632200Req {
 
     public void setInsuranceBank(String insuranceBank) {
         this.insuranceBank = insuranceBank;
-    }
-
-    public String getSaleUserId() {
-        return saleUserId;
-    }
-
-    public void setSaleUserId(String saleUserId) {
-        this.saleUserId = saleUserId;
     }
 
     public String getRegCertificateCode() {
