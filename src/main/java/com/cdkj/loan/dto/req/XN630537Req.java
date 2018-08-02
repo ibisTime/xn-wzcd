@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class XN630532Req {
+public class XN630537Req {
 
     @NotBlank
     private String code;// 还款计划编号

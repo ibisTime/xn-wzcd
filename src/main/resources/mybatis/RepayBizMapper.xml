@@ -130,11 +130,20 @@
 			<if test="periods != null and periods != '' ">
 				AND t.periods = #{periods}
 			</if>
+			<if test="bankFkDatetime != null and bankFkDatetime != '' ">
+				AND t.bank_fk_datetime = #{bankFkDatetime}
+			</if>
 			<if test="bankFkDatetimeStart != null and bankFkDatetimeStart != '' ">
 				<![CDATA[AND t.bank_fk_datetime >= #{bankFkDatetimeStart}]]>
 			</if>
 			<if test="bankFkDatetimeEnd != null and bankFkDatetimeEnd != '' ">
 				<![CDATA[AND t.bank_fk_datetime <= #{bankFkDatetimeEnd}]]>
+			</if>
+			<if test="curOverdueCountStart != null and curOverdueCountStart != '' ">
+				<![CDATA[AND t.cur_overdue_count >= #{curOverdueCountStart}]]>
+			</if>
+			<if test="curOverdueCountEnd != null and curOverdueCountEnd != '' ">
+				<![CDATA[AND t.cur_overdue_count <= #{curOverdueCountEnd}]]>
 			</if>
 			<if test="curOverdueCount != null and curOverdueCount != '' ">
 				AND t.cur_overdue_count = #{curOverdueCount}

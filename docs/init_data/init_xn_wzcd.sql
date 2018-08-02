@@ -535,8 +535,8 @@ INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806190005143218771','申请代偿','2','/apply','3','admin','2018-07-24 14:54:30','','SM201804271806010518814');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806190149518787204','/短信提醒','2','/message','1','admin','2018-07-24 14:54:30','车辆续保','SM201806141604269041642');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806190150422658486','续保','2','/continue','2','admin','2018-07-24 14:54:30','车辆续保','SM201806141604269041642');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806190349101714733','风控经理审核','2','/checkDirector','2','admin','2018-07-24 14:54:30','','SM201805291030239333610');
-INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806190350205773047','分公司总经理审查','2','/compCheck','3','admin','2018-07-24 14:54:30','','SM201805291030239333610');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806190350205773047','分公司总经理审查','2','/compCheck','2','admin','2018-07-24 14:54:30','','SM201805291030239333610');
+INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806190349101714733','风控经理审核','2','/checkDirector','3','admin','2018-07-24 14:54:30','','SM201805291030239333610');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806190352274735585','风控总监审查','2','/checkDirectorTwo','4','admin','2018-07-24 14:54:30','','SM201805291030239333610');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806190353007713237','财务经理审核','2','/finance','5','admin','2018-07-24 14:54:30','','SM201805291030239333610');
 INSERT INTO `tsys_menu` (`code`,`name`,`type`,`url`,`order_no`,`updater`,`update_datetime`,`remark`,`parent_code`) VALUES ('SM201806190639041558027','司法诉讼','2','/litigation','1','admin','2018-07-24 14:54:30','司法诉讼','SM201805291033129682833');
@@ -1590,7 +1590,6 @@ insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('0',NULL,'collection_result','催收结果','admin','2018-07-08 07:34:25','','CD-CWZCD000020','CD-CWZCD000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','collection_result','all_repay','全额还款','admin','2018-07-08 07:34:25','','CD-CWZCD000020','CD-CWZCD000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','collection_result','part_repay','部分还款','admin','2018-07-08 07:34:25','','CD-CWZCD000020','CD-CWZCD000020');
-insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','collection_result','provide_deposit','提供押金','admin','2018-07-08 07:34:25','','CD-CWZCD000020','CD-CWZCD000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','collection_result','rejust_repay','无力偿还','admin','2018-07-08 07:34:25','','CD-CWZCD000020','CD-CWZCD000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','collection_result','take_car','收车处理','admin','2018-07-08 07:34:25','','CD-CWZCD000020','CD-CWZCD000020');
 insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) values('1','collection_result','judge','诉讼','admin','2018-07-08 07:34:25','','CD-CWZCD000020','CD-CWZCD000020');
@@ -1901,8 +1900,8 @@ insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('020_11','寄�
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('020_12','驻行人员提交材料','020',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('020_13','解除抵押完成','020',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_01','申请收车','021',NULL);
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_02','风控经理审核','021',NULL);
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_03','分公司总经理审核','021',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_02','分公司总经理审核','021',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_03','风控经理审核','021',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_04','风控总监审核','021',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_05','财务经理审核','021',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_06','确认放款','021',NULL);

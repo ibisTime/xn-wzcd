@@ -36,6 +36,13 @@ public class XN630523 extends AProcessor {
             condition.setCurOverdueCount(
                 StringValidater.toInteger(req.getCurOverdueCount()));
         }
+        if (StringUtils.isNotBlank(req.getCurOverdueCountStart())
+                && StringUtils.isNotBlank(req.getCurOverdueCountEnd())) {
+            condition.setCurOverdueCountStart(
+                StringValidater.toInteger(req.getCurOverdueCountStart()));
+            condition.setCurOverdueCountEnd(
+                StringValidater.toInteger(req.getCurOverdueCountEnd()));
+        }
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
