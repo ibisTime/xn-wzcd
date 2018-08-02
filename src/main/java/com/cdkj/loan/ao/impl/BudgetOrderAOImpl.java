@@ -939,6 +939,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             userId = user.getUserId();
         }
 
+        // 生成还款业务时银行卡号不能为空
+        if (StringUtils.isBlank(budgetOrder.getBankCardNumber())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "预算单银行卡号为空，请先导入合同！");
+        }
+
         // 绑定用户银行卡
         String bankcardCode = bankcardBO.bind(userId,
             budgetOrder.getCustomerName(), budgetOrder.getBankCardNumber(),
@@ -1103,7 +1109,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 DateUtil.FRONT_DATE_FORMAT_STRING));
 
         budgetOrder.setInsuranceBank(req.getInsuranceBank());
-        budgetOrder.setSaleUserId(req.getSaleUserId());
         budgetOrder.setRegCertificateCode(req.getRegCertificateCode());
 
         budgetOrder.setGuarantor1Name(req.getGuarantor1Name());

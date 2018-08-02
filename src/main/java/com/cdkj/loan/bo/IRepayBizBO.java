@@ -129,7 +129,8 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
             String updater);
 
     // 收件
-    public void refreshBankRecLogic(String code, String updater);
+    public void refreshBankRecLogic(String code, String curNodeCode,
+            String updater);
 
     // 结果回录
     public void refreshMortgageCommit(RepayBiz data);

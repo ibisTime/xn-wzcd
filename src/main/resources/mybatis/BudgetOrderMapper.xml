@@ -1715,7 +1715,6 @@
 		,commerce_insurance = #{commerceInsurance}
 		,insurance_effect_datetime = #{insuranceEffectDatetime}
 		,insurance_bank = #{insuranceBank}
-		,sale_user_id = #{saleUserId}
 		
 		,guarantee_contract_code = #{guaranteeContractCode}
 		,bank_contract_code = #{bankContractCode}

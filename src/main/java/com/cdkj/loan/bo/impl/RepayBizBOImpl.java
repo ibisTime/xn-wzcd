@@ -576,11 +576,10 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
     @Override
     @Transactional
-    public void refreshBankRecLogic(String code, String updater) {
+    public void refreshBankRecLogic(String code, String curNodeCode,
+            String updater) {
         RepayBiz data = getRepayBiz(code);
-        String curNodeCode = data.getCurNodeCode();
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
-        data.setCurNodeCode(nodeFlow.getNextNode());
+        data.setCurNodeCode(curNodeCode);
         data.setUpdater(updater);
         data.setUpdateDatetime(new Date());
         repayBizDAO.updateBankRecLogic(data);

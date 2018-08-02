@@ -660,7 +660,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         data.setThirdCompanyInsurance(req.getThirdCompanyInsurance());
         data.setSettleAttach(req.getSettleAttach());
         data.setSettleDatetime(DateUtil.strToDate(req.getSettleDatetime(),
-            DateUtil.DATA_TIME_PATTERN_1));
+            DateUtil.FRONT_DATE_FORMAT_STRING));
 
         data.setDepositReceipt(req.getDepositReceipt());
         data.setUpdater(req.getOperator());
