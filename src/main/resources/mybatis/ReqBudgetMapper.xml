@@ -44,6 +44,12 @@
 			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
 				<![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
 			</if>
+			<if test="payDatetime != null and payDatetime != '' ">
+				AND t.pay_datetime &gt;= #{payDatetimeStart}
+			</if>
+			<if test="payDatetime != null and payDatetime != '' ">
+				AND t.pay_datetime &lt;= #{payDatetimeEnd}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_reqBudget" parameterType="reqBudget" resultMap="reqBudget_DB_Result">
@@ -271,7 +277,8 @@
 		,t.cur_node_code
 		FROM
 		tdq_req_budget t
-		WHERE t.company_code= #{companyCode}
+		<include refid="where_condition" />
+		<!-- AND to_days(t.pay_datetime) = to_days(now()); -->
 	</select>
 
 </mapper>
