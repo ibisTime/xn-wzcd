@@ -29,10 +29,10 @@ public enum EBudgetOrderNode {
 
     OUT_BANKPOINT_SEND_PARENT("009_01", "银行驻点发送抵押合同给总公司"), OUT_PARENT_SEND_BRANCH(
             "009_02", "总公司寄送合同给分公司"), OUT_PLEDGE_BEGIN("009_03", "抵押开始"), TODO_OUT_PLEDGE_ACHIEVE(
-            "009_04", "待提交抵押完成"), OUT_BRANCH_SEND_PARENT("009_05",
-            "分公司寄送抵押材料给总公司"), OUT_COLLATEPOST_COLLATE("009_06", "理件岗理件"), OUT_SENDPOST_SEND_BANK(
-            "009_07", "寄件岗寄送材料给银行驻点"), OUT_SUBMIT_BANK("009_08", "提交银行"), OUT_PLEDGE_ACHIEVE(
-            "009_09", "抵押完成"),
+            "009_04", "待提交抵押完成"), OUT_BRANCH_SEND_PARENT("009_05","分公司寄送抵押材料给总公司"), 
+            HEADQUARTERS_INTERNAL_SEND("009_06","总公司内勤寄送银行材料"), OUT_COLLATEPOST_COLLATE(
+            "009_07", "理件岗理件"), OUT_SENDPOST_SEND_BANK("009_08", "寄件岗寄送材料给银行驻点"), OUT_SUBMIT_BANK(
+            "009_09", "提交银行"), OUT_PLEDGE_ACHIEVE("009_10", "抵押完成"),
 
     INVOICE_MISMATCH_APPLY("011_01", "发票不匹配申请"), APPROVE_APPLY("011_02",
             "发票不匹配审核"), TWO_APPROVE_APPLY("011_03", "发票不匹配二审"), FINANCE_CONFIRM(

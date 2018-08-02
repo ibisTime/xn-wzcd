@@ -262,7 +262,9 @@ public class LogisticsAOImpl implements ILogisticsAO {
                     NodeFlow pledgeNodeFlow = nodeFlowBO
                         .getNodeFlowByCurrentNode(pledgeCurNodeCode);
                     if (EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode()
-                        .equals(pledgeCurNodeCode)) {
+                        .equals(pledgeCurNodeCode)
+                            || EBudgetOrderNode.HEADQUARTERS_INTERNAL_SEND
+                                .getCode().equals(pledgeCurNodeCode)) {
                         budgetOrder
                             .setPledgeCurNodeCode(pledgeNodeFlow.getNextNode());
                         budgetOrderBO.collateAchieve(budgetOrder);

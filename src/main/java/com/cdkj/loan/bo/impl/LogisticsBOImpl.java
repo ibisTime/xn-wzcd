@@ -206,7 +206,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
                     EBudgetOrderNode.LOCAL_COLLATEPOST_COLLATE.getCode());
                 data.setIsBankPointPartSupt(EBoolean.YES.getCode());
             }
-            // 判断节点是否是009_07，是的话补件返回009_05
+            // 判断节点是否是009_08，是的话补件返回009_05
             if (EBudgetOrderNode.OUT_SENDPOST_SEND_BANK.getCode()
                 .equals(pledgeCurrentNode)) {
                 budgetOrder.setPledgeCurNodeCode(
@@ -216,7 +216,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
                 data.setFromNodeCode(
                     EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode());
                 data.setToNodeCode(
-                    EBudgetOrderNode.OUT_COLLATEPOST_COLLATE.getCode());
+                    EBudgetOrderNode.HEADQUARTERS_INTERNAL_SEND.getCode());
             }
             // 日志记录
             EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
