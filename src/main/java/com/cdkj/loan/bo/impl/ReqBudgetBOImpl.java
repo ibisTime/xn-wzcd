@@ -10,6 +10,7 @@ import com.cdkj.loan.bo.IReqBudgetBO;
 import com.cdkj.loan.bo.base.Page;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IReqBudgetDAO;
 import com.cdkj.loan.domain.ReqBudget;
@@ -125,6 +126,8 @@ public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget> implements
         if (StringUtils.isNotBlank(companyCode)) {
             ReqBudget condition = new ReqBudget();
             condition.setCompanyCode(companyCode);
+            condition.setPayDatetimeStart(DateUtil.getTodayStart());
+            condition.setPayDatetimeEnd(DateUtil.getTodayEnd());
             data = reqBudgetDAO.selectTodayReqBudget(condition);
         }
         return data;

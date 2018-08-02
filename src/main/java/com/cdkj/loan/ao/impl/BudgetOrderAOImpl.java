@@ -458,11 +458,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 如果预算单对应的返点明细已经存在 先删除 再计算新的返点明细
         repointDetailBO.deleteRepointDetailByBudgetOrderCode(data.getCode());
 
-        // 协议外返点 和 应退按揭款（不垫资 退给客户 填写）
         Department company = departmentBO.getDepartment(data.getCompanyCode());
         CreditUser user = creditUserBO.getCreditUserByCreditCode(
             data.getCreditCode(), ELoanRole.APPLY_USER);
         CarDealer carDealer = carDealerBO.getCarDealer(data.getCarDealerCode());
+        // 协议外返点 和 应退按揭款（不垫资 退给客户 填写）
         List<XN632120ReqRepointDetail> repointDetailList = req
             .getRepointDetailList();// 前端填写的不垫资应退按揭款 和 协议外返点
         for (XN632120ReqRepointDetail xn632120ReqRepointDetail : repointDetailList) {
@@ -471,9 +471,25 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 xn632120ReqRepointDetail.getUseMoneyPurpose())) {
                 if (EIsAdvanceFund.YES.getCode()
                     .equals(data.getIsAdvanceFund())) {
-                    // data.setShouldBackAmount(data.get);
+                    // 垫资客户 应退按揭款
+                    Long serviceFee = 0L;
+                    if (EServiceChargeWay.MORTGAGE.getCode().equals(
+                        data.getServiceChargeWay())) {
+                        serviceFee = getLong(data.getServiceCharge());
+                    }
+                    Long gpsFee = 0L;
+                    if (EGpsFeeWay.MORTGAGE.getCode().equals(
+                        data.getGpsFeeWay())) {
+                        gpsFee = getLong(data.getGpsFee());
+                    }
+                    Long carDealerSubsidy = getLong(data.getCarDealerSubsidy());
+                    // 应退按揭款合计 = 贷款金额 - 收客户手续费（按揭款扣）- GPS费（按揭款扣）- 厂家贴息
+                    Long shouldBackAmount = loanAmount - serviceFee - gpsFee
+                            - carDealerSubsidy;
+                    data.setShouldBackAmount(shouldBackAmount);
                     continue;// 垫资 应退按揭款就是垫资金额 直接生成 不能手填
                 }
+                // 不垫资客户 应退按揭款
                 data.setShouldBackAmount(StringValidater
                     .toLong(xn632120ReqRepointDetail.getRepointAmount()));// 应退按揭款金额
                 data.setShouldBackUserName(xn632120ReqRepointDetail
@@ -1809,24 +1825,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public void mortgageRefund(String code, String shouldBackBankcardCode,
             String shouldBackDatetime, String shouldBackBillPdf) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
-        Long loanAmount = budgetOrder.getLoanAmount();// 贷款金额
-        long fee = 0;
-        if (EServiceChargeWay.MORTGAGE.getCode().equals(
-            budgetOrder.getServiceChargeWay())) {
-            fee = budgetOrder.getFee();
-        }
-        long gpsFee = 0;
-        if (EGpsFeeWay.MORTGAGE.getCode().equals(budgetOrder.getGpsFeeWay())) {
-            gpsFee = budgetOrder.getGpsFee();
-        }
-        long carDealerSubsidy = 0;
-        if (null != budgetOrder.getCarDealerSubsidy()) {
-            carDealerSubsidy = budgetOrder.getCarDealerSubsidy();
-        }
-        // 应退按揭款合计 = 贷款金额 - 收客户手续费（按揭款扣）- GPS费（按揭款扣）- 厂家贴息
-        Long shouldBackAmount = loanAmount - fee - gpsFee - carDealerSubsidy;
-
-        budgetOrder.setShouldBackAmount(shouldBackAmount);
         budgetOrder.setShouldBackBankcardCode(shouldBackBankcardCode);
         budgetOrder.setShouldBackDatetime(DateUtil.strToDate(
             shouldBackDatetime, DateUtil.FRONT_DATE_FORMAT_STRING));
@@ -2452,7 +2450,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     private BudgetOrder calculateShouldBackMorgage(BudgetOrder data) {
-        // 计算应退按揭款(垫资)
+        // 计算应退按揭款
         Long carDealerSubsidy = 0L;
         if (null != data.getCarDealerSubsidy()) {
             carDealerSubsidy = data.getCarDealerSubsidy();// 厂家贴息
