@@ -24,7 +24,7 @@ public class XN632101 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        reqBudgetAO.audit(req);
+        // reqBudgetAO.audit(req);
         return new BooleanRes(true);
     }
 

@@ -11,10 +11,9 @@ import java.util.Map;
  */
 public enum EReqBudgetNode {
 
-    APPLY("005_01", "提交请款预算单"), AUDIT("005_02", "财务经理审核"), LOAN("005_03",
-            "确认放款"), REFILL("005_04", "重新填写请款预算单"), ALREADY_CREDIT("005_05",
-            "已放款"), COLLECTION("005_06", "财务确认收回预算款"), HAS_COLLECTION("005_07",
-            "已收回预算款");
+    APPLY("005_01", "提交请款预算单"), LOAN("005_02","确认放款"),
+            ALREADY_CREDIT("005_03","已放款"), COLLECTION("005_04", "财务确认收回预算款"), 
+            HAS_COLLECTION("005_05","已收回预算款");
 
     public static Map<String, EReqBudgetNode> getMap() {
         Map<String, EReqBudgetNode> map = new HashMap<String, EReqBudgetNode>();
