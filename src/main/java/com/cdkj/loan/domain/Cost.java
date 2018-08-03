@@ -20,6 +20,9 @@ public class Cost extends ABaseDO {
     // 还款计划编号
     private String repayPlanCode;
 
+    // 逾期处理编号
+    private String overdueTreatmentCode;
+
     // 费用项名称
     private String item;
 
@@ -58,6 +61,14 @@ public class Cost extends ABaseDO {
 
     public String getRepayPlanCode() {
         return repayPlanCode;
+    }
+
+    public String getOverdueTreatmentCode() {
+        return overdueTreatmentCode;
+    }
+
+    public void setOverdueTreatmentCode(String overdueTreatmentCode) {
+        this.overdueTreatmentCode = overdueTreatmentCode;
     }
 
     public void setItem(String item) {

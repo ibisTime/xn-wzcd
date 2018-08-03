@@ -5,6 +5,7 @@
 	<resultMap id="cost_DB_Result" type="cost">
 		<result column="code" property="code" />
 		<result column="repay_plan_code" property="repayPlanCode" />
+		<result column="overdue_treatment_code" property="overdueTreatmentCode" />
 		<result column="item" property="item" />
 		<result column="amount" property="amount" />
 		<result column="pay_datetime" property="payDatetime" />
@@ -22,6 +23,9 @@
 			<if test="repayPlanCode != null and repayPlanCode != '' ">
 				AND t.repay_plan_code = #{repayPlanCode}
 			</if>
+			<if test="overdueTreatmentCode != null and overdueTreatmentCode != '' ">
+				AND t.overdue_treatment_code = #{overdueTreatmentCode}
+			</if>
 			<if test="payWay != null and payWay != '' ">
 				AND t.pay_way = #{payWay}
 			</if>
@@ -37,6 +41,7 @@
 		SELECT
 		t.code
 		,t.repay_plan_code
+		,t.overdue_treatment_code
 		,t.item
 		,t.amount
 		,t.pay_datetime
@@ -66,6 +71,7 @@
 		tdh_cost(
 		code
 		,repay_plan_code
+		,overdue_treatment_code
 		,item
 		,amount
 		,pay_datetime
@@ -78,6 +84,7 @@
 		VALUES(
 		#{code}
 		,#{repayPlanCode}
+		,#{overdueTreatmentCode}
 		,#{item}
 		,#{amount}
 		,#{payDatetime}

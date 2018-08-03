@@ -10,18 +10,6 @@ public class XN630532Req {
     private String code;// 还款计划编号
 
     @NotBlank
-    private String collectionWay;// 催收方式
-
-    @NotBlank
-    private String collectionTarget;// 催收对象列表
-
-    @NotBlank
-    private String collectionProcess;// 催收过程
-
-    @NotBlank
-    private String collectionWish;// 客户意愿
-
-    @NotBlank
     private String collectionResult;// 催收结果
 
     private String depositIsProvide;// 是否提供押金
@@ -31,7 +19,7 @@ public class XN630532Req {
     private String realRepayAmount;// 实际还款金额(部分)
 
     @NotBlank
-    private String collectionNote;// 备注
+    private String collectionResultNote;// 催收结果说明
 
     private List<XN630535Req> costList; // 费用清单列表
 
@@ -54,38 +42,6 @@ public class XN630532Req {
         this.code = code;
     }
 
-    public String getCollectionWay() {
-        return collectionWay;
-    }
-
-    public void setCollectionWay(String collectionWay) {
-        this.collectionWay = collectionWay;
-    }
-
-    public String getCollectionTarget() {
-        return collectionTarget;
-    }
-
-    public void setCollectionTarget(String collectionTarget) {
-        this.collectionTarget = collectionTarget;
-    }
-
-    public String getCollectionProcess() {
-        return collectionProcess;
-    }
-
-    public void setCollectionProcess(String collectionProcess) {
-        this.collectionProcess = collectionProcess;
-    }
-
-    public String getCollectionWish() {
-        return collectionWish;
-    }
-
-    public void setCollectionWish(String collectionWish) {
-        this.collectionWish = collectionWish;
-    }
-
     public String getCollectionResult() {
         return collectionResult;
     }
@@ -102,6 +58,14 @@ public class XN630532Req {
         this.depositIsProvide = depositIsProvide;
     }
 
+    public String getCollectionResultNote() {
+        return collectionResultNote;
+    }
+
+    public void setCollectionResultNote(String collectionResultNote) {
+        this.collectionResultNote = collectionResultNote;
+    }
+
     public String getOverdueDeposit() {
         return overdueDeposit;
     }
@@ -116,14 +80,6 @@ public class XN630532Req {
 
     public void setRealRepayAmount(String realRepayAmount) {
         this.realRepayAmount = realRepayAmount;
-    }
-
-    public String getCollectionNote() {
-        return collectionNote;
-    }
-
-    public void setCollectionNote(String collectionNote) {
-        this.collectionNote = collectionNote;
     }
 
     public List<XN630535Req> getCostList() {

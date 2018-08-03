@@ -103,25 +103,25 @@ public class RepayPlan extends ABaseDO {
     private Date replaceBackRepayDatetime;
 
     // ******************处理数据******************
-    // 催收方式
+    // 催收方式(作废)
     private String collectionWay;
 
-    // 催收对象
+    // 催收对象(作废)
     private String collectionTarget;
 
-    // 催收过程
+    // 催收过程(作废)
     private String collectionProcess;
 
-    // 客户意愿
+    // 客户意愿(作废)
     private String collectionWish;
 
-    // 催收结果
+    // 催收结果(作废)
     private String collectionResult;
 
-    // 是否提供押金
+    // 是否提供押金(作废)
     private String depositIsProvide;
 
-    // 催收情况说明
+    // 催收情况说明(作废)
     private String collectionNote;
 
     // ******************处理数据******************
