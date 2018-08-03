@@ -21,7 +21,8 @@ ALTER TABLE `tdh_cost`
 ADD COLUMN `overdue_treatment_code` VARCHAR(32) NULL COMMENT '逾期处理编号' AFTER `repay_plan_code`;
 
 ALTER TABLE `tdh_repay_biz` 
-ADD COLUMN `final_payee` VARCHAR(255) NULL COMMENT '最终收款人' AFTER `Is_logistics`;
+ADD COLUMN `deal_enclosure` VARCHAR(255) NULL COMMENT '处理结果附件' AFTER `settle_datetime`,
+ADD COLUMN `final_payee` VARCHAR(255) NULL COMMENT '最终收款人' AFTER `Is_logistics`,
 ADD COLUMN `payee_enclosure` VARCHAR(255) NULL COMMENT '附件' AFTER `final_payee`;
 
 
