@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdkj.loan.ao.ITotalAdvanceFundAO;
 import com.cdkj.loan.bo.IAdvanceFundBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
+import com.cdkj.loan.bo.ICarDealerBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepointDetailBO;
 import com.cdkj.loan.bo.IReqBudgetBO;
@@ -20,6 +21,7 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.AdvanceFund;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.RepointDetail;
 import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.domain.TotalAdvanceFund;
@@ -33,6 +35,7 @@ import com.cdkj.loan.enums.EBudgetFrozenStatus;
 import com.cdkj.loan.enums.EFbhStatus;
 import com.cdkj.loan.enums.ERepointDetailStatus;
 import com.cdkj.loan.enums.EReqBudgetNode;
+import com.cdkj.loan.enums.ESettleWay;
 import com.cdkj.loan.enums.ETotalAdvanceFundStatus;
 import com.cdkj.loan.enums.ETotalAdvanceFundType;
 import com.cdkj.loan.exception.BizException;
@@ -67,14 +70,17 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
     @Autowired
     private IReqBudgetBO reqBudgetBO;
 
+    @Autowired
+    private ICarDealerBO carDealerBO;
+
     @Override
     @Transactional
     public String addTotalAdvanceFund(XN632174Req req) {
         List<String> codeList = req.getCodeList();
         for (String code : codeList) {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
-            if (!EAdvanceFundNode.BRANCH_MAKE_BILL.getCode()
-                .equals(advanceFund.getCurNodeCode())) {
+            if (!EAdvanceFundNode.BRANCH_MAKE_BILL.getCode().equals(
+                advanceFund.getCurNodeCode())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前不是分公司制单节点，不能操作！");
             }
@@ -83,8 +89,8 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         for (String code : codeList) {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
             String preNodeCode = advanceFund.getCurNodeCode();// 当前节点
-            advanceFund.setCurNodeCode(
-                nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode).getNextNode());
+            advanceFund.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                preNodeCode).getNextNode());
             // 补全分公司制单日志
             sysBizLogBO.refreshPreSYSBizLog(EBizLogType.ADVANCE_FUND_BRANCH,
                 advanceFund.getCode(), preNodeCode, req.getMakeBillNote(),
@@ -96,8 +102,8 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         data.setType(ETotalAdvanceFundType.FIRST.getCode());
         data.setCompanyCode(req.getCompanyCode());
         data.setTotalAdvanceFund(totalAdvanceFund);// 待垫资金额（制单时通过审核的所有垫资单相加总金额）
-        ReqBudget reqBudget = reqBudgetBO
-            .getTodayReqBudget(req.getCompanyCode());
+        ReqBudget reqBudget = reqBudgetBO.getTodayReqBudget(req
+            .getCompanyCode());
         if (reqBudget == null) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "该公司未提交没有请款预算单！");
@@ -167,8 +173,8 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         List<String> codeList = req.getCodeList();
         for (String code : codeList) {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
-            if (!EAdvanceFundNode.BRANCH_COMPANY.getCode()
-                .equals(advanceFund.getCurNodeCode())) {
+            if (!EAdvanceFundNode.BRANCH_COMPANY.getCode().equals(
+                advanceFund.getCurNodeCode())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前不是垫资流程确认打款给分公司节点，不能操作！");
             }
@@ -195,8 +201,8 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
             advanceFund.setTotalAdvanceFundCode(data.getCode());
             String preNodeCode = advanceFund.getCurNodeCode();
-            advanceFund.setCurNodeCode(
-                nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode).getNextNode());
+            advanceFund.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                preNodeCode).getNextNode());
             advanceFundBO.confirmPayBranchCompany(advanceFund);
             // 生成下一步操作日志 确认打款给车行
             sysBizLogBO.saveSYSBizLog(advanceFund.getBudgetCode(),
@@ -240,16 +246,19 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         budgetOrderBO.invoiceMismatchFinanceConfirm(budgetOrder);
 
         // 已录入发保合 把返点明细状态改为待打款
-        RepointDetail condition = new RepointDetail();
-        condition.setBudgetCode(budgetOrder.getCode());
-        List<RepointDetail> list = repointDetailBO
-            .queryRepointDetailList(condition);
-        for (RepointDetail repointDetail : list) {
-            repointDetail
-                .setCurNodeCode(ERepointDetailStatus.TODO_PAY.getCode());
-            repointDetailBO.updateCurNodeCode(repointDetail);
+        CarDealer carDealer = carDealerBO.getCarDealer(budgetOrder
+            .getCarDealerCode());
+        if (!carDealer.getSettleWay().equals(ESettleWay.MONTH.getCode())) {// 不是月结的在垫资后并且录完发保合可以返点
+            RepointDetail condition = new RepointDetail();
+            condition.setBudgetCode(budgetOrder.getCode());
+            List<RepointDetail> list = repointDetailBO
+                .queryRepointDetailList(condition);
+            for (RepointDetail repointDetail : list) {
+                repointDetail.setCurNodeCode(ERepointDetailStatus.TODO_PAY
+                    .getCode());
+                repointDetailBO.updateCurNodeCode(repointDetail);
+            }
         }
-
     }
 
     private Long getLong(Object obj) {
