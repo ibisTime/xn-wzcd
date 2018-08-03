@@ -65,7 +65,7 @@ public class ReqBudget extends ABaseDO {
 
     private String bankName; // 银行名称
 
-    private String realName; // 户名
+    private String realName; // 户名(收款公司账号)
 
     private Date payDatetimeStart;// 打款时间起
 

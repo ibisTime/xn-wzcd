@@ -20,12 +20,6 @@ public class XN632291Res {
     // 杂费
     private String otherFee;
 
-    // 油补
-    private String oilSubsidy;
-
-    // GPS提成
-    private String gpsDeduct;
-
     public String getLyAmount() {
         return lyAmount;
     }
@@ -56,22 +50,6 @@ public class XN632291Res {
 
     public void setOtherFee(String otherFee) {
         this.otherFee = otherFee;
-    }
-
-    public String getOilSubsidy() {
-        return oilSubsidy;
-    }
-
-    public void setOilSubsidy(String oilSubsidy) {
-        this.oilSubsidy = oilSubsidy;
-    }
-
-    public String getGpsDeduct() {
-        return gpsDeduct;
-    }
-
-    public void setGpsDeduct(String gpsDeduct) {
-        this.gpsDeduct = gpsDeduct;
     }
 
 }
