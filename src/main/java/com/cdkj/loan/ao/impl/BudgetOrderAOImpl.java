@@ -128,6 +128,7 @@ import com.cdkj.loan.enums.ERepointDetailStatus;
 import com.cdkj.loan.enums.ERepointDetailType;
 import com.cdkj.loan.enums.ERepointDetailUseMoneyPurpose;
 import com.cdkj.loan.enums.EServiceChargeWay;
+import com.cdkj.loan.enums.ESettleWay;
 import com.cdkj.loan.enums.EShouldBackStatus;
 import com.cdkj.loan.enums.ETakeBackAdvanceFundType;
 import com.cdkj.loan.enums.ETotalAdvanceFundType;
@@ -946,6 +947,21 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         sysBizLogBO.refreshPreSYSBizLog(EBizLogType.BUDGET_ORDER,
             budgetOrder.getCode(), curNodeCode, req.getBankReceiptNote(),
             req.getOperator());
+
+        // 月结的返点在银行放款后产生
+        CarDealer carDealer = carDealerBO.getCarDealer(budgetOrder
+            .getCarDealerCode());
+        if (carDealer.getSettleWay().equals(ESettleWay.MONTH.getCode())) {
+            RepointDetail condition = new RepointDetail();
+            condition.setBudgetCode(budgetOrder.getCode());
+            List<RepointDetail> list = repointDetailBO
+                .queryRepointDetailList(condition);
+            for (RepointDetail repointDetail : list) {
+                repointDetail.setCurNodeCode(ERepointDetailStatus.TODO_PAY
+                    .getCode());
+                repointDetailBO.updateCurNodeCode(repointDetail);
+            }
+        }
     }
 
     @Override
@@ -1546,17 +1562,21 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setPdPdf(req.getPdPdf());
         budgetOrder.setFbhRemark(req.getFbhRemark());
         budgetOrderBO.entryPreservation(budgetOrder);
-        // 已录入发保合 把返点明细状态改为待打款
+        // 已录入发保合 把返点明细状态改为待支付
         if (EFbhStatus.TO_PENDING_ENTRY.getCode().equals(
             budgetOrder.getFbhStatus())) {
-            RepointDetail condition = new RepointDetail();
-            condition.setBudgetCode(budgetOrder.getCode());
-            List<RepointDetail> list = repointDetailBO
-                .queryRepointDetailList(condition);
-            for (RepointDetail repointDetail : list) {
-                repointDetail.setCurNodeCode(ERepointDetailStatus.TODO_PAY
-                    .getCode());
-                repointDetailBO.updateCurNodeCode(repointDetail);
+            CarDealer carDealer = carDealerBO.getCarDealer(budgetOrder
+                .getCarDealerCode());
+            if (!carDealer.getSettleWay().equals(ESettleWay.MONTH.getCode())) {// 不是月结的在垫资后并且录完发保合可以返点
+                RepointDetail condition = new RepointDetail();
+                condition.setBudgetCode(budgetOrder.getCode());
+                List<RepointDetail> list = repointDetailBO
+                    .queryRepointDetailList(condition);
+                for (RepointDetail repointDetail : list) {
+                    repointDetail.setCurNodeCode(ERepointDetailStatus.TODO_PAY
+                        .getCode());
+                    repointDetailBO.updateCurNodeCode(repointDetail);
+                }
             }
         }
     }

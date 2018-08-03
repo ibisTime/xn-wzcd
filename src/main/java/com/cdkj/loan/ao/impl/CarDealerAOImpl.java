@@ -241,12 +241,12 @@ public class CarDealerAOImpl implements ICarDealerAO {
                 collectBankcard.setType(ECollectBankcardType.DEALER_COLLECT
                     .getCode());
                 List<CollectBankcard> jxsCollectBankcardList = collectBankcardBO
-                    .queryCollectBankcardList(collectBankcard);
+                    .queryCollectBankcardList(collectBankcard);// 经销商收款账号
                 carDealer.setJxsCollectBankcardList(jxsCollectBankcardList);
                 collectBankcard.setType(ECollectBankcardType.DEALER_REBATE
                     .getCode());
                 List<CollectBankcard> queryCollectBankcardList = collectBankcardBO
-                    .queryCollectBankcardList(collectBankcard);
+                    .queryCollectBankcardList(collectBankcard);// 经销商返点账号
 
                 // 协议
                 CarDealerProtocol carDealerProtocol = new CarDealerProtocol();
