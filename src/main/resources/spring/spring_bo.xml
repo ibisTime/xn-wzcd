@@ -405,5 +405,9 @@
 	<bean id="contractImportBO" class="com.cdkj.loan.bo.impl.ContractImportBOImpl">
 		<property name="paginableDAO" ref="contractImportDAOImpl"/>
 	</bean>
+	
+	<bean id="overdueTreatmentBO" class="com.cdkj.loan.bo.impl.OverdueTreatmentBOImpl">
+		<property name="paginableDAO" ref="overdueTreatmentDAOImpl"/>
+	</bean>
 
 </beans>
