@@ -12,6 +12,7 @@ import com.cdkj.loan.bo.ICreditBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditUser;
@@ -75,49 +76,49 @@ public class CreditUserAOImpl implements ICreditUserAO {
                     "征信人员编号不能为空");
             }
             CreditUser creditUser = creditUserBO.getCreditUser(code);
-            creditUser.setDkdyCount(StringValidater.toInteger(child
-                .getDkdyCount()));
-            creditUser.setDkdyAmount(StringValidater.toLong(child
-                .getDkdyAmount()));
-            creditUser.setDkdy2YearOverTimes(StringValidater.toInteger(child
-                .getDkdy2YearOverTimes()));
-            creditUser.setDkdyMaxOverAmount(StringValidater.toLong(child
-                .getDkdyMaxOverAmount()));
-            creditUser.setDkdyCurrentOverAmount(StringValidater.toLong(child
-                .getDkdyCurrentOverAmount()));
-            creditUser.setDkdy6MonthAvgAmount(StringValidater.toLong(child
-                .getDkdy6MonthAvgAmount()));
+            creditUser
+                .setDkdyCount(StringValidater.toInteger(child.getDkdyCount()));
+            creditUser
+                .setDkdyAmount(StringValidater.toLong(child.getDkdyAmount()));
+            creditUser.setDkdy2YearOverTimes(
+                StringValidater.toInteger(child.getDkdy2YearOverTimes()));
+            creditUser.setDkdyMaxOverAmount(
+                StringValidater.toLong(child.getDkdyMaxOverAmount()));
+            creditUser.setDkdyCurrentOverAmount(
+                StringValidater.toLong(child.getDkdyCurrentOverAmount()));
+            creditUser.setDkdy6MonthAvgAmount(
+                StringValidater.toLong(child.getDkdy6MonthAvgAmount()));
 
-            creditUser.setHkxyUnsettleCount(StringValidater.toInteger(child
-                .getHkxyUnsettleCount()));
-            creditUser.setHkxyUnsettleAmount(StringValidater.toLong(child
-                .getHkxyUnsettleAmount()));
-            creditUser.setHkxy2YearOverTimes(StringValidater.toInteger(child
-                .getHkxy2YearOverTimes()));
-            creditUser.setHkxyMonthMaxOverAmount(StringValidater.toLong(child
-                .getHkxyMonthMaxOverAmount()));
-            creditUser.setHkxy6MonthAvgAmount(StringValidater.toLong(child
-                .getHkxy6MonthAvgAmount()));
-            creditUser.setHkxyCurrentOverAmount(StringValidater.toLong(child
-                .getHkxyCurrentOverAmount()));
+            creditUser.setHkxyUnsettleCount(
+                StringValidater.toInteger(child.getHkxyUnsettleCount()));
+            creditUser.setHkxyUnsettleAmount(
+                StringValidater.toLong(child.getHkxyUnsettleAmount()));
+            creditUser.setHkxy2YearOverTimes(
+                StringValidater.toInteger(child.getHkxy2YearOverTimes()));
+            creditUser.setHkxyMonthMaxOverAmount(
+                StringValidater.toLong(child.getHkxyMonthMaxOverAmount()));
+            creditUser.setHkxy6MonthAvgAmount(
+                StringValidater.toLong(child.getHkxy6MonthAvgAmount()));
+            creditUser.setHkxyCurrentOverAmount(
+                StringValidater.toLong(child.getHkxyCurrentOverAmount()));
 
-            creditUser.setXykCount(StringValidater.toInteger(child
-                .getXykCount()));
-            creditUser.setXykCreditAmount(StringValidater.toLong(child
-                .getXykCreditAmount()));
-            creditUser.setXyk6MonthUseAmount(StringValidater.toLong(child
-                .getXyk6MonthUseAmount()));
-            creditUser.setXyk2YearOverTimes(StringValidater.toInteger(child
-                .getXyk2YearOverTimes()));
-            creditUser.setXykMonthMaxOverAmount(StringValidater.toLong(child
-                .getXykMonthMaxOverAmount()));
-            creditUser.setXykCurrentOverAmount(StringValidater.toLong(child
-                .getXykCurrentOverAmount()));
+            creditUser
+                .setXykCount(StringValidater.toInteger(child.getXykCount()));
+            creditUser.setXykCreditAmount(
+                StringValidater.toLong(child.getXykCreditAmount()));
+            creditUser.setXyk6MonthUseAmount(
+                StringValidater.toLong(child.getXyk6MonthUseAmount()));
+            creditUser.setXyk2YearOverTimes(
+                StringValidater.toInteger(child.getXyk2YearOverTimes()));
+            creditUser.setXykMonthMaxOverAmount(
+                StringValidater.toLong(child.getXykMonthMaxOverAmount()));
+            creditUser.setXykCurrentOverAmount(
+                StringValidater.toLong(child.getXykCurrentOverAmount()));
 
-            creditUser.setOutGuaranteesCount(StringValidater.toInteger(child
-                .getOutGuaranteesCount()));
-            creditUser.setOutGuaranteesAmount(StringValidater.toLong(child
-                .getOutGuaranteesAmount()));
+            creditUser.setOutGuaranteesCount(
+                StringValidater.toInteger(child.getOutGuaranteesCount()));
+            creditUser.setOutGuaranteesAmount(
+                StringValidater.toLong(child.getOutGuaranteesAmount()));
             creditUser.setOutGuaranteesRemark(child.getOutGuaranteesRemark());
 
             creditUserBO.inputBankCreditResult(creditUser);
@@ -125,8 +126,8 @@ public class CreditUserAOImpl implements ICreditUserAO {
 
         // 之前节点
         String preCurrentNode = credit.getCurNodeCode();
-        credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-            credit.getCurNodeCode()).getNextNode());
+        credit.setCurNodeCode(nodeFlowBO
+            .getNodeFlowByCurrentNode(credit.getCurNodeCode()).getNextNode());
         creditBO.refreshCreditNode(credit);
 
         // 日志记录
@@ -134,5 +135,11 @@ public class CreditUserAOImpl implements ICreditUserAO {
             EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
             credit.getCurNodeCode(), null, req.getOperator());
 
+    }
+
+    @Override
+    public Paginable<CreditUser> queryCreditUserList(int start, int limit,
+            CreditUser condition) {
+        return creditUserBO.getPaginable(start, limit, condition);
     }
 }
