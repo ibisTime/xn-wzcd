@@ -51,6 +51,7 @@ import com.cdkj.loan.dto.req.XN630563Req;
 import com.cdkj.loan.dto.req.XN630570Req;
 import com.cdkj.loan.dto.req.XN630572Req;
 import com.cdkj.loan.dto.req.XN630578Req;
+import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
@@ -523,6 +524,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         String nextNodeCode = getNextNodeCode(preNodeCode,
             EBoolean.YES.getCode());
         repayBiz.setCurNodeCode(nextNodeCode);
+        repayBiz.setFinalPayee(req.getFinalPayee());
+        repayBiz.setPayeeEnclosure(req.getPayeeEnclosure());
         repayBizBO.takeCarInputResult(repayBiz);
 
         // 日志记录
@@ -551,14 +554,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
         String preNodeCode = repayBiz.getCurNodeCode();
         String nextNodeCode = null;
         if (EDealResult.SELLED.getCode().equals(req.getDealResult())) {// 转卖
-            nextNodeCode = ERepayBizNode.SELLED.getCode();
-            // 还款计划处理为坏账
-            repayPlanBO.refreshRepayPlanTakeCarHandle(
-                repayPlan.getRepayBizCode(), ERepayPlanNode.BAD_DEBT);
+            nextNodeCode = ERepayBizNode.SELLED_FINANCIAL_AUDIT.getCode();
 
         } else if (EDealResult.REDEEM.getCode().equals(req.getDealResult())) {// 赎回或缴纳押金
             if (repayPlan.getCurPeriods() == repayPlan.getPeriods()) {// 最后一期
-                nextNodeCode = ERepayBizNode.COMMIT_SETTLE.getCode();
+                nextNodeCode = ERepayBizNode.REDEEM_FINANCIAL_AUDIT.getCode();
                 // 还款计划处理为已还款
                 repayPlanBO.refreshRepayPlanTakeCarHandle(
                     repayPlan.getRepayBizCode(), ERepayPlanNode.REPAY_YES);
@@ -577,6 +577,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             nextNodeCode = ERepayBizNode.JUDGE.getCode();
         }
         repayBiz.setCurNodeCode(nextNodeCode);
+        repayBiz.setDealEnclosure(req.getDealEnclosure());
         repayBizBO.takeCarResultHandle(repayBiz);
 
         // 日志记录
@@ -987,6 +988,44 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 operator);
         }
 
+    }
+
+    @Override
+    public void financialAudit(String code, String approveResult,
+            String approveNote, String operator) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizNode.REDEEM_FINANCIAL_AUDIT.getCode()
+            .equals(repayBiz.getCurNodeCode())
+                && !ERepayBizNode.SELLED_FINANCIAL_AUDIT.getCode()
+                    .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "还款业务不在财务审核节点！");
+        }
+        // 当前节点
+        String curNodeCode = repayBiz.getCurNodeCode();
+        String nextNodeCode = null;
+        if (EApproveResult.PASS.getCode().equals(approveResult)) {
+            if (ERepayBizNode.REDEEM_FINANCIAL_AUDIT.getCode()
+                .equals(curNodeCode)) {
+                nextNodeCode = ERepayBizNode.COMMIT_SETTLE.getCode();
+            } else {
+                nextNodeCode = ERepayBizNode.JUDGE_BAD.getCode();
+
+                // 还款计划处理为坏账
+                repayPlanBO.refreshRepayPlanTakeCarHandle(repayBiz.getCode(),
+                    ERepayPlanNode.BAD_DEBT);
+            }
+        } else {
+            nextNodeCode = ERepayBizNode.TC_RESULT_INPUT.getCode();
+        }
+
+        repayBizBO.refreshFinanceCheck(code, nextNodeCode, approveNote,
+            operator);
+
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), curNodeCode,
+            nextNodeCode, approveNote, operator);
     }
 
 }
