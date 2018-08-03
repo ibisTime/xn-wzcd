@@ -23,7 +23,7 @@ public class XN630565 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return new PKCodeRes(judgeAO.judgeApply(req));
+        return new PKCodeRes();
     }
 
     @Override
