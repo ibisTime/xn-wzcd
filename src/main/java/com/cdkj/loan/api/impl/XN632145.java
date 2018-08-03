@@ -45,6 +45,14 @@ public class XN632145 extends AProcessor {
         condition.setEnterFileStatus(req.getEnterFileStatus());
         condition.setBackAdvanceFundPage(req.getBackAdvanceFundPage());// 收回垫资款页面分页查询标识
         condition.setBankRepointPage(req.getBankRepointPage());
+        condition.setBankFkDatetimeStart(DateUtil.strToDate(
+            req.getBankFkDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setBankFkDatetimeEnd(DateUtil.strToDate(
+            req.getBankFkDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setBankFkDatetime(DateUtil.strToDate(
+            req.getSendDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setBankFkDatetime(DateUtil.strToDate(
+            req.getSendDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

@@ -458,6 +458,9 @@ public class BudgetOrder extends ABaseDO {
     // 银行放款时间
     private Date bankFkDatetime;
 
+    // 银行放款进件时间
+    private Date bankFkSendDatetime;
+
     // 已放款名单
     private String hasLoanListPic;
 
@@ -864,6 +867,10 @@ public class BudgetOrder extends ABaseDO {
     private List<String> enterFileStatusList;
 
     private String backAdvanceFundPage;// 收回垫资款页面分页查询标识
+
+    private Date BankFkDatetimeStart;
+
+    private Date BankFkDatetimeEnd;
 
     public AdvanceFund getAdvanceFund() {
         return advanceFund;
@@ -3219,6 +3226,30 @@ public class BudgetOrder extends ABaseDO {
 
     public void setBankRepointStatus(String bankRepointStatus) {
         this.bankRepointStatus = bankRepointStatus;
+    }
+
+    public Date getBankFkDatetimeStart() {
+        return BankFkDatetimeStart;
+    }
+
+    public void setBankFkDatetimeStart(Date bankFkDatetimeStart) {
+        BankFkDatetimeStart = bankFkDatetimeStart;
+    }
+
+    public Date getBankFkDatetimeEnd() {
+        return BankFkDatetimeEnd;
+    }
+
+    public void setBankFkDatetimeEnd(Date bankFkDatetimeEnd) {
+        BankFkDatetimeEnd = bankFkDatetimeEnd;
+    }
+
+    public Date getBankFkSendDatetime() {
+        return bankFkSendDatetime;
+    }
+
+    public void setBankFkSendDatetime(Date bankFkSendDatetime) {
+        this.bankFkSendDatetime = bankFkSendDatetime;
     }
 
 }
