@@ -32,9 +32,31 @@ public class XN630556Req {
     // 收车说明
     private String takeNote;
 
+    // 最终收款人
+    private String finalPayee;
+
+    // 附件
+    private String payeeEnclosure;
+
     // 操作人
     @NotBlank
     private String operator;
+
+    public String getFinalPayee() {
+        return finalPayee;
+    }
+
+    public void setFinalPayee(String finalPayee) {
+        this.finalPayee = finalPayee;
+    }
+
+    public String getPayeeEnclosure() {
+        return payeeEnclosure;
+    }
+
+    public void setPayeeEnclosure(String payeeEnclosure) {
+        this.payeeEnclosure = payeeEnclosure;
+    }
 
     public String getCode() {
         return code;

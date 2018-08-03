@@ -125,4 +125,8 @@ public interface IRepayBizAO {
     // 理件岗理件
     public void physicalParts(List<String> codeList, String operator);
 
+    // 处理结果财务审核（转卖，赎回）
+    public void financialAudit(String code, String approveResult,
+            String approveNote, String operator);
+
 }

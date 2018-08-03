@@ -54,6 +54,7 @@
 		<result column="is_advance_settled" property="isAdvanceSettled" />
 		<result column="settle_attach" property="settleAttach" />
 		<result column="settle_datetime" property="settleDatetime" />
+		<result column="deal_enclosure" property="dealEnclosure" />
 		<result column="deposit_receipt" property="depositReceipt" />
 		<result column="refund_bank_subbranch" property="refundBankSubbranch" />
 		<result column="refund_bank_real_name" property="refundBankRealName" />
@@ -81,6 +82,8 @@
 		<result column="remark" property="remark" />
 		<result column="team_code" property="teamCode" />
 		<result column="is_logistics" property="isLogistics"/>
+		<result column="final_payee" property="finalPayee"/>
+		<result column="payee_enclosure" property="payeeEnclosure"/>
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -209,6 +212,7 @@
 		,t.is_advance_settled
 		,t.settle_attach
 		,t.settle_datetime
+		,t.deal_enclosure
 		,t.deposit_receipt
 		,t.refund_bank_subbranch
 		
@@ -301,6 +305,7 @@
 		,t.is_advance_settled
 		,t.settle_attach
 		,t.settle_datetime
+		,t.deal_enclosure
 		,t.deposit_receipt
 		,t.refund_bank_subbranch
 		
@@ -393,6 +398,7 @@
 		,t.is_advance_settled
 		,t.settle_attach
 		,t.settle_datetime
+		,t.deal_enclosure
 		,t.deposit_receipt
 		,t.refund_bank_subbranch
 		
@@ -741,6 +747,8 @@
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,final_payee = #{finalPayee}
+		,payee_enclosure = #{payeeEnclosure}
 		WHERE code = #{code}
 	</update>
 	
@@ -748,6 +756,7 @@
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
+		,deal_enclosure = #{dealEnclosure}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}

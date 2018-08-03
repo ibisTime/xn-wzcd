@@ -26,6 +26,9 @@ public class XN630557Req {
     // 费用说明
     private String feeNote;
 
+    // 处理结果附件
+    private String dealEnclosure;
+
     // 操作人
     @NotBlank
     private String operator;
@@ -36,6 +39,14 @@ public class XN630557Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getDealEnclosure() {
+        return dealEnclosure;
+    }
+
+    public void setDealEnclosure(String dealEnclosure) {
+        this.dealEnclosure = dealEnclosure;
     }
 
     public String getDealResult() {

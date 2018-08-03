@@ -1914,6 +1914,8 @@ insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_12','重�
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_13','财务收款','021',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_14','司法诉讼完成','021',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_15','坏账','021',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_16','赎回财务审核','021',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_17','转卖财务审核','021',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('022_01','待还款','022',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('022_02','已还款','022',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('022_03','已逾期待处理','022',NULL);

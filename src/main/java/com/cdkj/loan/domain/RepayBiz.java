@@ -144,6 +144,9 @@ public class RepayBiz extends ABaseDO {
     // 结清时间
     private Date settleDatetime;
 
+    // 处理结果附件
+    private String dealEnclosure;
+
     // 押金单
     private String depositReceipt;
 
@@ -221,7 +224,13 @@ public class RepayBiz extends ABaseDO {
     private String teamCode;
 
     // 是否在物流传递中
-    private String IsLogistics;
+    private String isLogistics;
+
+    // 最终收款人
+    private String finalPayee;
+
+    // 附件
+    private String payeeEnclosure;
 
     // ****** 辅助字段 ******
     // 预算单编号
@@ -272,6 +281,22 @@ public class RepayBiz extends ABaseDO {
     private int curOverdueCountStart; // 现有逾期的次数起
 
     private int curOverdueCountEnd; // 现有逾期的次数止
+
+    public String getFinalPayee() {
+        return finalPayee;
+    }
+
+    public void setFinalPayee(String finalPayee) {
+        this.finalPayee = finalPayee;
+    }
+
+    public String getPayeeEnclosure() {
+        return payeeEnclosure;
+    }
+
+    public void setPayeeEnclosure(String payeeEnclosure) {
+        this.payeeEnclosure = payeeEnclosure;
+    }
 
     public int getCurOverdueCountStart() {
         return curOverdueCountStart;
@@ -425,6 +450,14 @@ public class RepayBiz extends ABaseDO {
         this.loanAmount = loanAmount;
     }
 
+    public String getDealEnclosure() {
+        return dealEnclosure;
+    }
+
+    public void setDealEnclosure(String dealEnclosure) {
+        this.dealEnclosure = dealEnclosure;
+    }
+
     public int getPeriods() {
         return periods;
     }
@@ -522,11 +555,11 @@ public class RepayBiz extends ABaseDO {
     }
 
     public String getIsLogistics() {
-        return IsLogistics;
+        return isLogistics;
     }
 
     public void setIsLogistics(String isLogistics) {
-        IsLogistics = isLogistics;
+        this.isLogistics = isLogistics;
     }
 
     public Long getLyDeposit() {
