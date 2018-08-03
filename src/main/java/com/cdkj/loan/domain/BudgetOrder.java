@@ -868,9 +868,13 @@ public class BudgetOrder extends ABaseDO {
 
     private String backAdvanceFundPage;// 收回垫资款页面分页查询标识
 
-    private Date BankFkDatetimeStart;
+    private Date BankFkDatetimeStart; // 银行放款时间起
 
-    private Date BankFkDatetimeEnd;
+    private Date BankFkDatetimeEnd;// 银行放款时间止
+
+    private Date BankFkSendDatetimeStart; // 银行放款时间起
+
+    private Date BankFkSendDatetimeEnd;// 银行放款时间止
 
     public AdvanceFund getAdvanceFund() {
         return advanceFund;
@@ -3250,6 +3254,22 @@ public class BudgetOrder extends ABaseDO {
 
     public void setBankFkSendDatetime(Date bankFkSendDatetime) {
         this.bankFkSendDatetime = bankFkSendDatetime;
+    }
+
+    public Date getBankFkSendDatetimeStart() {
+        return BankFkSendDatetimeStart;
+    }
+
+    public void setBankFkSendDatetimeStart(Date bankFkSendDatetimeStart) {
+        BankFkSendDatetimeStart = bankFkSendDatetimeStart;
+    }
+
+    public Date getBankFkSendDatetimeEnd() {
+        return BankFkSendDatetimeEnd;
+    }
+
+    public void setBankFkSendDatetimeEnd(Date bankFkSendDatetimeEnd) {
+        BankFkSendDatetimeEnd = bankFkSendDatetimeEnd;
     }
 
 }
