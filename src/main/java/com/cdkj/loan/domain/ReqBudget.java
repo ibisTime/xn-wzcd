@@ -15,8 +15,6 @@ public class ReqBudget extends ABaseDO {
 
     private String companyCode;// 业务公司编号
 
-    private String receiptBank;// 收款银行
-
     private String receiptAccount;// 收款账号
 
     private Long budgetAmount;// 预算金额
@@ -137,14 +135,6 @@ public class ReqBudget extends ABaseDO {
 
     public void setCompanyCode(String companyCode) {
         this.companyCode = companyCode;
-    }
-
-    public String getReceiptBank() {
-        return receiptBank;
-    }
-
-    public void setReceiptBank(String receiptBank) {
-        this.receiptBank = receiptBank;
     }
 
     public String getReceiptAccount() {

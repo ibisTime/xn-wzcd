@@ -3,11 +3,9 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 public class XN632100Req {
-    @NotBlank
-    private String receiptBank;// 收款银行
 
     @NotBlank
-    private String receiptAccount;// 收款账号
+    private String receiptAccount;// 收款账号编号
 
     @NotBlank
     private String budgetAmount;// 预算金额
@@ -17,14 +15,6 @@ public class XN632100Req {
 
     @NotBlank
     private String applyUser;// 申请人
-
-    public String getReceiptBank() {
-        return receiptBank;
-    }
-
-    public void setReceiptBank(String receiptBank) {
-        this.receiptBank = receiptBank;
-    }
 
     public String getReceiptAccount() {
         return receiptAccount;

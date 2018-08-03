@@ -27,7 +27,6 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632240Req;
 import com.cdkj.loan.dto.req.XN632241Req;
 import com.cdkj.loan.dto.req.XN632242Req;
-import com.cdkj.loan.dto.req.XN632243Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
@@ -269,29 +268,6 @@ public class RepointAOImpl implements IRepointAO {
             repoint.setCurNodeCode(node.getBackNode());
         }
         repointBO.branchCompanyManagerApprove(repoint);
-        // 日志记录
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(repoint.getCode(),
-            EBizLogType.REPOINT, repoint.getCode(), preCurNodeCode,
-            repoint.getCurNodeCode(), req.getApproveNote(), req.getOperator());
-    }
-
-    @Override
-    public void financeConfirm(XN632243Req req) {
-        Repoint repoint = repointBO.getRepoint(req.getCode());
-        String preCurNodeCode = repoint.getCurNodeCode();// 当前节点
-        if (!ERepointNode.FINANCE_CONFIRM.getCode().equals(preCurNodeCode)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是返点支付流程财务确认节点，不能操作");
-        }
-        NodeFlow node = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode);
-        if (EBoolean.YES.getCode().equals(req.getApproveResult())) {
-            // 审核通过
-            repoint.setCurNodeCode(node.getNextNode());
-        } else {
-            // 审核不通过
-            repoint.setCurNodeCode(node.getBackNode());
-        }
-        repointBO.financeConfirm(repoint);
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(repoint.getCode(),
             EBizLogType.REPOINT, repoint.getCode(), preCurNodeCode,

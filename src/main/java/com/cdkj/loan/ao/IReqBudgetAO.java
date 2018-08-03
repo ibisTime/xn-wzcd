@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.dto.req.XN632100Req;
-import com.cdkj.loan.dto.req.XN632101Req;
 import com.cdkj.loan.dto.req.XN632102Req;
 import com.cdkj.loan.dto.req.XN632103Req;
 
@@ -18,8 +17,6 @@ public interface IReqBudgetAO {
     public String addReqBudget(XN632100Req req);
 
     public void collectionReqBudget(XN632103Req req);
-
-    public void audit(XN632101Req req);
 
     public void loan(XN632102Req req);
 

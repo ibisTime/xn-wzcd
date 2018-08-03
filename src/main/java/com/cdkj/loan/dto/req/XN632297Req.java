@@ -17,6 +17,9 @@ public class XN632297Req {
     // 节点
     private String curNodeCode;
 
+    // 结算方式
+    private String settleWay;
+
     public String getAccountCode() {
         return accountCode;
     }
@@ -39,6 +42,14 @@ public class XN632297Req {
 
     public void setCurNodeCode(String curNodeCode) {
         this.curNodeCode = curNodeCode;
+    }
+
+    public String getSettleWay() {
+        return settleWay;
+    }
+
+    public void setSettleWay(String settleWay) {
+        this.settleWay = settleWay;
     }
 
 }

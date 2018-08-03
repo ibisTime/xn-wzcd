@@ -53,6 +53,9 @@
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
 			</if>
+			<if test="settleWay != null and settleWay != '' ">
+				AND tcd.settle_way = #{settleWay}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_repointDetail" parameterType="repointDetail" resultMap="repointDetail_DB_Result">
@@ -83,7 +86,7 @@
 		,t.account_name
 		,t.cur_node_code
 		FROM
-		tdqt_repoint_detail t
+		tdqt_repoint_detail t inner join tb_car_dealer tcd on t.car_dealer_code=tcd.code
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
