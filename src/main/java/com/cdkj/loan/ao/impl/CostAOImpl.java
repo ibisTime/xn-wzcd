@@ -21,10 +21,12 @@ public class CostAOImpl implements ICostAO {
     private ICostBO costBO;
 
     @Override
-    public void addCost(String repayPlanCode, List<XN630535Req> list) {
+    public void addCost(String repayPlanCode, String overdueTreatmentCode,
+            List<XN630535Req> list) {
         for (XN630535Req Req : list) {
             Cost cost = new Cost();
             cost.setRepayPlanCode(repayPlanCode);
+            cost.setOverdueTreatmentCode(overdueTreatmentCode);
             cost.setItem(Req.getItem());
             cost.setAmount(StringValidater.toLong(Req.getAmount()));
             cost.setPayDatetime(DateUtil.strToDate(Req.getPayDatetime(),

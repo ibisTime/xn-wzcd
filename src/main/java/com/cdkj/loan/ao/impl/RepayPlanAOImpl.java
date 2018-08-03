@@ -20,6 +20,7 @@ import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.ICostBO;
 import com.cdkj.loan.bo.ICreditscoreBO;
+import com.cdkj.loan.bo.IOverdueTreatmentBO;
 import com.cdkj.loan.bo.IRemindLogBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
@@ -34,6 +35,7 @@ import com.cdkj.loan.domain.Account;
 import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.Cost;
+import com.cdkj.loan.domain.OverdueTreatment;
 import com.cdkj.loan.domain.RemindLog;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
@@ -94,6 +96,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     @Autowired
     IReplaceRepayApplyBO replaceRepayApplyBO;
+
+    @Autowired
+    IOverdueTreatmentBO overdueTreatmentBO;
 
     private static final Logger logger = LoggerFactory
         .getLogger(RepayPlanAOImpl.class);
@@ -288,6 +293,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
 
     // 催收过程
     @Override
+    @Transactional
     public void collectionProcess(XN630537Req req) {
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(req.getCode());
         if (!ERepayPlanNode.OVERDUE.getCode()
@@ -301,24 +307,28 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前还款业务不是还款中，暂无法处理");
         }
-        // 删除原来费用清单
-        costAO.dropCost(req.getCode());
+
+        // 催收过程
+        OverdueTreatment data = new OverdueTreatment();
+        data.setRepayPlanCode(repayPlan.getCode());
+        data.setCollectionWay(req.getCollectionWay());
+        data.setCollectionTarget(req.getCollectionTarget());
+        data.setCollectionProcess(req.getCollectionProcess());
+        data.setCollectionWish(req.getCollectionWish());
+        data.setCollectionProcessNote(req.getCollectionProcessNote());
+        String code = overdueTreatmentBO.saveOverdueTreatment(data);
+
         // 添加费用清单
-        costAO.addCost(req.getCode(), req.getCostList());
+        costAO.addCost(req.getCode(), code, req.getCostList());
         long totalFee = 0;
         for (XN630535Req xn630535Req : req.getCostList()) {
             totalFee += StringValidater.toLong(xn630535Req.getAmount());
         }
         // 更新还款计划
-        repayPlan.setCollectionWay(req.getCollectionWay());
-        repayPlan.setCollectionTarget(req.getCollectionTarget());
-        repayPlan.setCollectionProcess(req.getCollectionProcess());
-        repayPlan.setCollectionWish(req.getCollectionWish());
-        repayPlan.setTotalFee(totalFee);
-        repayPlan.setCollectionNote(req.getCollectionNote());
+        repayPlan.setTotalFee(totalFee);// 清收费用总额
     }
 
-    // 逾期处理
+    // 催收结果
     @Override
     @Transactional
     public void overdueHandle(XN630532Req req) {
@@ -335,20 +345,30 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
                 "当前还款业务不是还款中，暂无法处理");
         }
 
-        // 删除原来费用清单
-        costAO.dropCost(req.getCode());
+        // 催收结果
+        OverdueTreatment data = new OverdueTreatment();
+        data.setRepayPlanCode(repayPlan.getCode());
+        data.setCollectionResult(req.getCollectionResult());
+        data.setDepositIsProvide(req.getDepositIsProvide());
+        if (StringUtils.isNotBlank(req.getOverdueDeposit())) {
+            data.setOverdueDeposit(
+                StringValidater.toLong(req.getOverdueDeposit()));
+        }
+        data.setCollectionResultNote(req.getCollectionResultNote());
+        if (StringUtils.isNotBlank(req.getRealRepayAmount())) {
+            data.setRealRepayAmount(
+                StringValidater.toLong(req.getRealRepayAmount()));// 部分还款实还金额
+        }
+        String code = overdueTreatmentBO.saveOverdueTreatment(data);
+
         // 添加费用清单
-        costAO.addCost(req.getCode(), req.getCostList());
+        costAO.addCost(req.getCode(), code, req.getCostList());
         long totalFee = 0;
         for (XN630535Req xn630535Req : req.getCostList()) {
             totalFee += StringValidater.toLong(xn630535Req.getAmount());
         }
 
         // 更新还款计划
-        repayPlan.setCollectionResult(req.getCollectionResult());
-        repayPlan.setDepositIsProvide(req.getDepositIsProvide());
-        repayPlan
-            .setOverdueDeposit(StringValidater.toLong(req.getOverdueDeposit()));
         Long realRepayAmount = StringValidater.toLong(req.getRealRepayAmount());
         if (null == realRepayAmount) {
             realRepayAmount = 0L;
@@ -356,9 +376,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         repayPlan.setRealRepayAmount(realRepayAmount);
         repayPlan
             .setOverdueAmount(repayPlan.getOverdueAmount() - realRepayAmount);
-
         repayPlan.setTotalFee(totalFee);
-        repayPlan.setCollectionNote(req.getCollectionNote());
+
         User user = userBO.getUser(repayPlan.getUserId());
         if (ECollectionResult.ALL_REPAY.getCode()
             .equals(req.getCollectionResult())) {
@@ -368,8 +387,6 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         } else if (ECollectionResult.REJUST_REPAY.getCode()
             .equals(req.getCollectionResult())
                 || ECollectionResult.TAKE_CAR.getCode()
-                    .equals(req.getCollectionResult())
-                || ECollectionResult.JUDGE.getCode()
                     .equals(req.getCollectionResult())) {
             repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_RED.getCode());
 
@@ -380,19 +397,23 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
                 .setCurNodeCode(ERepayPlanNode.HANDLER_TO_YELLOW.getCode());
 
             userBO.refreshYellowSign(user, req.getOperator());
+        } else if (ECollectionResult.JUDGE.getCode()
+            .equals(req.getCollectionResult())) {
+            repayPlan.setCurNodeCode(ERepayPlanNode.JUDGE.getCode());
+            userBO.refreshBlackSign(user, req.getOperator());
         }
         repayPlanBO.refreshOverdueHandle(repayPlan);
 
         // 红名单更新收车节点,司法诉讼则直接进去诉讼，无需收车
+        String nextNode = null;
         if (ERepayPlanNode.HANDLER_TO_RED.getCode()
             .equals(repayPlan.getCurNodeCode())) {
-            String nextNode = ERepayBizNode.TC_APPLY.getCode();
-            if (ECollectionResult.JUDGE.getCode()
-                .equals(req.getCollectionResult())) {
-                nextNode = ERepayBizNode.JUDGE.getCode();
-            }
-            repayBizBO.overdueRedMenuHandle(repayBiz, nextNode);
+            nextNode = ERepayBizNode.TC_APPLY.getCode();
         }
+        if (ERepayPlanNode.JUDGE.getCode().equals(repayPlan.getCurNodeCode())) {
+            nextNode = ERepayBizNode.JUDGE.getCode();
+        }
+        repayBizBO.overdueRedMenuHandle(repayBiz, nextNode);
     }
 
     @Override

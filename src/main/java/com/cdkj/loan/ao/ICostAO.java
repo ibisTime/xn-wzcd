@@ -9,7 +9,8 @@ import com.cdkj.loan.dto.req.XN630535Req;
 public interface ICostAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public void addCost(String repayPlanCode, List<XN630535Req> list);
+    public void addCost(String repayPlanCode, String overdueTreatmentCode,
+            List<XN630535Req> list);
 
     public int dropCost(String code);
 

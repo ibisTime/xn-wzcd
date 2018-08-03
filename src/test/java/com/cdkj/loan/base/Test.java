@@ -9,26 +9,26 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "contractImport";
+    private static String key = "overdueTreatment";
 
     // 实体名称
-    private static String keyName = "银行合同导入";
+    private static String keyName = "逾期处理";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdq_contract_import";
+    private static String dbname = "tdh_overdue_treatment";
 
-    private static String[] DBwords = { "code", "contract_code",
-            "budget_order_code", "customer_name", "id_no", "loan_amount",
-            "bank_code", "bill_datetime", "repay_bank_date", "bank_card_number",
-            "contract_sign_date", "import_datetime", "status", "operator",
-            "remark" };
+    private static String[] DBwords = { "code", "repay_plan_code",
+            "collection_way", "collection_target", "collection_process",
+            "collection_wish", "collection_process_note", "collection_result",
+            "depositIs_provide", "overdue_deposit", "real_repay_amount",
+            "collection_result_note", "operator", "update_datetime" };
 
-    private static String[] DBwordsName = { "编号", "合同号", "预算单编号", "客户姓名",
-            "身份证号", "贷款金额", "银行", "账单日", "还款日", "信用卡号", "合同签订日", "导入日期", "状态",
-            "操作人", "备注" };
+    private static String[] DBwordsName = { "编号", "还款计划编号", "催收方式", "催收对象",
+            "催收过程", "客户意愿", "催收过程说明", "催收结果", "是否提供押金", "违约押金", "实际还款金额",
+            "催收结果说明", "操作人", "操作时间" };
 
     private static String[] DOwords = getDOwords();
 
@@ -441,7 +441,7 @@ public class Test {
                 + packge + "bo.I" + Key + "BO;\n" + "import " + packge
                 + "bo.base.Paginable;\n" + "import " + packge + "domain." + Key
                 + ";\n" + "import " + packge + "exception.BizException;\n\n\n\n"
-                + "//@Service\n" + "public class " + Key + "AOImpl implements I"
+                + "@Service\n" + "public class " + Key + "AOImpl implements I"
                 + Key + "AO {\n\n\t" + "@Autowired\n\tprivate I" + Key + "BO "
                 + key + "BO;\n\n\t" + "@Override\n\tpublic String add" + Key
                 + "(" + Key + " data) {\n\t\t" + "return " + key + "BO.save"
