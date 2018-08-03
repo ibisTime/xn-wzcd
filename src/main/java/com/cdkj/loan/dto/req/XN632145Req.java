@@ -45,6 +45,14 @@ public class XN632145Req extends APageReq {
 
     private String bankRepointPage;// 收回垫资款页页面分页查询标识
 
+    private String bankFkDatetimeStart;// 银行放款时间起
+
+    private String bankFkDatetimeEnd;// 银行放款时间止
+
+    private String sendDatetimeStart;// 银行放款进件时间起
+
+    private String sendDatetimeEnd;// 银行放款进件时间止
+
     public String getBankRepointPage() {
         return bankRepointPage;
     }
@@ -163,6 +171,38 @@ public class XN632145Req extends APageReq {
 
     public void setEnterFileStatus(String enterFileStatus) {
         this.enterFileStatus = enterFileStatus;
+    }
+
+    public String getBankFkDatetimeStart() {
+        return bankFkDatetimeStart;
+    }
+
+    public void setBankFkDatetimeStart(String bankFkDatetimeStart) {
+        this.bankFkDatetimeStart = bankFkDatetimeStart;
+    }
+
+    public String getBankFkDatetimeEnd() {
+        return bankFkDatetimeEnd;
+    }
+
+    public void setBankFkDatetimeEnd(String bankFkDatetimeEnd) {
+        this.bankFkDatetimeEnd = bankFkDatetimeEnd;
+    }
+
+    public String getSendDatetimeStart() {
+        return sendDatetimeStart;
+    }
+
+    public void setSendDatetimeStart(String sendDatetimeStart) {
+        this.sendDatetimeStart = sendDatetimeStart;
+    }
+
+    public String getSendDatetimeEnd() {
+        return sendDatetimeEnd;
+    }
+
+    public void setSendDatetimeEnd(String sendDatetimeEnd) {
+        this.sendDatetimeEnd = sendDatetimeEnd;
     }
 
 }
