@@ -147,6 +147,10 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
             data.setSign(EUserSign.YELLOW.getCode());
             data.setSignDatetime(new Date());
             data.setTotalYellowCount(data.getTotalYellowCount() + 1);
+            // 三次黄名单进入红名单
+            if (data.getTotalYellowCount() >= 3) {
+                data.setSign(EUserSign.RED.getCode());
+            }
             data.setUpdater(updater);
             data.setUpdateDatetime(new Date());
             userDAO.updateYellowSign(data);

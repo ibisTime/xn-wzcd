@@ -5,6 +5,7 @@ import java.util.List;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.dto.req.XN630532Req;
+import com.cdkj.loan.dto.req.XN630537Req;
 
 public interface IRepayPlanAO {
 
@@ -43,5 +44,8 @@ public interface IRepayPlanAO {
 
     // 每天凌晨定时更新还款计划状态为已结清
     public void doPayedDaily();
+
+    // 催收过程
+    public void collectionProcess(XN630537Req req);
 
 }

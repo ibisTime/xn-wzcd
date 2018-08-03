@@ -303,8 +303,10 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         }
         // 抵押流程
         if (EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode()
-            .equals(budgetOrder.getPledgeCurNodeCode())) {// 连续发件情况
-                                                          // 再生成一条资料传递
+            .equals(budgetOrder.getPledgeCurNodeCode())
+                || EBudgetOrderNode.HEADQUARTERS_INTERNAL_SEND.getCode()
+                    .equals(budgetOrder.getPledgeCurNodeCode())) {// 连续发件情况
+                                                                  // 再生成一条资料传递
             NodeFlow nodeFlowNext = nodeFlowBO
                 .getNodeFlowByCurrentNode(budgetOrder.getPledgeCurNodeCode());// 获取当前节点的下一个节点
             // 生成资料传递

@@ -269,6 +269,26 @@ public class RepayBiz extends ABaseDO {
     // 最新的收车时间
     private Date newestTakeDatetime;
 
+    private int curOverdueCountStart; // 现有逾期的次数起
+
+    private int curOverdueCountEnd; // 现有逾期的次数止
+
+    public int getCurOverdueCountStart() {
+        return curOverdueCountStart;
+    }
+
+    public void setCurOverdueCountStart(int curOverdueCountStart) {
+        this.curOverdueCountStart = curOverdueCountStart;
+    }
+
+    public int getCurOverdueCountEnd() {
+        return curOverdueCountEnd;
+    }
+
+    public void setCurOverdueCountEnd(int curOverdueCountEnd) {
+        this.curOverdueCountEnd = curOverdueCountEnd;
+    }
+
     public Date getNewestTakeDatetime() {
         return newestTakeDatetime;
     }

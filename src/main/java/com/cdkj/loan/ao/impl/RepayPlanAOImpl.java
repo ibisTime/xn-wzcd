@@ -42,6 +42,7 @@ import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN630532Req;
 import com.cdkj.loan.dto.req.XN630535Req;
+import com.cdkj.loan.dto.req.XN630537Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECollectionResult;
@@ -285,6 +286,38 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         return results;
     }
 
+    // 催收过程
+    @Override
+    public void collectionProcess(XN630537Req req) {
+        RepayPlan repayPlan = repayPlanBO.getRepayPlan(req.getCode());
+        if (!ERepayPlanNode.OVERDUE.getCode()
+            .equals(repayPlan.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款计划不是逾期状态");
+        }
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
+        if (!ERepayBizNode.TO_REPAY.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不是还款中，暂无法处理");
+        }
+        // 删除原来费用清单
+        costAO.dropCost(req.getCode());
+        // 添加费用清单
+        costAO.addCost(req.getCode(), req.getCostList());
+        long totalFee = 0;
+        for (XN630535Req xn630535Req : req.getCostList()) {
+            totalFee += StringValidater.toLong(xn630535Req.getAmount());
+        }
+        // 更新还款计划
+        repayPlan.setCollectionWay(req.getCollectionWay());
+        repayPlan.setCollectionTarget(req.getCollectionTarget());
+        repayPlan.setCollectionProcess(req.getCollectionProcess());
+        repayPlan.setCollectionWish(req.getCollectionWish());
+        repayPlan.setTotalFee(totalFee);
+        repayPlan.setCollectionNote(req.getCollectionNote());
+    }
+
     // 逾期处理
     @Override
     @Transactional
@@ -312,12 +345,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         }
 
         // 更新还款计划
-        repayPlan.setCollectionWay(req.getCollectionWay());
-        repayPlan.setCollectionTarget(req.getCollectionTarget());
-        repayPlan.setCollectionProcess(req.getCollectionProcess());
-        repayPlan.setCollectionWish(req.getCollectionWish());
         repayPlan.setCollectionResult(req.getCollectionResult());
-
         repayPlan.setDepositIsProvide(req.getDepositIsProvide());
         repayPlan
             .setOverdueDeposit(StringValidater.toLong(req.getOverdueDeposit()));
@@ -333,11 +361,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         repayPlan.setCollectionNote(req.getCollectionNote());
         User user = userBO.getUser(repayPlan.getUserId());
         if (ECollectionResult.ALL_REPAY.getCode()
-            .equals(req.getCollectionResult())
-                || ECollectionResult.PART_REPAY.getCode()
-                    .equals(req.getCollectionResult())
-                || ECollectionResult.PROVIDE_DEPOSIT.getCode()
-                    .equals(req.getCollectionResult())) {
+            .equals(req.getCollectionResult())) {
             repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_GREEN.getCode());
 
             userBO.refreshGreenSign(user, req.getOperator());

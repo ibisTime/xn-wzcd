@@ -126,7 +126,7 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
 
         String preNodeCode = reqBudget.getCurNodeCode();// 当前节点
         reqBudget.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-            EReqBudgetNode.LOAN.getCode()).getNextNode());// 更新节点
+            preNodeCode).getNextNode());// 更新节点
         reqBudgetBO.loan(reqBudget);
 
         // 日志记录
