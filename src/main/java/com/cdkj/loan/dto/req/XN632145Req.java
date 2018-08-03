@@ -49,9 +49,9 @@ public class XN632145Req extends APageReq {
 
     private String bankFkDatetimeEnd;// 银行放款时间止
 
-    private String sendDatetimeStart;// 银行放款进件时间起
+    private String bankFkSendDatetimeStart;// 银行放款进件时间起
 
-    private String sendDatetimeEnd;// 银行放款进件时间止
+    private String bankFkSendDatetimeEnd;// 银行放款进件时间止
 
     public String getBankRepointPage() {
         return bankRepointPage;
@@ -189,20 +189,20 @@ public class XN632145Req extends APageReq {
         this.bankFkDatetimeEnd = bankFkDatetimeEnd;
     }
 
-    public String getSendDatetimeStart() {
-        return sendDatetimeStart;
+    public String getBankFkSendDatetimeStart() {
+        return bankFkSendDatetimeStart;
     }
 
-    public void setSendDatetimeStart(String sendDatetimeStart) {
-        this.sendDatetimeStart = sendDatetimeStart;
+    public void setBankFkSendDatetimeStart(String bankFkSendDatetimeStart) {
+        this.bankFkSendDatetimeStart = bankFkSendDatetimeStart;
     }
 
-    public String getSendDatetimeEnd() {
-        return sendDatetimeEnd;
+    public String getBankFkSendDatetimeEnd() {
+        return bankFkSendDatetimeEnd;
     }
 
-    public void setSendDatetimeEnd(String sendDatetimeEnd) {
-        this.sendDatetimeEnd = sendDatetimeEnd;
+    public void setBankFkSendDatetimeEnd(String bankFkSendDatetimeEnd) {
+        this.bankFkSendDatetimeEnd = bankFkSendDatetimeEnd;
     }
 
 }
