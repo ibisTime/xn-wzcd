@@ -9,7 +9,6 @@ import com.cdkj.loan.domain.Repoint;
 import com.cdkj.loan.dto.req.XN632240Req;
 import com.cdkj.loan.dto.req.XN632241Req;
 import com.cdkj.loan.dto.req.XN632242Req;
-import com.cdkj.loan.dto.req.XN632243Req;
 
 /**
  * 
@@ -35,8 +34,5 @@ public interface IRepointAO {
 
     // 分公司总经理审批
     public void branchCompanyManagerApprove(XN632242Req req);
-
-    // 财务确认
-    public void financeConfirm(XN632243Req req);
 
 }

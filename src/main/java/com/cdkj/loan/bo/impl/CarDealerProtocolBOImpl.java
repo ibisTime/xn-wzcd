@@ -219,9 +219,6 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
             res.setOtherFee(String.valueOf(AmountUtil.mul(loanAmount,
                 carDealerProtocol.getOtherRate())));
         }
-        Map<String, Long> map = calculateOilSubsidyGpsDeduct(loanAmount);
-        res.setOilSubsidy(String.valueOf(map.get("oilSubsidy")));// 油补
-        res.setGpsDeduct(String.valueOf(map.get("gpsDeduct")));// GPS提成
         return res;
     }
 

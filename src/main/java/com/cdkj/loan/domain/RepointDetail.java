@@ -78,6 +78,11 @@ public class RepointDetail extends ABaseDO {
     // 节点
     private String curNodeCode;
 
+    /*****************db properties*******************/
+
+    // 结算方式
+    private String settleWay;
+
     public String getCode() {
         return code;
     }
@@ -252,6 +257,14 @@ public class RepointDetail extends ABaseDO {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getSettleWay() {
+        return settleWay;
+    }
+
+    public void setSettleWay(String settleWay) {
+        this.settleWay = settleWay;
     }
 
 }

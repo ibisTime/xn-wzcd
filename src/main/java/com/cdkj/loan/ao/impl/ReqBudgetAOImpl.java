@@ -18,8 +18,8 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.Department;
-import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632100Req;
@@ -57,15 +57,14 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     public String addReqBudget(XN632100Req req) {
 
         SYSUser user = sysUserBO.getUser(req.getApplyUser());
-        ReqBudget todayReqBudget = reqBudgetBO
-            .getTodayReqBudget(user.getCompanyCode());
+        ReqBudget todayReqBudget = reqBudgetBO.getTodayReqBudget(user
+            .getCompanyCode());
         if (null != todayReqBudget) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "您今日已提交过申请！");
         }
         ReqBudget data = new ReqBudget();
         data.setCompanyCode(user.getCompanyCode());
-        data.setReceiptBank(req.getReceiptBank());
         data.setReceiptAccount(req.getReceiptAccount());
         data.setBudgetAmount(StringValidater.toLong(req.getBudgetAmount()));
         data.setUseDatetime(DateUtil.strToDate(req.getUseDatetime(),
@@ -73,9 +72,7 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
 
         data.setApplyUser(user.getUserId());
         data.setApplyDatetime(new Date());
-        NodeFlow nodeFlow = nodeFlowBO
-            .getNodeFlowByCurrentNode(data.getCurNodeCode());
-        data.setCurNodeCode(nodeFlow.getNextNode());
+        data.setCurNodeCode(EReqBudgetNode.LOAN.getCode());
         String code = reqBudgetBO.saveReqBudget(data);
         // 日志记录
         sysBizLogBO.recordCurrentSYSBizLog(code, EBizLogType.REQ_BUDGET, code,
@@ -89,21 +86,20 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     @Override
     public void collectionReqBudget(XN632103Req req) {
         ReqBudget reqBudget = reqBudgetBO.getReqBudget(req.getCode());
-        if (!EReqBudgetNode.COLLECTION.getCode()
-            .equals(reqBudget.getCurNodeCode())) {
+        if (!EReqBudgetNode.COLLECTION.getCode().equals(
+            reqBudget.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前不是财务确认收回预算款节点，不能操作");
         }
-        reqBudget.setCollectionBank(req.getCollectionBank());
-        reqBudget.setCollectionAmount(
-            StringValidater.toLong(req.getCollectionAmount()));
+        reqBudget.setCollectionAmount(StringValidater.toLong(req
+            .getCollectionAmount()));
         reqBudget.setCollectionDatetime(new Date());
         reqBudget.setCollectionRemark(req.getCollectionRemark());
 
         // 之前节点
         String preCurrentNode = reqBudget.getCurNodeCode();
-        reqBudget.setCurNodeCode(
-            nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
+        reqBudget.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+            preCurrentNode).getNextNode());
         reqBudgetBO.collectionReqBudget(reqBudget);
 
         // 日志记录
@@ -111,38 +107,6 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
             reqBudget.getCode(), preCurrentNode, req.getCollectionRemark(),
             req.getOperator());
     }
-
-    // 财务经理审核
-    // @Override
-    // public void audit(XN632101Req req) {
-    // ReqBudget reqBudget = reqBudgetBO.getReqBudget(req.getCode());
-    // if (!EReqBudgetNode.AUDIT.getCode()
-    // .equals(reqBudget.getCurNodeCode())) {
-    // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-    // "当前节点不是审核节点，不能操作");
-    // }
-    //
-    // // 之前节点
-    // String preCurrentNode = reqBudget.getCurNodeCode();
-    // if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
-    // // 审核通过，改变节点
-    // reqBudget.setCurNodeCode(nodeFlowBO
-    // .getNodeFlowByCurrentNode(EReqBudgetNode.AUDIT.getCode())
-    // .getNextNode());
-    // } else {
-    // reqBudget.setCurNodeCode(nodeFlowBO
-    // .getNodeFlowByCurrentNode(EReqBudgetNode.AUDIT.getCode())
-    // .getBackNode());
-    // }
-    // reqBudgetBO.refreshReqBudgetNode(reqBudget);
-    //
-    // // 日志记录
-    // EReqBudgetNode currentNode = EReqBudgetNode.getMap()
-    // .get(reqBudget.getCurNodeCode());
-    // sysBizLogBO.saveNewAndPreEndSYSBizLog(reqBudget.getCode(),
-    // EBizLogType.REQ_BUDGET, reqBudget.getCode(), preCurrentNode,
-    // currentNode.getCode(), currentNode.getValue(), req.getOperator());
-    // }
 
     // 确认放款
     @Override
@@ -153,24 +117,20 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
                 "当前节点不是确认放款节点，不能操作");
         }
         reqBudget.setPayAmount(StringValidater.toLong(req.getPayAmount()));
-
-        reqBudget.setPayBank(req.getPayBank());
         reqBudget.setPayAccount(req.getPayAccount());
         reqBudget.setWaterBill(req.getWaterBill());
         reqBudget.setPayDatetime(new Date());
         reqBudget.setPayRemark(req.getPayRemark());
 
-        String preNodeCode = reqBudget.getCurNodeCode();
-        reqBudget.setCurNodeCode(
-            nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode).getNextNode());
+        String preNodeCode = reqBudget.getCurNodeCode();// 当前节点
+        reqBudget.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+            preNodeCode).getNextNode());// 更新节点
         reqBudgetBO.loan(reqBudget);
 
         // 日志记录
-        EReqBudgetNode currentNode = EReqBudgetNode.getMap()
-            .get(reqBudget.getCurNodeCode());
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(reqBudget.getCode(),
-            EBizLogType.REQ_BUDGET, reqBudget.getCode(), preNodeCode,
-            currentNode.getCode(), currentNode.getValue(), req.getOperator());
+        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REQ_BUDGET,
+            reqBudget.getCode(), preNodeCode, req.getPayRemark(),
+            req.getOperator());
     }
 
     @Override
@@ -188,8 +148,8 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     @Override
     public Paginable<ReqBudget> queryReqBudgetPageByRoleCode(int start,
             int limit, ReqBudget condition) {
-        Paginable<ReqBudget> paginable = reqBudgetBO
-            .getPaginableByRoleCode(start, limit, condition);
+        Paginable<ReqBudget> paginable = reqBudgetBO.getPaginableByRoleCode(
+            start, limit, condition);
         List<ReqBudget> list = paginable.getList();
         for (ReqBudget reqBudget : list) {
             init(reqBudget);
@@ -216,8 +176,8 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
     private void init(ReqBudget data) {
 
         if (StringUtils.isNotBlank(data.getCompanyCode())) {
-            Department department = departmentBO
-                .getDepartment(data.getCompanyCode());
+            Department department = departmentBO.getDepartment(data
+                .getCompanyCode());
             if (null != department) {
                 data.setCompanyName(department.getName());
             }
@@ -227,6 +187,14 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
             SYSUser user = sysUserBO.getUser(data.getApplyUser());
             if (null != user) {
                 data.setApplyUserName(user.getRealName());
+            }
+        }
+
+        if (StringUtils.isNotBlank(data.getReceiptAccount())) {
+            CollectBankcard bankcard = collectBankcardBO
+                .getCollectBankcard(data.getReceiptAccount());
+            if (null != bankcard) {
+                data.setRealName(bankcard.getRealName());
             }
         }
     }

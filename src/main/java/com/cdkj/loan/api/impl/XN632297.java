@@ -29,6 +29,7 @@ public class XN632297 extends AProcessor {
         condition.setCarDealerCode(req.getCarDealerCode());
         condition.setAccountCode(req.getAccountCode());
         condition.setCurNodeCode(req.getCurNodeCode());
+        condition.setSettleWay(req.getSettleWay());
         return repointDetailAO.queryRepointDetailList(condition);
     }
 

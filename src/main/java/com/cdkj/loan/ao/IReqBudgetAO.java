@@ -18,8 +18,6 @@ public interface IReqBudgetAO {
 
     public void collectionReqBudget(XN632103Req req);
 
-    // public void audit(XN632101Req req);
-
     public void loan(XN632102Req req);
 
     public Paginable<ReqBudget> queryReqBudgetPage(int start, int limit,

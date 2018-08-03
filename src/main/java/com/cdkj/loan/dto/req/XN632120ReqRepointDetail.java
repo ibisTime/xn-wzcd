@@ -11,7 +11,7 @@ public class XN632120ReqRepointDetail {
     // 用款用途（1应退按揭款（不垫资） 3协议外返点
     private String useMoneyPurpose;
 
-    // 金额(返点金额或应退按揭款)
+    // 返点金额
     private String repointAmount;
 
     // 单位名称
