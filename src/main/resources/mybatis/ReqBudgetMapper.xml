@@ -5,13 +5,11 @@
 	<resultMap id="reqBudget_DB_Result" type="reqBudget">
 		<result column="code" property="code" />
 		<result column="company_code" property="companyCode" />
-		<result column="receipt_bank" property="receiptBank" />
 		<result column="receipt_account" property="receiptAccount" />
 		<result column="budget_amount" property="budgetAmount" />
 		<result column="use_datetime" property="useDatetime" />
 		<result column="finance_check_note" property="financeCheckNote" />
 		<result column="pay_amount" property="payAmount" />
-		<result column="pay_bank" property="payBank" />
 		<result column="pay_account" property="payAccount" />
 		<result column="water_bill" property="waterBill" />
 		<result column="pay_datetime" property="payDatetime" />
@@ -20,7 +18,6 @@
 		<result column="pay_remark" property="payRemark" />
 		<result column="dz_amount" property="dzAmount" />
 		<result column="dz_datetime" property="dzDatetime" />
-		<result column="collection_bank" property="collectionBank" />
 		<result column="collection_amount" property="collectionAmount" />
 		<result column="collection_account" property="collectionAccount" />
 		<result column="collection_datetime" property="collectionDatetime" />
@@ -56,13 +53,11 @@
 		SELECT
 		t.code
 		,t.company_code
-		,t.receipt_bank
 		,t.receipt_account
 		,t.budget_amount
 		,t.use_datetime
 		,t.finance_check_note
 		,t.pay_amount
-		,t.pay_bank
 		,t.pay_account
 		,t.water_bill
 		,t.pay_datetime
@@ -71,7 +66,6 @@
 		,t.pay_remark
 		,t.dz_amount
 		,t.dz_datetime
-		,t.collection_bank
 		,t.collection_amount
 		,t.collection_account
 		,t.collection_datetime
@@ -98,13 +92,11 @@
 		distinct
 		t.code
 		,t.company_code
-		,t.receipt_bank
 		,t.receipt_account
 		,t.budget_amount
 		,t.use_datetime
 		,t.finance_check_note
 		,t.pay_amount
-		,t.pay_bank
 		,t.pay_account
 		,t.water_bill
 		,t.pay_datetime
@@ -113,7 +105,6 @@
 		,t.pay_remark
 		,t.dz_amount
 		,t.dz_datetime
-		,t.collection_bank
 		,t.collection_amount
 		,t.collection_account
 		,t.collection_datetime
@@ -140,13 +131,11 @@
 		tdq_req_budget(
 		code
 		,company_code
-		,receipt_bank
 		,receipt_account
 		,budget_amount
 		,use_datetime
 		,finance_check_note
 		,pay_amount
-		,pay_bank
 		,pay_account
 		,water_bill
 		,pay_datetime
@@ -155,7 +144,6 @@
 		,pay_remark
 		,dz_amount
 		,dz_datetime
-		,collection_bank
 		,collection_amount
 		,collection_account
 		,collection_datetime
@@ -165,13 +153,11 @@
 		VALUES(
 		#{code}
 		,#{companyCode}
-		,#{receiptBank}
 		,#{receiptAccount}
 		,#{budgetAmount}
 		,#{useDatetime}
 		,#{financeCheckNote}
 		,#{payAmount}
-		,#{payBank}
 		,#{payAccount}
 		,#{waterBill}
 		,#{payDatetime}
@@ -180,7 +166,6 @@
 		,#{payRemark}
 		,#{dzAmount}
 		,#{dzDatetime}
-		,#{collectionBank}
 		,#{collectionAmount}
 		,#{collectionAccount}
 		,#{collectionDatetime}
@@ -193,13 +178,11 @@
 		UPDATE tdq_req_budget
 		SET
 		company_code = #{companyCode}
-		,receipt_bank = #{receiptBank}
 		,receipt_account = #{receiptAccount}
 		,budget_amount = #{budgetAmount}
 		,use_datetime = #{useDatetime}
 		,finance_check_note = #{financeCheckNote}
 		,pay_amount = #{payAmount}
-		,pay_bank = #{payBank}
 		,pay_account = #{payAccount}
 		,water_bill = #{waterBill}
 		,pay_datetime = #{payDatetime}
@@ -208,7 +191,6 @@
 		,pay_remark = #{payRemark}
 		,dz_amount = #{dzAmount}
 		,dz_datetime = #{dzDatetime}
-		,collection_bank = #{collectionBank}
 		,collection_amount = #{collectionAmount}
 		,collection_account = #{collectionAccount}
 		,collection_datetime = #{collectionDatetime}
@@ -228,7 +210,6 @@
 	<update id="loan" parameterType="reqBudget">
 		UPDATE tdq_req_budget
 		SET
-		pay_bank = #{payBank}
 		,pay_amount = #{payAmount}
 		,pay_account = #{payAccount}
 		,water_bill = #{waterBill}
@@ -241,7 +222,6 @@
 	<update id="update_collection" parameterType="reqBudget">
 		UPDATE tdq_req_budget
 		SET
-		collection_bank = #{collectionBank}
 		,collection_amount = #{collectionAmount}
 		,collection_account = #{collectionAccount}
 		,collection_datetime = #{collectionDatetime}
@@ -254,13 +234,11 @@
 		SELECT
 		t.code
 		,t.company_code
-		,t.receipt_bank
 		,t.receipt_account
 		,t.budget_amount
 		,t.use_datetime
 		,t.finance_check_note
 		,t.pay_amount
-		,t.pay_bank
 		,t.pay_account
 		,t.water_bill
 		,t.pay_datetime
@@ -269,7 +247,6 @@
 		,t.pay_remark
 		,t.dz_amount
 		,t.dz_datetime
-		,t.collection_bank
 		,t.collection_amount
 		,t.collection_account
 		,t.collection_datetime

@@ -8,13 +8,10 @@ public class XN632103Req {
     private String code;// 预算单编号
 
     @NotBlank
-    private String collectionBank;// 收款银行
-
-    @NotBlank
     private String collectionAmount;// 收款金额
 
     @NotBlank
-    private String collectionAccount;// 收款账号
+    private String collectionAccount;// 收款账号编号
 
     private String collectionRemark;// 备注
 
@@ -27,14 +24,6 @@ public class XN632103Req {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getCollectionBank() {
-        return collectionBank;
-    }
-
-    public void setCollectionBank(String collectionBank) {
-        this.collectionBank = collectionBank;
     }
 
     public String getCollectionAmount() {

@@ -15,7 +15,7 @@ public class ReqBudget extends ABaseDO {
 
     private String companyCode;// 业务公司编号
 
-    private String receiptAccount;// 收款账号
+    private String receiptAccount;// 收款账号编号
 
     private Long budgetAmount;// 预算金额
 
@@ -25,9 +25,7 @@ public class ReqBudget extends ABaseDO {
 
     private Long payAmount;// 打款金额
 
-    private String payBank;// 打款银行
-
-    private String payAccount;// 打款账号
+    private String payAccount;// 打款账号编号
 
     private String waterBill;// 水单
 
@@ -43,11 +41,9 @@ public class ReqBudget extends ABaseDO {
 
     private Date dzDatetime;// 垫资日期
 
-    private String collectionBank;// 收回款银行
-
     private Long collectionAmount;// 收回款金额
 
-    private String collectionAccount;// 收回款账号
+    private String collectionAccount;// 收回款账号编号
 
     private Date collectionDatetime;// 收回款日期
 
@@ -63,11 +59,13 @@ public class ReqBudget extends ABaseDO {
 
     private String roleCode; // 角色编号
 
-    private String companyName; // 公司编号
+    private String companyName; // 公司名称
 
     private String applyUserName; // 申请人姓名
 
     private String bankName; // 银行名称
+
+    private String realName; // 户名
 
     private Date payDatetimeStart;// 打款时间起
 
@@ -177,14 +175,6 @@ public class ReqBudget extends ABaseDO {
         this.payAmount = payAmount;
     }
 
-    public String getPayBank() {
-        return payBank;
-    }
-
-    public void setPayBank(String payBank) {
-        this.payBank = payBank;
-    }
-
     public String getPayAccount() {
         return payAccount;
     }
@@ -239,14 +229,6 @@ public class ReqBudget extends ABaseDO {
 
     public void setDzDatetime(Date dzDatetime) {
         this.dzDatetime = dzDatetime;
-    }
-
-    public String getCollectionBank() {
-        return collectionBank;
-    }
-
-    public void setCollectionBank(String collectionBank) {
-        this.collectionBank = collectionBank;
     }
 
     public Long getCollectionAmount() {
@@ -311,6 +293,14 @@ public class ReqBudget extends ABaseDO {
 
     public void setPayDatetimeEnd(Date payDatetimeEnd) {
         this.payDatetimeEnd = payDatetimeEnd;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
 }

@@ -11,10 +11,7 @@ public class XN632102Req {
     private String payAmount;// 打款金额
 
     @NotBlank
-    private String payBank;// 打款银行
-
-    @NotBlank
-    private String payAccount;// 打款账号
+    private String payAccount;// 打款账号编号
 
     @NotBlank
     private String waterBill;// 水单
@@ -38,14 +35,6 @@ public class XN632102Req {
 
     public void setPayAmount(String payAmount) {
         this.payAmount = payAmount;
-    }
-
-    public String getPayBank() {
-        return payBank;
-    }
-
-    public void setPayBank(String payBank) {
-        this.payBank = payBank;
     }
 
     public String getPayAccount() {

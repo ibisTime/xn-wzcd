@@ -90,7 +90,6 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前不是财务确认收回预算款节点，不能操作");
         }
-        reqBudget.setCollectionBank(req.getCollectionBank());
         reqBudget.setCollectionAmount(StringValidater.toLong(req
             .getCollectionAmount()));
         reqBudget.setCollectionDatetime(new Date());
@@ -117,8 +116,6 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
                 "当前节点不是确认放款节点，不能操作");
         }
         reqBudget.setPayAmount(StringValidater.toLong(req.getPayAmount()));
-
-        reqBudget.setPayBank(req.getPayBank());
         reqBudget.setPayAccount(req.getPayAccount());
         reqBudget.setWaterBill(req.getWaterBill());
         reqBudget.setPayDatetime(new Date());
@@ -182,6 +179,13 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
                 .getCompanyCode());
             if (null != department) {
                 data.setCompanyName(department.getName());
+            }
+        }
+
+        if (StringUtils.isNotBlank(data.getApplyUser())) {
+            SYSUser user = sysUserBO.getUser(data.getApplyUser());
+            if (null != user) {
+                data.setApplyUserName(user.getRealName());
             }
         }
 
