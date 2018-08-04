@@ -2027,9 +2027,11 @@ INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`rem
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_06','021_07',NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_07','021_08',NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_10','021_11',NULL,NULL);
-INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_11','021_12',NULL,NULL);
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_11','021_13','021_10',NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_12','021_13',NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_13','021_14',NULL,NULL);
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_14','021_15',NULL,NULL);
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_15','021_16',NULL,NULL);
 
 /*
 -- Query: SELECT * FROM dev_xn_htwt.tmall_category

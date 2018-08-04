@@ -631,17 +631,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             nextNodeCode = ERepayBizNode.SELLED_FINANCIAL_AUDIT.getCode();
 
         } else if (EDealResult.REDEEM.getCode().equals(req.getDealResult())) {// 赎回或缴纳押金
-            if (repayPlan.getCurPeriods() == repayPlan.getPeriods()) {// 最后一期
-                nextNodeCode = ERepayBizNode.REDEEM_FINANCIAL_AUDIT.getCode();
-                // 还款计划处理为已还款
-                repayPlanBO.refreshRepayPlanTakeCarHandle(
-                    repayPlan.getRepayBizCode(), ERepayPlanNode.REPAY_YES);
-
-            } else {
-                nextNodeCode = ERepayBizNode.TO_REPAY.getCode();
-                // 还款计划处理为继续还款中
-                repayPlanBO.repaySuccess(repayPlan, repayPlan.getRepayAmount());
-            }
+            nextNodeCode = ERepayBizNode.REDEEM_FINANCIAL_AUDIT.getCode();
         } else if (EDealResult.GREEN.getCode().equals(req.getDealResult())) {// 申请结清
             nextNodeCode = ERepayBizNode.COMMIT_SETTLE.getCode();
             // 还款计划处理为已还款
@@ -1090,10 +1080,24 @@ public class RepayBizAOImpl implements IRepayBizAO {
         // 当前节点
         String curNodeCode = repayBiz.getCurNodeCode();
         String nextNodeCode = null;
+
+        RepayPlan repayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
+            repayBiz.getCode(), ERepayPlanNode.HANDLER_TO_RED);
+
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             if (ERepayBizNode.REDEEM_FINANCIAL_AUDIT.getCode()
                 .equals(curNodeCode)) {
-                nextNodeCode = ERepayBizNode.COMMIT_SETTLE.getCode();
+                if (repayPlan.getCurPeriods() == repayPlan.getPeriods()) {// 最后一期
+                    nextNodeCode = ERepayBizNode.COMMIT_SETTLE.getCode();
+                    // 还款计划处理为已还款
+                    repayPlanBO.refreshRepayPlanTakeCarHandle(
+                        repayPlan.getRepayBizCode(), ERepayPlanNode.REPAY_YES);
+                } else {
+                    nextNodeCode = ERepayBizNode.TO_REPAY.getCode();
+                    // 还款计划处理为继续还款中
+                    repayPlanBO.repaySuccess(repayPlan,
+                        repayPlan.getRepayAmount());
+                }
             } else {
                 nextNodeCode = ERepayBizNode.JUDGE_BAD.getCode();
 
