@@ -777,7 +777,7 @@ public class BudgetOrder extends ABaseDO {
     private String backAdvanceFundType;
 
     // 收回垫资款流程节点
-    private String backAdvanceFundCurNodeCode;
+    private String backAdvanceFundNodeCode;
 
     // 节点编号
     private String curNodeCode;
@@ -3275,12 +3275,12 @@ public class BudgetOrder extends ABaseDO {
         BankFkSendDatetimeEnd = bankFkSendDatetimeEnd;
     }
 
-    public String getBackAdvanceFundCurNodeCode() {
-        return backAdvanceFundCurNodeCode;
+    public String getBackAdvanceFundNodeCode() {
+        return backAdvanceFundNodeCode;
     }
 
-    public void setBackAdvanceFundCurNodeCode(String backAdvanceFundCurNodeCode) {
-        this.backAdvanceFundCurNodeCode = backAdvanceFundCurNodeCode;
+    public void setBackAdvanceFundNodeCode(String backAdvanceFundNodeCode) {
+        this.backAdvanceFundNodeCode = backAdvanceFundNodeCode;
     }
 
 }

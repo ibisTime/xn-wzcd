@@ -1940,7 +1940,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setZfReason(zfReason);
         budgetOrder.setZfSkAmount(StringValidater.toLong(req.getZfSkAmount()));
         budgetOrder
-            .setBackAdvanceFundCurNodeCode(EBudgetOrderNode.BACK_ADVANCE_FUND_FINANCE_AUDIT
+            .setBackAdvanceFundNodeCode(EBudgetOrderNode.BACK_ADVANCE_FUND_FINANCE_AUDIT
                 .getCode());
         budgetOrderBO.receiptAndReturn(budgetOrder);
         // 日志记录 记录本次操作
@@ -1958,7 +1958,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Transactional
     public void remindingProcess(XN632281Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
-        String preNodeCode = budgetOrder.getBackAdvanceFundCurNodeCode();// 当前节点
+        String preNodeCode = budgetOrder.getBackAdvanceFundNodeCode();// 当前节点
         if (!EBudgetOrderNode.BACK_ADVANCE_FUND_FINANCE_AUDIT.getCode().equals(
             preNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -2037,7 +2037,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 preNodeCode, curNodeCode, req.getApproveNote(),
                 req.getOperator());
         }
-        budgetOrder.setBackAdvanceFundCurNodeCode(curNodeCode);// 更新收回垫资款流程节点
+        budgetOrder.setBackAdvanceFundNodeCode(curNodeCode);// 更新收回垫资款流程节点
         budgetOrderBO.backAdvanceFundFinanceAudit(budgetOrder);
     }
 
