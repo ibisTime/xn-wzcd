@@ -159,6 +159,7 @@
 		<typeAlias alias="repoint" type="com.cdkj.loan.domain.Repoint" />
 		<typeAlias alias="contractImport" type="com.cdkj.loan.domain.ContractImport" />
 		<typeAlias alias="overdueTreatment" type="com.cdkj.loan.domain.OverdueTreatment" />
+		<typeAlias alias="tableExport" type="com.cdkj.loan.domain.TableExport" />
 		
 	</typeAliases>
 </configuration>

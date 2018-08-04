@@ -25,4 +25,11 @@ ADD COLUMN `deal_enclosure` VARCHAR(255) NULL COMMENT '处理结果附件' AFTER
 ADD COLUMN `final_payee` VARCHAR(255) NULL COMMENT '最终收款人' AFTER `Is_logistics`,
 ADD COLUMN `payee_enclosure` VARCHAR(255) NULL COMMENT '附件' AFTER `final_payee`;
 
-
+DROP TABLE IF EXISTS `tsys_table_export`;
+CREATE TABLE `tsys_table_export` (
+  `id` varchar(32) NOT NULL COMMENT '编号',
+  `url` varchar(255) DEFAULT NULL COMMENT 'URL',
+  `operator` varchar(255) DEFAULT NULL COMMENT '操作人',
+  `update_datetime` datetime DEFAULT NULL COMMENT '操作时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='表格导出';
