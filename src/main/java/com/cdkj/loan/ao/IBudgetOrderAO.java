@@ -23,6 +23,7 @@ import com.cdkj.loan.dto.req.XN632270Req;
 import com.cdkj.loan.dto.req.XN632271Req;
 import com.cdkj.loan.dto.req.XN632272Req;
 import com.cdkj.loan.dto.req.XN632280Req;
+import com.cdkj.loan.dto.req.XN632281Req;
 import com.cdkj.loan.dto.req.XN632292Req;
 import com.cdkj.loan.dto.req.XN632341Req;
 import com.cdkj.loan.dto.res.XN632234Res;
@@ -114,8 +115,8 @@ public interface IBudgetOrderAO {
     // 收款回录
     public void receiptAndReturn(XN632280Req req);
 
-    // 提醒发起流程
-    public void remindingProcess(String code);
+    // 收回垫资款财务审核
+    public void remindingProcess(XN632281Req req);
 
     // 续保短信提醒
     public void renewInsuranceRemind(String code);
@@ -129,8 +130,8 @@ public interface IBudgetOrderAO {
     public XN632234Res modifyLoanAmountCalculateData(String code,
             String loanAmount);
 
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
-            BudgetOrder condition);
+    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start,
+            int limit, BudgetOrder condition);
 
     // 银行放款合同打印
     public BudgetOrder loanContractPrint(XN632142Req req);
