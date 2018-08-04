@@ -8,6 +8,8 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Judge;
 import com.cdkj.loan.dto.req.XN630560Req;
 import com.cdkj.loan.dto.req.XN630562Req;
+import com.cdkj.loan.dto.req.XN630564Req;
+import com.cdkj.loan.dto.req.XN630565Req;
 
 @Component
 public interface IJudgeAO {
@@ -15,6 +17,12 @@ public interface IJudgeAO {
 
     // 司法诉讼录入
     public String judgeApply(XN630560Req req);
+
+    // 财务审核
+    public void judgeFinanceCheck(XN630564Req req);
+
+    // 诉讼跟进
+    public void judgeFollow(XN630565Req req);
 
     // 执行结果录入
     public void judgeResultInput(XN630562Req req);

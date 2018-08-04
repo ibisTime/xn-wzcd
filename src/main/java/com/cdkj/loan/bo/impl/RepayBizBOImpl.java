@@ -359,7 +359,9 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     public void refreshJudgeApply(String code) {
         RepayBiz data = new RepayBiz();
         data.setCode(code);
-        data.setCurNodeCode(ERepayBizNode.JUDGE_RESULT_INPUT.getCode());
+        String curNodeCode = data.getCurNodeCode();// 当前节点
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
+        data.setCurNodeCode(nodeFlow.getNextNode());
         repayBizDAO.updateJudgeApply(data);
     }
 

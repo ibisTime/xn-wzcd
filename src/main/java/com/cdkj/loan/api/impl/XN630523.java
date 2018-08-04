@@ -32,17 +32,6 @@ public class XN630523 extends AProcessor {
         condition.setCode(req.getCode());
         condition.setUserId(req.getUserId());
         condition.setLoanBank(req.getLoanBank());
-        if (StringUtils.isNotBlank(req.getCurOverdueCount())) {
-            condition.setCurOverdueCount(
-                StringValidater.toInteger(req.getCurOverdueCount()));
-        }
-        if (StringUtils.isNotBlank(req.getCurOverdueCountStart())
-                && StringUtils.isNotBlank(req.getCurOverdueCountEnd())) {
-            condition.setCurOverdueCountStart(
-                StringValidater.toInteger(req.getCurOverdueCountStart()));
-            condition.setCurOverdueCountEnd(
-                StringValidater.toInteger(req.getCurOverdueCountEnd()));
-        }
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
@@ -53,7 +42,7 @@ public class XN630523 extends AProcessor {
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
         return repayBizAO.queryRepayBizByTotalOverdueCount(start, limit,
-            condition);
+            condition, req.getCurOverdueCount());
     }
 
     @Override

@@ -13,9 +13,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 632117征信详情查询
- * @author: jiafr 
- * @since: 2018年5月26日 下午2:33:29 
+ * 征信人员分页查
+ * @author: CYL 
+ * @since: 2018年8月4日 下午6:35:43 
  * @history:
  */
 public class XN632119 extends AProcessor {

@@ -120,7 +120,7 @@ public interface IRepayBizAO {
 
     // 通过累计逾期次数查询业务
     public Object queryRepayBizByTotalOverdueCount(int start, int limit,
-            RepayBiz condition);
+            RepayBiz condition, String curOverdueCount);
 
     // 理件岗理件
     public void physicalParts(List<String> codeList, String operator);

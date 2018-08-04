@@ -1912,13 +1912,15 @@ insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_07','录�
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_08','已录入待处理','021',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_09','转卖','021',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_10','司法诉讼','021',NULL);
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_11','诉讼结果录入','021',NULL);
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_12','重新申请执行','021',NULL);
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_13','财务收款','021',NULL);
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_14','司法诉讼完成','021',NULL);
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_15','坏账','021',NULL);
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_16','赎回财务审核','021',NULL);
-insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_17','转卖财务审核','021',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_11','财务审核','021',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_12','诉讼跟进','021',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_13','诉讼结果录入','021',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_14','重新申请执行','021',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_15','财务收款','021',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_16','司法诉讼完成','021',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_17','坏账','021',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_18','赎回财务审核','021',NULL);
+insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('021_19','转卖财务审核','021',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('022_01','待还款','022',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('022_02','已还款','022',NULL);
 insert into `tsys_node` (`code`, `name`, `type`, `remark`) values('022_03','已逾期待处理','022',NULL);
@@ -2025,9 +2027,11 @@ INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`rem
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_06','021_07',NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_07','021_08',NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_10','021_11',NULL,NULL);
-INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_11','021_12',NULL,NULL);
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_11','021_13','021_10',NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_12','021_13',NULL,NULL);
 INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_13','021_14',NULL,NULL);
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_14','021_15',NULL,NULL);
+INSERT INTO `tsys_node_flow` (`type`,`current_node`,`next_node`,`back_node`,`remark`) VALUES ('021','021_15','021_16',NULL,NULL);
 
 /*
 -- Query: SELECT * FROM dev_xn_htwt.tmall_category

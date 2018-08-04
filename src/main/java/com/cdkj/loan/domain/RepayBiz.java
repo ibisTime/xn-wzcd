@@ -282,6 +282,16 @@ public class RepayBiz extends ABaseDO {
 
     private int curOverdueCountEnd; // 现有逾期的次数止
 
+    private List<String> curOverdueCountList; // 现有逾期的次数止
+
+    public List<String> getCurOverdueCountList() {
+        return curOverdueCountList;
+    }
+
+    public void setCurOverdueCountList(List<String> curOverdueCountList) {
+        this.curOverdueCountList = curOverdueCountList;
+    }
+
     public String getFinalPayee() {
         return finalPayee;
     }

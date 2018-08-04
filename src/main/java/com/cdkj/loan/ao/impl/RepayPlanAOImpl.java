@@ -405,7 +405,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         repayPlanBO.refreshOverdueHandle(repayPlan);
 
         // 红名单更新收车节点,司法诉讼则直接进去诉讼，无需收车
-        String nextNode = null;
+        String nextNode = repayBiz.getCurNodeCode();
         if (ERepayPlanNode.HANDLER_TO_RED.getCode()
             .equals(repayPlan.getCurNodeCode())) {
             nextNode = ERepayBizNode.TC_APPLY.getCode();
