@@ -52,8 +52,8 @@ public class CreditUserDAOImpl extends AMybatisTemplate
     @Override
     public List<CreditUser> selectList(CreditUser condition, int start,
             int count) {
-        // TODO Auto-generated method stub
-        return null;
+        return super.selectList(NAMESPACE.concat("select_creditUser"),
+            condition, CreditUser.class);
     }
 
     @Override
