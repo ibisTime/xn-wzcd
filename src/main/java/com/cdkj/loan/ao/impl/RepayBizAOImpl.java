@@ -1,6 +1,7 @@
 package com.cdkj.loan.ao.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -319,7 +320,80 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     @Override
     public Object queryRepayBizByTotalOverdueCount(int start, int limit,
-            RepayBiz condition) {
+            RepayBiz condition, String curOverdueCount) {
+        ArrayList<String> arrayList = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<String>();
+        if (curOverdueCount != null) {
+            String[] split = curOverdueCount.split(",");// 用逗号分割
+            for (String string : split) {
+                // 判断是否只输入了一个数或一个区间
+                if (string.equals(curOverdueCount)) {
+                    String[] strings = string.split("-");
+                    for (String string2 : strings) {
+                        // 判断是否只输入了一个区间
+                        if (string2.equals(curOverdueCount)) {
+                            arrayList.add(string);
+                        } else {
+                            list.add(string);
+                        }
+                    }
+                    int x = Integer.parseInt(list.get(0));
+                    int y = Integer.parseInt(list.get(1));
+                    if (x <= y) {
+                        for (int i = x; i <= y; i++) {
+                            arrayList.add(i + "");
+                        }
+                    } else {
+                        for (int i = y; i <= x; i++) {
+                            arrayList.add(i + "");
+                        }
+                    }
+                } else {
+                    String[] strings = string.split("-");
+                    for (String data : strings) {
+                        if (string.equals(data)) {
+                            arrayList.add(data);
+                        } else {
+                            list.add(data);
+                        }
+                    }
+                    if (CollectionUtils.isNotEmpty(list)) {
+                        if (list.size() > 2) {
+                            int a = Integer.parseInt(list.get(0));
+                            int b = Integer.parseInt(list.get(1));
+                            int c = Integer.parseInt(list.get(2));
+                            int d = Integer.parseInt(list.get(3));
+                            if (a <= b) {
+                                for (int i = a; i <= b; i++) {
+                                    arrayList.add(i + "");
+                                }
+                            } else {
+                                for (int i = b; i <= a; i++) {
+                                    arrayList.add(i + "");
+                                }
+                            }
+                            if (c <= d) {
+                                for (int i = c; i <= d; i++) {
+                                    arrayList.add(i + "");
+                                }
+                            } else {
+                                for (int i = d; i <= c; i++) {
+                                    arrayList.add(i + "");
+                                }
+                            }
+
+                        } else {
+                            int x = Integer.parseInt(list.get(0));
+                            int y = Integer.parseInt(list.get(1));
+                            for (int i = x; i <= y; i++) {
+                                arrayList.add(i + "");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        condition.setCurOverdueCountList(arrayList);
         Paginable<RepayBiz> paginable = repayBizBO
             .getPaginableByTotalOverdueCount(start, limit, condition);
         for (RepayBiz repayBiz : paginable.getList()) {
@@ -735,7 +809,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
     public void settleCashRemit(XN630572Req req) {
         RepayBiz data = repayBizBO.getRepayBiz(req.getCode());
         if (!ERepayBizNode.CASH_REMIT.getCode().equals(data.getCurNodeCode())) {
-            throw new BizException("xn0000", "还款业务不在确认付款节点！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "还款业务不在确认付款节点！");
         }
         data.setSettlePayDatetime(DateUtil.strToDate(req.getSettlePayDatetime(),
             DateUtil.DATA_TIME_PATTERN_1));
@@ -760,6 +835,17 @@ public class RepayBizAOImpl implements IRepayBizAO {
             EBoolean.YES.getCode());
         data.setCurNodeCode(nextNodeCode);
         repayBizBO.refreshCashRemit(data);
+
+        // 还款计划的已还金额改为当月月供
+        List<RepayPlan> repayPlans = repayPlanBO
+            .queryRepayPlanListByRepayBizCode(req.getCode());
+        for (RepayPlan repayPlan : repayPlans) {
+            if (repayPlan.getCurPeriods() == 1) {// 首期
+                repayPlan.setPayedAmount(data.getFirstRepayAmount());
+            } else {
+                repayPlan.setPayedAmount(data.getMonthAmount());
+            }
+        }
 
         // 日志记录
         ERepayBizNode currentNode = ERepayBizNode.getMap()

@@ -23,6 +23,9 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN630560Req;
 import com.cdkj.loan.dto.req.XN630562Req;
+import com.cdkj.loan.dto.req.XN630564Req;
+import com.cdkj.loan.dto.req.XN630565Req;
+import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EExeResult;
@@ -67,7 +70,8 @@ public class JudgeAOImpl implements IJudgeAO {
     public String judgeApply(XN630560Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
         if (!ERepayBizNode.JUDGE.getCode().equals(repayBiz.getCurNodeCode())) {
-            throw new BizException("xn0000", "当前还款业务不在司法诉讼节点！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不在司法诉讼节点！");
         }
 
         repayBizBO.refreshJudgeApply(req.getRepayBizCode());
@@ -81,6 +85,41 @@ public class JudgeAOImpl implements IJudgeAO {
             repayBiz.getCurNodeCode(), node.getCode(), node.getValue(),
             req.getOperator());
         return code;
+    }
+
+    @Override
+    @Transactional
+    public void judgeFinanceCheck(XN630564Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
+        if (!ERepayBizNode.JUDGE_FINANCE_CHECK.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不在司法诉讼财务审核节点，不能操作！");
+        }
+        String curNodeCode = repayBiz.getCurNodeCode();
+        String nextNodeCode = null;
+        // 审核通过，诉讼跟进，不通过，重新申请
+        if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
+            nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode)
+                .getNextNode();
+        } else {
+            nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode)
+                .getBackNode();
+        }
+
+        repayBizBO.refreshFinanceCheck(req.getRepayBizCode(), nextNodeCode,
+            req.getApproveNote(), req.getOperator());
+
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), curNodeCode,
+            nextNodeCode, req.getApproveNote(), req.getOperator());
+    }
+
+    @Override
+    @Transactional
+    public void judgeFollow(XN630565Req req) {
+
     }
 
     @Override

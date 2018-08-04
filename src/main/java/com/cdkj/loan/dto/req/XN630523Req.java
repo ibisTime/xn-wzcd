@@ -12,26 +12,6 @@ public class XN630523Req extends APageReq {
 
     private String curOverdueCount; // 现有逾期的次数
 
-    private String curOverdueCountStart; // 现有逾期的次数起
-
-    private String curOverdueCountEnd; // 现有逾期的次数止
-
-    public String getCurOverdueCountStart() {
-        return curOverdueCountStart;
-    }
-
-    public void setCurOverdueCountStart(String curOverdueCountStart) {
-        this.curOverdueCountStart = curOverdueCountStart;
-    }
-
-    public String getCurOverdueCountEnd() {
-        return curOverdueCountEnd;
-    }
-
-    public void setCurOverdueCountEnd(String curOverdueCountEnd) {
-        this.curOverdueCountEnd = curOverdueCountEnd;
-    }
-
     public String getCode() {
         return code;
     }

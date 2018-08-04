@@ -30,4 +30,8 @@ public abstract class ADAOTest extends UnitilsJUnit4 {
     protected static final Logger logger = LoggerFactory
         .getLogger(ADAOTest.class);
 
+    public static void main(String[] args) {
+        String string = "123456";
+        String[] split = string.split(",");
+    }
 }

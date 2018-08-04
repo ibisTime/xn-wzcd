@@ -25,10 +25,11 @@ public enum ERepayBizNode {
             "021_03", "风控经理审核"), TC_RISK_LEADER_CHECK("021_04","风控总监审核"), TC_FINANCE_CHECK(
             "021_05", "财务经理审核"), TC_SURE_FK("021_06", "确认放款"), TC_RESULT_INPUT(
             "021_07", "录入收车结果"), TC_TO_HANDLE("021_08","已录入待处理"), SELLED("021_09", "转卖"), JUDGE(
-            "021_10", "司法诉讼"), JUDGE_RESULT_INPUT("021_11", "诉讼结果录入"), RESULT_INPUT_AGAIN(
-            "021_12", "重新申请执行"), FINANCE_SURE_RECEIPT("021_13", "财务收款"), LAWSUIT_FINISH(
-            "021_14", "司法诉讼完成"), JUDGE_BAD("021_15", "坏账"),REDEEM_FINANCIAL_AUDIT("021_16","赎回财务审核"),
-            SELLED_FINANCIAL_AUDIT("021_17","转卖财务审核"),
+            "021_10", "司法诉讼"), JUDGE_FINANCE_CHECK("021_11", "财务审核"),JUDGE_FOLLOW(
+            "021_12","诉讼跟进"),  JUDGE_RESULT_INPUT("021_13", "诉讼结果录入"), RESULT_INPUT_AGAIN(
+            "021_14", "重新申请执行"), FINANCE_SURE_RECEIPT("021_15", "财务收款"), LAWSUIT_FINISH(
+            "021_16", "司法诉讼完成"), JUDGE_BAD("021_17", "坏账"),REDEEM_FINANCIAL_AUDIT("021_18","赎回财务审核"),
+            SELLED_FINANCIAL_AUDIT("021_19","转卖财务审核"),
 
     // 商品分期的节点
     PRO_TO_REPAY("005_01", "还款中"), PRO_SETTLED("005_02", "已结清"), PRO_CONFIRM_SETTLE(

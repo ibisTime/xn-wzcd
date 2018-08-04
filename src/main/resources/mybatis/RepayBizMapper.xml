@@ -142,14 +142,14 @@
 			<if test="bankFkDatetimeEnd != null and bankFkDatetimeEnd != '' ">
 				<![CDATA[AND t.bank_fk_datetime <= #{bankFkDatetimeEnd}]]>
 			</if>
-			<if test="curOverdueCountStart != null and curOverdueCountStart != '' ">
-				<![CDATA[AND t.cur_overdue_count >= #{curOverdueCountStart}]]>
-			</if>
-			<if test="curOverdueCountEnd != null and curOverdueCountEnd != '' ">
-				<![CDATA[AND t.cur_overdue_count <= #{curOverdueCountEnd}]]>
-			</if>
 			<if test="curOverdueCount != null and curOverdueCount != '' ">
 				AND t.cur_overdue_count = #{curOverdueCount}
+			</if>
+			<if test="curOverdueCountList != null and curOverdueCountList.size() != 0 ">
+				AND t.cur_overdue_count in 
+                <foreach item="item" index="index" collection="curOverdueCountList" open="(" separator="," close=")">
+	            	#{item}
+                </foreach> 
 			</if>
 			<if test="teamCode != null and teamCode != '' ">
 				AND t.team_code = #{teamCode}
