@@ -95,6 +95,9 @@
 			<if test="repayDatetime != null and repayDatetime != '' ">
 				AND t.repay_datetime=#{repayDatetime}
 			</if>
+			<if test="repayDatetimeStart != null and repayDatetimeStart != '' ">
+				<![CDATA[AND t.repay_datetime >= #{repayDatetimeStart}]]>
+			</if>
 			<if test="repayDatetimeEnd != null and repayDatetimeEnd != '' ">
 				<![CDATA[AND t.repay_datetime <= #{repayDatetimeEnd}]]>
 			</if>

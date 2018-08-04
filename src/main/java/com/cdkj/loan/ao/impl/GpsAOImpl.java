@@ -97,8 +97,8 @@ public class GpsAOImpl implements IGpsAO {
     private void initGps(Gps gps) {
         // 业务公司名称
         if (StringUtils.isNotBlank(gps.getCompanyCode())) {
-            Department department = departmentBO
-                .getDepartment(gps.getCompanyCode());
+            Department department = departmentBO.getDepartment(gps
+                .getCompanyCode());
             gps.setCompanyName(department.getName());
         }
 
@@ -115,10 +115,10 @@ public class GpsAOImpl implements IGpsAO {
         if (EGpsSendBackReason.DAMAGE.getCode().equals(req.getReason())) {// gps损坏
             gps.setUseStatus(EGpsUseStatus.DAMAGE.getCode());
         }
-        if (EGpsSendBackReason.EMPLOYEE_LEAVE.getCode()
-            .equals(req.getReason())) {// 员工离职
+        if (EGpsSendBackReason.EMPLOYEE_LEAVE.getCode().equals(req.getReason())) {// 员工离职
             gps.setApplyStatus(EGpsUserApplyStatus.TO_APPLY.getCode());
         }
+        gpsBO.refresh(gps);
         // 资料传递待发件
         logisticsBO.saveLogistics(ELogisticsType.GPS.getCode(), gps.getCode(),
             gps.getApplyUser(), null, null);
