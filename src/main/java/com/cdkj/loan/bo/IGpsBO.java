@@ -42,4 +42,6 @@ public interface IGpsBO extends IPaginableBO<Gps> {
 
     public Gps getGpsByDevNo(String gpsDevNo);
 
+    public void refresh(Gps data);
+
 }
