@@ -20,9 +20,6 @@ public class XN632272Req {
     @NotBlank
     private String zfSkReceiptDatetime;
 
-    // 备注
-    private String zfFinanceRemark;
-
     // 操作人
     private String operator;
 
@@ -64,14 +61,6 @@ public class XN632272Req {
 
     public void setZfSkReceiptDatetime(String zfSkReceiptDatetime) {
         this.zfSkReceiptDatetime = zfSkReceiptDatetime;
-    }
-
-    public String getZfFinanceRemark() {
-        return zfFinanceRemark;
-    }
-
-    public void setZfFinanceRemark(String zfFinanceRemark) {
-        this.zfFinanceRemark = zfFinanceRemark;
     }
 
 }

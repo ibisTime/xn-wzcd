@@ -39,8 +39,6 @@ public class XN632145Req extends APageReq {
 
     private String enterFileStatus;// 入档状态（0待入档1待补录2已入档）
 
-    private String isSubmitCancel;// 是否提交作废申请
-
     private String backAdvanceFundPage;// 收回垫资款页页面分页查询标识
 
     private String bankRepointPage;// 收回垫资款页页面分页查询标识
@@ -67,14 +65,6 @@ public class XN632145Req extends APageReq {
 
     public void setBackAdvanceFundPage(String backAdvanceFundPage) {
         this.backAdvanceFundPage = backAdvanceFundPage;
-    }
-
-    public String getIsSubmitCancel() {
-        return isSubmitCancel;
-    }
-
-    public void setIsSubmitCancel(String isSubmitCancel) {
-        this.isSubmitCancel = isSubmitCancel;
     }
 
     public String getCarDealerCode() {

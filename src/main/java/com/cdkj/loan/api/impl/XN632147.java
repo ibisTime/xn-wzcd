@@ -40,7 +40,6 @@ public class XN632147 extends AProcessor {
         condition.setCompanyCode(req.getCompanyCode());
         condition.setIsAdvanceFund(req.getIsAdvanceFund());
         condition.setCurNodeCodeList(req.getCurNodeCodeList());
-        condition.setIsSubmitCancel(req.getIsSubmitCancel());
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {

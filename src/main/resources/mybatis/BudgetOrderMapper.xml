@@ -288,7 +288,7 @@
 		<result column="zf_sk_amount" property="zfSkAmount" />
 		<result column="zf_sk_bankcard_code" property="zfSkBankcardCode" />
 		<result column="zf_sk_receipt_datetime" property="zfSkReceiptDatetime" />
-		<result column="zf_finance_remark" property="zfFinanceRemark" />
+		<result column="zf_fk_bill_pdf" property="zfFkBillPdf" />
 		
 		<result column="make_card_status" property="makeCardStatus" />
 		<result column="make_card_operator" property="makeCardOperator" />
@@ -297,6 +297,7 @@
 		<result column="cancel_node_code" property="cancelNodeCode" />
 		
 		<result column="is_submit_cancel" property="isSubmitCancel" />
+		<result column="back_advance_fund_cur_node_code" property="backAdvanceFundCurNodeCode" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="pledge_cur_node_code" property="pledgeCurNodeCode"/>
 		<result column="repay_biz_code" property="repayBizCode" />
@@ -1929,11 +1930,10 @@
 	<update id="update_receiptAndReturn" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		zf_sk_amount = #{zfSkAmount}
-		,zf_sk_bankcard_code = #{zfSkBankcardCode}
-		,zf_sk_receipt_datetime = #{zfSkReceiptDatetime}
-		,zf_finance_remark = #{zfFinanceRemark}
-		,is_submit_cancel = #{isSubmitCancel}
+		is_submit_cancel = #{isSubmitCancel}
+		,zf_reason = #{zfReason}
+		,zf_sk_amount = #{zfSkAmount}
+		,back_advance_fund_cur_node_code = #{backAdvanceFundCurNodeCode}
 		WHERE code = #{code}
 	</update>
 
@@ -2109,6 +2109,17 @@
 		,bank_card_number = #{bankCardNumber}
 		,bill_datetime = #{billDatetime}
 		,repay_bank_date = #{repayBankDate}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_backAdvanceFundFinanceAudit" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		zf_sk_bankcard_code = #{zfSkBankcardCode}
+		,zf_sk_receipt_datetime = #{zfSkReceiptDatetime}
+		,zf_fk_bill_pdf = #{zfFkBillPdf}
+		,zf_sk_amount = #{zfSkAmount}
+		,back_advance_fund_cur_node_code = #{backAdvanceFundCurNodeCode}
 		WHERE code = #{code}
 	</update>
 		

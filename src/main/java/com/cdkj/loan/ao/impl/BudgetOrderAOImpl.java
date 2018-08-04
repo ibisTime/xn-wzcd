@@ -88,6 +88,7 @@ import com.cdkj.loan.dto.req.XN632270Req;
 import com.cdkj.loan.dto.req.XN632271Req;
 import com.cdkj.loan.dto.req.XN632272Req;
 import com.cdkj.loan.dto.req.XN632280Req;
+import com.cdkj.loan.dto.req.XN632281Req;
 import com.cdkj.loan.dto.req.XN632292Req;
 import com.cdkj.loan.dto.req.XN632341Req;
 import com.cdkj.loan.dto.res.XN632234Res;
@@ -98,6 +99,7 @@ import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EAdvanceType;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EAssureType;
+import com.cdkj.loan.enums.EBackAdvanceFundType;
 import com.cdkj.loan.enums.EBankRepointStatus;
 import com.cdkj.loan.enums.EBankType;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -130,7 +132,6 @@ import com.cdkj.loan.enums.ERepointDetailUseMoneyPurpose;
 import com.cdkj.loan.enums.EServiceChargeWay;
 import com.cdkj.loan.enums.ESettleWay;
 import com.cdkj.loan.enums.EShouldBackStatus;
-import com.cdkj.loan.enums.ETakeBackAdvanceFundType;
 import com.cdkj.loan.enums.ETotalAdvanceFundType;
 import com.cdkj.loan.enums.EUseMoneyPurpose;
 import com.cdkj.loan.enums.EUserKind;
@@ -1842,24 +1843,21 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Transactional
     public void applyCancel(XN632270Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
-        String preCurrentNode = budgetOrder.getCurNodeCode();
+        String preCurrentNode = budgetOrder.getCurNodeCode();// 当前主流程节点
         budgetOrder.setZfReason(req.getZfReason());
         budgetOrder.setFrozenStatus(EBudgetFrozenStatus.FROZEN.getCode());
-        budgetOrder.setCancelNodeCode(budgetOrder.getCurNodeCode());
-        budgetOrder.setIsSubmitCancel(EBoolean.YES.getCode());
-        // 节点
-        EBudgetOrderNode currentNode = EBudgetOrderNode.APPLY_CANCEL;
-        String nextNode = nodeFlowBO.getNodeFlowByCurrentNode(
-            currentNode.getCode()).getNextNode();
-        currentNode = EBudgetOrderNode.getMap().get(nextNode);
-        budgetOrder.setCurNodeCode(currentNode.getCode());
-
+        budgetOrder.setCancelNodeCode(preCurrentNode);
+        budgetOrder.setCurNodeCode(EBudgetOrderNode.APPROVE_CANCEL.getCode()); // 作废流程节点
         budgetOrderBO.applyCancel(budgetOrder);
-
-        // 写日志
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-            EBizLogType.BUDGET_CANCEL, budgetOrder.getCode(), preCurrentNode,
-            budgetOrder.getCurNodeCode(), null, req.getOperator());
+        // 日志 记录本次操作
+        sysBizLogBO.recordCurrentSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_CANCEL, budgetOrder.getCode(),
+            EBudgetOrderNode.APPLY_CANCEL.getCode(), req.getZfReason(),
+            req.getOperator());
+        // 生成下一步操作日志
+        sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BUDGET_CANCEL, budgetOrder.getCode(),
+            EBudgetOrderNode.APPROVE_CANCEL.getCode());
     }
 
     @Override
@@ -1918,7 +1916,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setZfSkBankcardCode(req.getZfSkBankcardCode());
         budgetOrder.setZfSkReceiptDatetime(DateUtil.strToDate(
             req.getZfSkReceiptDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder.setZfFinanceRemark(req.getZfFinanceRemark());
         budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
             preCurrentNode).getNextNode());
         budgetOrderBO.financeConfirm(budgetOrder);
@@ -1934,76 +1931,114 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     @Transactional
     public void receiptAndReturn(XN632280Req req) {
-        // 收回垫资款有两种情况：1客户作废 记录到预算单 2分公司当天未垫资 记录到垫资汇总表
-        if (ETakeBackAdvanceFundType.CUSTOMER_CANCEL.getCode().equals(
-            req.getType())) {
-            // 客户作废
-            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req
-                .getCode());
-            budgetOrder.setZfSkBankcardCode(req.getZfSkBankcardCode());
-            budgetOrder.setZfSkAmount(StringValidater.toLong(req
-                .getZfSkAmount()));
-            budgetOrder
-                .setZfSkReceiptDatetime(DateUtil.strToDate(
-                    req.getZfSkReceiptDatetime(),
-                    DateUtil.FRONT_DATE_FORMAT_STRING));
-            budgetOrder.setZfFinanceRemark(req.getZfFinanceRemark());
-            budgetOrder.setIsSubmitCancel(EBoolean.NO.getCode());
-            budgetOrderBO.receiptAndReturn(budgetOrder);
-        } else {
-            // 垫资款退回（仅限分公司业务）
-            // 1 垫资单回到确认用款单节点
-            AdvanceFund advanceFund = advanceFundBO
-                .getAdvanceFundByBudgetOrderCode(req.getCode());
-            advanceFund.setCurNodeCode(EAdvanceFundNode.BRANCH_CONFIRM
-                .getCode());
-            advanceFundBO.refreshAdvanceFund(advanceFund);
-            // 生成日志
-            sysBizLogBO.saveSYSBizLog(advanceFund.getBudgetCode(),
-                EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),
-                advanceFund.getCurNodeCode());
-            // 2 垫资汇总单减去该笔业务的金额
-            TotalAdvanceFund totalAdvanceFund = totalAdvanceFundBO
-                .getTotalAdvanceFund(advanceFund.getTotalAdvanceFundCode());
-            totalAdvanceFund.setTotalAdvanceFund(getLong(totalAdvanceFund
-                .getTotalAdvanceFund()) - getLong(advanceFund.getUseAmount()));
-            totalAdvanceFund.setPayAmount(getLong(totalAdvanceFund
-                .getPayAmount()) - getLong(advanceFund.getUseAmount()));
-            totalAdvanceFundBO.refreshTotalAdvanceFund(totalAdvanceFund);
-            // 3 记录页面填写的数据到垫资汇总表 类型是4收回垫资款
-            TotalAdvanceFund unAdvanceCollect = new TotalAdvanceFund();
-            unAdvanceCollect.setType(ETotalAdvanceFundType.ADVANCE_FUND_BACK
-                .getCode());
-            unAdvanceCollect.setCompanyCode(advanceFund.getCompanyCode());
-            unAdvanceCollect.setCollectionAmount(StringValidater.toLong(req
-                .getZfSkAmount()));
-            unAdvanceCollect
-                .setCollectionDatetime(DateUtil.strToDate(
-                    req.getZfSkReceiptDatetime(),
-                    DateUtil.FRONT_DATE_FORMAT_STRING));
-            unAdvanceCollect.setCollectionBankcardCode(req
-                .getZfSkBankcardCode());
-            unAdvanceCollect.setCollectionNote(req.getZfFinanceRemark());
-            unAdvanceCollect.setUpdater(req.getOperator());
-            unAdvanceCollect.setUpdateDatetime(new Date());
-            totalAdvanceFundBO.saveTotalAdvanceFund(unAdvanceCollect);
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        budgetOrder.setBackAdvanceFundType(req.getType());// 收回垫资款类型（1客户作废2垫资款退回）
+        String zfReason = null;
+        if ("1".equals(req.getType())) {
+            zfReason = req.getZfReason();
         }
+        budgetOrder.setZfReason(zfReason);
+        budgetOrder.setZfSkAmount(StringValidater.toLong(req.getZfSkAmount()));
+        budgetOrder
+            .setBackAdvanceFundCurNodeCode(EBudgetOrderNode.BACK_ADVANCE_FUND_FINANCE_AUDIT
+                .getCode());
+        budgetOrderBO.receiptAndReturn(budgetOrder);
+        // 日志记录 记录本次操作
+        sysBizLogBO.recordCurrentSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BACK_ADVANCE_FUND, budgetOrder.getCode(),
+            EBudgetOrderNode.BACK_ADVANCE_FUND_START.getCode(),
+            req.getZfReason(), req.getOperator());
+        // 日志记录 生成下一步操作
+        sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+            EBizLogType.BACK_ADVANCE_FUND, budgetOrder.getCode(),
+            EBudgetOrderNode.BACK_ADVANCE_FUND_FINANCE_AUDIT.getCode());
     }
 
     @Override
     @Transactional
-    public void remindingProcess(String code) {
-        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
-        if (!EBoolean.NO.getCode().equals(budgetOrder.getIsSubmitCancel())) {
+    public void remindingProcess(XN632281Req req) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        String preNodeCode = budgetOrder.getBackAdvanceFundCurNodeCode();// 当前节点
+        if (!EBudgetOrderNode.BACK_ADVANCE_FUND_FINANCE_AUDIT.getCode().equals(
+            preNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "不是未提交作废申请状态，不能操作！");
+                "当前不是收回垫资款审核节点，不能操作！");
         }
-        budgetOrder.setIsSubmitCancel(EBoolean.YES.getCode());
-        budgetOrder.setCurNodeCode(EBudgetOrderNode.TO_APPLY_CANCEL.getCode());
-        budgetOrderBO.remindingProcess(budgetOrder);
-        sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
-            EBizLogType.BUDGET_CANCEL, budgetOrder.getCode(),
-            EBudgetOrderNode.TO_APPLY_CANCEL.getCode());
+        String curNodeCode = null;
+        if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {// 审核通过
+            if (EBackAdvanceFundType.CANCEL.getCode().equals(
+                budgetOrder.getBackAdvanceFundType())) {// 1客户作废
+                String preCurrentNode = budgetOrder.getCurNodeCode();// 当前主流程节点
+                budgetOrder.setFrozenStatus(EBudgetFrozenStatus.FROZEN
+                    .getCode());
+                budgetOrder.setCancelNodeCode(preCurrentNode);
+                budgetOrder.setCurNodeCode(EBudgetOrderNode.APPROVE_CANCEL
+                    .getCode()); // 作废流程节点
+                budgetOrderBO.applyCancel(budgetOrder);
+                // 生成下一步日志 作废审核
+                sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
+                    EBizLogType.BUDGET_CANCEL, budgetOrder.getCode(),
+                    EBudgetOrderNode.APPROVE_CANCEL.getCode());
+                // 记录页面收款信息到预算单
+                budgetOrder.setZfSkBankcardCode(req.getZfSkBankcardCode());
+                budgetOrder.setZfSkReceiptDatetime(DateUtil.strToDate(
+                    req.getZfSkReceiptDatetime(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
+                budgetOrder.setZfFkBillPdf(req.getBillPdf());
+            } else {// 2垫资款退回（仅限分公司业务）
+                // 1 垫资单回到确认用款单节点
+                AdvanceFund advanceFund = advanceFundBO
+                    .getAdvanceFundByBudgetOrderCode(req.getCode());
+                advanceFund.setCurNodeCode(EAdvanceFundNode.BRANCH_CONFIRM
+                    .getCode());
+                advanceFundBO.refreshAdvanceFund(advanceFund);
+                // 生成日志
+                sysBizLogBO.saveSYSBizLog(advanceFund.getBudgetCode(),
+                    EBizLogType.ADVANCE_FUND_BRANCH, advanceFund.getCode(),
+                    advanceFund.getCurNodeCode());
+                // 2 垫资汇总单减去该笔业务的金额
+                TotalAdvanceFund totalAdvanceFund = totalAdvanceFundBO
+                    .getTotalAdvanceFund(advanceFund.getTotalAdvanceFundCode());
+                totalAdvanceFund.setTotalAdvanceFund(getLong(totalAdvanceFund
+                    .getTotalAdvanceFund())
+                        - getLong(advanceFund.getUseAmount()));
+                totalAdvanceFund.setPayAmount(getLong(totalAdvanceFund
+                    .getPayAmount()) - getLong(advanceFund.getUseAmount()));
+                totalAdvanceFundBO.refreshTotalAdvanceFund(totalAdvanceFund);
+                // 3 记录页面填写的数据到垫资汇总表 类型是4收回垫资款
+                TotalAdvanceFund unAdvanceCollect = new TotalAdvanceFund();
+                unAdvanceCollect
+                    .setType(ETotalAdvanceFundType.ADVANCE_FUND_BACK.getCode());
+                unAdvanceCollect.setCompanyCode(advanceFund.getCompanyCode());
+                unAdvanceCollect.setCollectionAmount(budgetOrder
+                    .getZfSkAmount());
+                budgetOrder.setZfSkAmount(null);
+                unAdvanceCollect.setCollectionDatetime(DateUtil.strToDate(
+                    req.getZfSkReceiptDatetime(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING));
+                unAdvanceCollect.setCollectionBankcardCode(req
+                    .getZfSkBankcardCode());
+                unAdvanceCollect.setCollectionBillPdf(req.getBillPdf());
+                unAdvanceCollect.setCollectionNote(req.getApproveNote());
+                unAdvanceCollect.setUpdater(req.getOperator());
+                unAdvanceCollect.setUpdateDatetime(new Date());
+                totalAdvanceFundBO.saveTotalAdvanceFund(unAdvanceCollect);
+            }
+            curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
+                .getNextNode();
+            sysBizLogBO.refreshPreSYSBizLog(EBizLogType.BACK_ADVANCE_FUND,
+                budgetOrder.getCode(), preNodeCode, req.getApproveNote(),
+                req.getOperator());
+        } else {
+            curNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
+                .getBackNode();
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+                EBizLogType.BACK_ADVANCE_FUND, budgetOrder.getCode(),
+                preNodeCode, curNodeCode, req.getApproveNote(),
+                req.getOperator());
+        }
+        budgetOrder.setBackAdvanceFundCurNodeCode(curNodeCode);// 更新收回垫资款流程节点
+        budgetOrderBO.backAdvanceFundFinanceAudit(budgetOrder);
     }
 
     @Override

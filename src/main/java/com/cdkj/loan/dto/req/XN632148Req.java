@@ -35,9 +35,6 @@ public class XN632148Req extends APageReq {
 
     private List<String> pledgeCurNodeCodeList;// 抵押流程节点编号
 
-    // 是否提交作废申请
-    private String isSubmitCancel;
-
     @NotBlank
     private String roleCode;// 角色编号
 
@@ -56,20 +53,12 @@ public class XN632148Req extends APageReq {
         return carDealerCode;
     }
 
-    public String getIsSubmitCancel() {
-        return isSubmitCancel;
-    }
-
     public List<String> getPledgeCurNodeCodeList() {
         return pledgeCurNodeCodeList;
     }
 
     public void setPledgeCurNodeCodeList(List<String> pledgeCurNodeCodeList) {
         this.pledgeCurNodeCodeList = pledgeCurNodeCodeList;
-    }
-
-    public void setIsSubmitCancel(String isSubmitCancel) {
-        this.isSubmitCancel = isSubmitCancel;
     }
 
     public void setCarDealerCode(String carDealerCode) {

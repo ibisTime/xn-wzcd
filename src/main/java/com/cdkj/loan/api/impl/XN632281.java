@@ -11,9 +11,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 提醒发起流程
- * @author: CYL 
- * @since: 2018年6月17日 下午7:54:12 
+ * 收回垫资款财务审核
+ * @author: jiafr 
+ * @since: 2018年8月4日 下午6:56:30 
  * @history:
  */
 public class XN632281 extends AProcessor {
@@ -24,7 +24,7 @@ public class XN632281 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        budgetOrderAO.remindingProcess(req.getCode());
+        budgetOrderAO.remindingProcess(req);
         return new BooleanRes(true);
     }
 

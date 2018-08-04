@@ -1,26 +1,32 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+/**
+ * 发起收回垫资款申请
+ * @author: jiafr 
+ * @since: 2018年8月4日 下午7:42:53 
+ * @history:
+ */
 public class XN632280Req {
 
-    // 收回垫资款类型(1、客户作废2、垫资款退回)
-    private String type;
-
     // 预算单编号
+    @NotBlank
     private String code;
 
-    // 收款账号编号
-    private String zfSkBankcardCode;
+    // 收回垫资款类型(1、客户作废2、垫资款退回)
+    @NotBlank
+    private String type;
+
+    // 作废原因
+    private String zfReason;
 
     // 收款金额
+    @NotBlank
     private String zfSkAmount;
 
-    // 收款时间
-    private String zfSkReceiptDatetime;
-
-    // 备注
-    private String zfFinanceRemark;
-
     // 操作人
+    @NotBlank
     private String operator;
 
     public String getCode() {
@@ -31,12 +37,20 @@ public class XN632280Req {
         this.code = code;
     }
 
-    public String getZfSkBankcardCode() {
-        return zfSkBankcardCode;
+    public String getType() {
+        return type;
     }
 
-    public void setZfSkBankcardCode(String zfSkBankcardCode) {
-        this.zfSkBankcardCode = zfSkBankcardCode;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getZfReason() {
+        return zfReason;
+    }
+
+    public void setZfReason(String zfReason) {
+        this.zfReason = zfReason;
     }
 
     public String getZfSkAmount() {
@@ -45,30 +59,6 @@ public class XN632280Req {
 
     public void setZfSkAmount(String zfSkAmount) {
         this.zfSkAmount = zfSkAmount;
-    }
-
-    public String getZfSkReceiptDatetime() {
-        return zfSkReceiptDatetime;
-    }
-
-    public void setZfSkReceiptDatetime(String zfSkReceiptDatetime) {
-        this.zfSkReceiptDatetime = zfSkReceiptDatetime;
-    }
-
-    public String getZfFinanceRemark() {
-        return zfFinanceRemark;
-    }
-
-    public void setZfFinanceRemark(String zfFinanceRemark) {
-        this.zfFinanceRemark = zfFinanceRemark;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getOperator() {

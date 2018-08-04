@@ -133,4 +133,7 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 银行合同导入
     void importContract(BudgetOrder budgetOrder);
 
+    // 收回垫资款财务审核
+    void backAdvanceFundFinanceAudit(BudgetOrder budgetOrder);
+
 }

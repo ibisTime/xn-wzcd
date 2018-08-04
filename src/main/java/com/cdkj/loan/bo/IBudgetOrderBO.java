@@ -88,7 +88,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 财务确认收款
     public void financeConfirm(BudgetOrder budgetOrder);
 
-    // 收款回录
+    // 发起收回垫资款
     public void receiptAndReturn(BudgetOrder budgetOrder);
 
     // 提醒发起流程
@@ -142,5 +142,8 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
 
     // 银行合同导入
     public void importContract(BudgetOrder budgetOrder);
+
+    // 收回垫资款财务审核
+    public void backAdvanceFundFinanceAudit(BudgetOrder budgetOrder);
 
 }

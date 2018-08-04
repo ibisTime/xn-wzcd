@@ -210,7 +210,7 @@
 	<update id="loan" parameterType="reqBudget">
 		UPDATE tdq_req_budget
 		SET
-		,pay_amount = #{payAmount}
+		pay_amount = #{payAmount}
 		,pay_account = #{payAccount}
 		,water_bill = #{waterBill}
 		,pay_datetime = #{payDatetime}
@@ -222,7 +222,7 @@
 	<update id="update_collection" parameterType="reqBudget">
 		UPDATE tdq_req_budget
 		SET
-		,collection_amount = #{collectionAmount}
+		collection_amount = #{collectionAmount}
 		,collection_account = #{collectionAccount}
 		,collection_datetime = #{collectionDatetime}
 		,collection_remark = #{collectionRemark}

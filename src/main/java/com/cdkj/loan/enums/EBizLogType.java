@@ -7,7 +7,7 @@ public enum EBizLogType {
             "预算款"), CAR_DEALER_AUDIT("006", "汽车经销商审核"), BANK_LOAN_COMMIT("007",
             "银行放款"), REPOINT("010", "返点支付流程"), INVOICE_MISMATCH("011",
             "发票不匹配影响贷款额"), BUDGET_CANCEL("012", "客户作废"), REPAY_BIZ("020",
-            "还款业务"), GPS_SEND_BACK("014", "GPS回退申请");
+            "还款业务"), BACK_ADVANCE_FUND("014", "收回垫资款");
 
     EBizLogType(String code, String value) {
         this.code = code;

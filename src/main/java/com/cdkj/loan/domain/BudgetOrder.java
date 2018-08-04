@@ -755,8 +755,8 @@ public class BudgetOrder extends ABaseDO {
     // 作废收款时间
     private Date zfSkReceiptDatetime;
 
-    // 作废财务备注
-    private String zfFinanceRemark;
+    // 作废付款水单
+    private String zfFkBillPdf;
 
     // 制卡状态
     private String makeCardStatus;
@@ -773,8 +773,11 @@ public class BudgetOrder extends ABaseDO {
     // 客户申请作废时的主流程节点编号/发票不匹配申请时的主流程节点编号
     private String cancelNodeCode;
 
-    // 是否提交作废申请
-    private String isSubmitCancel;
+    // 收回垫资款类型（1客户作废2垫资款退回）
+    private String backAdvanceFundType;
+
+    // 收回垫资款流程节点
+    private String backAdvanceFundCurNodeCode;
 
     // 节点编号
     private String curNodeCode;
@@ -1270,12 +1273,12 @@ public class BudgetOrder extends ABaseDO {
         this.cancelNodeCode = cancelNodeCode;
     }
 
-    public String getIsSubmitCancel() {
-        return isSubmitCancel;
+    public String getBackAdvanceFundType() {
+        return backAdvanceFundType;
     }
 
-    public void setIsSubmitCancel(String isSubmitCancel) {
-        this.isSubmitCancel = isSubmitCancel;
+    public void setBackAdvanceFundType(String backAdvanceFundType) {
+        this.backAdvanceFundType = backAdvanceFundType;
     }
 
     public String getShouldBackStatus() {
@@ -2982,12 +2985,12 @@ public class BudgetOrder extends ABaseDO {
         this.zfSkReceiptDatetime = zfSkReceiptDatetime;
     }
 
-    public String getZfFinanceRemark() {
-        return zfFinanceRemark;
+    public String getZfFkBillPdf() {
+        return zfFkBillPdf;
     }
 
-    public void setZfFinanceRemark(String zfFinanceRemark) {
-        this.zfFinanceRemark = zfFinanceRemark;
+    public void setZfFkBillPdf(String zfFkBillPdf) {
+        this.zfFkBillPdf = zfFkBillPdf;
     }
 
     public String getCurNodeCode() {
@@ -3270,6 +3273,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setBankFkSendDatetimeEnd(Date bankFkSendDatetimeEnd) {
         BankFkSendDatetimeEnd = bankFkSendDatetimeEnd;
+    }
+
+    public String getBackAdvanceFundCurNodeCode() {
+        return backAdvanceFundCurNodeCode;
+    }
+
+    public void setBackAdvanceFundCurNodeCode(String backAdvanceFundCurNodeCode) {
+        this.backAdvanceFundCurNodeCode = backAdvanceFundCurNodeCode;
     }
 
 }

@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 收款回录/垫资款退回
+ * 发起收回垫资款
  * @author: jiafr 
  * @since: 2018年7月25日 下午3:07:17 
  * @history:

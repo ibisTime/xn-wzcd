@@ -41,7 +41,6 @@ public class XN632145 extends AProcessor {
         condition.setCompanyCode(req.getCompanyCode());
         condition.setIsAdvanceFund(req.getIsAdvanceFund());
         condition.setCurNodeCodeList(req.getCurNodeCodeList());
-        condition.setIsSubmitCancel(req.getIsSubmitCancel());
         condition.setEnterFileStatus(req.getEnterFileStatus());
         condition.setBackAdvanceFundPage(req.getBackAdvanceFundPage());// 收回垫资款页面分页查询标识
         condition.setBankRepointPage(req.getBankRepointPage());
