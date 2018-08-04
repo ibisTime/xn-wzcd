@@ -409,5 +409,9 @@
 	<bean id="overdueTreatmentBO" class="com.cdkj.loan.bo.impl.OverdueTreatmentBOImpl">
 		<property name="paginableDAO" ref="overdueTreatmentDAOImpl"/>
 	</bean>
+	
+	<bean id="tableExportBO" class="com.cdkj.loan.bo.impl.TableExportBOImpl">
+		<property name="paginableDAO" ref="tableExportDAOImpl"/>
+	</bean>
 
 </beans>

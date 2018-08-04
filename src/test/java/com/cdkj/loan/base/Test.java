@@ -9,26 +9,21 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "overdueTreatment";
+    private static String key = "tableExport";
 
     // 实体名称
-    private static String keyName = "逾期处理";
+    private static String keyName = "表格导出";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdh_overdue_treatment";
+    private static String dbname = "tsys_table_export";
 
-    private static String[] DBwords = { "code", "repay_plan_code",
-            "collection_way", "collection_target", "collection_process",
-            "collection_wish", "collection_process_note", "collection_result",
-            "depositIs_provide", "overdue_deposit", "real_repay_amount",
-            "collection_result_note", "operator", "update_datetime" };
+    private static String[] DBwords = { "id", "url", "operator",
+            "update_datetime" };
 
-    private static String[] DBwordsName = { "编号", "还款计划编号", "催收方式", "催收对象",
-            "催收过程", "客户意愿", "催收过程说明", "催收结果", "是否提供押金", "违约押金", "实际还款金额",
-            "催收结果说明", "操作人", "操作时间" };
+    private static String[] DBwordsName = { "编号", "URL", "操作人", "操作时间" };
 
     private static String[] DOwords = getDOwords();
 

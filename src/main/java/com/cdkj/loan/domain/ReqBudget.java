@@ -65,6 +65,8 @@ public class ReqBudget extends ABaseDO {
 
     private String bankName; // 银行名称
 
+    private String bankcardNumber; // 银行卡号
+
     private String realName; // 户名(收款公司账号)
 
     private Date payDatetimeStart;// 打款时间起
@@ -77,6 +79,14 @@ public class ReqBudget extends ABaseDO {
 
     public void setBankName(String bankName) {
         this.bankName = bankName;
+    }
+
+    public String getBankcardNumber() {
+        return bankcardNumber;
+    }
+
+    public void setBankcardNumber(String bankcardNumber) {
+        this.bankcardNumber = bankcardNumber;
     }
 
     public String getApplyUserName() {
