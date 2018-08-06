@@ -387,7 +387,7 @@
 				AND t.bank_repoint_status = #{bankRepointStatus}
 			</if>
 			<if test="backAdvanceFundPage != null and backAdvanceFundPage != '' ">
-				AND t.is_submit_cancel is not null
+				AND t.back_advance_fund_node_code is not null
 			</if>
 			<if test="bankRepointPage != null and bankRepointPage != '' ">
 				AND t.bank_repoint_status is not null
@@ -660,7 +660,7 @@
 		,t.make_card_remark
 		,t.frozen_status
 		,t.cancel_node_code
-		,t.is_submit_cancel
+		,t.back_advance_fund_node_code
 		
 		,t.cur_node_code
 		,t.pledge_cur_node_code
@@ -933,7 +933,7 @@
 		,t.make_card_remark
 		,t.frozen_status
 		,t.cancel_node_code
-		,t.is_submit_cancel
+		,t.back_advance_fund_node_code
 		
 		,t.cur_node_code
 		,t.pledge_cur_node_code
@@ -1165,7 +1165,7 @@
 		,t.make_card_remark
 		,t.frozen_status
 		,t.cancel_node_code
-		,t.is_submit_cancel
+		,t.back_advance_fund_node_code
 		
 		,t.cur_node_code
 		,t.pledge_cur_node_code
