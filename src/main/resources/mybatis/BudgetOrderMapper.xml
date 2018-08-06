@@ -296,8 +296,7 @@
 		<result column="frozen_status" property="frozenStatus" />
 		<result column="cancel_node_code" property="cancelNodeCode" />
 		
-		<result column="is_submit_cancel" property="isSubmitCancel" />
-		<result column="back_advance_fund_cur_node_code" property="backAdvanceFundCurNodeCode" />
+		<result column="back_advance_fund_node_code" property="backAdvanceFundNodeCode" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="pledge_cur_node_code" property="pledgeCurNodeCode"/>
 		<result column="repay_biz_code" property="repayBizCode" />
@@ -374,9 +373,6 @@
 			</if>
 			<if test="fbhStatus != null and fbhStatus != '' ">
 				AND t.fbh_status = #{fbhStatus}
-			</if>
-			<if test="isSubmitCancel != null and isSubmitCancel != '' ">
-				AND t.is_submit_cancel = #{isSubmitCancel}
 			</if>
 			<if test="repayBizCode != null and repayBizCode != '' ">
 				AND t.repay_biz_code = #{repayBizCode}
@@ -657,7 +653,7 @@
 		,t.zf_sk_amount
 		,t.zf_sk_bankcard_code
 		,t.zf_sk_receipt_datetime
-		,t.zf_finance_remark
+		,t.zf_fk_bill_pdf
 		
 		,t.make_card_status
 		,t.make_card_operator
@@ -930,7 +926,7 @@
 		,t.zf_sk_amount
 		,t.zf_sk_bankcard_code
 		,t.zf_sk_receipt_datetime
-		,t.zf_finance_remark
+		,t.zf_fk_bill_pdf
 		
 		,t.make_card_status
 		,t.make_card_operator
@@ -1162,7 +1158,7 @@
 		,t.zf_sk_amount
 		,t.zf_sk_bankcard_code
 		,t.zf_sk_receipt_datetime
-		,t.zf_finance_remark
+		,t.zf_fk_bill_pdf
 		
 		,t.make_card_status
 		,t.make_card_operator
@@ -1883,7 +1879,6 @@
 		zf_reason = #{zfReason}
 		,frozen_status = #{frozenStatus}
 		,cancel_node_code = #{cancelNodeCode}
-		,is_submit_cancel = #{isSubmitCancel}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
@@ -1913,7 +1908,7 @@
 		zf_sk_amount = #{zfSkAmount}
 		,zf_sk_bankcard_code = #{zfSkBankcardCode}
 		,zf_sk_receipt_datetime = #{zfSkReceiptDatetime}
-		,zf_finance_remark = #{zfFinanceRemark}
+		,zf_fk_bill_pdf = #{zfFkBillPdf}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
@@ -1930,17 +1925,15 @@
 	<update id="update_receiptAndReturn" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		is_submit_cancel = #{isSubmitCancel}
-		,zf_reason = #{zfReason}
+		zf_reason = #{zfReason}
 		,zf_sk_amount = #{zfSkAmount}
-		,back_advance_fund_cur_node_code = #{backAdvanceFundCurNodeCode}
+		,back_advance_fund_node_code = #{backAdvanceFundNodeCode}
 		WHERE code = #{code}
 	</update>
 
 	<update id="update_remindingProcess" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		is_submit_cancel = #{isSubmitCancel}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
@@ -2119,7 +2112,7 @@
 		,zf_sk_receipt_datetime = #{zfSkReceiptDatetime}
 		,zf_fk_bill_pdf = #{zfFkBillPdf}
 		,zf_sk_amount = #{zfSkAmount}
-		,back_advance_fund_cur_node_code = #{backAdvanceFundCurNodeCode}
+		,back_advance_fund_node_code = #{backAdvanceFundNodeCode}
 		WHERE code = #{code}
 	</update>
 		
