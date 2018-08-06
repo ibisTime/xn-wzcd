@@ -357,8 +357,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
     @Override
     public void refreshJudgeApply(String code) {
-        RepayBiz data = new RepayBiz();
-        data.setCode(code);
+        RepayBiz data = getRepayBiz(code);
         String curNodeCode = data.getCurNodeCode();// 当前节点
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
         data.setCurNodeCode(nodeFlow.getNextNode());
