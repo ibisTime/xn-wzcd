@@ -653,7 +653,7 @@
 		,t.zf_sk_amount
 		,t.zf_sk_bankcard_code
 		,t.zf_sk_receipt_datetime
-		,t.zf_finance_remark
+		,t.zf_fk_bill_pdf
 		
 		,t.make_card_status
 		,t.make_card_operator
@@ -926,7 +926,7 @@
 		,t.zf_sk_amount
 		,t.zf_sk_bankcard_code
 		,t.zf_sk_receipt_datetime
-		,t.zf_finance_remark
+		,t.zf_fk_bill_pdf
 		
 		,t.make_card_status
 		,t.make_card_operator
@@ -1158,7 +1158,7 @@
 		,t.zf_sk_amount
 		,t.zf_sk_bankcard_code
 		,t.zf_sk_receipt_datetime
-		,t.zf_finance_remark
+		,t.zf_fk_bill_pdf
 		
 		,t.make_card_status
 		,t.make_card_operator
@@ -1908,7 +1908,7 @@
 		zf_sk_amount = #{zfSkAmount}
 		,zf_sk_bankcard_code = #{zfSkBankcardCode}
 		,zf_sk_receipt_datetime = #{zfSkReceiptDatetime}
-		,zf_finance_remark = #{zfFinanceRemark}
+		,zf_fk_bill_pdf = #{zfFkBillPdf}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
