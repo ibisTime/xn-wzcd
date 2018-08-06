@@ -835,6 +835,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             } else {
                 repayPlan.setPayedAmount(data.getMonthAmount());
             }
+            repayPlanBO.refreshRepayPlanPayedAmount(repayPlan);
         }
 
         // 日志记录

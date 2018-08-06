@@ -505,4 +505,11 @@
 		repay_capital=#{repayCapital}
 		WHERE code=#{code}
 	</update>
+	
+	<update id="update_repayPlan_payedAmount" parameterType="repayPlan">
+		UPDATE tdh_repay_plan
+		SET
+		payed_amount=#{payedAmount}
+		WHERE code=#{code}
+	</update>
 </mapper>
