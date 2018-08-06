@@ -337,15 +337,17 @@ public class RepayBizAOImpl implements IRepayBizAO {
                             list.add(string);
                         }
                     }
-                    int x = Integer.parseInt(list.get(0));
-                    int y = Integer.parseInt(list.get(1));
-                    if (x <= y) {
-                        for (int i = x; i <= y; i++) {
-                            arrayList.add(i + "");
-                        }
-                    } else {
-                        for (int i = y; i <= x; i++) {
-                            arrayList.add(i + "");
+                    if (CollectionUtils.isNotEmpty(list)) {
+                        int x = Integer.parseInt(list.get(0));
+                        int y = Integer.parseInt(list.get(1));
+                        if (x <= y) {
+                            for (int i = x; i <= y; i++) {
+                                arrayList.add(i + "");
+                            }
+                        } else {
+                            for (int i = y; i <= x; i++) {
+                                arrayList.add(i + "");
+                            }
                         }
                     }
                 } else {

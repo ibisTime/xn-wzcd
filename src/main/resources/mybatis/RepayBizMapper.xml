@@ -157,6 +157,7 @@
 			<if test="isLogistics != null and isLogistics != '' ">
 				AND t.is_logistics = #{isLogistics}
 			</if>
+			and t.total_overdue_count != 0
 		</trim>
 	</sql>
 	<select id="select_repayBiz" parameterType="repayBiz" resultMap="repayBiz_DB_Result">
@@ -336,7 +337,7 @@
 		,t.team_code
 		,t.is_logistics
 		FROM
-		tdh_repay_biz t where t.total_overdue_count != 0
+		tdh_repay_biz t 
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
