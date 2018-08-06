@@ -13,10 +13,6 @@ public class XN630560Req {
     @NotBlank
     private String repayBizCode;
 
-    // 案号
-    @NotBlank
-    private String caseNumber;
-
     // 原告
     @NotBlank
     private String plaintiff;
@@ -50,14 +46,6 @@ public class XN630560Req {
 
     public void setRepayBizCode(String repayBizCode) {
         this.repayBizCode = repayBizCode;
-    }
-
-    public String getCaseNumber() {
-        return caseNumber;
-    }
-
-    public void setCaseNumber(String caseNumber) {
-        this.caseNumber = caseNumber;
     }
 
     public String getPlaintiff() {

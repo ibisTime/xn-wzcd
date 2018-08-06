@@ -92,7 +92,6 @@
 		tdh_judge(
 		code
 		,repay_biz_code
-		,case_number
 		,plaintiff
 		,defendant
 		,case_subject
@@ -118,7 +117,6 @@
 		VALUES(
 		#{code}
 		,#{repayBizCode}
-		,#{caseNumber}
 		,#{plaintiff}
 		,#{defendant}
 		,#{caseSubject}

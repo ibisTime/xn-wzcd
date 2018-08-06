@@ -37,7 +37,6 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
             .generate(EGeneratePrefix.JUDGE.getCode());
         data.setCode(code);
         data.setRepayBizCode(req.getRepayBizCode());
-        data.setCaseNumber(req.getCaseNumber());
         data.setPlaintiff(req.getPlaintiff());
         data.setDefendant(req.getDefendant());
 
