@@ -14,17 +14,12 @@ insert into `tb_bank` (`code`, `bank_code`, `bank_name`, `subbranch`, `rate12`, 
 insert into `tb_bank_subbranch` (`code`, `bank_code`, `bank_type`, `abbr_name`, `full_name`, `open_bank`, `address`, `phone_number`, `post_code`, `bank_client`, `client_valid_date`, `auther_name`, `auther_phone_number`, `auther_id_no`, `auther_address`, `credit_card_type`, `credit_card_name`, `belong_area`, `updater`, `update_datetime`, `remark`) values('BS201807171350293781303','BA201806060406039453855','ICBC','中国工商银行简称1','中国工商银行支行全称','中国工商银行开户行','中国工商银行银行地址','13222222222','000000','中国工商银行银行委托人','3','中国工商银行授权人姓名','13222222222','150404199806080808','中国工商银行授权人地址','1','中国工商银行用卡名称','中国工商银行所属地区','USYS201800000000001','2018-07-17 13:50:29','备注');
 insert into `tb_bank_subbranch` (`code`, `bank_code`, `bank_type`, `abbr_name`, `full_name`, `open_bank`, `address`, `phone_number`, `post_code`, `bank_client`, `client_valid_date`, `auther_name`, `auther_phone_number`, `auther_id_no`, `auther_address`, `credit_card_type`, `credit_card_name`, `belong_area`, `updater`, `update_datetime`, `remark`) values('BS201807171352476874184','BA201806060405534759680','BOC','中国银行支行简称','中国银行支行全称','中国银行开户行','中国银行银行地址','13222222222','000000','中国银行银行委托人','3','中国银行授权人姓名','13222222222','150404199806080808','中国银行授权人地址','1','中国银行信用卡名称','中国银行所属地区','USYS201800000000001','2018-07-21 17:20:18','');
 
-insert into `tb_bank_rate` (`bank_code`, `period`, `rate`, `remark`) values('BA201806291550584978017','24','0.33000000','');
-insert into `tb_bank_rate` (`bank_code`, `period`, `rate`, `remark`) values('BA201806291550584978017','12','0.05000000','');
-insert into `tb_bank_rate` (`bank_code`, `period`, `rate`, `remark`) values('BA201806291550584978017','36','0.50000000','');
-insert into `tb_bank_rate` (`bank_code`, `period`, `rate`, `remark`) values('BA201807081621529236963','12','0.20000000','备注');
-insert into `tb_bank_rate` (`bank_code`, `period`, `rate`, `remark`) values('BA201807081621529236963','24','0.30000000','');
-insert into `tb_bank_rate` (`bank_code`, `period`, `rate`, `remark`) values('BA201807081621529236963','36','0.40000000','');
-insert into `tb_bank_rate` (`bank_code`, `period`, `rate`, `remark`) values('BA201806060406039453855','12','0.20000000','备注');
-insert into `tb_bank_rate` (`bank_code`, `period`, `rate`, `remark`) values('BA201806060406039453855','24','0.20000000','备注');
-insert into `tb_bank_rate` (`bank_code`, `period`, `rate`, `remark`) values('BA201806060406039453855','36','0.20000000','备注');
-insert into `tb_bank_rate` (`bank_code`, `period`, `rate`, `remark`) values('BA201806060405534759680','12','0.10000000','');
-insert into `tb_bank_rate` (`bank_code`, `period`, `rate`, `remark`) values('BA201806060405534759680','24','0.20000000','');
+INSERT INTO `tb_bank_rate` (`bank_code`,`period`,`rate`,`remark`) VALUES ('BA201806060406039453855',12,0.20000000,'备注');
+INSERT INTO `tb_bank_rate` (`bank_code`,`period`,`rate`,`remark`) VALUES ('BA201806060406039453855',24,0.20000000,'备注');
+INSERT INTO `tb_bank_rate` (`bank_code`,`period`,`rate`,`remark`) VALUES ('BA201806060406039453855',36,0.20000000,'备注');
+INSERT INTO `tb_bank_rate` (`bank_code`,`period`,`rate`,`remark`) VALUES ('BA201806060405534759680',12,0.10000000,'');
+INSERT INTO `tb_bank_rate` (`bank_code`,`period`,`rate`,`remark`) VALUES ('BA201806060405534759680',24,0.20000000,'');
+INSERT INTO `tb_bank_rate` (`bank_code`,`period`,`rate`,`remark`) VALUES ('BA201806060405534759680',36,0.20000000,NULL);
 
 INSERT INTO `tb_collect_bankcard` (`code`,`type`,`belong_bank`,`company_code`,`real_name`,`bank_code`,`bank_name`,`subbranch`,`bankcard_number`,`point_rate`,`remark`) VALUES ('CB201806060405380712648','1',NULL,'DP201800000000000000001','财务部','CMB','招商银行','乌鲁木齐支行','612313241234123',NULL,'');
 INSERT INTO `tb_collect_bankcard` (`code`,`type`,`belong_bank`,`company_code`,`real_name`,`bank_code`,`bank_name`,`subbranch`,`bankcard_number`,`point_rate`,`remark`) VALUES ('CB201807311421024691050','2',NULL,'CD201807151436370142124','悟空','CMBC','中国民生银行','悟空支行','222222222222222',NULL,NULL);

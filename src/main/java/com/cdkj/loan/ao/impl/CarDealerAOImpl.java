@@ -9,15 +9,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ICarDealerAO;
+import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.ICarDealerBO;
 import com.cdkj.loan.bo.ICarDealerProtocolBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.domain.CollectBankcard;
@@ -26,6 +29,7 @@ import com.cdkj.loan.dto.req.XN632060Req;
 import com.cdkj.loan.dto.req.XN632061Req;
 import com.cdkj.loan.dto.req.XN632062Req;
 import com.cdkj.loan.dto.req.XN632064Req;
+import com.cdkj.loan.dto.req.XN632690Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -33,6 +37,7 @@ import com.cdkj.loan.enums.ECarDealerNode;
 import com.cdkj.loan.enums.ECarDealerProtocolStatus;
 import com.cdkj.loan.enums.ECollectBankcardType;
 import com.cdkj.loan.enums.EGeneratePrefix;
+import com.cdkj.loan.enums.ERateType;
 import com.cdkj.loan.enums.EbelongBank;
 import com.cdkj.loan.exception.BizException;
 
@@ -55,11 +60,14 @@ public class CarDealerAOImpl implements ICarDealerAO {
     @Autowired
     INodeFlowBO nodeFlowBO;
 
+    @Autowired
+    IBankBO bankBO;
+
     @Override
     public String addCarDealer(XN632060Req req) {
         CarDealer data = new CarDealer();
-        String code = OrderNoGenerater.generate(EGeneratePrefix.CARDEALER
-            .getCode());
+        String code = OrderNoGenerater
+            .generate(EGeneratePrefix.CARDEALER.getCode());
         data.setCode(code);
         data.setFullName(req.getFullName());
         data.setAbbrName(req.getAbbrName());
@@ -70,8 +78,9 @@ public class CarDealerAOImpl implements ICarDealerAO {
         data.setContactPhone(req.getContactPhone());
         data.setMainBrand(req.getMainBrand());
         data.setParentGroup(req.getParentGroup());
-        data.setAgreementValidDateStart(DateUtil.strToDate(
-            req.getAgreementValidDateStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setAgreementValidDateStart(
+            DateUtil.strToDate(req.getAgreementValidDateStart(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setAgreementValidDateEnd(DateUtil.strToDate(
             req.getAgreementValidDateEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setAgreementPic(req.getAgreementPic());
@@ -94,8 +103,8 @@ public class CarDealerAOImpl implements ICarDealerAO {
             req.getJxsCollectBankcardList(),
             ECollectBankcardType.DEALER_COLLECT.getCode(), code);
         // 协议
-        carDealerProtocolBO.saveCarDealerProtocolList(
-            req.getCarDealerProtocolList(), code);
+        carDealerProtocolBO
+            .saveCarDealerProtocolList(req.getCarDealerProtocolList(), code);
         // 工行返点账号
         collectBankcardBO.saveCollectBankcardList(
             req.getGsCollectBankcardList(),
@@ -122,8 +131,8 @@ public class CarDealerAOImpl implements ICarDealerAO {
         // 删除经销商下的收款账号
         collectBankcardBO.removeCollectBankcardByCompanyCode(data.getCode());
         // 删除协议
-        carDealerProtocolBO.removeCarDealerProtocolByCarDealerCode(data
-            .getCode());
+        carDealerProtocolBO
+            .removeCarDealerProtocolByCarDealerCode(data.getCode());
 
         data.setFullName(req.getFullName());
         data.setAbbrName(req.getAbbrName());
@@ -134,8 +143,9 @@ public class CarDealerAOImpl implements ICarDealerAO {
         data.setContactPhone(req.getContactPhone());
         data.setMainBrand(req.getMainBrand());
         data.setParentGroup(req.getParentGroup());
-        data.setAgreementValidDateStart(DateUtil.strToDate(
-            req.getAgreementValidDateStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setAgreementValidDateStart(
+            DateUtil.strToDate(req.getAgreementValidDateStart(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setAgreementValidDateEnd(DateUtil.strToDate(
             req.getAgreementValidDateEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setAgreementPic(req.getAgreementPic());
@@ -206,14 +216,14 @@ public class CarDealerAOImpl implements ICarDealerAO {
             // 审核通过
             carDealer.setAgreementStatus(ECarDealerProtocolStatus.UP.getCode());// 审核通过之后汽车经商协议状态改为上架
             carDealerBO.refreshCarDealer(carDealer);
-            carDealer.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preCurNodeCode).getNextNode());
+            carDealer.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurNodeCode).getNextNode());
             // 日志
             sysBizLogBO.refreshPreSYSBizLog(EBizLogType.CAR_DEALER_AUDIT,
                 carDealer.getCode(), preCurNodeCode, approveNote, auditor);
         } else {
-            carDealer.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preCurNodeCode).getBackNode());
+            carDealer.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurNodeCode).getBackNode());
             // 日志
             sysBizLogBO.saveNewAndPreEndSYSBizLog(carDealer.getCode(),
                 EBizLogType.CAR_DEALER_AUDIT, carDealer.getCode(),
@@ -238,13 +248,13 @@ public class CarDealerAOImpl implements ICarDealerAO {
             for (CarDealer carDealer : results.getList()) {
                 CollectBankcard collectBankcard = new CollectBankcard();
                 collectBankcard.setCompanyCode(carDealer.getCode());
-                collectBankcard.setType(ECollectBankcardType.DEALER_COLLECT
-                    .getCode());
+                collectBankcard
+                    .setType(ECollectBankcardType.DEALER_COLLECT.getCode());
                 List<CollectBankcard> jxsCollectBankcardList = collectBankcardBO
                     .queryCollectBankcardList(collectBankcard);// 经销商收款账号
                 carDealer.setJxsCollectBankcardList(jxsCollectBankcardList);
-                collectBankcard.setType(ECollectBankcardType.DEALER_REBATE
-                    .getCode());
+                collectBankcard
+                    .setType(ECollectBankcardType.DEALER_REBATE.getCode());
                 List<CollectBankcard> queryCollectBankcardList = collectBankcardBO
                     .queryCollectBankcardList(collectBankcard);// 经销商返点账号
 
@@ -260,18 +270,18 @@ public class CarDealerAOImpl implements ICarDealerAO {
                 List<CollectBankcard> jhList = new ArrayList<CollectBankcard>();
                 for (CollectBankcard collectBankcard2 : queryCollectBankcardList) {
                     // 工行
-                    if (collectBankcard2.getBelongBank().equals(
-                        EbelongBank.GH.getCode())) {
+                    if (collectBankcard2.getBelongBank()
+                        .equals(EbelongBank.GH.getCode())) {
                         ghList.add(collectBankcard2);
                     }
                     // 中行
-                    if (collectBankcard2.getBelongBank().equals(
-                        EbelongBank.ZH.getCode())) {
+                    if (collectBankcard2.getBelongBank()
+                        .equals(EbelongBank.ZH.getCode())) {
                         zhList.add(collectBankcard2);
                     }
                     // 建行
-                    if (collectBankcard2.getBelongBank().equals(
-                        EbelongBank.JH.getCode())) {
+                    if (collectBankcard2.getBelongBank()
+                        .equals(EbelongBank.JH.getCode())) {
                         jhList.add(collectBankcard2);
                     }
                 }
@@ -293,8 +303,8 @@ public class CarDealerAOImpl implements ICarDealerAO {
             // 收款账号
             CollectBankcard collectBankcard = new CollectBankcard();
             collectBankcard.setCompanyCode(carDealer.getCode());
-            collectBankcard.setType(ECollectBankcardType.DEALER_COLLECT
-                .getCode());
+            collectBankcard
+                .setType(ECollectBankcardType.DEALER_COLLECT.getCode());
             List<CollectBankcard> jxsCollectBankcardList = collectBankcardBO
                 .queryCollectBankcardList(collectBankcard);
             carDealer.setJxsCollectBankcardList(jxsCollectBankcardList);// 经销商收款账号
@@ -307,8 +317,8 @@ public class CarDealerAOImpl implements ICarDealerAO {
             carDealer.setCarDealerProtocolList(queryCarDealerProtocolList);
 
             // 返点账号
-            collectBankcard.setType(ECollectBankcardType.DEALER_REBATE
-                .getCode());
+            collectBankcard
+                .setType(ECollectBankcardType.DEALER_REBATE.getCode());
             List<CollectBankcard> queryCollectBankcardList = collectBankcardBO
                 .queryCollectBankcardList(collectBankcard);
 
@@ -396,8 +406,8 @@ public class CarDealerAOImpl implements ICarDealerAO {
     @Override
     public void carDealerProtocolDown(XN632061Req req) {
         CarDealer carDealer = carDealerBO.getCarDealer(req.getCode());
-        if (ECarDealerProtocolStatus.DOWN.getCode().equals(
-            carDealer.getAgreementStatus())) {
+        if (ECarDealerProtocolStatus.DOWN.getCode()
+            .equals(carDealer.getAgreementStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前汽车经销商协议已下架，不能操作");
         }
@@ -411,13 +421,13 @@ public class CarDealerAOImpl implements ICarDealerAO {
     @Override
     public void carDealerProtocolUp(XN632064Req req) {
         CarDealer carDealer = carDealerBO.getCarDealer(req.getCode());
-        if (ECarDealerProtocolStatus.UP.getCode().equals(
-            carDealer.getAgreementStatus())) {
+        if (ECarDealerProtocolStatus.UP.getCode()
+            .equals(carDealer.getAgreementStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前汽车经销商协议已上架，不能操作");
         }
-        if (ECarDealerNode.TODO_AUDIT.getCode().equals(
-            carDealer.getCurNodeCode())) {
+        if (ECarDealerNode.TODO_AUDIT.getCode()
+            .equals(carDealer.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前汽车经销商待审核中，不能操作");
         }
@@ -429,5 +439,55 @@ public class CarDealerAOImpl implements ICarDealerAO {
         sysBizLogBO.saveSYSBizLog(carDealer.getCode(),
             EBizLogType.CAR_DEALER_AUDIT, carDealer.getCode(),
             ECarDealerNode.TODO_AUDIT.getCode());
+    }
+
+    @Override
+    public String calculation(XN632690Req req) {
+        Bank bank = bankBO.getBank(req.getLoanBankCode());
+        if (ERateType.CT.getCode().equals(req.getRateType())) {
+            // 1.首期本金 = 贷款额- (2) *（期数-1）
+            // 2.每期本金=贷款额/期数
+            Long annualPrincipal = (long) AmountUtil.div(req.getLoanAmount(),
+                req.getLoanPeriods());// 每期本金
+            Long initialPrincipal = (req.getLoanAmount() - AmountUtil
+                .mul(annualPrincipal, (req.getLoanPeriods() - 1)));// 首期本金
+
+            // 手续费=贷款额*基准利率
+            // 3.首期=手续费-（4）*（期数-1）
+            // 4.每期=(2)*基准利率
+            CarDealerProtocol carDealerProtocol = carDealerProtocolBO
+                .getCarDealerProtocolByCarDealerCode(req.getCarDealerCode(),
+                    req.getLoanBankCode());// 获取经销商协议
+            double rate = 0;// 基准利率
+            if (req.getLoanPeriods() == 12) {
+                rate = carDealerProtocol.getPlatCtRate12();
+            } else if (req.getLoanPeriods() == 24) {
+                rate = carDealerProtocol.getPlatCtRate24();
+            } else {
+                rate = carDealerProtocol.getPlatCtRate36();
+            }
+            Long poundage = AmountUtil.mul(req.getLoanAmount(), rate);// 手续费
+            Long annualPoundage = AmountUtil.mul(annualPrincipal, rate);// 每期手续费
+            Long initialPoundage = poundage - AmountUtil.mul(annualPoundage,
+                (req.getLoanPeriods() - 1));// 首期手续费
+
+            // 高息金额=贷款额*（总利率-基准利率）
+            // 5.高息金额首期=高息金额-（6）*（期数-1）
+            // 6.高息金额每期=高息金额/期数
+            // HighRate
+            Long highRate = AmountUtil.mul(req.getLoanAmount(),
+                (req.getBankRate() - rate));// 高息金额
+            Long annualHighRate = (long) AmountUtil.div(highRate,
+                req.getLoanPeriods());// 高息金额每期
+            Long initialHighRate = highRate - AmountUtil.mul(annualHighRate,
+                (req.getLoanPeriods() - 1));// 高息金额首期
+
+            // 高息手续费=高息金额*基准利率
+            // 7.高息手续费首期=（8）*（期数-1）
+            // 8.高息手续费每期=(6）*基准利率
+            Long highRatePoundage = AmountUtil.mul(highRate, rate);// 高息手续费
+        }
+
+        return null;
     }
 }

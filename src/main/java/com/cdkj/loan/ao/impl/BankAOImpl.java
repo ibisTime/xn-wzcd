@@ -144,7 +144,7 @@ public class BankAOImpl implements IBankAO {
         List<BankRate> bankRateList = null;
         // 添加利率明细信息
         for (Bank data : bankList) {
-            rateCondition.setBankCode(condition.getCode());
+            rateCondition.setBankCode(data.getCode());
             bankRateList = bankRateBO.queryBankRateList(rateCondition);
             data.setBankRateList(bankRateList);
         }

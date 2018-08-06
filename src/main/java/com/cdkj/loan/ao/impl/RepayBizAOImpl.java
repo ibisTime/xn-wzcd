@@ -334,7 +334,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
                         if (string2.equals(curOverdueCount)) {
                             arrayList.add(string);
                         } else {
-                            list.add(string);
+                            list.add(string2);
                         }
                     }
                     if (CollectionUtils.isNotEmpty(list)) {
