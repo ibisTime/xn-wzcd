@@ -93,4 +93,7 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     // 入档更新还款计划
     public void refreshRepayPlan(BudgetOrder budgetOrder);
+
+    // 还款计划的已还金额改为当月月供
+    public void refreshRepayPlanPayedAmount(RepayPlan repayPlan);
 }

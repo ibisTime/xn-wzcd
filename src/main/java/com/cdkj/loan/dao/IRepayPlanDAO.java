@@ -44,4 +44,7 @@ public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
 
     public void updateRepayPlan(RepayPlan repayPlan);
 
+    // 还款计划的已还金额改为当月月供
+    public void updateRepayPlanPayedAmount(RepayPlan repayPlan);
+
 }

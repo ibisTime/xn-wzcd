@@ -459,4 +459,9 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         }
     }
 
+    @Override
+    public void refreshRepayPlanPayedAmount(RepayPlan repayPlan) {
+        repayPlanDAO.updateRepayPlanPayedAmount(repayPlan);
+    }
+
 }
