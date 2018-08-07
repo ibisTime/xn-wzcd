@@ -117,20 +117,26 @@ public class BizDayStatisticAOImpl implements IBizDayStatisticAO {
             }
             data.setLoanAmount(loanAmount);// 贷方发生额
             data.setLoanOverdueAmount(loanOverdueAmount);// 贷方逾期金额
-            data.setOverdueRate(AmountUtil.div(loanOverdueAmount, loanAmount));// 当日逾期率
             BizDayStatistic bizDayStatistic = bizDayStatisticBO
                 .getBizDayStatisticByDate(DateUtil.strToDate(
                     calDate(DateUtil.dateToStr(new Date(),
                         DateUtil.FRONT_DATE_FORMAT_STRING), -1),
-                    DateUtil.FRONT_DATE_FORMAT_STRING));
+                    DateUtil.FRONT_DATE_FORMAT_STRING), department.getCode());
             Long balance = 0L;
+            Long overdueBalance = 0L;
             if (null == bizDayStatistic) {
                 balance = data.getDebitAmount() - data.getLoanAmount();
+                overdueBalance = data.getLoanOverdueAmount();
             } else {
                 balance = bizDayStatistic.getBalance() + data.getDebitAmount()
                         - data.getLoanAmount();
+                overdueBalance = bizDayStatistic.getOverdueBalance()
+                        + data.getLoanOverdueAmount();
             }
             data.setBalance(balance);// 当日余额
+            data.setOverdueBalance(overdueBalance);// 当日逾期余额
+            data.setOverdueRate(AmountUtil.div(
+                getLong(data.getOverdueBalance()), getLong(data.getBalance())));// 当日逾期率
             data.setDate(DateUtil.strToDate(
                 DateUtil.getToday(DateUtil.FRONT_DATE_FORMAT_STRING),
                 DateUtil.FRONT_DATE_FORMAT_STRING));// 日期
@@ -141,12 +147,27 @@ public class BizDayStatisticAOImpl implements IBizDayStatisticAO {
     @Override
     public List<BizDayStatistic> carLoanBizStatistic(XN630901Req req) {
         BizDayStatistic condition = new BizDayStatistic();
-        condition.setDate(DateUtil.strToDate(req.getDate(),
+        String date = calDate(req.getDate(), -1);
+        condition.setDate(DateUtil.strToDate(date,
             DateUtil.FRONT_DATE_FORMAT_STRING));
         List<BizDayStatistic> list = bizDayStatisticBO
-            .queryBizDayStatisticList(condition);
+            .queryBizDayStatisticList(condition);// 前一天的数据
         for (BizDayStatistic data : list) {
-
+            Department company = departmentBO.getDepartment(data
+                .getCompanyCode());
+            data.setCompanyName(company.getName());// 分公司名称
+            BizDayStatistic preBizDayStatistic = bizDayStatisticBO
+                .getBizDayStatisticByDate(DateUtil.strToDate(
+                    calDate(req.getDate(), -2),
+                    DateUtil.FRONT_DATE_FORMAT_STRING), data.getCompanyCode());
+            if (null != preBizDayStatistic) {
+                data.setPreBalance(String.valueOf(preBizDayStatistic
+                    .getBalance()));
+                data.setPreOverdueBalance(String.valueOf(preBizDayStatistic
+                    .getOverdueBalance()));
+                data.setPreOverdueRate(String.valueOf(preBizDayStatistic
+                    .getOverdueRate()));
+            }
         }
         return list;
     }

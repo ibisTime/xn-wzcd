@@ -21,6 +21,7 @@ public interface IBizDayStatisticBO extends IPaginableBO<BizDayStatistic> {
 
     public BizDayStatistic getBizDayStatistic(String id);
 
-    public BizDayStatistic getBizDayStatisticByDate(Date date);
+    public BizDayStatistic getBizDayStatisticByDate(Date date,
+            String companyCode);
 
 }
