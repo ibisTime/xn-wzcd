@@ -101,7 +101,6 @@ import com.cdkj.loan.enums.EAdvanceType;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EAssureType;
 import com.cdkj.loan.enums.EBackAdvanceFundType;
-import com.cdkj.loan.enums.EBankCode;
 import com.cdkj.loan.enums.EBankRepointStatus;
 import com.cdkj.loan.enums.EBankType;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -2550,7 +2549,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         XN632690Res res = new XN632690Res();
         Bank bank = bankBO.getBank(loanBankCode);
         // 中行
-        if (EBankCode.BOC.getCode().equals(bank.getBankCode())) {
+        if (bank.getBankCode().equals("BOC")) {
             // 传统
             if (ERateType.CT.getCode().equals(rateType)) {
                 // 1.首期本金 = 贷款额- (2) *（期数-1）
@@ -2565,7 +2564,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 // 4.每期=(2)*基准利率
                 CarDealerProtocol carDealerProtocol = carDealerProtocolBO
                     .getCarDealerProtocolByCarDealerCode(carDealerCode,
-                        loanBankCode);// 获取经销商协议
+                        bank.getBankCode());// 获取经销商协议
                 double rate = 0;// 基准利率
                 if (loanPeriods == 12) {
                     rate = carDealerProtocol.getPlatCtRate12();
@@ -2690,12 +2689,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
                 }
             }
-        } else if (EBankCode.ICBC.getCode().equals(bank.getBankCode())) {// 工行
+        } else if (bank.getBankCode().equals("ICBC")) {// 工行
             // a)服务费=(实际利率-基准利率)*贷款额
             // b)月供=((贷款额+服务费)*(1+基准利率))/贷款期数
             CarDealerProtocol carDealerProtocol = carDealerProtocolBO
                 .getCarDealerProtocolByCarDealerCode(carDealerCode,
-                    loanBankCode);// 获取经销商协议
+                    bank.getBankCode());// 获取经销商协议
             double rate = 0;// 基准利率
             if (loanPeriods == 12) {
                 rate = carDealerProtocol.getPlatCtRate12();
@@ -2710,7 +2709,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
             res.setAnnualAmount(String.valueOf(monthAmount));
             res.setInitialAmount(String.valueOf(monthAmount));
-        } else if (EBankCode.CCB.getCode().equals(bank.getBankCode())) {// 建行
+        } else if (bank.getBankCode().equals("CCB")) {// 建行
             // a) 服务费=0
             // b) 月供=贷款额*（1+利率）/期数
             Long amount = AmountUtil.mul(loanAmount, (bankRate + 1));
