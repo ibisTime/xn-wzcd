@@ -12,6 +12,8 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ISYSMenuDAO;
 import com.cdkj.loan.domain.SYSMenu;
+import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.exception.BizException;
 
 /**
  * @author: Gejin 
@@ -19,8 +21,8 @@ import com.cdkj.loan.domain.SYSMenu;
  * @history:
  */
 @Component
-public class SYSMenuBOImpl extends PaginableBOImpl<SYSMenu> implements
-        ISYSMenuBO {
+public class SYSMenuBOImpl extends PaginableBOImpl<SYSMenu>
+        implements ISYSMenuBO {
 
     @Autowired
     private ISYSMenuDAO sysMenuDAO;
@@ -99,5 +101,17 @@ public class SYSMenuBOImpl extends PaginableBOImpl<SYSMenu> implements
     @Override
     public List<SYSMenu> querySYSMenuList(SYSMenu data) {
         return sysMenuDAO.selectList(data);
+    }
+
+    @Override
+    public SYSMenu getSYSMenuByUrl(String url) {
+        SYSMenu data = new SYSMenu();
+        data.setUrl(url);
+        SYSMenu menu = sysMenuDAO.select(data);
+        if (menu == null) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "根据URL查询的菜单不存在！");
+        }
+        return menu;
     }
 }

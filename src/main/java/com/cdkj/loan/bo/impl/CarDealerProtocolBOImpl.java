@@ -24,6 +24,7 @@ import com.cdkj.loan.dto.req.XN632060ReqProtocol;
 import com.cdkj.loan.dto.res.XN632291Res;
 import com.cdkj.loan.enums.EAssureType;
 import com.cdkj.loan.enums.EBankType;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EGpsTypeProtocol;
 import com.cdkj.loan.enums.ELyAmountType;
 import com.cdkj.loan.enums.EOtherType;
@@ -53,31 +54,33 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
                 CarDealerProtocol data = new CarDealerProtocol();
                 data.setCarDealerCode(code);
                 data.setBankCode(req.getBankCode());
-                data.setPlatCtRate12(StringValidater.toDouble(req
-                    .getPlatCtRate12()));
-                data.setPlatCtRate24(StringValidater.toDouble(req
-                    .getPlatCtRate24()));
-                data.setPlatCtRate36(StringValidater.toDouble(req
-                    .getPlatCtRate36()));
+                data.setPlatCtRate12(
+                    StringValidater.toDouble(req.getPlatCtRate12()));
+                data.setPlatCtRate24(
+                    StringValidater.toDouble(req.getPlatCtRate24()));
+                data.setPlatCtRate36(
+                    StringValidater.toDouble(req.getPlatCtRate36()));
 
-                data.setPlatZkRate12(StringValidater.toDouble(req
-                    .getPlatZkRate12()));
-                data.setPlatZkRate24(StringValidater.toDouble(req
-                    .getPlatZkRate24()));
-                data.setPlatZkRate36(StringValidater.toDouble(req
-                    .getPlatZkRate36()));
+                data.setPlatZkRate12(
+                    StringValidater.toDouble(req.getPlatZkRate12()));
+                data.setPlatZkRate24(
+                    StringValidater.toDouble(req.getPlatZkRate24()));
+                data.setPlatZkRate36(
+                    StringValidater.toDouble(req.getPlatZkRate36()));
                 data.setAssureType(req.getAssureType());
                 data.setAssureFee(StringValidater.toLong(req.getAssureFee()));
 
-                data.setAssureRate(StringValidater.toDouble(req.getAssureRate()));
+                data.setAssureRate(
+                    StringValidater.toDouble(req.getAssureRate()));
                 data.setDzType(req.getDzType());
                 data.setDzFee(StringValidater.toLong(req.getDzFee()));
                 data.setDzRate(StringValidater.toDouble(req.getDzRate()));
                 data.setLyAmountType(req.getLyAmountType());
 
-                data.setLyAmountFee(StringValidater.toLong(req.getLyAmountFee()));
-                data.setLyAmountRate(StringValidater.toDouble(req
-                    .getLyAmountRate()));
+                data.setLyAmountFee(
+                    StringValidater.toLong(req.getLyAmountFee()));
+                data.setLyAmountRate(
+                    StringValidater.toDouble(req.getLyAmountRate()));
                 data.setGpsType(req.getGpsType());
                 data.setGpsFee(StringValidater.toLong(req.getGpsFee()));
                 data.setGpsRate(StringValidater.toDouble(req.getGpsRate()));
@@ -86,28 +89,28 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
                 data.setOtherFee(StringValidater.toLong(req.getOtherFee()));
                 data.setOtherRate(StringValidater.toDouble(req.getOtherRate()));
                 data.setIntroduceType(req.getIntroduceType());
-                data.setIntroduceFee(StringValidater.toLong(req
-                    .getIntroduceFee()));
+                data.setIntroduceFee(
+                    StringValidater.toLong(req.getIntroduceFee()));
 
-                data.setIntroduceRate(StringValidater.toDouble(req
-                    .getIntroduceRate()));
+                data.setIntroduceRate(
+                    StringValidater.toDouble(req.getIntroduceRate()));
                 data.setReturnPointType(req.getReturnPointType());
-                data.setReturnPointFee(StringValidater.toLong(req
-                    .getReturnPointFee()));
-                data.setReturnPointRate(StringValidater.toDouble(req
-                    .getReturnPointRate()));
+                data.setReturnPointFee(
+                    StringValidater.toLong(req.getReturnPointFee()));
+                data.setReturnPointRate(
+                    StringValidater.toDouble(req.getReturnPointRate()));
                 data.setIsDz(req.getIsDz());
 
                 data.setInsuAgencyYear1Type(req.getInsuAgencyYear1Type());
-                data.setInsuAgencyYear1Fee(StringValidater.toLong(req
-                    .getInsuAgencyYear1Fee()));
+                data.setInsuAgencyYear1Fee(
+                    StringValidater.toLong(req.getInsuAgencyYear1Fee()));
                 data.setInsuAgencyYear2Type(req.getInsuAgencyYear2Type());
-                data.setInsuAgencyYear2Fee(StringValidater.toLong(req
-                    .getInsuAgencyYear2Fee()));
+                data.setInsuAgencyYear2Fee(
+                    StringValidater.toLong(req.getInsuAgencyYear2Fee()));
                 data.setInsuAgencyYear3Type(req.getInsuAgencyYear3Type());
 
-                data.setInsuAgencyYear3Fee(StringValidater.toLong(req
-                    .getInsuAgencyYear3Fee()));
+                data.setInsuAgencyYear3Fee(
+                    StringValidater.toLong(req.getInsuAgencyYear3Fee()));
                 carDealerProtocolDAO.insert(data);
             }
         }
@@ -133,7 +136,8 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
     public void removeCarDealerProtocolByCarDealerCode(String carDealerCode) {
         CarDealerProtocol data = new CarDealerProtocol();
         data.setCarDealerCode(carDealerCode);
-        List<CarDealerProtocol> carDealerProtocolList = queryCarDealerProtocolList(data);
+        List<CarDealerProtocol> carDealerProtocolList = queryCarDealerProtocolList(
+            data);
         for (CarDealerProtocol carDealerProtocol : carDealerProtocolList) {
             carDealerProtocolDAO.delete(carDealerProtocol);
         }
@@ -169,7 +173,8 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
             condition.setBankCode(bankCode);
             data = carDealerProtocolDAO.select(condition);
             if (data == null) {
-                throw new BizException("xn0000", "根据汽车经销商查询协议不存在！");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "根据汽车经销商查询协议不存在！");
             }
         }
         return data;
@@ -191,33 +196,33 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
         }
         CarDealerProtocol carDealerProtocol = getCarDealerProtocolByCarDealerCode(
             carDealerCode, eBankType.getCode());
-        if (EAssureType.SINGLE.getCode().equals(
-            carDealerProtocol.getAssureType())) {
+        if (EAssureType.SINGLE.getCode()
+            .equals(carDealerProtocol.getAssureType())) {
             res.setFxAmount(String.valueOf(carDealerProtocol.getAssureFee()));
         } else {
-            res.setFxAmount(String.valueOf(AmountUtil.mul(loanAmount,
-                carDealerProtocol.getAssureRate())));
+            res.setFxAmount(String.valueOf(
+                AmountUtil.mul(loanAmount, carDealerProtocol.getAssureRate())));
         }
-        if (ELyAmountType.SINGLE.getCode().equals(
-            carDealerProtocol.getLyAmountType())) {
+        if (ELyAmountType.SINGLE.getCode()
+            .equals(carDealerProtocol.getLyAmountType())) {
             res.setLyAmount(String.valueOf(carDealerProtocol.getLyAmountFee()));
         } else {
             res.setLyAmount(String.valueOf(AmountUtil.mul(loanAmount,
                 carDealerProtocol.getLyAmountRate())));
         }
-        if (EGpsTypeProtocol.SINGLE.getCode().equals(
-            carDealerProtocol.getGpsType())) {
+        if (EGpsTypeProtocol.SINGLE.getCode()
+            .equals(carDealerProtocol.getGpsType())) {
             res.setGpsFee(String.valueOf(carDealerProtocol.getGpsFee()));
         } else {
-            res.setGpsFee(String.valueOf(AmountUtil.mul(loanAmount,
-                carDealerProtocol.getGpsRate())));
+            res.setGpsFee(String.valueOf(
+                AmountUtil.mul(loanAmount, carDealerProtocol.getGpsRate())));
         }
         if (EOtherType.SINGLE.getCode()
             .equals(carDealerProtocol.getOtherType())) {
             res.setOtherFee(String.valueOf(carDealerProtocol.getOtherFee()));
         } else {
-            res.setOtherFee(String.valueOf(AmountUtil.mul(loanAmount,
-                carDealerProtocol.getOtherRate())));
+            res.setOtherFee(String.valueOf(
+                AmountUtil.mul(loanAmount, carDealerProtocol.getOtherRate())));
         }
         return res;
     }
@@ -227,8 +232,8 @@ public class CarDealerProtocolBOImpl extends PaginableBOImpl<CarDealerProtocol>
         HashMap<String, Long> map = new HashMap<String, Long>();
         SYSConfig sysConfigoil = sysConfigBO
             .getSYSConfig(SysConstants.BUDGET_OIL_SUBSIDY_RATE);
-        Double oilSubsidyBFB = StringValidater.toDouble(sysConfigoil
-            .getCvalue());
+        Double oilSubsidyBFB = StringValidater
+            .toDouble(sysConfigoil.getCvalue());
         Long oilSubsidy = AmountUtil.mul(loanAmount, oilSubsidyBFB);
         map.put("oilSubsidy", oilSubsidy);
         SYSConfig sysConfig = sysConfigBO

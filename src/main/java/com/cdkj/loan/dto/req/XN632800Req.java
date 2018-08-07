@@ -32,10 +32,6 @@ public class XN632800Req {
     @NotBlank
     private String entryDatetime;
 
-    // 部门编号
-    @NotBlank
-    private String departmentCode;
-
     // 职务岗位编号
     @NotBlank
     private String postCode;
@@ -193,7 +189,8 @@ public class XN632800Req {
         return socialRelationList;
     }
 
-    public void setSocialRelationList(List<XN632800ReqChild> socialRelationList) {
+    public void setSocialRelationList(
+            List<XN632800ReqChild> socialRelationList) {
         this.socialRelationList = socialRelationList;
     }
 
@@ -235,14 +232,6 @@ public class XN632800Req {
 
     public void setEntryDatetime(String entryDatetime) {
         this.entryDatetime = entryDatetime;
-    }
-
-    public String getDepartmentCode() {
-        return departmentCode;
-    }
-
-    public void setDepartmentCode(String departmentCode) {
-        this.departmentCode = departmentCode;
     }
 
     public String getPostCode() {

@@ -26,6 +26,28 @@ public class TableExport extends ABaseDO {
     // 操作时间
     private Date updateDatetime;
 
+    /***********辅助字段************/
+
+    private String realName;// 真实姓名
+
+    private String menuName;// 菜单名称
+
+    public String getMenuName() {
+        return menuName;
+    }
+
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
     public int getId() {
         return id;
     }

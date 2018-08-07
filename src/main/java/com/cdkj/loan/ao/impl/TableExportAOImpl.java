@@ -3,12 +3,17 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ITableExportAO;
+import com.cdkj.loan.bo.ISYSMenuBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ITableExportBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.domain.SYSMenu;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.TableExport;
 
 @Service
@@ -16,6 +21,12 @@ public class TableExportAOImpl implements ITableExportAO {
 
     @Autowired
     private ITableExportBO tableExportBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
+
+    @Autowired
+    private ISYSMenuBO sysMenuBO;
 
     @Override
     public int addTableExport(String url, String operator) {
@@ -29,7 +40,21 @@ public class TableExportAOImpl implements ITableExportAO {
     @Override
     public Paginable<TableExport> queryTableExportPage(int start, int limit,
             TableExport condition) {
-        return tableExportBO.getPaginable(start, limit, condition);
+        Paginable<TableExport> paginable = tableExportBO.getPaginable(start,
+            limit, condition);
+        for (TableExport tableExport : paginable.getList()) {
+            // 真实姓名
+            if (StringUtils.isNotBlank(tableExport.getOperator())) {
+                SYSUser user = sysUserBO.getUser(tableExport.getOperator());
+                tableExport.setRealName(user.getRealName());
+            }
+            // 菜单名称
+            if (StringUtils.isNotBlank(tableExport.getUrl())) {
+                SYSMenu menu = sysMenuBO.getSYSMenuByUrl(tableExport.getUrl());
+                tableExport.setMenuName(menu.getName());
+            }
+        }
+        return paginable;
     }
 
     @Override
