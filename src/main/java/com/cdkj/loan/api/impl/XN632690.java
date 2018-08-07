@@ -5,7 +5,7 @@ import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN632690Req;
-import com.cdkj.loan.dto.res.PKCodeRes;
+import com.cdkj.loan.dto.res.XN632690Res;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -25,7 +25,10 @@ public class XN632690 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return new PKCodeRes(budgetOrderAO.calculation(req));
+        XN632690Res res = budgetOrderAO.calculation(req.getCarDealerCode(),
+            req.getLoanBankCode(), req.getLoanPeriods(), req.getLoanAmount(),
+            req.getRateType(), req.getServiceChargeWay(), req.getBankRate());
+        return res;
     }
 
     @Override

@@ -91,17 +91,16 @@ import com.cdkj.loan.dto.req.XN632280Req;
 import com.cdkj.loan.dto.req.XN632281Req;
 import com.cdkj.loan.dto.req.XN632292Req;
 import com.cdkj.loan.dto.req.XN632341Req;
-import com.cdkj.loan.dto.req.XN632690Req;
 import com.cdkj.loan.dto.res.XN632234Res;
 import com.cdkj.loan.dto.res.XN632290Res;
 import com.cdkj.loan.dto.res.XN632291Res;
+import com.cdkj.loan.dto.res.XN632690Res;
 import com.cdkj.loan.enums.EAccountType;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EAdvanceType;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EAssureType;
 import com.cdkj.loan.enums.EBackAdvanceFundType;
-import com.cdkj.loan.enums.EBankCode;
 import com.cdkj.loan.enums.EBankRepointStatus;
 import com.cdkj.loan.enums.EBankType;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -2544,48 +2543,50 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public String calculation(XN632690Req req) {
-        Bank bank = bankBO.getBank(req.getLoanBankCode());
+    public XN632690Res calculation(String carDealerCode, String loanBankCode,
+            Integer loanPeriods, Long loanAmount, String rateType,
+            String serviceChargeWay, double bankRate) {
+        XN632690Res res = new XN632690Res();
+        Bank bank = bankBO.getBank(loanBankCode);
         // 中行
-        if (EBankCode.BOC.getCode().equals(bank.getBankCode())) {
+        if (bank.getBankCode().equals("BOC")) {
             // 传统
-            if (ERateType.CT.getCode().equals(req.getRateType())) {
+            if (ERateType.CT.getCode().equals(rateType)) {
                 // 1.首期本金 = 贷款额- (2) *（期数-1）
                 // 2.每期本金=贷款额/期数
-                Long annualPrincipal = (long) AmountUtil
-                    .div(req.getLoanAmount(), req.getLoanPeriods());// 每期本金
-                Long initialPrincipal = (req.getLoanAmount() - AmountUtil
-                    .mul(annualPrincipal, (req.getLoanPeriods() - 1)));// 首期本金
+                Long annualPrincipal = (long) AmountUtil.div(loanAmount,
+                    loanPeriods);// 每期本金
+                Long initialPrincipal = (loanAmount
+                        - AmountUtil.mul(annualPrincipal, (loanPeriods - 1)));// 首期本金
 
                 // 手续费=贷款额*基准利率
                 // 3.首期=手续费-（4）*（期数-1）
                 // 4.每期=(2)*基准利率
                 CarDealerProtocol carDealerProtocol = carDealerProtocolBO
-                    .getCarDealerProtocolByCarDealerCode(req.getCarDealerCode(),
-                        req.getLoanBankCode());// 获取经销商协议
+                    .getCarDealerProtocolByCarDealerCode(carDealerCode,
+                        bank.getBankCode());// 获取经销商协议
                 double rate = 0;// 基准利率
-                if (req.getLoanPeriods() == 12) {
+                if (loanPeriods == 12) {
                     rate = carDealerProtocol.getPlatCtRate12();
-                } else if (req.getLoanPeriods() == 24) {
+                } else if (loanPeriods == 24) {
                     rate = carDealerProtocol.getPlatCtRate24();
                 } else {
                     rate = carDealerProtocol.getPlatCtRate36();
                 }
-                Long poundage = AmountUtil.mul(req.getLoanAmount(), rate);// 手续费
+                Long poundage = AmountUtil.mul(loanAmount, rate);// 手续费
                 Long annualPoundage = AmountUtil.mul(annualPrincipal, rate);// 每期手续费
-                Long initialPoundage = poundage - AmountUtil.mul(annualPoundage,
-                    (req.getLoanPeriods() - 1));// 首期手续费
+                Long initialPoundage = poundage
+                        - AmountUtil.mul(annualPoundage, (loanPeriods - 1));// 首期手续费
 
                 // 高息金额=贷款额*（总利率-基准利率）
                 // 5.高息金额首期=高息金额-（6）*（期数-1）
                 // 6.高息金额每期=高息金额/期数
                 // HighRate
-                Long highRate = AmountUtil.mul(req.getLoanAmount(),
-                    (req.getBankRate() - rate));// 高息金额
+                Long highRate = AmountUtil.mul(loanAmount, (bankRate - rate));// 高息金额
                 Long annualHighRate = (long) AmountUtil.div(highRate,
-                    req.getLoanPeriods());// 高息金额每期
-                Long initialHighRate = highRate - AmountUtil.mul(annualHighRate,
-                    (req.getLoanPeriods() - 1));// 高息金额首期
+                    loanPeriods);// 高息金额每期
+                Long initialHighRate = highRate
+                        - AmountUtil.mul(annualHighRate, (loanPeriods - 1));// 高息金额首期
 
                 // 高息手续费=高息金额*基准利率
                 // 7.高息手续费首期=（8）*（期数-1）
@@ -2594,7 +2595,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 Long annualHighRatePoundage = AmountUtil.mul(annualHighRate,
                     rate);// 高息手续费每期
                 Long initialHighRatePoundage = AmountUtil
-                    .mul(annualHighRatePoundage, (req.getLoanPeriods() - 1));// 高息手续费首期
+                    .mul(annualHighRatePoundage, (loanPeriods - 1));// 高息手续费首期
 
                 // 首期月供=1+3+5+7
                 Long initialAmount = initialPrincipal + initialPoundage
@@ -2602,69 +2603,82 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 // 每期月供=2+4+6+8
                 Long annualAmount = annualPrincipal + annualPoundage
                         + annualHighRate + annualHighRatePoundage;
-            } else if (ERateType.ZK.getCode().equals(req.getRateType())) {// 直客
-                if (EBocFeeWay.STAGES.getCode()
-                    .equals(req.getServiceChargeWay())) {// 分期
+                // 除以1000
+                Long annual = (long) AmountUtil.div(annualAmount, 1000);
+                Long initial = (long) AmountUtil.div(initialAmount, 1000);
+                res.setAnnualAmount(String.valueOf(annual));
+                res.setInitialAmount(String.valueOf(initial));
+            } else if (ERateType.ZK.getCode().equals(rateType)) {// 直客
+                if (EBocFeeWay.STAGES.getCode().equals(serviceChargeWay)) {// 分期
                     // 本金：
                     // 1.首期=贷款额-（2）*（期数-1）
                     // 2.每期=贷款额/期数
-                    Long annualPrincipal = (long) AmountUtil
-                        .div(req.getLoanAmount(), req.getLoanPeriods());// 每期本金
-                    Long initialPrincipal = req.getLoanAmount() - AmountUtil
-                        .mul(annualPrincipal, (req.getLoanPeriods() - 1));// 首期本金
+                    Long annualPrincipal = (long) AmountUtil.div(loanAmount,
+                        loanPeriods);// 每期本金
+                    Long initialPrincipal = loanAmount - AmountUtil
+                        .mul(annualPrincipal, (loanPeriods - 1));// 首期本金
 
                     // 手续费=贷款额*利率
                     // 3.首期=手续费-（4）*（期数-1）
                     // 4.每期=（2）*利率
-                    Long poundage = AmountUtil.mul(req.getLoanAmount(),
-                        req.getBankRate());// 手续费
+                    Long poundage = AmountUtil.mul(loanAmount, bankRate);// 手续费
                     Long annualPoundage = AmountUtil.mul(annualPrincipal,
-                        req.getBankRate());// 每期手续费
-                    Long initialPoundage = poundage - AmountUtil
-                        .mul(annualPoundage, (req.getLoanPeriods() - 1));// 首期手续费
+                        bankRate);// 每期手续费
+                    Long initialPoundage = poundage
+                            - AmountUtil.mul(annualPoundage, (loanPeriods - 1));// 首期手续费
 
                     // 月供：
                     // 首期=1+3
                     Long initialAmount = initialPrincipal + initialPoundage;
                     // 每期=2+4
                     Long annualAmount = annualPrincipal + annualPoundage;
+
+                    // 除以1000
+                    Long annual = (long) AmountUtil.div(annualAmount, 1000);
+                    Long initial = (long) AmountUtil.div(initialAmount, 1000);
+                    res.setAnnualAmount(String.valueOf(annual));
+                    res.setInitialAmount(String.valueOf(initial));
                 } else if (EBocFeeWay.DISPOSABLE.getCode()
-                    .equals(req.getServiceChargeWay())) {// 一次性
+                    .equals(serviceChargeWay)) {// 一次性
                     // 本金：
                     // 1.首期=贷款额-（2）*（期数-1）
                     // 2.每期=贷款额/期数
-                    Long annualPrincipal = (long) AmountUtil
-                        .div(req.getLoanAmount(), req.getLoanPeriods());// 每期本金
-                    Long initialPrincipal = req.getLoanAmount() - AmountUtil
-                        .mul(annualPrincipal, (req.getLoanPeriods() - 1));// 首期本金
+                    Long annualPrincipal = (long) AmountUtil.div(loanAmount,
+                        loanPeriods);// 每期本金
+                    Long initialPrincipal = loanAmount - AmountUtil
+                        .mul(annualPrincipal, (loanPeriods - 1));// 首期本金
 
                     // 手续费=贷款额*利率
-                    Long poundage = AmountUtil.mul(req.getLoanAmount(),
-                        req.getBankRate());// 手续费
+                    Long poundage = AmountUtil.mul(loanAmount, bankRate);// 手续费
 
                     // 月供：
                     // 首期=1+手续费
                     Long initialAmount = initialPrincipal + poundage;
                     // 每期=2
                     Long annualAmount = annualPrincipal;
+
+                    // 除以1000
+                    Long annual = (long) AmountUtil.div(annualAmount, 1000);
+                    Long initial = (long) AmountUtil.div(initialAmount, 1000);
+                    res.setAnnualAmount(String.valueOf(annual));
+                    res.setInitialAmount(String.valueOf(initial));
                 } else {// 附加费
                     // 本金：
                     // 1.首期=贷款额-（2）*（期数-1）
                     // 2.每期=贷款额/期数
-                    Long annualPrincipal = (long) AmountUtil
-                        .div(req.getLoanAmount(), req.getLoanPeriods());// 每期本金
-                    Long initialPrincipal = req.getLoanAmount() - AmountUtil
-                        .mul(annualPrincipal, (req.getLoanPeriods() - 1));// 首期本金
+                    Long annualPrincipal = (long) AmountUtil.div(loanAmount,
+                        loanPeriods);// 每期本金
+                    Long initialPrincipal = loanAmount - AmountUtil
+                        .mul(annualPrincipal, (loanPeriods - 1));// 首期本金
 
                     // 手续费=贷款额*利率
                     // 3.首期=手续费-（4）*（期数-1）
                     // 4.每期=（2）*利率
-                    Long poundage = AmountUtil.mul(req.getLoanAmount(),
-                        req.getBankRate());// 手续费
+                    Long poundage = AmountUtil.mul(loanAmount, bankRate);// 手续费
                     Long annualPoundage = AmountUtil.mul(annualPrincipal,
-                        req.getBankRate());// 每期手续费
-                    Long initialPoundage = poundage - AmountUtil
-                        .mul(annualPoundage, (req.getLoanPeriods() - 1));// 首期手续费
+                        bankRate);// 每期手续费
+                    Long initialPoundage = poundage
+                            - AmountUtil.mul(annualPoundage, (loanPeriods - 1));// 首期手续费
 
                     // 附加费：
                     // 5.首期=附加费-（2）*（期数-1）
@@ -2674,9 +2688,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     // 7.首期=手续费-（4）*（期数-1）
                     // 8.每期=（2）*利率
                     Long annualSurchargePoundage = AmountUtil
-                        .mul(annualPrincipal, req.getBankRate());// 每期附加费手续费
-                    Long initialSurchargePoundage = poundage - AmountUtil
-                        .mul(annualPoundage, (req.getLoanPeriods() - 1));// 首期附加费手续费
+                        .mul(annualPrincipal, bankRate);// 每期附加费手续费
+                    Long initialSurchargePoundage = poundage
+                            - AmountUtil.mul(annualPoundage, (loanPeriods - 1));// 首期附加费手续费
 
                     // 月供
                     // 首期=1+3+5+7
@@ -2685,36 +2699,40 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
                 }
             }
-        } else if (EBankCode.ICBC.getCode().equals(bank.getBankCode())) {// 工行
+        } else if (bank.getBankCode().equals("ICBC")) {// 工行
             // a)服务费=(实际利率-基准利率)*贷款额
             // b)月供=((贷款额+服务费)*(1+基准利率))/贷款期数
             CarDealerProtocol carDealerProtocol = carDealerProtocolBO
-                .getCarDealerProtocolByCarDealerCode(req.getCarDealerCode(),
-                    req.getLoanBankCode());// 获取经销商协议
+                .getCarDealerProtocolByCarDealerCode(carDealerCode,
+                    bank.getBankCode());// 获取经销商协议
             double rate = 0;// 基准利率
-            if (req.getLoanPeriods() == 12) {
+            if (loanPeriods == 12) {
                 rate = carDealerProtocol.getPlatCtRate12();
-            } else if (req.getLoanPeriods() == 24) {
+            } else if (loanPeriods == 24) {
                 rate = carDealerProtocol.getPlatCtRate24();
             } else {
                 rate = carDealerProtocol.getPlatCtRate36();
             }
-            Long poundage = AmountUtil.mul(req.getLoanAmount(),
-                (req.getBankRate() - rate));// 服务费
-            Long amount = AmountUtil.mul((req.getLoanAmount() + poundage),
-                (rate + 1));
-            Long monthAmount = (long) AmountUtil.div(amount,
-                (req.getLoanPeriods() - 1));// 月供
-        } else if (EBankCode.CCB.getCode().equals(bank.getBankCode())) {// 建行
+            Long poundage = AmountUtil.mul(loanAmount, (bankRate - rate));// 服务费
+            Long amount = AmountUtil.mul((loanAmount + poundage), (rate + 1));
+            Long monthAmount = (long) AmountUtil.div(amount, (loanPeriods - 1));// 月供
+
+            // 除以1000
+            Long domain = (long) AmountUtil.div(monthAmount, 1000);
+            res.setAnnualAmount(String.valueOf(domain));
+            res.setInitialAmount(String.valueOf(domain));
+        } else if (bank.getBankCode().equals("CCB")) {// 建行
             // a) 服务费=0
             // b) 月供=贷款额*（1+利率）/期数
-            Long amount = AmountUtil.mul(req.getLoanAmount(),
-                (req.getBankRate() + 1));
-            Long monthAmount = (long) AmountUtil.div(amount,
-                req.getLoanPeriods());// 月供
-        }
+            Long amount = AmountUtil.mul(loanAmount, (bankRate + 1));
+            Long monthAmount = (long) AmountUtil.div(amount, loanPeriods);// 月供
 
-        return null;
+            // 除以1000
+            Long domain = (long) AmountUtil.div(monthAmount, 1000);
+            res.setAnnualAmount(String.valueOf(domain));
+            res.setInitialAmount(String.valueOf(domain));
+        }
+        return res;
     }
 
 }

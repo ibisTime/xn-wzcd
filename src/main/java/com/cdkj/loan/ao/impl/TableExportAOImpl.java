@@ -50,7 +50,8 @@ public class TableExportAOImpl implements ITableExportAO {
             }
             // 菜单名称
             if (StringUtils.isNotBlank(tableExport.getUrl())) {
-                SYSMenu menu = sysMenuBO.getSYSMenuByUrl(tableExport.getUrl());
+                String url = tableExport.getUrl() + ".htm";
+                SYSMenu menu = sysMenuBO.getSYSMenuByUrl(url);
                 tableExport.setMenuName(menu.getName());
             }
         }
