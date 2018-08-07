@@ -26,29 +26,30 @@ public class BizDayStatistic extends ABaseDO {
     // 贷方发生额(当日客户还款总额)
     private Long loanAmount;
 
+    // 当日余额
+    private Long balance;
+
     // 贷方逾期金额
     private Long loanOverdueAmount;
 
+    // 当日逾期余额
+    private Long overdueBalance;
+
     // 当日逾期率
     private Double overdueRate;
-
-    // 当日余额（T-1）
-    private Long balance;
 
     // 日期（yyyy-MM-dd）
     private Date date;
 
     /***************db properties******************/
 
-    private String companyName;// 公司名称
+    private String companyName;// 分公司名称
 
-    private String preDayBalance;// 上日余额（T-2）
+    private String preBalance;// 上日余额
 
-    private String preDayOverdueAmount;// 上日逾期金额
+    private String preOverdueBalance;// 上日逾期余额
 
-    private String preDayOverdueRate;// 上日逾期率
-
-    private String overdueAmount;// 当日逾期金额
+    private String preOverdueRate;// 上日逾期率
 
     public String getId() {
         return id;
@@ -112,6 +113,46 @@ public class BizDayStatistic extends ABaseDO {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Long getOverdueBalance() {
+        return overdueBalance;
+    }
+
+    public void setOverdueBalance(Long overdueBalance) {
+        this.overdueBalance = overdueBalance;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getPreBalance() {
+        return preBalance;
+    }
+
+    public void setPreBalance(String preBalance) {
+        this.preBalance = preBalance;
+    }
+
+    public String getPreOverdueBalance() {
+        return preOverdueBalance;
+    }
+
+    public void setPreOverdueBalance(String preOverdueBalance) {
+        this.preOverdueBalance = preOverdueBalance;
+    }
+
+    public String getPreOverdueRate() {
+        return preOverdueRate;
+    }
+
+    public void setPreOverdueRate(String preOverdueRate) {
+        this.preOverdueRate = preOverdueRate;
     }
 
 }

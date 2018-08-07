@@ -86,11 +86,13 @@ public class BizDayStatisticBOImpl extends PaginableBOImpl<BizDayStatistic>
     }
 
     @Override
-    public BizDayStatistic getBizDayStatisticByDate(Date date) {
+    public BizDayStatistic getBizDayStatisticByDate(Date date,
+            String companyCode) {
         BizDayStatistic data = null;
         if (date != null) {
             BizDayStatistic condition = new BizDayStatistic();
             condition.setDate(date);
+            condition.setCompanyCode(companyCode);
             data = bizDayStatisticDAO.select(condition);
         }
         return data;
