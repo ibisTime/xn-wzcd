@@ -2597,11 +2597,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 // 每期月供=2+4+6+8
                 Long annualAmount = annualPrincipal + annualPoundage
                         + annualHighRate + annualHighRatePoundage;
-                // 除以1000
-                Long annual = (long) AmountUtil.div(annualAmount, 1000);
-                Long initial = (long) AmountUtil.div(initialAmount, 1000);
-                res.setAnnualAmount(String.valueOf(annual));
-                res.setInitialAmount(String.valueOf(initial));
+
+                res.setAnnualAmount(String.valueOf(annualAmount));
+                res.setInitialAmount(String.valueOf(initialAmount));
             } else if (ERateType.ZK.getCode().equals(rateType)) {// 直客
                 if (EBocFeeWay.STAGES.getCode().equals(serviceChargeWay)) {// 分期
                     // 本金：
@@ -2628,11 +2626,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     // 每期=2+4
                     Long annualAmount = annualPrincipal + annualPoundage;
 
-                    // 除以1000
-                    Long annual = (long) AmountUtil.div(annualAmount, 1000);
-                    Long initial = (long) AmountUtil.div(initialAmount, 1000);
-                    res.setAnnualAmount(String.valueOf(annual));
-                    res.setInitialAmount(String.valueOf(initial));
+                    res.setAnnualAmount(String.valueOf(annualAmount));
+                    res.setInitialAmount(String.valueOf(initialAmount));
                 } else if (EBocFeeWay.DISPOSABLE.getCode().equals(
                     serviceChargeWay)) {// 一次性
                     // 本金：
@@ -2653,11 +2648,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     // 每期=2
                     Long annualAmount = annualPrincipal;
 
-                    // 除以1000
-                    Long annual = (long) AmountUtil.div(annualAmount, 1000);
-                    Long initial = (long) AmountUtil.div(initialAmount, 1000);
-                    res.setAnnualAmount(String.valueOf(annual));
-                    res.setInitialAmount(String.valueOf(initial));
+                    res.setAnnualAmount(String.valueOf(annualAmount));
+                    res.setInitialAmount(String.valueOf(initialAmount));
                 } else {// 附加费
                     // 本金：
                     // 1.首期=贷款额-（2）*（期数-1）
@@ -2714,20 +2706,16 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             Long amount = AmountUtil.mul((loanAmount + poundage), (rate + 1));
             Long monthAmount = (long) AmountUtil.div(amount, (loanPeriods - 1));// 月供
 
-            // 除以1000
-            Long domain = (long) AmountUtil.div(monthAmount, 1000);
-            res.setAnnualAmount(String.valueOf(domain));
-            res.setInitialAmount(String.valueOf(domain));
+            res.setAnnualAmount(String.valueOf(monthAmount));
+            res.setInitialAmount(String.valueOf(monthAmount));
         } else if (bank.getBankCode().equals("CCB")) {// 建行
             // a) 服务费=0
             // b) 月供=贷款额*（1+利率）/期数
             Long amount = AmountUtil.mul(loanAmount, (bankRate + 1));
             Long monthAmount = (long) AmountUtil.div(amount, loanPeriods);// 月供
 
-            // 除以1000
-            Long domain = (long) AmountUtil.div(monthAmount, 1000);
-            res.setAnnualAmount(String.valueOf(domain));
-            res.setInitialAmount(String.valueOf(domain));
+            res.setAnnualAmount(String.valueOf(monthAmount));
+            res.setInitialAmount(String.valueOf(monthAmount));
         }
         return res;
     }
