@@ -1,6 +1,6 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.IStatisticAO;
+import com.cdkj.loan.ao.IBizDayStatisticAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
@@ -16,14 +16,14 @@ import com.cdkj.loan.spring.SpringContextHolder;
  * @history:
  */
 public class XN630901 extends AProcessor {
-    private IStatisticAO statisticAO = SpringContextHolder
-        .getBean(IStatisticAO.class);
+    private IBizDayStatisticAO bizDayStatisticAO = SpringContextHolder
+        .getBean(IBizDayStatisticAO.class);
 
     private XN630901Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        return statisticAO.carLoanBizStatistic(req);
+        return bizDayStatisticAO.carLoanBizStatistic(req);
     }
 
     @Override

@@ -413,5 +413,9 @@
 	<bean id="tableExportBO" class="com.cdkj.loan.bo.impl.TableExportBOImpl">
 		<property name="paginableDAO" ref="tableExportDAOImpl"/>
 	</bean>
+	
+	<bean id="bizDayStatisticBO" class="com.cdkj.loan.bo.impl.BizDayStatisticBOImpl">
+		<property name="paginableDAO" ref="bizDayStatisticDAOImpl"/>
+	</bean>
 
 </beans>
