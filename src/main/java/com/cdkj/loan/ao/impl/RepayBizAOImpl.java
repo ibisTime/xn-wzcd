@@ -323,77 +323,81 @@ public class RepayBizAOImpl implements IRepayBizAO {
             RepayBiz condition, String curOverdueCount) {
         ArrayList<String> arrayList = new ArrayList<String>();
         ArrayList<String> list = new ArrayList<String>();
-        if (curOverdueCount != null) {
-            String[] split = curOverdueCount.split(",");// 用逗号分割
-            for (String string : split) {
-                // 判断是否只输入了一个数或一个区间
-                if (string.equals(curOverdueCount)) {
-                    String[] strings = string.split("-");
-                    for (String string2 : strings) {
-                        // 判断是否只输入了一个区间
-                        if (string2.equals(curOverdueCount)) {
-                            arrayList.add(string);
-                        } else {
-                            list.add(string2);
+        if (curOverdueCount == null) {
+            curOverdueCount = "1-100";
+        }
+        String[] split = curOverdueCount.split(",");// 用逗号分割
+        for (String string : split) {
+            // 判断是否只输入了一个数或一个区间
+            if (string.equals(curOverdueCount)) {
+                String[] strings = string.split("-");
+                for (String string2 : strings) {
+                    // 判断是否只输入了一个区间
+                    if (string2.equals(curOverdueCount)) {
+                        arrayList.add(string);
+                    } else {
+                        list.add(string2);
+                    }
+                }
+                if (CollectionUtils.isNotEmpty(list)) {
+                    int x = Integer.parseInt(list.get(0));
+                    int y = Integer.parseInt(list.get(1));
+                    if (x <= y) {
+                        for (int i = x; i <= y; i++) {
+                            arrayList.add(i + "");
+                        }
+                    } else {
+                        for (int i = y; i <= x; i++) {
+                            arrayList.add(i + "");
                         }
                     }
-                    if (CollectionUtils.isNotEmpty(list)) {
+                }
+            } else {
+                String[] strings = string.split("-");
+                for (String data : strings) {
+                    if (string.equals(data)) {
+                        arrayList.add(data);
+                    } else {
+                        list.add(data);
+                    }
+                }
+                if (CollectionUtils.isNotEmpty(list)) {
+                    if (list.size() > 2) {
+                        int a = Integer.parseInt(list.get(0));
+                        int b = Integer.parseInt(list.get(1));
+                        int c = Integer.parseInt(list.get(2));
+                        int d = Integer.parseInt(list.get(3));
+                        if (a <= b) {
+                            for (int i = a; i <= b; i++) {
+                                arrayList.add(i + "");
+                            }
+                        } else {
+                            for (int i = b; i <= a; i++) {
+                                arrayList.add(i + "");
+                            }
+                        }
+                        if (c <= d) {
+                            for (int i = c; i <= d; i++) {
+                                arrayList.add(i + "");
+                            }
+                        } else {
+                            for (int i = d; i <= c; i++) {
+                                arrayList.add(i + "");
+                            }
+                        }
+
+                    } else {
                         int x = Integer.parseInt(list.get(0));
                         int y = Integer.parseInt(list.get(1));
-                        if (x <= y) {
-                            for (int i = x; i <= y; i++) {
-                                arrayList.add(i + "");
-                            }
-                        } else {
-                            for (int i = y; i <= x; i++) {
-                                arrayList.add(i + "");
-                            }
-                        }
-                    }
-                } else {
-                    String[] strings = string.split("-");
-                    for (String data : strings) {
-                        if (string.equals(data)) {
-                            arrayList.add(data);
-                        } else {
-                            list.add(data);
-                        }
-                    }
-                    if (CollectionUtils.isNotEmpty(list)) {
-                        if (list.size() > 2) {
-                            int a = Integer.parseInt(list.get(0));
-                            int b = Integer.parseInt(list.get(1));
-                            int c = Integer.parseInt(list.get(2));
-                            int d = Integer.parseInt(list.get(3));
-                            if (a <= b) {
-                                for (int i = a; i <= b; i++) {
-                                    arrayList.add(i + "");
-                                }
-                            } else {
-                                for (int i = b; i <= a; i++) {
-                                    arrayList.add(i + "");
-                                }
-                            }
-                            if (c <= d) {
-                                for (int i = c; i <= d; i++) {
-                                    arrayList.add(i + "");
-                                }
-                            } else {
-                                for (int i = d; i <= c; i++) {
-                                    arrayList.add(i + "");
-                                }
-                            }
-
-                        } else {
-                            int x = Integer.parseInt(list.get(0));
-                            int y = Integer.parseInt(list.get(1));
-                            for (int i = x; i <= y; i++) {
-                                arrayList.add(i + "");
-                            }
+                        for (int i = x; i <= y; i++) {
+                            arrayList.add(i + "");
                         }
                     }
                 }
             }
+        }
+        if (curOverdueCount.equals("0")) {
+            return null;
         }
         condition.setCurOverdueCountList(arrayList);
         Paginable<RepayBiz> paginable = repayBizBO

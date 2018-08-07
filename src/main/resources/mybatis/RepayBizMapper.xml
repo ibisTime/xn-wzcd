@@ -157,7 +157,7 @@
 			<if test="isLogistics != null and isLogistics != '' ">
 				AND t.is_logistics = #{isLogistics}
 			</if>
-			and t.total_overdue_count != 0
+			
 		</trim>
 	</sql>
 	<select id="select_repayBiz" parameterType="repayBiz" resultMap="repayBiz_DB_Result">
