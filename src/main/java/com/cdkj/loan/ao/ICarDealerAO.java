@@ -10,7 +10,6 @@ import com.cdkj.loan.dto.req.XN632060Req;
 import com.cdkj.loan.dto.req.XN632061Req;
 import com.cdkj.loan.dto.req.XN632062Req;
 import com.cdkj.loan.dto.req.XN632064Req;
-import com.cdkj.loan.dto.req.XN632690Req;
 
 @Component
 public interface ICarDealerAO {
@@ -39,8 +38,5 @@ public interface ICarDealerAO {
 
     // 汽车经销商协议上架
     public void carDealerProtocolUp(XN632064Req req);
-
-    // 计算器
-    public String calculation(XN632690Req req);
 
 }

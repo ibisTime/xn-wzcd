@@ -16,11 +16,9 @@ import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.base.Paginable;
-import com.cdkj.loan.common.AmountUtil;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
-import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.CarDealerProtocol;
 import com.cdkj.loan.domain.CollectBankcard;
@@ -29,7 +27,6 @@ import com.cdkj.loan.dto.req.XN632060Req;
 import com.cdkj.loan.dto.req.XN632061Req;
 import com.cdkj.loan.dto.req.XN632062Req;
 import com.cdkj.loan.dto.req.XN632064Req;
-import com.cdkj.loan.dto.req.XN632690Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -37,7 +34,6 @@ import com.cdkj.loan.enums.ECarDealerNode;
 import com.cdkj.loan.enums.ECarDealerProtocolStatus;
 import com.cdkj.loan.enums.ECollectBankcardType;
 import com.cdkj.loan.enums.EGeneratePrefix;
-import com.cdkj.loan.enums.ERateType;
 import com.cdkj.loan.enums.EbelongBank;
 import com.cdkj.loan.exception.BizException;
 
@@ -441,53 +437,4 @@ public class CarDealerAOImpl implements ICarDealerAO {
             ECarDealerNode.TODO_AUDIT.getCode());
     }
 
-    @Override
-    public String calculation(XN632690Req req) {
-        Bank bank = bankBO.getBank(req.getLoanBankCode());
-        if (ERateType.CT.getCode().equals(req.getRateType())) {
-            // 1.首期本金 = 贷款额- (2) *（期数-1）
-            // 2.每期本金=贷款额/期数
-            Long annualPrincipal = (long) AmountUtil.div(req.getLoanAmount(),
-                req.getLoanPeriods());// 每期本金
-            Long initialPrincipal = (req.getLoanAmount() - AmountUtil
-                .mul(annualPrincipal, (req.getLoanPeriods() - 1)));// 首期本金
-
-            // 手续费=贷款额*基准利率
-            // 3.首期=手续费-（4）*（期数-1）
-            // 4.每期=(2)*基准利率
-            CarDealerProtocol carDealerProtocol = carDealerProtocolBO
-                .getCarDealerProtocolByCarDealerCode(req.getCarDealerCode(),
-                    req.getLoanBankCode());// 获取经销商协议
-            double rate = 0;// 基准利率
-            if (req.getLoanPeriods() == 12) {
-                rate = carDealerProtocol.getPlatCtRate12();
-            } else if (req.getLoanPeriods() == 24) {
-                rate = carDealerProtocol.getPlatCtRate24();
-            } else {
-                rate = carDealerProtocol.getPlatCtRate36();
-            }
-            Long poundage = AmountUtil.mul(req.getLoanAmount(), rate);// 手续费
-            Long annualPoundage = AmountUtil.mul(annualPrincipal, rate);// 每期手续费
-            Long initialPoundage = poundage - AmountUtil.mul(annualPoundage,
-                (req.getLoanPeriods() - 1));// 首期手续费
-
-            // 高息金额=贷款额*（总利率-基准利率）
-            // 5.高息金额首期=高息金额-（6）*（期数-1）
-            // 6.高息金额每期=高息金额/期数
-            // HighRate
-            Long highRate = AmountUtil.mul(req.getLoanAmount(),
-                (req.getBankRate() - rate));// 高息金额
-            Long annualHighRate = (long) AmountUtil.div(highRate,
-                req.getLoanPeriods());// 高息金额每期
-            Long initialHighRate = highRate - AmountUtil.mul(annualHighRate,
-                (req.getLoanPeriods() - 1));// 高息金额首期
-
-            // 高息手续费=高息金额*基准利率
-            // 7.高息手续费首期=（8）*（期数-1）
-            // 8.高息手续费每期=(6）*基准利率
-            Long highRatePoundage = AmountUtil.mul(highRate, rate);// 高息手续费
-        }
-
-        return null;
-    }
 }

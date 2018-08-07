@@ -1,6 +1,6 @@
 package com.cdkj.loan.api.impl;
 
-import com.cdkj.loan.ao.ICarDealerAO;
+import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
@@ -18,14 +18,14 @@ import com.cdkj.loan.spring.SpringContextHolder;
  */
 public class XN632690 extends AProcessor {
 
-    private ICarDealerAO carDealerAO = SpringContextHolder
-        .getBean(ICarDealerAO.class);
+    private IBudgetOrderAO budgetOrderAO = SpringContextHolder
+        .getBean(IBudgetOrderAO.class);
 
     private XN632690Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
-        return new PKCodeRes(carDealerAO.calculation(req));
+        return new PKCodeRes(budgetOrderAO.calculation(req));
     }
 
     @Override
