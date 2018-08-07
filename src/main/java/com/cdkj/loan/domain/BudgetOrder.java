@@ -879,6 +879,26 @@ public class BudgetOrder extends ABaseDO {
 
     private Date BankFkSendDatetimeEnd;// 银行放款时间止
 
+    private Date advanceFundDatetime;// 垫资日期
+
+    private Date repayMonthDatetime;// 月供还款日(来自还款业务每期还款日期)
+
+    public Date getRepayMonthDatetime() {
+        return repayMonthDatetime;
+    }
+
+    public void setRepayMonthDatetime(Date repayMonthDatetime) {
+        this.repayMonthDatetime = repayMonthDatetime;
+    }
+
+    public Date getAdvanceFundDatetime() {
+        return advanceFundDatetime;
+    }
+
+    public void setAdvanceFundDatetime(Date advanceFundDatetime) {
+        this.advanceFundDatetime = advanceFundDatetime;
+    }
+
     public AdvanceFund getAdvanceFund() {
         return advanceFund;
     }

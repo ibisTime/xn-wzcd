@@ -147,7 +147,13 @@ public class BizDayStatisticAOImpl implements IBizDayStatisticAO {
     @Override
     public List<BizDayStatistic> carLoanBizStatistic(XN630901Req req) {
         BizDayStatistic condition = new BizDayStatistic();
-        String date = calDate(req.getDate(), -1);
+        String date = null;
+        if (null != req.getDate()) {
+            date = calDate(req.getDate(), -1);
+        } else {
+            date = calDate(DateUtil.dateToStr(new Date(),
+                DateUtil.FRONT_DATE_FORMAT_STRING), -1);
+        }
         condition.setDate(DateUtil.strToDate(date,
             DateUtil.FRONT_DATE_FORMAT_STRING));
         List<BizDayStatistic> list = bizDayStatisticBO

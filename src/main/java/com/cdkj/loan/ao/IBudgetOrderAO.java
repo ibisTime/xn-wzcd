@@ -131,8 +131,8 @@ public interface IBudgetOrderAO {
     public XN632234Res modifyLoanAmountCalculateData(String code,
             String loanAmount);
 
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
-            BudgetOrder condition);
+    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start,
+            int limit, BudgetOrder condition);
 
     // 银行放款合同打印
     public BudgetOrder loanContractPrint(XN632142Req req);
@@ -162,5 +162,9 @@ public interface IBudgetOrderAO {
     public XN632690Res calculation(String carDealerCode, String loanBankCode,
             Integer loanPeriods, Long loanAmount, String rateType,
             String serviceChargeWay, double bankRate);
+
+    // 统计分析 余额明细
+    public Object queryBudgetOrderPageForBalanceDetail(int start, int limit,
+            BudgetOrder condition);
 
 }
