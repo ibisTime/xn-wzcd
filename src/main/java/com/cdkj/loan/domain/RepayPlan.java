@@ -253,6 +253,9 @@ public class RepayPlan extends ABaseDO {
     // 代偿申请单
     private ReplaceRepayApply replaceRepayApply;
 
+    // 业务公司编号
+    private String companyCode;
+
     public ReplaceRepayApply getReplaceRepayApply() {
         return replaceRepayApply;
     }
@@ -867,6 +870,14 @@ public class RepayPlan extends ABaseDO {
 
     public void setRepayDatetimeStart(Date repayDatetimeStart) {
         this.repayDatetimeStart = repayDatetimeStart;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
     }
 
 }

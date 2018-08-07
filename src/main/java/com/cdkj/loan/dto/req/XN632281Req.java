@@ -17,11 +17,8 @@ public class XN632281Req {
     private String approveNote;
 
     // 付款水单
-    private String billPdf;
-
-    // 操作人
     @NotBlank
-    private String operator;
+    private String billPdf;
 
     // 收款账号编号
     @NotBlank
@@ -30,6 +27,10 @@ public class XN632281Req {
     // 收款时间
     @NotBlank
     private String zfSkReceiptDatetime;
+
+    // 操作人
+    @NotBlank
+    private String operator;
 
     public String getCode() {
         return code;

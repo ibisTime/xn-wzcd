@@ -9,26 +9,23 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "repoint";
+    private static String key = "bizDayStatistic";
 
     // 实体名称
-    private static String keyName = "返点表";
+    private static String keyName = "车贷分期业务日计表";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdqt_repoint";
+    private static String dbname = "tsys_biz_day_statistic";
 
-    private static String[] DBwords = { "code", "car_dealer_code",
-            "bankcard_code", "total_amount", "reason", "company_code",
-            "apply_user_id", "apply_datetime", "pay_datetime",
-            "pay_bankcard_code", "bill_pdf", "pay_remark", "settle_type",
-            "cur_node_code" };
+    private static String[] DBwords = { "id", "company_code",
+            "debit_amount", "loan_amount", "loan_overdue_amount", "overdue_rate",
+            "balance", "date"};
 
-    private static String[] DBwordsName = { "编号", "汽车经销商编号", "收款账号编号", "总金额",
-            "缘由", "申请公司编号", "申请人编号", "申请时间", "付款时间  ", "付款账号编号", "水单", "付款备注",
-            "结算方式", "节点（0待打款1已打款）" };
+    private static String[] DBwordsName = { "id", "分公司编号", "借方发生额(当日银行放款总额)", "贷方发生额(当日客户还款总额)",
+            "贷方逾期金额", "当日逾期率", "余额", "日期（yyyy-MM-dd）"};
 
     public void testname() throws Exception {
     }

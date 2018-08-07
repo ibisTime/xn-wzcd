@@ -19,6 +19,7 @@ public class XN632280Req {
     private String type;
 
     // 作废原因
+    @NotBlank
     private String zfReason;
 
     // 收款金额

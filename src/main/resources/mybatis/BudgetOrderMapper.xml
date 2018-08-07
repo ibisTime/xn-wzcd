@@ -296,6 +296,7 @@
 		<result column="frozen_status" property="frozenStatus" />
 		<result column="cancel_node_code" property="cancelNodeCode" />
 		
+		<result column="back_advance_fund_type" property="backAdvanceFundType" />
 		<result column="back_advance_fund_node_code" property="backAdvanceFundNodeCode" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="pledge_cur_node_code" property="pledgeCurNodeCode"/>
@@ -660,6 +661,7 @@
 		,t.make_card_remark
 		,t.frozen_status
 		,t.cancel_node_code
+		,t.back_advance_fund_type
 		,t.back_advance_fund_node_code
 		
 		,t.cur_node_code
@@ -933,6 +935,7 @@
 		,t.make_card_remark
 		,t.frozen_status
 		,t.cancel_node_code
+		,t.back_advance_fund_type
 		,t.back_advance_fund_node_code
 		
 		,t.cur_node_code
@@ -1165,6 +1168,7 @@
 		,t.make_card_remark
 		,t.frozen_status
 		,t.cancel_node_code
+		,t.back_advance_fund_type
 		,t.back_advance_fund_node_code
 		
 		,t.cur_node_code
@@ -1925,7 +1929,8 @@
 	<update id="update_receiptAndReturn" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		zf_reason = #{zfReason}
+		back_advance_fund_type = #{backAdvanceFundType}
+		,zf_reason = #{zfReason}
 		,zf_sk_amount = #{zfSkAmount}
 		,back_advance_fund_node_code = #{backAdvanceFundNodeCode}
 		WHERE code = #{code}
