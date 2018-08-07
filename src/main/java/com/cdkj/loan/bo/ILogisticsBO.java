@@ -31,7 +31,7 @@ public interface ILogisticsBO extends IPaginableBO<Logistics> {
     public void auditePassLogistics(String code, String remark);
 
     // 补发
-    public void sendAgainLogistics(XN632152Req req);
+    public void sendAgainLogistics(XN632152Req req, String code);
 
     // 查询
     public Logistics getLogistics(String code);

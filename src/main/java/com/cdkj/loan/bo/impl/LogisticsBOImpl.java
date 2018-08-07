@@ -138,11 +138,11 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
 
     @Override
     @Transactional
-    public void sendAgainLogistics(XN632152Req req) {
-        if (null == req.getCode()) {
+    public void sendAgainLogistics(XN632152Req req, String code) {
+        if (null == code) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "请填写编号");
         }
-        Logistics data = getLogistics(req.getCode());
+        Logistics data = getLogistics(code);
         data.setSupplementNote(req.getSupplementNote());
         data.setRemark(req.getRemark());
 
@@ -152,7 +152,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
             List<SupplementReason> reasonList = req.getSupplementReasonList();
             for (SupplementReason reason : reasonList) {
                 SupplementReason supplementReason = new SupplementReason();
-                supplementReason.setLogisticsCode(req.getCode());
+                supplementReason.setLogisticsCode(code);
                 supplementReason.setType(reason.getType());
                 supplementReason.setReason(reason.getReason());
                 supplementReasonBO.saveSupplementReason(supplementReason);
@@ -239,7 +239,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
                     .getSupplementReasonList();
                 for (SupplementReason reason : reasonList) {
                     SupplementReason supplementReason = new SupplementReason();
-                    supplementReason.setLogisticsCode(req.getCode());
+                    supplementReason.setLogisticsCode(code);
                     supplementReason.setType(reason.getType());
                     supplementReason.setReason(reason.getReason());
                     supplementReasonBO.saveSupplementReason(supplementReason);
