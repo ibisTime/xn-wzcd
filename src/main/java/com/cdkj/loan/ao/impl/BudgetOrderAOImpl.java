@@ -2741,6 +2741,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         for (BudgetOrder budgetOrder : list) {
             AdvanceFund advanceFund = advanceFundBO
                 .getAdvanceFundByBudgetOrderCode(budgetOrder.getCode());
+            budgetOrder.setAdvanceFundDatetime(advanceFund
+                .getAdvanceFundDatetime());
             RepayBiz repayBiz = repayBizBO.getRepayBizByRefCode(budgetOrder
                 .getCode());
 
