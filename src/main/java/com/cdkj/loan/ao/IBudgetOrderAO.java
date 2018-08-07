@@ -26,8 +26,8 @@ import com.cdkj.loan.dto.req.XN632280Req;
 import com.cdkj.loan.dto.req.XN632281Req;
 import com.cdkj.loan.dto.req.XN632292Req;
 import com.cdkj.loan.dto.req.XN632341Req;
-import com.cdkj.loan.dto.req.XN632690Req;
 import com.cdkj.loan.dto.res.XN632234Res;
+import com.cdkj.loan.dto.res.XN632690Res;
 
 @Component
 public interface IBudgetOrderAO {
@@ -159,6 +159,8 @@ public interface IBudgetOrderAO {
     public List<BudgetOrder> queryBudgetOrderByList(List<String> list);
 
     // 计算器
-    public String calculation(XN632690Req req);
+    public XN632690Res calculation(String carDealerCode, String loanBankCode,
+            Integer loanPeriods, Long loanAmount, String rateType,
+            String serviceChargeWay, double bankRate);
 
 }
