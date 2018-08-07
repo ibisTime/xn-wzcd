@@ -2,7 +2,7 @@ package com.cdkj.loan.dto.req;
 
 import java.util.List;
 
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.cdkj.loan.domain.SupplementReason;
 
@@ -14,7 +14,7 @@ import com.cdkj.loan.domain.SupplementReason;
  */
 public class XN632152Req {
     // 编号
-    @NotBlank
+    @NotEmpty
     private List<String> codeList;
 
     // 补件原因
