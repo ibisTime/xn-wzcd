@@ -497,7 +497,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 repointDetail.setIdNo(user.getIdNo());
                 repointDetail.setCarDealerName(xn632120ReqRepointDetail
                     .getCarDealerName());// 单位名称（汽车经销商）
-                repointDetail.setCarType(data.getCarType());
+                repointDetail.setCarDealerCode(data.getCarDealerCode());
+                repointDetail.setCarType(data.getCarModel());
                 repointDetail.setLoanAmount(data.getLoanAmount());
                 repointDetail.setBankRate(data.getBankRate());
                 Double benchmarkRate = benchmarkRate(data);
