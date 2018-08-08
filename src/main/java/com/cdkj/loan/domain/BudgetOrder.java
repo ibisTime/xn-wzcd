@@ -797,8 +797,11 @@ public class BudgetOrder extends ABaseDO {
     // 是否是资料传递中（1是，0否）
     private String isLogistics;
 
-    // 银行返点状态(0未返点1已返点)
+    // 银行返点状态(0待返点1已返点)
     private String bankRepointStatus;
+
+    // 银行返点时间
+    private Date bankRepointDatetime;
 
     /*-------辅助字段-------*/
 
@@ -3331,6 +3334,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setBackAdvanceFundNodeCode(String backAdvanceFundNodeCode) {
         this.backAdvanceFundNodeCode = backAdvanceFundNodeCode;
+    }
+
+    public Date getBankRepointDatetime() {
+        return bankRepointDatetime;
+    }
+
+    public void setBankRepointDatetime(Date bankRepointDatetime) {
+        this.bankRepointDatetime = bankRepointDatetime;
     }
 
 }

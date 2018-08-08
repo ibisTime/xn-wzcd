@@ -373,7 +373,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         // 垫资流程结束 预算单的发保合状态改成待录入发保合
         budgetOrder.setFbhStatus(EFbhStatus.PENDING_ENTRY.getCode());
         budgetOrderBO.bankLoanConfirmSubmitBank(budgetOrder);
-        // 垫资流程结束 预算单的银行返点状态改为未返点（垫资后可以提交银行返点）
+        // 垫资流程结束 预算单的银行返点状态改为待返点（垫资后可以提交银行返点）
         budgetOrder.setBankRepointStatus(EBankRepointStatus.NO.getCode());
         budgetOrderBO.bankRepoint(budgetOrder);
     }

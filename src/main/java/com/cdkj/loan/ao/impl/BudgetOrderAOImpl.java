@@ -2524,6 +2524,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     "当前业务不是待返点状态，不能操作！");
             }
             budgetOrder.setBankRepointStatus(EBankRepointStatus.YES.getCode());
+            budgetOrder.setBankRepointDatetime(new Date());
             budgetOrderBO.bankRepoint(budgetOrder);
         }
     }
