@@ -113,4 +113,11 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
         return data;
     }
 
+    @Override
+    public Judge getJudgeByRepaybizCode(String code) {
+        Judge condition = new Judge();
+        condition.setRepayBizCode(code);
+        return judgeDAO.select(condition);
+    }
+
 }

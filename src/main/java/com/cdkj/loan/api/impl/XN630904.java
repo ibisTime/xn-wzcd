@@ -4,40 +4,32 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.IOverdueMenuAO;
 import com.cdkj.loan.api.AProcessor;
-import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.domain.OverdueMenu;
-import com.cdkj.loan.dto.req.XN632305Req;
+import com.cdkj.loan.dto.req.XN630904Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 分页查询逾期客户
+ * 逾期客户清收进度表
  * @author: CYL 
- * @since: 2018年6月2日 下午11:09:54 
+ * @since: 2018年8月8日 上午11:35:18 
  * @history:
  */
-public class XN632305 extends AProcessor {
+public class XN630904 extends AProcessor {
     private IOverdueMenuAO overdueMenuAO = SpringContextHolder
         .getBean(IOverdueMenuAO.class);
 
-    private XN632305Req req = null;
+    private XN630904Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
         OverdueMenu condition = new OverdueMenu();
-        condition.setBudgetOrderCode(req.getBudgetOrderCode());
+        condition.setRepayBizCode(req.getRepayBizCode());
         condition.setRealName(req.getRealName());
-        condition.setAdvanceFundDatetimeStart(
-            DateUtil.strToDate(req.getAdvanceFundDatetimeStart(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setAdvanceFundDatetimeEnd(
-            DateUtil.strToDate(req.getAdvanceFundDatetimeEnd(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setStatus(req.getStatus());
-
+        condition.setLoanBankCode(req.getLoanBankCode());
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
             column = IOverdueMenuAO.DEFAULT_ORDER_COLUMN;
@@ -51,7 +43,7 @@ public class XN632305 extends AProcessor {
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632305Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN630904Req.class);
         ObjValidater.validateReq(req);
     }
 

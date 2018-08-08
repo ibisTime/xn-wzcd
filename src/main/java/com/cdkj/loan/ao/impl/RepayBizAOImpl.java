@@ -153,9 +153,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         }
 
         // 司法诉讼
-        Judge judgeCondition = new Judge();
-        judgeCondition.setRepayBizCode(repayBiz.getCode());
-        repayBiz.setJudgeList(judgeBO.queryJudgeList(judgeCondition));
+        Judge judge = judgeBO.getJudgeByRepaybizCode(repayBiz.getCode());
+        repayBiz.setJudge(judge);
 
         RepayPlan overdueRepayPlan = repayPlanBO.getRepayPlanByRepayBizCode(
             repayBiz.getCode(), ERepayPlanNode.HANDLER_TO_RED);
