@@ -44,6 +44,9 @@
 			<if test="warnDatetimeEnd != null and warnDatetimeEnd != '' ">
 				AND t.agreement_valid_date_end &lt;= #{warnDatetimeEnd}
 			</if>
+			<if test="agreementStatus != null and agreementStatus != '' ">
+				AND t.agreement_status = #{agreementStatus}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_carDealer" parameterType="carDealer" resultMap="carDealer_DB_Result">
