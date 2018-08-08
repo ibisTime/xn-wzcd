@@ -408,6 +408,22 @@ public class RepayBizAOImpl implements IRepayBizAO {
     }
 
     @Override
+    public Object queryRepayBizByOverdue(int start, int limit,
+            RepayBiz condition) {
+        ArrayList<String> arrayList = new ArrayList<String>();
+        for (int i = 1; i <= 36; i++) {
+            arrayList.add(i + "");
+        }
+        condition.setCurOverdueCountList(arrayList);
+        Paginable<RepayBiz> paginable = repayBizBO
+            .getPaginableByTotalOverdueCount(start, limit, condition);
+        for (RepayBiz repayBiz : paginable.getList()) {
+            initRepayBiz(repayBiz);
+        }
+        return paginable;
+    }
+
+    @Override
     public List<RepayBiz> queryRepayBizList(RepayBiz condition) {
         return repayBizBO.queryRepayBizList(condition);
     }

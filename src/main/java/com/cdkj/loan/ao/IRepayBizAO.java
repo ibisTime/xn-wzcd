@@ -129,4 +129,8 @@ public interface IRepayBizAO {
     public void financialAudit(String code, String approveResult,
             String approveNote, String operator);
 
+    // 逾期客户清收进度表
+    public Object queryRepayBizByOverdue(int start, int limit,
+            RepayBiz condition);
+
 }

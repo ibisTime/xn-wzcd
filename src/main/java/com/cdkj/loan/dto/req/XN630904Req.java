@@ -7,18 +7,28 @@ public class XN630904Req extends APageReq {
      */
     private static final long serialVersionUID = 1L;
 
-    private String repayBizCode;// 还款业务
+    private String code;// 还款业务
 
     private String realName;// 客户姓名
 
     private String loanBankCode;// 贷款银行
 
-    public String getRepayBizCode() {
-        return repayBizCode;
+    private String companyCode;// 业务公司
+
+    public String getCompanyCode() {
+        return companyCode;
     }
 
-    public void setRepayBizCode(String repayBizCode) {
-        this.repayBizCode = repayBizCode;
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getRealName() {
