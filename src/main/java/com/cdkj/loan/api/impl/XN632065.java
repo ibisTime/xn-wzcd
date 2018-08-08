@@ -32,6 +32,7 @@ public class XN632065 extends AProcessor {
         condition.setAbbrName(req.getAbbrName());
         condition.setIsSelfDevelop(req.getIsSelfDevelop());
         condition.setCurNodeCode(req.getCurNodeCode());
+        condition.setAgreementStatus(req.getAgreementStatus());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
