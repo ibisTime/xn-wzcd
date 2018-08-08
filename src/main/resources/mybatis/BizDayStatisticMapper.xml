@@ -14,8 +14,8 @@
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
+			<if test="id != null and id != '' ">
+				AND t.id = #{id}
 			</if>
 		</trim>
 	</sql>
@@ -79,7 +79,7 @@
 		,overdue_rate = #{overdueRate}
 		,balance = #{balance}
 		,date = #{date}
-		WHERE code = #{code}
+		WHERE id = #{id}
 	</update>
 
 
