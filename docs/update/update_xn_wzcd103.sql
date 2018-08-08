@@ -33,3 +33,7 @@ CREATE TABLE `tsys_table_export` (
   `update_datetime` datetime DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='表格导出';
+
+ALTER TABLE `tdq_budget_order` 
+ADD COLUMN `boc_fee_way` VARCHAR(4) NULL COMMENT '中行手续费收取方式' AFTER `service_charge`,
+ADD COLUMN `surcharge` VARCHAR(4) NULL COMMENT '附加费' AFTER `boc_fee_way`;

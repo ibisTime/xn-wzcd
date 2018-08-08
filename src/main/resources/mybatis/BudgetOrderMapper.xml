@@ -121,6 +121,8 @@
 		<result column="pre_other_fee" property="preOtherFee" />
 		<result column="service_charge_way" property="serviceChargeWay" />
 		<result column="service_charge" property="serviceCharge" />
+		<result column="boc_fee_way" property="bocFeeWay" />
+		<result column="surcharge" property="surcharge" />
 		
 		<result column="marry_divorce" property="marryDivorce" />
 		<result column="apply_user_hkb" property="applyUserHkb" />
@@ -514,6 +516,8 @@
 		,t.pre_other_fee
 		,t.service_charge_way
 		,t.service_charge
+		,t.boc_fee_way
+		,t.surcharge
 		,t.marry_divorce
 		,t.apply_user_hkb
 		,t.bank_bill_pdf
@@ -794,6 +798,8 @@
 		,t.pre_other_fee
 		,t.service_charge_way
 		,t.service_charge
+		,t.boc_fee_way
+		,t.surcharge
 		,t.marry_divorce
 		,t.apply_user_hkb
 		,t.bank_bill_pdf
@@ -1051,6 +1057,8 @@
 		,t.pre_other_fee
 		,t.service_charge_way
 		,t.service_charge
+		,t.boc_fee_way
+		,t.surcharge
 		,t.marry_divorce
 		,t.apply_user_hkb
 		,t.bank_bill_pdf
@@ -1293,6 +1301,7 @@
 		,other_fee
 		,service_charge_way
 		,service_charge
+		,surcharge
 		,marry_divorce
 		,apply_user_hkb
 		,bank_bill_pdf
@@ -1437,6 +1446,7 @@
 		,#{otherFee}
 		,#{serviceChargeWay}
 		,#{serviceCharge}
+		,#{surcharge}
 		,#{marryDivorce}
 		,#{applyUserHkb}
 		,#{bankBillPdf}
@@ -1585,6 +1595,8 @@
 		
 		,service_charge_way = #{serviceChargeWay}
 		,service_charge = #{serviceCharge}
+		,boc_fee_way = #{bocFeeWay}
+		,surcharge = #{surcharge}
 		,marry_divorce = #{marryDivorce}
 		,apply_user_hkb = #{applyUserHkb}
 		,bank_bill_pdf = #{bankBillPdf}

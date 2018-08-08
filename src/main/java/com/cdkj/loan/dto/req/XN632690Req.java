@@ -6,15 +6,17 @@ public class XN632690Req {
 
     private String loanBankCode;// 贷款银行
 
-    private Integer loanPeriods;// 贷款周期
+    private String loanPeriods;// 贷款周期
 
-    private Long loanAmount;// 贷款金额
+    private String loanAmount;// 贷款金额
 
     private String rateType;// 利率类型
 
     private String serviceChargeWay;// 手续费收取方式
 
-    private double bankRate;// 银行利率(%)
+    private String bankRate;// 银行利率
+
+    private String surcharge; // 附加费
 
     public String getCarDealerCode() {
         return carDealerCode;
@@ -32,19 +34,19 @@ public class XN632690Req {
         this.loanBankCode = loanBankCode;
     }
 
-    public Integer getLoanPeriods() {
+    public String getLoanPeriods() {
         return loanPeriods;
     }
 
-    public void setLoanPeriods(Integer loanPeriods) {
+    public void setLoanPeriods(String loanPeriods) {
         this.loanPeriods = loanPeriods;
     }
 
-    public Long getLoanAmount() {
+    public String getLoanAmount() {
         return loanAmount;
     }
 
-    public void setLoanAmount(Long loanAmount) {
+    public void setLoanAmount(String loanAmount) {
         this.loanAmount = loanAmount;
     }
 
@@ -64,12 +66,20 @@ public class XN632690Req {
         this.serviceChargeWay = serviceChargeWay;
     }
 
-    public double getBankRate() {
+    public String getBankRate() {
         return bankRate;
     }
 
-    public void setBankRate(double bankRate) {
+    public void setBankRate(String bankRate) {
         this.bankRate = bankRate;
+    }
+
+    public String getSurcharge() {
+        return surcharge;
+    }
+
+    public void setSurcharge(String surcharge) {
+        this.surcharge = surcharge;
     }
 
 }

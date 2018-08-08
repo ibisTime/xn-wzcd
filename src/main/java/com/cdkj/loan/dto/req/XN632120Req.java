@@ -220,6 +220,12 @@ public class XN632120Req {
     // 手续费收取方式
     private String serviceChargeWay;
 
+    // 中行手续费收取方式
+    private String bocFeeWay;
+
+    // 附加费
+    private String surcharge;
+
     // 结婚证离婚证
     private String marryDivorce;
 
@@ -594,6 +600,14 @@ public class XN632120Req {
         this.ghIsPrint = ghIsPrint;
     }
 
+    public String getSurcharge() {
+        return surcharge;
+    }
+
+    public void setSurcharge(String surcharge) {
+        this.surcharge = surcharge;
+    }
+
     public String getGuarantor1MonthIncome() {
         return guarantor1MonthIncome;
     }
@@ -768,6 +782,14 @@ public class XN632120Req {
 
     public void setCarType(String carType) {
         this.carType = carType;
+    }
+
+    public String getBocFeeWay() {
+        return bocFeeWay;
+    }
+
+    public void setBocFeeWay(String bocFeeWay) {
+        this.bocFeeWay = bocFeeWay;
     }
 
     public String getIsDriceLicense() {

@@ -323,6 +323,12 @@ public class BudgetOrder extends ABaseDO {
     // 手续费（收客户手续费合计）
     private Long serviceCharge;
 
+    // 中行手续费收取方式
+    private String bocFeeWay;
+
+    // 附加费(6000或6100)
+    private String surcharge;
+
     // 结婚证离婚证
     private String marryDivorce;
 
@@ -1454,6 +1460,14 @@ public class BudgetOrder extends ABaseDO {
         this.customerType = customerType;
     }
 
+    public String getBocFeeWay() {
+        return bocFeeWay;
+    }
+
+    public void setBocFeeWay(String bocFeeWay) {
+        this.bocFeeWay = bocFeeWay;
+    }
+
     public String getCustomerName() {
         return customerName;
     }
@@ -2216,6 +2230,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setGhSettleInterest(Long ghSettleInterest) {
         this.ghSettleInterest = ghSettleInterest;
+    }
+
+    public String getSurcharge() {
+        return surcharge;
+    }
+
+    public void setSurcharge(String surcharge) {
+        this.surcharge = surcharge;
     }
 
     public Long getGhBalance() {
