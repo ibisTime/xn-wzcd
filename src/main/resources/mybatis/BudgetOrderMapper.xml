@@ -306,6 +306,7 @@
 		<result column="enter_file_status" property="enterFileStatus"/>
 		<result column="is_logistics" property="isLogistics"/>
 		<result column="bank_repoint_status" property="bankRepointStatus"/>
+		<result column="bank_repoint_datetime" property="bankRepointDatetime"/>
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -2096,6 +2097,7 @@
 		UPDATE tdq_budget_order
 		SET
 		bank_repoint_status = #{bankRepointStatus}
+		,bank_repoint_datetime = #{bankRepointDatetime}
 		WHERE code = #{code}
 	</update>
 	

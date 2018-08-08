@@ -2524,6 +2524,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     "当前业务不是待返点状态，不能操作！");
             }
             budgetOrder.setBankRepointStatus(EBankRepointStatus.YES.getCode());
+            budgetOrder.setBankRepointDatetime(new Date());
             budgetOrderBO.bankRepoint(budgetOrder);
         }
     }
@@ -2730,10 +2731,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             AdvanceFund advanceFund = advanceFundBO
                 .getAdvanceFundByBudgetOrderCode(budgetOrder.getCode());
             budgetOrder.setAdvanceFundDatetime(advanceFund
-                .getAdvanceFundDatetime());
+                .getAdvanceFundDatetime());// 垫资日期
             RepayBiz repayBiz = repayBizBO.getRepayBizByRefCode(budgetOrder
                 .getCode());
-
+            budgetOrder.setRepayMonthDatetime(repayBiz.getMonthDatetime());// 月供还款日
+            RepayPlan curMonth = repayPlanBO.getRepayPlanCurMonth(repayBiz
+                .getCode());
+            budgetOrder.setOverplusAmount(curMonth.getOverdueAmount());// 当期欠款
+            budgetOrder.setDebtBalance(repayBiz.getRestAmount()
+                    + repayBiz.getRestOverdueAmount());// 借款余额
+            budgetOrder.setReplaceRealRepayAmount(repayBiz
+                .getRestReplaceRepayAmount());// 代偿金额
         }
         return page;
     }
