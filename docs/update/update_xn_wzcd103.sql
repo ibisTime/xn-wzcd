@@ -1,39 +1,33 @@
-DROP TABLE IF EXISTS `tdh_overdue_treatment`;
-CREATE TABLE `tdh_overdue_treatment` (
-  `code` varchar(32) NOT NULL COMMENT '编号',
-  `repay_plan_code` varchar(32) DEFAULT NULL COMMENT '还款计划编号',
-  `collection_way` varchar(32) DEFAULT NULL COMMENT '催收方式',
-  `collection_target` varchar(4) DEFAULT NULL COMMENT '催收对象',
-  `collection_process` varchar(32) DEFAULT NULL COMMENT '催收过程',
-  `collection_wish` varchar(32) DEFAULT NULL COMMENT '客户意愿',
-  `collection_process_note` varchar(255) DEFAULT NULL COMMENT '催收过程说明',
-  `collection_result` varchar(32) DEFAULT NULL COMMENT '催收结果',
-  `depositIs_provide` varchar(4) DEFAULT NULL COMMENT '是否提供押金',
-  `overdue_deposit` bigint(20) DEFAULT NULL COMMENT '违约押金',
-  `real_repay_amount` bigint(20) DEFAULT NULL COMMENT '实际还款金额',
-  `collection_result_note` varchar(255) DEFAULT NULL COMMENT '催收结果说明',
-  `operator` varchar(255) DEFAULT NULL COMMENT '操作人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '操作时间',
-  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='逾期处理';
+DELETE FROM `tsys_node` WHERE `code`='021_12';
+DELETE FROM `tsys_node` WHERE `code`='021_13';
+DELETE FROM `tsys_node` WHERE `code`='021_14';
+DELETE FROM `tsys_node` WHERE `code`='021_15';
+DELETE FROM `tsys_node` WHERE `code`='021_16';
+DELETE FROM `tsys_node` WHERE `code`='021_17';
+DELETE FROM `tsys_node` WHERE `code`='021_18';
+DELETE FROM `tsys_node` WHERE `code`='021_19';
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('021_12','出纳打款','021',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('021_13','受理','021',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('021_14','开庭','021',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('021_15','判决','021',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('021_16','诉讼结果录入','021',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('021_17','重新申请执行','021',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('021_18','财务收款','021',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('021_19','司法诉讼完成','021',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('021_20','坏账','021',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('021_21','赎回财务审核','021',NULL);
+INSERT INTO `tsys_node` (`code`,`name`,`type`,`remark`) VALUES ('021_22','转卖财务审核','021',NULL);
 
-ALTER TABLE `tdh_cost` 
-ADD COLUMN `overdue_treatment_code` VARCHAR(32) NULL COMMENT '逾期处理编号' AFTER `repay_plan_code`;
+UPDATE `tsys_node_flow` SET `next_node`='021_12' WHERE `id`='92';
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('021', '021_16', '021_17');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('021', '021_18', '021_19');
 
-ALTER TABLE `tdh_repay_biz` 
-ADD COLUMN `deal_enclosure` VARCHAR(255) NULL COMMENT '处理结果附件' AFTER `settle_datetime`,
-ADD COLUMN `final_payee` VARCHAR(255) NULL COMMENT '最终收款人' AFTER `Is_logistics`,
-ADD COLUMN `payee_enclosure` VARCHAR(255) NULL COMMENT '附件' AFTER `final_payee`;
-
-DROP TABLE IF EXISTS `tsys_table_export`;
-CREATE TABLE `tsys_table_export` (
-  `id` varchar(32) NOT NULL COMMENT '编号',
-  `url` varchar(255) DEFAULT NULL COMMENT 'URL',
-  `operator` varchar(255) DEFAULT NULL COMMENT '操作人',
-  `update_datetime` datetime DEFAULT NULL COMMENT '操作时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='表格导出';
-
-ALTER TABLE `tdq_budget_order` 
-ADD COLUMN `boc_fee_way` VARCHAR(4) NULL COMMENT '中行手续费收取方式' AFTER `service_charge`,
-ADD COLUMN `surcharge` VARCHAR(4) NULL COMMENT '附加费' AFTER `boc_fee_way`;
+ALTER TABLE `tdh_judge` 
+ADD COLUMN `pay_amount_prove` tinytext NULL COMMENT '打款证明' AFTER `case_pdf`,
+ADD COLUMN `acceptance_time` datetime NULL COMMENT '受理时间' AFTER `pay_amount_prove`,
+ADD COLUMN `court_address` varchar(255) NULL COMMENT '开庭地点' AFTER `court_datetime`,
+ADD COLUMN `handle_judge` varchar(255) NULL COMMENT '经办法官' AFTER `court_address`,
+ADD COLUMN `hear_case_number` varchar(255) NULL COMMENT '审理案号' AFTER `handle_judge`,
+ADD COLUMN `judge_result` varchar(255) NULL COMMENT '判决结果' AFTER `judge_datetime`,
+ADD COLUMN `judge_pdf_delivery_time` datetime NULL COMMENT '判决书送达时间' AFTER `judge_pdf`,
+ADD COLUMN `effective_time` datetime NULL COMMENT '生效时间' AFTER `judge_pdf_delivery_time`;

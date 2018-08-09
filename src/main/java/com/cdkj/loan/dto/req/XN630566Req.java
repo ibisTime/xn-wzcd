@@ -2,22 +2,19 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class XN630565Req {
+public class XN630566Req {
 
     // 还款业务编号
     @NotBlank
     private String repayBizCode;
 
-    // 打款证明
+    // 受理时间
     @NotBlank
-    private String payAmountProve;
+    private String acceptanceTime;
 
     // 操作人
     @NotBlank
     private String operator;
-
-    // 备注
-    private String remark;
 
     public String getRepayBizCode() {
         return repayBizCode;
@@ -25,14 +22,6 @@ public class XN630565Req {
 
     public void setRepayBizCode(String repayBizCode) {
         this.repayBizCode = repayBizCode;
-    }
-
-    public String getPayAmountProve() {
-        return payAmountProve;
-    }
-
-    public void setPayAmountProve(String payAmountProve) {
-        this.payAmountProve = payAmountProve;
     }
 
     public String getOperator() {
@@ -43,12 +32,12 @@ public class XN630565Req {
         this.operator = operator;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getAcceptanceTime() {
+        return acceptanceTime;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setAcceptanceTime(String acceptanceTime) {
+        this.acceptanceTime = acceptanceTime;
     }
 
 }

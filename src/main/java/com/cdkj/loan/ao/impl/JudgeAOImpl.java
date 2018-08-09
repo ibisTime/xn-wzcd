@@ -18,6 +18,7 @@ import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Judge;
+import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.User;
@@ -25,6 +26,9 @@ import com.cdkj.loan.dto.req.XN630560Req;
 import com.cdkj.loan.dto.req.XN630562Req;
 import com.cdkj.loan.dto.req.XN630564Req;
 import com.cdkj.loan.dto.req.XN630565Req;
+import com.cdkj.loan.dto.req.XN630566Req;
+import com.cdkj.loan.dto.req.XN630567Req;
+import com.cdkj.loan.dto.req.XN630568Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -118,8 +122,87 @@ public class JudgeAOImpl implements IJudgeAO {
 
     @Override
     @Transactional
-    public void judgeFollow(XN630565Req req) {
+    public void cashier(XN630565Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
+        if (!ERepayBizNode.CASHIER.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前业务不在出纳打款节点，不能操作！");
+        }
+        String curNodeCode = repayBiz.getCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
 
+        repayBiz.setCurNodeCode(nodeFlow.getNextNode());
+        repayBizBO.updateCurNodeCode(repayBiz);
+        judgeBO.cashier(req);
+
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), curNodeCode,
+            nodeFlow.getNextNode(), null, req.getOperator());
+    }
+
+    @Override
+    @Transactional
+    public void acceptance(XN630566Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
+        if (!ERepayBizNode.ACCEPTANCE.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前业务不在受理节点，不能操作！");
+        }
+        String curNodeCode = repayBiz.getCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
+
+        repayBiz.setCurNodeCode(nodeFlow.getNextNode());
+        repayBizBO.updateCurNodeCode(repayBiz);
+        judgeBO.acceptance(req);
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), curNodeCode,
+            nodeFlow.getNextNode(), null, req.getOperator());
+    }
+
+    @Override
+    @Transactional
+    public void toHoldCourt(XN630567Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
+        if (!ERepayBizNode.TO_HOLD_COURT.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前业务不在开庭节点，不能操作！");
+        }
+        String curNodeCode = repayBiz.getCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
+
+        repayBiz.setCurNodeCode(nodeFlow.getNextNode());
+        repayBizBO.updateCurNodeCode(repayBiz);
+        judgeBO.toHoldCourt(req);
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), curNodeCode,
+            nodeFlow.getNextNode(), null, req.getOperator());
+    }
+
+    @Override
+    @Transactional
+    public void sentence(XN630568Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
+        if (!ERepayBizNode.TO_HOLD_COURT.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前业务不在开庭节点，不能操作！");
+        }
+        String curNodeCode = repayBiz.getCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
+
+        repayBiz.setCurNodeCode(nodeFlow.getNextNode());
+        repayBizBO.updateCurNodeCode(repayBiz);
+        judgeBO.sentence(req);
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), curNodeCode,
+            nodeFlow.getNextNode(), null, req.getOperator());
     }
 
     @Override

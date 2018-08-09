@@ -3,7 +3,6 @@ package com.cdkj.loan.bo.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,6 +16,10 @@ import com.cdkj.loan.dao.IJudgeDAO;
 import com.cdkj.loan.domain.Judge;
 import com.cdkj.loan.dto.req.XN630560Req;
 import com.cdkj.loan.dto.req.XN630562Req;
+import com.cdkj.loan.dto.req.XN630565Req;
+import com.cdkj.loan.dto.req.XN630566Req;
+import com.cdkj.loan.dto.req.XN630567Req;
+import com.cdkj.loan.dto.req.XN630568Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECaseStatus;
@@ -98,19 +101,15 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
     @Override
     public Judge queryJudgeByRepayBizCode(String repayBizCode,
             EBoolean status) {
-        Judge data = null;
-
         Judge condition = new Judge();
         condition.setRepayBizCode(repayBizCode);
         condition.setStatus(status.getCode());
-        List<Judge> list = judgeDAO.selectList(condition);
-        if (CollectionUtils.isNotEmpty(list)) {
-            data = list.get(0);
-        } else {
+        Judge judge = judgeDAO.select(condition);
+        if (judge == null) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "对应诉讼信息不存在!");
         }
-        return data;
+        return judge;
     }
 
     @Override
@@ -118,6 +117,58 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
         Judge condition = new Judge();
         condition.setRepayBizCode(code);
         return judgeDAO.select(condition);
+    }
+
+    @Override
+    public void cashier(XN630565Req req) {
+        Judge judge = queryJudgeByRepayBizCode(req.getRepayBizCode(),
+            EBoolean.NO);
+        judge.setPayAmountProve(req.getPayAmountProve());
+        judge.setUpdater(req.getOperator());
+        judge.setUpdateDatetime(new Date());
+        judgeDAO.cashier(judge);
+    }
+
+    @Override
+    public void acceptance(XN630566Req req) {
+        Judge judge = queryJudgeByRepayBizCode(req.getRepayBizCode(),
+            EBoolean.NO);
+        judge.setAcceptanceTime(DateUtil.strToDate(req.getAcceptanceTime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        judge.setUpdater(req.getOperator());
+        judge.setUpdateDatetime(new Date());
+        judgeDAO.acceptance(judge);
+    }
+
+    @Override
+    public void toHoldCourt(XN630567Req req) {
+        Judge judge = queryJudgeByRepayBizCode(req.getRepayBizCode(),
+            EBoolean.NO);
+        judge.setCourtDatetime(DateUtil.strToDate(req.getCourtDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        judge.setCourtAddress(req.getCourtAddress());
+        judge.setHandleJudge(req.getHandleJudge());
+        judge.setHearCaseNumber(req.getHearCaseNumber());
+        judge.setUpdater(req.getOperator());
+        judge.setUpdateDatetime(new Date());
+        judgeDAO.toHoldCourt(judge);
+    }
+
+    @Override
+    public void sentence(XN630568Req req) {
+        Judge judge = queryJudgeByRepayBizCode(req.getRepayBizCode(),
+            EBoolean.NO);
+        judge.setJudgeDatetime(DateUtil.strToDate(req.getJudgeDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        judge.setJudgeResult(req.getJudgeResult());
+        judge.setJudgePdf(req.getJudgePdf());
+        judge.setJudgePdfDeliveryTime(DateUtil.strToDate(
+            req.getJudgePdfDeliveryTime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        judge.setEffectiveTime(DateUtil.strToDate(req.getEffectiveTime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        judge.setUpdater(req.getOperator());
+        judge.setUpdateDatetime(new Date());
+        judgeDAO.sentence(judge);
     }
 
 }

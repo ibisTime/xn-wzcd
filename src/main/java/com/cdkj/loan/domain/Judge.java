@@ -47,14 +47,38 @@ public class Judge extends ABaseDO {
     // 起诉附件
     private String casePdf;
 
+    // 打款证明
+    private String payAmountProve;
+
+    // 受理时间
+    private Date acceptanceTime;
+
     // 开庭日期
     private Date courtDatetime;
+
+    // 开庭地点
+    private String courtAddress;
+
+    // 经办法官
+    private String handleJudge;
+
+    // 审理案号
+    private String hearCaseNumber;
 
     // 判决日期
     private Date judgeDatetime;
 
+    // 判决结果
+    private String judgeResult;
+
     // 判决附件
     private String judgePdf;
+
+    // 判决书送达时间
+    private Date judgePdfDeliveryTime;
+
+    // 生效时间
+    private Date effectiveTime;
 
     // 执行案号
     private String exeCaseNumber;
@@ -115,6 +139,70 @@ public class Judge extends ABaseDO {
 
     public void setExecuteMarkAmount(Long executeMarkAmount) {
         this.executeMarkAmount = executeMarkAmount;
+    }
+
+    public String getPayAmountProve() {
+        return payAmountProve;
+    }
+
+    public void setPayAmountProve(String payAmountProve) {
+        this.payAmountProve = payAmountProve;
+    }
+
+    public Date getAcceptanceTime() {
+        return acceptanceTime;
+    }
+
+    public void setAcceptanceTime(Date acceptanceTime) {
+        this.acceptanceTime = acceptanceTime;
+    }
+
+    public String getCourtAddress() {
+        return courtAddress;
+    }
+
+    public void setCourtAddress(String courtAddress) {
+        this.courtAddress = courtAddress;
+    }
+
+    public String getHandleJudge() {
+        return handleJudge;
+    }
+
+    public void setHandleJudge(String handleJudge) {
+        this.handleJudge = handleJudge;
+    }
+
+    public String getHearCaseNumber() {
+        return hearCaseNumber;
+    }
+
+    public void setHearCaseNumber(String hearCaseNumber) {
+        this.hearCaseNumber = hearCaseNumber;
+    }
+
+    public String getJudgeResult() {
+        return judgeResult;
+    }
+
+    public void setJudgeResult(String judgeResult) {
+        this.judgeResult = judgeResult;
+    }
+
+    public Date getJudgePdfDeliveryTime() {
+        return judgePdfDeliveryTime;
+    }
+
+    public void setJudgePdfDeliveryTime(Date judgePdfDeliveryTime) {
+        this.judgePdfDeliveryTime = judgePdfDeliveryTime;
+    }
+
+    public Date getEffectiveTime() {
+        return effectiveTime;
+    }
+
+    public void setEffectiveTime(Date effectiveTime) {
+        this.effectiveTime = effectiveTime;
     }
 
     public String getCode() {
