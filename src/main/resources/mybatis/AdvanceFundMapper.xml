@@ -56,6 +56,12 @@
 			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
 				AND t.apply_datetime &lt;= #{applyDatetimeEnd}
 			</if>
+			<if test="updateDatetimeStart != null and updateDatetimeStart != '' ">
+				AND t.update_datetime &gt;= #{updateDatetimeStart}
+			</if>
+			<if test="updateDatetimeEnd != null and updateDatetimeEnd != '' ">
+				AND t.update_datetime &lt;= #{updateDatetimeEnd}
+			</if>
 			<if test="roleCode != null and roleCode != '' ">
 				AND trn.role_code = #{roleCode}
 			</if>
@@ -256,7 +262,11 @@
 	<update id="update_confirm_advance_fund" parameterType="advanceFund">
 		UPDATE tdq_advance_fund
 		SET
-		cur_node_code = #{curNodeCode}
+		updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,apply_datetime = #{applyDatetime}
+		,is_advance_fund = #{isAdvanceFund}
+		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 	
@@ -292,15 +302,14 @@
 	<update id="update_confirm_pay_car_dealer" parameterType="advanceFund">
 		UPDATE tdq_advance_fund
 		SET
-		budget_code = #{budgetCode}
-		,cur_node_code = #{curNodeCode}
-		,advance_fund_amount = #{advanceFundAmount}
+		advance_fund_amount = #{advanceFundAmount}
 		,advance_fund_datetime = #{advanceFundDatetime}
 		,pay_bankcard_code = #{payBankcardCode}
 		,bill_pdf = #{billPdf}
 		,note = #{note}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 
@@ -309,7 +318,7 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,total_advance_fund_code = #{totalAdvanceFundCode}
-		,advance_fund_datetime = #{advanceFundDatetime}
+		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>
 	
