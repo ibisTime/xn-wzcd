@@ -31,3 +31,12 @@ ADD COLUMN `hear_case_number` varchar(255) NULL COMMENT '审理案号' AFTER `ha
 ADD COLUMN `judge_result` varchar(255) NULL COMMENT '判决结果' AFTER `judge_datetime`,
 ADD COLUMN `judge_pdf_delivery_time` datetime NULL COMMENT '判决书送达时间' AFTER `judge_pdf`,
 ADD COLUMN `effective_time` datetime NULL COMMENT '生效时间' AFTER `judge_pdf_delivery_time`;
+
+UPDATE `tsys_menu` SET `name`='银行返佣' WHERE `code`='';
+UPDATE `tsys_menu` SET `name`='应收银行返佣' WHERE `code`='SM201807241624080938516';
+
+INSERT INTO `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`) VALUES ('RO201800000000000001', 'SM201808091633548934541', 'U201808031956004721377', '2018-08-08 02:36:46');
+INSERT INTO `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`) VALUES ('RO201800000000000001', 'SM201808091634300896647', 'U201808031956004721377', '2018-08-08 02:36:46');
+INSERT INTO `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`) VALUES ('RO201800000000000001', 'SM201808091634577197277', 'U201808031956004721377', '2018-08-08 02:36:46');
+INSERT INTO `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`) VALUES ('RO201800000000000001', 'SM201808091635215548948', 'U201808031956004721377', '2018-08-08 02:36:46');
+INSERT INTO `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`) VALUES ('RO201800000000000001', 'SM201808091618111629813', 'U201808031956004721377', '2018-08-08 02:36:46');

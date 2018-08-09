@@ -9,19 +9,19 @@ import org.hibernate.validator.constraints.NotBlank;
  * @history:
  */
 public class XN630561Req {
-    // 编号
+    // 还款业务编号
     @NotBlank
-    private String code;
+    private String repayBizCode;
 
     @NotBlank
     private String operator;
 
-    public String getCode() {
-        return code;
+    public String getRepayBizCode() {
+        return repayBizCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setRepayBizCode(String repayBizCode) {
+        this.repayBizCode = repayBizCode;
     }
 
     public String getOperator() {

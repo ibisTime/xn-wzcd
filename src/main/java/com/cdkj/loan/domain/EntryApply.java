@@ -176,6 +176,17 @@ public class EntryApply extends ABaseDO {
     // 入职时间止
     private Date entryDatetimeEnd;
 
+    // 入职岗位名称
+    private String positionName;
+
+    public String getPositionName() {
+        return positionName;
+    }
+
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
+
     public String getSubbranch() {
         return subbranch;
     }

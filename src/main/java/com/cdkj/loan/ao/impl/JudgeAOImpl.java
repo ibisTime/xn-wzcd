@@ -208,7 +208,7 @@ public class JudgeAOImpl implements IJudgeAO {
     @Override
     @Transactional
     public void judgeResultInput(XN630562Req req) {
-        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
         if (!ERepayBizNode.JUDGE_RESULT_INPUT.getCode()
             .equals(repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -220,31 +220,32 @@ public class JudgeAOImpl implements IJudgeAO {
         // 结果为完毕，则用户已还欠款；结果为中止，则需要重新诉讼；结果为终结，则为坏账；
         if (EExeResult.FINISH_NORMAL.getCode().equals(req.getExeResult())) {// 还款计划设置为已还清
 
-            repayPlanBO.refreshRepayPlanTakeCarHandle(req.getCode(),
+            repayPlanBO.refreshRepayPlanTakeCarHandle(req.getRepayBizCode(),
                 ERepayPlanNode.REPAY_YES);
-            repayBizBO.refreshJudgePaid(req.getCode());
+            repayBizBO.refreshJudgePaid(req.getRepayBizCode());
 
             // 日志记录
             sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REPAY_BIZ,
-                req.getCode(), curNodeCode, null, req.getOperator());
+                req.getRepayBizCode(), curNodeCode, null, req.getOperator());
 
         } else if (EExeResult.ABORT.getCode().equals(req.getExeResult())) {// 还款计划不操作
 
-            repayBizBO.refreshJudgeAgain(req.getCode());
+            repayBizBO.refreshJudgeAgain(req.getRepayBizCode());
 
             // 日志记录
             ERepayBizNode node = ERepayBizNode.getMap().get(
                 nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getNextNode());
-            sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getCode(),
-                EBizLogType.REPAY_BIZ, req.getCode(), repayBiz.getCurNodeCode(),
-                node.getCode(), node.getValue(), req.getOperator());
+            sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getRepayBizCode(),
+                EBizLogType.REPAY_BIZ, req.getRepayBizCode(),
+                repayBiz.getCurNodeCode(), node.getCode(), node.getValue(),
+                req.getOperator());
 
         } else if (EExeResult.FINISH_BAD.getCode().equals(req.getExeResult())) {
 
             // 还款计划处理为坏账
-            repayPlanBO.refreshRepayPlanTakeCarHandle(req.getCode(),
+            repayPlanBO.refreshRepayPlanTakeCarHandle(req.getRepayBizCode(),
                 ERepayPlanNode.BAD_DEBT);
-            repayBizBO.refreshJudgeBad(req.getCode());
+            repayBizBO.refreshJudgeBad(req.getRepayBizCode());
 
             // 更新预算单节点
             BudgetOrder condition = new BudgetOrder();
@@ -260,7 +261,7 @@ public class JudgeAOImpl implements IJudgeAO {
 
             // 日志记录
             sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REPAY_BIZ,
-                req.getCode(), curNodeCode, null, req.getOperator());
+                req.getRepayBizCode(), curNodeCode, null, req.getOperator());
         }
 
         judgeBO.refreshJudgeResultInput(req);

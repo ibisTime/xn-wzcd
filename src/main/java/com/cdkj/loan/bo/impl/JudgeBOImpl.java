@@ -59,7 +59,8 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
 
     @Override
     public void refreshJudgeResultInput(XN630562Req req) {
-        Judge data = queryJudgeByRepayBizCode(req.getCode(), EBoolean.NO);
+        Judge data = queryJudgeByRepayBizCode(req.getRepayBizCode(),
+            EBoolean.NO);
         data.setExeCaseNumber(req.getExeCaseNumber());
         data.setExeApplyUser(req.getExeApplyUser());
         data.setExecuteMarkAmount(

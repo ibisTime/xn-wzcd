@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN630563Req {
     // 还款业务编号
     @NotBlank
-    private String code;
+    private String repayBizCode;
 
     // 司法诉讼收款时间
     @NotBlank
@@ -31,12 +31,12 @@ public class XN630563Req {
     @NotBlank
     private String operator;
 
-    public String getCode() {
-        return code;
+    public String getRepayBizCode() {
+        return repayBizCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setRepayBizCode(String repayBizCode) {
+        this.repayBizCode = repayBizCode;
     }
 
     public String getJudgeReceiptDatetime() {
