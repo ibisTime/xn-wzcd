@@ -188,10 +188,10 @@ public class JudgeAOImpl implements IJudgeAO {
     @Transactional
     public void sentence(XN630568Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
-        if (!ERepayBizNode.TO_HOLD_COURT.getCode()
+        if (!ERepayBizNode.SENTENCE.getCode()
             .equals(repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前业务不在开庭节点，不能操作！");
+                "当前业务不在判决节点，不能操作！");
         }
         String curNodeCode = repayBiz.getCurNodeCode();
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);

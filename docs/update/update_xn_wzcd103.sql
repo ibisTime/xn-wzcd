@@ -40,3 +40,11 @@ INSERT INTO `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datet
 INSERT INTO `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`) VALUES ('RO201800000000000001', 'SM201808091634577197277', 'U201808031956004721377', '2018-08-08 02:36:46');
 INSERT INTO `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`) VALUES ('RO201800000000000001', 'SM201808091635215548948', 'U201808031956004721377', '2018-08-08 02:36:46');
 INSERT INTO `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`) VALUES ('RO201800000000000001', 'SM201808091618111629813', 'U201808031956004721377', '2018-08-08 02:36:46');
+INSERT INTO `tsys_menu_role` (`role_code`, `menu_code`, `updater`, `update_datetime`) VALUES ('RO201800000000000001', 'SM201808092045589215519', 'U201808031956004721377', '2018-08-08 02:36:46');
+DELETE FROM `tsys_node` WHERE `code`='005_03';
+UPDATE `tsys_node` SET `code`='005_03' WHERE `code`='005_04';
+UPDATE `tsys_node` SET `code`='005_04' WHERE `code`='005_05';
+UPDATE `tsys_node` SET `code`='005_05' WHERE `code`='005_06';
+
+INSERT INTO `tsys_node_flow` (`current_node`, `next_node`) VALUES ('014_01', '014_02');
+INSERT INTO `tsys_node_flow` (`current_node`, `next_node`, `back_node`) VALUES ('014_02', '014_03', '014_01');
