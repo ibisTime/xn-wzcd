@@ -290,17 +290,25 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     "当前贷款成数不在我司贷款成数有效范围内");
             }
         }
-
         data.setIsAdvanceFund(req.getIsAdvanceFund());
-        Long fee = StringValidater.toLong(req.getFee());// 服务费
-        data.setFee(fee);
-        double feeRate = AmountUtil.div(fee, loanAmount);
-        data.setGlobalRate(
-            feeRate + StringValidater.toDouble(req.getBankRate()));// 综合利率=服务费/贷款金额+银行利率
-        data.setCarDealerSubsidy(
-            StringValidater.toLong(req.getCarDealerSubsidy()));// 厂家贴息
-        Long totalAmount = loanAmount + fee;// 贷款总额=贷款额+服务费
-        data.setBankLoanCs(AmountUtil.div(totalAmount, invoicePrice));// 银行贷款成数=(贷款金额+服务费)/发票价格
+        Long fee = 0L;
+        // 如果是保存，贷款金额为0，则不用计算服务费
+        if (loanAmount != 0) {
+            XN632690Res res = calculation(req.getCarDealerCode(),
+                data.getLoanBankCode(), req.getLoanPeriods(),
+                loanAmount.toString(), req.getRateType(),
+                req.getServiceChargeWay(), req.getBankRate(),
+                req.getSurcharge());
+            fee = StringValidater.toLong(res.getPoundage());
+            data.setFee(fee);// 服务费
+            double feeRate = AmountUtil.div(fee, loanAmount);
+            data.setGlobalRate(
+                feeRate + StringValidater.toDouble(req.getBankRate()));// 综合利率=服务费/贷款金额+银行利率
+            data.setCarDealerSubsidy(
+                StringValidater.toLong(req.getCarDealerSubsidy()));// 厂家贴息
+            Long totalAmount = loanAmount + fee;// 贷款总额=贷款额+服务费
+            data.setBankLoanCs(AmountUtil.div(totalAmount, invoicePrice));// 银行贷款成数=(贷款金额+服务费)/发票价格
+        }
 
         data.setApplyUserMonthIncome(
             StringValidater.toLong(req.getApplyUserMonthIncome()));
@@ -2617,6 +2625,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
                 res.setAnnualAmount(String.valueOf(annualAmount));
                 res.setInitialAmount(String.valueOf(initialAmount));
+                res.setPoundage(String.valueOf(0));
             } else if (ERateType.ZK.getCode().equals(rateType)) {// 直客
                 if (EBocFeeWay.STAGES.getCode().equals(serviceChargeWay)) {// 分期
                     // 本金：
@@ -2649,6 +2658,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
                     res.setAnnualAmount(String.valueOf(annualAmount));
                     res.setInitialAmount(String.valueOf(initialAmount));
+                    res.setPoundage(String.valueOf(0));
                 } else if (EBocFeeWay.DISPOSABLE.getCode()
                     .equals(serviceChargeWay)) {// 一次性
                     // 本金：
@@ -2674,6 +2684,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
                     res.setAnnualAmount(String.valueOf(annualAmount));
                     res.setInitialAmount(String.valueOf(initialAmount));
+                    res.setPoundage(String.valueOf(0));
                 } else {// 附加费
                     // 本金：
                     // 1.首期=贷款额-（2）*（期数-1）
@@ -2737,6 +2748,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
                     res.setAnnualAmount(String.valueOf(annualAmount));
                     res.setInitialAmount(String.valueOf(initialAmount));
+                    res.setPoundage(String.valueOf(0));
                 }
             }
         } else if (bank.getBankCode().equals(EBankType.GH.getCode())) {// 工行
@@ -2762,6 +2774,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
             res.setAnnualAmount(String.valueOf(monthAmount));
             res.setInitialAmount(String.valueOf(monthAmount));
+            res.setPoundage(String.valueOf(poundage));
         } else if (bank.getBankCode().equals(EBankType.JH.getCode())) {// 建行
             // a) 服务费=0
             // b) 月供=贷款额*（1+利率）/期数
@@ -2772,6 +2785,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
             res.setAnnualAmount(String.valueOf(monthAmount));
             res.setInitialAmount(String.valueOf(monthAmount));
+            res.setPoundage(String.valueOf(0));
         }
         return res;
     }

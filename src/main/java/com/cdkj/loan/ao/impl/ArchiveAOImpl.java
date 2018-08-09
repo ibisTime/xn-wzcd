@@ -178,8 +178,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setJobNo(req.getJobNo());
         data.setEntryDatetime(DateUtil.strToDate(req.getEntryDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setDepartmentCode(req.getDepartmentCode());
         data.setPostCode(req.getPostCode());
+        Department department = departmentBO.getDepartment(req.getPostCode());// 通过岗位获取部门
+        data.setDepartmentCode(department.getParentCode());
         data.setJobClasses(req.getJobClasses());
         data.setBirthday(DateUtil.strToDate(req.getBirthday(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
