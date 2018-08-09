@@ -472,22 +472,22 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         CreditUser user = creditUserBO.getCreditUserByCreditCode(
             data.getCreditCode(), ELoanRole.APPLY_USER);
         CarDealer carDealer = carDealerBO.getCarDealer(data.getCarDealerCode());
-        // 协议外返点 和 应退按揭款（不垫资客户个人收款信息）
+        // 协议外返点 和 应退按揭款
         List<XN632120ReqRepointDetail> repointDetailList = req
             .getRepointDetailList();
         for (XN632120ReqRepointDetail xn632120ReqRepointDetail : repointDetailList) {
             if (EUseMoneyPurpose.MORTGAGE.getCode()
-                .equals(xn632120ReqRepointDetail.getUseMoneyPurpose())) {// 应退按揭款
-                if (EIsAdvanceFund.NO.equals(data.getIsAdvanceFund())) {// 不垫资填写退给客户个人的收款信息
-                    data.setShouldBackUserName(
-                        xn632120ReqRepointDetail.getCarDealerName());
-                    data.setShouldBackAccountNo(
-                        xn632120ReqRepointDetail.getAccountNo());
-                    data.setShouldBackOpenBankName(
-                        xn632120ReqRepointDetail.getOpenBankName());
-                    data.setShouldBackAccountName(
-                        xn632120ReqRepointDetail.getAccountName());
-                }
+                .equals(xn632120ReqRepointDetail.getUseMoneyPurpose())
+                    && EIsAdvanceFund.NO.equals(data.getIsAdvanceFund())) {// 应退按揭款
+                // 不垫资客户 填写退给客户个人的收款信息
+                data.setShouldBackUserName(
+                    xn632120ReqRepointDetail.getCarDealerName());
+                data.setShouldBackAccountNo(
+                    xn632120ReqRepointDetail.getAccountNo());
+                data.setShouldBackOpenBankName(
+                    xn632120ReqRepointDetail.getOpenBankName());
+                data.setShouldBackAccountName(
+                    xn632120ReqRepointDetail.getAccountName());
             }
             if (EUseMoneyPurpose.PROTOCOL_OUTER.getCode()
                 .equals(xn632120ReqRepointDetail.getUseMoneyPurpose())) {// 协议外返点

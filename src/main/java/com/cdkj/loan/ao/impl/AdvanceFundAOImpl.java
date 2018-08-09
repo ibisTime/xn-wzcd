@@ -104,6 +104,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         }
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
+        data.setApplyDatetime(new Date());
         data.setIsAdvanceFund(req.getIsAdvanceFund());
         String preNodeCode = data.getCurNodeCode();
         data.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
@@ -328,6 +329,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         data.setBillPdf(req.getBillPdf());
         data.setNote(req.getNote());
         data.setUpdater(req.getOperator());
+        data.setUpdateDatetime(new Date());
         String preNodeCode = data.getCurNodeCode();// 当前节点
         data.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
             .getNextNode());// 更新节点为垫资完成

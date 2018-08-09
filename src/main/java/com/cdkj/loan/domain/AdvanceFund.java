@@ -106,6 +106,12 @@ public class AdvanceFund extends ABaseDO {
     // 申请时间止
     private Date applyDatetimeEnd;
 
+    // 更新时间起
+    private Date updateDatetimeStart;
+
+    // 更新时间止
+    private Date updateDatetimeEnd;
+
     // 征信单编号
     private String creditCode;
 
@@ -475,6 +481,22 @@ public class AdvanceFund extends ABaseDO {
 
     public void setUpdateDatetime(Date updateDatetime) {
         this.updateDatetime = updateDatetime;
+    }
+
+    public Date getUpdateDatetimeStart() {
+        return updateDatetimeStart;
+    }
+
+    public void setUpdateDatetimeStart(Date updateDatetimeStart) {
+        this.updateDatetimeStart = updateDatetimeStart;
+    }
+
+    public Date getUpdateDatetimeEnd() {
+        return updateDatetimeEnd;
+    }
+
+    public void setUpdateDatetimeEnd(Date updateDatetimeEnd) {
+        this.updateDatetimeEnd = updateDatetimeEnd;
     }
 
 }
