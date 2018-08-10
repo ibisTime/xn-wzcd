@@ -25,7 +25,7 @@ public class XN630414 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        seriesAO.downSeries(req.getCode(), req.getUpdater(), req.getRemark());
+        seriesAO.downSeries(req.getCode(), req.getUpdater());
         return new BooleanRes(true);
     }
 

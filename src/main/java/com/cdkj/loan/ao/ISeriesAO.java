@@ -19,10 +19,10 @@ public interface ISeriesAO {
 
     // 上架品牌
     public void upSeries(String code, String location, String orderNo,
-            String updater, String remark);
+            String updater);
 
     // 下架品牌
-    public void downSeries(String code, String updater, String remark);
+    public void downSeries(String code, String updater);
 
     // 分页查询
     public Paginable<Series> querySeriesPage(int start, int limit,

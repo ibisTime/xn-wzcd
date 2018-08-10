@@ -48,3 +48,9 @@ UPDATE `tsys_node` SET `code`='005_05' WHERE `code`='005_06';
 
 INSERT INTO `tsys_node_flow` (`current_node`, `next_node`) VALUES ('014_01', '014_02');
 INSERT INTO `tsys_node_flow` (`current_node`, `next_node`, `back_node`) VALUES ('014_02', '014_03', '014_01');
+
+UPDATE `tstd_cnavigate` SET `pic`='FtqaSR_osmL6F-Y5ag8x8LUOnQw_' WHERE `code`='DH201711271342486662078';
+UPDATE `tstd_cnavigate` SET `pic`='FtqaSR_osmL6F-Y5ag8x8LUOnQw_' WHERE `code`='DH201711271344255452496';
+UPDATE `tstd_cnavigate` SET `pic`='FtqaSR_osmL6F-Y5ag8x8LUOnQw_' WHERE `code`='DH201711271344255452497';
+
+INSERT INTO `tp_archive` (`code`, `real_name`, `id_no`, `mobile`, `job_no`, `entry_datetime`, `department_code`, `post_code`, `job_classes`, `birthday`, `gender`, `nation`, `native_place`, `marry_status`, `politics`, `major`, `education`, `work_status`, `health`, `salary_card`, `residence_address`, `residence_property`, `probation_time`, `traffic_award`, `mobile_award`, `taxi_ward`, `meal_award`, `updater`, `update_datetime`,`user_id`) VALUES ('RA201800000000001', 'admin', '150606199710040501', '18736182541', '1', '2018-08-09 00:00:00', 'DP201807170504370111263', 'DP201807170508487789432', '1', '2018-08-09 00:00:00', '1', '汉', '籍贯', '1', '1', '专业', '1', '1', '健康状况', '', '户籍所在地', '1', '1', '0', '0', '0', '0', 'USYS201800000000001', '2018-08-09 11:17:29','USYS201800000000001');
