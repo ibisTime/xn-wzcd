@@ -11,7 +11,7 @@ import com.cdkj.loan.domain.TableExport;
 public interface ITableExportAO {
     static final String DEFAULT_ORDER_COLUMN = "id";
 
-    public int addTableExport(String url, String operator);
+    public String addTableExport(String url, String operator);
 
     public Paginable<TableExport> queryTableExportPage(int start, int limit,
             TableExport condition);

@@ -5,7 +5,6 @@ import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN632090Req;
-import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -24,8 +23,7 @@ public class XN632090 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        tableExportAO.addTableExport(req.getUrl(), req.getOperator());
-        return new BooleanRes(true);
+        return tableExportAO.addTableExport(req.getUrl(), req.getOperator());
     }
 
     @Override
