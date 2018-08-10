@@ -41,6 +41,19 @@ public class WorkExperience extends ABaseDO {
     // 证明人联系电话
     private String proverMobile;
 
+    /*---------辅助字段----------*/
+
+    // 职位名称
+    private String positionName;
+
+    public String getPositionName() {
+        return positionName;
+    }
+
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }

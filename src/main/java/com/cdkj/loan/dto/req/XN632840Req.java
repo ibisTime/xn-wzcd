@@ -4,9 +4,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class XN632840Req {
 
-    // 申请部门编号
-    private String departmentCode;
-
     // 招聘岗位
     @NotBlank
     private String position;
@@ -84,14 +81,6 @@ public class XN632840Req {
 
     // 备注
     private String remark;
-
-    public String getDepartmentCode() {
-        return departmentCode;
-    }
-
-    public void setDepartmentCode(String departmentCode) {
-        this.departmentCode = departmentCode;
-    }
 
     public String getPosition() {
         return position;

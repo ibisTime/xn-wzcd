@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IEntryApplyAO;
 import com.cdkj.loan.ao.ISYSUserAO;
@@ -46,6 +47,7 @@ public class EntryApplyAOImpl implements IEntryApplyAO {
     private ISYSUserAO sysUserAO;
 
     @Override
+    @Transactional
     public String addEntryApply(XN632860Req req) {
         EntryApply data = new EntryApply();
         data.setRelativeRelation(req.getRelativeRelation());
@@ -122,6 +124,7 @@ public class EntryApplyAOImpl implements IEntryApplyAO {
     }
 
     @Override
+    @Transactional
     public void approveEntryApply(String code, String approveResult,
             String updater, String remark) {
         EntryApply entryApply = entryApplyBO.getEntryApply(code);

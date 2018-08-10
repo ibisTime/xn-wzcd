@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IRecruitApplyAO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IRecruitApplyBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
@@ -22,11 +23,16 @@ public class RecruitApplyAOImpl implements IRecruitApplyAO {
     @Autowired
     private IRecruitApplyBO recruitApplyBO;
 
+    @Autowired
+    private IDepartmentBO departmentBO;
+
     @Override
     public String addRecruitApply(XN632840Req req) {
         RecruitApply data = new RecruitApply();
-        data.setDepartmentCode(req.getDepartmentCode());
         data.setPosition(req.getPosition());
+        String departmentCode = departmentBO
+            .getDepartmentByPost(req.getPosition());
+        data.setDepartmentCode(departmentCode);
         data.setEstablishQuantity(
             StringValidater.toInteger(req.getEstablishQuantity()));
         data.setNowQuantity(StringValidater.toInteger(req.getNowQuantity()));
