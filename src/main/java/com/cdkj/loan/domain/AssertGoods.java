@@ -28,7 +28,7 @@ public class AssertGoods extends ABaseDO {
     private String quantity;
 
     // 出库价格
-    private String price;
+    private Long price;
 
     // 备注
     private String remark;
@@ -86,12 +86,12 @@ public class AssertGoods extends ABaseDO {
         return quantity;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public Long getPrice() {
+        return price;
     }
 
-    public String getPrice() {
-        return price;
+    public void setPrice(Long price) {
+        this.price = price;
     }
 
     public void setRemark(String remark) {

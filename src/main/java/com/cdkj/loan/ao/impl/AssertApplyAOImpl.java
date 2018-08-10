@@ -13,6 +13,7 @@ import com.cdkj.loan.bo.IAssertGoodsBO;
 import com.cdkj.loan.bo.IAssertUserBO;
 import com.cdkj.loan.bo.ICompProductBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.AssertApply;
 import com.cdkj.loan.domain.AssertGoods;
@@ -78,7 +79,7 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
                 data1.setProductCode(child1.getProductCode());
                 data1.setMode(child1.getMode());
                 data1.setQuantity(child1.getQuantity());
-                data1.setPrice(child1.getPrice());
+                data1.setPrice(StringValidater.toLong(child1.getPrice()));
                 data1.setRemark(child1.getRemark());
                 assertGoodsBO.saveAssertGoods(data1);
             }
