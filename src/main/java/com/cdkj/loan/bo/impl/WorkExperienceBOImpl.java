@@ -6,10 +6,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IWorkExperienceBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IWorkExperienceDAO;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.WorkExperience;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
@@ -20,6 +22,9 @@ public class WorkExperienceBOImpl extends PaginableBOImpl<WorkExperience>
 
     @Autowired
     private IWorkExperienceDAO workExperienceDAO;
+
+    @Autowired
+    private IDepartmentBO departmentBO;
 
     @Override
     public String saveWorkExperience(WorkExperience data) {
@@ -36,7 +41,16 @@ public class WorkExperienceBOImpl extends PaginableBOImpl<WorkExperience>
     @Override
     public List<WorkExperience> queryWorkExperienceList(
             WorkExperience condition) {
-        return workExperienceDAO.selectList(condition);
+        List<WorkExperience> selectList = workExperienceDAO
+            .selectList(condition);
+        for (WorkExperience workExperience : selectList) {
+            if (StringUtils.isNotBlank(workExperience.getPosition())) {
+                Department department = departmentBO
+                    .getDepartment(workExperience.getPosition());
+                workExperience.setPositionName(department.getName());
+            }
+        }
+        return selectList;
     }
 
     @Override

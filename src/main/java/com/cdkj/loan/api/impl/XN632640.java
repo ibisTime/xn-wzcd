@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 
+ * 新增办公用品/固定资产申请
  * @author: jiafr 
  * @since: 2018年6月6日 下午5:55:04 
  * @history:
