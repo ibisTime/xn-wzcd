@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN630562Req {
     // 编号
     @NotBlank
-    private String code;
+    private String repayBizCode;
 
     // 执行案号
     @NotBlank
@@ -42,12 +42,12 @@ public class XN630562Req {
     @NotBlank
     private String operator;
 
-    public String getCode() {
-        return code;
+    public String getRepayBizCode() {
+        return repayBizCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setRepayBizCode(String repayBizCode) {
+        this.repayBizCode = repayBizCode;
     }
 
     public String getExeCaseNumber() {

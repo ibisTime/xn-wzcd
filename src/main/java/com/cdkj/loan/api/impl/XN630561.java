@@ -23,7 +23,7 @@ public class XN630561 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        judgeAO.resultInputAgain(req.getCode(), req.getOperator());
+        judgeAO.resultInputAgain(req.getRepayBizCode(), req.getOperator());
         return new BooleanRes(true);
     }
 

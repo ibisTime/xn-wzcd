@@ -6,6 +6,8 @@ public class XN632690Res {
 
     private String annualAmount;// 每期月供
 
+    private String poundage;// 手续费
+
     public String getInitialAmount() {
         return initialAmount;
     }
@@ -20,6 +22,14 @@ public class XN632690Res {
 
     public void setAnnualAmount(String annualAmount) {
         this.annualAmount = annualAmount;
+    }
+
+    public String getPoundage() {
+        return poundage;
+    }
+
+    public void setPoundage(String poundage) {
+        this.poundage = poundage;
     }
 
 }

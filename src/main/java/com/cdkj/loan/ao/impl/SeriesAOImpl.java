@@ -60,24 +60,22 @@ public class SeriesAOImpl implements ISeriesAO {
 
     @Override
     public void upSeries(String code, String location, String orderNo,
-            String updater, String remark) {
+            String updater) {
         Series series = seriesBO.getSeries(code);
         series.setLocation(StringValidater.toInteger(location));
         series.setOrderNo(StringValidater.toInteger(orderNo));
         series.setStatus(EBrandStatus.UP.getCode());
         series.setUpdater(updater);
         series.setUpdateDatetime(new Date());
-        series.setRemark(remark);
         seriesBO.upSeries(series);
     }
 
     @Override
-    public void downSeries(String code, String updater, String remark) {
+    public void downSeries(String code, String updater) {
         Series series = seriesBO.getSeries(code);
         series.setStatus(EBrandStatus.DOWN.getCode());
         series.setUpdater(updater);
         series.setUpdateDatetime(new Date());
-        series.setRemark(remark);
         seriesBO.downSeries(series);
     }
 

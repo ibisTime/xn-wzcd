@@ -60,4 +60,24 @@ public class JudgeDAOImpl extends AMybatisTemplate implements IJudgeDAO {
     public void updateJudgeResultInput(Judge data) {
         super.update(NAMESPACE.concat("update_judgeResultInput"), data);
     }
+
+    @Override
+    public void cashier(Judge data) {
+        super.update(NAMESPACE.concat("update_cashier"), data);
+    }
+
+    @Override
+    public void acceptance(Judge data) {
+        super.update(NAMESPACE.concat("update_acceptance"), data);
+    }
+
+    @Override
+    public void toHoldCourt(Judge data) {
+        super.update(NAMESPACE.concat("update_toHoldCourt"), data);
+    }
+
+    @Override
+    public void sentence(Judge data) {
+        super.update(NAMESPACE.concat("update_sentence"), data);
+    }
 }

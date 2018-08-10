@@ -2,17 +2,17 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-/**
- * 重新申请执行
- * @author: CYL 
- * @since: 2018年7月30日 上午10:26:09 
- * @history:
- */
-public class XN630561Req {
+public class XN630566Req {
+
     // 还款业务编号
     @NotBlank
     private String repayBizCode;
 
+    // 受理时间
+    @NotBlank
+    private String acceptanceTime;
+
+    // 操作人
     @NotBlank
     private String operator;
 
@@ -30,6 +30,14 @@ public class XN630561Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getAcceptanceTime() {
+        return acceptanceTime;
+    }
+
+    public void setAcceptanceTime(String acceptanceTime) {
+        this.acceptanceTime = acceptanceTime;
     }
 
 }

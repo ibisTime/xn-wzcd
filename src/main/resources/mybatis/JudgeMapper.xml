@@ -16,11 +16,19 @@
 		<result column="case_status" property="caseStatus" />
 		
 		<result column="case_pdf" property="casePdf" />
+		<result column="pay_amount_prove" property="payAmountProve" />
+		<result column="acceptance_time" property="acceptanceTime" />
 		<result column="court_datetime" property="courtDatetime" />
+		<result column="court_address" property="courtAddress" />
+		<result column="handle_judge" property="handleJudge" />
+		<result column="hear_case_number" property="hearCaseNumber" />
 		<result column="judge_datetime" property="judgeDatetime" />
+		<result column="judge_result" property="judgeResult" />
 		<result column="judge_pdf" property="judgePdf" />
-		<result column="exe_case_number" property="exeCaseNumber" />
+		<result column="judge_pdf_delivery_time" property="judgePdfDeliveryTime" />
+		<result column="effective_time" property="effectiveTime" />
 		
+		<result column="exe_case_number" property="exeCaseNumber" />
 		<result column="exe_apply_user" property="exeApplyUser" />
 		<result column="execute_mark_amount" property="executeMarkAmount" />
 		<result column="exe_datetime" property="exeDatetime" />
@@ -58,9 +66,17 @@
 		,t.case_start_datetime
 		,t.case_status
 		,t.case_pdf
+		,t.pay_amount_prove
+		,t.acceptance_time
 		,t.court_datetime
+		,t.court_address
+		,t.handle_judge
+		,t.hear_case_number
 		,t.judge_datetime
+		,t.judge_result
 		,t.judge_pdf
+		,t.judge_pdf_delivery_time
+		,t.effective_time
 		,t.exe_case_number
 		,t.exe_apply_user
 		,t.execute_mark_amount
@@ -165,6 +181,49 @@
 		,sale_datetime = #{saleDatetime}
 		,exe_pdf = #{exePdf}
 		,status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_cashier" parameterType="judge">
+		UPDATE tdh_judge
+		SET
+		pay_amount_prove = #{payAmountProve}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_acceptance" parameterType="judge">
+		UPDATE tdh_judge
+		SET
+		acceptance_time = #{acceptanceTime}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_toHoldCourt" parameterType="judge">
+		UPDATE tdh_judge
+		SET
+		court_datetime = #{courtDatetime}
+		,court_address = #{courtAddress}
+		,handle_judge = #{handleJudge}
+		,hear_case_number = #{hearCaseNumber}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_sentence" parameterType="judge">
+		UPDATE tdh_judge
+		SET
+		judge_datetime = #{judgeDatetime}
+		,judge_result = #{judgeResult}
+		,judge_pdf = #{judgePdf}
+		,judge_pdf_delivery_time = #{judgePdfDeliveryTime}
+		,effective_time = #{effectiveTime}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}

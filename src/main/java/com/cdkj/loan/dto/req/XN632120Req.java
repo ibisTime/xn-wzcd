@@ -55,9 +55,6 @@ public class XN632120Req {
     // 是否垫资
     private String isAdvanceFund;
 
-    // 服务费
-    private String fee;
-
     // 厂家贴息
     private String carDealerSubsidy;
 
@@ -478,14 +475,6 @@ public class XN632120Req {
 
     public void setIsAdvanceFund(String isAdvanceFund) {
         this.isAdvanceFund = isAdvanceFund;
-    }
-
-    public String getFee() {
-        return fee;
-    }
-
-    public void setFee(String fee) {
-        this.fee = fee;
     }
 
     public String getCarDealerSubsidy() {

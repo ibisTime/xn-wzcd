@@ -676,7 +676,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Override
     @Transactional
     public void judgeFinanceSureReceipt(XN630563Req req) {
-        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
         if (!ERepayBizNode.FINANCE_SURE_RECEIPT.getCode()
             .equals(repayBiz.getCurNodeCode())) {
             throw new BizException("xn0000", "当前还款业务不在财务确认收款节点！");
@@ -723,8 +723,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         // 日志记录
         ERepayBizNode node = ERepayBizNode.getMap()
             .get(repayBiz.getCurNodeCode());
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getCode(),
-            EBizLogType.REPAY_BIZ, req.getCode(), preCurNodeCode,
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getRepayBizCode(),
+            EBizLogType.REPAY_BIZ, req.getRepayBizCode(), preCurNodeCode,
             node.getCode(), null, req.getOperator());
     }
 

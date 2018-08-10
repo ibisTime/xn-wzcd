@@ -16,8 +16,6 @@ public class XN630413Req {
     @NotBlank(message = "最新修改人不能为空")
     private String updater; // 最新修改人（必填）
 
-    private String remark; // 备注（选填）
-
     public String getCode() {
         return code;
     }
@@ -50,12 +48,5 @@ public class XN630413Req {
         this.updater = updater;
     }
 
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
 
 }

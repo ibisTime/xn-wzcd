@@ -10,6 +10,9 @@ import com.cdkj.loan.dto.req.XN630560Req;
 import com.cdkj.loan.dto.req.XN630562Req;
 import com.cdkj.loan.dto.req.XN630564Req;
 import com.cdkj.loan.dto.req.XN630565Req;
+import com.cdkj.loan.dto.req.XN630566Req;
+import com.cdkj.loan.dto.req.XN630567Req;
+import com.cdkj.loan.dto.req.XN630568Req;
 
 @Component
 public interface IJudgeAO {
@@ -21,8 +24,8 @@ public interface IJudgeAO {
     // 财务审核
     public void judgeFinanceCheck(XN630564Req req);
 
-    // 诉讼跟进
-    public void judgeFollow(XN630565Req req);
+    // 出纳打款
+    public void cashier(XN630565Req req);
 
     // 执行结果录入
     public void judgeResultInput(XN630562Req req);
@@ -36,5 +39,14 @@ public interface IJudgeAO {
     public List<Judge> queryJudgeList(Judge condition);
 
     public Judge getJudge(String code);
+
+    // 受理
+    public void acceptance(XN630566Req req);
+
+    // 开庭
+    public void toHoldCourt(XN630567Req req);
+
+    // 判决
+    public void sentence(XN630568Req req);
 
 }

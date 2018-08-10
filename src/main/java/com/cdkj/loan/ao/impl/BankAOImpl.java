@@ -96,10 +96,10 @@ public class BankAOImpl implements IBankAO {
         data.setBankName(req.getBankName());
         data.setSubbranch(req.getSubbranch());
 
-        data.setRate12(0.0d);
-        data.setRate18(0.0d);
-        data.setRate24(0.0d);
-        data.setRate36(0.0d);
+        data.setRate12(StringValidater.toDouble(req.getRate12()));
+        data.setRate18(StringValidater.toDouble(req.getRate18()));
+        data.setRate24(StringValidater.toDouble(req.getRate24()));
+        data.setRate36(StringValidater.toDouble(req.getRate36()));
 
         data.setStatus(req.getStatus());
         data.setUpdater(req.getUpdater());

@@ -11,9 +11,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 诉讼跟进
+ * 出纳打款
  * @author: CYL 
- * @since: 2018年8月4日 下午12:25:30 
+ * @since: 2018年8月8日 下午7:17:02 
  * @history:
  */
 public class XN630565 extends AProcessor {
@@ -23,7 +23,7 @@ public class XN630565 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        judgeAO.judgeFollow(req);
+        judgeAO.cashier(req);
         return new BooleanRes(true);
     }
 
