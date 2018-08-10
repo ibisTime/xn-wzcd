@@ -294,10 +294,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         Long fee = 0L;
         // 如果是保存，贷款金额为0，则不用计算服务费
         if (loanAmount != 0) {
+            Bank bank = bankBO.getBankBySubbranch(data.getLoanBankCode());
             XN632690Res res = calculation(req.getCarDealerCode(),
-                data.getLoanBankCode(), req.getLoanPeriods(),
-                loanAmount.toString(), req.getRateType(),
-                req.getServiceChargeWay(), req.getBankRate(),
+                bank.getCode(), req.getLoanPeriods(), loanAmount.toString(),
+                req.getRateType(), req.getServiceChargeWay(), req.getBankRate(),
                 req.getSurcharge());
             fee = StringValidater.toLong(res.getPoundage());
             data.setFee(fee);// 服务费
@@ -2560,10 +2560,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             String loanPeriods, String loanAmount, String rateType,
             String serviceChargeWay, String bankRate, String surcharge) {
         XN632690Res res = new XN632690Res();
-        BankSubbranch bankSubbranch = bankSubbranchBO
-            .getBankSubbranch(loanBankCode);
+        Bank bank = bankBO.getBank(loanBankCode);
         // 中行
-        if (bankSubbranch.getBankType().equals(EBankType.ZH.getCode())) {
+        if (bank.getBankCode().equals(EBankType.ZH.getCode())) {
             // 传统
             if (ERateType.CT.getCode().equals(rateType)) {
                 // 1.首期本金 = 贷款额- (2) *（期数-1）
@@ -2580,7 +2579,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 // 4.每期=(2)*基准利率
                 CarDealerProtocol carDealerProtocol = carDealerProtocolBO
                     .getCarDealerProtocolByCarDealerCode(carDealerCode,
-                        bankSubbranch.getBankType());// 获取经销商协议
+                        bank.getBankCode());// 获取经销商协议
                 double rate = 0;// 基准利率
                 if (StringValidater.toInteger(loanPeriods) == 12) {
                     rate = carDealerProtocol.getPlatCtRate12();
@@ -2698,7 +2697,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                                 (StringValidater.toInteger(loanPeriods) - 1));// 首期本金
 
                     // 手续费=贷款额*利率
-                    // 3.首期=手续费-（4）*（期数-1）
+                    // 3.首期=手续费-（2）*（期数-1）
                     // 4.每期=（2）*利率
                     Long poundage = AmountUtil.mul(
                         StringValidater.toLong(loanAmount),
@@ -2706,42 +2705,62 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     Long annualPoundage = AmountUtil.mul(annualPrincipal,
                         StringValidater.toDouble(bankRate));// 每期手续费
                     Long initialPoundage = poundage
-                            - AmountUtil.mul(annualPoundage,
+                            - AmountUtil.mul(annualPrincipal,
                                 (StringValidater.toInteger(loanPeriods) - 1));// 首期手续费
 
                     // 附加费：
-                    // 5.首期=附加费-（2）*（期数-1）
+                    // 5.首期=附加费-（6）*（期数-1）
                     // 6.每期=附加费/期数
                     Long annualsurcharge = 0L;// 每期附加费
                     Long initialsurcharge = 0L;// 首期附加费
                     if (ESurcharge.SIX_THOUSAND.getCode().equals(surcharge)) {
                         annualsurcharge = (long) AmountUtil.div(
                             Long.valueOf(6000000),
-                            (StringValidater.toDouble(loanPeriods) - 1));
+                            StringValidater.toDouble(loanPeriods));
                         initialsurcharge = Long.valueOf(6000000) - AmountUtil
-                            .mul(annualPrincipal,
+                            .mul(annualsurcharge,
                                 (StringValidater.toDouble(loanPeriods) - 1));
                     } else {
                         annualsurcharge = (long) AmountUtil.div(
                             Long.valueOf(6100000),
-                            (StringValidater.toDouble(loanPeriods) - 1));
+                            StringValidater.toDouble(loanPeriods));
                         initialsurcharge = Long.valueOf(6100000) - AmountUtil
-                            .mul(annualPrincipal,
+                            .mul(annualsurcharge,
                                 (StringValidater.toDouble(loanPeriods) - 1));
                     }
 
-                    // 附加费手续费
-                    // 7.首期=手续费-（4）*（期数-1）
-                    // 8.每期=（2）*利率
-                    Long annualSurchargePoundage = AmountUtil.mul(
-                        annualPrincipal, StringValidater.toDouble(bankRate));// 每期附加费手续费
-                    Long initialSurchargePoundage = poundage
-                            - AmountUtil.mul(annualPoundage,
-                                (StringValidater.toInteger(loanPeriods) - 1));// 首期附加费手续费
+                    // 附加费手续费=附加费金额*利率
+                    // 附加费手续费每期=附加费每期*利率
+                    // 附加费手续费首期=附加费手续费金额-附加费手续费每期*（期数-1）
+                    Long annualSurchargePoundage = 0L;
+                    Long initialSurchargePoundage = 0L;
+                    if (ESurcharge.SIX_THOUSAND.getCode().equals(surcharge)) {
+                        Long surchargePoundage = AmountUtil.mul(
+                            Long.valueOf(6000000),
+                            StringValidater.toDouble(bankRate));// 附加费手续费
+                        annualSurchargePoundage = AmountUtil.mul(
+                            annualsurcharge,
+                            StringValidater.toDouble(bankRate));// 每期附加费手续费
+                        initialSurchargePoundage = surchargePoundage
+                                - AmountUtil.mul(annualSurchargePoundage,
+                                    (StringValidater.toInteger(loanPeriods)
+                                            - 1));// 首期附加费手续费
+                    } else {
+                        Long surchargePoundage = AmountUtil.mul(
+                            Long.valueOf(6100000),
+                            StringValidater.toDouble(bankRate));// 附加费手续费
+                        annualSurchargePoundage = AmountUtil.mul(
+                            annualsurcharge,
+                            StringValidater.toDouble(bankRate));// 每期附加费手续费
+                        initialSurchargePoundage = surchargePoundage
+                                - AmountUtil.mul(annualSurchargePoundage,
+                                    (StringValidater.toInteger(loanPeriods)
+                                            - 1));// 首期附加费手续费
+                    }
 
-                    // 月供
-                    // 首期=1+3+5+7
-                    // 每期=2+4+6+8
+                    // 月供：
+                    // 首期=1+3+附加费首期+附加费手续费首期
+                    // 每期=2+4+附加费每期+附加费手续费每期
                     Long initialAmount = initialPrincipal + initialPoundage
                             + initialsurcharge + initialSurchargePoundage;
                     Long annualAmount = annualPrincipal + annualPoundage
@@ -2752,12 +2771,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     res.setPoundage(String.valueOf(0));
                 }
             }
-        } else if (bankSubbranch.getBankType().equals(EBankType.GH.getCode())) {// 工行
+        } else if (bank.getBankCode().equals(EBankType.GH.getCode())) {// 工行
             // a)服务费=(实际利率-基准利率)*贷款额
             // b)月供=((贷款额+服务费)*(1+基准利率))/贷款期数
             CarDealerProtocol carDealerProtocol = carDealerProtocolBO
                 .getCarDealerProtocolByCarDealerCode(carDealerCode,
-                    bankSubbranch.getBankType());// 获取经销商协议
+                    bank.getBankCode());// 获取经销商协议
             double rate = 0;// 基准利率
             if (StringValidater.toInteger(loanPeriods) == 12) {
                 rate = carDealerProtocol.getPlatCtRate12();
@@ -2776,7 +2795,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             res.setAnnualAmount(String.valueOf(monthAmount));
             res.setInitialAmount(String.valueOf(monthAmount));
             res.setPoundage(String.valueOf(poundage));
-        } else if (bankSubbranch.getBankType().equals(EBankType.JH.getCode())) {// 建行
+        } else if (bank.getBankCode().equals(EBankType.JH.getCode())) {// 建行
             // a) 服务费=0
             // b) 月供=贷款额*（1+利率）/期数
             Long amount = AmountUtil.mul(StringValidater.toLong(loanAmount),
