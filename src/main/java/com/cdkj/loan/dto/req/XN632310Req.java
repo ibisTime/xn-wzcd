@@ -3,9 +3,9 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 确认返点支付
+ * 
  * @author: jiafr 
- * @since: 2018年6月9日 下午2:10:21 
+ * @since: 2018年8月10日 下午2:48:18 
  * @history:
  */
 public class XN632310Req {
