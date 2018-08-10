@@ -1,12 +1,12 @@
 package com.cdkj.loan.dto.req;
 
 /**
- * 余额明细统计
+ * 代偿明细统计
  * @author: jiafr 
  * @since: 2018年8月7日 下午9:39:25 
  * @history:
  */
-public class XN630902Req extends APageReq {
+public class XN630903Req extends APageReq {
 
     private String bizCode;// 业务编号
 

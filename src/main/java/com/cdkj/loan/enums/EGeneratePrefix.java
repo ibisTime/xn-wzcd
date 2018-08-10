@@ -10,7 +10,8 @@ import java.util.Map;
  */
 public enum EGeneratePrefix {
 
-    REPAY_BIZ("RB", "还款业务"), REPAY_PLAN("RP", "还款计划"), DH("DH", "导航"),OVERDUE_TREATMENT("OT","逾期处理")
+    REPAY_BIZ("RB", "还款业务"), REPAY_PLAN("RP", "还款计划"), DH("DH", "导航"), OVERDUE_TREATMENT(
+            "OT", "逾期处理")
 
     , Account("A", "账户"), AJour("AJ", "账户流水"), EXCHANGE_CURRENCY("EC", "币种兑换"), HLORDER(
             "HL", "红蓝订单"), Charge("CZ", "充值订单"), Withdraw("QX", "取现订单"), BAOFOO_PAY_ORDER(
@@ -56,8 +57,9 @@ public enum EGeneratePrefix {
             "WA", "福利发放"), WELFARE_USER("WU", "福利发放人员"), BIZ_TEAM("BT", "业务团队"), REPOINT(
             "RE", "返点"), REPLACE_REPAY_APPLY("RRA", "代偿预算单"), REPLACE_REPAY_PLAN(
             "PPP", "代偿预算审核"), ADVANCE_FUND("AF", "垫资单"), REPOINT_DETAIL("RD",
-            "返点明细"), JUDGE("J", "司法诉讼"), TOTAL_ADVANCE_FUND("TAF", "垫资汇总"),
-    CONTRACT_IMPORT("CI","银行合同导入");
+            "返点明细"), JUDGE("J", "司法诉讼"), TOTAL_ADVANCE_FUND("TAF", "垫资汇总"), CONTRACT_IMPORT(
+            "CI", "银行合同导入"), BANK_REPOINT("BR", "银行返佣"), BANK_REPOINT_DETAIL(
+            "BRD", "银行返佣明细");
 
     public static Map<String, EGeneratePrefix> getMap() {
         Map<String, EGeneratePrefix> map = new HashMap<String, EGeneratePrefix>();

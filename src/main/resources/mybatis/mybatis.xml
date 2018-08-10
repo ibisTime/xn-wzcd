@@ -161,6 +161,7 @@
 		<typeAlias alias="overdueTreatment" type="com.cdkj.loan.domain.OverdueTreatment" />
 		<typeAlias alias="tableExport" type="com.cdkj.loan.domain.TableExport" />
 		<typeAlias alias="bizDayStatistic" type="com.cdkj.loan.domain.BizDayStatistic" />
-		
+		<typeAlias alias="bankRepoint" type="com.cdkj.loan.domain.BankRepoint" />
+		<typeAlias alias="bankRepointDetail" type="com.cdkj.loan.domain.BankRepointDetail" />
 	</typeAliases>
 </configuration>

@@ -29,12 +29,18 @@ public class TableExportAOImpl implements ITableExportAO {
     private ISYSMenuBO sysMenuBO;
 
     @Override
-    public int addTableExport(String url, String operator) {
+    public String addTableExport(String url, String operator) {
         TableExport data = new TableExport();
         data.setUrl(url);
         data.setOperator(operator);
         data.setUpdateDatetime(new Date());
-        return tableExportBO.saveTableExport(data);
+        tableExportBO.saveTableExport(data);
+        // 菜单名称
+        if (StringUtils.isNotBlank(data.getUrl())) {
+            SYSMenu menu = sysMenuBO.getSYSMenuByUrl(data.getUrl() + ".htm");
+            data.setMenuName(menu.getName());
+        }
+        return data.getMenuName();
     }
 
     @Override

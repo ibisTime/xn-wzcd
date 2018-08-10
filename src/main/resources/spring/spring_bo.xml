@@ -417,5 +417,13 @@
 	<bean id="bizDayStatisticBO" class="com.cdkj.loan.bo.impl.BizDayStatisticBOImpl">
 		<property name="paginableDAO" ref="bizDayStatisticDAOImpl"/>
 	</bean>
+	
+	<bean id="bankRepointBO" class="com.cdkj.loan.bo.impl.BankRepointBOImpl">
+		<property name="paginableDAO" ref="bankRepointDAOImpl"/>
+	</bean>
+	
+	<bean id="bankRepointDetailBO" class="com.cdkj.loan.bo.impl.BankRepointDetailBOImpl">
+		<property name="paginableDAO" ref="bankRepointDetailDAOImpl"/>
+	</bean>
 
 </beans>
