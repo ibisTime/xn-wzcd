@@ -47,5 +47,4 @@ public interface IRepayPlanAO {
 
     // 催收过程
     public void collectionProcess(XN630537Req req);
-
 }
