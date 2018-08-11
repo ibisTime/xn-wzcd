@@ -50,7 +50,6 @@ public class BankAOImpl implements IBankAO {
         data.setBankName(req.getBankName());
         data.setSubbranch(req.getSubbranch());
         data.setRate12(StringValidater.toDouble(req.getRate12()));
-        data.setRate18(StringValidater.toDouble(req.getRate18()));
         data.setRate24(StringValidater.toDouble(req.getRate24()));
 
         data.setRate36(StringValidater.toDouble(req.getRate36()));
@@ -97,7 +96,6 @@ public class BankAOImpl implements IBankAO {
         data.setSubbranch(req.getSubbranch());
 
         data.setRate12(StringValidater.toDouble(req.getRate12()));
-        data.setRate18(StringValidater.toDouble(req.getRate18()));
         data.setRate24(StringValidater.toDouble(req.getRate24()));
         data.setRate36(StringValidater.toDouble(req.getRate36()));
 

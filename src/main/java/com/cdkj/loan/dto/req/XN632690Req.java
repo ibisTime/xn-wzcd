@@ -2,8 +2,6 @@ package com.cdkj.loan.dto.req;
 
 public class XN632690Req {
 
-    private String carDealerCode;// 经销商编号
-
     private String loanBankCode;// 贷款银行
 
     private String loanPeriods;// 贷款周期
@@ -17,14 +15,6 @@ public class XN632690Req {
     private String bankRate;// 银行利率
 
     private String surcharge; // 附加费
-
-    public String getCarDealerCode() {
-        return carDealerCode;
-    }
-
-    public void setCarDealerCode(String carDealerCode) {
-        this.carDealerCode = carDealerCode;
-    }
 
     public String getLoanBankCode() {
         return loanBankCode;

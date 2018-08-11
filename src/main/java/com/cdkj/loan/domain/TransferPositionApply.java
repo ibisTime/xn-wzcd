@@ -64,6 +64,28 @@ public class TransferPositionApply extends ABaseDO {
     // 人事档案
     private Archive archice;
 
+    // 新部门名称
+    private String newDepartmentName;
+
+    // 新岗位名称
+    private String newPositionName;
+
+    public String getNewDepartmentName() {
+        return newDepartmentName;
+    }
+
+    public void setNewDepartmentName(String newDepartmentName) {
+        this.newDepartmentName = newDepartmentName;
+    }
+
+    public String getNewPositionName() {
+        return newPositionName;
+    }
+
+    public void setNewPositionName(String newPositionName) {
+        this.newPositionName = newPositionName;
+    }
+
     public SYSUser getUser() {
         return user;
     }
