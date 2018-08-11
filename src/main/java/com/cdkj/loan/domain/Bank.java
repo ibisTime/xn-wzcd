@@ -33,9 +33,6 @@ public class Bank extends ABaseDO {
     // 12期
     private Double rate12;
 
-    // 18期
-    private Double rate18;
-
     // 24期
     private Double rate24;
 
@@ -94,14 +91,6 @@ public class Bank extends ABaseDO {
 
     public void setRate12(Double rate12) {
         this.rate12 = rate12;
-    }
-
-    public Double getRate18() {
-        return rate18;
-    }
-
-    public void setRate18(Double rate18) {
-        this.rate18 = rate18;
     }
 
     public Double getRate24() {

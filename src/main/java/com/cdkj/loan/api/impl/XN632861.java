@@ -10,6 +10,12 @@ import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
+/**
+ * 入职申请审核
+ * @author: CYL 
+ * @since: 2018年8月11日 上午10:32:47 
+ * @history:
+ */
 public class XN632861 extends AProcessor {
     private IEntryApplyAO entryApplyAO = SpringContextHolder
         .getBean(IEntryApplyAO.class);

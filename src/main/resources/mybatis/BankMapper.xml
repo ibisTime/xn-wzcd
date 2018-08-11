@@ -8,7 +8,6 @@
 		<result column="bank_name" property="bankName" />
 		<result column="subbranch" property="subbranch" />
 		<result column="rate12" property="rate12" />
-		<result column="rate18" property="rate18" />
 		
 		<result column="rate24" property="rate24" />
 		<result column="rate36" property="rate36" />
@@ -46,7 +45,6 @@
 		,t.bank_name
 		,t.subbranch
 		,t.rate12
-		,t.rate18
 		
 		,t.rate24
 		,t.rate36
@@ -77,7 +75,6 @@
 		,bank_name
 		,subbranch
 		,rate12
-		,rate18
 		
 		,rate24
 		,rate36
@@ -93,7 +90,6 @@
 		,#{bankName}
 		,#{subbranch}
 		,#{rate12}
-		,#{rate18}
 		
 		,#{rate24}
 		,#{rate36}
@@ -112,7 +108,6 @@
 		,t.bank_name = #{bankName}
 		,t.subbranch = #{subbranch}
 		,t.rate12 = #{rate12}
-		,t.rate18 = #{rate18}
 		,t.rate24 = #{rate24}
 		
 		,t.rate36 = #{rate36}

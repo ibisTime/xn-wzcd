@@ -295,9 +295,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // 如果是保存，贷款金额为0，则不用计算服务费
         if (loanAmount != 0) {
             Bank bank = bankBO.getBankBySubbranch(data.getLoanBankCode());
-            XN632690Res res = calculation(req.getCarDealerCode(),
-                bank.getCode(), req.getLoanPeriods(), loanAmount.toString(),
-                req.getRateType(), req.getServiceChargeWay(), req.getBankRate(),
+            XN632690Res res = calculation(bank.getCode(), req.getLoanPeriods(),
+                loanAmount.toString(), req.getRateType(),
+                req.getServiceChargeWay(), req.getBankRate(),
                 req.getSurcharge());
             fee = StringValidater.toLong(res.getPoundage());
             data.setFee(fee);// 服务费
@@ -2557,9 +2557,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public XN632690Res calculation(String carDealerCode, String loanBankCode,
-            String loanPeriods, String loanAmount, String rateType,
-            String serviceChargeWay, String bankRate, String surcharge) {
+    public XN632690Res calculation(String loanBankCode, String loanPeriods,
+            String loanAmount, String rateType, String serviceChargeWay,
+            String bankRate, String surcharge) {
         XN632690Res res = new XN632690Res();
         Bank bank = bankBO.getBank(loanBankCode);
         // 中行
@@ -2578,16 +2578,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 // 手续费=贷款额*基准利率
                 // 3.首期=手续费-（4）*（期数-1）
                 // 4.每期=(2)*基准利率
-                CarDealerProtocol carDealerProtocol = carDealerProtocolBO
-                    .getCarDealerProtocolByCarDealerCode(carDealerCode,
-                        bank.getBankCode());// 获取经销商协议
                 double rate = 0;// 基准利率
                 if (StringValidater.toInteger(loanPeriods) == 12) {
-                    rate = carDealerProtocol.getPlatCtRate12();
+                    rate = bank.getRate12();
                 } else if (StringValidater.toInteger(loanPeriods) == 24) {
-                    rate = carDealerProtocol.getPlatCtRate24();
+                    rate = bank.getRate24();
                 } else {
-                    rate = carDealerProtocol.getPlatCtRate36();
+                    rate = bank.getRate36();
                 }
                 Long poundage = AmountUtil
                     .mul(StringValidater.toLong(loanAmount), rate);// 手续费
@@ -2775,16 +2772,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         } else if (bank.getBankCode().equals(EBankType.GH.getCode())) {// 工行
             // a)服务费=(实际利率-基准利率)*贷款额
             // b)月供=((贷款额+服务费)*(1+基准利率))/贷款期数
-            CarDealerProtocol carDealerProtocol = carDealerProtocolBO
-                .getCarDealerProtocolByCarDealerCode(carDealerCode,
-                    bank.getBankCode());// 获取经销商协议
             double rate = 0;// 基准利率
             if (StringValidater.toInteger(loanPeriods) == 12) {
-                rate = carDealerProtocol.getPlatCtRate12();
+                rate = bank.getRate12();
             } else if (StringValidater.toInteger(loanPeriods) == 24) {
-                rate = carDealerProtocol.getPlatCtRate24();
+                rate = bank.getRate24();
             } else {
-                rate = carDealerProtocol.getPlatCtRate36();
+                rate = bank.getRate36();
             }
             Long poundage = AmountUtil.mul(StringValidater.toLong(loanAmount),
                 (StringValidater.toDouble(bankRate) - rate));// 服务费

@@ -159,9 +159,9 @@ public interface IBudgetOrderAO {
     public List<BudgetOrder> queryBudgetOrderByList(List<String> list);
 
     // 计算器
-    public XN632690Res calculation(String carDealerCode, String loanBankCode,
-            String loanPeriods, String loanAmount, String rateType,
-            String serviceChargeWay, String bankRate, String surcharge);
+    public XN632690Res calculation(String loanBankCode, String loanPeriods,
+            String loanAmount, String rateType, String serviceChargeWay,
+            String bankRate, String surcharge);
 
     // 统计分析 余额明细
     public Object queryBudgetOrderPageForBalanceDetail(int start, int limit,

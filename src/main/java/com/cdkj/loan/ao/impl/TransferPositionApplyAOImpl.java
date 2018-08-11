@@ -3,16 +3,19 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ITransferPositionApplyAO;
 import com.cdkj.loan.bo.IArchiveBO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ITransferPositionApplyBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.Archive;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.TransferPositionApply;
 import com.cdkj.loan.dto.req.XN632880Req;
@@ -30,6 +33,9 @@ public class TransferPositionApplyAOImpl implements ITransferPositionApplyAO {
 
     @Autowired
     private IArchiveBO archiveBO;
+
+    @Autowired
+    private IDepartmentBO departmentBO;
 
     @Override
     public String addTransferPositionApply(XN632880Req req) {
@@ -74,12 +80,7 @@ public class TransferPositionApplyAOImpl implements ITransferPositionApplyAO {
         if (paginable != null) {
             for (TransferPositionApply transferPositionApply : paginable
                 .getList()) {
-                SYSUser user = sysUserBO
-                    .getUser(transferPositionApply.getApplyUser());
-                transferPositionApply.setUser(user);
-                Archive archive = archiveBO
-                    .getArchiveByUserid(transferPositionApply.getApplyUser());
-                transferPositionApply.setArchice(archive);
+                initTransferPositionApply(transferPositionApply);
             }
         }
         return paginable;
@@ -88,19 +89,38 @@ public class TransferPositionApplyAOImpl implements ITransferPositionApplyAO {
     @Override
     public List<TransferPositionApply> queryTransferPositionApplyList(
             TransferPositionApply condition) {
-        return transferPositionApplyBO
+        List<TransferPositionApply> transferPositionApplyList = transferPositionApplyBO
             .queryTransferPositionApplyList(condition);
+        for (TransferPositionApply transferPositionApply : transferPositionApplyList) {
+            initTransferPositionApply(transferPositionApply);
+        }
+        return transferPositionApplyList;
     }
 
     @Override
     public TransferPositionApply getTransferPositionApply(String code) {
         TransferPositionApply transferPositionApply = transferPositionApplyBO
             .getTransferPositionApply(code);
+        initTransferPositionApply(transferPositionApply);
+        return transferPositionApply;
+    }
+
+    private void initTransferPositionApply(
+            TransferPositionApply transferPositionApply) {
         SYSUser user = sysUserBO.getUser(transferPositionApply.getApplyUser());
         transferPositionApply.setUser(user);
         Archive archive = archiveBO
             .getArchiveByUserid(transferPositionApply.getApplyUser());
         transferPositionApply.setArchice(archive);
-        return transferPositionApply;
+        if (StringUtils.isNotBlank(transferPositionApply.getNewDepartment())) {
+            Department department = departmentBO
+                .getDepartment(transferPositionApply.getNewDepartment());
+            transferPositionApply.setNewDepartmentName(department.getName());
+        }
+        if (StringUtils.isNotBlank(transferPositionApply.getNewPosition())) {
+            Department department = departmentBO
+                .getDepartment(transferPositionApply.getNewPosition());
+            transferPositionApply.setNewPositionName(department.getName());
+        }
     }
 }
