@@ -31,4 +31,8 @@ public interface IBankRepointDetailAO {
 
     public BankRepointDetail getBankRepointDetail(String code);
 
+    // 录入返佣金额
+    public void entryRepointAmount(String code, String amount, String billPdf,
+            String operator);
+
 }

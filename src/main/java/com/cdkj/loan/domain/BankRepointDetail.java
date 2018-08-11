@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -10,83 +12,83 @@ import com.cdkj.loan.dao.base.ABaseDO;
 */
 public class BankRepointDetail extends ABaseDO {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	// 编号
-	private String code;
+    // 编号
+    private String code;
 
-	// 银行返佣编号
-	private String bankRepointCode;
+    // 银行返佣编号
+    private String bankRepointCode;
 
-	// 返佣金额
-	private String amount;
+    // 返佣金额
+    private Long amount;
 
-	// 到账时间
-	private String settleDatetime;
+    // 到账时间
+    private Date settleDatetime;
 
-	// 银行回单
-	private String billPdf;
+    // 银行回单
+    private String billPdf;
 
-	// 更新人
-	private String updater;
+    // 更新人
+    private String updater;
 
-	// 更新时间
-	private String updateDatetime;
+    // 更新时间
+    private Date updateDatetime;
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public void setBankRepointCode(String bankRepointCode) {
-		this.bankRepointCode = bankRepointCode;
-	}
+    public String getBankRepointCode() {
+        return bankRepointCode;
+    }
 
-	public String getBankRepointCode() {
-		return bankRepointCode;
-	}
+    public void setBankRepointCode(String bankRepointCode) {
+        this.bankRepointCode = bankRepointCode;
+    }
 
-	public void setAmount(String amount) {
-		this.amount = amount;
-	}
+    public Long getAmount() {
+        return amount;
+    }
 
-	public String getAmount() {
-		return amount;
-	}
+    public void setAmount(Long amount) {
+        this.amount = amount;
+    }
 
-	public void setSettleDatetime(String settleDatetime) {
-		this.settleDatetime = settleDatetime;
-	}
+    public Date getSettleDatetime() {
+        return settleDatetime;
+    }
 
-	public String getSettleDatetime() {
-		return settleDatetime;
-	}
+    public void setSettleDatetime(Date settleDatetime) {
+        this.settleDatetime = settleDatetime;
+    }
 
-	public void setBillPdf(String billPdf) {
-		this.billPdf = billPdf;
-	}
+    public String getBillPdf() {
+        return billPdf;
+    }
 
-	public String getBillPdf() {
-		return billPdf;
-	}
+    public void setBillPdf(String billPdf) {
+        this.billPdf = billPdf;
+    }
 
-	public void setUpdater(String updater) {
-		this.updater = updater;
-	}
+    public String getUpdater() {
+        return updater;
+    }
 
-	public String getUpdater() {
-		return updater;
-	}
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
 
-	public void setUpdateDatetime(String updateDatetime) {
-		this.updateDatetime = updateDatetime;
-	}
+    public Date getUpdateDatetime() {
+        return updateDatetime;
+    }
 
-	public String getUpdateDatetime() {
-		return updateDatetime;
-	}
+    public void setUpdateDatetime(Date updateDatetime) {
+        this.updateDatetime = updateDatetime;
+    }
 
 }

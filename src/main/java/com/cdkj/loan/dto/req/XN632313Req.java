@@ -3,7 +3,7 @@ package com.cdkj.loan.dto.req;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 退回佣金
+ * 退回银行返佣的佣金
  * @author: jiafr 
  * @since: 2018年8月10日 下午5:23:19 
  * @history:

@@ -62,7 +62,7 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
         data.setUpdateDatetime(new Date());
         String code = assertApplyBO.saveAssertApply(data);
 
-        if ("1".equals(req.getIsPrint())) {
+        if ("1".equals(req.getIsPrint())) {// 印刷品
             List<XN632640ReqChild2> list2 = req.getAssertUserList();
             for (XN632640ReqChild2 child2 : list2) {
                 AssertUser data2 = new AssertUser();
@@ -71,7 +71,8 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
                 data2.setUserId(child2.getUserId());
                 assertUserBO.saveAssertUser(data2);
             }
-        } else if ("2".equals(req.getIsPrint())) {
+        }
+        if ("2".equals(req.getIsPrint())) {// 非印刷品
             List<XN632640ReqChild1> list1 = req.getAssertGoodsList();
             for (XN632640ReqChild1 child1 : list1) {
                 AssertGoods data1 = new AssertGoods();
