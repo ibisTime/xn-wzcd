@@ -12,6 +12,7 @@ public class XN632640Req {
 
     private String applyNote;
 
+    // 是否是印刷品（1是2不是）
     private String isPrint;
 
     private String remark;

@@ -55,8 +55,7 @@ public class BankRepointDAOImpl extends AMybatisTemplate implements
 
     @Override
     public int update(BankRepoint data) {
-        // TODO Auto-generated method stub
-        return 0;
+        return super.update(NAMESPACE.concat("update_bankRepoint"), data);
     }
 
 }

@@ -30,4 +30,12 @@ public interface IBankRepointAO {
 
     public BankRepoint getBankRepoint(String code);
 
+    // 录入结算费率 （批量）
+    public void entrySettleRate(List<String> codeList, String settleRate,
+            String operator);
+
+    // 退回银行返佣的佣金
+    public void sendBackBankRepoint(String code, String sendBackAmount,
+            String billPdf, String operator);
+
 }

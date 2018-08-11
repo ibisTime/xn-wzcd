@@ -1,66 +1,52 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * 
+ * 录入结算费率
  * @author: jiafr 
  * @since: 2018年8月10日 下午2:48:18 
  * @history:
  */
 public class XN632310Req {
 
+    // 银行返佣编号列表
+    @NotEmpty
+    List<String> codeList;
+
+    // 结算费率
     @NotBlank
-    private String code;
+    String settleRate;
 
+    // 操作人
     @NotBlank
-    private String actualAmount;
+    String operator;
 
-    @NotBlank
-    private String waterBill;
-
-    @NotBlank
-    private String updater;
-
-    private String remark;
-
-    public String getCode() {
-        return code;
+    public List<String> getCodeList() {
+        return codeList;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCodeList(List<String> codeList) {
+        this.codeList = codeList;
     }
 
-    public String getActualAmount() {
-        return actualAmount;
+    public String getSettleRate() {
+        return settleRate;
     }
 
-    public void setActualAmount(String actualAmount) {
-        this.actualAmount = actualAmount;
+    public void setSettleRate(String settleRate) {
+        this.settleRate = settleRate;
     }
 
-    public String getWaterBill() {
-        return waterBill;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setWaterBill(String waterBill) {
-        this.waterBill = waterBill;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
-    public String getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
 }

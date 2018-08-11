@@ -1,7 +1,7 @@
 package com.cdkj.loan.dto.req;
 
 /**
- * 分页查询返点支付
+ * 分页查询银行返佣
  * @author: jiafr 
  * @since: 2018年6月9日 下午2:22:25 
  * @history:
@@ -10,34 +10,48 @@ public class XN632315Req extends APageReq {
 
     private static final long serialVersionUID = 1L;
 
-    private String teamCode;
+    // 贷款银行编号
+    private String loanBankCode;
 
-    private String bizCode;
+    // 汽车经销商编号
+    private String carDealerCode;
 
-    private String status;
+    // 节点
+    private String curNodeCode;
 
-    public String getBizCode() {
-        return bizCode;
+    // 客户姓名
+    private String customerName;
+
+    public String getLoanBankCode() {
+        return loanBankCode;
     }
 
-    public void setBizCode(String bizCode) {
-        this.bizCode = bizCode;
+    public void setLoanBankCode(String loanBankCode) {
+        this.loanBankCode = loanBankCode;
     }
 
-    public String getTeamCode() {
-        return teamCode;
+    public String getCarDealerCode() {
+        return carDealerCode;
     }
 
-    public void setTeamCode(String teamCode) {
-        this.teamCode = teamCode;
+    public void setCarDealerCode(String carDealerCode) {
+        this.carDealerCode = carDealerCode;
     }
 
-    public String getStatus() {
-        return status;
+    public String getCurNodeCode() {
+        return curNodeCode;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
 }

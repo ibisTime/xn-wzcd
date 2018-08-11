@@ -13,6 +13,7 @@ import com.cdkj.loan.bo.IAssertGoodsBO;
 import com.cdkj.loan.bo.IAssertUserBO;
 import com.cdkj.loan.bo.ICompProductBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.AssertApply;
 import com.cdkj.loan.domain.AssertGoods;
@@ -61,7 +62,7 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
         data.setUpdateDatetime(new Date());
         String code = assertApplyBO.saveAssertApply(data);
 
-        if ("1".equals(req.getIsPrint())) {
+        if ("1".equals(req.getIsPrint())) {// 印刷品
             List<XN632640ReqChild2> list2 = req.getAssertUserList();
             for (XN632640ReqChild2 child2 : list2) {
                 AssertUser data2 = new AssertUser();
@@ -70,7 +71,8 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
                 data2.setUserId(child2.getUserId());
                 assertUserBO.saveAssertUser(data2);
             }
-        } else if ("2".equals(req.getIsPrint())) {
+        }
+        if ("2".equals(req.getIsPrint())) {// 非印刷品
             List<XN632640ReqChild1> list1 = req.getAssertGoodsList();
             for (XN632640ReqChild1 child1 : list1) {
                 AssertGoods data1 = new AssertGoods();
@@ -78,7 +80,7 @@ public class AssertApplyAOImpl implements IAssertApplyAO {
                 data1.setProductCode(child1.getProductCode());
                 data1.setMode(child1.getMode());
                 data1.setQuantity(child1.getQuantity());
-                data1.setPrice(child1.getPrice());
+                data1.setPrice(StringValidater.toLong(child1.getPrice()));
                 data1.setRemark(child1.getRemark());
                 assertGoodsBO.saveAssertGoods(data1);
             }
