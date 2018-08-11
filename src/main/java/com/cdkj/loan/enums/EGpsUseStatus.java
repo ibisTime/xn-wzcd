@@ -7,7 +7,7 @@ package com.cdkj.loan.enums;
  * @history:
  */
 public enum EGpsUseStatus {
-    UN_USE("0", "待使用"), USED("1", "使用中"), DAMAGE("2", "GPS损坏");
+    UN_USE("0", "待使用"), USED("1", "使用中"), DAMAGE("2", "GPS已损坏");
 
     EGpsUseStatus(String code, String value) {
         this.code = code;

@@ -46,7 +46,7 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
             Date applyDatetime, String companyApplyCode) {
         Gps gps = getGps(code);
         gps.setCompanyCode(companyCode);
-        gps.setCompanyApplyStatus(EBoolean.NO.getCode());
+        gps.setCompanyApplyStatus(EBoolean.YES.getCode());// 已申领
         gps.setCompanyApplyDatetime(applyDatetime);
         gps.setCompanyApplyCode(companyApplyCode);
         gpsDAO.updateCompanyApprove(gps);
@@ -116,7 +116,6 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
     public List<Gps> queryGpsListByUserApplyCode(String userApplyCode) {
         Gps condition = new Gps();
         condition.setApplyCode(userApplyCode);
-        condition.setApplyStatus(EGpsUserApplyStatus.APPLYING.getCode());
         return gpsDAO.selectList(condition);
     }
 
@@ -124,7 +123,6 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
     public List<Gps> queryGpsListByCompanyApplyCode(String companyApplyCode) {
         Gps condition = new Gps();
         condition.setCompanyApplyCode(companyApplyCode);
-        condition.setApplyStatus(EGpsUserApplyStatus.APPLYING.getCode());
         return gpsDAO.selectList(condition);
     }
 

@@ -32,19 +32,19 @@ public class Gps extends ABaseDO {
     // 公司申领日期
     private Date companyApplyDatetime;
 
-    // 公司申领编号
+    // 公司申领单编号
     private String companyApplyCode;
 
-    // 申领人
+    // 申领人id
     private String applyUser;
 
     // 申领日期
     private Date applyDatetime;
 
-    // 申领状态(0 待申领 1 申领处理中 2 已申领)
+    // 个人申领状态(0 待申领 1 申领处理中 2 已申领)
     private String applyStatus;
 
-    // 申领单号
+    // 个人申领单号
     private String applyCode;
 
     // 使用状态(0待使用1使用中2已损坏)

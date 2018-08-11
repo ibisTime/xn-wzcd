@@ -15,6 +15,10 @@ public class XN632211Req {
     // 制卡备注
     private String makeCardRemark;
 
+    // 操作人
+    @NotBlank
+    private String operator;
+
     public String getCode() {
         return code;
     }
@@ -37,6 +41,14 @@ public class XN632211Req {
 
     public void setMakeCardRemark(String makeCardRemark) {
         this.makeCardRemark = makeCardRemark;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
 }

@@ -18,7 +18,6 @@
 		<result column="send_datetime" property="sendDatetime" />
 		<result column="receive_datetime" property="receiveDatetime" />
 		<result column="status" property="status" />
-		<result column="remark" property="remark" />
 	</resultMap>
 	
 	<sql id="where_condition">
@@ -61,7 +60,6 @@
 		,t.send_datetime
 		,t.receive_datetime
 		,t.status
-		,t.remark
 		FROM
 		tb_gps_apply t
 		<include refid="where_condition" />
@@ -90,7 +88,6 @@
 		,apply_reason
 		,apply_count
 		,status
-		,remark
 		)
 		VALUES(
 		#{code}
@@ -102,7 +99,6 @@
 		,#{applyReason}
 		,#{applyCount}
 		,#{status}
-		,#{remark}
 		)
 	</insert>
 

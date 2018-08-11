@@ -24,7 +24,6 @@ import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EGpsSendBackReason;
 import com.cdkj.loan.enums.EGpsUseStatus;
 import com.cdkj.loan.enums.EGpsUserApplyStatus;
-import com.cdkj.loan.enums.ELogisticsType;
 
 @Service
 public class GpsAOImpl implements IGpsAO {
@@ -54,8 +53,8 @@ public class GpsAOImpl implements IGpsAO {
         data.setCode(code);
         data.setGpsDevNo(gpsDevNo);
         data.setGpsType(gpsType);
-        data.setCompanyApplyStatus(EBoolean.NO.getCode());
-        data.setApplyStatus(EGpsUserApplyStatus.TO_APPLY.getCode());
+        data.setCompanyApplyStatus(EBoolean.NO.getCode());// 公司申领状态
+        data.setApplyStatus(EGpsUserApplyStatus.TO_APPLY.getCode());// 个人申领状态
         data.setUseStatus(EGpsUseStatus.UN_USE.getCode());
         gpsBO.saveGps(data);
         return code;
@@ -119,8 +118,9 @@ public class GpsAOImpl implements IGpsAO {
             gps.setApplyStatus(EGpsUserApplyStatus.TO_APPLY.getCode());
         }
         gpsBO.refresh(gps);
-        // 资料传递待发件
-        logisticsBO.saveLogistics(ELogisticsType.GPS.getCode(), gps.getCode(),
-            gps.getApplyUser(), null, null);
+        // 资料传递待发件 TODO
+        // logisticsBO.saveLogistics(ELogisticsType.GPS.getCode(),
+        // gps.getCode(),
+        // gps.getApplyUser(), null, null);
     }
 }

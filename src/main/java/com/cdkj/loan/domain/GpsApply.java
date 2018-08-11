@@ -54,9 +54,6 @@ public class GpsApply extends ABaseDO {
     // 状态(0 待审核 1 审核通过,待发货 2 审核不通过 3 已发货,待收货 4 已收货)
     private String status;
 
-    // 备注
-    private String remark;
-
     // **************db propreties**************
     // 申请人名称
     private String applyUserName;
@@ -169,14 +166,6 @@ public class GpsApply extends ABaseDO {
 
     public String getStatus() {
         return status;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getRemark() {
-        return remark;
     }
 
     public String getApplyReason() {

@@ -30,6 +30,7 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGpsApplyStatus;
 import com.cdkj.loan.enums.EGpsApplyType;
+import com.cdkj.loan.enums.EGpsUseStatus;
 import com.cdkj.loan.enums.EGpsUserApplyStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
@@ -60,6 +61,12 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
 
     @Override
     public String applyCompanyGps(XN632710Req req) {
+        Gps condition = new Gps();
+        condition.setUseStatus(EGpsUseStatus.UN_USE.getCode());
+        List<Gps> list = gpsBO.queryGpsList(condition);
+        if (StringValidater.toInteger(req.getApplyCount()) > list.size()) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "申请数量大于库存！");
+        }
         // 保存数据
         GpsApply data = new GpsApply();
         data.setType(EGpsApplyType.COMPANY.getCode());
@@ -73,7 +80,7 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         data.setApplyReason(req.getApplyReason());
         data.setApplyCount(StringValidater.toInteger(req.getApplyCount()));
         data.setApplyDatetime(new Date());
-        data.setStatus(EGpsApplyStatus.TO_APPROVE.getCode());
+        data.setStatus(EGpsApplyStatus.TO_APPROVE.getCode());// 节点
         return gpsApplyBO.saveGpsApply(data);
     }
 
@@ -82,12 +89,17 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
     public void approveCompanyGps(XN632712Req req) {
         GpsApply data = gpsApplyBO.getGpsApply(req.getCode());
         if (!EGpsApplyStatus.TO_APPROVE.getCode().equals(data.getStatus())) {
-            throw new BizException("xn0000", "GPS申领单不在待审核状态");
+            throw new BizException("xn0000", "GPS申领单不是待审核状态，不能操作");
         }
-        // 审核通过gps，状态更改
+        // 审核通过gps
         if (EBoolean.YES.getCode().equals(req.getApproveResult())) {
             // gps 分配
             for (XN632712ReqGps childReq : req.getGpsList()) {
+                Gps gps = gpsBO.getGps(childReq.getCode());
+                if (EGpsUseStatus.UN_USE.getCode().equals(gps.getUseStatus())) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "编号为" + gps.getCode() + "的gps不是待使用状态,不能申领");
+                }
                 gpsBO.approveCompanyGps(childReq.getCode(),
                     data.getCompanyCode(), data.getApplyDatetime(),
                     data.getCode());
@@ -96,7 +108,6 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             logisticsBO.saveLogistics(ELogisticsType.GPS.getCode(),
                 data.getCode(), data.getApplyUser(), null, null);
         }
-
         // 修改订单状态
         gpsApplyBO.approveCompanyGpsApply(data, req.getApproveResult(),
             req.getApproveUser(), req.getApproveNote());
@@ -129,13 +140,12 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             Gps gps = gpsBO.getGps(gpsReq.getCode());
             if (!EGpsUserApplyStatus.TO_APPLY.getCode().equals(
                 gps.getApplyStatus())) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "gps不处于待申领状态");
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "编号为"
+                        + gps.getCode() + "的gps不处于待申领状态,不能申领");
             }
             gpsBO.applyUserGps(gpsReq.getCode(), gpsApplyCode,
                 req.getApplyUser());
         }
-
         return gpsApplyCode;
     }
 
@@ -145,7 +155,7 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         if (!EGpsApplyStatus.TO_APPROVE.getCode().equals(data.getStatus())) {
             throw new BizException("xn0000", "GPS申领单不在待审核状态");
         }
-        // 审核通过gps，状态更改
+        // 审核通过gps
         if (EBoolean.YES.getCode().equals(req.getApproveResult())) {
             List<Gps> gpsList = gpsBO.queryGpsListByUserApplyCode(data
                 .getCode());
@@ -154,7 +164,6 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
                 gpsBO.approveUserGps(gps.getCode(), req.getApproveResult());
             }
         }
-
         // 修改订单状态
         gpsApplyBO.approveUserGpsApply(data, req.getApproveResult(),
             req.getApproveUser(), req.getApproveNote());

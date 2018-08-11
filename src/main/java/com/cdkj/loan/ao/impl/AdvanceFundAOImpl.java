@@ -382,40 +382,46 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
 
     @Override
     public void applyCancelAdvanceFund(XN632177Req req) {
-
         AdvanceFund data = advanceFundBO.getAdvanceFund(req.getCode());
         data.setCancelReason(req.getCancelReason());
+        data.setUpdateDatetime(new Date());
         data.setUpdater(req.getOperator());
-
-        if (EAdvanceType.PARENT_BIZ.getCode().equals(data.getType())) {
+        String preCurNodeCode = data.getCurNodeCode();// 当前节点
+        EBizLogType eBizLogType = null;
+        if (EAdvanceType.PARENT_BIZ.getCode().equals(data.getType())) {// 本地公司
+            eBizLogType = EBizLogType.ADVANCE_FUND_PARENT;
             if (EAdvanceFundNode.PARENT_CONFIRM.getCode().equals(
                 data.getCurNodeCode())
                     || EAdvanceFundNode.PARENT_AREA.getCode().equals(
                         data.getCurNodeCode())
                     || EAdvanceFundNode.PARENT_PROVINCE.getCode().equals(
                         data.getCurNodeCode())) {
-                data.setCurNodeCode(EAdvanceFundNode.PARENT_CONFIRM.getCode());
+                data.setCurNodeCode(EAdvanceFundNode.PARENT_AGAIN.getCode());
             } else {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不能申请撤销垫资操作，需财务审核");
             }
-
-        } else if (EAdvanceType.BRANCH_BIZ.getCode().equals(data.getType())) {
+        }
+        if (EAdvanceType.BRANCH_BIZ.getCode().equals(data.getType())) {// 外地公司
+            eBizLogType = EBizLogType.ADVANCE_FUND_BRANCH;
             if (EAdvanceFundNode.BRANCH_CONFIRM.getCode().equals(
                 data.getCurNodeCode())
                     || EAdvanceFundNode.BRANCH_AREA.getCode().equals(
                         data.getCurNodeCode())
                     || EAdvanceFundNode.BRANCH_PROVINCE.getCode().equals(
                         data.getCurNodeCode())) {
-                data.setCurNodeCode(EAdvanceFundNode.BRANCH_CONFIRM.getCode());
+                data.setCurNodeCode(EAdvanceFundNode.BRANCH_AGAIN.getCode());
             } else {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前节点不能申请撤销垫资操作，需财务审核");
             }
-
         }
+        sysBizLogBO.recordCurrentSYSBizLog(data.getBudgetCode(), eBizLogType,
+            data.getCode(), preCurNodeCode, req.getCancelReason(),
+            req.getOperator());
+        sysBizLogBO.saveSYSBizLog(data.getBudgetCode(), eBizLogType,
+            data.getCode(), data.getCurNodeCode());
         advanceFundBO.applyCancelAdvanceFund(data);
-
     }
 
     @Override

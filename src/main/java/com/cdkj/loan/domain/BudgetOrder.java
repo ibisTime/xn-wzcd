@@ -767,7 +767,7 @@ public class BudgetOrder extends ABaseDO {
     // 制卡状态
     private String makeCardStatus;
 
-    // 制卡更新人
+    // 制卡操作人
     private String makeCardOperator;
 
     // 制卡备注

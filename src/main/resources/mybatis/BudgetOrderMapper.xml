@@ -1804,6 +1804,7 @@
 		make_card_status = #{makeCardStatus}
 		,bank_card_number = #{bankCardNumber}
 		,make_card_remark = #{makeCardRemark}
+		,make_card_operator = #{makeCardOperator}
 		WHERE code = #{code}
 	</update>
 

@@ -84,7 +84,7 @@ public interface IBudgetOrderAO {
 
     // 制卡录入
     public void cardMaking(String code, String bankCardNumber,
-            String makeCardRemark);
+            String makeCardRemark, String operator);
 
     // 发保合录入
     public void entryPreservation(XN632220Req req);
@@ -131,8 +131,8 @@ public interface IBudgetOrderAO {
     public XN632234Res modifyLoanAmountCalculateData(String code,
             String loanAmount);
 
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
-            BudgetOrder condition);
+    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start,
+            int limit, BudgetOrder condition);
 
     // 银行放款合同打印
     public BudgetOrder loanContractPrint(XN632142Req req);
