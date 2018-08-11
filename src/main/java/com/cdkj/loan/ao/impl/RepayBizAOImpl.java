@@ -978,7 +978,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             EBoolean.YES.getCode());
 
         Date releaseDatetime = DateUtil.strToDate(releaseDatetimeStr,
-            DateUtil.DATA_TIME_PATTERN_1);
+            DateUtil.FRONT_DATE_FORMAT_STRING);
         repayBizBO.refreshMortgagePrint(repayBiz, nextNodeCode, releaseDatetime,
             releaseTemplateId, releaseNote, operator);
 

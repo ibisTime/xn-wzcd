@@ -62,6 +62,7 @@
 		<result column="second_company_insurance" property="secondCompanyInsurance" />
 		<result column="third_company_insurance" property="thirdCompanyInsurance" />
 		<result column="release_apply_note" property="releaseApplyNote" />
+		<result column="release_apply_datetime" property="releaseApplyDatetime" />
 		<result column="release_datetime" property="releaseDatetime" />
 		<result column="release_note" property="releaseNote" />
 		<result column="release_template_id" property="releaseTemplateId" />
@@ -222,6 +223,7 @@
 		,t.second_company_insurance
 		,t.third_company_insurance
 		,t.release_apply_note
+		,t.release_apply_datetime
 		
 		,t.release_datetime
 		,t.release_note
@@ -315,6 +317,7 @@
 		,t.second_company_insurance
 		,t.third_company_insurance
 		,t.release_apply_note
+		,t.release_apply_datetime
 		
 		,t.release_datetime
 		,t.release_note
@@ -408,6 +411,7 @@
 		,t.second_company_insurance
 		,t.third_company_insurance
 		,t.release_apply_note
+		,t.release_apply_datetime
 		
 		,t.release_datetime
 		,t.release_note
@@ -683,7 +687,8 @@
 	<update id="update_overdueRedHandle" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET
-		cur_node_code = #{curNodeCode}
+		rest_periods = #{restPeriods}
+		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 	
@@ -855,6 +860,7 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,release_apply_note = #{releaseApplyNote}
+		,release_apply_datetime = #{releaseApplyDatetime}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}

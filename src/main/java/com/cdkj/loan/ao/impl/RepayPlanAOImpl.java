@@ -383,6 +383,10 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             .equals(req.getCollectionResult())) {
             repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_GREEN.getCode());
 
+            // 剩余期数 = 总期数-还款计划的当前期数
+            repayBiz.setRestPeriods(
+                repayBiz.getPeriods() - repayPlan.getCurPeriods());
+
             userBO.refreshGreenSign(user, req.getOperator());
         } else if (ECollectionResult.REJUST_REPAY.getCode()
             .equals(req.getCollectionResult())
@@ -395,6 +399,10 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             .equals(req.getCollectionResult())) {
             repayPlan
                 .setCurNodeCode(ERepayPlanNode.HANDLER_TO_YELLOW.getCode());
+
+            // 剩余期数 = 总期数-还款计划的当前期数
+            repayBiz.setRestPeriods(
+                repayBiz.getPeriods() - repayPlan.getCurPeriods());
 
             userBO.refreshYellowSign(user, req.getOperator());
         } else if (ECollectionResult.JUDGE.getCode()

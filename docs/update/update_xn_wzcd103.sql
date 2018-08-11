@@ -57,3 +57,6 @@ INSERT INTO `tp_archive` (`code`, `real_name`, `id_no`, `mobile`, `job_no`, `ent
 
 ALTER TABLE `tb_bank` 
 DROP COLUMN `rate18`;
+
+ALTER TABLE `tdh_repay_biz` 
+ADD COLUMN `release_apply_datetime` datetime NULL COMMENT '解除抵押申请时间' AFTER `release_apply_note`;

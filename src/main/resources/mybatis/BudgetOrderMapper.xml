@@ -1649,6 +1649,8 @@
 		
 		,repay_biz_code = #{repayBizCode}
 		,type = #{type}
+		,repay_first_month_amount = #{repayFirstMonthAmount}
+		,repay_month_amount = #{repayMonthAmount}
 		WHERE code = #{code}
 	</update>
 
@@ -1761,9 +1763,7 @@
 		,month_amount = #{monthAmount}
 		,repay_bank_date = #{repayBankDate}
 		
-		,repay_first_month_amount = #{repayFirstMonthAmount}
 		,repay_first_month_datetime = #{repayFirstMonthDatetime}
-		,repay_month_amount = #{repayMonthAmount}
 		,id_no_picz = #{idNoPicz}
 		,id_no_picf = #{idNoPicf}
 		

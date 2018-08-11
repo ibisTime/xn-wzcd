@@ -25,8 +25,10 @@ import com.cdkj.loan.domain.WorkExperience;
 import com.cdkj.loan.dto.req.XN632850ReqExp;
 import com.cdkj.loan.dto.req.XN632860Req;
 import com.cdkj.loan.enums.EApproveResult;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EEntryApplyStatus;
 import com.cdkj.loan.enums.ESysUserType;
+import com.cdkj.loan.exception.BizException;
 
 @Service
 public class EntryApplyAOImpl implements IEntryApplyAO {
@@ -128,6 +130,11 @@ public class EntryApplyAOImpl implements IEntryApplyAO {
     public void approveEntryApply(String code, String approveResult,
             String updater, String remark) {
         EntryApply entryApply = entryApplyBO.getEntryApply(code);
+        if (!EEntryApplyStatus.STAY_AUDIT.getCode()
+            .equals(entryApply.getStatus())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前状态不是待审核状态，不能操作！");
+        }
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             entryApply.setStatus(EEntryApplyStatus.AUDIT_PASS.getCode());
             // 新增人事档案

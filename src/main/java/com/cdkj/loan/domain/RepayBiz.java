@@ -168,6 +168,9 @@ public class RepayBiz extends ABaseDO {
     // 解除抵押说明
     private String releaseApplyNote;
 
+    // 解除抵押申请时间
+    private Date releaseApplyDatetime;
+
     // 解除抵押时间
     private Date releaseDatetime;
 
@@ -546,6 +549,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setBillDatetime(int billDatetime) {
         this.billDatetime = billDatetime;
+    }
+
+    public Date getReleaseApplyDatetime() {
+        return releaseApplyDatetime;
+    }
+
+    public void setReleaseApplyDatetime(Date releaseApplyDatetime) {
+        this.releaseApplyDatetime = releaseApplyDatetime;
     }
 
     public int getMonthDatetime() {

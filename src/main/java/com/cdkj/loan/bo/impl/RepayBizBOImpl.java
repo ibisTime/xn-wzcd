@@ -166,22 +166,13 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
             repayBiz.setFirstRepayDatetime(
                 budgetOrder.getRepayFirstMonthDatetime());
         }
-        if (budgetOrder.getRepayFirstMonthAmount() == null) {
-            repayBiz.setFirstRepayAmount(0L);
-        } else {
-            repayBiz
-                .setFirstRepayAmount(budgetOrder.getRepayFirstMonthAmount());
-        }
+        repayBiz.setFirstRepayAmount(budgetOrder.getRepayFirstMonthAmount());
 
         if (budgetOrder.getRepayBankDate() == 0) {
             budgetOrder.setRepayBankDate(1);
         }
 
-        if (budgetOrder.getRepayMonthAmount() == null) {
-            repayBiz.setMonthAmount(0L);
-        } else {
-            repayBiz.setMonthAmount(budgetOrder.getRepayMonthAmount());
-        }
+        repayBiz.setMonthAmount(budgetOrder.getRepayMonthAmount());
         repayBiz.setMonthDatetime(budgetOrder.getRepayBankDate());
         repayBiz.setLyDeposit(budgetOrder.getLyAmount());
         repayBiz.setCutLyDeposit(0L);
@@ -531,6 +522,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         data.setCode(code);
         data.setCurNodeCode(curNodeCode);
         data.setReleaseApplyNote(applyNote);
+        data.setReleaseApplyDatetime(new Date());
         data.setUpdater(updater);
         data.setUpdateDatetime(new Date());
         repayBizDAO.updateReleaseMortgageApply(data);

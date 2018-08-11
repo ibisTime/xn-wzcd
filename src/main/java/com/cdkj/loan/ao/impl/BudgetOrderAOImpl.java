@@ -300,6 +300,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 loanAmount.toString(), req.getRateType(),
                 req.getServiceChargeWay(), req.getBankRate(),
                 req.getSurcharge());
+            data.setRepayFirstMonthAmount(StringValidater.toLong(res
+                .getInitialAmount()));// 首期还款金额
+            data.setRepayMonthAmount(StringValidater.toLong(res
+                .getAnnualAmount()));// 每期月供金额
             fee = StringValidater.toLong(res.getPoundage());
             data.setFee(fee);// 服务费
             double feeRate = AmountUtil.div(fee, loanAmount);
@@ -1142,12 +1146,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .getRepayBankDate()));
         budgetOrder.setRepayFirstMonthAmount(StringValidater.toLong(req
             .getRepayFirstMonthAmount()));
+        budgetOrder.setMonthAmount(StringValidater.toLong(req
+            .getRepayMonthAmount()));
+        budgetOrder.setRepayBankDate(StringValidater.toInteger(req
+            .getRepayBankDate()));
         budgetOrder
             .setRepayFirstMonthDatetime(DateUtil.strToDate(
                 req.getRepayFirstMonthDatetime(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
-        budgetOrder.setRepayMonthAmount(StringValidater.toLong(req
-            .getRepayMonthAmount()));
 
         budgetOrder.setIsComplete(req.getIsComplete());
         budgetOrder.setStorePlace(req.getStorePlace());

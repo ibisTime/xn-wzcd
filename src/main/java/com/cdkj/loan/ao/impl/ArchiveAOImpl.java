@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.cdkj.loan.ao.IArchiveAO;
@@ -58,6 +59,7 @@ public class ArchiveAOImpl implements IArchiveAO {
     private IDepartmentBO departmentBO;
 
     @Override
+    @Transactional
     public String addArchive(XN632800Req req) {
         Archive data = new Archive();
         data.setRealName(req.getRealName());
@@ -166,6 +168,7 @@ public class ArchiveAOImpl implements IArchiveAO {
     }
 
     @Override
+    @Transactional
     public void editArchive(XN632802Req req) {
         if (!archiveBO.isArchiveExist(req.getCode())) {
             throw new BizException("xn0000", "人事档案不存在");
@@ -287,6 +290,7 @@ public class ArchiveAOImpl implements IArchiveAO {
     }
 
     @Override
+    @Transactional
     public void editLeaveArchive(Archive data) {
         if (!archiveBO.isArchiveExist(data.getCode())) {
             throw new BizException("xn0000", "人事档案不存在");
@@ -295,6 +299,7 @@ public class ArchiveAOImpl implements IArchiveAO {
     }
 
     @Override
+    @Transactional
     public void statisticsAge(Archive condition) {
         int age1to20 = 0;
         int age20to30 = 0;
