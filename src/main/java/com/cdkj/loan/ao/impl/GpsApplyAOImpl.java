@@ -118,7 +118,16 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
     @Override
     @Transactional
     public String applyUserGps(XN632711Req req) {
-        // 思路:
+        SYSUser user = sysUserBO.getUser(req.getApplyUser());
+        Gps condition = new Gps();
+        condition.setCompanyCode(user.getCompanyCode());
+        condition.setCompanyApplyStatus(EBoolean.YES.getCode());// 公司已申领
+        condition.setApplyStatus(EGpsUserApplyStatus.TO_APPLY.getCode());// 个人未申领
+        List<Gps> list = gpsBO.queryGpsList(condition);
+        if (StringValidater.toInteger(req.getApplyCount()) > list.size()) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "申请数量大于公司库存！");
+        }
         // 1、申请记录落地
         GpsApply data = new GpsApply();
         data.setType(EGpsApplyType.PERSON.getCode());
@@ -127,28 +136,13 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "申请用户还未设置职位");
         }
-
         data.setCompanyCode(sysUser.getCompanyCode());
         data.setApplyUser(req.getApplyUser());
-        data.setApplyCount(req.getGpsList().size());
+        data.setApplyCount(StringValidater.toInteger(req.getApplyCount()));
         data.setApplyReason(req.getApplyReason());
         data.setApplyDatetime(new Date());
-
         data.setStatus(EGpsApplyStatus.TO_APPROVE.getCode());
-        String gpsApplyCode = gpsApplyBO.saveGpsApply(data);
-
-        // 2、gps个人申请状态变更
-        for (XN632712ReqGps gpsReq : req.getGpsList()) {
-            Gps gps = gpsBO.getGps(gpsReq.getCode());
-            if (!EGpsUserApplyStatus.TO_APPLY.getCode()
-                .equals(gps.getApplyStatus())) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "编号为" + gps.getCode() + "的gps不处于待申领状态,不能申领");
-            }
-            gpsBO.applyUserGps(gpsReq.getCode(), gpsApplyCode,
-                req.getApplyUser());
-        }
-        return gpsApplyCode;
+        return gpsApplyBO.saveGpsApply(data);
     }
 
     @Override
@@ -159,11 +153,17 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         }
         // 审核通过gps
         if (EBoolean.YES.getCode().equals(req.getApproveResult())) {
-            List<Gps> gpsList = gpsBO
-                .queryGpsListByUserApplyCode(data.getCode());
-            // gps 分配
-            for (Gps gps : gpsList) {
-                gpsBO.approveUserGps(gps.getCode(), req.getApproveResult());
+            // 2、gps个人申请状态变更
+            for (XN632712ReqGps gpsReq : req.getGpsList()) {
+                Gps gps = gpsBO.getGps(gpsReq.getCode());
+                if (!EGpsUserApplyStatus.TO_APPLY.getCode()
+                    .equals(gps.getApplyStatus())) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "编号为" + gps.getCode() + "的gps不处于待申领状态,不能申领");
+                }
+                gpsBO.applyUserGps(gpsReq.getCode(), data.getCode(),
+                    data.getApplyUser());
+                gpsBO.approveUserGps(gpsReq.getCode(), req.getApproveResult());
             }
         }
         // 修改订单状态

@@ -1,6 +1,9 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * GPS个人审核
@@ -23,6 +26,10 @@ public class XN632713Req {
 
     // 审核说明
     private String approveNote;
+
+    // GPS列表
+    @NotEmpty
+    private List<XN632712ReqGps> gpsList;
 
     public String getCode() {
         return code;
@@ -55,4 +62,13 @@ public class XN632713Req {
     public void setApproveNote(String approveNote) {
         this.approveNote = approveNote;
     }
+
+    public List<XN632712ReqGps> getGpsList() {
+        return gpsList;
+    }
+
+    public void setGpsList(List<XN632712ReqGps> gpsList) {
+        this.gpsList = gpsList;
+    }
+
 }
