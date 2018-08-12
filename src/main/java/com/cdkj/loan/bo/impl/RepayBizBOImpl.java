@@ -595,6 +595,10 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     @Override
     @Transactional
     public void refreshRepayBiz(BudgetOrder budgetOrder) {
+        if (StringUtils.isBlank(budgetOrder.getRepayBizCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "预算单还款业务为空！");
+        }
         RepayBiz repayBiz = getRepayBiz(budgetOrder.getRepayBizCode());
         repayBiz.setSfAmount(budgetOrder.getRepayFirstMonthAmount());
         repayBiz.setFirstRepayAmount(budgetOrder.getRepayFirstMonthAmount());
