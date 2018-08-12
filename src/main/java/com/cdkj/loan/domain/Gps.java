@@ -23,7 +23,7 @@ public class Gps extends ABaseDO {
     // gps类型(1有限0无线)
     private String gpsType;
 
-    // 公司编号
+    // 公司编号（公司申领）
     private String companyCode;
 
     // 公司申领状态(0 待申领 1 已申领)
@@ -35,7 +35,7 @@ public class Gps extends ABaseDO {
     // 公司申领单编号
     private String companyApplyCode;
 
-    // 申领人id
+    // 申领人（个人申领）
     private String applyUser;
 
     // 申领日期
@@ -53,7 +53,7 @@ public class Gps extends ABaseDO {
     // 使用日期
     private Date useDatetime;
 
-    // 业务编号
+    // 业务编号(预算单编号)
     private String bizCode;
 
     /*****************/
