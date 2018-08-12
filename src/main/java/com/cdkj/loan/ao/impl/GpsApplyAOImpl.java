@@ -96,7 +96,7 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             // gps 分配
             for (XN632712ReqGps childReq : req.getGpsList()) {
                 Gps gps = gpsBO.getGps(childReq.getCode());
-                if (EGpsUseStatus.UN_USE.getCode().equals(gps.getUseStatus())) {
+                if (!EGpsUseStatus.UN_USE.getCode().equals(gps.getUseStatus())) {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "编号为" + gps.getCode() + "的gps不是待使用状态,不能申领");
                 }

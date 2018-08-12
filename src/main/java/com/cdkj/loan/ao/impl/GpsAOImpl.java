@@ -55,7 +55,7 @@ public class GpsAOImpl implements IGpsAO {
         data.setGpsType(gpsType);
         data.setCompanyApplyStatus(EBoolean.NO.getCode());// 公司申领状态
         data.setApplyStatus(EGpsUserApplyStatus.TO_APPLY.getCode());// 个人申领状态
-        data.setUseStatus(EGpsUseStatus.UN_USE.getCode());
+        data.setUseStatus(EGpsUseStatus.UN_USE.getCode());// 使用状态
         gpsBO.saveGps(data);
         return code;
     }
