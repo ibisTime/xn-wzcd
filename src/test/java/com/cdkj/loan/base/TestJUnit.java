@@ -7,12 +7,13 @@ import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.unitils.UnitilsJUnit4;
 
+import com.alibaba.fastjson.JSONArray;
 import com.cdkj.loan.aliyun.util.HttpUtils;
 
 public class TestJUnit extends UnitilsJUnit4 {
     public static void main(String[] args) {
         String host = "https://jisucxdq.market.alicloudapi.com";
-        String path = "/car/detail";
+        String path = "/car/brand";
         String method = "GET";
         String appcode = "1bd9832a74284772a7549ff0cc51043e";
         Map<String, String> headers = new HashMap<String, String>();
@@ -20,7 +21,6 @@ public class TestJUnit extends UnitilsJUnit4 {
         // 83359fd73fe94948385f570e3c139105
         headers.put("Authorization", "APPCODE " + appcode);
         Map<String, String> querys = new HashMap<String, String>();
-        querys.put("carid", "2571");
         try {
             /**
             * 重要提示如下:
@@ -35,7 +35,10 @@ public class TestJUnit extends UnitilsJUnit4 {
                 querys);
             System.out.println(response.toString());
             // 获取response的body
-            System.out.println(EntityUtils.toString(response.getEntity()));
+
+            JSONArray parseArray = JSONArray
+                .parseArray(EntityUtils.toString(response.getEntity()));
+            System.out.println("---------->" + parseArray.getJSONArray(2));
         } catch (Exception e) {
             e.printStackTrace();
         }

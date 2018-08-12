@@ -890,6 +890,7 @@
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
+		,release_datetime = #{releaseDatetime}
 		,release_template_id = #{releaseTemplateId}
 		,release_note = #{releaseNote}
 		,updater = #{updater}
