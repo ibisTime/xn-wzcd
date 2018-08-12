@@ -309,8 +309,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             double feeRate = AmountUtil.div(fee, loanAmount);
             data.setGlobalRate(feeRate
                     + StringValidater.toDouble(req.getBankRate()));// 综合利率=服务费/贷款金额+银行利率
-            data.setCarDealerSubsidy(StringValidater.toLong(req
-                .getCarDealerSubsidy()));// 厂家贴息
+            data.setCarDealerSubsidy(getLong(req.getCarDealerSubsidy()));// 厂家贴息
             Long totalAmount = loanAmount + fee;// 贷款总额=贷款额+服务费
             data.setBankLoanCs(AmountUtil.div(totalAmount, invoicePrice));// 银行贷款成数=(贷款金额+服务费)/发票价格
         }
