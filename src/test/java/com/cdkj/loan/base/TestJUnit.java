@@ -9,10 +9,7 @@ import org.apache.http.util.EntityUtils;
 import org.unitils.UnitilsJUnit4;
 
 import com.alibaba.fastjson.JSONArray;
-<<<<<<< HEAD
 import com.alibaba.fastjson.JSONObject;
-=======
->>>>>>> refs/remotes/origin/branch_v1.0.4
 import com.cdkj.loan.aliyun.util.HttpUtils;
 
 public class TestJUnit extends UnitilsJUnit4 {
