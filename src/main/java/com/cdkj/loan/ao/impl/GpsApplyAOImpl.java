@@ -62,7 +62,7 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
     @Override
     public String applyCompanyGps(XN632710Req req) {
         Gps condition = new Gps();
-        condition.setUseStatus(EGpsUseStatus.UN_USE.getCode());
+        condition.setCompanyApplyStatus(EBoolean.NO.getCode());
         List<Gps> list = gpsBO.queryGpsList(condition);
         if (StringValidater.toInteger(req.getApplyCount()) > list.size()) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(), "申请数量大于库存！");

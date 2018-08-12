@@ -1953,7 +1953,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         budgetOrder.setBackAdvanceFundType(req.getType());// 收回垫资款类型（1客户作废2垫资款退回）
         String zfReason = null;
-        if ("1".equals(req.getType())) {
+        if ("1".equals(req.getType())) {// (1、客户作废2、垫资款退回)
             zfReason = req.getZfReason();
         }
         budgetOrder.setZfReason(zfReason);
