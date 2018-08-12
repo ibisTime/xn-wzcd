@@ -328,7 +328,7 @@
 		cur_node_code = #{curNodeCode}
 		,cancel_reason = #{cancelReason}
 		,updater = #{updater}
-		,updateDatetime = #{updateDatetime}
+		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	
 	</update>
