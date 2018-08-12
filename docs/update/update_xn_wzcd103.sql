@@ -60,3 +60,8 @@ DROP COLUMN `rate18`;
 
 ALTER TABLE `tdh_repay_biz` 
 ADD COLUMN `release_apply_datetime` datetime NULL COMMENT '解除抵押申请时间' AFTER `release_apply_note`;
+
+INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'back_advance_fund_type', '收回垫资款类型', 'admin', '2018-07-08 07:34:21', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'back_advance_fund_type', '1', '客户作废', 'admin', '2018-07-08 07:34:21', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'back_advance_fund_type', '2', '垫资款退回', 'admin', '2018-07-08 07:34:21', 'CD-CWZCD000020', 'CD-CWZCD000020');
+

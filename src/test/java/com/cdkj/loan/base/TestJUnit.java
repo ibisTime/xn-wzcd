@@ -3,11 +3,13 @@ package com.cdkj.loan.base;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.unitils.UnitilsJUnit4;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.aliyun.util.HttpUtils;
 
 public class TestJUnit extends UnitilsJUnit4 {
@@ -31,14 +33,21 @@ public class TestJUnit extends UnitilsJUnit4 {
             * 相应的依赖请参照
             * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/pom.xml
             */
-            HttpResponse response = HttpUtils.doGet(host, path, method, headers,
-                querys);
-            System.out.println(response.toString());
-            // 获取response的body
-
-            JSONArray parseArray = JSONArray
-                .parseArray(EntityUtils.toString(response.getEntity()));
-            System.out.println("---------->" + parseArray.getJSONArray(2));
+            HttpResponse response = HttpUtils.doGet(host, path, method,
+                headers, querys);
+            HttpEntity entity = response.getEntity();
+            String string = EntityUtils.toString(entity);// 获取response的body
+            JSONArray json = (JSONArray) JSONArray.parse(string.substring(34,
+                string.length() - 1));
+            for (Object obj : json) {
+                JSONObject jo = (JSONObject) obj;
+                String id = jo.getString("id");
+                String name = jo.getString("name");
+                String initial = jo.getString("initial");
+                String parentid = jo.getString("parentid");
+                String logo = jo.getString("logo");
+                String depth = jo.getString("depth");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
