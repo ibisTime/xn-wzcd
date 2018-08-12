@@ -28,7 +28,7 @@
 		<result column="five_insurance_info" property="fiveInsuranceInfo" />
 		<result column="residence_address" property="residenceAddress" />
 		<result column="residence_property" property="residenceProperty" />
-		<result column="social_securityReg_datetime" property="socialSecurityRegDatetime" />
+		<result column="social_security_reg_datetime" property="socialSecurityRegDatetime" />
 		<result column="current_address" property="currentAddress" />
 		<result column="emergency_contact" property="emergencyContact" />
 		<result column="emergency_contact_mobile" property="emergencyContactMobile" />
