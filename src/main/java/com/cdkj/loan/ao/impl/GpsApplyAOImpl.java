@@ -65,7 +65,8 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         condition.setUseStatus(EGpsUseStatus.UN_USE.getCode());
         List<Gps> list = gpsBO.queryGpsList(condition);
         if (StringValidater.toInteger(req.getApplyCount()) > list.size()) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "申请数量大于库存！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "申请数量大于库存！");
         }
         // 保存数据
         GpsApply data = new GpsApply();
@@ -96,7 +97,8 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             // gps 分配
             for (XN632712ReqGps childReq : req.getGpsList()) {
                 Gps gps = gpsBO.getGps(childReq.getCode());
-                if (EGpsUseStatus.UN_USE.getCode().equals(gps.getUseStatus())) {
+                if (!EGpsUseStatus.UN_USE.getCode()
+                    .equals(gps.getUseStatus())) {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "编号为" + gps.getCode() + "的gps不是待使用状态,不能申领");
                 }
@@ -138,10 +140,10 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         // 2、gps个人申请状态变更
         for (XN632712ReqGps gpsReq : req.getGpsList()) {
             Gps gps = gpsBO.getGps(gpsReq.getCode());
-            if (!EGpsUserApplyStatus.TO_APPLY.getCode().equals(
-                gps.getApplyStatus())) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(), "编号为"
-                        + gps.getCode() + "的gps不处于待申领状态,不能申领");
+            if (!EGpsUserApplyStatus.TO_APPLY.getCode()
+                .equals(gps.getApplyStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "编号为" + gps.getCode() + "的gps不处于待申领状态,不能申领");
             }
             gpsBO.applyUserGps(gpsReq.getCode(), gpsApplyCode,
                 req.getApplyUser());
@@ -157,8 +159,8 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         }
         // 审核通过gps
         if (EBoolean.YES.getCode().equals(req.getApproveResult())) {
-            List<Gps> gpsList = gpsBO.queryGpsListByUserApplyCode(data
-                .getCode());
+            List<Gps> gpsList = gpsBO
+                .queryGpsListByUserApplyCode(data.getCode());
             // gps 分配
             for (Gps gps : gpsList) {
                 gpsBO.approveUserGps(gps.getCode(), req.getApproveResult());
@@ -200,8 +202,8 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
     private void initGpsApply(GpsApply gpsApply) {
         SYSUser sysUser = sysUserBO.getUser(gpsApply.getApplyUser());
         gpsApply.setApplyUserName(sysUser.getRealName());
-        Department department = departmentBO.getDepartment(gpsApply
-            .getCompanyCode());
+        Department department = departmentBO
+            .getDepartment(gpsApply.getCompanyCode());
         if (department != null) {
             gpsApply.setCompanyName(department.getName());
         }
