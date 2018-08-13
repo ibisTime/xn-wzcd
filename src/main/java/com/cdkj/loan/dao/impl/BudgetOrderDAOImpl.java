@@ -218,7 +218,6 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate implements
     @Override
     public void bankLoanConfirmSubmitBank(BudgetOrder data) {
         super.update(NAMESPACE.concat("bank_loan_confirm_submit_bank"), data);
-
     }
 
     @Override

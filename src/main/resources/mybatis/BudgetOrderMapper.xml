@@ -1963,6 +1963,7 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,fbh_status = #{fbhStatus}
+		,fbh_warn_day = #{fbhWarnDay}
 		WHERE code = #{code}
 	</update>
 
