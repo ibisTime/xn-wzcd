@@ -1,7 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -529,8 +528,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         int step = Integer.valueOf(sysConfig.getCvalue()); // 每次处理的条数
         while (true) {
             RepayPlan condition = new RepayPlan();
-            condition.setRepayDatetimeEnd(new Date());
             condition.setCurNodeCode(ERepayPlanNode.TO_REPAY.getCode());
+            condition.setRepayStartDatetime(DateUtil.getFirstDay());
+            condition.setRepayEndDatetime(DateUtil.getLastDay());
             Paginable<RepayPlan> page = repayPlanBO.getPaginable(0, step,
                 condition);
             List<RepayPlan> list = page.getList();
