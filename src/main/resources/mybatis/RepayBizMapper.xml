@@ -950,4 +950,11 @@
 		cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_restPeriods" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		rest_periods = #{restPeriods}
+		WHERE code = #{code}
+	</update>
 </mapper>

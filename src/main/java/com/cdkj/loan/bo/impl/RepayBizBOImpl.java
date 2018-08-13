@@ -638,4 +638,10 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBizDAO.updateCurNodeCode(repayBiz);
     }
 
+    @Override
+    public void refreshRestPeriods(RepayBiz repayBiz) {
+        repayBiz.setRestPeriods(repayBiz.getRestPeriods() - 1);
+        repayBizDAO.updateRestPeriods(repayBiz);
+    }
+
 }

@@ -179,5 +179,8 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     // 改变节点
     public void updateCurNodeCode(RepayBiz repayBiz);
 
+    // 更新剩余期数
+    public void refreshRestPeriods(RepayBiz repayBiz);
+
     // ********************************common********************************
 }

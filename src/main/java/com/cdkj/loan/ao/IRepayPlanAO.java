@@ -42,7 +42,7 @@ public interface IRepayPlanAO {
     public void repayAmount(String code, String operator, String payType,
             Long payAmount);
 
-    // 每天凌晨定时更新还款计划状态为已结清
+    // 每月最后一天23点执行一次：还款计划状态为已结清，剩余期数-1
     public void doPayedDaily();
 
     // 催收过程
