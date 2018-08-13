@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
@@ -15,8 +16,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.cdkj.loan.aliyun.util.HttpUtils;
 import com.cdkj.loan.ao.IBrandAO;
 import com.cdkj.loan.bo.IBrandBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Brand;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630400Req;
 import com.cdkj.loan.dto.req.XN630402Req;
 import com.cdkj.loan.enums.EBrandStatus;
@@ -27,6 +30,9 @@ public class BrandAOImpl implements IBrandAO {
 
     @Autowired
     private IBrandBO brandBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     public void addBrand(XN630400Req req) {
@@ -142,17 +148,35 @@ public class BrandAOImpl implements IBrandAO {
     @Override
     public Paginable<Brand> queryBrandPage(int start, int limit,
             Brand condition) {
-        return brandBO.getPaginable(start, limit, condition);
+        Paginable<Brand> paginable = brandBO.getPaginable(start, limit,
+            condition);
+        for (Brand brand : paginable.getList()) {
+            initBrand(brand);
+        }
+        return paginable;
+    }
+
+    private void initBrand(Brand brand) {
+        if (StringUtils.isNotBlank(brand.getUpdater())) {
+            SYSUser user = sysUserBO.getUser(brand.getUpdater());
+            brand.setUpdaterName(user.getRealName());
+        }
     }
 
     @Override
     public Brand getBrand(String code) {
-        return brandBO.getBrand(code);
+        Brand brand = brandBO.getBrand(code);
+        initBrand(brand);
+        return brand;
     }
 
     @Override
     public List<Brand> queryBrandList(Brand condition) {
-        return brandBO.queryBrand(condition);
+        List<Brand> queryBrand = brandBO.queryBrand(condition);
+        for (Brand brand : queryBrand) {
+            initBrand(brand);
+        }
+        return queryBrand;
     }
 
 }
