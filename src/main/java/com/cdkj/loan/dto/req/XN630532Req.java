@@ -12,6 +12,7 @@ public class XN630532Req {
     @NotBlank
     private String collectionResult;// 催收结果
 
+    @NotBlank
     private String depositIsProvide;// 是否提供押金
 
     private String overdueDeposit;// 再次逾期保证金

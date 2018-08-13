@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.ContractImport;
 import com.cdkj.loan.dto.req.XN632250ReqContract;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EContractImportStatus;
 import com.cdkj.loan.exception.BizException;
 
@@ -44,6 +46,11 @@ public class ContractImportAOImpl implements IContractImportAO {
             BudgetOrder condition = new BudgetOrder();
             condition.setCustomerName(contract.getCustomerName());
             condition.setIdNo(contract.getIdNo());
+            ArrayList<String> curNodeCodeList = new ArrayList<String>();
+            curNodeCodeList
+                .add(EBudgetOrderNode.BANK_POINT_PUSH_LOAN_LIST.getCode());
+            curNodeCodeList.add(EBudgetOrderNode.CONFIRM_RECEIVABLES.getCode());
+            condition.setCurNodeCodeList(curNodeCodeList);
             List<BudgetOrder> budgetOrderList = budgetOrderBO
                 .queryBudgetOrderList(condition);
 

@@ -65,3 +65,9 @@ INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`,
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'back_advance_fund_type', '1', '客户作废', 'admin', '2018-07-08 07:34:21', 'CD-CWZCD000020', 'CD-CWZCD000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'back_advance_fund_type', '2', '垫资款退回', 'admin', '2018-07-08 07:34:21', 'CD-CWZCD000020', 'CD-CWZCD000020');
 
+UPDATE `tsys_menu` SET `order_no`='3' WHERE `code`='SM201805081710209032086';
+UPDATE `tsys_menu` SET `order_no`='4' WHERE `code`='SM201806190005143218771';
+UPDATE `tsys_menu` SET `name`='录入催收过程' WHERE `code`='SM201808031644380795299';
+UPDATE `tsys_menu` SET `name`='录入催收结果' WHERE `code`='SM201808031645062405626';
+
+DELETE FROM `tsys_menu` WHERE `code`='SM201805250101085488247';
