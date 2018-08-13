@@ -100,7 +100,6 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
 
     @Override
     public void refreshLeaveArchive(Archive data) {
-
         if (StringUtils.isNotBlank(data.getCode())) {
             archiveDAO.updateLeaveArchive(data);
         }

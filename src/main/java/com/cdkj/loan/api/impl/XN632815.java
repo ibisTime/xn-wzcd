@@ -9,12 +9,13 @@ import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.dto.req.XN632815Req;
+import com.cdkj.loan.enums.EArchiveWorkStatus;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 分页查询人事档案
+ * 分页查询离职档案
  * @author: jiafr 
  * @since: 2018年6月4日 下午9:19:10 
  * @history:
@@ -32,7 +33,9 @@ public class XN632815 extends AProcessor {
         condition.setRealName(req.getRealName());
         condition.setDepartmentCode(req.getDepartmentCode());
         condition.setPostCode(req.getPostCode());
+        condition.setWorkStatus(EArchiveWorkStatus.LEAVE.getCode());
         condition.setIsDelete("1");
+
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
             column = IArchiveAO.DEFAULT_ORDER_COLUMN;
