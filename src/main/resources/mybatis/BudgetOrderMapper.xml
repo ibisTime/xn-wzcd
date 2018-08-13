@@ -408,7 +408,7 @@
 			<if test="BankFkSendDatetimeEnd != null and BankFkSendDatetimeEnd != '' ">
 				AND t.bank_fk_send_datetime &lt;= #{BankFkSendDatetimeEnd}
 			</if>
-			<if test="FbhPage != null and FbhPage != '' ">
+			<if test="fbhPage != null and fbhPage != '' ">
 				AND t.fbh_status is not null
 			</if>
 			

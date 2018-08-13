@@ -875,30 +875,6 @@ public class BudgetOrder extends ABaseDO {
 
     private Long replaceRealRepayAmount;// 代偿金额
 
-    public Long getReplaceRealRepayAmount() {
-        return replaceRealRepayAmount;
-    }
-
-    public void setReplaceRealRepayAmount(Long replaceRealRepayAmount) {
-        this.replaceRealRepayAmount = replaceRealRepayAmount;
-    }
-
-    public Long getDebtBalance() {
-        return debtBalance;
-    }
-
-    public void setDebtBalance(Long debtBalance) {
-        this.debtBalance = debtBalance;
-    }
-
-    public Long getOverplusAmount() {
-        return overplusAmount;
-    }
-
-    public void setOverplusAmount(Long overplusAmount) {
-        this.overplusAmount = overplusAmount;
-    }
-
     // 担保打印人姓名
     private String guarantPrintName;
 
@@ -925,6 +901,30 @@ public class BudgetOrder extends ABaseDO {
     private String bankRepointPage;// 银行返点页面分页查询标识
 
     private String fbhPage;// 发保合页面分页查询标识
+
+    public Long getReplaceRealRepayAmount() {
+        return replaceRealRepayAmount;
+    }
+
+    public void setReplaceRealRepayAmount(Long replaceRealRepayAmount) {
+        this.replaceRealRepayAmount = replaceRealRepayAmount;
+    }
+
+    public Long getDebtBalance() {
+        return debtBalance;
+    }
+
+    public void setDebtBalance(Long debtBalance) {
+        this.debtBalance = debtBalance;
+    }
+
+    public Long getOverplusAmount() {
+        return overplusAmount;
+    }
+
+    public void setOverplusAmount(Long overplusAmount) {
+        this.overplusAmount = overplusAmount;
+    }
 
     public int getRepayMonthDatetime() {
         return repayMonthDatetime;
