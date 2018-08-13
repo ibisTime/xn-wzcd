@@ -23,8 +23,8 @@ import com.cdkj.loan.exception.BizException;
  * @history:
  */
 @Component
-public class ArchiveBOImpl extends PaginableBOImpl<Archive>
-        implements IArchiveBO {
+public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
+        IArchiveBO {
 
     @Autowired
     private IArchiveDAO archiveDAO;
@@ -46,8 +46,8 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
     public String saveArchive(Archive data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.RECRUITAPPLY.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.RECRUITAPPLY
+                .getCode());
             data.setCode(code);
             archiveDAO.insert(data);
         }
@@ -66,7 +66,6 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
 
     @Override
     public void refreshArchive(Archive data) {
-
         if (StringUtils.isNotBlank(data.getCode())) {
             archiveDAO.update(data);
         }
@@ -76,10 +75,10 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
     public List<Archive> queryArchiveList(Archive condition) {
         List<Archive> archiveList = archiveDAO.selectList(condition);
         for (Archive archive : archiveList) {
-            archive.setDepartmentName(departmentBO
-                .getDepartment(archive.getDepartmentCode()).getName());
-            archive.setPostName(
-                departmentBO.getDepartment(archive.getPostCode()).getName());
+            archive.setDepartmentName(departmentBO.getDepartment(
+                archive.getDepartmentCode()).getName());
+            archive.setPostName(departmentBO.getDepartment(
+                archive.getPostCode()).getName());
         }
         return archiveList;
     }
