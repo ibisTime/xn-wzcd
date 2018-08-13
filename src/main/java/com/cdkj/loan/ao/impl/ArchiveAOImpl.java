@@ -90,9 +90,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(
-            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
+            req.getSocialSecurityRegDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -173,7 +173,7 @@ public class ArchiveAOImpl implements IArchiveAO {
         if (!archiveBO.isArchiveExist(req.getCode())) {
             throw new BizException("xn0000", "人事档案不存在");
         }
-        Archive data = new Archive();
+        Archive data = archiveBO.getArchive(req.getCode());
         data.setCode(req.getCode());
         data.setRealName(req.getRealName());
         data.setIdNo(req.getIdNo());
@@ -202,9 +202,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(
-            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
+            req.getSocialSecurityRegDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());

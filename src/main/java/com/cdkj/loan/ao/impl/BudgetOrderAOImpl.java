@@ -309,7 +309,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             double feeRate = AmountUtil.div(fee, loanAmount);
             data.setGlobalRate(feeRate
                     + StringValidater.toDouble(req.getBankRate()));// 综合利率=服务费/贷款金额+银行利率
-            data.setCarDealerSubsidy(getLong(req.getCarDealerSubsidy()));// 厂家贴息
+            data.setCarDealerSubsidy(StringValidater.toLong(req
+                .getCarDealerSubsidy()));// 厂家贴息
             Long totalAmount = loanAmount + fee;// 贷款总额=贷款额+服务费
             data.setBankLoanCs(AmountUtil.div(totalAmount, invoicePrice));// 银行贷款成数=(贷款金额+服务费)/发票价格
         }
@@ -658,12 +659,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点处于物流传递中，不能操作");
         }
-        String preCurrentNode = budgetOrder.getCurNodeCode();// 当前节点 准入审核二审
+        String preCurrentNode = budgetOrder.getCurNodeCode();// 当前节点（准入审核二审）
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             // 审核通过
-            budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preCurrentNode).getNextNode());
-            // 预算单日志记录 收尾准入审核二审日志 预算单节点更新为垫资审核中但不生成日志
+            // 预算单日志记录 收尾准入审核二审日志
             sysBizLogBO.refreshPreSYSBizLog(EBizLogType.BUDGET_ORDER,
                 budgetOrder.getCode(), preCurrentNode, approveNote, operator);
             // 产生手续费
@@ -671,7 +670,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             // 判断预算单是否垫资
             if (EIsAdvanceFund.NO.getCode().equals(
                 budgetOrder.getIsAdvanceFund())) {
-                // 不垫资 进入银行放款流程第一步
+                // 不垫资 跳过垫资审核流程 进入银行放款流程
                 EBudgetOrderNode bankLoanNode = null;
                 Department company = departmentBO.getDepartment(budgetOrder
                     .getCompanyCode());
@@ -686,6 +685,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(),
                     EBizLogType.BANK_LOAN_COMMIT, budgetOrder.getCode(),
                     budgetOrder.getCurNodeCode());
+                // 预算单准入审核通过后 如果跳过垫资流程 预算单的发保合状态改成待录入发保合
+                budgetOrder.setFbhStatus(EFbhStatus.PENDING_ENTRY.getCode());
+                budgetOrder.setFbhWarnDay(0);
                 budgetOrderBO.bankLoanConfirmSubmitBank(budgetOrder);
                 // 当前节点
                 String curNodeCode = budgetOrder.getCurNodeCode();
@@ -700,7 +702,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 budgetOrderBO.updateIsLogistics(budgetOrder);
             } else {
                 // 垫资
-                // 预算单节点改为垫资审核（进入垫资审核流程）
+                // 预算单节点更新为垫资审核中 不生成日志
+                budgetOrder.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
+                    preCurrentNode).getNextNode());
+                // 预算单节点改为垫资审核中（进入垫资审核流程）
                 budgetOrder.setCurNodeCode(EBudgetOrderNode.ADVANCE_FUND_AUDIT
                     .getCode());
                 // 生成垫资单判断是本地公司业务还是外地公司业务

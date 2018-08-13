@@ -18,6 +18,7 @@ import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IReqBudgetBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.StringValidater;
@@ -28,6 +29,7 @@ import com.cdkj.loan.domain.CarDealer;
 import com.cdkj.loan.domain.CollectBankcard;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.ReqBudget;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632170Req;
 import com.cdkj.loan.dto.req.XN632171Req;
 import com.cdkj.loan.dto.req.XN632172Req;
@@ -87,6 +89,9 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
 
     @Autowired
     private IReqBudgetBO reqBudgetBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     public void confirmAdvanceFund(XN632170Req req) {
@@ -325,6 +330,14 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             .getAdvanceFundAmount()));
         data.setAdvanceFundDatetime(DateUtil.strToDate(
             req.getAdvanceFundDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+
+        CollectBankcard bankcard = collectBankcardBO.getCollectBankcard(req
+            .getPayBankcardCode());
+        SYSUser sysUser = sysUserBO.getUser(req.getOperator());
+        if (!bankcard.getCompanyCode().equals(sysUser.getCompanyCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "付款账号与当前操作人不属于同一个业务公司！");
+        }
         data.setPayBankcardCode(req.getPayBankcardCode());
         data.setBillPdf(req.getBillPdf());
         data.setNote(req.getNote());
