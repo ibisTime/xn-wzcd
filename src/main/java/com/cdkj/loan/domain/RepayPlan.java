@@ -256,6 +256,17 @@ public class RepayPlan extends ABaseDO {
     // 业务公司编号
     private String companyCode;
 
+    // 已还逾期金额
+    private Long repayOverdueAmount;
+
+    public Long getRepayOverdueAmount() {
+        return repayOverdueAmount;
+    }
+
+    public void setRepayOverdueAmount(Long repayOverdueAmount) {
+        this.repayOverdueAmount = repayOverdueAmount;
+    }
+
     public ReplaceRepayApply getReplaceRepayApply() {
         return replaceRepayApply;
     }
