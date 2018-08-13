@@ -212,42 +212,30 @@ public class CreditAOImpl implements ICreditAO {
             EBizLogType.CREDIT, credit.getCode(), preCurNodeCode,
             credit.getCurNodeCode(), null, req.getOperator());
 
+        // 删除原有的征信人员
+        CreditUser condition = new CreditUser();
+        condition.setCreditCode(credit.getCode());
+        List<CreditUser> creditUserList = creditUserBO
+            .queryCreditUserList(condition);
+        for (CreditUser creditUser : creditUserList) {
+            creditUserBO.dropCreditUser(creditUser.getCode());
+        }
+
         // 修改征信人员
         List<XN632112ReqChild> list = req.getCreditUserList();
         for (XN632112ReqChild reqChild : list) {
-            CreditUser creditUser = creditUserBO
-                .getCreditUserNotNull(reqChild.getCode());
-            if (creditUser == null) {
-                CreditUser data = new CreditUser();
-                data.setCreditCode(credit.getCode());
-                data.setUserName(reqChild.getUserName());
-                data.setRelation(reqChild.getRelation());
-                if (ECreditUserRelation.SELF.getCode()
-                    .equals(reqChild.getRelation())) {
-                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                        "贷款人本人只能有一个！");
-                }
-                data.setLoanRole(reqChild.getLoanRole());
-                data.setIdNo(reqChild.getIdNo());
-                data.setMobile(reqChild.getMobile());
-                data.setIdNoFront(reqChild.getIdNoFront());
-                data.setIdNoReverse(reqChild.getIdNoReverse());
-                data.setAuthPdf(reqChild.getAuthPdf());
-                data.setInterviewPic(reqChild.getInterviewPic());
-                creditUserBO.saveCreditUser(data);
-            } else {
-                creditUser.setUserName(reqChild.getUserName());
-                creditUser.setLoanRole(reqChild.getLoanRole());
-                creditUser.setRelation(reqChild.getRelation());
-                creditUser.setMobile(reqChild.getMobile());
-                creditUser.setIdNo(reqChild.getIdNo());
-
-                creditUser.setIdNoFront(reqChild.getIdNoFront());
-                creditUser.setIdNoReverse(reqChild.getIdNoReverse());
-                creditUser.setAuthPdf(reqChild.getAuthPdf());
-                creditUser.setInterviewPic(reqChild.getInterviewPic());
-                creditUserBO.refreshCreditUser(creditUser);
-            }
+            CreditUser data = new CreditUser();
+            data.setCreditCode(credit.getCode());
+            data.setUserName(reqChild.getUserName());
+            data.setRelation(reqChild.getRelation());
+            data.setLoanRole(reqChild.getLoanRole());
+            data.setIdNo(reqChild.getIdNo());
+            data.setMobile(reqChild.getMobile());
+            data.setIdNoFront(reqChild.getIdNoFront());
+            data.setIdNoReverse(reqChild.getIdNoReverse());
+            data.setAuthPdf(reqChild.getAuthPdf());
+            data.setInterviewPic(reqChild.getInterviewPic());
+            creditUserBO.saveCreditUser(data);
         }
 
     }

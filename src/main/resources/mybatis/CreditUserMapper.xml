@@ -286,4 +286,10 @@
 		code = #{code}
 	</update>
 	
+	<delete id="delete_creditUser" parameterType="creditUser">
+		DELETE FROM tdq_credit_user
+		WHERE
+		code = #{code}
+	</delete>
+	
 </mapper>

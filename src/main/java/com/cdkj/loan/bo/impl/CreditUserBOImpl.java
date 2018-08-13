@@ -43,6 +43,15 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
     }
 
     @Override
+    public void dropCreditUser(String code) {
+        CreditUser data = getCreditUser(code);
+        if (data == null) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "征信人员不存在！");
+        }
+        creditUserDAO.delete(data);
+    }
+
+    @Override
     public CreditUser getCreditUser(String code) {
 
         CreditUser data = null;

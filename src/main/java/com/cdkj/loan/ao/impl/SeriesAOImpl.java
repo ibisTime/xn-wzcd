@@ -1,11 +1,18 @@
 package com.cdkj.loan.ao.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.cdkj.loan.aliyun.util.HttpUtils;
 import com.cdkj.loan.ao.ISeriesAO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISeriesBO;
@@ -27,7 +34,7 @@ public class SeriesAOImpl implements ISeriesAO {
     private ISYSUserBO sysUserBO;
 
     @Override
-    public String addSeries(XN630410Req req) {
+    public void addSeries(XN630410Req req) {
         Series series = new Series();
         series.setBrandCode(req.getBrandCode());
         series.setName(req.getName());
@@ -38,7 +45,48 @@ public class SeriesAOImpl implements ISeriesAO {
         series.setUpdater(req.getUpdater());
         series.setUpdateDatetime(new Date());
         series.setRemark(req.getRemark());
-        return seriesBO.saveSeries(series);
+        seriesBO.saveSeries(series);
+
+        // JSONArray json = generateBrand();
+        // for (Object obj : json) {
+        // JSONObject jo = (JSONObject) obj;
+        // String id = jo.getString("id");
+        // // String name = jo.getString("name");
+        // // String initial = jo.getString("initial");
+        // // String parentid = jo.getString("parentid");
+        // // String logo = jo.getString("logo");
+        // // String depth = jo.getString("depth");
+        // System.out.println("id = " + jo);
+        // // System.out.println("id = " + id);
+        // }
+    }
+
+    private JSONArray generateBrand() {
+        JSONArray json = null;
+        String host = "https://jisucxdq.market.alicloudapi.com";
+        String path = "/car/carlist";
+        String method = "GET";
+        String appcode = "1bd9832a74284772a7549ff0cc51043e";
+        Map<String, String> headers = new HashMap<String, String>();
+        // 最后在header中的格式(中间是英文空格)为Authorization:APPCODE
+        // 83359fd73fe94948385f570e3c139105
+        headers.put("Authorization", "APPCODE " + appcode);
+        Map<String, String> querys = new HashMap<String, String>();
+        querys.put("parentid", "1");
+        try {
+            HttpResponse response = HttpUtils.doGet(host, path, method, headers,
+                querys);
+            HttpEntity entity = response.getEntity();
+            String string = EntityUtils.toString(entity);// 获取response的body
+            // System.out.println("1------------->" + string);
+            json = (JSONArray) JSONArray
+                .parse(string.substring(34, string.length() - 1));
+            // System.out.println("2------------->" + json);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
     @Override
