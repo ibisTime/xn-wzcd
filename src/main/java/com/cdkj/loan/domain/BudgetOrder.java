@@ -922,6 +922,10 @@ public class BudgetOrder extends ABaseDO {
 
     private int repayMonthDatetime;// 月供还款日(来自还款业务每期还款日期)
 
+    private String bankRepointPage;// 银行返点页面分页查询标识
+
+    private String fbhPage;// 发保合页面分页查询标识
+
     public int getRepayMonthDatetime() {
         return repayMonthDatetime;
     }
@@ -945,8 +949,6 @@ public class BudgetOrder extends ABaseDO {
     public void setAdvanceFund(AdvanceFund advanceFund) {
         this.advanceFund = advanceFund;
     }
-
-    private String bankRepointPage;// 银行返点页面分页查询标识
 
     public String getBankRepointPage() {
         return bankRepointPage;
@@ -3364,6 +3366,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setBankRepointDatetime(Date bankRepointDatetime) {
         this.bankRepointDatetime = bankRepointDatetime;
+    }
+
+    public String getFbhPage() {
+        return fbhPage;
+    }
+
+    public void setFbhPage(String fbhPage) {
+        this.fbhPage = fbhPage;
     }
 
 }
