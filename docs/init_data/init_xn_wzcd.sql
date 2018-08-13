@@ -92,11 +92,11 @@ insert into `tsys_user` (`user_id`, `type`, `photo`, `login_name`, `mobile`, `re
 -- Query: SELECT code,name,level,updater,now() update_datetime,remark FROM tsys_role
 -- Date: 2018-06-12 12:17
 */
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','超级管理员','1','admin',now(),NULL);
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201800000000000000YWY','业务员','2','admin',now(),NULL);
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR20180000000000000NQZY','内勤专员','2','admin',now(),NULL);
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR20180000000000000ZHRY','驻行人员','2','admin',now(),NULL);
-INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR20180000000000000PTYG','普通员工','2','admin',now(),'');
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('RO201800000000000001','超级管理员','1','USYS201800000000001',now(),NULL);
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR201800000000000000YWY','业务员','2','USYS201800000000001',now(),NULL);
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR20180000000000000NQZY','内勤专员','2','USYS201800000000001',now(),NULL);
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR20180000000000000ZHRY','驻行人员','2','USYS201800000000001',now(),NULL);
+INSERT INTO `tsys_role` (`code`,`name`,`level`,`updater`,`update_datetime`,`remark`) VALUES ('SR20180000000000000PTYG','普通员工','2','USYS201800000000001',now(),NULL);
 
 
 /*
