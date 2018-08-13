@@ -43,6 +43,8 @@ public class XN632145Req extends APageReq {
 
     private String bankRepointPage;// 收回垫资款页页面分页查询标识
 
+    private String fbhPage;// 发保合页面分页查询标识
+
     private String bankFkDatetimeStart;// 银行放款时间起
 
     private String bankFkDatetimeEnd;// 银行放款时间止
@@ -193,6 +195,14 @@ public class XN632145Req extends APageReq {
 
     public void setBankFkSendDatetimeEnd(String bankFkSendDatetimeEnd) {
         this.bankFkSendDatetimeEnd = bankFkSendDatetimeEnd;
+    }
+
+    public String getFbhPage() {
+        return fbhPage;
+    }
+
+    public void setFbhPage(String fbhPage) {
+        this.fbhPage = fbhPage;
     }
 
 }
