@@ -222,6 +222,11 @@ public class CreditAOImpl implements ICreditAO {
                 data.setCreditCode(credit.getCode());
                 data.setUserName(reqChild.getUserName());
                 data.setRelation(reqChild.getRelation());
+                if (ECreditUserRelation.SELF.getCode()
+                    .equals(reqChild.getRelation())) {
+                    throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                        "贷款人本人只能有一个！");
+                }
                 data.setLoanRole(reqChild.getLoanRole());
                 data.setIdNo(reqChild.getIdNo());
                 data.setMobile(reqChild.getMobile());

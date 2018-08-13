@@ -11,7 +11,7 @@ public interface IBrandAO {
     String DEFAULT_ORDER_COLUMN = "code";
 
     // 新增品牌
-    public String addBrand(XN630400Req req);
+    public void addBrand(XN630400Req req);
 
     // 修改品牌
     public void editBrand(XN630402Req req);

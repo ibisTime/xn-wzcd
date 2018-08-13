@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.SYSRole;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -68,13 +70,22 @@ public class SYSRoleAOImpl implements ISYSRoleAO {
 
     @Override
     public List<SYSRole> querySYSRoleList(SYSRole condition) {
-        return sysRoleBO.querySYSRoleList(condition);
+        List<SYSRole> sysRoleList = sysRoleBO.querySYSRoleList(condition);
+        for (SYSRole sysRole : sysRoleList) {
+            initRole(sysRole);
+        }
+        return sysRoleList;
     }
 
     @Override
     public Paginable<SYSRole> querySYSRolePage(int start, int limit,
             SYSRole condition) {
-        return sysRoleBO.getPaginable(start, limit, condition);
+        Paginable<SYSRole> paginable = sysRoleBO.getPaginable(start, limit,
+            condition);
+        for (SYSRole sysRole : paginable.getList()) {
+            initRole(sysRole);
+        }
+        return paginable;
     }
 
     /** 
@@ -83,8 +94,18 @@ public class SYSRoleAOImpl implements ISYSRoleAO {
     @Override
     public SYSRole getSYSRole(String code) {
         if (!sysRoleBO.isSYSRoleExist(code)) {
-            throw new BizException("lh4000", "角色不存在！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "角色不存在！");
         }
-        return sysRoleBO.getSYSRole(code);
+        SYSRole sysRole = sysRoleBO.getSYSRole(code);
+        initRole(sysRole);
+        return sysRole;
     }
+
+    private void initRole(SYSRole sysRole) {
+        if (StringUtils.isNotBlank(sysRole.getUpdater())) {
+            SYSUser user = sysUserBO.getUser(sysRole.getUpdater());
+            sysRole.setUpdaterName(user.getRealName());
+        }
+    }
+
 }

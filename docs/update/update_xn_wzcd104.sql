@@ -71,3 +71,10 @@ UPDATE `tsys_menu` SET `name`='录入催收过程' WHERE `code`='SM2018080316443
 UPDATE `tsys_menu` SET `name`='录入催收结果' WHERE `code`='SM201808031645062405626';
 
 DELETE FROM `tsys_menu` WHERE `code`='SM201805250101085488247';
+
+/*-----------------------------------------------------------------------------------------*/
+
+UPDATE `tsys_menu` SET `name`='预算单流转中' WHERE `code`='SM201806292245140079435';
+UPDATE `tb_car_dealer` SET `cur_node_code`='006_03' WHERE `code`='CD201807081628275712800';
+
+
