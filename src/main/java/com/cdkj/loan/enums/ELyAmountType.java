@@ -8,7 +8,7 @@ package com.cdkj.loan.enums;
  */
 public enum ELyAmountType {
 
-    SINGLE("1", "单笔"), PERCENT("1", "贷款额百分比");
+    SINGLE("1", "单笔"), PERCENT("2", "贷款额百分比");
 
     ELyAmountType(String code, String value) {
         this.code = code;
