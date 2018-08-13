@@ -101,7 +101,7 @@ public class GpsAOImpl implements IGpsAO {
             gps.setCompanyName(department.getName());
         }
 
-        // 业务员姓名
+        // 申请人姓名
         if (StringUtils.isNotBlank(gps.getApplyUser())) {
             SYSUser sysUser = sysUserBO.getUser(gps.getApplyUser());
             gps.setApplyUserName(sysUser.getRealName());

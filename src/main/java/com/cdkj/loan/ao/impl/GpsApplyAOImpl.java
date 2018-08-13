@@ -30,7 +30,6 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGpsApplyStatus;
 import com.cdkj.loan.enums.EGpsApplyType;
-import com.cdkj.loan.enums.EGpsUseStatus;
 import com.cdkj.loan.enums.EGpsUserApplyStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
@@ -62,11 +61,10 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
     @Override
     public String applyCompanyGps(XN632710Req req) {
         Gps condition = new Gps();
-        condition.setCompanyApplyStatus(EBoolean.NO.getCode());
+        condition.setCompanyApplyStatus(EBoolean.NO.getCode());// 公司未申领
         List<Gps> list = gpsBO.queryGpsList(condition);
         if (StringValidater.toInteger(req.getApplyCount()) > list.size()) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "申请数量大于库存！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "申请数量大于库存！");
         }
         // 保存数据
         GpsApply data = new GpsApply();
@@ -92,15 +90,12 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         if (!EGpsApplyStatus.TO_APPROVE.getCode().equals(data.getStatus())) {
             throw new BizException("xn0000", "GPS申领单不是待审核状态，不能操作");
         }
-        // 审核通过gps
-        if (EBoolean.YES.getCode().equals(req.getApproveResult())) {
-            // gps 分配
-            for (XN632712ReqGps childReq : req.getGpsList()) {
+        if (EBoolean.YES.getCode().equals(req.getApproveResult())) {// 审核通过
+            for (XN632712ReqGps childReq : req.getGpsList()) {// 分配GPS
                 Gps gps = gpsBO.getGps(childReq.getCode());
-                if (!EGpsUseStatus.UN_USE.getCode()
-                    .equals(gps.getUseStatus())) {
+                if (!EBoolean.NO.getCode().equals(gps.getCompanyApplyStatus())) {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                        "编号为" + gps.getCode() + "的gps不是待使用状态,不能申领");
+                        "编号为" + gps.getCode() + "的gps不是待申领状态,不能申领");
                 }
                 gpsBO.approveCompanyGps(childReq.getCode(),
                     data.getCompanyCode(), data.getApplyDatetime(),
@@ -128,7 +123,6 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "申请数量大于公司库存！");
         }
-        // 1、申请记录落地
         GpsApply data = new GpsApply();
         data.setType(EGpsApplyType.PERSON.getCode());
         SYSUser sysUser = sysUserBO.getUser(req.getApplyUser());
@@ -151,13 +145,11 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
         if (!EGpsApplyStatus.TO_APPROVE.getCode().equals(data.getStatus())) {
             throw new BizException("xn0000", "GPS申领单不在待审核状态");
         }
-        // 审核通过gps
-        if (EBoolean.YES.getCode().equals(req.getApproveResult())) {
-            // 2、gps个人申请状态变更
-            for (XN632712ReqGps gpsReq : req.getGpsList()) {
+        if (EBoolean.YES.getCode().equals(req.getApproveResult())) { // 审核通过
+            for (XN632712ReqGps gpsReq : req.getGpsList()) { // gps个人申请状态变更
                 Gps gps = gpsBO.getGps(gpsReq.getCode());
-                if (!EGpsUserApplyStatus.TO_APPLY.getCode()
-                    .equals(gps.getApplyStatus())) {
+                if (!EGpsUserApplyStatus.TO_APPLY.getCode().equals(
+                    gps.getApplyStatus())) {
                     throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                         "编号为" + gps.getCode() + "的gps不处于待申领状态,不能申领");
                 }
@@ -202,8 +194,8 @@ public class GpsApplyAOImpl implements IGpsApplyAO {
     private void initGpsApply(GpsApply gpsApply) {
         SYSUser sysUser = sysUserBO.getUser(gpsApply.getApplyUser());
         gpsApply.setApplyUserName(sysUser.getRealName());
-        Department department = departmentBO
-            .getDepartment(gpsApply.getCompanyCode());
+        Department department = departmentBO.getDepartment(gpsApply
+            .getCompanyCode());
         if (department != null) {
             gpsApply.setCompanyName(department.getName());
         }
