@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,10 +15,12 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONArray;
 import com.cdkj.loan.aliyun.util.HttpUtils;
 import com.cdkj.loan.ao.ISeriesAO;
+import com.cdkj.loan.bo.IBrandBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.Brand;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630410Req;
 import com.cdkj.loan.dto.req.XN630412Req;
@@ -29,6 +32,9 @@ public class SeriesAOImpl implements ISeriesAO {
 
     @Autowired
     private ISeriesBO seriesBO;
+
+    @Autowired
+    private IBrandBO brandBO;
 
     @Autowired
     private ISYSUserBO sysUserBO;
@@ -47,21 +53,33 @@ public class SeriesAOImpl implements ISeriesAO {
         series.setRemark(req.getRemark());
         seriesBO.saveSeries(series);
 
-        // JSONArray json = generateBrand();
-        // for (Object obj : json) {
+        // 导入车系基础数据
+        // ArrayList<JSONArray> json = generateSeries();
+        // for (JSONArray jsonArray : json) {
+        // for (Object obj : jsonArray) {
         // JSONObject jo = (JSONObject) obj;
         // String id = jo.getString("id");
-        // // String name = jo.getString("name");
+        // String name = jo.getString("name");
         // // String initial = jo.getString("initial");
-        // // String parentid = jo.getString("parentid");
-        // // String logo = jo.getString("logo");
-        // // String depth = jo.getString("depth");
-        // System.out.println("id = " + jo);
-        // // System.out.println("id = " + id);
+        // String parentid = jo.getString("parentid");
+        // String logo = jo.getString("logo");
+        // String price = jo.getString("price");
+        //
+        // Series series = new Series();
+        // series.setName(name);
+        // series.setBrandCode(parentid);
+        // series.setPrice(StringValidater.toLong(price));
+        // series.setAdvPic(logo);
+        // series.setStatus(EBrandStatus.TO_UP.getCode());
+        // series.setUpdater("USYS201800000000001");
+        // series.setUpdateDatetime(new Date());
+        // seriesBO.saveSeries(series);
+        // }
         // }
     }
 
-    private JSONArray generateBrand() {
+    private ArrayList<JSONArray> generateSeries() {
+        ArrayList<JSONArray> list = new ArrayList<JSONArray>();
         JSONArray json = null;
         String host = "https://jisucxdq.market.alicloudapi.com";
         String path = "/car/carlist";
@@ -72,21 +90,29 @@ public class SeriesAOImpl implements ISeriesAO {
         // 83359fd73fe94948385f570e3c139105
         headers.put("Authorization", "APPCODE " + appcode);
         Map<String, String> querys = new HashMap<String, String>();
-        querys.put("parentid", "1");
-        try {
-            HttpResponse response = HttpUtils.doGet(host, path, method, headers,
-                querys);
-            HttpEntity entity = response.getEntity();
-            String string = EntityUtils.toString(entity);// 获取response的body
-            // System.out.println("1------------->" + string);
-            json = (JSONArray) JSONArray
-                .parse(string.substring(34, string.length() - 1));
-            // System.out.println("2------------->" + json);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        ArrayList<String> arrayList = new ArrayList<String>();
+        Brand condition = new Brand();
+        List<Brand> queryBrand = brandBO.queryBrand(condition);
+        for (Brand brand : queryBrand) {
+            arrayList.add(brand.getDescription());
         }
-        return json;
+        for (String brandCode : arrayList) {
+            querys.put("parentid", brandCode);
+            try {
+                HttpResponse response = HttpUtils.doGet(host, path, method,
+                    headers, querys);
+                HttpEntity entity = response.getEntity();
+                String string = EntityUtils.toString(entity);// 获取response的body
+                // System.out.println("1------------->" + string);
+                json = (JSONArray) JSONArray
+                    .parse(string.substring(34, string.length() - 1));
+                // System.out.println("2------------->" + json);
+                list.add(json);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return list;
     }
 
     @Override
