@@ -21,8 +21,13 @@ public interface ISocialRelationBO extends IPaginableBO<SocialRelation> {
 
     public int refreshSocialRelation(SocialRelation data);
 
-    public List<SocialRelation> querySocialRelationList(SocialRelation condition);
+    public List<SocialRelation> querySocialRelationList(
+            SocialRelation condition);
 
     public SocialRelation getSocialRelation(String code);
+
+    // 通过人事档案编号查社会关系
+    public List<SocialRelation> querySocialRelationListByArchiveCode(
+            String code);
 
 }

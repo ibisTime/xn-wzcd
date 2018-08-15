@@ -90,9 +90,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
-            req.getSocialSecurityRegDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(
+            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -202,9 +202,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
-            req.getSocialSecurityRegDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(
+            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -235,25 +235,32 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setUpdateDatetime(new Date());
         data.setWorkingYears(req.getWorkingYears());
 
-        List<XN632802ReqChild> list = req.getSocialRelationList();
-        for (XN632802ReqChild child : list) {
-
-            if (!"".equals(child.getIsDelete()) && null != child.getIsDelete()
-                    && "0".equals(child.getIsDelete())) {
-                socialRelationBO.removeSocialRelation(child.getCode());
-                continue;
-            }
-            SocialRelation data1 = new SocialRelation();
-            data1.setCode(child.getCode());
-            data1.setCompanyName(child.getCompanyName());
-            data1.setRealName(child.getRealName());
-            data1.setRelation(child.getRelation());
-            data1.setContact(child.getContact());
-            data1.setPost(child.getPost());
-            socialRelationBO.refreshSocialRelation(data1);
-
+        List<SocialRelation> SocialRelationList = socialRelationBO
+            .querySocialRelationListByArchiveCode(data.getCode());
+        for (SocialRelation socialRelation : SocialRelationList) {
+            socialRelationBO.removeSocialRelation(socialRelation.getCode());
         }
 
+        List<XN632802ReqChild> list = req.getSocialRelationList();
+        if (!CollectionUtils.isEmpty(list)) {
+            for (XN632802ReqChild child : list) {
+                // if (!"".equals(child.getIsDelete())
+                // && null != child.getIsDelete()
+                // && "0".equals(child.getIsDelete())) {
+                // socialRelationBO.removeSocialRelation(child.getCode());
+                // continue;
+                // }
+                SocialRelation data1 = new SocialRelation();
+                data1.setCompanyName(child.getCompanyName());
+                data1.setRealName(child.getRealName());
+                data1.setRelation(child.getRelation());
+                data1.setContact(child.getContact());
+                data1.setPost(child.getPost());
+                socialRelationBO.saveSocialRelation(data1);
+
+            }
+
+        }
         archiveBO.refreshArchive(data);
     }
 

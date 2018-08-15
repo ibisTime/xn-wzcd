@@ -88,4 +88,12 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
         }
         return data;
     }
+
+    @Override
+    public List<SocialRelation> querySocialRelationListByArchiveCode(
+            String code) {
+        SocialRelation condition = new SocialRelation();
+        condition.setArchiveCode(code);
+        return socialRelationDAO.selectList(condition);
+    }
 }
