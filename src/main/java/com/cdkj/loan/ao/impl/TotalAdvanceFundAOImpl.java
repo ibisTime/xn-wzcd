@@ -114,7 +114,7 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
             payAmount = 0L;
             // 生成待收回预算款
             // reqBudget.setCollectionAmount(reqBudgetAmount -
-            // totalAdvanceFund); //在收回预算款时填写实收金额
+            // totalAdvanceFund); //在收回预算款时录入实收金额 界面打款金额-垫资总额展示应收金额
             reqBudget.setCurNodeCode(EReqBudgetNode.COLLECTION.getCode());
             // 生成日志
             sysBizLogBO.saveSYSBizLog(reqBudget.getCode(),
