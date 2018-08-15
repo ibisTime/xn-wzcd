@@ -1875,6 +1875,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public void applyCancel(XN632270Req req) {
         BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
         String preCurrentNode = budgetOrder.getCurNodeCode();// 当前主流程节点
+        if (EBudgetOrderNode.BANK_LOAN_ACHIEVE.getCode().equals(preCurrentNode)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前业务正在还款中，不能申请作废");
+        }
         budgetOrder.setZfReason(req.getZfReason());
         budgetOrder.setFrozenStatus(EBudgetFrozenStatus.FROZEN.getCode());
         budgetOrder.setCancelNodeCode(preCurrentNode);

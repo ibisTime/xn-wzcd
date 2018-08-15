@@ -120,6 +120,7 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
                 EReqBudgetNode.COLLECTION.getCode());
         }
         reqBudget.setDzAmount(totalAdvanceFund);
+        reqBudget.setDzDatetime(new Date());
         reqBudgetBO.refreshReqBudget(reqBudget);
         data.setPayAmount(payAmount);// 付款金额（垫资总金额-请款预算单金额=本次垫资金额）
         data.setMakeBillNote(req.getMakeBillNote());
