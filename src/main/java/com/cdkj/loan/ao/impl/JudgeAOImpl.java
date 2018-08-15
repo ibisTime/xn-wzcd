@@ -82,12 +82,12 @@ public class JudgeAOImpl implements IJudgeAO {
         String code = judgeBO.saveJudge(req);
 
         // 日志记录
-        ERepayBizNode node = ERepayBizNode.getMap().get(nodeFlowBO
-            .getNodeFlowByCurrentNode(repayBiz.getCurNodeCode()).getNextNode());
+        ERepayBizNode node = ERepayBizNode.getMap().get(
+            nodeFlowBO.getNodeFlowByCurrentNode(repayBiz.getCurNodeCode())
+                .getNextNode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getRepayBizCode(),
             EBizLogType.REPAY_BIZ, req.getRepayBizCode(),
-            repayBiz.getCurNodeCode(), node.getCode(), node.getValue(),
-            req.getOperator());
+            repayBiz.getCurNodeCode(), node.getCode(), null, req.getOperator());
         return code;
     }
 
@@ -95,8 +95,8 @@ public class JudgeAOImpl implements IJudgeAO {
     @Transactional
     public void judgeFinanceCheck(XN630564Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
-        if (!ERepayBizNode.JUDGE_FINANCE_CHECK.getCode()
-            .equals(repayBiz.getCurNodeCode())) {
+        if (!ERepayBizNode.JUDGE_FINANCE_CHECK.getCode().equals(
+            repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前还款业务不在司法诉讼财务审核节点，不能操作！");
         }
@@ -124,8 +124,7 @@ public class JudgeAOImpl implements IJudgeAO {
     @Transactional
     public void cashier(XN630565Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
-        if (!ERepayBizNode.CASHIER.getCode()
-            .equals(repayBiz.getCurNodeCode())) {
+        if (!ERepayBizNode.CASHIER.getCode().equals(repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前业务不在出纳打款节点，不能操作！");
         }
@@ -146,8 +145,8 @@ public class JudgeAOImpl implements IJudgeAO {
     @Transactional
     public void acceptance(XN630566Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
-        if (!ERepayBizNode.ACCEPTANCE.getCode()
-            .equals(repayBiz.getCurNodeCode())) {
+        if (!ERepayBizNode.ACCEPTANCE.getCode().equals(
+            repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前业务不在受理节点，不能操作！");
         }
@@ -167,8 +166,8 @@ public class JudgeAOImpl implements IJudgeAO {
     @Transactional
     public void toHoldCourt(XN630567Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
-        if (!ERepayBizNode.TO_HOLD_COURT.getCode()
-            .equals(repayBiz.getCurNodeCode())) {
+        if (!ERepayBizNode.TO_HOLD_COURT.getCode().equals(
+            repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前业务不在开庭节点，不能操作！");
         }
@@ -188,8 +187,7 @@ public class JudgeAOImpl implements IJudgeAO {
     @Transactional
     public void sentence(XN630568Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
-        if (!ERepayBizNode.SENTENCE.getCode()
-            .equals(repayBiz.getCurNodeCode())) {
+        if (!ERepayBizNode.SENTENCE.getCode().equals(repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前业务不在判决节点，不能操作！");
         }
@@ -209,8 +207,8 @@ public class JudgeAOImpl implements IJudgeAO {
     @Transactional
     public void judgeResultInput(XN630562Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
-        if (!ERepayBizNode.JUDGE_RESULT_INPUT.getCode()
-            .equals(repayBiz.getCurNodeCode())) {
+        if (!ERepayBizNode.JUDGE_RESULT_INPUT.getCode().equals(
+            repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前业务不在执行结果录入节点！");
         }
@@ -237,7 +235,7 @@ public class JudgeAOImpl implements IJudgeAO {
                 nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getNextNode());
             sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getRepayBizCode(),
                 EBizLogType.REPAY_BIZ, req.getRepayBizCode(),
-                repayBiz.getCurNodeCode(), node.getCode(), node.getValue(),
+                repayBiz.getCurNodeCode(), node.getCode(), null,
                 req.getOperator());
 
         } else if (EExeResult.FINISH_BAD.getCode().equals(req.getExeResult())) {
@@ -271,8 +269,8 @@ public class JudgeAOImpl implements IJudgeAO {
     @Override
     public void resultInputAgain(String code, String operator) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-        if (!ERepayBizNode.RESULT_INPUT_AGAIN.getCode()
-            .equals(repayBiz.getCurNodeCode())) {
+        if (!ERepayBizNode.RESULT_INPUT_AGAIN.getCode().equals(
+            repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前业务不在重新申请执行节点，不能操作！");
         }
@@ -284,13 +282,12 @@ public class JudgeAOImpl implements IJudgeAO {
         // 日志记录
         ERepayBizNode node = ERepayBizNode.getMap().get(
             nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getNextNode());
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(code, EBizLogType.REPAY_BIZ, code,
-            repayBiz.getCurNodeCode(), node.getCode(), null, operator);
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(code, EBizLogType.REPAY_BIZ,
+            code, repayBiz.getCurNodeCode(), node.getCode(), null, operator);
     }
 
     @Override
-    public Paginable<Judge> queryJudgePage(int start, int limit,
-            Judge condition) {
+    public Paginable<Judge> queryJudgePage(int start, int limit, Judge condition) {
         Paginable<Judge> page = judgeBO.getPaginable(start, limit, condition);
         List<Judge> list = page.getList();
         for (Judge judge : list) {
