@@ -251,6 +251,7 @@ public class ArchiveAOImpl implements IArchiveAO {
                 // continue;
                 // }
                 SocialRelation data1 = new SocialRelation();
+                data1.setArchiveCode(data.getCode());
                 data1.setCompanyName(child.getCompanyName());
                 data1.setRealName(child.getRealName());
                 data1.setRelation(child.getRelation());
