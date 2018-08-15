@@ -12,7 +12,7 @@ public interface ISeriesAO {
     String DEFAULT_ORDER_COLUMN = "code";
 
     // 新增品牌
-    public String addSeries(XN630410Req req);
+    public void addSeries(XN630410Req req);
 
     // 修改品牌
     public void editSeries(XN630412Req req);

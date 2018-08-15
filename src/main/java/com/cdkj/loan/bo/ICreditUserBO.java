@@ -11,6 +11,9 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     // 新增征信人员
     public void saveCreditUser(CreditUser creditUser);
 
+    // 删除征信人员
+    public void dropCreditUser(String code);
+
     // 查询征信人员
     public CreditUser getCreditUser(String code);
 

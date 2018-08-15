@@ -26,8 +26,7 @@ public class CreditUserDAOImpl extends AMybatisTemplate
 
     @Override
     public int delete(CreditUser data) {
-        // TODO Auto-generated method stub
-        return 0;
+        return super.delete(NAMESPACE.concat("delete_creditUser"), data);
     }
 
     @Override

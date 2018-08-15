@@ -52,7 +52,7 @@ public class TestJUnit extends UnitilsJUnit4 {
                 // String logo = jo.getString("logo");
                 // String depth = jo.getString("depth");
                 System.out.println("id = " + jo);
-                System.out.println("id = " + id);
+                // System.out.println("id = " + id);
             }
         } catch (Exception e) {
             e.printStackTrace();
