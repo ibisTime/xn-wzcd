@@ -53,7 +53,10 @@ public class SeriesAOImpl implements ISeriesAO {
         series.setRemark(req.getRemark());
         seriesBO.saveSeries(series);
 
-        // 导入车系基础数据
+        // 导入车系基础数据。然后执行
+        // (update tht_series s, tht_brand b set s.brand_code=b.code where
+        // s.brand_code=b.description;)
+
         // ArrayList<JSONArray> json = generateSeries();
         // for (JSONArray jsonArray : json) {
         // for (Object obj : jsonArray) {
@@ -68,7 +71,8 @@ public class SeriesAOImpl implements ISeriesAO {
         // Series series = new Series();
         // series.setName(name);
         // series.setBrandCode(parentid);
-        // series.setPrice(StringValidater.toLong(price));
+        // String[] split = price.split("万");
+        // series.setPrice((long) (Double.parseDouble(split[0]) * 10000));
         // series.setAdvPic(logo);
         // series.setStatus(EBrandStatus.TO_UP.getCode());
         // series.setUpdater("USYS201800000000001");

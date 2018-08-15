@@ -70,17 +70,14 @@ public class ConvertApplyAOImpl implements IConvertApplyAO {
         data.setRemark(req.getRemark());
 
         List<XN632870ReqProbationAssess> list = req.getProbationAssessList();
-        int number = 0;
         for (XN632870ReqProbationAssess reqpa : list) {
             ProbationAssess probationAssess = new ProbationAssess();
             probationAssess.setConvertCode(code);
             probationAssess.setEvalItem(reqpa.getEvalItem());
             Integer grade = StringValidater.toInteger(reqpa.getGrade());
             probationAssess.setGrade(grade);
-            number = number + grade;
             probationAssessBO.saveProbationAssess(probationAssess);
         }
-        data.setTotalGrade(number);
         convertApplyBO.saveConvertApply(data);
         return code;
     }
@@ -112,18 +109,7 @@ public class ConvertApplyAOImpl implements IConvertApplyAO {
             limit, condition);
         if (paginable != null) {
             for (ConvertApply convertApply : paginable.getList()) {
-                ProbationAssess probationAssess = new ProbationAssess();
-                probationAssess.setConvertCode(convertApply.getCode());
-                convertApply.setProbationAssessesList(probationAssessBO
-                    .queryProbationAssessList(probationAssess));
-                SYSUser user = sysUserBO.getUser(convertApply.getApplyUser());
-                convertApply.setUser(user);
-                Archive archive = archiveBO
-                    .getArchiveByUserid(convertApply.getApplyUser());
-                convertApply.setArchice(archive);
-                EntryApply entryApply = entryApplyBO
-                    .getEntryApply(convertApply.getEntryCode());
-                convertApply.setEntryApply(entryApply);
+                initConvertApply(convertApply);
             }
         }
         return paginable;
@@ -131,16 +117,22 @@ public class ConvertApplyAOImpl implements IConvertApplyAO {
 
     @Override
     public List<ConvertApply> queryConvertApplyList(ConvertApply condition) {
-        return convertApplyBO.queryConvertApplyList(condition);
+        List<ConvertApply> queryConvertApplyList = convertApplyBO
+            .queryConvertApplyList(condition);
+        for (ConvertApply convertApply : queryConvertApplyList) {
+            initConvertApply(convertApply);
+        }
+        return queryConvertApplyList;
     }
 
     @Override
     public ConvertApply getConvertApply(String code) {
         ConvertApply convertApply = convertApplyBO.getConvertApply(code);
-        ProbationAssess probationAssess = new ProbationAssess();
-        probationAssess.setConvertCode(convertApply.getCode());
-        convertApply.setProbationAssessesList(
-            probationAssessBO.queryProbationAssessList(probationAssess));
+        initConvertApply(convertApply);
+        return convertApply;
+    }
+
+    private void initConvertApply(ConvertApply convertApply) {
         SYSUser user = sysUserBO.getUser(convertApply.getApplyUser());
         convertApply.setUser(user);
         Archive archive = archiveBO
@@ -149,7 +141,13 @@ public class ConvertApplyAOImpl implements IConvertApplyAO {
         EntryApply entryApply = entryApplyBO
             .getEntryApply(convertApply.getEntryCode());
         convertApply.setEntryApply(entryApply);
-        return convertApply;
+        List<ProbationAssess> list = probationAssessBO
+            .queryProbationAssessListByConvertApplyCode(convertApply.getCode());
+        convertApply.setProbationAssessesList(list);
+        int totalGrade = 0;
+        for (ProbationAssess probationAssess : list) {
+            totalGrade += probationAssess.getGrade();
+        }
+        convertApply.setTotalGrade(totalGrade);
     }
-
 }
