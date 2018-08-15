@@ -66,4 +66,12 @@ public class ProbationAssessBOImpl extends PaginableBOImpl<ProbationAssess>
         }
         return data;
     }
+
+    @Override
+    public List<ProbationAssess> queryProbationAssessListByConvertApplyCode(
+            String code) {
+        ProbationAssess condition = new ProbationAssess();
+        condition.setConvertCode(code);
+        return probationAssessDAO.selectList(condition);
+    }
 }

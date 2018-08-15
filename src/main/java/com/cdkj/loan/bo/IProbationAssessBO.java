@@ -18,4 +18,7 @@ public interface IProbationAssessBO extends IPaginableBO<ProbationAssess> {
 
     public ProbationAssess getProbationAssess(int id);
 
+    public List<ProbationAssess> queryProbationAssessListByConvertApplyCode(
+            String code);
+
 }
