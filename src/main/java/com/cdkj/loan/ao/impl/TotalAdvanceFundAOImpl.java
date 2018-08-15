@@ -106,21 +106,21 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
             .getCompanyCode());
         if (reqBudget == null) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "该公司未提交没有请款预算单！");
+                "今天还未给该业务公司打预算款！");
         }
         Long reqBudgetAmount = getLong(reqBudget.getPayAmount());
         Long payAmount = totalAdvanceFund - reqBudgetAmount;
         if (payAmount < 0) {
             payAmount = 0L;
-            // 生成待收回预算款
-            reqBudget.setCollectionAmount(reqBudgetAmount - totalAdvanceFund);
+            // 生成待收回预算款 (在收回预算款时录入实收金额 界面打款金额-垫资总额展示应收金额)
             reqBudget.setCurNodeCode(EReqBudgetNode.COLLECTION.getCode());
-            // 生成日志
+            // 日志
             sysBizLogBO.saveSYSBizLog(reqBudget.getCode(),
                 EBizLogType.REQ_BUDGET, reqBudget.getCode(),
                 EReqBudgetNode.COLLECTION.getCode());
-            reqBudgetBO.refreshReqBudget(reqBudget);
         }
+        reqBudget.setDzAmount(totalAdvanceFund);
+        reqBudgetBO.refreshReqBudget(reqBudget);
         data.setPayAmount(payAmount);// 付款金额（垫资总金额-请款预算单金额=本次垫资金额）
         data.setMakeBillNote(req.getMakeBillNote());
         data.setUpdater(req.getOperator());
@@ -135,42 +135,8 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
     }
 
     @Override
-    public int editTotalAdvanceFund(TotalAdvanceFund data) {
-        if (!totalAdvanceFundBO.isTotalAdvanceFundExist(data.getCode())) {
-            throw new BizException("xn0000", "记录编号不存在");
-        }
-        return totalAdvanceFundBO.refreshTotalAdvanceFund(data);
-    }
-
-    @Override
-    public int dropTotalAdvanceFund(String code) {
-        if (!totalAdvanceFundBO.isTotalAdvanceFundExist(code)) {
-            throw new BizException("xn0000", "记录编号不存在");
-        }
-        return totalAdvanceFundBO.removeTotalAdvanceFund(code);
-    }
-
-    @Override
-    public Paginable<TotalAdvanceFund> queryTotalAdvanceFundPage(int start,
-            int limit, TotalAdvanceFund condition) {
-        return totalAdvanceFundBO.getPaginable(start, limit, condition);
-    }
-
-    @Override
-    public List<TotalAdvanceFund> queryTotalAdvanceFundList(
-            TotalAdvanceFund condition) {
-        return totalAdvanceFundBO.queryTotalAdvanceFundList(condition);
-    }
-
-    @Override
-    public TotalAdvanceFund getTotalAdvanceFund(String code) {
-        return totalAdvanceFundBO.getTotalAdvanceFund(code);
-    }
-
-    @Override
     @Transactional
     public void confirmPayBranchCompany(XN632176Req req) {
-
         List<String> codeList = req.getCodeList();
         for (String code : codeList) {
             AdvanceFund advanceFund = advanceFundBO.getAdvanceFund(code);
@@ -261,6 +227,39 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
                 repointDetailBO.updateCurNodeCode(repointDetail);
             }
         }
+    }
+
+    @Override
+    public int dropTotalAdvanceFund(String code) {
+        if (!totalAdvanceFundBO.isTotalAdvanceFundExist(code)) {
+            throw new BizException("xn0000", "记录编号不存在");
+        }
+        return totalAdvanceFundBO.removeTotalAdvanceFund(code);
+    }
+
+    @Override
+    public Paginable<TotalAdvanceFund> queryTotalAdvanceFundPage(int start,
+            int limit, TotalAdvanceFund condition) {
+        return totalAdvanceFundBO.getPaginable(start, limit, condition);
+    }
+
+    @Override
+    public List<TotalAdvanceFund> queryTotalAdvanceFundList(
+            TotalAdvanceFund condition) {
+        return totalAdvanceFundBO.queryTotalAdvanceFundList(condition);
+    }
+
+    @Override
+    public TotalAdvanceFund getTotalAdvanceFund(String code) {
+        return totalAdvanceFundBO.getTotalAdvanceFund(code);
+    }
+
+    @Override
+    public int editTotalAdvanceFund(TotalAdvanceFund data) {
+        if (!totalAdvanceFundBO.isTotalAdvanceFundExist(data.getCode())) {
+            throw new BizException("xn0000", "记录编号不存在");
+        }
+        return totalAdvanceFundBO.refreshTotalAdvanceFund(data);
     }
 
     private Long getLong(Object obj) {

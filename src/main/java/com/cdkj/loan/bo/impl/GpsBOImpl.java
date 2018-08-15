@@ -46,7 +46,7 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
             Date applyDatetime, String companyApplyCode) {
         Gps gps = getGps(code);
         gps.setCompanyCode(companyCode);
-        gps.setCompanyApplyStatus(EBoolean.YES.getCode());// 已申领
+        gps.setCompanyApplyStatus(EBoolean.NO.getCode());
         gps.setCompanyApplyDatetime(applyDatetime);
         gps.setCompanyApplyCode(companyApplyCode);
         gpsDAO.updateCompanyApprove(gps);
