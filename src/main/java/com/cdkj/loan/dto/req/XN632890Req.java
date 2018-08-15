@@ -39,9 +39,6 @@ public class XN632890Req {
     // 更新人
     private String updater;
 
-    // 备注
-    private String remark;
-
     public String getApplyUser() {
         return applyUser;
     }
@@ -104,14 +101,6 @@ public class XN632890Req {
 
     public void setUpdater(String updater) {
         this.updater = updater;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
     }
 
 }

@@ -33,6 +33,9 @@ public class SocialRelation extends ABaseDO {
     // 联系方式
     private String contact;
 
+    // 状态(1正常0删除)
+    private String status;
+
     public void setCode(String code) {
         this.code = code;
     }
@@ -87,6 +90,14 @@ public class SocialRelation extends ABaseDO {
 
     public String getContact() {
         return contact;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

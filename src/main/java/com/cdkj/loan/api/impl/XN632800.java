@@ -24,7 +24,6 @@ public class XN632800 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-
         return new PKCodeRes(archiveAO.addArchive(req));
     }
 

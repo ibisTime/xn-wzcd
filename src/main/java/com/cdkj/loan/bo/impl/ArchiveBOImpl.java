@@ -13,6 +13,7 @@ import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.IArchiveDAO;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -56,11 +57,11 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
 
     @Override
     public void removeArchive(String code) {
-        int count = 0;
         if (StringUtils.isNotBlank(code)) {
             Archive data = new Archive();
             data.setCode(code);
-            count = archiveDAO.delete(data);
+            data.setStatus(EBoolean.NO.getCode());
+            archiveDAO.delete(data);
         }
     }
 
@@ -89,7 +90,7 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive> implements
         if (StringUtils.isNotBlank(code)) {
             Archive condition = new Archive();
             condition.setCode(code);
-            condition.setIsDelete("1");
+            condition.setStatus(EBoolean.YES.getCode());
             data = archiveDAO.select(condition);
             if (data == null) {
                 throw new BizException("xn0000", "人事档案不存在");

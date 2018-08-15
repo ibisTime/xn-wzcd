@@ -17,6 +17,7 @@ public interface ISocialRelationBO extends IPaginableBO<SocialRelation> {
 
     public String saveSocialRelation(SocialRelation data);
 
+    // 逻辑删除
     public int removeSocialRelation(String code);
 
     public int refreshSocialRelation(SocialRelation data);
@@ -24,5 +25,8 @@ public interface ISocialRelationBO extends IPaginableBO<SocialRelation> {
     public List<SocialRelation> querySocialRelationList(SocialRelation condition);
 
     public SocialRelation getSocialRelation(String code);
+
+    // 真删除
+    public void removeSocialRelationTrue(String Code);
 
 }

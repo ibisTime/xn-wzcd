@@ -77,4 +77,13 @@ DELETE FROM `tsys_menu` WHERE `code`='SM201805250101085488247';
 UPDATE `tsys_menu` SET `name`='预算单流转中' WHERE `code`='SM201806292245140079435';
 UPDATE `tb_car_dealer` SET `cur_node_code`='006_03' WHERE `code`='CD201807081628275712800';
 
+ALTER TABLE `tp_archive` 
+DROP COLUMN `is_delete`;
+
+ALTER TABLE `tp_social_relation` 
+DROP COLUMN `is_delete`;
+
+ALTER TABLE `tp_social_relation` 
+ADD COLUMN `status` VARCHAR(4) NULL COMMENT '状态（0删除1正常）' AFTER `contact`;
+
 

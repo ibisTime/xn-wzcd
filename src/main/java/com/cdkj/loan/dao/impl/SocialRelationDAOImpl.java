@@ -55,8 +55,12 @@ public class SocialRelationDAOImpl extends AMybatisTemplate implements
 
     @Override
     public int update(SocialRelation data) {
-
         return super.update(NAMESPACE.concat("update_socialRelation"), data);
+    }
+
+    @Override
+    public int updateStatus(SocialRelation data) {
+        return super.update(NAMESPACE.concat("update_status"), data);
     }
 
 }

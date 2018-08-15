@@ -91,10 +91,12 @@
 			<if test="ageEnd != null and ageEnd != '' ">
 				<![CDATA[AND TIMESTAMPDIFF(YEAR, birthday, CURDATE()) <= #{ageEnd}]]>
 			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
 			</if>
-			AND t.is_delete = '1'
 		</trim>
 	</sql>
 	<select id="select_archive" parameterType="archive" resultMap="Archive_DB_Result">
@@ -234,7 +236,6 @@
 		,update_datetime
 		,remark
 		,user_id
-		,is_delete
 		)
 		VALUES(
 		#{code}
@@ -295,7 +296,6 @@
 		,#{updateDatetime}
 		,#{remark}
 		,#{userId}
-		,'1'
 		)
 	</insert>
 
@@ -362,8 +362,6 @@
 		WHERE code = #{code}
 	</update>
 	
-	
-	
 	<update id="update_leave_archive" parameterType="archive">
 		UPDATE tp_archive
 		SET
@@ -378,9 +376,7 @@
 	<update id="delete_archive">
 		UPDATE tp_archive
 		SET
-		is_delete = '0' 
+		status = #{status} 
 		WHERE code = #{code}
 	</update>
-
-
 </mapper>

@@ -66,7 +66,7 @@ public class Archive extends ABaseDO {
     // 学历
     private String education;
 
-    // 状态
+    // 工作状态
     private String workStatus;
 
     // 健康状况
@@ -174,7 +174,7 @@ public class Archive extends ABaseDO {
     // 工龄
     private String workingYears;
 
-    // 状态
+    // 状态(0删除1正常)
     private String status;
 
     // 更新人
@@ -188,8 +188,6 @@ public class Archive extends ABaseDO {
 
     // 用户编号
     private String userId;
-
-    private String isDelete;
 
     /*************db properties*************/
 
@@ -227,14 +225,6 @@ public class Archive extends ABaseDO {
 
     public void setAgeEnd(Integer ageEnd) {
         this.ageEnd = ageEnd;
-    }
-
-    public String getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(String isDelete) {
-        this.isDelete = isDelete;
     }
 
     public String getUserId() {

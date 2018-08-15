@@ -1538,11 +1538,10 @@ CREATE TABLE `tp_archive` (
   `taxi_ward` bigint(20) DEFAULT NULL COMMENT '出租车',
   `meal_award` bigint(20) DEFAULT NULL COMMENT '餐补',
   `working_years` varchar(32) DEFAULT NULL COMMENT '工龄',
-  `status` varchar(32) DEFAULT NULL COMMENT '状态',
+  `status` varchar(32) DEFAULT NULL COMMENT '状态(1正常0删除)',
   `updater` varchar(255) DEFAULT NULL COMMENT '更新人',
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  `is_delete` char(1) DEFAULT NULL COMMENT '0删除',
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户编号',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='人事档案';

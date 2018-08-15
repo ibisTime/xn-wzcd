@@ -18,8 +18,8 @@ import com.cdkj.loan.enums.ESYSBizLogStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
-        implements ISYSBizLogBO {
+public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
+        ISYSBizLogBO {
 
     @Autowired
     private ISYSBizLogDAO sysBizLogDAO;
@@ -27,23 +27,10 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
     @Autowired
     private ISYSUserBO sysUserBO;
 
-    @Override
-    public void saveSYSBizLog(String parentOrder, EBizLogType refType,
-            String refOrder, String dealNode) {
-        SYSBizLog data = new SYSBizLog();
-        data.setParentOrder(parentOrder);
-        data.setRefType(refType.getCode());
-        data.setRefOrder(refOrder);
-        data.setDealNode(dealNode);
-        data.setStatus(ESYSBizLogStatus.WAIT_HANDLE.getCode());// 待处理
-        data.setStartDatetime(new Date());
-        sysBizLogDAO.insert(data);
-    }
-
+    // 当前操作日志
     @Override
     public void recordCurrentSYSBizLog(String parentOrder, EBizLogType refType,
-            String refOrder, String dealNode, String dealNote,
-            String operator) {
+            String refOrder, String dealNode, String dealNote, String operator) {
         SYSBizLog data = new SYSBizLog();
         data.setParentOrder(parentOrder);
         data.setRefType(refType.getCode());
@@ -62,16 +49,30 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
         sysBizLogDAO.insert(data);
     }
 
-    // 系统用户记录日志
+    // 下一步待操作的日志
+    @Override
+    public void saveSYSBizLog(String parentOrder, EBizLogType refType,
+            String refOrder, String dealNode) {
+        SYSBizLog data = new SYSBizLog();
+        data.setParentOrder(parentOrder);
+        data.setRefType(refType.getCode());
+        data.setRefOrder(refOrder);
+        data.setDealNode(dealNode);
+        data.setStatus(ESYSBizLogStatus.WAIT_HANDLE.getCode());// 待处理
+        data.setStartDatetime(new Date());
+        sysBizLogDAO.insert(data);
+    }
+
+    // 系统用户记录日志 （1记录当前操作 2生成下一步操作）
     @Override
     public void saveNewAndPreEndSYSBizLog(String parentOrder,
             EBizLogType refType, String refOrder, String preDealNode,
             String nowDealNode, String nowDealNote, String operator) {
-        // 保存新节点（为下一个节点生成的 有开始时间 待填入操作人和结束时间）
-        saveSYSBizLog(parentOrder, refType, refOrder, nowDealNode);
         // 处理之前节点
         refreshPreSYSBizLog(refType, refOrder, preDealNode, nowDealNote,
             operator);
+        // 保存新节点（为下一个节点生成的 有开始时间 待填入操作人和结束时间）
+        saveSYSBizLog(parentOrder, refType, refOrder, nowDealNode);
     }
 
     // 最后操作记录日志
@@ -89,8 +90,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog>
             Long day = diff / (24 * 60 * 60 * 1000);
             Long hour = (diff / (60 * 60 * 1000) - day * 24);
             Long min = ((diff / (60 * 1000)) - day * 24 * 60 - hour * 60);
-            Long sec = (diff / 1000 - day * 24 * 60 * 60 - hour * 60 * 60
-                    - min * 60);
+            Long sec = (diff / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
             data.setSpeedTime(day + "天" + hour + "时" + min + "分" + sec + "秒");
             data.setDealNote(dealNote);
             data.setStatus(ESYSBizLogStatus.ALREADY_HANDLE.getCode());// 已处理

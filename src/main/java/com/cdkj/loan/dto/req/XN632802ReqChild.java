@@ -23,16 +23,6 @@ public class XN632802ReqChild {
     // 联系方式
     private String contact;
 
-    private String isDelete;
-
-    public String getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(String isDelete) {
-        this.isDelete = isDelete;
-    }
-
     public String getCode() {
         return code;
     }

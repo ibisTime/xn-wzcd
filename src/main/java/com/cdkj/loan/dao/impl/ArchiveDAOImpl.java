@@ -24,7 +24,7 @@ public class ArchiveDAOImpl extends AMybatisTemplate implements IArchiveDAO {
 
     @Override
     public int delete(Archive data) {
-        return super.delete(NAMESPACE.concat("delete_archive"), data);
+        return super.update(NAMESPACE.concat("delete_archive"), data);
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.dto.req.XN632805Req;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -35,7 +36,7 @@ public class XN632805 extends AProcessor {
         condition.setEntryDatetimeStart(req.getEntryDatetimeStart());
         condition.setEntryDatetimeEnd(req.getEntryDatetimeEnd());
         condition.setWorkStatus(req.getWorkStatus());
-        condition.setIsDelete("1");
+        condition.setStatus(EBoolean.YES.getCode());
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
             column = IArchiveAO.DEFAULT_ORDER_COLUMN;

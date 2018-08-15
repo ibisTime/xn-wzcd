@@ -10,6 +10,7 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.dto.req.XN632815Req;
 import com.cdkj.loan.enums.EArchiveWorkStatus;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -34,7 +35,7 @@ public class XN632815 extends AProcessor {
         condition.setDepartmentCode(req.getDepartmentCode());
         condition.setPostCode(req.getPostCode());
         condition.setWorkStatus(EArchiveWorkStatus.LEAVE.getCode());
-        condition.setIsDelete("1");
+        condition.setStatus(EBoolean.YES.getCode());
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {

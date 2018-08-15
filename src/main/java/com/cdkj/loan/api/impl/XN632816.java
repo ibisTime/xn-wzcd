@@ -22,7 +22,6 @@ public class XN632816 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-
         return archiveAO.getArchive(req.getCode());
     }
 

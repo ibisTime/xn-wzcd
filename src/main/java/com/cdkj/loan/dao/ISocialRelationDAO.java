@@ -8,4 +8,6 @@ public interface ISocialRelationDAO extends IBaseDAO<SocialRelation> {
     String NAMESPACE = ISocialRelationDAO.class.getName().concat(".");
 
     public int update(SocialRelation data);
+
+    public int updateStatus(SocialRelation data);
 }

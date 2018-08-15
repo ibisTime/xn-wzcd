@@ -11,6 +11,7 @@ import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.dao.ISocialRelationDAO;
 import com.cdkj.loan.domain.SocialRelation;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -41,8 +42,8 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
     public String saveSocialRelation(SocialRelation data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater
-                .generate(EGeneratePrefix.SOCIAL_RELATION.getCode());
+            code = OrderNoGenerater.generate(EGeneratePrefix.SOCIAL_RELATION
+                .getCode());
             data.setCode(code);
             socialRelationDAO.insert(data);
         }
@@ -55,7 +56,8 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
         if (StringUtils.isNotBlank(code)) {
             SocialRelation data = new SocialRelation();
             data.setArchiveCode(code);
-            count = socialRelationDAO.delete(data);
+            data.setStatus(EBoolean.NO.getCode());
+            count = socialRelationDAO.updateStatus(data);
         }
         return count;
     }
@@ -70,8 +72,7 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
     }
 
     @Override
-    public List<SocialRelation> querySocialRelationList(
-            SocialRelation condition) {
+    public List<SocialRelation> querySocialRelationList(SocialRelation condition) {
         return socialRelationDAO.selectList(condition);
     }
 
@@ -87,5 +88,14 @@ public class SocialRelationBOImpl extends PaginableBOImpl<SocialRelation>
             }
         }
         return data;
+    }
+
+    @Override
+    public void removeSocialRelationTrue(String code) {
+        if (StringUtils.isNotBlank(code)) {
+            SocialRelation data = new SocialRelation();
+            data.setCode(code);
+            socialRelationDAO.delete(data);
+        }
     }
 }

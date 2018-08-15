@@ -70,16 +70,16 @@ public class LeaveApplyAOImpl implements ILeaveApplyAO {
             throw new BizException("xn0000", "请假申请不存在");
         }
         LeaveApply leaveApply = leaveApplyBO.getLeaveApply(req.getCode());
-        if (!ELeaveApplyStatus.TO_APPROVE.getCode()
-            .equals(leaveApply.getStatus())) {
+        if (!ELeaveApplyStatus.TO_APPROVE.getCode().equals(
+            leaveApply.getStatus())) {
             throw new BizException("xn0000", "申请单不在待审核状态!");
         }
 
         LeaveApply data = new LeaveApply();
         if (req.getResult().equals(ELeaveApplyStatus.APPROVE_PASS.getCode())) {
             data.setStatus(ELeaveApplyStatus.APPROVE_PASS.getCode());
-        } else if (req.getResult()
-            .equals(ELeaveApplyStatus.APPROVE_FAIL.getCode())) {
+        } else if (req.getResult().equals(
+            ELeaveApplyStatus.APPROVE_FAIL.getCode())) {
             data.setStatus(ELeaveApplyStatus.APPROVE_FAIL.getCode());
         }
         data.setCode(req.getCode());

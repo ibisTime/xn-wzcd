@@ -5,6 +5,7 @@ import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.dto.req.XN632817Req;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -27,7 +28,7 @@ public class XN632817 extends AProcessor {
         condition.setRealName(req.getRealName());
         condition.setDepartmentCode(req.getDepartmentCode());
         condition.setPostCode(req.getPostCode());
-        condition.setIsDelete("1");
+        condition.setStatus(EBoolean.YES.getCode());
         return archiveAO.queryArchiveList(condition);
     }
 

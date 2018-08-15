@@ -72,7 +72,7 @@ public class XN632800Req {
     @NotBlank
     private String education;
 
-    // 状态
+    // 工作状态
     @NotBlank
     private String workStatus;
 
@@ -189,8 +189,7 @@ public class XN632800Req {
         return socialRelationList;
     }
 
-    public void setSocialRelationList(
-            List<XN632800ReqChild> socialRelationList) {
+    public void setSocialRelationList(List<XN632800ReqChild> socialRelationList) {
         this.socialRelationList = socialRelationList;
     }
 

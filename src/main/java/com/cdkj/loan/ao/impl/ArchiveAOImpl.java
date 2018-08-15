@@ -31,6 +31,7 @@ import com.cdkj.loan.dto.req.XN632802Req;
 import com.cdkj.loan.dto.req.XN632802ReqChild;
 import com.cdkj.loan.dto.res.XN632803Res;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.exception.BizException;
 
@@ -147,6 +148,7 @@ public class ArchiveAOImpl implements IArchiveAO {
             }
         }
         data.setUserId(userId);
+        data.setStatus(EBoolean.YES.getCode());
         String archiveCode = archiveBO.saveArchive(data);
 
         List<XN632800ReqChild> socialRelationList = req.getSocialRelationList();
@@ -161,9 +163,9 @@ public class ArchiveAOImpl implements IArchiveAO {
             data1.setCompanyName(xn632800ReqChild.getCompanyName());
             data1.setPost(xn632800ReqChild.getPost());
             data1.setContact(xn632800ReqChild.getContact());
+            data1.setStatus(EBoolean.YES.getCode());
             socialRelationBO.saveSocialRelation(data1);
         }
-
         return archiveCode;
     }
 
@@ -234,15 +236,16 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         data.setWorkingYears(req.getWorkingYears());
-
+        // 删除原有的社会关系
+        SocialRelation condition = new SocialRelation();
+        condition.setArchiveCode(req.getCode());
+        List<SocialRelation> socialRelationList = socialRelationBO
+            .querySocialRelationList(condition);
+        for (SocialRelation socialRelation : socialRelationList) {
+            socialRelationBO.removeSocialRelationTrue(socialRelation.getCode());
+        }
         List<XN632802ReqChild> list = req.getSocialRelationList();
         for (XN632802ReqChild child : list) {
-
-            if (!"".equals(child.getIsDelete()) && null != child.getIsDelete()
-                    && "0".equals(child.getIsDelete())) {
-                socialRelationBO.removeSocialRelation(child.getCode());
-                continue;
-            }
             SocialRelation data1 = new SocialRelation();
             data1.setCode(child.getCode());
             data1.setCompanyName(child.getCompanyName());
@@ -250,10 +253,8 @@ public class ArchiveAOImpl implements IArchiveAO {
             data1.setRelation(child.getRelation());
             data1.setContact(child.getContact());
             data1.setPost(child.getPost());
-            socialRelationBO.refreshSocialRelation(data1);
-
+            socialRelationBO.saveSocialRelation(data1);
         }
-
         archiveBO.refreshArchive(data);
     }
 
@@ -279,12 +280,11 @@ public class ArchiveAOImpl implements IArchiveAO {
 
     @Override
     public Archive getArchive(String code) {
-
+        Archive archive = archiveBO.getArchive(code);
         SocialRelation condition = new SocialRelation();
         condition.setArchiveCode(code);
         List<SocialRelation> list = socialRelationBO
             .querySocialRelationList(condition);
-        Archive archive = archiveBO.getArchive(code);
         archive.setSocialRelationList(list);
         return archive;
     }
