@@ -112,11 +112,9 @@ public class TotalAdvanceFundAOImpl implements ITotalAdvanceFundAO {
         Long payAmount = totalAdvanceFund - reqBudgetAmount;
         if (payAmount < 0) {
             payAmount = 0L;
-            // 生成待收回预算款
-            // reqBudget.setCollectionAmount(reqBudgetAmount -
-            // totalAdvanceFund); //在收回预算款时录入实收金额 界面打款金额-垫资总额展示应收金额
+            // 生成待收回预算款 (在收回预算款时录入实收金额 界面打款金额-垫资总额展示应收金额)
             reqBudget.setCurNodeCode(EReqBudgetNode.COLLECTION.getCode());
-            // 生成日志
+            // 日志
             sysBizLogBO.saveSYSBizLog(reqBudget.getCode(),
                 EBizLogType.REQ_BUDGET, reqBudget.getCode(),
                 EReqBudgetNode.COLLECTION.getCode());
