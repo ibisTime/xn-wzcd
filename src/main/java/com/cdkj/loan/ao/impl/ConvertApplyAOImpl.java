@@ -5,13 +5,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IConvertApplyAO;
+import com.cdkj.loan.ao.ISYSUserAO;
 import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IConvertApplyBO;
 import com.cdkj.loan.bo.IEntryApplyBO;
 import com.cdkj.loan.bo.IProbationAssessBO;
-import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
@@ -38,7 +39,7 @@ public class ConvertApplyAOImpl implements IConvertApplyAO {
     private IProbationAssessBO probationAssessBO;
 
     @Autowired
-    private ISYSUserBO sysUserBO;
+    private ISYSUserAO sysUserAO;
 
     @Autowired
     private IArchiveBO archiveBO;
@@ -47,6 +48,7 @@ public class ConvertApplyAOImpl implements IConvertApplyAO {
     private IEntryApplyBO entryApplyBO;
 
     @Override
+    @Transactional
     public String addConvertApply(XN632870Req req) {
         ConvertApply data = new ConvertApply();
         String code = OrderNoGenerater
@@ -83,6 +85,7 @@ public class ConvertApplyAOImpl implements IConvertApplyAO {
     }
 
     @Override
+    @Transactional
     public void approveConvertApply(String code, String approveResult,
             String updater, String remark) {
         ConvertApply convertApply = convertApplyBO.getConvertApply(code);
@@ -133,7 +136,7 @@ public class ConvertApplyAOImpl implements IConvertApplyAO {
     }
 
     private void initConvertApply(ConvertApply convertApply) {
-        SYSUser user = sysUserBO.getUser(convertApply.getApplyUser());
+        SYSUser user = sysUserAO.getUser(convertApply.getApplyUser());
         convertApply.setUser(user);
         Archive archive = archiveBO
             .getArchiveByUserid(convertApply.getApplyUser());

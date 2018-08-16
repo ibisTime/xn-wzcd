@@ -7,10 +7,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cdkj.loan.ao.ISYSUserAO;
 import com.cdkj.loan.ao.ITransferPositionApplyAO;
 import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IDepartmentBO;
-import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ITransferPositionApplyBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
@@ -29,7 +29,7 @@ public class TransferPositionApplyAOImpl implements ITransferPositionApplyAO {
     private ITransferPositionApplyBO transferPositionApplyBO;
 
     @Autowired
-    private ISYSUserBO sysUserBO;
+    private ISYSUserAO sysUserAO;
 
     @Autowired
     private IArchiveBO archiveBO;
@@ -107,7 +107,7 @@ public class TransferPositionApplyAOImpl implements ITransferPositionApplyAO {
 
     private void initTransferPositionApply(
             TransferPositionApply transferPositionApply) {
-        SYSUser user = sysUserBO.getUser(transferPositionApply.getApplyUser());
+        SYSUser user = sysUserAO.getUser(transferPositionApply.getApplyUser());
         transferPositionApply.setUser(user);
         Archive archive = archiveBO
             .getArchiveByUserid(transferPositionApply.getApplyUser());
