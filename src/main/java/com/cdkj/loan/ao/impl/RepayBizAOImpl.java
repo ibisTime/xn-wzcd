@@ -756,8 +756,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBizBO.refreshCommitSettle(data);
 
         // 日志记录
-        ERepayBizNode currentNode = ERepayBizNode.getMap().get(
-            data.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
             EBizLogType.REPAY_BIZ, data.getCode(), data.getCurNodeCode(),
             nextNodeCode, req.getRemark(), req.getOperator());
@@ -779,8 +777,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
             req.getApproveNote(), req.getOperator());
 
         // 日志记录
-        ERepayBizNode currentNode = ERepayBizNode.getMap().get(
-            repayBiz.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
             EBizLogType.REPAY_BIZ, repayBiz.getCode(),
             repayBiz.getCurNodeCode(), nextNodeCode, req.getApproveNote(),
@@ -805,8 +801,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
             operator);
 
         // 日志记录
-        ERepayBizNode currentNode = ERepayBizNode.getMap().get(
-            repayBiz.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
             EBizLogType.REPAY_BIZ, repayBiz.getCode(),
             repayBiz.getCurNodeCode(), nextNodeCode, approveNote, operator);
@@ -857,8 +851,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
         }
 
         // 日志记录
-        ERepayBizNode currentNode = ERepayBizNode.getMap().get(
-            data.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
             EBizLogType.REPAY_BIZ, data.getCode(), data.getCurNodeCode(),
             nextNodeCode, req.getSettleNote(), req.getOperator());
@@ -880,8 +872,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
             releaseApplyNote, operator);
 
         // 日志记录
-        ERepayBizNode currentNode = ERepayBizNode.getMap().get(
-            repayBiz.getCurNodeCode());
         sysBizLogBO
             .saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
                 EBizLogType.REPAY_BIZ, repayBiz.getCode(),
@@ -905,8 +895,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
             operator);
 
         // 日志记录
-        ERepayBizNode currentNode = ERepayBizNode.getMap().get(
-            repayBiz.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
             EBizLogType.REPAY_BIZ, repayBiz.getCode(),
             repayBiz.getCurNodeCode(), nextNodeCode, approveNote, operator);
@@ -948,8 +936,6 @@ public class RepayBizAOImpl implements IRepayBizAO {
         }
 
         // 日志记录
-        ERepayBizNode currentNode = ERepayBizNode.getMap().get(
-            repayBiz.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
             EBizLogType.REPAY_BIZ, repayBiz.getCode(),
             repayBiz.getCurNodeCode(), nextNodeCode, approveNote, operator);

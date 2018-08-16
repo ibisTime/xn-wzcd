@@ -297,8 +297,7 @@ public class XN632850Req {
         return socialRelationList;
     }
 
-    public void setSocialRelationList(
-            List<XN632850ReqSocial> socialRelationList) {
+    public void setSocialRelationList(List<XN632850ReqSocial> socialRelationList) {
         this.socialRelationList = socialRelationList;
     }
 }
