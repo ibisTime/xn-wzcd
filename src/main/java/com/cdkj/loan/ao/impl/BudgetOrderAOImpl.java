@@ -881,8 +881,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setCurNodeCode(nodeFlow.getNextNode());// 当前节点的下一个节点
             budgetOrderBO.bankPointPushHasLoanList(budgetOrder);
             // 日志记录
-            EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
-                budgetOrder.getCurNodeCode());
             sysBizLogBO
                 .saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
                     EBizLogType.BUDGET_ORDER, budgetOrder.getCode(),

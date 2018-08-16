@@ -87,7 +87,7 @@ public class XN632850Req {
     private String remark;
 
     // 工作经历列表
-    @NotEmpty
+    @NotEmpty(message = "工作经历不能为空")
     private List<XN632850ReqExp> workExperienceList;
 
     // 家庭成员列表
@@ -297,8 +297,7 @@ public class XN632850Req {
         return socialRelationList;
     }
 
-    public void setSocialRelationList(
-            List<XN632850ReqSocial> socialRelationList) {
+    public void setSocialRelationList(List<XN632850ReqSocial> socialRelationList) {
         this.socialRelationList = socialRelationList;
     }
 }
