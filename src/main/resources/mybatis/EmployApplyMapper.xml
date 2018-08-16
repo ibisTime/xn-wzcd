@@ -25,6 +25,7 @@
 		<result column="postcode" property="postcode" />
 		<result column="award" property="award" />
 		<result column="is_out" property="isOut" />
+		<result column="is_over_time" property="isOverTime" />
 		<result column="is_adjust_work" property="isAdjustWork" />
 		
 		<result column="is_once_recruited" property="isOnceRecruited" />
@@ -86,6 +87,7 @@
 		,t.postcode
 		,t.award
 		,t.is_out
+		,t.is_over_time
 		,t.is_adjust_work
 		
 		,t.is_once_recruited
@@ -149,6 +151,7 @@
 		,postcode
 		,award
 		,is_out
+		,is_over_time
 		,is_adjust_work
 		
 		,is_once_recruited
@@ -181,6 +184,7 @@
 		,#{postcode}
 		,#{award}
 		,#{isOut}
+		,#{isOverTime}
 		,#{isAdjustWork}
 		
 		,#{isOnceRecruited}

@@ -116,7 +116,7 @@ public class EntryApplyAOImpl implements IEntryApplyAO {
             experience.setEndDatetime(DateUtil.strToDate(exp.getEndDatetime(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
             experience.setCompanyName(exp.getCompanyName());
-            experience.setPosition(req.getPosition());
+            experience.setPosition(exp.getPosition());
             experience.setLeaveReason(exp.getLeaveReason());
             experience.setProver(exp.getProver());
             experience.setProverMobile(exp.getProverMobile());
