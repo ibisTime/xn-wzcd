@@ -82,9 +82,9 @@ public class EmployApplyAOImpl implements IEmployApplyAO {
             WorkExperience experience = new WorkExperience();
             experience.setParentCode(code);
             experience.setStartDatetime(DateUtil.strToDate(
-                exp.getStartDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+                exp.getStartDatetime(), DateUtil.DATA_TIME_PATTERN_1));
             experience.setEndDatetime(DateUtil.strToDate(exp.getEndDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+                DateUtil.DATA_TIME_PATTERN_1));
             experience.setCompanyName(exp.getCompanyName());
             experience.setPosition(exp.getPosition());
             experience.setLeaveReason(exp.getLeaveReason());
