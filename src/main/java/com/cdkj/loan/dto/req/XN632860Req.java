@@ -83,15 +83,12 @@ public class XN632860Req {
     private String isOtherCompanyRelation;
 
     // 亲属从事本行姓名
-    @NotBlank
     private String relativeName;
 
     // 亲属与本人关系
-    @NotBlank
     private String relativeRelation;
 
     // 亲属职务
-    @NotBlank
     private String relativePosition;
 
     // 主要业绩及工作能力简述
