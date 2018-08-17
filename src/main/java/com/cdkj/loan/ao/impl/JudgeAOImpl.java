@@ -317,7 +317,6 @@ public class JudgeAOImpl implements IJudgeAO {
         if (null != updater) {
             judge.setUpdaterName(updater.getRealName());
         }
-
         SYSUser exeApplyUser = sysUserBO.getUser(judge.getExeApplyUser());
         if (null != exeApplyUser) {
             judge.setExeApplyUserName(exeApplyUser.getRealName());
