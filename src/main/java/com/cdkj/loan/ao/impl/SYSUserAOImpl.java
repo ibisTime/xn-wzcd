@@ -264,28 +264,32 @@ public class SYSUserAOImpl implements ISYSUserAO {
             condition);
 
         for (SYSUser sysUser : page.getList()) {
-            if (StringUtils.isNotBlank(sysUser.getPostCode())
-                    && !"0".equals(sysUser.getPostCode())) {
-                sysUser.setPostName(departmentBO
-                    .getDepartment(sysUser.getPostCode()).getName());
-            }
-            if (StringUtils.isNotBlank(sysUser.getDepartmentCode())
-                    && !"0".equals(sysUser.getDepartmentCode())) {
-                sysUser.setDepartmentName(departmentBO
-                    .getDepartment(sysUser.getDepartmentCode()).getName());
-            }
-            if (StringUtils.isNotBlank(sysUser.getCompanyCode())
-                    && !"0".equals(sysUser.getCompanyCode())) {
-                sysUser.setCompanyName(departmentBO
-                    .getDepartment(sysUser.getCompanyCode()).getName());
-            }
-            if (StringUtils.isNotBlank(sysUser.getTeamCode())
-                    && !"0".equals(sysUser.getTeamCode())) {
-                sysUser.setTeamName(
-                    bizTeamBO.getBizTeam(sysUser.getTeamCode()).getName());
-            }
+            initUser(sysUser);
         }
         return page;
+    }
+
+    private void initUser(SYSUser sysUser) {
+        if (StringUtils.isNotBlank(sysUser.getPostCode())
+                && !"0".equals(sysUser.getPostCode())) {
+            sysUser.setPostName(
+                departmentBO.getDepartment(sysUser.getPostCode()).getName());
+        }
+        if (StringUtils.isNotBlank(sysUser.getDepartmentCode())
+                && !"0".equals(sysUser.getDepartmentCode())) {
+            sysUser.setDepartmentName(departmentBO
+                .getDepartment(sysUser.getDepartmentCode()).getName());
+        }
+        if (StringUtils.isNotBlank(sysUser.getCompanyCode())
+                && !"0".equals(sysUser.getCompanyCode())) {
+            sysUser.setCompanyName(
+                departmentBO.getDepartment(sysUser.getCompanyCode()).getName());
+        }
+        if (StringUtils.isNotBlank(sysUser.getTeamCode())
+                && !"0".equals(sysUser.getTeamCode())) {
+            sysUser.setTeamName(
+                bizTeamBO.getBizTeam(sysUser.getTeamCode()).getName());
+        }
     }
 
     @Override
@@ -302,18 +306,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
     @Override
     public SYSUser getUser(String userId) {
         SYSUser sysUser = sysUserBO.getUser(userId);
-        if (StringUtils.isNotBlank(sysUser.getPostCode())) {
-            sysUser.setPostName(
-                departmentBO.getDepartment(sysUser.getPostCode()).getName());
-        }
-        if (StringUtils.isNotBlank(sysUser.getDepartmentCode())) {
-            sysUser.setDepartmentName(departmentBO
-                .getDepartment(sysUser.getDepartmentCode()).getName());
-        }
-        if (StringUtils.isNotBlank(sysUser.getCompanyCode())) {
-            sysUser.setCompanyName(
-                departmentBO.getDepartment(sysUser.getCompanyCode()).getName());
-        }
+        initUser(sysUser);
         return sysUser;
     }
 

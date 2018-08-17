@@ -8,7 +8,7 @@ package com.cdkj.loan.enums;
  */
 public enum ETransferPositionApplyStatus {
 
-    STAY_AUDIT("0", "待审核"), AUDIT_PASS("1", "审核通过"), AUDIT_NOT_PASS("1",
+    STAY_AUDIT("0", "待审核"), AUDIT_PASS("1", "审核通过"), AUDIT_NOT_PASS("2",
             "审核不通过");
 
     ETransferPositionApplyStatus(String code, String value) {
