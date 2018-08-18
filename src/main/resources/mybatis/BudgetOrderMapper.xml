@@ -1219,7 +1219,6 @@
 		,out_car_dealer_name
 		,loan_bank_code
 		,original_price
-		,car_model
 		,frame_no
 		,loan_periods
 		,invoice_price
@@ -1364,7 +1363,6 @@
 		,#{outCarDealerName}
 		,#{loanBankCode}
 		,#{originalPrice}
-		,#{carModel}
 		,#{frameNo}
 		,#{loanPeriods}
 		,#{invoicePrice}
@@ -1744,7 +1742,6 @@
 		cur_node_code = #{curNodeCode}
 		,insurance_company_code = #{insuranceCompanyCode}
 		,car_color = #{carColor}
-		,car_brand = #{carBrand}
 		,frame_no = #{frameNo}
 		,engine_no = #{engineNo}
 		
