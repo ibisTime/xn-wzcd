@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -88,7 +89,7 @@ public class BizDayStatisticAOImpl implements IBizDayStatisticAO {
         companyCondition.setType(EDepartmentType.SUBBRANCH_COMPANY.getCode());
         List<Department> list = departmentBO
             .queryDepartmentList(companyCondition);
-        for (Department department : list) {
+        for (Department department : list) {// 分公司集合
             BizDayStatistic data = new BizDayStatistic();
             data.setCompanyCode(department.getCode());// 分公司编号
             BudgetOrder budgetOrderCondition = new BudgetOrder();
@@ -98,9 +99,11 @@ public class BizDayStatisticAOImpl implements IBizDayStatisticAO {
             budgetOrderCondition.setCompanyCode(department.getCode());
             List<BudgetOrder> budgetOrderList = budgetOrderBO
                 .queryBudgetOrderList(budgetOrderCondition);
-            Long debitAmount = 0L;
-            for (BudgetOrder budgetOrder : budgetOrderList) {
-                debitAmount += getLong(budgetOrder.getBankFkAmount());
+            Long debitAmount = 0L;// 分公司当天银行放款总额
+            if (CollectionUtils.isNotEmpty(budgetOrderList)) {
+                for (BudgetOrder budgetOrder : budgetOrderList) {
+                    debitAmount += getLong(budgetOrder.getBankFkAmount());
+                }
             }
             data.setDebitAmount(debitAmount);// 借方发生额
             RepayPlan repayPlanCondition = new RepayPlan();
@@ -109,11 +112,13 @@ public class BizDayStatisticAOImpl implements IBizDayStatisticAO {
             repayPlanCondition.setCompanyCode(department.getCode());
             List<RepayPlan> repayPlanList = repayPlanBO
                 .queryRepayPlanList(repayPlanCondition);
-            Long loanAmount = 0L;
-            Long loanOverdueAmount = 0L;
-            for (RepayPlan repayPlan : repayPlanList) {
-                loanAmount += getLong(repayPlan.getRepayAmount());
-                loanOverdueAmount += getLong(repayPlan.getOverdueAmount());
+            Long loanAmount = 0L;// 分公司当天客户还款总额
+            Long loanOverdueAmount = 0L; // 分公司当天客户逾期总额
+            if (CollectionUtils.isNotEmpty(repayPlanList)) {
+                for (RepayPlan repayPlan : repayPlanList) {
+                    loanAmount += getLong(repayPlan.getPayedAmount());
+                    loanOverdueAmount += getLong(repayPlan.getOverdueAmount());
+                }
             }
             data.setLoanAmount(loanAmount);// 贷方发生额
             data.setLoanOverdueAmount(loanOverdueAmount);// 贷方逾期金额
@@ -146,33 +151,36 @@ public class BizDayStatisticAOImpl implements IBizDayStatisticAO {
 
     @Override
     public List<BizDayStatistic> carLoanBizStatistic(XN630901Req req) {
-        BizDayStatistic condition = new BizDayStatistic();
-        String date = null;
+        String date = "";
         if (null != req.getDate()) {
-            date = calDate(req.getDate(), -1);
+            date = calDate(req.getDate(), -1);// 查询日期的前一天
         } else {
             date = calDate(DateUtil.dateToStr(new Date(),
-                DateUtil.FRONT_DATE_FORMAT_STRING), -1);
+                DateUtil.FRONT_DATE_FORMAT_STRING), -1);// 今天的前一天
         }
+        BizDayStatistic condition = new BizDayStatistic();
         condition.setDate(DateUtil.strToDate(date,
             DateUtil.FRONT_DATE_FORMAT_STRING));
         List<BizDayStatistic> list = bizDayStatisticBO
-            .queryBizDayStatisticList(condition);// 前一天的数据
-        for (BizDayStatistic data : list) {
-            Department company = departmentBO.getDepartment(data
-                .getCompanyCode());
-            data.setCompanyName(company.getName());// 分公司名称
-            BizDayStatistic preBizDayStatistic = bizDayStatisticBO
-                .getBizDayStatisticByDate(DateUtil.strToDate(
-                    calDate(req.getDate(), -2),
-                    DateUtil.FRONT_DATE_FORMAT_STRING), data.getCompanyCode());
-            if (null != preBizDayStatistic) {
-                data.setPreBalance(String.valueOf(preBizDayStatistic
-                    .getBalance()));
-                data.setPreOverdueBalance(String.valueOf(preBizDayStatistic
-                    .getOverdueBalance()));
-                data.setPreOverdueRate(String.valueOf(preBizDayStatistic
-                    .getOverdueRate()));
+            .queryBizDayStatisticList(condition);
+        if (CollectionUtils.isNotEmpty(list)) {
+            for (BizDayStatistic data : list) {
+                Department company = departmentBO.getDepartment(data
+                    .getCompanyCode());
+                data.setCompanyName(company.getName());// 分公司名称
+                BizDayStatistic preBizDayStatistic = bizDayStatisticBO
+                    .getBizDayStatisticByDate(DateUtil.strToDate(
+                        calDate(req.getDate(), -2),
+                        DateUtil.FRONT_DATE_FORMAT_STRING), data
+                        .getCompanyCode());// 该分公司前两天的数据
+                if (null != preBizDayStatistic) {
+                    data.setPreBalance(String.valueOf(preBizDayStatistic
+                        .getBalance()));
+                    data.setPreOverdueBalance(String.valueOf(preBizDayStatistic
+                        .getOverdueBalance()));
+                    data.setPreOverdueRate(String.valueOf(preBizDayStatistic
+                        .getOverdueRate()));
+                }
             }
         }
         return list;

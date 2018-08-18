@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,8 +58,8 @@ public class OvertimeApplyAOImpl implements IOvertimeApplyAO {
             DateUtil.DATA_TIME_PATTERN_2);
         data.setEndDatetime(end);
         data.setReason(req.getReason());
-        String time = String
-            .valueOf((end.getTime() - start.getTime()) / (1000 * 60 * 60));
+        String time = String.valueOf((end.getTime() - start.getTime())
+                / (1000 * 60 * 60));
         data.setTotalHour(time);
         data.setUpdater(req.getUpdater());
         data.setStatus("0");
@@ -84,10 +85,10 @@ public class OvertimeApplyAOImpl implements IOvertimeApplyAO {
     }
 
     @Override
-    public Paginable<OvertimeApply> queryOvertimeApplyPage(int start, int limit,
-            OvertimeApply condition) {
-        Paginable<OvertimeApply> paginable = overtimeApplyBO.getPaginable(start,
-            limit, condition);
+    public Paginable<OvertimeApply> queryOvertimeApplyPage(int start,
+            int limit, OvertimeApply condition) {
+        Paginable<OvertimeApply> paginable = overtimeApplyBO.getPaginable(
+            start, limit, condition);
         List<OvertimeApply> list = paginable.getList();
         for (OvertimeApply data : list) {
             init(data);
@@ -113,8 +114,8 @@ public class OvertimeApplyAOImpl implements IOvertimeApplyAO {
             String applyUserCode = overtimeApply.getApplyUser();
             user = sysUserBO.getUser(applyUserCode);
             overtimeApply.setApplyUserName(user.getRealName());
-            Department department = departmentBO
-                .getDepartment(user.getDepartmentCode());
+            Department department = departmentBO.getDepartment(user
+                .getDepartmentCode());
             overtimeApply.setDepartmentName(department.getName());
             Department post = departmentBO.getDepartment(user.getPostCode());
             overtimeApply.setPostName(post.getName());
@@ -123,7 +124,7 @@ public class OvertimeApplyAOImpl implements IOvertimeApplyAO {
         Archive archiveConditon = new Archive();
         archiveConditon.setUserId(user.getUserId());
         List<Archive> archiveList = archiveBO.queryArchiveList(archiveConditon);
-        if (!archiveList.isEmpty()) {
+        if (CollectionUtils.isNotEmpty(archiveList)) {
             Archive archive = archiveList.get(0);
             overtimeApply.setJobNo(archive.getJobNo());
         }

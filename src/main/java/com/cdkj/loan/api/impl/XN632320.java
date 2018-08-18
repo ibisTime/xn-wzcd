@@ -11,8 +11,8 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 代偿预算单申请
- * @author: silver 
- * @since: 2018年6月15日 上午10:49:55 
+ * @author: jiafr 
+ * @since: 2018年8月18日 下午7:15:27 
  * @history:
  */
 public class XN632320 extends AProcessor {

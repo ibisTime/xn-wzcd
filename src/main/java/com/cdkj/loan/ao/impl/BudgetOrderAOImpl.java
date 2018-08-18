@@ -33,6 +33,7 @@ import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
+import com.cdkj.loan.bo.IReplaceRepayApplyBO;
 import com.cdkj.loan.bo.IRepointDetailBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
@@ -65,6 +66,7 @@ import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.domain.ReplaceRepayApply;
 import com.cdkj.loan.domain.RepointDetail;
 import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.domain.SYSUser;
@@ -229,6 +231,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private ITotalAdvanceFundBO totalAdvanceFundBO;
+
+    @Autowired
+    private IReplaceRepayApplyBO replaceRepayApplyBO;
 
     @Override
     @Transactional
@@ -2830,25 +2835,49 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         Paginable<BudgetOrder> page = budgetOrderBO.getPaginable(start, limit,
             condition);
         List<BudgetOrder> list = page.getList();
-        for (BudgetOrder budgetOrder : list) {
-            AdvanceFund advanceFund = advanceFundBO
-                .getAdvanceFundByBudgetOrderCode(budgetOrder.getCode());
-            if (advanceFund != null) {
-                budgetOrder.setAdvanceFundDatetime(advanceFund
-                    .getAdvanceFundDatetime());// 垫资日期
+        if (CollectionUtils.isNotEmpty(list)) {
+            for (BudgetOrder budgetOrder : list) {
+                AdvanceFund advanceFund = advanceFundBO
+                    .getAdvanceFundByBudgetOrderCode(budgetOrder.getCode());
+                if (null != advanceFund) {
+                    budgetOrder.setAdvanceFundDatetime(advanceFund
+                        .getAdvanceFundDatetime());// 垫资日期
+                }
+                RepayBiz repayBiz = repayBizBO.getRepayBizByRefCode(budgetOrder
+                    .getCode());
+                if (null != repayBiz) {
+                    budgetOrder.setRepayMonthDatetime(repayBiz
+                        .getMonthDatetime());// 月供还款日
+                    RepayPlan curMonth = repayPlanBO
+                        .getRepayPlanCurMonth(repayBiz.getCode());
+                    if (null != curMonth) {
+                        budgetOrder.setOverplusAmount(curMonth
+                            .getOverdueAmount());// 当期欠款
+                    }
+                    budgetOrder.setDebtBalance(repayBiz.getRestAmount()
+                            + repayBiz.getRestOverdueAmount());// 借款余额(实际欠款金额，包括逾期金额)
+                    if (StringUtils.isNotBlank(budgetOrder.getRepayBizCode())) {// 有还款业务编号
+                        ReplaceRepayApply ReplaceRepayCondition = new ReplaceRepayApply();
+                        ReplaceRepayCondition.setBizCode(budgetOrder
+                            .getRepayBizCode());
+                        List<ReplaceRepayApply> replaceRepayApplyList = replaceRepayApplyBO
+                            .queryReplaceRepayApplyList(ReplaceRepayCondition);
+                        if (CollectionUtils.isNotEmpty(replaceRepayApplyList)) {
+                            long replaceRealRepayAmount = 0L;
+                            for (ReplaceRepayApply replaceRepayApply : replaceRepayApplyList) {
+                                replaceRealRepayAmount += replaceRepayApply
+                                    .getAmount();
+                            }
+                            budgetOrder
+                                .setReplaceRealRepayAmount(replaceRealRepayAmount);// 代偿金额
+                        }
+                    }
+                    budgetOrder.setTotalOverdueCount(repayBiz
+                        .getTotalOverdueCount());// 欠款期数
+                    // TODO 其他欠款未处理
+                }
             }
-            RepayBiz repayBiz = repayBizBO.getRepayBizByRefCode(budgetOrder
-                .getCode());
-            budgetOrder.setRepayMonthDatetime(repayBiz.getMonthDatetime());// 月供还款日
-            RepayPlan curMonth = repayPlanBO.getRepayPlanCurMonth(repayBiz
-                .getCode());
-            budgetOrder.setOverplusAmount(curMonth.getOverdueAmount());// 当期欠款
-            budgetOrder.setDebtBalance(repayBiz.getRestAmount()
-                    + repayBiz.getRestOverdueAmount());// 借款余额
-            budgetOrder.setReplaceRealRepayAmount(repayBiz
-                .getRestReplaceRepayAmount());// 代偿金额
         }
         return page;
     }
-
 }

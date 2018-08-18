@@ -875,6 +875,8 @@ public class BudgetOrder extends ABaseDO {
 
     private Long replaceRealRepayAmount;// 代偿金额
 
+    private int totalOverdueCount;// 累计逾期期数
+
     // 担保打印人姓名
     private String guarantPrintName;
 
@@ -3374,6 +3376,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setFbhPage(String fbhPage) {
         this.fbhPage = fbhPage;
+    }
+
+    public int getTotalOverdueCount() {
+        return totalOverdueCount;
+    }
+
+    public void setTotalOverdueCount(int totalOverdueCount) {
+        this.totalOverdueCount = totalOverdueCount;
     }
 
 }

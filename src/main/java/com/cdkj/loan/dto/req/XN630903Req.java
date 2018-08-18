@@ -8,6 +8,8 @@ package com.cdkj.loan.dto.req;
  */
 public class XN630903Req extends APageReq {
 
+    private static final long serialVersionUID = -6871370045562166891L;
+
     private String bizCode;// 业务编号
 
     private String customerName;// 客户姓名

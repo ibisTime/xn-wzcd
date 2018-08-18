@@ -23,7 +23,7 @@ public class ReplaceRepayApply extends ABaseDO {
     // 预算金额
     private Long amount;
 
-    // 业务编号(还款计划)
+    // 业务编号(还款业务)
     private String bizCode;
 
     // 收款人开户行
