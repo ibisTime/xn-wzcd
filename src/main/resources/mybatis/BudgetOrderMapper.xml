@@ -1743,7 +1743,6 @@
 		,insurance_company_code = #{insuranceCompanyCode}
 		,car_color = #{carColor}
 		,frame_no = #{frameNo}
-		,engine_no = #{engineNo}
 		
 		,force_insurance = #{forceInsurance}
 		,commerce_insurance = #{commerceInsurance}

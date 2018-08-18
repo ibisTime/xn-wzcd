@@ -50,8 +50,8 @@ public class TestJUnit extends UnitilsJUnit4 {
         // e.printStackTrace();
         // }
 
-        Long a = null;
-        Long b = 100L;
+        Long a = 100L;
+        Long b = null;
         System.out.println(a + b);
 
     }

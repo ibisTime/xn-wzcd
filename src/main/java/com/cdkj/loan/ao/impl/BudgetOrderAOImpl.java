@@ -1127,11 +1127,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
         budgetOrder.setInsuranceCompanyCode(req.getInsuranceCompanyCode());
         budgetOrder.setCarColor(req.getCarColor());
-
-        budgetOrder.setEngineNo(req.getEngineNo());
-
         budgetOrder.setForceInsurance(req.getForceInsurance());
-
         budgetOrder.setCommerceInsurance(req.getCommerceInsurance());
         budgetOrder.setInsuranceEffectDatetime(
             DateUtil.strToDate(req.getInsuranceEffectDatetime(),

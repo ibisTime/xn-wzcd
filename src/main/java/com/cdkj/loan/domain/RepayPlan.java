@@ -259,6 +259,17 @@ public class RepayPlan extends ABaseDO {
     // 已还逾期金额
     private Long repayOverdueAmount;
 
+    // 未还清收成本
+    private Long notPayedFee;
+
+    public Long getNotPayedFee() {
+        return notPayedFee;
+    }
+
+    public void setNotPayedFee(Long notPayedFee) {
+        this.notPayedFee = notPayedFee;
+    }
+
     public Long getRepayOverdueAmount() {
         return repayOverdueAmount;
     }

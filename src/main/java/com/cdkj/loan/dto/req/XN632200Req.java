@@ -21,9 +21,6 @@ public class XN632200Req {
     // 车辆颜色
     private String carColor;
 
-    // 发动机号码
-    private String engineNo;
-
     // 交强险
     private String forceInsurance;
 
@@ -166,14 +163,6 @@ public class XN632200Req {
 
     public void setCarColor(String carColor) {
         this.carColor = carColor;
-    }
-
-    public String getEngineNo() {
-        return engineNo;
-    }
-
-    public void setEngineNo(String engineNo) {
-        this.engineNo = engineNo;
     }
 
     public String getForceInsurance() {

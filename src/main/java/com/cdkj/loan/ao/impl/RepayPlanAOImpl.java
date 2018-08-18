@@ -121,6 +121,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             } else {
                 repayPlan.setRepayOverdueAmount(repayPlan.getOverdueAmount());
             }
+            // 未还清收成本
+            repayPlan.setNotPayedFee(
+                repayPlan.getTotalFee() - repayPlan.getPayedFee());
         }
 
         // RepayPlan repayPlan = repayPlanBO.getRepayPlan(condition.getCode());
@@ -179,6 +182,10 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
                 .getCollectBankcard(repayPlan.getRemitBankCode());
             repayPlan.setRemitBankName(collectBankcard.getBankName());
         }
+
+        // 未还清收成本
+        repayPlan
+            .setNotPayedFee(repayPlan.getTotalFee() - repayPlan.getPayedFee());
 
         return repayPlan;
     }
@@ -463,7 +470,10 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             totalFee += cost.getAmount();
             costBO.refreshRepay(cost, payType);
         }
-        repayPlan.setTotalFee(totalFee);
+        repayPlan.setTotalFee(repayPlan.getTotalFee() - totalFee);
+        if (repayPlan.getPayedFee() == null) {
+            repayPlan.setPayedFee(0L);
+        }
         Long totalPayedFee = totalFee + repayPlan.getPayedFee(); // 现在总的支付费用
         repayPlan.setPayedFee(totalPayedFee);
         repayPlanBO.payFee(repayPlan);
