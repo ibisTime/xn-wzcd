@@ -86,4 +86,7 @@ DROP COLUMN `is_delete`;
 ALTER TABLE `tp_social_relation` 
 ADD COLUMN `status` VARCHAR(4) NULL COMMENT '状态（0删除1正常）' AFTER `contact`;
 
+DELETE FROM `tsys_menu` WHERE `code`='SM201805170038079738669';
+
+
 

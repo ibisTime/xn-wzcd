@@ -8,7 +8,7 @@ package com.cdkj.loan.dto.req;
  */
 public class XN630901Req {
 
-    // 日期
+    // 日期 yyyy-MM-dd（不传默认查当天）
     private String date;
 
     public String getDate() {
