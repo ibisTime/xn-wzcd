@@ -112,6 +112,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         }
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
+        data.setApplyUser(req.getOperator());
         data.setApplyDatetime(new Date());
         data.setIsAdvanceFund(req.getIsAdvanceFund());
         String preNodeCode = data.getCurNodeCode();
@@ -483,7 +484,6 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             res.setUnAdvanceFund(String.valueOf(totalAdvanceFund
                     - reqBudgetAmount));
         }
-
         return res;
     }
 
@@ -567,13 +567,30 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         return list;
     }
 
+    @Override
+    public Object todayHasAdvanceFund(int start, int limit,
+            AdvanceFund condition) {
+        condition.setAdvanceFundDatetime(DateUtil.getTodayStart());
+        ArrayList<String> curNodeCodeList = new ArrayList<String>();
+        curNodeCodeList.add(EAdvanceFundNode.PARENT_ADVANCE_END.getCode());
+        curNodeCodeList.add(EAdvanceFundNode.BRANCH_ADVANCE_END.getCode());
+        condition.setCurNodeCodeList(curNodeCodeList);
+        Paginable<AdvanceFund> paginable = advanceFundBO.getPaginable(start,
+            limit, condition);
+        List<AdvanceFund> list = paginable.getList();
+        for (AdvanceFund advanceFund : list) {
+            init(advanceFund);
+        }
+        return paginable;
+    }
+
     private AdvanceFund init(AdvanceFund data) {
         if (StringUtils.isNotBlank(data.getBudgetCode())) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
                 .getBudgetCode());
             data.setCreditCode(budgetOrder.getCreditCode());
             data.setBudgetOrder(budgetOrder);
-            data.setApplyUserIdNo(budgetOrder.getIdNo());
+            data.setApplyUserIdNo(budgetOrder.getIdNo());// 客户身份证号 不是申请人身份证号
         }
         if (StringUtils.isNotBlank(data.getCompanyCode())) {
             Department company = departmentBO.getDepartment(data
@@ -601,7 +618,8 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             if (null != collectBankcard) {
                 data.setCollectionAccountNo(collectBankcard.getBankcardNumber());
                 data.setCollectBankName(collectBankcard.getBankName());
-                data.setSubbranch(collectBankcard.getSubbranch());
+                data.setCollectSubbranch(collectBankcard.getSubbranch());
+                data.setCollectAccountName(collectBankcard.getRealName());
             }
         }
         if (StringUtils.isNotBlank(data.getPayBankcardCode())) {
@@ -611,7 +629,12 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
                 data.setPayAccountNo(payBankcard.getBankcardNumber());
             }
         }
-
+        if (StringUtils.isNotBlank(data.getApplyUser())) {
+            SYSUser user = sysUserBO.getUser(data.getApplyUser());
+            if (null != user) {
+                data.setApplyUserName(user.getRealName());
+            }
+        }
         return data;
 
     }

@@ -63,4 +63,7 @@ CREATE TABLE `tdq_bonuses_list` (
   `is_loan_bank` VARCHAR(4) DEFAULT NULL COMMENT '是否已放款',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='奖金提成';
-ALTER TABLE `dev_xn_wzcd`.`tdq_bonuses_list` 
+
+ALTER TABLE `tdq_advance_fund` 
+ADD COLUMN `apply_user` VARCHAR(32) NULL COMMENT '申请人' AFTER `type`;
+
