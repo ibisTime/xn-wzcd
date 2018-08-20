@@ -14,8 +14,14 @@
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
+			<if test="id != null and id != '' ">
+				AND t.id = #{id}
+			</if>
+			<if test="isSelfDevelop != null and isSelfDevelop != '' ">
+				AND t.is_self_develop = #{isSelfDevelop}
+			</if>
+			<if test="retainMonths != null and retainMonths != '' ">
+				AND t.retain_months = #{retainMonths}
 			</if>
 		</trim>
 	</sql>
@@ -79,7 +85,7 @@
 		,start_amount = #{startAmount}
 		,end_amount = #{endAmount}
 		,remark = #{remark}
-		WHERE code = #{code}
+		WHERE id = #{id}
 	</update>
 
 
