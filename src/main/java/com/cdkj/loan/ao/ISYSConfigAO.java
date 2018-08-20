@@ -25,4 +25,7 @@ public interface ISYSConfigAO {
     public Map<String, String> getSYSConfigMap(String type);
 
     public SYSConfig getSYSConfig(String key);
+
+    // 修改GPS个人申领上限个数
+    public void editGpsLimitNumber(String number, String updater);
 }

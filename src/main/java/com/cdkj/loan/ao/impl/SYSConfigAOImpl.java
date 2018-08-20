@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.cdkj.loan.ao.ISYSConfigAO;
 import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.domain.SYSConfig;
 
 /**
@@ -49,5 +50,15 @@ public class SYSConfigAOImpl implements ISYSConfigAO {
     @Override
     public Map<String, String> getSYSConfigMap(String type) {
         return sysConfigBO.getConfigsMap(type);
+    }
+
+    @Override
+    public void editGpsLimitNumber(String number, String updater) {
+        SYSConfig data = sysConfigBO
+            .getSYSConfig(SysConstants.PERSONAL_APPLICATION_LIMIT);
+        data.setCvalue(number);
+        data.setUpdater(updater);
+        data.setUpdateDatetime(new Date());
+        sysConfigBO.refreshSYSConfig(data);
     }
 }

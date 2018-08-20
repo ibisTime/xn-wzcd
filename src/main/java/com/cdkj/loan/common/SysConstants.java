@@ -73,4 +73,7 @@ public class SysConstants {
     // 阿里云appcode
     public static String ALIYUN_APPCODE = "ALIYUN_APPCODE";
 
+    // GPS个人申领上限
+    public static String PERSONAL_APPLICATION_LIMIT = "PERSONAL_APPLICATION_LIMIT";
+
 }

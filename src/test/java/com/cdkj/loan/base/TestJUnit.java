@@ -1,5 +1,7 @@
 package com.cdkj.loan.base;
 
+import java.util.ArrayList;
+
 import org.unitils.UnitilsJUnit4;
 
 public class TestJUnit extends UnitilsJUnit4 {
@@ -50,9 +52,7 @@ public class TestJUnit extends UnitilsJUnit4 {
         // e.printStackTrace();
         // }
 
-        Long a = 100L;
-        Long b = null;
-        System.out.println(a + b);
-
+        ArrayList<String> list = new ArrayList<String>();
+        System.out.println(list.size());
     }
 }

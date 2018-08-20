@@ -26,3 +26,6 @@ CREATE TABLE `tb_gps_supplier` (
 
 ALTER TABLE `tb_gps` 
 ADD COLUMN `supplier_code` VARCHAR(32) NULL COMMENT '供应商编号' AFTER `biz_code`;
+
+INSERT INTO `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('gps_apply', 'PERSONAL_APPLICATION_LIMIT', '10', 'admin', '2018-08-15 17:33:30', 'GPS个人申领上限', 'CD-CWZCD000020', 'CD-CWZCD000020');
+
