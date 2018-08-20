@@ -11,7 +11,7 @@ import com.cdkj.loan.dto.req.XN632402Req;
 
 @Component
 public interface ISysBonusesAO {
-    static final String DEFAULT_ORDER_COLUMN = "code";
+    static final String DEFAULT_ORDER_COLUMN = "id";
 
     public void addSysBonuses(XN632400Req req);
 
