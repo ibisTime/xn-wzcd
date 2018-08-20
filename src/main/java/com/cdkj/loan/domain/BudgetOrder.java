@@ -12,7 +12,8 @@ import com.cdkj.loan.dao.base.ABaseDO;
 * @history:
 */
 public class BudgetOrder extends ABaseDO {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 1970927521460904146L;
 
     // 编号
     private String code;
@@ -809,6 +810,8 @@ public class BudgetOrder extends ABaseDO {
     // 银行返点时间
     private Date bankRepointDatetime;
 
+    /***************DB properties**********/
+
     /*-------辅助字段-------*/
 
     private String roleCode;// 角色编号
@@ -825,15 +828,15 @@ public class BudgetOrder extends ABaseDO {
 
     private List<String> fileListArray;
 
-    private String bankReceiptName;// 收款银行
+    private String bankReceiptName;// 收款银行名称
 
-    private String carDealerName;// 汽车经销商
+    private String carDealerName;// 汽车经销商名称
 
     private String carDealerPhone;// 汽车经销商电话
 
-    private String insuranceCompanyName;// 保险公司
+    private String insuranceCompanyName;// 保险公司名称
 
-    private String loanBankName;// 贷款银行
+    private String loanBankName;// 贷款银行名称
 
     private String operateDepartmentName;// 经办部门
 
@@ -841,7 +844,7 @@ public class BudgetOrder extends ABaseDO {
 
     private User user; // 用户
 
-    private String saleUserName;// 业务员
+    private String saleUserName;// 业务员姓名
 
     private String companyName;// 业务公司名称
 
@@ -853,7 +856,7 @@ public class BudgetOrder extends ABaseDO {
 
     private List<String> curNodeCodeList;// 节点
 
-    private List<String> pledgeCurNodeCodeList;// 抵押流程节点编号
+    private List<String> pledgeCurNodeCodeList;// 抵押流程节点编号列表
 
     private List<RepointDetail> repointDetailList1;// 返点，1应退按揭款
 
@@ -867,24 +870,25 @@ public class BudgetOrder extends ABaseDO {
 
     private String guarantor2Sex;// 担保人2性别
 
-    private List<RepayPlan> repayPlansList;// 还款计划
+    private List<RepayPlan> repayPlansList;// 还款计划列表
 
     private Long overplusAmount; // 当期欠款
 
     private Long debtBalance; // 借款余额
 
-    private Long replaceRealRepayAmount;// 代偿金额
+    private Long replaceRealRepayAmount;// 公司垫款金额(代偿金额)
+
+    private Long bankDebtAmount;// 银行欠款金额(逾期金额)
+
+    private Long debtTotal;// 欠款合计（公司垫款金额+银行欠款金额）
 
     private int totalOverdueCount;// 累计逾期期数
 
-    // 担保打印人姓名
-    private String guarantPrintName;
+    private String guarantPrintName;// 担保打印人姓名
 
-    // 垫资单
-    private AdvanceFund advanceFund;
+    private AdvanceFund advanceFund;// 垫资单
 
-    // 入档状态List
-    private List<String> enterFileStatusList;
+    private List<String> enterFileStatusList;// 入档状态列表
 
     private String backAdvanceFundPage;// 收回垫资款页面分页查询标识
 
@@ -892,9 +896,9 @@ public class BudgetOrder extends ABaseDO {
 
     private Date BankFkDatetimeEnd;// 银行放款时间止
 
-    private Date BankFkSendDatetimeStart; // 银行放款时间起
+    private Date BankFkSendDatetimeStart; // 银行放款进件时间起
 
-    private Date BankFkSendDatetimeEnd;// 银行放款时间止
+    private Date BankFkSendDatetimeEnd;// 银行放款进件时间止
 
     private Date advanceFundDatetime;// 垫资日期
 
@@ -3384,6 +3388,22 @@ public class BudgetOrder extends ABaseDO {
 
     public void setTotalOverdueCount(int totalOverdueCount) {
         this.totalOverdueCount = totalOverdueCount;
+    }
+
+    public Long getBankDebtAmount() {
+        return bankDebtAmount;
+    }
+
+    public void setBankDebtAmount(Long bankDebtAmount) {
+        this.bankDebtAmount = bankDebtAmount;
+    }
+
+    public Long getDebtTotal() {
+        return debtTotal;
+    }
+
+    public void setDebtTotal(Long debtTotal) {
+        this.debtTotal = debtTotal;
     }
 
 }

@@ -1,3 +1,7 @@
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('0', NULL,'customer_type', '客户类型', 'admin', '2018-07-08 07:34:21', NULL,'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('1', 'customer_type', '1', '个人', 'admin', '2018-07-08 07:34:21', NULL,'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('1', 'customer_type', '2', '企业', 'admin', '2018-07-08 07:34:21', NULL,'CD-CWZCD000020', 'CD-CWZCD000020');
+
 
 DELETE FROM `tsys_menu` WHERE `code`='SM201805170038079738669';
 

@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +37,7 @@ import com.cdkj.loan.dto.req.XN632172Req;
 import com.cdkj.loan.dto.req.XN632173Req;
 import com.cdkj.loan.dto.req.XN632175Req;
 import com.cdkj.loan.dto.req.XN632177Req;
+import com.cdkj.loan.dto.res.XN632178Res;
 import com.cdkj.loan.dto.res.XN632188Res;
 import com.cdkj.loan.enums.EAdvanceFundNode;
 import com.cdkj.loan.enums.EAdvanceType;
@@ -46,6 +48,7 @@ import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ECity;
+import com.cdkj.loan.enums.EDepartmentType;
 import com.cdkj.loan.enums.EFbhStatus;
 import com.cdkj.loan.enums.EIsAdvanceFund;
 import com.cdkj.loan.enums.ELogisticsType;
@@ -345,9 +348,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         data.setUpdateDatetime(new Date());
         String preNodeCode = data.getCurNodeCode();// 当前节点
         data.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
-            .getNextNode());// 更新节点为垫资完成
-                            // 补全确认打款车行的日志
-                            // 不生成新日志
+            .getNextNode());// 更新节点为垫资完成补全确认打款车行的日志不生成新日志
         advanceFundBO.confirmPayCarDealer(data);
         EBizLogType refType = null;
         if (EAdvanceType.PARENT_BIZ.getCode().equals(data.getType())) {
@@ -486,6 +487,86 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         return res;
     }
 
+    @Override
+    public Object expectPayStatistics(String companyCode) {
+        ArrayList<XN632178Res> list = new ArrayList<XN632178Res>();
+        if (StringUtils.isNotBlank(companyCode)) {// 统计指定分公司的预打款
+            XN632178Res res = new XN632178Res();
+            Department company = departmentBO.getDepartment(companyCode);
+            res.setCompanyName(company.getName());// 业务公司名称
+
+            AdvanceFund condition = new AdvanceFund();
+            condition.setCompanyCode(companyCode);
+            List<AdvanceFund> totalAdvanceFundList = advanceFundBO
+                .queryAdvanceFundList(condition);
+            Long totalAdvanceFund = 0L;
+            for (AdvanceFund advanceFund : totalAdvanceFundList) {
+                totalAdvanceFund += advanceFund.getUseAmount();
+            }
+            res.setTotalAdvanceFund(String.valueOf(totalAdvanceFund));// 垫资总额
+
+            String curNodeCode = "";
+            if (ECity.WENZHOU.getValue().equals(company.getCityNo())) {
+                curNodeCode = EAdvanceFundNode.PARENT_ADVANCE_END.getCode();
+            } else {
+                curNodeCode = EAdvanceFundNode.BRANCH_ADVANCE_END.getCode();
+            }
+            condition.setCurNodeCode(curNodeCode);
+            List<AdvanceFund> hasAdvanceFundList = advanceFundBO
+                .queryAdvanceFundList(condition);
+            Long hasAdvanceFund = 0L;
+            for (AdvanceFund advanceFund : hasAdvanceFundList) {
+                hasAdvanceFund += advanceFund.getAdvanceFundAmount();
+            }
+            res.setHasAdvanceFund(String.valueOf(hasAdvanceFund));// 已垫资金额
+
+            res.setUnAdvanceFund(String.valueOf(totalAdvanceFund
+                    - hasAdvanceFund));// 未垫资金额
+
+            list.add(res);
+        } else {// 统计所有分公司的预打款
+            Department condition = new Department();
+            condition.setType(EDepartmentType.SUBBRANCH_COMPANY.getCode());
+            List<Department> companyList = departmentBO
+                .queryDepartmentList(condition);
+            for (Department company : companyList) {
+                XN632178Res res = new XN632178Res();
+                res.setCompanyName(company.getName());// 业务公司名称
+
+                AdvanceFund allCondition = new AdvanceFund();
+                allCondition.setCompanyCode(company.getCode());
+                List<AdvanceFund> totalAdvanceFundList = advanceFundBO
+                    .queryAdvanceFundList(allCondition);
+                Long totalAdvanceFund = 0L;
+                for (AdvanceFund advanceFund : totalAdvanceFundList) {
+                    totalAdvanceFund += advanceFund.getUseAmount();
+                }
+                res.setTotalAdvanceFund(String.valueOf(totalAdvanceFund));// 垫资总额
+
+                String curNodeCode = "";
+                if (ECity.WENZHOU.getValue().equals(company.getCityNo())) {
+                    curNodeCode = EAdvanceFundNode.PARENT_ADVANCE_END.getCode();
+                } else {
+                    curNodeCode = EAdvanceFundNode.BRANCH_ADVANCE_END.getCode();
+                }
+                allCondition.setCurNodeCode(curNodeCode);
+                List<AdvanceFund> hasAdvanceFundList = advanceFundBO
+                    .queryAdvanceFundList(allCondition);
+                Long hasAdvanceFund = 0L;
+                for (AdvanceFund advanceFund : hasAdvanceFundList) {
+                    hasAdvanceFund += advanceFund.getAdvanceFundAmount();
+                }
+                res.setHasAdvanceFund(String.valueOf(hasAdvanceFund));// 已垫资金额
+
+                res.setUnAdvanceFund(String.valueOf(totalAdvanceFund
+                        - hasAdvanceFund));// 未垫资金额
+
+                list.add(res);
+            }
+        }
+        return list;
+    }
+
     private AdvanceFund init(AdvanceFund data) {
         if (StringUtils.isNotBlank(data.getBudgetCode())) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
@@ -542,4 +623,5 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             return (Long) obj;
         }
     }
+
 }

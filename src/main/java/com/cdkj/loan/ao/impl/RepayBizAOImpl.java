@@ -52,6 +52,7 @@ import com.cdkj.loan.dto.req.XN630563Req;
 import com.cdkj.loan.dto.req.XN630570Req;
 import com.cdkj.loan.dto.req.XN630572Req;
 import com.cdkj.loan.dto.req.XN630578Req;
+import com.cdkj.loan.dto.res.XN630907Res;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -1117,6 +1118,20 @@ public class RepayBizAOImpl implements IRepayBizAO {
         sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
             EBizLogType.REPAY_BIZ, repayBiz.getCode(), curNodeCode,
             nextNodeCode, approveNote, operator);
+    }
+
+    @Override
+    public Object unclearedLoanTotalAmount() {
+        List<RepayBiz> repayBizList = repayBizBO
+            .queryRepayBizList(new RepayBiz());
+        Long unclearedLoanTotalAmount = 0L;
+        for (RepayBiz repayBiz : repayBizList) {
+            unclearedLoanTotalAmount += repayBiz.getRestAmount();
+        }
+        XN630907Res res = new XN630907Res();
+        res.setUnclearedLoanTotalAmount(String
+            .valueOf(unclearedLoanTotalAmount));
+        return res;
     }
 
 }
