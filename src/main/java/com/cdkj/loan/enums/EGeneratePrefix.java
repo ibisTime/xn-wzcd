@@ -30,11 +30,10 @@ public enum EGeneratePrefix {
             "经销商协议表"),
 
     BUDGET("BG", "预订单"), GPS("G", "GPS"), BANK("BA", "银行"), BANKSUBBRANCH("BS",
-            "支行"), LOGISTICS("L",
-
-    "资料传递"), BUDGETORDER("BO", "预算单"), LOAN_PRODUCT("LP", "贷款产品"), GPSAZ(
-            "GPSAZ", "gps安装"), GPS_APPLY("GA", "GPS申领"), GPS_SUPPLIER("GS","GPS供应商"), BUDGET_ORDER_FEE(
-            "BOF", "准入单手续费"), BUDGET_ORDER_FEE_DETAIL("BOFD", "准入单手续费明细"),
+            "支行"), LOGISTICS("L","资料传递"), BUDGETORDER("BO", "预算单"), LOAN_PRODUCT(
+            "LP", "贷款产品"), GPSAZ("GPSAZ", "gps安装"), GPS_APPLY("GA", "GPS申领"), GPS_SUPPLIER(
+            "GS","GPS供应商"), BUDGET_ORDER_FEE("BOF", "准入单手续费"), BUDGET_ORDER_FEE_DETAIL(
+            "BOFD", "准入单手续费明细"),BONUSES_LIST("BL","奖金提成"),
 
     OVERDUEMENU("OM", "导入逾期名单"), NOTICE("N", "通知公告"), REGIME("R", "公司制度"), CompCategory(
             "CC", "库存类别"), CompProduct("COP", "品名"), RECRUITAPPLY("RA", "用人申请"), ARCHIVE(

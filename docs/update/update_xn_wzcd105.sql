@@ -41,12 +41,26 @@ CREATE TABLE `tsys_bonuses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='奖金提成配置';
 
 INSERT INTO `tsys_bonuses` (`is_self_develop`, `unit_price`, `month_rate`, `retain_months`, `start_amount`, `end_amount`, `remark`) VALUES ('0', '180', '0.8', '6', '300001', '2000000', '30万以上');
-INSERT INTO `tsys_bonuses` (`is_self_develop`, `unit_price`, `month_rate`, `retain_months`, `start_amount`, `end_amount`, `remark`) VALUES ('0', '150', '0.8', '6', '100001', '300001', '10万--30万');
-INSERT INTO `tsys_bonuses` (`is_self_develop`, `unit_price`, `month_rate`, `retain_months`, `start_amount`, `end_amount`, `remark`) VALUES ('0', '120', '0.8', '6', '20000', '100001', '10万以下');
-INSERT INTO `tsys_bonuses` (`is_self_develop`, `unit_price`, `month_rate`, `retain_months`, `start_amount`, `end_amount`, `remark`) VALUES ('1', '200', '0.8', '6', '20000', '100001', '笔数*提成单价*本月比例');
+INSERT INTO `tsys_bonuses` (`is_self_develop`, `unit_price`, `month_rate`, `retain_months`, `start_amount`, `end_amount`, `remark`) VALUES ('0', '150', '0.8', '6', '100001', '300000', '10万--30万');
+INSERT INTO `tsys_bonuses` (`is_self_develop`, `unit_price`, `month_rate`, `retain_months`, `start_amount`, `end_amount`, `remark`) VALUES ('0', '120', '0.8', '6', '20000', '100000', '10万以下');
+INSERT INTO `tsys_bonuses` (`is_self_develop`, `unit_price`, `month_rate`, `retain_months`, `start_amount`, `end_amount`, `remark`) VALUES ('1', '200', '0.8', '6', '20000', '10000000', '笔数*提成单价*本月比例');
 
 ALTER TABLE `tb_gps` 
 ADD COLUMN `supplier_code` VARCHAR(32) NULL COMMENT '供应商编号' AFTER `biz_code`;
 
 INSERT INTO `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('gps_apply', 'PERSONAL_APPLICATION_LIMIT', '10', 'admin', '2018-08-15 17:33:30', 'GPS个人申领上限', 'CD-CWZCD000020', 'CD-CWZCD000020');
 
+DROP TABLE IF EXISTS `tdq_bonuses_list`;
+CREATE TABLE `tdq_bonuses_list` (
+  `code` varchar(32) NOT NULL COMMENT '编号',
+  `month` varchar(32) DEFAULT NULL COMMENT '月份',
+  `sale_user` varchar(32) DEFAULT NULL COMMENT '业务员',
+  `budget_code` varchar(32) DEFAULT NULL COMMENT '预算单编号',
+  `is_self_develop` varchar(4) DEFAULT NULL COMMENT '是否自主开发',
+  `self_develop_amount` bigint(20) DEFAULT NULL COMMENT '自主开发奖金',
+  `not_self_develop_amount` bigint(20) DEFAULT NULL COMMENT '非自主开发奖金',
+  `loan_amount` bigint(20) DEFAULT NULL COMMENT '贷款金额',
+  `is_loan_bank` VARCHAR(4) DEFAULT NULL COMMENT '是否已放款',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='奖金提成';
+ALTER TABLE `dev_xn_wzcd`.`tdq_bonuses_list` 

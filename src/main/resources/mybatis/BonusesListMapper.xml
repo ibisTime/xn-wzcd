@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IBonusesListDAO">
+	<resultMap id="bonusesList_DB_Result" type="bonusesList">
+		<result column="code" property="code" />
+		<result column="month" property="month" />
+		<result column="sale_user" property="saleUser" />
+		<result column="budget_code" property="budgetCode" />
+		<result column="is_self_develop" property="isSelfDevelop" />
+		<result column="self_develop_amount" property="selfDevelopAmount" />
+		<result column="not_self_develop_amount" property="notSelfDevelopAmount" />
+		<result column="loan_amount" property="loanAmount" />
+		<result column="is_loan_bank" property="isLoanBank" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+			<if test="month != null and month != '' ">
+				AND t.month = #{month}
+			</if>
+			<if test="isSelfDevelop != null and isSelfDevelop != '' ">
+				AND t.is_self_develop = #{isSelfDevelop}
+			</if>
+			<if test="saleUser != null and saleUser != '' ">
+				AND t.sale_user = #{saleUser}
+			</if>
+			<if test="monthStart != null and monthStart != '' ">
+				<![CDATA[AND t.month > #{monthStart}]]>
+			</if>
+			<if test="monthEnd != null and monthEnd != '' ">
+				<![CDATA[AND t.month < #{monthEnd}]]>
+			</if>
+		</trim>
+	</sql>
+	<select id="select_bonusesList" parameterType="bonusesList" resultMap="bonusesList_DB_Result">
+		SELECT
+		t.code
+		,t.month
+		,t.sale_user
+		,t.budget_code
+		,t.is_self_develop
+		,t.self_develop_amount
+		,t.not_self_develop_amount
+		,t.loan_amount
+		,t.is_loan_bank
+		FROM
+		tdq_bonuses_list t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_bonusesList_count" parameterType="bonusesList"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_bonuses_list t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_bonusesList" parameterType="bonusesList">
+		INSERT INTO
+		tdq_bonuses_list(
+		code
+		,month
+		,sale_user
+		,budget_code
+		,is_self_develop
+		,self_develop_amount
+		,not_self_develop_amount
+		,loan_amount
+		,is_loan_bank
+		)
+		VALUES(
+		#{code}
+		,#{month}
+		,#{saleUser}
+		,#{budgetCode}
+		,#{isSelfDevelop}
+		,#{selfDevelopAmount}
+		,#{notSelfDevelopAmount}
+		,#{loanAmount}
+		,#{isLoanBank}
+		)
+	</insert>
+
+	<update id="update_bonusesList" parameterType="bonusesList">
+		UPDATE tdq_bonuses_list
+		SET
+		month = #{month}
+		,sale_user = #{saleUser}
+		,budget_code = #{budgetCode}
+		,is_self_develop = #{isSelfDevelop}
+		,self_develop_amount = #{selfDevelopAmount}
+		,not_self_develop_amount = #{notSelfDevelopAmount}
+		,loan_amount = #{loanAmount}
+		,is_loan_bank = #{isLoanBank}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>

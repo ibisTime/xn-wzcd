@@ -433,5 +433,9 @@
 	<bean id="sysBonusesBO" class="com.cdkj.loan.bo.impl.SysBonusesBOImpl">
 		<property name="paginableDAO" ref="sysBonusesDAOImpl"/>
 	</bean>
+	
+	<bean id="bonusesListBO" class="com.cdkj.loan.bo.impl.BonusesListBOImpl">
+		<property name="paginableDAO" ref="bonusesListDAOImpl"/>
+	</bean>
 
 </beans>

@@ -1,12 +1,24 @@
 package com.cdkj.loan.base;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.unitils.UnitilsJUnit4;
 
 public class TestJUnit extends UnitilsJUnit4 {
 
     public static void main(String[] args) {
+
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        String date = null;
+        if (month < 10) {
+            date = "" + year + "0" + month;
+        } else {
+            date = "" + year + month;
+        }
+        System.out.println(date);
+
         // String host = "https://jisucxdq.market.alicloudapi.com";
         // String path = "/car/detail";
         // String method = "GET";
@@ -51,8 +63,5 @@ public class TestJUnit extends UnitilsJUnit4 {
         // } catch (Exception e) {
         // e.printStackTrace();
         // }
-
-        ArrayList<String> list = new ArrayList<String>();
-        System.out.println(list.size());
     }
 }
