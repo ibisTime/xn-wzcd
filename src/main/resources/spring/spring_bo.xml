@@ -429,5 +429,9 @@
 	<bean id="gpsSupplierBO" class="com.cdkj.loan.bo.impl.GpsSupplierBOImpl">
 		<property name="paginableDAO" ref="gpsSupplierDAOImpl"/>
 	</bean>
+	
+	<bean id="sysBonusesBO" class="com.cdkj.loan.bo.impl.SysBonusesBOImpl">
+		<property name="paginableDAO" ref="sysBonusesDAOImpl"/>
+	</bean>
 
 </beans>

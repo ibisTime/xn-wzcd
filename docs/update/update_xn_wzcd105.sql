@@ -23,6 +23,23 @@ CREATE TABLE `tb_gps_supplier` (
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='gps供应商';
 
+DROP TABLE IF EXISTS `tsys_bonuses`;
+CREATE TABLE `tsys_bonuses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `is_self_develop` varchar(4) DEFAULT NULL COMMENT '是否自主开发',
+  `unit_price` bigint(20) DEFAULT NULL COMMENT '提成单价',
+  `month_rate` decimal(18,8) DEFAULT NULL COMMENT '本月比例',
+  `retain_months` int(11) DEFAULT NULL COMMENT '留存月数',
+  `start_amount` bigint(20) DEFAULT NULL COMMENT '起始金额',
+  `end_amount` bigint(20) DEFAULT NULL COMMENT '结束金额',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='奖金提成配置';
+
+INSERT INTO `tsys_bonuses` (`is_self_develop`, `unit_price`, `month_rate`, `retain_months`, `start_amount`, `end_amount`, `remark`) VALUES ('0', '180', '0.8', '6', '300001', '2000000', '30万以上');
+INSERT INTO `tsys_bonuses` (`is_self_develop`, `unit_price`, `month_rate`, `retain_months`, `start_amount`, `end_amount`, `remark`) VALUES ('0', '150', '0.8', '6', '100001', '300001', '10万--30万');
+INSERT INTO `tsys_bonuses` (`is_self_develop`, `unit_price`, `month_rate`, `retain_months`, `start_amount`, `end_amount`, `remark`) VALUES ('0', '120', '0.8', '6', '20000', '100001', '10万以下');
+INSERT INTO `tsys_bonuses` (`is_self_develop`, `unit_price`, `month_rate`, `retain_months`, `start_amount`, `end_amount`, `remark`) VALUES ('1', '200', '0.8', '6', '20000', '100001', '笔数*提成单价*本月比例');
 
 ALTER TABLE `tb_gps` 
 ADD COLUMN `supplier_code` VARCHAR(32) NULL COMMENT '供应商编号' AFTER `biz_code`;

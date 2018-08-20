@@ -9,23 +9,23 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "gpsSupplier";
+    private static String key = "sysBonuses";
 
     // 实体名称
-    private static String keyName = "gps供应商";
+    private static String keyName = "奖金提成配置";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tb_gps_supplier";
+    private static String dbname = "tsys_bonuses";
 
-    private static String[] DBwords = { "code", "name", "contacts",
-            "contacts_mobile", "address", "updater", "update_datetime",
+    private static String[] DBwords = { "id", "is_self_develop", "unit_price",
+            "month_rate", "retain_months", "start_amount", "end_amount",
             "remark" };
 
-    private static String[] DBwordsName = { "编号", "名称", "联系人", "联系人手机号", "地址",
-            "最新修改人", "最新修改时间", "备注" };
+    private static String[] DBwordsName = { "id", "是否自主开发", "提成单价", "本月比例",
+            "留存月数", "起始金额", "结束金额", "备注" };
 
     private static String[] DOwords = getDOwords();
 

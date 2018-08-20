@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.ISysBonusesDAO">
+	<resultMap id="sysBonuses_DB_Result" type="sysBonuses">
+		<result column="id" property="id" />
+		<result column="is_self_develop" property="isSelfDevelop" />
+		<result column="unit_price" property="unitPrice" />
+		<result column="month_rate" property="monthRate" />
+		<result column="retain_months" property="retainMonths" />
+		<result column="start_amount" property="startAmount" />
+		<result column="end_amount" property="endAmount" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="code != null and code != '' ">
+				AND t.code = #{code}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_sysBonuses" parameterType="sysBonuses" resultMap="sysBonuses_DB_Result">
+		SELECT
+		t.id
+		,t.is_self_develop
+		,t.unit_price
+		,t.month_rate
+		,t.retain_months
+		,t.start_amount
+		,t.end_amount
+		,t.remark
+		FROM
+		tsys_bonuses t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_sysBonuses_count" parameterType="sysBonuses"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tsys_bonuses t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_sysBonuses" parameterType="sysBonuses">
+		INSERT INTO
+		tsys_bonuses(
+		id
+		,is_self_develop
+		,unit_price
+		,month_rate
+		,retain_months
+		,start_amount
+		,end_amount
+		,remark
+		)
+		VALUES(
+		#{id}
+		,#{isSelfDevelop}
+		,#{unitPrice}
+		,#{monthRate}
+		,#{retainMonths}
+		,#{startAmount}
+		,#{endAmount}
+		,#{remark}
+		)
+	</insert>
+
+	<update id="update_sysBonuses" parameterType="sysBonuses">
+		UPDATE tsys_bonuses
+		SET
+		is_self_develop = #{isSelfDevelop}
+		,unit_price = #{unitPrice}
+		,month_rate = #{monthRate}
+		,retain_months = #{retainMonths}
+		,start_amount = #{startAmount}
+		,end_amount = #{endAmount}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+
+
+</mapper>
