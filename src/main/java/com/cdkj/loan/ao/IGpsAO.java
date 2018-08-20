@@ -12,7 +12,7 @@ import com.cdkj.loan.dto.req.XN632701Req;
 public interface IGpsAO {
     static final String DEFAULT_ORDER_COLUMN = "code";
 
-    public String addGps(String gpsNo, String gpsType);
+    public String addGps(String gpsNo, String gpsType, String supplierCode);
 
     public Paginable<Gps> queryGpsPage(int start, int limit, Gps condition);
 

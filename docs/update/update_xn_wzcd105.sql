@@ -22,3 +22,7 @@ CREATE TABLE `tb_gps_supplier` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='gps供应商';
+
+
+ALTER TABLE `tb_gps` 
+ADD COLUMN `supplier_code` VARCHAR(32) NULL COMMENT '供应商编号' AFTER `biz_code`;

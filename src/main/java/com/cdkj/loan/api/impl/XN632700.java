@@ -23,7 +23,8 @@ public class XN632700 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        String code = gpsAO.addGps(req.getGpsDevNo(), req.getGpsType());
+        String code = gpsAO.addGps(req.getGpsDevNo(), req.getGpsType(),
+            req.getSupplierCode());
         return new PKCodeRes(code);
     }
 

@@ -31,6 +31,17 @@ public class XN632705Req extends APageReq {
     // 业务编号
     private String bizCode;
 
+    // 供应商编号
+    private String supplierCode;
+
+    public String getSupplierCode() {
+        return supplierCode;
+    }
+
+    public void setSupplierCode(String supplierCode) {
+        this.supplierCode = supplierCode;
+    }
+
     public String getCompanyApplyStatus() {
         return companyApplyStatus;
     }

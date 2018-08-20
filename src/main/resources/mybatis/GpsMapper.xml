@@ -19,6 +19,7 @@
 		<result column="use_status" property="useStatus" />
 		<result column="use_datetime" property="useDatetime" />
 		<result column="biz_code" property="bizCode" />
+		<result column="supplier_code" property="supplierCode" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -55,6 +56,9 @@
 			<if test="bizCode != null and bizCode != '' ">
 				AND t.biz_code = #{bizCode}
 			</if>
+			<if test="supplierCode != null and supplierCode != '' ">
+				AND t.supplier_code = #{supplierCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_gps" parameterType="gps" resultMap="gps_DB_Result">
@@ -75,6 +79,7 @@
 		,t.use_status
 		,t.use_datetime
 		,t.biz_code
+		,t.supplier_code
 		FROM
 		tb_gps t
 		<include refid="where_condition" />
@@ -100,6 +105,7 @@
 		,company_apply_status
 		,apply_status
 		,use_status
+		,supplier_code
 		)
 		VALUES(
 		#{code}
@@ -108,6 +114,7 @@
 		,#{companyApplyStatus}
 		,#{applyStatus}
 		,#{useStatus}
+		,#{supplierCode}
 		)
 	</insert>
 

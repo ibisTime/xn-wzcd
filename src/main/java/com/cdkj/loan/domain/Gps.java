@@ -56,12 +56,34 @@ public class Gps extends ABaseDO {
     // 业务编号(预算单编号)
     private String bizCode;
 
+    // 供应商编号
+    private String supplierCode;
+
     /*****************/
     // 公司编号
     private String companyName;
 
     // 申请人姓名
     private String applyUserName;
+
+    // 供应商名称
+    private String supplierName;
+
+    public String getSupplierCode() {
+        return supplierCode;
+    }
+
+    public void setSupplierCode(String supplierCode) {
+        this.supplierCode = supplierCode;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
 
     public String getCompanyApplyStatus() {
         return companyApplyStatus;
