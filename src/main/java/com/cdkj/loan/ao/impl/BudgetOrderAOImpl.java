@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -1126,12 +1127,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
         budgetOrder.setInsuranceCompanyCode(req.getInsuranceCompanyCode());
         budgetOrder.setCarColor(req.getCarColor());
-        budgetOrder.setCarBrand(req.getCarBrand());
-
-        budgetOrder.setEngineNo(req.getEngineNo());
-
         budgetOrder.setForceInsurance(req.getForceInsurance());
-
         budgetOrder.setCommerceInsurance(req.getCommerceInsurance());
         budgetOrder
             .setInsuranceEffectDatetime(DateUtil.strToDate(
@@ -2590,12 +2586,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             if (ERateType.CT.getCode().equals(rateType)) {
                 // 1.首期本金 = 贷款额- (2) *（期数-1）
                 // 2.每期本金=贷款额/期数
-                Long annualPrincipal = (long) AmountUtil.div(
+                Double annualPrincipal = AmountUtil.div(
                     StringValidater.toDouble(loanAmount),
                     StringValidater.toLong(loanPeriods));// 每期本金
-                Long initialPrincipal = (StringValidater.toLong(loanAmount) - AmountUtil
-                    .mul(annualPrincipal,
-                        (StringValidater.toInteger(loanPeriods) - 1)));// 首期本金
+                Double initialPrincipal = (StringValidater.toDouble(loanAmount) - AmountUtil
+                    .mulAB(annualPrincipal,
+                        (StringValidater.toDouble(loanPeriods) - 1)));// 首期本金
 
                 // 手续费=贷款额*基准利率
                 // 3.首期=手续费-（4）*（期数-1）
@@ -2610,10 +2606,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 }
                 Long poundage = AmountUtil.mul(
                     StringValidater.toLong(loanAmount), rate);// 手续费
-                Long annualPoundage = AmountUtil.mul(annualPrincipal, rate);// 每期手续费
-                Long initialPoundage = poundage
-                        - AmountUtil.mul(annualPoundage,
-                            (StringValidater.toInteger(loanPeriods) - 1));// 首期手续费
+                Double annualPoundage = AmountUtil.mulAB(annualPrincipal, rate);// 每期手续费
+                Double initialPoundage = poundage
+                        - AmountUtil.mulAB(annualPoundage,
+                            (StringValidater.toDouble(loanPeriods) - 1));// 首期手续费
 
                 // 高息金额=贷款额*（总利率-基准利率）
                 // 5.高息金额首期=高息金额-（6）*（期数-1）
@@ -2622,43 +2618,47 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 Long highRate = AmountUtil.mul(
                     StringValidater.toLong(loanAmount),
                     (StringValidater.toDouble(bankRate) - rate));// 高息金额
-                Long annualHighRate = (long) AmountUtil.div(highRate,
+                Double annualHighRate = AmountUtil.div(highRate,
                     StringValidater.toInteger(loanPeriods));// 高息金额每期
-                Long initialHighRate = highRate
-                        - AmountUtil.mul(annualHighRate,
-                            (StringValidater.toInteger(loanPeriods) - 1));// 高息金额首期
+                Double initialHighRate = highRate
+                        - AmountUtil.mulAB(annualHighRate,
+                            (StringValidater.toDouble(loanPeriods) - 1));// 高息金额首期
 
                 // 高息手续费=高息金额*基准利率
                 // 7.高息手续费首期=（8）*（期数-1）
                 // 8.高息手续费每期=(6）*基准利率
                 Long highRatePoundage = AmountUtil.mul(highRate, rate);// 高息手续费
-                Long annualHighRatePoundage = AmountUtil.mul(annualHighRate,
-                    rate);// 高息手续费每期
-                Long initialHighRatePoundage = AmountUtil.mul(
+                Double annualHighRatePoundage = AmountUtil.mulAB(
+                    annualHighRate, rate);// 高息手续费每期
+                Double initialHighRatePoundage = AmountUtil.mulAB(
                     annualHighRatePoundage,
-                    (StringValidater.toInteger(loanPeriods) - 1));// 高息手续费首期
+                    (StringValidater.toDouble(loanPeriods) - 1));// 高息手续费首期
 
                 // 首期月供=1+3+5+7
-                Long initialAmount = initialPrincipal + initialPoundage
+                Double initialAmount = initialPrincipal + initialPoundage
                         + initialHighRate + initialHighRatePoundage;
+                Double d1 = new BigDecimal(initialAmount).setScale(2,
+                    BigDecimal.ROUND_HALF_UP).doubleValue();
                 // 每期月供=2+4+6+8
-                Long annualAmount = annualPrincipal + annualPoundage
+                Double annualAmount = annualPrincipal + annualPoundage
                         + annualHighRate + annualHighRatePoundage;
+                Double d2 = new BigDecimal(annualAmount).setScale(2,
+                    BigDecimal.ROUND_HALF_UP).doubleValue();
 
-                res.setAnnualAmount(String.valueOf(annualAmount));
-                res.setInitialAmount(String.valueOf(initialAmount));
+                res.setAnnualAmount(String.valueOf(d2));
+                res.setInitialAmount(String.valueOf(d1));
                 res.setPoundage(String.valueOf(0));
             } else if (ERateType.ZK.getCode().equals(rateType)) {// 直客
                 if (EBocFeeWay.STAGES.getCode().equals(serviceChargeWay)) {// 分期
                     // 本金：
                     // 1.首期=贷款额-（2）*（期数-1）
                     // 2.每期=贷款额/期数
-                    Long annualPrincipal = (long) AmountUtil.div(
-                        StringValidater.toLong(loanAmount),
+                    Double annualPrincipal = AmountUtil.div(
+                        StringValidater.toBigDecimal(loanAmount),
                         StringValidater.toInteger(loanPeriods));// 每期本金
-                    Long initialPrincipal = StringValidater.toLong(loanAmount)
-                            - AmountUtil.mul(annualPrincipal,
-                                (StringValidater.toInteger(loanPeriods) - 1));// 首期本金
+                    Double initialPrincipal = Double.valueOf(loanAmount)
+                            - AmountUtil.mulAB(annualPrincipal,
+                                (StringValidater.toDouble(loanPeriods) - 1));// 首期本金
 
                     // 手续费=贷款额*利率
                     // 3.首期=手续费-（4）*（期数-1）
@@ -2666,32 +2666,37 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     Long poundage = AmountUtil.mul(
                         StringValidater.toLong(loanAmount),
                         StringValidater.toDouble(bankRate));// 手续费
-                    Long annualPoundage = AmountUtil.mul(annualPrincipal,
+                    Double annualPoundage = AmountUtil.mulAB(annualPrincipal,
                         StringValidater.toDouble(bankRate));// 每期手续费
-                    Long initialPoundage = poundage
-                            - AmountUtil.mul(annualPoundage,
+                    Double initialPoundage = poundage
+                            - AmountUtil.mulAB(annualPoundage,
                                 (StringValidater.toInteger(loanPeriods) - 1));// 首期手续费
 
                     // 月供：
                     // 首期=1+3
-                    Long initialAmount = initialPrincipal + initialPoundage;
+                    Double initialAmount = initialPrincipal + initialPoundage;
+                    Double d1 = new BigDecimal(initialAmount).setScale(2,
+                        BigDecimal.ROUND_HALF_UP).doubleValue();
                     // 每期=2+4
-                    Long annualAmount = annualPrincipal + annualPoundage;
+                    Double annualAmount = annualPrincipal + annualPoundage;
+                    Double d2 = new BigDecimal(annualAmount).setScale(2,
+                        BigDecimal.ROUND_HALF_UP).doubleValue();
 
-                    res.setAnnualAmount(String.valueOf(annualAmount));
-                    res.setInitialAmount(String.valueOf(initialAmount));
+                    res.setAnnualAmount(String.valueOf(d2));
+                    res.setInitialAmount(String.valueOf(d1));
                     res.setPoundage(String.valueOf(0));
                 } else if (EBocFeeWay.DISPOSABLE.getCode().equals(
                     serviceChargeWay)) {// 一次性
                     // 本金：
                     // 1.首期=贷款额-（2）*（期数-1）
                     // 2.每期=贷款额/期数
-                    Long annualPrincipal = (long) AmountUtil.div(
+                    Double annualPrincipal = AmountUtil.div(
                         StringValidater.toLong(loanAmount),
                         StringValidater.toInteger(loanPeriods));// 每期本金
-                    Long initialPrincipal = StringValidater.toLong(loanAmount)
-                            - AmountUtil.mul(annualPrincipal,
-                                (StringValidater.toInteger(loanPeriods) - 1));// 首期本金
+                    Double initialPrincipal = StringValidater
+                        .toDouble(loanAmount)
+                            - AmountUtil.mulAB(annualPrincipal,
+                                (StringValidater.toDouble(loanPeriods) - 1));// 首期本金
 
                     // 手续费=贷款额*利率
                     Long poundage = AmountUtil.mul(
@@ -2700,23 +2705,28 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
                     // 月供：
                     // 首期=1+手续费
-                    Long initialAmount = initialPrincipal + poundage;
+                    Double initialAmount = initialPrincipal + poundage;
+                    Double d1 = new BigDecimal(initialAmount).setScale(2,
+                        BigDecimal.ROUND_HALF_UP).doubleValue();
                     // 每期=2
-                    Long annualAmount = annualPrincipal;
+                    Double annualAmount = annualPrincipal;
+                    Double d2 = new BigDecimal(annualAmount).setScale(2,
+                        BigDecimal.ROUND_HALF_UP).doubleValue();
 
-                    res.setAnnualAmount(String.valueOf(annualAmount));
-                    res.setInitialAmount(String.valueOf(initialAmount));
+                    res.setAnnualAmount(String.valueOf(d2));
+                    res.setInitialAmount(String.valueOf(d1));
                     res.setPoundage(String.valueOf(0));
                 } else {// 附加费
                     // 本金：
                     // 1.首期=贷款额-（2）*（期数-1）
                     // 2.每期=贷款额/期数
-                    Long annualPrincipal = (long) AmountUtil.div(
+                    Double annualPrincipal = AmountUtil.div(
                         StringValidater.toLong(loanAmount),
                         StringValidater.toInteger(loanPeriods));// 每期本金
-                    Long initialPrincipal = StringValidater.toLong(loanAmount)
-                            - AmountUtil.mul(annualPrincipal,
-                                (StringValidater.toInteger(loanPeriods) - 1));// 首期本金
+                    Double initialPrincipal = StringValidater
+                        .toDouble(loanAmount)
+                            - AmountUtil.mulAB(annualPrincipal,
+                                (StringValidater.toDouble(loanPeriods) - 1));// 首期本金
 
                     // 手续费=贷款额*利率
                     // 3.首期=手续费-（2）*（期数-1）
@@ -2724,33 +2734,31 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     Long poundage = AmountUtil.mul(
                         StringValidater.toLong(loanAmount),
                         StringValidater.toDouble(bankRate));// 手续费
-                    Long annualPoundage = AmountUtil.mul(annualPrincipal,
+                    Double annualPoundage = AmountUtil.mulAB(annualPrincipal,
                         StringValidater.toDouble(bankRate));// 每期手续费
-                    Long initialPoundage = poundage
-                            - AmountUtil.mul(annualPrincipal,
-                                (StringValidater.toInteger(loanPeriods) - 1));// 首期手续费
+                    Double initialPoundage = poundage
+                            - AmountUtil.mulAB(annualPrincipal,
+                                (StringValidater.toDouble(loanPeriods) - 1));// 首期手续费
 
                     // 附加费：
                     // 5.首期=附加费-（6）*（期数-1）
                     // 6.每期=附加费/期数
-                    Long annualsurcharge = 0L;// 每期附加费
-                    Long initialsurcharge = 0L;// 首期附加费
+                    Double annualsurcharge = 0D;// 每期附加费
+                    Double initialsurcharge = 0D;// 首期附加费
                     if (ESurcharge.SIX_THOUSAND.getCode().equals(surcharge)) {
-                        annualsurcharge = (long) AmountUtil.div(
-                            Long.valueOf(6000000),
+                        annualsurcharge = AmountUtil.div(Long.valueOf(6000000),
                             StringValidater.toDouble(loanPeriods));
                         initialsurcharge = Long.valueOf(6000000)
                                 - AmountUtil
-                                    .mul(
+                                    .mulAB(
                                         annualsurcharge,
                                         (StringValidater.toDouble(loanPeriods) - 1));
                     } else {
-                        annualsurcharge = (long) AmountUtil.div(
-                            Long.valueOf(6100000),
+                        annualsurcharge = AmountUtil.div(Long.valueOf(6100000),
                             StringValidater.toDouble(loanPeriods));
                         initialsurcharge = Long.valueOf(6100000)
                                 - AmountUtil
-                                    .mul(
+                                    .mulAB(
                                         annualsurcharge,
                                         (StringValidater.toDouble(loanPeriods) - 1));
                     }
@@ -2758,18 +2766,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     // 附加费手续费=附加费金额*利率
                     // 附加费手续费每期=附加费每期*利率
                     // 附加费手续费首期=附加费手续费金额-附加费手续费每期*（期数-1）
-                    Long annualSurchargePoundage = 0L;
-                    Long initialSurchargePoundage = 0L;
+                    Double annualSurchargePoundage = 0D;
+                    Double initialSurchargePoundage = 0D;
                     if (ESurcharge.SIX_THOUSAND.getCode().equals(surcharge)) {
                         Long surchargePoundage = AmountUtil.mul(
                             Long.valueOf(6000000),
                             StringValidater.toDouble(bankRate));// 附加费手续费
                         annualSurchargePoundage = AmountUtil
-                            .mul(annualsurcharge,
+                            .mulAB(annualsurcharge,
                                 StringValidater.toDouble(bankRate));// 每期附加费手续费
                         initialSurchargePoundage = surchargePoundage
                                 - AmountUtil
-                                    .mul(
+                                    .mulAB(
                                         annualSurchargePoundage,
                                         (StringValidater.toInteger(loanPeriods) - 1));// 首期附加费手续费
                     } else {
@@ -2777,11 +2785,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                             Long.valueOf(6100000),
                             StringValidater.toDouble(bankRate));// 附加费手续费
                         annualSurchargePoundage = AmountUtil
-                            .mul(annualsurcharge,
+                            .mulAB(annualsurcharge,
                                 StringValidater.toDouble(bankRate));// 每期附加费手续费
                         initialSurchargePoundage = surchargePoundage
                                 - AmountUtil
-                                    .mul(
+                                    .mulAB(
                                         annualSurchargePoundage,
                                         (StringValidater.toInteger(loanPeriods) - 1));// 首期附加费手续费
                     }
@@ -2789,13 +2797,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     // 月供：
                     // 首期=1+3+附加费首期+附加费手续费首期
                     // 每期=2+4+附加费每期+附加费手续费每期
-                    Long initialAmount = initialPrincipal + initialPoundage
+                    Double initialAmount = initialPrincipal + initialPoundage
                             + initialsurcharge + initialSurchargePoundage;
-                    Long annualAmount = annualPrincipal + annualPoundage
+                    Double d1 = new BigDecimal(initialAmount).setScale(2,
+                        BigDecimal.ROUND_HALF_UP).doubleValue();
+                    Double annualAmount = annualPrincipal + annualPoundage
                             + annualsurcharge + annualSurchargePoundage;
+                    Double d2 = new BigDecimal(annualAmount).setScale(2,
+                        BigDecimal.ROUND_HALF_UP).doubleValue();
 
-                    res.setAnnualAmount(String.valueOf(annualAmount));
-                    res.setInitialAmount(String.valueOf(initialAmount));
+                    res.setAnnualAmount(String.valueOf(d2));
+                    res.setInitialAmount(String.valueOf(d1));
                     res.setPoundage(String.valueOf(0));
                 }
             }

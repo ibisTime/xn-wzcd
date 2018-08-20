@@ -292,6 +292,7 @@ public class CreditAOImpl implements ICreditAO {
     }
 
     @Override
+    @Transactional
     public void primaryAudit(XN632113Req req) {
         Credit credit = creditBO.getCredit(req.getCode());
 
@@ -309,9 +310,22 @@ public class CreditAOImpl implements ICreditAO {
                     .getNextNode());
             // 征信人员
             List<CreditUser> userList = req.getCreditUserList();
+            if (CollectionUtils.isEmpty(userList)) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "征信人员为空，请选择征信人！");
+            }
+            int i = 0;
             for (CreditUser creditUser : userList) {
+                if (ECreditUserRelation.SELF.getCode()
+                    .equals(creditUser.getRelation())) {
+                    i = 1;
+                }
                 creditUser.setIsFirstAudit(EBoolean.YES.getCode());
                 creditUserBO.refreshCreditUserIsFirstAudit(creditUser);
+            }
+            if (i == 0) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "征信人员无贷款人本人，请选择征信人！");
             }
             // 选填了附件
             if (null != req.getAccessory() && !"".equals(req.getAccessory())) {

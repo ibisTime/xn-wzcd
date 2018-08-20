@@ -176,14 +176,15 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
             .getRepayPlanCurMonth(repayBiz.getCode());
         // 还款计划状态是否更新
         overDueRepayPlan.setCurNodeCode(ERepayPlanNode.OVERDUE.getCode());
-        long totalRepayAmount = overDueRepayPlan.getRepayCapital()
-                + overDueRepayPlan.getRepayInterest();
-        if (totalRepayAmount < overdueMenu.getOverdueAmount()) {
-            overDueRepayPlan.setOverdueAmount(totalRepayAmount);
-        } else {
-            overDueRepayPlan.setOverdueAmount(overdueMenu.getOverdueAmount());
-        }
-        repayPlanBO.refreshRepayPlanOverdue(overDueRepayPlan);
+        // long totalRepayAmount = overDueRepayPlan.getRepayCapital()
+        // + overDueRepayPlan.getRepayInterest();
+        // if (totalRepayAmount < overdueMenu.getOverdueAmount()) {
+        // overDueRepayPlan.setOverdueAmount(totalRepayAmount);
+        // } else {
+        // overDueRepayPlan.setOverdueAmount(overdueMenu.getOverdueAmount());
+        // }
+        // repayPlanBO.refreshRepayPlanOverdue(overDueRepayPlan);
+
         // 更新逾期还款信息
         refreshRepayInfo(overdueMenu, repayBiz, overDueRepayPlan);
 
