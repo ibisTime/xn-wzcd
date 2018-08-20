@@ -33,7 +33,7 @@ public enum EGeneratePrefix {
             "支行"), LOGISTICS("L",
 
     "资料传递"), BUDGETORDER("BO", "预算单"), LOAN_PRODUCT("LP", "贷款产品"), GPSAZ(
-            "GPSAZ", "gps安装"), GPS_APPLY("GA", "GPS申领"), BUDGET_ORDER_FEE(
+            "GPSAZ", "gps安装"), GPS_APPLY("GA", "GPS申领"), GPS_SUPPLIER("GS","GPS供应商"), BUDGET_ORDER_FEE(
             "BOF", "准入单手续费"), BUDGET_ORDER_FEE_DETAIL("BOFD", "准入单手续费明细"),
 
     OVERDUEMENU("OM", "导入逾期名单"), NOTICE("N", "通知公告"), REGIME("R", "公司制度"), CompCategory(

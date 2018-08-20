@@ -9,21 +9,23 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "tableExport";
+    private static String key = "gpsSupplier";
 
     // 实体名称
-    private static String keyName = "表格导出";
+    private static String keyName = "gps供应商";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tsys_table_export";
+    private static String dbname = "tb_gps_supplier";
 
-    private static String[] DBwords = { "id", "url", "operator",
-            "update_datetime" };
+    private static String[] DBwords = { "code", "name", "contacts",
+            "contacts_mobile", "address", "updater", "update_datetime",
+            "remark" };
 
-    private static String[] DBwordsName = { "编号", "URL", "操作人", "操作时间" };
+    private static String[] DBwordsName = { "编号", "名称", "联系人", "联系人手机号", "地址",
+            "最新修改人", "最新修改时间", "备注" };
 
     private static String[] DOwords = getDOwords();
 

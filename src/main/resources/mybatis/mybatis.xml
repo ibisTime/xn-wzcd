@@ -163,5 +163,6 @@
 		<typeAlias alias="bizDayStatistic" type="com.cdkj.loan.domain.BizDayStatistic" />
 		<typeAlias alias="bankRepoint" type="com.cdkj.loan.domain.BankRepoint" />
 		<typeAlias alias="bankRepointDetail" type="com.cdkj.loan.domain.BankRepointDetail" />
+		<typeAlias alias="gpsSupplier" type="com.cdkj.loan.domain.GpsSupplier" />
 	</typeAliases>
 </configuration>

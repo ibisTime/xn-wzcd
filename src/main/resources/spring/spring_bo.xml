@@ -425,5 +425,9 @@
 	<bean id="bankRepointDetailBO" class="com.cdkj.loan.bo.impl.BankRepointDetailBOImpl">
 		<property name="paginableDAO" ref="bankRepointDetailDAOImpl"/>
 	</bean>
+	
+	<bean id="gpsSupplierBO" class="com.cdkj.loan.bo.impl.GpsSupplierBOImpl">
+		<property name="paginableDAO" ref="gpsSupplierDAOImpl"/>
+	</bean>
 
 </beans>
