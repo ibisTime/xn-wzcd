@@ -2048,6 +2048,9 @@ insert into `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('0',NULL,'back_advance_fund_type','收回垫资款类型','admin','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('1','back_advance_fund_type','1','客户作废','admin','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('1','back_advance_fund_type','2','垫资款退回','admin','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('0', NULL,'customer_type', '客户类型', 'admin', '2018-07-08 07:34:21', NULL,'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('1', 'customer_type', '1', '个人', 'admin', '2018-07-08 07:34:21', NULL,'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('1', 'customer_type', '2', '企业', 'admin', '2018-07-08 07:34:21', NULL,'CD-CWZCD000020', 'CD-CWZCD000020');
 
 /*
 -- Query: select `type`,`ckey`,`cvalue`,`updater`,now() as `update_datetime`,`remark`,`company_code`,`system_code` from tsys_config

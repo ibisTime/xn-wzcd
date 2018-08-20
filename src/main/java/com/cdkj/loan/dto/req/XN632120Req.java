@@ -16,7 +16,7 @@ public class XN632120Req {
     @NotBlank
     private String dealType;
 
-    // 客户类型
+    // 客户类型(1个人2企业)
     private String customerType;
 
     // 汽车经销商编号

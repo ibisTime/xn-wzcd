@@ -167,4 +167,8 @@ public interface IBudgetOrderAO {
     public Object queryBudgetOrderPageForBalanceDetail(int start, int limit,
             BudgetOrder condition);
 
+    // 风险客户四级分类
+    public Object riskCustomerFourClass(int start, int limit,
+            BudgetOrder condition);
+
 }

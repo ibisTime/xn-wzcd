@@ -257,17 +257,17 @@ public class RepayBiz extends ABaseDO {
     // 商品订单
     private Order mallOrder;
 
-    // 银行放款日期
+    // 银行放款日期起
     private Date bankFkDatetimeStart;
 
-    // 银行放款日期
+    // 银行放款日期止
     private Date bankFkDatetimeEnd;
 
     private String keyWord;// 关键字
 
     private RepayPlan overdueRepayPlan;
 
-    private List<String> curNodeCodeList;// 节点
+    private List<String> curNodeCodeList;// 节点编号列表
 
     // 司法诉讼
     private Judge judge;
@@ -285,7 +285,7 @@ public class RepayBiz extends ABaseDO {
 
     private int curOverdueCountEnd; // 现有逾期的次数止
 
-    private List<String> curOverdueCountList; // 现有逾期的次数止
+    private List<String> curOverdueCountList; // 现有逾期的次数列表
 
     public List<String> getCurOverdueCountList() {
         return curOverdueCountList;

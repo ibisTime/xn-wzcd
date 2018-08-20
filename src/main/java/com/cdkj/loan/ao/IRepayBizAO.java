@@ -115,8 +115,8 @@ public interface IRepayBizAO {
 
     public RepayBiz getRepayBiz(String code);
 
-    public Paginable<RepayBiz> queryRepayBizPageByRoleCode(int start, int limit,
-            RepayBiz condition);
+    public Paginable<RepayBiz> queryRepayBizPageByRoleCode(int start,
+            int limit, RepayBiz condition);
 
     // 通过累计逾期次数查询业务
     public Object queryRepayBizByTotalOverdueCount(int start, int limit,
@@ -132,5 +132,8 @@ public interface IRepayBizAO {
     // 逾期客户清收进度表
     public Object queryRepayBizByOverdue(int start, int limit,
             RepayBiz condition);
+
+    // 在保金额（未结清贷款总额）
+    public Object unclearedLoanTotalAmount();
 
 }

@@ -78,7 +78,7 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
         data.setReceiptAccount(bankcard.getBankcardNumber());
         data.setReceiptRealName(bankcard.getRealName());
         data.setIsUrgent(req.getIsUrgent());
-        data.setApplyUser(req.getApplyUser());
+        data.setApplyUser(req.getApplyUser());// 取的是当前操作人 不是客户
         data.setApplyNote(req.getApplyNote());
         data.setApplyDatetime(new Date());
         data.setStatus(EReplaceRepayStatus.TO_APPROVE.getCode());

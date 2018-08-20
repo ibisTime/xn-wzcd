@@ -34,6 +34,7 @@ import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.IReplaceRepayApplyBO;
+import com.cdkj.loan.bo.IReplaceRepayPlanBO;
 import com.cdkj.loan.bo.IRepointDetailBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSConfigBO;
@@ -67,6 +68,7 @@ import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.domain.ReplaceRepayApply;
+import com.cdkj.loan.domain.ReplaceRepayPlan;
 import com.cdkj.loan.domain.RepointDetail;
 import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.domain.SYSUser;
@@ -130,6 +132,7 @@ import com.cdkj.loan.enums.ELyAmountType;
 import com.cdkj.loan.enums.EMakeCardStatus;
 import com.cdkj.loan.enums.EOtherType;
 import com.cdkj.loan.enums.ERateType;
+import com.cdkj.loan.enums.EReplaceRepayPlanNode;
 import com.cdkj.loan.enums.ERepointDetailStatus;
 import com.cdkj.loan.enums.ERepointDetailType;
 import com.cdkj.loan.enums.ERepointDetailUseMoneyPurpose;
@@ -234,6 +237,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private IReplaceRepayApplyBO replaceRepayApplyBO;
+
+    @Autowired
+    private IReplaceRepayPlanBO replaceRepayPlanBO;
 
     @Override
     @Transactional
@@ -2874,9 +2880,60 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     }
                     budgetOrder.setTotalOverdueCount(repayBiz
                         .getTotalOverdueCount());// 欠款期数
-                    // TODO 其他欠款未处理
+                    // TODO 其他欠款 除月供欠款外的其他欠款 总欠款-欠款期数*月供（如有银行数据来源或由相关部门人员手工输入）
                 }
             }
+        }
+        return page;
+    }
+
+    @Override
+    public Object riskCustomerFourClass(int start, int limit,
+            BudgetOrder condition) {
+        Paginable<BudgetOrder> page = budgetOrderBO.getPaginable(start, limit,
+            condition);
+        List<BudgetOrder> list = page.getList();
+        for (BudgetOrder budgetOrder : list) {
+            RepayBiz repayBiz = repayBizBO.getRepayBizByRefCode(budgetOrder
+                .getCode());
+            if (null != repayBiz) {
+                budgetOrder.setDebtBalance(repayBiz.getRestAmount());// 借款余额（取的还款业务的剩余欠款）
+                budgetOrder.setBankDebtAmount(repayBiz.getRestOverdueAmount());// 银行欠款金额(取的还款业务的剩余逾期总金额)
+            }
+            if (StringUtils.isNotBlank(budgetOrder.getRepayBizCode())) {
+                Long ReplaceRealRepayAmount = 0L;
+                ReplaceRepayPlan replaceRepayPlanCondition = new ReplaceRepayPlan();
+                replaceRepayPlanCondition
+                    .setCurNodeCode(EReplaceRepayPlanNode.CONFIRM_LOAN_YES
+                        .getCode());
+                List<ReplaceRepayPlan> replaceRepayPlanList = replaceRepayPlanBO
+                    .queryReplaceRepayPlanList(replaceRepayPlanCondition);// 查询所有确认放款完成的代偿计划单
+                List<RepayPlan> repayPlanList = repayPlanBO
+                    .queryRepayPlanListByRepayBizCode(budgetOrder
+                        .getRepayBizCode());// 查询该笔业务的还款计划
+                if (CollectionUtils.isNotEmpty(replaceRepayPlanList)
+                        && CollectionUtils.isNotEmpty(repayPlanList)) {
+                    // 两个集合取交集
+                    for (RepayPlan repayPlan : repayPlanList) {
+                        for (ReplaceRepayPlan replaceRepayPlan : replaceRepayPlanList) {
+                            if (replaceRepayPlan.getBizCode() == repayPlan
+                                .getCode()) {
+                                ReplaceRepayApply replaceRepayApply = replaceRepayApplyBO
+                                    .getReplaceRepayApply(replaceRepayPlan
+                                        .getReplaceApplyCode());
+                                if (null != replaceRepayApply) {
+                                    ReplaceRealRepayAmount += getLong(replaceRepayApply
+                                        .getAmount());
+                                }
+                                continue;
+                            }
+                        }
+                    }
+                }
+                budgetOrder.setReplaceRealRepayAmount(ReplaceRealRepayAmount);// 公司垫款金额（代偿）
+            }
+            budgetOrder.setDebtTotal(getLong(budgetOrder.getBankDebtAmount())
+                    + getLong(budgetOrder.getReplaceRealRepayAmount()));// 欠款合计
         }
         return page;
     }

@@ -145,6 +145,7 @@ public class AdvanceFund extends ABaseDO {
     // 申请人身份证号
     private String applyUserIdNo;
 
+    // 预算单
     private BudgetOrder budgetOrder;
 
     public Long getLoanAmount() {

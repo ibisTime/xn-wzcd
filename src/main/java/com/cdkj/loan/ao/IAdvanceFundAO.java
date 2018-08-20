@@ -61,4 +61,7 @@ public interface IAdvanceFundAO {
     public XN632188Res queryAdvanceFundListForBranch(String companyCode,
             String curNodeCode);
 
+    // 预打款统计
+    public Object expectPayStatistics(String companyCode);
+
 }

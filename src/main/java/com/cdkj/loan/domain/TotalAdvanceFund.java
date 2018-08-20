@@ -12,7 +12,7 @@ import com.cdkj.loan.dao.base.ABaseDO;
 */
 public class TotalAdvanceFund extends ABaseDO {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -6306083039234146975L;
 
     // 编号
     private String code;
