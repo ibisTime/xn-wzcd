@@ -64,4 +64,8 @@ public interface IAdvanceFundAO {
     // 预打款统计
     public Object expectPayStatistics(String companyCode);
 
+    // 今日已垫资
+    public Object todayHasAdvanceFund(int start, int limit,
+            AdvanceFund condition);
+
 }

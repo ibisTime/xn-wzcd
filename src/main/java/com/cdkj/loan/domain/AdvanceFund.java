@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -12,7 +13,7 @@ import com.cdkj.loan.dao.base.ABaseDO;
 */
 public class AdvanceFund extends ABaseDO {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 8269296004558344190L;
 
     // 编号
     private String code;
@@ -74,7 +75,7 @@ public class AdvanceFund extends ABaseDO {
     // 垫资日期
     private Date advanceFundDatetime;
 
-    // 付款银行编号
+    // 付款账号编号
     private String payBankcardCode;
 
     // 付款凭证
@@ -91,6 +92,9 @@ public class AdvanceFund extends ABaseDO {
 
     // 更新时间
     private Date updateDatetime;
+
+    // 申请人编号
+    private String applyUser;
 
     // 申请时间
     private Date applyDatetime;
@@ -121,14 +125,14 @@ public class AdvanceFund extends ABaseDO {
     // 收款银行名称
     private String collectBankName;
 
-    // 支行名称
-    private String subbranch;
+    // 收款银行支行名称
+    private String collectSubbranch;
 
-    // 打款账号
+    // 收款账号户名
+    private String collectAccountName;
+
+    // 付款账号
     private String payAccountNo;
-
-    // 开户行名称
-    private String openBankName;
 
     // 贷款银行名称
     private String loanBankName;
@@ -140,13 +144,16 @@ public class AdvanceFund extends ABaseDO {
     private String carDealerName;
 
     // 申请人姓名
-    private String applyName;
+    private String applyUserName;
 
-    // 申请人身份证号
+    // 客户身份证号
     private String applyUserIdNo;
 
     // 预算单
     private BudgetOrder budgetOrder;
+
+    // 节点编号列表
+    private List<String> curNodeCodeList;
 
     public Long getLoanAmount() {
         return loanAmount;
@@ -156,12 +163,12 @@ public class AdvanceFund extends ABaseDO {
         this.loanAmount = loanAmount;
     }
 
-    public String getSubbranch() {
-        return subbranch;
+    public String getCollectSubbranch() {
+        return collectSubbranch;
     }
 
-    public void setSubbranch(String subbranch) {
-        this.subbranch = subbranch;
+    public void setCollectSubbranch(String collectSubbranch) {
+        this.collectSubbranch = collectSubbranch;
     }
 
     public String getApplyUserIdNo() {
@@ -236,14 +243,6 @@ public class AdvanceFund extends ABaseDO {
         this.collectionAccountNo = collectionAccountNo;
     }
 
-    public String getOpenBankName() {
-        return openBankName;
-    }
-
-    public void setOpenBankName(String openBankName) {
-        this.openBankName = openBankName;
-    }
-
     public String getLoanBankName() {
         return loanBankName;
     }
@@ -268,12 +267,20 @@ public class AdvanceFund extends ABaseDO {
         this.carDealerName = carDealerName;
     }
 
-    public String getApplyName() {
-        return applyName;
+    public String getApplyUser() {
+        return applyUser;
     }
 
-    public void setApplyName(String applyName) {
-        this.applyName = applyName;
+    public void setApplyUser(String applyUser) {
+        this.applyUser = applyUser;
+    }
+
+    public String getApplyUserName() {
+        return applyUserName;
+    }
+
+    public void setApplyUserName(String applyUserName) {
+        this.applyUserName = applyUserName;
     }
 
     public String getCreditCode() {
@@ -498,6 +505,22 @@ public class AdvanceFund extends ABaseDO {
 
     public void setUpdateDatetimeEnd(Date updateDatetimeEnd) {
         this.updateDatetimeEnd = updateDatetimeEnd;
+    }
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
+    }
+
+    public String getCollectAccountName() {
+        return collectAccountName;
+    }
+
+    public void setCollectAccountName(String collectAccountName) {
+        this.collectAccountName = collectAccountName;
     }
 
 }
