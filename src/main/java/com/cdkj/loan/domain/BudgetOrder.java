@@ -910,6 +910,10 @@ public class BudgetOrder extends ABaseDO {
 
     private String fbhPage;// 发保合页面分页查询标识
 
+    private String bankFkDatetimeForYear;// 放款年份(业绩完成统计年份查询)
+
+    /*-------辅助字段-------*/
+
     public Long getReplaceRealRepayAmount() {
         return replaceRealRepayAmount;
     }
@@ -3414,6 +3418,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setOtherDebt(Long otherDebt) {
         this.otherDebt = otherDebt;
+    }
+
+    public String getBankFkDatetimeForYear() {
+        return bankFkDatetimeForYear;
+    }
+
+    public void setBankFkDatetimeForYear(String bankFkDatetimeForYear) {
+        this.bankFkDatetimeForYear = bankFkDatetimeForYear;
     }
 
 }

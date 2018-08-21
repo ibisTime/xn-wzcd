@@ -1,11 +1,14 @@
 package com.cdkj.loan.dto.req;
 
+/**
+ * 逾期客户清收进度表
+ * @author: jiafr 
+ * @since: 2018年8月21日 上午11:37:21 
+ * @history:
+ */
 public class XN630904Req extends APageReq {
 
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
-     */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -6263583306083692342L;
 
     private String code;// 还款业务
 
