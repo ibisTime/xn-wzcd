@@ -59,8 +59,8 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
     public Paginable<BudgetOrderFee> queryBudgetOrderFeePage(int start,
             int limit, BudgetOrderFee condition) {
         condition.setEffect(EBoolean.YES.getCode());
-        Paginable<BudgetOrderFee> paginable = budgetOrderFeeBO
-            .getPaginable(start, limit, condition);
+        Paginable<BudgetOrderFee> paginable = budgetOrderFeeBO.getPaginable(
+            start, limit, condition);
 
         List<BudgetOrderFee> list = paginable.getList();
 
@@ -71,8 +71,8 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
                 budgetOrderFee.setCompanyName(department.getName());
             }
             if (StringUtils.isNotBlank(budgetOrderFee.getUpdater())) {
-                SYSUser saleUser = sysUserBO
-                    .getUser(budgetOrderFee.getUpdater());
+                SYSUser saleUser = sysUserBO.getUser(budgetOrderFee
+                    .getUpdater());
                 budgetOrderFee.setUpdater(saleUser.getRealName());
             }
             if (StringUtils.isNotBlank(budgetOrderFee.getBudgetOrder())) {
@@ -86,8 +86,7 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
     }
 
     @Override
-    public List<BudgetOrderFee> queryBudgetOrderFeeList(
-            BudgetOrderFee condition) {
+    public List<BudgetOrderFee> queryBudgetOrderFeeList(BudgetOrderFee condition) {
         condition.setEffect(EBoolean.YES.getCode());
         return budgetOrderFeeBO.queryBudgetOrderFeeList(condition);
     }
@@ -107,10 +106,10 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
         }
 
         // 设置业务公司真实姓名
-        Department department = departmentBO
-            .getDepartment(budgetOrderFee.getCompanyCode());
-        BudgetOrder budgetOrder = budgetOrderBO
-            .getBudgetOrder(budgetOrderFee.getBudgetOrder());
+        Department department = departmentBO.getDepartment(budgetOrderFee
+            .getCompanyCode());
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(budgetOrderFee
+            .getBudgetOrder());
         budgetOrderFee.setCustomerName(budgetOrder.getCustomerName());
 
         // 设置贷款银行和贷款金额
@@ -134,8 +133,8 @@ public class BudgetOrderFeeAOImpl implements IBudgetOrderFeeAO {
             CollectBankcard collectBankcard = collectBankcardBO
                 .getCollectBankcard(platBankcard);
             budgetOrderFeeDetail.setCollectBankcard(collectBankcard);
-            SYSUser updateUser = sysUserBO
-                .getUser(budgetOrderFeeDetail.getUpdater());
+            SYSUser updateUser = sysUserBO.getUser(budgetOrderFeeDetail
+                .getUpdater());
             if (null != updateUser) {
                 budgetOrderFeeDetail.setUpdater(updateUser.getRealName());
             }
