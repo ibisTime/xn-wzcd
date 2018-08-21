@@ -171,4 +171,8 @@ public interface IBudgetOrderAO {
     public Object riskCustomerFourClass(int start, int limit,
             BudgetOrder condition);
 
+    // 统计分析 代偿明细
+    public Object queryBudgetOrderPageForCompensatoryDetail(int start,
+            int limit, BudgetOrder condition);
+
 }

@@ -876,6 +876,8 @@ public class BudgetOrder extends ABaseDO {
 
     private Long debtBalance; // 借款余额
 
+    private Long otherDebt; // 其他欠款
+
     private Long replaceRealRepayAmount;// 公司垫款金额(代偿金额)
 
     private Long bankDebtAmount;// 银行欠款金额(逾期金额)
@@ -3404,6 +3406,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setDebtTotal(Long debtTotal) {
         this.debtTotal = debtTotal;
+    }
+
+    public Long getOtherDebt() {
+        return otherDebt;
+    }
+
+    public void setOtherDebt(Long otherDebt) {
+        this.otherDebt = otherDebt;
     }
 
 }
