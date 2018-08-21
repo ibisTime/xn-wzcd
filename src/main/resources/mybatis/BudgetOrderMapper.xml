@@ -411,7 +411,9 @@
 			<if test="fbhPage != null and fbhPage != '' ">
 				AND t.fbh_status is not null
 			</if>
-			
+			<if test="bankFkDatetimeForYear != null and bankFkDatetimeForYear != '' ">
+				AND t.bank_fk_datetime like #{bankFkDatetimeForYear}"%"
+			</if>
 		</trim>
 	</sql>
 	<select id="select_budgetOrder" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">

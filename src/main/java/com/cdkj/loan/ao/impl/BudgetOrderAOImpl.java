@@ -1,9 +1,11 @@
 package com.cdkj.loan.ao.impl;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -81,6 +83,7 @@ import com.cdkj.loan.domain.SupplementReason;
 import com.cdkj.loan.domain.SysBonuses;
 import com.cdkj.loan.domain.TotalAdvanceFund;
 import com.cdkj.loan.domain.User;
+import com.cdkj.loan.dto.req.XN630908Req;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632120ReqRepointDetail;
 import com.cdkj.loan.dto.req.XN632141Req;
@@ -101,6 +104,7 @@ import com.cdkj.loan.dto.req.XN632280Req;
 import com.cdkj.loan.dto.req.XN632281Req;
 import com.cdkj.loan.dto.req.XN632292Req;
 import com.cdkj.loan.dto.req.XN632341Req;
+import com.cdkj.loan.dto.res.XN630908Res;
 import com.cdkj.loan.dto.res.XN632234Res;
 import com.cdkj.loan.dto.res.XN632290Res;
 import com.cdkj.loan.dto.res.XN632291Res;
@@ -3058,5 +3062,114 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     + getLong(budgetOrder.getReplaceRealRepayAmount()));// 欠款合计
         }
         return page;
+    }
+
+    @Override
+    public Object performanceCompletionSituation(XN630908Req req) {
+        // 返回结果
+        ArrayList<XN630908Res> resList = new ArrayList<XN630908Res>();
+
+        BudgetOrder condition = new BudgetOrder();
+        if (StringUtils.isNotBlank(req.getFkYear())) {
+            condition.setBankFkDatetimeForYear(req.getFkYear());
+        } else {
+            condition.setBankFkDatetimeForYear(new SimpleDateFormat("yyyy")
+                .format(new Date()));
+        }
+        condition.setSaleUserId(req.getSaleUserId());
+        condition.setCompanyCode(req.getCompanyCode());
+        List<BudgetOrder> result = budgetOrderBO
+            .queryBudgetOrderList(condition);
+        // 第一步， 把查询结果根据业务员编号分组
+        Map<String, List<BudgetOrder>> data = new HashMap<String, List<BudgetOrder>>();
+        List<BudgetOrder> list = null;
+        for (BudgetOrder b1 : result) {
+            if (data.containsKey(b1.getSaleUserId())) {
+                list = data.get(b1.getSaleUserId());
+            } else {
+                list = new ArrayList<BudgetOrder>();
+                data.put(b1.getSaleUserId(), list);
+            }
+            list.add(b1);
+        }
+
+        // 第二步，处理数据
+        for (String key : data.keySet()) {
+            List<BudgetOrder> list2 = data.get(key);// 一个业务员的数据集合
+            SYSUser user = sysUserBO.getUser(key);
+            XN630908Res res = new XN630908Res(user.getRealName(), 0, 0, 0, 0,
+                0L, 0, 0, 0, 0, 0L, 0, 0, 0, 0, 0L, 0, 0, 0, 0, 0L);// 返回的一行数据
+            for (BudgetOrder b2 : list2) {
+                Long loanAmount = getLong(b2.getLoanAmount());
+                Date bankFkDatetime = b2.getBankFkDatetime();
+                SimpleDateFormat sdf = new SimpleDateFormat("MM");
+                String month = sdf.format(bankFkDatetime);
+                int jd = (Integer.valueOf(month) + 2) / 3;// 季度
+                switch (jd) {
+                    case 1:// 第一季度
+                        if (loanAmount < 100000) {// 十万以下
+                            res.setFirstQuarterTenUnder(res
+                                .getFirstQuarterTenUnder() + 1);
+                        } else if (loanAmount >= 300000) {// 三十万以上
+                            res.setFirstQuarterThirtyAbove(res
+                                .getFirstQuarterThirtyAbove() + 1);
+                        } else {// 十万到三十万
+                            res.setFirstQuarterTenToThirty(res
+                                .getFirstQuarterTenToThirty() + 1);
+                        }
+                        res.setFirstQuarterNumber(res.getFirstQuarterNumber() + 1);
+                        res.setFirstQuarterLoanAmount(res
+                            .getFirstQuarterLoanAmount() + loanAmount);
+                        break;
+                    case 2:// 第二季度
+                        if (loanAmount < 100000) {// 十万以下
+                            res.setSecondQuarterTenUnder(res
+                                .getFirstQuarterTenUnder() + 1);
+                        } else if (loanAmount >= 300000) {// 三十万以上
+                            res.setSecondQuarterThirtyAbove(res
+                                .getFirstQuarterThirtyAbove() + 1);
+                        } else {// 十万到三十万
+                            res.setSecondQuarterTenToThirty(res
+                                .getFirstQuarterTenToThirty() + 1);
+                        }
+                        res.setSecondQuarterNumber(res.getFirstQuarterNumber() + 1);
+                        res.setSecondQuarterLoanAmount(res
+                            .getFirstQuarterLoanAmount() + loanAmount);
+                        break;
+                    case 3:// 第三季度
+                        if (loanAmount < 100000) {// 十万以下
+                            res.setThirdQuarterTenUnder(res
+                                .getFirstQuarterTenUnder() + 1);
+                        } else if (loanAmount >= 300000) {// 三十万以上
+                            res.setThirdQuarterThirtyAbove(res
+                                .getFirstQuarterThirtyAbove() + 1);
+                        } else {// 十万到三十万
+                            res.setThirdQuarterTenToThirty(res
+                                .getFirstQuarterTenToThirty() + 1);
+                        }
+                        res.setThirdQuarterNumber(res.getFirstQuarterNumber() + 1);
+                        res.setThirdQuarterLoanAmount(res
+                            .getFirstQuarterLoanAmount() + loanAmount);
+                        break;
+                    case 4:// 第四季度
+                        if (loanAmount < 100000) {// 十万以下
+                            res.setFourthQuarterTenUnder(res
+                                .getFirstQuarterTenUnder() + 1);
+                        } else if (loanAmount >= 300000) {// 三十万以上
+                            res.setFourthQuarterThirtyAbove(res
+                                .getFirstQuarterThirtyAbove() + 1);
+                        } else {// 十万到三十万
+                            res.setFourthQuarterTenToThirty(res
+                                .getFirstQuarterTenToThirty() + 1);
+                        }
+                        res.setFourthQuarterNumber(res.getFirstQuarterNumber() + 1);
+                        res.setFourthQuarterLoanAmount(res
+                            .getFirstQuarterLoanAmount() + loanAmount);
+                        break;
+                }
+            }
+            resList.add(res);
+        }
+        return resList;
     }
 }

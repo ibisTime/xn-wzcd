@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.dto.req.XN630908Req;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632142Req;
@@ -167,12 +168,15 @@ public interface IBudgetOrderAO {
     public Object queryBudgetOrderPageForBalanceDetail(int start, int limit,
             BudgetOrder condition);
 
-    // 风险客户四级分类
+    // 统计分析 风险客户四级分类
     public Object riskCustomerFourClass(int start, int limit,
             BudgetOrder condition);
 
     // 统计分析 代偿明细
     public Object queryBudgetOrderPageForCompensatoryDetail(int start,
             int limit, BudgetOrder condition);
+
+    // 统计分析 业绩完成情况
+    public Object performanceCompletionSituation(XN630908Req req);
 
 }

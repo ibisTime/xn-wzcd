@@ -1,9 +1,9 @@
 package com.cdkj.loan.dto.req;
 
 /**
- * 分页查询垫资
+ * 风险客户四级分类
  * @author: jiafr 
- * @since: 2018年6月17日 下午5:25:14 
+ * @since: 2018年8月21日 上午11:36:59 
  * @history:
  */
 public class XN630906Req extends APageReq {

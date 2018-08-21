@@ -1,9 +1,9 @@
 package com.cdkj.loan.dto.req;
 
 /**
- * 分页查询垫资
+ * 当天0点为止分公司没有打款给车行的数据统计
  * @author: jiafr 
- * @since: 2018年6月17日 下午5:25:14 
+ * @since: 2018年8月21日 上午11:36:22 
  * @history:
  */
 public class XN630905Req extends APageReq {
