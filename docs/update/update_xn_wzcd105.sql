@@ -67,3 +67,19 @@ CREATE TABLE `tdq_bonuses_list` (
 ALTER TABLE `tdq_advance_fund` 
 ADD COLUMN `apply_user` VARCHAR(32) NULL COMMENT '申请人' AFTER `type`;
 
+
+DROP TABLE IF EXISTS `tdq_performance_bond`;
+CREATE TABLE `tdq_performance_bond` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `budget_code` varchar(32) DEFAULT NULL COMMENT '预算单编号',
+  `customer_name` varchar(32) DEFAULT NULL COMMENT '客户姓名',
+  `car_dealer_code` varchar(32) DEFAULT NULL COMMENT '汽车经销商',
+  `sale_user` varchar(32) DEFAULT NULL COMMENT '业务员',
+  `loan_bank_code` varchar(32) DEFAULT NULL COMMENT '贷款银行',
+  `loan_amount` bigint(20) DEFAULT NULL COMMENT '贷款金额',
+  `ly_amount` bigint(20) DEFAULT NULL COMMENT '履约保证金',
+  `bank_fk_datetime` datetime DEFAULT NULL COMMENT '放款日期',
+  `print_number` varchar(32) DEFAULT NULL COMMENT '收款打印单号',
+  `print_datetime` datetime DEFAULT NULL COMMENT '收款打印日期',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='履约保证金开票';

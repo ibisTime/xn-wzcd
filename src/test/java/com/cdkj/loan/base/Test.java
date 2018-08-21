@@ -9,23 +9,23 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "bonusesList";
+    private static String key = "performanceBond";
 
     // 实体名称
-    private static String keyName = "奖金提成";
+    private static String keyName = "履约保证金开票";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdq_bonuses_list";
+    private static String dbname = "tdq_performance_bond";
 
-    private static String[] DBwords = { "code", "month", "sale_user",
-            "budget_code", "is_self_develop", "self_develop_amount",
-            "not_self_develop_amount", "loan_amount" };
+    private static String[] DBwords = { "id", "budget_code", "customer_name",
+            "car_dealer_code", "sale_user", "loan_bank_code", "loan_amount",
+            "ly_amount", "bank_fk_datetime", "print_number", "print_datetime" };
 
-    private static String[] DBwordsName = { "编号", "月份", "业务员", "预算单编号",
-            "是否自主开发", "自主开发奖金", "非自主开发奖金", "贷款金额" };
+    private static String[] DBwordsName = { "id", "预算单编号", "客户姓名", "汽车经销商",
+            "业务员", "贷款银行", "贷款金额", "履约保证金", "放款日期", "收款打印单号", "收款打印日期" };
 
     private static String[] DOwords = getDOwords();
 
@@ -415,7 +415,7 @@ public class Test {
         String str = "package " + packge + "ao;\n\n"
                 + "import java.util.List;\n\n" + "import " + packge
                 + "bo.base.Paginable;\n" + "import " + packge + "domain." + Key
-                + ";\n\n\n\n" + "//@Component\n" + "public interface I" + Key
+                + ";\n\n\n\n" + "@Component\n" + "public interface I" + Key
                 + "AO {\n\t"
                 + "static final String DEFAULT_ORDER_COLUMN = \"code\";\n\n\n\t"
                 + "public String add" + Key + "(" + Key + " data);\n\n\t"

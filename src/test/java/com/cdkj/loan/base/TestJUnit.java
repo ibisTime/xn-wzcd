@@ -1,23 +1,12 @@
 package com.cdkj.loan.base;
 
-import java.util.Calendar;
-
 import org.unitils.UnitilsJUnit4;
 
 public class TestJUnit extends UnitilsJUnit4 {
 
     public static void main(String[] args) {
 
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        String date = null;
-        if (month < 10) {
-            date = "" + year + "0" + month;
-        } else {
-            date = "" + year + month;
-        }
-        System.out.println(date);
+        System.out.println(String.format("%04d", 50));
 
         // String host = "https://jisucxdq.market.alicloudapi.com";
         // String path = "/car/detail";
