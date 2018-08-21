@@ -1021,6 +1021,16 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         performanceBond.setLoanAmount(budgetOrder.getLoanAmount());
         performanceBond.setLyAmount(budgetOrder.getLyAmount());
         performanceBond.setBankFkDatetime(budgetOrder.getBankFkDatetime());
+
+        PerformanceBond domain = new PerformanceBond();
+        long count = performanceBondBO.getTotalCount(domain) + 1;
+        // 预算单首位是H是是浩源
+        if ("H".equals(budgetOrder.getCode().charAt(0))) {
+            performanceBond.setPrintNumber("HY" + String.format("%04d", count));
+        } else {
+            performanceBond.setPrintNumber("BL" + String.format("%04d", count));
+        }
+
         performanceBondBO.savePerformanceBond(performanceBond);
 
         /****** 生成还款业务 ******/

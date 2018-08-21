@@ -17,8 +17,8 @@
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
-			<if test="code != null and code != '' ">
-				AND t.code = #{code}
+			<if test="id != null and id != '' ">
+				AND t.id = #{id}
 			</if>
 			<if test="budgetCode != null and budgetCode != '' ">
 				AND t.budget_code = #{budgetCode}
@@ -93,9 +93,8 @@
 	<update id="update_performanceBond" parameterType="performanceBond">
 		UPDATE tdq_performance_bond
 		SET
-		print_number = #{printNumber}
-		,print_datetime = #{printDatetime}
-		WHERE code = #{code}
+		print_datetime = #{printDatetime}
+		WHERE id = #{id}
 	</update>
 
 
