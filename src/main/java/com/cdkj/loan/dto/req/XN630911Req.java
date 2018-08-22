@@ -1,6 +1,12 @@
 package com.cdkj.loan.dto.req;
 
-public class XN632910Req extends APageReq {
+/**
+ * 垫资超过1天未放款客户
+ * @author: CYL 
+ * @since: 2018年8月22日 下午5:55:43 
+ * @history:
+ */
+public class XN630911Req extends APageReq {
 
     private static final long serialVersionUID = -939306905107710022L;
 

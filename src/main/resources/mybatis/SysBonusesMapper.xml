@@ -87,6 +87,10 @@
 		,remark = #{remark}
 		WHERE id = #{id}
 	</update>
-
-
+	
+	<delete id="delete_sysBonuses" parameterType="sysBonuses">
+        DELETE 
+        FROM tsys_bonuses 
+        WHERE id = #{id}
+    </delete>
 </mapper>
