@@ -87,6 +87,7 @@ import com.cdkj.loan.domain.SysBonuses;
 import com.cdkj.loan.domain.TotalAdvanceFund;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN630908Req;
+import com.cdkj.loan.dto.req.XN630909Req;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632120ReqRepointDetail;
 import com.cdkj.loan.dto.req.XN632141Req;
@@ -108,6 +109,7 @@ import com.cdkj.loan.dto.req.XN632281Req;
 import com.cdkj.loan.dto.req.XN632292Req;
 import com.cdkj.loan.dto.req.XN632341Req;
 import com.cdkj.loan.dto.res.XN630908Res;
+import com.cdkj.loan.dto.res.XN630909Res;
 import com.cdkj.loan.dto.res.XN632234Res;
 import com.cdkj.loan.dto.res.XN632290Res;
 import com.cdkj.loan.dto.res.XN632291Res;
@@ -3123,7 +3125,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 Date bankFkDatetime = b2.getBankFkDatetime();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM");
                 String month = sdf.format(bankFkDatetime);
-                int jd = (Integer.valueOf(month) + 2) / 3;// 季度
+                int jd = (Integer.valueOf(month) + 2) / 3;
                 switch (jd) {
                     case 1:// 第一季度
                         if (loanAmount < 100000) {// 十万以下
@@ -3190,5 +3192,181 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             resList.add(res);
         }
         return resList;
+    }
+
+    @Override
+    public Object monthPerformanceCompletionSituation(XN630909Req req) {
+        ArrayList<XN630909Res> resList = new ArrayList<XN630909Res>();// 返回结果集
+
+        BudgetOrder condition = new BudgetOrder();
+        condition.setSaleUserId(req.getSaleUserId());
+        condition.setCompanyCode(req.getCompanyCode());
+        String year1 = null;
+        if (StringUtils.isNotBlank(req.getFkYear())) {
+            year1 = req.getFkYear();
+        } else {
+            year1 = new SimpleDateFormat("yyyy").format(new Date());
+        }
+        condition.setBankFkDatetimeForYear(year1);
+        XN630909Res res1 = doOneYearPerformance(condition);// 标准线年数据
+
+        condition.setBankFkDatetimeForYear(String.valueOf(Integer
+            .valueOf(year1) - 1));
+        XN630909Res res2 = doOneYearPerformance(condition);// 去年数据
+
+        condition.setBankFkDatetimeForYear(String.valueOf(Integer
+            .valueOf(year1) - 2));
+        XN630909Res res3 = doOneYearPerformance(condition);// 前年数据
+
+        condition.setBankFkDatetimeForYear(String.valueOf(Integer
+            .valueOf(year1) - 3));
+        XN630909Res res4 = doOneYearPerformance(condition);// 大前年数据
+
+        res1 = doGrowthRate(res1, res2);
+        res1.setYear("今年");
+        resList.add(res1);
+
+        res2 = doGrowthRate(res2, res3);
+        res2.setYear("去年");
+        resList.add(res2);
+
+        res3 = doGrowthRate(res3, res4);
+        res3.setYear("前年");
+        resList.add(res3);
+
+        res4.setYear("大前年");
+        resList.add(res4);
+        return resList;
+    }
+
+    private XN630909Res doGrowthRate(XN630909Res res1, XN630909Res res2) {
+        res1.setOneGrowthRate(countGrowthRate(res1.getOneLoanAmount(),
+            res2.getOneLoanAmount()));
+        res1.setTwoGrowthRate(countGrowthRate(res1.getTwoLoanAmount(),
+            res2.getTwoLoanAmount()));
+        res1.setThreeGrowthRate(countGrowthRate(res1.getThreeLoanAmount(),
+            res2.getThreeLoanAmount()));
+        res1.setFourGrowthRate(countGrowthRate(res1.getFourLoanAmount(),
+            res2.getFourLoanAmount()));
+        res1.setFiveGrowthRate(countGrowthRate(res1.getFiveLoanAmount(),
+            res2.getFiveLoanAmount()));
+        res1.setSixGrowthRate(countGrowthRate(res1.getSixLoanAmount(),
+            res2.getSixLoanAmount()));
+        res1.setSevenGrowthRate(countGrowthRate(res1.getSevenLoanAmount(),
+            res2.getSevenLoanAmount()));
+        res1.setEightGrowthRate(countGrowthRate(res1.getEightLoanAmount(),
+            res2.getEightLoanAmount()));
+        res1.setNineGrowthRate(countGrowthRate(res1.getNineLoanAmount(),
+            res2.getNineLoanAmount()));
+        res1.setTenGrowthRate(countGrowthRate(res1.getTenLoanAmount(),
+            res2.getTenLoanAmount()));
+        res1.setElevenGrowthRate(countGrowthRate(res1.getElevenLoanAmount(),
+            res2.getElevenLoanAmount()));
+        res1.setTwelveGrowthRate(countGrowthRate(res1.getTwelveLoanAmount(),
+            res2.getTwelveLoanAmount()));
+        res1.setFirstQuarterGrowthRate(countGrowthRate(
+            res1.getFirstQuarterLoanAmount(), res2.getFirstQuarterLoanAmount()));
+        res1.setSecondQuarterGrowthRate(countGrowthRate(
+            res1.getSecondQuarterLoanAmount(),
+            res2.getSecondQuarterLoanAmount()));
+        res1.setThirdQuarterGrowthRate(countGrowthRate(
+            res1.getThirdQuarterLoanAmount(), res2.getThirdQuarterLoanAmount()));
+        res1.setFourthQuarterGrowthRate(countGrowthRate(
+            res1.getFourthQuarterLoanAmount(),
+            res2.getFourthQuarterLoanAmount()));
+        res1.setTotalLoanAmountGrowthRate(countGrowthRate(
+            res1.getTotalLoanAmount(), res2.getTotalLoanAmount()));
+        res1.setTotalNumberGrowthRate(countGrowthRate(res1.getTotalNumber(),
+            res2.getTotalNumber()));
+        return res1;
+    }
+
+    private String countGrowthRate(String cur, String last) {
+        // 增长率：（本期数－同期数）÷同期数×100%
+        Double growthRate = 0D;
+        if (!"0".equals(last)) {
+            growthRate = (Double.valueOf(cur) - Double.valueOf(last))
+                    / Double.valueOf(last);
+        }
+        return String.valueOf(growthRate);
+    }
+
+    private XN630909Res doOneYearPerformance(BudgetOrder condition) {
+        List<BudgetOrder> result = budgetOrderBO
+            .queryBudgetOrderList(condition);// 标准线年份数据集合
+        Long oneLoanAmount = 0L;
+        Long twoLoanAmount = 0L;
+        Long threeLoanAmount = 0L;
+        Long fourLoanAmount = 0L;
+        Long fiveLoanAmount = 0L;
+        Long sixLoanAmount = 0L;
+        Long sevenLoanAmount = 0L;
+        Long eightLoanAmount = 0L;
+        Long nineLoanAmount = 0L;
+        Long tenLoanAmount = 0L;
+        Long elevenLoanAmount = 0L;
+        Long twelveLoanAmount = 0L;
+        int totalNumber = 0;
+        for (BudgetOrder b1 : result) {
+            totalNumber++;
+            SimpleDateFormat sdf = new SimpleDateFormat("MM");
+            String month = sdf.format(b1.getBankFkDatetime());
+            switch (Integer.valueOf(month)) {
+                case 1:
+                    oneLoanAmount += b1.getLoanAmount();
+                    break;
+                case 2:
+                    twoLoanAmount += b1.getLoanAmount();
+                    break;
+                case 3:
+                    threeLoanAmount += b1.getLoanAmount();
+                    break;
+                case 4:
+                    fourLoanAmount += b1.getLoanAmount();
+                    break;
+                case 5:
+                    fiveLoanAmount += b1.getLoanAmount();
+                    break;
+                case 6:
+                    sixLoanAmount += b1.getLoanAmount();
+                    break;
+                case 7:
+                    sevenLoanAmount += b1.getLoanAmount();
+                    break;
+                case 8:
+                    eightLoanAmount += b1.getLoanAmount();
+                    break;
+                case 9:
+                    nineLoanAmount += b1.getLoanAmount();
+                    break;
+                case 10:
+                    tenLoanAmount += b1.getLoanAmount();
+                    break;
+                case 11:
+                    elevenLoanAmount += b1.getLoanAmount();
+                    break;
+                case 12:
+                    twelveLoanAmount += b1.getLoanAmount();
+                    break;
+            }
+        }
+        Long firstQuarter = oneLoanAmount + twoLoanAmount + threeLoanAmount;
+        Long secondQuarter = fourLoanAmount + fiveLoanAmount + sixLoanAmount;
+        Long thirdQuarter = sevenLoanAmount + eightLoanAmount + nineLoanAmount;
+        Long fourthQuarter = tenLoanAmount + elevenLoanAmount
+                + twelveLoanAmount;
+        Long totalLoanAmount = firstQuarter + secondQuarter + thirdQuarter
+                + fourthQuarter;
+        XN630909Res res = new XN630909Res(String.valueOf(oneLoanAmount),
+            String.valueOf(twoLoanAmount), String.valueOf(threeLoanAmount),
+            String.valueOf(fourLoanAmount), String.valueOf(fiveLoanAmount),
+            String.valueOf(sixLoanAmount), String.valueOf(sevenLoanAmount),
+            String.valueOf(eightLoanAmount), String.valueOf(nineLoanAmount),
+            String.valueOf(tenLoanAmount), String.valueOf(elevenLoanAmount),
+            String.valueOf(twelveLoanAmount), String.valueOf(firstQuarter),
+            String.valueOf(secondQuarter), String.valueOf(thirdQuarter),
+            String.valueOf(fourthQuarter), String.valueOf(totalLoanAmount),
+            String.valueOf(totalNumber));
+        return res;
     }
 }
