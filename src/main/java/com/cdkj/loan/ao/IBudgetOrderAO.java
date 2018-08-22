@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN630908Req;
+import com.cdkj.loan.dto.req.XN630909Req;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632142Req;
@@ -178,5 +179,8 @@ public interface IBudgetOrderAO {
 
     // 统计分析 业绩完成情况
     public Object performanceCompletionSituation(XN630908Req req);
+
+    // 统计分析 月度业绩完成情况
+    public Object monthPerformanceCompletionSituation(XN630909Req req);
 
 }
