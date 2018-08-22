@@ -10,6 +10,8 @@
 		<result column="retain_months" property="retainMonths" />
 		<result column="start_amount" property="startAmount" />
 		<result column="end_amount" property="endAmount" />
+		<result column="updater" property="updater" />
+		<result column="updater_datetime" property="updaterDatetime" />
 		<result column="remark" property="remark" />
 	</resultMap>
 	<sql id="where_condition">
@@ -34,6 +36,8 @@
 		,t.retain_months
 		,t.start_amount
 		,t.end_amount
+		,t.updater
+		,t.updater_datetime
 		,t.remark
 		FROM
 		tsys_bonuses t
@@ -61,6 +65,8 @@
 		,retain_months
 		,start_amount
 		,end_amount
+		,updater
+		,updater_datetime
 		,remark
 		)
 		VALUES(
@@ -71,6 +77,8 @@
 		,#{retainMonths}
 		,#{startAmount}
 		,#{endAmount}
+		,#{updater}
+		,#{updaterDatetime}
 		,#{remark}
 		)
 	</insert>
@@ -84,6 +92,8 @@
 		,retain_months = #{retainMonths}
 		,start_amount = #{startAmount}
 		,end_amount = #{endAmount}
+		,updater = #{updater}
+		,updater_datetime = #{updaterDatetime}
 		,remark = #{remark}
 		WHERE id = #{id}
 	</update>
