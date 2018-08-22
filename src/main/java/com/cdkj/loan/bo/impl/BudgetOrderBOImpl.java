@@ -34,8 +34,8 @@ import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
 
 @Component
-public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
-        IBudgetOrderBO {
+public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
+        implements IBudgetOrderBO {
 
     @Autowired
     private IBudgetOrderDAO budgetOrderDAO;
@@ -195,19 +195,19 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         budgetOrderBO.updateIsLogistics(budgetOrder);
 
         String preCurrentNode = budgetOrder.getCurNodeCode();// 主流程当前节点
-        Department department = departmentBO.getDepartment(budgetOrder
-            .getCompanyCode());// 获取公司
+        Department department = departmentBO
+            .getDepartment(budgetOrder.getCompanyCode());// 获取公司
         if (StringUtils.isNotBlank(budgetOrder.getPledgeCurNodeCode())) {
             String pledgeCurNodeCode = budgetOrder.getPledgeCurNodeCode();// 抵押流程当前节点
-            if (EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode().equals(
-                pledgeCurNodeCode)) {
+            if (EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode()
+                .equals(pledgeCurNodeCode)) {
                 // 当前抵押流程节点如果是车辆抵押流程 外地 009_05分公司寄送抵押材料给总公司
                 // 收件并审核通过后 改预算单入档状态为待入档
                 budgetOrder.setEnterFileStatus(EEnterFileStatus.TODO.getCode());
                 budgetOrderBO.updateEnterFileStatus(budgetOrder);
             }
-            if (EBudgetOrderNode.LOCAL_SENDPOST_SEND_BANK.getCode().equals(
-                pledgeCurNodeCode)) {
+            if (EBudgetOrderNode.LOCAL_SENDPOST_SEND_BANK.getCode()
+                .equals(pledgeCurNodeCode)) {
                 // 抵押流程本地 寄件岗寄送银行 收件并审核通过 更新抵押流程节点 到下一个 提交银行
                 budgetOrder.setPledgeCurNodeCode(nodeFlowBO
                     .getNodeFlowByCurrentNode(pledgeCurNodeCode).getNextNode());
@@ -221,15 +221,13 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         // budgetOrder.setPledgeCurNodeCode(
         // EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode());
         // }
-        if (EBudgetOrderNode.SEND_BANK_MATERIALS.getCode().equals(
-            preCurrentNode)
-                && !"温州市".equals(department.getCityNo())) {
+        if (EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
+            .equals(preCurrentNode) && !"温州市".equals(department.getCityNo())) {
             // 当前主流程节点是银行放款流程 007_05 总公司寄送银行材料给银行驻点
             // 收件并审核通过后 抵押流程外地开始（主流程外的）
             // 设置抵押流程节点为车辆抵押外地第一步009_01银行驻点发送抵押合同给总公司
-            budgetOrder
-                .setPledgeCurNodeCode(EBudgetOrderNode.OUT_BANKPOINT_SEND_PARENT
-                    .getCode());
+            budgetOrder.setPledgeCurNodeCode(
+                EBudgetOrderNode.OUT_BANKPOINT_SEND_PARENT.getCode());
             // 获取当前抵押流程节点
             NodeFlow pledgeNodeFlow = nodeFlowBO
                 .getNodeFlowByCurrentNode(budgetOrder.getPledgeCurNodeCode());
@@ -243,25 +241,26 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         }
         String pledgeCurNodeCode = budgetOrder.getPledgeCurNodeCode();
         if (EBudgetOrderNode.BANK_LOAN_ACHIEVE.getCode().equals(preCurrentNode)
-                && (EBudgetOrderNode.LOCAL_SENDPOST_SEND_BANK.getCode().equals(
-                    pledgeCurNodeCode)
+                && (EBudgetOrderNode.LOCAL_SENDPOST_SEND_BANK.getCode()
+                    .equals(pledgeCurNodeCode)
                         || EBudgetOrderNode.OUT_BANKPOINT_SEND_PARENT.getCode()
                             .equals(pledgeCurNodeCode)
                         || EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode()
                             .equals(pledgeCurNodeCode)
                         || EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode()
-                            .equals(pledgeCurNodeCode) || EBudgetOrderNode.OUT_SENDPOST_SEND_BANK
-                    .getCode().equals(pledgeCurNodeCode))) {
+                            .equals(pledgeCurNodeCode)
+                        || EBudgetOrderNode.OUT_SENDPOST_SEND_BANK.getCode()
+                            .equals(pledgeCurNodeCode))) {
             NodeFlow nodeFlow = nodeFlowBO
                 .getNodeFlowByCurrentNode(pledgeCurNodeCode);
             budgetOrder.setPledgeCurNodeCode(nodeFlow.getNextNode());
         }
-        if (EBudgetOrderNode.SALESMAN_SEND_LOGISTICS.getCode().equals(
-            preCurrentNode)
-                || EBudgetOrderNode.BRANCH_SEND_LOGISTICS.getCode().equals(
-                    preCurrentNode)
-                || EBudgetOrderNode.SEND_BANK_MATERIALS.getCode().equals(
-                    preCurrentNode)) {
+        if (EBudgetOrderNode.SALESMAN_SEND_LOGISTICS.getCode()
+            .equals(preCurrentNode)
+                || EBudgetOrderNode.BRANCH_SEND_LOGISTICS.getCode()
+                    .equals(preCurrentNode)
+                || EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
+                    .equals(preCurrentNode)) {
             // 获取当前主流程节点
             NodeFlow nodeFlow = nodeFlowBO
                 .getNodeFlowByCurrentNode(preCurrentNode);
@@ -272,8 +271,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         // 主流程
         List<SupplementReason> supplementReason = supplementReasonBO
             .getSupplementReasonByLogisticsCode(logisticsCode);
-        if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode().equals(
-            budgetOrder.getCurNodeCode())) {
+        if (EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode()
+            .equals(budgetOrder.getCurNodeCode())) {
             // 连续发件情况
             // 再生成一条资料传递
             NodeFlow nodeFlowNext = nodeFlowBO
@@ -286,15 +285,13 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             // 判断是否为银行驻点补件(改变收发点)
             Logistics condition = logisticsBO.getLogistics(logisticsCode);
             if (StringUtils.isNotBlank(condition.getIsBankPointPartSupt())
-                    && EBoolean.YES.getCode().equals(
-                        condition.getIsBankPointPartSupt())) {
+                    && EBoolean.YES.getCode()
+                        .equals(condition.getIsBankPointPartSupt())) {
                 Logistics logistics = logisticsBO.getLogistics(loCode);
-                logistics
-                    .setFromNodeCode(EBudgetOrderNode.HEADQUARTERS_SEND_PRINT
-                        .getCode());
-                logistics
-                    .setToNodeCode(EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE
-                        .getCode());
+                logistics.setFromNodeCode(
+                    EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode());
+                logistics.setToNodeCode(
+                    EBudgetOrderNode.BANK_LOAN_COLLATEPOST_COLLATE.getCode());
                 logistics.setIsBankPointPartSupt(EBoolean.YES.getCode());
                 // 补件原因带过来
                 for (SupplementReason reason : supplementReason) {
@@ -305,8 +302,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
             }
         }
         // 抵押流程
-        if (EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode().equals(
-            budgetOrder.getPledgeCurNodeCode())
+        if (EBudgetOrderNode.OUT_PARENT_SEND_BRANCH.getCode()
+            .equals(budgetOrder.getPledgeCurNodeCode())
                 || EBudgetOrderNode.HEADQUARTERS_INTERNAL_SEND.getCode()
                     .equals(budgetOrder.getPledgeCurNodeCode())) {// 连续发件情况
                                                                   // 再生成一条资料传递
@@ -322,8 +319,8 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         budgetOrderDAO.updaterLogicNode(budgetOrder);
 
         // 日志记录 主流程
-        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
-            budgetOrder.getCurNodeCode());
+        EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
+            .get(budgetOrder.getCurNodeCode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
             EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
             currentNode.getCode(), null, operator);
@@ -360,6 +357,23 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
         List<BudgetOrder> dataList = budgetOrderDAO
             .selectBudgetOrderByRoleCodeList(condition, page.getStart(),
                 page.getPageSize());
+
+        page.setList(dataList);
+        return page;
+    }
+
+    @Override
+    public Paginable<BudgetOrder> getPaginableByDz(int start, int limit,
+            BudgetOrder condition) {
+        prepare(condition);
+
+        long totalCount = budgetOrderDAO.selectTotalCountByDz(condition);
+
+        Paginable<BudgetOrder> page = new Page<BudgetOrder>(start, limit,
+            totalCount);
+
+        List<BudgetOrder> dataList = budgetOrderDAO.selectBudgetOrderByDzList(
+            condition, page.getStart(), page.getPageSize());
 
         page.setList(dataList);
         return page;
@@ -528,4 +542,5 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder> implements
     public void backAdvanceFundFinanceAudit(BudgetOrder budgetOrder) {
         budgetOrderDAO.backAdvanceFundFinanceAudit(budgetOrder);
     }
+
 }

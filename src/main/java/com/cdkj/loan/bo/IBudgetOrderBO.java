@@ -55,6 +55,10 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     public Paginable<BudgetOrder> getPaginableByRoleCode(int start, int limit,
             BudgetOrder condition);
 
+    // 根据角色分页查
+    public Paginable<BudgetOrder> getPaginableByDz(int start, int limit,
+            BudgetOrder condition);
+
     // 申请制卡
     public void approveMakeCard(BudgetOrder budgetOrder);
 

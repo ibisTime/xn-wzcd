@@ -14,9 +14,9 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 详细查询请假申请
- * @author: silver 
- * @since: 2018年6月5日 下午9:06:31 
+ * 履约保证金开票分页查
+ * @author: CYL 
+ * @since: 2018年8月21日 下午9:21:52 
  * @history:
  */
 public class XN632905 extends AProcessor {

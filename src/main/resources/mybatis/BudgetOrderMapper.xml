@@ -315,6 +315,9 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="codeQuery != null and codeQuery != '' ">
+				AND t.code like "%"#{codeQuery}"%"
+			</if>
 			<if test="roleCode != null and roleCode != '' ">
 				AND trn.role_code = #{roleCode}
 			</if>
@@ -959,6 +962,38 @@
 		,t.bank_repoint_status
 		FROM
 		tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="select_budgetOrder_count_byDz" parameterType="budgetOrder"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdq_budget_order t
+		<include refid="where_condition" />
+	</select>
+	
+	<select id="select_budgetOrder_dz" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
+		SELECT
+		distinct
+		t.code
+		,t.customer_name
+		,t.car_dealer_code
+		,t.out_car_dealer_name
+		,t.loan_bank_code
+		,t.rate_type
+		,t.pre_loan_amount
+		,t.loan_amount
+		,t.is_advance_fund
+		,t.company_code
+		,t.sale_user_id
+		,t.should_back_amount
+		,t.cur_node_code
+		FROM
+		tdq_budget_order t where t.cur_node_code between '007_01'  and  '007_08'
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">

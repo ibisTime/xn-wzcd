@@ -5,8 +5,10 @@ import org.unitils.UnitilsJUnit4;
 public class TestJUnit extends UnitilsJUnit4 {
 
     public static void main(String[] args) {
-
-        System.out.println(String.format("%04d", 50));
+        String x = "007_01A";
+        String y = "007_08";
+        int i = y.compareTo(x);
+        System.out.println(i);
 
         // String host = "https://jisucxdq.market.alicloudapi.com";
         // String path = "/car/detail";

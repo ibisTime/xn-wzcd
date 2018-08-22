@@ -912,10 +912,31 @@ public class BudgetOrder extends ABaseDO {
 
     private String bankFkDatetimeForYear;// 放款年份(业绩完成统计年份查询)
 
+    private int advanceDays;// 垫资天数
+
+    // 编号模糊查
+    private String codeQuery;
+
     /*-------辅助字段-------*/
 
     public Long getReplaceRealRepayAmount() {
         return replaceRealRepayAmount;
+    }
+
+    public String getCodeQuery() {
+        return codeQuery;
+    }
+
+    public void setCodeQuery(String codeQuery) {
+        this.codeQuery = codeQuery;
+    }
+
+    public int getAdvanceDays() {
+        return advanceDays;
+    }
+
+    public void setAdvanceDays(int advanceDays) {
+        this.advanceDays = advanceDays;
     }
 
     public void setReplaceRealRepayAmount(Long replaceRealRepayAmount) {

@@ -46,6 +46,11 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     List<BudgetOrder> selectBudgetOrderByRoleCodeList(BudgetOrder condition,
             int start, int pageSize);
 
+    long selectTotalCountByDz(BudgetOrder condition);
+
+    List<BudgetOrder> selectBudgetOrderByDzList(BudgetOrder condition,
+            int start, int pageSize);
+
     // 申请制卡
     void approveMakeCard(BudgetOrder budgetOrder);
 

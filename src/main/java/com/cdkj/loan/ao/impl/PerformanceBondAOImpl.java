@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IPerformanceBondAO;
 import com.cdkj.loan.bo.IBankBO;
@@ -39,17 +40,10 @@ public class PerformanceBondAOImpl implements IPerformanceBondAO {
     }
 
     @Override
+    @Transactional
     public void editPerformanceBond(String budgetCode) {
         PerformanceBond performanceBond = performanceBondBO
             .getPerformanceBondByBudget(budgetCode);
-        PerformanceBond condition = new PerformanceBond();
-        long count = performanceBondBO.getTotalCount(condition) + 1;
-        // 预算单首位是H是是浩源
-        if ("H".equals(budgetCode.charAt(0))) {
-            performanceBond.setPrintNumber("HY" + String.format("%04d", count));
-        } else {
-            performanceBond.setPrintNumber("BL" + String.format("%04d", count));
-        }
         performanceBond.setPrintDatetime(new Date());
         performanceBondBO.refreshPerformanceBond(performanceBond);
     }

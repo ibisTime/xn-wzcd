@@ -8,34 +8,32 @@ import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BudgetOrder;
-import com.cdkj.loan.dto.req.XN632910Req;
+import com.cdkj.loan.dto.req.XN630910Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 统计分析，垫资超过1天未放款客户
+ * 查询分析:进度表
  * @author: CYL 
- * @since: 2018年6月12日 上午3:03:03 
+ * @since: 2018年8月22日 下午2:14:33 
  * @history:
  */
-public class XN632910 extends AProcessor {
+public class XN630910 extends AProcessor {
     private IBudgetOrderAO budgetOrderAO = SpringContextHolder
         .getBean(IBudgetOrderAO.class);
 
-    private XN632910Req req = null;
+    private XN630910Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
         BudgetOrder condition = new BudgetOrder();
-        // condition.setCurNodeCodeDz(EBudgetOrderNode.GPSAZ.getCode());
-        // condition.setCurNodeCodeFk(EBudgetOrderNode.ENTRYMORTGAGE.getCode());
-        // condition.setAdvanceFlag(EBoolean.YES.getCode());
         condition.setCodeQuery(req.getBudgetCode());
         condition.setCustomerName(req.getCustomerName());
         condition.setCompanyCode(req.getCompanyCode());
         condition.setLoanBankCode(req.getLoanBankCode());
         condition.setCarDealerCode(req.getCarDealerCode());
+        condition.setCustomerType(req.getCustomerType());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
@@ -44,13 +42,13 @@ public class XN632910 extends AProcessor {
         condition.setOrder(orderColumn, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
-        return budgetOrderAO.queryBudgetOrderPageByDz(start, limit, condition);
+        return budgetOrderAO.queryBudgetOrderPage(start, limit, condition);
     }
 
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632910Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN630910Req.class);
         ObjValidater.validateReq(req);
     }
 

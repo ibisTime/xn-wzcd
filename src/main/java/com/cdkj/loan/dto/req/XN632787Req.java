@@ -1,8 +1,6 @@
 package com.cdkj.loan.dto.req;
 
-public class XN632785Req extends APageReq {
-
-    private static final long serialVersionUID = 3306806001096780462L;
+public class XN632787Req {
 
     // 编号
     private String code;

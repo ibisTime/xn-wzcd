@@ -72,7 +72,12 @@ public class GpsSupplierAOImpl implements IGpsSupplierAO {
 
     @Override
     public List<GpsSupplier> queryGpsSupplierList(GpsSupplier condition) {
-        return gpsSupplierBO.queryGpsSupplierList(condition);
+        List<GpsSupplier> queryGpsSupplierList = gpsSupplierBO
+            .queryGpsSupplierList(condition);
+        for (GpsSupplier gpsSupplier : queryGpsSupplierList) {
+            initGpsSupplier(gpsSupplier);
+        }
+        return queryGpsSupplierList;
     }
 
     @Override
