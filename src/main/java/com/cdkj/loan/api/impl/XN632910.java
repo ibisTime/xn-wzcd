@@ -31,7 +31,7 @@ public class XN632910 extends AProcessor {
         // condition.setCurNodeCodeDz(EBudgetOrderNode.GPSAZ.getCode());
         // condition.setCurNodeCodeFk(EBudgetOrderNode.ENTRYMORTGAGE.getCode());
         // condition.setAdvanceFlag(EBoolean.YES.getCode());
-        condition.setCode(req.getBudgetCode());
+        condition.setCodeQuery(req.getBudgetCode());
         condition.setCustomerName(req.getCustomerName());
         condition.setCompanyCode(req.getCompanyCode());
         condition.setLoanBankCode(req.getLoanBankCode());

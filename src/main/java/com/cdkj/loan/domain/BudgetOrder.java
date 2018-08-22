@@ -914,10 +914,21 @@ public class BudgetOrder extends ABaseDO {
 
     private int advanceDays;// 垫资天数
 
+    // 编号模糊查
+    private String codeQuery;
+
     /*-------辅助字段-------*/
 
     public Long getReplaceRealRepayAmount() {
         return replaceRealRepayAmount;
+    }
+
+    public String getCodeQuery() {
+        return codeQuery;
+    }
+
+    public void setCodeQuery(String codeQuery) {
+        this.codeQuery = codeQuery;
     }
 
     public int getAdvanceDays() {

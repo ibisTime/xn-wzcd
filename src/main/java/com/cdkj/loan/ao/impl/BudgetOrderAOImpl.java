@@ -2224,14 +2224,62 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
+    public ArrayList<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
             BudgetOrder condition) {
-        Paginable<BudgetOrder> paginable = budgetOrderBO.getPaginable(start,
+        Paginable<BudgetOrder> paginable = budgetOrderBO.getPaginableByDz(start,
             limit, condition);
+        ArrayList<BudgetOrder> list = new ArrayList<BudgetOrder>();
         for (BudgetOrder budgetOrder : paginable.getList()) {
-            initBudget(budgetOrder);
+            // 经销商
+            if (StringUtils.isNotBlank(budgetOrder.getCarDealerCode())) {
+                CarDealer carDealer = carDealerBO
+                    .getCarDealer(budgetOrder.getCarDealerCode());
+
+                budgetOrder.setCarDealerName(carDealer.getFullName());
+            }
+
+            // 贷款银行
+            if (StringUtils.isNotBlank(budgetOrder.getLoanBankCode())) {
+                Bank loanBank = bankBO
+                    .getBankBySubbranch(budgetOrder.getLoanBankCode());
+                budgetOrder.setLoanBankName(loanBank.getBankName());
+            }
+
+            // 业务公司名称
+            if (StringUtils.isNotBlank(budgetOrder.getCompanyCode())) {
+                Department company = departmentBO
+                    .getDepartment(budgetOrder.getCompanyCode());
+                budgetOrder.setCompanyName(company.getName());
+            }
+
+            // 业务员
+            if (StringUtils.isNotBlank(budgetOrder.getSaleUserId())) {
+                SYSUser saleUser = sysUserBO
+                    .getUser(budgetOrder.getSaleUserId());
+                budgetOrder.setSaleUserName(saleUser.getRealName());
+            }
+
+            // 垫资表
+            AdvanceFund advanceFund = advanceFundBO
+                .getAdvanceFundPageByBudgetOrder(budgetOrder.getCode());
+            if (advanceFund != null) {
+                budgetOrder.setAdvanceFundDatetime(
+                    advanceFund.getAdvanceFundDatetime());
+                // 垫资天数
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(budgetOrder.getAdvanceFundDatetime());
+                long time1 = cal.getTimeInMillis();
+                cal.setTime(new Date());
+                long time2 = cal.getTimeInMillis();
+                long between_days = (time2 - time1) / (1000 * 3600 * 24);
+                int days = Integer.parseInt(String.valueOf(between_days));
+                budgetOrder.setAdvanceDays(days);
+                if (days > 1) {
+                    list.add(budgetOrder);
+                }
+            }
         }
-        return paginable;
+        return list;
     }
 
     @Override

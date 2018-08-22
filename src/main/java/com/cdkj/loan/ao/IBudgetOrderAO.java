@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -126,14 +127,13 @@ public interface IBudgetOrderAO {
     // 续保
     public void renewInsurance(XN632341Req req);
 
-    // 垫资超过1天未放款客户
-
     // 修改贷款金额计算关联数据
     public XN632234Res modifyLoanAmountCalculateData(String code,
             String loanAmount);
 
-    public Paginable<BudgetOrder> queryBudgetOrderPageByDz(int start,
-            int limit, BudgetOrder condition);
+    // 垫资超过1天未放款客户
+    public ArrayList<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
+            BudgetOrder condition);
 
     // 银行放款合同打印
     public BudgetOrder loanContractPrint(XN632142Req req);
