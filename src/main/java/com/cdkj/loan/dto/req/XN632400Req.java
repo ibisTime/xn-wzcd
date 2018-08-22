@@ -34,8 +34,20 @@ public class XN632400Req {
     @NotBlank
     private String endAmount;
 
+    // 最新修改人
+    @NotBlank
+    private String updater;
+
     // 备注
     private String remark;
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
 
     public String getIsSelfDevelop() {
         return isSelfDevelop;

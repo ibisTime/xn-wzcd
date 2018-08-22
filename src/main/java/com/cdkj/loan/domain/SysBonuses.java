@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -33,8 +35,27 @@ public class SysBonuses extends ABaseDO {
     // 结束金额
     private Long endAmount;
 
+    // 最新修改人
+    private String updater;
+
+    // 最新修改时间
+    private Date updaterDatetime;
+
     // 备注
     private String remark;
+
+    /*----------辅助字段-------------*/
+
+    // 最新修改人名称
+    private String updaterName;
+
+    public String getUpdaterName() {
+        return updaterName;
+    }
+
+    public void setUpdaterName(String updaterName) {
+        this.updaterName = updaterName;
+    }
 
     public int getId() {
         return id;
@@ -42,6 +63,22 @@ public class SysBonuses extends ABaseDO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+
+    public Date getUpdaterDatetime() {
+        return updaterDatetime;
+    }
+
+    public void setUpdaterDatetime(Date updaterDatetime) {
+        this.updaterDatetime = updaterDatetime;
     }
 
     public void setIsSelfDevelop(String isSelfDevelop) {
