@@ -8,7 +8,7 @@ import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BudgetOrder;
-import com.cdkj.loan.dto.req.XN632910Req;
+import com.cdkj.loan.dto.req.XN630911Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -19,11 +19,11 @@ import com.cdkj.loan.spring.SpringContextHolder;
  * @since: 2018年6月12日 上午3:03:03 
  * @history:
  */
-public class XN632910 extends AProcessor {
+public class XN630911 extends AProcessor {
     private IBudgetOrderAO budgetOrderAO = SpringContextHolder
         .getBean(IBudgetOrderAO.class);
 
-    private XN632910Req req = null;
+    private XN630911Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
@@ -50,7 +50,7 @@ public class XN632910 extends AProcessor {
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632910Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN630911Req.class);
         ObjValidater.validateReq(req);
     }
 
