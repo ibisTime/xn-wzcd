@@ -297,7 +297,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
         repayBiz.setLyDeposit(0L);
         repayBiz.setCutLyDeposit(0L);
-        repayBiz.setCurNodeCode(ERepayBizNode.PRO_TO_REPAY.getCode());
+        // repayBiz.setCurNodeCode(ERepayBizNode.PRO_TO_REPAY.getCode());
         repayBiz.setRestAmount(order.getLoanAmount());
         repayBiz.setRestTotalCost(0L);
 

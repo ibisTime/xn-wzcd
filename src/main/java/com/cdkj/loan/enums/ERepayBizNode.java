@@ -30,11 +30,8 @@ public enum ERepayBizNode {
             "021_16", "诉讼结果录入"), RESULT_INPUT_AGAIN("021_17", "重新申请执行"), FINANCE_SURE_RECEIPT(
             "021_18", "财务收款"), LAWSUIT_FINISH("021_19", "司法诉讼完成"), JUDGE_BAD(
             "021_20", "坏账"),REDEEM_FINANCIAL_AUDIT("021_21","赎回财务审核"),SELLED_FINANCIAL_AUDIT(
-            "021_22","转卖财务审核"),
+            "021_22","转卖财务审核");
 
-    // 商品分期的节点
-    PRO_TO_REPAY("005_01", "还款中"), PRO_SETTLED("005_02", "已结清"), PRO_CONFIRM_SETTLE(
-            "005_03", "确认结清"), PRO_BAD_DEBT("005_04", "确认不还");
 
     public static Map<String, ERepayBizNode> getMap() {
         Map<String, ERepayBizNode> map = new HashMap<String, ERepayBizNode>();

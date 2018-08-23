@@ -90,7 +90,8 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
     public void refreshFinanceManageApprove(String code, String approveResult,
             String updater, String remark) {
         ReplaceRepayApply data = replaceRepayApplyBO.getReplaceRepayApply(code);
-        if (!EReplaceRepayStatus.TO_APPROVE.getCode().equals(data.getStatus())) {
+        if (!EReplaceRepayStatus.TO_APPROVE.getCode()
+            .equals(data.getStatus())) {
             throw new BizException("xn0000", "预算单不在财务经理审核状态！");
         }
 
@@ -112,8 +113,8 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
     @Override
     public Paginable<ReplaceRepayApply> queryReplaceRepayApplyPage(int start,
             int limit, ReplaceRepayApply condition) {
-        Paginable<ReplaceRepayApply> page = replaceRepayApplyBO.getPaginable(
-            start, limit, condition);
+        Paginable<ReplaceRepayApply> page = replaceRepayApplyBO
+            .getPaginable(start, limit, condition);
         List<ReplaceRepayApply> list = page.getList();
         for (ReplaceRepayApply replaceRepayApply : list) {
             init(replaceRepayApply);
@@ -143,20 +144,20 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
 
     private void init(ReplaceRepayApply replaceRepayApply) {
         if (StringUtils.isNotBlank(replaceRepayApply.getApplyUser())) {
-            SYSUser applyUser = sysUserBO.getUser(replaceRepayApply
-                .getApplyUser());
+            SYSUser applyUser = sysUserBO
+                .getUser(replaceRepayApply.getApplyUser());
             replaceRepayApply.setApplyUserName(applyUser.getRealName());
         }
 
         if (StringUtils.isNotBlank(replaceRepayApply.getUpdater())) {
-            SYSUser updaterUser = sysUserBO.getUser(replaceRepayApply
-                .getUpdater());
+            SYSUser updaterUser = sysUserBO
+                .getUser(replaceRepayApply.getUpdater());
             replaceRepayApply.setUpdaterName(updaterUser.getRealName());
         }
         if (StringUtils.isNotBlank(replaceRepayApply.getBizCode())) {
             BudgetOrder budgetOrder = budgetOrderBO
                 .getBudgetOrderByRepayBizCode(replaceRepayApply.getBizCode());
-            replaceRepayApply.setBudgetOrderCode(budgetOrder.getCode());
+            replaceRepayApply.setBudgetOrder(budgetOrder);
         }
     }
 

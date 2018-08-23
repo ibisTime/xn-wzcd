@@ -919,10 +919,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         for (String code : codeList) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
             budgetOrder.setHasLoanListPic(req.getHasLoanListPic());
-            budgetOrder.setRepayBankDate(
-                StringValidater.toInteger(req.getRepayBankDate()));
-            budgetOrder.setBillDatetime(
-                StringValidater.toInteger(req.getBillDatetime()));
+            // budgetOrder.setRepayBankDate(
+            // StringValidater.toInteger(req.getRepayBankDate()));
+            // budgetOrder.setBillDatetime(
+            // StringValidater.toInteger(req.getBillDatetime()));
             String preCurNodeCode = budgetOrder.getCurNodeCode();// 当前节点
             NodeFlow nodeFlow = nodeFlowBO
                 .getNodeFlowByCurrentNode(preCurNodeCode);
@@ -1238,6 +1238,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setInsuranceEffectDatetime(
             DateUtil.strToDate(req.getInsuranceEffectDatetime(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
+
+        budgetOrder.setRepayBankDate(
+            StringValidater.toInteger(req.getRepayBankDate()));
+        budgetOrder
+            .setBillDatetime(StringValidater.toInteger(req.getBillDatetime()));
 
         budgetOrder.setInsuranceBank(req.getInsuranceBank());
         budgetOrder.setRegCertificateCode(req.getRegCertificateCode());

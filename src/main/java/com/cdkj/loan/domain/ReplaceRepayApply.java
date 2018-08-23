@@ -71,14 +71,14 @@ public class ReplaceRepayApply extends ABaseDO {
 
     private String updaterName;
 
-    private String budgetOrderCode;// 预算单编号
+    private BudgetOrder budgetOrder;// 预算单
 
-    public String getBudgetOrderCode() {
-        return budgetOrderCode;
+    public BudgetOrder getBudgetOrder() {
+        return budgetOrder;
     }
 
-    public void setBudgetOrderCode(String budgetOrderCode) {
-        this.budgetOrderCode = budgetOrderCode;
+    public void setBudgetOrder(BudgetOrder budgetOrder) {
+        this.budgetOrder = budgetOrder;
     }
 
     public String getApplyUserName() {

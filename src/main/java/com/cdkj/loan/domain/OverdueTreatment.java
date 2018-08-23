@@ -54,6 +54,19 @@ public class OverdueTreatment extends ABaseDO {
     // 操作时间
     private String updateDatetime;
 
+    /*------------辅助字段--------------*/
+
+    // 操作人名称
+    private String operatorName;
+
+    public String getOperatorName() {
+        return operatorName;
+    }
+
+    public void setOperatorName(String operatorName) {
+        this.operatorName = operatorName;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }
