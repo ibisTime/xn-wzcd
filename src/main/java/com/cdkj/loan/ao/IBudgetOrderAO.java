@@ -133,8 +133,8 @@ public interface IBudgetOrderAO {
             String loanAmount);
 
     // 垫资超过1天未放款客户
-    public ArrayList<BudgetOrder> queryBudgetOrderPageByDz(int start, int limit,
-            BudgetOrder condition);
+    public ArrayList<BudgetOrder> queryBudgetOrderPageByDz(int start,
+            int limit, BudgetOrder condition);
 
     // 银行放款合同打印
     public BudgetOrder loanContractPrint(XN632142Req req);
@@ -182,5 +182,8 @@ public interface IBudgetOrderAO {
 
     // 统计分析 月度业绩完成情况
     public Object monthPerformanceCompletionSituation(XN630909Req req);
+
+    // 统计分析 奖金提成
+    public Object bonusDeduct(BudgetOrder condition);
 
 }
