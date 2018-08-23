@@ -133,6 +133,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setCode(code);
         repayBiz.setRefType(ERepayBizType.CAR.getCode());
         repayBiz.setRefCode(budgetOrder.getCode());
+        repayBiz.setCompanyCode(budgetOrder.getCompanyCode());
         repayBiz.setUserId(userId);
         repayBiz.setRealName(budgetOrder.getCustomerName());
         repayBiz.setIdKind(EIDKind.IDCard.getCode());

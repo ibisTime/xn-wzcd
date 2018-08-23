@@ -83,3 +83,6 @@ CREATE TABLE `tdq_performance_bond` (
   `print_datetime` datetime DEFAULT NULL COMMENT '收款打印日期',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='履约保证金开票';
+
+ALTER TABLE `tdh_repay_biz` 
+ADD COLUMN `company_code` VARCHAR(32) NULL COMMENT '业务公司编号' AFTER `ref_code`;

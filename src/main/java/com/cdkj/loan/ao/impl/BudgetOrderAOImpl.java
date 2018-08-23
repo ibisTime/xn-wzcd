@@ -1492,15 +1492,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             }
             budgetOrder.setAdvanceFundDatetime(advanceFund
                 .getAdvanceFundDatetime());
-            // 垫资天数
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(budgetOrder.getAdvanceFundDatetime());
-            long time1 = cal.getTimeInMillis();
-            cal.setTime(new Date());
-            long time2 = cal.getTimeInMillis();
-            long between_days = (time2 - time1) / (1000 * 3600 * 24);
-            int days = Integer.parseInt(String.valueOf(between_days));
-            budgetOrder.setAdvanceDays(days);
+            if (budgetOrder.getAdvanceFundDatetime() != null) {
+                // 垫资天数
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(budgetOrder.getAdvanceFundDatetime());
+                long time1 = cal.getTimeInMillis();
+                cal.setTime(new Date());
+                long time2 = cal.getTimeInMillis();
+                long between_days = (time2 - time1) / (1000 * 3600 * 24);
+                int days = Integer.parseInt(String.valueOf(between_days));
+                budgetOrder.setAdvanceDays(days);
+            }
         }
 
         // 获取返点列表

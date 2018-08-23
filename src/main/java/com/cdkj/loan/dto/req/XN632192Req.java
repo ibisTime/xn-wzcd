@@ -15,12 +15,15 @@ public class XN632192Req {
     private String code;
 
     // 车牌号码
+    @NotBlank
     private String carNumber;
 
     // 车架号码
+    @NotBlank
     private String frameNo;
 
     // 发动机号码
+    @NotBlank
     private String engineNo;
 
     // 抵押套打模板

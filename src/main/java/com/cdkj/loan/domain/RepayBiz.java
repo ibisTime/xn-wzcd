@@ -39,6 +39,9 @@ public class RepayBiz extends ABaseDO {
     // 关联编号(预算单编号)
     private String refCode;
 
+    // 业务公司编号
+    private String companyCode;
+
     // 业务总价(?)
     private Long bizPrice;
 
@@ -278,6 +281,9 @@ public class RepayBiz extends ABaseDO {
     // 贷款银行名称
     private String loanBankName;
 
+    // 还款卡号
+    private String bankcardNumber;
+
     // 最新的收车时间
     private Date newestTakeDatetime;
 
@@ -286,6 +292,33 @@ public class RepayBiz extends ABaseDO {
     private int curOverdueCountEnd; // 现有逾期的次数止
 
     private List<String> curOverdueCountList; // 现有逾期的次数列表
+
+    // 业务公司名称
+    private String companyName;
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getBankcardNumber() {
+        return bankcardNumber;
+    }
+
+    public void setBankcardNumber(String bankcardNumber) {
+        this.bankcardNumber = bankcardNumber;
+    }
 
     public List<String> getCurOverdueCountList() {
         return curOverdueCountList;

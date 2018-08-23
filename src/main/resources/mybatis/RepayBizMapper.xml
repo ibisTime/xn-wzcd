@@ -12,6 +12,7 @@
 		<result column="bankcard_code" property="bankcardCode" />
 		<result column="ref_type" property="refType" />
 		<result column="ref_code" property="refCode" />
+		<result column="company_code" property="companyCode" />
 		<result column="biz_price" property="bizPrice" />
 		<result column="sf_rate" property="sfRate" />
 		
@@ -91,11 +92,17 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="code != null and code != '' ">
+				AND t.code like "%"#{code}"%"
+			</if>
 			<if test="refType != null and refType != '' ">
 				AND t.ref_type = #{refType}
 			</if>
 			<if test="refCode != null and refCode != '' ">
 				AND t.ref_code = #{refCode}
+			</if>
+			<if test="companyCode != null and companyCode != '' ">
+				AND t.company_code = #{companyCode}
 			</if>
 			<if test="userId != null and userId != '' ">
 				AND t.user_id = #{userId}
@@ -172,6 +179,7 @@
 		,t.bankcard_code
 		,t.ref_type
 		,t.ref_code
+		,t.company_code
 		,t.biz_price
 		,t.sf_rate
 		
@@ -266,6 +274,7 @@
 		,t.bankcard_code
 		,t.ref_type
 		,t.ref_code
+		,t.company_code
 		,t.biz_price
 		,t.sf_rate
 		
@@ -360,6 +369,7 @@
 		,t.bankcard_code
 		,t.ref_type
 		,t.ref_code
+		,t.company_code
 		,t.biz_price
 		,t.sf_rate
 		
@@ -467,6 +477,7 @@
 		,bankcard_code
 		,ref_type
 		,ref_code
+		,company_code
 		,biz_price
 		,sf_rate
 		
@@ -522,6 +533,7 @@
 		,#{bankcardCode}
 		,#{refType}
 		,#{refCode}
+		,#{companyCode}
 		,#{bizPrice}
 		,#{sfRate}
 		
