@@ -1497,15 +1497,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             }
             budgetOrder
                 .setAdvanceFundDatetime(advanceFund.getAdvanceFundDatetime());
-            // 垫资天数
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(budgetOrder.getAdvanceFundDatetime());
-            long time1 = cal.getTimeInMillis();
-            cal.setTime(new Date());
-            long time2 = cal.getTimeInMillis();
-            long between_days = (time2 - time1) / (1000 * 3600 * 24);
-            int days = Integer.parseInt(String.valueOf(between_days));
-            budgetOrder.setAdvanceDays(days);
+            if (budgetOrder.getAdvanceFundDatetime() != null) {
+                // 垫资天数
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(budgetOrder.getAdvanceFundDatetime());
+                long time1 = cal.getTimeInMillis();
+                cal.setTime(new Date());
+                long time2 = cal.getTimeInMillis();
+                long between_days = (time2 - time1) / (1000 * 3600 * 24);
+                int days = Integer.parseInt(String.valueOf(between_days));
+                budgetOrder.setAdvanceDays(days);
+            }
         }
 
         // 获取返点列表
@@ -3287,16 +3289,16 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         condition.setBankFkDatetimeForYear(year1);
         XN630909Res res1 = doOneYearPerformance(condition);// 标准线年数据
 
-        condition.setBankFkDatetimeForYear(String.valueOf(Integer
-            .valueOf(year1) - 1));
+        condition.setBankFkDatetimeForYear(
+            String.valueOf(Integer.valueOf(year1) - 1));
         XN630909Res res2 = doOneYearPerformance(condition);// 去年数据
 
-        condition.setBankFkDatetimeForYear(String.valueOf(Integer
-            .valueOf(year1) - 2));
+        condition.setBankFkDatetimeForYear(
+            String.valueOf(Integer.valueOf(year1) - 2));
         XN630909Res res3 = doOneYearPerformance(condition);// 前年数据
 
-        condition.setBankFkDatetimeForYear(String.valueOf(Integer
-            .valueOf(year1) - 3));
+        condition.setBankFkDatetimeForYear(
+            String.valueOf(Integer.valueOf(year1) - 3));
         XN630909Res res4 = doOneYearPerformance(condition);// 大前年数据
 
         res1 = doGrowthRate(res1, res2);
@@ -3317,44 +3319,46 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     private XN630909Res doGrowthRate(XN630909Res res1, XN630909Res res2) {
-        res1.setOneGrowthRate(countGrowthRate(res1.getOneLoanAmount(),
-            res2.getOneLoanAmount()));
-        res1.setTwoGrowthRate(countGrowthRate(res1.getTwoLoanAmount(),
-            res2.getTwoLoanAmount()));
+        res1.setOneGrowthRate(
+            countGrowthRate(res1.getOneLoanAmount(), res2.getOneLoanAmount()));
+        res1.setTwoGrowthRate(
+            countGrowthRate(res1.getTwoLoanAmount(), res2.getTwoLoanAmount()));
         res1.setThreeGrowthRate(countGrowthRate(res1.getThreeLoanAmount(),
             res2.getThreeLoanAmount()));
         res1.setFourGrowthRate(countGrowthRate(res1.getFourLoanAmount(),
             res2.getFourLoanAmount()));
         res1.setFiveGrowthRate(countGrowthRate(res1.getFiveLoanAmount(),
             res2.getFiveLoanAmount()));
-        res1.setSixGrowthRate(countGrowthRate(res1.getSixLoanAmount(),
-            res2.getSixLoanAmount()));
+        res1.setSixGrowthRate(
+            countGrowthRate(res1.getSixLoanAmount(), res2.getSixLoanAmount()));
         res1.setSevenGrowthRate(countGrowthRate(res1.getSevenLoanAmount(),
             res2.getSevenLoanAmount()));
         res1.setEightGrowthRate(countGrowthRate(res1.getEightLoanAmount(),
             res2.getEightLoanAmount()));
         res1.setNineGrowthRate(countGrowthRate(res1.getNineLoanAmount(),
             res2.getNineLoanAmount()));
-        res1.setTenGrowthRate(countGrowthRate(res1.getTenLoanAmount(),
-            res2.getTenLoanAmount()));
+        res1.setTenGrowthRate(
+            countGrowthRate(res1.getTenLoanAmount(), res2.getTenLoanAmount()));
         res1.setElevenGrowthRate(countGrowthRate(res1.getElevenLoanAmount(),
             res2.getElevenLoanAmount()));
         res1.setTwelveGrowthRate(countGrowthRate(res1.getTwelveLoanAmount(),
             res2.getTwelveLoanAmount()));
-        res1.setFirstQuarterGrowthRate(countGrowthRate(
-            res1.getFirstQuarterLoanAmount(), res2.getFirstQuarterLoanAmount()));
-        res1.setSecondQuarterGrowthRate(countGrowthRate(
-            res1.getSecondQuarterLoanAmount(),
-            res2.getSecondQuarterLoanAmount()));
-        res1.setThirdQuarterGrowthRate(countGrowthRate(
-            res1.getThirdQuarterLoanAmount(), res2.getThirdQuarterLoanAmount()));
-        res1.setFourthQuarterGrowthRate(countGrowthRate(
-            res1.getFourthQuarterLoanAmount(),
-            res2.getFourthQuarterLoanAmount()));
+        res1.setFirstQuarterGrowthRate(
+            countGrowthRate(res1.getFirstQuarterLoanAmount(),
+                res2.getFirstQuarterLoanAmount()));
+        res1.setSecondQuarterGrowthRate(
+            countGrowthRate(res1.getSecondQuarterLoanAmount(),
+                res2.getSecondQuarterLoanAmount()));
+        res1.setThirdQuarterGrowthRate(
+            countGrowthRate(res1.getThirdQuarterLoanAmount(),
+                res2.getThirdQuarterLoanAmount()));
+        res1.setFourthQuarterGrowthRate(
+            countGrowthRate(res1.getFourthQuarterLoanAmount(),
+                res2.getFourthQuarterLoanAmount()));
         res1.setTotalLoanAmountGrowthRate(countGrowthRate(
             res1.getTotalLoanAmount(), res2.getTotalLoanAmount()));
-        res1.setTotalNumberGrowthRate(countGrowthRate(res1.getTotalNumber(),
-            res2.getTotalNumber()));
+        res1.setTotalNumberGrowthRate(
+            countGrowthRate(res1.getTotalNumber(), res2.getTotalNumber()));
         return res1;
     }
 
