@@ -36,7 +36,7 @@ public class XN630912 extends AProcessor {
                 Integer.valueOf(req.getFkMonthStart().substring(5, 7))));
         }
         if (StringUtils.isNotBlank(req.getFkMonthEnd())) {
-            condition.setBankFkDatetimeEnd(DateUtil.getBeginTime(
+            condition.setBankFkDatetimeEnd(DateUtil.getEndTime(
                 Integer.valueOf(req.getFkMonthEnd().substring(0, 4)),
                 Integer.valueOf(req.getFkMonthEnd().substring(5, 7))));
         }
