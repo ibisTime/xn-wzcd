@@ -25,6 +25,7 @@ public class XN632200Req {
     private String forceInsurance;
 
     // 商业险合计
+    @NotBlank(message = "商业险合计不能为空")
     private String commerceInsurance;
 
     // 保险生效日期
@@ -66,18 +67,6 @@ public class XN632200Req {
     // 担保人2手机
     private String guarantor2Mobile;
 
-    // 银行卡号
-    @NotBlank
-    private String bankCardNumber;
-
-    // 对账单日
-    @NotBlank
-    private String billDatetime;
-
-    // 银行还款日
-    @NotBlank
-    private String repayBankDate;
-
     // 首期还款金额
     @NotBlank
     private String repayFirstMonthAmount;
@@ -115,14 +104,6 @@ public class XN632200Req {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getRepayBankDate() {
-        return repayBankDate;
-    }
-
-    public void setRepayBankDate(String repayBankDate) {
-        this.repayBankDate = repayBankDate;
     }
 
     public String getRepayFirstMonthAmount() {
@@ -283,22 +264,6 @@ public class XN632200Req {
 
     public void setGuarantor2Mobile(String guarantor2Mobile) {
         this.guarantor2Mobile = guarantor2Mobile;
-    }
-
-    public String getBankCardNumber() {
-        return bankCardNumber;
-    }
-
-    public void setBankCardNumber(String bankCardNumber) {
-        this.bankCardNumber = bankCardNumber;
-    }
-
-    public String getBillDatetime() {
-        return billDatetime;
-    }
-
-    public void setBillDatetime(String billDatetime) {
-        this.billDatetime = billDatetime;
     }
 
     public String getIdNoPic() {

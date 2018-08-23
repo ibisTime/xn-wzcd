@@ -1,14 +1,32 @@
 package com.cdkj.loan.base;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.unitils.UnitilsJUnit4;
+
+import com.cdkj.loan.common.DateUtil;
 
 public class TestJUnit extends UnitilsJUnit4 {
 
     public static void main(String[] args) {
-        String x = "007_01A";
-        String y = "007_08";
-        int i = y.compareTo(x);
-        System.out.println(i);
+
+        Calendar now = Calendar.getInstance();
+        int i = now.get(Calendar.YEAR);
+        int j = now.get(Calendar.MONTH) + 1;
+        String d = "" + i + "-" + j + "-" + 13;
+        Date strToDate = DateUtil.strToDate(d,
+            DateUtil.FRONT_DATE_FORMAT_STRING);
+
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");// 字符串转换
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(strToDate.getTime());
+        c.add(Calendar.DATE, 50);// 50天后的日期
+        Date date = new Date(c.getTimeInMillis()); // 将c转换成Date
+        System.out.println("date=" + formatDate.format(date));
+        String substring = formatDate.format(date).substring(8, 10);
+        System.out.println("date=" + substring);
 
         // String host = "https://jisucxdq.market.alicloudapi.com";
         // String path = "/car/detail";

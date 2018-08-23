@@ -19,7 +19,6 @@ public class XN630532Req {
 
     private String realRepayAmount;// 实际还款金额(部分)
 
-    @NotBlank
     private String collectionResultNote;// 催收结果说明
 
     private List<XN630535Req> costList; // 费用清单列表
