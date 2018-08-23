@@ -493,6 +493,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         if (StringUtils.isNotBlank(companyCode)) {// 统计指定分公司的预打款
             XN632178Res res = new XN632178Res();
             Department company = departmentBO.getDepartment(companyCode);
+            res.setCompanyCode(company.getCode());// 业务公司编号
             res.setCompanyName(company.getName());// 业务公司名称
 
             AdvanceFund condition = new AdvanceFund();
@@ -531,6 +532,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
                 .queryDepartmentList(condition);
             for (Department company : companyList) {
                 XN632178Res res = new XN632178Res();
+                res.setCompanyCode(company.getCode());// 业务公司编号
                 res.setCompanyName(company.getName());// 业务公司名称
 
                 AdvanceFund allCondition = new AdvanceFund();
@@ -635,8 +637,17 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
                 data.setApplyUserName(user.getRealName());
             }
         }
+        if (StringUtils.isNotBlank(data.getCurNodeCode())) {
+            if (EAdvanceFundNode.PARENT_ADVANCE_END.getCode().equals(
+                data.getCurNodeCode())
+                    || EAdvanceFundNode.BRANCH_ADVANCE_END.getCode().equals(
+                        data.getCurNodeCode())) {
+                data.setStatus("已垫资");
+            } else {
+                data.setStatus("未垫资");
+            }
+        }
         return data;
-
     }
 
     private Long getLong(Object obj) {

@@ -101,6 +101,7 @@ public class AdvanceFund extends ABaseDO {
 
     /*********************db properties******************/
 
+    /************辅助字段***********/
     // 角色编号
     private String roleCode;
 
@@ -154,6 +155,11 @@ public class AdvanceFund extends ABaseDO {
 
     // 节点编号列表
     private List<String> curNodeCodeList;
+
+    // 状态（未垫资/已垫资）
+    private String status;
+
+    /************辅助字段***********/
 
     public Long getLoanAmount() {
         return loanAmount;
@@ -521,6 +527,14 @@ public class AdvanceFund extends ABaseDO {
 
     public void setCollectAccountName(String collectAccountName) {
         this.collectAccountName = collectAccountName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

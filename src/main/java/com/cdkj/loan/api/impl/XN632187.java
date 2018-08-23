@@ -34,19 +34,20 @@ public class XN632187 extends AProcessor {
         condition.setCustomerName(req.getCustomerName());
         condition.setCompanyCode(req.getCompanyCode());
         condition.setLoanBankCode(req.getLoanBankCode());
-        condition.setRoleCode(req.getRoleCode());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setApplyDatetimeEnd(DateUtil.strToDate(
             req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setCurNodeCode(req.getCurNodeCode());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IAdvanceFundAO.DEFAULT_ORDER_COLUMN;
         }
         condition.setOrder(orderColumn, req.getOrderDir());
-
-        return advanceFundAO.queryAdvanceFundList(condition);
+        int start = Integer.valueOf(req.getStart());
+        int limit = Integer.valueOf(req.getLimit());
+        return advanceFundAO.queryAdvanceFundPage(start, limit, condition);
     }
 
     @Override

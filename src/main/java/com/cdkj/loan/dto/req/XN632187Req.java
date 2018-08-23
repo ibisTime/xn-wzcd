@@ -1,14 +1,14 @@
 package com.cdkj.loan.dto.req;
 
 /**
- * 列表查询垫资
+ * 分页查询垫资
  * @author: jiafr 
  * @since: 2018年6月17日 下午9:14:13 
  * @history:
  */
-public class XN632187Req extends AListReq {
+public class XN632187Req extends APageReq {
 
-    private static final long serialVersionUID = -2988293364347757686L;
+    private static final long serialVersionUID = -6854132522148511455L;
 
     // 预算单编号
     private String budgetCode;
@@ -22,14 +22,14 @@ public class XN632187Req extends AListReq {
     // 贷款银行编号
     private String loanBankCode;
 
-    // 角色编号
-    private String roleCode;
-
     // 申请日期起
     private String applyDatetimeStart;
 
     // 申请日期止
     private String applyDatetimeEnd;
+
+    // 节点编号
+    private String curNodeCode;
 
     public String getBudgetCode() {
         return budgetCode;
@@ -63,14 +63,6 @@ public class XN632187Req extends AListReq {
         this.loanBankCode = loanBankCode;
     }
 
-    public String getRoleCode() {
-        return roleCode;
-    }
-
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode;
-    }
-
     public String getApplyDatetimeStart() {
         return applyDatetimeStart;
     }
@@ -85,6 +77,14 @@ public class XN632187Req extends AListReq {
 
     public void setApplyDatetimeEnd(String applyDatetimeEnd) {
         this.applyDatetimeEnd = applyDatetimeEnd;
+    }
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
     }
 
 }
