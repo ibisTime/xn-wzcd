@@ -919,6 +919,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         for (String code : codeList) {
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
             budgetOrder.setHasLoanListPic(req.getHasLoanListPic());
+            budgetOrder.setRepayBankDate(
+                StringValidater.toInteger(req.getRepayBankDate()));
+            budgetOrder.setBillDatetime(
+                StringValidater.toInteger(req.getBillDatetime()));
             String preCurNodeCode = budgetOrder.getCurNodeCode();// 当前节点
             NodeFlow nodeFlow = nodeFlowBO
                 .getNodeFlowByCurrentNode(preCurNodeCode);
@@ -1242,8 +1246,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setGuarantor1Mobile(req.getGuarantor1Mobile());
         budgetOrder.setGuarantor2Name(req.getGuarantor2Name());
         budgetOrder.setGuarantor2Mobile(req.getGuarantor2Mobile());
-        budgetOrder
-            .setBillDatetime(StringValidater.toInteger(req.getBillDatetime()));
 
         if (EBoolean.YES.getCode().equals(req.getIsComplete())) {
             budgetOrder.setEnterFileStatus(EEnterFileStatus.ACHIEVE.getCode());
@@ -1253,14 +1255,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
         budgetOrder
             .setMonthAmount(StringValidater.toLong(req.getRepayMonthAmount()));
-        budgetOrder.setRepayBankDate(
-            StringValidater.toInteger(req.getRepayBankDate()));
         budgetOrder.setRepayFirstMonthAmount(
             StringValidater.toLong(req.getRepayFirstMonthAmount()));
         budgetOrder
             .setMonthAmount(StringValidater.toLong(req.getRepayMonthAmount()));
-        budgetOrder.setRepayBankDate(
-            StringValidater.toInteger(req.getRepayBankDate()));
         budgetOrder.setRepayFirstMonthDatetime(
             DateUtil.strToDate(req.getRepayFirstMonthDatetime(),
                 DateUtil.FRONT_DATE_FORMAT_STRING));
@@ -3462,8 +3460,38 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     public XN632139Res selectData(String code) {
+        XN632139Res res = new XN632139Res();
+        String billDatetime = null;
+        String repayBankDate = null;
+        Calendar now = Calendar.getInstance();
+        billDatetime = String.valueOf(now.get(Calendar.DAY_OF_MONTH));
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+        if (StringUtils.isNotBlank(budgetOrder.getLoanBankCode())) {
+            Bank bank = bankBO
+                .getBankBySubbranch(budgetOrder.getLoanBankCode());
+            // 如果是工行，则为次月25号，如果是中行，则为账单日后50天。建行就先空着
+            if (EBankType.GH.getCode().equals(bank.getBankCode())) {
+                repayBankDate = "" + 25;
+            } else if (EBankType.ZH.getCode().equals(bank.getBankCode())) {
+                int i = now.get(Calendar.YEAR);
+                int j = now.get(Calendar.MONTH) + 1;// 获取当前的年和月
+                String d = "" + i + "-" + j + "-" + billDatetime;// 拼成还款日期
+                Date strToDate = DateUtil.strToDate(d,
+                    DateUtil.FRONT_DATE_FORMAT_STRING);// 转成时间类型
 
-        return null;
+                SimpleDateFormat formatDate = new SimpleDateFormat(
+                    "yyyy-MM-dd"); // 字符串转换
+                Calendar c = Calendar.getInstance();
+                // new Date().getTime();这个是获得当前电脑的时间，你也可以换成一个随意的时间
+                c.setTimeInMillis(strToDate.getTime());
+                c.add(Calendar.DATE, 50);// 50天后的日期
+                Date date = new Date(c.getTimeInMillis()); // 将c转换成Date
+                repayBankDate = formatDate.format(date).substring(8, 10);// 返回一个时间，截取日
+            }
+        }
+        res.setBillDatetime(billDatetime);
+        res.setRepayBankDate(repayBankDate);
+        return res;
     }
 
     @Override

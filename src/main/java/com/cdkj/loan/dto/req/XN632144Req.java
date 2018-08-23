@@ -17,6 +17,14 @@ public class XN632144Req {
     @NotEmpty
     private List<String> codeList;
 
+    // 银行还款日
+    @NotBlank
+    private String repayBankDate;
+
+    // 对账单日
+    @NotBlank
+    private String billDatetime;
+
     // 操作人
     @NotBlank
     private String operator;
@@ -31,6 +39,22 @@ public class XN632144Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getRepayBankDate() {
+        return repayBankDate;
+    }
+
+    public void setRepayBankDate(String repayBankDate) {
+        this.repayBankDate = repayBankDate;
+    }
+
+    public String getBillDatetime() {
+        return billDatetime;
+    }
+
+    public void setBillDatetime(String billDatetime) {
+        this.billDatetime = billDatetime;
     }
 
     public List<String> getCodeList() {

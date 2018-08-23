@@ -1794,9 +1794,7 @@
 		,guarantor1_mobile = #{guarantor1Mobile}
 		,guarantor2_name = #{guarantor2Name}
 		,guarantor2_mobile = #{guarantor2Mobile}
-		,bill_datetime = #{billDatetime}
 		,month_amount = #{monthAmount}
-		,repay_bank_date = #{repayBankDate}
 		
 		,repay_first_month_datetime = #{repayFirstMonthDatetime}
 		,id_no_picz = #{idNoPicz}
@@ -2132,6 +2130,8 @@
 		UPDATE tdq_budget_order
 		SET
 		has_loan_list_pic = #{hasLoanListPic}
+		,repay_bank_date = #{repayBankDate}
+		,bill_datetime = #{billDatetime}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>

@@ -3,24 +3,24 @@ package com.cdkj.loan.dto.res;
 public class XN632139Res {
 
     // 银行还款日
-    private Integer repayBankDate;
+    private String repayBankDate;
 
     // 对账单日
-    private Integer billDatetime;
+    private String billDatetime;
 
-    public Integer getRepayBankDate() {
+    public String getRepayBankDate() {
         return repayBankDate;
     }
 
-    public void setRepayBankDate(Integer repayBankDate) {
+    public void setRepayBankDate(String repayBankDate) {
         this.repayBankDate = repayBankDate;
     }
 
-    public Integer getBillDatetime() {
+    public String getBillDatetime() {
         return billDatetime;
     }
 
-    public void setBillDatetime(Integer billDatetime) {
+    public void setBillDatetime(String billDatetime) {
         this.billDatetime = billDatetime;
     }
 

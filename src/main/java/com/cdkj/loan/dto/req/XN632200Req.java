@@ -67,14 +67,6 @@ public class XN632200Req {
     // 担保人2手机
     private String guarantor2Mobile;
 
-    // 对账单日
-    @NotBlank
-    private String billDatetime;
-
-    // 银行还款日
-    @NotBlank
-    private String repayBankDate;
-
     // 首期还款金额
     @NotBlank
     private String repayFirstMonthAmount;
@@ -112,14 +104,6 @@ public class XN632200Req {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getRepayBankDate() {
-        return repayBankDate;
-    }
-
-    public void setRepayBankDate(String repayBankDate) {
-        this.repayBankDate = repayBankDate;
     }
 
     public String getRepayFirstMonthAmount() {
@@ -280,14 +264,6 @@ public class XN632200Req {
 
     public void setGuarantor2Mobile(String guarantor2Mobile) {
         this.guarantor2Mobile = guarantor2Mobile;
-    }
-
-    public String getBillDatetime() {
-        return billDatetime;
-    }
-
-    public void setBillDatetime(String billDatetime) {
-        this.billDatetime = billDatetime;
     }
 
     public String getIdNoPic() {
