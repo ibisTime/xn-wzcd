@@ -12,12 +12,23 @@ public class XN630523Req extends APageReq {
 
     private String curOverdueCount; // 现有逾期的次数
 
+    // 业务公司编号
+    private String companyCode;
+
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
     }
 
     public String getLoanBank() {

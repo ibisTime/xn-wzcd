@@ -18,6 +18,7 @@ import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
+import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.IJudgeBO;
 import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
@@ -34,6 +35,7 @@ import com.cdkj.loan.domain.BankSubbranch;
 import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.CollectBankcard;
+import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Judge;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.NodeFlow;
@@ -114,6 +116,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Autowired
     private ISupplementReasonBO supplementReasonBO;
 
+    @Autowired
+    private IDepartmentBO departmentBO;
+
     // 变更银行卡
     @Override
     public void editBankcardNew(XN630510Req req) {
@@ -151,6 +156,13 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 budgetOrderAO.getBudgetOrder(repayBiz.getRefCode()));
         } else {
             repayBiz.setMallOrder(orderAO.getOrder(repayBiz.getRefCode()));
+        }
+
+        // 业务公司
+        if (StringUtils.isNotBlank(repayBiz.getCompanyCode())) {
+            Department department = departmentBO
+                .getDepartment(repayBiz.getCompanyCode());
+            repayBiz.setCompanyName(department.getName());
         }
 
         // 司法诉讼
@@ -191,9 +203,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
         }
 
         if (StringUtils.isNotBlank(repayBiz.getBankcardCode())) {
-            CollectBankcard collectBankcard = collectBankcardBO
-                .getCollectBankcard(repayBiz.getBankcardCode());
-            repayBiz.setBankcardNumber(collectBankcard.getBankcardNumber());
+            Bankcard bankcard = bankcardBO
+                .getBankcard(repayBiz.getBankcardCode());
+            repayBiz.setBankcardNumber(bankcard.getBankcardNumber());
         }
 
         if (newestTakeDatetime != null) {
