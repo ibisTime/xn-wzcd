@@ -9,12 +9,13 @@ import com.cdkj.loan.dao.base.ABaseDO;
 * @history:
 */
 public class BonusesList extends ABaseDO {
+
     private static final long serialVersionUID = 4044647931440714600L;
 
     // 编号
     private String code;
 
-    // 月份
+    // 月份（yyyy-MM）
     private String month;
 
     // 业务员

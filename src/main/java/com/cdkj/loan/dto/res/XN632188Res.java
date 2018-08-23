@@ -21,7 +21,7 @@ public class XN632188Res {
     // 未垫资金额
     private String unAdvanceFund;
 
-    // 垫资单列表
+    // 垫资客户列表
     private List<AdvanceFund> advanceFundlist;
 
     public String getTotalAdvanceFund() {

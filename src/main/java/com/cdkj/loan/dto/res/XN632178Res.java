@@ -8,6 +8,8 @@ package com.cdkj.loan.dto.res;
  */
 public class XN632178Res {
 
+    private String companyCode;// 业务公司编号
+
     private String companyName;// 业务公司名称
 
     private String totalAdvanceFund;// 垫资总额
@@ -15,6 +17,14 @@ public class XN632178Res {
     private String hasAdvanceFund;// 已垫资金额
 
     private String unAdvanceFund;// 未垫资金额
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
 
     public String getCompanyName() {
         return companyName;
