@@ -187,4 +187,7 @@ public interface IBudgetOrderAO {
     // 查询还款日、账单日
     public XN632139Res selectData(String code);
 
+    // 统计分析 奖金提成
+    public Object bonusDeduct(BudgetOrder condition);
+
 }

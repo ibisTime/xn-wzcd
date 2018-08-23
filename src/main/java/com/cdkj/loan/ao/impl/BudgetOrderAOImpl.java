@@ -110,6 +110,7 @@ import com.cdkj.loan.dto.req.XN632292Req;
 import com.cdkj.loan.dto.req.XN632341Req;
 import com.cdkj.loan.dto.res.XN630908Res;
 import com.cdkj.loan.dto.res.XN630909Res;
+import com.cdkj.loan.dto.res.XN630912Res;
 import com.cdkj.loan.dto.res.XN632139Res;
 import com.cdkj.loan.dto.res.XN632234Res;
 import com.cdkj.loan.dto.res.XN632290Res;
@@ -3463,5 +3464,94 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     public XN632139Res selectData(String code) {
 
         return null;
+    }
+
+    @Override
+    @Transactional
+    public Object bonusDeduct(BudgetOrder condition) {
+        ArrayList<XN630912Res> resList = new ArrayList<XN630912Res>();
+
+        List<BudgetOrder> result = budgetOrderBO
+            .queryBudgetOrderList(condition);
+        HashMap<String, List<BudgetOrder>> map1 = new HashMap<String, List<BudgetOrder>>();
+        List<BudgetOrder> list1 = null;
+        for (BudgetOrder b1 : result) {
+            if (map1.containsKey(b1.getSaleUserId())) {
+                list1 = map1.get(b1.getSaleUserId());
+            } else {
+                list1 = new ArrayList<BudgetOrder>();
+                map1.put(b1.getSaleUserId(), list1);
+            }
+            list1.add(b1);
+        }
+        for (String key1 : map1.keySet()) {
+            List<BudgetOrder> saleUserList = map1.get(key1);
+            HashMap<String, List<BudgetOrder>> monthMap = new HashMap<String, List<BudgetOrder>>();
+            List<BudgetOrder> list2 = null;
+            for (BudgetOrder b2 : saleUserList) {
+                String yearMonth = DateUtil.dateToStr(b2.getBankFkDatetime(),
+                    DateUtil.FRONT_DATE_FORMAT_STRING).substring(0, 7);
+                if (monthMap.containsKey(yearMonth)) {// yyyy-MM
+                    list2 = monthMap.get(yearMonth);
+                } else {
+                    list2 = new ArrayList<BudgetOrder>();
+                    monthMap.put(yearMonth, list2);
+                }
+                list2.add(b2);
+            }
+            for (String key2 : monthMap.keySet()) {
+                List<BudgetOrder> monthList = monthMap.get(key2);
+                XN630912Res res = new XN630912Res();// 返回的一行数据
+                res.setYearMonth(key2);
+                BudgetOrder b4 = monthList.get(0);
+                SYSUser user = sysUserBO.getUser(b4.getSaleUserId());
+                if (null != user) {
+                    res.setSaleUserName(user.getRealName());
+                }
+                int selfNum = 0;
+                long selfBonus = 0L;
+                int notSelfNum = 0;
+                long notSelfBonus = 0L;
+                for (BudgetOrder b3 : monthList) {
+                    Long loanAmount = b3.getLoanAmount();
+                    SysBonuses bonusCondition = new SysBonuses();// 查询奖金提成配置系统参数的条件
+                    CarDealer carDealer = carDealerBO
+                        .getCarDealer(b3.getCarDealerCode());
+                    String isSelf = carDealer.getIsSelfDevelop();
+                    if (EBoolean.YES.getCode().equals(isSelf)) {// 自主开发
+                        bonusCondition.setIsSelfDevelop(EBoolean.YES.getCode());
+                        selfNum++;
+                    } else {// 非自主开发
+                        bonusCondition.setIsSelfDevelop(EBoolean.NO.getCode());
+                        notSelfNum++;
+                    }
+                    if (loanAmount < 100000) {
+                        bonusCondition.setRemark("10万以下");
+                    } else if (loanAmount > 300000) {
+                        bonusCondition.setRemark("30万以上");
+                    } else {
+                        bonusCondition.setRemark("10万-30万");
+                    }
+                    SysBonuses sysBonuses = sysBonusesBO
+                        .querySysBonusesList(bonusCondition).get(0);// 奖金提成配置系统参数
+                    if (EBoolean.YES.getCode().equals(isSelf)) {// 自主开发
+                        selfBonus += AmountUtil.mul(sysBonuses.getUnitPrice(),
+                            sysBonuses.getMonthRate());
+                    } else {// 非自主开发
+                        notSelfBonus += AmountUtil.mul(
+                            sysBonuses.getUnitPrice(),
+                            sysBonuses.getMonthRate());
+                    }
+                }
+                res.setSelfDevelopNumber(String.valueOf(selfNum));
+                res.setSelfDevelopBonus(String.valueOf(selfBonus));
+                res.setNotSelfDevelopNumber(String.valueOf(notSelfNum));
+                res.setNotSelfDevelopBonus(String.valueOf(notSelfBonus));
+                res.setTotalNumber(String.valueOf(selfNum + notSelfNum));
+                res.setTotalBonus(String.valueOf(selfBonus + notSelfBonus));
+                resList.add(res);
+            }
+        }
+        return resList;
     }
 }

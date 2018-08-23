@@ -4,9 +4,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.api.AProcessor;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN630912Req;
 import com.cdkj.loan.exception.BizException;
@@ -30,15 +30,21 @@ public class XN630912 extends AProcessor {
         BudgetOrder condition = new BudgetOrder();
         condition.setCompanyCode(req.getCompanyCode());
         condition.setSaleUserId(req.getSaleUserId());
-
-        String orderColumn = req.getOrderColumn();
-        if (StringUtils.isBlank(orderColumn)) {
-            orderColumn = IBudgetOrderAO.DEFAULT_ORDER_COLUMN;
+        if (StringUtils.isNotBlank(req.getFkMonthStart())) {
+            condition.setBankFkDatetimeStart(DateUtil.getBeginTime(
+                Integer.valueOf(req.getFkMonthStart().substring(0, 4)),
+                Integer.valueOf(req.getFkMonthStart().substring(5, 7))));
         }
-        condition.setOrder(orderColumn, req.getOrderDir());
-        int start = StringValidater.toInteger(req.getStart());
-        int limit = StringValidater.toInteger(req.getLimit());
-        return budgetOrderAO.queryBudgetOrderPage(start, limit, condition);
+        if (StringUtils.isNotBlank(req.getFkMonthEnd())) {
+            condition.setBankFkDatetimeEnd(DateUtil.getEndTime(
+                Integer.valueOf(req.getFkMonthEnd().substring(0, 4)),
+                Integer.valueOf(req.getFkMonthEnd().substring(5, 7))));
+        }
+        if (StringUtils.isBlank(req.getFkMonthStart())
+                && StringUtils.isBlank(req.getFkMonthEnd())) {
+            condition.setBankFkDatetimeForYear("2");
+        }
+        return budgetOrderAO.bonusDeduct(condition);
     }
 
     @Override

@@ -6,9 +6,7 @@ package com.cdkj.loan.dto.req;
  * @since: 2018年8月22日 下午5:56:20 
  * @history:
  */
-public class XN630912Req extends APageReq {
-
-    private static final long serialVersionUID = -6252658967187686575L;
+public class XN630912Req {
 
     // 业务公司编号
     private String companyCode;
