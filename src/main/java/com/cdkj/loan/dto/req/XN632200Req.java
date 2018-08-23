@@ -25,6 +25,7 @@ public class XN632200Req {
     private String forceInsurance;
 
     // 商业险合计
+    @NotBlank(message = "商业险合计不能为空")
     private String commerceInsurance;
 
     // 保险生效日期
@@ -65,10 +66,6 @@ public class XN632200Req {
 
     // 担保人2手机
     private String guarantor2Mobile;
-
-    // 银行卡号
-    @NotBlank
-    private String bankCardNumber;
 
     // 对账单日
     @NotBlank
@@ -283,14 +280,6 @@ public class XN632200Req {
 
     public void setGuarantor2Mobile(String guarantor2Mobile) {
         this.guarantor2Mobile = guarantor2Mobile;
-    }
-
-    public String getBankCardNumber() {
-        return bankCardNumber;
-    }
-
-    public void setBankCardNumber(String bankCardNumber) {
-        this.bankCardNumber = bankCardNumber;
     }
 
     public String getBillDatetime() {

@@ -29,6 +29,7 @@ import com.cdkj.loan.dto.req.XN632280Req;
 import com.cdkj.loan.dto.req.XN632281Req;
 import com.cdkj.loan.dto.req.XN632292Req;
 import com.cdkj.loan.dto.req.XN632341Req;
+import com.cdkj.loan.dto.res.XN632139Res;
 import com.cdkj.loan.dto.res.XN632234Res;
 import com.cdkj.loan.dto.res.XN632690Res;
 
@@ -182,5 +183,8 @@ public interface IBudgetOrderAO {
 
     // 统计分析 月度业绩完成情况
     public Object monthPerformanceCompletionSituation(XN630909Req req);
+
+    // 查询还款日、账单日
+    public XN632139Res selectData(String code);
 
 }

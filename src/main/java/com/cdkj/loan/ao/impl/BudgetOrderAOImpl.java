@@ -110,6 +110,7 @@ import com.cdkj.loan.dto.req.XN632292Req;
 import com.cdkj.loan.dto.req.XN632341Req;
 import com.cdkj.loan.dto.res.XN630908Res;
 import com.cdkj.loan.dto.res.XN630909Res;
+import com.cdkj.loan.dto.res.XN632139Res;
 import com.cdkj.loan.dto.res.XN632234Res;
 import com.cdkj.loan.dto.res.XN632290Res;
 import com.cdkj.loan.dto.res.XN632291Res;
@@ -1240,7 +1241,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setGuarantor1Mobile(req.getGuarantor1Mobile());
         budgetOrder.setGuarantor2Name(req.getGuarantor2Name());
         budgetOrder.setGuarantor2Mobile(req.getGuarantor2Mobile());
-        budgetOrder.setBankCardNumber(req.getBankCardNumber());
         budgetOrder
             .setBillDatetime(StringValidater.toInteger(req.getBillDatetime()));
 
@@ -2809,8 +2809,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 Double d2 = new BigDecimal(annualAmount)
                     .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 
-                res.setAnnualAmount(String.valueOf(d2));
-                res.setInitialAmount(String.valueOf(d1));
+                // 先转成long再转成string
+                res.setAnnualAmount(String.valueOf(new Double(d2).longValue()));
+                res.setInitialAmount(
+                    String.valueOf(new Double(d1).longValue()));
                 res.setPoundage(String.valueOf(0));
             } else if (ERateType.ZK.getCode().equals(rateType)) {// 直客
                 if (EBocFeeWay.STAGES.getCode().equals(serviceChargeWay)) {// 分期
@@ -2846,8 +2848,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     Double d2 = new BigDecimal(annualAmount)
                         .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 
-                    res.setAnnualAmount(String.valueOf(d2));
-                    res.setInitialAmount(String.valueOf(d1));
+                    res.setAnnualAmount(
+                        String.valueOf(new Double(d2).longValue()));
+                    res.setInitialAmount(
+                        String.valueOf(new Double(d1).longValue()));
                     res.setPoundage(String.valueOf(0));
                 } else if (EBocFeeWay.DISPOSABLE.getCode()
                     .equals(serviceChargeWay)) {// 一次性
@@ -2877,8 +2881,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     Double d2 = new BigDecimal(annualAmount)
                         .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 
-                    res.setAnnualAmount(String.valueOf(d2));
-                    res.setInitialAmount(String.valueOf(d1));
+                    res.setAnnualAmount(
+                        String.valueOf(new Double(d2).longValue()));
+                    res.setInitialAmount(
+                        String.valueOf(new Double(d1).longValue()));
                     res.setPoundage(String.valueOf(0));
                 } else {// 附加费
                     // 本金：
@@ -2964,8 +2970,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     Double d2 = new BigDecimal(annualAmount)
                         .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 
-                    res.setAnnualAmount(String.valueOf(d2));
-                    res.setInitialAmount(String.valueOf(d1));
+                    res.setAnnualAmount(
+                        String.valueOf(new Double(d2).longValue()));
+                    res.setInitialAmount(
+                        String.valueOf(new Double(d1).longValue()));
                     res.setPoundage(String.valueOf(0));
                 }
             }
@@ -3449,5 +3457,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             String.valueOf(fourthQuarter), String.valueOf(totalLoanAmount),
             String.valueOf(totalNumber));
         return res;
+    }
+
+    @Override
+    public XN632139Res selectData(String code) {
+
+        return null;
     }
 }

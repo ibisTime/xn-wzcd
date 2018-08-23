@@ -1794,7 +1794,6 @@
 		,guarantor1_mobile = #{guarantor1Mobile}
 		,guarantor2_name = #{guarantor2Name}
 		,guarantor2_mobile = #{guarantor2Mobile}
-		,bank_card_number = #{bankCardNumber}
 		,bill_datetime = #{billDatetime}
 		,month_amount = #{monthAmount}
 		,repay_bank_date = #{repayBankDate}
