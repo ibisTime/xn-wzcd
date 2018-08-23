@@ -31,7 +31,7 @@
 		<result column="cancel_reason" property="cancelReason" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
-		<result column="apply_user" property="apply_user" />
+		<result column="apply_user" property="applyUser" />
 		<result column="apply_datetime" property="applyDatetime" />
 	</resultMap>
 	<sql id="where_condition">

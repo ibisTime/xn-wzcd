@@ -278,6 +278,9 @@ public class RepayBiz extends ABaseDO {
     // 贷款银行名称
     private String loanBankName;
 
+    // 还款卡号
+    private String bankcardNumber;
+
     // 最新的收车时间
     private Date newestTakeDatetime;
 
@@ -286,6 +289,14 @@ public class RepayBiz extends ABaseDO {
     private int curOverdueCountEnd; // 现有逾期的次数止
 
     private List<String> curOverdueCountList; // 现有逾期的次数列表
+
+    public String getBankcardNumber() {
+        return bankcardNumber;
+    }
+
+    public void setBankcardNumber(String bankcardNumber) {
+        this.bankcardNumber = bankcardNumber;
+    }
 
     public List<String> getCurOverdueCountList() {
         return curOverdueCountList;

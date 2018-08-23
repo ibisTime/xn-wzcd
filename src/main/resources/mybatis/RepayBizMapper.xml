@@ -91,6 +91,9 @@
 			<if test="code != null and code != '' ">
 				AND t.code = #{code}
 			</if>
+			<if test="code != null and code != '' ">
+				AND t.code like "%"#{code}"%"
+			</if>
 			<if test="refType != null and refType != '' ">
 				AND t.ref_type = #{refType}
 			</if>
