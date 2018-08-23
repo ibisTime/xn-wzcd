@@ -3449,11 +3449,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     public Object bonusDeduct(BudgetOrder condition) {
-        ArrayList<XN630912Res> resList = new ArrayList<XN630912Res>();// 返回结果集
+        ArrayList<XN630912Res> resList = new ArrayList<XN630912Res>();
 
         List<BudgetOrder> result = budgetOrderBO
-            .queryBudgetOrderList(condition);// 查询结果集
-        // 查询结果根据业务员分组
+            .queryBudgetOrderList(condition);
         HashMap<String, List<BudgetOrder>> map1 = new HashMap<String, List<BudgetOrder>>();
         List<BudgetOrder> list1 = null;
         for (BudgetOrder b1 : result) {
@@ -3467,7 +3466,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
         for (String key1 : map1.keySet()) {
             List<BudgetOrder> saleUserList = map1.get(key1);
-            // 查询结果根据月份分组
             HashMap<String, List<BudgetOrder>> monthMap = new HashMap<String, List<BudgetOrder>>();
             List<BudgetOrder> list2 = null;
             for (BudgetOrder b2 : saleUserList) {
@@ -3499,8 +3497,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     SysBonuses bonusCondition = new SysBonuses();// 查询奖金提成配置系统参数的条件
                     CarDealer carDealer = carDealerBO.getCarDealer(b3
                         .getCarDealerCode());
-                    if (EBoolean.YES.getCode().equals(
-                        carDealer.getIsSelfDevelop())) {// 自主开发
+                    String isSelf = carDealer.getIsSelfDevelop();
+                    if (EBoolean.YES.getCode().equals(isSelf)) {// 自主开发
                         bonusCondition.setIsSelfDevelop(EBoolean.YES.getCode());
                         selfNum++;
                     } else {// 非自主开发
@@ -3516,8 +3514,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     }
                     SysBonuses sysBonuses = sysBonusesBO.querySysBonusesList(
                         bonusCondition).get(0);// 奖金提成配置系统参数
-                    if (EBoolean.YES.getCode().equals(
-                        carDealer.getIsSelfDevelop())) {// 自主开发
+                    if (EBoolean.YES.getCode().equals(isSelf)) {// 自主开发
                         selfBonus += AmountUtil.mul(sysBonuses.getUnitPrice(),
                             sysBonuses.getMonthRate());
                     } else {// 非自主开发

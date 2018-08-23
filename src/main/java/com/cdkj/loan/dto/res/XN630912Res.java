@@ -8,7 +8,7 @@ package com.cdkj.loan.dto.res;
  */
 public class XN630912Res {
 
-    private String yearMonth;// 月份(yyyyMM)
+    private String yearMonth;// 月份(yyyy-MM)
 
     private String saleUserName;// 业务员
 
