@@ -17,7 +17,7 @@ public class ReplaceRepayApply extends ABaseDO {
     // 编号
     private String code;
 
-    // 代偿性质
+    // 代偿性质(1月供,2剩余贷款金额)
     private String type;
 
     // 预算金额
