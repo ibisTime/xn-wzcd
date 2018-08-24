@@ -29,9 +29,23 @@ public class XN630557Req {
     // 处理结果附件
     private String dealEnclosure;
 
+    // 代偿预算单编号
+    private String ReplaceRepayCode;
+
     // 操作人
     @NotBlank
     private String operator;
+
+    // 处理结果说明
+    private String remark;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public String getCode() {
         return code;
@@ -39,6 +53,14 @@ public class XN630557Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getReplaceRepayCode() {
+        return ReplaceRepayCode;
+    }
+
+    public void setReplaceRepayCode(String replaceRepayCode) {
+        ReplaceRepayCode = replaceRepayCode;
     }
 
     public String getDealEnclosure() {

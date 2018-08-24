@@ -75,6 +75,9 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
     public int updateFinanceSureReceipt(RepayBiz data);
 
     // ********************************结清管理********************************
+    // 公司结清出纳打款
+    public void clearanceCashier(RepayBiz repayBiz);
+
     // 结算单申请
     public int updateCommitSettle(RepayBiz data);
 

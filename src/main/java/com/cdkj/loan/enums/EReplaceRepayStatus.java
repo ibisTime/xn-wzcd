@@ -9,7 +9,7 @@ package com.cdkj.loan.enums;
 public enum EReplaceRepayStatus {
 
     TO_APPROVE("1", "待财务经理审核"), APPROVED_YES("2", "审核通过"), APPROVED_NO("3",
-            "审核不通过"), MAKE_DOCUMENT("4", "制单");
+            "审核不通过"), MAKE_DOCUMENT("4", "制单"), DELETE("5", "作废");
 
     EReplaceRepayStatus(String code, String value) {
         this.code = code;

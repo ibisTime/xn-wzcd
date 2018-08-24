@@ -27,4 +27,6 @@ public interface IReplaceRepayApplyBO extends IPaginableBO<ReplaceRepayApply> {
 
     public ReplaceRepayApply getReplaceRepayApply(String code);
 
+    public void refreshReplaceRepayStatus(ReplaceRepayApply replaceRepayApply);
+
 }

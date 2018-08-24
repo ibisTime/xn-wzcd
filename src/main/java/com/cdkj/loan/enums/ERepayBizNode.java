@@ -31,7 +31,8 @@ public enum ERepayBizNode {
             "021_16", "诉讼结果录入"), RESULT_INPUT_AGAIN("021_17", "重新申请执行"), FINANCE_SURE_RECEIPT(
             "021_18", "财务收款"), LAWSUIT_FINISH("021_19", "司法诉讼完成"), JUDGE_BAD(
             "021_20", "坏账"), REDEEM_FINANCIAL_AUDIT("021_21", "赎回财务审核"), SELLED_FINANCIAL_AUDIT(
-            "021_22", "转卖财务审核");
+            "021_22", "转卖财务审核"),CLEARANCE_CASHIER("021_23", "公司结清出纳打款"),COMPANY_CLEARANCE(
+            "021_24", "公司已结清");
 
     public static Map<String, ERepayBizNode> getMap() {
         Map<String, ERepayBizNode> map = new HashMap<String, ERepayBizNode>();

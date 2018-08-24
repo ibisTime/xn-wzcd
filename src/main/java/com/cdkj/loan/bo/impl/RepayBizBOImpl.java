@@ -645,4 +645,9 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBizDAO.updateRestPeriods(repayBiz);
     }
 
+    @Override
+    public void clearanceCashier(RepayBiz repayBiz) {
+        repayBizDAO.clearanceCashier(repayBiz);
+    }
+
 }

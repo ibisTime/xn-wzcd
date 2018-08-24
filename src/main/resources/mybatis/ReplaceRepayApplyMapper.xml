@@ -135,5 +135,14 @@
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_replaceRepayStatus" parameterType="replaceRepayApply">
+		UPDATE tdh_replace_repay_apply
+		SET
+		status = #{status}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
 
 </mapper>

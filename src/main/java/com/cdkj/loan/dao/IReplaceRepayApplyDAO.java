@@ -11,4 +11,6 @@ public interface IReplaceRepayApplyDAO extends IBaseDAO<ReplaceRepayApply> {
 
     public void updateMakeDocument(ReplaceRepayApply data);
 
+    public void refreshReplaceRepayStatus(ReplaceRepayApply replaceRepayApply);
+
 }
