@@ -46,7 +46,7 @@ public class SysBonuses extends ABaseDO {
 
     /*----------辅助字段-------------*/
 
-    // 最新修改人名称
+    // 最新修改人姓名
     private String updaterName;
 
     public String getUpdaterName() {

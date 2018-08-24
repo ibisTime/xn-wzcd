@@ -141,4 +141,7 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 收回垫资款财务审核
     void backAdvanceFundFinanceAudit(BudgetOrder budgetOrder);
 
+    // 生成业务员奖金
+    void generateSaleUserBonus(BudgetOrder budgetOrder);
+
 }
