@@ -66,8 +66,11 @@ public class BudgetOrder extends ABaseDO {
     // 发票不匹配之前贷款金额
     private Long preLoanAmount;
 
-    // 银行利率
+    // 银行利率（银行实际利率）
     private double bankRate;
+
+    // 银行基准利率
+    private double bankBenchmarkRate;
 
     // 我司贷款成数
     private double companyLoanCs;
@@ -464,6 +467,12 @@ public class BudgetOrder extends ABaseDO {
 
     // 银行放款时间
     private Date bankFkDatetime;
+
+    // 是否自主开发(1是0否)
+    private String isSelfDevelop;
+
+    // 业务员奖金提成
+    private Long saleUserBonus;
 
     // 银行放款进件时间
     private Date bankFkSendDatetime;
@@ -3447,6 +3456,30 @@ public class BudgetOrder extends ABaseDO {
 
     public void setBankFkDatetimeForYear(String bankFkDatetimeForYear) {
         this.bankFkDatetimeForYear = bankFkDatetimeForYear;
+    }
+
+    public double getBankBenchmarkRate() {
+        return bankBenchmarkRate;
+    }
+
+    public void setBankBenchmarkRate(double bankBenchmarkRate) {
+        this.bankBenchmarkRate = bankBenchmarkRate;
+    }
+
+    public String getIsSelfDevelop() {
+        return isSelfDevelop;
+    }
+
+    public void setIsSelfDevelop(String isSelfDevelop) {
+        this.isSelfDevelop = isSelfDevelop;
+    }
+
+    public Long getSaleUserBonus() {
+        return saleUserBonus;
+    }
+
+    public void setSaleUserBonus(Long saleUserBonus) {
+        this.saleUserBonus = saleUserBonus;
     }
 
 }

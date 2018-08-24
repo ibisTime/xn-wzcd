@@ -434,10 +434,6 @@
 		<property name="paginableDAO" ref="sysBonusesDAOImpl"/>
 	</bean>
 	
-	<bean id="bonusesListBO" class="com.cdkj.loan.bo.impl.BonusesListBOImpl">
-		<property name="paginableDAO" ref="bonusesListDAOImpl"/>
-	</bean>
-	
 	<bean id="performanceBondBO" class="com.cdkj.loan.bo.impl.PerformanceBondBOImpl">
 		<property name="paginableDAO" ref="performanceBondDAOImpl"/>
 	</bean>

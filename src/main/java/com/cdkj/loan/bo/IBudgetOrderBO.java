@@ -150,4 +150,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 收回垫资款财务审核
     public void backAdvanceFundFinanceAudit(BudgetOrder budgetOrder);
 
+    // 生成业务员奖金
+    public void generateSaleUserBonus(BudgetOrder budgetOrder);
+
 }

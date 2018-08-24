@@ -9,22 +9,23 @@ import com.cdkj.loan.common.DateUtil;
 
 public class SCDM_IDAO {
     // 实体
-    private static String key = "bankRepointDetail";
+    private static String key = "bonus";
 
     // 实体名称
-    private static String keyName = "银行返佣明细";
+    private static String keyName = "奖金提成";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tb_bank_repoint_detail";
+    private static String dbname = "tb_bonus";
 
-    private static String[] DBwords = { "code", "bank_repoint_code", "amount",
-            "settle_datetime", "bill_pdf", "updater", "update_datetime" };
+    private static String[] DBwords = { "code", "month", "sale_user_id",
+            "company_code", "budget_code", "is_self_develop",
+            "self_develop_amount", "not_self_develop_amount", "loan_amount" };
 
-    private static String[] DBwordsName = { "编号", "银行返佣编号", "返佣金额", "到账时间",
-            "银行回单", "更新人", "更新时间" };
+    private static String[] DBwordsName = { "编号", "月份（yyyy-MM）", "业务员",
+            "业务公司编号", "预算单编号", "是否自主开发(1是0否)", "自主开发奖金", "非自主开发奖金", "贷款金额" };
 
     public void testname() throws Exception {
     }

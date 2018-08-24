@@ -169,7 +169,6 @@
 		<typeAlias alias="bankRepointDetail" type="com.cdkj.loan.domain.BankRepointDetail" />
 		<typeAlias alias="gpsSupplier" type="com.cdkj.loan.domain.GpsSupplier" />
 		<typeAlias alias="sysBonuses" type="com.cdkj.loan.domain.SysBonuses" />
-		<typeAlias alias="bonusesList" type="com.cdkj.loan.domain.BonusesList" />
 		<typeAlias alias="performanceBond" type="com.cdkj.loan.domain.PerformanceBond" />
 		<typeAlias alias="companyClearance" type="com.cdkj.loan.domain.CompanyClearance" />
 	</typeAliases>

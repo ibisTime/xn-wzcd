@@ -23,7 +23,6 @@ import com.cdkj.loan.bo.IAdvanceFundBO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.IBankcardBO;
-import com.cdkj.loan.bo.IBonusesListBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IBudgetOrderFeeBO;
 import com.cdkj.loan.bo.IBudgetOrderGpsBO;
@@ -60,7 +59,6 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.AdvanceFund;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankSubbranch;
-import com.cdkj.loan.domain.BonusesList;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.BudgetOrderFee;
 import com.cdkj.loan.domain.BudgetOrderGps;
@@ -260,9 +258,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
     private ISysBonusesBO sysBonusesBO;
-
-    @Autowired
-    private IBonusesListBO bonusesListBO;
 
     @Autowired
     private IPerformanceBondBO performanceBondBO;
@@ -973,56 +968,29 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         budgetOrderBO.refreshBankLoanConfirm(budgetOrder);
 
-        // 生成奖金提成
-        BonusesList bonusesList = new BonusesList();
-        // 月份
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        if (month < 10) {
-            bonusesList.setMonth("" + year + "0" + month);
-        } else {
-            bonusesList.setMonth("" + year + month);
-        }
-        bonusesList.setSaleUser(budgetOrder.getSaleUserId());
-        bonusesList.setBudgetCode(budgetOrder.getCode());
-        bonusesList.setLoanAmount(budgetOrder.getLoanAmount());
+        /***生成奖金提成*****/
         CarDealer carDealer = carDealerBO
             .getCarDealer(budgetOrder.getCarDealerCode());
-        if (EBoolean.YES.getCode().equals(carDealer.getIsSelfDevelop())) {
-            bonusesList.setIsSelfDevelop(EBoolean.YES.getCode());
-            SysBonuses sysBonuses = new SysBonuses();
-            sysBonuses.setIsSelfDevelop(EBoolean.YES.getCode());
-            List<SysBonuses> sysBonusesList = sysBonusesBO
-                .querySysBonusesList(sysBonuses);
-            for (SysBonuses domain : sysBonusesList) {
-                if (bonusesList.getLoanAmount() > domain.getStartAmount()
-                        && bonusesList.getLoanAmount() < domain
-                            .getEndAmount()) {
-                    Long amount = AmountUtil.mul(domain.getUnitPrice(),
-                        domain.getMonthRate());
-                    bonusesList.setSelfDevelopAmount(amount);
-                    bonusesList.setNotSelfDevelopAmount(0L);
-                }
-            }
-        } else {
-            bonusesList.setIsSelfDevelop(EBoolean.NO.getCode());
-            SysBonuses sysBonuses = new SysBonuses();
-            sysBonuses.setIsSelfDevelop(EBoolean.NO.getCode());
-            List<SysBonuses> sysBonusesList = sysBonusesBO
-                .querySysBonusesList(sysBonuses);
-            for (SysBonuses domain : sysBonusesList) {
-                if (bonusesList.getLoanAmount() > domain.getStartAmount()
-                        && bonusesList.getLoanAmount() < domain
-                            .getEndAmount()) {
-                    Long amount = AmountUtil.mul(domain.getUnitPrice(),
-                        domain.getMonthRate());
-                    bonusesList.setSelfDevelopAmount(0L);
-                    bonusesList.setNotSelfDevelopAmount(amount);
-                }
+        SysBonuses bonusCfgCondition = new SysBonuses();
+        if (EBoolean.YES.getCode().equals(carDealer.getIsSelfDevelop())) {// 自主开发
+            budgetOrder.setIsSelfDevelop(EBoolean.YES.getCode());
+            bonusCfgCondition.setIsSelfDevelop(EBoolean.YES.getCode());
+        } else {// 非自主开发
+            budgetOrder.setIsSelfDevelop(EBoolean.NO.getCode());
+            bonusCfgCondition.setIsSelfDevelop(EBoolean.NO.getCode());
+        }
+        List<SysBonuses> sysBonusesList = sysBonusesBO
+            .querySysBonusesList(bonusCfgCondition);
+        for (SysBonuses sysBonuses : sysBonusesList) {
+            if (budgetOrder.getLoanAmount() > sysBonuses.getStartAmount()
+                    && budgetOrder.getLoanAmount() < sysBonuses
+                        .getEndAmount()) {
+                budgetOrder.setSaleUserBonus(AmountUtil
+                    .mul(sysBonuses.getUnitPrice(), sysBonuses.getMonthRate()));
             }
         }
-        bonusesListBO.saveBonusesList(bonusesList);
+        budgetOrderBO.generateSaleUserBonus(budgetOrder);
+        /***生成奖金提成*****/
 
         // 生成履约保证金开票
         PerformanceBond performanceBond = new PerformanceBond();
@@ -3532,43 +3500,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 XN630912Res res = new XN630912Res();// 返回的一行数据
                 res.setYearMonth(key2);
                 BudgetOrder b4 = monthList.get(0);
-                SYSUser user = sysUserBO.getUser(b4.getSaleUserId());
-                if (null != user) {
-                    res.setSaleUserName(user.getRealName());
-                }
+                res.setSaleUserName(
+                    sysUserBO.getUser(b4.getSaleUserId()).getRealName());
                 int selfNum = 0;
                 long selfBonus = 0L;
                 int notSelfNum = 0;
                 long notSelfBonus = 0L;
                 for (BudgetOrder b3 : monthList) {
-                    Long loanAmount = b3.getLoanAmount();
-                    SysBonuses bonusCondition = new SysBonuses();// 查询奖金提成配置系统参数的条件
-                    CarDealer carDealer = carDealerBO
-                        .getCarDealer(b3.getCarDealerCode());
-                    String isSelf = carDealer.getIsSelfDevelop();
-                    if (EBoolean.YES.getCode().equals(isSelf)) {// 自主开发
-                        bonusCondition.setIsSelfDevelop(EBoolean.YES.getCode());
+                    if (EBoolean.YES.getCode().equals(b3.getIsSelfDevelop())) {// 自主开发
                         selfNum++;
+                        selfBonus += getLong(b3.getSaleUserBonus());
                     } else {// 非自主开发
-                        bonusCondition.setIsSelfDevelop(EBoolean.NO.getCode());
                         notSelfNum++;
-                    }
-                    if (loanAmount < 100000) {
-                        bonusCondition.setRemark("10万以下");
-                    } else if (loanAmount > 300000) {
-                        bonusCondition.setRemark("30万以上");
-                    } else {
-                        bonusCondition.setRemark("10万-30万");
-                    }
-                    SysBonuses sysBonuses = sysBonusesBO
-                        .querySysBonusesList(bonusCondition).get(0);// 奖金提成配置系统参数
-                    if (EBoolean.YES.getCode().equals(isSelf)) {// 自主开发
-                        selfBonus += AmountUtil.mul(sysBonuses.getUnitPrice(),
-                            sysBonuses.getMonthRate());
-                    } else {// 非自主开发
-                        notSelfBonus += AmountUtil.mul(
-                            sysBonuses.getUnitPrice(),
-                            sysBonuses.getMonthRate());
+                        notSelfBonus += getLong(b3.getSaleUserBonus());
                     }
                 }
                 res.setSelfDevelopNumber(String.valueOf(selfNum));

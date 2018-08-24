@@ -24,6 +24,7 @@
 		<result column="loan_amount" property="loanAmount" />
 		
 		<result column="bank_rate" property="bankRate" />
+		<result column="bank_benchmark_rate" property="bankBenchmarkRate" />
 		<result column="company_loan_cs" property="companyLoanCs" />
 		<result column="pre_company_loan_cs" property="preCompanyLoanCs" />
 		<result column="is_advance_fund" property="isAdvanceFund" />
@@ -176,6 +177,8 @@
 		<result column="bank_commit_note" property="bankCommitNote" />
 		<result column="bank_fk_amount" property="bankFkAmount" />
 		<result column="bank_fk_datetime" property="bankFkDatetime" />
+		<result column="is_self_develop" property="isSelfDevelop" />
+		<result column="sale_user_bonus" property="saleUserBonus" />
 		<result column="bank_fk_send_datetime" property="bankFkSendDatetime" />
 		<result column="has_loan_list_pic" property="hasLoanListPic" />
 		
@@ -439,6 +442,7 @@
 		,t.pre_loan_amount
 		,t.loan_amount
 		,t.bank_rate
+		,t.bank_benchmark_rate
 		,t.company_loan_cs
 		,t.pre_company_loan_cs
 		,t.is_advance_fund
@@ -571,6 +575,8 @@
 		,t.bank_commit_note
 		,t.bank_fk_amount
 		,t.bank_fk_datetime
+		,t.is_self_develop
+		,t.sale_user_bonus
 		,t.bank_fk_send_datetime
 		,t.has_loan_list_pic
 		,t.bank_receipt_code
@@ -853,6 +859,8 @@
 		,t.bank_commit_note
 		,t.bank_fk_amount
 		,t.bank_fk_datetime
+		,t.is_self_develop
+		,t.sale_user_bonus
 		,t.bank_fk_send_datetime
 		,t.has_loan_list_pic
 		,t.bank_receipt_code
@@ -1120,6 +1128,8 @@
 		,t.bank_commit_note
 		,t.bank_fk_amount
 		,t.bank_fk_datetime
+		,t.is_self_develop
+		,t.sale_user_bonus
 		,t.bank_fk_send_datetime
 		,t.has_loan_list_pic
 		,t.bank_receipt_code
@@ -2172,5 +2182,12 @@
 		,back_advance_fund_node_code = #{backAdvanceFundNodeCode}
 		WHERE code = #{code}
 	</update>
-		
+	
+	<update id="update_generateSaleUserBonus" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		is_self_develop = #{isSelfDevelop}
+		,sale_user_bonus = #{saleUserBonus}
+		WHERE code = #{code}
+	</update>
 </mapper>
