@@ -300,14 +300,14 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Transactional
     public void confirmSettledProduct(XN630513Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        if (!ERepayBizNode.PRO_SETTLED.getCode()
-            .equals(repayBiz.getCurNodeCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前产品状态不是已还款，不能确认结清！");
-        }
+        // if (!ERepayBizNode.PRO_SETTLED.getCode()
+        // .equals(repayBiz.getCurNodeCode())) {
+        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+        // "当前产品状态不是已还款，不能确认结清！");
+        // }
 
         // 更新还款业务
-        repayBiz.setCurNodeCode(ERepayBizNode.PRO_CONFIRM_SETTLE.getCode());
+        // repayBiz.setCurNodeCode(ERepayBizNode.PRO_CONFIRM_SETTLE.getCode());
         repayBiz.setCutLyDeposit(StringValidater.toLong(req.getCutLyDeposit()));
         repayBiz.setUpdater(req.getUpdater());
         repayBiz.setUpdateDatetime(new Date());
@@ -551,7 +551,16 @@ public class RepayBizAOImpl implements IRepayBizAO {
         // 还款业务变更节点
         String preNodeCode = repayBiz.getCurNodeCode();
         String nextNodeCode = getNextNodeCode(preNodeCode, approveResult);
-        repayBiz.setCurNodeCode(nextNodeCode);
+
+        RepayPlan repayPlan = repayPlanBO.getRepayPlanByRepayBizCode(code,
+            ERepayPlanNode.HANDLER_TO_RED);
+        // 如果没有填写拖车费用和赎金，则不需要经过财务
+        if (StringUtils.isBlank(repayPlan.getRansom())
+                && repayPlan.getTsCarAmount() == null) {
+            repayBiz.setCurNodeCode(ERepayBizNode.TC_RESULT_INPUT.getCode());
+        } else {
+            repayBiz.setCurNodeCode(nextNodeCode);
+        }
         repayBizBO.takeCarRiskLeaderCheck(repayBiz);
 
         // 日志记录

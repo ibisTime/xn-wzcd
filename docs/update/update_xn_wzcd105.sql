@@ -84,5 +84,22 @@ CREATE TABLE `tdq_performance_bond` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='履约保证金开票';
 
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('0', NULL,'shop_way', '购车途径', 'admin', '2018-07-08 07:34:21', NULL,'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('1', 'shop_way', '0', '新车', 'admin', '2018-07-08 07:34:21', NULL,'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('1', 'shop_way', '1', '二手车', 'admin', '2018-07-08 07:34:21', NULL,'CD-CWZCD000020', 'CD-CWZCD000020');
+
 ALTER TABLE `tdh_repay_biz` 
 ADD COLUMN `company_code` VARCHAR(32) NULL COMMENT '业务公司编号' AFTER `ref_code`;
+
+UPDATE `tsys_dict` SET `dvalue`='车辆抵押 （本地）' WHERE `id`='509';
+UPDATE `tsys_dict` SET `dvalue`='车辆抵押（外地）' WHERE `id`='510';
+UPDATE `tsys_dict` SET `dvalue`='返点支付' WHERE `id`='511';
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'node_type', '014', '收回垫资款', 'admin', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
+
+UPDATE `tsys_node` SET `type`='007' WHERE `code`='007_09';
+
+UPDATE `tsys_dict` SET `dvalue`='汽车经销商' WHERE `id`='504';
+UPDATE `tsys_dict` SET `dvalue`='请款预算单' WHERE `id`='503';
+DELETE FROM `tsys_dict` WHERE `id`='422';
+UPDATE `tsys_dict` SET `dvalue`='银行放款 ' WHERE `id`='508';
+

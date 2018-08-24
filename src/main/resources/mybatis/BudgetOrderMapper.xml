@@ -1777,6 +1777,8 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
+		,repay_bank_date = #{repayBankDate}
+		,bill_datetime = #{billDatetime}
 		,insurance_company_code = #{insuranceCompanyCode}
 		,car_color = #{carColor}
 		,frame_no = #{frameNo}
