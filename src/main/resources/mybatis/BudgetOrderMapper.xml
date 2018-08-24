@@ -442,6 +442,7 @@
 		,t.pre_loan_amount
 		,t.loan_amount
 		,t.bank_rate
+		,t.bank_benchmark_rate
 		,t.company_loan_cs
 		,t.pre_company_loan_cs
 		,t.is_advance_fund
@@ -574,6 +575,8 @@
 		,t.bank_commit_note
 		,t.bank_fk_amount
 		,t.bank_fk_datetime
+		,t.is_self_develop
+		,t.sale_user_bonus
 		,t.bank_fk_send_datetime
 		,t.has_loan_list_pic
 		,t.bank_receipt_code
@@ -856,6 +859,8 @@
 		,t.bank_commit_note
 		,t.bank_fk_amount
 		,t.bank_fk_datetime
+		,t.is_self_develop
+		,t.sale_user_bonus
 		,t.bank_fk_send_datetime
 		,t.has_loan_list_pic
 		,t.bank_receipt_code
@@ -1123,6 +1128,8 @@
 		,t.bank_commit_note
 		,t.bank_fk_amount
 		,t.bank_fk_datetime
+		,t.is_self_develop
+		,t.sale_user_bonus
 		,t.bank_fk_send_datetime
 		,t.has_loan_list_pic
 		,t.bank_receipt_code

@@ -3508,10 +3508,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 for (BudgetOrder b3 : monthList) {
                     if (EBoolean.YES.getCode().equals(b3.getIsSelfDevelop())) {// 自主开发
                         selfNum++;
-                        selfBonus += b3.getSaleUserBonus();
+                        selfBonus += getLong(b3.getSaleUserBonus());
                     } else {// 非自主开发
                         notSelfNum++;
-                        notSelfBonus += b3.getSaleUserBonus();
+                        notSelfBonus += getLong(b3.getSaleUserBonus());
                     }
                 }
                 res.setSelfDevelopNumber(String.valueOf(selfNum));

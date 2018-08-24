@@ -103,3 +103,10 @@ UPDATE `tsys_dict` SET `dvalue`='请款预算单' WHERE `id`='503';
 DELETE FROM `tsys_dict` WHERE `id`='422';
 UPDATE `tsys_dict` SET `dvalue`='银行放款 ' WHERE `id`='508';
 
+
+ALTER TABLE `dev_xn_wzcd`.`tdq_budget_order` 
+ADD COLUMN `bank_benchmark_rate` DECIMAL(18,8) NULL DEFAULT NULL COMMENT '银行基准利率' AFTER `bank_rate`,
+ADD COLUMN `is_self_develop` VARCHAR(4) NULL DEFAULT NULL COMMENT '是否自主开发（1是0否）' AFTER `bank_fk_datetime`,
+ADD COLUMN `sale_user_bonus` BIGINT(20) NULL DEFAULT NULL COMMENT '业务员奖金提成' AFTER `is_self_develop`;
+
+
