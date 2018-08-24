@@ -22,15 +22,16 @@ public enum ERepayBizNode {
 
     // 收车流程To hold court
     TC_APPLY("021_01", "申请收车"), TC_COMPANY_MANAGE_CHECK("021_02", "分公司总经理审核"), TC_RISK_MANAGE_CHECK(
-            "021_03", "风控经理审核"), TC_RISK_LEADER_CHECK("021_04","风控总监审核"), TC_FINANCE_CHECK(
+            "021_03", "风控经理审核"), TC_RISK_LEADER_CHECK("021_04", "风控总监审核"), TC_FINANCE_CHECK(
             "021_05", "财务经理审核"), TC_SURE_FK("021_06", "确认放款"), TC_RESULT_INPUT(
-            "021_07", "录入收车结果"), TC_TO_HANDLE("021_08","已录入待处理"), SELLED("021_09", "转卖"), JUDGE(
-            "021_10", "司法诉讼"), JUDGE_FINANCE_CHECK("021_11", "财务审核"),CASHIER("021_12","出纳打款"), ACCEPTANCE(
-            "021_13", "受理"),TO_HOLD_COURT("021_14", "开庭"), SENTENCE("021_15", "判决"), JUDGE_RESULT_INPUT(
+            "021_07", "录入收车结果"), TC_TO_HANDLE("021_08", "已录入待处理"), JUDGE(
+            "021_10", "司法诉讼"), JUDGE_FINANCE_CHECK("021_11", "财务审核"), CASHIER(
+            "021_12", "出纳打款"), ACCEPTANCE("021_13", "受理"), TO_HOLD_COURT(
+            "021_14", "开庭"), SENTENCE("021_15", "判决"), JUDGE_RESULT_INPUT(
             "021_16", "诉讼结果录入"), RESULT_INPUT_AGAIN("021_17", "重新申请执行"), FINANCE_SURE_RECEIPT(
             "021_18", "财务收款"), LAWSUIT_FINISH("021_19", "司法诉讼完成"), JUDGE_BAD(
-            "021_20", "坏账"),REDEEM_FINANCIAL_AUDIT("021_21","赎回财务审核"),SELLED_FINANCIAL_AUDIT(
-            "021_22","转卖财务审核"),
+            "021_20", "坏账"), REDEEM_FINANCIAL_AUDIT("021_21", "赎回财务审核"), SELLED_FINANCIAL_AUDIT(
+            "021_22", "转卖财务审核"),
 
     // 商品分期的节点
     PRO_TO_REPAY("005_01", "还款中"), PRO_SETTLED("005_02", "已结清"), PRO_CONFIRM_SETTLE(
