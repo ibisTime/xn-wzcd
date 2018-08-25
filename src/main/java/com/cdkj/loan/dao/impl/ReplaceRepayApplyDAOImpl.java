@@ -63,4 +63,9 @@ public class ReplaceRepayApplyDAOImpl extends AMybatisTemplate
         super.update(NAMESPACE.concat("update_makeDocument"), data);
     }
 
+    @Override
+    public void refreshReplaceRepayStatus(ReplaceRepayApply data) {
+        super.update(NAMESPACE.concat("update_replaceRepayStatus"), data);
+    }
+
 }

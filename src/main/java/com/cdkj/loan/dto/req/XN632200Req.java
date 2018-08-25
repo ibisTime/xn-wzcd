@@ -15,13 +15,6 @@ public class XN632200Req {
     @NotBlank
     private String code;
 
-    // 银行还款日
-    private String repayBankDate;
-
-    // 对账单日
-    @NotBlank
-    private String billDatetime;
-
     // 保险公司编号
     private String insuranceCompanyCode;
 
@@ -227,22 +220,6 @@ public class XN632200Req {
 
     public String getEmergencyRelation2() {
         return emergencyRelation2;
-    }
-
-    public String getRepayBankDate() {
-        return repayBankDate;
-    }
-
-    public void setRepayBankDate(String repayBankDate) {
-        this.repayBankDate = repayBankDate;
-    }
-
-    public String getBillDatetime() {
-        return billDatetime;
-    }
-
-    public void setBillDatetime(String billDatetime) {
-        this.billDatetime = billDatetime;
     }
 
     public void setEmergencyRelation2(String emergencyRelation2) {

@@ -24,6 +24,7 @@ import com.cdkj.loan.bo.ILogisticsBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
+import com.cdkj.loan.bo.IReplaceRepayApplyBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISupplementReasonBO;
@@ -41,6 +42,7 @@ import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
+import com.cdkj.loan.domain.ReplaceRepayApply;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.SupplementReason;
 import com.cdkj.loan.dto.req.XN630510Req;
@@ -66,6 +68,7 @@ import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayBizType;
 import com.cdkj.loan.enums.ERepayPlanNode;
+import com.cdkj.loan.enums.EReplaceRepayStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -118,6 +121,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
     @Autowired
     private IDepartmentBO departmentBO;
+
+    @Autowired
+    private IReplaceRepayApplyBO replaceRepayApplyBO;
 
     // 变更银行卡
     @Override
@@ -689,9 +695,19 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 repayPlan.getRepayBizCode(), ERepayPlanNode.REPAY_YES);
         } else if (EDealResult.JUDGE.getCode().equals(req.getDealResult())) {// 司法诉讼，还款计划暂不处理
             nextNodeCode = ERepayBizNode.JUDGE.getCode();
+        } else if (EDealResult.COMPANY_CLEARANCE.getCode()
+            .equals(req.getDealResult())) {// 公司结清
+            nextNodeCode = ERepayBizNode.CLEARANCE_CASHIER.getCode();
+            ReplaceRepayApply replaceRepayApply = replaceRepayApplyBO
+                .getReplaceRepayApply(req.getReplaceRepayCode());
+            replaceRepayApply.setStatus(EReplaceRepayStatus.DELETE.getCode());
+            replaceRepayApply.setUpdater(req.getOperator());
+            replaceRepayApply.setUpdateDatetime(new Date());
+            replaceRepayApplyBO.refreshReplaceRepayStatus(replaceRepayApply);
         }
         repayBiz.setCurNodeCode(nextNodeCode);
         repayBiz.setDealEnclosure(req.getDealEnclosure());
+        repayBiz.setRemark(req.getRemark());
         repayBizBO.takeCarResultHandle(repayBiz);
 
         // 日志记录
@@ -1161,6 +1177,31 @@ public class RepayBizAOImpl implements IRepayBizAO {
         res.setUnclearedLoanTotalAmount(
             String.valueOf(unclearedLoanTotalAmount));
         return res;
+    }
+
+    @Override
+    public void clearanceCashier(String code, String paymentBank,
+            String paymentPdf, String operator) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizNode.CLEARANCE_CASHIER.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "还款业务不在公司结清出纳打款节点，不能操作！");
+        }
+        // 当前节点
+        String curNodeCode = repayBiz.getCurNodeCode();
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
+        repayBiz.setCurNodeCode(nodeFlow.getNextNode());
+        repayBiz.setPaymentBank(paymentBank);
+        repayBiz.setPaymentPdf(paymentPdf);
+        repayBiz.setUpdater(operator);
+        repayBiz.setUpdateDatetime(new Date());
+        repayBizBO.clearanceCashier(repayBiz);
+
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(), curNodeCode,
+            nodeFlow.getNextNode(), null, operator);
     }
 
 }

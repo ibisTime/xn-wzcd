@@ -839,6 +839,9 @@ public class BudgetOrder extends ABaseDO {
 
     private String bankReceiptName;// 收款银行名称
 
+    // 汽车经销商编号
+    private CarDealer carDealer;
+
     private String carDealerName;// 汽车经销商名称
 
     private String carDealerPhone;// 汽车经销商电话
@@ -930,6 +933,14 @@ public class BudgetOrder extends ABaseDO {
 
     public Long getReplaceRealRepayAmount() {
         return replaceRealRepayAmount;
+    }
+
+    public CarDealer getCarDealer() {
+        return carDealer;
+    }
+
+    public void setCarDealer(CarDealer carDealer) {
+        this.carDealer = carDealer;
     }
 
     public String getCodeQuery() {

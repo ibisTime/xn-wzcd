@@ -98,4 +98,9 @@ public class ReplaceRepayApplyBOImpl extends PaginableBOImpl<ReplaceRepayApply>
         data.setStatus(EReplaceRepayStatus.MAKE_DOCUMENT.getCode());
         replaceRepayApplyDAO.updateFinanceManageApprove(data);
     }
+
+    @Override
+    public void refreshReplaceRepayStatus(ReplaceRepayApply replaceRepayApply) {
+        replaceRepayApplyDAO.refreshReplaceRepayStatus(replaceRepayApply);
+    }
 }

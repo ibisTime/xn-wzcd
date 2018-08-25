@@ -55,6 +55,8 @@
 		<result column="is_advance_settled" property="isAdvanceSettled" />
 		<result column="settle_attach" property="settleAttach" />
 		<result column="settle_datetime" property="settleDatetime" />
+		<result column="payment_bank" property="paymentBank" />
+		<result column="payment_pdf" property="paymentPdf" />
 		<result column="deal_enclosure" property="dealEnclosure" />
 		<result column="deposit_receipt" property="depositReceipt" />
 		<result column="refund_bank_subbranch" property="refundBankSubbranch" />
@@ -219,6 +221,8 @@
 		,t.is_advance_settled
 		,t.settle_attach
 		,t.settle_datetime
+		,t.payment_bank
+		,t.payment_pdf
 		,t.deal_enclosure
 		,t.deposit_receipt
 		,t.refund_bank_subbranch
@@ -314,6 +318,8 @@
 		,t.is_advance_settled
 		,t.settle_attach
 		,t.settle_datetime
+		,t.payment_bank
+		,t.payment_pdf
 		,t.deal_enclosure
 		,t.deposit_receipt
 		,t.refund_bank_subbranch
@@ -409,6 +415,8 @@
 		,t.is_advance_settled
 		,t.settle_attach
 		,t.settle_datetime
+		,t.payment_bank
+		,t.payment_pdf
 		,t.deal_enclosure
 		,t.deposit_receipt
 		,t.refund_bank_subbranch
@@ -774,6 +782,7 @@
 		,deal_enclosure = #{dealEnclosure}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -925,6 +934,17 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_clearanceCashier" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,payment_bank = #{paymentBank}
+		,payment_pdf = #{paymentPdf}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
 	</update>
 
