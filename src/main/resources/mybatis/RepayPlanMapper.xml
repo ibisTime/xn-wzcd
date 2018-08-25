@@ -378,6 +378,7 @@
 		cur_node_code=#{curNodeCode}
 		,payed_amount=#{payedAmount}
 		,overplus_amount=#{overplusAmount}
+		,overdue_amount = #{overdueAmount}
 		WHERE code=#{code}
 	</update>
 	
