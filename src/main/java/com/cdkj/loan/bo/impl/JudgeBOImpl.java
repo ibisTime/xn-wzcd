@@ -20,10 +20,14 @@ import com.cdkj.loan.dto.req.XN630565Req;
 import com.cdkj.loan.dto.req.XN630566Req;
 import com.cdkj.loan.dto.req.XN630567Req;
 import com.cdkj.loan.dto.req.XN630568Req;
+import com.cdkj.loan.dto.req.XN630569Req;
+import com.cdkj.loan.dto.req.XN630580Req;
+import com.cdkj.loan.dto.req.XN630581Req;
+import com.cdkj.loan.dto.req.XN630582Req;
+import com.cdkj.loan.dto.req.XN630583Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECaseStatus;
-import com.cdkj.loan.enums.EExeResult;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.exception.BizException;
 
@@ -43,12 +47,8 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
         data.setPlaintiff(req.getPlaintiff());
         data.setDefendant(req.getDefendant());
 
-        data.setCaseSubject(req.getCaseSubject());
         data.setCaseStatus(ECaseStatus.RECORD.getCode());
         data.setCaseFee(StringValidater.toLong(req.getCaseFee()));
-        data.setCaseStartDatetime(DateUtil.strToDate(req.getCaseStartDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-        data.setCasePdf(req.getCasePdf());
 
         data.setStatus(EBoolean.NO.getCode());
         data.setUpdater(req.getOperator());
@@ -61,20 +61,8 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
     public void refreshJudgeResultInput(XN630562Req req) {
         Judge data = queryJudgeByRepayBizCode(req.getRepayBizCode(),
             EBoolean.NO);
-        data.setExeCaseNumber(req.getExeCaseNumber());
-        data.setExeApplyUser(req.getExeApplyUser());
-        data.setExecuteMarkAmount(
-            StringValidater.toLong(req.getExecuteMarkAmount()));
-        data.setExeDatetime(DateUtil.strToDate(req.getExeDatetime(),
-            DateUtil.DB_DATE_FORMAT_STRING));
         data.setExeResult(req.getExeResult());
-
-        data.setSaleDatetime(DateUtil.strToDate(req.getSaleDatetime(),
-            DateUtil.DB_DATE_FORMAT_STRING));
-        data.setExePdf(req.getExePdf());
-        if (!EExeResult.ABORT.getCode().equals(req.getExeResult())) {
-            data.setStatus(EBoolean.YES.getCode());
-        }
+        data.setRemark(req.getRemark());
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
         judgeDAO.updateJudgeResultInput(data);
@@ -136,6 +124,8 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
             EBoolean.NO);
         judge.setAcceptanceTime(DateUtil.strToDate(req.getAcceptanceTime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
+        judge.setAcceptanceFee(StringValidater.toLong(req.getAcceptanceFee()));
+        judge.setCaseNumber(req.getCaseNumber());
         judge.setUpdater(req.getOperator());
         judge.setUpdateDatetime(new Date());
         judgeDAO.acceptance(judge);
@@ -149,7 +139,8 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
             DateUtil.FRONT_DATE_FORMAT_STRING));
         judge.setCourtAddress(req.getCourtAddress());
         judge.setHandleJudge(req.getHandleJudge());
-        judge.setHearCaseNumber(req.getHearCaseNumber());
+        judge.setSummonsDeliveryTime(DateUtil.strToDate(
+            req.getSummonsDeliveryTime(), DateUtil.FRONT_DATE_FORMAT_STRING));
         judge.setUpdater(req.getOperator());
         judge.setUpdateDatetime(new Date());
         judgeDAO.toHoldCourt(judge);
@@ -159,17 +150,71 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
     public void sentence(XN630568Req req) {
         Judge judge = queryJudgeByRepayBizCode(req.getRepayBizCode(),
             EBoolean.NO);
-        judge.setJudgeDatetime(DateUtil.strToDate(req.getJudgeDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING));
-        judge.setJudgeResult(req.getJudgeResult());
         judge.setJudgePdf(req.getJudgePdf());
         judge.setJudgePdfDeliveryTime(DateUtil.strToDate(
             req.getJudgePdfDeliveryTime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        judge.setUpdater(req.getOperator());
+        judge.setUpdateDatetime(new Date());
+        judgeDAO.sentence(judge);
+    }
+
+    @Override
+    public void takeEffect(XN630569Req req) {
+        Judge judge = queryJudgeByRepayBizCode(req.getRepayBizCode(),
+            EBoolean.NO);
         judge.setEffectiveTime(DateUtil.strToDate(req.getEffectiveTime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
         judge.setUpdater(req.getOperator());
         judge.setUpdateDatetime(new Date());
-        judgeDAO.sentence(judge);
+        judgeDAO.takeEffect(judge);
+    }
+
+    @Override
+    public void applyImplement(XN630580Req req) {
+        Judge judge = queryJudgeByRepayBizCode(req.getRepayBizCode(),
+            EBoolean.NO);
+        judge.setExeApplyUser(req.getExeApplyUser());
+        judge.setApplyDatetime(new Date());
+        judge.setBeExeUser(req.getBeExeUser());
+        judge.setExecuteMarkAmount(
+            StringValidater.toLong(req.getExecuteMarkAmount()));
+        judge.setUpdater(req.getOperator());
+        judge.setUpdateDatetime(new Date());
+        judgeDAO.applyImplement(judge);
+    }
+
+    @Override
+    public void implementAdmissibility(XN630581Req req) {
+        Judge judge = queryJudgeByRepayBizCode(req.getRepayBizCode(),
+            EBoolean.NO);
+        judge.setHandleJudge(req.getHandleJudge());
+        judge.setHearCaseNumber(req.getHandleJudge());
+        judge.setCaseNumber(req.getHearCaseNumber());
+        judge.setUpdater(req.getOperator());
+        judge.setUpdateDatetime(new Date());
+        judgeDAO.implementAdmissibility(judge);
+    }
+
+    @Override
+    public void auction(XN630582Req req) {
+        Judge judge = queryJudgeByRepayBizCode(req.getRepayBizCode(),
+            EBoolean.NO);
+        judge.setSaleDatetime(DateUtil.strToDate(req.getSaleDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        judge.setUpdater(req.getOperator());
+        judge.setUpdateDatetime(new Date());
+        judgeDAO.auction(judge);
+    }
+
+    @Override
+    public void notice(XN630583Req req) {
+        Judge judge = queryJudgeByRepayBizCode(req.getRepayBizCode(),
+            EBoolean.NO);
+        judge.setNoticeDatetime(DateUtil.strToDate(req.getNoticeDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
+        judge.setUpdater(req.getOperator());
+        judge.setUpdateDatetime(new Date());
+        judgeDAO.notice(judge);
     }
 
 }

@@ -18,8 +18,10 @@
 		<result column="case_pdf" property="casePdf" />
 		<result column="pay_amount_prove" property="payAmountProve" />
 		<result column="acceptance_time" property="acceptanceTime" />
+		<result column="acceptance_fee" property="acceptanceFee" />
 		<result column="court_datetime" property="courtDatetime" />
 		<result column="court_address" property="courtAddress" />
+		<result column="summons_delivery_time" property="summonsDeliveryTime" />
 		<result column="handle_judge" property="handleJudge" />
 		<result column="hear_case_number" property="hearCaseNumber" />
 		<result column="judge_datetime" property="judgeDatetime" />
@@ -31,14 +33,17 @@
 		<result column="exe_case_number" property="exeCaseNumber" />
 		<result column="exe_apply_user" property="exeApplyUser" />
 		<result column="execute_mark_amount" property="executeMarkAmount" />
+		<result column="recovery_datetime" property="recoveryDatetime" />
 		<result column="exe_datetime" property="exeDatetime" />
 		<result column="exe_result" property="exeResult" />
 		<result column="sale_datetime" property="saleDatetime" />
+		<result column="notice_datetime" property="noticeDatetime" />
 		<result column="exe_pdf" property="exePdf" />
 		
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
+		<result column="remark" property="remark" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -68,8 +73,10 @@
 		,t.case_pdf
 		,t.pay_amount_prove
 		,t.acceptance_time
+		,t.acceptance_fee
 		,t.court_datetime
 		,t.court_address
+		,t.summons_delivery_time
 		,t.handle_judge
 		,t.hear_case_number
 		,t.judge_datetime
@@ -80,13 +87,16 @@
 		,t.exe_case_number
 		,t.exe_apply_user
 		,t.execute_mark_amount
+		,t.recovery_datetime
 		,t.exe_datetime
 		,t.exe_result
 		,t.sale_datetime
+		,t.notice_datetime
 		,t.exe_pdf
 		,t.status
 		,t.updater
 		,t.update_datetime
+		,t.remark
 		FROM
 		tdh_judge t
 		<include refid="where_condition" />
@@ -110,22 +120,8 @@
 		,repay_biz_code
 		,plaintiff
 		,defendant
-		,case_subject
-		,case_car
 		,case_fee
-		,case_start_datetime
 		,case_status
-		,case_pdf
-		,court_datetime
-		,judge_datetime
-		,judge_pdf
-		,exe_case_number
-		,exe_apply_user
-		,execute_mark_amount
-		,exe_datetime
-		,exe_result
-		,sale_datetime
-		,exe_pdf
 		,status
 		,updater
 		,update_datetime
@@ -135,22 +131,8 @@
 		,#{repayBizCode}
 		,#{plaintiff}
 		,#{defendant}
-		,#{caseSubject}
-		,#{caseCar}
 		,#{caseFee}
-		,#{caseStartDatetime}
 		,#{caseStatus}
-		,#{casePdf}
-		,#{courtDatetime}
-		,#{judgeDatetime}
-		,#{judgePdf}
-		,#{exeCaseNumber}
-		,#{exeApplyUser}
-		,#{executeMarkAmount}
-		,#{exeDatetime}
-		,#{exeResult}
-		,#{saleDatetime}
-		,#{exePdf}
 		,#{status}
 		,#{updater}
 		,#{updateDatetime}
@@ -173,16 +155,11 @@
 	<update id="update_judgeResultInput" parameterType="judge">
 		UPDATE tdh_judge
 		SET
-		exe_case_number = #{exeCaseNumber}
-		,exe_apply_user = #{exeApplyUser}
-		,execute_mark_amount = #{executeMarkAmount}
-		,exe_datetime = #{exeDatetime}
-		,exe_result = #{exeResult}
-		,sale_datetime = #{saleDatetime}
-		,exe_pdf = #{exePdf}
+		exe_result = #{exeResult}
 		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 
@@ -199,6 +176,8 @@
 		UPDATE tdh_judge
 		SET
 		acceptance_time = #{acceptanceTime}
+		,acceptance_fee = #{acceptanceFee}
+		,case_number = #{caseNumber}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
@@ -210,7 +189,7 @@
 		court_datetime = #{courtDatetime}
 		,court_address = #{courtAddress}
 		,handle_judge = #{handleJudge}
-		,hear_case_number = #{hearCaseNumber}
+		,summons_delivery_time = #{summonsDeliveryTime}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
@@ -219,11 +198,58 @@
 	<update id="update_sentence" parameterType="judge">
 		UPDATE tdh_judge
 		SET
-		judge_datetime = #{judgeDatetime}
-		,judge_result = #{judgeResult}
-		,judge_pdf = #{judgePdf}
+		judge_pdf = #{judgePdf}
 		,judge_pdf_delivery_time = #{judgePdfDeliveryTime}
-		,effective_time = #{effectiveTime}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_takeEffect" parameterType="judge">
+		UPDATE tdh_judge
+		SET
+		effective_time = #{effectiveTime}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_applyImplement" parameterType="judge">
+		UPDATE tdh_judge
+		SET
+		exe_apply_user = #{exeApplyUser}
+		,be_exe_user = #{beExeUser}
+		,execute_mark_amount = #{executeMarkAmount}
+		,recovery_datetime = #{recoveryDatetime}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_implementAdmissibility" parameterType="judge">
+		UPDATE tdh_judge
+		SET
+		handle_judge = #{handleJudge}
+		,hear_case_number = #{hearCaseNumber}
+		,case_subject = #{caseSubject}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_auction" parameterType="judge">
+		UPDATE tdh_judge
+		SET
+		sale_datetime = #{saleDatetime}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_notice" parameterType="judge">
+		UPDATE tdh_judge
+		SET
+		notice_datetime = #{noticeDatetime}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}

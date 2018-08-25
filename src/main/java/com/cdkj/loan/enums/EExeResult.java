@@ -2,12 +2,12 @@ package com.cdkj.loan.enums;
 
 /**
  * 执行结果
- * @author: xieyj 
- * @since: 2018年6月17日 下午5:52:42 
+ * @author: CYL 
+ * @since: 2018年8月25日 下午8:20:57 
  * @history:
  */
 public enum EExeResult {
-    FINISH_NORMAL("1", "完毕"), ABORT("2", "中止"), FINISH_BAD("3", "终结");
+    FINISH_NORMAL("1", "执毕"), ABORT("2", "和解"), FINISH_BAD("3", "终结");
 
     EExeResult(String code, String value) {
         this.code = code;

@@ -20,9 +20,8 @@ public class XN630567Req {
     @NotBlank
     private String handleJudge;
 
-    // 审理案号
-    @NotBlank
-    private String hearCaseNumber;
+    // 传票等送达日期
+    private String summonsDeliveryTime;
 
     // 操作人
     @NotBlank
@@ -34,6 +33,14 @@ public class XN630567Req {
 
     public void setRepayBizCode(String repayBizCode) {
         this.repayBizCode = repayBizCode;
+    }
+
+    public String getSummonsDeliveryTime() {
+        return summonsDeliveryTime;
+    }
+
+    public void setSummonsDeliveryTime(String summonsDeliveryTime) {
+        this.summonsDeliveryTime = summonsDeliveryTime;
     }
 
     public String getOperator() {
@@ -66,14 +73,6 @@ public class XN630567Req {
 
     public void setHandleJudge(String handleJudge) {
         this.handleJudge = handleJudge;
-    }
-
-    public String getHearCaseNumber() {
-        return hearCaseNumber;
-    }
-
-    public void setHearCaseNumber(String hearCaseNumber) {
-        this.hearCaseNumber = hearCaseNumber;
     }
 
 }

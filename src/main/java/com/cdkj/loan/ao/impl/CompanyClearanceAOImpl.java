@@ -10,11 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.ICompanyClearanceAO;
 import com.cdkj.loan.bo.ICompanyClearanceBO;
+import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.CompanyClearance;
+import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632350Req;
+import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.ERepayBizNode;
+import com.cdkj.loan.exception.BizException;
 
 @Service
 public class CompanyClearanceAOImpl implements ICompanyClearanceAO {
@@ -25,9 +30,18 @@ public class CompanyClearanceAOImpl implements ICompanyClearanceAO {
     @Autowired
     private ISYSUserBO sysUserBO;
 
+    @Autowired
+    private IRepayBizBO repayBizBO;
+
     @Override
     @Transactional
     public void addCompanyClearance(XN632350Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepaybizCode());
+        if (ERepayBizNode.CLEARANCE_CASHIER.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是公司结清后待打款节点，不能操作！");
+        }
         CompanyClearance data = new CompanyClearance();
         data.setRepaybizCode(req.getRepaybizCode());
         data.setUpdater(req.getUpdater());

@@ -23,4 +23,19 @@ public interface IJudgeDAO extends IBaseDAO<Judge> {
 
     // 判决
     public void sentence(Judge judge);
+
+    // 生效
+    public void takeEffect(Judge judge);
+
+    // 申请执行
+    public void applyImplement(Judge judge);
+
+    // 执行案件：申请执行
+    public void implementAdmissibility(Judge judge);
+
+    // 执行案件：拍卖
+    public void auction(Judge judge);
+
+    // 执行案件：公告
+    public void notice(Judge judge);
 }

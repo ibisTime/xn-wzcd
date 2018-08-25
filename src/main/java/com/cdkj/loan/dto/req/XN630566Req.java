@@ -12,6 +12,14 @@ public class XN630566Req {
     @NotBlank
     private String acceptanceTime;
 
+    // 受理费
+    @NotBlank
+    private String acceptanceFee;
+
+    // 案号
+    @NotBlank
+    private String caseNumber;
+
     // 操作人
     @NotBlank
     private String operator;
@@ -22,6 +30,22 @@ public class XN630566Req {
 
     public void setRepayBizCode(String repayBizCode) {
         this.repayBizCode = repayBizCode;
+    }
+
+    public String getAcceptanceFee() {
+        return acceptanceFee;
+    }
+
+    public void setAcceptanceFee(String acceptanceFee) {
+        this.acceptanceFee = acceptanceFee;
+    }
+
+    public String getCaseNumber() {
+        return caseNumber;
+    }
+
+    public void setCaseNumber(String caseNumber) {
+        this.caseNumber = caseNumber;
     }
 
     public String getOperator() {
