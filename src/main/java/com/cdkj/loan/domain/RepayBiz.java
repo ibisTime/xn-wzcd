@@ -42,7 +42,7 @@ public class RepayBiz extends ABaseDO {
     // 业务公司编号
     private String companyCode;
 
-    // 业务总价(?)
+    // 业务总价(预算单的发票价格)
     private Long bizPrice;
 
     // 首付比例
