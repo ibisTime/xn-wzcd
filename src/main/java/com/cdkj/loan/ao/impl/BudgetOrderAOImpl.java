@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
+import com.cdkj.loan.ao.ICarDealerAO;
 import com.cdkj.loan.ao.IRepointDetailAO;
 import com.cdkj.loan.bo.IAccountBO;
 import com.cdkj.loan.bo.IAdvanceFundBO;
@@ -182,6 +183,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     private IBankSubbranchBO bankSubbranchBO;
 
     @Autowired
+    private ICarDealerAO carDealerAO;
+
+    @Autowired
     private ICarDealerBO carDealerBO;
 
     @Autowired
@@ -303,6 +307,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
         Long invoicePrice = StringValidater.toLong(req.getInvoicePrice());
         // 我司贷款成数=贷款金额/发票价格
+        if (invoicePrice == 0) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "发票价不能为0");
+        }
         data.setCompanyLoanCs(AmountUtil.div(loanAmount, invoicePrice));
 
         // 获取我司贷款成数区间 标准
@@ -1362,9 +1369,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
 
         if (StringUtils.isNotBlank(budgetOrder.getCarDealerCode())) {
-            CarDealer carDealer = carDealerBO
+            CarDealer carDealer = carDealerAO
                 .getCarDealer(budgetOrder.getCarDealerCode());
-
+            budgetOrder.setCarDealer(carDealer);
             budgetOrder.setCarDealerName(carDealer.getFullName());
             budgetOrder.setCarDealerPhone(carDealer.getContactPhone());
         }
