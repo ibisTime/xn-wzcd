@@ -38,6 +38,7 @@
 		<result column="exe_result" property="exeResult" />
 		<result column="sale_datetime" property="saleDatetime" />
 		<result column="notice_datetime" property="noticeDatetime" />
+		<result column="adjudication_deadline" property="adjudicationDeadline" />
 		<result column="exe_pdf" property="exePdf" />
 		
 		<result column="status" property="status" />
@@ -92,6 +93,7 @@
 		,t.exe_result
 		,t.sale_datetime
 		,t.notice_datetime
+		,t.adjudication_deadline
 		,t.exe_pdf
 		,t.status
 		,t.updater
@@ -250,6 +252,16 @@
 		UPDATE tdh_judge
 		SET
 		notice_datetime = #{noticeDatetime}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+
+	<update id="update_inputVerdict" parameterType="judge">
+		UPDATE tdh_judge
+		SET
+		adjudication_deadline = #{adjudicationDeadline}
+		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}

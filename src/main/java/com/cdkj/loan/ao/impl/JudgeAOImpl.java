@@ -32,6 +32,7 @@ import com.cdkj.loan.dto.req.XN630580Req;
 import com.cdkj.loan.dto.req.XN630581Req;
 import com.cdkj.loan.dto.req.XN630582Req;
 import com.cdkj.loan.dto.req.XN630583Req;
+import com.cdkj.loan.dto.req.XN630584Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
@@ -368,6 +369,29 @@ public class JudgeAOImpl implements IJudgeAO {
             nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getNextNode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(code, EBizLogType.REPAY_BIZ, code,
             repayBiz.getCurNodeCode(), node.getCode(), null, operator);
+    }
+
+    @Override
+    public void inputVerdict(XN630584Req req) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
+        if (!ERepayBizNode.ADJUDICATION_DEADLINE.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前业务不在录入查封裁定到期时间节点，不能操作！");
+        }
+        // 当前节点
+        String curNodeCode = repayBiz.getCurNodeCode();
+
+        repayBizBO.inputVerdict(req.getRepayBizCode());
+
+        judgeBO.inputVerdict(req);
+
+        // 日志记录
+        ERepayBizNode node = ERepayBizNode.getMap().get(
+            nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getNextNode());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(),
+            repayBiz.getCurNodeCode(), node.getCode(), null, req.getOperator());
     }
 
     @Override

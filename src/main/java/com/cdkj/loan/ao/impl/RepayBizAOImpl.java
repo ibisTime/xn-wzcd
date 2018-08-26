@@ -732,6 +732,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             req.getJudgeReceiptDatetime(), DateUtil.DATA_TIME_PATTERN_1));
         repayBiz.setJudgeReceiptAmount(
             StringValidater.toLong(req.getJudgeReceiptAmount()));
+        repayBiz.setJudgeReceiptBankCode(req.getJudgeReceiptBankCode());
 
         repayBiz.setJudgeBillPdf(req.getJudgeBillPdf());
 
@@ -757,7 +758,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             if (ECollectBankcardType.PLATFORM.getCode()
                 .equals(collectBankcard.getType())) {// 公司的收款账号
                 repayBiz.setJudgeReceiptBankcard(
-                    collectBankcard.getBankcardNumber());// 收款账号编号
+                    collectBankcard.getBankcardNumber());// 收款账号
             }
         }
 

@@ -25,6 +25,7 @@ import com.cdkj.loan.dto.req.XN630580Req;
 import com.cdkj.loan.dto.req.XN630581Req;
 import com.cdkj.loan.dto.req.XN630582Req;
 import com.cdkj.loan.dto.req.XN630583Req;
+import com.cdkj.loan.dto.req.XN630584Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECaseStatus;
@@ -215,6 +216,18 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
         judge.setUpdater(req.getOperator());
         judge.setUpdateDatetime(new Date());
         judgeDAO.notice(judge);
+    }
+
+    @Override
+    public void inputVerdict(XN630584Req req) {
+        Judge judge = queryJudgeByRepayBizCode(req.getRepayBizCode(),
+            EBoolean.NO);
+        judge.setAdjudicationDeadline(DateUtil.strToDate(
+            req.getAdjudicationDeadline(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        judge.setStatus(EBoolean.YES.getCode());
+        judge.setUpdater(req.getOperator());
+        judge.setUpdateDatetime(new Date());
+        judgeDAO.inputVerdict(judge);
     }
 
 }

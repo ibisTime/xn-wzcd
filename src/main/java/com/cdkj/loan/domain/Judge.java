@@ -50,7 +50,7 @@ public class Judge extends ABaseDO {
     // 受理时间
     private Date acceptanceTime;
 
-    // 受理费--
+    // 受理费
     private Long acceptanceFee;
 
     // 开庭日期
@@ -59,7 +59,7 @@ public class Judge extends ABaseDO {
     // 开庭地点
     private String courtAddress;
 
-    // 传票等送达日期--
+    // 传票等送达日期
     private Date summonsDeliveryTime;
 
     // 经办法官
@@ -89,13 +89,13 @@ public class Judge extends ABaseDO {
     // 申请时间
     private Date applyDatetime;
 
-    // 被执行人--
+    // 被执行人
     private String beExeUser;
 
     // 申请标的额
     private Long executeMarkAmount;
 
-    // 恢复时间--
+    // 恢复时间
     private Date recoveryDatetime;
 
     // 执行日期
@@ -113,8 +113,11 @@ public class Judge extends ABaseDO {
     // 拍卖日期
     private Date saleDatetime;
 
-    // 有关公告时间--
+    // 有关公告时间
     private Date noticeDatetime;
+
+    // 查封裁定到期时间
+    private Date adjudicationDeadline;
 
     // 执行裁定书
     private String exePdf;
@@ -173,6 +176,14 @@ public class Judge extends ABaseDO {
 
     public void setApplyDatetime(Date applyDatetime) {
         this.applyDatetime = applyDatetime;
+    }
+
+    public Date getAdjudicationDeadline() {
+        return adjudicationDeadline;
+    }
+
+    public void setAdjudicationDeadline(Date adjudicationDeadline) {
+        this.adjudicationDeadline = adjudicationDeadline;
     }
 
     public String getUpdaterName() {

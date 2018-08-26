@@ -38,4 +38,7 @@ public interface IJudgeDAO extends IBaseDAO<Judge> {
 
     // 执行案件：公告
     public void notice(Judge judge);
+
+    // 执行案件：录入查封裁定到期时间
+    public void inputVerdict(Judge judge);
 }

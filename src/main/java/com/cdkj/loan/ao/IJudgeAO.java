@@ -18,6 +18,7 @@ import com.cdkj.loan.dto.req.XN630580Req;
 import com.cdkj.loan.dto.req.XN630581Req;
 import com.cdkj.loan.dto.req.XN630582Req;
 import com.cdkj.loan.dto.req.XN630583Req;
+import com.cdkj.loan.dto.req.XN630584Req;
 
 @Component
 public interface IJudgeAO {
@@ -68,5 +69,8 @@ public interface IJudgeAO {
 
     // 执行案件：公告
     public void notice(XN630583Req req);
+
+    // 执行案件：录入查封裁定到期时间
+    public void inputVerdict(XN630584Req req);
 
 }

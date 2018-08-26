@@ -27,3 +27,11 @@ INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('021'
 UPDATE `tsys_node_flow` SET `type`='014' WHERE `id`='98';
 UPDATE `tsys_node_flow` SET `type`='014' WHERE `id`='99';
 
+
+ALTER TABLE `tdh_judge` 
+ADD COLUMN `acceptance_fee` bigint(20) NULL COMMENT '受理费' AFTER `acceptance_time`,
+ADD COLUMN `summons_delivery_time` datetime NULL COMMENT '传票等送达日期' AFTER `court_address`,
+ADD COLUMN `be_exe_user` varchar(255) NULL COMMENT '被执行人' AFTER `apply_datetime`,
+ADD COLUMN `recovery_datetime` datetime NULL COMMENT '恢复时间' AFTER `execute_mark_amount`,
+ADD COLUMN `notice_datetime` datetime NULL COMMENT '有关公告时间' AFTER `sale_datetime`,
+

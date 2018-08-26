@@ -379,6 +379,13 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBizDAO.updateJudgeResultInput(data);
     }
 
+    @Override
+    public void inputVerdict(String code) {
+        RepayBiz data = getRepayBiz(code);
+        data.setCurNodeCode(ERepayBizNode.LAWSUIT_FINISH.getCode());
+        repayBizDAO.updateJudgeResultInput(data);
+    }
+
     // 执行结果录入归入坏账
     @Override
     public void refreshJudgeBad(String code) {
