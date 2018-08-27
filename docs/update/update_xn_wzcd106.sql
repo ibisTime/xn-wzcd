@@ -8,6 +8,7 @@ INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 
 ALTER TABLE `tdh_repay_biz` 
 ADD COLUMN `payment_bank` VARCHAR(32) NULL COMMENT '付款银行' AFTER `settle_datetime`,
+ADD COLUMN `judge_receipt_bank_code` VARCHAR(32) NULL COMMENT '司法诉讼收款银行编号' AFTER `judge_receipt_amount`,
 ADD COLUMN `payment_pdf` tinytext NULL COMMENT '付款凭证' AFTER `payment_bank`;
 
 DROP TABLE IF EXISTS `tdh_company_clearance`;
@@ -34,4 +35,8 @@ ADD COLUMN `summons_delivery_time` datetime NULL COMMENT '传票等送达日期'
 ADD COLUMN `be_exe_user` varchar(255) NULL COMMENT '被执行人' AFTER `apply_datetime`,
 ADD COLUMN `recovery_datetime` datetime NULL COMMENT '恢复时间' AFTER `execute_mark_amount`,
 ADD COLUMN `notice_datetime` datetime NULL COMMENT '有关公告时间' AFTER `sale_datetime`,
+ADD COLUMN `adjudication_deadline` datetime NULL COMMENT '查封裁定到期时间' AFTER `notice_datetime`,
+ADD COLUMN `remark` varchar(255) NULL COMMENT '备注' AFTER `update_datetime`;
+
+
 

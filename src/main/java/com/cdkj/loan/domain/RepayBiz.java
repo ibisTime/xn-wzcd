@@ -197,7 +197,7 @@ public class RepayBiz extends ABaseDO {
     // 司法诉讼收款金额
     private Long judgeReceiptAmount;
 
-    // 司法诉讼收款银行编号--
+    // 司法诉讼收款银行编号
     private String judgeReceiptBankCode;
 
     // 司法诉讼收款银行账号

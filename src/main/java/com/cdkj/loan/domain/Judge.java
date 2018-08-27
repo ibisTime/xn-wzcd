@@ -131,7 +131,7 @@ public class Judge extends ABaseDO {
     // 更新时间
     private Date updateDatetime;
 
-    // 备注--
+    // 备注
     private String remark;
 
     /******************db properties******************/
