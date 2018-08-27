@@ -21,6 +21,7 @@ public class XN630567Req {
     private String handleJudge;
 
     // 传票等送达日期
+    @NotBlank
     private String summonsDeliveryTime;
 
     // 操作人

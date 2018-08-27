@@ -2430,18 +2430,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // budgetOrder.setCurNodeCode(nextNodeCode);
         budgetOrderBO.loanContractPrint(budgetOrder);
 
-        // 生成资料传递
-        logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-            budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
-            nextNodeCode);
-        // 产生物流单后改变状态为物流传递中
-        budgetOrder.setIsLogistics(EBoolean.YES.getCode());
-        budgetOrderBO.updateIsLogistics(budgetOrder);
-
-        // 写日志
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), curNodeCode,
-            nextNodeCode, EBoolean.YES.getCode(), req.getOperator());
+        // // 生成资料传递
+        // logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+        // budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
+        // nextNodeCode);
+        // // 产生物流单后改变状态为物流传递中
+        // budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+        // budgetOrderBO.updateIsLogistics(budgetOrder);
+        //
+        // // 写日志
+        // sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+        // EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), curNodeCode,
+        // nextNodeCode, EBoolean.YES.getCode(), req.getOperator());
 
         return budgetOrder;
     }
