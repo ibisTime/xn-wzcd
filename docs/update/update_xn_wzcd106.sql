@@ -49,5 +49,7 @@ ADD COLUMN `notice_datetime` datetime NULL COMMENT '有关公告时间' AFTER `s
 ADD COLUMN `adjudication_deadline` datetime NULL COMMENT '查封裁定到期时间' AFTER `notice_datetime`,
 ADD COLUMN `remark` varchar(255) NULL COMMENT '备注' AFTER `update_datetime`;
 
+ALTER TABLE `tdh_repay_plan` 
+DROP COLUMN `real_repay_amount`;
 
 
