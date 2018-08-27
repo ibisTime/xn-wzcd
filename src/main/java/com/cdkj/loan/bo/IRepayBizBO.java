@@ -96,6 +96,9 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     // 财务确认收款
     public void refreshJudgeFinanceSureReceipt(RepayBiz data);
 
+    // 录入查封裁定到期时间
+    public void inputVerdict(String repayBizCode);
+
     /********************************结清管理********************************/
     // 公司结清出纳打款
     public void clearanceCashier(RepayBiz repayBiz);

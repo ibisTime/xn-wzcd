@@ -6,7 +6,7 @@ import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
 * 司法审判表
-* @author: silver 
+* @author: CYL 
 * @since: 2018-06-16 15:25:21
 * @history:
 */
@@ -29,9 +29,6 @@ public class Judge extends ABaseDO {
     // 被告
     private String defendant;
 
-    // 诉讼标的
-    private String caseSubject;
-
     // 涉案车辆
     private String caseCar;
 
@@ -53,17 +50,20 @@ public class Judge extends ABaseDO {
     // 受理时间
     private Date acceptanceTime;
 
+    // 受理费
+    private Long acceptanceFee;
+
     // 开庭日期
     private Date courtDatetime;
 
     // 开庭地点
     private String courtAddress;
 
+    // 传票等送达日期
+    private Date summonsDeliveryTime;
+
     // 经办法官
     private String handleJudge;
-
-    // 审理案号
-    private String hearCaseNumber;
 
     // 判决日期
     private Date judgeDatetime;
@@ -86,8 +86,17 @@ public class Judge extends ABaseDO {
     // 执行申请人
     private String exeApplyUser;
 
-    // 执行标的额
+    // 申请时间
+    private Date applyDatetime;
+
+    // 被执行人
+    private String beExeUser;
+
+    // 申请标的额
     private Long executeMarkAmount;
+
+    // 恢复时间
+    private Date recoveryDatetime;
 
     // 执行日期
     private Date exeDatetime;
@@ -95,8 +104,20 @@ public class Judge extends ABaseDO {
     // 执行结果
     private String exeResult;
 
+    // 执行案号
+    private String hearCaseNumber;
+
+    // 优先权标的物
+    private String caseSubject;
+
     // 拍卖日期
     private Date saleDatetime;
+
+    // 有关公告时间
+    private Date noticeDatetime;
+
+    // 查封裁定到期时间
+    private Date adjudicationDeadline;
 
     // 执行裁定书
     private String exePdf;
@@ -110,19 +131,59 @@ public class Judge extends ABaseDO {
     // 更新时间
     private Date updateDatetime;
 
+    // 备注
+    private String remark;
+
     /******************db properties******************/
     // 更新人
     private String updaterName;
 
-    // 执行申请人
-    private String exeApplyUserName;
-
-    public String getExeApplyUserName() {
-        return exeApplyUserName;
+    public String getBeExeUser() {
+        return beExeUser;
     }
 
-    public void setExeApplyUserName(String exeApplyUserName) {
-        this.exeApplyUserName = exeApplyUserName;
+    public void setBeExeUser(String beExeUser) {
+        this.beExeUser = beExeUser;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Date getRecoveryDatetime() {
+        return recoveryDatetime;
+    }
+
+    public void setRecoveryDatetime(Date recoveryDatetime) {
+        this.recoveryDatetime = recoveryDatetime;
+    }
+
+    public Date getNoticeDatetime() {
+        return noticeDatetime;
+    }
+
+    public void setNoticeDatetime(Date noticeDatetime) {
+        this.noticeDatetime = noticeDatetime;
+    }
+
+    public Date getApplyDatetime() {
+        return applyDatetime;
+    }
+
+    public void setApplyDatetime(Date applyDatetime) {
+        this.applyDatetime = applyDatetime;
+    }
+
+    public Date getAdjudicationDeadline() {
+        return adjudicationDeadline;
+    }
+
+    public void setAdjudicationDeadline(Date adjudicationDeadline) {
+        this.adjudicationDeadline = adjudicationDeadline;
     }
 
     public String getUpdaterName() {
@@ -139,6 +200,22 @@ public class Judge extends ABaseDO {
 
     public void setExecuteMarkAmount(Long executeMarkAmount) {
         this.executeMarkAmount = executeMarkAmount;
+    }
+
+    public Long getAcceptanceFee() {
+        return acceptanceFee;
+    }
+
+    public void setAcceptanceFee(Long acceptanceFee) {
+        this.acceptanceFee = acceptanceFee;
+    }
+
+    public Date getSummonsDeliveryTime() {
+        return summonsDeliveryTime;
+    }
+
+    public void setSummonsDeliveryTime(Date summonsDeliveryTime) {
+        this.summonsDeliveryTime = summonsDeliveryTime;
     }
 
     public String getPayAmountProve() {

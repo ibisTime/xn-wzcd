@@ -10,7 +10,7 @@ import com.cdkj.loan.domain.Judge;
 
 /**
  * 司法诉讼
- * @author: silver 
+ * @author: CYL 
  * @since: 2018年6月16日 下午8:23:22 
  * @history:
  */
@@ -79,5 +79,35 @@ public class JudgeDAOImpl extends AMybatisTemplate implements IJudgeDAO {
     @Override
     public void sentence(Judge data) {
         super.update(NAMESPACE.concat("update_sentence"), data);
+    }
+
+    @Override
+    public void takeEffect(Judge data) {
+        super.update(NAMESPACE.concat("update_takeEffect"), data);
+    }
+
+    @Override
+    public void applyImplement(Judge data) {
+        super.update(NAMESPACE.concat("update_applyImplement"), data);
+    }
+
+    @Override
+    public void implementAdmissibility(Judge data) {
+        super.update(NAMESPACE.concat("update_implementAdmissibility"), data);
+    }
+
+    @Override
+    public void auction(Judge data) {
+        super.update(NAMESPACE.concat("update_auction"), data);
+    }
+
+    @Override
+    public void notice(Judge data) {
+        super.update(NAMESPACE.concat("update_notice"), data);
+    }
+
+    @Override
+    public void inputVerdict(Judge data) {
+        super.update(NAMESPACE.concat("update_inputVerdict"), data);
     }
 }

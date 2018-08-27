@@ -338,7 +338,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         Paginable<RepayBiz> paginable = repayBizBO.getPaginableByRoleCode(start,
             limit, condition);
         for (RepayBiz repayBiz : paginable.getList()) {
-            initRepayBiz(repayBiz);
+            // initRepayBiz(repayBiz);先注释掉，查询太慢，缺字段的时候再补
         }
         return paginable;
     }
@@ -724,13 +724,15 @@ public class RepayBizAOImpl implements IRepayBizAO {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
         if (!ERepayBizNode.FINANCE_SURE_RECEIPT.getCode()
             .equals(repayBiz.getCurNodeCode())) {
-            throw new BizException("xn0000", "当前还款业务不在财务确认收款节点！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务不在财务确认收款节点！");
         }
 
         repayBiz.setJudgeReceiptDatetime(DateUtil.strToDate(
             req.getJudgeReceiptDatetime(), DateUtil.DATA_TIME_PATTERN_1));
         repayBiz.setJudgeReceiptAmount(
             StringValidater.toLong(req.getJudgeReceiptAmount()));
+        repayBiz.setJudgeReceiptBankCode(req.getJudgeReceiptBankCode());
 
         repayBiz.setJudgeBillPdf(req.getJudgeBillPdf());
 
@@ -756,7 +758,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             if (ECollectBankcardType.PLATFORM.getCode()
                 .equals(collectBankcard.getType())) {// 公司的收款账号
                 repayBiz.setJudgeReceiptBankcard(
-                    collectBankcard.getBankcardNumber());// 收款账号编号
+                    collectBankcard.getBankcardNumber());// 收款账号
             }
         }
 

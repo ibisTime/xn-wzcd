@@ -10,6 +10,12 @@ import com.cdkj.loan.dto.req.XN630565Req;
 import com.cdkj.loan.dto.req.XN630566Req;
 import com.cdkj.loan.dto.req.XN630567Req;
 import com.cdkj.loan.dto.req.XN630568Req;
+import com.cdkj.loan.dto.req.XN630569Req;
+import com.cdkj.loan.dto.req.XN630580Req;
+import com.cdkj.loan.dto.req.XN630581Req;
+import com.cdkj.loan.dto.req.XN630582Req;
+import com.cdkj.loan.dto.req.XN630583Req;
+import com.cdkj.loan.dto.req.XN630584Req;
 import com.cdkj.loan.enums.EBoolean;
 
 public interface IJudgeBO extends IPaginableBO<Judge> {
@@ -38,5 +44,23 @@ public interface IJudgeBO extends IPaginableBO<Judge> {
 
     // 判决
     public void sentence(XN630568Req req);
+
+    // 生效
+    public void takeEffect(XN630569Req req);
+
+    // 申请执行
+    public void applyImplement(XN630580Req req);
+
+    // 执行案件：案件受理
+    public void implementAdmissibility(XN630581Req req);
+
+    // 执行案件：拍卖
+    public void auction(XN630582Req req);
+
+    // 执行案件：公告
+    public void notice(XN630583Req req);
+
+    // 执行案件：录入查封裁定到期时间
+    public void inputVerdict(XN630584Req req);
 
 }

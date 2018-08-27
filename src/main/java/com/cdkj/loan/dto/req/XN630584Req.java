@@ -2,24 +2,17 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-/**
- * 执行结果录入
- * @author: silver 
- * @since: 2018年6月16日 下午3:36:13 
- * @history:
- */
-public class XN630562Req {
-    // 编号
+public class XN630584Req {
+
+    // 还款业务编号
     @NotBlank
     private String repayBizCode;
 
-    // 执行结果
+    // 查封裁定到期时间
     @NotBlank
-    private String exeResult;
+    private String AdjudicationDeadline;
 
-    // 备注
-    private String remark;
-
+    // 操作人
     @NotBlank
     private String operator;
 
@@ -31,20 +24,12 @@ public class XN630562Req {
         this.repayBizCode = repayBizCode;
     }
 
-    public String getExeResult() {
-        return exeResult;
+    public String getAdjudicationDeadline() {
+        return AdjudicationDeadline;
     }
 
-    public void setExeResult(String exeResult) {
-        this.exeResult = exeResult;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setAdjudicationDeadline(String adjudicationDeadline) {
+        AdjudicationDeadline = adjudicationDeadline;
     }
 
     public String getOperator() {
@@ -54,4 +39,5 @@ public class XN630562Req {
     public void setOperator(String operator) {
         this.operator = operator;
     }
+
 }

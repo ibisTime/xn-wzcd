@@ -21,21 +21,9 @@ public class XN630560Req {
     @NotBlank
     private String defendant;
 
-    // 诉讼标的
-    @NotBlank
-    private String caseSubject;
-
-    // 诉讼费
+    // 案款
     @NotBlank
     private String caseFee;
-
-    // 起诉日期
-    @NotBlank
-    private String caseStartDatetime;
-
-    // 起诉附件
-    @NotBlank
-    private String casePdf;
 
     @NotBlank
     private String operator;
@@ -64,36 +52,12 @@ public class XN630560Req {
         this.defendant = defendant;
     }
 
-    public String getCaseSubject() {
-        return caseSubject;
-    }
-
-    public void setCaseSubject(String caseSubject) {
-        this.caseSubject = caseSubject;
-    }
-
     public String getCaseFee() {
         return caseFee;
     }
 
     public void setCaseFee(String caseFee) {
         this.caseFee = caseFee;
-    }
-
-    public String getCaseStartDatetime() {
-        return caseStartDatetime;
-    }
-
-    public void setCaseStartDatetime(String caseStartDatetime) {
-        this.caseStartDatetime = caseStartDatetime;
-    }
-
-    public String getCasePdf() {
-        return casePdf;
-    }
-
-    public void setCasePdf(String casePdf) {
-        this.casePdf = casePdf;
     }
 
     public String getOperator() {

@@ -25,14 +25,15 @@ public enum ERepayBizNode {
             "021_03", "风控经理审核"), TC_RISK_LEADER_CHECK("021_04", "风控总监审核"), TC_FINANCE_CHECK(
             "021_05", "财务经理审核"), TC_SURE_FK("021_06", "确认放款"), TC_RESULT_INPUT(
             "021_07", "录入收车结果"), TC_TO_HANDLE("021_08", "已录入待处理"), JUDGE(
-            "021_10", "司法诉讼"), JUDGE_FINANCE_CHECK("021_11", "财务审核"), CASHIER(
-            "021_12", "出纳打款"), ACCEPTANCE("021_13", "受理"), TO_HOLD_COURT(
-            "021_14", "开庭"), SENTENCE("021_15", "判决"), JUDGE_RESULT_INPUT(
-            "021_16", "诉讼结果录入"), RESULT_INPUT_AGAIN("021_17", "重新申请执行"), FINANCE_SURE_RECEIPT(
-            "021_18", "财务收款"), LAWSUIT_FINISH("021_19", "司法诉讼完成"), JUDGE_BAD(
-            "021_20", "坏账"), REDEEM_FINANCIAL_AUDIT("021_21", "赎回财务审核"), SELLED_FINANCIAL_AUDIT(
-            "021_22", "转卖财务审核"),CLEARANCE_CASHIER("021_23", "公司结清出纳打款"),COMPANY_CLEARANCE(
-            "021_24", "公司已结清");
+            "021_09", "司法诉讼"),CASE_ADMISSIBILITY("021_10", "案件受理"), JUDGE_FINANCE_CHECK(
+            "021_11", "财务审核"), CASHIER("021_12", "出纳打款"), SERVICE("021_13", "送达"),  SENTENCE(
+            "021_14", "判决"),TAKE_EFFECT("021_15", "生效"),APPLY_IMPLEMENT("021_16","申请执行"),IMPLEMENT_ADMISSIBILITY(
+            "021_17","案件受理"),AUCTION("021_18","拍卖"),NOTICE("021_19","公告"), JUDGE_RESULT_INPUT(
+            "021_20", "诉讼结果录入"), RESULT_INPUT_AGAIN("021_21", "恢复执行"), FINANCE_SURE_RECEIPT(
+            "021_22", "财务收款"),ADJUDICATION_DEADLINE("021_23","录入查封裁定到期时间"), LAWSUIT_FINISH(
+            "021_24", "司法诉讼完成"), JUDGE_BAD("021_25", "坏账"), REDEEM_FINANCIAL_AUDIT(
+            "021_26", "赎回财务审核"), SELLED_FINANCIAL_AUDIT("021_27", "转卖财务审核"),CLEARANCE_CASHIER(
+            "021_28", "公司结清出纳打款"),COMPANY_CLEARANCE("021_29", "公司已结清");
 
     public static Map<String, ERepayBizNode> getMap() {
         Map<String, ERepayBizNode> map = new HashMap<String, ERepayBizNode>();

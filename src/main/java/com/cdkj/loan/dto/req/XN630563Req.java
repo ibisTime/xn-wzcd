@@ -21,6 +21,10 @@ public class XN630563Req {
     @NotBlank
     private String judgeReceiptAmount;
 
+    // 司法诉讼收款银行编号
+    @NotBlank
+    private String judgeReceiptBankCode;
+
     // 司法诉讼收款凭证
     @NotBlank
     private String judgeBillPdf;
@@ -37,6 +41,14 @@ public class XN630563Req {
 
     public void setRepayBizCode(String repayBizCode) {
         this.repayBizCode = repayBizCode;
+    }
+
+    public String getJudgeReceiptBankCode() {
+        return judgeReceiptBankCode;
+    }
+
+    public void setJudgeReceiptBankCode(String judgeReceiptBankCode) {
+        this.judgeReceiptBankCode = judgeReceiptBankCode;
     }
 
     public String getJudgeReceiptDatetime() {

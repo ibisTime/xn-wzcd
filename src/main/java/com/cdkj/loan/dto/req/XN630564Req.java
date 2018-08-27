@@ -8,6 +8,7 @@ public class XN630564Req {
     private String repayBizCode;
 
     // 审核说明
+    @NotBlank
     private String approveNote;
 
     // 审核结果 1=通过 0=不通过

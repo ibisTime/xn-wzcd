@@ -358,8 +358,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
     @Override
     public void resultInputAgain(String code) {
-        RepayBiz data = new RepayBiz();
-        data.setCode(code);
+        RepayBiz data = getRepayBiz(code);
         data.setCurNodeCode(ERepayBizNode.JUDGE_RESULT_INPUT.getCode());
         repayBizDAO.updateJudgeFollow(data);
     }
@@ -367,26 +366,30 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     // 执行结果录入用户已还清
     @Override
     public void refreshJudgePaid(String code) {
-        RepayBiz data = new RepayBiz();
-        data.setCode(code);
+        RepayBiz data = getRepayBiz(code);
         data.setCurNodeCode(ERepayBizNode.FINANCE_SURE_RECEIPT.getCode());
         repayBizDAO.updateJudgeResultInput(data);
     }
 
-    // 执行结果录入需要重新诉讼
+    // 执行结果录入需要恢复执行
     @Override
     public void refreshJudgeAgain(String code) {
-        RepayBiz data = new RepayBiz();
-        data.setCode(code);
+        RepayBiz data = getRepayBiz(code);
         data.setCurNodeCode(ERepayBizNode.RESULT_INPUT_AGAIN.getCode());
+        repayBizDAO.updateJudgeResultInput(data);
+    }
+
+    @Override
+    public void inputVerdict(String code) {
+        RepayBiz data = getRepayBiz(code);
+        data.setCurNodeCode(ERepayBizNode.LAWSUIT_FINISH.getCode());
         repayBizDAO.updateJudgeResultInput(data);
     }
 
     // 执行结果录入归入坏账
     @Override
     public void refreshJudgeBad(String code) {
-        RepayBiz data = new RepayBiz();
-        data.setCode(code);
+        RepayBiz data = getRepayBiz(code);
         data.setCurNodeCode(ERepayBizNode.JUDGE_BAD.getCode());
         repayBizDAO.updateJudgeResultInput(data);
     }
