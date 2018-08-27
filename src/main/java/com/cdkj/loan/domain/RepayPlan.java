@@ -78,11 +78,8 @@ public class RepayPlan extends ABaseDO {
     // 再次逾期保证金收取方式(线下收款)
     private String overdueDepositWay;
 
-    // 是否部分还款
+    // 是否部分还款(1是0否)
     private String repayIsPart;
-
-    // 实际还款金额(部分还款时候用)
-    private Long realRepayAmount;
 
     // 已催款次数
     private int remindCount;
@@ -256,9 +253,6 @@ public class RepayPlan extends ABaseDO {
     // 业务公司编号
     private String companyCode;
 
-    // 已还逾期金额
-    private Long repayOverdueAmount;
-
     // 未还清收成本
     private Long notPayedFee;
 
@@ -268,14 +262,6 @@ public class RepayPlan extends ABaseDO {
 
     public void setNotPayedFee(Long notPayedFee) {
         this.notPayedFee = notPayedFee;
-    }
-
-    public Long getRepayOverdueAmount() {
-        return repayOverdueAmount;
-    }
-
-    public void setRepayOverdueAmount(Long repayOverdueAmount) {
-        this.repayOverdueAmount = repayOverdueAmount;
     }
 
     public ReplaceRepayApply getReplaceRepayApply() {
@@ -500,14 +486,6 @@ public class RepayPlan extends ABaseDO {
 
     public void setRepayIsPart(String repayIsPart) {
         this.repayIsPart = repayIsPart;
-    }
-
-    public Long getRealRepayAmount() {
-        return realRepayAmount;
-    }
-
-    public void setRealRepayAmount(Long realRepayAmount) {
-        this.realRepayAmount = realRepayAmount;
     }
 
     public int getRemindCount() {

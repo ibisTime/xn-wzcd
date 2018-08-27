@@ -38,7 +38,7 @@ public class ReplaceRepayApply extends ABaseDO {
     // 是否加急
     private String isUrgent;
 
-    // 申请人
+    // 申请人(业务员)
     private String applyUser;
 
     // 申请时间
@@ -50,7 +50,7 @@ public class ReplaceRepayApply extends ABaseDO {
     // 状态
     private String status;
 
-    // 更新人
+    // 更新人(第一次业务员 第二次财务审核人)
     private String updater;
 
     // 更新时间

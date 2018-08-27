@@ -13,8 +13,8 @@ import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
  * 缴纳代偿金额
- * @author: CYL 
- * @since: 2018年6月11日 下午7:46:19 
+ * @author: jiafr 
+ * @since: 2018年8月27日 上午10:22:03 
  * @history:
  */
 public class XN630534 extends AProcessor {
@@ -25,7 +25,7 @@ public class XN630534 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repayPlanAO.repayAmount(req.getCode(), req.getOperator(),
+        repayPlanAO.payCompensatoryAmount(req.getCode(), req.getOperator(),
             req.getPayType(), StringValidater.toLong(req.getPayAmount()));
         return new BooleanRes(true);
     }

@@ -2,21 +2,25 @@ package com.cdkj.loan.dto.req;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+/**
+ * 缴纳代偿金额
+ * @author: jiafr 
+ * @since: 2018年8月27日 上午10:22:30 
+ * @history:
+ */
 public class XN630534Req {
-    // 还款业务编号
-    @NotBlank
-    private String code;
 
-    // 最近修改人
     @NotBlank
-    private String operator;
+    private String code;// 还款业务编号
 
-    // 支付方式
     @NotBlank
-    private String payType;
+    private String operator;// 操作人
 
-    // 支付金额
-    private String payAmount;
+    @NotBlank
+    private String payType;// 支付方式
+
+    @NotBlank
+    private String payAmount;// 支付金额
 
     public String getPayAmount() {
         return payAmount;

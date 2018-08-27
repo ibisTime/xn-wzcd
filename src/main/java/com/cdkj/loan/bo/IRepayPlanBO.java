@@ -15,8 +15,7 @@ import com.cdkj.loan.enums.ERepayPlanNode;
 
 public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
-    public boolean checkRepayComplete(String repayBizCode,
-            String repayPlanCode);
+    public boolean checkRepayComplete(String repayBizCode, String repayPlanCode);
 
     public boolean checkPreUnpay(String repayBizCode, int curPeriod);
 
@@ -24,11 +23,10 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
 
     public RepayPlan getRepayPlanCurMonth(String repayBizCode);
 
-    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
-            String repayBizCode);
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(String repayBizCode);
 
-    public List<RepayPlan> queryRepayPlanListByRepayBizCode(String repayBizCode,
-            List<String> repayPlanNodeList);
+    public List<RepayPlan> queryRepayPlanListByRepayBizCode(
+            String repayBizCode, List<String> repayPlanNodeList);
 
     public RepayPlan getRepayPlanListByRepayBizCode(String repayBizCode,
             ERepayPlanNode repayPlanNode);
@@ -63,7 +61,7 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
     public void payFee(RepayPlan repayPlan);
 
     // 缴纳代偿金额
-    public void repayAmount(RepayPlan repayPlan);
+    public void payCompensatoryAmount(RepayPlan repayPlan);
 
     // 收车处理
     public void refreshRepayPlanTakeCarHandle(String repayBizCode,
@@ -88,8 +86,7 @@ public interface IRepayPlanBO extends IPaginableBO<RepayPlan> {
     public Paginable<RepayPlan> getPaginableByRoleCode(int start, int limit,
             RepayPlan condition);
 
-    public int getTotalCount(String repayPlanCode,
-            ERepayPlanNode repayPlanNode);
+    public int getTotalCount(String repayPlanCode, ERepayPlanNode repayPlanNode);
 
     // 入档更新还款计划
     public void refreshRepayPlan(BudgetOrder budgetOrder);

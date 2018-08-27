@@ -17,7 +17,7 @@ public class XN630532Req {
 
     private String overdueDeposit;// 再次逾期保证金
 
-    private String realRepayAmount;// 实际还款金额(部分)
+    private String realRepayAmount;// 实际还款金额(部分还款)
 
     private String collectionResultNote;// 催收结果说明
 

@@ -173,9 +173,8 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
             repayPlan.setRepayDatetime(repayDatetime);
             repayPlan.setRepayCapital(repayCapital);
             repayPlan.setRepayInterest(0L);
-            repayPlan.setRepayAmount(repayCapital);
-            // repayPlan.setRepayAmount(repayCapital + 0L);
-            repayPlan.setPayedAmount(repayCapital);
+            repayPlan.setRepayAmount(0L);
+            repayPlan.setPayedAmount(0L);
 
             // 每期应还金额getRepayCapital
             long shouldRepayAmount = repayPlan.getRepayCapital()
@@ -193,7 +192,6 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
 
             repayPlan.setOverdueDeposit(0L);
             repayPlan.setRepayIsPart(EBoolean.NO.getCode());
-            repayPlan.setRealRepayAmount(0L);
             repayPlan.setRemindCount(0);
             repayPlan.setReplaceRealRepayAmount(0L);
             repayPlan.setReplaceIsRepay(EReplaceIsRepayStatus.TO_REPLACE
@@ -329,8 +327,8 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan> implements
     }
 
     @Override
-    public void repayAmount(RepayPlan repayPlan) {
-        repayPlanDAO.repayAmount(repayPlan);
+    public void payCompensatoryAmount(RepayPlan repayPlan) {
+        repayPlanDAO.payCompensatoryAmount(repayPlan);
     }
 
     @Override

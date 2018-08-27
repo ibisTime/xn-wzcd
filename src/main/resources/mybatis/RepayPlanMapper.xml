@@ -30,7 +30,6 @@
 		<result column="overdue_deposit_way" property="overdueDepositWay" />
 		
 		<result column="repay_is_part" property="repayIsPart" />
-		<result column="real_repay_amount" property="realRepayAmount" />
 		<result column="remind_count" property="remindCount" />
 		<result column="replace_real_repay_amount" property="replaceRealRepayAmount" />
 		<result column="replace_is_repay" property="replaceIsRepay" />
@@ -159,7 +158,6 @@
 		,t.overdue_deposit_way
 		
 		,t.repay_is_part
-		,t.real_repay_amount
 		,t.remind_count
 		,t.replace_real_repay_amount
 		,t.replace_is_repay
@@ -243,7 +241,6 @@
 		,t.overdue_deposit_way
 		
 		,t.repay_is_part
-		,t.real_repay_amount
 		,t.remind_count
 		,t.replace_real_repay_amount
 		,t.replace_is_repay
@@ -333,7 +330,6 @@
 		,overdue_deposit
 		,overdue_deposit_way
 		,repay_is_part
-		,real_repay_amount
 		,remind_count
 		,replace_real_repay_amount
 		,replace_is_repay
@@ -363,7 +359,6 @@
 		,#{repayPlan.overdueDeposit}
 		,#{repayPlan.overdueDepositWay}
 		,#{repayPlan.repayIsPart}
-		,#{repayPlan.realRepayAmount}
 		,#{repayPlan.remindCount}
 		,#{repayPlan.replaceRealRepayAmount}
 		,#{repayPlan.replaceIsRepay}
@@ -397,10 +392,10 @@
 		WHERE code=#{code}
 	</update>
 	
-	<update id="update_repayAmount" parameterType="repayPlan">
+	<update id="update_payCompensatoryAmount" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
-		real_repay_amount=#{realRepayAmount}
+		replace_real_repay_Amount=#{replaceRealRepayAmount}
 		,replace_is_repay=#{replaceIsRepay}
 		WHERE code=#{code}
 	</update>
@@ -413,23 +408,16 @@
 		WHERE code=#{code}
 	</update>
 	
-	<update id="overdue_handle" parameterType="repayPlan">
+	<update id="update_OverdueHandle" parameterType="repayPlan">
 		UPDATE tdh_repay_plan
 		SET
 		cur_node_code=#{curNodeCode}
-		,collection_way=#{collectionWay}
-		,collection_target=#{collectionTarget}
-		,collection_process=#{collectionProcess}
-		,collection_wish=#{collectionWish}
-		,collection_result=#{collectionResult}
-		
+		,total_fee=#{totalFee}
+		,overdue_amount=#{overdueAmount}
+		,payed_Amount = #{payedAmount}
+		,overplus_amount = #{overplusAmount}
 		,deposit_is_provide=#{depositIsProvide}
 		,overdue_deposit=#{overdueDeposit}
-		,real_repay_amount=#{realRepayAmount}
-		,overdue_amount=#{overdueAmount}
-		,total_fee=#{totalFee}
-		
-		,collection_note=#{collectionNote}
 		WHERE code=#{code}
 	</update>
 	

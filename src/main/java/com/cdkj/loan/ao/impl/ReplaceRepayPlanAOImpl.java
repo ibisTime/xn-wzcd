@@ -77,7 +77,9 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
             .getReplaceRepayApply(req.getReplaceApplyCode());
         if (null != replaceRepayApply) {
             data.setType(replaceRepayApply.getType());
-            data.setCustomerUserId(replaceRepayApply.getApplyUser());
+            RepayBiz repayBiz = repayBizBO.getRepayBiz(replaceRepayApply
+                .getBizCode());
+            data.setCustomerUserId(repayBiz.getUserId());
         }
 
         data.setCurNodeCode(EReplaceRepayPlanNode.RISK_MANAGE_APPROVE.getCode());

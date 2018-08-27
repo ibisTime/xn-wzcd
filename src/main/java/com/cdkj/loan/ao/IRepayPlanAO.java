@@ -39,8 +39,8 @@ public interface IRepayPlanAO {
     public Long getUnsettledLoan();
 
     // 缴纳代偿金额
-    public void repayAmount(String code, String operator, String payType,
-            Long payAmount);
+    public void payCompensatoryAmount(String code, String operator,
+            String payType, Long payAmount);
 
     // 每月最后一天23点执行一次：还款计划状态为已结清，剩余期数-1
     public void doPayedDaily();

@@ -17,7 +17,7 @@ public class ReplaceRepayPlan extends ABaseDO {
     // 编号
     private String code;
 
-    // 类型
+    // 类型(1月供,2剩余贷款金额)
     private String type;
 
     // 与我司过往是否有纠纷

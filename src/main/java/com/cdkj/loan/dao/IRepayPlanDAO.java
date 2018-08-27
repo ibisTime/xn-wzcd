@@ -20,7 +20,7 @@ public interface IRepayPlanDAO extends IBaseDAO<RepayPlan> {
 
     public int payFee(RepayPlan repayPlan);
 
-    public int repayAmount(RepayPlan repayPlan);
+    public int payCompensatoryAmount(RepayPlan repayPlan);
 
     // 收车申请
     public int updateTakeCarApply(RepayPlan data);
