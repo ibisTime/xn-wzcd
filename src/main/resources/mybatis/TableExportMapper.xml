@@ -19,6 +19,12 @@
 			<if test="operator != null and operator != '' ">
 				AND t.operator = #{operator}
 			</if>
+			<if test="updateDatetimeStart != null and updateDatetimeStart != '' ">
+				<![CDATA[AND t.update_datetime > #{updateDatetimeStart}]]>
+			</if>
+			<if test="updateDatetimeEnd != null and updateDatetimeEnd != '' ">
+				<![CDATA[AND t.update_datetime < #{updateDatetimeEnd}]]>
+			</if>
 		</trim>
 	</sql>
 	<select id="select_tableExport" parameterType="tableExport" resultMap="tableExport_DB_Result">

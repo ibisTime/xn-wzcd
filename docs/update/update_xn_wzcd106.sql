@@ -112,3 +112,23 @@ INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('020'
 ALTER TABLE `tdh_repay_biz` 
 ADD COLUMN `is_deposit_receipt` VARCHAR(4) NULL COMMENT '是否有押金单' AFTER `deal_enclosure`,
 ADD COLUMN `deposit_receipt_lost_proof` tinytext NULL COMMENT '押金单遗失证明' AFTER `deposit_receipt`;
+
+
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('020_15', '已结清', '020');
+UPDATE `tsys_node` SET `name`='确认付款' WHERE `code`='020_14';
+UPDATE `tsys_node` SET `name`='财务审核' WHERE `code`='020_13';
+UPDATE `tsys_node` SET `name`='风控总监审核' WHERE `code`='020_12';
+UPDATE `tsys_node` SET `name`='风控经理审核' WHERE `code`='020_11';
+UPDATE `tsys_node` SET `name`='提交结算单' WHERE `code`='020_10';
+UPDATE `tsys_node` SET `name`='驻行人员提交材料' WHERE `code`='020_09';
+UPDATE `tsys_node` SET `name`='寄送银行材料' WHERE `code`='020_08';
+UPDATE `tsys_node` SET `name`='理件岗理件' WHERE `code`='020_07';
+UPDATE `tsys_node` SET `name`='打印岗打印' WHERE `code`='020_06';
+UPDATE `tsys_node` SET `name`='风控总监审核' WHERE `code`='020_05';
+
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('020', '020_14', '020_15');
+UPDATE `tsys_node_flow` SET `back_node`='020_02' WHERE `id`='75';
+UPDATE `tsys_node_flow` SET `back_node`='020_10' WHERE `id`='81';
+UPDATE `tsys_node_flow` SET `back_node`='020_10' WHERE `id`='82';
+UPDATE `tsys_node_flow` SET `back_node`='020_10' WHERE `id`='111';
+UPDATE `tsys_node_flow` SET `back_node`='' WHERE `id`='80';

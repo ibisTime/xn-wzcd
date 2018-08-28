@@ -72,7 +72,7 @@ public interface IRepayBizAO {
     public void riskManagerCheck(String code, String approveResult,
             String approveNote, String operator);
 
-    // 风控总监理审核
+    // 风控总监审核
     public void riskManageAudit(XN630578Req req);
 
     // 财务审核
@@ -93,6 +93,10 @@ public interface IRepayBizAO {
     // 风控主管审核
     public void settleRiskManagerCheck(String code, String approveResult,
             String approveNote, String operator);
+
+    // 解除抵押:风控总监审核
+    public void settleriskManageAudit(String code, String approveResult,
+            String applyNote, String operator);
 
     // 抵押打印
     public RepayBiz settleMortgagePrint(String code, String releaseDatetime,

@@ -129,6 +129,10 @@ public interface IRepayBizBO extends IPaginableBO<RepayBiz> {
     public void refreshRiskManagerCheck(String code, String curNodeCode,
             String remark, String updater);
 
+    // 解除抵押:风控总监审核
+    public void settleriskManageAudit(String code, String nextNodeCode,
+            String applyNote, String operator);
+
     // 打印岗打印
     public void refreshMortgagePrint(RepayBiz data, String curNodeCode,
             Date releaseDatetime, String releaseTemplateId, String releaseNote,

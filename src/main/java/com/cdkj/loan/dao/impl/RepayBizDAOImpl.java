@@ -206,6 +206,11 @@ public class RepayBizDAOImpl extends AMybatisTemplate implements IRepayBizDAO {
     }
 
     @Override
+    public void updateSettleriskManageAudit(RepayBiz data) {
+        super.update(NAMESPACE.concat("update_settleriskManageAudit"), data);
+    }
+
+    @Override
     public int updateMortgagePrint(RepayBiz data) {
         return super.update(NAMESPACE.concat("update_mortgagePrint"), data);
     }

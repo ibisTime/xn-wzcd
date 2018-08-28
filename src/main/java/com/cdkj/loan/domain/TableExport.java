@@ -32,6 +32,26 @@ public class TableExport extends ABaseDO {
 
     private String menuName;// 菜单名称
 
+    private Date updateDatetimeStart;// 操作时间起始
+
+    private Date updateDatetimeEnd;// 操作时间结束
+
+    public Date getUpdateDatetimeStart() {
+        return updateDatetimeStart;
+    }
+
+    public void setUpdateDatetimeStart(Date updateDatetimeStart) {
+        this.updateDatetimeStart = updateDatetimeStart;
+    }
+
+    public Date getUpdateDatetimeEnd() {
+        return updateDatetimeEnd;
+    }
+
+    public void setUpdateDatetimeEnd(Date updateDatetimeEnd) {
+        this.updateDatetimeEnd = updateDatetimeEnd;
+    }
+
     public String getMenuName() {
         return menuName;
     }

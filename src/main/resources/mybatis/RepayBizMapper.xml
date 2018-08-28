@@ -921,6 +921,16 @@
 		WHERE code = #{code}
 	</update>
 	
+	<update id="update_settleriskManageAudit" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		cur_node_code = #{curNodeCode}
+		,remark = #{remark}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+	
 	<update id="update_mortgagePrint" parameterType="repayBiz">
 		UPDATE tdh_repay_biz
 		SET

@@ -855,7 +855,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Transactional
     public void riskManageAudit(XN630578Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        if (!ERepayBizNode.RISK_MANAGE_AUDIT.getCode()
+        if (!ERepayBizNode.SETTLE_RISK_MANAGE_AUDIT.getCode()
             .equals(repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "还款业务不在风控总监理审核节点，不能操作！");
@@ -959,6 +959,28 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
         String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
             EBoolean.YES.getCode());
+
+        // 如果客户未逾期过，即白名单，则不需要经过风控审核
+        // 查这个人所有的还款业务，累计逾期期数相加
+        RepayBiz data = new RepayBiz();
+        data.setUserId(repayBiz.getUserId());
+        List<RepayBiz> repayBizList = repayBizBO.queryRepayBizList(data);
+        if (CollectionUtils.isNotEmpty(repayBizList)) {
+            int i = 0;
+            for (RepayBiz domain : repayBizList) {
+                i += domain.getTotalOverdueCount();
+            }
+            if (i == 0) {
+                // 生成资料传递
+                logisticsBO.saveLogistics(ELogisticsType.REPAY_BIZ.getCode(),
+                    code, operator, repayBiz.getCurNodeCode(),
+                    ERepayBizNode.MORTGAGE_PRINT.getCode());
+                // 产生物流单后改变状态为物流传递中
+                repayBiz.setIsLogistics(EBoolean.YES.getCode());
+                repayBizBO.updateIsLogistics(repayBiz);
+                nextNodeCode = ERepayBizNode.RELEASE_MORTGAGE_APPLY.getCode();// 还款业务节点不变
+            }
+        }
         repayBizBO.refreshReleaseMortgageApply(code, nextNodeCode,
             releaseApplyNote, operator);
 
@@ -993,12 +1015,34 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Override
     @Transactional
     public void settleRiskManagerCheck(String code, String approveResult,
-            String approveNote, String operator) {
+            String applyNote, String operator) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
         if (!ERepayBizNode.RISK_MANAGER_CHECK.getCode()
             .equals(repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "还款业务不在风控经理审核节点！");
+                "还款业务不在风控经理审核节点，不能操作！");
+        }
+        String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
+            approveResult);
+
+        repayBizBO.refreshRiskManagerCheck(code, nextNodeCode, applyNote,
+            operator);
+
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(),
+            repayBiz.getCurNodeCode(), nextNodeCode, applyNote, operator);
+    }
+
+    @Override
+    @Transactional
+    public void settleriskManageAudit(String code, String approveResult,
+            String approveNote, String operator) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizNode.RISK_MANAGE_AUDIT.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "还款业务不在风控总监审核节点！");
         }
         if (EBoolean.YES.getCode().equals(repayBiz.getIsLogistics())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -1012,7 +1056,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         if (EBoolean.NO.getCode().equals(approveResult)) {
             nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
                 approveResult);
-            repayBizBO.refreshRiskManagerCheck(code, nextNodeCode, approveNote,
+            repayBizBO.settleriskManageAudit(code, nextNodeCode, approveNote,
                 operator);
         } else {
             nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),

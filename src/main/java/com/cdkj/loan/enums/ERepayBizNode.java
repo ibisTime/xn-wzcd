@@ -13,12 +13,12 @@ public enum ERepayBizNode {
 
     // 车贷正常流程
     TO_REPAY("020_01", "还款中"),RELEASE_MORTGAGE_APPLY("020_02", "解除抵押申请"), RISK_INDOOR_CHECK(
-            "020_03", "风控内勤审核"), RISK_MANAGER_CHECK("020_04", "风控经理审核"), MORTGAGE_PRINT(
-            "020_05", "打印岗打印"), PHYSICAL_PARTS("020_06", "理件岗理件"), BANK_REC_LOGIC(
-            "020_07", "寄送银行材料"), MORTGAGE_COMMIT_FILE("020_08", "驻行人员提交材料"),COMMIT_SETTLE(
-            "020_09", "提交结算单"),SETTLE_RISK_MANAGER_CHECK("020_10", "风控经理审核"), RISK_MANAGE_AUDIT(
-            "020_11", "风控总监审核"), FINANCE_CHECK("020_12", "财务审核"), CASH_REMIT(
-            "020_13", "确认付款"), SETTLE_OVER("020_14", "已结清"),
+            "020_03", "风控内勤审核"), RISK_MANAGER_CHECK("020_04", "风控经理审核"),RISK_MANAGE_AUDIT(
+            "020_05", "风控总监审核"), MORTGAGE_PRINT("020_06", "打印岗打印"), PHYSICAL_PARTS(
+            "020_07", "理件岗理件"), BANK_REC_LOGIC("020_08", "寄送银行材料"), MORTGAGE_COMMIT_FILE(
+            "020_09", "驻行人员提交材料"),COMMIT_SETTLE("020_10", "提交结算单"),SETTLE_RISK_MANAGER_CHECK(
+            "020_11", "风控经理审核"), SETTLE_RISK_MANAGE_AUDIT("020_12", "风控总监审核"), FINANCE_CHECK(
+            "020_13", "财务审核"), CASH_REMIT("020_14", "确认付款"), SETTLE_OVER("020_15", "已结清"),
 
     // 收车流程To hold court
     TC_APPLY("021_01", "申请收车"), TC_COMPANY_MANAGE_CHECK("021_02", "分公司总经理审核"), TC_RISK_MANAGE_CHECK(

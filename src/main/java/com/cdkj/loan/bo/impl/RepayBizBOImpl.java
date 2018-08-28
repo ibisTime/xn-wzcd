@@ -256,7 +256,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setRefundBankcard(req.getRefundBankcard());
         repayBiz.setSecondCompanyInsurance(req.getSecondCompanyInsurance());
         repayBiz.setThirdCompanyInsurance(req.getThirdCompanyInsurance());
-        repayBiz.setCurNodeCode(ERepayBizNode.RISK_MANAGE_AUDIT.getCode());
+        repayBiz
+            .setCurNodeCode(ERepayBizNode.SETTLE_RISK_MANAGER_CHECK.getCode());
 
         repayBiz.setIsAdvanceSettled(EBoolean.YES.getCode());
         repayBiz.setRestAmount(0L);
@@ -576,6 +577,18 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         data.setUpdater(updater);
         data.setUpdateDatetime(new Date());
         repayBizDAO.updateRiskManagerCheck(data);
+    }
+
+    @Override
+    public void settleriskManageAudit(String code, String nextNodeCode,
+            String applyNote, String operator) {
+        RepayBiz data = new RepayBiz();
+        data.setCode(code);
+        data.setCurNodeCode(nextNodeCode);
+        data.setRemark(applyNote);
+        data.setUpdater(operator);
+        data.setUpdateDatetime(new Date());
+        repayBizDAO.updateSettleriskManageAudit(data);
     }
 
     @Override
