@@ -12,13 +12,13 @@ import java.util.Map;
 public enum ERepayBizNode {
 
     // 车贷正常流程
-    TO_REPAY("020_01", "还款中"), COMMIT_SETTLE("020_02", "提交结算单"), RISK_MANAGE_AUDIT(
-            "020_03", "风控总监理审核"), FINANCE_CHECK("020_04", "财务审核"), CASH_REMIT(
-            "020_05", "确认付款"), RELEASE_MORTGAGE_APPLY("020_06", "解除抵押申请"), RISK_INDOOR_CHECK(
-            "020_07", "风控内勤审核"), RISK_MANAGER_CHECK("020_08", "风控经理审核"), MORTGAGE_PRINT(
-            "020_09", "打印岗打印"), PHYSICAL_PARTS("020_10", "理件岗理件"), BANK_REC_LOGIC(
-            "020_11", "寄送银行材料"), MORTGAGE_COMMIT_FILE("020_12", "驻行人员提交材料"), MORTGAGE_OVER(
-            "020_13", "解除抵押完成"),
+    TO_REPAY("020_01", "还款中"),RELEASE_MORTGAGE_APPLY("020_02", "解除抵押申请"), RISK_INDOOR_CHECK(
+            "020_03", "风控内勤审核"), RISK_MANAGER_CHECK("020_04", "风控经理审核"), MORTGAGE_PRINT(
+            "020_05", "打印岗打印"), PHYSICAL_PARTS("020_06", "理件岗理件"), BANK_REC_LOGIC(
+            "020_07", "寄送银行材料"), MORTGAGE_COMMIT_FILE("020_08", "驻行人员提交材料"),COMMIT_SETTLE(
+            "020_09", "提交结算单"), RISK_MANAGE_AUDIT("020_10", "风控总监理审核"), FINANCE_CHECK(
+            "020_11", "财务审核"), CASH_REMIT("020_12", "确认付款"), SETTLE_OVER(
+            "020_13", "已结清"),
 
     // 收车流程To hold court
     TC_APPLY("021_01", "申请收车"), TC_COMPANY_MANAGE_CHECK("021_02", "分公司总经理审核"), TC_RISK_MANAGE_CHECK(

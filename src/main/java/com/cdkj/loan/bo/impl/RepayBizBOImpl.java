@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IBankcardAO;
+import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
@@ -35,6 +36,7 @@ import com.cdkj.loan.dto.req.XN630512Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
+import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.EGeneratePrefix;
 import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.ERepayBizNode;
@@ -60,6 +62,9 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private IBudgetOrderBO budgetOrderBO;
 
     @Override
     @Transactional
@@ -201,6 +206,16 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         RepayBiz repayBiz = getRepayBiz(repayBizCode);
         repayBiz.setRestAmount(repayBiz.getRestAmount() - realWithholdAmount);
         if (repayBiz.getRestAmount() == 0) {
+            BudgetOrder budgetOrder = budgetOrderBO
+                .getBudgetOrderByRepayBizCode(repayBiz.getRefCode());
+            // 判断是否抵押过
+            if (EBudgetOrderNode.LOCAL_PLEDGE_ACHIEVE.getCode()
+                .equals(budgetOrder.getPledgeCurNodeCode())
+                    || EBudgetOrderNode.OUT_PLEDGE_ACHIEVE.getCode()
+                        .equals(budgetOrder.getPledgeCurNodeCode())) {
+                repayBiz.setCurNodeCode(
+                    ERepayBizNode.RELEASE_MORTGAGE_APPLY.getCode());
+            }
             repayBiz.setCurNodeCode(ERepayBizNode.COMMIT_SETTLE.getCode());// 提交结算单节点
             repayBiz.setRemark("提交结算单");
         }
@@ -590,9 +605,18 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     @Override
     @Transactional
     public void refreshRepayEndCommitSettle(String code) {
-        RepayBiz data = new RepayBiz();
-        data.setCode(code);
-        data.setCurNodeCode(ERepayBizNode.COMMIT_SETTLE.getCode());
+        RepayBiz data = getRepayBiz(code);
+        BudgetOrder budgetOrder = budgetOrderBO
+            .getBudgetOrderByRepayBizCode(data.getRefCode());
+        // 判断是否抵押过
+        if (EBudgetOrderNode.LOCAL_PLEDGE_ACHIEVE.getCode()
+            .equals(budgetOrder.getPledgeCurNodeCode())
+                || EBudgetOrderNode.OUT_PLEDGE_ACHIEVE.getCode()
+                    .equals(budgetOrder.getPledgeCurNodeCode())) {
+            data.setCurNodeCode(ERepayBizNode.RELEASE_MORTGAGE_APPLY.getCode());
+        } else {
+            data.setCurNodeCode(ERepayBizNode.COMMIT_SETTLE.getCode());
+        }
         repayBizDAO.updateRepayEndCommitSettle(data);
     }
 

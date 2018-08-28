@@ -61,6 +61,7 @@ import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
+import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ECollectBankcardType;
 import com.cdkj.loan.enums.EDealResult;
 import com.cdkj.loan.enums.ELogisticsStatus;
@@ -306,13 +307,14 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Transactional
     public void confirmSettledProduct(XN630513Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getCode());
-        // if (!ERepayBizNode.PRO_SETTLED.getCode()
-        // .equals(repayBiz.getCurNodeCode())) {
-        // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-        // "当前产品状态不是已还款，不能确认结清！");
-        // }
-
-        // 更新还款业务
+        // // if (!ERepayBizNode.PRO_SETTLED.getCode()
+        // // .equals(repayBiz.getCurNodeCode())) {
+        // // throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+        // // "当前产品状态不是已还款，不能确认结清！");
+        // // }
+        //
+        // // 更新还款业务
+        // //
         // repayBiz.setCurNodeCode(ERepayBizNode.PRO_CONFIRM_SETTLE.getCode());
         repayBiz.setCutLyDeposit(StringValidater.toLong(req.getCutLyDeposit()));
         repayBiz.setUpdater(req.getUpdater());
@@ -689,7 +691,17 @@ public class RepayBizAOImpl implements IRepayBizAO {
         } else if (EDealResult.REDEEM.getCode().equals(req.getDealResult())) {// 赎回或缴纳押金
             nextNodeCode = ERepayBizNode.REDEEM_FINANCIAL_AUDIT.getCode();
         } else if (EDealResult.GREEN.getCode().equals(req.getDealResult())) {// 申请结清
-            nextNodeCode = ERepayBizNode.COMMIT_SETTLE.getCode();
+            BudgetOrder budgetOrder = budgetOrderBO
+                .getBudgetOrderByRepayBizCode(repayBiz.getRefCode());
+            // 判断是否抵押过
+            if (EBudgetOrderNode.LOCAL_PLEDGE_ACHIEVE.getCode()
+                .equals(budgetOrder.getPledgeCurNodeCode())
+                    || EBudgetOrderNode.OUT_PLEDGE_ACHIEVE.getCode()
+                        .equals(budgetOrder.getPledgeCurNodeCode())) {
+                nextNodeCode = ERepayBizNode.RELEASE_MORTGAGE_APPLY.getCode();
+            } else {
+                nextNodeCode = ERepayBizNode.COMMIT_SETTLE.getCode();
+            }
             // 还款计划处理为已还款
             repayPlanBO.refreshRepayPlanTakeCarHandle(
                 repayPlan.getRepayBizCode(), ERepayPlanNode.REPAY_YES);
@@ -912,7 +924,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
         if (!ERepayBizNode.RELEASE_MORTGAGE_APPLY.getCode()
             .equals(repayBiz.getCurNodeCode())) {
-            throw new BizException("xn0000", "还款业务不在解除抵押申请节点！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "还款业务不在解除抵押申请节点！");
         }
 
         String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
@@ -1137,7 +1150,18 @@ public class RepayBizAOImpl implements IRepayBizAO {
             if (ERepayBizNode.REDEEM_FINANCIAL_AUDIT.getCode()
                 .equals(curNodeCode)) {
                 if (repayPlan.getCurPeriods() == repayPlan.getPeriods()) {// 最后一期
-                    nextNodeCode = ERepayBizNode.COMMIT_SETTLE.getCode();
+                    BudgetOrder budgetOrder = budgetOrderBO
+                        .getBudgetOrderByRepayBizCode(repayBiz.getRefCode());
+                    // 判断是否抵押过
+                    if (EBudgetOrderNode.LOCAL_PLEDGE_ACHIEVE.getCode()
+                        .equals(budgetOrder.getPledgeCurNodeCode())
+                            || EBudgetOrderNode.OUT_PLEDGE_ACHIEVE.getCode()
+                                .equals(budgetOrder.getPledgeCurNodeCode())) {
+                        nextNodeCode = ERepayBizNode.RELEASE_MORTGAGE_APPLY
+                            .getCode();
+                    } else {
+                        nextNodeCode = ERepayBizNode.COMMIT_SETTLE.getCode();
+                    }
                     // 还款计划处理为已还款
                     repayPlanBO.refreshRepayPlanTakeCarHandle(
                         repayPlan.getRepayBizCode(), ERepayPlanNode.REPAY_YES);

@@ -52,4 +52,39 @@ ADD COLUMN `remark` varchar(255) NULL COMMENT '备注' AFTER `update_datetime`;
 ALTER TABLE `tdh_repay_plan` 
 DROP COLUMN `real_repay_amount`;
 
+INSERT INTO `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('car_periods', '36', '12.5', 'admin', '2018-08-15 17:33:30', '车贷期数管理的期数和利率', 'CD-CWZCD000020', 'CD-CWZCD000020');
+DELETE FROM `tsys_menu` WHERE `code`='SM201808092134147313197';
+
+UPDATE `tsys_node` SET `name`='司法诉讼' WHERE `code`='021_09';
+UPDATE `tsys_node` SET `name`='案件受理' WHERE `code`='021_10';
+UPDATE `tsys_node` SET `name`='送达' WHERE `code`='021_13';
+UPDATE `tsys_node` SET `name`='判决' WHERE `code`='021_14';
+UPDATE `tsys_node` SET `name`='生效' WHERE `code`='021_15';
+UPDATE `tsys_node` SET `name`='申请执行' WHERE `code`='021_16';
+UPDATE `tsys_node` SET `name`='案件受理' WHERE `code`='021_17';
+UPDATE `tsys_node` SET `name`='拍卖' WHERE `code`='021_18';
+UPDATE `tsys_node` SET `name`='公告' WHERE `code`='021_19';
+UPDATE `tsys_node` SET `name`='诉讼结果录入' WHERE `code`='021_20';
+UPDATE `tsys_node` SET `name`='恢复执行' WHERE `code`='021_21';  
+UPDATE `tsys_node` SET `name`='财务收款' WHERE `code`='021_22';
+UPDATE `tsys_node` SET `name`='录入查封裁定到期时间' WHERE `code`='021_23';
+UPDATE `tsys_node` SET `name`='司法诉讼完成' WHERE `code`='021_24';
+INSERT INTO tsys_node` (`code`, `name`, `type`) VALUES ('021_25', '坏账', '021');
+INSERT INTO tsys_node` (`code`, `name`, `type`) VALUES ('021_26', '赎回财务审核', '021');
+INSERT INTO tsys_node` (`code`, `name`, `type`) VALUES ('021_27', '转卖财务审核', '021');
+INSERT INTO tsys_node` (`code`, `name`, `type`) VALUES ('021_28', '公司结清出纳打款', '021');
+INSERT INTO tsys_node` (`code`, `name`, `type`) VALUES ('021_29', '公司已结清', '021');
+
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('021', '021_09', '021_10');
+UPDATE `tsys_node_flow` SET `back_node`='021_09' WHERE `id`='91';
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('021', '021_17', '021_18');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('021', '021_19', '021_20');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('021', '021_20', '021_21');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('021', '021_21', '021_17');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('021', '021_22', '021_23');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('021', '021_28', '021_29');
+UPDATE `tsys_node_flow` SET `back_node`='020_09' WHERE `id`='80';
+UPDATE `tsys_node_flow` SET `back_node`='020_10' WHERE `id`='81';
+UPDATE `tsys_node_flow` SET `back_node`='' WHERE `id`='77';
+UPDATE `tsys_node_flow` SET `back_node`='' WHERE `id`='78';
 
