@@ -19,7 +19,6 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.IBankDAO;
 import com.cdkj.loan.dao.IChannelBankDAO;
 import com.cdkj.loan.dao.IRepayPlanDAO;
-import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.ChannelBank;
 import com.cdkj.loan.domain.RepayBiz;
@@ -122,9 +121,9 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
         if (CollectionUtils.isNotEmpty(list)) {
             data = list.get(0);
             if (StringUtils.isNotBlank(data.getTsBankCode())) {
-                Bank domain = new Bank();
-                domain.setBankCode(data.getTsBankCode());
-                Bank bank = bankDAO.select(domain);
+                ChannelBank channelBank = new ChannelBank();
+                channelBank.setBankCode(data.getTsBankCode());
+                ChannelBank bank = channelBankDAO.select(channelBank);
                 data.setTsBankName(bank.getBankName());
             }
         }
