@@ -36,14 +36,22 @@ public class XN630570Req {
     private String thirdCompanyInsurance;
 
     // 结清证明
+    @NotBlank
     private String settleAttach;
 
     // 结清时间
     @NotBlank
     private String settleDatetime;
 
+    // 是否有押金单
+    @NotBlank
+    private String isDepositReceipt;
+
     // 押金单
     private String depositReceipt;
+
+    // 押金单遗失证明
+    private String depositReceiptLostProof;
 
     @NotBlank
     private String operator;
@@ -57,6 +65,22 @@ public class XN630570Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getIsDepositReceipt() {
+        return isDepositReceipt;
+    }
+
+    public void setIsDepositReceipt(String isDepositReceipt) {
+        this.isDepositReceipt = isDepositReceipt;
+    }
+
+    public String getDepositReceiptLostProof() {
+        return depositReceiptLostProof;
+    }
+
+    public void setDepositReceiptLostProof(String depositReceiptLostProof) {
+        this.depositReceiptLostProof = depositReceiptLostProof;
     }
 
     public String getCode() {

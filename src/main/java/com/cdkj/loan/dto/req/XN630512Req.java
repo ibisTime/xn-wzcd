@@ -16,8 +16,15 @@ public class XN630512Req {
     // 结清时间
     private String settleDatetime;
 
+    // 是否有押金单
+    @NotBlank
+    private String isDepositReceipt;
+
     // 押金单
     private String depositReceipt;
+
+    // 押金单遗失证明
+    private String depositReceiptLostProof;
 
     @NotBlank
     private String refundBankSubbranch; // 退款开户行
@@ -95,6 +102,22 @@ public class XN630512Req {
 
     public void setRefundBankRealName(String refundBankRealName) {
         this.refundBankRealName = refundBankRealName;
+    }
+
+    public String getIsDepositReceipt() {
+        return isDepositReceipt;
+    }
+
+    public void setIsDepositReceipt(String isDepositReceipt) {
+        this.isDepositReceipt = isDepositReceipt;
+    }
+
+    public String getDepositReceiptLostProof() {
+        return depositReceiptLostProof;
+    }
+
+    public void setDepositReceiptLostProof(String depositReceiptLostProof) {
+        this.depositReceiptLostProof = depositReceiptLostProof;
     }
 
     public String getRefundBankcard() {

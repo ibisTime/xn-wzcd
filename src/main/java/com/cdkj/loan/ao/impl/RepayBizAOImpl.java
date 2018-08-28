@@ -807,7 +807,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
         data.setSettleDatetime(DateUtil.strToDate(req.getSettleDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
 
-        data.setDepositReceipt(req.getDepositReceipt());
+        if (EBoolean.YES.getCode().equals(req.getIsDepositReceipt())) {
+            data.setDepositReceipt(req.getDepositReceipt());
+        } else {
+            data.setDepositReceiptLostProof(req.getDepositReceiptLostProof());
+        }
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());
@@ -820,6 +824,31 @@ public class RepayBizAOImpl implements IRepayBizAO {
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
             EBizLogType.REPAY_BIZ, data.getCode(), data.getCurNodeCode(),
             nextNodeCode, req.getRemark(), req.getOperator());
+    }
+
+    @Override
+    @Transactional
+    public void riskManagerCheck(String code, String approveResult,
+            String approveNote, String operator) {
+        RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
+        if (!ERepayBizNode.SETTLE_RISK_MANAGER_CHECK.getCode()
+            .equals(repayBiz.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "还款业务不在风控经理审核节点！");
+        }
+        repayBiz.setRemark(approveNote);
+        repayBiz.setUpdater(operator);
+        repayBiz.setUpdateDatetime(new Date());
+
+        String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
+            approveResult);
+        repayBizBO.refreshRiskManagerCheck(code, nextNodeCode, approveNote,
+            operator);
+
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
+            EBizLogType.REPAY_BIZ, repayBiz.getCode(),
+            repayBiz.getCurNodeCode(), nextNodeCode, approveNote, operator);
     }
 
     @Override

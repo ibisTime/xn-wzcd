@@ -244,7 +244,12 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         repayBiz.setSettleAttach(req.getSettleAttach());
         repayBiz.setSettleDatetime(DateUtil.strToDate(req.getSettleDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
-        repayBiz.setDepositReceipt(req.getDepositReceipt());
+        if (EBoolean.YES.getCode().equals(req.getIsDepositReceipt())) {
+            repayBiz.setDepositReceipt(req.getDepositReceipt());
+        } else {
+            repayBiz
+                .setDepositReceiptLostProof(req.getDepositReceiptLostProof());
+        }
         repayBiz.setRefundBankSubbranch(req.getRefundBankSubbranch());
 
         repayBiz.setRefundBankRealName(req.getRefundBankRealName());

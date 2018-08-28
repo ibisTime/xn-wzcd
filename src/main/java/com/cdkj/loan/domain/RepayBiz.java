@@ -156,8 +156,14 @@ public class RepayBiz extends ABaseDO {
     // 处理结果附件
     private String dealEnclosure;
 
+    // 是否有押金单
+    private String isDepositReceipt;
+
     // 押金单
     private String depositReceipt;
+
+    // 押金单遗失证明
+    private String depositReceiptLostProof;
 
     // 退款开户行
     private String refundBankSubbranch;
@@ -319,6 +325,22 @@ public class RepayBiz extends ABaseDO {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getIsDepositReceipt() {
+        return isDepositReceipt;
+    }
+
+    public void setIsDepositReceipt(String isDepositReceipt) {
+        this.isDepositReceipt = isDepositReceipt;
+    }
+
+    public String getDepositReceiptLostProof() {
+        return depositReceiptLostProof;
+    }
+
+    public void setDepositReceiptLostProof(String depositReceiptLostProof) {
+        this.depositReceiptLostProof = depositReceiptLostProof;
     }
 
     public String getBankcardNumber() {

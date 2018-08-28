@@ -75,6 +75,22 @@ INSERT INTO tsys_node` (`code`, `name`, `type`) VALUES ('021_27', '转卖财务�
 INSERT INTO tsys_node` (`code`, `name`, `type`) VALUES ('021_28', '公司结清出纳打款', '021');
 INSERT INTO tsys_node` (`code`, `name`, `type`) VALUES ('021_29', '公司已结清', '021');
 
+UPDATE `tsys_node` SET `name`='风控内勤审核' WHERE `code`='020_03';
+UPDATE `tsys_node` SET `name`='解除抵押申请' WHERE `code`='020_02';
+UPDATE `tsys_node` SET `name`='理件岗理件' WHERE `code`='020_06';
+UPDATE `tsys_node` SET `name`='提交结算单' WHERE `code`='020_09';
+UPDATE `tsys_node` SET `name`='打印岗打印' WHERE `code`='020_05';
+UPDATE `tsys_node` SET `name`='财务审核' WHERE `code`='020_12';
+UPDATE `tsys_node` SET `name`='驻行人员提交材料' WHERE `code`='020_08';
+UPDATE `tsys_node` SET `name`='风控经理审核' WHERE `code`='020_04';
+UPDATE `tsys_node` SET `name`='风控总监审核' WHERE `code`='020_11';
+UPDATE `tsys_node` SET `name`='寄送银行材料' WHERE `code`='020_07';
+UPDATE `tsys_node` SET `name`='风控经理审核' WHERE `code`='020_10';
+UPDATE `tsys_node` SET `name`='确认付款' WHERE `code`='020_13';
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('020_14', '已结清', '020');
+
+
+
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('021', '021_09', '021_10');
 UPDATE `tsys_node_flow` SET `back_node`='021_09' WHERE `id`='91';
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('021', '021_17', '021_18');
@@ -87,4 +103,12 @@ UPDATE `tsys_node_flow` SET `back_node`='020_09' WHERE `id`='80';
 UPDATE `tsys_node_flow` SET `back_node`='020_10' WHERE `id`='81';
 UPDATE `tsys_node_flow` SET `back_node`='' WHERE `id`='77';
 UPDATE `tsys_node_flow` SET `back_node`='' WHERE `id`='78';
+UPDATE `tsys_node_flow` SET `back_node`='020_02' WHERE `id`='74';
+UPDATE `tsys_node_flow` SET `back_node`='020_09' WHERE `id`='81';
+UPDATE `tsys_node_flow` SET `back_node`='020_09' WHERE `id`='82';
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('020', '020_13', '020_14');
 
+
+ALTER TABLE `tdh_repay_biz` 
+ADD COLUMN `is_deposit_receipt` VARCHAR(4) NULL COMMENT '是否有押金单' AFTER `deal_enclosure`,
+ADD COLUMN `deposit_receipt_lost_proof` tinytext NULL COMMENT '押金单遗失证明' AFTER `deposit_receipt`;

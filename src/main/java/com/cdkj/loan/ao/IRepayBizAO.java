@@ -68,6 +68,10 @@ public interface IRepayBizAO {
     // 结算单申请
     public void commitSettle(XN630570Req req);
 
+    // 风控经理审核
+    public void riskManagerCheck(String code, String approveResult,
+            String approveNote, String operator);
+
     // 风控总监理审核
     public void riskManageAudit(XN630578Req req);
 

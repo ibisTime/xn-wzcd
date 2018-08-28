@@ -58,7 +58,9 @@
 		<result column="payment_bank" property="paymentBank" />
 		<result column="payment_pdf" property="paymentPdf" />
 		<result column="deal_enclosure" property="dealEnclosure" />
+		<result column="is_deposit_receipt" property="isDepositReceipt" />
 		<result column="deposit_receipt" property="depositReceipt" />
+		<result column="deposit_receipt_lost_proof" property="depositReceiptLostProof" />
 		<result column="refund_bank_subbranch" property="refundBankSubbranch" />
 		<result column="refund_bank_real_name" property="refundBankRealName" />
 		<result column="refund_bankcard" property="refundBankcard" />
@@ -225,7 +227,9 @@
 		,t.payment_bank
 		,t.payment_pdf
 		,t.deal_enclosure
+		,t.is_deposit_receipt
 		,t.deposit_receipt
+		,t.deposit_receipt_lost_proof
 		,t.refund_bank_subbranch
 		
 		,t.refund_bank_real_name
@@ -323,7 +327,9 @@
 		,t.payment_bank
 		,t.payment_pdf
 		,t.deal_enclosure
+		,t.is_deposit_receipt
 		,t.deposit_receipt
+		,t.deposit_receipt_lost_proof
 		,t.refund_bank_subbranch
 		
 		,t.refund_bank_real_name
@@ -421,7 +427,9 @@
 		,t.payment_bank
 		,t.payment_pdf
 		,t.deal_enclosure
+		,t.is_deposit_receipt
 		,t.deposit_receipt
+		,t.deposit_receipt_lost_proof
 		,t.refund_bank_subbranch
 		
 		,t.refund_bank_real_name
@@ -627,7 +635,9 @@
 		,settle_attach = #{settleAttach}
 	    ,settle_datetime = #{settleDatetime}
 	    
+		,is_deposit_receipt = #{isDepositReceipt}
 		,deposit_receipt = #{depositReceipt}
+		,deposit_receipt_lost_proof = #{depositReceiptLostProof}
 		,refund_bank_subbranch = #{refundBankSubbranch}
 		,refund_bank_real_name = #{refundBankRealName}
 		,refund_bankcard = #{refundBankcard}
@@ -848,7 +858,9 @@
 		,third_company_insurance = #{thirdCompanyInsurance}
 		,settle_attach = #{settleAttach}
 		,settle_datetime = #{settleDatetime}
+		,is_deposit_receipt = #{isDepositReceipt}
 		,deposit_receipt = #{depositReceipt}
+		,deposit_receipt_lost_proof = #{depositReceiptLostProof}
 		,remark = #{remark}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
