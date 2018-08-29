@@ -24,7 +24,6 @@ public class XN630550Req {
     private String ransom;
 
     // 收车申请费用
-    @NotBlank
     private String tsCarAmount;
 
     // 收车人姓名
