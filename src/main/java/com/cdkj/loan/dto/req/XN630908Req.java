@@ -6,7 +6,9 @@ package com.cdkj.loan.dto.req;
  * @since: 2018年8月21日 上午11:35:53 
  * @history:
  */
-public class XN630908Req {
+public class XN630908Req extends APageReq {
+
+    private static final long serialVersionUID = 4276641370382948570L;
 
     // 放款年份
     private String fkYear;

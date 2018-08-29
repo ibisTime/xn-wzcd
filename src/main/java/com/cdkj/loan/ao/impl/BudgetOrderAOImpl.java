@@ -85,7 +85,6 @@ import com.cdkj.loan.domain.SupplementReason;
 import com.cdkj.loan.domain.SysBonuses;
 import com.cdkj.loan.domain.TotalAdvanceFund;
 import com.cdkj.loan.domain.User;
-import com.cdkj.loan.dto.req.XN630908Req;
 import com.cdkj.loan.dto.req.XN630909Req;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632120ReqRepointDetail;
@@ -3142,25 +3141,17 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     }
 
     @Override
-    public Object performanceCompletionSituation(XN630908Req req) {
+    public Object performanceCompletionSituation(int start, int limit,
+            BudgetOrder condition) {
         // 返回结果
         ArrayList<XN630908Res> resList = new ArrayList<XN630908Res>();
 
-        BudgetOrder condition = new BudgetOrder();
-        if (StringUtils.isNotBlank(req.getFkYear())) {
-            condition.setBankFkDatetimeForYear(req.getFkYear());
-        } else {
-            condition.setBankFkDatetimeForYear(
-                new SimpleDateFormat("yyyy").format(new Date()));
-        }
-        condition.setSaleUserId(req.getSaleUserId());
-        condition.setCompanyCode(req.getCompanyCode());
-        List<BudgetOrder> result = budgetOrderBO
-            .queryBudgetOrderList(condition);
+        Paginable<BudgetOrder> paginable = budgetOrderBO.getPaginable(start,
+            limit, condition);
         // 第一步， 把查询结果根据业务员编号分组
         Map<String, List<BudgetOrder>> data = new HashMap<String, List<BudgetOrder>>();
         List<BudgetOrder> list = null;
-        for (BudgetOrder b1 : result) {
+        for (BudgetOrder b1 : paginable.getList()) {
             if (data.containsKey(b1.getSaleUserId())) {
                 list = data.get(b1.getSaleUserId());
             } else {

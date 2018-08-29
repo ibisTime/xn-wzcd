@@ -1,9 +1,17 @@
 package com.cdkj.loan.api.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.apache.commons.lang3.StringUtils;
+
 import com.cdkj.loan.ao.IBudgetOrderAO;
+import com.cdkj.loan.ao.ICollectBankcardAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
+import com.cdkj.loan.core.StringValidater;
+import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN630908Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
@@ -24,7 +32,25 @@ public class XN630908 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return budgetOrderAO.performanceCompletionSituation(req);
+        BudgetOrder condition = new BudgetOrder();
+        if (StringUtils.isNotBlank(req.getFkYear())) {
+            condition.setBankFkDatetimeForYear(req.getFkYear());
+        } else {
+            condition.setBankFkDatetimeForYear(
+                new SimpleDateFormat("yyyy").format(new Date()));
+        }
+        condition.setSaleUserId(req.getSaleUserId());
+        condition.setCompanyCode(req.getCompanyCode());
+
+        String orderColumn = req.getOrderColumn();
+        if (StringUtils.isBlank(orderColumn)) {
+            orderColumn = ICollectBankcardAO.DEFAULT_ORDER_COLUMN;
+        }
+        condition.setOrder(orderColumn, req.getOrderDir());
+        int start = StringValidater.toInteger(req.getStart());
+        int limit = StringValidater.toInteger(req.getLimit());
+        return budgetOrderAO.performanceCompletionSituation(start, limit,
+            condition);
     }
 
     @Override
