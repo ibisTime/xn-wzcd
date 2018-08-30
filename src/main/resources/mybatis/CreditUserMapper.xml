@@ -148,7 +148,32 @@
 		,auth_pdf
 		
 		,interview_pic		
-		,is_first_audit		
+		,is_first_audit
+		,dkdy_count
+		
+		,dkdy_amount
+		,dkdy_2year_over_times
+		,dkdy_max_over_amount
+		,dkdy_current_over_amount
+		,dkdy_6month_avg_amount
+				
+		,hkxy_unsettle_count
+		,hkxy_unsettle_amount
+		,hkxy_2year_over_times
+		,hkxy_month_max_over_amount
+		,hkxy_current_over_amount
+		
+		,hkxy_6month_avg_amount
+		,xyk_count
+		,xyk_credit_amount
+		,xyk_6month_use_amount
+		,xyk_2year_over_times
+		
+		,xyk_month_max_over_amount
+		,xyk_current_over_amount
+		,out_guarantees_count
+		,out_guarantees_amount
+		,out_guarantees_remark		
 		)
 		VALUES(
 		#{code}
@@ -166,6 +191,31 @@
 		
 		,#{interviewPic}
 		,#{isFirstAudit}
+		,#{dkdyCount}
+		
+		,#{dkdyAmount}
+		,#{dkdy2yearOverTimes}
+		,#{dkdyMaxOverAmount}
+		,#{dkdyCurrentOverAmount}
+		,#{dkdy6monthAvgAmount}
+				
+		,#{hkxyUnsettleCount}
+		,#{hkxyUnsettleAmount}
+		,#{hkxy2yearOverTimes}
+		,#{hkxyMonthMaxOverAmount}
+		,#{hkxyCurrentOverAmount}
+		
+		,#{hkxy6monthAvgAmount}
+		,#{xykCount}
+		,#{xykCreditAmount}
+		,#{xyk6monthUseAmount}
+		,#{xyk2yearOverTimes}
+		
+		,#{xykMonthMaxOverAmount}
+		,#{xykCurrentOverAmount}
+		,#{outGuaranteesCount}
+		,#{outGuaranteesAmount}
+		,#{outGuaranteesRemark}
 		)
 	</insert>
 	
