@@ -8,8 +8,9 @@ package com.cdkj.loan.enums;
  */
 public enum EArchiveStatus {
 
-    BRANCH_CEO_APPROVE("015_01", "分公司总经理审批"), ON_JOB("2", "行政部审批"), LEAVE("3",
-            "离职"), RETIRE("4", "退休");
+    BRANCH_CEO_APPROVE("015_01", "分公司总经理审批"), ADMINISTRATION_APPROVE(
+        "2","行政部审批"), NETWORK_SKILL_APPROVE("3","网络技术部审批"), REAPPLY(
+        "4", "重新申请");
 
     EArchiveStatus(String code, String value) {
         this.code = code;
