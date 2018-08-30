@@ -32,6 +32,8 @@
 		
 		<result column="exe_case_number" property="exeCaseNumber" />
 		<result column="exe_apply_user" property="exeApplyUser" />
+		<result column="apply_datetime" property="applyDatetime" />
+		<result column="be_exe_user" property="beExeUser" />
 		<result column="execute_mark_amount" property="executeMarkAmount" />
 		<result column="recovery_datetime" property="recoveryDatetime" />
 		<result column="exe_datetime" property="exeDatetime" />
@@ -87,6 +89,8 @@
 		,t.effective_time
 		,t.exe_case_number
 		,t.exe_apply_user
+		,t.apply_datetime
+		,t.be_exe_user
 		,t.execute_mark_amount
 		,t.recovery_datetime
 		,t.exe_datetime
@@ -220,6 +224,7 @@
 		UPDATE tdh_judge
 		SET
 		exe_apply_user = #{exeApplyUser}
+		,apply_datetime = #{applyDatetime}
 		,be_exe_user = #{beExeUser}
 		,execute_mark_amount = #{executeMarkAmount}
 		,recovery_datetime = #{recoveryDatetime}

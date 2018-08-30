@@ -132,3 +132,9 @@ UPDATE `tsys_node_flow` SET `back_node`='020_10' WHERE `id`='81';
 UPDATE `tsys_node_flow` SET `back_node`='020_10' WHERE `id`='82';
 UPDATE `tsys_node_flow` SET `back_node`='020_10' WHERE `id`='111';
 UPDATE `tsys_node_flow` SET `back_node`='' WHERE `id`='80';
+
+
+ALTER TABLE `tb_bank` 
+CHANGE COLUMN `rate12` `rate12` DECIMAL(18,8) NULL DEFAULT NULL COMMENT '12期' ,
+CHANGE COLUMN `rate24` `rate24` DECIMAL(18,8) NULL DEFAULT NULL COMMENT '24期' ,
+CHANGE COLUMN `rate36` `rate36` DECIMAL(18,8) NULL DEFAULT NULL COMMENT '36期' ;
