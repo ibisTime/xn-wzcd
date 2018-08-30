@@ -235,6 +235,49 @@ public class CreditAOImpl implements ICreditAO {
             data.setIdNoReverse(reqChild.getIdNoReverse());
             data.setAuthPdf(reqChild.getAuthPdf());
             data.setInterviewPic(reqChild.getInterviewPic());
+            data.setDkdyCount(
+                StringValidater.toInteger(reqChild.getDkdyCount()));
+            data.setDkdyAmount(
+                StringValidater.toLong(reqChild.getDkdyAmount()));
+            data.setDkdy2YearOverTimes(
+                StringValidater.toInteger(reqChild.getDkdy2YearOverTimes()));
+            data.setDkdyMaxOverAmount(
+                StringValidater.toLong(reqChild.getDkdyMaxOverAmount()));
+            data.setDkdyCurrentOverAmount(
+                StringValidater.toLong(reqChild.getDkdyCurrentOverAmount()));
+            data.setDkdy6MonthAvgAmount(
+                StringValidater.toLong(reqChild.getDkdy6MonthAvgAmount()));
+
+            data.setHkxyUnsettleCount(
+                StringValidater.toInteger(reqChild.getHkxyUnsettleCount()));
+            data.setHkxyUnsettleAmount(
+                StringValidater.toLong(reqChild.getHkxyUnsettleAmount()));
+            data.setHkxy2YearOverTimes(
+                StringValidater.toInteger(reqChild.getHkxy2YearOverTimes()));
+            data.setHkxyMonthMaxOverAmount(
+                StringValidater.toLong(reqChild.getHkxyMonthMaxOverAmount()));
+            data.setHkxy6MonthAvgAmount(
+                StringValidater.toLong(reqChild.getHkxy6MonthAvgAmount()));
+            data.setHkxyCurrentOverAmount(
+                StringValidater.toLong(reqChild.getHkxyCurrentOverAmount()));
+
+            data.setXykCount(StringValidater.toInteger(reqChild.getXykCount()));
+            data.setXykCreditAmount(
+                StringValidater.toLong(reqChild.getXykCreditAmount()));
+            data.setXyk6MonthUseAmount(
+                StringValidater.toLong(reqChild.getXyk6MonthUseAmount()));
+            data.setXyk2YearOverTimes(
+                StringValidater.toInteger(reqChild.getXyk2YearOverTimes()));
+            data.setXykMonthMaxOverAmount(
+                StringValidater.toLong(reqChild.getXykMonthMaxOverAmount()));
+            data.setXykCurrentOverAmount(
+                StringValidater.toLong(reqChild.getXykCurrentOverAmount()));
+
+            data.setOutGuaranteesCount(
+                StringValidater.toInteger(reqChild.getOutGuaranteesCount()));
+            data.setOutGuaranteesAmount(
+                StringValidater.toLong(reqChild.getOutGuaranteesAmount()));
+            data.setOutGuaranteesRemark(reqChild.getOutGuaranteesRemark());
             creditUserBO.saveCreditUser(data);
         }
 

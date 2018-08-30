@@ -189,7 +189,7 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
         Judge judge = queryJudgeByRepayBizCode(req.getRepayBizCode(),
             EBoolean.NO);
         judge.setHandleJudge(req.getHandleJudge());
-        judge.setHearCaseNumber(req.getHandleJudge());
+        judge.setHearCaseNumber(req.getHearCaseNumber());
         judge.setCaseNumber(req.getHearCaseNumber());
         judge.setUpdater(req.getOperator());
         judge.setUpdateDatetime(new Date());
