@@ -956,6 +956,10 @@ public class RepayBizAOImpl implements IRepayBizAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "还款业务不在解除抵押申请节点！");
         }
+        if (EBoolean.YES.getCode().equals(repayBiz.getIsLogistics())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前还款业务在资料传递中，请先去资料传递！");
+        }
 
         String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
             EBoolean.YES.getCode());

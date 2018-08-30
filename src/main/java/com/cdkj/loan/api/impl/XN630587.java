@@ -1,7 +1,7 @@
 package com.cdkj.loan.api.impl;
 
+import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.api.AProcessor;
-import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.domain.BudgetOrder;
@@ -18,15 +18,15 @@ import com.cdkj.loan.spring.SpringContextHolder;
  * @history:
  */
 public class XN630587 extends AProcessor {
-    private IBudgetOrderBO budgetOrderBO = SpringContextHolder
-        .getBean(IBudgetOrderBO.class);
+    private IBudgetOrderAO budgetOrderAO = SpringContextHolder
+        .getBean(IBudgetOrderAO.class);
 
     private XN630587Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
         Boolean b = null;
-        BudgetOrder budgetOrder = budgetOrderBO
+        BudgetOrder budgetOrder = budgetOrderAO
             .getBudgetOrderByRepayBizCode(req.getCode());
         if (EBudgetOrderNode.LOCAL_PLEDGE_ACHIEVE.getCode()
             .equals(budgetOrder.getPledgeCurNodeCode())

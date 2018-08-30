@@ -13,7 +13,6 @@ public class XN630581Req {
     private String handleJudge;
 
     // 执行案号
-    @NotBlank
     private String hearCaseNumber;
 
     // 优先权标的物

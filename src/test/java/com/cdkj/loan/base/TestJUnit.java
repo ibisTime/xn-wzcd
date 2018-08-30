@@ -1,11 +1,25 @@
 package com.cdkj.loan.base;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.unitils.UnitilsJUnit4;
+
+import com.cdkj.loan.common.DateUtil;
 
 public class TestJUnit extends UnitilsJUnit4 {
 
     public static void main(String[] args) {
-
+        Date date = DateUtil.strToDate("2018-08-29 20:56:00",
+            DateUtil.DATA_TIME_PATTERN_1);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        long time1 = cal.getTimeInMillis();
+        cal.setTime(new Date());
+        long time2 = cal.getTimeInMillis();
+        long between_days = (time2 - time1) / (1000 * 3600 * 24);
+        int days = Integer.parseInt(String.valueOf(between_days));
+        System.out.println(days);
         // String host = "https://jisucxdq.market.alicloudapi.com";
         // String path = "/car/detail";
         // String method = "GET";

@@ -190,4 +190,7 @@ public interface IBudgetOrderAO {
     // 统计分析 奖金提成
     public Object bonusDeduct(BudgetOrder condition);
 
+    // 通过还款业务编号获取预算单
+    public BudgetOrder getBudgetOrderByRepayBizCode(String code);
+
 }
