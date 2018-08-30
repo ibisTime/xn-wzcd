@@ -10,7 +10,7 @@ public class XN630584Req {
 
     // 查封裁定到期时间
     @NotBlank
-    private String AdjudicationDeadline;
+    private String adjudicationDeadline;
 
     // 操作人
     @NotBlank
@@ -24,20 +24,20 @@ public class XN630584Req {
         this.repayBizCode = repayBizCode;
     }
 
-    public String getAdjudicationDeadline() {
-        return AdjudicationDeadline;
-    }
-
-    public void setAdjudicationDeadline(String adjudicationDeadline) {
-        AdjudicationDeadline = adjudicationDeadline;
-    }
-
     public String getOperator() {
         return operator;
     }
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getAdjudicationDeadline() {
+        return adjudicationDeadline;
+    }
+
+    public void setAdjudicationDeadline(String adjudicationDeadline) {
+        this.adjudicationDeadline = adjudicationDeadline;
     }
 
 }
