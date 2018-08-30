@@ -89,7 +89,8 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
     }
 
     @Override
-    public Judge queryJudgeByRepayBizCode(String repayBizCode, EBoolean status) {
+    public Judge queryJudgeByRepayBizCode(String repayBizCode,
+            EBoolean status) {
         Judge condition = new Judge();
         condition.setRepayBizCode(repayBizCode);
         condition.setStatus(status.getCode());
@@ -176,8 +177,14 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
         judge.setExeApplyUser(req.getExeApplyUser());
         judge.setApplyDatetime(new Date());
         judge.setBeExeUser(req.getBeExeUser());
-        judge.setExecuteMarkAmount(StringValidater.toLong(req
-            .getExecuteMarkAmount()));
+        if (StringUtils.isNotBlank(req.getExecuteMarkAmount())) {
+            judge.setExecuteMarkAmount(
+                StringValidater.toLong(req.getExecuteMarkAmount()));
+        }
+        if (StringUtils.isNotBlank(req.getRecoveryDatetime())) {
+            judge.setRecoveryDatetime(DateUtil.strToDate(
+                req.getRecoveryDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        }
         judge.setUpdater(req.getOperator());
         judge.setUpdateDatetime(new Date());
         judgeDAO.applyImplement(judge);
@@ -189,6 +196,7 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
             EBoolean.NO);
         judge.setHandleJudge(req.getHandleJudge());
         judge.setHearCaseNumber(req.getHearCaseNumber());
+        judge.setCaseSubject(req.getCaseSubject());
         judge.setCaseNumber(req.getHearCaseNumber());
         judge.setUpdater(req.getOperator());
         judge.setUpdateDatetime(new Date());
