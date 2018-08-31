@@ -952,7 +952,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
             String operator) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
         if (!ERepayBizNode.RELEASE_MORTGAGE_APPLY.getCode()
-            .equals(repayBiz.getCurNodeCode())) {
+            .equals(repayBiz.getCurNodeCode())
+                && !ERepayBizNode.TO_REPAY.getCode()
+                    .equals(repayBiz.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "还款业务不在解除抵押申请节点！");
         }
@@ -961,8 +963,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 "当前还款业务在资料传递中，请先去资料传递！");
         }
 
-        String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
-            EBoolean.YES.getCode());
+        String nextNodeCode = ERepayBizNode.RISK_INDOOR_CHECK.getCode();
 
         // 如果客户未逾期过，即白名单，则不需要经过风控审核
         // 查这个人所有的还款业务，累计逾期期数相加
