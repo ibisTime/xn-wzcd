@@ -56,12 +56,6 @@
 			<if test="operatorMobileForQuery != null and operatorMobileForQuery != '' ">
 				AND t.operator_mobile like "%"#{operatorMobileForQuery}"%"
 			</if>
-			<if test="startDatetimeStart != null and startDatetimeStart != '' ">
-				<![CDATA[AND t.start_datetime >= #{startDatetimeStart}]]>
-			</if>
-			<if test="endDatetimeEnd != null and endDatetimeEnd != '' ">
-				<![CDATA[AND t.end_datetime <= #{endDatetimeEnd}]]>
-			</if>
 			<if test="roleCode != null and roleCode != '' ">
 				AND trn.roleCode = #{roleCode}
 			</if>
