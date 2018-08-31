@@ -15,24 +15,29 @@ import com.cdkj.loan.ao.IArchiveAO;
 import com.cdkj.loan.ao.ISYSUserAO;
 import com.cdkj.loan.bo.IArchiveBO;
 import com.cdkj.loan.bo.IDepartmentBO;
+import com.cdkj.loan.bo.INodeFlowBO;
+import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISocialRelationBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
-import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.Department;
-import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.SocialRelation;
 import com.cdkj.loan.dto.req.XN632800Req;
 import com.cdkj.loan.dto.req.XN632800ReqChild;
 import com.cdkj.loan.dto.req.XN632802Req;
 import com.cdkj.loan.dto.req.XN632802ReqChild;
+import com.cdkj.loan.dto.req.XN632804Req;
+import com.cdkj.loan.dto.req.XN632808Req;
+import com.cdkj.loan.dto.req.XN632809Req;
 import com.cdkj.loan.dto.res.XN632803Res;
+import com.cdkj.loan.enums.EArchiveNode;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
-import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -58,6 +63,12 @@ public class ArchiveAOImpl implements IArchiveAO {
 
     @Autowired
     private IDepartmentBO departmentBO;
+
+    @Autowired
+    private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private INodeFlowBO nodeFlowBO;
 
     @Override
     @Transactional
@@ -131,23 +142,23 @@ public class ArchiveAOImpl implements IArchiveAO {
             data.setWorkingYears(workingYears);
         }
 
-        SYSUser sysUserLoginName = sysUserBO
-            .getUserByLoginName(req.getMobile());
-        SYSUser sysUserMobile = sysUserBO.getUserByMobile(req.getMobile());
-
-        String userId = null;
-        if (sysUserLoginName == null && sysUserMobile == null) {
-            userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
-                req.getMobile(), "888888", req.getMobile(), req.getRealName(),
-                SysConstants.COMMON_ROLE, req.getPostCode(), null);
-        } else {
-            if (sysUserLoginName != null) {
-                userId = sysUserLoginName.getUserId();
-            } else if (sysUserMobile != null) {
-                userId = sysUserMobile.getUserId();
-            }
-        }
-        data.setUserId(userId);
+        // SYSUser sysUserLoginName = sysUserBO
+        // .getUserByLoginName(req.getMobile());
+        // SYSUser sysUserMobile = sysUserBO.getUserByMobile(req.getMobile());
+        //
+        // String userId = null;
+        // if (sysUserLoginName == null && sysUserMobile == null) {
+        // userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
+        // req.getMobile(), "888888", req.getMobile(), req.getRealName(),
+        // SysConstants.COMMON_ROLE, req.getPostCode(), null);
+        // } else {
+        // if (sysUserLoginName != null) {
+        // userId = sysUserLoginName.getUserId();
+        // } else if (sysUserMobile != null) {
+        // userId = sysUserMobile.getUserId();
+        // }
+        // }
+        // data.setUserId(userId);
         data.setStatus(EBoolean.YES.getCode());
         String archiveCode = archiveBO.saveArchive(data);
 
@@ -172,11 +183,11 @@ public class ArchiveAOImpl implements IArchiveAO {
     @Override
     @Transactional
     public void editArchive(XN632802Req req) {
-        if (!archiveBO.isArchiveExist(req.getCode())) {
-            throw new BizException("xn0000", "人事档案不存在");
-        }
         Archive data = archiveBO.getArchive(req.getCode());
-        data.setCode(req.getCode());
+        if (!EArchiveNode.REAPPLY.getCode().equals(data.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "人事档案不是重新申请节点，不能操作！");
+        }
         data.setRealName(req.getRealName());
         data.setIdNo(req.getIdNo());
         data.setMobile(req.getMobile());
@@ -262,10 +273,81 @@ public class ArchiveAOImpl implements IArchiveAO {
     @Override
     public void dropArchive(String code) {
         if (!archiveBO.isArchiveExist(code)) {
-            throw new BizException("xn0000", "人事档案不存在");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "人事档案不存在");
         }
         archiveBO.removeArchive(code);
         socialRelationBO.removeSocialRelation(code);
+    }
+
+    @Override
+    public void branchCeoApprove(XN632804Req req) {
+        Archive data = archiveBO.getArchive(req.getCode());
+        if (!EArchiveNode.BRANCH_CEO_APPROVE.getCode()
+            .equals(data.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "人事档案不是分公司总经理审批节点，不能操作！");
+        }
+        String nextNodeCode = getNextNodeCode(data.getCurNodeCode(),
+            req.getApproveResult());
+
+        archiveBO.branchCeoApprove(req.getCode(), nextNodeCode,
+            req.getApproveNote(), req.getOperator());
+
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
+            EBizLogType.REPAY_BIZ, data.getCode(), data.getCurNodeCode(),
+            nextNodeCode, req.getApproveNote(), req.getOperator());
+    }
+
+    @Override
+    public void administrationApprove(XN632808Req req) {
+        Archive data = archiveBO.getArchive(req.getCode());
+        if (!EArchiveNode.ADMINISTRATION_APPROVE.getCode()
+            .equals(data.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "人事档案不是行政部审批节点，不能操作！");
+        }
+        String nextNodeCode = getNextNodeCode(data.getCurNodeCode(),
+            req.getApproveResult());
+
+        archiveBO.administrationApprove(req.getCode(), nextNodeCode,
+            req.getApproveNote(), req.getOperator());
+
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
+            EBizLogType.REPAY_BIZ, data.getCode(), data.getCurNodeCode(),
+            nextNodeCode, req.getApproveNote(), req.getOperator());
+    }
+
+    @Override
+    public void networkSkillApprove(XN632809Req req) {
+        Archive data = archiveBO.getArchive(req.getCode());
+        if (!EArchiveNode.NETWORK_SKILL_APPROVE.getCode()
+            .equals(data.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "人事档案不是网络技术部审批节点，不能操作！");
+        }
+        String nextNodeCode = getNextNodeCode(data.getCurNodeCode(),
+            req.getApproveResult());
+
+        archiveBO.networkSkillApprove(req.getCode(), nextNodeCode,
+            req.getApproveNote(), req.getOperator());
+
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
+            EBizLogType.REPAY_BIZ, data.getCode(), data.getCurNodeCode(),
+            nextNodeCode, req.getApproveNote(), req.getOperator());
+    }
+
+    private String getNextNodeCode(String curNodeCode, String approveResult) {
+        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
+        String nextNodeCode = null;
+        if (EBoolean.YES.getCode().equals(approveResult)) {
+            nextNodeCode = nodeFlow.getNextNode();
+        } else if (EBoolean.NO.getCode().equals(approveResult)) {
+            nextNodeCode = nodeFlow.getBackNode();
+        }
+        return nextNodeCode;
     }
 
     @Override
@@ -367,4 +449,5 @@ public class ArchiveAOImpl implements IArchiveAO {
         list.add(res5);
         return list;
     }
+
 }

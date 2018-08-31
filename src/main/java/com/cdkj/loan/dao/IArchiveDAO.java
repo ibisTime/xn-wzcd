@@ -11,4 +11,13 @@ public interface IArchiveDAO extends IBaseDAO<Archive> {
 
     public int updateLeaveArchive(Archive data);
 
+    // 分公司总经理审批
+    public void branchCeoApprove(Archive archive);
+
+    // 行政部审批
+    public void administrationApprove(Archive archive);
+
+    // 网络技术部审批
+    public void networkSkillApprove(Archive archive);
+
 }

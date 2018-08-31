@@ -8,6 +8,9 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.dto.req.XN632800Req;
 import com.cdkj.loan.dto.req.XN632802Req;
+import com.cdkj.loan.dto.req.XN632804Req;
+import com.cdkj.loan.dto.req.XN632808Req;
+import com.cdkj.loan.dto.req.XN632809Req;
 import com.cdkj.loan.dto.res.XN632803Res;
 
 /**
@@ -32,6 +35,15 @@ public interface IArchiveAO {
     public List<Archive> queryArchiveList(Archive condition);
 
     public Archive getArchive(String code);
+
+    // 分公司总经理审批
+    public void branchCeoApprove(XN632804Req req);
+
+    // 行政部审批
+    public void administrationApprove(XN632808Req req);
+
+    // 网络技术部审批
+    public void networkSkillApprove(XN632809Req req);
 
     // 新增离职档案
     public void editLeaveArchive(Archive data);

@@ -174,6 +174,9 @@ public class Archive extends ABaseDO {
     // 工龄
     private String workingYears;
 
+    // 节点
+    private String curNodeCode;
+
     // 状态(0删除1正常)
     private String status;
 
@@ -210,6 +213,24 @@ public class Archive extends ABaseDO {
 
     // 年龄止
     private Integer ageEnd;
+
+    private List<String> curNodeCodeList;// 节点编号列表
+
+    public List<String> getCurNodeCodeList() {
+        return curNodeCodeList;
+    }
+
+    public void setCurNodeCodeList(List<String> curNodeCodeList) {
+        this.curNodeCodeList = curNodeCodeList;
+    }
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
+    }
 
     public Integer getAgeStart() {
         return ageStart;

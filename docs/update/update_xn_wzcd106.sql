@@ -142,6 +142,8 @@ CHANGE COLUMN `rate36` `rate36` DECIMAL(18,8) NULL DEFAULT NULL COMMENT '36期' 
 UPDATE `tsys_dict` SET `dvalue`='执毕' WHERE `id`='556';
 UPDATE `tsys_dict` SET `dvalue`='和解' WHERE `id`='557';
 
+ALTER TABLE `tp_archive` 
+ADD COLUMN `cur_node_code` VARCHAR(32) NULL COMMENT '节点' AFTER `working_years`;
 
 /*********************************************8.31开始 jiafr*************************************************/
 INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('0', 'tc_deal_result', '收车处理结果', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');

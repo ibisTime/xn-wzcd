@@ -56,6 +56,7 @@
 		<result column="taxi_ward" property="taxiWard" />
 		<result column="meal_award" property="mealAward" />
 		<result column="working_years" property="workingYears" />
+		<result column="cur_node_code" property="curNodeCode" />
 		<result column="status" property="status" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
@@ -90,6 +91,15 @@
 			</if>
 			<if test="ageEnd != null and ageEnd != '' ">
 				<![CDATA[AND TIMESTAMPDIFF(YEAR, birthday, CURDATE()) <= #{ageEnd}]]>
+			</if>
+			<if test="curNodeCode != null and curNodeCode != '' ">
+				AND t.cur_node_code = #{curNodeCode}
+			</if>
+			<if test="curNodeCodeList != null and curNodeCodeList.size() != 0 ">
+				AND t.cur_node_code in 
+                <foreach item="item" index="index" collection="curNodeCodeList" open="(" separator="," close=")">
+	            	#{item}
+                </foreach> 
 			</if>
 			<if test="status != null and status != '' ">
 				AND t.status = #{status}
@@ -154,6 +164,7 @@
 		,t.taxi_ward
 		,t.meal_award
 		,t.working_years
+		,t.cur_node_code
 		,t.status
 		,t.updater
 		,t.update_datetime
@@ -231,6 +242,7 @@
 		,taxi_ward
 		,meal_award
 		,working_years
+		,cur_node_code
 		,status
 		,updater
 		,update_datetime
@@ -291,6 +303,7 @@
 		,#{taxiWard}
 		,#{mealAward}
 		,#{workingYears}
+		,#{curNodeCode}
 		,#{status}
 		,#{updater}
 		,#{updateDatetime}
@@ -369,6 +382,36 @@
 		,leave_datetime = #{leaveDatetime}
 		,heir_people = #{heirPeople}
 		,leave_reason = #{leaveReason}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_branchCeoApprove" parameterType="archive">
+		UPDATE tp_archive
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_administrationApprove" parameterType="archive">
+		UPDATE tp_archive
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_networkSkillApprove" parameterType="archive">
+		UPDATE tp_archive
+		SET
+		cur_node_code = #{curNodeCode}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>

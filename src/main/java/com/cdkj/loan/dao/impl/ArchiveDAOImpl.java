@@ -59,7 +59,21 @@ public class ArchiveDAOImpl extends AMybatisTemplate implements IArchiveDAO {
 
     @Override
     public int updateLeaveArchive(Archive data) {
-
         return super.update(NAMESPACE.concat("update_leave_archive"), data);
+    }
+
+    @Override
+    public void branchCeoApprove(Archive data) {
+        super.update(NAMESPACE.concat("update_branchCeoApprove"), data);
+    }
+
+    @Override
+    public void administrationApprove(Archive data) {
+        super.update(NAMESPACE.concat("update_administrationApprove"), data);
+    }
+
+    @Override
+    public void networkSkillApprove(Archive data) {
+        super.update(NAMESPACE.concat("update_networkSkillApprove"), data);
     }
 }
