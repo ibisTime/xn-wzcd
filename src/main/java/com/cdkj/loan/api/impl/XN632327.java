@@ -31,6 +31,7 @@ public class XN632327 extends AProcessor {
         ReplaceRepayApply condition = new ReplaceRepayApply();
         condition.setCode(req.getCode());
         condition.setStatus(req.getStatus());
+        condition.setBizCode(req.getBizCode());
         condition.setType(req.getType());
         condition.setReceiptRealName(req.getReceiptRealName());
         condition.setStartDatetime(DateUtil.strToDate(req.getStartDatetime(),

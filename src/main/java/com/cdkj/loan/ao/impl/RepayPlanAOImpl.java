@@ -481,6 +481,9 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             // 1、将还款计划更新为 已还款
             // 2、如果还款计划已全部完成，将还款业务更新为 提交结算单
             repayPlanBO.refreshPayedDaily(repayPlan.getCode());
+            RepayBiz repayBiz = repayBizBO
+                .getRepayBiz(repayPlan.getRepayBizCode());
+            repayBizBO.refreshRestAmount(repayBiz, repayPlan.getRepayAmount());// 更新剩余欠款
             if (repayPlan.getPeriods() == repayPlan.getCurPeriods()) {
                 repayBizBO
                     .refreshRepayEndCommitSettle(repayPlan.getRepayBizCode());

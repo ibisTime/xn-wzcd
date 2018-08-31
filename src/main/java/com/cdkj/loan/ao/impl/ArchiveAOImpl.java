@@ -144,7 +144,7 @@ public class ArchiveAOImpl implements IArchiveAO {
             String workingYears = String.valueOf(((int) (num / 365)));
             data.setWorkingYears(workingYears);
         }
-
+        data.setCurNodeCode(EArchiveNode.BRANCH_CEO_APPROVE.getCode());
         data.setStatus(EBoolean.YES.getCode());
         String archiveCode = archiveBO.saveArchive(data);
 
@@ -266,6 +266,7 @@ public class ArchiveAOImpl implements IArchiveAO {
     }
 
     @Override
+    @Transactional
     public void branchCeoApprove(XN632804Req req) {
         Archive data = archiveBO.getArchive(req.getCode());
         if (!EArchiveNode.BRANCH_CEO_APPROVE.getCode()
@@ -286,6 +287,7 @@ public class ArchiveAOImpl implements IArchiveAO {
     }
 
     @Override
+    @Transactional
     public void administrationApprove(XN632808Req req) {
         Archive data = archiveBO.getArchive(req.getCode());
         if (!EArchiveNode.ADMINISTRATION_APPROVE.getCode()
@@ -306,6 +308,7 @@ public class ArchiveAOImpl implements IArchiveAO {
     }
 
     @Override
+    @Transactional
     public void networkSkillApprove(XN632809Req req) {
         Archive data = archiveBO.getArchive(req.getCode());
         if (!EArchiveNode.NETWORK_SKILL_APPROVE.getCode()

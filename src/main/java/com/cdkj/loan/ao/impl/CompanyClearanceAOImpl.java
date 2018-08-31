@@ -71,7 +71,12 @@ public class CompanyClearanceAOImpl implements ICompanyClearanceAO {
     @Override
     public List<CompanyClearance> queryCompanyClearanceList(
             CompanyClearance condition) {
-        return companyClearanceBO.queryCompanyClearanceList(condition);
+        List<CompanyClearance> companyClearanceList = companyClearanceBO
+            .queryCompanyClearanceList(condition);
+        for (CompanyClearance companyClearance : companyClearanceList) {
+            initCompanyClearance(companyClearance);
+        }
+        return companyClearanceList;
     }
 
     @Override

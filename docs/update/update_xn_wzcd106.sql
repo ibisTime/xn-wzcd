@@ -148,6 +148,21 @@ ADD COLUMN `cur_node_code` VARCHAR(32) NULL COMMENT '节点' AFTER `working_year
 ALTER TABLE `tdh_overdue_treatment` 
 CHANGE COLUMN `collection_target` `collection_target` VARCHAR(32) NULL DEFAULT NULL COMMENT '催收对象' ;
 
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'node_type', '015', '人事档案', 'admin', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
+
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('015_01', '分公司总经理审批', '015');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('015_02', '行政部审批', '015');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('015_03', '网络技术部审批', '015');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('015_04', '重新申请', '015');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('015_05', '已完成', '015');
+
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`) VALUES ('015', '015_01', '015_02', '015_04');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`) VALUES ('015', '015_02', '015_03', '015_04');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`) VALUES ('015', '015_03', '015_05', '015_04');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('015', '015_04', '015_01');
+
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'replace_repay_status', '5', '作废', 'admin', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
+
 
 /*********************************************8.31开始 jiafr*************************************************/
 INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('0', 'tc_deal_result', '收车处理结果', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');

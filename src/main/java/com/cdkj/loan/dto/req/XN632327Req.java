@@ -8,6 +8,9 @@ public class XN632327Req extends AListReq {
 
     private String status;
 
+    // 业务编号(还款业务)
+    private String bizCode;
+
     private String type;
 
     private String receiptRealName;
@@ -22,6 +25,14 @@ public class XN632327Req extends AListReq {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getBizCode() {
+        return bizCode;
+    }
+
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
     }
 
     public String getStatus() {

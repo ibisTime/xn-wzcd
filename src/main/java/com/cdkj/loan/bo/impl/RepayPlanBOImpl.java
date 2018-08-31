@@ -413,8 +413,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
 
     @Override
     public void refreshPayedDaily(String code) {
-        RepayPlan data = new RepayPlan();
-        data.setCode(code);
+        RepayPlan data = getRepayPlan(code);
         data.setCurNodeCode(ERepayPlanNode.REPAY_YES.getCode());
         repayPlanDAO.updatePayedDaily(data);
     }

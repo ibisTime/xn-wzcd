@@ -584,8 +584,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
     @Transactional
     public void commitSettle(XN630570Req req) {
         RepayBiz data = repayBizBO.getRepayBiz(req.getCode());
-        if (!ERepayBizNode.COMMIT_SETTLE.getCode()
-            .equals(data.getCurNodeCode())) {
+        if (!ERepayBizNode.COMMIT_SETTLE.getCode().equals(data.getCurNodeCode())
+                && !ERepayBizNode.TO_REPAY.getCode()
+                    .equals(data.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "还款业务不在结算单申请节点！");
         }
@@ -609,8 +610,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
         data.setRemark(req.getRemark());
-        String nextNodeCode = getNextNodeCode(data.getCurNodeCode(),
-            EBoolean.YES.getCode());
+        String nextNodeCode = ERepayBizNode.SETTLE_RISK_MANAGER_CHECK.getCode();
         data.setCurNodeCode(nextNodeCode);
         repayBizBO.refreshCommitSettle(data);
 
