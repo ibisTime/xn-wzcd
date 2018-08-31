@@ -6,9 +6,6 @@ import com.cdkj.loan.dao.base.ABaseDO;
 
 public class SYSBizLog extends ABaseDO {
 
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
-     */
     private static final long serialVersionUID = 2099380862896285572L;
 
     private int id;// 序号
@@ -41,13 +38,23 @@ public class SYSBizLog extends ABaseDO {
 
     /*-------------辅助字段---------------*/
 
-    private Date startDatetimeStart;
-
-    private Date endDatetimeEnd;
-
     private String operatorNameForQuery;// 操作人姓名模糊查
 
     private String operatorMobileForQuery;// 操作人手机号模糊查
+
+    private String roleCode;// 角色编号
+
+    private String teamCode;// 团队编号
+
+    private String userName;// 客户姓名
+
+    private String loanBank;// 贷款银行编号
+
+    private String bizType;// 业务种类(新车，二手车)
+
+    private String departmentName;// 部门名称
+
+    private String bizOrderType;// 业务单类型（ 征信单 准入单 还款业务 出差申请）
 
     public int getId() {
         return id;
@@ -177,20 +184,60 @@ public class SYSBizLog extends ABaseDO {
         this.operatorMobileForQuery = operatorMobileForQuery;
     }
 
-    public Date getStartDatetimeStart() {
-        return startDatetimeStart;
+    public String getRoleCode() {
+        return roleCode;
     }
 
-    public void setStartDatetimeStart(Date startDatetimeStart) {
-        this.startDatetimeStart = startDatetimeStart;
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
 
-    public Date getEndDatetimeEnd() {
-        return endDatetimeEnd;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setEndDatetimeEnd(Date endDatetimeEnd) {
-        this.endDatetimeEnd = endDatetimeEnd;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getLoanBank() {
+        return loanBank;
+    }
+
+    public void setLoanBank(String loanBank) {
+        this.loanBank = loanBank;
+    }
+
+    public String getBizType() {
+        return bizType;
+    }
+
+    public void setBizType(String bizType) {
+        this.bizType = bizType;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public String getBizOrderType() {
+        return bizOrderType;
+    }
+
+    public void setBizOrderType(String bizOrderType) {
+        this.bizOrderType = bizOrderType;
+    }
+
+    public String getTeamCode() {
+        return teamCode;
+    }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
     }
 
 }

@@ -18,4 +18,9 @@ public interface ISYSBizLogAO {
 
     public SYSBizLog getSYSBizLog(int id);
 
+    public Paginable<SYSBizLog> todoListOSS(int start, int limit,
+            SYSBizLog condition);
+
+    public Object todoListAPP(SYSBizLog condition);
+
 }
