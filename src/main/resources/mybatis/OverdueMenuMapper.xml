@@ -47,10 +47,10 @@
 				AND t.repay_plan_code = #{repayPlanCode}
 			</if>
 			<if test="importDatetimeStart != null and importDatetimeStart != '' ">
-				AND t.importDatetime &gt;= #{importDatetimeStart}
+				AND t.import_datetime &gt;= #{importDatetimeStart}
 			</if>
 			<if test="importDatetimeEnd != null and importDatetimeEnd != '' ">
-				AND t.importDatetime &lt;= #{importDatetimeEnd}
+				AND t.import_datetime &lt;= #{importDatetimeEnd}
 			</if>
 		</trim>
 	</sql>
