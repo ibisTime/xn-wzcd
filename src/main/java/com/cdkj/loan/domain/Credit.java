@@ -62,6 +62,9 @@ public class Credit extends ABaseDO {
     // 申请时间止
     private Date applyDatetimeEnd;
 
+    // 客户姓名
+    private String userName;
+
     // 角色编号
     private String roleCode;
 
@@ -248,6 +251,14 @@ public class Credit extends ABaseDO {
 
     public void setApplyDatetimeEnd(Date applyDatetimeEnd) {
         this.applyDatetimeEnd = applyDatetimeEnd;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
 }

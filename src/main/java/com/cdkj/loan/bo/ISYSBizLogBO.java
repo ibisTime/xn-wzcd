@@ -3,6 +3,7 @@ package com.cdkj.loan.bo;
 import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.enums.EBizLogType;
 
@@ -31,5 +32,10 @@ public interface ISYSBizLogBO extends IPaginableBO<SYSBizLog> {
 
     public SYSBizLog getSYSBizLoglatest(String refType, String refOrder,
             String dealNode);
+
+    public List<SYSBizLog> querySYSBizLogListByRoleCode(SYSBizLog condition);
+
+    public Paginable<SYSBizLog> getPaginableByRoleCode(int start, int limit,
+            SYSBizLog condition);
 
 }

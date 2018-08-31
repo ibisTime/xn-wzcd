@@ -77,6 +77,10 @@ public class OverdueMenu extends ABaseDO {
 
     private Date advanceFundDatetimeEnd;// 垫资日期止
 
+    private Date importDatetimeStart;// 导入日期起
+
+    private Date importDatetimeEnd;// 导入日期止
+
     private String loanBankName;// 贷款银行名称
 
     // 银行放款日期
@@ -286,6 +290,22 @@ public class OverdueMenu extends ABaseDO {
 
     public String getBudgetOrderCode() {
         return budgetOrderCode;
+    }
+
+    public Date getImportDatetimeStart() {
+        return importDatetimeStart;
+    }
+
+    public void setImportDatetimeStart(Date importDatetimeStart) {
+        this.importDatetimeStart = importDatetimeStart;
+    }
+
+    public Date getImportDatetimeEnd() {
+        return importDatetimeEnd;
+    }
+
+    public void setImportDatetimeEnd(Date importDatetimeEnd) {
+        this.importDatetimeEnd = importDatetimeEnd;
     }
 
 }

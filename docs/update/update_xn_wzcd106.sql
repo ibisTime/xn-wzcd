@@ -144,3 +144,12 @@ UPDATE `tsys_dict` SET `dvalue`='和解' WHERE `id`='557';
 
 ALTER TABLE `tp_archive` 
 ADD COLUMN `cur_node_code` VARCHAR(32) NULL COMMENT '节点' AFTER `working_years`;
+
+/*********************************************8.31开始 jiafr*************************************************/
+INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('0', 'tc_deal_result', '收车处理结果', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('1', 'tc_deal_result', '1', '用户赎回', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('1', 'tc_deal_result', '2', '转卖', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('1', 'tc_deal_result', '3', '用户结清', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('1', 'tc_deal_result', '4', '公司结清', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('1', 'tc_deal_result', '5', '暂缓处理', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
+/*********************************************jiafr*************************************************/

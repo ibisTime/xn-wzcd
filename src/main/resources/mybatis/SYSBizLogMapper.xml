@@ -62,6 +62,12 @@
 			<if test="endDatetimeEnd != null and endDatetimeEnd != '' ">
 				<![CDATA[AND t.end_datetime <= #{endDatetimeEnd}]]>
 			</if>
+			<if test="roleCode != null and roleCode != '' ">
+				AND trn.roleCode = #{roleCode}
+			</if>
+			<if test="teamCode != null and teamCode != '' ">
+				AND tu.teamCode = #{teamCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_sysBizLog" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
@@ -90,7 +96,6 @@
 		</trim>
 	</select>
 	
-
 	<select id="select_sysBizLog_count" parameterType="sysBizLog"
 		resultType="java.lang.Long">
 		SELECT count(1) FROM tsys_biz_log t
@@ -180,4 +185,40 @@
 		,speed_time = #{speedTime}
 		WHERE id = #{id}
 	</update>
+
+	<select id="select_sysBizLog_byRoleCode" parameterType="sysBizLog" resultMap="sysBizLog_DB_Result">
+		SELECT
+		t.id
+		,t.parent_order
+		,t.ref_type
+		,t.ref_order
+		,t.deal_node
+		,t.deal_note
+		,t.status
+		,t.operate_role
+		,t.operator
+		,t.operator_name
+		,t.operator_mobile
+		,t.start_datetime
+		,t.end_datetime
+		,t.speed_time
+		FROM
+		tsys_biz_log t LEFT JOIN tsys_role_node trn ON t.deal_node = trn.node_code 
+		LEFT JOIN tsys_user tu ON t.operator = tu.user_id 
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="select_sysBizLog_count_byRoleCode" parameterType="sysBizLog"
+		resultType="java.lang.Long">
+		select count(1) 
+		FROM (SELECT DISTINCT t.id FROM tsys_biz_log t LEFT JOIN tsys_role_node trn ON t.deal_node = trn.node_code 
+		LEFT JOIN tsys_user tu ON t.operator = tu.user_id 
+		<include refid="where_condition" />) tb;
+	</select>
+	
 </mapper>

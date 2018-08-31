@@ -61,4 +61,25 @@ public class SYSBizLogDAOImpl extends AMybatisTemplate implements ISYSBizLogDAO 
         super.update(NAMESPACE.concat("update_sysBizLog"), data);
     }
 
+    @Override
+    public List<SYSBizLog> selectListByRoleCode(SYSBizLog condition) {
+        return super.selectList(
+            NAMESPACE.concat("select_sysBizLog_byRoleCode"), condition,
+            SYSBizLog.class);
+    }
+
+    @Override
+    public long selectTotalCountByRoleCode(SYSBizLog condition) {
+        return super.selectTotalCount(
+            NAMESPACE.concat("select_sysBizLog_count_byRoleCode"), condition);
+    }
+
+    @Override
+    public List<SYSBizLog> selectListByRoleCode(SYSBizLog condition, int start,
+            int pageSize) {
+        return super.selectList(
+            NAMESPACE.concat("select_sysBizLog_byRoleCode"), start, pageSize,
+            condition, SYSBizLog.class);
+    }
+
 }

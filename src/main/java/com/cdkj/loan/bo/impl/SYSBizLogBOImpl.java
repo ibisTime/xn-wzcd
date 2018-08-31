@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.ISYSBizLogBO;
 import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.base.Page;
+import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.ISYSBizLogDAO;
 import com.cdkj.loan.domain.SYSBizLog;
@@ -27,7 +29,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
     @Autowired
     private ISYSUserBO sysUserBO;
 
-    // 当前操作日志
+    // 流程第一步操作日志
     @Override
     public void recordCurrentSYSBizLog(String parentOrder, EBizLogType refType,
             String refOrder, String dealNode, String dealNote, String operator) {
@@ -49,7 +51,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
         sysBizLogDAO.insert(data);
     }
 
-    // 下一步待操作的日志
+    // 流程下一步待操作的日志
     @Override
     public void saveSYSBizLog(String parentOrder, EBizLogType refType,
             String refOrder, String dealNode) {
@@ -63,7 +65,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
         sysBizLogDAO.insert(data);
     }
 
-    // 系统用户记录日志 （1记录当前操作 2生成下一步操作）
+    // 流程中间日志（1记录当前操作 2生成下一步操作）
     @Override
     public void saveNewAndPreEndSYSBizLog(String parentOrder,
             EBizLogType refType, String refOrder, String preDealNode,
@@ -75,7 +77,7 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
         saveSYSBizLog(parentOrder, refType, refOrder, nowDealNode);
     }
 
-    // 最后操作记录日志
+    // 流程最后操作记录日志
     @Override
     public void refreshPreSYSBizLog(EBizLogType refType, String refOrder,
             String dealNode, String dealNote, String operator) {
@@ -131,6 +133,24 @@ public class SYSBizLogBOImpl extends PaginableBOImpl<SYSBizLog> implements
             }
         }
         return data;
+    }
+
+    @Override
+    public List<SYSBizLog> querySYSBizLogListByRoleCode(SYSBizLog condition) {
+        return sysBizLogDAO.selectListByRoleCode(condition);
+    }
+
+    @Override
+    public Paginable<SYSBizLog> getPaginableByRoleCode(int start, int limit,
+            SYSBizLog condition) {
+        prepare(condition);
+        long totalCount = sysBizLogDAO.selectTotalCountByRoleCode(condition);
+        Paginable<SYSBizLog> page = new Page<SYSBizLog>(start, limit,
+            totalCount);
+        List<SYSBizLog> dataList = sysBizLogDAO.selectListByRoleCode(condition,
+            page.getStart(), page.getPageSize());
+        page.setList(dataList);
+        return page;
     }
 
 }
