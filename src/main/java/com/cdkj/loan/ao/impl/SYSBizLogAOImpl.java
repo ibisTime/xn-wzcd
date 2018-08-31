@@ -22,7 +22,7 @@ import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
-import com.cdkj.loan.dto.res.XN632912Res;
+import com.cdkj.loan.dto.res.XN630172Res;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ELogisticsStatus;
@@ -89,26 +89,10 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
     public Object todoListAPP(SYSBizLog condition) {
         List<SYSBizLog> list = sysBizLogBO
             .querySYSBizLogListByRoleCode(condition);
-        XN632912Res data = new XN632912Res(0, 0, 0, 0, 0, 0);
+        XN630172Res data = new XN630172Res(0, 0, 0, 0, 0, 0, 0);
         for (SYSBizLog sysBizLog : list) {
             if (EBizLogType.CREDIT.getCode().equals(sysBizLog.getRefType())) {
                 data.setCreditTodo(data.getCreditTodo() + 1);
-            }
-            if (EBudgetOrderNode.START_NODE.getCode().equals(
-                sysBizLog.getDealNode())
-                    || EBudgetOrderNode.START_NODE.getCode().equals(
-                        sysBizLog.getDealNode())) {
-                data.setInterviewTodo(data.getInterviewTodo() + 1);
-            }
-            if (EBudgetOrderNode.START_NODE.getCode().equals(
-                sysBizLog.getDealNode())
-                    || EBudgetOrderNode.START_NODE.getCode().equals(
-                        sysBizLog.getDealNode())) {
-                data.setGpsInstallTodo(data.getGpsInstallTodo() + 1);
-            }
-            if (EBudgetOrderNode.START_NODE.getCode().equals(
-                sysBizLog.getDealNode())) {
-                data.setCarSettleTodo(data.getCarSettleTodo() + 1);
             }
             if (EBudgetOrderNode.START_NODE.getCode().equals(
                 sysBizLog.getDealNode())

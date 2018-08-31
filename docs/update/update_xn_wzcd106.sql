@@ -141,3 +141,13 @@ CHANGE COLUMN `rate36` `rate36` DECIMAL(18,8) NULL DEFAULT NULL COMMENT '36期' 
 
 UPDATE `tsys_dict` SET `dvalue`='执毕' WHERE `id`='556';
 UPDATE `tsys_dict` SET `dvalue`='和解' WHERE `id`='557';
+
+
+/*********************************************8.31开始 jiafr*************************************************/
+INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('0', 'tc_deal_result', '收车处理结果', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('1', 'tc_deal_result', '1', '用户赎回', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('1', 'tc_deal_result', '2', '转卖', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('1', 'tc_deal_result', '3', '用户结清', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('1', 'tc_deal_result', '4', '公司结清', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('1', 'tc_deal_result', '5', '暂缓处理', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
+/*********************************************jiafr*************************************************/

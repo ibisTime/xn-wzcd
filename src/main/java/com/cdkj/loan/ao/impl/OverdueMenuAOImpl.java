@@ -55,6 +55,15 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
     @Transactional
     public void importOverdueMenu(String loanBankCode,
             List<XN632300ReqOverdue> list) {
+        OverdueMenu om = new OverdueMenu();
+        om.setImportDatetimeStart(DateUtil.getCurrentMonthFirstDay());
+        om.setImportDatetimeEnd(DateUtil.getCurrentMonthLastDay());
+        List<OverdueMenu> queryOverdueMenuList = overdueMenuBO
+            .queryOverdueMenuList(om);
+        if (CollectionUtils.isNotEmpty(queryOverdueMenuList)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "逾期客户一个月只能导入一次!");
+        }
         // 遍历循环导入
         for (XN632300ReqOverdue overdue : list) {
             // 当条数据判断是否匹配，匹配条件：姓名、证件号、贷款银行、贷款金额、总期数、放款日期查询准入单
@@ -141,12 +150,28 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
      */
     private void refreshRepayInfo(OverdueMenu overdueMenu, RepayBiz repayBiz,
             RepayPlan overDueRepayPlan) {
-        overDueRepayPlan.setOverdueAmount(overdueMenu.getOverdueAmount());
-        repayPlanBO.refreshRepayPlanOverdue(overDueRepayPlan);// 更新还款计划逾期金额
+        Long preOverdueAmount = 0L;// 上一期逾期金额
+        Long overdueAmount = 0L;// 本期逾期金额
+        if (overdueMenu.getOverdueAmount() > overDueRepayPlan.getRepayAmount()) {
+            preOverdueAmount = overdueMenu.getOverdueAmount()
+                    - overDueRepayPlan.getRepayAmount();
+            overdueAmount = overDueRepayPlan.getRepayAmount();
+        } else {
+            preOverdueAmount = 0L;
+            overdueAmount = overdueMenu.getOverdueAmount();
+        }
+        RepayPlan condition = new RepayPlan();
+        condition.setRepayBizCode(repayBiz.getCode());
+        condition.setCurPeriods(overDueRepayPlan.getCurPeriods() - 1);
+        List<RepayPlan> list = repayPlanBO.queryRepayPlanList(condition);
+        RepayPlan preRepayPlan = list.get(0);
+        preRepayPlan.setOverdueAmount(preOverdueAmount);
+        repayPlanBO.refreshRepayPlanOverdue(preRepayPlan);// 更新上一期还款计划逾期金额
+        overDueRepayPlan.setOverdueAmount(overdueAmount);
+        repayPlanBO.refreshRepayPlanOverdue(overDueRepayPlan);// 更新当月期的还款计划逾期金额
 
         // 更新还款业务逾期金额
-        repayBiz.setRestOverdueAmount(repayBiz.getRestOverdueAmount()
-                + overDueRepayPlan.getOverdueAmount());
+        repayBiz.setRestOverdueAmount(overdueMenu.getOverdueAmount());
         repayBiz.setTotalOverdueCount(repayBiz.getTotalOverdueCount() + 1);
         repayBiz.setCurOverdueCount(repayBiz.getCurOverdueCount() + 1);
         repayBizBO.repayOverdue(repayBiz);

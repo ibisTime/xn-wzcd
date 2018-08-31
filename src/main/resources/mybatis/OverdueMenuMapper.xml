@@ -46,6 +46,12 @@
 			<if test="repayPlanCode != null and repayPlanCode != '' ">
 				AND t.repay_plan_code = #{repayPlanCode}
 			</if>
+			<if test="importDatetimeStart != null and importDatetimeStart != '' ">
+				AND t.importDatetime &gt;= #{importDatetimeStart}
+			</if>
+			<if test="importDatetimeEnd != null and importDatetimeEnd != '' ">
+				AND t.importDatetime &lt;= #{importDatetimeEnd}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_overdueMenu" parameterType="overdueMenu" resultMap="overdueMenu_DB_Result">
