@@ -175,4 +175,9 @@ public class ArchiveBOImpl extends PaginableBOImpl<Archive>
         }
     }
 
+    @Override
+    public void refreshArchiveUserId(Archive data) {
+        archiveDAO.refreshArchiveUserId(data);
+    }
+
 }

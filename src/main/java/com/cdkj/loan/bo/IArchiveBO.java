@@ -46,4 +46,7 @@ public interface IArchiveBO extends IPaginableBO<Archive> {
     // 网络技术部审批
     public void networkSkillApprove(String code, String nextNodeCode,
             String approveNote, String operator);
+
+    // 更新userId
+    public void refreshArchiveUserId(Archive data);
 }

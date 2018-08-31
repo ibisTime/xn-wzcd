@@ -21,10 +21,12 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISocialRelationBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.common.SysConstants;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.NodeFlow;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.SocialRelation;
 import com.cdkj.loan.dto.req.XN632800Req;
 import com.cdkj.loan.dto.req.XN632800ReqChild;
@@ -38,6 +40,7 @@ import com.cdkj.loan.enums.EArchiveNode;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
+import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -142,23 +145,6 @@ public class ArchiveAOImpl implements IArchiveAO {
             data.setWorkingYears(workingYears);
         }
 
-        // SYSUser sysUserLoginName = sysUserBO
-        // .getUserByLoginName(req.getMobile());
-        // SYSUser sysUserMobile = sysUserBO.getUserByMobile(req.getMobile());
-        //
-        // String userId = null;
-        // if (sysUserLoginName == null && sysUserMobile == null) {
-        // userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
-        // req.getMobile(), "888888", req.getMobile(), req.getRealName(),
-        // SysConstants.COMMON_ROLE, req.getPostCode(), null);
-        // } else {
-        // if (sysUserLoginName != null) {
-        // userId = sysUserLoginName.getUserId();
-        // } else if (sysUserMobile != null) {
-        // userId = sysUserMobile.getUserId();
-        // }
-        // }
-        // data.setUserId(userId);
         data.setStatus(EBoolean.YES.getCode());
         String archiveCode = archiveBO.saveArchive(data);
 
@@ -332,6 +318,30 @@ public class ArchiveAOImpl implements IArchiveAO {
 
         archiveBO.networkSkillApprove(req.getCode(), nextNodeCode,
             req.getApproveNote(), req.getOperator());
+
+        if (EBoolean.YES.getCode().equals(req.getApproveResult())) {
+
+            // 生成角色
+            SYSUser sysUserLoginName = sysUserBO
+                .getUserByLoginName(data.getMobile());
+            SYSUser sysUserMobile = sysUserBO.getUserByMobile(data.getMobile());
+
+            String userId = null;
+            if (sysUserLoginName == null && sysUserMobile == null) {
+                userId = sysUserAO.doAddUser(ESysUserType.Plat.getCode(),
+                    data.getMobile(), "888888", data.getMobile(),
+                    data.getRealName(), SysConstants.COMMON_ROLE,
+                    data.getPostCode(), null);
+            } else {
+                if (sysUserLoginName != null) {
+                    userId = sysUserLoginName.getUserId();
+                } else if (sysUserMobile != null) {
+                    userId = sysUserMobile.getUserId();
+                }
+            }
+            data.setUserId(userId);
+            archiveBO.refreshArchiveUserId(data);
+        }
 
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),

@@ -20,4 +20,7 @@ public interface IArchiveDAO extends IBaseDAO<Archive> {
     // 网络技术部审批
     public void networkSkillApprove(Archive archive);
 
+    // 更新userId
+    public void refreshArchiveUserId(Archive data);
+
 }

@@ -76,4 +76,9 @@ public class ArchiveDAOImpl extends AMybatisTemplate implements IArchiveDAO {
     public void networkSkillApprove(Archive data) {
         super.update(NAMESPACE.concat("update_networkSkillApprove"), data);
     }
+
+    @Override
+    public void refreshArchiveUserId(Archive data) {
+        super.update(NAMESPACE.concat("update_networkSkillApprove"), data);
+    }
 }
