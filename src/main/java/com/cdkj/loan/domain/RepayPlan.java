@@ -226,6 +226,9 @@ public class RepayPlan extends ABaseDO {
     // 催收记录
     private List<RemindLog> remindLogList;
 
+    // 逾期处理记录
+    private List<OverdueTreatment> overdueTreatmentList;
+
     // 状态list
     private List<String> curNodeCodeList;
 
@@ -255,6 +258,15 @@ public class RepayPlan extends ABaseDO {
 
     // 未还清收成本
     private Long notPayedFee;
+
+    public List<OverdueTreatment> getOverdueTreatmentList() {
+        return overdueTreatmentList;
+    }
+
+    public void setOverdueTreatmentList(
+            List<OverdueTreatment> overdueTreatmentList) {
+        this.overdueTreatmentList = overdueTreatmentList;
+    }
 
     public Long getNotPayedFee() {
         return notPayedFee;

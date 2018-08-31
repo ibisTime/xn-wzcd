@@ -145,6 +145,10 @@ UPDATE `tsys_dict` SET `dvalue`='和解' WHERE `id`='557';
 ALTER TABLE `tp_archive` 
 ADD COLUMN `cur_node_code` VARCHAR(32) NULL COMMENT '节点' AFTER `working_years`;
 
+ALTER TABLE `tdh_overdue_treatment` 
+CHANGE COLUMN `collection_target` `collection_target` VARCHAR(32) NULL DEFAULT NULL COMMENT '催收对象' ;
+
+
 /*********************************************8.31开始 jiafr*************************************************/
 INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('0', 'tc_deal_result', '收车处理结果', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('1', 'tc_deal_result', '1', '用户赎回', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
