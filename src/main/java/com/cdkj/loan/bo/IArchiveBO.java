@@ -34,4 +34,16 @@ public interface IArchiveBO extends IPaginableBO<Archive> {
 
     // 判断是否存在
     public void doCheck(String userId);
+
+    // 分公司总经理审批
+    public void branchCeoApprove(String code, String nextNodeCode,
+            String approveNote, String operator);
+
+    // 行政部审批
+    public void administrationApprove(String code, String nextNodeCode,
+            String approveNote, String operator);
+
+    // 网络技术部审批
+    public void networkSkillApprove(String code, String nextNodeCode,
+            String approveNote, String operator);
 }

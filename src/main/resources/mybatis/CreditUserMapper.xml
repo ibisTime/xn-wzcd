@@ -194,22 +194,22 @@
 		,#{dkdyCount}
 		
 		,#{dkdyAmount}
-		,#{dkdy2yearOverTimes}
+		,#{dkdy2YearOverTimes}
 		,#{dkdyMaxOverAmount}
 		,#{dkdyCurrentOverAmount}
-		,#{dkdy6monthAvgAmount}
+		,#{dkdy6MonthAvgAmount}
 				
 		,#{hkxyUnsettleCount}
 		,#{hkxyUnsettleAmount}
-		,#{hkxy2yearOverTimes}
+		,#{hkxy2YearOverTimes}
 		,#{hkxyMonthMaxOverAmount}
 		,#{hkxyCurrentOverAmount}
 		
-		,#{hkxy6monthAvgAmount}
+		,#{hkxy6MonthAvgAmount}
 		,#{xykCount}
 		,#{xykCreditAmount}
-		,#{xyk6monthUseAmount}
-		,#{xyk2yearOverTimes}
+		,#{xyk6MonthUseAmount}
+		,#{xyk2YearOverTimes}
 		
 		,#{xykMonthMaxOverAmount}
 		,#{xykCurrentOverAmount}

@@ -78,6 +78,10 @@ public class CompanyClearanceAOImpl implements ICompanyClearanceAO {
     public CompanyClearance getCompanyClearance(int id) {
         CompanyClearance companyClearance = companyClearanceBO
             .getCompanyClearance(id);
+        if (companyClearance == null) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "公司结清记录不存在！");
+        }
         initCompanyClearance(companyClearance);
         return companyClearance;
     }

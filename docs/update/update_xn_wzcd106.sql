@@ -141,3 +141,6 @@ CHANGE COLUMN `rate36` `rate36` DECIMAL(18,8) NULL DEFAULT NULL COMMENT '36期' 
 
 UPDATE `tsys_dict` SET `dvalue`='执毕' WHERE `id`='556';
 UPDATE `tsys_dict` SET `dvalue`='和解' WHERE `id`='557';
+
+ALTER TABLE `tp_archive` 
+ADD COLUMN `cur_node_code` VARCHAR(32) NULL COMMENT '节点' AFTER `working_years`;
