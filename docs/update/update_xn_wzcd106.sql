@@ -156,4 +156,10 @@ INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `com
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('1', 'tc_deal_result', '3', '用户结清', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('1', 'tc_deal_result', '4', '公司结清', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `company_code`, `system_code`) VALUES ('1', 'tc_deal_result', '5', '暂缓处理', 'admin', 'CD-CWZCD000020', 'CD-CWZCD000020');
+
+DELETE FROM `tsys_dict` WHERE `id`='547';
+DELETE FROM `tsys_dict` WHERE `id`='548';
+DELETE FROM `tsys_dict` WHERE `id`='549';
+DELETE FROM `tsys_dict` WHERE `id`='550';
+DELETE FROM `tsys_dict` WHERE `id`='551';
 /*********************************************jiafr*************************************************/
