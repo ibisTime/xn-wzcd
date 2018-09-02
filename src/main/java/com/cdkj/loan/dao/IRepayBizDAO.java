@@ -123,4 +123,7 @@ public interface IRepayBizDAO extends IBaseDAO<RepayBiz> {
     // 更新剩余期数
     public void updateRestPeriods(RepayBiz repayBiz);
 
+    // 更新是否恢复申请
+    public void updateRepayBizImplement(RepayBiz repayBiz);
+
 }

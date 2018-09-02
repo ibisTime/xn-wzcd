@@ -78,6 +78,7 @@
 		<result column="judge_receipt_bank_code" property="judgeReceiptBankCode" />
 		<result column="judge_note" property="judgeNote" />
 		<result column="judge_bill_pdf" property="judgeBillPdf" />
+		<result column="is_implement_again" property="isImplementAgain" />
 			
 		<result column="settle_pay_datetime" property="settlePayDatetime" />
 		<result column="settle_bankcard" property="settleBankcard" />
@@ -249,6 +250,7 @@
 		,t.judge_receipt_bank_code
 		,t.judge_note
 		,t.judge_bill_pdf
+		,t.is_implement_again
 		,t.settle_pay_datetime
 		
 		,t.settle_bankcard
@@ -349,6 +351,7 @@
 		,t.judge_receipt_bank_code
 		,t.judge_note
 		,t.judge_bill_pdf
+		,t.is_implement_again
 		,t.settle_pay_datetime
 		
 		,t.settle_bankcard
@@ -449,6 +452,7 @@
 		,t.judge_receipt_bank_code
 		,t.judge_note
 		,t.judge_bill_pdf
+		,t.is_implement_again
 		,t.settle_pay_datetime
 		
 		,t.settle_bankcard
@@ -1004,6 +1008,14 @@
 		UPDATE tdh_repay_biz
 		SET
 		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_repayBizImplement" parameterType="repayBiz">
+		UPDATE tdh_repay_biz
+		SET
+		is_implement_again = #{isImplementAgain}
+		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
 	

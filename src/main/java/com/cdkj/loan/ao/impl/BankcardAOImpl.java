@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.bo.IBankBO;
+import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.IBankcardBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -37,6 +38,9 @@ public class BankcardAOImpl implements IBankcardAO {
 
     @Autowired
     private IBankBO bankBO;
+
+    @Autowired
+    private IBankSubbranchBO bankSubbranchBO;
 
     @Autowired
     private IUserBO userBO;
@@ -100,8 +104,15 @@ public class BankcardAOImpl implements IBankcardAO {
         }
         data.setBankcardNumber(req.getBankcardNumber());
         data.setBankCode(req.getBankCode());
-        Bank bank = bankBO.getBank(req.getBankCode());
-        data.setBankName(bank.getBankName());
+        String bankName = null;
+        String string = req.getBankCode().substring(0, 1);
+        if (string == "B") {
+            bankName = bankSubbranchBO.getBankSubbranch(req.getBankCode())
+                .getFullName();
+        } else {
+            bankName = bankBO.getBank(req.getBankCode()).getBankName();
+        }
+        data.setBankName(bankName);
         data.setSubbranch(req.getSubbranch());
         data.setBindMobile(req.getBindMobile());
         data.setUpdater(req.getUpdater());

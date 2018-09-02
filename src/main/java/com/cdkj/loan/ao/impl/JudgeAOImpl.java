@@ -222,7 +222,7 @@ public class JudgeAOImpl implements IJudgeAO {
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
         repayBiz.setCurNodeCode(nodeFlow.getNextNode());
         repayBiz.setIsImplementAgain(EBoolean.NO.getCode());
-        repayBizBO.updateCurNodeCode(repayBiz);
+        repayBizBO.updateRepayBizImplement(repayBiz);
 
         judgeBO.takeEffect(req);
         // 日志记录
