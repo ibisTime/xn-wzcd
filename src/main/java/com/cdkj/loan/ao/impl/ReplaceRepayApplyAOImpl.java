@@ -72,8 +72,7 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
         data.setAmount(StringValidater.toLong(req.getAmount()));
         data.setBizCode(req.getBizCode());// 还款业务编号
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getBizCode());
-        Bankcard bankcard = bankcardBO
-            .getBankcardByUserId(repayBiz.getUserId());
+        Bankcard bankcard = bankcardBO.getBankcard(repayBiz.getBankcardCode());
         data.setReceiptBank(bankcard.getBankName());
         data.setReceiptAccount(bankcard.getBankcardNumber());
         data.setReceiptRealName(bankcard.getRealName());

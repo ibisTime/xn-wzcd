@@ -1789,30 +1789,21 @@
 		cur_node_code = #{curNodeCode}
 		,insurance_company_code = #{insuranceCompanyCode}
 		,car_color = #{carColor}
-		,frame_no = #{frameNo}
 		
 		,force_insurance = #{forceInsurance}
 		,commerce_insurance = #{commerceInsurance}
 		,insurance_effect_datetime = #{insuranceEffectDatetime}
 		,insurance_bank = #{insuranceBank}
-		
-		,guarantee_contract_code = #{guaranteeContractCode}
-		,bank_contract_code = #{bankContractCode}
 		,reg_certificate_code = #{regCertificateCode}
 		
 		,guarantor1_name = #{guarantor1Name}
 		,guarantor1_mobile = #{guarantor1Mobile}
 		,guarantor2_name = #{guarantor2Name}
 		,guarantor2_mobile = #{guarantor2Mobile}
-		,month_amount = #{monthAmount}
 		
-		,repay_first_month_datetime = #{repayFirstMonthDatetime}
-		,id_no_picz = #{idNoPicz}
-		,id_no_picf = #{idNoPicf}
 		
 		,file_list = #{fileList}
 		,is_complete = #{isComplete}
-		,month_amount = #{monthAmount}
 		,store_place = #{storePlace}
 		,file_remark = #{fileRemark}
 		

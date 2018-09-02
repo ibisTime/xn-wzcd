@@ -29,7 +29,7 @@ public enum ERepayBizNode {
             "021_11", "财务审核"), CASHIER("021_12", "出纳打款"), SERVICE("021_13", "送达"),  SENTENCE(
             "021_14", "判决"),TAKE_EFFECT("021_15", "生效"),APPLY_IMPLEMENT("021_16","申请执行"),IMPLEMENT_ADMISSIBILITY(
             "021_17","案件受理"),AUCTION("021_18","拍卖"),NOTICE("021_19","公告"), JUDGE_RESULT_INPUT(
-            "021_20", "诉讼结果录入"), RESULT_INPUT_AGAIN("021_21", "恢复执行"), FINANCE_SURE_RECEIPT(
+            "021_20", "执行结果录入"), RESULT_INPUT_AGAIN("021_21", "恢复执行"), FINANCE_SURE_RECEIPT(
             "021_22", "财务收款"),ADJUDICATION_DEADLINE("021_23","录入查封裁定到期时间"), LAWSUIT_FINISH(
             "021_24", "司法诉讼完成"), JUDGE_BAD("021_25", "坏账"), REDEEM_FINANCIAL_AUDIT(
             "021_26", "赎回财务审核"), SELLED_FINANCIAL_AUDIT("021_27", "转卖财务审核"),CLEARANCE_CASHIER(

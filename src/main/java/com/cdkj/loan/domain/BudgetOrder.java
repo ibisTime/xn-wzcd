@@ -929,10 +929,21 @@ public class BudgetOrder extends ABaseDO {
     // 编号模糊查
     private String codeQuery;
 
+    // 首付金额
+    private Long firstPayment;
+
     /*-------辅助字段-------*/
 
     public Long getReplaceRealRepayAmount() {
         return replaceRealRepayAmount;
+    }
+
+    public Long getFirstPayment() {
+        return firstPayment;
+    }
+
+    public void setFirstPayment(Long firstPayment) {
+        this.firstPayment = firstPayment;
     }
 
     public CarDealer getCarDealer() {

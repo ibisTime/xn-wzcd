@@ -15,6 +15,7 @@
 		<result column="overdue_deposit" property="overdueDeposit" />
 		<result column="real_repay_amount" property="realRepayAmount" />
 		<result column="collection_result_note" property="collectionResultNote" />
+		<result column="collection_type" property="collectionType" />
 		<result column="operator" property="operator" />
 		<result column="update_datetime" property="updateDatetime" />
 	</resultMap>
@@ -42,6 +43,7 @@
 		,t.overdue_deposit
 		,t.real_repay_amount
 		,t.collection_result_note
+		,t.collection_type
 		,t.operator
 		,t.update_datetime
 		FROM
@@ -75,6 +77,7 @@
 		,overdue_deposit
 		,real_repay_amount
 		,collection_result_note
+		,collection_type
 		,operator
 		,update_datetime
 		)
@@ -91,6 +94,7 @@
 		,#{overdueDeposit}
 		,#{realRepayAmount}
 		,#{collectionResultNote}
+		,#{collectionType}
 		,#{operator}
 		,#{updateDatetime}
 		)

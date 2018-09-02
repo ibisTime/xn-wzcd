@@ -48,6 +48,9 @@ public class OverdueTreatment extends ABaseDO {
     // 催收结果说明
     private String collectionResultNote;
 
+    // 催收类型(0过程，1结果)
+    private String collectionType;
+
     // 操作人
     private String operator;
 
@@ -58,6 +61,14 @@ public class OverdueTreatment extends ABaseDO {
 
     // 操作人名称
     private String operatorName;
+
+    public String getCollectionType() {
+        return collectionType;
+    }
+
+    public void setCollectionType(String collectionType) {
+        this.collectionType = collectionType;
+    }
 
     public String getOperatorName() {
         return operatorName;

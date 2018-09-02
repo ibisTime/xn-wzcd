@@ -37,24 +37,6 @@ public class XN632200Req {
     // 登记证书号
     private String regCertificateCode;
 
-    // 家庭紧急联系人信息1 姓名
-    private String emergencyName1;
-
-    // 家庭紧急联系人信息1 与申请人关系
-    private String emergencyRelation1;
-
-    // 家庭紧急联系人信息1 手机号码
-    private String emergencyMobile1;
-
-    // 家庭紧急联系人信息2 姓名
-    private String emergencyName2;
-
-    // 家庭紧急联系人信息2 与申请人关系
-    private String emergencyRelation2;
-
-    // 家庭紧急联系人信息2 手机号码
-    private String emergencyMobile2;
-
     // 担保人1姓名
     private String guarantor1Name;
 
@@ -66,21 +48,6 @@ public class XN632200Req {
 
     // 担保人2手机
     private String guarantor2Mobile;
-
-    // 首期还款金额
-    @NotBlank
-    private String repayFirstMonthAmount;
-
-    // 首期还款日期
-    @NotBlank
-    private String repayFirstMonthDatetime;
-
-    // 每期月供金额
-    @NotBlank
-    private String repayMonthAmount;
-
-    // 身份证照片
-    private String idNoPic;
 
     // 已入档清单
     private List<String> fileList;
@@ -104,30 +71,6 @@ public class XN632200Req {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getRepayFirstMonthAmount() {
-        return repayFirstMonthAmount;
-    }
-
-    public void setRepayFirstMonthAmount(String repayFirstMonthAmount) {
-        this.repayFirstMonthAmount = repayFirstMonthAmount;
-    }
-
-    public String getRepayFirstMonthDatetime() {
-        return repayFirstMonthDatetime;
-    }
-
-    public void setRepayFirstMonthDatetime(String repayFirstMonthDatetime) {
-        this.repayFirstMonthDatetime = repayFirstMonthDatetime;
-    }
-
-    public String getRepayMonthAmount() {
-        return repayMonthAmount;
-    }
-
-    public void setRepayMonthAmount(String repayMonthAmount) {
-        this.repayMonthAmount = repayMonthAmount;
     }
 
     public String getInsuranceCompanyCode() {
@@ -186,54 +129,6 @@ public class XN632200Req {
         this.regCertificateCode = regCertificateCode;
     }
 
-    public String getEmergencyName1() {
-        return emergencyName1;
-    }
-
-    public void setEmergencyName1(String emergencyName1) {
-        this.emergencyName1 = emergencyName1;
-    }
-
-    public String getEmergencyRelation1() {
-        return emergencyRelation1;
-    }
-
-    public void setEmergencyRelation1(String emergencyRelation1) {
-        this.emergencyRelation1 = emergencyRelation1;
-    }
-
-    public String getEmergencyMobile1() {
-        return emergencyMobile1;
-    }
-
-    public void setEmergencyMobile1(String emergencyMobile1) {
-        this.emergencyMobile1 = emergencyMobile1;
-    }
-
-    public String getEmergencyName2() {
-        return emergencyName2;
-    }
-
-    public void setEmergencyName2(String emergencyName2) {
-        this.emergencyName2 = emergencyName2;
-    }
-
-    public String getEmergencyRelation2() {
-        return emergencyRelation2;
-    }
-
-    public void setEmergencyRelation2(String emergencyRelation2) {
-        this.emergencyRelation2 = emergencyRelation2;
-    }
-
-    public String getEmergencyMobile2() {
-        return emergencyMobile2;
-    }
-
-    public void setEmergencyMobile2(String emergencyMobile2) {
-        this.emergencyMobile2 = emergencyMobile2;
-    }
-
     public String getGuarantor1Name() {
         return guarantor1Name;
     }
@@ -264,14 +159,6 @@ public class XN632200Req {
 
     public void setGuarantor2Mobile(String guarantor2Mobile) {
         this.guarantor2Mobile = guarantor2Mobile;
-    }
-
-    public String getIdNoPic() {
-        return idNoPic;
-    }
-
-    public void setIdNoPic(String idNoPic) {
-        this.idNoPic = idNoPic;
     }
 
     public List<String> getFileList() {

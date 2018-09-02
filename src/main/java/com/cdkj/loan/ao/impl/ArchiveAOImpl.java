@@ -382,6 +382,10 @@ public class ArchiveAOImpl implements IArchiveAO {
         List<SocialRelation> list = socialRelationBO
             .querySocialRelationList(condition);
         archive.setSocialRelationList(list);
+        archive.setDepartmentName(
+            departmentBO.getDepartment(archive.getDepartmentCode()).getName());
+        archive.setPostName(
+            departmentBO.getDepartment(archive.getPostCode()).getName());
         return archive;
     }
 

@@ -482,7 +482,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             nextNodeCode = ERepayBizNode.REDEEM_FINANCIAL_AUDIT.getCode();
         } else if (EDealResult.GREEN.getCode().equals(req.getDealResult())) {// 申请结清
             BudgetOrder budgetOrder = budgetOrderBO
-                .getBudgetOrderByRepayBizCode(repayBiz.getRefCode());
+                .getBudgetOrderByRepayBizCode(req.getCode());
             // 判断是否抵押过
             if (EBudgetOrderNode.LOCAL_PLEDGE_ACHIEVE.getCode()
                 .equals(budgetOrder.getPledgeCurNodeCode())

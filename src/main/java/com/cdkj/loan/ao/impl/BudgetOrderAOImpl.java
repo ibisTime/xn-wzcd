@@ -1193,12 +1193,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 "存放位置不能为空！");
         }
 
-        if (StringUtils.isNotBlank(req.getEmergencyMobile1())) {
-            PhoneUtil.checkMobile(req.getEmergencyMobile1());
-        }
-        if (StringUtils.isNotBlank(req.getEmergencyMobile2())) {
-            PhoneUtil.checkMobile(req.getEmergencyMobile2());
-        }
         if (StringUtils.isNotBlank(req.getGuarantor1Mobile())) {
             PhoneUtil.checkMobile(req.getGuarantor1Mobile());
         }
@@ -1227,15 +1221,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder
                 .setEnterFileStatus(EEnterFileStatus.TODO_MAKEUP.getCode());
         }
-        budgetOrder
-            .setMonthAmount(StringValidater.toLong(req.getRepayMonthAmount()));
-        budgetOrder.setRepayFirstMonthAmount(
-            StringValidater.toLong(req.getRepayFirstMonthAmount()));
-        budgetOrder
-            .setMonthAmount(StringValidater.toLong(req.getRepayMonthAmount()));
-        budgetOrder.setRepayFirstMonthDatetime(
-            DateUtil.strToDate(req.getRepayFirstMonthDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
 
         budgetOrder.setIsComplete(req.getIsComplete());
         budgetOrder.setStorePlace(req.getStorePlace());
@@ -1399,6 +1384,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 .getDepartment(budgetOrder.getOperateDepartment());
 
             budgetOrder.setOperateDepartmentName(department.getName());
+        }
+
+        // 首付金额(现发票价减贷款金额)
+        if (budgetOrder.getCurrentInvoicePrice() != null) {
+            budgetOrder.setFirstPayment(budgetOrder.getLoanAmount()
+                    - budgetOrder.getCurrentInvoicePrice());
         }
 
         // 业务公司名称

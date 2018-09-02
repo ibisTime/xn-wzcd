@@ -224,6 +224,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         data.setCollectionProcess(req.getCollectionProcess());
         data.setCollectionWish(req.getCollectionWish());
         data.setCollectionProcessNote(req.getCollectionProcessNote());
+        data.setCollectionType(EBoolean.NO.getCode());
         String code = overdueTreatmentBO.saveOverdueTreatment(data);
 
         // 添加费用清单
@@ -261,6 +262,7 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         data.setRepayPlanCode(repayPlan.getCode());
         data.setCollectionResult(req.getCollectionResult());
         data.setDepositIsProvide(req.getDepositIsProvide());
+        data.setCollectionType(EBoolean.YES.getCode());
         if (StringUtils.isNotBlank(req.getOverdueDeposit())) {
             data.setOverdueDeposit(
                 StringValidater.toLong(req.getOverdueDeposit()));
