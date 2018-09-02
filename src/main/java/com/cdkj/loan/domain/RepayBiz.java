@@ -215,6 +215,9 @@ public class RepayBiz extends ABaseDO {
     // 司法诉讼收款凭证
     private String judgeBillPdf;
 
+    // 是否恢复执行
+    private String isImplementAgain;
+
     // ********************司法诉讼打款回来的********************
 
     // ********************结清打款回来的********************
@@ -317,6 +320,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setCompanyCode(String companyCode) {
         this.companyCode = companyCode;
+    }
+
+    public String getIsImplementAgain() {
+        return isImplementAgain;
+    }
+
+    public void setIsImplementAgain(String isImplementAgain) {
+        this.isImplementAgain = isImplementAgain;
     }
 
     public String getCompanyName() {

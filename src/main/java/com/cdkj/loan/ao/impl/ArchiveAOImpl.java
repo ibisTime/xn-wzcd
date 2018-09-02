@@ -233,6 +233,7 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setUpdater(req.getUpdater());
         data.setUpdateDatetime(new Date());
         data.setWorkingYears(req.getWorkingYears());
+        data.setCurNodeCode(EArchiveNode.BRANCH_CEO_APPROVE.getCode());
         // 删除原有的社会关系
         SocialRelation condition = new SocialRelation();
         condition.setArchiveCode(req.getCode());

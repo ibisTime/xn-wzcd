@@ -36,6 +36,7 @@ import com.cdkj.loan.dto.req.XN630584Req;
 import com.cdkj.loan.enums.EApproveResult;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EExeResult;
 import com.cdkj.loan.enums.ERepayBizNode;
 import com.cdkj.loan.enums.ERepayPlanNode;
@@ -220,6 +221,7 @@ public class JudgeAOImpl implements IJudgeAO {
         String curNodeCode = repayBiz.getCurNodeCode();
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
         repayBiz.setCurNodeCode(nodeFlow.getNextNode());
+        repayBiz.setIsImplementAgain(EBoolean.NO.getCode());
         repayBizBO.updateCurNodeCode(repayBiz);
 
         judgeBO.takeEffect(req);
