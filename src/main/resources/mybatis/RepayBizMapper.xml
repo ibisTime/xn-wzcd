@@ -168,6 +168,9 @@
 			<if test="isLogistics != null and isLogistics != '' ">
 				AND t.is_logistics = #{isLogistics}
 			</if>
+			<if test="isImplementAgain != null and isImplementAgain != '' ">
+				AND t.is_implement_again = #{isImplementAgain}
+			</if>
 			
 		</trim>
 	</sql>

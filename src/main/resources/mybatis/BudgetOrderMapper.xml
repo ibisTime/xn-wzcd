@@ -421,6 +421,9 @@
 			<if test="bankFkDatetimeForYear != null and bankFkDatetimeForYear != '' ">
 				AND t.bank_fk_datetime like #{bankFkDatetimeForYear}"%"
 			</if>
+			<if test="isEnd != null and isEnd != '' ">
+				AND t.is_end = #{isEnd}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_budgetOrder" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">
