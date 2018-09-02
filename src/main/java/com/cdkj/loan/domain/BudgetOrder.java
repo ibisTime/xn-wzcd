@@ -819,6 +819,9 @@ public class BudgetOrder extends ABaseDO {
     // 银行返点时间
     private Date bankRepointDatetime;
 
+    // 业务是否结束
+    private String isEnd;
+
     /***************DB properties**********/
 
     /*-------辅助字段-------*/
@@ -1260,6 +1263,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setBudgetOrderGpsList(List<BudgetOrderGps> budgetOrderGpsList) {
         this.budgetOrderGpsList = budgetOrderGpsList;
+    }
+
+    public String getIsEnd() {
+        return isEnd;
+    }
+
+    public void setIsEnd(String isEnd) {
+        this.isEnd = isEnd;
     }
 
     public Bank getBank() {

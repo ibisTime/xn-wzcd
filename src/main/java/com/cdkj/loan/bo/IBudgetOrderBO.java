@@ -153,4 +153,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 生成业务员奖金
     public void generateSaleUserBonus(BudgetOrder budgetOrder);
 
+    // 预算单改为已结束
+    public void updateBudgetOrderEnd(BudgetOrder budgetOrder);
+
 }

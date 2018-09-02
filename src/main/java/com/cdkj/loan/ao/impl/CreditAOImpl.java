@@ -507,6 +507,7 @@ public class CreditAOImpl implements ICreditAO {
             data.setCreateDatetime(new Date());
             data.setCode(credit.getCode());// 预算单编号使用征信单编号
             data.setIsLogistics(EBoolean.NO.getCode());
+            data.setIsEnd(EBoolean.NO.getCode());
             String budgetOrderCode = budgetOrderBO.saveBudgetOrder(data);
             // 预算单第一步 日志记录
             sysBizLogBO.saveSYSBizLog(budgetOrderCode, EBizLogType.BUDGET_ORDER,

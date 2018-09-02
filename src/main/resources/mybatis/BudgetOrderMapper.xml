@@ -312,6 +312,7 @@
 		<result column="is_logistics" property="isLogistics"/>
 		<result column="bank_repoint_status" property="bankRepointStatus"/>
 		<result column="bank_repoint_datetime" property="bankRepointDatetime"/>
+		<result column="is_end" property="isEnd"/>
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -690,6 +691,8 @@
 		,t.enter_file_status
 		,t.is_logistics
 		,t.bank_repoint_status
+		,t.bank_repoint_datetime
+		,t.is_end
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -968,6 +971,8 @@
 		,t.enter_file_status
 		,t.is_logistics
 		,t.bank_repoint_status
+		,t.bank_repoint_datetime
+		,t.is_end
 		FROM
 		tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
 		<include refid="where_condition" />
@@ -1237,6 +1242,8 @@
 		,t.enter_file_status
 		,t.is_logistics
 		,t.bank_repoint_status
+		,t.bank_repoint_datetime
+		,t.is_end
 		FROM
 		tdq_budget_order t
 		<include refid="where_condition" />
@@ -1398,6 +1405,7 @@
 		,repay_biz_code
 		,type
 		,is_logistics
+		,is_end
 		)
 		VALUES(
 		#{code}
@@ -1542,6 +1550,7 @@
 		,#{repayBizCode}
 		,#{type}
 		,#{isLogistics}
+		,#{isEnd}
 		)
 	</insert>
 	
@@ -1829,6 +1838,14 @@
 		UPDATE tdq_budget_order
 		SET
 		cur_node_code = #{curNodeCode}
+		WHERE code = #{code}
+	</update>
+	
+	<update id="update_BudgetOrderEnd" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		cur_node_code = #{curNodeCode}
+		,is_end = #{isEnd}
 		WHERE code = #{code}
 	</update>
 

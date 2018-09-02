@@ -414,6 +414,12 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         RepayBiz data = getRepayBiz(code);
         data.setCurNodeCode(ERepayBizNode.JUDGE_BAD.getCode());
         repayBizDAO.updateJudgeResultInput(data);
+
+        // 预算单改为结束
+        BudgetOrder budgetOrder = budgetOrderBO
+            .getBudgetOrderByRepayBizCode(code);
+        budgetOrder.setIsEnd(EBoolean.YES.getCode());
+        budgetOrderBO.updateBudgetOrderEnd(budgetOrder);
     }
 
     @Override
