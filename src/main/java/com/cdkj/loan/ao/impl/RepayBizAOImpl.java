@@ -1084,15 +1084,14 @@ public class RepayBizAOImpl implements IRepayBizAO {
     public void clearanceCashier(String code, String paymentBank,
             String paymentPdf, String operator) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(code);
-        if (!ERepayBizNode.CLEARANCE_CASHIER.getCode().equals(
-            repayBiz.getCurNodeCode())) {
+        String curNodeCode = repayBiz.getCurNodeCode();
+        if (!ERepayBizNode.CLEARANCE_CASHIER.getCode().equals(curNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "还款业务不在公司结清出纳打款节点，不能操作！");
         }
         // 当前节点
-        String curNodeCode = repayBiz.getCurNodeCode();
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
-        repayBiz.setCurNodeCode(nodeFlow.getNextNode());
+        repayBiz.setCurNodeCode(nodeFlowBO
+            .getNodeFlowByCurrentNode(curNodeCode).getNextNode());
         repayBiz.setPaymentBank(paymentBank);
         repayBiz.setPaymentPdf(paymentPdf);
         repayBiz.setUpdater(operator);
@@ -1100,9 +1099,8 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBizBO.clearanceCashier(repayBiz);
 
         // 日志记录
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
-            EBizLogType.REPAY_BIZ, repayBiz.getCode(), curNodeCode,
-            nodeFlow.getNextNode(), null, operator);
+        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.ABNORMAL_REPAY_BIZ,
+            repayBiz.getCode(), curNodeCode, null, operator);
     }
 
     @Override

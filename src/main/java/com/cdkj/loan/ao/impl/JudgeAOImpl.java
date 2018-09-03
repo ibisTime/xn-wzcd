@@ -17,7 +17,6 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Judge;
-import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630560Req;
@@ -290,33 +289,31 @@ public class JudgeAOImpl implements IJudgeAO {
     @Override
     public void notice(XN630583Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
-        if (!ERepayBizNode.NOTICE.getCode().equals(repayBiz.getCurNodeCode())) {
+        String curNodeCode = repayBiz.getCurNodeCode();
+        if (!ERepayBizNode.NOTICE.getCode().equals(curNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前业务不在执行案件的公告节点，不能操作！");
         }
-        String curNodeCode = repayBiz.getCurNodeCode();
-        NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
-        repayBiz.setCurNodeCode(nodeFlow.getNextNode());
+        repayBiz.setCurNodeCode(nodeFlowBO
+            .getNodeFlowByCurrentNode(curNodeCode).getNextNode());
         repayBizBO.updateCurNodeCode(repayBiz);
 
         judgeBO.notice(req);
         // 日志记录
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
-            EBizLogType.REPAY_BIZ, repayBiz.getCode(), curNodeCode,
-            nodeFlow.getNextNode(), null, req.getOperator());
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
+            EBizLogType.ABNORMAL_REPAY_BIZ, repayBiz.getCode(), curNodeCode,
+            repayBiz.getCurNodeCode(), null, req.getOperator());
     }
 
     @Override
     @Transactional
     public void judgeResultInput(XN630562Req req) {
         RepayBiz repayBiz = repayBizBO.getRepayBiz(req.getRepayBizCode());
-        if (!ERepayBizNode.JUDGE_RESULT_INPUT.getCode().equals(
-            repayBiz.getCurNodeCode())) {
+        String curNodeCode = repayBiz.getCurNodeCode();
+        if (!ERepayBizNode.JUDGE_RESULT_INPUT.getCode().equals(curNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前业务不在执行结果录入节点！");
         }
-        // 当前节点
-        String curNodeCode = repayBiz.getCurNodeCode();
 
         // 结果为执毕 或 和解，则用户已还欠款；结果为终结，则需要重新诉讼；
         if (EExeResult.FINISH_NORMAL.getCode().equals(req.getExeResult())
@@ -326,18 +323,18 @@ public class JudgeAOImpl implements IJudgeAO {
             repayBizBO.refreshJudgePaid(req.getRepayBizCode());
 
             // 日志记录
-            sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REPAY_BIZ,
-                req.getRepayBizCode(), curNodeCode, null, req.getOperator());
+            sysBizLogBO.refreshPreSYSBizLog(EBizLogType.ABNORMAL_REPAY_BIZ,
+                repayBiz.getCode(), curNodeCode, req.getRemark(),
+                req.getOperator());
         } else {
             repayBizBO.refreshJudgeAgain(req.getRepayBizCode());
 
             // 日志记录
-            ERepayBizNode node = ERepayBizNode.getMap().get(
-                nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode).getNextNode());
-            sysBizLogBO.saveNewAndPreEndSYSBizLog(req.getRepayBizCode(),
-                EBizLogType.REPAY_BIZ, req.getRepayBizCode(),
-                repayBiz.getCurNodeCode(), node.getCode(), null,
-                req.getOperator());
+            sysBizLogBO
+                .saveNewAndPreEndSYSBizLog(repayBiz.getRefCode(),
+                    EBizLogType.ABNORMAL_REPAY_BIZ, repayBiz.getCode(),
+                    curNodeCode, repayBiz.getCurNodeCode(), null,
+                    req.getOperator());
         }
 
         judgeBO.refreshJudgeResultInput(req);
