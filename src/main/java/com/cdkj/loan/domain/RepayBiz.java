@@ -153,6 +153,9 @@ public class RepayBiz extends ABaseDO {
     // 付款凭证(公司结清)
     private String paymentPdf;
 
+    // 处理结果
+    private String dealResult;
+
     // 处理结果附件
     private String dealEnclosure;
 
@@ -608,6 +611,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setLoanEndDatetime(Date loanEndDatetime) {
         this.loanEndDatetime = loanEndDatetime;
+    }
+
+    public String getDealResult() {
+        return dealResult;
+    }
+
+    public void setDealResult(String dealResult) {
+        this.dealResult = dealResult;
     }
 
     public Date getBankFkDatetime() {

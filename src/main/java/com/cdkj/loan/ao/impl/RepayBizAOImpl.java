@@ -511,6 +511,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             nextNodeCode = preNodeCode;
         }
         repayBiz.setCurNodeCode(nextNodeCode);
+        repayBiz.setDealResult(req.getDealResult());
         repayBiz.setDealEnclosure(req.getDealEnclosure());
         repayBiz.setRemark(req.getRemark());
         repayBizBO.takeCarResultHandle(repayBiz);

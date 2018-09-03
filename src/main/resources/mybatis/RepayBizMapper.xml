@@ -57,6 +57,7 @@
 		<result column="settle_datetime" property="settleDatetime" />
 		<result column="payment_bank" property="paymentBank" />
 		<result column="payment_pdf" property="paymentPdf" />
+		<result column="deal_result" property="dealResult" />
 		<result column="deal_enclosure" property="dealEnclosure" />
 		<result column="is_deposit_receipt" property="isDepositReceipt" />
 		<result column="deposit_receipt" property="depositReceipt" />
@@ -230,6 +231,7 @@
 		,t.settle_datetime
 		,t.payment_bank
 		,t.payment_pdf
+		,t.deal_result
 		,t.deal_enclosure
 		,t.is_deposit_receipt
 		,t.deposit_receipt
@@ -331,6 +333,7 @@
 		,t.settle_datetime
 		,t.payment_bank
 		,t.payment_pdf
+		,t.deal_result
 		,t.deal_enclosure
 		,t.is_deposit_receipt
 		,t.deposit_receipt
@@ -432,6 +435,7 @@
 		,t.settle_datetime
 		,t.payment_bank
 		,t.payment_pdf
+		,t.deal_result
 		,t.deal_enclosure
 		,t.is_deposit_receipt
 		,t.deposit_receipt
@@ -801,6 +805,7 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,deal_enclosure = #{dealEnclosure}
+		,deal_result = #{dealResult}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
