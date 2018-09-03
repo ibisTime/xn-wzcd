@@ -28,6 +28,9 @@
 			<if test="url != null and url != '' ">
 				AND t.url = #{url}
 			</if>
+			<if test="urlQuery != null and urlQuery != '' ">
+				AND t.url like "%"#{urlQuery}"%"
+			</if>
 			<if test="parentCode != null and parentCode != '' ">
 				AND t.parent_code = #{parentCode}
 			</if>
