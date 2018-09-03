@@ -31,6 +31,7 @@ public class TableExportAOImpl implements ITableExportAO {
     @Override
     public String addTableExport(String url, String operator) {
         TableExport data = new TableExport();
+        url = url + ".htm";
         data.setUrl(url);
         data.setOperator(operator);
         SYSUser user = sysUserBO.getUser(operator);
@@ -39,7 +40,7 @@ public class TableExportAOImpl implements ITableExportAO {
         tableExportBO.saveTableExport(data);
         // 菜单名称
         if (StringUtils.isNotBlank(data.getUrl())) {
-            SYSMenu menu = sysMenuBO.getSYSMenuByUrl(data.getUrl() + ".htm");
+            SYSMenu menu = sysMenuBO.getSYSMenuByUrl(data.getUrl());
             data.setMenuName(menu.getName());
         }
         return data.getMenuName();
@@ -53,7 +54,7 @@ public class TableExportAOImpl implements ITableExportAO {
         for (TableExport tableExport : paginable.getList()) {
             // 菜单名称
             if (StringUtils.isNotBlank(tableExport.getUrl())) {
-                String url = tableExport.getUrl() + ".htm";
+                String url = tableExport.getUrl();
                 SYSMenu menu = sysMenuBO.getSYSMenuByUrl(url);
                 tableExport.setMenuName(menu.getName());
             }

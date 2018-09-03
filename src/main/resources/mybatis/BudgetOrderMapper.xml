@@ -98,20 +98,25 @@
 		<result column="apply_birth_address_province" property="applyBirthAddressProvince" />
 		<result column="apply_birth_address_city" property="applyBirthAddressCity" />
 		<result column="apply_birth_address_area" property="applyBirthAddressArea" />
+		<result column="apply_birth_address" property="applyBirthAddress" />
 		<result column="apply_now_address_province" property="applyNowAddressProvince" />
 		<result column="apply_now_address_city" property="applyNowAddressCity" />
 		<result column="apply_now_address_area" property="applyNowAddressArea" />
+		<result column="apply_now_address" property="applyNowAddress" />
 		
 		<result column="house_type" property="houseType" />
 		<result column="gh_birth_address_province" property="ghBirthAddressProvince" />
 		<result column="gh_birth_address_city" property="ghBirthAddressCity" />
 		<result column="gh_birth_address_area" property="ghBirthAddressArea" />
+		<result column="gh_birth_address" property="ghBirthAddress" />
 		<result column="guarantor1_birth_address_province" property="guarantor1BirthAddressProvince" />
 		<result column="guarantor1_birth_address_city" property="guarantor1BirthAddressCity" />
 		<result column="guarantor1_birth_address_area" property="guarantor1BirthAddressArea" />
+		<result column="guarantor1_birth_address" property="guarantor1BirthAddress" />
 		<result column="guarantor2_birth_address_province" property="guarantor2BirthAddressProvince" />
 		<result column="guarantor2_birth_address_city" property="guarantor2BirthAddressCity" />
 		<result column="guarantor2_birth_address_area" property="guarantor2BirthAddressArea" />
+		<result column="guarantor2_birth_address" property="guarantor2BirthAddress" />
 		<result column="other_note" property="otherNote" />
 		
 		<result column="oil_subsidy" property="oilSubsidy" />
@@ -524,16 +529,20 @@
 		,t.apply_now_address_province
 		,t.apply_now_address_city
 		,t.apply_now_address_area
+		,t.apply_now_address
 		,t.house_type
 		,t.gh_birth_address_province
 		,t.gh_birth_address_city
 		,t.gh_birth_address_area
+		,t.gh_birth_address
 		,t.guarantor1_birth_address_province
 		,t.guarantor1_birth_address_city
 		,t.guarantor1_birth_address_area
+		,t.guarantor1_birth_address
 		,t.guarantor2_birth_address_province
 		,t.guarantor2_birth_address_city
 		,t.guarantor2_birth_address_area
+		,t.guarantor2_birth_address
 		,t.other_note
 		,t.oil_subsidy
 		,t.pre_oil_subsidy
@@ -820,16 +829,20 @@
 		,t.apply_now_address_province
 		,t.apply_now_address_city
 		,t.apply_now_address_area
+		,t.apply_now_address
 		,t.house_type
 		,t.gh_birth_address_province
 		,t.gh_birth_address_city
 		,t.gh_birth_address_area
+		,t.gh_birth_address
 		,t.guarantor1_birth_address_province
 		,t.guarantor1_birth_address_city
 		,t.guarantor1_birth_address_area
+		,t.guarantor1_birth_address
 		,t.guarantor2_birth_address_province
 		,t.guarantor2_birth_address_city
 		,t.guarantor2_birth_address_area
+		,t.guarantor2_birth_address
 		,t.other_note
 		,t.oil_subsidy
 		,t.pre_oil_subsidy
@@ -1125,16 +1138,20 @@
 		,t.apply_now_address_province
 		,t.apply_now_address_city
 		,t.apply_now_address_area
+		,t.apply_now_address
 		,t.house_type
 		,t.gh_birth_address_province
 		,t.gh_birth_address_city
 		,t.gh_birth_address_area
+		,t.gh_birth_address
 		,t.guarantor1_birth_address_province
 		,t.guarantor1_birth_address_city
 		,t.guarantor1_birth_address_area
+		,t.guarantor1_birth_address
 		,t.guarantor2_birth_address_province
 		,t.guarantor2_birth_address_city
 		,t.guarantor2_birth_address_area
+		,t.guarantor2_birth_address
 		,t.other_note
 		,t.oil_subsidy
 		,t.pre_oil_subsidy
@@ -1670,16 +1687,20 @@
 		,apply_now_address_province = #{applyNowAddressProvince}
 		,apply_now_address_city = #{applyNowAddressCity}
 		,apply_now_address_area = #{applyNowAddressArea}
+		,apply_now_address = #{applyNowAddress}
 		,house_type = #{houseType}
 		,gh_birth_address_province = #{ghBirthAddressProvince}
 		,gh_birth_address_city = #{ghBirthAddressCity}
 		,gh_birth_address_area = #{ghBirthAddressArea}
+		,gh_birth_address = #{ghBirthAddress}
 		,guarantor1_birth_address_province = #{guarantor1BirthAddressProvince}
 		,guarantor1_birth_address_city = #{guarantor1BirthAddressCity}
 		,guarantor1_birth_address_area = #{guarantor1BirthAddressArea}
+		,guarantor1_birth_address = #{guarantor1BirthAddress}
 		,guarantor2_birth_address_province = #{guarantor2BirthAddressProvince}
 		,guarantor2_birth_address_city = #{guarantor2BirthAddressCity}
 		,guarantor2_birth_address_area = #{guarantor2BirthAddressArea}
+		,guarantor2_birth_address = #{guarantor2BirthAddress}
 		
 		,other_note = #{otherNote}
 		,oil_subsidy = #{oilSubsidy}

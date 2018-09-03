@@ -181,6 +181,9 @@ public class XN632120Req {
     // 申请人户籍地区
     private String applyBirthAddressArea;
 
+    // 申请人户籍地详细地址
+    private String applyBirthAddress;
+
     // 现住地址省
     private String applyNowAddressProvince;
 
@@ -189,6 +192,9 @@ public class XN632120Req {
 
     // 现住地址区
     private String applyNowAddressArea;
+
+    // 现住地址详细地址
+    private String applyNowAddress;
 
     // 现住房屋类型
     private String houseType;
@@ -202,6 +208,9 @@ public class XN632120Req {
     // 共还人户籍地区
     private String ghBirthAddressArea;
 
+    // 共还人户籍地详细地址
+    private String ghBirthAddress;
+
     // 担保1户籍地省
     private String guarantor1BirthAddressProvince;
 
@@ -211,6 +220,9 @@ public class XN632120Req {
     // 担保1户籍地区
     private String guarantor1BirthAddressArea;
 
+    // 担保1户籍地详细地址
+    private String guarantor1BirthAddress;
+
     // 担保2户籍地省
     private String guarantor2BirthAddressProvince;
 
@@ -219,6 +231,9 @@ public class XN632120Req {
 
     // 担保2户籍地区
     private String guarantor2BirthAddressArea;
+
+    // 担保2户籍地详细地址
+    private String guarantor2BirthAddress;
 
     // 其他情况说明
     private String otherNote;
@@ -881,6 +896,46 @@ public class XN632120Req {
 
     public void setApplyNowAddressArea(String applyNowAddressArea) {
         this.applyNowAddressArea = applyNowAddressArea;
+    }
+
+    public String getApplyBirthAddress() {
+        return applyBirthAddress;
+    }
+
+    public void setApplyBirthAddress(String applyBirthAddress) {
+        this.applyBirthAddress = applyBirthAddress;
+    }
+
+    public String getApplyNowAddress() {
+        return applyNowAddress;
+    }
+
+    public void setApplyNowAddress(String applyNowAddress) {
+        this.applyNowAddress = applyNowAddress;
+    }
+
+    public String getGhBirthAddress() {
+        return ghBirthAddress;
+    }
+
+    public void setGhBirthAddress(String ghBirthAddress) {
+        this.ghBirthAddress = ghBirthAddress;
+    }
+
+    public String getGuarantor1BirthAddress() {
+        return guarantor1BirthAddress;
+    }
+
+    public void setGuarantor1BirthAddress(String guarantor1BirthAddress) {
+        this.guarantor1BirthAddress = guarantor1BirthAddress;
+    }
+
+    public String getGuarantor2BirthAddress() {
+        return guarantor2BirthAddress;
+    }
+
+    public void setGuarantor2BirthAddress(String guarantor2BirthAddress) {
+        this.guarantor2BirthAddress = guarantor2BirthAddress;
     }
 
     public String getHouseType() {

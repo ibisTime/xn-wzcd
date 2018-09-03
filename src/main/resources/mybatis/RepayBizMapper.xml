@@ -897,6 +897,9 @@
 		,settle_bankcard = #{settleBankcard}
 		,settle_pdf = #{settlePdf}
 		,settle_note = #{settleNote}
+		,rest_periods = #{restPeriods}
+		,rest_amount = #{restAmount}
+		,rest_overdue_amount = #{restOverdueAmount}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}

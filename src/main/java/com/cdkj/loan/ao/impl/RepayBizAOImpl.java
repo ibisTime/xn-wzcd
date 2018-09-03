@@ -698,6 +698,12 @@ public class RepayBizAOImpl implements IRepayBizAO {
         String nextNodeCode = getNextNodeCode(data.getCurNodeCode(),
             EBoolean.YES.getCode());
         data.setCurNodeCode(nextNodeCode);
+
+        // 业务结束
+        data.setRestPeriods(0);
+        data.setRestAmount(0L);
+        data.setRestOverdueAmount(0L);
+
         repayBizBO.refreshCashRemit(data);
 
         // 还款业务结束，预算单改为已还款
