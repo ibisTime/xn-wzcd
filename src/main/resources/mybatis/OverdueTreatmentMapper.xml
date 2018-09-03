@@ -11,7 +11,7 @@
 		<result column="collection_wish" property="collectionWish" />
 		<result column="collection_process_note" property="collectionProcessNote" />
 		<result column="collection_result" property="collectionResult" />
-		<result column="depositIs_provide" property="depositIsProvide" />
+		<result column="deposit_is_provide" property="depositIsProvide" />
 		<result column="overdue_deposit" property="overdueDeposit" />
 		<result column="real_repay_amount" property="realRepayAmount" />
 		<result column="collection_result_note" property="collectionResultNote" />
@@ -39,7 +39,7 @@
 		,t.collection_wish
 		,t.collection_process_note
 		,t.collection_result
-		,t.depositIs_provide
+		,t.deposit_is_provide
 		,t.overdue_deposit
 		,t.real_repay_amount
 		,t.collection_result_note
@@ -73,7 +73,7 @@
 		,collection_wish
 		,collection_process_note
 		,collection_result
-		,depositIs_provide
+		,deposit_is_provide
 		,overdue_deposit
 		,real_repay_amount
 		,collection_result_note

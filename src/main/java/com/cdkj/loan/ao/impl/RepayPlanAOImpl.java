@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -225,6 +226,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
         data.setCollectionWish(req.getCollectionWish());
         data.setCollectionProcessNote(req.getCollectionProcessNote());
         data.setCollectionType(EBoolean.NO.getCode());
+        data.setOperator(req.getOperator());
+        data.setUpdateDatetime(new Date());
         String code = overdueTreatmentBO.saveOverdueTreatment(data);
 
         // 添加费用清单
@@ -272,6 +275,8 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
             data.setRealRepayAmount(
                 StringValidater.toLong(req.getRealRepayAmount()));// 部分还款实还金额
         }
+        data.setOperator(req.getOperator());
+        data.setUpdateDatetime(new Date());
         String code = overdueTreatmentBO.saveOverdueTreatment(data);
 
         // 添加费用清单

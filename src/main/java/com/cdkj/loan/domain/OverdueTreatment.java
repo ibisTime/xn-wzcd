@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -55,7 +57,7 @@ public class OverdueTreatment extends ABaseDO {
     private String operator;
 
     // 操作时间
-    private String updateDatetime;
+    private Date updateDatetime;
 
     /*------------辅助字段--------------*/
 
@@ -182,12 +184,12 @@ public class OverdueTreatment extends ABaseDO {
         return operator;
     }
 
-    public void setUpdateDatetime(String updateDatetime) {
-        this.updateDatetime = updateDatetime;
+    public Date getUpdateDatetime() {
+        return updateDatetime;
     }
 
-    public String getUpdateDatetime() {
-        return updateDatetime;
+    public void setUpdateDatetime(Date updateDatetime) {
+        this.updateDatetime = updateDatetime;
     }
 
 }

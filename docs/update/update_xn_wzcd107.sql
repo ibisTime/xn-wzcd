@@ -5,7 +5,9 @@ ADD COLUMN `bank_benchmark_rate` decimal(18,8) NULL COMMENT '银行基准利率'
 ADD COLUMN `is_end` VARCHAR(4) NULL COMMENT '业务是否结束' AFTER `bank_repoint_datetime`;
 
 ALTER TABLE `tdh_overdue_treatment` 
-ADD COLUMN `collection_type` VARCHAR(4) NULL COMMENT '催收类型(0过程，1结果)' AFTER `collection_result_note`;
+ADD COLUMN `collection_type` VARCHAR(4) NULL COMMENT '催收类型(0过程，1结果)' AFTER `collection_result_note`,
+CHANGE COLUMN `depositIs_provide` `deposit_is_provide` VARCHAR(4) NULL DEFAULT NULL COMMENT '是否提供押金' ;
+
 
 ALTER TABLE `tdh_repay_biz` 
 ADD COLUMN `is_implement_again` VARCHAR(4) NULL COMMENT '是否恢复执行' AFTER `judge_bill_pdf`,
