@@ -103,7 +103,7 @@
 		<result column="apply_now_address_area" property="applyNowAddressArea" />
 		
 		<result column="house_type" property="houseType" />
-		<result column="gh_birth_address_province" property="ghBirthAddress" />
+		<result column="gh_birth_address_province" property="ghBirthAddressProvince" />
 		<result column="gh_birth_address_city" property="ghBirthAddressCity" />
 		<result column="gh_birth_address_area" property="ghBirthAddressArea" />
 		<result column="guarantor1_birth_address_province" property="guarantor1BirthAddressProvince" />

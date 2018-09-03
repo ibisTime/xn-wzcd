@@ -39,7 +39,7 @@ ADD COLUMN `guarantor1_birth_address_city` TINYTEXT NULL COMMENT '担保1户籍�
 ADD COLUMN `guarantor1_birth_address_area` TINYTEXT NULL COMMENT '担保1户籍地区' AFTER `guarantor1_birth_address_city`,
 CHANGE COLUMN `guarantor2_birth_address` `guarantor2_birth_address_province` TINYTEXT NULL DEFAULT NULL COMMENT '担保2户籍地省',
 ADD COLUMN `guarantor2_birth_address_city` TINYTEXT NULL COMMENT '担保2户籍地市' AFTER `guarantor2_birth_address_province`,
-ADD COLUMN `guarantor2_birth_address_area` TINYTEXT NULL COMMENT '担保2户籍地区' AFTER `guarantor2_birth_address_city`,
+ADD COLUMN `guarantor2_birth_address_area` TINYTEXT NULL COMMENT '担保2户籍地区' AFTER `guarantor2_birth_address_city`;
 
 
 
