@@ -34,12 +34,22 @@ public class XN802012Req {
     // 绑定手机号（选填）
     private String bindMobile;
 
+    private String type;// 类型（只做判断）
+
     // 更新人
     @NotBlank
     private String updater;
 
     // 备注（选填）
     private String remark;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getRealName() {
         return realName;

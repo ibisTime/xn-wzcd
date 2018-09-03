@@ -12,6 +12,7 @@ import com.cdkj.loan.ao.IBankcardAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankSubbranchBO;
 import com.cdkj.loan.bo.IBankcardBO;
+import com.cdkj.loan.bo.IChannelBankBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.OrderNoGenerater;
@@ -41,6 +42,9 @@ public class BankcardAOImpl implements IBankcardAO {
 
     @Autowired
     private IBankSubbranchBO bankSubbranchBO;
+
+    @Autowired
+    private IChannelBankBO channelBankBO;
 
     @Autowired
     private IUserBO userBO;
@@ -105,12 +109,12 @@ public class BankcardAOImpl implements IBankcardAO {
         data.setBankcardNumber(req.getBankcardNumber());
         data.setBankCode(req.getBankCode());
         String bankName = null;
-        String string = req.getBankCode().substring(0, 1);
-        if (string == "B") {
+        if ("C" == req.getType()) {
+            bankName = channelBankBO.getChannelBank(req.getBankCode())
+                .getBankName();
+        } else {
             bankName = bankSubbranchBO.getBankSubbranch(req.getBankCode())
                 .getFullName();
-        } else {
-            bankName = bankBO.getBank(req.getBankCode()).getBankName();
         }
         data.setBankName(bankName);
         data.setSubbranch(req.getSubbranch());

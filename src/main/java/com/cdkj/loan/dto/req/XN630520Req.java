@@ -17,6 +17,17 @@ public class XN630520Req extends APageReq {
     private List<String> curNodeCodeList;// 节点
 
     private String curNodeCode;// 节点
+    // 是否恢复执行
+
+    private String isImplementAgain;
+
+    public String getIsImplementAgain() {
+        return isImplementAgain;
+    }
+
+    public void setIsImplementAgain(String isImplementAgain) {
+        this.isImplementAgain = isImplementAgain;
+    }
 
     public String getCurNodeCode() {
         return curNodeCode;
