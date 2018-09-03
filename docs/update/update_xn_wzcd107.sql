@@ -8,7 +8,8 @@ ALTER TABLE `tdh_overdue_treatment`
 ADD COLUMN `collection_type` VARCHAR(4) NULL COMMENT '催收类型(0过程，1结果)' AFTER `collection_result_note`;
 
 ALTER TABLE `tdh_repay_biz` 
-ADD COLUMN `is_implement_again` VARCHAR(4) NULL COMMENT '是否恢复执行' AFTER `judge_bill_pdf`;
+ADD COLUMN `is_implement_again` VARCHAR(4) NULL COMMENT '是否恢复执行' AFTER `judge_bill_pdf`,
+ADD COLUMN `deal_result` VARCHAR(4) NULL COMMENT '处理结果' AFTER `payment_pdf`;
 
 ALTER TABLE `tsys_table_export` 
 ADD COLUMN `real_name` VARCHAR(255) NULL COMMENT '真实姓名' AFTER `operator`;
