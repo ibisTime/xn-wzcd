@@ -8,7 +8,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 菜单列表查
+ * 可以表格导出的菜单
  * @author: CYL 
  * @since: 2018年8月4日 下午8:22:27 
  * @history:

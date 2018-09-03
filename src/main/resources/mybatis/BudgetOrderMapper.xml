@@ -1382,9 +1382,7 @@
 		,is_drice_license
 		,drice_license
 		,other_property_note
-		,apply_now_address
 		,house_type
-		,gh_birth_address
 		,other_note
 		,oil_subsidy
 		,oil_subsidy_kil
@@ -1524,9 +1522,7 @@
 		,#{isDriceLicense}
 		,#{driceLicense}
 		,#{otherPropertyNote}
-		,#{applyNowAddress}
 		,#{houseType}
-		,#{ghBirthAddress}
 		,#{otherNote}
 		,#{oilSubsidy}
 		,#{oilSubsidyKil}
@@ -1675,7 +1671,9 @@
 		,apply_now_address_city = #{applyNowAddressCity}
 		,apply_now_address_area = #{applyNowAddressArea}
 		,house_type = #{houseType}
-		,gh_birth_address = #{ghBirthAddress}
+		,gh_birth_address_province = #{ghBirthAddressProvince}
+		,gh_birth_address_city = #{ghBirthAddressCity}
+		,gh_birth_address_area = #{ghBirthAddressArea}
 		,guarantor1_birth_address_province = #{guarantor1BirthAddressProvince}
 		,guarantor1_birth_address_city = #{guarantor1BirthAddressCity}
 		,guarantor1_birth_address_area = #{guarantor1BirthAddressArea}

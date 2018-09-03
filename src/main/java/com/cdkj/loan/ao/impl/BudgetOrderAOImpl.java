@@ -1400,8 +1400,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         // 首付金额(现发票价减贷款金额)
         if (budgetOrder.getCurrentInvoicePrice() != null) {
-            budgetOrder.setFirstPayment(budgetOrder.getLoanAmount()
-                    - budgetOrder.getCurrentInvoicePrice());
+            budgetOrder.setFirstPayment(budgetOrder.getCurrentInvoicePrice()
+                    - budgetOrder.getLoanAmount());
         }
 
         // 业务公司名称
