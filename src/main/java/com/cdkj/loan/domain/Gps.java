@@ -59,6 +59,9 @@ public class Gps extends ABaseDO {
     // 供应商编号
     private String supplierCode;
 
+    // 是否回退
+    private String isSendBack;
+
     /*****************/
     // 公司编号
     private String companyName;
@@ -68,6 +71,14 @@ public class Gps extends ABaseDO {
 
     // 供应商名称
     private String supplierName;
+
+    public String getIsSendBack() {
+        return isSendBack;
+    }
+
+    public void setIsSendBack(String isSendBack) {
+        this.isSendBack = isSendBack;
+    }
 
     public String getSupplierCode() {
         return supplierCode;

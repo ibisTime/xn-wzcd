@@ -63,6 +63,7 @@ public class GpsAOImpl implements IGpsAO {
         data.setCompanyApplyStatus(EBoolean.NO.getCode());// 公司申领状态 (0待申领 1已申领)
         data.setApplyStatus(EGpsUserApplyStatus.TO_APPLY.getCode());// 个人申领状态
         data.setUseStatus(EGpsUseStatus.UN_USE.getCode());// 使用状态
+        data.setIsSendBack(EBoolean.NO.getCode());// 是否为回退的
         gpsBO.saveGps(data);
         return code;
     }
@@ -103,8 +104,8 @@ public class GpsAOImpl implements IGpsAO {
     private void initGps(Gps gps) {
         // 业务公司名称
         if (StringUtils.isNotBlank(gps.getCompanyCode())) {
-            Department department = departmentBO.getDepartment(gps
-                .getCompanyCode());
+            Department department = departmentBO
+                .getDepartment(gps.getCompanyCode());
             gps.setCompanyName(department.getName());
         }
 
@@ -116,8 +117,8 @@ public class GpsAOImpl implements IGpsAO {
 
         // 供应商名称
         if (StringUtils.isNotBlank(gps.getSupplierCode())) {
-            GpsSupplier gpsSupplier = gpsSupplierBO.getGpsSupplier(gps
-                .getSupplierCode());
+            GpsSupplier gpsSupplier = gpsSupplierBO
+                .getGpsSupplier(gps.getSupplierCode());
             gps.setSupplierName(gpsSupplier.getName());
         }
     }
@@ -128,9 +129,11 @@ public class GpsAOImpl implements IGpsAO {
         if (EGpsSendBackReason.DAMAGE.getCode().equals(req.getReason())) {// gps损坏
             gps.setUseStatus(EGpsUseStatus.DAMAGE.getCode());
         }
-        if (EGpsSendBackReason.EMPLOYEE_LEAVE.getCode().equals(req.getReason())) {// 员工离职
+        if (EGpsSendBackReason.EMPLOYEE_LEAVE.getCode()
+            .equals(req.getReason())) {// 员工离职
             gps.setApplyStatus(EGpsUserApplyStatus.TO_APPLY.getCode());
         }
+        gps.setIsSendBack(EBoolean.YES.getCode());
         gpsBO.refresh(gps);
         // 资料传递待发件
         logisticsBO.saveLogistics(ELogisticsType.GPS.getCode(), gps.getCode(),

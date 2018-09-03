@@ -20,6 +20,7 @@
 		<result column="use_datetime" property="useDatetime" />
 		<result column="biz_code" property="bizCode" />
 		<result column="supplier_code" property="supplierCode" />
+		<result column="is_send_back" property="isSendBack" />
 	</resultMap>
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -31,6 +32,9 @@
 			</if>
 			<if test="gpsType != null and gpsType != '' ">
 				AND t.gps_type = #{gpsType}
+			</if>
+			<if test="isSendBack != null and isSendBack != '' ">
+				AND t.is_send_back = #{isSendBack}
 			</if>
 			<if test="companyCode != null and companyCode != '' ">
 				AND t.company_code = #{companyCode}
@@ -80,6 +84,7 @@
 		,t.use_datetime
 		,t.biz_code
 		,t.supplier_code
+		,t.is_send_back
 		FROM
 		tb_gps t
 		<include refid="where_condition" />
@@ -106,6 +111,7 @@
 		,apply_status
 		,use_status
 		,supplier_code
+		,is_send_back
 		)
 		VALUES(
 		#{code}
@@ -115,6 +121,7 @@
 		,#{applyStatus}
 		,#{useStatus}
 		,#{supplierCode}
+		,#{isSendBack}
 		)
 	</insert>
 
@@ -125,6 +132,7 @@
 		,company_apply_status = #{companyApplyStatus}
 		,company_apply_datetime = #{companyApplyDatetime}
 		,company_apply_code = #{companyApplyCode}
+		,is_send_back = #{isSendBack}
 		WHERE code = #{code}
 	</update>
 	
