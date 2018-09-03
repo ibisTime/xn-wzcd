@@ -397,15 +397,15 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
     public void refreshJudgeAgain(String code) {
         RepayBiz data = getRepayBiz(code);
         data.setCurNodeCode(ERepayBizNode.RESULT_INPUT_AGAIN.getCode());
-        repayBizDAO.updateJudgeResultInput(data);
+        data.setIsImplementAgain(EBoolean.YES.getCode());
+        repayBizDAO.updateRepayBizImplement(data);
     }
 
     @Override
     public void inputVerdict(String code) {
         RepayBiz data = getRepayBiz(code);
         data.setCurNodeCode(ERepayBizNode.LAWSUIT_FINISH.getCode());
-        data.setIsImplementAgain(EBoolean.YES.getCode());
-        repayBizDAO.updateRepayBizImplement(data);
+        repayBizDAO.updateJudgeResultInput(data);
     }
 
     // 执行结果录入归入坏账

@@ -10,9 +10,19 @@ public class XN632095Req extends APageReq {
     // 操作人
     private String operator;
 
+    private String realName;// 真实姓名
+
     private String updateDatetimeStart;// 操作时间起始
 
     private String updateDatetimeEnd;// 操作时间结束
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
 
     public String getUpdateDatetimeStart() {
         return updateDatetimeStart;

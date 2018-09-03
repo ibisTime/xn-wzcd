@@ -23,12 +23,12 @@ public class TableExport extends ABaseDO {
     // 操作人
     private String operator;
 
+    private String realName;// 真实姓名
+
     // 操作时间
     private Date updateDatetime;
 
     /***********辅助字段************/
-
-    private String realName;// 真实姓名
 
     private String menuName;// 菜单名称
 

@@ -10,6 +10,9 @@ ADD COLUMN `collection_type` VARCHAR(4) NULL COMMENT '催收类型(0过程，1�
 ALTER TABLE `tdh_repay_biz` 
 ADD COLUMN `is_implement_again` VARCHAR(4) NULL COMMENT '是否恢复执行' AFTER `judge_bill_pdf`;
 
+ALTER TABLE `tsys_table_export` 
+ADD COLUMN `real_name` VARCHAR(255) NULL COMMENT '真实姓名' AFTER `operator`;
+
 
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', '', 'pledge_print_template_id', '抵押套打模板', 'admin', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
 UPDATE `tsys_dict` SET `parent_key`='pledge_print_template_id' WHERE `id`='645';
