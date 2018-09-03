@@ -441,7 +441,6 @@ public class CreditAOImpl implements ICreditAO {
             data.setCustomerSex(sex);
             data.setMobile(customerUser.getMobile());
             data.setLoanBankCode(credit.getLoanBankCode());
-            data.setApplyBirthAddress(customerUser.getBirthAddress());
 
             // 共还人信息
             CreditUser ghUser = creditUserBO
@@ -460,7 +459,6 @@ public class CreditAOImpl implements ICreditAO {
                 data.setGhBalance(ghUser.getBalance());
                 data.setGhJourShowIncome(ghUser.getJourShowIncome());
                 data.setGhIsPrint(ghUser.getIsPrint());
-                data.setGhBirthAddress(ghUser.getBirthAddress());
             }
 
             // 担保人信息

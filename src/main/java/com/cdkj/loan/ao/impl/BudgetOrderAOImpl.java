@@ -409,13 +409,25 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setIsDriceLicense(req.getIsDriceLicense());
         data.setDriceLicense(req.getDriceLicense());
         data.setOtherPropertyNote(req.getOtherPropertyNote());
-        data.setApplyBirthAddress(req.getApplyBirthAddress());
+        data.setApplyBirthAddressProvince(req.getApplyBirthAddressProvince());
+        data.setApplyBirthAddressCity(req.getApplyBirthAddressCity());
+        data.setApplyBirthAddressArea(req.getApplyBirthAddressArea());
 
-        data.setApplyNowAddress(req.getApplyNowAddress());
+        data.setApplyNowAddressProvince(req.getApplyNowAddressProvince());
+        data.setApplyNowAddressCity(req.getApplyNowAddressCity());
+        data.setApplyNowAddressArea(req.getApplyNowAddressArea());
         data.setHouseType(req.getHouseType());
-        data.setGhBirthAddress(req.getGhBirthAddress());
-        data.setGuarantor1BirthAddress(req.getGuarantor1BirthAddress());
-        data.setGuarantor2BirthAddress(req.getGuarantor2BirthAddress());
+        data.setGhBirthAddressProvince(req.getGhBirthAddressProvince());
+        data.setGhBirthAddressCity(req.getGhBirthAddressCity());
+        data.setGhBirthAddressArea(req.getGhBirthAddressArea());
+        data.setGuarantor1BirthAddressProvince(
+            req.getGuarantor1BirthAddressProvince());
+        data.setGuarantor1BirthAddressCity(req.getGuarantor1BirthAddressCity());
+        data.setGuarantor1BirthAddressArea(req.getGuarantor1BirthAddressArea());
+        data.setGuarantor2BirthAddressProvince(
+            req.getGuarantor2BirthAddressProvince());
+        data.setGuarantor2BirthAddressCity(req.getGuarantor2BirthAddressCity());
+        data.setGuarantor2BirthAddressArea(req.getGuarantor2BirthAddressArea());
 
         data.setOtherNote(req.getOtherNote());
         data.setOilSubsidyKil(StringValidater.toDouble(req.getOilSubsidyKil()));

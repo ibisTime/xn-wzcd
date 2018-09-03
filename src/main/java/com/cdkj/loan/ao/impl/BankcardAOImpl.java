@@ -109,7 +109,7 @@ public class BankcardAOImpl implements IBankcardAO {
         data.setBankcardNumber(req.getBankcardNumber());
         data.setBankCode(req.getBankCode());
         String bankName = null;
-        if ("C" == req.getType()) {
+        if ("C".equals(req.getType())) {
             bankName = channelBankBO.getChannelBank(req.getBankCode())
                 .getBankName();
         } else {

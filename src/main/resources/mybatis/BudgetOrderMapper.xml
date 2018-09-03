@@ -95,13 +95,23 @@
 		<result column="is_drice_license" property="isDriceLicense" />
 		<result column="drice_license" property="driceLicense" />
 		<result column="other_property_note" property="otherPropertyNote" />
-		<result column="apply_birth_address" property="applyBirthAddress" />
-		<result column="apply_now_address" property="applyNowAddress" />
+		<result column="apply_birth_address_province" property="applyBirthAddressProvince" />
+		<result column="apply_birth_address_city" property="applyBirthAddressCity" />
+		<result column="apply_birth_address_area" property="applyBirthAddressArea" />
+		<result column="apply_now_address_province" property="applyNowAddressProvince" />
+		<result column="apply_now_address_city" property="applyNowAddressCity" />
+		<result column="apply_now_address_area" property="applyNowAddressArea" />
 		
 		<result column="house_type" property="houseType" />
-		<result column="gh_birth_address" property="ghBirthAddress" />
-		<result column="guarantor1_birth_address" property="guarantor1BirthAddress" />
-		<result column="guarantor2_birth_address" property="guarantor2BirthAddress" />
+		<result column="gh_birth_address_province" property="ghBirthAddress" />
+		<result column="gh_birth_address_city" property="ghBirthAddressCity" />
+		<result column="gh_birth_address_area" property="ghBirthAddressArea" />
+		<result column="guarantor1_birth_address_province" property="guarantor1BirthAddressProvince" />
+		<result column="guarantor1_birth_address_city" property="guarantor1BirthAddressCity" />
+		<result column="guarantor1_birth_address_area" property="guarantor1BirthAddressArea" />
+		<result column="guarantor2_birth_address_province" property="guarantor2BirthAddressProvince" />
+		<result column="guarantor2_birth_address_city" property="guarantor2BirthAddressCity" />
+		<result column="guarantor2_birth_address_area" property="guarantor2BirthAddressArea" />
 		<result column="other_note" property="otherNote" />
 		
 		<result column="oil_subsidy" property="oilSubsidy" />
@@ -508,12 +518,22 @@
 		,t.is_drice_license
 		,t.drice_license
 		,t.other_property_note
-		,t.apply_birth_address
-		,t.apply_now_address
+		,t.apply_birth_address_province
+		,t.apply_birth_address_city
+		,t.apply_birth_address_area
+		,t.apply_now_address_province
+		,t.apply_now_address_city
+		,t.apply_now_address_area
 		,t.house_type
-		,t.gh_birth_address
-		,t.guarantor1_birth_address
-		,t.guarantor2_birth_address
+		,t.gh_birth_address_province
+		,t.gh_birth_address_city
+		,t.gh_birth_address_area
+		,t.guarantor1_birth_address_province
+		,t.guarantor1_birth_address_city
+		,t.guarantor1_birth_address_area
+		,t.guarantor2_birth_address_province
+		,t.guarantor2_birth_address_city
+		,t.guarantor2_birth_address_area
 		,t.other_note
 		,t.oil_subsidy
 		,t.pre_oil_subsidy
@@ -794,12 +814,22 @@
 		,t.is_drice_license
 		,t.drice_license
 		,t.other_property_note
-		,t.apply_birth_address
-		,t.apply_now_address
+		,t.apply_birth_address_province
+		,t.apply_birth_address_city
+		,t.apply_birth_address_area
+		,t.apply_now_address_province
+		,t.apply_now_address_city
+		,t.apply_now_address_area
 		,t.house_type
-		,t.gh_birth_address
-		,t.guarantor1_birth_address
-		,t.guarantor2_birth_address
+		,t.gh_birth_address_province
+		,t.gh_birth_address_city
+		,t.gh_birth_address_area
+		,t.guarantor1_birth_address_province
+		,t.guarantor1_birth_address_city
+		,t.guarantor1_birth_address_area
+		,t.guarantor2_birth_address_province
+		,t.guarantor2_birth_address_city
+		,t.guarantor2_birth_address_area
 		,t.other_note
 		,t.oil_subsidy
 		,t.pre_oil_subsidy
@@ -1089,12 +1119,22 @@
 		,t.is_drice_license
 		,t.drice_license
 		,t.other_property_note
-		,t.apply_birth_address
-		,t.apply_now_address
+		,t.apply_birth_address_province
+		,t.apply_birth_address_city
+		,t.apply_birth_address_area
+		,t.apply_now_address_province
+		,t.apply_now_address_city
+		,t.apply_now_address_area
 		,t.house_type
-		,t.gh_birth_address
-		,t.guarantor1_birth_address
-		,t.guarantor2_birth_address
+		,t.gh_birth_address_province
+		,t.gh_birth_address_city
+		,t.gh_birth_address_area
+		,t.guarantor1_birth_address_province
+		,t.guarantor1_birth_address_city
+		,t.guarantor1_birth_address_area
+		,t.guarantor2_birth_address_province
+		,t.guarantor2_birth_address_city
+		,t.guarantor2_birth_address_area
 		,t.other_note
 		,t.oil_subsidy
 		,t.pre_oil_subsidy
@@ -1342,12 +1382,9 @@
 		,is_drice_license
 		,drice_license
 		,other_property_note
-		,apply_birth_address
 		,apply_now_address
 		,house_type
 		,gh_birth_address
-		,guarantor1_birth_address
-		,guarantor2_birth_address
 		,other_note
 		,oil_subsidy
 		,oil_subsidy_kil
@@ -1487,12 +1524,9 @@
 		,#{isDriceLicense}
 		,#{driceLicense}
 		,#{otherPropertyNote}
-		,#{applyBirthAddress}
 		,#{applyNowAddress}
 		,#{houseType}
 		,#{ghBirthAddress}
-		,#{guarantor1BirthAddress}
-		,#{guarantor2BirthAddress}
 		,#{otherNote}
 		,#{oilSubsidy}
 		,#{oilSubsidyKil}
@@ -1634,12 +1668,20 @@
 		,drice_license = #{driceLicense}
 		,other_property_note = #{otherPropertyNote}
 		
-		,apply_birth_address = #{applyBirthAddress}
-		,apply_now_address = #{applyNowAddress}
+		,apply_birth_address_province = #{applyBirthAddressProvince}
+		,apply_birth_address_city = #{applyBirthAddressCity}
+		,apply_birth_address_area = #{applyBirthAddressArea}
+		,apply_now_address_province = #{applyNowAddressProvince}
+		,apply_now_address_city = #{applyNowAddressCity}
+		,apply_now_address_area = #{applyNowAddressArea}
 		,house_type = #{houseType}
 		,gh_birth_address = #{ghBirthAddress}
-		,guarantor1_birth_address = #{guarantor1BirthAddress}
-		,guarantor2_birth_address = #{guarantor2BirthAddress}
+		,guarantor1_birth_address_province = #{guarantor1BirthAddressProvince}
+		,guarantor1_birth_address_city = #{guarantor1BirthAddressCity}
+		,guarantor1_birth_address_area = #{guarantor1BirthAddressArea}
+		,guarantor2_birth_address_province = #{guarantor2BirthAddressProvince}
+		,guarantor2_birth_address_city = #{guarantor2BirthAddressCity}
+		,guarantor2_birth_address_area = #{guarantor2BirthAddressArea}
 		
 		,other_note = #{otherNote}
 		,oil_subsidy = #{oilSubsidy}

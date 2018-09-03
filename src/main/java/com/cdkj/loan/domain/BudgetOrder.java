@@ -255,23 +255,53 @@ public class BudgetOrder extends ABaseDO {
     // 其他资产说明
     private String otherPropertyNote;
 
-    // 申请人户籍地
-    private String applyBirthAddress;
+    // 申请人户籍地省
+    private String applyBirthAddressProvince;
 
-    // 现住地址
-    private String applyNowAddress;
+    // 申请人户籍地市
+    private String applyBirthAddressCity;
+
+    // 申请人户籍地区
+    private String applyBirthAddressArea;
+
+    // 现住地址省
+    private String applyNowAddressProvince;
+
+    // 现住地址市
+    private String applyNowAddressCity;
+
+    // 现住地址区
+    private String applyNowAddressArea;
 
     // 现住房屋类型
     private String houseType;
 
-    // 共还人户籍地
-    private String ghBirthAddress;
+    // 共还人户籍地省
+    private String ghBirthAddressProvince;
 
-    // 担保1户籍地
-    private String guarantor1BirthAddress;
+    // 共还人户籍地市
+    private String ghBirthAddressCity;
 
-    // 担保2户籍地
-    private String guarantor2BirthAddress;
+    // 共还人户籍地区
+    private String ghBirthAddressArea;
+
+    // 担保1户籍地省
+    private String guarantor1BirthAddressProvince;
+
+    // 担保1户籍地市
+    private String guarantor1BirthAddressCity;
+
+    // 担保1户籍地区
+    private String guarantor1BirthAddressArea;
+
+    // 担保2户籍地省
+    private String guarantor2BirthAddressProvince;
+
+    // 担保2户籍地市
+    private String guarantor2BirthAddressCity;
+
+    // 担保2户籍地区
+    private String guarantor2BirthAddressArea;
 
     // 其他情况说明
     private String otherNote;
@@ -1857,20 +1887,130 @@ public class BudgetOrder extends ABaseDO {
         this.otherPropertyNote = otherPropertyNote;
     }
 
-    public String getApplyBirthAddress() {
-        return applyBirthAddress;
+    public String getApplyBirthAddressProvince() {
+        return applyBirthAddressProvince;
     }
 
-    public void setApplyBirthAddress(String applyBirthAddress) {
-        this.applyBirthAddress = applyBirthAddress;
+    public void setApplyBirthAddressProvince(String applyBirthAddressProvince) {
+        this.applyBirthAddressProvince = applyBirthAddressProvince;
     }
 
-    public String getApplyNowAddress() {
-        return applyNowAddress;
+    public String getApplyBirthAddressCity() {
+        return applyBirthAddressCity;
     }
 
-    public void setApplyNowAddress(String applyNowAddress) {
-        this.applyNowAddress = applyNowAddress;
+    public void setApplyBirthAddressCity(String applyBirthAddressCity) {
+        this.applyBirthAddressCity = applyBirthAddressCity;
+    }
+
+    public String getApplyBirthAddressArea() {
+        return applyBirthAddressArea;
+    }
+
+    public void setApplyBirthAddressArea(String applyBirthAddressArea) {
+        this.applyBirthAddressArea = applyBirthAddressArea;
+    }
+
+    public String getGhBirthAddressProvince() {
+        return ghBirthAddressProvince;
+    }
+
+    public void setGhBirthAddressProvince(String ghBirthAddressProvince) {
+        this.ghBirthAddressProvince = ghBirthAddressProvince;
+    }
+
+    public String getGhBirthAddressCity() {
+        return ghBirthAddressCity;
+    }
+
+    public void setGhBirthAddressCity(String ghBirthAddressCity) {
+        this.ghBirthAddressCity = ghBirthAddressCity;
+    }
+
+    public String getGhBirthAddressArea() {
+        return ghBirthAddressArea;
+    }
+
+    public void setGhBirthAddressArea(String ghBirthAddressArea) {
+        this.ghBirthAddressArea = ghBirthAddressArea;
+    }
+
+    public String getGuarantor1BirthAddressProvince() {
+        return guarantor1BirthAddressProvince;
+    }
+
+    public void setGuarantor1BirthAddressProvince(
+            String guarantor1BirthAddressProvince) {
+        this.guarantor1BirthAddressProvince = guarantor1BirthAddressProvince;
+    }
+
+    public String getGuarantor1BirthAddressCity() {
+        return guarantor1BirthAddressCity;
+    }
+
+    public void setGuarantor1BirthAddressCity(
+            String guarantor1BirthAddressCity) {
+        this.guarantor1BirthAddressCity = guarantor1BirthAddressCity;
+    }
+
+    public String getGuarantor1BirthAddressArea() {
+        return guarantor1BirthAddressArea;
+    }
+
+    public void setGuarantor1BirthAddressArea(
+            String guarantor1BirthAddressArea) {
+        this.guarantor1BirthAddressArea = guarantor1BirthAddressArea;
+    }
+
+    public String getGuarantor2BirthAddressProvince() {
+        return guarantor2BirthAddressProvince;
+    }
+
+    public void setGuarantor2BirthAddressProvince(
+            String guarantor2BirthAddressProvince) {
+        this.guarantor2BirthAddressProvince = guarantor2BirthAddressProvince;
+    }
+
+    public String getGuarantor2BirthAddressCity() {
+        return guarantor2BirthAddressCity;
+    }
+
+    public void setGuarantor2BirthAddressCity(
+            String guarantor2BirthAddressCity) {
+        this.guarantor2BirthAddressCity = guarantor2BirthAddressCity;
+    }
+
+    public String getGuarantor2BirthAddressArea() {
+        return guarantor2BirthAddressArea;
+    }
+
+    public void setGuarantor2BirthAddressArea(
+            String guarantor2BirthAddressArea) {
+        this.guarantor2BirthAddressArea = guarantor2BirthAddressArea;
+    }
+
+    public String getApplyNowAddressProvince() {
+        return applyNowAddressProvince;
+    }
+
+    public void setApplyNowAddressProvince(String applyNowAddressProvince) {
+        this.applyNowAddressProvince = applyNowAddressProvince;
+    }
+
+    public String getApplyNowAddressCity() {
+        return applyNowAddressCity;
+    }
+
+    public void setApplyNowAddressCity(String applyNowAddressCity) {
+        this.applyNowAddressCity = applyNowAddressCity;
+    }
+
+    public String getApplyNowAddressArea() {
+        return applyNowAddressArea;
+    }
+
+    public void setApplyNowAddressArea(String applyNowAddressArea) {
+        this.applyNowAddressArea = applyNowAddressArea;
     }
 
     public String getHouseType() {
@@ -1879,30 +2019,6 @@ public class BudgetOrder extends ABaseDO {
 
     public void setHouseType(String houseType) {
         this.houseType = houseType;
-    }
-
-    public String getGhBirthAddress() {
-        return ghBirthAddress;
-    }
-
-    public void setGhBirthAddress(String ghBirthAddress) {
-        this.ghBirthAddress = ghBirthAddress;
-    }
-
-    public String getGuarantor1BirthAddress() {
-        return guarantor1BirthAddress;
-    }
-
-    public void setGuarantor1BirthAddress(String guarantor1BirthAddress) {
-        this.guarantor1BirthAddress = guarantor1BirthAddress;
-    }
-
-    public String getGuarantor2BirthAddress() {
-        return guarantor2BirthAddress;
-    }
-
-    public void setGuarantor2BirthAddress(String guarantor2BirthAddress) {
-        this.guarantor2BirthAddress = guarantor2BirthAddress;
     }
 
     public String getGreenBigCode() {
