@@ -5,6 +5,11 @@ ADD COLUMN `bank_benchmark_rate` decimal(18,8) NULL COMMENT '银行基准利率'
 ADD COLUMN `is_end` VARCHAR(4) NULL COMMENT '业务是否结束' AFTER `bank_repoint_datetime`;
 
 ALTER TABLE `tdh_overdue_treatment` 
+
+ADD COLUMN `collection_type` VARCHAR(4) NULL COMMENT '催收类型(0过程，1结果)' AFTER `collection_result_note`;
+
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('020_16', '提请结清申请', '020');
+
 ADD COLUMN `collection_type` VARCHAR(4) NULL COMMENT '催收类型(0过程，1结果)' AFTER `collection_result_note`,
 CHANGE COLUMN `depositIs_provide` `deposit_is_provide` VARCHAR(4) NULL DEFAULT NULL COMMENT '是否提供押金' ;
 
@@ -42,12 +47,5 @@ ADD COLUMN `guarantor1_birth_address_area` TINYTEXT NULL COMMENT '担保1户籍�
 CHANGE COLUMN `guarantor2_birth_address` `guarantor2_birth_address_province` TINYTEXT NULL DEFAULT NULL COMMENT '担保2户籍地省',
 ADD COLUMN `guarantor2_birth_address_city` TINYTEXT NULL COMMENT '担保2户籍地市' AFTER `guarantor2_birth_address_province`,
 ADD COLUMN `guarantor2_birth_address_area` TINYTEXT NULL COMMENT '担保2户籍地区' AFTER `guarantor2_birth_address_city`;
-
-
-
-
-
-
-
 
 
