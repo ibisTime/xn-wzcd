@@ -22,6 +22,9 @@ public class XN632705Req extends APageReq {
     // 公司申领状态
     private String companyApplyStatus;
 
+    // 申领人（个人申领）
+    private String applyUser;
+
     // 申请状态
     private String applyStatus;
 
@@ -34,12 +37,31 @@ public class XN632705Req extends APageReq {
     // 供应商编号
     private String supplierCode;
 
+    // 是否回退
+    private String isSendBack;
+
+    public String getIsSendBack() {
+        return isSendBack;
+    }
+
+    public void setIsSendBack(String isSendBack) {
+        this.isSendBack = isSendBack;
+    }
+
     public String getSupplierCode() {
         return supplierCode;
     }
 
     public void setSupplierCode(String supplierCode) {
         this.supplierCode = supplierCode;
+    }
+
+    public String getApplyUser() {
+        return applyUser;
+    }
+
+    public void setApplyUser(String applyUser) {
+        this.applyUser = applyUser;
     }
 
     public String getCompanyApplyStatus() {

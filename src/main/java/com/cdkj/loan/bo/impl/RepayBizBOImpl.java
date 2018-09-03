@@ -174,7 +174,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.set(Calendar.DAY_OF_MONTH, budgetOrder.getRepayBankDate());
-        calendar.add(Calendar.MONTH, 1);
+        calendar.add(Calendar.MONTH, 0);
         String format = format1.format(calendar.getTime());
 
         repayBiz.setFirstRepayDatetime(

@@ -31,10 +31,12 @@ public class XN632705 extends AProcessor {
         condition.setCompanyCode(req.getCompanyCode());
         condition.setCompanyApplyCode(req.getCompanyApplyCode());
         condition.setCompanyApplyStatus(req.getCompanyApplyStatus());
+        condition.setApplyUser(req.getApplyUser());
         condition.setApplyStatus(req.getApplyStatus());
         condition.setUseStatus(req.getUseStatus());
         condition.setBizCode(req.getBizCode());
         condition.setSupplierCode(req.getSupplierCode());
+        condition.setIsSendBack(req.getIsSendBack());
 
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
