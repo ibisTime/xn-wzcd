@@ -120,7 +120,6 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 code, ELogisticsStatus.TO_SEND.getCode(),
                 ELogisticsStatus.TO_RECEIVE.getCode(), req.getSendNote(),
                 req.getOperator());
-
         }
     }
 

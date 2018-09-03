@@ -38,6 +38,7 @@ public class XN630176 extends AProcessor {
             DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setStartDatetime(DateUtil.strToDate(req.getEndDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setOrder(ISYSBizLogAO.DEFAULT_ORDER_COLUMN, false);
 
         return sysBizLogAO.querySYSBizLogList(condition);
     }
