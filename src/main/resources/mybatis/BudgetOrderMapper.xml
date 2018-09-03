@@ -526,6 +526,7 @@
 		,t.apply_birth_address_province
 		,t.apply_birth_address_city
 		,t.apply_birth_address_area
+		,t.apply_birth_address
 		,t.apply_now_address_province
 		,t.apply_now_address_city
 		,t.apply_now_address_area
@@ -826,6 +827,7 @@
 		,t.apply_birth_address_province
 		,t.apply_birth_address_city
 		,t.apply_birth_address_area
+		,t.apply_birth_address
 		,t.apply_now_address_province
 		,t.apply_now_address_city
 		,t.apply_now_address_area
@@ -1135,6 +1137,7 @@
 		,t.apply_birth_address_province
 		,t.apply_birth_address_city
 		,t.apply_birth_address_area
+		,t.apply_birth_address
 		,t.apply_now_address_province
 		,t.apply_now_address_city
 		,t.apply_now_address_area
@@ -1684,6 +1687,7 @@
 		,apply_birth_address_province = #{applyBirthAddressProvince}
 		,apply_birth_address_city = #{applyBirthAddressCity}
 		,apply_birth_address_area = #{applyBirthAddressArea}
+		,apply_birth_address = #{applyBirthAddress}
 		,apply_now_address_province = #{applyNowAddressProvince}
 		,apply_now_address_city = #{applyNowAddressCity}
 		,apply_now_address_area = #{applyNowAddressArea}
