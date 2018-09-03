@@ -867,6 +867,9 @@ public class BudgetOrder extends ABaseDO {
     // 业务是否结束
     private String isEnd;
 
+    // 补件原因id（提交银行返回时的补件原因）
+    private Long reasonId;
+
     /***************DB properties**********/
 
     /*-------辅助字段-------*/
@@ -1292,6 +1295,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public Long getReasonId() {
+        return reasonId;
+    }
+
+    public void setReasonId(Long reasonId) {
+        this.reasonId = reasonId;
     }
 
     public List<String> getCurNodeCodeList() {

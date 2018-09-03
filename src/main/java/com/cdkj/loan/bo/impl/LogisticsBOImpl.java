@@ -152,13 +152,14 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
             data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
             // 补件原因
+            Long id = null;
             List<SupplementReason> reasonList = req.getSupplementReasonList();
             for (SupplementReason reason : reasonList) {
                 SupplementReason supplementReason = new SupplementReason();
                 supplementReason.setLogisticsCode(code);
                 supplementReason.setType(reason.getType());
                 supplementReason.setReason(reason.getReason());
-                supplementReasonBO.saveSupplementReason(supplementReason);
+                id = supplementReasonBO.saveSupplementReason(supplementReason);
             }
             // 判断节点是否是007_05，是的话补件返回007_01
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
@@ -191,7 +192,8 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
                         .getCode());
                     data.setIsBankPointPartSupt(EBoolean.YES.getCode());
                 }
-                budgetOrderBO.updateCurNodeCode(budgetOrder);
+                budgetOrder.setReasonId(id);
+                budgetOrderBO.updateCurNodeCodeAndReasonId(budgetOrder);
             }
 
             String pledgeCurrentNode = budgetOrder.getPledgeCurNodeCode();

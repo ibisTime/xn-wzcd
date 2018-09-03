@@ -299,7 +299,12 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
 
     @Override
     public void updateBudgetOrderEnd(BudgetOrder data) {
-        super.update(NAMESPACE.concat("update_BudgetOrderEnd"), data);
+        super.update(NAMESPACE.concat("update_budgetOrderEnd"), data);
+    }
+
+    @Override
+    public void updateCurNodeCodeAndReasonId(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_curNodeCodeAndReasonId"), data);
     }
 
 }

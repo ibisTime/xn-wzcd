@@ -156,4 +156,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 预算单改为已结束
     public void updateBudgetOrderEnd(BudgetOrder budgetOrder);
 
+    // 更改补件原因id和节点
+    public void updateCurNodeCodeAndReasonId(BudgetOrder budgetOrder);
+
 }
