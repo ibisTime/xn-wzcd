@@ -367,6 +367,7 @@
 		,taxi_ward = #{taxiWard}
 		,meal_award = #{mealAward}
 		,working_years = #{workingYears}
+		,cur_node_code = #{curNodeCode}
 		,status = #{status}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}

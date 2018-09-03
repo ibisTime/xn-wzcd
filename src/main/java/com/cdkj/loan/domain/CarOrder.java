@@ -52,6 +52,16 @@ public class CarOrder extends ABaseDO {
     // 用户
     private User user;
 
+    private Double rate;// 利率
+
+    public Double getRate() {
+        return rate;
+    }
+
+    public void setRate(Double rate) {
+        this.rate = rate;
+    }
+
     public User getUser() {
         return user;
     }

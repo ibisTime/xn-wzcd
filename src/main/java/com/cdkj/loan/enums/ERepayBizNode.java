@@ -21,7 +21,7 @@ public enum ERepayBizNode {
             "020_13", "财务审核"), CASH_REMIT("020_14", "确认付款"), SETTLE_OVER(
             "020_15", "已结清"), ADVANCE_SETTLE("020_16", "提交结清申请"),
 
-    // 收车流程To hold court
+    // 收车流程
     TC_APPLY("021_01", "申请收车"), TC_COMPANY_MANAGE_CHECK("021_02", "分公司总经理审核"), TC_RISK_MANAGE_CHECK(
             "021_03", "风控经理审核"), TC_RISK_LEADER_CHECK("021_04", "风控总监审核"), TC_FINANCE_CHECK(
             "021_05", "财务经理审核"), TC_SURE_FK("021_06", "确认放款"), TC_RESULT_INPUT(

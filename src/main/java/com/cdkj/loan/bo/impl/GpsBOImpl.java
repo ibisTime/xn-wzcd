@@ -86,8 +86,7 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
     @Override
     public void refreshUseGps(String code, String budgetOrder) {
         if (StringUtils.isNotBlank(code)) {
-            Gps data = new Gps();
-            data.setCode(code);
+            Gps data = getGps(code);
             data.setUseStatus(EGpsUseStatus.USED.getCode());
             data.setUseDatetime(new Date());
             data.setBizCode(budgetOrder);

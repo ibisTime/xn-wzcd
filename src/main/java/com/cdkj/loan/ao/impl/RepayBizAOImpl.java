@@ -486,6 +486,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             nextNodeCode = preNodeCode;
         }
         repayBiz.setCurNodeCode(nextNodeCode);
+        repayBiz.setDealResult(req.getDealResult());
         repayBiz.setDealEnclosure(req.getDealEnclosure());
         repayBiz.setRemark(req.getRemark());
         repayBizBO.takeCarResultHandle(repayBiz);
@@ -697,6 +698,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
             EBoolean.YES.getCode());
         data.setCurNodeCode(nextNodeCode);
         repayBizBO.refreshCashRemit(data);
+
+        // 还款业务结束，预算单改为已还款
+        budgetOrder.setCurNodeCode(EBudgetOrderNode.REPAY_YES.getCode());
+        budgetOrder.setIsEnd(EBoolean.YES.getCode());
+        budgetOrderBO.updateBudgetOrderEnd(budgetOrder);
 
         // 还款计划的已还金额改为当月月供
         List<RepayPlan> repayPlans = repayPlanBO
@@ -1033,8 +1039,16 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 // 还款计划处理为坏账
                 repayPlanBO.refreshRepayPlanTakeCarHandle(repayBiz.getCode(),
                     ERepayPlanNode.BAD_DEBT);
+
                 sysBizLogBO.refreshPreSYSBizLog(EBizLogType.ABNORMAL_REPAY_BIZ,
                     repayBiz.getCode(), curNodeCode, approveNote, operator);
+
+                // 预算单改为结束
+                BudgetOrder budgetOrder = budgetOrderBO
+                    .getBudgetOrderByRepayBizCode(code);
+                budgetOrder.setIsEnd(EBoolean.YES.getCode());
+                budgetOrderBO.updateBudgetOrderEnd(budgetOrder);
+
             }
         } else {
             nextNodeCode = ERepayBizNode.TC_RESULT_INPUT.getCode();

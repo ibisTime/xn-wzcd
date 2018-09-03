@@ -41,6 +41,8 @@ public class BudgetOrderGpsAOImpl implements IBudgetOrderGpsAO {
         data.setRemark(req.getRemark());
         data.setBudgetOrder(req.getBudgetOrder());
         budgetOrderGpsBO.saveBudgetOrderGps(data);
+
+        gpsBO.refreshUseGps(req.getGpsCode(), req.getBudgetOrder());
         return req.getGpsCode();
     }
 

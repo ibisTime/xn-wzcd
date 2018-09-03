@@ -404,7 +404,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     public void refreshJudgeAgain(String code) {
         RepayBiz data = getRepayBiz(code);
         data.setCurNodeCode(ERepayBizNode.RESULT_INPUT_AGAIN.getCode());
-        repayBizDAO.updateJudgeResultInput(data);
+        data.setIsImplementAgain(EBoolean.YES.getCode());
+        repayBizDAO.updateRepayBizImplement(data);
     }
 
     @Override
@@ -420,6 +421,12 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
         RepayBiz data = getRepayBiz(code);
         data.setCurNodeCode(ERepayBizNode.JUDGE_BAD.getCode());
         repayBizDAO.updateJudgeResultInput(data);
+
+        // 预算单改为结束
+        BudgetOrder budgetOrder = budgetOrderBO
+            .getBudgetOrderByRepayBizCode(code);
+        budgetOrder.setIsEnd(EBoolean.YES.getCode());
+        budgetOrderBO.updateBudgetOrderEnd(budgetOrder);
     }
 
     @Override
@@ -707,6 +714,11 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz> implements
     @Override
     public void clearanceCashier(RepayBiz repayBiz) {
         repayBizDAO.clearanceCashier(repayBiz);
+    }
+
+    @Override
+    public void updateRepayBizImplement(RepayBiz repayBiz) {
+        repayBizDAO.updateRepayBizImplement(repayBiz);
     }
 
 }

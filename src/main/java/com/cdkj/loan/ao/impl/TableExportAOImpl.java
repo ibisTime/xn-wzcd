@@ -33,6 +33,8 @@ public class TableExportAOImpl implements ITableExportAO {
         TableExport data = new TableExport();
         data.setUrl(url);
         data.setOperator(operator);
+        SYSUser user = sysUserBO.getUser(operator);
+        data.setRealName(user.getRealName());
         data.setUpdateDatetime(new Date());
         tableExportBO.saveTableExport(data);
         // 菜单名称
@@ -49,11 +51,6 @@ public class TableExportAOImpl implements ITableExportAO {
         Paginable<TableExport> paginable = tableExportBO.getPaginable(start,
             limit, condition);
         for (TableExport tableExport : paginable.getList()) {
-            // 真实姓名
-            if (StringUtils.isNotBlank(tableExport.getOperator())) {
-                SYSUser user = sysUserBO.getUser(tableExport.getOperator());
-                tableExport.setRealName(user.getRealName());
-            }
             // 菜单名称
             if (StringUtils.isNotBlank(tableExport.getUrl())) {
                 String url = tableExport.getUrl() + ".htm";

@@ -153,6 +153,9 @@ public class RepayBiz extends ABaseDO {
     // 付款凭证(公司结清)
     private String paymentPdf;
 
+    // 处理结果
+    private String dealResult;
+
     // 处理结果附件
     private String dealEnclosure;
 
@@ -214,6 +217,9 @@ public class RepayBiz extends ABaseDO {
 
     // 司法诉讼收款凭证
     private String judgeBillPdf;
+
+    // 是否恢复执行
+    private String isImplementAgain;
 
     // ********************司法诉讼打款回来的********************
 
@@ -317,6 +323,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setCompanyCode(String companyCode) {
         this.companyCode = companyCode;
+    }
+
+    public String getIsImplementAgain() {
+        return isImplementAgain;
+    }
+
+    public void setIsImplementAgain(String isImplementAgain) {
+        this.isImplementAgain = isImplementAgain;
     }
 
     public String getCompanyName() {
@@ -597,6 +611,14 @@ public class RepayBiz extends ABaseDO {
 
     public void setLoanEndDatetime(Date loanEndDatetime) {
         this.loanEndDatetime = loanEndDatetime;
+    }
+
+    public String getDealResult() {
+        return dealResult;
+    }
+
+    public void setDealResult(String dealResult) {
+        this.dealResult = dealResult;
     }
 
     public Date getBankFkDatetime() {

@@ -144,4 +144,7 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 生成业务员奖金
     void generateSaleUserBonus(BudgetOrder budgetOrder);
 
+    // 预算单改为已结束
+    void updateBudgetOrderEnd(BudgetOrder budgetOrder);
+
 }

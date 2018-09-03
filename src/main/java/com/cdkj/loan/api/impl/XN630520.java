@@ -32,6 +32,7 @@ public class XN630520 extends AProcessor {
         condition.setCode(req.getCode());
         condition.setUserId(req.getUserId());
         condition.setRefType(req.getRefType());
+        condition.setIsImplementAgain(req.getIsImplementAgain());
         condition.setCurNodeCodeList(req.getCurNodeCodeList());
         condition.setCurNodeCode(req.getCurNodeCode());
 

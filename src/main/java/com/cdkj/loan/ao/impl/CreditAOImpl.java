@@ -441,7 +441,6 @@ public class CreditAOImpl implements ICreditAO {
             data.setCustomerSex(sex);
             data.setMobile(customerUser.getMobile());
             data.setLoanBankCode(credit.getLoanBankCode());
-            data.setApplyBirthAddress(customerUser.getBirthAddress());
 
             // 共还人信息
             CreditUser ghUser = creditUserBO
@@ -460,7 +459,6 @@ public class CreditAOImpl implements ICreditAO {
                 data.setGhBalance(ghUser.getBalance());
                 data.setGhJourShowIncome(ghUser.getJourShowIncome());
                 data.setGhIsPrint(ghUser.getIsPrint());
-                data.setGhBirthAddress(ghUser.getBirthAddress());
             }
 
             // 担保人信息
@@ -507,6 +505,7 @@ public class CreditAOImpl implements ICreditAO {
             data.setCreateDatetime(new Date());
             data.setCode(credit.getCode());// 预算单编号使用征信单编号
             data.setIsLogistics(EBoolean.NO.getCode());
+            data.setIsEnd(EBoolean.NO.getCode());
             String budgetOrderCode = budgetOrderBO.saveBudgetOrder(data);
             // 预算单第一步 日志记录
             sysBizLogBO.saveSYSBizLog(budgetOrderCode, EBizLogType.BUDGET_ORDER,

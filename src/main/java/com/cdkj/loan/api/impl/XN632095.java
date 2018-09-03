@@ -31,9 +31,10 @@ public class XN632095 extends AProcessor {
         TableExport condition = new TableExport();
         condition.setUrl(req.getUrl());
         condition.setOperator(req.getOperator());
+        condition.setRealName(req.getRealName());
         condition.setUpdateDatetimeStart(DateUtil.strToDate(
             req.getUpdateDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setUpdateDatetimeStart(DateUtil.strToDate(
+        condition.setUpdateDatetimeEnd(DateUtil.strToDate(
             req.getUpdateDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
 
         String orderColumn = req.getOrderColumn();
