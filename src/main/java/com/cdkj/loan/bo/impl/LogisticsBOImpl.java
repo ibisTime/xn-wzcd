@@ -42,8 +42,8 @@ import com.cdkj.loan.exception.BizException;
  */
 
 @Component
-public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
-        implements ILogisticsBO {
+public class LogisticsBOImpl extends PaginableBOImpl<Logistics> implements
+        ILogisticsBO {
     @Autowired
     private ILogisticsDAO logisticsDAO;
 
@@ -74,8 +74,8 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
     @Override
     public String saveLogistics(String type, String bizCode, String userId,
             String fromNodeCode, String toNodeCode) {
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.LOGISTICS.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.LOGISTICS
+            .getCode());
         Logistics data = new Logistics();
         data.setCode(code);
         data.setType(type);
@@ -87,14 +87,17 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
         data.setToNodeCode(toNodeCode);
         data.setStatus(ELogisticsStatus.TO_SEND.getCode());
         logisticsDAO.insert(data);
+        // 日志
+        sysBizLogBO.saveSYSBizLog(bizCode, EBizLogType.LOGISTICS,
+            data.getCode(), ELogisticsStatus.TO_SEND.getCode());
         return code;
     }
 
     @Override
     public String saveLogisticsToSupplement(String type, String bizCode,
             String userId, String fromNodeCode, String toNodeCode) {
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.LOGISTICS.getCode());
+        String code = OrderNoGenerater.generate(EGeneratePrefix.LOGISTICS
+            .getCode());
         Logistics data = new Logistics();
         data.setCode(code);
         data.setType(type);
@@ -158,32 +161,34 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
                 supplementReasonBO.saveSupplementReason(supplementReason);
             }
             // 判断节点是否是007_05，是的话补件返回007_01
-            BudgetOrder budgetOrder = budgetOrderBO
-                .getBudgetOrder(data.getBizCode());
+            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
+                .getBizCode());
             String preCurrentNode = budgetOrder.getCurNodeCode();
-            if (EBudgetOrderNode.SEND_BANK_MATERIALS.getCode()
-                .equals(budgetOrder.getCurNodeCode())) {
-                Department company = departmentBO
-                    .getDepartment(budgetOrder.getCompanyCode());
+            if (EBudgetOrderNode.SEND_BANK_MATERIALS.getCode().equals(
+                budgetOrder.getCurNodeCode())) {
+                Department company = departmentBO.getDepartment(budgetOrder
+                    .getCompanyCode());
                 if ("温州市".equals(company.getCityNo())) {
                     // 本地
-                    budgetOrder.setCurNodeCode(
-                        EBudgetOrderNode.SALESMAN_SEND_LOGISTICS.getCode());
+                    budgetOrder
+                        .setCurNodeCode(EBudgetOrderNode.SALESMAN_SEND_LOGISTICS
+                            .getCode());
                     // 改变发收节点
-                    data.setFromNodeCode(
-                        EBudgetOrderNode.SALESMAN_SEND_LOGISTICS.getCode());
-                    data.setToNodeCode(
-                        EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode());
+                    data.setFromNodeCode(EBudgetOrderNode.SALESMAN_SEND_LOGISTICS
+                        .getCode());
+                    data.setToNodeCode(EBudgetOrderNode.HEADQUARTERS_SEND_PRINT
+                        .getCode());
                     data.setIsBankPointPartSupt(EBoolean.YES.getCode());
                 } else {
                     // 外地
-                    budgetOrder.setCurNodeCode(
-                        EBudgetOrderNode.BRANCH_SEND_LOGISTICS.getCode());
+                    budgetOrder
+                        .setCurNodeCode(EBudgetOrderNode.BRANCH_SEND_LOGISTICS
+                            .getCode());
                     // 改变发收节点
-                    data.setFromNodeCode(
-                        EBudgetOrderNode.BRANCH_SEND_LOGISTICS.getCode());
-                    data.setToNodeCode(
-                        EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode());
+                    data.setFromNodeCode(EBudgetOrderNode.BRANCH_SEND_LOGISTICS
+                        .getCode());
+                    data.setToNodeCode(EBudgetOrderNode.HEADQUARTERS_SEND_PRINT
+                        .getCode());
                     data.setIsBankPointPartSupt(EBoolean.YES.getCode());
                 }
                 budgetOrderBO.updateCurNodeCode(budgetOrder);
@@ -191,47 +196,50 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
 
             String pledgeCurrentNode = budgetOrder.getPledgeCurNodeCode();
             // 判断节点是否是008_03，是的话补件返回008_01
-            if (EBudgetOrderNode.LOCAL_SENDPOST_SEND_BANK.getCode()
-                .equals(pledgeCurrentNode)) {
-                budgetOrder.setPledgeCurNodeCode(
-                    EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode());
+            if (EBudgetOrderNode.LOCAL_SENDPOST_SEND_BANK.getCode().equals(
+                pledgeCurrentNode)) {
+                budgetOrder
+                    .setPledgeCurNodeCode(EBudgetOrderNode.LOCAL_PRINTPOST_PRINT
+                        .getCode());
                 budgetOrderBO.collateAchieve(budgetOrder);
                 // 是否在资料传递中改成否
                 budgetOrder.setIsLogistics(EBoolean.NO.getCode());
                 budgetOrderBO.updateIsLogistics(budgetOrder);
                 // 改变发收节点
-                data.setFromNodeCode(
-                    EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode());
-                data.setToNodeCode(
-                    EBudgetOrderNode.LOCAL_COLLATEPOST_COLLATE.getCode());
+                data.setFromNodeCode(EBudgetOrderNode.LOCAL_PRINTPOST_PRINT
+                    .getCode());
+                data.setToNodeCode(EBudgetOrderNode.LOCAL_COLLATEPOST_COLLATE
+                    .getCode());
                 data.setIsBankPointPartSupt(EBoolean.YES.getCode());
             }
             // 判断节点是否是009_08，是的话补件返回009_05
-            if (EBudgetOrderNode.OUT_SENDPOST_SEND_BANK.getCode()
-                .equals(pledgeCurrentNode)) {
-                budgetOrder.setPledgeCurNodeCode(
-                    EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode());
+            if (EBudgetOrderNode.OUT_SENDPOST_SEND_BANK.getCode().equals(
+                pledgeCurrentNode)) {
+                budgetOrder
+                    .setPledgeCurNodeCode(EBudgetOrderNode.OUT_BRANCH_SEND_PARENT
+                        .getCode());
                 budgetOrderBO.collateAchieve(budgetOrder);
                 // 改变发收节点
-                data.setFromNodeCode(
-                    EBudgetOrderNode.OUT_BRANCH_SEND_PARENT.getCode());
-                data.setToNodeCode(
-                    EBudgetOrderNode.HEADQUARTERS_INTERNAL_SEND.getCode());
+                data.setFromNodeCode(EBudgetOrderNode.OUT_BRANCH_SEND_PARENT
+                    .getCode());
+                data.setToNodeCode(EBudgetOrderNode.HEADQUARTERS_INTERNAL_SEND
+                    .getCode());
             }
             // 日志记录
-            EBudgetOrderNode currentNode = EBudgetOrderNode.getMap()
-                .get(budgetOrder.getCurNodeCode());
+            EBudgetOrderNode currentNode = EBudgetOrderNode.getMap().get(
+                budgetOrder.getCurNodeCode());
             sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-                EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), preCurrentNode,
-                currentNode.getCode(), req.getRemark(), req.getOperator());
+                EBizLogType.BUDGET_ORDER, budgetOrder.getCode(),
+                preCurrentNode, currentNode.getCode(), req.getRemark(),
+                req.getOperator());
         } else if (ELogisticsType.GPS.getCode().equals(data.getType())) {
             // gps补件原因
             data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
             data.setSupplementReason(req.getSupplementReason());
         } else {
             RepayBiz repayBiz = repayBizBO.getRepayBiz(data.getBizCode());
-            if (ERepayBizNode.BANK_REC_LOGIC.getCode()
-                .equals(repayBiz.getCurNodeCode())) {
+            if (ERepayBizNode.BANK_REC_LOGIC.getCode().equals(
+                repayBiz.getCurNodeCode())) {
                 repayBiz.setCurNodeCode(ERepayBizNode.MORTGAGE_PRINT.getCode());
                 repayBizBO.updateCurNodeCode(repayBiz);
                 // 补件原因
