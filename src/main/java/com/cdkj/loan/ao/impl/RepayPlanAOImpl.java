@@ -317,10 +317,10 @@ public class RepayPlanAOImpl implements IRepayPlanAO {
                 .getRealRepayAmount());
             repayPlan.setPayedAmount(repayPlan.getPayedAmount()
                     + realRepayAmount);// 已还金额
-            repayPlan.setOverplusAmount(repayPlan.getRepayAmount()
+            repayPlan.setOverplusAmount(repayPlan.getOverdueAmount()
                     - repayPlan.getPayedAmount());
             // 多次部分还款，还完后进绿名单
-            if (repayPlan.getOverdueAmount() == 0) {
+            if (repayPlan.getOverplusAmount() == 0) {
                 repayPlan.setCurNodeCode(ERepayPlanNode.HANDLER_TO_GREEN
                     .getCode());
             }
