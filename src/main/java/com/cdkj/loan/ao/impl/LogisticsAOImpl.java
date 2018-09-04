@@ -24,6 +24,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Department;
+import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.RepayBiz;
@@ -36,6 +37,9 @@ import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderNode;
+import com.cdkj.loan.enums.EGpsSendBackReason;
+import com.cdkj.loan.enums.EGpsUseStatus;
+import com.cdkj.loan.enums.EGpsUserApplyStatus;
 import com.cdkj.loan.enums.ELogisticsStatus;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.enums.ERepayBizNode;
@@ -330,7 +334,22 @@ public class LogisticsAOImpl implements ILogisticsAO {
 
             } else if (ELogisticsType.GPS.getCode().equals(data.getType())) {
                 data.setStatus(ELogisticsStatus.RECEIVED_NOT_AUDITE.getCode());// gps物流改为已收件
-                gpsApplyBO.receiveGps(data.getBizCode());
+                if (data.getBizCode().substring(0, 2).equals("GA")) {
+                    gpsApplyBO.receiveGps(data.getBizCode());
+                } else {
+                    Gps gps = gpsBO.getGps(data.getBizCode());
+                    if (EGpsSendBackReason.DAMAGE.getCode().equals(
+                        gps.getIsSendBack())) {// gps损坏
+                        gps.setUseStatus(EGpsUseStatus.DAMAGE.getCode());
+                    }
+                    if (EGpsSendBackReason.EMPLOYEE_LEAVE.getCode().equals(
+                        gps.getIsSendBack())) {// 员工离职
+                        gps.setApplyStatus(EGpsUserApplyStatus.TO_APPLY
+                            .getCode());
+                    }
+                    gps.setIsSendBack(EBoolean.YES.getCode());
+                    gpsBO.refresh(gps);
+                }
             } else if (ELogisticsType.REPAY_BIZ.getCode()
                 .equals(data.getType())) {
                 data.setStatus(ELogisticsStatus.RECEIVED.getCode());// 普通物流改为待审核
