@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 返点详情查询
  * @author: jiafr 
@@ -9,6 +11,7 @@ package com.cdkj.loan.dto.req;
 public class XN632246Req {
 
     // 返点编号
+    @NotBlank
     private String code;
 
     public String getCode() {

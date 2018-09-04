@@ -105,9 +105,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(
-            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
+            req.getSocialSecurityRegDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -147,6 +147,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setCurNodeCode(EArchiveNode.BRANCH_CEO_APPROVE.getCode());
         data.setStatus(EBoolean.YES.getCode());
         String archiveCode = archiveBO.saveArchive(data);
+
+        sysBizLogBO.saveSYSBizLog(archiveCode, EBizLogType.ARCHIVE,
+            archiveCode, EArchiveNode.BRANCH_CEO_APPROVE.getCode());
 
         List<XN632800ReqChild> socialRelationList = req.getSocialRelationList();
         if (CollectionUtils.isEmpty(socialRelationList)) {
@@ -201,9 +204,9 @@ public class ArchiveAOImpl implements IArchiveAO {
         data.setFiveInsuranceInfo(req.getFiveInsuranceInfo());
         data.setResidenceAddress(req.getResidenceAddress());
         data.setResidenceProperty(req.getResidenceProperty());
-        data.setSocialSecurityRegDatetime(
-            DateUtil.strToDate(req.getSocialSecurityRegDatetime(),
-                DateUtil.FRONT_DATE_FORMAT_STRING));
+        data.setSocialSecurityRegDatetime(DateUtil.strToDate(
+            req.getSocialSecurityRegDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING));
         data.setCurrentAddress(req.getCurrentAddress());
         data.setEmergencyContact(req.getEmergencyContact());
         data.setEmergencyContactMobile(req.getEmergencyContactMobile());
@@ -270,12 +273,12 @@ public class ArchiveAOImpl implements IArchiveAO {
     @Transactional
     public void branchCeoApprove(XN632804Req req) {
         Archive data = archiveBO.getArchive(req.getCode());
-        if (!EArchiveNode.BRANCH_CEO_APPROVE.getCode()
-            .equals(data.getCurNodeCode())) {
+        String curNodeCode = data.getCurNodeCode();
+        if (!EArchiveNode.BRANCH_CEO_APPROVE.getCode().equals(curNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "人事档案不是分公司总经理审批节点，不能操作！");
         }
-        String nextNodeCode = getNextNodeCode(data.getCurNodeCode(),
+        String nextNodeCode = getNextNodeCode(curNodeCode,
             req.getApproveResult());
 
         archiveBO.branchCeoApprove(req.getCode(), nextNodeCode,
@@ -283,20 +286,20 @@ public class ArchiveAOImpl implements IArchiveAO {
 
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
-            EBizLogType.REPAY_BIZ, data.getCode(), data.getCurNodeCode(),
-            nextNodeCode, req.getApproveNote(), req.getOperator());
+            EBizLogType.ARCHIVE, data.getCode(), curNodeCode, nextNodeCode,
+            req.getApproveNote(), req.getOperator());
     }
 
     @Override
     @Transactional
     public void administrationApprove(XN632808Req req) {
         Archive data = archiveBO.getArchive(req.getCode());
-        if (!EArchiveNode.ADMINISTRATION_APPROVE.getCode()
-            .equals(data.getCurNodeCode())) {
+        String curNodeCode = data.getCurNodeCode();
+        if (!EArchiveNode.ADMINISTRATION_APPROVE.getCode().equals(curNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "人事档案不是行政部审批节点，不能操作！");
         }
-        String nextNodeCode = getNextNodeCode(data.getCurNodeCode(),
+        String nextNodeCode = getNextNodeCode(curNodeCode,
             req.getApproveResult());
 
         archiveBO.administrationApprove(req.getCode(), nextNodeCode,
@@ -304,20 +307,20 @@ public class ArchiveAOImpl implements IArchiveAO {
 
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
-            EBizLogType.REPAY_BIZ, data.getCode(), data.getCurNodeCode(),
-            nextNodeCode, req.getApproveNote(), req.getOperator());
+            EBizLogType.ARCHIVE, data.getCode(), curNodeCode, nextNodeCode,
+            req.getApproveNote(), req.getOperator());
     }
 
     @Override
     @Transactional
     public void networkSkillApprove(XN632809Req req) {
         Archive data = archiveBO.getArchive(req.getCode());
-        if (!EArchiveNode.NETWORK_SKILL_APPROVE.getCode()
-            .equals(data.getCurNodeCode())) {
+        String curNodeCode = data.getCurNodeCode();
+        if (!EArchiveNode.NETWORK_SKILL_APPROVE.getCode().equals(curNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "人事档案不是网络技术部审批节点，不能操作！");
         }
-        String nextNodeCode = getNextNodeCode(data.getCurNodeCode(),
+        String nextNodeCode = getNextNodeCode(curNodeCode,
             req.getApproveResult());
 
         archiveBO.networkSkillApprove(req.getCode(), nextNodeCode,
@@ -326,8 +329,8 @@ public class ArchiveAOImpl implements IArchiveAO {
         if (EBoolean.YES.getCode().equals(req.getApproveResult())) {
 
             // 生成角色
-            SYSUser sysUserLoginName = sysUserBO
-                .getUserByLoginName(data.getMobile());
+            SYSUser sysUserLoginName = sysUserBO.getUserByLoginName(data
+                .getMobile());
             SYSUser sysUserMobile = sysUserBO.getUserByMobile(data.getMobile());
 
             String userId = null;
@@ -348,9 +351,8 @@ public class ArchiveAOImpl implements IArchiveAO {
         }
 
         // 日志记录
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
-            EBizLogType.REPAY_BIZ, data.getCode(), data.getCurNodeCode(),
-            nextNodeCode, req.getApproveNote(), req.getOperator());
+        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.ARCHIVE, data.getCode(),
+            curNodeCode, req.getApproveNote(), req.getOperator());
     }
 
     private String getNextNodeCode(String curNodeCode, String approveResult) {
@@ -383,10 +385,10 @@ public class ArchiveAOImpl implements IArchiveAO {
         List<SocialRelation> list = socialRelationBO
             .querySocialRelationList(condition);
         archive.setSocialRelationList(list);
-        archive.setDepartmentName(
-            departmentBO.getDepartment(archive.getDepartmentCode()).getName());
-        archive.setPostName(
-            departmentBO.getDepartment(archive.getPostCode()).getName());
+        archive.setDepartmentName(departmentBO.getDepartment(
+            archive.getDepartmentCode()).getName());
+        archive.setPostName(departmentBO.getDepartment(archive.getPostCode())
+            .getName());
         return archive;
     }
 

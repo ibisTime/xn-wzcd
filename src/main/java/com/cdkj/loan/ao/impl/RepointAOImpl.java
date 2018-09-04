@@ -155,36 +155,27 @@ public class RepointAOImpl implements IRepointAO {
     }
 
     @Override
-    public Paginable<Repoint> queryRepointPage(int start, int limit,
-            Repoint condition) {
-
-        Paginable<Repoint> paginable = repointBO.getPaginable(start, limit,
-            condition);
-        List<Repoint> list = paginable.getList();
-        for (Repoint data : list) {
-            init(data);
+    public void branchCompanyManagerApprove(XN632242Req req) {
+        Repoint repoint = repointBO.getRepoint(req.getCode());
+        String preCurNodeCode = repoint.getCurNodeCode();// 当前节点
+        if (!ERepointNode.BRANCH_MANAGER_APPROVE.getCode().equals(
+            preCurNodeCode)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是返点支付流程分公司总经理审批节点，不能操作");
         }
-
-        return paginable;
-    }
-
-    @Override
-    public List<Repoint> queryRepointList(Repoint condition) {
-        return repointBO.queryRepointList(condition);
-    }
-
-    @Override
-    public Repoint getRepoint(String code) {
-        Repoint repoint = repointBO.getRepoint(code);
-        RepointDetail condition = new RepointDetail();
-        condition.setRepointCode(repoint.getCode());
-        List<RepointDetail> list = repointDetailBO
-            .queryRepointDetailList(condition);
-        repoint.setRepointDetailList(list);
-
-        init(repoint);
-
-        return repoint;
+        NodeFlow node = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode);
+        if (EBoolean.YES.getCode().equals(req.getApproveResult())) {
+            // 审核通过
+            repoint.setCurNodeCode(node.getNextNode());
+        } else {
+            // 审核不通过
+            repoint.setCurNodeCode(node.getBackNode());
+        }
+        repointBO.branchCompanyManagerApprove(repoint);
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(repoint.getCode(),
+            EBizLogType.REPOINT, repoint.getCode(), preCurNodeCode,
+            repoint.getCurNodeCode(), req.getApproveNote(), req.getOperator());
     }
 
     @Override
@@ -219,8 +210,38 @@ public class RepointAOImpl implements IRepointAO {
         }
     }
 
-    private Repoint init(Repoint data) {
+    @Override
+    public Paginable<Repoint> queryRepointPage(int start, int limit,
+            Repoint condition) {
 
+        Paginable<Repoint> paginable = repointBO.getPaginable(start, limit,
+            condition);
+        List<Repoint> list = paginable.getList();
+        for (Repoint data : list) {
+            init(data);
+        }
+
+        return paginable;
+    }
+
+    @Override
+    public List<Repoint> queryRepointList(Repoint condition) {
+        return repointBO.queryRepointList(condition);
+    }
+
+    @Override
+    public Repoint getRepoint(String code) {
+        Repoint repoint = repointBO.getRepoint(code);
+        init(repoint);
+        RepointDetail condition = new RepointDetail();
+        condition.setRepointCode(repoint.getCode());
+        List<RepointDetail> list = repointDetailBO
+            .queryRepointDetailList(condition);
+        repoint.setRepointDetailList(list);
+        return repoint;
+    }
+
+    private Repoint init(Repoint data) {
         if (StringUtils.isNotBlank(data.getCarDealerCode())) {
             CarDealer carDealer = carDealerBO.getCarDealer(data
                 .getCarDealerCode());
@@ -229,7 +250,6 @@ public class RepointAOImpl implements IRepointAO {
             }
 
         }
-
         if (StringUtils.isNotBlank(data.getCompanyCode())) {
             Department department = departmentBO.getDepartment(data
                 .getCompanyCode());
@@ -238,7 +258,6 @@ public class RepointAOImpl implements IRepointAO {
             }
 
         }
-
         if (StringUtils.isNotBlank(data.getApplyUserId())) {
             SYSUser user = sysUserBO.getUser(data.getApplyUserId());
             if (null != user) {
@@ -247,30 +266,5 @@ public class RepointAOImpl implements IRepointAO {
 
         }
         return data;
-
-    }
-
-    @Override
-    public void branchCompanyManagerApprove(XN632242Req req) {
-        Repoint repoint = repointBO.getRepoint(req.getCode());
-        String preCurNodeCode = repoint.getCurNodeCode();// 当前节点
-        if (!ERepointNode.BRANCH_MANAGER_APPROVE.getCode().equals(
-            preCurNodeCode)) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前节点不是返点支付流程分公司总经理审批节点，不能操作");
-        }
-        NodeFlow node = nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode);
-        if (EBoolean.YES.getCode().equals(req.getApproveResult())) {
-            // 审核通过
-            repoint.setCurNodeCode(node.getNextNode());
-        } else {
-            // 审核不通过
-            repoint.setCurNodeCode(node.getBackNode());
-        }
-        repointBO.branchCompanyManagerApprove(repoint);
-        // 日志记录
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(repoint.getCode(),
-            EBizLogType.REPOINT, repoint.getCode(), preCurNodeCode,
-            repoint.getCurNodeCode(), req.getApproveNote(), req.getOperator());
     }
 }
