@@ -23,7 +23,6 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632701Req;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
-import com.cdkj.loan.enums.EGpsSendBackReason;
 import com.cdkj.loan.enums.EGpsUseStatus;
 import com.cdkj.loan.enums.EGpsUserApplyStatus;
 import com.cdkj.loan.enums.ELogisticsType;
@@ -104,8 +103,8 @@ public class GpsAOImpl implements IGpsAO {
     private void initGps(Gps gps) {
         // 业务公司名称
         if (StringUtils.isNotBlank(gps.getCompanyCode())) {
-            Department department = departmentBO
-                .getDepartment(gps.getCompanyCode());
+            Department department = departmentBO.getDepartment(gps
+                .getCompanyCode());
             gps.setCompanyName(department.getName());
         }
 
@@ -117,8 +116,8 @@ public class GpsAOImpl implements IGpsAO {
 
         // 供应商名称
         if (StringUtils.isNotBlank(gps.getSupplierCode())) {
-            GpsSupplier gpsSupplier = gpsSupplierBO
-                .getGpsSupplier(gps.getSupplierCode());
+            GpsSupplier gpsSupplier = gpsSupplierBO.getGpsSupplier(gps
+                .getSupplierCode());
             gps.setSupplierName(gpsSupplier.getName());
         }
     }
@@ -126,14 +125,7 @@ public class GpsAOImpl implements IGpsAO {
     @Override
     public void gpsSendBackApply(XN632701Req req) {
         Gps gps = gpsBO.getGps(req.getCode());
-        if (EGpsSendBackReason.DAMAGE.getCode().equals(req.getReason())) {// gps损坏
-            gps.setUseStatus(EGpsUseStatus.DAMAGE.getCode());
-        }
-        if (EGpsSendBackReason.EMPLOYEE_LEAVE.getCode()
-            .equals(req.getReason())) {// 员工离职
-            gps.setApplyStatus(EGpsUserApplyStatus.TO_APPLY.getCode());
-        }
-        gps.setIsSendBack(EBoolean.YES.getCode());
+        gps.setIsSendBack(req.getReason());
         gpsBO.refresh(gps);
         // 资料传递待发件
         logisticsBO.saveLogistics(ELogisticsType.GPS.getCode(), gps.getCode(),
