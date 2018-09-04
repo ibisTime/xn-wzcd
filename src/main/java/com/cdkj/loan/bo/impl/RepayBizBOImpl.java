@@ -174,13 +174,13 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.set(Calendar.DAY_OF_MONTH, budgetOrder.getRepayBankDate());
-        calendar.add(Calendar.MONTH, 0);
+        calendar.add(Calendar.MONTH, 0);// 0表示当月，1表示下个月
         String format = format1.format(calendar.getTime());
 
         repayBiz.setFirstRepayDatetime(
             DateUtil.strToDate(format, DateUtil.FRONT_DATE_FORMAT_STRING));
         repayBiz.setFirstRepayAmount(budgetOrder.getRepayFirstMonthAmount());
-
+        repayBiz.setBillDatetime(budgetOrder.getBillDatetime());
         if (budgetOrder.getRepayBankDate() == 0) {
             budgetOrder.setRepayBankDate(1);
         }
@@ -714,7 +714,6 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
     @Override
     public void refreshRestPeriods(RepayBiz repayBiz) {
-        repayBiz.setRestPeriods(repayBiz.getRestPeriods() - 1);
         repayBizDAO.updateRestPeriods(repayBiz);
     }
 

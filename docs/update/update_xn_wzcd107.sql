@@ -53,3 +53,7 @@ ADD COLUMN `guarantor2_birth_address_city` TINYTEXT NULL COMMENT '担保2户籍�
 ADD COLUMN `guarantor2_birth_address_area` TINYTEXT NULL COMMENT '担保2户籍地区' AFTER `guarantor2_birth_address_city`,
 ADD COLUMN `guarantor2_birth_address` TINYTEXT NULL COMMENT '担保2户籍地详细地址' AFTER `guarantor2_birth_address_area`,
 ADD COLUMN `reason_id` int(11) NULL COMMENT '补件原因id' AFTER `is_end`;
+
+DELETE FROM `tsys_dict` WHERE `id`='420';
+DELETE FROM `tsys_dict` WHERE `id`='421';
+
