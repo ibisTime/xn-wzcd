@@ -368,6 +368,12 @@
 	            	#{item}
                 </foreach> 
 			</if>
+			<if test="makeCardStatusList != null and makeCardStatusList.size() != 0 ">
+				AND t.make_card_status in 
+                <foreach item="item" index="index" collection="makeCardStatusList" open="(" separator="," close=")">
+	            	#{item}
+                </foreach> 
+			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
 				<![CDATA[AND t.apply_datetime > #{applyDatetimeStart}]]>
 			</if>

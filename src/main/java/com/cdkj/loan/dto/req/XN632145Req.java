@@ -53,6 +53,8 @@ public class XN632145Req extends APageReq {
 
     private String bankFkSendDatetimeEnd;// 银行放款进件时间止
 
+    private List<String> makeCardStatusList;// 制卡状态列表
+
     public String getBankRepointPage() {
         return bankRepointPage;
     }
@@ -203,6 +205,14 @@ public class XN632145Req extends APageReq {
 
     public void setFbhPage(String fbhPage) {
         this.fbhPage = fbhPage;
+    }
+
+    public List<String> getMakeCardStatusList() {
+        return makeCardStatusList;
+    }
+
+    public void setMakeCardStatusList(List<String> makeCardStatusList) {
+        this.makeCardStatusList = makeCardStatusList;
     }
 
 }

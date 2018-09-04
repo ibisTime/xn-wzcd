@@ -976,6 +976,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         BankSubbranch data = bankSubbranchBO.getBankSubbranch(budgetOrder
             .getLoanBankCode());
+        // 银行放款后可以申请制卡或回录
         if (EBankType.GH.getCode().equals(data.getBankType())) {
             budgetOrder.setMakeCardStatus(EMakeCardStatus.PENDING_CARD
                 .getCode());
