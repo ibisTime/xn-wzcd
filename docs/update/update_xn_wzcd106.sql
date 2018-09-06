@@ -17,3 +17,7 @@ UPDATE `tsys_node` SET `name`='打款回录' WHERE `code`='005_04';
 
 INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('005', '005_05', '005_06');
 
+UPDATE `tsys_menu` SET `name`='返回垫资款' WHERE `code`='SM201805250110582487975';
+UPDATE `tsys_menu` SET `name`='打款回录' WHERE `code`='SM201805250111434718233';
+UPDATE `tsys_menu` SET `name`='返回预算款' WHERE `code`='SM201805250038140313354';
+UPDATE `tsys_menu` SET `name`='收取手续费' WHERE `code`='SM201805250041071059259';
