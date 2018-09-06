@@ -78,76 +78,103 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
             String bankName = bankBO.getBankBySubbranch(loanBankCode)
                 .getBankName();
             condition.setLoanBank(loanBankCode);
-            condition.setLoanAmount(StringValidater.toLong(overdue
-                .getLoanAmount()));
+            condition
+                .setLoanAmount(StringValidater.toLong(overdue.getLoanAmount()));
             condition
                 .setPeriods(StringValidater.toInteger(overdue.getPeriods()));
-            condition.setBankFkDatetimeStart(DateUtil.getFrontDate(
-                overdue.getFkDatetime(), false));
-            condition.setBankFkDatetimeEnd(DateUtil.getFrontDate(
-                overdue.getFkDatetime(), true));
+            condition.setBankFkDatetimeStart(
+                DateUtil.getFrontDate(overdue.getFkDatetime(), false));
+            condition.setBankFkDatetimeEnd(
+                DateUtil.getFrontDate(overdue.getFkDatetime(), true));
             condition.setCurNodeCode(ERepayBizNode.TO_REPAY.getCode());
             List<RepayBiz> repayBizList = repayBizBO
                 .queryRepayBizList(condition);
             OverdueMenu overdueMenu = new OverdueMenu();
             overdueMenu.setStatus(EOverdueMenuStatus.DCL.getCode());
-            overdueMenu.setOverdueAmount(StringValidater.toLong(overdue
-                .getOverdueAmount()));
+            overdueMenu.setOverdueAmount(
+                StringValidater.toLong(overdue.getOverdueAmount()));
             // 判断是否有准入单，没有，状态设置为待处理，原因是信息不匹配,
             if (CollectionUtils.isNotEmpty(repayBizList)) {
                 // 有,状态设置为已处理,根据准入单查询还款业务表再查最新一条还款计划,设置还款计划状态为逾期名单
-                RepayBiz repayBiz = repayBizList.get(0);
-                RepayPlan overDueRepayPlan = repayPlanBO
-                    .getRepayPlanCurMonth(repayBiz.getCode());
-                if (!ERepayPlanNode.OVERDUE.getCode().equals(
-                    overDueRepayPlan.getCurNodeCode())) {
-                    repayBiz.setRestPeriods(repayBiz.getRestPeriods() - 1);
-                    repayBizBO.refreshRestPeriods(repayBiz);
+                for (RepayBiz repayBiz : repayBizList) {
+                    RepayPlan overDueRepayPlan = repayPlanBO
+                        .getRepayPlanCurMonth(repayBiz.getCode());
+                    if (!ERepayPlanNode.OVERDUE.getCode()
+                        .equals(overDueRepayPlan.getCurNodeCode())) {
+                        repayBiz.setRestPeriods(repayBiz.getRestPeriods() - 1);
+                        repayBizBO.refreshRestPeriods(repayBiz);
+                    }
+                    if (overDueRepayPlan != null
+                            && overDueRepayPlan.getPeriods() == StringValidater
+                                .toInteger(overdue.getPeriods())) {
+                        overDueRepayPlan
+                            .setCurNodeCode(ERepayPlanNode.OVERDUE.getCode());
+                        // 日志
+                        sysBizLogBO.saveSYSBizLog(
+                            overDueRepayPlan.getRepayBizCode(),
+                            EBizLogType.REPAY_PLAN, overDueRepayPlan.getCode(),
+                            ERepayPlanNode.OVERDUE.getCode());
+
+                        // 更新逾期还款信息
+                        refreshRepayInfo(overdueMenu, repayBiz,
+                            overDueRepayPlan);
+
+                        overdueMenu.setStatus(EOverdueMenuStatus.YCL.getCode());
+                        overdueMenu.setBudgetOrderCode(repayBiz.getRefCode());
+                        overdueMenu.setRepayBizCode(
+                            overDueRepayPlan.getRepayBizCode());
+
+                        overdueMenu
+                            .setRepayPlanCode(overDueRepayPlan.getCode());
+                        overdueMenu.setOverdueDatetime(
+                            overDueRepayPlan.getRepayDatetime());
+                    }
+
+                    // 最后逾期数据填充入库
+                    overdueMenu.setBatchDatetime(
+                        DateUtil.strToDate(overdue.getBatchDatetime(),
+                            DateUtil.DB_DATE_FORMAT_STRING));
+                    overdueMenu.setRealName(overdue.getRealName());
+                    overdueMenu.setIdNo(overdue.getIdNo());
+                    overdueMenu.setLoanAmount(
+                        StringValidater.toLong(overdue.getLoanAmount()));
+                    overdueMenu.setFkDatetime(
+                        DateUtil.strToDate(overdue.getFkDatetime(),
+                            DateUtil.FRONT_DATE_FORMAT_STRING));
+                    overdueMenu.setPeriods(
+                        StringValidater.toInteger(overdue.getPeriods()));
+
+                    overdueMenu.setRemainAmount(
+                        StringValidater.toLong(overdue.getRemainAmount()));
+                    overdueMenu.setLoanBankCode(loanBankCode);
+                    overdueMenu.setLoanBankName(bankName);
+
+                    overdueMenu.setImportDatetime(new Date());
+                    overdueMenuBO.saveOverdueMenu(overdueMenu);
                 }
-                if (overDueRepayPlan != null
-                        && overDueRepayPlan.getPeriods() == StringValidater
-                            .toInteger(overdue.getPeriods())) {
-                    overDueRepayPlan.setCurNodeCode(ERepayPlanNode.OVERDUE
-                        .getCode());
-                    // 日志
-                    sysBizLogBO.saveSYSBizLog(
-                        overDueRepayPlan.getRepayBizCode(),
-                        EBizLogType.REPAY_PLAN, overDueRepayPlan.getCode(),
-                        ERepayPlanNode.OVERDUE.getCode());
+            } else {
+                // 最后逾期数据填充入库
+                overdueMenu.setBatchDatetime(
+                    DateUtil.strToDate(overdue.getBatchDatetime(),
+                        DateUtil.DB_DATE_FORMAT_STRING));
+                overdueMenu.setRealName(overdue.getRealName());
+                overdueMenu.setIdNo(overdue.getIdNo());
+                overdueMenu.setLoanAmount(
+                    StringValidater.toLong(overdue.getLoanAmount()));
+                overdueMenu
+                    .setFkDatetime(DateUtil.strToDate(overdue.getFkDatetime(),
+                        DateUtil.FRONT_DATE_FORMAT_STRING));
+                overdueMenu.setPeriods(
+                    StringValidater.toInteger(overdue.getPeriods()));
 
-                    // 更新逾期还款信息
-                    refreshRepayInfo(overdueMenu, repayBiz, overDueRepayPlan);
+                overdueMenu.setRemainAmount(
+                    StringValidater.toLong(overdue.getRemainAmount()));
+                overdueMenu.setLoanBankCode(loanBankCode);
+                overdueMenu.setLoanBankName(bankName);
 
-                    overdueMenu.setStatus(EOverdueMenuStatus.YCL.getCode());
-                    overdueMenu.setBudgetOrderCode(repayBiz.getRefCode());
-                    overdueMenu.setRepayBizCode(overDueRepayPlan
-                        .getRepayBizCode());
-
-                    overdueMenu.setRepayPlanCode(overDueRepayPlan.getCode());
-                    overdueMenu.setOverdueDatetime(overDueRepayPlan
-                        .getRepayDatetime());
-                }
+                overdueMenu.setImportDatetime(new Date());
+                overdueMenuBO.saveOverdueMenu(overdueMenu);
             }
-
-            // 最后逾期数据填充入库
-            overdueMenu.setBatchDatetime(DateUtil.strToDate(
-                overdue.getBatchDatetime(), DateUtil.DB_DATE_FORMAT_STRING));
-            overdueMenu.setRealName(overdue.getRealName());
-            overdueMenu.setIdNo(overdue.getIdNo());
-            overdueMenu.setLoanAmount(StringValidater.toLong(overdue
-                .getLoanAmount()));
-            overdueMenu.setFkDatetime(DateUtil.strToDate(
-                overdue.getFkDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
-            overdueMenu.setPeriods(StringValidater.toInteger(overdue
-                .getPeriods()));
-
-            overdueMenu.setRemainAmount(StringValidater.toLong(overdue
-                .getRemainAmount()));
-            overdueMenu.setLoanBankCode(loanBankCode);
-            overdueMenu.setLoanBankName(bankName);
-
-            overdueMenu.setImportDatetime(new Date());
-            overdueMenuBO.saveOverdueMenu(overdueMenu);
         }
     }
 
@@ -162,7 +189,8 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
             RepayPlan overDueRepayPlan) {
         Long preOverdueAmount = 0L;// 上一期逾期金额
         Long overdueAmount = 0L;// 本期逾期金额
-        if (overdueMenu.getOverdueAmount() > overDueRepayPlan.getRepayAmount()) {
+        if (overdueMenu.getOverdueAmount() > overDueRepayPlan
+            .getRepayAmount()) {
             preOverdueAmount = overdueMenu.getOverdueAmount()
                     - overDueRepayPlan.getRepayAmount();
             overdueAmount = overDueRepayPlan.getRepayAmount();
@@ -197,12 +225,13 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
             String operator) {
         OverdueMenu overdueMenu = overdueMenuBO.getOverdueMenu(code);
         if (EOverdueMenuStatus.YCL.getCode().equals(overdueMenu.getStatus())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "当前逾期名单已处理");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前逾期名单已处理");
         }
 
         RepayBiz repayBiz = repayBizBO.getRepayBiz(repayBizCode);
-        RepayPlan overDueRepayPlan = repayPlanBO.getRepayPlanCurMonth(repayBiz
-            .getCode());
+        RepayPlan overDueRepayPlan = repayPlanBO
+            .getRepayPlanCurMonth(repayBiz.getCode());
         // 还款计划状态是否更新
         overDueRepayPlan.setCurNodeCode(ERepayPlanNode.OVERDUE.getCode());
 
@@ -218,6 +247,19 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
 
         overdueMenu.setHandleDatetime(new Date());
         overdueMenuBO.refreshOverdueMenu(overdueMenu);
+    }
+
+    @Override
+    public void deleteOverdueMenu(List<String> codeList) {
+        for (String code : codeList) {
+            OverdueMenu overdueMenu = overdueMenuBO.getOverdueMenu(code);
+            if (EOverdueMenuStatus.YCL.getCode()
+                .equals(overdueMenu.getStatus())) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "客户姓名为" + overdueMenu.getRealName() + "的名单已处理，不能删除！");
+            }
+            overdueMenuBO.removeOverdueMenu(code);
+        }
     }
 
     @Override

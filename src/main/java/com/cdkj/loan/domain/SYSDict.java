@@ -48,6 +48,19 @@ public class SYSDict extends ABaseDO {
     // 备注
     private String remark;
 
+    /*---------辅助字段----------*/
+
+    // 更新人姓名
+    private String updaterName;
+
+    public String getUpdaterName() {
+        return updaterName;
+    }
+
+    public void setUpdaterName(String updaterName) {
+        this.updaterName = updaterName;
+    }
+
     public Long getId() {
         return id;
     }

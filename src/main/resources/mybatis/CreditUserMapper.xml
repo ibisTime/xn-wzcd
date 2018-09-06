@@ -17,6 +17,7 @@
 		<result column="auth_pdf" property="authPdf" />
 		<result column="interview_pic" property="interviewPic" />
 		<result column="court_network_results" property="courtNetworkResults" />
+		<result column="court_network_results_remark" property="courtNetworkResultsRemark" />
 		
 		<result column="dkdy_count" property="dkdyCount" />
 		<result column="dkdy_amount" property="dkdyAmount" />
@@ -83,6 +84,7 @@
 		,t.auth_pdf
 		,t.interview_pic
 		,t.court_network_results
+		,t.court_network_results_remark
 		,t.dkdy_count
 		
 		,t.dkdy_amount
@@ -324,6 +326,7 @@
 		UPDATE tdq_credit_user
 		SET
 		court_network_results = #{courtNetworkResults}
+		,court_network_results_remark = #{courtNetworkResultsRemark}
 		WHERE
 		code = #{code}
 	</update>

@@ -17,6 +17,9 @@ public class XN632342Req {
     @NotBlank
     private String azLocation;
 
+    // 安装位置备注
+    private String azLocationRemark;
+
     // 安装时间
     @NotBlank
     private String azDatetime;
@@ -41,6 +44,14 @@ public class XN632342Req {
 
     public void setGpsCode(String gpsCode) {
         this.gpsCode = gpsCode;
+    }
+
+    public String getAzLocationRemark() {
+        return azLocationRemark;
+    }
+
+    public void setAzLocationRemark(String azLocationRemark) {
+        this.azLocationRemark = azLocationRemark;
     }
 
     public String getAzLocation() {

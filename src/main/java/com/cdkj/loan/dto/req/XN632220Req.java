@@ -14,6 +14,13 @@ public class XN632220Req {
     @NotBlank
     private String code;
 
+    // 车辆颜色
+    @NotBlank
+    private String carColor;
+
+    // 车架号码
+    private String frameNo;
+
     // 提车日期
     @NotBlank
     private String deliveryDatetime;
@@ -68,6 +75,22 @@ public class XN632220Req {
 
     public void setMotorRegCertification(String motorRegCertification) {
         this.motorRegCertification = motorRegCertification;
+    }
+
+    public String getCarColor() {
+        return carColor;
+    }
+
+    public void setCarColor(String carColor) {
+        this.carColor = carColor;
+    }
+
+    public String getFrameNo() {
+        return frameNo;
+    }
+
+    public void setFrameNo(String frameNo) {
+        this.frameNo = frameNo;
     }
 
     public String getPdPdf() {

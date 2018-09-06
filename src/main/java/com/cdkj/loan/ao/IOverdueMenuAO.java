@@ -20,6 +20,8 @@ public interface IOverdueMenuAO {
     public void handleOverdueMenu(String code, String repayBizCode,
             String operator);
 
+    public void deleteOverdueMenu(List<String> codeList);
+
     public Paginable<OverdueMenu> queryOverdueMenuPage(int start, int limit,
             OverdueMenu condition);
 

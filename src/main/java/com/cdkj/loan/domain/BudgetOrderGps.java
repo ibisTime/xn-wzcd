@@ -26,6 +26,9 @@ public class BudgetOrderGps extends ABaseDO {
     // 安装位置
     private String azLocation;
 
+    // 安装位置备注
+    private String azLocationRemark;
+
     // 安装时间
     private Date azDatetime;
 
@@ -63,6 +66,14 @@ public class BudgetOrderGps extends ABaseDO {
 
     public String getGpsDevNo() {
         return gpsDevNo;
+    }
+
+    public String getAzLocationRemark() {
+        return azLocationRemark;
+    }
+
+    public void setAzLocationRemark(String azLocationRemark) {
+        this.azLocationRemark = azLocationRemark;
     }
 
     public void setGpsType(String gpsType) {

@@ -21,9 +21,6 @@ public class XN632200Req {
     // 车辆颜色
     private String carColor;
 
-    // 交强险
-    private String forceInsurance;
-
     // 商业险合计
     @NotBlank(message = "商业险合计不能为空")
     private String commerceInsurance;
@@ -87,14 +84,6 @@ public class XN632200Req {
 
     public void setCarColor(String carColor) {
         this.carColor = carColor;
-    }
-
-    public String getForceInsurance() {
-        return forceInsurance;
-    }
-
-    public void setForceInsurance(String forceInsurance) {
-        this.forceInsurance = forceInsurance;
     }
 
     public String getCommerceInsurance() {

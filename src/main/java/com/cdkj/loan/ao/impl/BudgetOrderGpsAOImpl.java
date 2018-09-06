@@ -2,6 +2,7 @@ package com.cdkj.loan.ao.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,9 @@ public class BudgetOrderGpsAOImpl implements IBudgetOrderGpsAO {
         data.setGpsDevNo(gps.getGpsDevNo());
         data.setGpsType(gps.getGpsType());
         data.setAzLocation(req.getAzLocation());
+        if (StringUtils.isNotBlank(req.getAzLocationRemark())) {
+            data.setAzLocationRemark(req.getAzLocationRemark());
+        }
 
         data.setAzDatetime(DateUtil.strToDate(req.getAzDatetime(),
             DateUtil.FRONT_DATE_FORMAT_STRING));

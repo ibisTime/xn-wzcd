@@ -7,6 +7,7 @@
 		<result column="gps_dev_no" property="gpsDevNo" />
 		<result column="gps_type" property="gpsType" />
 		<result column="az_location" property="azLocation" />
+		<result column="az_location_remark" property="azLocationRemark" />
 		<result column="az_datetime" property="azDatetime" />
 		<result column="az_user" property="azUser" />
 		<result column="status" property="status" />
@@ -32,6 +33,7 @@
 		,t.gps_dev_no
 		,t.gps_type
 		,t.az_location
+		,t.az_location_remark
 		,t.az_datetime
 		,t.az_user
 		,t.status
@@ -60,6 +62,7 @@
 		,gps_dev_no
 		,gps_type
 		,az_location
+		,az_location_remark
 		,az_datetime
 		,az_user
 		,status
@@ -71,6 +74,7 @@
 		,#{gpsDevNo}
 		,#{gpsType}
 		,#{azLocation}
+		,#{azLocationRemark}
 		,#{azDatetime}
 		,#{azUser}
 		,#{status}

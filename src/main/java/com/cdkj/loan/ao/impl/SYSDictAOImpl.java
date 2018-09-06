@@ -11,13 +11,16 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.ISYSDictAO;
 import com.cdkj.loan.bo.ISYSDictBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.SYSDict;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630030Req;
 import com.cdkj.loan.enums.EDictType;
 
@@ -30,6 +33,9 @@ import com.cdkj.loan.enums.EDictType;
 public class SYSDictAOImpl implements ISYSDictAO {
     @Autowired
     ISYSDictBO sysDictBO;
+
+    @Autowired
+    ISYSUserBO sysUserBO;
 
     @Override
     public Long addSecondDict(XN630030Req req) {
@@ -63,16 +69,34 @@ public class SYSDictAOImpl implements ISYSDictAO {
     @Override
     public Paginable<SYSDict> querySYSDictPage(int start, int limit,
             SYSDict condition) {
-        return sysDictBO.getPaginable(start, limit, condition);
+        Paginable<SYSDict> paginable = sysDictBO.getPaginable(start, limit,
+            condition);
+        for (SYSDict dict : paginable.getList()) {
+            initDict(dict);
+        }
+        return paginable;
+    }
+
+    private void initDict(SYSDict dict) {
+        if (StringUtils.isNotBlank(dict.getUpdater())) {
+            SYSUser user = sysUserBO.getUser(dict.getUpdater());
+            dict.setUpdaterName(user.getRealName());
+        }
     }
 
     @Override
     public List<SYSDict> querySysDictList(SYSDict condition) {
-        return sysDictBO.querySYSDictList(condition);
+        List<SYSDict> querySYSDictList = sysDictBO.querySYSDictList(condition);
+        for (SYSDict dict : querySYSDictList) {
+            initDict(dict);
+        }
+        return querySYSDictList;
     }
 
     @Override
     public SYSDict getSYSDict(Long id) {
-        return sysDictBO.getSYSDict(id);
+        SYSDict dict = sysDictBO.getSYSDict(id);
+        initDict(dict);
+        return dict;
     }
 }

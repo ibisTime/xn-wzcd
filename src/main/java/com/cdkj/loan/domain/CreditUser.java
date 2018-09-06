@@ -54,6 +54,9 @@ public class CreditUser extends ABaseDO {
     // 法院网查询结果
     private String courtNetworkResults;
 
+    // 法院网查询结果备注
+    private String courtNetworkResultsRemark;
+
     // 贷款抵押笔数
     private Integer dkdyCount;
 
@@ -285,6 +288,14 @@ public class CreditUser extends ABaseDO {
 
     public void setDkdyCurrentOverAmount(Long dkdyCurrentOverAmount) {
         this.dkdyCurrentOverAmount = dkdyCurrentOverAmount;
+    }
+
+    public String getCourtNetworkResultsRemark() {
+        return courtNetworkResultsRemark;
+    }
+
+    public void setCourtNetworkResultsRemark(String courtNetworkResultsRemark) {
+        this.courtNetworkResultsRemark = courtNetworkResultsRemark;
     }
 
     public Long getDkdy6MonthAvgAmount() {

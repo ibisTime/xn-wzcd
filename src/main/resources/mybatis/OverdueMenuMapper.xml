@@ -144,4 +144,10 @@
 		,repay_plan_code = #{repayPlanCode}
 		WHERE code = #{code}
 	</update>
+
+	<delete id="delete_overdueMenu" parameterType="overdueMenu">
+		DELETE FROM tdh_overdue_menu
+		WHERE 
+		code = #{code}
+	</delete>
 </mapper>

@@ -23,12 +23,15 @@ public class XN630030Req {
     private String parentKey;
 
     // key（必填）
+    @NotBlank(message = "不为空")
     private String dkey;
 
     // value（必填）
+    @NotBlank(message = "不为空")
     private String dvalue;
 
     // 修改人（必填）
+    @NotBlank(message = "不为空")
     private String updater;
 
     // 备注（选填）

@@ -1877,7 +1877,6 @@
 		,insurance_company_code = #{insuranceCompanyCode}
 		,car_color = #{carColor}
 		
-		,force_insurance = #{forceInsurance}
 		,commerce_insurance = #{commerceInsurance}
 		,insurance_effect_datetime = #{insuranceEffectDatetime}
 		,insurance_bank = #{insuranceBank}
@@ -1948,7 +1947,9 @@
 	<update id="update_entryPreservation" parameterType="budgetOrder">
 		UPDATE tdq_budget_order
 		SET
-		delivery_datetime = #{deliveryDatetime}
+		car_color = #{carColor}
+		,frame_no = #{frameNo}
+		,delivery_datetime = #{deliveryDatetime}
 		,is_right_invoice = #{isRightInvoice}
 		,current_invoice_price = #{currentInvoicePrice}
 		,pre_company_loan_cs = #{PreCompanyLoanCs}
