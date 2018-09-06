@@ -9,6 +9,7 @@ import com.cdkj.loan.domain.ReqBudget;
 import com.cdkj.loan.dto.req.XN632100Req;
 import com.cdkj.loan.dto.req.XN632102Req;
 import com.cdkj.loan.dto.req.XN632103Req;
+import com.cdkj.loan.dto.req.XN632104Req;
 
 @Component
 public interface IReqBudgetAO {
@@ -29,4 +30,7 @@ public interface IReqBudgetAO {
     public List<ReqBudget> queryReqBudgetList(ReqBudget condition);
 
     public ReqBudget getReqBudget(String code);
+
+    // 打款回录
+    public void backRecord(XN632104Req req);
 }

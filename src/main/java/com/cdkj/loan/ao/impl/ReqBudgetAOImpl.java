@@ -25,6 +25,7 @@ import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632100Req;
 import com.cdkj.loan.dto.req.XN632102Req;
 import com.cdkj.loan.dto.req.XN632103Req;
+import com.cdkj.loan.dto.req.XN632104Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EReqBudgetNode;
@@ -82,34 +83,9 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         return code;
     }
 
-    // 收回预算款
-    @Override
-    public void collectionReqBudget(XN632103Req req) {
-        ReqBudget reqBudget = reqBudgetBO.getReqBudget(req.getCode());
-        if (!EReqBudgetNode.COLLECTION.getCode()
-            .equals(reqBudget.getCurNodeCode())) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前不是财务确认收回预算款节点，不能操作");
-        }
-        reqBudget.setCollectionAmount(
-            StringValidater.toLong(req.getCollectionAmount()));
-        reqBudget.setCollectionDatetime(new Date());
-        reqBudget.setCollectionRemark(req.getCollectionRemark());
-
-        // 之前节点
-        String preCurrentNode = reqBudget.getCurNodeCode();
-        reqBudget.setCurNodeCode(
-            nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
-        reqBudgetBO.collectionReqBudget(reqBudget);
-
-        // 日志记录
-        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REQ_BUDGET,
-            reqBudget.getCode(), preCurrentNode, req.getCollectionRemark(),
-            req.getOperator());
-    }
-
     // 确认放款
     @Override
+    @Transactional
     public void loan(XN632102Req req) {
         ReqBudget reqBudget = reqBudgetBO.getReqBudget(req.getCode());
         if (!EReqBudgetNode.LOAN.getCode().equals(reqBudget.getCurNodeCode())) {
@@ -130,6 +106,61 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
         // 日志记录
         sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REQ_BUDGET,
             reqBudget.getCode(), preNodeCode, req.getPayRemark(),
+            req.getOperator());
+    }
+
+    @Override
+    @Transactional
+    public void backRecord(XN632104Req req) {
+        ReqBudget reqBudget = reqBudgetBO.getReqBudget(req.getCode());
+        if (!EReqBudgetNode.BACK_RECORD.getCode()
+            .equals(reqBudget.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前节点不是打款回录节点，不能操作");
+        }
+        reqBudget.setCollectionAmount(
+            StringValidater.toLong(req.getCollectionAmount()));
+        reqBudget.setBillPdf(req.getBillPdf());
+        reqBudgetBO.backRecord(reqBudget);
+
+        String preNodeCode = reqBudget.getCurNodeCode();// 当前节点
+        String nextNode = nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
+            .getNextNode();
+        reqBudget.setCurNodeCode(nextNode);// 更新节点
+
+        // 日志记录
+        sysBizLogBO.saveNewAndPreEndSYSBizLog(reqBudget.getCode(),
+            EBizLogType.REQ_BUDGET, reqBudget.getCode(), preNodeCode, nextNode,
+            null, req.getOperator());
+    }
+
+    // 收回预算款
+    @Override
+    @Transactional
+    public void collectionReqBudget(XN632103Req req) {
+        ReqBudget reqBudget = reqBudgetBO.getReqBudget(req.getCode());
+        if (!EReqBudgetNode.COLLECTION.getCode()
+            .equals(reqBudget.getCurNodeCode())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "当前不是财务确认收回预算款节点，不能操作");
+        }
+        if (reqBudget.getCollectionAmount() != StringValidater
+            .toLong(req.getCollectionAmount())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "收款金额与打款金额不符，不能收款");
+        }
+        reqBudget.setCollectionDatetime(new Date());
+        reqBudget.setCollectionRemark(req.getCollectionRemark());
+
+        // 之前节点
+        String preCurrentNode = reqBudget.getCurNodeCode();
+        reqBudget.setCurNodeCode(
+            nodeFlowBO.getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
+        reqBudgetBO.collectionReqBudget(reqBudget);
+
+        // 日志记录
+        sysBizLogBO.refreshPreSYSBizLog(EBizLogType.REQ_BUDGET,
+            reqBudget.getCode(), preCurrentNode, req.getCollectionRemark(),
             req.getOperator());
     }
 
@@ -200,4 +231,5 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
             }
         }
     }
+
 }

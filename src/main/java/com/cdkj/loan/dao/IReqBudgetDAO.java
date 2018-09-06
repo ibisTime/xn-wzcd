@@ -24,4 +24,7 @@ public interface IReqBudgetDAO extends IBaseDAO<ReqBudget> {
 
     ReqBudget selectTodayReqBudget(ReqBudget condition);
 
+    // 打款回录
+    void backRecord(ReqBudget reqBudget);
+
 }

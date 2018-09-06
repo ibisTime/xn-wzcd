@@ -41,6 +41,8 @@ public class ReqBudget extends ABaseDO {
 
     private Date dzDatetime;// 垫资日期
 
+    private String billPdf;// 打款凭证
+
     private Long collectionAmount;// 收回款金额
 
     private String collectionAccount;// 收回款账号编号
@@ -95,6 +97,14 @@ public class ReqBudget extends ABaseDO {
 
     public void setApplyUserName(String applyUserName) {
         this.applyUserName = applyUserName;
+    }
+
+    public String getBillPdf() {
+        return billPdf;
+    }
+
+    public void setBillPdf(String billPdf) {
+        this.billPdf = billPdf;
     }
 
     public String getCompanyName() {

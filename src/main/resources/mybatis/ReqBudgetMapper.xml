@@ -18,6 +18,7 @@
 		<result column="pay_remark" property="payRemark" />
 		<result column="dz_amount" property="dzAmount" />
 		<result column="dz_datetime" property="dzDatetime" />
+		<result column="bill_pdf" property="billPdf" />
 		<result column="collection_amount" property="collectionAmount" />
 		<result column="collection_account" property="collectionAccount" />
 		<result column="collection_datetime" property="collectionDatetime" />
@@ -66,6 +67,7 @@
 		,t.pay_remark
 		,t.dz_amount
 		,t.dz_datetime
+		,t.bill_pdf
 		,t.collection_amount
 		,t.collection_account
 		,t.collection_datetime
@@ -105,6 +107,7 @@
 		,t.pay_remark
 		,t.dz_amount
 		,t.dz_datetime
+		,t.bill_pdf
 		,t.collection_amount
 		,t.collection_account
 		,t.collection_datetime
@@ -206,6 +209,15 @@
 		WHERE code = #{code}
 	</update>
 	
+	<update id="update_backRecord" parameterType="reqBudget">
+		UPDATE tdq_req_budget
+		SET
+		cur_node_code = #{curNodeCode}
+		,collection_amount = #{collectionAmount}
+		,bill_pdf = #{billPdf}
+		WHERE code = #{code}
+	</update>
+	
 	
 	<update id="loan" parameterType="reqBudget">
 		UPDATE tdq_req_budget
@@ -222,8 +234,7 @@
 	<update id="update_collection" parameterType="reqBudget">
 		UPDATE tdq_req_budget
 		SET
-		collection_amount = #{collectionAmount}
-		,collection_account = #{collectionAccount}
+		collection_account = #{collectionAccount}
 		,collection_datetime = #{collectionDatetime}
 		,collection_remark = #{collectionRemark}
 		,cur_node_code = #{curNodeCode}
