@@ -14,6 +14,7 @@ import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.ICreditBO;
+import com.cdkj.loan.bo.ICreditChangeRecordBO;
 import com.cdkj.loan.bo.ICreditUserBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.INodeFlowBO;
@@ -25,6 +26,7 @@ import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Credit;
+import com.cdkj.loan.domain.CreditChangeRecord;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSUser;
@@ -36,6 +38,7 @@ import com.cdkj.loan.dto.req.XN632113Req;
 import com.cdkj.loan.dto.req.XN632114Req;
 import com.cdkj.loan.dto.req.XN632114ReqCNR;
 import com.cdkj.loan.enums.EApproveResult;
+import com.cdkj.loan.enums.EBankType;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBizLogType;
 import com.cdkj.loan.enums.EBoolean;
@@ -85,6 +88,9 @@ public class CreditAOImpl implements ICreditAO {
 
     @Autowired
     private ICollectBankcardBO collectBankcardBO;
+
+    @Autowired
+    private ICreditChangeRecordBO creditChangeRecordBO;
 
     @Override
     @Transactional
@@ -193,6 +199,28 @@ public class CreditAOImpl implements ICreditAO {
         }
 
         // 修改征信单
+        if (!credit.getLoanBankCode().equals(req.getLoanBankCode())) {
+            CreditChangeRecord data = new CreditChangeRecord();
+            data.setRawCreditCode(credit.getCode());
+
+            char bizCompany = 'H';
+            Bank bank = bankBO.getBankBySubbranch(req.getLoanBankCode());
+            if (EBankType.ZH.getCode().equals(bank.getBankCode())) {
+                bizCompany = 'B';
+            }
+            // 修改征信单编号的第一个字符
+            String code = credit.getCode();
+            char[] a = code.toCharArray();
+            a[0] = bizCompany;
+            code = String.valueOf(a);
+            data.setNowCreditCode(code);
+            credit.setCode(code);// 更新征信单编号
+            data.setRawLoanBankCode(credit.getLoanBankCode());
+            data.setNowLoanBankCode(req.getLoanBankCode());
+            data.setOperator(req.getOperator());
+            data.setUpdateDatetime(new Date());
+            creditChangeRecordBO.saveCreditChangeRecord(data);
+        }
         credit.setLoanBankCode(req.getLoanBankCode());
         credit.setLoanAmount(StringValidater.toLong(req.getLoanAmount()));
         credit.setShopWay(req.getShopWay());
@@ -574,6 +602,13 @@ public class CreditAOImpl implements ICreditAO {
             credit.setLoanBankName(bank.getBankName());
         }
 
+        // 征信银行卡变更记录
+        CreditChangeRecord condition = new CreditChangeRecord();
+        String string = credit.getCode().substring(1);// 截取征信编号第二位到最后一位，模糊查处所有的变更记录
+        condition.setNowCreditCode(string);
+        List<CreditChangeRecord> recordList = creditChangeRecordBO
+            .queryCreditChangeRecordList(condition);
+        credit.setCreditChangeRecordList(recordList);
     }
 
 }

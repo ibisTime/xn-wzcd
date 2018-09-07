@@ -85,6 +85,18 @@ public class Credit extends ABaseDO {
     // 征信人员信息
     private List<CreditUser> creditUserList;
 
+    // 征信银行卡变更记录
+    private List<CreditChangeRecord> creditChangeRecordList;
+
+    public List<CreditChangeRecord> getCreditChangeRecordList() {
+        return creditChangeRecordList;
+    }
+
+    public void setCreditChangeRecordList(
+            List<CreditChangeRecord> creditChangeRecordList) {
+        this.creditChangeRecordList = creditChangeRecordList;
+    }
+
     public String getCode() {
         return code;
     }

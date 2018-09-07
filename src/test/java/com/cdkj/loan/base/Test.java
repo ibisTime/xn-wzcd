@@ -9,21 +9,23 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "companyClearance";
+    private static String key = "creditChangeRecord";
 
     // 实体名称
-    private static String keyName = "公司结清记录";
+    private static String keyName = "征信银行卡变更记录";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdh_company_clearance";
+    private static String dbname = "tdq_credit_change_record";
 
-    private static String[] DBwords = { "id", "repaybiz_code", "updater",
-            "update_datetime", "remark" };
+    private static String[] DBwords = { "id", "now_credit_code",
+            "raw_credit_code", "now_loan_bank_code", "raw_loan_bank_code",
+            "operator", "update_datetime", "remark" };
 
-    private static String[] DBwordsName = { "id", "业务编号", "更新人", "更新时间", "备注" };
+    private static String[] DBwordsName = { "id", "现征信编号", "原征信编号", "现贷款银行编号",
+            "原贷款银行编号", "更新人", "更新时间", "备注" };
 
     private static String[] DOwords = getDOwords();
 

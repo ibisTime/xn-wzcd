@@ -33,10 +33,21 @@ public class XN632115Req extends APageReq {
     // 征信单编号
     private String creditCode;
 
+    // 业务公司编号
+    private String companyCode;
+
     // 角色编号
     private String roleCode;
 
     private List<String> curNodeCodeList;// 节点
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
 
     public String getApplyDatetimeStart() {
         return applyDatetimeStart;

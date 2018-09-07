@@ -164,7 +164,8 @@
 	<update id="update_credit" parameterType="credit">
 		UPDATE tdq_credit
 		SET
-		budget_code = #{budgetCode}
+		code = #{code}
+		,budget_code = #{budgetCode}
 		,loan_bank_code = #{loanBankCode}
 		,shop_way = #{shopWay}
 		,loan_amount = #{loanAmount}
