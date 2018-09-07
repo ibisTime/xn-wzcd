@@ -28,7 +28,6 @@ import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.core.OrderNoGenerater;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dao.IRepayBizDAO;
-import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.NodeFlow;
 import com.cdkj.loan.domain.Order;
@@ -674,16 +673,6 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
                 "预算单还款业务为空！");
         }
         RepayBiz repayBiz = getRepayBiz(budgetOrder.getRepayBizCode());
-        repayBiz.setSfAmount(budgetOrder.getRepayFirstMonthAmount());
-        repayBiz.setFirstRepayAmount(budgetOrder.getRepayFirstMonthAmount());
-        repayBiz.setMonthAmount(budgetOrder.getMonthAmount());
-        repayBiz.setMonthDatetime(budgetOrder.getRepayBankDate());
-        repayBiz
-            .setFirstRepayDatetime(budgetOrder.getRepayFirstMonthDatetime());
-        repayBiz.setBillDatetime(budgetOrder.getBillDatetime());
-        Bankcard bankcard = bankcardAO.getBankcard(repayBiz.getBankcardCode());
-        bankcard.setBankcardNumber(budgetOrder.getBankCardNumber());
-        bankcardAO.editBankcardNumber(bankcard);
         repayBizDAO.updateRepayBiz(repayBiz);
     }
 

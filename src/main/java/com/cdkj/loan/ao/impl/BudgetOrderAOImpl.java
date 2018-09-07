@@ -1270,10 +1270,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
 
         budgetOrderBO.refreshCarLoanArchive(budgetOrder);
-        // 更新还款业务
-        repayBizBO.refreshRepayBiz(budgetOrder);
-        // 更新还款计划
-        repayPlanBO.refreshRepayPlan(budgetOrder);
     }
 
     // 分配账号
@@ -3002,10 +2998,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                                     (StringValidater.toInteger(loanPeriods)
                                             - 1));// 首期附加费手续费
                     }
-                    annualSurchargePoundage = new BigDecimal(annualSurchargePoundage)
-                            .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();// 保留两位
-                    initialSurchargePoundage = new BigDecimal(initialSurchargePoundage)
-                            .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();// 保留两位
+                    annualSurchargePoundage = new BigDecimal(
+                        annualSurchargePoundage)
+                            .setScale(2, BigDecimal.ROUND_HALF_UP)
+                            .doubleValue();// 保留两位
+                    initialSurchargePoundage = new BigDecimal(
+                        initialSurchargePoundage)
+                            .setScale(2, BigDecimal.ROUND_HALF_UP)
+                            .doubleValue();// 保留两位
                     // 月供：
                     // 首期=1+3+附加费首期+附加费手续费首期
                     // 每期=2+4+附加费每期+附加费手续费每期
