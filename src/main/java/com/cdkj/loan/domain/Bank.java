@@ -53,6 +53,17 @@ public class Bank extends ABaseDO {
 
     private List<BankRate> bankRateList;
 
+    // 更新人名称
+    private String updaterName;
+
+    public String getUpdaterName() {
+        return updaterName;
+    }
+
+    public void setUpdaterName(String updaterName) {
+        this.updaterName = updaterName;
+    }
+
     public String getSubbranch() {
         return subbranch;
     }

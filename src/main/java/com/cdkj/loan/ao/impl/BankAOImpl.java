@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,11 +12,13 @@ import com.cdkj.loan.ao.IBankAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBankRateBO;
 import com.cdkj.loan.bo.IBankSubbranchBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BankRate;
 import com.cdkj.loan.domain.BankSubbranch;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632030Req;
 import com.cdkj.loan.dto.req.XN632032Req;
 import com.cdkj.loan.enums.EBoolean;
@@ -38,6 +41,9 @@ public class BankAOImpl implements IBankAO {
 
     @Autowired
     private IBankSubbranchBO bankSubbranchBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     @Override
     @Transactional
@@ -112,10 +118,7 @@ public class BankAOImpl implements IBankAO {
     @Override
     public Bank getBank(String code) {
         Bank data = bankBO.getBank(code);
-
-        BankRate rateCondition = new BankRate();
-        rateCondition.setBankCode(code);
-        data.setBankRateList(bankRateBO.queryBankRateList(rateCondition));
+        initBank(data);
         return data;
     }
 
@@ -123,30 +126,34 @@ public class BankAOImpl implements IBankAO {
     public Paginable<Bank> queryBankPage(int start, int limit, Bank condition) {
         Paginable<Bank> page = bankBO.getPaginable(start, limit, condition);
         List<Bank> bankList = page.getList();
-        List<BankRate> bankRateList = null;
-        BankRate rateCondition = new BankRate();
-
-        // 添加利率明细信息
         for (Bank data : bankList) {
-            rateCondition.setBankCode(condition.getCode());
-            bankRateList = bankRateBO.queryBankRateList(rateCondition);
-            data.setBankRateList(bankRateList);
+            initBank(data);
         }
         return page;
+    }
+
+    private void initBank(Bank data) {
+        // 添加利率明细信息
+        List<BankRate> bankRateList = null;
+        BankRate rateCondition = new BankRate();
+        rateCondition.setBankCode(data.getCode());
+        bankRateList = bankRateBO.queryBankRateList(rateCondition);
+        data.setBankRateList(bankRateList);
+
+        // 更新人名称
+        if (StringUtils.isNotBlank(data.getUpdater())) {
+            SYSUser user = sysUserBO.getUser(data.getUpdater());
+            data.setUpdaterName(user.getRealName());
+        }
     }
 
     @Override
     public List<Bank> queryBankList(Bank condition) {
         List<Bank> bankList = bankBO.queryBankList(condition);
-        BankRate rateCondition = new BankRate();
-        List<BankRate> bankRateList = null;
         // 添加利率明细信息
         for (Bank data : bankList) {
-            rateCondition.setBankCode(data.getCode());
-            bankRateList = bankRateBO.queryBankRateList(rateCondition);
-            data.setBankRateList(bankRateList);
+            initBank(data);
         }
-
         return bankList;
     }
 }

@@ -21,13 +21,13 @@
 	<sql id="where_condition">
 		<trim prefix="WHERE" prefixOverrides="AND | OR">	
 			<if test="code != null and code != '' ">
-				AND t.code = #{code}
+				AND t.code like "%"#{code}"%"
 			</if>
 			<if test="bankCode != null and bankCode != '' ">
-				AND t.bank_code = #{bankCode}
+				AND t.bank_code like "%"#{bankCode}"%"
 			</if>
 			<if test="bankName != null and bankName != '' ">
-				AND t.bank_name = #{bankName}
+				AND t.bank_name like "%"#{bankName}"%"
 			</if>
 			<if test="subbranch != null and subbranch != '' ">
 				AND t.subbranch = #{subbranch}

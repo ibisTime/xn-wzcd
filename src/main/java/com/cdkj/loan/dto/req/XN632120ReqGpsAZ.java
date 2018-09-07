@@ -8,6 +8,9 @@ public class XN632120ReqGpsAZ {
     // GPS安装位置
     private String azLocation;
 
+    // 安装位置备注
+    private String azLocationRemark;
+
     public String getCode() {
         return code;
     }
@@ -22,6 +25,14 @@ public class XN632120ReqGpsAZ {
 
     public void setAzLocation(String azLocation) {
         this.azLocation = azLocation;
+    }
+
+    public String getAzLocationRemark() {
+        return azLocationRemark;
+    }
+
+    public void setAzLocationRemark(String azLocationRemark) {
+        this.azLocationRemark = azLocationRemark;
     }
 
 }
