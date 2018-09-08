@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.OverdueMenu;
 import com.cdkj.loan.dto.req.XN632300ReqOverdue;
+import com.cdkj.loan.dto.req.XN632301Res;
 
 @Component
 public interface IOverdueMenuAO {
@@ -18,7 +19,7 @@ public interface IOverdueMenuAO {
 
     // 处理
     public void handleOverdueMenu(String code, String repayBizCode,
-            String operator);
+            List<XN632301Res> repaybizList, String operator);
 
     public void deleteOverdueMenu(List<String> codeList);
 

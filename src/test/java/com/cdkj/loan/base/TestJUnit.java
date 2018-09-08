@@ -1,23 +1,43 @@
 package com.cdkj.loan.base;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.math.BigDecimal;
 
 import org.unitils.UnitilsJUnit4;
 
-import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.common.AmountUtil;
+import com.cdkj.loan.core.StringValidater;
 
 public class TestJUnit extends UnitilsJUnit4 {
 
     public static void main(String[] args) {
-        Calendar calendar = Calendar.getInstance();
-        Date date = DateUtil.strToDate("2018-02-03",
-            DateUtil.FRONT_DATE_FORMAT_STRING);
-        calendar.setTime(date);
-        calendar.add(Calendar.DAY_OF_MONTH, +1);
-        Date time = calendar.getTime();
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(time));
+        String loanAmount = "800000";
+        String loanPeriods = "12";
+        String bankRate = "0.0";
+        Double annualPrincipal = AmountUtil.div(
+            StringValidater.toLong(loanAmount),
+            StringValidater.toInteger(loanPeriods));// 每期本金
+        annualPrincipal = Math.floor(annualPrincipal);// 向下取整
+        Double initialPrincipal = StringValidater.toDouble(loanAmount)
+                - AmountUtil.mulAB(annualPrincipal,
+                    (StringValidater.toDouble(loanPeriods) - 1));// 首期本金
+        initialPrincipal = new BigDecimal(initialPrincipal)
+            .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();// 保留两位
+
+        // 手续费=贷款额*利率
+        Long poundage = AmountUtil.mul(StringValidater.toLong(loanAmount),
+            StringValidater.toDouble(bankRate));// 手续费
+
+        // 月供：
+        // 首期=1+手续费
+        Double initialAmount = initialPrincipal + poundage;
+        Double d1 = new BigDecimal(initialAmount)
+            .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        // 每期=2
+        Double annualAmount = annualPrincipal;
+        Double d2 = new BigDecimal(annualAmount)
+            .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        System.out.println("d1----" + d1);
+        System.out.println("d2----" + d2);
         // String host = "https://jisucxdq.market.alicloudapi.com";
         // String path = "/car/detail";
         // String method = "GET";

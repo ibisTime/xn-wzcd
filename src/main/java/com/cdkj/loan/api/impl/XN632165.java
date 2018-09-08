@@ -39,14 +39,16 @@ public class XN632165 extends AProcessor {
         condition.setBudgetOrder(req.getBudgetOrder());
         condition.setUpdateDatetimeStart(DateUtil.strToDate(
             req.getUpdateDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        // 更新时间止加一
-        Calendar calendar = Calendar.getInstance();
-        Date date = DateUtil.strToDate(req.getUpdateDatetime(),
-            DateUtil.FRONT_DATE_FORMAT_STRING);
-        calendar.setTime(date);
-        calendar.add(Calendar.DAY_OF_MONTH, +1);
-        Date time = calendar.getTime();
-        condition.setUpdateDatetimeEnd(time);
+        if (StringUtils.isNotBlank(req.getUpdateDatetime())) {
+            // 更新时间止加一
+            Calendar calendar = Calendar.getInstance();
+            Date date = DateUtil.strToDate(req.getUpdateDatetime(),
+                DateUtil.FRONT_DATE_FORMAT_STRING);
+            calendar.setTime(date);
+            calendar.add(Calendar.DAY_OF_MONTH, +1);
+            Date time = calendar.getTime();
+            condition.setUpdateDatetimeEnd(time);
+        }
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
             column = ISYSRoleAO.DEFAULT_ORDER_COLUMN;

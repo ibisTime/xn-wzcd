@@ -37,14 +37,16 @@ public class XN632148 extends AProcessor {
         condition.setCustomerName(req.getCustomerName());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        // 申请时间止加一
-        Calendar calendar = Calendar.getInstance();
-        Date date = DateUtil.strToDate(req.getApplyDatetimeEnd(),
-            DateUtil.FRONT_DATE_FORMAT_STRING);
-        calendar.setTime(date);
-        calendar.add(Calendar.DAY_OF_MONTH, +1);
-        Date time = calendar.getTime();
-        condition.setApplyDatetimeEnd(time);
+        if (StringUtils.isNotBlank(req.getApplyDatetimeEnd())) {
+            // 申请时间止加一
+            Calendar calendar = Calendar.getInstance();
+            Date date = DateUtil.strToDate(req.getApplyDatetimeEnd(),
+                DateUtil.FRONT_DATE_FORMAT_STRING);
+            calendar.setTime(date);
+            calendar.add(Calendar.DAY_OF_MONTH, +1);
+            Date time = calendar.getTime();
+            condition.setApplyDatetimeEnd(time);
+        }
         condition.setCurNodeCode(req.getCurNodeCode());
         condition.setCarDealerCode(req.getCarDealerCode());
         condition.setLoanBankCode(req.getLoanBankCode());

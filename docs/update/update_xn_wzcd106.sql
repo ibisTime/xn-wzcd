@@ -44,4 +44,7 @@ ALTER TABLE `tdq_budget_order`
 CHANGE COLUMN `force_insurance` `force_insurance` BIGINT(20) NULL DEFAULT NULL COMMENT '交强险' ,
 ADD COLUMN `force_insurance_pdf` TINYTEXT NULL COMMENT '交强险图片' AFTER `force_insurance`;
 
+ALTER TABLE `tdh_overdue_menu` 
+ADD COLUMN `not_mate_result` varchar(4) NULL COMMENT '不匹配原因（0信息不匹配，1一卡多贷）' AFTER `status`;
+
 

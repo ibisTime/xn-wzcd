@@ -25,6 +25,10 @@ public class XN632280Req {
     @NotBlank
     private String zfSkAmount;
 
+    // 付款水单
+    @NotBlank
+    private String billPdf;
+
     // 操作人
     @NotBlank
     private String operator;
@@ -35,6 +39,14 @@ public class XN632280Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getBillPdf() {
+        return billPdf;
+    }
+
+    public void setBillPdf(String billPdf) {
+        this.billPdf = billPdf;
     }
 
     public String getType() {

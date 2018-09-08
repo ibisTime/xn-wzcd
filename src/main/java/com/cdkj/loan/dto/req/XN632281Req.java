@@ -16,10 +16,6 @@ public class XN632281Req {
     @NotBlank
     private String approveNote;
 
-    // 付款水单
-    @NotBlank
-    private String billPdf;
-
     // 收款账号编号
     @NotBlank
     private String zfSkBankcardCode;
@@ -54,14 +50,6 @@ public class XN632281Req {
 
     public void setApproveNote(String approveNote) {
         this.approveNote = approveNote;
-    }
-
-    public String getBillPdf() {
-        return billPdf;
-    }
-
-    public void setBillPdf(String billPdf) {
-        this.billPdf = billPdf;
     }
 
     public String getOperator() {

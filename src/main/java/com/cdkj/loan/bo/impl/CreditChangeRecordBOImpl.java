@@ -8,10 +8,12 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.ICreditChangeRecordBO;
+import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.PaginableBOImpl;
 import com.cdkj.loan.dao.ICreditChangeRecordDAO;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.CreditChangeRecord;
+import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
 
@@ -24,6 +26,9 @@ public class CreditChangeRecordBOImpl extends
 
     @Autowired
     private IBankBO bankBO;
+
+    @Autowired
+    private ISYSUserBO sysUserBO;
 
     public int saveCreditChangeRecord(CreditChangeRecord data) {
         int id = 0;
@@ -56,6 +61,11 @@ public class CreditChangeRecordBOImpl extends
             Bank bank = bankBO
                 .getBankBySubbranch(creditChangeRecord.getNowLoanBankCode());
             creditChangeRecord.setNowLoanBankName(bank.getBankName());
+        }
+        // 更新人姓名
+        if (StringUtils.isNotBlank(creditChangeRecord.getOperator())) {
+            SYSUser user = sysUserBO.getUser(creditChangeRecord.getOperator());
+            creditChangeRecord.setOperatorName(user.getRealName());
         }
     }
 

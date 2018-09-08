@@ -2101,6 +2101,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
         budgetOrder.setZfReason(zfReason);
         budgetOrder.setZfSkAmount(StringValidater.toLong(req.getZfSkAmount()));
+        budgetOrder.setZfFkBillPdf(req.getBillPdf());
         budgetOrder.setZfSkReceiptDatetime(new Date());
         budgetOrder.setBackAdvanceFundNodeCode(
             EBudgetOrderNode.BACK_ADVANCE_FUND_FINANCE_AUDIT.getCode());
@@ -2146,7 +2147,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 budgetOrder.setZfSkReceiptDatetime(
                     DateUtil.strToDate(req.getZfSkReceiptDatetime(),
                         DateUtil.FRONT_DATE_FORMAT_STRING));
-                budgetOrder.setZfFkBillPdf(req.getBillPdf());
             } else {// 2垫资款退回（仅限分公司业务）
                 // 1 垫资单回到确认用款单节点
                 AdvanceFund advanceFund = advanceFundBO
@@ -2181,7 +2181,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                         DateUtil.FRONT_DATE_FORMAT_STRING));
                 unAdvanceCollect
                     .setCollectionBankcardCode(req.getZfSkBankcardCode());
-                unAdvanceCollect.setCollectionBillPdf(req.getBillPdf());
+                // 柴
+                // unAdvanceCollect.setCollectionBillPdf(req.getBillPdf());
                 unAdvanceCollect.setCollectionNote(req.getApproveNote());
                 unAdvanceCollect.setUpdater(req.getOperator());
                 unAdvanceCollect.setUpdateDatetime(new Date());

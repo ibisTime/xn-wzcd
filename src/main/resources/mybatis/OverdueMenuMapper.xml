@@ -17,6 +17,7 @@
 		<result column="import_datetime" property="importDatetime" />
 		<result column="import_note" property="importNote" />
 		<result column="status" property="status" />
+		<result column="not_mate_result" property="notMateResult" />
 		<result column="handle_datetime" property="handleDatetime" />
 		<result column="handle_note" property="handleNote" />
 		<result column="budget_order_code" property="budgetOrderCode" />
@@ -70,6 +71,7 @@
 		,t.import_datetime
 		,t.import_note
 		,t.status
+		,t.not_mate_result
 		,t.handle_datetime
 		,t.handle_note
 		,t.budget_order_code
@@ -108,6 +110,7 @@
 		,import_datetime
 		,import_note
 		,status
+		,not_mate_result
 		,budget_order_code
 		,repay_biz_code
 		,repay_plan_code
@@ -127,6 +130,7 @@
 		,#{importDatetime}
 		,#{importNote}
 		,#{status}
+		,#{notMateResult}
 		,#{budgetOrderCode}
 		,#{repayBizCode}
 		,#{repayPlanCode}

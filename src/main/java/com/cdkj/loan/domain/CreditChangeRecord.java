@@ -45,6 +45,17 @@ public class CreditChangeRecord extends ABaseDO {
     // 原贷款银行名称
     private String rawLoanBankName;
 
+    // 更新人姓名
+    private String operatorName;
+
+    public String getOperatorName() {
+        return operatorName;
+    }
+
+    public void setOperatorName(String operatorName) {
+        this.operatorName = operatorName;
+    }
+
     public String getNowLoanBankName() {
         return nowLoanBankName;
     }

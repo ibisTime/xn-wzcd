@@ -56,6 +56,9 @@ public class OverdueMenu extends ABaseDO {
     // 状态(0 待处理 1 已处理)
     private String status;
 
+    // 不匹配原因（0信息不匹配，1一卡多贷）
+    private String notMateResult;
+
     // 处理时间
     private Date handleDatetime;
 
@@ -98,6 +101,14 @@ public class OverdueMenu extends ABaseDO {
 
     public void setBatchDatetime(Date batchDatetime) {
         this.batchDatetime = batchDatetime;
+    }
+
+    public String getNotMateResult() {
+        return notMateResult;
+    }
+
+    public void setNotMateResult(String notMateResult) {
+        this.notMateResult = notMateResult;
     }
 
     public RepayBiz getRepayBiz() {

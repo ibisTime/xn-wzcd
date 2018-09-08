@@ -25,7 +25,7 @@ public class XN632301 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         overdueMenuAO.handleOverdueMenu(req.getCode(), req.getRepayBizCode(),
-            req.getOperator());
+            req.getRepayBizList(), req.getOperator());
         return new BooleanRes(true);
     }
 
