@@ -751,7 +751,10 @@ public class BudgetOrder extends ABaseDO {
     private String certification;
 
     // 交强险
-    private String forceInsurance;
+    private Long forceInsurance;
+
+    // 交强险图片
+    private String forceInsurancePdf;
 
     // 商业险
     private String businessInsurance;
@@ -1976,7 +1979,8 @@ public class BudgetOrder extends ABaseDO {
         return guarantor1BirthAddressCity;
     }
 
-    public void setGuarantor1BirthAddressCity(String guarantor1BirthAddressCity) {
+    public void setGuarantor1BirthAddressCity(
+            String guarantor1BirthAddressCity) {
         this.guarantor1BirthAddressCity = guarantor1BirthAddressCity;
     }
 
@@ -1984,7 +1988,8 @@ public class BudgetOrder extends ABaseDO {
         return guarantor1BirthAddressArea;
     }
 
-    public void setGuarantor1BirthAddressArea(String guarantor1BirthAddressArea) {
+    public void setGuarantor1BirthAddressArea(
+            String guarantor1BirthAddressArea) {
         this.guarantor1BirthAddressArea = guarantor1BirthAddressArea;
     }
 
@@ -2001,7 +2006,8 @@ public class BudgetOrder extends ABaseDO {
         return guarantor2BirthAddressCity;
     }
 
-    public void setGuarantor2BirthAddressCity(String guarantor2BirthAddressCity) {
+    public void setGuarantor2BirthAddressCity(
+            String guarantor2BirthAddressCity) {
         this.guarantor2BirthAddressCity = guarantor2BirthAddressCity;
     }
 
@@ -2009,7 +2015,8 @@ public class BudgetOrder extends ABaseDO {
         return guarantor2BirthAddressArea;
     }
 
-    public void setGuarantor2BirthAddressArea(String guarantor2BirthAddressArea) {
+    public void setGuarantor2BirthAddressArea(
+            String guarantor2BirthAddressArea) {
         this.guarantor2BirthAddressArea = guarantor2BirthAddressArea;
     }
 
@@ -3213,12 +3220,20 @@ public class BudgetOrder extends ABaseDO {
         this.certification = certification;
     }
 
-    public String getForceInsurance() {
+    public Long getForceInsurance() {
         return forceInsurance;
     }
 
-    public void setForceInsurance(String forceInsurance) {
+    public void setForceInsurance(Long forceInsurance) {
         this.forceInsurance = forceInsurance;
+    }
+
+    public String getForceInsurancePdf() {
+        return forceInsurancePdf;
+    }
+
+    public void setForceInsurancePdf(String forceInsurancePdf) {
+        this.forceInsurancePdf = forceInsurancePdf;
     }
 
     public String getBusinessInsurance() {

@@ -1711,7 +1711,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setInvoice(req.getInvoice());
         budgetOrder.setCertification(req.getCertification());
 
-        budgetOrder.setForceInsurance(req.getForceInsurance());
+        budgetOrder
+            .setForceInsurance(StringValidater.toLong(req.getForceInsurance()));
+        budgetOrder.setForceInsurancePdf(req.getForceInsurancePdf());
         budgetOrder.setBusinessInsurance(req.getBusinessInsurance());
         budgetOrder.setMotorRegCertification(req.getMotorRegCertification());
         budgetOrder.setPdPdf(req.getPdPdf());

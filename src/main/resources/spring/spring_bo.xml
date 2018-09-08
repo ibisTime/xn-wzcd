@@ -168,6 +168,10 @@
 		<property name="paginableDAO" ref="creditUserDAOImpl"/>
 	</bean>
 	
+	<bean id="creditChangeRecordBO" class="com.cdkj.loan.bo.impl.CreditChangeRecordBOImpl">
+		<property name="paginableDAO" ref="creditChangeRecordDAOImpl"/>
+	</bean>
+	
     <bean id="creditBO" class="com.cdkj.loan.bo.impl.CreditBOImpl">
 		<property name="paginableDAO" ref="creditDAOImpl"/>
 	</bean>

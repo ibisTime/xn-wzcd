@@ -1,10 +1,14 @@
 package com.cdkj.loan.api.impl;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.IBudgetOrderFeeAO;
 import com.cdkj.loan.ao.ISYSRoleAO;
 import com.cdkj.loan.api.AProcessor;
+import com.cdkj.loan.common.DateUtil;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.core.StringValidater;
@@ -33,6 +37,16 @@ public class XN632165 extends AProcessor {
         condition.setUserId(req.getUserId());
         condition.setIsSettled(req.getIsSettled());
         condition.setBudgetOrder(req.getBudgetOrder());
+        condition.setUpdateDatetimeStart(DateUtil.strToDate(
+            req.getUpdateDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        // 更新时间止加一
+        Calendar calendar = Calendar.getInstance();
+        Date date = DateUtil.strToDate(req.getUpdateDatetime(),
+            DateUtil.FRONT_DATE_FORMAT_STRING);
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, +1);
+        Date time = calendar.getTime();
+        condition.setUpdateDatetimeEnd(time);
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
             column = ISYSRoleAO.DEFAULT_ORDER_COLUMN;
@@ -40,8 +54,8 @@ public class XN632165 extends AProcessor {
         condition.setOrder(column, req.getOrderDir());
         int start = StringValidater.toInteger(req.getStart());
         int limit = StringValidater.toInteger(req.getLimit());
-        return budgetOrderFeeAO
-            .queryBudgetOrderFeePage(start, limit, condition);
+        return budgetOrderFeeAO.queryBudgetOrderFeePage(start, limit,
+            condition);
     }
 
     @Override

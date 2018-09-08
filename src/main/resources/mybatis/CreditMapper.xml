@@ -59,10 +59,10 @@
 				AND trn.role_code = #{roleCode}
 			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
-				AND t.apply_datetime &gt;= #{applyDatetimeStart}
+				<![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
 			</if>
 			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
-				AND t.apply_datetime &lt;= #{applyDatetimeEnd}
+				<![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
 			</if>
 			<if test="curNodeCodeList != null and curNodeCodeList.size() != 0 ">
 				AND t.cur_node_code in 

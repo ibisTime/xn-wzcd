@@ -283,6 +283,7 @@
 		<result column="invoice" property="invoice" />
 		<result column="certification" property="certification" />
 		<result column="force_insurance" property="forceInsurance" />
+		<result column="force_insurance_pdf" property="forceInsurancePdf" />
 		<result column="business_insurance" property="businessInsurance" />
 		<result column="motor_reg_certification" property="motorRegCertification" />
 		
@@ -375,16 +376,16 @@
                 </foreach> 
 			</if>
 			<if test="applyDatetimeStart != null and applyDatetimeStart != '' ">
-				<![CDATA[AND t.apply_datetime > #{applyDatetimeStart}]]>
+				<![CDATA[AND t.apply_datetime >= #{applyDatetimeStart}]]>
 			</if>
 			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
-				<![CDATA[AND t.apply_datetime < #{applyDatetimeEnd}]]>
+				<![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
 			</if>
 			<if test="createDatetimeStart != null and createDatetimeStart != '' ">
-				<![CDATA[AND t.create_datetime > #{createDatetimeStart}]]>
+				<![CDATA[AND t.create_datetime >= #{createDatetimeStart}]]>
 			</if>
 			<if test="createDatetimeEnd != null and createDatetimeEnd != '' ">
-				<![CDATA[AND t.create_datetime < #{createDatetimeEnd}]]>
+				<![CDATA[AND t.create_datetime <= #{createDatetimeEnd}]]>
 			</if>
 			<if test="carDealerCode != null and carDealerCode != '' ">
 				AND t.car_dealer_code = #{carDealerCode}
@@ -698,6 +699,7 @@
 		,t.invoice
 		,t.certification
 		,t.force_insurance
+		,t.force_insurance_pdf
 		,t.business_insurance
 		,t.motor_reg_certification
 		,t.pd_pdf
@@ -994,6 +996,7 @@
 		,t.invoice
 		,t.certification
 		,t.force_insurance
+		,t.force_insurance_pdf
 		,t.business_insurance
 		,t.motor_reg_certification
 		,t.pd_pdf
@@ -1281,6 +1284,7 @@
 		,t.invoice
 		,t.certification
 		,t.force_insurance
+		,t.force_insurance_pdf
 		,t.business_insurance
 		,t.motor_reg_certification
 		,t.pd_pdf
@@ -1957,6 +1961,7 @@
 		,invoice = #{invoice}
 		,certification = #{certification}
 		,force_insurance = #{forceInsurance}
+		,force_insurance_pdf = #{forceInsurancePdf}
 		,business_insurance = #{businessInsurance}
 		,motor_reg_certification = #{motorRegCertification}
 		,pd_pdf = #{pdPdf}

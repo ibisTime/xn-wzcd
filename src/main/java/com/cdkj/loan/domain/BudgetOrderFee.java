@@ -66,6 +66,28 @@ public class BudgetOrderFee extends ABaseDO {
     // 客户姓名
     private String customerName;
 
+    // 更新时间起
+    private Date updateDatetimeStart;
+
+    // 更新时间止
+    private Date updateDatetimeEnd;
+
+    public Date getUpdateDatetimeStart() {
+        return updateDatetimeStart;
+    }
+
+    public void setUpdateDatetimeStart(Date updateDatetimeStart) {
+        this.updateDatetimeStart = updateDatetimeStart;
+    }
+
+    public Date getUpdateDatetimeEnd() {
+        return updateDatetimeEnd;
+    }
+
+    public void setUpdateDatetimeEnd(Date updateDatetimeEnd) {
+        this.updateDatetimeEnd = updateDatetimeEnd;
+    }
+
     public String getEffect() {
         return effect;
     }

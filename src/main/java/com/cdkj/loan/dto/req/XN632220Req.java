@@ -44,6 +44,10 @@ public class XN632220Req {
     @NotBlank
     private String forceInsurance;
 
+    // 交强险
+    @NotBlank
+    private String forceInsurancePdf;
+
     // 商业险
     @NotBlank
     private String businessInsurance;
@@ -75,6 +79,14 @@ public class XN632220Req {
 
     public void setMotorRegCertification(String motorRegCertification) {
         this.motorRegCertification = motorRegCertification;
+    }
+
+    public String getForceInsurancePdf() {
+        return forceInsurancePdf;
+    }
+
+    public void setForceInsurancePdf(String forceInsurancePdf) {
+        this.forceInsurancePdf = forceInsurancePdf;
     }
 
     public String getCarColor() {

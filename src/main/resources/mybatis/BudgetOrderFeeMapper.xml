@@ -33,6 +33,15 @@
 			<if test="budgetOrder != null and budgetOrder != '' ">
 				AND t.budget_order = #{budgetOrder}
 			</if>
+			<if test="updateDatetime != null and updateDatetime != '' ">
+				AND t.update_datetime = #{updateDatetime}"%"
+			</if>
+			<if test="updateDatetimeStart != null and updateDatetimeStart != '' ">
+				<![CDATA[AND t.update_datetime >= #{updateDatetimeStart}]]>
+			</if>
+			<if test="updateDatetimeEnd != null and updateDatetimeEnd != '' ">
+				<![CDATA[AND t.update_datetime <= #{updateDatetimeEnd}]]>
+			</if>
 		</trim>
 	</sql>
 	<select id="select_budgetOrderFee" parameterType="budgetOrderFee" resultMap="budgetOrderFee_DB_Result">

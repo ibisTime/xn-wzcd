@@ -10,19 +10,19 @@
 
 <log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
 
-	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+	<!-- <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH:mm:ss,SSS} %t [%c]-[%p] %m%n" />
 		</layout>
-	</appender>
-	<!--<appender name="logfile" class="org.apache.log4j.RollingFileAppender">
+	</appender> -->
+	<!-- <appender name="logfile" class="org.apache.log4j.RollingFileAppender">
 		<param name="File" value="${catalina.home}/logs/ihoms-biz.log" />
 		<param name="MaxFileSize" value="512KB" />
 		<param name="MaxBackupIndex" value="5" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH:mm:ss,SSS} [%c]-[%p] %m%n" />
 		</layout>
-	</appender>-->
+	</appender> -->
 	<!-- <appender name="log4jJDBC" class="com.hundsun.ihoms.common.log4j.appender.SpringIBatisDBAppender">
 	 		<param name="BufferSize" value="10"/>
 	       	<param name="clazz" value="com.hundsun.ihoms.member.dao.MclientLoginLogsDao"/>
@@ -38,17 +38,17 @@
 	            <param name="levelMax" value="info" />
 	            <param name="AcceptOnMatch" value="true" />
 	        </filter>
-	    </appender>-->
-<!--	<category name="org.apache.log4j.xml">
+	    </appender>
+	<category name="org.apache.log4j.xml">
 		<priority value="info" />
-	</category>-->
+	</category> -->
 
-<!--
-  <logger name="com.hundsun.ihoms.member.service.login.AbsLoginService">
+
+  <!-- <logger name="com.hundsun.ihoms.member.service.login.AbsLoginService">
         <level value="INFO"/>
        <appender-ref ref="log4jJDBC"/>
-    </logger>
--->
+    </logger> -->
+
 
  	<logger name="com.ibatis">
 		<level value="DEBUG"/>

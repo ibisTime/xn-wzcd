@@ -1,5 +1,8 @@
 package com.cdkj.loan.api.impl;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.apache.commons.lang3.StringUtils;
 
 import com.cdkj.loan.ao.IBudgetOrderAO;
@@ -34,8 +37,14 @@ public class XN632148 extends AProcessor {
         condition.setCustomerName(req.getCustomerName());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
-        condition.setApplyDatetimeEnd(DateUtil.strToDate(
-            req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        // 申请时间止加一
+        Calendar calendar = Calendar.getInstance();
+        Date date = DateUtil.strToDate(req.getApplyDatetimeEnd(),
+            DateUtil.FRONT_DATE_FORMAT_STRING);
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, +1);
+        Date time = calendar.getTime();
+        condition.setApplyDatetimeEnd(time);
         condition.setCurNodeCode(req.getCurNodeCode());
         condition.setCarDealerCode(req.getCarDealerCode());
         condition.setLoanBankCode(req.getLoanBankCode());

@@ -22,6 +22,17 @@ public class XN632165Req extends APageReq {
     // 准入单编号
     private String budgetOrder;
 
+    // 更新时间
+    private String updateDatetime;
+
+    public String getUpdateDatetime() {
+        return updateDatetime;
+    }
+
+    public void setUpdateDatetime(String updateDatetime) {
+        this.updateDatetime = updateDatetime;
+    }
+
     public String getUserId() {
         return userId;
     }

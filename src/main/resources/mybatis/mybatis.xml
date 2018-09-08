@@ -67,6 +67,7 @@
 		<!-- 征信 -->
 		<typeAlias alias="credit" type="com.cdkj.loan.domain.Credit" />
 		<typeAlias alias="creditUser" type="com.cdkj.loan.domain.CreditUser" />
+		<typeAlias alias="creditChangeRecord" type="com.cdkj.loan.domain.CreditChangeRecord" />
 		<typeAlias alias="budgetOrder" type="com.cdkj.loan.domain.BudgetOrder" />
 
 		<typeAlias alias="sysBizLog" type="com.cdkj.loan.domain.SYSBizLog" />

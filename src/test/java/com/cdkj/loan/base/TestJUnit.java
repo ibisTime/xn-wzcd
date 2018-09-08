@@ -1,14 +1,23 @@
 package com.cdkj.loan.base;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.unitils.UnitilsJUnit4;
+
+import com.cdkj.loan.common.DateUtil;
 
 public class TestJUnit extends UnitilsJUnit4 {
 
     public static void main(String[] args) {
-        String str = "yangyongjie";
-        char[] a = str.toCharArray();
-        a[0] = 'L';
-        System.out.print(a);
+        Calendar calendar = Calendar.getInstance();
+        Date date = DateUtil.strToDate("2018-02-03",
+            DateUtil.FRONT_DATE_FORMAT_STRING);
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, +1);
+        Date time = calendar.getTime();
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(time));
         // String host = "https://jisucxdq.market.alicloudapi.com";
         // String path = "/car/detail";
         // String method = "GET";

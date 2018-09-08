@@ -34,3 +34,14 @@ CREATE TABLE `tdq_credit_change_record` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='征信银行卡变更记录';
+
+
+SET SQL_SAFE_UPDATES = 0;
+update tdq_budget_order set force_insurance = 0;
+SET SQL_SAFE_UPDATES = 1;
+
+ALTER TABLE `tdq_budget_order` 
+CHANGE COLUMN `force_insurance` `force_insurance` BIGINT(20) NULL DEFAULT NULL COMMENT '交强险' ,
+ADD COLUMN `force_insurance_pdf` TINYTEXT NULL COMMENT '交强险图片' AFTER `force_insurance`;
+
+
