@@ -75,6 +75,8 @@ public class ReqBudget extends ABaseDO {
 
     private Date payDatetimeEnd;// 打款时间止
 
+    private String shouldCollectionAmount;// 应收金额
+
     public String getBankName() {
         return bankName;
     }
@@ -321,6 +323,14 @@ public class ReqBudget extends ABaseDO {
 
     public void setRealName(String realName) {
         this.realName = realName;
+    }
+
+    public String getShouldCollectionAmount() {
+        return shouldCollectionAmount;
+    }
+
+    public void setShouldCollectionAmount(String shouldCollectionAmount) {
+        this.shouldCollectionAmount = shouldCollectionAmount;
     }
 
 }

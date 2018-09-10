@@ -159,6 +159,9 @@ public class AdvanceFund extends ABaseDO {
     // 状态（未垫资/已垫资）
     private String status;
 
+    // 当前登录人的公司编号
+    private String currentUserCompanyCode;
+
     /************辅助字段***********/
 
     public Long getLoanAmount() {
@@ -535,6 +538,14 @@ public class AdvanceFund extends ABaseDO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getCurrentUserCompanyCode() {
+        return currentUserCompanyCode;
+    }
+
+    public void setCurrentUserCompanyCode(String currentUserCompanyCode) {
+        this.currentUserCompanyCode = currentUserCompanyCode;
     }
 
 }

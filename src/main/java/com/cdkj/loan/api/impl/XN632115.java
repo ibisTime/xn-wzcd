@@ -51,6 +51,8 @@ public class XN632115 extends AProcessor {
             condition.setApplyDatetimeEnd(time);
         }
         condition.setRoleCode(req.getRoleCode());
+        condition.setCurrentUserCompanyCode(req.getCurrentUserCompanyCode());
+
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {
             orderColumn = IReqBudgetAO.DEFAULT_ORDER_COLUMN;

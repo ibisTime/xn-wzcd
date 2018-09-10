@@ -25,6 +25,7 @@ import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Province;
 import com.cdkj.loan.enums.EBankType;
 import com.cdkj.loan.enums.EBizErrorCode;
+import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EBudgetOrderShopWay;
 import com.cdkj.loan.exception.BizException;
 
@@ -85,12 +86,19 @@ public class CreditBOImpl extends PaginableBOImpl<Credit> implements ICreditBO {
             String month = today.substring(4, 6);
             String day = today.substring(6);
 
+            String jobNo = "";
             Archive condition = new Archive();
             condition.setUserId(data.getSaleUserId());
+            condition.setStatus(EBoolean.YES.getCode());
             List<Archive> archiveList = archiveBO.queryArchiveList(condition);
-            String jobNo = "000";
-            if (!archiveList.isEmpty()) {
-                jobNo = archiveList.get(0).getJobNo();// TODO
+            if (archiveList.isEmpty()) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前用户没有档案");
+            }
+            jobNo = archiveList.get(0).getJobNo();
+            if (StringUtils.isEmpty(jobNo)) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "当前用户的档案没有设置工号");
             }
 
             Credit creditCondition = new Credit();

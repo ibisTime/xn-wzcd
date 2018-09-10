@@ -56,6 +56,7 @@ public class XN632145 extends AProcessor {
             req.getBankFkSendDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setFbhPage(req.getFbhPage());
         condition.setMakeCardStatusList(req.getMakeCardStatusList());
+        condition.setCompanyCode(req.getCompanyCode());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

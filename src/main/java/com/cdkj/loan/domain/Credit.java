@@ -3,6 +3,8 @@ package com.cdkj.loan.domain;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -13,9 +15,6 @@ import com.cdkj.loan.dao.base.ABaseDO;
  */
 public class Credit extends ABaseDO {
 
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
-     */
     private static final long serialVersionUID = 1L;
 
     // 编号
@@ -87,6 +86,10 @@ public class Credit extends ABaseDO {
 
     // 征信银行卡变更记录
     private List<CreditChangeRecord> creditChangeRecordList;
+
+    // 当前登录人的公司编号
+    @NotBlank
+    private String currentUserCompanyCode;
 
     public List<CreditChangeRecord> getCreditChangeRecordList() {
         return creditChangeRecordList;
@@ -271,6 +274,14 @@ public class Credit extends ABaseDO {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getCurrentUserCompanyCode() {
+        return currentUserCompanyCode;
+    }
+
+    public void setCurrentUserCompanyCode(String currentUserCompanyCode) {
+        this.currentUserCompanyCode = currentUserCompanyCode;
     }
 
 }

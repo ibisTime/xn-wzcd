@@ -3,7 +3,7 @@ package com.cdkj.loan.dto.req;
 import java.util.List;
 
 /**
- * 征信分页查询 （按角色权限）
+ * 征信分页查询 （按角色权限）(前端目前没用到)
  * @author: jiafr 
  * @since: 2018年5月26日 上午10:18:51 
  * @history:

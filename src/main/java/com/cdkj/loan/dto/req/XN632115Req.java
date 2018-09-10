@@ -2,6 +2,8 @@ package com.cdkj.loan.dto.req;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 征信分页查询 （按角色权限）
  * @author: jiafr 
@@ -10,9 +12,6 @@ import java.util.List;
  */
 public class XN632115Req extends APageReq {
 
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
-     */
     private static final long serialVersionUID = 1L;
 
     // 申请日期开始
@@ -40,6 +39,10 @@ public class XN632115Req extends APageReq {
     private String roleCode;
 
     private List<String> curNodeCodeList;// 节点
+
+    // 当前登录人的公司编号
+    @NotBlank
+    private String currentUserCompanyCode;
 
     public String getCompanyCode() {
         return companyCode;
@@ -111,6 +114,14 @@ public class XN632115Req extends APageReq {
 
     public void setRoleCode(String roleCode) {
         this.roleCode = roleCode;
+    }
+
+    public String getCurrentUserCompanyCode() {
+        return currentUserCompanyCode;
+    }
+
+    public void setCurrentUserCompanyCode(String currentUserCompanyCode) {
+        this.currentUserCompanyCode = currentUserCompanyCode;
     }
 
 }

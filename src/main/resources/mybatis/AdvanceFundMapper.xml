@@ -75,6 +75,9 @@
 	            	#{item}
                 </foreach> 
 			</if>
+			<if test="currentUserCompanyCode != null and currentUserCompanyCode != '' ">
+				AND t.company_code = #{currentUserCompanyCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_advanceFund" parameterType="advanceFund" resultMap="advanceFund_DB_Result">

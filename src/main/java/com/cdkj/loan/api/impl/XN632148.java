@@ -56,6 +56,7 @@ public class XN632148 extends AProcessor {
         condition.setCurNodeCodeList(req.getCurNodeCodeList());
         condition.setPledgeCurNodeCodeList(req.getPledgeCurNodeCodeList());
         condition.setEnterFileStatusList(req.getEnterFileStatusList());
+        condition.setCurrentUserCompanyCode(req.getCurrentUserCompanyCode());
 
         String orderColumn = req.getOrderColumn();
         if (StringUtils.isBlank(orderColumn)) {

@@ -451,6 +451,14 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
     @Override
     public Paginable<AdvanceFund> queryAdvanceFundPageByRoleCode(int start,
             int limit, AdvanceFund condition) {
+        Department department = departmentBO.getDepartment(condition
+            .getCurrentUserCompanyCode());
+        if (department.getParentCode().equals("0")) {// 总公司
+            condition.setCurrentUserCompanyCode(null);
+        } else {// 分公司
+            condition.setCompanyCode(null);
+        }
+
         Paginable<AdvanceFund> paginable = advanceFundBO
             .queryAdvanceFundPageByRoleCode(start, limit, condition);
         List<AdvanceFund> list = paginable.getList();
