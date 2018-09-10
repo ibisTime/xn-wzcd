@@ -16,6 +16,7 @@ import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.IReplaceRepayApplyBO;
 import com.cdkj.loan.bo.IReplaceRepayPlanBO;
+import com.cdkj.loan.bo.ISYSDictBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.IUserBO;
 import com.cdkj.loan.bo.base.Paginable;
@@ -28,10 +29,12 @@ import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.domain.ReplaceRepayApply;
 import com.cdkj.loan.domain.ReplaceRepayPlan;
+import com.cdkj.loan.domain.SYSDict;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.domain.User;
 import com.cdkj.loan.dto.req.XN632330Req;
 import com.cdkj.loan.dto.req.XN632335Req;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.ECollectBankcardType;
 import com.cdkj.loan.enums.EReplaceRepayPlanNode;
@@ -74,6 +77,9 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
 
     @Autowired
     private IBudgetOrderBO budgetOrderBO;
+
+    @Autowired
+    private ISYSDictBO sysDictBO;
 
     @Override
     public String addReplaceRepayPlan(XN632330Req req) {
@@ -121,52 +127,68 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
 
     @Override
     public void approveBySubcomp(String code, String approveResult,
-            String remark, String operator) {
+            String approveNote, String remark, String operator) {
         ReplaceRepayPlan replaceRepayPlan = replaceRepayPlanBO
             .getReplaceRepayPlan(code);
         if (!EReplaceRepayPlanNode.SUBCOMP_APPROVE.getCode()
             .equals(replaceRepayPlan.getCurNodeCode())) {
-            throw new BizException("xn0000", "代偿记录不在分公司审核状态，无法审核！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "代偿记录不在分公司审核状态，无法审核！");
         }
-
+        // 审核说明
+        SYSDict dict = sysDictBO.getSYSDictBykey("approve_note", approveNote);
+        String note = dict.getDvalue();
+        if ("99".equals(approveNote)) {
+            note = remark;
+        }
         String nextNodeCode = getNextNodeCode(replaceRepayPlan.getCurNodeCode(),
             approveResult);
 
-        replaceRepayPlanBO.updateSubcompApprove(code, nextNodeCode, remark,
+        replaceRepayPlanBO.updateSubcompApprove(code, nextNodeCode, note,
             operator);
     }
 
     @Override
     public void approveByRiskChief(String code, String approveResult,
-            String remark, String operator) {
+            String approveNote, String remark, String operator) {
         ReplaceRepayPlan replaceRepayPlan = replaceRepayPlanBO
             .getReplaceRepayPlan(code);
         if (!EReplaceRepayPlanNode.RISK_CHIEF_APPROVE.getCode()
             .equals(replaceRepayPlan.getCurNodeCode())) {
             throw new BizException("xn0000", "代偿记录不在风控总监审核状态，无法审核！");
         }
-
+        // 审核说明
+        SYSDict dict = sysDictBO.getSYSDictBykey("approve_note", approveNote);
+        String note = dict.getDvalue();
+        if ("99".equals(approveNote)) {
+            note = remark;
+        }
         String nextNodeCode = getNextNodeCode(replaceRepayPlan.getCurNodeCode(),
             approveResult);
 
-        replaceRepayPlanBO.updateRiskChiefApprove(code, nextNodeCode, remark,
+        replaceRepayPlanBO.updateRiskChiefApprove(code, nextNodeCode, note,
             operator);
     }
 
     @Override
     public void approveByFianace(String code, String approveResult,
-            String remark, String operator) {
+            String approveNote, String remark, String operator) {
         ReplaceRepayPlan replaceRepayPlan = replaceRepayPlanBO
             .getReplaceRepayPlan(code);
         if (!EReplaceRepayPlanNode.FINANCE_APPROVE.getCode()
             .equals(replaceRepayPlan.getCurNodeCode())) {
             throw new BizException("xn0000", "代偿记录不在财务审核状态，无法审核！");
         }
-
+        // 审核说明
+        SYSDict dict = sysDictBO.getSYSDictBykey("approve_note", approveNote);
+        String note = dict.getDvalue();
+        if ("99".equals(approveNote)) {
+            note = remark;
+        }
         String nextNodeCode = getNextNodeCode(replaceRepayPlan.getCurNodeCode(),
             approveResult);
 
-        replaceRepayPlanBO.updateFianaceApprove(code, nextNodeCode, remark,
+        replaceRepayPlanBO.updateFianaceApprove(code, nextNodeCode, note,
             operator);
     }
 

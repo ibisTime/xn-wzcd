@@ -26,7 +26,8 @@ public class XN632321 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         replaceRepayApplyAO.refreshFinanceManageApprove(req.getCode(),
-            req.getApproveResult(), req.getOperator(), req.getRemark());
+            req.getApproveResult(), req.getApproveNote(), req.getOperator(),
+            req.getRemark());
         return new BooleanRes(true);
     }
 

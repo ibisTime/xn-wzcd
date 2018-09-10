@@ -27,15 +27,15 @@ public interface IReplaceRepayPlanAO {
 
     // 分公司总经理审核
     public void approveBySubcomp(String code, String approveResult,
-            String remark, String operator);
+            String approveNote, String remark, String operator);
 
     // 风控总监审核
     public void approveByRiskChief(String code, String approveResult,
-            String remark, String operator);
+            String approveNote, String remark, String operator);
 
     // 财务经理审核
     public void approveByFianace(String code, String approveResult,
-            String remark, String operator);
+            String approveNote, String remark, String operator);
 
     // 确认放款
     public void updateConfirmLoan(XN632335Req req);

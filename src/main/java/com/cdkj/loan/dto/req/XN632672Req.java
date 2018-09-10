@@ -16,6 +16,10 @@ public class XN632672Req {
     @NotBlank
     private String approveResult;
 
+    // 审核备注
+    @NotBlank
+    private String approveNote;
+
     @NotBlank
     private String updater;
 
@@ -27,6 +31,14 @@ public class XN632672Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getApproveNote() {
+        return approveNote;
+    }
+
+    public void setApproveNote(String approveNote) {
+        this.approveNote = approveNote;
     }
 
     public String getApproveResult() {

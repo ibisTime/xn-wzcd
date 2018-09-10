@@ -12,6 +12,7 @@ import com.cdkj.loan.bo.IAssertApplyBO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IFeeAdvanceApplyBO;
+import com.cdkj.loan.bo.ISYSDictBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
@@ -21,6 +22,7 @@ import com.cdkj.loan.domain.AssertApply;
 import com.cdkj.loan.domain.Bank;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.FeeAdvanceApply;
+import com.cdkj.loan.domain.SYSDict;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632670Req;
 import com.cdkj.loan.enums.EBizErrorCode;
@@ -48,6 +50,9 @@ public class FeeAdvanceApplyAOImpl implements IFeeAdvanceApplyAO {
     @Autowired
     private IBankBO bankBO;
 
+    @Autowired
+    private ISYSDictBO sysDictBO;
+
     @Override
     public String addFeeAdvanceApply(XN632670Req req) {
         FeeAdvanceApply data = new FeeAdvanceApply();
@@ -56,8 +61,8 @@ public class FeeAdvanceApplyAOImpl implements IFeeAdvanceApplyAO {
         data.setCode(code);
         data.setType(req.getType());
         if (EFeeAdvanceApplyType.BUY_ASSERT.getCode().equals(req.getType())
-                || EFeeAdvanceApplyType.BUY_OFFICE.getCode().equals(
-                    req.getType())) {
+                || EFeeAdvanceApplyType.BUY_OFFICE.getCode()
+                    .equals(req.getType())) {
             if (StringUtils.isBlank(req.getRefAssertCode())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "请选择关联资产审批列表");
@@ -94,8 +99,8 @@ public class FeeAdvanceApplyAOImpl implements IFeeAdvanceApplyAO {
     public void approveApply(String code, String approveResult, String updater,
             String remark) {
         FeeAdvanceApply data = feeAdvanceApplyBO.getFeeAdvanceApply(code);
-        if (!EFeeAdvanceApplyStatus.TO_APPROVE.getCode().equals(
-            data.getStatus())) {
+        if (!EFeeAdvanceApplyStatus.TO_APPROVE.getCode()
+            .equals(data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前费用预支申请单状态不是待审核状态");
         }
@@ -109,34 +114,39 @@ public class FeeAdvanceApplyAOImpl implements IFeeAdvanceApplyAO {
 
     @Override
     public void financeApproveApply(String code, String approveResult,
-            String updater, String remark) {
+            String approveNote, String updater, String remark) {
         FeeAdvanceApply data = feeAdvanceApplyBO.getFeeAdvanceApply(code);
-        if (!EFeeAdvanceApplyStatus.APPROVE_YES.getCode().equals(
-            data.getStatus())) {
+        if (!EFeeAdvanceApplyStatus.APPROVE_YES.getCode()
+            .equals(data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前费用预支申请单状态不是待财务审核状态");
         }
-
+        // 审核说明
+        SYSDict dict = sysDictBO.getSYSDictBykey("approve_note", approveNote);
+        String note = dict.getDvalue();
+        if ("99".equals(approveNote)) {
+            note = remark;
+        }
         String status = EFeeAdvanceApplyStatus.FINANCE_APPROVE_NO.getCode();
         if (EBoolean.YES.getCode().equals(approveResult)) {
             status = EFeeAdvanceApplyStatus.FINANCE_APPROVE_YES.getCode();
         }
         feeAdvanceApplyBO.refreshFeeAdvanceApplyFinanceApprove(data, status,
-            updater, remark);
+            updater, note);
     }
 
     @Override
     public void sureFk(String code, String payDatetime, String payBankcard,
             String payPdf, String updater) {
         FeeAdvanceApply data = feeAdvanceApplyBO.getFeeAdvanceApply(code);
-        if (!EFeeAdvanceApplyStatus.FINANCE_APPROVE_YES.getCode().equals(
-            data.getStatus())) {
+        if (!EFeeAdvanceApplyStatus.FINANCE_APPROVE_YES.getCode()
+            .equals(data.getStatus())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前费用预支申请单状态不是待确认放款状态");
         }
 
-        data.setPayDatetime(DateUtil.strToDate(payDatetime,
-            DateUtil.DATA_TIME_PATTERN_1));
+        data.setPayDatetime(
+            DateUtil.strToDate(payDatetime, DateUtil.DATA_TIME_PATTERN_1));
         data.setPayBankcard(payBankcard);
         data.setPayPdf(payPdf);
         data.setStatus(EFeeAdvanceApplyStatus.SURE_FK.getCode());
@@ -153,8 +163,8 @@ public class FeeAdvanceApplyAOImpl implements IFeeAdvanceApplyAO {
         if (page != null) {
             for (FeeAdvanceApply data : page.getList()) {
                 // 申请人转义
-                SYSUser applySysUser = sysUserBO.getMoreUser(data
-                    .getApplyUser());
+                SYSUser applySysUser = sysUserBO
+                    .getMoreUser(data.getApplyUser());
                 data.setApplySysUser(applySysUser);
             }
         }
@@ -183,14 +193,14 @@ public class FeeAdvanceApplyAOImpl implements IFeeAdvanceApplyAO {
     private void initFeeAdvanceApply(FeeAdvanceApply data) {
         // 初始化资产
         if (StringUtils.isNotBlank(data.getRefAssertCode())) {
-            AssertApply assertApply = assertApplyBO.getAssertApply(data
-                .getRefAssertCode());
+            AssertApply assertApply = assertApplyBO
+                .getAssertApply(data.getRefAssertCode());
             data.setRefAssertApply(assertApply);
         }
         // 初始化预算单
         if (StringUtils.isNotBlank(data.getRefBudgetOrderCode())) {
-            BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(data
-                .getRefBudgetOrderCode());
+            BudgetOrder budgetOrder = budgetOrderBO
+                .getBudgetOrder(data.getRefBudgetOrderCode());
             data.setRefBudgetOrder(budgetOrder);
         }
         // 申请人转义

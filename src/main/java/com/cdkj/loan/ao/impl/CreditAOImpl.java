@@ -201,7 +201,7 @@ public class CreditAOImpl implements ICreditAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是填写征信资料节点，不能操作");
         }
-
+        credit.setPreCode(credit.getCode());
         // 修改征信单
         if (!credit.getLoanBankCode().equals(req.getLoanBankCode())) {
             CreditChangeRecord data = new CreditChangeRecord();

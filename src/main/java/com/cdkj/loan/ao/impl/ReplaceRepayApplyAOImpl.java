@@ -14,6 +14,7 @@ import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.IRepayBizBO;
 import com.cdkj.loan.bo.IRepayPlanBO;
 import com.cdkj.loan.bo.IReplaceRepayApplyBO;
+import com.cdkj.loan.bo.ISYSDictBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
@@ -21,8 +22,10 @@ import com.cdkj.loan.domain.Bankcard;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.ReplaceRepayApply;
+import com.cdkj.loan.domain.SYSDict;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632320Req;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EReplaceRepayStatus;
 import com.cdkj.loan.enums.EReplaceRepayType;
 import com.cdkj.loan.exception.BizException;
@@ -57,6 +60,9 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
     @Autowired
     private IBudgetOrderBO budgetOrderBO;
 
+    @Autowired
+    private ISYSDictBO sysDictBO;
+
     @Override
     public String addReplaceRepayApply(XN632320Req req) {
         if (EReplaceRepayType.REMAIN_LOAN.getCode().equals(req.getType())) {// 代偿性质是剩余贷款金额一笔还款业务只能申请一次代偿
@@ -87,15 +93,23 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
 
     @Override
     public void refreshFinanceManageApprove(String code, String approveResult,
-            String updater, String remark) {
+            String approveNote, String updater, String remark) {
         ReplaceRepayApply data = replaceRepayApplyBO.getReplaceRepayApply(code);
         if (!EReplaceRepayStatus.TO_APPROVE.getCode()
             .equals(data.getStatus())) {
-            throw new BizException("xn0000", "预算单不在财务经理审核状态！");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "预算单不在财务经理审核状态！");
+        }
+
+        // 审核说明
+        SYSDict dict = sysDictBO.getSYSDictBykey("approve_note", approveNote);
+        String note = dict.getDvalue();
+        if ("99".equals(approveNote)) {
+            note = remark;
         }
 
         replaceRepayApplyBO.refreshFinanceManageApprove(code, approveResult,
-            updater, remark);
+            updater, note);
     }
 
     @Override

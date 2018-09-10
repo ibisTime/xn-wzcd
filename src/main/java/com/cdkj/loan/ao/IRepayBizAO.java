@@ -37,19 +37,19 @@ public interface IRepayBizAO {
 
     // 收车分控经理审核
     public void takeCarRiskManageCheck(String code, String approveResult,
-            String operator, String remark);
+            String approveNote, String operator, String remark);
 
     // 收车分公司总公司审核
     public void takeCarCompanyManageCheck(String code, String approveResult,
-            String operator, String remark);
+            String approveNote, String operator, String remark);
 
     // 风控总监审核
     public void takeCarRiskLeaderCheck(String code, String approveResult,
-            String operator, String remark);
+            String approveNote, String operator, String remark);
 
     // 财务经理审核
     public void takeCarFinanceManageCheck(String code, String approveResult,
-            String operator, String remark);
+            String approveNote, String operator, String remark);
 
     // 确认放款
     public void takeCarSureFk(String code, String remitBankCode,
@@ -70,14 +70,14 @@ public interface IRepayBizAO {
 
     // 风控经理审核
     public void riskManagerCheck(String code, String approveResult,
-            String approveNote, String operator);
+            String approveNote, String operator, String remark);
 
     // 风控总监审核
     public void riskManageAudit(XN630578Req req);
 
     // 财务审核
     public void settleFinanceCheck(String code, String approveResult,
-            String approveNote, String operator);
+            String approveNote, String operator, String remark);
 
     // 确认付款
     public void settleCashRemit(XN630572Req req);
@@ -88,15 +88,15 @@ public interface IRepayBizAO {
 
     // 风控内勤审核
     public void settleRiskIndoorCheck(String code, String approveResult,
-            String approveNote, String operator);
+            String approveNote, String operator, String remark);
 
     // 风控主管审核
     public void settleRiskManagerCheck(String code, String approveResult,
-            String approveNote, String operator);
+            String approveNote, String operator, String remark);
 
     // 解除抵押:风控总监审核
     public void settleriskManageAudit(String code, String approveResult,
-            String applyNote, String operator);
+            String applyNote, String operator, String remark);
 
     // 抵押打印
     public RepayBiz settleMortgagePrint(String code, String releaseDatetime,
@@ -135,7 +135,7 @@ public interface IRepayBizAO {
 
     // 处理结果财务审核（转卖，赎回）
     public void financialAudit(String code, String approveResult,
-            String approveNote, String operator);
+            String approveNote, String operator, String remark);
 
     // 逾期客户清收进度表
     public Object queryRepayBizByOverdue(int start, int limit,

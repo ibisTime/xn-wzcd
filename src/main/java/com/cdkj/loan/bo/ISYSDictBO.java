@@ -33,4 +33,6 @@ public interface ISYSDictBO extends IPaginableBO<SYSDict> {
 
     public SYSDict getSYSDict(Long id);
 
+    public SYSDict getSYSDictBykey(String parentKey, String dKey);
+
 }

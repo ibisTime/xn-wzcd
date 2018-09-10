@@ -723,6 +723,7 @@
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,release_datetime = #{releaseDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -740,6 +741,7 @@
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -749,6 +751,7 @@
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -758,6 +761,7 @@
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -767,6 +771,7 @@
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -786,6 +791,7 @@
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -795,6 +801,7 @@
 		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		,final_payee = #{finalPayee}
 		,payee_enclosure = #{payeeEnclosure}
 		WHERE code = #{code}
@@ -854,6 +861,7 @@
 		,judge_note = #{judgeNote}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>
@@ -886,6 +894,7 @@
 		,remark = #{remark}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -902,6 +911,7 @@
 		,rest_overdue_amount = #{restOverdueAmount}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 
@@ -913,6 +923,7 @@
 		,release_apply_datetime = #{releaseApplyDatetime}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 
@@ -923,6 +934,7 @@
 		,remark = #{remark}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 	
@@ -987,6 +999,7 @@
 		,payment_pdf = #{paymentPdf}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
+		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
 

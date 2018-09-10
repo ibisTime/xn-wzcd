@@ -19,7 +19,7 @@ public class XN632123 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         budgetOrderAO.approveBranchCompany(req.getCode(), req.getOperator(),
-            req.getApproveResult(), req.getApproveNote());
+            req.getApproveResult(), req.getApproveNote(), req.getRemark());
         return new BooleanRes(true);
     }
 

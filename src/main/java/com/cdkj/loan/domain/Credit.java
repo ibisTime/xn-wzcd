@@ -88,6 +88,17 @@ public class Credit extends ABaseDO {
     // 征信银行卡变更记录
     private List<CreditChangeRecord> creditChangeRecordList;
 
+    // 原编号
+    private String preCode;
+
+    public String getPreCode() {
+        return preCode;
+    }
+
+    public void setPreCode(String preCode) {
+        this.preCode = preCode;
+    }
+
     public List<CreditChangeRecord> getCreditChangeRecordList() {
         return creditChangeRecordList;
     }

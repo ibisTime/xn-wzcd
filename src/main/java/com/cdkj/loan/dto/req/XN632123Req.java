@@ -13,7 +13,10 @@ public class XN632123Req {
     @NotBlank
     private String operator;// 操作人
 
+    @NotBlank
     private String approveNote;// 审核说明
+
+    private String remark;
 
     public String getCode() {
         return code;
@@ -21,6 +24,14 @@ public class XN632123Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getApproveResult() {

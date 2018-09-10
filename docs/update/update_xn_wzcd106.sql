@@ -51,5 +51,9 @@ INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`) VALUES ('0', 'fund_source', '
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`) VALUES ('1', 'fund_source', '1', '财务部');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`) VALUES ('1', 'fund_source', '2', '预支款');
 
+INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'approve_note', '审核说明', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'approve_note', '1', '审核通过', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'approve_note', '2', '审核不通过', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'approve_note', '99', '其他', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
 
 

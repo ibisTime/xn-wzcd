@@ -40,15 +40,15 @@ public interface IBudgetOrderAO {
 
     // 区域总经理审核
     public void approveAreaManager(String code, String operator,
-            String approveResult, String approveNote);
+            String approveResult, String approveNote, String remark);
 
     // 省分公司总经理审核
     public void approveBranchCompany(String code, String operator,
-            String approveResult, String approveNote);
+            String approveResult, String approveNote, String remark);
 
     // 二审
     public void approveGlobalManager(String code, String operator,
-            String approveResult, String approveNote);
+            String approveResult, String approveNote, String remark);
 
     // 申请撤销
     public void canceOrder(String code, String operator, String cancelNote);
@@ -97,11 +97,11 @@ public interface IBudgetOrderAO {
 
     // 发票不匹配审核
     public void invoiceMismatchApprove(String code, String approveResult,
-            String approveNote, String operator);
+            String approveNote, String remark, String operator);
 
     // 发票不匹配二审
     public void invoiceMismatchSecondApprove(String code, String approveResult,
-            String approveNote, String operator);
+            String approveNote, String remark, String operator);
 
     // 应退按揭款
     public void mortgageRefund(String code, String shouldBackBankcardCode,

@@ -18,10 +18,13 @@ public class XN630586Req {
     private String approveResult;
 
     // 申请说明
+    @NotBlank
     private String applyNote;
 
     @NotBlank
     private String operator;
+
+    private String remark;
 
     public String getCode() {
         return code;
@@ -29,6 +32,14 @@ public class XN630586Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getApplyNote() {

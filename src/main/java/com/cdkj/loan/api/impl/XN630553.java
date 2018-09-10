@@ -24,8 +24,8 @@ public class XN630553 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        repayBizAO.takeCarRiskLeaderCheck(req.getCode(),
-            req.getApproveResult(), req.getOperator(), req.getRemark());
+        repayBizAO.takeCarRiskLeaderCheck(req.getCode(), req.getApproveResult(),
+            req.getApproveNote(), req.getOperator(), req.getRemark());
         return new BooleanRes(true);
     }
 

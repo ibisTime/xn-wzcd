@@ -174,7 +174,7 @@
 		,accessory = #{accessory}
 		,cur_node_code= #{curNodeCode}
 		WHERE
-		code = #{code}
+		code = #{preCode}
 	</update>
 	
 	<update id="update_node" parameterType="credit">

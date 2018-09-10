@@ -25,7 +25,7 @@ public class XN630575 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         repayBizAO.settleRiskManagerCheck(req.getCode(), req.getApproveResult(),
-            req.getApplyNote(), req.getOperator());
+            req.getApplyNote(), req.getOperator(), req.getRemark());
         return new BooleanRes(true);
     }
 

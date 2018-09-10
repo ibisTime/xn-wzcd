@@ -18,6 +18,9 @@ public class XN630551Req {
     @NotBlank
     private String approveResult;
 
+    // 审核说明
+    private String approveNote;
+
     // 最近修改人
     @NotBlank
     private String operator;
@@ -31,6 +34,14 @@ public class XN630551Req {
 
     public void setApproveResult(String approveResult) {
         this.approveResult = approveResult;
+    }
+
+    public String getApproveNote() {
+        return approveNote;
+    }
+
+    public void setApproveNote(String approveNote) {
+        this.approveNote = approveNote;
     }
 
     public String getCode() {

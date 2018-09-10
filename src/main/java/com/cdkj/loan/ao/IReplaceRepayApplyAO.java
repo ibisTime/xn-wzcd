@@ -21,7 +21,7 @@ public interface IReplaceRepayApplyAO {
     public String addReplaceRepayApply(XN632320Req req);
 
     public void refreshFinanceManageApprove(String code, String approveResult,
-            String updater, String remark);
+            String approveNote, String updater, String remark);
 
     public void refreshMakeDocument(String code, String updater);
 

@@ -25,7 +25,8 @@ public class XN632231 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         budgetOrderAO.invoiceMismatchApprove(req.getCode(),
-            req.getApproveResult(), req.getApproveNote(), req.getOperator());
+            req.getApproveResult(), req.getApproveNote(), req.getRemark(),
+            req.getOperator());
         return new BooleanRes(true);
     }
 

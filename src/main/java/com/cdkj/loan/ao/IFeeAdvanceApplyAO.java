@@ -18,7 +18,7 @@ public interface IFeeAdvanceApplyAO {
             String remark);
 
     public void financeApproveApply(String code, String approveResult,
-            String updater, String remark);
+            String approveNote, String updater, String remark);
 
     public void sureFk(String code, String payDatetime, String payBankcard,
             String payPdf, String updater);

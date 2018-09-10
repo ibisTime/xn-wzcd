@@ -23,12 +23,22 @@ public class XN630571Req {
     @NotBlank
     private String operator;
 
+    private String remark;
+
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getApproveNote() {
