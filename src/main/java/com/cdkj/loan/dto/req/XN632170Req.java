@@ -22,6 +22,9 @@ public class XN632170Req {
     @NotBlank
     private String operator;
 
+    // 金额来源(1财务部2预支款)
+    private String fundSource;
+
     public String getCode() {
         return code;
     }
@@ -44,6 +47,14 @@ public class XN632170Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getFundSource() {
+        return fundSource;
+    }
+
+    public void setFundSource(String fundSource) {
+        this.fundSource = fundSource;
     }
 
 }

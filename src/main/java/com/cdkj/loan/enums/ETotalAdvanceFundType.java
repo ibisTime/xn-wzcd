@@ -1,7 +1,7 @@
 package com.cdkj.loan.enums;
 
 /**
- * 垫资汇总类型(1第一次打款2发票不匹配补打款)
+ * 垫资汇总类型
  * @author: jiafr 
  * @since: 2018年6月17日 下午9:40:36 
  * @history:

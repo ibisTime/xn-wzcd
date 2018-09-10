@@ -2280,6 +2280,7 @@
 		,zf_sk_receipt_datetime = #{zfSkReceiptDatetime}
 		,zf_fk_bill_pdf = #{zfFkBillPdf}
 		,zf_sk_amount = #{zfSkAmount}
+		,zf_reason = #{zfReason}
 		,back_advance_fund_node_code = #{backAdvanceFundNodeCode}
 		WHERE code = #{code}
 	</update>
