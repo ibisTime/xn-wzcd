@@ -188,7 +188,9 @@ public class OverdueMenuAOImpl implements IOverdueMenuAO {
         List<RepayPlan> list = repayPlanBO.queryRepayPlanList(condition);
         RepayPlan preRepayPlan = list.get(0);
         preRepayPlan.setOverdueAmount(preOverdueAmount);
-        preRepayPlan.setCurNodeCode(ERepayPlanNode.OVERDUE.getCode());
+        if (preOverdueAmount != 0) {
+            preRepayPlan.setCurNodeCode(ERepayPlanNode.OVERDUE.getCode());
+        }
         repayPlanBO.refreshRepayPlanOverdue(preRepayPlan);// 更新上一期还款计划逾期金额
         overDueRepayPlan.setOverdueAmount(overdueAmount);
         repayPlanBO.refreshRepayPlanOverdue(overDueRepayPlan);// 更新当月期的还款计划逾期金额
