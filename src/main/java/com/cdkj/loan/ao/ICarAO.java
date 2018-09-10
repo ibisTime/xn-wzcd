@@ -11,7 +11,7 @@ public interface ICarAO {
     String DEFAULT_ORDER_COLUMN = "code";
 
     // 新增品牌
-    public String addCar(XN630420Req req);
+    public void addCar(XN630420Req req);
 
     // 修改品牌
     public void editCar(XN630422Req req);

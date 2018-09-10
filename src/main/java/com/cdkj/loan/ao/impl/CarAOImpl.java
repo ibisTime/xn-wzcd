@@ -11,6 +11,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
 import com.cdkj.loan.aliyun.util.HttpUtils;
@@ -40,7 +41,8 @@ public class CarAOImpl implements ICarAO {
     private ISYSUserBO sysUserBO;
 
     @Override
-    public String addCar(XN630420Req req) {
+    @Transactional
+    public void addCar(XN630420Req req) {
         Car car = new Car();
 
         car.setName(req.getName());
@@ -62,14 +64,39 @@ public class CarAOImpl implements ICarAO {
         car.setUpdateDatetime(new Date());
 
         car.setRemark(req.getRemark());
-        return carBO.saveCar(car);
+        carBO.saveCar(car);
+
+        // ArrayList<JSONArray> json = generateCar();
+        // for (JSONArray jsonArray : json) {
+        // for (Object obj : jsonArray) {
+        // JSONObject jo = (JSONObject) obj;
+        // String name = jo.getString("name");
+        // String parentid = jo.getString("parentid");
+        // String price = jo.getString("price");
+        // String logo = jo.getString("logo");
+        //
+        // Car car = new Car();
+        // car.setName(name);
+        // car.setSeriesCode(parentid);
+        // if (StringUtils.isNotBlank(price)) {
+        // String[] split = price.split("万");
+        // car.setOriginalPrice(
+        // (long) (Double.parseDouble(split[0]) * 10000));
+        // }
+        // car.setAdvPic(logo);
+        // car.setStatus(EBrandStatus.TO_UP.getCode());
+        // car.setUpdater("USYS201800000000001");
+        // car.setUpdateDatetime(new Date());
+        // carBO.saveCar(car);
+        // }
+        // }
     }
 
-    private ArrayList<JSONArray> generateSeries() {
+    private ArrayList<JSONArray> generateCar() {
         ArrayList<JSONArray> list = new ArrayList<JSONArray>();
         JSONArray json = null;
         String host = "https://jisucxdq.market.alicloudapi.com";
-        String path = "/car/carlist";
+        String path = "/car/detail";
         String method = "GET";
         String appcode = "1bd9832a74284772a7549ff0cc51043e";
         Map<String, String> headers = new HashMap<String, String>();
@@ -77,23 +104,22 @@ public class CarAOImpl implements ICarAO {
         // 83359fd73fe94948385f570e3c139105
         headers.put("Authorization", "APPCODE " + appcode);
         Map<String, String> querys = new HashMap<String, String>();
-        ArrayList<String> arrayList = new ArrayList<String>();
         Series condition = new Series();
         List<Series> querySeries = seriesBO.querySeries(condition);
         for (Series series : querySeries) {
-            arrayList.add(series.getRemark());
-        }
-        for (String seriesCode : arrayList) {
-            querys.put("parentid", seriesCode);
+            querys.put("carid", series.getSlogan());
             try {
                 HttpResponse response = HttpUtils.doGet(host, path, method,
                     headers, querys);
                 HttpEntity entity = response.getEntity();
                 String string = EntityUtils.toString(entity);// 获取response的body
-                // System.out.println("1------------->" + string);
+                System.out.println("string------------->" + string + "||||||");
+                String substring = string.substring(34, string.length() - 1);
+                System.out
+                    .println("substring----------->" + substring + "|||||");
                 json = (JSONArray) JSONArray
-                    .parse(string.substring(34, string.length() - 1));
-                // System.out.println("2------------->" + json);
+                    .parse(substring.substring(34, substring.length() - 1));
+                System.out.println("json------------->" + json + "||||||");
                 list.add(json);
             } catch (Exception e) {
                 e.printStackTrace();

@@ -1,24 +1,25 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
 
 public class XN630410Req {
 
-    // @NotBlank(message = "品牌编号不能为空")
+    @NotBlank(message = "品牌编号不能为空")
     private String brandCode;// 品牌编号
 
-    // @NotBlank(message = "名称不能为空")
+    @NotBlank(message = "名称不能为空")
     private String name; // 名称
 
-    // @NotBlank(message = "广告语不能为空")
+    @NotBlank(message = "广告语不能为空")
     private String slogan;// 广告语
 
-    // @NotBlank(message = "广告图不能为空")
+    @NotBlank(message = "广告图不能为空")
     private String advPic;// 广告图
 
-    // @NotBlank(message = "价格区间不能为空")
+    @NotBlank(message = "价格区间不能为空")
     private String price;// 价格区间
 
-    // @NotBlank(message = "最新修改人不能为空")
+    @NotBlank(message = "最新修改人不能为空")
     private String updater;// 最新修改人
 
     private String remark;// 备注
