@@ -34,6 +34,10 @@ public class XN632185Req extends APageReq {
     // 申请日期止
     private String applyDatetimeEnd;
 
+    // 当前登录人的公司编号
+    @NotBlank
+    private String currentUserCompanyCode;
+
     public String getRoleCode() {
         return roleCode;
     }
@@ -88,6 +92,14 @@ public class XN632185Req extends APageReq {
 
     public void setLoanBankCode(String loanBankCode) {
         this.loanBankCode = loanBankCode;
+    }
+
+    public String getCurrentUserCompanyCode() {
+        return currentUserCompanyCode;
+    }
+
+    public void setCurrentUserCompanyCode(String currentUserCompanyCode) {
+        this.currentUserCompanyCode = currentUserCompanyCode;
     }
 
 }

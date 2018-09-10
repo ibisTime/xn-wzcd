@@ -988,6 +988,8 @@ public class BudgetOrder extends ABaseDO {
 
     private List<String> makeCardStatusList;
 
+    private String currentUserCompanyCode;// 当前登录人公司编号
+
     /*-------辅助字段-------*/
 
     public Long getReplaceRealRepayAmount() {
@@ -1979,8 +1981,7 @@ public class BudgetOrder extends ABaseDO {
         return guarantor1BirthAddressCity;
     }
 
-    public void setGuarantor1BirthAddressCity(
-            String guarantor1BirthAddressCity) {
+    public void setGuarantor1BirthAddressCity(String guarantor1BirthAddressCity) {
         this.guarantor1BirthAddressCity = guarantor1BirthAddressCity;
     }
 
@@ -1988,8 +1989,7 @@ public class BudgetOrder extends ABaseDO {
         return guarantor1BirthAddressArea;
     }
 
-    public void setGuarantor1BirthAddressArea(
-            String guarantor1BirthAddressArea) {
+    public void setGuarantor1BirthAddressArea(String guarantor1BirthAddressArea) {
         this.guarantor1BirthAddressArea = guarantor1BirthAddressArea;
     }
 
@@ -2006,8 +2006,7 @@ public class BudgetOrder extends ABaseDO {
         return guarantor2BirthAddressCity;
     }
 
-    public void setGuarantor2BirthAddressCity(
-            String guarantor2BirthAddressCity) {
+    public void setGuarantor2BirthAddressCity(String guarantor2BirthAddressCity) {
         this.guarantor2BirthAddressCity = guarantor2BirthAddressCity;
     }
 
@@ -2015,8 +2014,7 @@ public class BudgetOrder extends ABaseDO {
         return guarantor2BirthAddressArea;
     }
 
-    public void setGuarantor2BirthAddressArea(
-            String guarantor2BirthAddressArea) {
+    public void setGuarantor2BirthAddressArea(String guarantor2BirthAddressArea) {
         this.guarantor2BirthAddressArea = guarantor2BirthAddressArea;
     }
 
@@ -3716,6 +3714,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setMakeCardStatusList(List<String> makeCardStatusList) {
         this.makeCardStatusList = makeCardStatusList;
+    }
+
+    public String getCurrentUserCompanyCode() {
+        return currentUserCompanyCode;
+    }
+
+    public void setCurrentUserCompanyCode(String currentUserCompanyCode) {
+        this.currentUserCompanyCode = currentUserCompanyCode;
     }
 
 }

@@ -1608,6 +1608,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     public Paginable<BudgetOrder> queryBudgetOrderPageByRoleCode(int start,
             int limit, BudgetOrder condition) {
+        Department department = departmentBO
+            .getDepartment(condition.getCurrentUserCompanyCode());
+        if (department.getParentCode().equals("0")) {// 总公司
+            condition.setCurrentUserCompanyCode(null);
+        } else {// 分公司
+            condition.setCompanyCode(null);
+        }
+
         Paginable<BudgetOrder> page = budgetOrderBO
             .getPaginableByRoleCode(start, limit, condition);
         List<BudgetOrder> list = page.getList();

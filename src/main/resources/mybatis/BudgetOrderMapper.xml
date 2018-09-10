@@ -447,6 +447,9 @@
 			<if test="isEnd != null and isEnd != '' ">
 				AND t.is_end = #{isEnd}
 			</if>
+			<if test="currentUserCompanyCode != null and currentUserCompanyCode != '' ">
+				AND t.company_code = #{CurrentUserCompanyCode}
+			</if>
 		</trim>
 	</sql>
 	<select id="select_budgetOrder" parameterType="budgetOrder" resultMap="budgetOrder_DB_Result">

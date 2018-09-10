@@ -13,9 +13,6 @@ import com.cdkj.loan.dao.base.ABaseDO;
  */
 public class Credit extends ABaseDO {
 
-    /** 
-     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
-     */
     private static final long serialVersionUID = 1L;
 
     // 编号
@@ -90,6 +87,9 @@ public class Credit extends ABaseDO {
 
     // 原编号
     private String preCode;
+
+    // 当前登录人的公司编号
+    private String currentUserCompanyCode;
 
     public String getPreCode() {
         return preCode;
@@ -282,6 +282,14 @@ public class Credit extends ABaseDO {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getCurrentUserCompanyCode() {
+        return currentUserCompanyCode;
+    }
+
+    public void setCurrentUserCompanyCode(String currentUserCompanyCode) {
+        this.currentUserCompanyCode = currentUserCompanyCode;
     }
 
 }

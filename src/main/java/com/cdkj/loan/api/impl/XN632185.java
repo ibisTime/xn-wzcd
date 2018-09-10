@@ -39,6 +39,8 @@ public class XN632185 extends AProcessor {
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
         condition.setApplyDatetimeEnd(DateUtil.strToDate(
             req.getApplyDatetimeEnd(), DateUtil.FRONT_DATE_FORMAT_STRING));
+        condition.setCurrentUserCompanyCode(req.getCurrentUserCompanyCode());
+
         String column = req.getOrderColumn();
         if (StringUtils.isBlank(column)) {
             column = IAdvanceFundAO.DEFAULT_ORDER_COLUMN;

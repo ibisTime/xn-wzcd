@@ -41,6 +41,10 @@ public class XN632148Req extends APageReq {
     // 入档状态List
     private List<String> enterFileStatusList;
 
+    // 当前登录人的公司编号
+    @NotBlank
+    private String currentUserCompanyCode;
+
     public List<String> getEnterFileStatusList() {
         return enterFileStatusList;
     }
@@ -151,6 +155,14 @@ public class XN632148Req extends APageReq {
 
     public void setRoleCode(String roleCode) {
         this.roleCode = roleCode;
+    }
+
+    public String getCurrentUserCompanyCode() {
+        return currentUserCompanyCode;
+    }
+
+    public void setCurrentUserCompanyCode(String currentUserCompanyCode) {
+        this.currentUserCompanyCode = currentUserCompanyCode;
     }
 
 }

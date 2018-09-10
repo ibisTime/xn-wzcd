@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdkj.loan.dao.ICreditDAO">
-	<resultMap id="credit_DB_Result" type="credit">
-	
+	<resultMap id="credit_DB_Result" type="credit">	
 		<result column="code" property="code" />
 		<result column="budget_code" property="budgetCode" />
 		<result column="company_code" property="companyCode" />
@@ -15,9 +14,7 @@
 		<result column="xsz_reverse" property="xszReverse" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="accessory" property="accessory" />
-		<result column="apply_datetime" property="applyDatetime" />
-
-		
+		<result column="apply_datetime" property="applyDatetime" />		
 	</resultMap>
 	
 	<sql id="where_condition">
@@ -30,6 +27,9 @@
 			</if>
 			<if test="companyCode != null and companyCode != '' ">
 				AND t.company_code = #{companyCode}
+			</if>
+			<if test="currentUserCompanyCode != null and currentUserCompanyCode != '' ">
+				AND t.company_code = #{currentUserCompanyCode}
 			</if>
 			<if test="saleUserId != null and saleUserId != '' ">
 				AND t.sale_user_id = #{saleUserId}
