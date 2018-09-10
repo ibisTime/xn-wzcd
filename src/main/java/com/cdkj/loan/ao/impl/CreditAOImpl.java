@@ -140,6 +140,10 @@ public class CreditAOImpl implements ICreditAO {
 
         // 新增征信人员
         List<XN632110ReqChild> childList = req.getCreditUserList();
+        if (CollectionUtils.isEmpty(childList)) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "征信人列表不能为空！");
+        }
         int applyuser = 0;
         for (XN632110ReqChild child : childList) {
             CreditUser creditUser = new CreditUser();
