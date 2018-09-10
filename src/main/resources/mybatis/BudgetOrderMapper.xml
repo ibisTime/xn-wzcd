@@ -448,7 +448,7 @@
 				AND t.is_end = #{isEnd}
 			</if>
 			<if test="currentUserCompanyCode != null and currentUserCompanyCode != '' ">
-				AND t.company_code = #{CurrentUserCompanyCode}
+				AND t.company_code = #{currentUserCompanyCode}
 			</if>
 		</trim>
 	</sql>
