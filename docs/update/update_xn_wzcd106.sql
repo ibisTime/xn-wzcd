@@ -47,4 +47,9 @@ ADD COLUMN `force_insurance_pdf` TINYTEXT NULL COMMENT '交强险图片' AFTER `
 ALTER TABLE `tdh_overdue_menu` 
 ADD COLUMN `not_mate_result` varchar(4) NULL COMMENT '不匹配原因（0信息不匹配，1一卡多贷）' AFTER `status`;
 
+INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`) VALUES ('0', 'fund_source', '金额来源');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`) VALUES ('1', 'fund_source', '1', '财务部');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`) VALUES ('1', 'fund_source', '2', '预支款');
+
+
 

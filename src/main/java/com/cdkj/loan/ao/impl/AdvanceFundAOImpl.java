@@ -50,6 +50,7 @@ import com.cdkj.loan.enums.EBudgetOrderNode;
 import com.cdkj.loan.enums.ECity;
 import com.cdkj.loan.enums.EDepartmentType;
 import com.cdkj.loan.enums.EFbhStatus;
+import com.cdkj.loan.enums.EFundSource;
 import com.cdkj.loan.enums.EIsAdvanceFund;
 import com.cdkj.loan.enums.ELogisticsType;
 import com.cdkj.loan.exception.BizException;
@@ -114,10 +115,17 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         data.setUpdateDatetime(new Date());
         data.setApplyUser(req.getOperator());
         data.setApplyDatetime(new Date());
-        data.setIsAdvanceFund(req.getIsAdvanceFund());
+        String isAdvanceFund = req.getIsAdvanceFund();
+        data.setIsAdvanceFund(isAdvanceFund);
         String preNodeCode = data.getCurNodeCode();
-        data.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
-            .getNextNode());
+        if (EIsAdvanceFund.YES.getCode().equals(isAdvanceFund)
+                && EFundSource.ADVANCE_FUND.getCode().equals(
+                    req.getFundSource())) {// 垫资并且金额来源是预支款
+            data.setCurNodeCode(EAdvanceFundNode.BRANCH_CAR_DEALER.getCode());
+        } else {
+            data.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preNodeCode).getNextNode());
+        }
         EBizLogType refType = null;
         if (EAdvanceType.PARENT_BIZ.getCode().equals(data.getType())) {
             refType = EBizLogType.ADVANCE_FUND_PARENT;
