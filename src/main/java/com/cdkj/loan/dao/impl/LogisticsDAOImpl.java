@@ -87,4 +87,10 @@ public class LogisticsDAOImpl extends AMybatisTemplate
         super.update(NAMESPACE.concat("update_logistics"), data);
     }
 
+    @Override
+    public Logistics selectLogisticsByCommitBank(Logistics condition) {
+        return super.select(NAMESPACE.concat("select_logisticsByCommitBank"),
+            condition, Logistics.class);
+    }
+
 }

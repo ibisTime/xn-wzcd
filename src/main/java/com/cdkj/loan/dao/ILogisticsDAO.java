@@ -31,4 +31,7 @@ public interface ILogisticsDAO extends IBaseDAO<Logistics> {
     // 修改收发节点
     public void updateLogistics(Logistics condition);
 
+    // 确认提交银行时的最近的资料传递
+    public Logistics selectLogisticsByCommitBank(Logistics condition);
+
 }

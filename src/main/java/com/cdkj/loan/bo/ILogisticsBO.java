@@ -44,4 +44,7 @@ public interface ILogisticsBO extends IPaginableBO<Logistics> {
 
     // 修改收发节点
     public void updateLogistics(Logistics logistics);
+
+    // 确认提交银行时的最近的资料传递
+    public Logistics getLogisticsByCommitBank(Logistics domain);
 }

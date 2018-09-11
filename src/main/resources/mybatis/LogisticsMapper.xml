@@ -95,6 +95,31 @@
 			</if>
 		</trim>
 	</select>
+	<select id="select_logisticsByCommitBank" parameterType="logistics" resultMap="logistics_DB_result">
+		SELECT
+		t.code
+		,t.type
+		,t.biz_code
+		,t.user_id
+		,t.from_node_code
+		,t.to_node_code
+		
+		,t.send_type
+		,t.logistics_company
+		,t.logistics_code
+		
+		,t.send_datetime
+		,t.send_note
+		,t.receipt_datetime
+		,t.is_bank_point_part_supt
+		,t.supplement_reason
+		,t.supplement_note
+		,t.status
+		,t.remark
+		FROM
+		tdq_logistics t where t.send_datetime in (select max(send_datetime) FROM tdq_logistics t
+		<include refid="where_condition" />)
+	</select>
 
 	<select id="select_logistics_count" parameterType="logistics" resultType="java.lang.Long">
 		SELECT count(1) FROM tdq_logistics t 
