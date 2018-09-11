@@ -768,9 +768,6 @@ public class BudgetOrder extends ABaseDO {
     // 发保合备注
     private String fbhRemark;
 
-    // 发保合预警天数
-    private Integer fbhWarnDay;
-
     // 发保合状态（已录入/待录入）
     private String fbhStatus;
 
@@ -989,6 +986,8 @@ public class BudgetOrder extends ABaseDO {
     private List<String> makeCardStatusList;
 
     private String currentUserCompanyCode;// 当前登录人公司编号
+
+    private Integer fbhWarnDay;// 发保合预警天数
 
     /*-------辅助字段-------*/
 
