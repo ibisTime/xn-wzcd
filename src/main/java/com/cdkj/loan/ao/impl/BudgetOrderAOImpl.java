@@ -1525,9 +1525,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             sysBizLog.setStatus("0");
             List<SYSBizLog> sysBizLogList = sysBizLogBO
                 .querySYSBizLogList(sysBizLog);
-            SYSBizLog bizLog = sysBizLogList.get(0);
-            budgetOrder.setFbhWarnDay(DateUtil.daysBetweenDate(
-                bizLog.getStartDatetime(), new Date()));
+            if (CollectionUtils.isNotEmpty(sysBizLogList)) {
+                SYSBizLog bizLog = sysBizLogList.get(0);
+                budgetOrder.setFbhWarnDay(DateUtil.daysBetweenDate(
+                    bizLog.getStartDatetime(), new Date()));
+            }
         }
 
         // 获取返点列表
