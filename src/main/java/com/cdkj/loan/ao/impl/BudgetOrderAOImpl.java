@@ -1380,220 +1380,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         return budgetOrderList;
     }
 
-    private void initBudget(BudgetOrder budgetOrder) {
-        String file = budgetOrder.getFileList();
-        if (StringUtils.isNotBlank(file)) {
-            String[] fileArray = file.split(",");
-            List<String> fileList = new ArrayList<String>();
-            for (String data : fileArray) {
-                fileList.add(data);
-            }
-            budgetOrder.setFileListArray(fileList);
-        }
-
-        if (StringUtils.isNotBlank(budgetOrder.getBankReceiptCode())) {
-            CollectBankcard receiptBank = collectBankcardBO
-                .getCollectBankcard(budgetOrder.getBankReceiptCode());
-            if (null != receiptBank) {
-                budgetOrder.setBankReceiptName(receiptBank.getBankName());
-            }
-        }
-
-        if (StringUtils.isNotBlank(budgetOrder.getCarDealerCode())) {
-            CarDealer carDealer = carDealerAO.getCarDealer(budgetOrder
-                .getCarDealerCode());
-            budgetOrder.setCarDealer(carDealer);
-            budgetOrder.setCarDealerName(carDealer.getFullName());
-            budgetOrder.setCarDealerPhone(carDealer.getContactPhone());
-        }
-
-        if (StringUtils.isNotBlank(budgetOrder.getInsuranceCompanyCode())) {
-            InsuranceCompany insuranceCompany = insuranceCompanyBO
-                .getInsuranceCompany(budgetOrder.getInsuranceCompanyCode());
-            budgetOrder.setInsuranceCompanyName(insuranceCompany.getName());
-        }
-
-        if (StringUtils.isNotBlank(budgetOrder.getLoanBankCode())) {
-            Bank loanBank = bankBO.getBankBySubbranch(budgetOrder
-                .getLoanBankCode());
-            budgetOrder.setLoanBankName(loanBank.getBankName());
-        }
-
-        if (StringUtils.isNotBlank(budgetOrder.getLoanBankCode())) {
-            BankSubbranch subbranch = bankSubbranchBO
-                .getBankSubbranch(budgetOrder.getLoanBankCode());
-
-            budgetOrder.setBankSubbranch(subbranch);
-        }
-
-        if (StringUtils.isNotBlank(budgetOrder.getOperateDepartment())) {
-            Department department = departmentBO.getDepartment(budgetOrder
-                .getOperateDepartment());
-
-            budgetOrder.setOperateDepartmentName(department.getName());
-        }
-
-        // 首付金额(现发票价减贷款金额)
-        if (budgetOrder.getCurrentInvoicePrice() != null) {
-            budgetOrder.setFirstPayment(budgetOrder.getCurrentInvoicePrice()
-                    - budgetOrder.getLoanAmount());
-        }
-
-        // 业务公司名称
-        if (StringUtils.isNotBlank(budgetOrder.getCompanyCode())) {
-            Department company = departmentBO.getDepartment(budgetOrder
-                .getCompanyCode());
-            budgetOrder.setCompanyName(company.getName());
-        }
-
-        if (StringUtils.isNotBlank(budgetOrder.getOperator())) {
-            SYSUser user = sysUserBO.getUser(budgetOrder.getOperator());
-            budgetOrder.setOperatorName(user.getRealName());
-        }
-
-        if (StringUtils.isNotBlank(budgetOrder.getSaleUserId())) {
-            SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
-            budgetOrder.setSaleUserName(saleUser.getRealName());
-        }
-        List<BudgetOrderGps> budgetOrderGpsList = budgetOrderGpsBO
-            .queryBudgetOrderGpsList(budgetOrder.getCode());
-        if (CollectionUtils.isNotEmpty(budgetOrderGpsList)) {
-            budgetOrder.setBudgetOrderGpsList(budgetOrderGpsList);
-        }
-
-        if (StringUtils.isNotBlank(budgetOrder.getCreditCode())) {
-            Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
-            budgetOrder.setCredit(credit);
-        }
-
-        if (StringUtils.isNotBlank(budgetOrder.getGuarantor1IdNo())) {
-            if (budgetOrder.getGuarantor1IdNo().length() != 18) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "担保人1身份证号不合法！");
-            }
-            String sex = getSexByIdNo(budgetOrder.getGuarantor1IdNo());
-            budgetOrder.setGuarantor1Sex(sex);
-        }
-
-        if (StringUtils.isNotBlank(budgetOrder.getGuarantor2IdNo())) {
-            if (budgetOrder.getGuarantor1IdNo().length() != 18) {
-                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                    "担保人2身份证号不合法！");
-            }
-            String sex = getSexByIdNo(budgetOrder.getGuarantor2IdNo());
-            budgetOrder.setGuarantor2Sex(sex);
-        }
-
-        if (StringUtils.isNotBlank(budgetOrder.getRepayBizCode())) {
-            List<RepayPlan> planList = repayPlanBO
-                .queryRepayPlanListByRepayBizCode(budgetOrder.getRepayBizCode());
-            budgetOrder.setRepayPlansList(planList);
-        }
-        // 担保打印人
-        if (StringUtils.isNotBlank(budgetOrder.getGuarantPrintUser())) {
-            SYSUser user = sysUserBO.getUser(budgetOrder.getGuarantPrintUser());
-            budgetOrder.setGuarantPrintName(user.getRealName());
-        }
-
-        // 垫资表
-        AdvanceFund advanceFund = advanceFundBO
-            .getAdvanceFundPageByBudgetOrder(budgetOrder.getCode());
-        if (advanceFund != null) {
-            budgetOrder.setAdvanceFund(advanceFund);
-            budgetOrder.setAdvanceFundDatetime(advanceFund
-                .getAdvanceFundDatetime());
-            if (budgetOrder.getAdvanceFundDatetime() != null) {
-                // 垫资天数
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(budgetOrder.getAdvanceFundDatetime());
-                long time1 = cal.getTimeInMillis();
-                cal.setTime(new Date());
-                long time2 = cal.getTimeInMillis();
-                long between_days = (time2 - time1) / (1000 * 3600 * 24);
-                int days = Integer.parseInt(String.valueOf(between_days));
-                budgetOrder.setAdvanceDays(days);
-            }
-        }
-
-        if (budgetOrder.getFbhStatus().equals(
-            EFbhStatus.PENDING_ENTRY.getCode())) {
-            SYSBizLog sysBizLog = new SYSBizLog();
-            sysBizLog.setParentOrder(budgetOrder.getCode());
-            sysBizLog.setRefType(EBizLogType.FBH.getCode());
-            sysBizLog.setRefOrder(budgetOrder.getCode());
-            sysBizLog.setDealNode(EFbhStatus.PENDING_ENTRY.getCode());
-            sysBizLog.setStatus("0");
-            List<SYSBizLog> sysBizLogList = sysBizLogBO
-                .querySYSBizLogList(sysBizLog);
-            if (CollectionUtils.isNotEmpty(sysBizLogList)) {
-                SYSBizLog bizLog = sysBizLogList.get(0);
-                budgetOrder.setFbhWarnDay(DateUtil.daysBetweenDate(
-                    bizLog.getStartDatetime(), new Date()));
-            }
-        }
-
-        // 获取返点列表
-        /*
-         * List<RepointDetail> shouldBackRepointList = repointDetailBO
-         * .queryRepointDetailList(budgetOrder.getCode(),
-         * ERepointDetailUseMoneyPurpose.SHOULD_BACK.getCode());
-         */
-        ArrayList<RepointDetail> shouldBackRepointList = new ArrayList<RepointDetail>();
-        RepointDetail mortgageRepointDetail = new RepointDetail();
-        mortgageRepointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
-            .getCode());
-        mortgageRepointDetail.setRepointAmount(budgetOrder
-            .getShouldBackAmount());
-        if (EIsAdvanceFund.YES.getCode().equals(budgetOrder.getIsAdvanceFund())) {
-            // 垫资
-            CollectBankcard condition = new CollectBankcard();
-            condition.setCompanyCode(budgetOrder.getCarDealerCode());
-            condition.setType(ECollectBankcardType.DEALER_COLLECT.getCode());
-            List<CollectBankcard> list = collectBankcardBO
-                .queryCollectBankcardByCompanyCodeAndType(condition);
-            if (CollectionUtils.isNotEmpty(list)) {
-                CollectBankcard collectBankcard = list.get(0);
-                mortgageRepointDetail.setAccountName(collectBankcard
-                    .getRealName());
-                mortgageRepointDetail.setAccountNo(collectBankcard
-                    .getBankcardNumber());
-                mortgageRepointDetail.setOpenBankName(collectBankcard
-                    .getSubbranch());
-            }
-            String carDealerName = "";
-            if (StringUtils.isNotBlank(budgetOrder.getCarDealerCode())) {
-                CarDealer carDealer = carDealerBO.getCarDealer(budgetOrder
-                    .getCarDealerCode());
-                carDealerName = carDealer.getFullName();
-            } else {
-                carDealerName = budgetOrder.getOutCarDealerName();
-            }
-            mortgageRepointDetail.setCarDealerName(carDealerName);
-        } else {
-            // 不垫资
-            mortgageRepointDetail.setCarDealerName(budgetOrder
-                .getShouldBackUserName());
-            mortgageRepointDetail.setAccountName(budgetOrder
-                .getShouldBackAccountName());
-            mortgageRepointDetail.setAccountNo(budgetOrder
-                .getShouldBackAccountNo());
-            mortgageRepointDetail.setOpenBankName(budgetOrder
-                .getShouldBackOpenBankName());
-        }
-        shouldBackRepointList.add(mortgageRepointDetail);
-        budgetOrder.setRepointDetailList1(shouldBackRepointList);
-
-        List<RepointDetail> proInRepointList = repointDetailBO
-            .queryRepointDetailList(budgetOrder.getCode(),
-                ERepointDetailUseMoneyPurpose.PROIN_REPOINT.getCode());
-        budgetOrder.setRepointDetailList2(proInRepointList);
-
-        List<RepointDetail> proOutRepointList = repointDetailBO
-            .queryRepointDetailList(budgetOrder.getCode(),
-                ERepointDetailUseMoneyPurpose.PROOUT_REPOINT.getCode());
-        budgetOrder.setRepointDetailList3(proOutRepointList);
-    }
-
     private String getSexByIdNo(String idNo) {
         /**
          * 根据身份编号获取性别
@@ -3729,5 +3515,202 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     public BudgetOrder getBudgetOrderByRepayBizCode(String code) {
         return budgetOrderBO.getBudgetOrderByRepayBizCode(code);
+    }
+
+    private void initBudget(BudgetOrder budgetOrder) {
+        String file = budgetOrder.getFileList();
+        if (StringUtils.isNotBlank(file)) {
+            String[] fileArray = file.split(",");
+            List<String> fileList = new ArrayList<String>();
+            for (String data : fileArray) {
+                fileList.add(data);
+            }
+            budgetOrder.setFileListArray(fileList);
+        }
+
+        if (StringUtils.isNotBlank(budgetOrder.getBankReceiptCode())) {
+            CollectBankcard receiptBank = collectBankcardBO
+                .getCollectBankcard(budgetOrder.getBankReceiptCode());
+            if (null != receiptBank) {
+                budgetOrder.setBankReceiptName(receiptBank.getBankName());
+            }
+        }
+
+        if (StringUtils.isNotBlank(budgetOrder.getCarDealerCode())) {
+            CarDealer carDealer = carDealerAO.getCarDealer(budgetOrder
+                .getCarDealerCode());
+            budgetOrder.setCarDealer(carDealer);
+            budgetOrder.setCarDealerName(carDealer.getFullName());
+            budgetOrder.setCarDealerPhone(carDealer.getContactPhone());
+        }
+
+        if (StringUtils.isNotBlank(budgetOrder.getInsuranceCompanyCode())) {
+            InsuranceCompany insuranceCompany = insuranceCompanyBO
+                .getInsuranceCompany(budgetOrder.getInsuranceCompanyCode());
+            budgetOrder.setInsuranceCompanyName(insuranceCompany.getName());
+        }
+
+        if (StringUtils.isNotBlank(budgetOrder.getLoanBankCode())) {
+            Bank loanBank = bankBO.getBankBySubbranch(budgetOrder
+                .getLoanBankCode());
+            budgetOrder.setLoanBankName(loanBank.getBankName());
+
+            BankSubbranch subbranch = bankSubbranchBO
+                .getBankSubbranch(budgetOrder.getLoanBankCode());
+            budgetOrder.setBankSubbranch(subbranch);
+        }
+
+        if (StringUtils.isNotBlank(budgetOrder.getOperateDepartment())) {
+            Department department = departmentBO.getDepartment(budgetOrder
+                .getOperateDepartment());
+            budgetOrder.setOperateDepartmentName(department.getName());
+        }
+
+        // 首付金额(现发票价减贷款金额)
+        if (budgetOrder.getCurrentInvoicePrice() != null) {
+            budgetOrder.setFirstPayment(budgetOrder.getCurrentInvoicePrice()
+                    - budgetOrder.getLoanAmount());
+        }
+
+        // 业务公司名称
+        if (StringUtils.isNotBlank(budgetOrder.getCompanyCode())) {
+            Department company = departmentBO.getDepartment(budgetOrder
+                .getCompanyCode());
+            budgetOrder.setCompanyName(company.getName());
+        }
+
+        if (StringUtils.isNotBlank(budgetOrder.getOperator())) {
+            SYSUser user = sysUserBO.getUser(budgetOrder.getOperator());
+            budgetOrder.setOperatorName(user.getRealName());
+        }
+
+        if (StringUtils.isNotBlank(budgetOrder.getSaleUserId())) {
+            SYSUser saleUser = sysUserBO.getUser(budgetOrder.getSaleUserId());
+            budgetOrder.setSaleUserName(saleUser.getRealName());
+        }
+        List<BudgetOrderGps> budgetOrderGpsList = budgetOrderGpsBO
+            .queryBudgetOrderGpsList(budgetOrder.getCode());
+        if (CollectionUtils.isNotEmpty(budgetOrderGpsList)) {
+            budgetOrder.setBudgetOrderGpsList(budgetOrderGpsList);
+        }
+
+        if (StringUtils.isNotBlank(budgetOrder.getCreditCode())) {
+            Credit credit = creditBO.getCredit(budgetOrder.getCreditCode());
+            budgetOrder.setCredit(credit);
+        }
+
+        if (StringUtils.isNotBlank(budgetOrder.getGuarantor1IdNo())) {
+            if (budgetOrder.getGuarantor1IdNo().length() != 18) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "担保人1身份证号不合法！");
+            }
+            String sex = getSexByIdNo(budgetOrder.getGuarantor1IdNo());
+            budgetOrder.setGuarantor1Sex(sex);
+        }
+
+        if (StringUtils.isNotBlank(budgetOrder.getGuarantor2IdNo())) {
+            if (budgetOrder.getGuarantor1IdNo().length() != 18) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "担保人2身份证号不合法！");
+            }
+            String sex = getSexByIdNo(budgetOrder.getGuarantor2IdNo());
+            budgetOrder.setGuarantor2Sex(sex);
+        }
+
+        if (StringUtils.isNotBlank(budgetOrder.getRepayBizCode())) {
+            List<RepayPlan> planList = repayPlanBO
+                .queryRepayPlanListByRepayBizCode(budgetOrder.getRepayBizCode());
+            budgetOrder.setRepayPlansList(planList);
+        }
+        // 担保打印人
+        if (StringUtils.isNotBlank(budgetOrder.getGuarantPrintUser())) {
+            SYSUser user = sysUserBO.getUser(budgetOrder.getGuarantPrintUser());
+            budgetOrder.setGuarantPrintName(user.getRealName());
+        }
+
+        // 垫资表
+        AdvanceFund advanceFund = advanceFundBO
+            .getAdvanceFundPageByBudgetOrder(budgetOrder.getCode());
+        if (advanceFund != null) {
+            budgetOrder.setAdvanceFund(advanceFund);
+            if (null != advanceFund.getAdvanceFundDatetime()) {
+                budgetOrder.setAdvanceFundDatetime(advanceFund
+                    .getAdvanceFundDatetime());
+                budgetOrder.setAdvanceDays(DateUtil.daysBetween(
+                    budgetOrder.getAdvanceFundDatetime(), new Date()));// 垫资天数
+            }
+        }
+
+        if (budgetOrder.getFbhStatus().equals(
+            EFbhStatus.PENDING_ENTRY.getCode())) {
+            SYSBizLog sysBizLog = new SYSBizLog();
+            sysBizLog.setParentOrder(budgetOrder.getCode());
+            sysBizLog.setRefType(EBizLogType.FBH.getCode());
+            sysBizLog.setRefOrder(budgetOrder.getCode());
+            sysBizLog.setDealNode(EFbhStatus.PENDING_ENTRY.getCode());
+            sysBizLog.setStatus(EBoolean.NO.getCode());
+            List<SYSBizLog> sysBizLogList = sysBizLogBO
+                .querySYSBizLogList(sysBizLog);
+            if (CollectionUtils.isNotEmpty(sysBizLogList)) {
+                SYSBizLog bizLog = sysBizLogList.get(0);
+                budgetOrder.setFbhWarnDay(DateUtil.daysBetweenDate(
+                    bizLog.getStartDatetime(), new Date()));
+            }
+        }
+
+        ArrayList<RepointDetail> shouldBackRepointList = new ArrayList<RepointDetail>();
+        RepointDetail mortgageRepointDetail = new RepointDetail();
+        mortgageRepointDetail.setUseMoneyPurpose(EUseMoneyPurpose.MORTGAGE
+            .getCode());
+        mortgageRepointDetail.setRepointAmount(budgetOrder
+            .getShouldBackAmount());
+        if (EIsAdvanceFund.YES.getCode().equals(budgetOrder.getIsAdvanceFund())) {
+            // 垫资
+            CollectBankcard condition = new CollectBankcard();
+            condition.setCompanyCode(budgetOrder.getCarDealerCode());
+            condition.setType(ECollectBankcardType.DEALER_COLLECT.getCode());
+            List<CollectBankcard> list = collectBankcardBO
+                .queryCollectBankcardByCompanyCodeAndType(condition);
+            if (CollectionUtils.isNotEmpty(list)) {
+                CollectBankcard collectBankcard = list.get(0);
+                mortgageRepointDetail.setAccountName(collectBankcard
+                    .getRealName());
+                mortgageRepointDetail.setAccountNo(collectBankcard
+                    .getBankcardNumber());
+                mortgageRepointDetail.setOpenBankName(collectBankcard
+                    .getSubbranch());
+            }
+            String carDealerName = "";
+            if (StringUtils.isNotBlank(budgetOrder.getCarDealerCode())) {
+                CarDealer carDealer = carDealerBO.getCarDealer(budgetOrder
+                    .getCarDealerCode());
+                carDealerName = carDealer.getFullName();
+            } else {
+                carDealerName = budgetOrder.getOutCarDealerName();
+            }
+            mortgageRepointDetail.setCarDealerName(carDealerName);
+        } else {
+            // 不垫资
+            mortgageRepointDetail.setCarDealerName(budgetOrder
+                .getShouldBackUserName());
+            mortgageRepointDetail.setAccountName(budgetOrder
+                .getShouldBackAccountName());
+            mortgageRepointDetail.setAccountNo(budgetOrder
+                .getShouldBackAccountNo());
+            mortgageRepointDetail.setOpenBankName(budgetOrder
+                .getShouldBackOpenBankName());
+        }
+        shouldBackRepointList.add(mortgageRepointDetail);
+        budgetOrder.setRepointDetailList1(shouldBackRepointList);
+
+        List<RepointDetail> proInRepointList = repointDetailBO
+            .queryRepointDetailList(budgetOrder.getCode(),
+                ERepointDetailUseMoneyPurpose.PROIN_REPOINT.getCode());
+        budgetOrder.setRepointDetailList2(proInRepointList);
+
+        List<RepointDetail> proOutRepointList = repointDetailBO
+            .queryRepointDetailList(budgetOrder.getCode(),
+                ERepointDetailUseMoneyPurpose.PROOUT_REPOINT.getCode());
+        budgetOrder.setRepointDetailList3(proOutRepointList);
     }
 }
