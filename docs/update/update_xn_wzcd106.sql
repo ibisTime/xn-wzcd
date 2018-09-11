@@ -56,4 +56,6 @@ INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'approve_note', '2', '审核不通过', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'approve_note', '99', '其他', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
 
+ALTER TABLE `tdq_budget_order` 
+DROP COLUMN `fbh_warn_day`;
 

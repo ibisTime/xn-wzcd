@@ -289,7 +289,6 @@
 		
 		<result column="pd_pdf" property="pdPdf" />
 		<result column="fbh_remark" property="fbhRemark" />
-		<result column="fbh_warn_day" property="fbhWarnDay" />
 		<result column="fbh_status" property="fbhStatus" />
 		<result column="should_back_amount" property="shouldBackAmount" />
 		
@@ -707,7 +706,6 @@
 		,t.motor_reg_certification
 		,t.pd_pdf
 		,t.fbh_remark
-		,t.fbh_warn_day
 		,t.fbh_status
 		,t.should_back_amount
 		,t.should_back_status
@@ -1004,7 +1002,6 @@
 		,t.motor_reg_certification
 		,t.pd_pdf
 		,t.fbh_remark
-		,t.fbh_warn_day
 		,t.fbh_status
 		,t.should_back_amount
 		,t.should_back_status
@@ -1292,7 +1289,6 @@
 		,t.motor_reg_certification
 		,t.pd_pdf
 		,t.fbh_remark
-		,t.fbh_warn_day
 		,t.fbh_status
 		,t.should_back_amount
 		,t.should_back_status
@@ -2110,7 +2106,6 @@
 		SET
 		cur_node_code = #{curNodeCode}
 		,fbh_status = #{fbhStatus}
-		,fbh_warn_day = #{fbhWarnDay}
 		WHERE code = #{code}
 	</update>
 

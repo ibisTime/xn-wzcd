@@ -397,8 +397,9 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             EBizLogType.BANK_LOAN_COMMIT, budgetOrder.getCode(), curNodeCode);
         // 垫资流程结束 预算单的发保合状态改成待录入发保合
         budgetOrder.setFbhStatus(EFbhStatus.PENDING_ENTRY.getCode());
-        budgetOrder.setFbhWarnDay(0);
         budgetOrderBO.bankLoanConfirmSubmitBank(budgetOrder);
+        sysBizLogBO.saveSYSBizLog(budgetOrder.getCode(), EBizLogType.FBH,
+            budgetOrder.getCode(), EFbhStatus.PENDING_ENTRY.getCode());
         // 垫资流程结束 预算单的银行返点状态改为待返点（垫资后可以提交银行返点）
         budgetOrder.setBankRepointStatus(EBankRepointStatus.NO.getCode());
         budgetOrderBO.bankRepoint(budgetOrder);
