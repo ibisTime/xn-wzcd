@@ -320,6 +320,16 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
     public ReplaceRepayPlan getReplaceRepayPlan(String code) {
         ReplaceRepayPlan replaceRepayPlan = replaceRepayPlanBO
             .getReplaceRepayPlan(code);
+        // 获取预算单
+        if (StringUtils.isNotBlank(replaceRepayPlan.getBizCode())) {
+            RepayPlan repayPlan = repayPlanBO
+                .getRepayPlan(replaceRepayPlan.getBizCode());
+            RepayBiz repayBiz = repayBizBO
+                .getRepayBiz(repayPlan.getRepayBizCode());
+            BudgetOrder budgetOrder = budgetOrderBO
+                .getBudgetOrder(repayBiz.getBudgetOrderCode());
+            replaceRepayPlan.setBudgetOrder(budgetOrder);
+        }
         init(replaceRepayPlan);
         return replaceRepayPlan;
     }

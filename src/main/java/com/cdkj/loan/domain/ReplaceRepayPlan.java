@@ -94,6 +94,17 @@ public class ReplaceRepayPlan extends ABaseDO {
     // 代偿申请单
     private ReplaceRepayApply replaceRepayApply;
 
+    // 预算单(oss要的)
+    private BudgetOrder budgetOrder;
+
+    public BudgetOrder getBudgetOrder() {
+        return budgetOrder;
+    }
+
+    public void setBudgetOrder(BudgetOrder budgetOrder) {
+        this.budgetOrder = budgetOrder;
+    }
+
     public ReplaceRepayApply getReplaceRepayApply() {
         return replaceRepayApply;
     }
