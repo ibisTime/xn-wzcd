@@ -16,7 +16,7 @@
 		<result column="apply_datetime" property="applyDatetime" />
 		
 		<result column="apply_note" property="applyNote" />
-		<result column="status" property="status" />
+		<result column="cur_node_code" property="curNodeCode" />
 		<result column="updater" property="updater" />
 		<result column="update_datetime" property="updateDatetime" />
 		<result column="remark" property="remark" />
@@ -38,8 +38,8 @@
 			<if test="endDatetime != null and endDatetime != '' ">
 				AND t.apply_datetime &lt;= #{endDatetime}
 			</if>
-			<if test="status != null and status != '' ">
-				AND t.status = #{status}
+			<if test="curNodeCode != null and curNodeCode != '' ">
+				AND t.cur_node_code = #{curNodeCode}
 			</if>
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
@@ -59,7 +59,7 @@
 		,t.apply_user
 		,t.apply_datetime
 		,t.apply_note
-		,t.status
+		,t.cur_node_code
 		,t.updater
 		,t.update_datetime
 		,t.remark
@@ -93,7 +93,7 @@
 		,apply_user
 		,apply_datetime
 		,apply_note
-		,status
+		,cur_node_code
 		,updater
 		,update_datetime
 		,remark
@@ -110,7 +110,7 @@
 		,#{applyUser}
 		,#{applyDatetime}
 		,#{applyNote}
-		,#{status}
+		,#{curNodeCode}
 		,#{updater}
 		,#{updateDatetime}
 		,#{remark}
@@ -120,7 +120,7 @@
 	<update id="update_financeManageApprove" parameterType="replaceRepayApply">
 		UPDATE tdh_replace_repay_apply
 		SET
-		status = #{status}
+		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		,remark = #{remark}
@@ -130,7 +130,7 @@
 	<update id="update_makeDocument" parameterType="replaceRepayApply">
 		UPDATE tdh_replace_repay_apply
 		SET
-		status = #{status}
+		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}
@@ -139,7 +139,7 @@
 	<update id="update_replaceRepayStatus" parameterType="replaceRepayApply">
 		UPDATE tdh_replace_repay_apply
 		SET
-		status = #{status}
+		cur_node_code = #{curNodeCode}
 		,updater = #{updater}
 		,update_datetime = #{updateDatetime}
 		WHERE code = #{code}

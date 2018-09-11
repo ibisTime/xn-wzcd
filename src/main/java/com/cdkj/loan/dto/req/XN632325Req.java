@@ -12,7 +12,7 @@ public class XN632325Req extends APageReq {
 
     private String code;
 
-    private String status;
+    private String curNodeCode;
 
     private String type;
 
@@ -30,12 +30,12 @@ public class XN632325Req extends APageReq {
         this.code = code;
     }
 
-    public String getStatus() {
-        return status;
+    public String getCurNodeCode() {
+        return curNodeCode;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
     }
 
     public String getType() {

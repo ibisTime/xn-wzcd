@@ -31,7 +31,7 @@ public class XN632325 extends AProcessor {
     public Object doBusiness() throws BizException {
         ReplaceRepayApply condition = new ReplaceRepayApply();
         condition.setCode(req.getCode());
-        condition.setStatus(req.getStatus());
+        condition.setCurNodeCode(req.getCurNodeCode());
         condition.setType(req.getType());
         condition.setReceiptRealName(req.getReceiptRealName());
         condition.setStartDatetime(DateUtil.strToDate(req.getStartDatetime(),

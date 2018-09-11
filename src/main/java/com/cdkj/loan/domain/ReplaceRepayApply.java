@@ -47,8 +47,8 @@ public class ReplaceRepayApply extends ABaseDO {
     // 申请说明
     private String applyNote;
 
-    // 状态
-    private String status;
+    // 节点
+    private String curNodeCode;
 
     // 更新人(第一次业务员 第二次财务审核人)
     private String updater;
@@ -193,12 +193,12 @@ public class ReplaceRepayApply extends ABaseDO {
         return applyNote;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public String getCurNodeCode() {
+        return curNodeCode;
     }
 
-    public String getStatus() {
-        return status;
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
     }
 
     public void setUpdater(String updater) {
