@@ -14,7 +14,7 @@ import com.cdkj.loan.dao.IReplaceRepayApplyDAO;
 import com.cdkj.loan.domain.ReplaceRepayApply;
 import com.cdkj.loan.enums.EBoolean;
 import com.cdkj.loan.enums.EGeneratePrefix;
-import com.cdkj.loan.enums.EReplaceRepayStatus;
+import com.cdkj.loan.enums.EReplaceRepayApplyNode;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -82,9 +82,9 @@ public class ReplaceRepayApplyBOImpl extends PaginableBOImpl<ReplaceRepayApply>
         data.setRemark(remark);
 
         if (EBoolean.YES.getCode().equals(approveResult)) {
-            data.setStatus(EReplaceRepayStatus.APPROVED_YES.getCode());
+            data.setCurNodeCode(EReplaceRepayApplyNode.MAKE_BILL.getCode());
         } else if (EBoolean.NO.getCode().equals(approveResult)) {
-            data.setStatus(EReplaceRepayStatus.APPROVED_NO.getCode());
+            data.setCurNodeCode(EReplaceRepayApplyNode.REAPPLY.getCode());
         }
         replaceRepayApplyDAO.updateFinanceManageApprove(data);
     }
@@ -95,7 +95,7 @@ public class ReplaceRepayApplyBOImpl extends PaginableBOImpl<ReplaceRepayApply>
         data.setCode(code);
         data.setUpdater(updater);
         data.setUpdateDatetime(new Date());
-        data.setStatus(EReplaceRepayStatus.MAKE_DOCUMENT.getCode());
+        data.setCurNodeCode(EReplaceRepayApplyNode.HAS_MAKE_BILL.getCode());
         replaceRepayApplyDAO.updateFinanceManageApprove(data);
     }
 

@@ -30,7 +30,7 @@ public class XN632327 extends AProcessor {
     public Object doBusiness() throws BizException {
         ReplaceRepayApply condition = new ReplaceRepayApply();
         condition.setCode(req.getCode());
-        condition.setStatus(req.getStatus());
+        condition.setCurNodeCode(req.getCurNodeCode());
         condition.setBizCode(req.getBizCode());
         condition.setType(req.getType());
         condition.setReceiptRealName(req.getReceiptRealName());

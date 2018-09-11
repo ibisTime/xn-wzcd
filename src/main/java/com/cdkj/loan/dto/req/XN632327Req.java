@@ -6,7 +6,7 @@ public class XN632327Req extends AListReq {
 
     private String code;
 
-    private String status;
+    private String curNodeCode;
 
     // 业务编号(还款业务)
     private String bizCode;
@@ -35,12 +35,12 @@ public class XN632327Req extends AListReq {
         this.bizCode = bizCode;
     }
 
-    public String getStatus() {
-        return status;
+    public String getCurNodeCode() {
+        return curNodeCode;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
     }
 
     public String getType() {

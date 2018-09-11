@@ -59,3 +59,29 @@ INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 ALTER TABLE `tdq_budget_order` 
 DROP COLUMN `fbh_warn_day`;
 
+DELETE FROM `tsys_dict` WHERE `id`='429';
+DELETE FROM `tsys_dict` WHERE `id`='430';
+DELETE FROM `tsys_dict` WHERE `id`='431';
+DELETE FROM `tsys_dict` WHERE `id`='432';
+DELETE FROM `tsys_dict` WHERE `id`='433';
+DELETE FROM `tsys_dict` WHERE `id`='664';
+
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('017', '017_01', '017_02');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`, `back_node`) VALUES ('017', '017_02', '017_03', '017_04');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('017', '017_03', '017_05');
+INSERT INTO `tsys_node_flow` (`type`, `current_node`, `next_node`) VALUES ('017', '017_04', '017_01');
+
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('017_01', '申请代偿预算单', '017');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('017_02', '财务经理审核', '017');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('017_03', '制单', '017');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('017_04', '重新申请代偿预算单', '017');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('017_05', '已制单', '017');
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('017_06', '作废', '017');
+
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'node_type', '017', '代偿预算单', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
+
+ALTER TABLE `tdh_replace_repay_apply` 
+CHANGE COLUMN `status` `curNodeCode` VARCHAR(32) NULL COMMENT '节点' ;
+
+
+
