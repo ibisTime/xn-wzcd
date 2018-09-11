@@ -7,9 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.ao.IReplaceRepayPlanAO;
 import com.cdkj.loan.bo.IBankBO;
-import com.cdkj.loan.bo.IBudgetOrderBO;
 import com.cdkj.loan.bo.ICollectBankcardBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepayBizBO;
@@ -78,7 +78,7 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
     private IRepayPlanBO repayPlanBO;
 
     @Autowired
-    private IBudgetOrderBO budgetOrderBO;
+    private IBudgetOrderAO budgetOrderAO;
 
     @Autowired
     private ISYSDictBO sysDictBO;
@@ -243,7 +243,7 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
             DateUtil.DATA_TIME_PATTERN_1));
         RepayPlan repayPlan = repayPlanBO.getRepayPlan(data.getBizCode());
         RepayBiz repayBiz = repayBizBO.getRepayBiz(repayPlan.getRepayBizCode());
-        BudgetOrder budgetOrder = budgetOrderBO
+        BudgetOrder budgetOrder = budgetOrderAO
             .getBudgetOrder(repayBiz.getRefCode());
         CollectBankcard condition = new CollectBankcard();
         condition.setCompanyCode(budgetOrder.getCompanyCode());
@@ -326,8 +326,8 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
                 .getRepayPlan(replaceRepayPlan.getBizCode());
             RepayBiz repayBiz = repayBizBO
                 .getRepayBiz(repayPlan.getRepayBizCode());
-            BudgetOrder budgetOrder = budgetOrderBO
-                .getBudgetOrderByRepayBizCode(repayBiz.getBudgetOrderCode());
+            BudgetOrder budgetOrder = budgetOrderAO
+                .getBudgetOrderByRepayBizCode(repayBiz.getCode());
             replaceRepayPlan.setBudgetOrder(budgetOrder);
         }
         init(replaceRepayPlan);

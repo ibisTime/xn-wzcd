@@ -81,7 +81,7 @@ INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('017_06', '作废', '01
 INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'node_type', '017', '代偿预算单', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
 
 ALTER TABLE `tdh_replace_repay_apply` 
-CHANGE COLUMN `status` `curNodeCode` VARCHAR(32) NULL COMMENT '节点' ;
+CHANGE COLUMN `status` `cur_node_code` VARCHAR(32) NULL COMMENT '节点' ;
 
 
 

@@ -3524,7 +3524,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     public BudgetOrder getBudgetOrderByRepayBizCode(String code) {
-        return budgetOrderBO.getBudgetOrderByRepayBizCode(code);
+        BudgetOrder budgetOrder = budgetOrderBO
+            .getBudgetOrderByRepayBizCode(code);
+        initBudget(budgetOrder);
+        return budgetOrder;
     }
 
     private void initBudget(BudgetOrder budgetOrder) {
