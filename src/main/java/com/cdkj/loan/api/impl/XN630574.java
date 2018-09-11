@@ -25,7 +25,7 @@ public class XN630574 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         repayBizAO.settleRiskIndoorCheck(req.getCode(), req.getApproveResult(),
-            req.getApplyNote(), req.getOperator(), req.getRemark());
+            req.getApproveNote(), req.getOperator(), req.getRemark());
         return new BooleanRes(true);
     }
 

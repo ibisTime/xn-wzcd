@@ -14,6 +14,7 @@ public class XN630571Req {
     private String code;
 
     // 审核说明
+    @NotBlank
     private String approveNote;
 
     // 审核结果 1=通过 0=不通过

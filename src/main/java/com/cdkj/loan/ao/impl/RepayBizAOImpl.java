@@ -844,7 +844,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
 
         String nextNodeCode = getNextNodeCode(repayBiz.getCurNodeCode(),
             approveResult);
-        repayBizBO.refreshRiskIndoorCheck(code, note, approveNote, operator);
+        repayBizBO.refreshRiskIndoorCheck(code, nextNodeCode, note, operator);
 
         // 日志记录
         sysBizLogBO.saveNewAndPreEndSYSBizLog(repayBiz.getCode(),
