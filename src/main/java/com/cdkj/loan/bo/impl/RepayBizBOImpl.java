@@ -683,7 +683,7 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
 
     @Override
     @Transactional
-    public void logicOrder(String code, String remark, String operator) {
+    public void logicOrder(String code, String operator, String remark) {
         RepayBiz repayBiz = getRepayBiz(code);
         String curNodeCode = repayBiz.getCurNodeCode();
         NodeFlow nodeFlow = nodeFlowBO.getNodeFlowByCurrentNode(curNodeCode);
