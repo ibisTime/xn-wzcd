@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.aliyun.util.HttpUtils;
 import com.cdkj.loan.ao.ICarAO;
 import com.cdkj.loan.bo.ICarBO;
@@ -43,83 +45,88 @@ public class CarAOImpl implements ICarAO {
     @Override
     @Transactional
     public void addCar(XN630420Req req) {
-        Car car = new Car();
-
-        car.setName(req.getName());
-        car.setSeriesCode(req.getSeriesCode());
-        car.setSeriesName(req.getSeriesName());
-        car.setBrandCode(req.getBrandCode());
-        car.setBrandName(req.getBrandName());
-
-        car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
-        car.setSalePrice(StringValidater.toLong(req.getSalePrice()));
-        car.setSfAmount(StringValidater.toLong(req.getSfAmount()));
-        car.setSlogan(req.getSlogan());
-        car.setAdvPic(req.getAdvPic());
-
-        car.setPic(req.getPic());
-        car.setDescription(req.getDescription());
-        car.setStatus(EBrandStatus.TO_UP.getCode());
-        car.setUpdater(req.getUpdater());
-        car.setUpdateDatetime(new Date());
-
-        car.setRemark(req.getRemark());
-        carBO.saveCar(car);
-
-        // ArrayList<JSONArray> json = generateCar();
-        // for (JSONArray jsonArray : json) {
-        // for (Object obj : jsonArray) {
-        // JSONObject jo = (JSONObject) obj;
-        // String name = jo.getString("name");
-        // String parentid = jo.getString("parentid");
-        // String price = jo.getString("price");
-        // String logo = jo.getString("logo");
-        //
         // Car car = new Car();
-        // car.setName(name);
-        // car.setSeriesCode(parentid);
-        // if (StringUtils.isNotBlank(price)) {
-        // String[] split = price.split("万");
-        // car.setOriginalPrice(
-        // (long) (Double.parseDouble(split[0]) * 10000));
-        // }
-        // car.setAdvPic(logo);
+        //
+        // car.setName(req.getName());
+        // car.setSeriesCode(req.getSeriesCode());
+        // car.setSeriesName(req.getSeriesName());
+        // car.setBrandCode(req.getBrandCode());
+        // car.setBrandName(req.getBrandName());
+        //
+        // car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
+        // car.setSalePrice(StringValidater.toLong(req.getSalePrice()));
+        // car.setSfAmount(StringValidater.toLong(req.getSfAmount()));
+        // car.setSlogan(req.getSlogan());
+        // car.setAdvPic(req.getAdvPic());
+        //
+        // car.setPic(req.getPic());
+        // car.setDescription(req.getDescription());
         // car.setStatus(EBrandStatus.TO_UP.getCode());
-        // car.setUpdater("USYS201800000000001");
+        // car.setUpdater(req.getUpdater());
         // car.setUpdateDatetime(new Date());
+        //
+        // car.setRemark(req.getRemark());
         // carBO.saveCar(car);
-        // }
-        // }
+
+        ArrayList<JSONArray> json = generateCar();
+        for (Object obj : json) {
+            JSONObject jo = (JSONObject) obj;
+            String carlist = jo.getString("carlist");
+            JSONArray json2 = JSONArray.parseArray(carlist);
+            for (Object object : json2) {
+                JSONObject jo2 = (JSONObject) object;
+                String fullname = jo2.getString("fullname");
+                String list1 = jo2.getString("list");
+                JSONArray json3 = JSONArray.parseArray(list1);
+                for (Object object2 : json3) {
+                    JSONObject jo3 = (JSONObject) object2;
+                    String id = jo3.getString("id");
+                    String name = jo3.getString("name");
+                    String logo = jo3.getString("logo");
+                    String price = jo3.getString("price");
+                    String parentid = jo3.getString("parentid");
+
+                    Car car = new Car();
+                    car.setName(name);
+                    car.setSeriesCode(parentid);
+                    car.setSeriesName(fullname);
+                    car.setSlogan(id);
+                    if (StringUtils.isNotBlank(price)) {
+                        String[] split = price.split("万");
+                        car.setOriginalPrice(
+                            (long) (Double.parseDouble(split[0]) * 10000));
+                    }
+                    car.setAdvPic(logo);
+                    car.setStatus(EBrandStatus.TO_UP.getCode());
+                    car.setUpdater("USYS201800000000001");
+                    car.setUpdateDatetime(new Date());
+                    carBO.saveCar(car);
+                }
+            }
+        }
     }
 
     private ArrayList<JSONArray> generateCar() {
         ArrayList<JSONArray> list = new ArrayList<JSONArray>();
         JSONArray json = null;
         String host = "https://jisucxdq.market.alicloudapi.com";
-        String path = "/car/detail";
+        String path = "/car/carlist";
         String method = "GET";
         String appcode = "1bd9832a74284772a7549ff0cc51043e";
         Map<String, String> headers = new HashMap<String, String>();
-        // 最后在header中的格式(中间是英文空格)为Authorization:APPCODE
-        // 83359fd73fe94948385f570e3c139105
         headers.put("Authorization", "APPCODE " + appcode);
         Map<String, String> querys = new HashMap<String, String>();
         Series condition = new Series();
         List<Series> querySeries = seriesBO.querySeries(condition);
         for (Series series : querySeries) {
-            querys.put("carid", series.getSlogan());
+            querys.put("parentid", series.getSlogan());
             try {
                 HttpResponse response = HttpUtils.doGet(host, path, method,
                     headers, querys);
                 HttpEntity entity = response.getEntity();
                 String string = EntityUtils.toString(entity);// 获取response的body
-                System.out.println("string------------->" + string + "||||||");
                 String substring = string.substring(34, string.length() - 1);
-                System.out
-                    .println("substring----------->" + substring + "|||||");
-                json = (JSONArray) JSONArray
-                    .parse(substring.substring(34, substring.length() - 1));
-                System.out.println("json------------->" + json + "||||||");
+                json = JSONArray.parseArray(substring);
                 list.add(json);
             } catch (Exception e) {
                 e.printStackTrace();
