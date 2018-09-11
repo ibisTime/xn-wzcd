@@ -68,42 +68,79 @@ public class CarAOImpl implements ICarAO {
         // car.setRemark(req.getRemark());
         // carBO.saveCar(car);
 
-        ArrayList<JSONArray> json = generateCar();
-        for (Object obj : json) {
-            JSONObject jo = (JSONObject) obj;
-            String carlist = jo.getString("carlist");
-            JSONArray json2 = JSONArray.parseArray(carlist);
-            for (Object object : json2) {
-                JSONObject jo2 = (JSONObject) object;
-                String fullname = jo2.getString("fullname");
-                String list1 = jo2.getString("list");
-                JSONArray json3 = JSONArray.parseArray(list1);
-                for (Object object2 : json3) {
-                    JSONObject jo3 = (JSONObject) object2;
-                    String id = jo3.getString("id");
-                    String name = jo3.getString("name");
-                    String logo = jo3.getString("logo");
-                    String price = jo3.getString("price");
-                    String parentid = jo3.getString("parentid");
-
-                    Car car = new Car();
-                    car.setName(name);
-                    car.setSeriesCode(parentid);
-                    car.setSeriesName(fullname);
-                    car.setSlogan(id);
-                    if (StringUtils.isNotBlank(price)) {
-                        String[] split = price.split("万");
-                        car.setOriginalPrice(
-                            (long) (Double.parseDouble(split[0]) * 10000));
+        ArrayList<JSONArray> jsonList = generateCar();
+        for (JSONArray json : jsonList) {
+            if (null != json) {
+                for (int i = 0; i < json.size(); i++) {
+                    JSONObject jsonObject = json.getJSONObject(i);
+                    JSONArray ja = jsonObject.getJSONArray("carlist");
+                    if (null != ja) {
+                        for (int j = 0; j < ja.size(); j++) {
+                            JSONObject jo = ja.getJSONObject(j);
+                            if (null != jo) {
+                                Car car = new Car();
+                                car.setName(jo.getString("name"));
+                                car.setSeriesCode(jo.getString("parentid"));
+                                car.setSeriesName(jo.getString("fullname"));
+                                car.setSlogan(jo.getString("id"));
+                                if (StringUtils.isNotBlank(jo
+                                    .getString("price"))) {
+                                    if ("暂无".equals(jo.getString("price"))) {
+                                        car.setOriginalPrice(0L);
+                                    } else {
+                                        String[] split = jo.getString("price")
+                                            .split("万");
+                                        car.setOriginalPrice((long) (Double
+                                            .parseDouble(split[0]) * 10000));
+                                    }
+                                }
+                                car.setAdvPic(jo.getString("logo"));
+                                car.setStatus(EBrandStatus.TO_UP.getCode());
+                                car.setUpdater("USYS201800000000001");
+                                car.setUpdateDatetime(new Date());
+                                carBO.saveCar(car);
+                            }
+                        }
                     }
-                    car.setAdvPic(logo);
-                    car.setStatus(EBrandStatus.TO_UP.getCode());
-                    car.setUpdater("USYS201800000000001");
-                    car.setUpdateDatetime(new Date());
-                    carBO.saveCar(car);
                 }
             }
         }
+
+        // for (Object obj : json) {
+        // JSONObject jo = (JSONObject) obj;
+        // String carlist = jo.getString("carlist");
+        // JSONArray json2 = JSONArray.parseArray(carlist);
+        // for (Object object : json2) {
+        // JSONObject jo2 = (JSONObject) object;
+        // String fullname = jo2.getString("fullname");
+        // String list1 = jo2.getString("list");
+        // JSONArray json3 = JSONArray.parseArray(list1);
+        // for (Object object2 : json3) {
+        // JSONObject jo3 = (JSONObject) object2;
+        // String id = jo3.getString("id");
+        // String name = jo3.getString("name");
+        // String logo = jo3.getString("logo");
+        // String price = jo3.getString("price");
+        // String parentid = jo3.getString("parentid");
+        //
+        // Car car = new Car();
+        // car.setName(name);
+        // car.setSeriesCode(parentid);
+        // car.setSeriesName(fullname);
+        // car.setSlogan(id);
+        // if (StringUtils.isNotBlank(price)) {
+        // String[] split = price.split("万");
+        // car.setOriginalPrice((long) (Double
+        // .parseDouble(split[0]) * 10000));
+        // }
+        // car.setAdvPic(logo);
+        // car.setStatus(EBrandStatus.TO_UP.getCode());
+        // car.setUpdater("USYS201800000000001");
+        // car.setUpdateDatetime(new Date());
+        // carBO.saveCar(car);
+        // }
+        // }
+        // }
     }
 
     private ArrayList<JSONArray> generateCar() {
@@ -125,7 +162,8 @@ public class CarAOImpl implements ICarAO {
                     headers, querys);
                 HttpEntity entity = response.getEntity();
                 String string = EntityUtils.toString(entity);// 获取response的body
-                String substring = string.substring(34, string.length() - 1);
+                int length = string.length();
+                String substring = string.substring(34, length - 1);
                 json = JSONArray.parseArray(substring);
                 list.add(json);
             } catch (Exception e) {
