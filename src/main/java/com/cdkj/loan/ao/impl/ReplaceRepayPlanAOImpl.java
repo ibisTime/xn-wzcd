@@ -327,7 +327,7 @@ public class ReplaceRepayPlanAOImpl implements IReplaceRepayPlanAO {
             RepayBiz repayBiz = repayBizBO
                 .getRepayBiz(repayPlan.getRepayBizCode());
             BudgetOrder budgetOrder = budgetOrderBO
-                .getBudgetOrder(repayBiz.getBudgetOrderCode());
+                .getBudgetOrderByRepayBizCode(repayBiz.getBudgetOrderCode());
             replaceRepayPlan.setBudgetOrder(budgetOrder);
         }
         init(replaceRepayPlan);

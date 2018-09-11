@@ -19,7 +19,7 @@ public class XN630574Req {
 
     // 申请说明
     @NotBlank
-    private String applyNote;
+    private String approveNote;
 
     @NotBlank
     private String operator;
@@ -42,12 +42,12 @@ public class XN630574Req {
         this.remark = remark;
     }
 
-    public String getApplyNote() {
-        return applyNote;
+    public String getApproveNote() {
+        return approveNote;
     }
 
-    public void setApplyNote(String applyNote) {
-        this.applyNote = applyNote;
+    public void setApproveNote(String approveNote) {
+        this.approveNote = approveNote;
     }
 
     public String getOperator() {
