@@ -7,22 +7,26 @@ package com.cdkj.loan.dto.res;
  * @history:
  */
 public class XN630172Res {
-    private int creditTodo;// 资信调查001_02 001_03 001_05 和 返回的CurNodeCode字段对应为
-                           // 征信一审
+    // 资信调查001_02 001_03 001_04 001_05
+    private int creditTodo;
 
-    private int accessTodo;// 准入申请 002_01
+    // 准入申请 002_01
+    private int accessTodo;
 
-    private int advanceFundTodo;// 财务垫资002_04 if( code ==(003_01 || 004_01) ){
-                                // if (CurNodeCode == 002_06) { "这个情况"} }
+    // 财务垫资 003_01 004_01
+    private int advanceFundTodo;
 
-    private int bankLoanTodo;// 银行放款007_04
+    // 银行放款 007_06 007_07
+    private int bankLoanTodo;
 
-    private int entryMortgageTodo;// 车辆抵押002_21
+    // 车辆抵押 008_04 009_09
+    private int entryMortgageTodo;
 
+    // 资料传递 Status = 0124 GPS的时候为 Status = 014
+    private int logisticsTodo;
+
+    // 以下待定
     private int relieveMortgageTodo;// 解除抵押007_01
-
-    private int logisticsTodo;// 资料传递 资料的时候为 Status = 0 1 2 4 GPS的时候为 Status = 0
-                              // 1 4
 
     public int getCreditTodo() {
         return creditTodo;

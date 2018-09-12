@@ -126,7 +126,7 @@ public class ReplaceRepayApplyAOImpl implements IReplaceRepayApplyAO {
             updater, note);
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getBizCode(),
             EBizLogType.REPLACE_REPAY_APPLY, data.getCode(), preCurNodeCode,
-            data.getCurNodeCode(), approveNote, updater);
+            data.getCurNodeCode(), note, updater);
     }
 
     @Override

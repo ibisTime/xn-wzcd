@@ -23,9 +23,6 @@ import com.cdkj.loan.domain.RepayBiz;
 import com.cdkj.loan.domain.SYSBizLog;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.res.XN630172Res;
-import com.cdkj.loan.enums.EBizLogType;
-import com.cdkj.loan.enums.EBudgetOrderNode;
-import com.cdkj.loan.enums.ELogisticsStatus;
 
 @Service
 public class SYSBizLogAOImpl implements ISYSBizLogAO {
@@ -91,24 +88,53 @@ public class SYSBizLogAOImpl implements ISYSBizLogAO {
             .querySYSBizLogListByRoleCode(condition);
         XN630172Res data = new XN630172Res(0, 0, 0, 0, 0, 0, 0);
         for (SYSBizLog sysBizLog : list) {
-            if (EBizLogType.CREDIT.getCode().equals(sysBizLog.getRefType())) {
-                data.setCreditTodo(data.getCreditTodo() + 1);
-            }
-            if (EBudgetOrderNode.START_NODE.getCode().equals(
-                sysBizLog.getDealNode())
-                    || EBudgetOrderNode.START_NODE.getCode().equals(
-                        sysBizLog.getDealNode())
-                    || EBudgetOrderNode.START_NODE.getCode().equals(
-                        sysBizLog.getDealNode())) {
-                data.setEntryMortgageTodo(data.getEntryMortgageTodo() + 1);
-            }
-            if (ELogisticsStatus.TO_SEND.getCode().equals(
-                sysBizLog.getDealNode())
-                    || ELogisticsStatus.TO_SEND.getCode().equals(
-                        sysBizLog.getDealNode())
-                    || ELogisticsStatus.TO_SEND.getCode().equals(
-                        sysBizLog.getDealNode())) {
-                data.setLogisticsTodo(data.getLogisticsTodo() + 1);
+            String dealNode = sysBizLog.getDealNode();
+            switch (dealNode) {
+                case "001_02":
+                    data.setCreditTodo(data.getCreditTodo() + 1);
+                    break;
+                case "001_03":
+                    data.setCreditTodo(data.getCreditTodo() + 1);
+                    break;
+                case "001_04":
+                    data.setCreditTodo(data.getCreditTodo() + 1);
+                    break;
+                case "001_05":
+                    data.setCreditTodo(data.getCreditTodo() + 1);
+                    break;
+                case "002_01":
+                    data.setAccessTodo(data.getAccessTodo() + 1);
+                    break;
+                case "003_01":
+                    data.setAdvanceFundTodo(data.getAdvanceFundTodo() + 1);
+                    break;
+                case "004_01":
+                    data.setAdvanceFundTodo(data.getAdvanceFundTodo() + 1);
+                    break;
+                case "007_06":
+                    data.setBankLoanTodo(data.getBankLoanTodo() + 1);
+                    break;
+                case "007_07":
+                    data.setBankLoanTodo(data.getBankLoanTodo() + 1);
+                    break;
+                case "008_04":
+                    data.setEntryMortgageTodo(data.getEntryMortgageTodo() + 1);
+                    break;
+                case "009_09":
+                    data.setEntryMortgageTodo(data.getEntryMortgageTodo() + 1);
+                    break;
+                case "0":
+                    data.setLogisticsTodo(data.getLogisticsTodo() + 1);
+                    break;
+                case "1":
+                    data.setLogisticsTodo(data.getLogisticsTodo() + 1);
+                    break;
+                case "2":
+                    data.setLogisticsTodo(data.getLogisticsTodo() + 1);
+                    break;
+                case "4":
+                    data.setLogisticsTodo(data.getLogisticsTodo() + 1);
+                    break;
             }
         }
         return data;

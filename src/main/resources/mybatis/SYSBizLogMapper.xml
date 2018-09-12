@@ -57,10 +57,10 @@
 				AND t.operator_mobile like "%"#{operatorMobileForQuery}"%"
 			</if>
 			<if test="roleCode != null and roleCode != '' ">
-				AND trn.roleCode = #{roleCode}
+				AND trn.role_code = #{roleCode}
 			</if>
 			<if test="teamCode != null and teamCode != '' ">
-				AND tu.teamCode = #{teamCode}
+				AND tu.team_code = #{teamCode}
 			</if>
 		</trim>
 	</sql>
