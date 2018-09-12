@@ -497,6 +497,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setHkbMainPage(req.getHkbMainPage());
         data.setGhHkb(req.getGhHkb());
 
+        data.setGuarantor1IdPicz(req.getGuarantor1IdPicz());
+        data.setGuarantor1IdPicf(req.getGuarantor1IdPicf());
+        data.setGuarantor2IdPicz(req.getGuarantor2IdPicz());
+        data.setGuarantor2IdPicf(req.getGuarantor2IdPicf());
+        data.setGhIdPicz(req.getGhIdPicz());
+        data.setGhIdPicf(req.getGhIdPicf());
+
         data.setGuarantor1Hkb(req.getGuarantor1Hkb());
         data.setGuarantor2Hkb(req.getGuarantor2Hkb());
         data.setHousePic(req.getHousePic());
@@ -3631,6 +3638,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         }
 
         if (StringUtils.isNotBlank(budgetOrder.getRepayBizCode())) {
+            RepayBiz repayBiz = repayBizBO
+                .getRepayBiz(budgetOrder.getRepayBizCode());
+            budgetOrder.setRepayBiz(repayBiz);
             List<RepayPlan> planList = repayPlanBO
                 .queryRepayPlanListByRepayBizCode(
                     budgetOrder.getRepayBizCode());

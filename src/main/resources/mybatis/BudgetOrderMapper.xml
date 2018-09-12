@@ -1747,8 +1747,16 @@
 		
 		,hkb_main_page = #{hkbMainPage}
 		,gh_hkb = #{ghHkb}
-		,guarantor1_hkb = #{guarantor1Hkb}
 		,guarantor2_hkb = #{guarantor2Hkb}
+		,guarantor2_hkb = #{guarantor2Hkb}
+		
+		,guarantor1_id_picz = #{guarantor1IdPicz}
+		,guarantor1_id_picf = #{guarantor1IdPicf}
+		,guarantor2_id_picz = #{guarantor2IdPicz}
+		,guarantor2_id_picf = #{guarantor2IdPicf}
+		,gh_id_picz = #{ghIdPicz}
+		,gh_id_picf = #{ghIdPicf}
+		
 		,house_pic = #{housePic}
 		,house_unit_pic = #{houseUnitPic}
 		,house_door_pic = #{houseDoorPic}
