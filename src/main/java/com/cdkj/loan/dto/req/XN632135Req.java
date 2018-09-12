@@ -8,7 +8,7 @@ public class XN632135Req extends APageReq {
     private static final long serialVersionUID = -7934614924475825048L;
 
     // 编号
-    private Long id;
+    private String id;
 
     // 物流单编号
     private String logisticsCode;
@@ -16,11 +16,11 @@ public class XN632135Req extends APageReq {
     // 类型
     private String type;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

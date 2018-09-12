@@ -7,12 +7,12 @@ import com.cdkj.loan.domain.SupplementReason;
 
 public interface ISupplementReasonBO extends IPaginableBO<SupplementReason> {
 
-    public Long saveSupplementReason(SupplementReason data);
+    public int saveSupplementReason(SupplementReason data);
 
     public List<SupplementReason> querySupplementReasonList(
             SupplementReason condition);
 
-    public SupplementReason getSupplementReason(Long id);
+    public SupplementReason getSupplementReason(int id);
 
     // 改变是否已补件
     public void refreshSupplementReason(SupplementReason reason);
@@ -22,6 +22,9 @@ public interface ISupplementReasonBO extends IPaginableBO<SupplementReason> {
             String logisticsCode);
 
     // 改变原来的补件原因的物流单编号
-    public void refreshLogisticsCode(Long id, String loCode);
+    public void refreshLogisticsCode(int id, String loCode);
+
+    // 更新补件原因状态
+    public void refreshReasonStatus(SupplementReason reason);
 
 }

@@ -1,5 +1,7 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,14 +154,20 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
             data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
             // 补件原因
-            Long id = null;
+            ArrayList<Integer> list = new ArrayList<Integer>();
             List<SupplementReason> reasonList = req.getSupplementReasonList();
             for (SupplementReason reason : reasonList) {
                 SupplementReason supplementReason = new SupplementReason();
                 supplementReason.setLogisticsCode(code);
                 supplementReason.setType(reason.getType());
                 supplementReason.setReason(reason.getReason());
-                id = supplementReasonBO.saveSupplementReason(supplementReason);
+                supplementReason.setFromNodeCode(data.getFromNodeCode());
+                supplementReason.setToNodeCode(data.getToNodeCode());
+                supplementReason.setStatus(EBoolean.NO.getCode());
+                supplementReason.setCreateDatetime(new Date());
+                int id = supplementReasonBO
+                    .saveSupplementReason(supplementReason);
+                list.add(id);
             }
             // 判断节点是否是007_05，是的话补件返回007_01
             BudgetOrder budgetOrder = budgetOrderBO
@@ -190,7 +198,10 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
                         EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode());
                     data.setIsBankPointPartSupt(EBoolean.YES.getCode());
                 }
-                budgetOrder.setReasonId(id);
+                // 拼接id放在预算单的补件原因id里
+                String string = String.valueOf(list);
+                String reasonId = string.substring(1, string.length() - 1);// 去掉ArrayList的前后括号
+                budgetOrder.setReasonId(reasonId);
                 budgetOrderBO.updateCurNodeCodeAndReasonId(budgetOrder);
             }
 

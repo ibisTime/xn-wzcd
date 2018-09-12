@@ -1,5 +1,7 @@
 package com.cdkj.loan.domain;
 
+import java.util.Date;
+
 import com.cdkj.loan.dao.base.ABaseDO;
 
 /**
@@ -13,7 +15,7 @@ public class SupplementReason extends ABaseDO {
     private static final long serialVersionUID = 1L;
 
     // id
-    private Long id;
+    private int id;
 
     // 物流单编号
     private String logisticsCode;
@@ -24,15 +26,59 @@ public class SupplementReason extends ABaseDO {
     // 原因
     private String reason;
 
+    // 发件节点
+    private String fromNodeCode;
+
+    // 收件节点
+    private String toNodeCode;
+
+    // 状态(0 未处理 1已处理)
+    private String status;
+
+    // 生成时间
+    private Date createDatetime;
+
     // 是否已补件（0未补件1已补件）
     private String isPartSupt;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public String getFromNodeCode() {
+        return fromNodeCode;
+    }
+
+    public void setFromNodeCode(String fromNodeCode) {
+        this.fromNodeCode = fromNodeCode;
+    }
+
+    public String getToNodeCode() {
+        return toNodeCode;
+    }
+
+    public void setToNodeCode(String toNodeCode) {
+        this.toNodeCode = toNodeCode;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Date getCreateDatetime() {
+        return createDatetime;
+    }
+
+    public void setCreateDatetime(Date createDatetime) {
+        this.createDatetime = createDatetime;
     }
 
     public String getIsPartSupt() {

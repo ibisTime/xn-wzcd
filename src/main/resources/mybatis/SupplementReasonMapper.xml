@@ -7,6 +7,10 @@
 		<result column="logistics_code" property="logisticsCode" />
 		<result column="type" property="type" />
 		<result column="reason" property="reason" />
+		<result column="from_node_code" property="fromNodeCode" />
+		<result column="to_node_code" property="toNodeCode" />
+		<result column="status" property="status" />
+		<result column="create_datetime" property="createDatetime" />
 		<result column="is_part_supt" property="isPartSupt" />
 	</resultMap>
 	<sql id="where_condition">
@@ -20,6 +24,15 @@
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
 			</if>
+			<if test="fromNodeCode != null and fromNodeCode != '' ">
+				AND t.from_node_code = #{fromNodeCode}
+			</if>
+			<if test="toNodeCode != null and toNodeCode != '' ">
+				AND t.to_node_code = #{toNodeCode}
+			</if>
+			<if test="status != null and status != '' ">
+				AND t.status = #{status}
+			</if>
 			<if test="isPartSupt != null and isPartSupt != '' ">
 				AND t.is_part_supt = #{isPartSupt}
 			</if>
@@ -31,6 +44,10 @@
 		,t.logistics_code
 		,t.type
 		,t.reason
+		,t.from_node_code
+		,t.to_node_code
+		,t.status
+		,t.create_datetime
 		,t.is_part_supt
 		FROM
 		tdp_supplement_reason t
@@ -55,6 +72,10 @@
 		,logistics_code
 		,type
 		,reason
+		,from_node_code
+		,to_node_code
+		,status
+		,create_datetime
 		,is_part_supt
 		)
 		VALUES(
@@ -62,6 +83,10 @@
 		,#{logisticsCode}
 		,#{type}
 		,#{reason}
+		,#{fromNodeCode}
+		,#{toNodeCode}
+		,#{status}
+		,#{createDatetime}
 		,#{isPartSupt}
 		)
 	</insert>
@@ -78,6 +103,14 @@
 		UPDATE tdp_supplement_reason
 		SET
 		logistics_code = #{logisticsCode}
+		WHERE
+		id = #{id}	
+	</update>
+	
+	<update id="update_reasonStatus" parameterType="supplementReason">
+		UPDATE tdp_supplement_reason
+		SET
+		status = #{status}
 		WHERE
 		id = #{id}	
 	</update>

@@ -13,7 +13,7 @@ public interface ISupplementReasonAO {
     static final String DEFAULT_ORDER_COLUMN = "id";
 
     // 新增补件原因
-    public Long addSupplementReason(XN632130Req req);
+    public int addSupplementReason(XN632130Req req);
 
     public Paginable<SupplementReason> querySupplementReasonPage(int start,
             int limit, SupplementReason condition);
@@ -21,10 +21,10 @@ public interface ISupplementReasonAO {
     public List<SupplementReason> querySupplementReasonList(
             SupplementReason condition);
 
-    public SupplementReason getSupplementReason(Long id);
+    public SupplementReason getSupplementReason(int id);
 
-    // 确认提交银行时的补件原因查询
+    // 历史补件原因
     public List<SupplementReason> querySupplementReason(
-            SupplementReason condition, String budgetOrderCode);
+            SupplementReason condition, String logisticsCode);
 
 }
