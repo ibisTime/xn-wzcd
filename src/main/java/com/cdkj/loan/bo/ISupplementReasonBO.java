@@ -24,4 +24,7 @@ public interface ISupplementReasonBO extends IPaginableBO<SupplementReason> {
     // 改变原来的补件原因的物流单编号
     public void refreshLogisticsCode(Long id, String loCode);
 
+    // 更新补件原因状态
+    public void refreshReasonStatus(SupplementReason reason);
+
 }

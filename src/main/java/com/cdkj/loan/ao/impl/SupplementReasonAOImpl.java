@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import com.cdkj.loan.domain.Logistics;
 import com.cdkj.loan.domain.SupplementReason;
 import com.cdkj.loan.dto.req.XN632130Req;
 import com.cdkj.loan.enums.EBoolean;
-import com.cdkj.loan.enums.EBudgetOrderNode;
 
 @Service
 public class SupplementReasonAOImpl implements ISupplementReasonAO {
@@ -53,13 +53,18 @@ public class SupplementReasonAOImpl implements ISupplementReasonAO {
 
     @Override
     public List<SupplementReason> querySupplementReason(
-            SupplementReason condition, String budgetOrderCode) {
+            SupplementReason condition, String logisticsCode) {
+        ArrayList<SupplementReason> arrayList = new ArrayList<SupplementReason>();
+        Logistics data = logisticsBO.getLogistics(logisticsCode);
         Logistics domain = new Logistics();
-        domain.setBizCode(budgetOrderCode);
-        domain.setFromNodeCode(EBudgetOrderNode.SEND_BANK_MATERIALS.getCode());
-        domain.setToNodeCode(EBudgetOrderNode.BANK_LOAN_COMMIT.getCode());
-        Logistics logistics = logisticsBO.getLogisticsByCommitBank(domain);
-        condition.setLogisticsCode(logistics.getCode());
-        return supplementReasonBO.querySupplementReasonList(condition);
+        domain.setBizCode(data.getBizCode());
+        List<Logistics> logisticsList = logisticsBO.queryLogisticsList(domain);
+        for (Logistics logistics : logisticsList) {
+            condition.setLogisticsCode(logistics.getCode());
+            List<SupplementReason> reasonList = supplementReasonBO
+                .querySupplementReasonList(condition);
+            arrayList.addAll(reasonList);
+        }
+        return arrayList;
     }
 }

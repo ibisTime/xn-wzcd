@@ -23,8 +23,8 @@ public interface ISupplementReasonAO {
 
     public SupplementReason getSupplementReason(Long id);
 
-    // 确认提交银行时的补件原因查询
+    // 历史补件原因
     public List<SupplementReason> querySupplementReason(
-            SupplementReason condition, String budgetOrderCode);
+            SupplementReason condition, String logisticsCode);
 
 }

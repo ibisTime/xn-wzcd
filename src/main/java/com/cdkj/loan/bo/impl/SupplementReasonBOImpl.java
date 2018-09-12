@@ -64,4 +64,9 @@ public class SupplementReasonBOImpl extends PaginableBOImpl<SupplementReason>
         reason.setLogisticsCode(loCode);
         supplementReasonDAO.updateLogisticsCode(reason);
     }
+
+    @Override
+    public void refreshReasonStatus(SupplementReason reason) {
+        supplementReasonDAO.updateReasonStatus(reason);
+    }
 }

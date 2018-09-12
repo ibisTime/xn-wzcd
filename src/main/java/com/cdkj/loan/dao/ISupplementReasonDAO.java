@@ -12,4 +12,7 @@ public interface ISupplementReasonDAO extends IBaseDAO<SupplementReason> {
     // 改变原来的补件原因的物流单编号
     void updateLogisticsCode(SupplementReason reason);
 
+    // 更新补件原因状态
+    void updateReasonStatus(SupplementReason reason);
+
 }

@@ -11,7 +11,7 @@ import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
 
 /**
- * 确认提交银行时的补件原因查询
+ * 历史补件原因（预算单的）
  * @author: CYL 
  * @since: 2018年9月11日 下午8:49:27 
  * @history:
@@ -26,7 +26,7 @@ public class XN632137 extends AProcessor {
     public Object doBusiness() throws BizException {
         SupplementReason condition = new SupplementReason();
         return supplementReasonAO.querySupplementReason(condition,
-            req.getBudgetOrderCode());
+            req.getLogisticsCode());
     }
 
     @Override
