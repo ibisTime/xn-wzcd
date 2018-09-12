@@ -868,7 +868,7 @@ public class BudgetOrder extends ABaseDO {
     private String isEnd;
 
     // 补件原因id（提交银行返回时的补件原因）
-    private List<Long> reasonId;
+    private String reasonId;
 
     /***************DB properties**********/
 
@@ -1303,11 +1303,11 @@ public class BudgetOrder extends ABaseDO {
         this.companyName = companyName;
     }
 
-    public List<Long> getReasonId() {
+    public String getReasonId() {
         return reasonId;
     }
 
-    public void setReasonId(List<Long> reasonId) {
+    public void setReasonId(String reasonId) {
         this.reasonId = reasonId;
     }
 

@@ -15,7 +15,7 @@ public class SupplementReason extends ABaseDO {
     private static final long serialVersionUID = 1L;
 
     // id
-    private Long id;
+    private int id;
 
     // 物流单编号
     private String logisticsCode;
@@ -41,11 +41,11 @@ public class SupplementReason extends ABaseDO {
     // 是否已补件（0未补件1已补件）
     private String isPartSupt;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

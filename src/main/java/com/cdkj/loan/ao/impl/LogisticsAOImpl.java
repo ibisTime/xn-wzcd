@@ -23,6 +23,7 @@ import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISupplementReasonBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.DateUtil;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.Gps;
@@ -160,7 +161,11 @@ public class LogisticsAOImpl implements ILogisticsAO {
                 .equals(data.getToNodeCode())) {
                 BudgetOrder budgetOrder = budgetOrderBO
                     .getBudgetOrder(data.getBizCode());
-                size = size + budgetOrder.getReasonId().size();// 本条的补件原因加上提交银行打回的补件原因
+                if (StringUtils.isNotBlank(budgetOrder.getReasonId())) {
+                    String[] split = budgetOrder.getReasonId().split(",");
+                    int length = split.length;
+                    size = size + length;// 本条的补件原因加上提交银行打回的补件原因
+                }
             }
             int size2 = req.getSupplementReasonList().size();
             if (size != size2) {
@@ -523,12 +528,14 @@ public class LogisticsAOImpl implements ILogisticsAO {
             .equals(logistics.getToNodeCode())) {
             String bizCode = logistics.getBizCode();
             BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(bizCode);
-            List<Long> reasonId = budgetOrder.getReasonId();
-            if (CollectionUtils.isNotEmpty(reasonId)) {
-                for (Long id : reasonId) {
-                    SupplementReason supplementReason = supplementReasonBO
-                        .getSupplementReason(id);
-                    arrayList.add(supplementReason);
+            if (StringUtils.isNotBlank(budgetOrder.getReasonId())) {
+                String[] split = budgetOrder.getReasonId().split(",");
+                if (split != null) {
+                    for (String id : split) {
+                        SupplementReason supplementReason = supplementReasonBO
+                            .getSupplementReason(StringValidater.toInteger(id));
+                        arrayList.add(supplementReason);
+                    }
                 }
             }
         }

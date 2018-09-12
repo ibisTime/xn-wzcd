@@ -83,5 +83,9 @@ INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 ALTER TABLE `tdh_replace_repay_apply` 
 CHANGE COLUMN `status` `cur_node_code` VARCHAR(32) NULL COMMENT '节点' ;
 
-
+ALTER TABLE `tdp_supplement_reason` 
+ADD COLUMN `from_node_code` varchar(32) NULL COMMENT '发件节点' AFTER `reason`,
+ADD COLUMN `to_node_code` varchar(32) NULL COMMENT '收件节点' AFTER `from_node_code`,
+ADD COLUMN `status` varchar(4) NULL COMMENT '状态(0 未处理 1已处理)' AFTER `to_node_code`,
+ADD COLUMN `create_datetime` datetime NULL COMMENT '生成时间' AFTER `status`;
 

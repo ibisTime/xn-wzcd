@@ -25,7 +25,7 @@ public class SupplementReasonAOImpl implements ISupplementReasonAO {
     private ILogisticsBO logisticsBO;
 
     @Override
-    public Long addSupplementReason(XN632130Req req) {
+    public int addSupplementReason(XN632130Req req) {
         SupplementReason data = new SupplementReason();
         data.setLogisticsCode(req.getLogisticsCode());
         data.setType(req.getType());
@@ -47,7 +47,7 @@ public class SupplementReasonAOImpl implements ISupplementReasonAO {
     }
 
     @Override
-    public SupplementReason getSupplementReason(Long id) {
+    public SupplementReason getSupplementReason(int id) {
         return supplementReasonBO.getSupplementReason(id);
     }
 

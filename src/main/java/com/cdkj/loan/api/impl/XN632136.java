@@ -4,6 +4,7 @@ import com.cdkj.loan.ao.ISupplementReasonAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
+import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.dto.req.XN632135Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
@@ -23,7 +24,8 @@ public class XN632136 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return supplementReasonAO.getSupplementReason(req.getId());
+        return supplementReasonAO
+            .getSupplementReason(StringValidater.toInteger(req.getId()));
     }
 
     @Override

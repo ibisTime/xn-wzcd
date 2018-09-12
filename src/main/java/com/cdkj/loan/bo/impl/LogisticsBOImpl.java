@@ -154,7 +154,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
         if (ELogisticsType.BUDGET.getCode().equals(data.getType())) {
             data.setStatus(ELogisticsStatus.TO_SEND_AGAIN.getCode());
             // 补件原因
-            ArrayList<Long> list = new ArrayList<Long>();
+            ArrayList<Integer> list = new ArrayList<Integer>();
             List<SupplementReason> reasonList = req.getSupplementReasonList();
             for (SupplementReason reason : reasonList) {
                 SupplementReason supplementReason = new SupplementReason();
@@ -165,7 +165,7 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
                 supplementReason.setToNodeCode(data.getToNodeCode());
                 supplementReason.setStatus(EBoolean.NO.getCode());
                 supplementReason.setCreateDatetime(new Date());
-                Long id = supplementReasonBO
+                int id = supplementReasonBO
                     .saveSupplementReason(supplementReason);
                 list.add(id);
             }
@@ -198,7 +198,10 @@ public class LogisticsBOImpl extends PaginableBOImpl<Logistics>
                         EBudgetOrderNode.HEADQUARTERS_SEND_PRINT.getCode());
                     data.setIsBankPointPartSupt(EBoolean.YES.getCode());
                 }
-                budgetOrder.setReasonId(list);
+                // 拼接id放在预算单的补件原因id里
+                String string = String.valueOf(list);
+                String reasonId = string.substring(1, string.length() - 1);// 去掉ArrayList的前后括号
+                budgetOrder.setReasonId(reasonId);
                 budgetOrderBO.updateCurNodeCodeAndReasonId(budgetOrder);
             }
 

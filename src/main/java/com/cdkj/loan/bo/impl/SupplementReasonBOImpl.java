@@ -18,8 +18,8 @@ public class SupplementReasonBOImpl extends PaginableBOImpl<SupplementReason>
     @Autowired
     private ISupplementReasonDAO supplementReasonDAO;
 
-    public Long saveSupplementReason(SupplementReason data) {
-        Long id = null;
+    public int saveSupplementReason(SupplementReason data) {
+        int id = 0;
         supplementReasonDAO.insert(data);
         id = data.getId();
         return id;
@@ -32,7 +32,7 @@ public class SupplementReasonBOImpl extends PaginableBOImpl<SupplementReason>
     }
 
     @Override
-    public SupplementReason getSupplementReason(Long id) {
+    public SupplementReason getSupplementReason(int id) {
         SupplementReason data = null;
         if (id != 0) {
             SupplementReason condition = new SupplementReason();
@@ -59,7 +59,7 @@ public class SupplementReasonBOImpl extends PaginableBOImpl<SupplementReason>
     }
 
     @Override
-    public void refreshLogisticsCode(Long id, String loCode) {
+    public void refreshLogisticsCode(int id, String loCode) {
         SupplementReason reason = getSupplementReason(id);
         reason.setLogisticsCode(loCode);
         supplementReasonDAO.updateLogisticsCode(reason);
