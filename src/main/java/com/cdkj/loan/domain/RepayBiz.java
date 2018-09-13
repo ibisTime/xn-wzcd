@@ -317,6 +317,17 @@ public class RepayBiz extends ABaseDO {
     // 业务公司名称
     private String companyName;
 
+    // 实际退款金额(还款计划保证金相加)
+    private Long actualRefunds;
+
+    public Long getActualRefunds() {
+        return actualRefunds;
+    }
+
+    public void setActualRefunds(Long actualRefunds) {
+        this.actualRefunds = actualRefunds;
+    }
+
     public String getCompanyCode() {
         return companyCode;
     }

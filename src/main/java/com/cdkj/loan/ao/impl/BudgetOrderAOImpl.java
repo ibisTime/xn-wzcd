@@ -138,6 +138,7 @@ import com.cdkj.loan.enums.EButtonCode;
 import com.cdkj.loan.enums.ECity;
 import com.cdkj.loan.enums.ECollectBankcardType;
 import com.cdkj.loan.enums.ECurrency;
+import com.cdkj.loan.enums.EDealType;
 import com.cdkj.loan.enums.EEnterFileStatus;
 import com.cdkj.loan.enums.EFbhStatus;
 import com.cdkj.loan.enums.EGpsFeeWay;
@@ -316,12 +317,20 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             loanAmount = StringValidater.toLong(req.getLoanAmount());
             data.setLoanAmount(loanAmount);
         }
-        Long invoicePrice = StringValidater.toLong(req.getInvoicePrice());
-        // 我司贷款成数=贷款金额/发票价格
-        if (invoicePrice == 0) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "发票价不能为0");
+        Long invoicePrice = 0L;
+        if (StringUtils.isNotBlank(req.getInvoicePrice())) {
+            invoicePrice = StringValidater.toLong(req.getInvoicePrice());
+            // 我司贷款成数=贷款金额/发票价格
+            if (0 == invoicePrice) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "发票价不能为0");
+            }
+            data.setCompanyLoanCs(AmountUtil.div(loanAmount, invoicePrice));
         }
-        data.setCompanyLoanCs(AmountUtil.div(loanAmount, invoicePrice));
+        if (StringUtils.isBlank(req.getInvoicePrice())
+                && EDealType.SEND.getCode().equals(req.getDealType())) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "发票价不能为空");
+        }
 
         // 获取我司贷款成数区间 标准
         LoanCs loanCsCondition = new LoanCs();
@@ -343,7 +352,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setIsAdvanceFund(req.getIsAdvanceFund());
         Long fee = 0L;
         // 如果是保存，贷款金额为0，则不用计算服务费
-        if (loanAmount != 0) {
+        if (loanAmount != 0 && StringUtils.isNotBlank(req.getLoanPeriods())
+                && StringUtils.isNotBlank(req.getRateType())) {
             Bank bank = bankBO.getBankBySubbranch(data.getLoanBankCode());
             XN632690Res res = calculation(bank.getCode(), req.getLoanPeriods(),
                 loanAmount.toString(), req.getRateType(),
@@ -419,7 +429,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         data.setCarType(req.getCarType());
         data.setIsDriceLicense(req.getIsDriceLicense());
-        if (EBudgetOrderShopWay.OLD.getCode().equals(data.getShopWay())
+        if (EDealType.SEND.getCode().equals(req.getDealType())
+                && EBudgetOrderShopWay.OLD.getCode().equals(data.getShopWay())
                 && StringUtils.isBlank(req.getDriceLicense())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前车辆是二手车，驾照不能为空！");

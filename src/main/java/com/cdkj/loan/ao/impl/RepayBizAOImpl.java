@@ -1322,6 +1322,11 @@ public class RepayBizAOImpl implements IRepayBizAO {
         List<RepayPlan> repayPlanList = repayPlanBO
             .queryRepayPlanList(condition);
         repayBiz.setRepayPlanList(repayPlanList);
+        Long actualRefunds = 0L;
+        for (RepayPlan repayPlan : repayPlanList) {
+            actualRefunds += repayPlan.getDeposit();
+        }
+        repayBiz.setActualRefunds(actualRefunds);
         RepayPlan repayPlan = repayPlanBO
             .getRepayPlanCurMonth(repayBiz.getCode());
         repayBiz.setCurMonthRepayPlan(repayPlan);
