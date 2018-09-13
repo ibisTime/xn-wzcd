@@ -933,6 +933,8 @@ public class BudgetOrder extends ABaseDO {
 
     private String guarantor2Sex;// 担保人2性别
 
+    private RepayBiz repayBiz;// 还款业务
+
     private List<RepayPlan> repayPlansList;// 还款计划列表
 
     private Long overplusAmount; // 当期欠款
@@ -1001,6 +1003,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setFirstPayment(Long firstPayment) {
         this.firstPayment = firstPayment;
+    }
+
+    public RepayBiz getRepayBiz() {
+        return repayBiz;
+    }
+
+    public void setRepayBiz(RepayBiz repayBiz) {
+        this.repayBiz = repayBiz;
     }
 
     public CarDealer getCarDealer() {

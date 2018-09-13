@@ -316,6 +316,24 @@ public class XN632120Req {
     // 家庭紧急联系人信息2 手机号码
     private String emergencyMobile2;
 
+    // 担保人1身份证照片正
+    private String guarantor1IdPicz;
+
+    // 担保人1身份证照片反
+    private String guarantor1IdPicf;
+
+    // 担保人2身份证照片正
+    private String guarantor2IdPicz;
+
+    // 担保人2身份证照片反
+    private String guarantor2IdPicf;
+
+    // 共还人身份证照片正
+    private String ghIdPicz;
+
+    // 共还人身份证照片反
+    private String ghIdPicf;
+
     // 担保人1户口本
     private String guarantor1Hkb;
 
@@ -672,6 +690,54 @@ public class XN632120Req {
 
     public void setGuarantor1JourShowIncome(String guarantor1JourShowIncome) {
         this.guarantor1JourShowIncome = guarantor1JourShowIncome;
+    }
+
+    public String getGuarantor1IdPicz() {
+        return guarantor1IdPicz;
+    }
+
+    public void setGuarantor1IdPicz(String guarantor1IdPicz) {
+        this.guarantor1IdPicz = guarantor1IdPicz;
+    }
+
+    public String getGuarantor1IdPicf() {
+        return guarantor1IdPicf;
+    }
+
+    public void setGuarantor1IdPicf(String guarantor1IdPicf) {
+        this.guarantor1IdPicf = guarantor1IdPicf;
+    }
+
+    public String getGuarantor2IdPicz() {
+        return guarantor2IdPicz;
+    }
+
+    public void setGuarantor2IdPicz(String guarantor2IdPicz) {
+        this.guarantor2IdPicz = guarantor2IdPicz;
+    }
+
+    public String getGuarantor2IdPicf() {
+        return guarantor2IdPicf;
+    }
+
+    public void setGuarantor2IdPicf(String guarantor2IdPicf) {
+        this.guarantor2IdPicf = guarantor2IdPicf;
+    }
+
+    public String getGhIdPicz() {
+        return ghIdPicz;
+    }
+
+    public void setGhIdPicz(String ghIdPicz) {
+        this.ghIdPicz = ghIdPicz;
+    }
+
+    public String getGhIdPicf() {
+        return ghIdPicf;
+    }
+
+    public void setGhIdPicf(String ghIdPicf) {
+        this.ghIdPicf = ghIdPicf;
     }
 
     public String getGuarantor1IsPrint() {
