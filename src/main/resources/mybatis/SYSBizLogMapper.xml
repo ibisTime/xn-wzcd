@@ -63,7 +63,7 @@
 				AND tu.team_code = #{teamCode}
 			</if>
 			<if test="dealNodeList != null and dealNodeList.size() != 0 ">
-				AND t.dealNode in 
+				AND t.deal_node in 
                 <foreach item="item" index="index" collection="dealNodeList" open="(" separator="," close=")">
 	            	#{item}
                 </foreach> 
