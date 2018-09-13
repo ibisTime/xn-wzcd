@@ -1,6 +1,7 @@
 package com.cdkj.loan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.cdkj.loan.dao.base.ABaseDO;
 
@@ -55,6 +56,8 @@ public class SYSBizLog extends ABaseDO {
     private String departmentName;// 部门名称
 
     private String bizOrderType;// 业务单类型（ 征信单 准入单 还款业务 出差申请）
+
+    private List<String> dealNodeList;// 处理节点
 
     public int getId() {
         return id;
@@ -238,6 +241,14 @@ public class SYSBizLog extends ABaseDO {
 
     public void setTeamCode(String teamCode) {
         this.teamCode = teamCode;
+    }
+
+    public List<String> getDealNodeList() {
+        return dealNodeList;
+    }
+
+    public void setDealNodeList(List<String> dealNodeList) {
+        this.dealNodeList = dealNodeList;
     }
 
 }

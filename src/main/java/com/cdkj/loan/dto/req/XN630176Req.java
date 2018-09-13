@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import java.util.List;
+
 public class XN630176Req {
 
     private String parentOrder;// 上级订单编号
@@ -23,6 +25,8 @@ public class XN630176Req {
     private String startDatetime;// 操作开始时间
 
     private String endDatetime;// 操作结束时间
+
+    private List<String> dealNodeList;// 处理节点
 
     public String getParentOrder() {
         return parentOrder;
@@ -110,6 +114,14 @@ public class XN630176Req {
 
     public void setEndDatetime(String endDatetime) {
         this.endDatetime = endDatetime;
+    }
+
+    public List<String> getDealNodeList() {
+        return dealNodeList;
+    }
+
+    public void setDealNodeList(List<String> dealNodeList) {
+        this.dealNodeList = dealNodeList;
     }
 
 }

@@ -261,7 +261,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         String preNodeCode = repayBiz.getCurNodeCode();
         if (!ERepayBizNode.TC_APPLY.getCode().equals(preNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "当前还款业务不在收车提交节点！");
+                "当前还款业务不在申请收车节点！");
         }
 
         // 还款计划落地数据
