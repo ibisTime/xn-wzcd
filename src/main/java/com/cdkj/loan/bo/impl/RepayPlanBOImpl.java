@@ -66,6 +66,7 @@ public class RepayPlanBOImpl extends PaginableBOImpl<RepayPlan>
             String repayBizCode) {
         RepayPlan condition = new RepayPlan();
         condition.setRepayBizCode(repayBizCode);
+        condition.setOrder("cur_periods", "asc");
         return repayPlanDAO.selectList(condition);
     }
 
