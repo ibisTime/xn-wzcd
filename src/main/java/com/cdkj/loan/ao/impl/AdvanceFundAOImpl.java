@@ -100,14 +100,12 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
     @Override
     public void confirmAdvanceFund(XN632170Req req) {
         AdvanceFund data = advanceFundBO.getAdvanceFund(req.getCode());
-        if (!EAdvanceFundNode.PARENT_CONFIRM.getCode().equals(
-            data.getCurNodeCode())
+        String preNodeCode = data.getCurNodeCode();
+        if (!EAdvanceFundNode.PARENT_CONFIRM.getCode().equals(preNodeCode)
                 && !EAdvanceFundNode.BRANCH_CONFIRM.getCode().equals(
-                    data.getCurNodeCode())
-                && !EAdvanceFundNode.PARENT_AGAIN.getCode().equals(
-                    data.getCurNodeCode())
-                && !EAdvanceFundNode.BRANCH_AGAIN.getCode().equals(
-                    data.getCurNodeCode())) {
+                    preNodeCode)
+                && !EAdvanceFundNode.PARENT_AGAIN.getCode().equals(preNodeCode)
+                && !EAdvanceFundNode.BRANCH_AGAIN.getCode().equals(preNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是垫资流程确认用款单节点，不能操作");
         }
@@ -117,7 +115,6 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         data.setApplyDatetime(new Date());
         String isAdvanceFund = req.getIsAdvanceFund();
         data.setIsAdvanceFund(isAdvanceFund);
-        String preNodeCode = data.getCurNodeCode();
         if (EIsAdvanceFund.YES.getCode().equals(isAdvanceFund)
                 && EFundSource.ADVANCE_FUND.getCode().equals(
                     req.getFundSource())) {// 垫资并且金额来源是预支款
@@ -129,13 +126,12 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         EBizLogType refType = null;
         if (EAdvanceType.PARENT_BIZ.getCode().equals(data.getType())) {
             refType = EBizLogType.ADVANCE_FUND_PARENT;
-        } else if (EAdvanceType.BRANCH_BIZ.getCode().equals(data.getType())) {
+        } else {
             refType = EBizLogType.ADVANCE_FUND_BRANCH;
         }
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getBudgetCode(), refType,
             data.getCode(), preNodeCode, data.getCurNodeCode(), null,
             req.getOperator());
-
         advanceFundBO.refreshConfirmAdvanceFund(data);
     }
 
@@ -186,34 +182,29 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
     @Override
     public void areaAudit(XN632171Req req) {
         AdvanceFund data = advanceFundBO.getAdvanceFund(req.getCode());
-        if (!EAdvanceFundNode.PARENT_AREA.getCode().equals(
-            data.getCurNodeCode())
-                && !EAdvanceFundNode.BRANCH_AREA.getCode().equals(
-                    data.getCurNodeCode())) {
+        String preNodeCode = data.getCurNodeCode();// 当前节点
+        if (!EAdvanceFundNode.PARENT_AREA.getCode().equals(preNodeCode)
+                && !EAdvanceFundNode.BRANCH_AREA.getCode().equals(preNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是垫资流程区域总经理审核节点，不能操作");
         }
-        String preNodeCode = data.getCurNodeCode();// 当前节点
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             data.setCurNodeCode(nodeFlowBO
                 .getNodeFlowByCurrentNode(preNodeCode).getNextNode());
-        } else if (EApproveResult.NOT_PASS.getCode().equals(
-            req.getApproveResult())) {
+        } else {
             data.setCurNodeCode(nodeFlowBO
                 .getNodeFlowByCurrentNode(preNodeCode).getBackNode());
         }
         EBizLogType refType = null;
         if (EAdvanceType.PARENT_BIZ.getCode().equals(data.getType())) {
             refType = EBizLogType.ADVANCE_FUND_PARENT;
-        } else if (EAdvanceType.BRANCH_BIZ.getCode().equals(data.getType())) {
+        } else {
             refType = EBizLogType.ADVANCE_FUND_BRANCH;
         }
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getBudgetCode(), refType,
             data.getCode(), preNodeCode, data.getCurNodeCode(),
             req.getApproveNote(), req.getOperator());
-
         advanceFundBO.refreshAreaAudit(data);
-
     }
 
     @Override
@@ -227,11 +218,9 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是垫资流程省分公司总经理审核节点，不能操作！");
         }
-        if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
-            // 审核通过
+        if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {// 审核通过
             if (EIsAdvanceFund.NO.getCode().equals(
-                advanceFund.getIsAdvanceFund())) {
-                // 不垫资
+                advanceFund.getIsAdvanceFund())) {// 不垫资
                 // 结束垫资流程 预算单进入银行放款流程第一步
                 BudgetOrder budgetOrder = budgetOrderBO
                     .getBudgetOrder(advanceFund.getBudgetCode());
@@ -239,11 +228,9 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
                     .getCompanyCode());
                 EBudgetOrderNode bankLoanNode = null;
                 if (ECity.WENZHOU.getValue().equals(company.getCityNo())) {
-                    // 本地业务
-                    bankLoanNode = EBudgetOrderNode.SALESMAN_SEND_LOGISTICS;
+                    bankLoanNode = EBudgetOrderNode.SALESMAN_SEND_LOGISTICS;// 本地业务
                 } else {
-                    // 外地业务
-                    bankLoanNode = EBudgetOrderNode.BRANCH_SEND_LOGISTICS;
+                    bankLoanNode = EBudgetOrderNode.BRANCH_SEND_LOGISTICS;// 外地业务
                 }
                 budgetOrder.setCurNodeCode(bankLoanNode.getCode());
                 // 日志记录预算单银行放款流程
@@ -251,12 +238,9 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
                     EBizLogType.BANK_LOAN_COMMIT, budgetOrder.getCode(),
                     budgetOrder.getCurNodeCode());
                 budgetOrderBO.refreshCurNodeCode(budgetOrder);
-
-                // 当前节点
-                String curNodeCode = budgetOrder.getCurNodeCode();
+                String curNodeCode = budgetOrder.getCurNodeCode();// 预算单当前节点
                 String nextNodeCode = nodeFlowBO.getNodeFlowByCurrentNode(
                     curNodeCode).getNextNode();
-
                 // 生成资料传递
                 logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
                     budgetOrder.getCode(), budgetOrder.getSaleUserId(),
@@ -267,14 +251,12 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
                 // 垫资单垫资流程结束 直接改节点到垫资流程的最后一个节点
                 EBizLogType eBizLogType = null;
                 if (EAdvanceType.PARENT_BIZ.getCode().equals(
-                    advanceFund.getType())) {
-                    // 总公司业务
+                    advanceFund.getType())) {// 总公司业务
                     advanceFund
                         .setCurNodeCode(EAdvanceFundNode.PARENT_ADVANCE_END
                             .getCode());
                     eBizLogType = EBizLogType.ADVANCE_FUND_PARENT;
-                } else {
-                    // 分公司业务
+                } else {// 分公司业务
                     advanceFund
                         .setCurNodeCode(EAdvanceFundNode.BRANCH_ADVANCE_END
                             .getCode());
@@ -286,22 +268,18 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
                     req.getApproveNote(), req.getOperator());
                 advanceFundBO.refreshProvinceAudit(advanceFund);
                 return;
-            } else {
-                // 垫资
-                // 继续向下走垫资流程
+            } else {// 垫资
                 advanceFund.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                    advanceFundPreNodeCode).getNextNode());
+                    advanceFundPreNodeCode).getNextNode());// 继续向下走垫资流程
             }
-        } else {
-            // 审核不通过
+        } else {// 审核不通过
             advanceFund.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
                 advanceFundPreNodeCode).getBackNode());
         }
         EBizLogType refType = null;
         if (EAdvanceType.PARENT_BIZ.getCode().equals(advanceFund.getType())) {
             refType = EBizLogType.ADVANCE_FUND_PARENT;
-        } else if (EAdvanceType.BRANCH_BIZ.getCode().equals(
-            advanceFund.getType())) {
+        } else {
             refType = EBizLogType.ADVANCE_FUND_BRANCH;
         }
         sysBizLogBO.saveNewAndPreEndSYSBizLog(advanceFund.getBudgetCode(),
@@ -314,12 +292,11 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
     @Override
     public void parentMakeBill(XN632173Req req) {
         AdvanceFund data = advanceFundBO.getAdvanceFund(req.getCode());
-        if (!EAdvanceFundNode.PARENT_MAKE_BILL.getCode().equals(
-            data.getCurNodeCode())) {
+        String preNodeCode = data.getCurNodeCode();
+        if (!EAdvanceFundNode.PARENT_MAKE_BILL.getCode().equals(preNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是垫资流程总公司制单节点，不能操作！");
         }
-        String preNodeCode = data.getCurNodeCode();
         data.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
             .getNextNode());
         sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getBudgetCode(),
@@ -331,10 +308,10 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
     @Override
     public void confirmPayCarDealer(XN632175Req req) {
         AdvanceFund data = advanceFundBO.getAdvanceFund(req.getCode());
-        if (!EAdvanceFundNode.PARENT_CAR_DEALER.getCode().equals(
-            data.getCurNodeCode())
+        String preNodeCode = data.getCurNodeCode();
+        if (!EAdvanceFundNode.PARENT_CAR_DEALER.getCode().equals(preNodeCode)
                 && !EAdvanceFundNode.BRANCH_CAR_DEALER.getCode().equals(
-                    data.getCurNodeCode())) {
+                    preNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是垫资流程确认打款给车行节点，不能操作");
         }
@@ -342,7 +319,6 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
             .getAdvanceFundAmount()));
         data.setAdvanceFundDatetime(DateUtil.strToDate(
             req.getAdvanceFundDatetime(), DateUtil.FRONT_DATE_FORMAT_STRING));
-
         CollectBankcard bankcard = collectBankcardBO.getCollectBankcard(req
             .getPayBankcardCode());
         SYSUser sysUser = sysUserBO.getUser(req.getOperator());
@@ -355,7 +331,6 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         data.setNote(req.getNote());
         data.setUpdater(req.getOperator());
         data.setUpdateDatetime(new Date());
-        String preNodeCode = data.getCurNodeCode();// 当前节点
         data.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(preNodeCode)
             .getNextNode());// 更新节点为垫资完成补全确认打款车行的日志不生成新日志
         advanceFundBO.confirmPayCarDealer(data);
@@ -375,11 +350,9 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         Department company = departmentBO.getDepartment(budgetOrder
             .getCompanyCode());
         String curNodeCode = null;
-        if (ECity.WENZHOU.getValue().equals(company.getCityNo())) {
-            // 本地业务
+        if (ECity.WENZHOU.getValue().equals(company.getCityNo())) {// 本地业务
             curNodeCode = EBudgetOrderNode.SALESMAN_SEND_LOGISTICS.getCode();
-        } else {
-            // 外地业务
+        } else {// 外地业务
             curNodeCode = EBudgetOrderNode.BRANCH_SEND_LOGISTICS.getCode();
         }
         budgetOrder.setCurNodeCode(curNodeCode);
