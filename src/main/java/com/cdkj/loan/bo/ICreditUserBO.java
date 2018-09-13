@@ -52,6 +52,6 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
 
     // 法院网查询结果录入
     public void refreshCourtNetworkResults(String code,
-            String courtNetworkResults);
+            String courtNetworkResults, String courtNetworkResultsRemark);
 
 }

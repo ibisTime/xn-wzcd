@@ -149,7 +149,8 @@ public class CreditAOImpl implements ICreditAO {
             CreditUser creditUser = new CreditUser();
             creditUser.setCreditCode(creditCode);
             creditUser.setRelation(child.getRelation());
-            if (ECreditUserRelation.SELF.getCode().equals(child.getRelation())) {
+            if (ECreditUserRelation.SELF.getCode()
+                .equals(child.getRelation())) {
                 applyuser++;
             }
             creditUser.setUserName(child.getUserName());
@@ -233,8 +234,8 @@ public class CreditAOImpl implements ICreditAO {
         // 更新当前节点
         if (EButtonCode.SEND.getCode().equals(req.getButtonCode())) {
             // 发送 更新节点
-            credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preCurNodeCode).getNextNode());
+            credit.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurNodeCode).getNextNode());
         }
         creditBO.refreshCredit(credit);
 
@@ -266,46 +267,48 @@ public class CreditAOImpl implements ICreditAO {
             data.setIdNoReverse(reqChild.getIdNoReverse());
             data.setAuthPdf(reqChild.getAuthPdf());
             data.setInterviewPic(reqChild.getInterviewPic());
-            data.setDkdyCount(StringValidater.toInteger(reqChild.getDkdyCount()));
-            data.setDkdyAmount(StringValidater.toLong(reqChild.getDkdyAmount()));
-            data.setDkdy2YearOverTimes(StringValidater.toInteger(reqChild
-                .getDkdy2YearOverTimes()));
-            data.setDkdyMaxOverAmount(StringValidater.toLong(reqChild
-                .getDkdyMaxOverAmount()));
-            data.setDkdyCurrentOverAmount(StringValidater.toLong(reqChild
-                .getDkdyCurrentOverAmount()));
-            data.setDkdy6MonthAvgAmount(StringValidater.toLong(reqChild
-                .getDkdy6MonthAvgAmount()));
+            data.setDkdyCount(
+                StringValidater.toInteger(reqChild.getDkdyCount()));
+            data.setDkdyAmount(
+                StringValidater.toLong(reqChild.getDkdyAmount()));
+            data.setDkdy2YearOverTimes(
+                StringValidater.toInteger(reqChild.getDkdy2YearOverTimes()));
+            data.setDkdyMaxOverAmount(
+                StringValidater.toLong(reqChild.getDkdyMaxOverAmount()));
+            data.setDkdyCurrentOverAmount(
+                StringValidater.toLong(reqChild.getDkdyCurrentOverAmount()));
+            data.setDkdy6MonthAvgAmount(
+                StringValidater.toLong(reqChild.getDkdy6MonthAvgAmount()));
 
-            data.setHkxyUnsettleCount(StringValidater.toInteger(reqChild
-                .getHkxyUnsettleCount()));
-            data.setHkxyUnsettleAmount(StringValidater.toLong(reqChild
-                .getHkxyUnsettleAmount()));
-            data.setHkxy2YearOverTimes(StringValidater.toInteger(reqChild
-                .getHkxy2YearOverTimes()));
-            data.setHkxyMonthMaxOverAmount(StringValidater.toLong(reqChild
-                .getHkxyMonthMaxOverAmount()));
-            data.setHkxy6MonthAvgAmount(StringValidater.toLong(reqChild
-                .getHkxy6MonthAvgAmount()));
-            data.setHkxyCurrentOverAmount(StringValidater.toLong(reqChild
-                .getHkxyCurrentOverAmount()));
+            data.setHkxyUnsettleCount(
+                StringValidater.toInteger(reqChild.getHkxyUnsettleCount()));
+            data.setHkxyUnsettleAmount(
+                StringValidater.toLong(reqChild.getHkxyUnsettleAmount()));
+            data.setHkxy2YearOverTimes(
+                StringValidater.toInteger(reqChild.getHkxy2YearOverTimes()));
+            data.setHkxyMonthMaxOverAmount(
+                StringValidater.toLong(reqChild.getHkxyMonthMaxOverAmount()));
+            data.setHkxy6MonthAvgAmount(
+                StringValidater.toLong(reqChild.getHkxy6MonthAvgAmount()));
+            data.setHkxyCurrentOverAmount(
+                StringValidater.toLong(reqChild.getHkxyCurrentOverAmount()));
 
             data.setXykCount(StringValidater.toInteger(reqChild.getXykCount()));
-            data.setXykCreditAmount(StringValidater.toLong(reqChild
-                .getXykCreditAmount()));
-            data.setXyk6MonthUseAmount(StringValidater.toLong(reqChild
-                .getXyk6MonthUseAmount()));
-            data.setXyk2YearOverTimes(StringValidater.toInteger(reqChild
-                .getXyk2YearOverTimes()));
-            data.setXykMonthMaxOverAmount(StringValidater.toLong(reqChild
-                .getXykMonthMaxOverAmount()));
-            data.setXykCurrentOverAmount(StringValidater.toLong(reqChild
-                .getXykCurrentOverAmount()));
+            data.setXykCreditAmount(
+                StringValidater.toLong(reqChild.getXykCreditAmount()));
+            data.setXyk6MonthUseAmount(
+                StringValidater.toLong(reqChild.getXyk6MonthUseAmount()));
+            data.setXyk2YearOverTimes(
+                StringValidater.toInteger(reqChild.getXyk2YearOverTimes()));
+            data.setXykMonthMaxOverAmount(
+                StringValidater.toLong(reqChild.getXykMonthMaxOverAmount()));
+            data.setXykCurrentOverAmount(
+                StringValidater.toLong(reqChild.getXykCurrentOverAmount()));
 
-            data.setOutGuaranteesCount(StringValidater.toInteger(reqChild
-                .getOutGuaranteesCount()));
-            data.setOutGuaranteesAmount(StringValidater.toLong(reqChild
-                .getOutGuaranteesAmount()));
+            data.setOutGuaranteesCount(
+                StringValidater.toInteger(reqChild.getOutGuaranteesCount()));
+            data.setOutGuaranteesAmount(
+                StringValidater.toLong(reqChild.getOutGuaranteesAmount()));
             data.setOutGuaranteesRemark(reqChild.getOutGuaranteesRemark());
             creditUserBO.saveCreditUser(data);
         }
@@ -351,16 +354,16 @@ public class CreditAOImpl implements ICreditAO {
     @Override
     public Paginable<Credit> queryCreditPageByRoleCode(int start, int limit,
             Credit condition) {
-        Department department = departmentBO.getDepartment(condition
-            .getCurrentUserCompanyCode());
+        Department department = departmentBO
+            .getDepartment(condition.getCurrentUserCompanyCode());
         if (department.getParentCode().equals("0")) {// 总公司
             condition.setCurrentUserCompanyCode(null);
         } else {// 分公司
             condition.setCompanyCode(null);
         }
 
-        Paginable<Credit> result = creditBO.getPaginableByRoleCode(start,
-            limit, condition);
+        Paginable<Credit> result = creditBO.getPaginableByRoleCode(start, limit,
+            condition);
         List<Credit> list = result.getList();
         for (Credit credit : list) {
             // 从征信人员表查申请人的客户姓名 手机号 身份证号
@@ -376,7 +379,8 @@ public class CreditAOImpl implements ICreditAO {
     public void primaryAudit(XN632113Req req) {
         Credit credit = creditBO.getCredit(req.getCode());
 
-        if (!ECreditNode.PRIMARYAUDIT.getCode().equals(credit.getCurNodeCode())) {
+        if (!ECreditNode.PRIMARYAUDIT.getCode()
+            .equals(credit.getCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是业务员初审节点，不能操作");
         }
@@ -384,8 +388,9 @@ public class CreditAOImpl implements ICreditAO {
         String preCurrentNode = credit.getCurNodeCode();
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             // 审核通过，改变节点
-            credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                credit.getCurNodeCode()).getNextNode());
+            credit.setCurNodeCode(
+                nodeFlowBO.getNodeFlowByCurrentNode(credit.getCurNodeCode())
+                    .getNextNode());
             // 征信人员
             List<CreditUser> userList = req.getCreditUserList();
             if (CollectionUtils.isEmpty(userList)) {
@@ -394,8 +399,8 @@ public class CreditAOImpl implements ICreditAO {
             }
             int i = 0;
             for (CreditUser creditUser : userList) {
-                if (ECreditUserRelation.SELF.getCode().equals(
-                    creditUser.getRelation())) {
+                if (ECreditUserRelation.SELF.getCode()
+                    .equals(creditUser.getRelation())) {
                     i = 1;
                 }
                 creditUser.setIsFirstAudit(EBoolean.YES.getCode());
@@ -413,8 +418,9 @@ public class CreditAOImpl implements ICreditAO {
             }
         } else {
             // 审核不通过
-            credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                credit.getCurNodeCode()).getBackNode());
+            credit.setCurNodeCode(
+                nodeFlowBO.getNodeFlowByCurrentNode(credit.getCurNodeCode())
+                    .getBackNode());
         }
         creditBO.refreshCreditNode(credit);
 
@@ -435,8 +441,8 @@ public class CreditAOImpl implements ICreditAO {
         String preCurrentNode = credit.getCurNodeCode();// 当前节点
         if (EApproveResult.PASS.getCode().equals(req.getApproveResult())) {
             // 审核通过，改变节点
-            credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preCurrentNode).getNextNode());
+            credit.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
             // 法院网查询结果录入
             for (XN632114ReqCNR courtNetworkResults : req
                 .getCourtNetworkResultsList()) {
@@ -450,7 +456,8 @@ public class CreditAOImpl implements ICreditAO {
                 }
                 creditUserBO.refreshCourtNetworkResults(
                     courtNetworkResults.getCode(),
-                    courtNetworkResults.getCourtNetworkResults());
+                    courtNetworkResults.getCourtNetworkResults(),
+                    courtNetworkResults.getCourtNetworkResultsRemark());
             }
             // 生成预算单
             BudgetOrder data = new BudgetOrder();
@@ -477,8 +484,8 @@ public class CreditAOImpl implements ICreditAO {
             data.setLoanBankCode(credit.getLoanBankCode());
 
             // 共还人信息
-            CreditUser ghUser = creditUserBO.getCreditUserByIsFirstAudit(
-                credit.getCode(), ELoanRole.GHR);
+            CreditUser ghUser = creditUserBO
+                .getCreditUserByIsFirstAudit(credit.getCode(), ELoanRole.GHR);
             if (ghUser != null) {
                 data.setGhRealName(ghUser.getUserName());
                 data.setGhIdNo(ghUser.getIdNo());
@@ -519,11 +526,11 @@ public class CreditAOImpl implements ICreditAO {
                     data.setGuarantor2IdPicz(dbUser2.getIdNoFront());
                     data.setGuarantor2IdPicf(dbUser2.getIdNoReverse());
                     data.setGuarantor2MonthIncome(dbUser2.getMonthIncome());
-                    data.setGuarantor2SettleInterest(dbUser2
-                        .getSettleInterest());
+                    data.setGuarantor2SettleInterest(
+                        dbUser2.getSettleInterest());
                     data.setGuarantor2Balance(dbUser2.getBalance());
-                    data.setGuarantor2JourShowIncome(dbUser2
-                        .getJourShowIncome());
+                    data.setGuarantor2JourShowIncome(
+                        dbUser2.getJourShowIncome());
                     data.setGuarantor2IsPrint(dbUser2.getIsPrint());
                     // 修改担保人是否一审
                     creditUserBO.refreshCreditUserIsFirstAudit(dbUser2);
@@ -542,9 +549,8 @@ public class CreditAOImpl implements ICreditAO {
             data.setIsEnd(EBoolean.NO.getCode());
             String budgetOrderCode = budgetOrderBO.saveBudgetOrder(data);
             // 预算单第一步 日志记录
-            sysBizLogBO.saveSYSBizLog(budgetOrderCode,
-                EBizLogType.BUDGET_ORDER, budgetOrderCode,
-                data.getCurNodeCode());
+            sysBizLogBO.saveSYSBizLog(budgetOrderCode, EBizLogType.BUDGET_ORDER,
+                budgetOrderCode, data.getCurNodeCode());
             // 征信单回写预算单编号
             credit.setBudgetCode(budgetOrderCode);
             creditBO.refreshCredit(credit);
@@ -554,8 +560,8 @@ public class CreditAOImpl implements ICreditAO {
                 credit.getCode(), preCurrentNode, req.getApproveNote(),
                 req.getOperator());
         } else {
-            credit.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                preCurrentNode).getBackNode());
+            credit.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(preCurrentNode).getBackNode());
             sysBizLogBO.saveNewAndPreEndSYSBizLog(credit.getCode(),
                 EBizLogType.CREDIT, credit.getCode(), preCurrentNode,
                 credit.getCurNodeCode(), req.getApproveNote(),
@@ -594,8 +600,8 @@ public class CreditAOImpl implements ICreditAO {
 
     private void init(Credit credit) {
         if (StringUtils.isNotBlank(credit.getCompanyCode())) {
-            Department department = departmentBO.getDepartment(credit
-                .getCompanyCode());
+            Department department = departmentBO
+                .getDepartment(credit.getCompanyCode());
             if (null != department) {
                 credit.setCompanyName(department.getName());
             }

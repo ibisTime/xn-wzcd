@@ -151,9 +151,10 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
 
     @Override
     public void refreshCourtNetworkResults(String code,
-            String courtNetworkResults) {
+            String courtNetworkResults, String courtNetworkResultsRemark) {
         CreditUser creditUser = getCreditUser(code);
         creditUser.setCourtNetworkResults(courtNetworkResults);
+        creditUser.setCourtNetworkResultsRemark(courtNetworkResultsRemark);
         creditUserDAO.refreshCourtNetworkResults(creditUser);
     }
 

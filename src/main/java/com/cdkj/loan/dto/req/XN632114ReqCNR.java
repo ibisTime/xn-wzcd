@@ -12,6 +12,9 @@ public class XN632114ReqCNR {
     @NotBlank
     private String courtNetworkResults;
 
+    // 法院网查询结果备注
+    private String courtNetworkResultsRemark;
+
     public String getCode() {
         return code;
     }
@@ -26,6 +29,14 @@ public class XN632114ReqCNR {
 
     public void setCourtNetworkResults(String courtNetworkResults) {
         this.courtNetworkResults = courtNetworkResults;
+    }
+
+    public String getCourtNetworkResultsRemark() {
+        return courtNetworkResultsRemark;
+    }
+
+    public void setCourtNetworkResultsRemark(String courtNetworkResultsRemark) {
+        this.courtNetworkResultsRemark = courtNetworkResultsRemark;
     }
 
 }
