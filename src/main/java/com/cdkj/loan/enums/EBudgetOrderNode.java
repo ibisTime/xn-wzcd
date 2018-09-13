@@ -20,7 +20,7 @@ public enum EBudgetOrderNode {
             "007_04", "理件岗理件"), SEND_BANK_MATERIALS("007_05", "寄件岗寄件"), BANK_LOAN_COMMIT(
             "007_06", "确认提交银行"), BANK_POINT_PUSH_LOAN_LIST("007_07",
             "银行驻点推送已放款名单"), CONFIRM_RECEIVABLES("007_08", "财务确认收款"), BANK_LOAN_ACHIEVE(
-            "007_09", "还款中"),REPAY_YES("007_10", "已还款"),
+            "007_09", "还款中"),REPAY_YES("007_10", "已还款"), JUDGE_BAD("007_11", "坏账"),
 
     LOCAL_PRINTPOST_PRINT("008_01", "打印岗打印"), LOCAL_COLLATEPOST_COLLATE(
             "008_02", "理件岗理件"), LOCAL_SENDPOST_SEND_BANK("008_03",

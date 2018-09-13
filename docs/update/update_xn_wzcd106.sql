@@ -89,3 +89,6 @@ ADD COLUMN `to_node_code` varchar(32) NULL COMMENT '收件节点' AFTER `from_no
 ADD COLUMN `status` varchar(4) NULL COMMENT '状态(0 未处理 1已处理)' AFTER `to_node_code`,
 ADD COLUMN `create_datetime` datetime NULL COMMENT '生成时间' AFTER `status`;
 
+------------------------------------------------------------------------------------------------------------
+
+INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('007_11', '坏账', '007');
