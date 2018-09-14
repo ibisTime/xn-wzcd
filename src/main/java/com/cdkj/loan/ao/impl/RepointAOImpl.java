@@ -213,14 +213,12 @@ public class RepointAOImpl implements IRepointAO {
     @Override
     public Paginable<Repoint> queryRepointPage(int start, int limit,
             Repoint condition) {
-
         Paginable<Repoint> paginable = repointBO.getPaginable(start, limit,
             condition);
         List<Repoint> list = paginable.getList();
         for (Repoint data : list) {
             init(data);
         }
-
         return paginable;
     }
 
@@ -248,7 +246,6 @@ public class RepointAOImpl implements IRepointAO {
             if (null != carDealer) {
                 data.setCarDealerName(carDealer.getFullName());
             }
-
         }
         if (StringUtils.isNotBlank(data.getCompanyCode())) {
             Department department = departmentBO.getDepartment(data
@@ -256,14 +253,12 @@ public class RepointAOImpl implements IRepointAO {
             if (null != department) {
                 data.setCarDealerName(department.getName());
             }
-
         }
         if (StringUtils.isNotBlank(data.getApplyUserId())) {
             SYSUser user = sysUserBO.getUser(data.getApplyUserId());
             if (null != user) {
                 data.setApplyUserName(user.getRealName());
             }
-
         }
         return data;
     }
