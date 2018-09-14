@@ -95,3 +95,16 @@ INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('007_11', '坏账', '00
 
 ALTER TABLE `tdq_advance_fund` 
 ADD COLUMN `fund_source` varchar(4) NULL COMMENT ' 金额来源(1财务部2预支款)' AFTER `is_advance_fund`;
+
+
+
+DROP TABLE IF EXISTS `tdh_overdue_record`;
+CREATE TABLE `tdh_overdue_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `biz_code` varchar(32) NOT NULL COMMENT '业务编号',
+  `customer_name` varchar(255) NOT NULL COMMENT '客户姓名',
+  `sign` varchar(4) NOT NULL COMMENT '标记',
+  `overdue_datetime` datetime NOT NULL COMMENT '逾期日期',
+  `overdue_amount` bigint(20) NOT NULL COMMENT '逾期金额',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='逾期记录';

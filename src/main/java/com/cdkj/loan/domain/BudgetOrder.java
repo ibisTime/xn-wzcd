@@ -991,10 +991,21 @@ public class BudgetOrder extends ABaseDO {
 
     private Integer fbhWarnDay;// 发保合预警天数
 
+    // 制卡操作人姓名
+    private String makeCardOperatorName;
+
     /*-------辅助字段-------*/
 
     public Long getReplaceRealRepayAmount() {
         return replaceRealRepayAmount;
+    }
+
+    public String getMakeCardOperatorName() {
+        return makeCardOperatorName;
+    }
+
+    public void setMakeCardOperatorName(String makeCardOperatorName) {
+        this.makeCardOperatorName = makeCardOperatorName;
     }
 
     public Long getFirstPayment() {

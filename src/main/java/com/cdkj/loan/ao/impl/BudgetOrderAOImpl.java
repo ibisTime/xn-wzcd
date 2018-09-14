@@ -3623,6 +3623,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             budgetOrder.setGuarantPrintName(user.getRealName());
         }
 
+        // 制卡操作人
+        if (StringUtils.isNotBlank(budgetOrder.getMakeCardOperator())) {
+            SYSUser user = sysUserBO.getUser(budgetOrder.getMakeCardOperator());
+            budgetOrder.setMakeCardOperatorName(user.getRealName());
+        }
+
         // 垫资表
         AdvanceFund advanceFund = advanceFundBO
             .getAdvanceFundPageByBudgetOrder(budgetOrder.getCode());

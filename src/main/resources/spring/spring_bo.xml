@@ -445,5 +445,9 @@
 	<bean id="companyClearanceBO" class="com.cdkj.loan.bo.impl.CompanyClearanceBOImpl">
 		<property name="paginableDAO" ref="companyClearanceDAOImpl"/>
 	</bean>
+	
+	<bean id="overdueRecordBO" class="com.cdkj.loan.bo.impl.OverdueRecordBOImpl">
+		<property name="paginableDAO" ref="overdueRecordDAOImpl"/>
+	</bean>
 
 </beans>

@@ -172,5 +172,6 @@
 		<typeAlias alias="sysBonuses" type="com.cdkj.loan.domain.SysBonuses" />
 		<typeAlias alias="performanceBond" type="com.cdkj.loan.domain.PerformanceBond" />
 		<typeAlias alias="companyClearance" type="com.cdkj.loan.domain.CompanyClearance" />
+		<typeAlias alias="overdueRecord" type="com.cdkj.loan.domain.OverdueRecord" />
 	</typeAliases>
 </configuration>
