@@ -269,6 +269,12 @@ public class RepayBiz extends ABaseDO {
     // 角色编号
     private String roleCode;
 
+    // 购车途径
+    private String shopWay;
+
+    // 汽车经销商编号
+    private String carDealerCode;
+
     // 车贷订单
     private BudgetOrder budgetOrder;
 
@@ -326,6 +332,22 @@ public class RepayBiz extends ABaseDO {
 
     public void setActualRefunds(Long actualRefunds) {
         this.actualRefunds = actualRefunds;
+    }
+
+    public String getShopWay() {
+        return shopWay;
+    }
+
+    public void setShopWay(String shopWay) {
+        this.shopWay = shopWay;
+    }
+
+    public String getCarDealerCode() {
+        return carDealerCode;
+    }
+
+    public void setCarDealerCode(String carDealerCode) {
+        this.carDealerCode = carDealerCode;
     }
 
     public String getCompanyCode() {

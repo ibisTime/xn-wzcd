@@ -132,6 +132,12 @@
 			<if test="roleCode != null and roleCode != '' ">
 				AND r.role_code = #{roleCode}
 			</if>
+			<if test="shopWay != null and shopWay != '' ">
+				AND b.shop_way = #{shopWay}
+			</if>
+			<if test="carDealerCode != null and carDealerCode != '' ">
+				AND b.car_dealer_code = #{carDealerCode}
+			</if>
 			
 			<if test="isAdvanceSettled != null and isAdvanceSettled != '' ">
 				AND t.is_advance_settled = #{isAdvanceSettled}
@@ -268,7 +274,7 @@
 		,t.team_code
 		,t.is_logistics
 		FROM
-		tdh_repay_biz t
+		tdh_repay_biz t left join tdq_budget_order b on t.ref_code = b.code
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -483,8 +489,8 @@
 	
 	<select id="select_repayBiz_count" parameterType="repayBiz"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM tdh_repay_biz t
-		<include refid="where_condition" />
+		SELECT count(1) FROM (SELECT distinct t.code FROM tdh_repay_biz t left join tdq_budget_order b on t.ref_code = b.code
+		<include refid="where_condition" />) tq
 	</select>
 
 	<select id="select_repayBiz_count_byRoleCode" parameterType="repayBiz"

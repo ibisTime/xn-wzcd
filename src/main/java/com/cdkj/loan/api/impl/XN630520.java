@@ -35,6 +35,7 @@ public class XN630520 extends AProcessor {
         condition.setIsImplementAgain(req.getIsImplementAgain());
         condition.setCurNodeCodeList(req.getCurNodeCodeList());
         condition.setCurNodeCode(req.getCurNodeCode());
+        condition.setCompanyCode(req.getCompanyCode());
 
         condition.setKeyWord(req.getKeyWord());
         String orderColumn = req.getOrderColumn();
