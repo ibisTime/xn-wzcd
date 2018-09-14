@@ -1324,7 +1324,9 @@ public class RepayBizAOImpl implements IRepayBizAO {
         repayBiz.setRepayPlanList(repayPlanList);
         Long actualRefunds = 0L;
         for (RepayPlan repayPlan : repayPlanList) {
-            actualRefunds += repayPlan.getDeposit();
+            if (repayPlan.getDeposit() != null) {
+                actualRefunds += repayPlan.getDeposit();
+            }
         }
         repayBiz.setActualRefunds(actualRefunds);
         RepayPlan repayPlan = repayPlanBO
