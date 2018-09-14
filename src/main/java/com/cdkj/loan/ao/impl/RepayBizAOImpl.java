@@ -750,7 +750,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         budgetOrder.setIsEnd(EBoolean.YES.getCode());
         budgetOrderBO.updateBudgetOrderEnd(budgetOrder);
 
-        // 还款计划的已还金额改为当月月供
+        // 还款计划的已还金额改为当月月供，剩余欠款改为0
         List<RepayPlan> repayPlans = repayPlanBO
             .queryRepayPlanListByRepayBizCode(req.getCode());
         for (RepayPlan repayPlan : repayPlans) {
@@ -759,6 +759,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
             } else {
                 repayPlan.setPayedAmount(data.getMonthAmount());
             }
+            repayPlan.setOverplusAmount(0L);
             repayPlanBO.refreshRepayPlanPayedAmount(repayPlan);
         }
 

@@ -499,6 +499,7 @@
 		UPDATE tdh_repay_plan
 		SET
 		payed_amount=#{payedAmount}
+		,overplus_amount=#{overplusAmount}
 		WHERE code=#{code}
 	</update>
 </mapper>
