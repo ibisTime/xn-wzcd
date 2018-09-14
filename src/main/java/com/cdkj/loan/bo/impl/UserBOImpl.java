@@ -132,8 +132,11 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     @Override
     public void refreshGreenSign(User data, String updater) {
         if (data != null) {
-            data.setSign(EUserSign.GREEN.getCode());
-            data.setSignDatetime(new Date());
+            // 如果原本是红名单和黄名单，状态不变；如果原本是绿名单，状态和时间不用变
+            if (EUserSign.WHITE.getCode().equals(data.getSign())) {
+                data.setSign(EUserSign.GREEN.getCode());
+                data.setSignDatetime(new Date());
+            }
             data.setTotalGreenCount(data.getTotalGreenCount() + 1);
             data.setUpdater(updater);
             data.setUpdateDatetime(new Date());
@@ -144,8 +147,12 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     @Override
     public void refreshYellowSign(User data, String updater) {
         if (data != null) {
-            data.setSign(EUserSign.YELLOW.getCode());
-            data.setSignDatetime(new Date());
+            // 如果原本是红名单，状态不变；如果原本是黄名单，状态和时间不用变
+            if (!EUserSign.RED.getCode().equals(data.getSign())
+                    && !EUserSign.YELLOW.getCode().equals(data.getSign())) {
+                data.setSign(EUserSign.YELLOW.getCode());
+                data.setSignDatetime(new Date());
+            }
             data.setTotalYellowCount(data.getTotalYellowCount() + 1);
             // 三次黄名单进入红名单
             if (data.getTotalYellowCount() >= 3) {
@@ -160,8 +167,11 @@ public class UserBOImpl extends PaginableBOImpl<User> implements IUserBO {
     @Override
     public void refreshRedSign(User data, String updater) {
         if (data != null) {
-            data.setSign(EUserSign.RED.getCode());
-            data.setSignDatetime(new Date());
+            // 如果原本是红名单，状态和时间不用变
+            if (!EUserSign.RED.getCode().equals(data.getSign())) {
+                data.setSign(EUserSign.RED.getCode());
+                data.setSignDatetime(new Date());
+            }
             data.setTotalRedCount(data.getTotalRedCount() + 1);
             data.setUpdater(updater);
             data.setUpdateDatetime(new Date());

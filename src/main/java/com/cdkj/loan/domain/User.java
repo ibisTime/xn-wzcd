@@ -59,7 +59,7 @@ public class User extends ABaseDO {
     // 状态
     private String status;
 
-    // 标记(0=白名单 1=绿名单 2=黄名单 3=红名单)
+    // 标记(0=白名单 1=绿名单 2=黄名单 3=红名单 4=黑名单)
     private String sign;
 
     // 标记日期
