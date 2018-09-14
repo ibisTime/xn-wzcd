@@ -12,14 +12,47 @@ public class XN630520Req extends APageReq {
 
     private String refType;// 关联类型
 
+    // 业务公司编号
+    private String companyCode;
+
+    // 汽车经销商编号
+    private String carDealerCode;
+
+    // 入档状态（0待入档1待补录2已入档）
+    private String enterFileStatus;
+
     private String keyWord;// 关键字
 
     private List<String> curNodeCodeList;// 节点
 
     private String curNodeCode;// 节点
-    // 是否恢复执行
 
+    // 是否恢复执行
     private String isImplementAgain;
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public String getCarDealerCode() {
+        return carDealerCode;
+    }
+
+    public void setCarDealerCode(String carDealerCode) {
+        this.carDealerCode = carDealerCode;
+    }
+
+    public String getEnterFileStatus() {
+        return enterFileStatus;
+    }
+
+    public void setEnterFileStatus(String enterFileStatus) {
+        this.enterFileStatus = enterFileStatus;
+    }
 
     public String getIsImplementAgain() {
         return isImplementAgain;
