@@ -92,3 +92,6 @@ ADD COLUMN `create_datetime` datetime NULL COMMENT '生成时间' AFTER `status`
 ------------------------------------------------------------------------------------------------------------
 
 INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('007_11', '坏账', '007');
+
+ALTER TABLE `tdq_advance_fund` 
+ADD COLUMN `fund_source` varchar(4) NULL COMMENT ' 金额来源(1财务部2预支款)' AFTER `is_advance_fund`;

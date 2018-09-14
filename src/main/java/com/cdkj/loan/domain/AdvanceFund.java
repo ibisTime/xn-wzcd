@@ -60,6 +60,9 @@ public class AdvanceFund extends ABaseDO {
     // 是否垫资
     private String isAdvanceFund;
 
+    // 金额来源(1财务部2预支款)
+    private String fundSource;
+
     // 收款账号编号
     private String collectBankcardCode;
 
@@ -194,6 +197,14 @@ public class AdvanceFund extends ABaseDO {
 
     public void setCollectBankName(String collectBankName) {
         this.collectBankName = collectBankName;
+    }
+
+    public String getFundSource() {
+        return fundSource;
+    }
+
+    public void setFundSource(String fundSource) {
+        this.fundSource = fundSource;
     }
 
     public Long getServiceCharge() {

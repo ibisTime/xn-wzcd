@@ -20,6 +20,7 @@
                            
 		<result column="loan_bank_code" property="loanBankCode" />
 		<result column="is_advance_fund" property="isAdvanceFund" />
+		<result column="fund_source" property="fundSource" />
 		<result column="collect_bankcard_code" property="collectBankcardCode" />
 		<result column="cur_node_code" property="curNodeCode" />
 		<result column="make_bill_note" property="makeBillNote" />
@@ -99,6 +100,7 @@
 		
 		,t.loan_bank_code
 		,t.is_advance_fund
+		,t.fund_source
 		,t.collect_bankcard_code
 		,t.cur_node_code
 		,t.make_bill_note
@@ -146,6 +148,7 @@
 		,t.gps_fee_way
 		,t.loan_bank_code
 		,t.is_advance_fund
+		,t.fund_source
 		,t.collect_bankcard_code
 		,t.cur_node_code
 		,t.make_bill_note
@@ -282,6 +285,7 @@
 		,apply_user = #{applyUser}
 		,apply_datetime = #{applyDatetime}
 		,is_advance_fund = #{isAdvanceFund}
+		,fund_source = #{fundSource}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>

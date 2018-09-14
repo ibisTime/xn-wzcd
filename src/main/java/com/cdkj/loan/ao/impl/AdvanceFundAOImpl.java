@@ -115,6 +115,7 @@ public class AdvanceFundAOImpl implements IAdvanceFundAO {
         data.setApplyDatetime(new Date());
         String isAdvanceFund = req.getIsAdvanceFund();
         data.setIsAdvanceFund(isAdvanceFund);
+        data.setFundSource(req.getFundSource());
         if (EIsAdvanceFund.YES.getCode().equals(isAdvanceFund)
                 && EFundSource.ADVANCE_FUND.getCode().equals(
                     req.getFundSource())) {// 垫资并且金额来源是预支款
