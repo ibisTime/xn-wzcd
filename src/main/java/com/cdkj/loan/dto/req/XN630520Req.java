@@ -26,9 +26,20 @@ public class XN630520Req extends APageReq {
     private List<String> curNodeCodeList;// 节点
 
     private String curNodeCode;// 节点
+    // 购车途径
+
+    private String shopWay;
 
     // 是否恢复执行
     private String isImplementAgain;
+
+    public String getShopWay() {
+        return shopWay;
+    }
+
+    public void setShopWay(String shopWay) {
+        this.shopWay = shopWay;
+    }
 
     public String getCompanyCode() {
         return companyCode;

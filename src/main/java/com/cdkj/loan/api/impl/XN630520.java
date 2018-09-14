@@ -36,6 +36,8 @@ public class XN630520 extends AProcessor {
         condition.setCurNodeCodeList(req.getCurNodeCodeList());
         condition.setCurNodeCode(req.getCurNodeCode());
         condition.setCompanyCode(req.getCompanyCode());
+        condition.setShopWay(req.getShopWay());
+        condition.setCarDealerCode(req.getCarDealerCode());
 
         condition.setKeyWord(req.getKeyWord());
         String orderColumn = req.getOrderColumn();
