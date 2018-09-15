@@ -30,13 +30,16 @@ public class XN632115Req extends APageReq {
     private String saleUserId;
 
     // 征信单编号
-    private String creditCode;
+    private String code;
 
     // 业务公司编号
     private String companyCode;
 
     // 角色编号
     private String roleCode;
+
+    // 节点
+    private String curNodeCode;
 
     private List<String> curNodeCodeList;// 节点
 
@@ -50,6 +53,14 @@ public class XN632115Req extends APageReq {
 
     public void setCompanyCode(String companyCode) {
         this.companyCode = companyCode;
+    }
+
+    public String getCurNodeCode() {
+        return curNodeCode;
+    }
+
+    public void setCurNodeCode(String curNodeCode) {
+        this.curNodeCode = curNodeCode;
     }
 
     public String getApplyDatetimeStart() {
@@ -100,12 +111,12 @@ public class XN632115Req extends APageReq {
         this.saleUserId = saleUserId;
     }
 
-    public String getCreditCode() {
-        return creditCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setCreditCode(String creditCode) {
-        this.creditCode = creditCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getRoleCode() {

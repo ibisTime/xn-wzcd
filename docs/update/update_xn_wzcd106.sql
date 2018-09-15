@@ -108,3 +108,28 @@ CREATE TABLE `tdh_overdue_record` (
   `overdue_amount` bigint(20) NOT NULL COMMENT '逾期金额',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='逾期记录';
+
+
+UPDATE `tsys_dict` SET `dkey`='guarant_gh_print_template_id', `dvalue`='担保工行套打模板' WHERE `id`='574';
+UPDATE `tsys_dict` SET `parent_key`='guarant_gh_print_template_id' WHERE `id`='575';
+UPDATE `tsys_dict` SET `parent_key`='guarant_zh_print_template_id' WHERE `id`='643';
+UPDATE `tsys_dict` SET `parent_key`='guarant_zh_print_template_id' WHERE `id`='644';
+UPDATE `tsys_dict` SET `parent_key`='guarant_zh_print_template_id' WHERE `id`='646';
+UPDATE `tsys_dict` SET `parent_key`='guarant_zh_print_template_id' WHERE `id`='649';
+UPDATE `tsys_dict` SET `parent_key`='guarant_jh_print_template_id' WHERE `id`='651';
+UPDATE `tsys_dict` SET `parent_key`='guarant_jh_print_template_id' WHERE `id`='652';
+UPDATE `tsys_dict` SET `parent_key`='guarant_jh_print_template_id' WHERE `id`='654';
+INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'guarant_zh_print_template_id', '担保中行套打模板', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'guarant_jh_print_template_id', '担保建行套打模板', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
+UPDATE `tsys_dict` SET `type`='1', `parent_key`='pledge_gh_print_template_id' WHERE `id`='688';
+UPDATE `tsys_dict` SET `dkey`='pledge_gh_print_template_id', `dvalue`='抵押工行套打模板' WHERE `id`='687';
+INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'pledge_zh_print_template_id', '抵押中行套打模板', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'pledge_jh_print_template_id', '抵押建行套打模板', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
+UPDATE `tsys_dict` SET `parent_key`='pledge_zh_print_template_id' WHERE `id`='645';
+UPDATE `tsys_dict` SET `parent_key`='pledge_jh_print_template_id' WHERE `id`='650';
+UPDATE `tsys_dict` SET `dkey`='release_gh_print_template_id', `dvalue`='解除抵押工行套打模板' WHERE `id`='689';
+UPDATE `tsys_dict` SET `parent_key`='release_gh_print_template_id' WHERE `id`='690';
+UPDATE `tsys_dict` SET `parent_key`='release_jh_print_template_id' WHERE `id`='653';
+INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'release_jh_print_template_id', '解除抵押建行套打模板', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
+UPDATE `tsys_dict` SET `parent_key`='release_zh_print_template_id' WHERE `id`='647';
+INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'release_zh_print_template_id', '解除抵押中行套打模板', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');

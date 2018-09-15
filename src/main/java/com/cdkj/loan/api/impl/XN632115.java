@@ -32,10 +32,11 @@ public class XN632115 extends AProcessor {
     @Override
     public Object doBusiness() throws BizException {
         Credit condition = new Credit();
-        condition.setCode(req.getCreditCode());
+        condition.setCode(req.getCode());
         condition.setLoanBankCode(req.getLoanBankCode());
         condition.setSaleUserId(req.getSaleUserId());
         condition.setCompanyCode(req.getCompanyCode());
+        condition.setCurNodeCode(req.getCurNodeCode());
         condition.setCurNodeCodeList(req.getCurNodeCodeList());
         condition.setApplyDatetimeStart(DateUtil.strToDate(
             req.getApplyDatetimeStart(), DateUtil.FRONT_DATE_FORMAT_STRING));
