@@ -5,6 +5,7 @@ import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
 import com.cdkj.loan.dto.req.XN632010Req;
+import com.cdkj.loan.dto.res.BooleanRes;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -23,7 +24,8 @@ public class XN632010 extends AProcessor {
 
     @Override
     public Object doBusiness() throws BizException {
-        return areaAO.addArea(req.getAreaNo(), req.getAreaName());
+        areaAO.addArea(req.getAreaNo(), req.getAreaName());
+        return new BooleanRes(true);
     }
 
     @Override

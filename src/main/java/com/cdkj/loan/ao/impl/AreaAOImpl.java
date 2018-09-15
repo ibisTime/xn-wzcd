@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IAreaAO;
 import com.cdkj.loan.bo.IAreaBO;
@@ -25,24 +26,24 @@ public class AreaAOImpl implements IAreaAO {
     private IAreaBO areaBO;
 
     @Override
+    @Transactional
     public int addArea(String areaNo, String areaName) {
         Area data = new Area();
         data.setAreaNo(areaNo);
+        Area area = areaBO.getArea(data);
+        if (area != null) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "身份证区域号已存在，请勿重复添加!");
+        }
+        data.setAreaNo(null);// 置空，只查名称
         data.setAreaName(areaName);
         Area domain = areaBO.getArea(data);
         if (null != domain) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "记录已存在，请勿重复添加。");
+                "身份证区域名称已存在，请勿重复添加!");
         }
-
-        areaBO.saveArea(data);
-
-        // 获取新纪录id
-        Area area = areaBO.getArea(data);
-        if (null == area) {
-            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "添加记录失败。");
-        }
-        return area.getId();
+        data.setAreaNo(areaNo);// 填充
+        return areaBO.saveArea(data);
     }
 
     @Override
