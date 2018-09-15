@@ -133,3 +133,6 @@ UPDATE `tsys_dict` SET `parent_key`='release_jh_print_template_id' WHERE `id`='6
 INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'release_jh_print_template_id', '解除抵押建行套打模板', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
 UPDATE `tsys_dict` SET `parent_key`='release_zh_print_template_id' WHERE `id`='647';
 INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'release_zh_print_template_id', '解除抵押中行套打模板', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
+
+ALTER TABLE `tdq_budget_order` 
+ADD COLUMN `zf_finance_remark` varchar(255) NULL COMMENT '作废备注' AFTER `zf_fk_bill_pdf`;

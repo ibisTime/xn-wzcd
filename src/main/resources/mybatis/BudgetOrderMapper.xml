@@ -309,7 +309,8 @@
 		<result column="zf_sk_bankcard_code" property="zfSkBankcardCode" />
 		<result column="zf_sk_receipt_datetime" property="zfSkReceiptDatetime" />
 		<result column="zf_fk_bill_pdf" property="zfFkBillPdf" />
-		
+		<result column="zf_finance_remark" property="zfFinanceRemark" />
+
 		<result column="make_card_status" property="makeCardStatus" />
 		<result column="make_card_operator" property="makeCardOperator" />
 		<result column="make_card_remark" property="makeCardRemark" />
@@ -718,6 +719,7 @@
 		,t.zf_sk_bankcard_code
 		,t.zf_sk_receipt_datetime
 		,t.zf_fk_bill_pdf
+		,t.zf_finance_remark
 		
 		,t.make_card_status
 		,t.make_card_operator
@@ -1014,6 +1016,7 @@
 		,t.zf_sk_bankcard_code
 		,t.zf_sk_receipt_datetime
 		,t.zf_fk_bill_pdf
+		,t.zf_finance_remark
 		
 		,t.make_card_status
 		,t.make_card_operator
@@ -1301,6 +1304,7 @@
 		,t.zf_sk_bankcard_code
 		,t.zf_sk_receipt_datetime
 		,t.zf_fk_bill_pdf
+		,t.zf_finance_remark
 		
 		,t.make_card_status
 		,t.make_card_operator
@@ -2076,7 +2080,7 @@
 		zf_sk_amount = #{zfSkAmount}
 		,zf_sk_bankcard_code = #{zfSkBankcardCode}
 		,zf_sk_receipt_datetime = #{zfSkReceiptDatetime}
-		,zf_fk_bill_pdf = #{zfFkBillPdf}
+		,zf_finance_remark = #{zfFinanceRemark}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}
 	</update>

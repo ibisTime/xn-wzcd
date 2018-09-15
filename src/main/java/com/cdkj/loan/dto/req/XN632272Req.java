@@ -20,7 +20,11 @@ public class XN632272Req {
     @NotBlank
     private String zfSkReceiptDatetime;
 
+    // 备注
+    private String zfFinanceRemark;
+
     // 操作人
+    @NotBlank
     private String operator;
 
     public String getOperator() {
@@ -29,6 +33,14 @@ public class XN632272Req {
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getZfFinanceRemark() {
+        return zfFinanceRemark;
+    }
+
+    public void setZfFinanceRemark(String zfFinanceRemark) {
+        this.zfFinanceRemark = zfFinanceRemark;
     }
 
     public String getCode() {

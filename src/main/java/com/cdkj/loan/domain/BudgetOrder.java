@@ -819,6 +819,9 @@ public class BudgetOrder extends ABaseDO {
     // 作废付款水单
     private String zfFkBillPdf;
 
+    // 作废备注
+    private String zfFinanceRemark;
+
     // 制卡状态
     private String makeCardStatus;
 
@@ -3360,6 +3363,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setZfFkBillPdf(String zfFkBillPdf) {
         this.zfFkBillPdf = zfFkBillPdf;
+    }
+
+    public String getZfFinanceRemark() {
+        return zfFinanceRemark;
+    }
+
+    public void setZfFinanceRemark(String zfFinanceRemark) {
+        this.zfFinanceRemark = zfFinanceRemark;
     }
 
     public String getCurNodeCode() {
