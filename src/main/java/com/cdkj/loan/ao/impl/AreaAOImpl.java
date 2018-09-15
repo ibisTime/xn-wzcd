@@ -9,6 +9,7 @@ import com.cdkj.loan.ao.IAreaAO;
 import com.cdkj.loan.bo.IAreaBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Area;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.exception.BizException;
 
 /**
@@ -28,8 +29,10 @@ public class AreaAOImpl implements IAreaAO {
         Area data = new Area();
         data.setAreaNo(areaNo);
         data.setAreaName(areaName);
-        if (null != areaBO.getArea(data)) {
-            throw new BizException("xn0000", "记录已存在，请勿重复添加。");
+        Area domain = areaBO.getArea(data);
+        if (null != domain) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "记录已存在，请勿重复添加。");
         }
 
         areaBO.saveArea(data);
@@ -37,7 +40,7 @@ public class AreaAOImpl implements IAreaAO {
         // 获取新纪录id
         Area area = areaBO.getArea(data);
         if (null == area) {
-            throw new BizException("xn0000", "添加记录失败。");
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(), "添加记录失败。");
         }
         return area.getId();
     }

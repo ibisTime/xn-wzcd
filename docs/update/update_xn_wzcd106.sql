@@ -136,3 +136,54 @@ INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`,
 
 ALTER TABLE `tdq_budget_order` 
 ADD COLUMN `zf_finance_remark` varchar(255) NULL COMMENT '作废备注' AFTER `zf_fk_bill_pdf`;
+
+DELETE FROM `tsys_dict` WHERE `id`='574';
+DELETE FROM `tsys_dict` WHERE `id`='575';
+DELETE FROM `tsys_dict` WHERE `id`='643';
+DELETE FROM `tsys_dict` WHERE `id`='644';
+DELETE FROM `tsys_dict` WHERE `id`='645';
+DELETE FROM `tsys_dict` WHERE `id`='646';
+DELETE FROM `tsys_dict` WHERE `id`='647';
+DELETE FROM `tsys_dict` WHERE `id`='649';
+DELETE FROM `tsys_dict` WHERE `id`='650';
+DELETE FROM `tsys_dict` WHERE `id`='651';
+DELETE FROM `tsys_dict` WHERE `id`='652';
+DELETE FROM `tsys_dict` WHERE `id`='653';
+DELETE FROM `tsys_dict` WHERE `id`='654';
+DELETE FROM `tsys_dict` WHERE `id`='687';
+DELETE FROM `tsys_dict` WHERE `id`='688';
+DELETE FROM `tsys_dict` WHERE `id`='689';
+DELETE FROM `tsys_dict` WHERE `id`='690';
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'guarant_gh_print_template_id','担保工行套打模板','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','guarant_gh_print_template_id','1','工行','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'guarant_zh_print_template_id','担保中行套打模板','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','guarant_zh_print_template_id','2','中行总对总-手续费分期','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','guarant_zh_print_template_id','3','中行总对总 手续费一次性','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','guarant_zh_print_template_id','5','中行 传统','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','guarant_zh_print_template_id','8','中行总对总-附加费\r','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'guarant_jh_print_template_id','担保建行套打模板','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','guarant_jh_print_template_id','10','建设银行-服务费','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','guarant_jh_print_template_id','11','建设银行-附加贷','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','guarant_jh_print_template_id','13','建设银行-信用+担保','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'pledge_zh_print_template_id','抵押中行套打模板','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','pledge_zh_print_template_id','4','中国银行  抵押','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'pledge_gh_print_template_id','抵押工行套打模板','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','pledge_gh_print_template_id','1','工行','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'pledge_jh_print_template_id','抵押建行套打模板','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','pledge_jh_print_template_id','9','建设银行-抵押','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'release_jh_print_template_id','解除抵押建行套打模板','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','release_jh_print_template_id','12','建设银行-解除','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'release_gh_print_template_id','解除抵押工行套打模板','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','release_gh_print_template_id','1','工行','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'release_zh_print_template_id','解除抵押中行套打模板','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','release_zh_print_template_id','6','中行解除抵押 ','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
+
