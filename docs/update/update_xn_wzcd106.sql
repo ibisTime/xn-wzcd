@@ -89,12 +89,11 @@ ADD COLUMN `to_node_code` varchar(32) NULL COMMENT '收件节点' AFTER `from_no
 ADD COLUMN `status` varchar(4) NULL COMMENT '状态(0 未处理 1已处理)' AFTER `to_node_code`,
 ADD COLUMN `create_datetime` datetime NULL COMMENT '生成时间' AFTER `status`;
 
-------------------------------------------------------------------------------------------------------------
 
 INSERT INTO `tsys_node` (`code`, `name`, `type`) VALUES ('007_11', '坏账', '007');
 
 ALTER TABLE `tdq_advance_fund` 
-ADD COLUMN `fund_source` varchar(4) NULL COMMENT ' 金额来源(1财务部2预支款)' AFTER `is_advance_fund`;
+ADD COLUMN `fund_source` varchar(4) NULL COMMENT '金额来源(1财务部2预支款)' AFTER `is_advance_fund`;
 
 
 
@@ -109,6 +108,7 @@ CREATE TABLE `tdh_overdue_record` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='逾期记录';
 
+------------------------------------------------------------------------------------------------------------
 
 UPDATE `tsys_dict` SET `dkey`='guarant_gh_print_template_id', `dvalue`='担保工行套打模板' WHERE `id`='574';
 UPDATE `tsys_dict` SET `parent_key`='guarant_gh_print_template_id' WHERE `id`='575';
