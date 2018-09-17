@@ -467,9 +467,16 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.3.6</version>
+			<version>4.5.2</version>
 		</dependency>
-
+		
+		
+		<!-- https://mvnrepository.com/artifact/net.sourceforge.htmlunit/htmlunit -->
+		<dependency>
+		    <groupId>net.sourceforge.htmlunit</groupId>
+		    <artifactId>htmlunit</artifactId>
+		    <version>2.22</version>
+		</dependency>
 
 	</dependencies>
 	<!-- 解决每次更新maven自动更改jdk1.5办法 -->
@@ -487,5 +494,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	
 </project>
