@@ -1,5 +1,7 @@
 package com.cdkj.loan.dto.req;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 确认抵押完成
  * @author: silver 
@@ -9,15 +11,23 @@ package com.cdkj.loan.dto.req;
 public class XN632191Req {
 
     // 预算单编号
+    @NotBlank
     private String code;
 
+    // 车牌号码
+    @NotBlank
+    private String carNumber;
+
     // 绿大本编号
+    @NotBlank
     private String greenBigCode;
 
     // 绿大本扫描件
+    @NotBlank
     private String greenBigSmj;
 
     // 操作人
+    @NotBlank
     private String operator;
 
     public String getCode() {
@@ -26,6 +36,14 @@ public class XN632191Req {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getCarNumber() {
+        return carNumber;
+    }
+
+    public void setCarNumber(String carNumber) {
+        this.carNumber = carNumber;
     }
 
     public String getGreenBigCode() {

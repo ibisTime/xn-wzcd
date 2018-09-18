@@ -234,6 +234,15 @@ public class BudgetOrder extends ABaseDO {
     // 营业执照
     private String license;
 
+    // 贷款人公司名称
+    private String lenderCompanyName;
+
+    // 组织机构代码证
+    private String organizationCodeCard;
+
+    // 代码证上的地址
+    private String codeCardAddress;
+
     // 提供场地证明
     private String isSiteProve;
 
@@ -1237,6 +1246,30 @@ public class BudgetOrder extends ABaseDO {
 
     public void setGuarantorCompanyAddress(String guarantorCompanyAddress) {
         this.guarantorCompanyAddress = guarantorCompanyAddress;
+    }
+
+    public String getLenderCompanyName() {
+        return lenderCompanyName;
+    }
+
+    public void setLenderCompanyName(String lenderCompanyName) {
+        this.lenderCompanyName = lenderCompanyName;
+    }
+
+    public String getOrganizationCodeCard() {
+        return organizationCodeCard;
+    }
+
+    public void setOrganizationCodeCard(String organizationCodeCard) {
+        this.organizationCodeCard = organizationCodeCard;
+    }
+
+    public String getCodeCardAddress() {
+        return codeCardAddress;
+    }
+
+    public void setCodeCardAddress(String codeCardAddress) {
+        this.codeCardAddress = codeCardAddress;
     }
 
     public String getGuarantApplyUserNote() {

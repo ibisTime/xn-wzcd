@@ -1,25 +1,36 @@
 package com.cdkj.loan.base;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import org.unitils.UnitilsJUnit4;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import com.cdkj.loan.common.AmountUtil;
+import com.cdkj.loan.core.StringValidater;
 
 public class TestJUnit extends UnitilsJUnit4 {
 
     public static void main(String[] args) throws IOException {
 
-        OkHttpClient client = new OkHttpClient();
+        // a)服务费=(实际利率-基准利率)*贷款额
+        // b)月供=((贷款额+服务费)*(1+基准利率))/贷款期数
+        double rate = 0.00500000;// 基准利率
+        String loanPeriods = "36";
+        String loanAmount = "100000";
+        String bankRate = "0.12";
+        BigDecimal bankRateD = StringValidater.toBigDecimal(bankRate);
+        BigDecimal rateD = new BigDecimal(rate);
 
-        Request request = new Request.Builder()
-            .url(
-                "http://apis.haoservice.com/idcard/VerifyIdcard?cardNo=14272719950821351X&realName=柴运来&key=9665866375902170")
-            .get().build();
+        BigDecimal fwRate = bankRateD.subtract(rateD);
+        Long poundage = AmountUtil.mul(StringValidater.toLong(loanAmount),
+            fwRate.doubleValue());// 服务费
+        Long amount = AmountUtil
+            .mul((StringValidater.toLong(loanAmount) + poundage), (rate + 1));
+        Long monthAmount = (long) AmountUtil.div(amount,
+            (StringValidater.toInteger(loanPeriods) - 1));// 月供
 
-        Response response = client.newCall(request).execute();
-        System.out.println(response);
+        System.out.println(String.valueOf(monthAmount));
+        System.out.println(String.valueOf(monthAmount));
+        System.out.println(String.valueOf(poundage));
     }
 }

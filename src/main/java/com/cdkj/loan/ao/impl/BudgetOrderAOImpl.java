@@ -169,6 +169,9 @@ import com.cdkj.loan.exception.BizException;
 public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Autowired
+    private IBudgetOrderAO budgetOrderAO;
+
+    @Autowired
     private IBudgetOrderBO budgetOrderBO;
 
     @Autowired
@@ -423,6 +426,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
         data.setIsLicense(req.getIsLicense());
         data.setLicense(req.getLicense());
+        data.setLenderCompanyName(req.getLenderCompanyName());
+        data.setOrganizationCodeCard(req.getOrganizationCodeCard());
+        data.setCodeCardAddress(req.getCodeCardAddress());
         data.setIsSiteProve(req.getIsSiteProve());
         data.setSiteProve(req.getSiteProve());
         data.setSiteArea(req.getSiteArea());
@@ -1192,7 +1198,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         String nextNodeCode = getNextNodeCode(preCurrentNode,
             EBoolean.YES.getCode());
         budgetOrder.setPledgeCurNodeCode(nextNodeCode);
-        budgetOrder.setCode(req.getCode());
+        budgetOrder.setCarNumber(req.getCarNumber());
         budgetOrder.setOperator(req.getOperator());
         budgetOrder.setOperateDatetime(new Date());
         budgetOrder.setGreenBigCode(req.getGreenBigCode());
@@ -2316,7 +2322,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     @Transactional
     public BudgetOrder pledgeContractPrint(XN632192Req req) {
-        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        BudgetOrder budgetOrder = budgetOrderAO.getBudgetOrder(req.getCode());
         if (!EBudgetOrderNode.LOCAL_PRINTPOST_PRINT.getCode()
             .equals(budgetOrder.getPledgeCurNodeCode())) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
@@ -2612,6 +2618,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 } else {
                     rate = bank.getRate36();
                 }
+                BigDecimal bankRateD = StringValidater.toBigDecimal(bankRate);
+                BigDecimal rateD = new BigDecimal(rate);
                 Long poundage = AmountUtil
                     .mul(StringValidater.toLong(loanAmount), rate);// 手续费
                 Double annualPoundage = AmountUtil.mulAB(annualPrincipal, rate);// 每期手续费
@@ -2628,7 +2636,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 // HighRate
                 Long highRate = AmountUtil.mul(
                     StringValidater.toLong(loanAmount),
-                    (StringValidater.toDouble(bankRate) - rate));// 高息金额
+                    bankRateD.subtract(rateD).doubleValue());// 高息金额
                 Double annualHighRate = AmountUtil.div(highRate,
                     StringValidater.toInteger(loanPeriods));// 高息金额每期
                 annualHighRate = Math.floor(annualHighRate);// 向下取整
@@ -2870,8 +2878,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             } else {
                 rate = bank.getRate36();
             }
+            BigDecimal bankRateD = StringValidater.toBigDecimal(bankRate);
+            BigDecimal rateD = new BigDecimal(rate);
             Long poundage = AmountUtil.mul(StringValidater.toLong(loanAmount),
-                (StringValidater.toDouble(bankRate) - rate));// 服务费
+                bankRateD.subtract(rateD).doubleValue());// 服务费
             Long amount = AmountUtil.mul(
                 (StringValidater.toLong(loanAmount) + poundage), (rate + 1));
             Long monthAmount = (long) AmountUtil.div(amount,

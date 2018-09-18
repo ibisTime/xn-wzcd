@@ -187,3 +187,14 @@ INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_d
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('0',NULL,'release_zh_print_template_id','解除抵押中行套打模板','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
 INSERT INTO `tsys_dict` (`type`,`parent_key`,`dkey`,`dvalue`,`updater`,`update_datetime`,`remark`,`company_code`,`system_code`) VALUES ('1','release_zh_print_template_id','6','中行解除抵押 ','USYS201800000000001','2018-08-15 17:32:12',NULL,'CD-CWZCD000020','CD-CWZCD000020');
 
+
+
+DELETE FROM `tsys_menu_role` WHERE `id`='425';
+DELETE FROM `tsys_menu_role` WHERE `id`='1708';
+DELETE FROM `tsys_menu_role` WHERE `id`='478';
+DELETE FROM `tsys_menu_role` WHERE `id`='1791';
+
+ALTER TABLE `tdq_budget_order` 
+ADD COLUMN `lender_company_name` TINYTEXT NULL COMMENT '贷款人公司名称' AFTER `license`,
+ADD COLUMN `organization_code_card` TINYTEXT NULL COMMENT '组织机构代码证' AFTER `lender_company_name`,
+ADD COLUMN `code_card_address` TINYTEXT NULL COMMENT '代码证上的地址' AFTER `organization_code_card`;

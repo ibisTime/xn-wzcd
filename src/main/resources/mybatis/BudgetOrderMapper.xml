@@ -87,6 +87,9 @@
 		<result column="is_license" property="isLicense" />
 		
 		<result column="license" property="license" />
+		<result column="lender_company_name" property="lenderCompanyName" />
+		<result column="organization_code_card" property="organizationCodeCard" />
+		<result column="code_card_address" property="codeCardAddress" />
 		<result column="is_site_prove" property="isSiteProve" />
 		<result column="site_prove" property="siteProve" />
 		<result column="site_area" property="siteArea" />
@@ -527,6 +530,9 @@
 		,t.house_invoice
 		,t.is_license
 		,t.license
+		,t.lender_company_name
+		,t.organization_code_card
+		,t.code_card_address
 		,t.is_site_prove
 		,t.site_prove
 		,t.site_area
@@ -830,6 +836,9 @@
 		,t.house_invoice
 		,t.is_license
 		,t.license
+		,t.lender_company_name
+		,t.organization_code_card
+		,t.code_card_address
 		,t.is_site_prove
 		,t.site_prove
 		,t.site_area
@@ -1142,6 +1151,9 @@
 		,t.house_invoice
 		,t.is_license
 		,t.license
+		,t.lender_company_name
+		,t.organization_code_card
+		,t.code_card_address
 		,t.is_site_prove
 		,t.site_prove
 		,t.site_area
@@ -1692,6 +1704,9 @@
 		,house_invoice = #{houseInvoice}
 		,is_license = #{isLicense}
 		,license = #{license}
+		,lender_company_name = #{lenderCompanyName}
+		,organization_code_card = #{organizationCodeCard}
+		,code_card_address = #{codeCardAddress}
 		,is_site_prove = #{isSiteProve}
 		,site_prove = #{siteProve}
 		
@@ -1878,6 +1893,7 @@
 		SET
 		pledge_cur_node_code = #{pledgeCurNodeCode}
 		,enter_file_status = #{enterFileStatus}
+		,car_number = #{carNumber}
 		,operator = #{operator}
 		,operate_datetime = #{operateDatetime}
 		,green_big_code = #{greenBigCode}
