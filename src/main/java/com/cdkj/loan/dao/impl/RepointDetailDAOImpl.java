@@ -15,8 +15,8 @@ import com.cdkj.loan.domain.RepointDetail;
  * @history:
  */
 @Repository("repointDetailDAOImpl")
-public class RepointDetailDAOImpl extends AMybatisTemplate implements
-        IRepointDetailDAO {
+public class RepointDetailDAOImpl extends AMybatisTemplate
+        implements IRepointDetailDAO {
 
     @Override
     public int insert(RepointDetail data) {
@@ -30,8 +30,8 @@ public class RepointDetailDAOImpl extends AMybatisTemplate implements
 
     @Override
     public RepointDetail select(RepointDetail condition) {
-        return super.select(NAMESPACE.concat("select_repointDetail"),
-            condition, RepointDetail.class);
+        return super.select(NAMESPACE.concat("select_repointDetail"), condition,
+            RepointDetail.class);
     }
 
     @Override
@@ -49,8 +49,8 @@ public class RepointDetailDAOImpl extends AMybatisTemplate implements
     @Override
     public List<RepointDetail> selectList(RepointDetail condition, int start,
             int count) {
-        return super.selectList(NAMESPACE.concat("select_repointDetail"),
-            start, count, condition, RepointDetail.class);
+        return super.selectList(NAMESPACE.concat("select_repointDetail"), start,
+            count, condition, RepointDetail.class);
     }
 
     @Override
@@ -74,6 +74,13 @@ public class RepointDetailDAOImpl extends AMybatisTemplate implements
     public void updateRepointDetailType(RepointDetail data) {
         super.update(NAMESPACE.concat("update_repointDetailType"), data);
 
+    }
+
+    @Override
+    public List<RepointDetail> selectListByCarDealer(RepointDetail condition) {
+        return super.selectList(
+            NAMESPACE.concat("select_repointDetail_byCarDealer"), condition,
+            RepointDetail.class);
     }
 
 }

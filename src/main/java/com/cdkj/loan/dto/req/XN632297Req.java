@@ -14,6 +14,9 @@ public class XN632297Req {
     // 汽车经销商编号
     private String carDealerCode;
 
+    // 收款账号(协议外返点手填)
+    private String accountNo;
+
     // 节点
     private String curNodeCode;
 
@@ -26,6 +29,14 @@ public class XN632297Req {
 
     public void setAccountCode(String accountCode) {
         this.accountCode = accountCode;
+    }
+
+    public String getAccountNo() {
+        return accountNo;
+    }
+
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
     }
 
     public String getCarDealerCode() {

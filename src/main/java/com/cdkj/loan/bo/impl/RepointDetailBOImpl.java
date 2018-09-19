@@ -41,8 +41,8 @@ public class RepointDetailBOImpl extends PaginableBOImpl<RepointDetail>
     public String saveRepointDetail(RepointDetail data) {
         String code = null;
         if (data != null) {
-            code = OrderNoGenerater.generate(EGeneratePrefix.REPOINT_DETAIL
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.REPOINT_DETAIL.getCode());
             data.setCode(code);
             repointDetailDAO.insert(data);
         }
@@ -138,5 +138,11 @@ public class RepointDetailBOImpl extends PaginableBOImpl<RepointDetail>
             data.setBudgetCode(code);
             repointDetailDAO.delete(data);
         }
+    }
+
+    @Override
+    public List<RepointDetail> queryRepointDetailListByCarDealer(
+            RepointDetail condition) {
+        return repointDetailDAO.selectListByCarDealer(condition);
     }
 }

@@ -1,5 +1,7 @@
 package com.cdkj.loan.dao;
 
+import java.util.List;
+
 import com.cdkj.loan.dao.base.IBaseDAO;
 import com.cdkj.loan.domain.RepointDetail;
 
@@ -14,4 +16,7 @@ public interface IRepointDetailDAO extends IBaseDAO<RepointDetail> {
     int deletePreRepointDetail(RepointDetail data);
 
     void updateRepointDetailType(RepointDetail data);
+
+    // 根据经销商编号查返点（去重）
+    List<RepointDetail> selectListByCarDealer(RepointDetail condition);
 }

@@ -42,4 +42,8 @@ public interface IRepointDetailBO extends IPaginableBO<RepointDetail> {
     // 根据预算单编号删除返点明细数据
     public void deleteRepointDetailByBudgetOrderCode(String code);
 
+    // 根据经销商编号查返点（去重）
+    public List<RepointDetail> queryRepointDetailListByCarDealer(
+            RepointDetail condition);
+
 }

@@ -50,6 +50,9 @@
 			<if test="accountCode != null and accountCode != '' ">
 				AND t.account_code = #{accountCode}
 			</if>
+			<if test="accountNo != null and accountNo != '' ">
+				AND t.account_no = #{accountNo}
+			</if>
 			<if test="type != null and type != '' ">
 				AND t.type = #{type}
 			</if>
@@ -91,6 +94,25 @@
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
 				t.${order}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="select_repointDetail_byCarDealer" parameterType="repointDetail" resultMap="repointDetail_DB_Result">
+		SELECT
+		t.account_no
+		,t.account_name
+		FROM
+		tdqt_repoint_detail t group by t.account_no
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+		<trim prefix="WHERE" prefixOverrides="AND | OR" >
+			<if test="accountNo != null and accountNo != '' ">
+				t.${accountNo}
 			</if>
 		</trim>
 	</select>

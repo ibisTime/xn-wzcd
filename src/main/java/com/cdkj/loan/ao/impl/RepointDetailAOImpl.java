@@ -83,8 +83,8 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
     }
 
     @Override
-    public Paginable<RepointDetail> queryRepointDetailPage(int start,
-            int limit, RepointDetail condition) {
+    public Paginable<RepointDetail> queryRepointDetailPage(int start, int limit,
+            RepointDetail condition) {
         return repointDetailBO.getPaginable(start, limit, condition);
     }
 
@@ -157,8 +157,8 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         Long fxAmount = getLong(data.getFxAmount());
         Long otherFee = getLong(data.getOtherFee());
         Long sxFee = 0L;// 收客户手续费合计：履约保证金+担保风险金+杂费
-        if (EServiceChargeWay.REPOINT.getCode().equals(
-            data.getServiceChargeWay())) {
+        if (EServiceChargeWay.REPOINT.getCode()
+            .equals(data.getServiceChargeWay())) {
             sxFee = lyAmount + fxAmount + otherFee;
         }
         Long gpsFee = 0L;// GPS费
@@ -166,13 +166,13 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
             gpsFee = getLong(data.getGpsFee());
         }
         actualRepointAmount = repointAmount - sxFee - gpsFee;
-        if (ERepointType.SINGLE.getCode().equals(
-            carDealerProtocol.getReturnPointType())) {
+        if (ERepointType.SINGLE.getCode()
+            .equals(carDealerProtocol.getReturnPointType())) {
             actualRepointAmount = actualRepointAmount
                     - getLong(carDealerProtocol.getReturnPointFee());
         }
-        if (ERepointType.PERCENT.getCode().equals(
-            carDealerProtocol.getReturnPointType())) {
+        if (ERepointType.PERCENT.getCode()
+            .equals(carDealerProtocol.getReturnPointType())) {
             actualRepointAmount = AmountUtil.mul(actualRepointAmount,
                 (1 - getDouble(carDealerProtocol.getReturnPointRate())));
         }
@@ -185,10 +185,10 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         for (CollectBankcard collectBankcard : list) {
             RepointDetail repointDetail = new RepointDetail();
             Double pointRate = getDouble(collectBankcard.getPointRate());
-            repointDetail.setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER
-                .getCode());
-            repointDetail.setRepointAmount(AmountUtil.mul(actualRepointAmount,
-                pointRate));// 实际返点金额*返点比例=实际给汽车经销商返点的金额
+            repointDetail
+                .setUseMoneyPurpose(EUseMoneyPurpose.PROTOCOL_INNER.getCode());
+            repointDetail.setRepointAmount(
+                AmountUtil.mul(actualRepointAmount, pointRate));// 实际返点金额*返点比例=实际给汽车经销商返点的金额
             repointDetail.setAccountCode(collectBankcard.getCode());
             repointDetail.setBenchmarkRate(benchmarkRate);
             returnList.add(repointDetail);
@@ -210,5 +210,11 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         } else {
             return (Double) obj;
         }
+    }
+
+    @Override
+    public List<RepointDetail> queryRepointDetailListByCarDealer(
+            RepointDetail condition) {
+        return repointDetailBO.queryRepointDetailListByCarDealer(condition);
     }
 }

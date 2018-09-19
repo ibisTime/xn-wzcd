@@ -24,8 +24,8 @@ public interface IRepointDetailAO {
 
     public int editRepointDetail(RepointDetail data);
 
-    public Paginable<RepointDetail> queryRepointDetailPage(int start,
-            int limit, RepointDetail condition);
+    public Paginable<RepointDetail> queryRepointDetailPage(int start, int limit,
+            RepointDetail condition);
 
     public RepointDetail getRepointDetail(String code);
 
@@ -34,5 +34,8 @@ public interface IRepointDetailAO {
 
     // 列表查询返点明细 (按汽车经销商编号和返点账号编号)
     public List<RepointDetail> queryRepointDetailList(RepointDetail condition);
+
+    // 根据经销商编号查返点（去重）
+    public Object queryRepointDetailListByCarDealer(RepointDetail condition);
 
 }
