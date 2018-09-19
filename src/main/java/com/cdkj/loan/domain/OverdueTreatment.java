@@ -64,6 +64,16 @@ public class OverdueTreatment extends ABaseDO {
     // 操作人名称
     private String operatorName;
 
+    private RepayPlan repayPlan;
+
+    public RepayPlan getRepayPlan() {
+        return repayPlan;
+    }
+
+    public void setRepayPlan(RepayPlan repayPlan) {
+        this.repayPlan = repayPlan;
+    }
+
     public String getCollectionType() {
         return collectionType;
     }

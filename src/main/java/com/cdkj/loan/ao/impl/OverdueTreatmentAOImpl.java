@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IOverdueTreatmentAO;
+import com.cdkj.loan.ao.IRepayPlanAO;
 import com.cdkj.loan.bo.IOverdueTreatmentBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.OverdueTreatment;
+import com.cdkj.loan.domain.RepayPlan;
 import com.cdkj.loan.domain.SYSUser;
 
 @Service
@@ -21,6 +23,9 @@ public class OverdueTreatmentAOImpl implements IOverdueTreatmentAO {
 
     @Autowired
     private ISYSUserBO sysUserBO;
+
+    @Autowired
+    private IRepayPlanAO repayPlanAO;
 
     @Override
     public String addOverdueTreatment(OverdueTreatment data) {
@@ -58,6 +63,9 @@ public class OverdueTreatmentAOImpl implements IOverdueTreatmentAO {
     public OverdueTreatment getOverdueTreatment(String code) {
         OverdueTreatment overdueTreatment = overdueTreatmentBO
             .getOverdueTreatment(code);
+        RepayPlan repayPlan = repayPlanAO
+            .getRepayPlan(overdueTreatment.getRepayPlanCode());
+        overdueTreatment.setRepayPlan(repayPlan);
         initOverdueTreatment(overdueTreatment);
         return overdueTreatment;
     }

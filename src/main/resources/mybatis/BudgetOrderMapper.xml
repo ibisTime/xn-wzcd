@@ -958,6 +958,12 @@
 		,t.insurance_effect_datetime
 		,t.insurance_company
 		,t.insurance_bank
+		,t.insurance_remind_count
+		,t.insurance_apply_datetime
+		,t.insurance_end_datetime
+		,t.insurance_force_pdf
+		,t.insurance_business_pdf
+		,t.insurance_note
 		,t.guarantee_contract_code
 		,t.bank_contract_code
 		,t.contract_sign_date
@@ -1249,6 +1255,12 @@
 		,t.insurance_effect_datetime
 		,t.insurance_company
 		,t.insurance_bank
+		,t.insurance_remind_count
+		,t.insurance_apply_datetime
+		,t.insurance_end_datetime
+		,t.insurance_force_pdf
+		,t.insurance_business_pdf
+		,t.insurance_note
 		,t.guarantee_contract_code
 		,t.bank_contract_code
 		,t.contract_sign_date
