@@ -103,18 +103,14 @@
 		t.account_no
 		,t.account_name
 		FROM
-		tdqt_repoint_detail t group by t.account_no
+		tdqt_repoint_detail t inner join tb_car_dealer tcd on t.car_dealer_code=tcd.code and t.account_no is not null
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
 				t.${order}
 			</if>
 		</trim>
-		<trim prefix="WHERE" prefixOverrides="AND | OR" >
-			<if test="accountNo != null and accountNo != '' ">
-				t.${accountNo}
-			</if>
-		</trim>
+		group by t.account_no
 	</select>
 
 	<select id="select_repointDetail_count" parameterType="repointDetail"
