@@ -156,6 +156,12 @@ public class CreditAOImpl implements ICreditAO {
             creditUser.setUserName(child.getUserName());
             creditUser.setLoanRole(child.getLoanRole());
             creditUser.setMobile(child.getMobile());
+            CreditUser domain = creditUserBO
+                .getCreditUserByMobile(child.getMobile());
+            if (domain != null && domain.getUserName() != child.getUserName()) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "手机号已存在，请重新输入！");
+            }
 
             CreditUser user = new CreditUser();
             user.setCreditCode(creditCode);

@@ -164,4 +164,11 @@ public class CreditUserBOImpl extends PaginableBOImpl<CreditUser>
         creditUserDAO.updateCreditUserIsFirstAudit(creditUser);
     }
 
+    @Override
+    public CreditUser getCreditUserByMobile(String mobile) {
+        CreditUser creditUser = new CreditUser();
+        creditUser.setMobile(mobile);
+        return creditUserDAO.select(creditUser);
+    }
+
 }

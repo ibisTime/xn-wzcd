@@ -3617,6 +3617,19 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (StringUtils.isNotBlank(budgetOrder.getRepayBizCode())) {
             RepayBiz repayBiz = repayBizBO
                 .getRepayBiz(budgetOrder.getRepayBizCode());
+            // 保证金金额
+            RepayPlan condition = new RepayPlan();
+            condition.setRepayBizCode(repayBiz.getCode());
+            List<RepayPlan> repayPlanList = repayPlanBO
+                .queryRepayPlanList(condition);
+            Long actualRefunds = 0L;
+            for (RepayPlan repayPlan : repayPlanList) {
+                if (repayPlan.getDeposit() != null) {
+                    actualRefunds += repayPlan.getDeposit();
+                }
+            }
+            repayBiz.setActualRefunds(actualRefunds + repayBiz.getLyDeposit());
+
             budgetOrder.setRepayBiz(repayBiz);
             List<RepayPlan> planList = repayPlanBO
                 .queryRepayPlanListByRepayBizCode(

@@ -54,4 +54,6 @@ public interface ICreditUserBO extends IPaginableBO<CreditUser> {
     public void refreshCourtNetworkResults(String code,
             String courtNetworkResults, String courtNetworkResultsRemark);
 
+    public CreditUser getCreditUserByMobile(String mobile);
+
 }

@@ -60,7 +60,9 @@ public class ContractImportAOImpl implements IContractImportAO {
             if (budgetOrderList.size() == 1) {
                 BudgetOrder budgetOrder = budgetOrderList.get(0);
                 budgetOrder.setBankContractCode(contract.getContractCode());
-                budgetOrder.setBillDatetime(contract.getBillDatetime());
+                if (null != contract.getBillDatetime()) {
+                    budgetOrder.setBillDatetime(contract.getBillDatetime());
+                }
                 if (contract.getRepayBankDate() != null) {
                     budgetOrder.setRepayBankDate(contract.getRepayBankDate());
                 }

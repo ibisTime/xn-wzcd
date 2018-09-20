@@ -175,23 +175,7 @@
 	<update id="update_gps" parameterType="gps">
 		UPDATE tb_gps
 		SET
-		code = #{code}
-		,gps_dev_no = #{gpsDevNo}
-		,gps_type = #{gpsType} 
-		,company_code = #{companyCode}
-		,company_apply_status = #{companyApplyStatus}
-		
-		,company_apply_datetime = #{companyApplyDatetime}
-		,company_apply_code = #{companyApplyCode}
-		,apply_user = #{applyUser}
-		,apply_status = #{applyStatus}
-		,apply_datetime = #{applyDatetime}
-		
-		,apply_code = #{applyCode}
-		,use_status = #{useStatus}
-		,use_datetime = #{useDatetime}
-		,biz_code = #{bizCode}
-		,is_send_back = #{isSendBack}
+		is_send_back = #{isSendBack}
 		WHERE code = #{code}
 	</update>
 </mapper>
