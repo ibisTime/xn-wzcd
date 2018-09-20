@@ -782,6 +782,7 @@
 		,t.pre_loan_amount
 		,t.loan_amount
 		,t.bank_rate
+		,t.bank_benchmark_rate
 		,t.company_loan_cs
 		,t.pre_company_loan_cs
 		,t.is_advance_fund
@@ -1113,6 +1114,7 @@
 		,t.pre_loan_amount
 		,t.loan_amount
 		,t.bank_rate
+		,t.bank_benchmark_rate
 		,t.company_loan_cs
 		,t.pre_company_loan_cs
 		,t.is_advance_fund
@@ -1663,6 +1665,7 @@
 		,invoice_price = #{invoicePrice}
 		,rate_type = #{rateType}
 		,bank_rate = #{bankRate}
+		,bank_benchmark_rate = #{bankBenchmarkRate}
 		
 		,company_loan_cs = #{companyLoanCs}
 		,is_advance_fund = #{isAdvanceFund}

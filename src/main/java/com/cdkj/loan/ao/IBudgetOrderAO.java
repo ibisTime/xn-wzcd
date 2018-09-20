@@ -163,7 +163,7 @@ public interface IBudgetOrderAO {
     // 计算器
     public XN632690Res calculation(String loanBankCode, String loanPeriods,
             String loanAmount, String rateType, String serviceChargeWay,
-            String bankRate, String surcharge);
+            String bankRate, String bankBenchmarkRate, String surcharge);
 
     // 统计分析 余额明细
     public Object queryBudgetOrderPageForBalanceDetail(int start, int limit,

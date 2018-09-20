@@ -27,7 +27,8 @@ public class XN632690 extends AProcessor {
     public Object doBusiness() throws BizException {
         XN632690Res res = budgetOrderAO.calculation(req.getLoanBankCode(),
             req.getLoanPeriods(), req.getLoanAmount(), req.getRateType(),
-            req.getServiceChargeWay(), req.getBankRate(), req.getSurcharge());
+            req.getServiceChargeWay(), req.getBankRate(),
+            req.getBankBenchmarkRate(), req.getSurcharge());
         return res;
     }
 

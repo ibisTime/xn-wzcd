@@ -313,6 +313,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setRateType(req.getRateType());
 
         data.setBankRate(StringValidater.toDouble(req.getBankRate()));
+        data.setBankBenchmarkRate(
+            StringValidater.toDouble(req.getBankBenchmarkRate()));
         Long loanAmount = 0L;
         if (null == req.getLoanAmount()) {
             loanAmount = data.getLoanAmount();
@@ -361,7 +363,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             XN632690Res res = calculation(bank.getCode(), req.getLoanPeriods(),
                 loanAmount.toString(), req.getRateType(),
                 req.getServiceChargeWay(), req.getBankRate(),
-                req.getSurcharge());
+                req.getBankBenchmarkRate(), req.getSurcharge());
             data.setRepayFirstMonthAmount(
                 StringValidater.toLong(res.getInitialAmount()));// 首期还款金额
             data.setRepayMonthAmount(
@@ -2588,9 +2590,11 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
     @Override
     public XN632690Res calculation(String loanBankCode, String loanPeriods,
             String loanAmount, String rateType, String serviceChargeWay,
-            String bankRate, String surcharge) {
+            String bankRate, String bankBenchmarkRate, String surcharge) {
         XN632690Res res = new XN632690Res();
         Bank bank = bankBO.getBank(loanBankCode);
+        Double BenchmarkRate = StringValidater.toDouble(bankBenchmarkRate);// 基准利率
+
         // 中行
         if (bank.getBankCode().equals(EBankType.ZH.getCode())) {
             // 传统
@@ -2610,19 +2614,12 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 // 手续费=贷款额*基准利率
                 // 3.首期=手续费-（4）*（期数-1）
                 // 4.每期=(2)*基准利率
-                double rate = 0;// 基准利率
-                if (StringValidater.toInteger(loanPeriods) == 12) {
-                    rate = bank.getRate12();
-                } else if (StringValidater.toInteger(loanPeriods) == 24) {
-                    rate = bank.getRate24();
-                } else {
-                    rate = bank.getRate36();
-                }
                 BigDecimal bankRateD = StringValidater.toBigDecimal(bankRate);
-                BigDecimal rateD = new BigDecimal(rate);
+                BigDecimal rateD = new BigDecimal(BenchmarkRate);
                 Long poundage = AmountUtil
-                    .mul(StringValidater.toLong(loanAmount), rate);// 手续费
-                Double annualPoundage = AmountUtil.mulAB(annualPrincipal, rate);// 每期手续费
+                    .mul(StringValidater.toLong(loanAmount), BenchmarkRate);// 手续费
+                Double annualPoundage = AmountUtil.mulAB(annualPrincipal,
+                    BenchmarkRate);// 每期手续费
                 annualPoundage = new BigDecimal(annualPoundage)
                     .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();// 保留两位
                 Double initialPoundage = poundage
@@ -2649,9 +2646,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 // 高息手续费=高息金额*基准利率
                 // 7.高息手续费首期=（8）*（期数-1）
                 // 8.高息手续费每期=(6）*基准利率
-                Long highRatePoundage = AmountUtil.mul(highRate, rate);// 高息手续费
+                Long highRatePoundage = AmountUtil.mul(highRate, BenchmarkRate);// 高息手续费
                 Double annualHighRatePoundage = AmountUtil.mulAB(annualHighRate,
-                    rate);// 高息手续费每期
+                    BenchmarkRate);// 高息手续费每期
                 annualHighRatePoundage = new BigDecimal(annualHighRatePoundage)
                     .setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();// 保留一位
                 Double initialHighRatePoundage = AmountUtil.mulAB(
@@ -2870,20 +2867,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         } else if (bank.getBankCode().equals(EBankType.GH.getCode())) {// 工行
             // a)服务费=(实际利率-基准利率)*贷款额
             // b)月供=((贷款额+服务费)*(1+基准利率))/贷款期数
-            double rate = 0;// 基准利率
-            if (StringValidater.toInteger(loanPeriods) == 12) {
-                rate = bank.getRate12();
-            } else if (StringValidater.toInteger(loanPeriods) == 24) {
-                rate = bank.getRate24();
-            } else {
-                rate = bank.getRate36();
-            }
             BigDecimal bankRateD = StringValidater.toBigDecimal(bankRate);
-            BigDecimal rateD = new BigDecimal(rate);
+            BigDecimal rateD = new BigDecimal(BenchmarkRate);
             Long poundage = AmountUtil.mul(StringValidater.toLong(loanAmount),
                 bankRateD.subtract(rateD).doubleValue());// 服务费
             Long amount = AmountUtil.mul(
-                (StringValidater.toLong(loanAmount) + poundage), (rate + 1));
+                (StringValidater.toLong(loanAmount) + poundage),
+                (BenchmarkRate + 1));
             Long monthAmount = (long) AmountUtil.div(amount,
                 (StringValidater.toInteger(loanPeriods) - 1));// 月供
 

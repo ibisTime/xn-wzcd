@@ -52,6 +52,9 @@ public class XN632120Req {
     // 银行利率
     private String bankRate;
 
+    // 银行基准利率
+    private String bankBenchmarkRate;
+
     // 是否垫资
     private String isAdvanceFund;
 
@@ -827,6 +830,14 @@ public class XN632120Req {
 
     public void setIsHouseContract(String isHouseContract) {
         this.isHouseContract = isHouseContract;
+    }
+
+    public String getBankBenchmarkRate() {
+        return bankBenchmarkRate;
+    }
+
+    public void setBankBenchmarkRate(String bankBenchmarkRate) {
+        this.bankBenchmarkRate = bankBenchmarkRate;
     }
 
     public String getHouseContract() {

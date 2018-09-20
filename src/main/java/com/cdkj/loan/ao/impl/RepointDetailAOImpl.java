@@ -143,7 +143,7 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
         if (ERateType.CT.getCode().equals(rateType)) {
             // 传统返点支付总金额:贷款额*（银行实际利率-基准利率） =贷款额*[(服务费/贷款额)+银行利率-基准利率]
             repointAmount = AmountUtil.mul(loanAmount,
-                (globalRate - benchmarkRate));
+                (bankRate - benchmarkRate));
         }
         if (ERateType.ZK.getCode().equals(rateType)) {
             // 直客返点支付总金额 :贷款额*基准利率

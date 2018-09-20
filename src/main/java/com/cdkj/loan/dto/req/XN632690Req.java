@@ -14,6 +14,9 @@ public class XN632690Req {
 
     private String bankRate;// 银行利率
 
+    // 银行基准利率
+    private String bankBenchmarkRate;
+
     private String surcharge; // 附加费
 
     public String getLoanBankCode() {
@@ -22,6 +25,14 @@ public class XN632690Req {
 
     public void setLoanBankCode(String loanBankCode) {
         this.loanBankCode = loanBankCode;
+    }
+
+    public String getBankBenchmarkRate() {
+        return bankBenchmarkRate;
+    }
+
+    public void setBankBenchmarkRate(String bankBenchmarkRate) {
+        this.bankBenchmarkRate = bankBenchmarkRate;
     }
 
     public String getLoanPeriods() {
