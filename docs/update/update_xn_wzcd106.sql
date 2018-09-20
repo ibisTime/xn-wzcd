@@ -198,3 +198,8 @@ ALTER TABLE `tdq_budget_order`
 ADD COLUMN `lender_company_name` TINYTEXT NULL COMMENT '贷款人公司名称' AFTER `license`,
 ADD COLUMN `organization_code_card` TINYTEXT NULL COMMENT '组织机构代码证' AFTER `lender_company_name`,
 ADD COLUMN `code_card_address` TINYTEXT NULL COMMENT '代码证上的地址' AFTER `organization_code_card`;
+
+
+INSERT INTO `tsys_dict` (`type`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('0', 'gps_bank_reason', 'gps回退原因', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'gps_bank_reason', '1', 'GPS损坏', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');
+INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `update_datetime`, `company_code`, `system_code`) VALUES ('1', 'gps_bank_reason', '2', '员工离职', 'USYS201800000000001', '2018-08-15 17:32:12', 'CD-CWZCD000020', 'CD-CWZCD000020');

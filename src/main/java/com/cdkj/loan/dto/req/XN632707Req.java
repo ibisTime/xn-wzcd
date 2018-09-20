@@ -34,6 +34,17 @@ public class XN632707Req extends AListReq {
     // 业务编号
     private String bizCode;
 
+    // 是否回退
+    private String isSendBack;
+
+    public String getIsSendBack() {
+        return isSendBack;
+    }
+
+    public void setIsSendBack(String isSendBack) {
+        this.isSendBack = isSendBack;
+    }
+
     public String getCompanyApplyStatus() {
         return companyApplyStatus;
     }

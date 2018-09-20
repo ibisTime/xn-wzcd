@@ -6,6 +6,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdkj.loan.ao.IGpsAO;
 import com.cdkj.loan.bo.IDepartmentBO;
@@ -103,8 +104,8 @@ public class GpsAOImpl implements IGpsAO {
     private void initGps(Gps gps) {
         // 业务公司名称
         if (StringUtils.isNotBlank(gps.getCompanyCode())) {
-            Department department = departmentBO.getDepartment(gps
-                .getCompanyCode());
+            Department department = departmentBO
+                .getDepartment(gps.getCompanyCode());
             gps.setCompanyName(department.getName());
         }
 
@@ -116,13 +117,14 @@ public class GpsAOImpl implements IGpsAO {
 
         // 供应商名称
         if (StringUtils.isNotBlank(gps.getSupplierCode())) {
-            GpsSupplier gpsSupplier = gpsSupplierBO.getGpsSupplier(gps
-                .getSupplierCode());
+            GpsSupplier gpsSupplier = gpsSupplierBO
+                .getGpsSupplier(gps.getSupplierCode());
             gps.setSupplierName(gpsSupplier.getName());
         }
     }
 
     @Override
+    @Transactional
     public void gpsSendBackApply(XN632701Req req) {
         Gps gps = gpsBO.getGps(req.getCode());
         gps.setIsSendBack(req.getReason());
