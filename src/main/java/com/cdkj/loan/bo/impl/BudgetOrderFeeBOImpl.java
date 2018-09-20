@@ -29,22 +29,28 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
     @Override
     public String saveBudgetOrderFee(BudgetOrder budgetOrder, String operator) {
         String code = null;
-        if (budgetOrder != null
-                && StringUtils.isNotBlank(operator)
-                && EBudgetOrderFeeWay.TRANSFER.getCode().equals(
-                    budgetOrder.getServiceChargeWay())) {// 当手续费收取方式是转账时产生手续费
+        if (budgetOrder != null && StringUtils.isNotBlank(operator)
+                && EBudgetOrderFeeWay.TRANSFER.getCode()
+                    .equals(budgetOrder.getServiceChargeWay())) {// 当手续费收取方式是转账时产生手续费
             BudgetOrderFee budgetOrderFee = new BudgetOrderFee();
-            code = OrderNoGenerater.generate(EGeneratePrefix.BUDGET_ORDER_FEE
-                .getCode());
+            code = OrderNoGenerater
+                .generate(EGeneratePrefix.BUDGET_ORDER_FEE.getCode());
             budgetOrderFee.setCode(code);
             budgetOrderFee.setEffect(EBoolean.YES.getCode());
             budgetOrderFee.setCompanyCode(budgetOrder.getCompanyCode());
 
             budgetOrderFee.setUserId(budgetOrder.getSaleUserId());
-            // 收客户手续费合计：履约保证金+担保风险金+GPS收费+杂费
-            Long totalFee = budgetOrder.getFee() + budgetOrder.getLyAmount()
-                    + budgetOrder.getFxAmount() + budgetOrder.getGpsFee()
-                    + budgetOrder.getOtherFee();
+            // 如果GPS收费方式是转账，＋GPS收费；不是就不加。如果手续费收取方式是转账，+履约保证金+担保风险金+杂费，不是就不加
+            Long totalFee = 0L;
+            if (EBudgetOrderFeeWay.TRANSFER.getCode()
+                .equals(budgetOrder.getGpsFeeWay())) {
+                totalFee += budgetOrder.getGpsFee();
+            }
+            if (EBudgetOrderFeeWay.TRANSFER.getCode()
+                .equals(budgetOrder.getServiceChargeWay())) {
+                totalFee = budgetOrder.getLyAmount() + budgetOrder.getFxAmount()
+                        + budgetOrder.getOtherFee();
+            }
             budgetOrderFee.setShouldAmount(totalFee);
             budgetOrderFee.setRealAmount(0L);
 
@@ -68,7 +74,8 @@ public class BudgetOrderFeeBOImpl extends PaginableBOImpl<BudgetOrderFee>
     }
 
     @Override
-    public List<BudgetOrderFee> queryBudgetOrderFeeList(BudgetOrderFee condition) {
+    public List<BudgetOrderFee> queryBudgetOrderFeeList(
+            BudgetOrderFee condition) {
         return budgetOrderFeeDAO.selectList(condition);
     }
 

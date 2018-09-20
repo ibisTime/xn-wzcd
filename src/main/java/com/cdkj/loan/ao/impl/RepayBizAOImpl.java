@@ -1329,7 +1329,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
                 actualRefunds += repayPlan.getDeposit();
             }
         }
-        repayBiz.setActualRefunds(actualRefunds);
+        repayBiz.setActualRefunds(actualRefunds + repayBiz.getLyDeposit());
         RepayPlan repayPlan = repayPlanBO
             .getRepayPlanCurMonth(repayBiz.getCode());
         repayBiz.setCurMonthRepayPlan(repayPlan);

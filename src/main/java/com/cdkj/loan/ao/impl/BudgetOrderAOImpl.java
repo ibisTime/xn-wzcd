@@ -1745,29 +1745,34 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if ("99".equals(approveNote)) {
             note = remark;
         }
-
+        BudgetOrderFee budgetOrderFee = budgetOrderFeeBO
+            .getBudgetOrderFeeByBudgetOrder(code);
         String preCurrentNode = budgetOrder.getCurNodeCode();// 当前节点
         if (EApproveResult.PASS.getCode().equals(approveResult)) {
             // 二审通过
             budgetOrder.setCurNodeCode(nodeFlowBO
                 .getNodeFlowByCurrentNode(preCurrentNode).getNextNode());
             // 计算出新应收手续费总额 更新手续费单的应收总额 （履约保证金+担保风险金+GPS收费+杂费）
+            // 如果GPS收费方式是转账，＋GPS收费；不是就不加。如果手续费收取方式是转账，+履约保证金+担保风险金+杂费，不是就不加
+            Long totalFee = 0L;
+            if (EBudgetOrderFeeWay.TRANSFER.getCode()
+                .equals(budgetOrder.getGpsFeeWay())) {
+                totalFee += budgetOrder.getGpsFee();
+            }
             if (EBudgetOrderFeeWay.TRANSFER.getCode()
                 .equals(budgetOrder.getServiceChargeWay())) {
-                Long totalFee = budgetOrder.getFee() + budgetOrder.getLyAmount()
-                        + budgetOrder.getFxAmount() + budgetOrder.getGpsFee()
+                totalFee = budgetOrder.getLyAmount() + budgetOrder.getFxAmount()
                         + budgetOrder.getOtherFee();
-                BudgetOrderFee budgetOrderFee = budgetOrderFeeBO
-                    .getBudgetOrderFeeByBudgetOrder(code);
+
                 if (totalFee > budgetOrderFee.getShouldAmount()) {
                     budgetOrderFee.setIsSettled(EBoolean.NO.getCode());// 未结清
                 } else {
                     budgetOrderFee.setIsSettled(budgetOrderFee.getIsSettled());
                 }
-                budgetOrderFee.setShouldAmount(totalFee);
-                budgetOrderFee.setUpdateDatetime(new Date());
-                budgetOrderFeeBO.updateShouldAmountAndIsSettled(budgetOrderFee);
             }
+            budgetOrderFee.setShouldAmount(totalFee);
+            budgetOrderFee.setUpdateDatetime(new Date());
+            budgetOrderFeeBO.updateShouldAmountAndIsSettled(budgetOrderFee);
             // TODO 手续费收取方式是按揭款扣 在退按揭款时使用新计算出的手续费
             // 删除原返点数据
             repointDetailBO.deletePreRepointDetail(budgetOrder.getCode(),
