@@ -91,4 +91,10 @@ public class ReqBudgetDAOImpl extends AMybatisTemplate
             condition, ReqBudget.class);
     }
 
+    @Override
+    public ReqBudget selectUseDayReqBudget(ReqBudget condition) {
+        return super.select(NAMESPACE.concat("select_useDay_reqBudget"),
+            condition, ReqBudget.class);
+    }
+
 }

@@ -2,8 +2,6 @@ package com.cdkj.loan.bo.impl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -166,18 +164,8 @@ public class RepayBizBOImpl extends PaginableBOImpl<RepayBiz>
         Date addMonths = DateUtils.addMonths(now, repayBiz.getPeriods());
         repayBiz.setLoanEndDatetime(addMonths);
         repayBiz.setFxDeposit(0L);
-
-        // 计算首期还款日
-        DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.DAY_OF_MONTH, budgetOrder.getRepayBankDate());
-        calendar.add(Calendar.MONTH, 0);// 0表示当月，1表示下个月
-        String format = format1.format(calendar.getTime());
-
-        repayBiz.setFirstRepayDatetime(
-            DateUtil.strToDate(format, DateUtil.FRONT_DATE_FORMAT_STRING));
+        repayBiz
+            .setFirstRepayDatetime(budgetOrder.getRepayFirstMonthDatetime());
         repayBiz.setFirstRepayAmount(budgetOrder.getRepayFirstMonthAmount());
         repayBiz.setBillDatetime(budgetOrder.getBillDatetime());
         if (budgetOrder.getRepayBankDate() == 0) {

@@ -757,7 +757,7 @@
 	
 	<select id="select_budgetOrder_count_byRoleCode" parameterType="budgetOrder"
 		resultType="java.lang.Long">
-		SELECT count(1) FROM (SELECT distinct code FROM tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
+		SELECT count(1) FROM (SELECT distinct code FROM tdq_budget_order t left join tsys_role_node trn on (t.cur_node_code=trn.node_code or t.pledge_cur_node_code=trn.node_code)
 		<include refid="where_condition" />) tb
 	</select>
 	
@@ -1053,7 +1053,7 @@
 		,t.is_end
 		,t.reason_id
 		FROM
-		tdq_budget_order t left join tsys_role_node trn on t.cur_node_code = trn.node_code
+		tdq_budget_order t left join tsys_role_node trn on (t.cur_node_code=trn.node_code or t.pledge_cur_node_code=trn.node_code)
 		<include refid="where_condition" />
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -2283,6 +2283,7 @@
 		SET
 		has_loan_list_pic = #{hasLoanListPic}
 		,repay_bank_date = #{repayBankDate}
+		,repay_first_month_datetime = #{repayFirstMonthDatetime}
 		,bill_datetime = #{billDatetime}
 		,cur_node_code = #{curNodeCode}
 		WHERE code = #{code}

@@ -75,6 +75,10 @@ public class ReqBudget extends ABaseDO {
 
     private Date payDatetimeEnd;// 打款时间止
 
+    private Date useDatetimeStart;// 用款时间起
+
+    private Date useDatetimeEnd;// 用款时间止
+
     private String shouldCollectionAmount;// 应收金额
 
     public String getBankName() {
@@ -83,6 +87,22 @@ public class ReqBudget extends ABaseDO {
 
     public void setBankName(String bankName) {
         this.bankName = bankName;
+    }
+
+    public Date getUseDatetimeStart() {
+        return useDatetimeStart;
+    }
+
+    public void setUseDatetimeStart(Date useDatetimeStart) {
+        this.useDatetimeStart = useDatetimeStart;
+    }
+
+    public Date getUseDatetimeEnd() {
+        return useDatetimeEnd;
+    }
+
+    public void setUseDatetimeEnd(Date useDatetimeEnd) {
+        this.useDatetimeEnd = useDatetimeEnd;
     }
 
     public String getBankcardNumber() {

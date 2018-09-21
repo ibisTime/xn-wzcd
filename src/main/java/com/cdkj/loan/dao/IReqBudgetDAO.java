@@ -27,4 +27,7 @@ public interface IReqBudgetDAO extends IBaseDAO<ReqBudget> {
     // 打款回录
     void backRecord(ReqBudget reqBudget);
 
+    // 查询用款那天的请款预算单
+    ReqBudget selectUseDayReqBudget(ReqBudget condition);
+
 }

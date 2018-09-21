@@ -42,11 +42,17 @@
 			<if test="applyDatetimeEnd != null and applyDatetimeEnd != '' ">
 				<![CDATA[AND t.apply_datetime <= #{applyDatetimeEnd}]]>
 			</if>
-			<if test="payDatetime != null and payDatetime != '' ">
-				AND t.pay_datetime &gt;= #{payDatetimeStart}
+			<if test="payDatetimeStart != null and payDatetimeStart != '' ">
+				<![CDATA[AND t.pay_datetime >= #{payDatetimeStart}]]>
 			</if>
-			<if test="payDatetime != null and payDatetime != '' ">
-				AND t.pay_datetime &lt;= #{payDatetimeEnd}
+			<if test="payDatetimeEnd != null and payDatetimeEnd != '' ">
+				<![CDATA[AND t.pay_datetime <= #{payDatetimeEnd}]]>
+			</if>
+			<if test="useDatetimeStart != null and useDatetimeStart != '' ">
+				<![CDATA[AND t.use_datetime >= #{useDatetimeStart}]]>
+			</if>
+			<if test="useDatetimeEnd != null and useDatetimeEnd != '' ">
+				<![CDATA[AND t.use_datetime <= #{useDatetimeEnd}]]>
 			</if>
 		</trim>
 	</sql>
@@ -128,7 +134,72 @@
 		SELECT count(1) FROM (SELECT distinct code FROM tdq_req_budget t left join tsys_role_node trn on t.cur_node_code = trn.node_code
 		<include refid="where_condition" />) tb
 	</select>
-
+	
+	<select id="select_today_reqBudget" parameterType="reqBudget" resultMap="reqBudget_DB_Result">
+		SELECT
+		t.code
+		,t.company_code
+		,t.receipt_account
+		,t.budget_amount
+		,t.use_datetime
+		,t.finance_check_note
+		,t.pay_amount
+		,t.pay_account
+		,t.water_bill
+		,t.pay_datetime
+		,t.apply_user
+		,t.apply_datetime
+		,t.pay_remark
+		,t.dz_amount
+		,t.dz_datetime
+		,t.collection_amount
+		,t.collection_account
+		,t.collection_datetime
+		,t.collection_remark
+		,t.cur_node_code
+		FROM
+		tdq_req_budget t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+		<!-- AND to_days(t.pay_datetime) = to_days(now()); -->
+	</select>
+	
+	<select id="select_useDay_reqBudget" parameterType="reqBudget" resultMap="reqBudget_DB_Result">
+		SELECT
+		t.code
+		,t.company_code
+		,t.receipt_account
+		,t.budget_amount
+		,t.use_datetime
+		,t.finance_check_note
+		,t.pay_amount
+		,t.pay_account
+		,t.water_bill
+		,t.pay_datetime
+		,t.apply_user
+		,t.apply_datetime
+		,t.pay_remark
+		,t.dz_amount
+		,t.dz_datetime
+		,t.collection_amount
+		,t.collection_account
+		,t.collection_datetime
+		,t.collection_remark
+		,t.cur_node_code
+		FROM
+		tdq_req_budget t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+	
 	<insert id="insert_reqBudget" parameterType="reqBudget">
 		INSERT INTO
 		tdq_req_budget(
@@ -241,32 +312,4 @@
 		WHERE code = #{code}
 	</update>
 	
-	<select id="select_today_reqBudget" parameterType="reqBudget" resultMap="reqBudget_DB_Result">
-		SELECT
-		t.code
-		,t.company_code
-		,t.receipt_account
-		,t.budget_amount
-		,t.use_datetime
-		,t.finance_check_note
-		,t.pay_amount
-		,t.pay_account
-		,t.water_bill
-		,t.pay_datetime
-		,t.apply_user
-		,t.apply_datetime
-		,t.pay_remark
-		,t.dz_amount
-		,t.dz_datetime
-		,t.collection_amount
-		,t.collection_account
-		,t.collection_datetime
-		,t.collection_remark
-		,t.cur_node_code
-		FROM
-		tdq_req_budget t
-		<include refid="where_condition" />
-		<!-- AND to_days(t.pay_datetime) = to_days(now()); -->
-	</select>
-
 </mapper>

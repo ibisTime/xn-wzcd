@@ -1,5 +1,7 @@
 package com.cdkj.loan.bo.impl;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -134,6 +136,32 @@ public class ReqBudgetBOImpl extends PaginableBOImpl<ReqBudget>
             condition.setPayDatetimeStart(DateUtil.getTodayStart());
             condition.setPayDatetimeEnd(DateUtil.getTodayEnd());
             data = reqBudgetDAO.selectTodayReqBudget(condition);
+        }
+        return data;
+    }
+
+    @Override
+    public ReqBudget getUseDayReqBudget(String companyCode,
+            String useDatetime) {
+        ReqBudget data = null;
+        if (StringUtils.isNotBlank(companyCode)) {
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(DateUtil.strToDate(useDatetime,
+                DateUtil.FRONT_DATE_FORMAT_STRING));
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            Date start = calendar.getTime();
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            calendar.add(Calendar.SECOND, -1);
+            Date end = calendar.getTime();
+
+            ReqBudget condition = new ReqBudget();
+            condition.setCompanyCode(companyCode);
+            condition.setUseDatetimeStart(start);
+            condition.setUseDatetimeEnd(end);
+            data = reqBudgetDAO.selectUseDayReqBudget(condition);
         }
         return data;
     }

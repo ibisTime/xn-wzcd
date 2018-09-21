@@ -59,11 +59,12 @@ public class ReqBudgetAOImpl implements IReqBudgetAO {
 
         SYSUser user = sysUserBO.getUser(req.getApplyUser());
         ReqBudget todayReqBudget = reqBudgetBO
-            .getTodayReqBudget(user.getCompanyCode());
+            .getUseDayReqBudget(user.getCompanyCode(), req.getUseDatetime());
         if (null != todayReqBudget) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
-                "您今日已提交过申请！");
+                "当前用款日期已提交过申请！");
         }
+
         ReqBudget data = new ReqBudget();
         data.setCompanyCode(user.getCompanyCode());
         data.setReceiptAccount(req.getReceiptAccount());

@@ -33,4 +33,7 @@ public interface IReqBudgetBO extends IPaginableBO<ReqBudget> {
     // 打款回录
     public void backRecord(ReqBudget reqBudget);
 
+    // 查询用款那天的请款预算单
+    public ReqBudget getUseDayReqBudget(String companyCode, String useDatetime);
+
 }
