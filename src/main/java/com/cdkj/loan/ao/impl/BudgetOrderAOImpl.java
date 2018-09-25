@@ -2616,80 +2616,75 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         if (bank.getBankCode().equals(EBankType.ZH.getCode())) {
             // 传统
             if (ERateType.CT.getCode().equals(rateType)) {
+                BigDecimal amountB = StringValidater.toBigDecimal(loanAmount);
+                BigDecimal periodsB = StringValidater.toBigDecimal(loanPeriods);
                 // 1.首期本金 = 贷款额- (2) *（期数-1）
                 // 2.每期本金=贷款额/期数
-                Double annualPrincipal = AmountUtil.div(
-                    StringValidater.toDouble(loanAmount),
-                    StringValidater.toLong(loanPeriods));// 每期本金
-                annualPrincipal = Math.floor(annualPrincipal);// 向下取整
-                Double initialPrincipal = (StringValidater.toDouble(loanAmount)
-                        - AmountUtil.mulAB(annualPrincipal,
-                            (StringValidater.toDouble(loanPeriods) - 1)));// 首期本金
-                initialPrincipal = new BigDecimal(initialPrincipal)
-                    .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();// 保留两位
+                BigDecimal annualPrincipal = amountB.divide(periodsB, 0, 1);// 每期本金
+                annualPrincipal = annualPrincipal.divide(new BigDecimal(1000),
+                    0, 1);// 向下取整
+                annualPrincipal = annualPrincipal
+                    .multiply(new BigDecimal(1000));
+
+                BigDecimal initialPrincipal = amountB.subtract(annualPrincipal
+                    .multiply(periodsB.subtract(new BigDecimal("1"))));// 首期本金
 
                 // 手续费=贷款额*基准利率
                 // 3.首期=手续费-（4）*（期数-1）
                 // 4.每期=(2)*基准利率
                 BigDecimal bankRateD = StringValidater.toBigDecimal(bankRate);
                 BigDecimal rateD = new BigDecimal(BenchmarkRate);
-                Long poundage = AmountUtil
-                    .mul(StringValidater.toLong(loanAmount), BenchmarkRate);// 手续费
-                Double annualPoundage = AmountUtil.mulAB(annualPrincipal,
-                    BenchmarkRate);// 每期手续费
-                annualPoundage = new BigDecimal(annualPoundage)
-                    .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();// 保留两位
-                Double initialPoundage = poundage
-                        - AmountUtil.mulAB(annualPoundage,
-                            (StringValidater.toDouble(loanPeriods) - 1));// 首期手续费
-                initialPoundage = Math.abs(initialPoundage);// 绝对值
+                BigDecimal poundage = amountB.multiply(rateD);// 手续费
+                BigDecimal annualPoundage = annualPrincipal.multiply(rateD);// 每期手续费
+                annualPoundage = annualPoundage.divide(new BigDecimal(1000), 2,
+                    4);// 保留两位
+                annualPoundage = annualPoundage.multiply(new BigDecimal(1000));
+                BigDecimal initialPoundage = poundage.subtract(annualPoundage
+                    .multiply(periodsB.subtract(new BigDecimal("1"))));// 首期手续费
+                initialPoundage = initialPoundage.abs();// 绝对值
 
                 // 高息金额=贷款额*（总利率-基准利率）
                 // 5.高息金额首期=高息金额-（6）*（期数-1）
                 // 6.高息金额每期=高息金额/期数
                 // HighRate
-                Long highRate = AmountUtil.mul(
-                    StringValidater.toLong(loanAmount),
-                    bankRateD.subtract(rateD).doubleValue());// 高息金额
-                Double annualHighRate = AmountUtil.div(highRate,
-                    StringValidater.toInteger(loanPeriods));// 高息金额每期
-                annualHighRate = Math.floor(annualHighRate);// 向下取整
-                Double initialHighRate = highRate
-                        - AmountUtil.mulAB(annualHighRate,
-                            (StringValidater.toDouble(loanPeriods) - 1));// 高息金额首期
-                initialHighRate = new BigDecimal(initialHighRate)
-                    .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();// 保留两位
+                BigDecimal highRate = amountB
+                    .multiply(bankRateD.subtract(rateD));// 高息金额
+                BigDecimal annualHighRate = highRate.divide(periodsB, 0, 1);// 高息金额每期
+                annualHighRate = annualHighRate.divide(new BigDecimal(1000), 0,
+                    1);// 向下取整
+                annualHighRate = annualHighRate.multiply(new BigDecimal(1000));
+                BigDecimal initialHighRate = highRate.subtract(annualHighRate
+                    .multiply(periodsB.subtract(new BigDecimal(1))));// 高息金额首期
+                // 保留两位
 
                 // 高息手续费=高息金额*基准利率
                 // 7.高息手续费首期=（8）*（期数-1）
                 // 8.高息手续费每期=(6）*基准利率
-                Long highRatePoundage = AmountUtil.mul(highRate, BenchmarkRate);// 高息手续费
-                Double annualHighRatePoundage = AmountUtil.mulAB(annualHighRate,
-                    BenchmarkRate);// 高息手续费每期
-                annualHighRatePoundage = new BigDecimal(annualHighRatePoundage)
-                    .setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();// 保留一位
-                Double initialHighRatePoundage = AmountUtil.mulAB(
-                    annualHighRatePoundage,
-                    (StringValidater.toDouble(loanPeriods) - 1));// 高息手续费首期
-                initialHighRatePoundage = new BigDecimal(
-                    initialHighRatePoundage)
-                        .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();// 保留两位
+                BigDecimal highRatePoundage = highRate.multiply(rateD);// 高息手续费
+                highRatePoundage = highRatePoundage.divide(new BigDecimal(1000),
+                    2, 4);
+                highRatePoundage = highRatePoundage
+                    .multiply(new BigDecimal(1000));
+                BigDecimal annualHighRatePoundage = annualHighRate
+                    .multiply(rateD);// 高息手续费每期
+                annualHighRatePoundage = annualHighRatePoundage
+                    .divide(new BigDecimal(1000), 1, 4);// 保留一位
+                annualHighRatePoundage = annualHighRatePoundage
+                    .multiply(new BigDecimal(1000));
+                BigDecimal initialHighRatePoundage = annualHighRatePoundage
+                    .multiply(periodsB.subtract(new BigDecimal(1)));// 高息手续费首期
+                // 保留两位
 
                 // 首期月供=1+3+5+7
-                Double initialAmount = initialPrincipal + initialPoundage
-                        + initialHighRate + initialHighRatePoundage;
-                Double d1 = new BigDecimal(initialAmount)
-                    .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                BigDecimal initialAmount = initialPrincipal.add(initialPoundage)
+                    .add(initialHighRate).add(initialHighRatePoundage);
                 // 每期月供=2+4+6+8
-                Double annualAmount = annualPrincipal + annualPoundage
-                        + annualHighRate + annualHighRatePoundage;
-                Double d2 = new BigDecimal(annualAmount)
-                    .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                BigDecimal annualAmount = annualPrincipal.add(annualPoundage)
+                    .add(annualHighRate).add(annualHighRatePoundage);
 
                 // 先转成long再转成string
-                res.setAnnualAmount(String.valueOf(new Double(d2).longValue()));
-                res.setInitialAmount(
-                    String.valueOf(new Double(d1).longValue()));
+                res.setAnnualAmount(String.valueOf(annualAmount));
+                res.setInitialAmount(String.valueOf(initialAmount));
                 res.setPoundage(String.valueOf(0));
             } else if (ERateType.ZK.getCode().equals(rateType)) {// 直客
                 if (EBocFeeWay.STAGES.getCode().equals(serviceChargeWay)) {// 分期
@@ -2769,110 +2764,112 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                         String.valueOf(initialAmount.longValue()));
                     res.setPoundage(String.valueOf(0));
                 } else {// 附加费
+                    BigDecimal bankRateD = StringValidater
+                        .toBigDecimal(bankRate);
                     // 本金：
                     // 1.首期=贷款额-（2）*（期数-1）
                     // 2.每期=贷款额/期数
-                    Double annualPrincipal = AmountUtil.div(
-                        StringValidater.toLong(loanAmount),
-                        StringValidater.toInteger(loanPeriods));// 每期本金
-                    annualPrincipal = Math.floor(annualPrincipal);// 向下取整
-                    Double initialPrincipal = StringValidater
-                        .toDouble(loanAmount)
-                            - AmountUtil.mulAB(annualPrincipal,
-                                (StringValidater.toDouble(loanPeriods) - 1));// 首期本金
-                    initialPrincipal = new BigDecimal(initialPrincipal)
-                        .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();// 保留两位
+                    BigDecimal amountB = StringValidater
+                        .toBigDecimal(loanAmount);
+                    BigDecimal periodsB = StringValidater
+                        .toBigDecimal(loanPeriods);
+                    BigDecimal annualPrincipal = amountB.divide(periodsB, 0, 1);// 每期本金(向下取整)
+                    annualPrincipal = annualPrincipal
+                        .divide(new BigDecimal(1000), 0, 1);
+                    annualPrincipal = annualPrincipal
+                        .multiply(new BigDecimal(1000));
 
+                    BigDecimal multiply = annualPrincipal
+                        .multiply(periodsB.subtract(new BigDecimal("1")));// 首期本金
+                    BigDecimal initialPrincipal = amountB.subtract(multiply);
                     // 手续费=贷款额*利率
                     // 3.首期=手续费-（2）*（期数-1）
                     // 4.每期=（2）*利率
-                    Long poundage = AmountUtil.mul(
-                        StringValidater.toLong(loanAmount),
-                        StringValidater.toDouble(bankRate));// 手续费
-                    Double annualPoundage = AmountUtil.mulAB(annualPrincipal,
-                        StringValidater.toDouble(bankRate));// 每期手续费
-                    annualPoundage = new BigDecimal(annualPoundage)
-                        .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();// 保留两位
-                    Double initialPoundage = poundage
-                            - AmountUtil.mulAB(annualPrincipal,
-                                (StringValidater.toDouble(loanPeriods) - 1));// 首期手续费
-                    initialPoundage = new BigDecimal(initialPoundage)
-                        .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();// 保留两位
-
+                    BigDecimal poundage = amountB.multiply(bankRateD);// 手续费
+                    BigDecimal annualPoundage = annualPrincipal
+                        .multiply(bankRateD);// 每期手续费(保留一位)
+                    annualPoundage = annualPoundage
+                        .divide(new BigDecimal(1000));
+                    annualPoundage = annualPoundage.setScale(1, 4);
+                    annualPoundage = annualPoundage
+                        .multiply(new BigDecimal(1000));
+                    BigDecimal multiply2 = annualPrincipal
+                        .multiply(periodsB.subtract(new BigDecimal("1")));
+                    BigDecimal initialPoundage = poundage.subtract(multiply2);// 首期手续费
+                    initialPoundage = initialPoundage.abs();// 取绝对值
                     // 附加费：
                     // 5.首期=附加费-（6）*（期数-1）
                     // 6.每期=附加费/期数
-                    Double annualsurcharge = 0D;// 每期附加费
-                    Double initialsurcharge = 0D;// 首期附加费
+                    BigDecimal annualsurcharge = null;// 每期附加费
+                    BigDecimal initialsurcharge = null;// 首期附加费
                     if (ESurcharge.SIX_THOUSAND.getCode().equals(surcharge)) {
-                        annualsurcharge = AmountUtil.div(Long.valueOf(6000000),
-                            StringValidater.toDouble(loanPeriods));
-                        initialsurcharge = Long.valueOf(6000000) - AmountUtil
-                            .mulAB(annualsurcharge,
-                                (StringValidater.toDouble(loanPeriods) - 1));
+                        annualsurcharge = new BigDecimal(6000000)
+                            .divide(periodsB, 0, 1);// 向下取整
+                        annualsurcharge = annualsurcharge
+                            .divide(new BigDecimal(1000), 0, 1);
+                        annualsurcharge = annualsurcharge
+                            .multiply(new BigDecimal(1000));
+                        initialsurcharge = new BigDecimal(6000000)
+                            .subtract(annualsurcharge.multiply(
+                                periodsB.subtract(new BigDecimal("1"))));
                     } else {
-                        annualsurcharge = AmountUtil.div(Long.valueOf(6100000),
-                            StringValidater.toDouble(loanPeriods));
-                        initialsurcharge = Long.valueOf(6100000) - AmountUtil
-                            .mulAB(annualsurcharge,
-                                (StringValidater.toDouble(loanPeriods) - 1));
+                        annualsurcharge = new BigDecimal(6100000)
+                            .divide(periodsB, 0, 1);
+                        annualsurcharge = annualsurcharge
+                            .divide(new BigDecimal(1000), 0, 1);
+                        annualsurcharge = annualsurcharge
+                            .multiply(new BigDecimal(1000));
+                        initialsurcharge = new BigDecimal(6100000)
+                            .subtract(annualsurcharge.multiply(
+                                periodsB.subtract(new BigDecimal("1"))));
                     }
-                    initialsurcharge = new BigDecimal(initialsurcharge)
-                        .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();// 保留两位
-                    annualsurcharge = Math.floor(annualsurcharge);// 向下取整
 
                     // 附加费手续费=附加费金额*利率
                     // 附加费手续费每期=附加费每期*利率
                     // 附加费手续费首期=附加费手续费金额-附加费手续费每期*（期数-1）
-                    Double annualSurchargePoundage = 0D;
-                    Double initialSurchargePoundage = 0D;
+                    BigDecimal annualSurchargePoundage = null;
+                    BigDecimal initialSurchargePoundage = null;
                     if (ESurcharge.SIX_THOUSAND.getCode().equals(surcharge)) {
-                        Long surchargePoundage = AmountUtil.mul(
-                            Long.valueOf(6000000),
-                            StringValidater.toDouble(bankRate));// 附加费手续费
-                        annualSurchargePoundage = AmountUtil.mulAB(
-                            annualsurcharge,
-                            StringValidater.toDouble(bankRate));// 每期附加费手续费
+                        BigDecimal surchargePoundage = new BigDecimal(6000000)
+                            .multiply(bankRateD);// 附加费手续费
+                        annualSurchargePoundage = annualsurcharge
+                            .multiply(bankRateD);// 每期附加费手续费
+                        annualSurchargePoundage = annualSurchargePoundage
+                            .divide(new BigDecimal(1000));
+                        annualSurchargePoundage = annualSurchargePoundage
+                            .setScale(2, 4);
+                        annualSurchargePoundage = annualSurchargePoundage
+                            .multiply(new BigDecimal(1000));
                         initialSurchargePoundage = surchargePoundage
-                                - AmountUtil.mulAB(annualSurchargePoundage,
-                                    (StringValidater.toInteger(loanPeriods)
-                                            - 1));// 首期附加费手续费
+                            .subtract(annualSurchargePoundage.multiply(
+                                periodsB.subtract(new BigDecimal("1"))));// 首期附加费手续费
                     } else {
-                        Long surchargePoundage = AmountUtil.mul(
-                            Long.valueOf(6100000),
-                            StringValidater.toDouble(bankRate));// 附加费手续费
-                        annualSurchargePoundage = AmountUtil.mulAB(
-                            annualsurcharge,
-                            StringValidater.toDouble(bankRate));// 每期附加费手续费
+                        BigDecimal surchargePoundage = new BigDecimal(6100000)
+                            .multiply(bankRateD);// 附加费手续费
+                        annualSurchargePoundage = annualsurcharge
+                            .multiply(bankRateD);// 每期附加费手续费
+                        annualSurchargePoundage = annualSurchargePoundage
+                            .divide(new BigDecimal(1000));
+                        annualSurchargePoundage = annualSurchargePoundage
+                            .setScale(2, 4);
+                        annualSurchargePoundage = annualSurchargePoundage
+                            .multiply(new BigDecimal(1000));
                         initialSurchargePoundage = surchargePoundage
-                                - AmountUtil.mulAB(annualSurchargePoundage,
-                                    (StringValidater.toInteger(loanPeriods)
-                                            - 1));// 首期附加费手续费
+                            .subtract(annualSurchargePoundage.multiply(
+                                periodsB.subtract(new BigDecimal("1"))));// 首期附加费手续费
                     }
-                    annualSurchargePoundage = new BigDecimal(
-                        annualSurchargePoundage)
-                            .setScale(2, BigDecimal.ROUND_HALF_UP)
-                            .doubleValue();// 保留两位
-                    initialSurchargePoundage = new BigDecimal(
-                        initialSurchargePoundage)
-                            .setScale(2, BigDecimal.ROUND_HALF_UP)
-                            .doubleValue();// 保留两位
                     // 月供：
                     // 首期=1+3+附加费首期+附加费手续费首期
                     // 每期=2+4+附加费每期+附加费手续费每期
-                    Double initialAmount = initialPrincipal + initialPoundage
-                            + initialsurcharge + initialSurchargePoundage;
-                    Double d1 = new BigDecimal(initialAmount)
-                        .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-                    Double annualAmount = annualPrincipal + annualPoundage
-                            + annualsurcharge + annualSurchargePoundage;
-                    Double d2 = new BigDecimal(annualAmount)
-                        .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                    BigDecimal initialAmount = initialPrincipal
+                        .add(initialPoundage).add(initialsurcharge)
+                        .add(initialSurchargePoundage);
+                    BigDecimal annualAmount = annualPrincipal
+                        .add(annualPoundage).add(annualsurcharge)
+                        .add(annualSurchargePoundage);
 
-                    res.setAnnualAmount(
-                        String.valueOf(new Double(d2).longValue()));
-                    res.setInitialAmount(
-                        String.valueOf(new Double(d1).longValue()));
+                    res.setAnnualAmount(String.valueOf(annualAmount));
+                    res.setInitialAmount(String.valueOf(initialAmount));
                     res.setPoundage(String.valueOf(0));
                 }
             }
@@ -2881,13 +2878,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             // b)月供=((贷款额+服务费)*(1+基准利率))/贷款期数
             BigDecimal bankRateD = StringValidater.toBigDecimal(bankRate);
             BigDecimal rateD = new BigDecimal(BenchmarkRate);
-            Long poundage = AmountUtil.mul(StringValidater.toLong(loanAmount),
-                bankRateD.subtract(rateD).doubleValue());// 服务费
-            Long amount = AmountUtil.mul(
-                (StringValidater.toLong(loanAmount) + poundage),
-                (BenchmarkRate + 1));
-            Long monthAmount = (long) AmountUtil.div(amount,
-                (StringValidater.toInteger(loanPeriods) - 1));// 月供
+            BigDecimal amountB = StringValidater.toBigDecimal(loanAmount);
+            BigDecimal periodsB = StringValidater.toBigDecimal(loanPeriods);
+            BigDecimal poundage = amountB.multiply(bankRateD.subtract(rateD));// 服务费
+            BigDecimal monthAmount = amountB.add(poundage)
+                .multiply(rateD.add(new BigDecimal(1))).divide(periodsB);// 月供
+            monthAmount = monthAmount.divide(new BigDecimal(1000), 2, 4);
+            monthAmount = monthAmount.multiply(new BigDecimal(1000));
 
             res.setAnnualAmount(String.valueOf(monthAmount));
             res.setInitialAmount(String.valueOf(monthAmount));
@@ -2895,11 +2892,14 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         } else if (bank.getBankCode().equals(EBankType.JH.getCode())) {// 建行
             // a) 服务费=0
             // b) 月供=贷款额*（1+利率）/期数
-            Long amount = AmountUtil.mul(StringValidater.toLong(loanAmount),
-                (StringValidater.toDouble(bankRate) + 1));
-            Long monthAmount = (long) AmountUtil.div(amount,
-                StringValidater.toInteger(loanPeriods));// 月供
 
+            BigDecimal amountB = StringValidater.toBigDecimal(loanAmount);
+            BigDecimal periodsB = StringValidater.toBigDecimal(loanPeriods);
+            BigDecimal bankRateD = StringValidater.toBigDecimal(bankRate);
+            BigDecimal monthAmount = amountB
+                .multiply(bankRateD.add(new BigDecimal(1))).divide(periodsB);// 月供
+            monthAmount = monthAmount.divide(new BigDecimal(1000), 2, 4);
+            monthAmount = monthAmount.multiply(new BigDecimal(1000));
             res.setAnnualAmount(String.valueOf(monthAmount));
             res.setInitialAmount(String.valueOf(monthAmount));
             res.setPoundage(String.valueOf(0));

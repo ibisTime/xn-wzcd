@@ -560,7 +560,7 @@ public class RepayBizAOImpl implements IRepayBizAO {
         String preCurNodeCode = repayBiz.getCurNodeCode();
         repayBiz.setCurNodeCode(
             nodeFlowBO.getNodeFlowByCurrentNode(preCurNodeCode).getNextNode());
-        // repayBizBO.refreshJudgeFinanceSureReceipt(repayBiz);
+        repayBizBO.refreshJudgeFinanceSureReceipt(repayBiz);
 
         BudgetOrder condition = new BudgetOrder();
         condition.setRepayBizCode(repayBiz.getCode());
