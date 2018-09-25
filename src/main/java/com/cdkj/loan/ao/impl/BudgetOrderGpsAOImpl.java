@@ -16,6 +16,7 @@ import com.cdkj.loan.domain.Gps;
 import com.cdkj.loan.dto.req.XN632342Req;
 import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBudgetOrderGpsStatus;
+import com.cdkj.loan.enums.EGpsUseStatus;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -60,6 +61,9 @@ public class BudgetOrderGpsAOImpl implements IBudgetOrderGpsAO {
         data.setStatus(EBudgetOrderGpsStatus.INVALID.getCode());
         data.setRemark(remark);
         budgetOrderGpsBO.abandonBudgetOrderGps(data);
+        Gps gps = gpsBO.getGpsByDevNo(data.getGpsDevNo());
+        gps.setUseStatus(EGpsUseStatus.DAMAGE.getCode());
+        gpsBO.refreshUseGps(code, null);// 作废后使用状态改为已损坏
     }
 
     @Override

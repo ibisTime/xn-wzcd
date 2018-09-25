@@ -176,6 +176,8 @@
 		UPDATE tb_gps
 		SET
 		is_send_back = #{isSendBack}
+		,use_status = #{useStatus}
+		,apply_status = #{applyStatus}
 		WHERE code = #{code}
 	</update>
 </mapper>
