@@ -10,6 +10,12 @@ public class XN630520Req extends APageReq {
 
     private String userId;// 用户编号
 
+    // 申请人姓名
+    private String realName;
+
+    // 申请人证件号
+    private String idNo;
+
     private String refType;// 关联类型
 
     // 业务公司编号
@@ -39,6 +45,22 @@ public class XN630520Req extends APageReq {
 
     public void setShopWay(String shopWay) {
         this.shopWay = shopWay;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
     }
 
     public String getCompanyCode() {

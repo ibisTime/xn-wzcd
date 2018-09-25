@@ -42,7 +42,7 @@ public class APIServlet extends HttpServlet {
         logger.info("Successful Deployment");
         PrintWriter writer = response.getWriter();
         writer.append("Version:1.0.5 \n");
-        writer.append("Description:wzcd_1st \n");
+        writer.append("Description:wzcd_3rd \n");
         writer.flush();
     }
 

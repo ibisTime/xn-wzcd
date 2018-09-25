@@ -112,10 +112,10 @@
 				AND t.user_id = #{userId}
 			</if>
 			<if test="realName != null and realName != '' ">
-				AND t.real_name = #{realName}
+				AND t.real_name like "%"#{realName}"%"
 			</if>
 			<if test="idNo != null and idNo != '' ">
-				AND t.id_no = #{idNo}
+				AND t.id_no like "%"#{idNo}"%"
 			</if>
 			<if test="keyWord != null and keyWord != '' ">
 				AND t.real_name like "%"#{keyWord}"%" OR  t.id_no like "%"#{keyWord}"%"

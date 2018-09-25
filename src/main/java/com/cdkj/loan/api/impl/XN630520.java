@@ -31,6 +31,8 @@ public class XN630520 extends AProcessor {
         RepayBiz condition = new RepayBiz();
         condition.setCode(req.getCode());
         condition.setUserId(req.getUserId());
+        condition.setRealName(req.getRealName());
+        condition.setIdNo(req.getIdNo());
         condition.setRefType(req.getRefType());
         condition.setIsImplementAgain(req.getIsImplementAgain());
         condition.setCurNodeCodeList(req.getCurNodeCodeList());
