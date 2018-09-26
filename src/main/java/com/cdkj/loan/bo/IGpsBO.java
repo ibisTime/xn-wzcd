@@ -29,6 +29,8 @@ public interface IGpsBO extends IPaginableBO<Gps> {
     // 更新gps使用状态
     public void refreshUseGps(String code, String budgetOrder);
 
+    public void refreshUseGpsToDamage(Gps gps);
+
     // 更新gps使用为未使用
     public void refreshUnUse(String code);
 

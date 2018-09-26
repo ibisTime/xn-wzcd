@@ -1,5 +1,6 @@
 package com.cdkj.loan.ao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -63,7 +64,9 @@ public class BudgetOrderGpsAOImpl implements IBudgetOrderGpsAO {
         budgetOrderGpsBO.abandonBudgetOrderGps(data);
         Gps gps = gpsBO.getGpsByDevNo(data.getGpsDevNo());
         gps.setUseStatus(EGpsUseStatus.DAMAGE.getCode());
-        gpsBO.refreshUseGps(code, null);// 作废后使用状态改为已损坏
+        gps.setUseDatetime(new Date());
+        gps.setBizCode(null);
+        gpsBO.refreshUseGpsToDamage(gps);// 作废后使用状态改为已损坏
     }
 
     @Override

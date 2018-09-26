@@ -95,6 +95,11 @@ public class GpsBOImpl extends PaginableBOImpl<Gps> implements IGpsBO {
     }
 
     @Override
+    public void refreshUseGpsToDamage(Gps gps) {
+        gpsDAO.updateUseStatus(gps);
+    }
+
+    @Override
     public void refreshUnUse(String code) {
         if (StringUtils.isNotBlank(code)) {
             Gps data = new Gps();
