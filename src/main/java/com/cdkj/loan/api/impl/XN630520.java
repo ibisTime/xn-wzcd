@@ -30,6 +30,7 @@ public class XN630520 extends AProcessor {
     public Object doBusiness() throws BizException {
         RepayBiz condition = new RepayBiz();
         condition.setCode(req.getCode());
+        condition.setLoanBank(req.getLoanBank());
         condition.setUserId(req.getUserId());
         condition.setRealName(req.getRealName());
         condition.setIdNo(req.getIdNo());

@@ -32,8 +32,11 @@ public class XN630520Req extends APageReq {
     private List<String> curNodeCodeList;// 节点
 
     private String curNodeCode;// 节点
-    // 购车途径
 
+    // 贷款银行
+    private String loanBank;
+
+    // 购车途径
     private String shopWay;
 
     // 是否恢复执行
@@ -45,6 +48,14 @@ public class XN630520Req extends APageReq {
 
     public void setShopWay(String shopWay) {
         this.shopWay = shopWay;
+    }
+
+    public String getLoanBank() {
+        return loanBank;
+    }
+
+    public void setLoanBank(String loanBank) {
+        this.loanBank = loanBank;
     }
 
     public String getRealName() {

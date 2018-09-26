@@ -2323,18 +2323,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setGuarantPrintDatetime(new Date());
         budgetOrderBO.loanContractPrint(budgetOrder);
 
-        // 生成资料传递
-        logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-            budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
-            nextNodeCode);
-        // 产生物流单后改变状态为物流传递中
-        budgetOrder.setIsLogistics(EBoolean.YES.getCode());
-        budgetOrderBO.updateIsLogistics(budgetOrder);
-
-        // 写日志
-        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), curNodeCode,
-            nextNodeCode, EBoolean.YES.getCode(), req.getOperator());
+//        // 生成资料传递
+//        logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+//            budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
+//            nextNodeCode);
+//        // 产生物流单后改变状态为物流传递中
+//        budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+//        budgetOrderBO.updateIsLogistics(budgetOrder);
+//
+//        // 写日志
+//        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+//            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), curNodeCode,
+//            nextNodeCode, EBoolean.YES.getCode(), req.getOperator());
 
         return budgetOrder;
     }
@@ -2610,7 +2610,6 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             String bankRate, String bankBenchmarkRate, String surcharge) {
         XN632690Res res = new XN632690Res();
         Bank bank = bankBO.getBank(loanBankCode);
-        Double BenchmarkRate = StringValidater.toDouble(bankBenchmarkRate);// 基准利率
 
         // 中行
         if (bank.getBankCode().equals(EBankType.ZH.getCode())) {
@@ -2633,7 +2632,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 // 3.首期=手续费-（4）*（期数-1）
                 // 4.每期=(2)*基准利率
                 BigDecimal bankRateD = StringValidater.toBigDecimal(bankRate);
-                BigDecimal rateD = new BigDecimal(BenchmarkRate);
+                BigDecimal rateD = StringValidater
+                    .toBigDecimal(bankBenchmarkRate);// 基准利率
                 BigDecimal poundage = amountB.multiply(rateD);// 手续费
                 BigDecimal annualPoundage = annualPrincipal.multiply(rateD);// 每期手续费
                 annualPoundage = annualPoundage.divide(new BigDecimal(1000), 2,
@@ -2682,9 +2682,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 BigDecimal annualAmount = annualPrincipal.add(annualPoundage)
                     .add(annualHighRate).add(annualHighRatePoundage);
 
-                // 先转成long再转成string
-                res.setAnnualAmount(String.valueOf(annualAmount));
-                res.setInitialAmount(String.valueOf(initialAmount));
+                res.setAnnualAmount(
+                    String.valueOf(annualAmount.setScale(0, 1)));
+                res.setInitialAmount(
+                    String.valueOf(initialAmount.setScale(0, 1)));
                 res.setPoundage(String.valueOf(0));
             } else if (ERateType.ZK.getCode().equals(rateType)) {// 直客
                 if (EBocFeeWay.STAGES.getCode().equals(serviceChargeWay)) {// 分期
@@ -2726,9 +2727,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                         .add(annualPoundage);
 
                     res.setAnnualAmount(
-                        String.valueOf(annualAmount.longValue()));
+                        String.valueOf(annualAmount.setScale(0, 1)));
                     res.setInitialAmount(
-                        String.valueOf(initialAmount.longValue()));
+                        String.valueOf(initialAmount.setScale(0, 1)));
                     res.setPoundage(String.valueOf(0));
                 } else if (EBocFeeWay.DISPOSABLE.getCode()
                     .equals(serviceChargeWay)) {// 一次性
@@ -2759,9 +2760,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                     BigDecimal annualAmount = annualPrincipal;
 
                     res.setAnnualAmount(
-                        String.valueOf(annualAmount.longValue()));
+                        String.valueOf(annualAmount.setScale(0, 1)));
                     res.setInitialAmount(
-                        String.valueOf(initialAmount.longValue()));
+                        String.valueOf(initialAmount.setScale(0, 1)));
                     res.setPoundage(String.valueOf(0));
                 } else {// 附加费
                     BigDecimal bankRateD = StringValidater
@@ -2868,8 +2869,10 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                         .add(annualPoundage).add(annualsurcharge)
                         .add(annualSurchargePoundage);
 
-                    res.setAnnualAmount(String.valueOf(annualAmount));
-                    res.setInitialAmount(String.valueOf(initialAmount));
+                    res.setAnnualAmount(
+                        String.valueOf(annualAmount.setScale(0, 1)));
+                    res.setInitialAmount(
+                        String.valueOf(initialAmount.setScale(0, 1)));
                     res.setPoundage(String.valueOf(0));
                 }
             }
@@ -2877,7 +2880,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             // a)服务费=(实际利率-基准利率)*贷款额
             // b)月供=((贷款额+服务费)*(1+基准利率))/贷款期数
             BigDecimal bankRateD = StringValidater.toBigDecimal(bankRate);
-            BigDecimal rateD = new BigDecimal(BenchmarkRate);
+            BigDecimal rateD = StringValidater.toBigDecimal(bankBenchmarkRate);
             BigDecimal amountB = StringValidater.toBigDecimal(loanAmount);
             BigDecimal periodsB = StringValidater.toBigDecimal(loanPeriods);
             BigDecimal poundage = amountB.multiply(bankRateD.subtract(rateD));// 服务费
@@ -2886,9 +2889,9 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             monthAmount = monthAmount.divide(new BigDecimal(1000), 2, 4);
             monthAmount = monthAmount.multiply(new BigDecimal(1000));
 
-            res.setAnnualAmount(String.valueOf(monthAmount));
-            res.setInitialAmount(String.valueOf(monthAmount));
-            res.setPoundage(String.valueOf(poundage));
+            res.setAnnualAmount(String.valueOf(monthAmount.setScale(0, 1)));
+            res.setInitialAmount(String.valueOf(monthAmount.setScale(0, 1)));
+            res.setPoundage(String.valueOf(poundage.setScale(0, 1)));
         } else if (bank.getBankCode().equals(EBankType.JH.getCode())) {// 建行
             // a) 服务费=0
             // b) 月供=贷款额*（1+利率）/期数
@@ -2900,8 +2903,8 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
                 .multiply(bankRateD.add(new BigDecimal(1))).divide(periodsB);// 月供
             monthAmount = monthAmount.divide(new BigDecimal(1000), 2, 4);
             monthAmount = monthAmount.multiply(new BigDecimal(1000));
-            res.setAnnualAmount(String.valueOf(monthAmount));
-            res.setInitialAmount(String.valueOf(monthAmount));
+            res.setAnnualAmount(String.valueOf(monthAmount.setScale(0, 1)));
+            res.setInitialAmount(String.valueOf(monthAmount.setScale(0, 1)));
             res.setPoundage(String.valueOf(0));
         }
         return res;
