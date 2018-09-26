@@ -35,6 +35,9 @@
 			<if test="bizCode != null and bizCode != '' ">
 				AND t.biz_code = #{bizCode}
 			</if>
+			<if test="customerName != null and customerName != '' ">
+				AND tbo.customer_name = #{customerName}
+			</if>
 			<if test="fromNodeCode != null and fromNodeCode != '' ">
 				AND t.from_node_code = #{fromNodeCode}
 			</if>
@@ -87,7 +90,7 @@
 		,t.status
 		,t.remark
 		FROM
-		tdq_logistics t
+		tdq_logistics t left join tdq_budget_order tbo on t.biz_code = tbo.code
 		<include refid="where_condition"/>
 		<trim prefix="ORDER BY ">
 			<if test="order != null and order != '' ">
@@ -122,7 +125,7 @@
 	</select>
 
 	<select id="select_logistics_count" parameterType="logistics" resultType="java.lang.Long">
-		SELECT count(1) FROM tdq_logistics t 
+		SELECT count(1) FROM tdq_logistics t left join tdq_budget_order tbo on t.biz_code = tbo.code
 		<include refid="where_condition"/>
 	</select>
 	

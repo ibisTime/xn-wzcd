@@ -35,6 +35,17 @@ public class XN632155Req extends APageReq {
     // 类型List
     private List<String> typeList;
 
+    // 客户姓名
+    private String customerName;
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     public List<String> getTypeList() {
         return typeList;
     }
