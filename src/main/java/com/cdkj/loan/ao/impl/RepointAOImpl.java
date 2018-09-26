@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdkj.loan.ao.IRepointAO;
+import com.cdkj.loan.ao.IRepointDetailAO;
 import com.cdkj.loan.bo.ICarDealerBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.INodeFlowBO;
@@ -53,6 +54,9 @@ public class RepointAOImpl implements IRepointAO {
     private ICarDealerBO carDealerBO;
 
     @Autowired
+    private IRepointDetailAO repointDetailAO;
+
+    @Autowired
     private IRepointDetailBO repointDetailBO;
 
     @Autowired
@@ -70,7 +74,8 @@ public class RepointAOImpl implements IRepointAO {
             // 审核不通过的制单（重新制单）
             Repoint data = repointBO.getRepoint(req.getCode());
             String preCurNodeCode = data.getCurNodeCode();// 当前节点
-            if (!ERepointNode.MAKE_BILL.getCode().equals(data.getCurNodeCode())) {
+            if (!ERepointNode.MAKE_BILL.getCode()
+                .equals(data.getCurNodeCode())) {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "当前不是制单节点，不能操作");
             }
@@ -86,11 +91,11 @@ public class RepointAOImpl implements IRepointAO {
             }
             data.setCompanyCode(user.getCompanyCode());
             data.setApplyDatetime(new Date());
-            CarDealer carDealer = carDealerBO.getCarDealer(req
-                .getCarDealerCode());
+            CarDealer carDealer = carDealerBO
+                .getCarDealer(req.getCarDealerCode());
             data.setSettleType(carDealer.getSettleWay());
-            data.setCurNodeCode(nodeFlowBO.getNodeFlowByCurrentNode(
-                data.getCurNodeCode()).getNextNode());// 制单后设置节点为分公司总经理审批
+            data.setCurNodeCode(nodeFlowBO
+                .getNodeFlowByCurrentNode(data.getCurNodeCode()).getNextNode());// 制单后设置节点为分公司总经理审批
             repointBO.refreshRepoint(data);
             // 日志记录
             sysBizLogBO.saveNewAndPreEndSYSBizLog(data.getCode(),
@@ -103,8 +108,8 @@ public class RepointAOImpl implements IRepointAO {
             List<RepointDetail> repointDetailList = repointDetailBO
                 .queryRepointDetailList(condition);
             for (RepointDetail repointDetail : repointDetailList) {
-                repointDetail.setCurNodeCode(ERepointDetailStatus.TODO_PAY
-                    .getCode());
+                repointDetail
+                    .setCurNodeCode(ERepointDetailStatus.TODO_PAY.getCode());
                 repointDetail.setRepointCode(null);
                 repointDetailBO.updateCurNodeCode(repointDetail);
             }
@@ -113,8 +118,8 @@ public class RepointAOImpl implements IRepointAO {
             for (String code : list) {
                 RepointDetail repointDetail = repointDetailBO
                     .getRepointDetail(code);
-                repointDetail.setCurNodeCode(ERepointDetailStatus.APPROVE
-                    .getCode());
+                repointDetail
+                    .setCurNodeCode(ERepointDetailStatus.APPROVE.getCode());
                 repointDetail.setRepointCode(req.getCode());
                 repointDetailBO.updateCurNodeCode(repointDetail);
             }
@@ -133,8 +138,8 @@ public class RepointAOImpl implements IRepointAO {
             }
             data.setCompanyCode(user.getCompanyCode());
             data.setApplyDatetime(new Date());
-            CarDealer carDealer = carDealerBO.getCarDealer(req
-                .getCarDealerCode());
+            CarDealer carDealer = carDealerBO
+                .getCarDealer(req.getCarDealerCode());
             data.setSettleType(carDealer.getSettleWay());
             data.setCurNodeCode(ERepointNode.BRANCH_MANAGER_APPROVE.getCode());// 制单后设置节点为分公司总经理审批
             String repointCode = repointBO.saveRepoint(data);
@@ -146,8 +151,8 @@ public class RepointAOImpl implements IRepointAO {
             for (String code : list) {
                 RepointDetail repointDetail = repointDetailBO
                     .getRepointDetail(code);
-                repointDetail.setCurNodeCode(ERepointDetailStatus.APPROVE
-                    .getCode());
+                repointDetail
+                    .setCurNodeCode(ERepointDetailStatus.APPROVE.getCode());
                 repointDetail.setRepointCode(repointCode);
                 repointDetailBO.updateCurNodeCode(repointDetail);
             }
@@ -158,8 +163,8 @@ public class RepointAOImpl implements IRepointAO {
     public void branchCompanyManagerApprove(XN632242Req req) {
         Repoint repoint = repointBO.getRepoint(req.getCode());
         String preCurNodeCode = repoint.getCurNodeCode();// 当前节点
-        if (!ERepointNode.BRANCH_MANAGER_APPROVE.getCode().equals(
-            preCurNodeCode)) {
+        if (!ERepointNode.BRANCH_MANAGER_APPROVE.getCode()
+            .equals(preCurNodeCode)) {
             throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                 "当前节点不是返点支付流程分公司总经理审批节点，不能操作");
         }
@@ -233,7 +238,7 @@ public class RepointAOImpl implements IRepointAO {
         init(repoint);
         RepointDetail condition = new RepointDetail();
         condition.setRepointCode(repoint.getCode());
-        List<RepointDetail> list = repointDetailBO
+        List<RepointDetail> list = repointDetailAO
             .queryRepointDetailList(condition);
         repoint.setRepointDetailList(list);
         return repoint;
@@ -241,15 +246,15 @@ public class RepointAOImpl implements IRepointAO {
 
     private Repoint init(Repoint data) {
         if (StringUtils.isNotBlank(data.getCarDealerCode())) {
-            CarDealer carDealer = carDealerBO.getCarDealer(data
-                .getCarDealerCode());
+            CarDealer carDealer = carDealerBO
+                .getCarDealer(data.getCarDealerCode());
             if (null != carDealer) {
                 data.setCarDealerName(carDealer.getFullName());
             }
         }
         if (StringUtils.isNotBlank(data.getCompanyCode())) {
-            Department department = departmentBO.getDepartment(data
-                .getCompanyCode());
+            Department department = departmentBO
+                .getDepartment(data.getCompanyCode());
             if (null != department) {
                 data.setCarDealerName(department.getName());
             }

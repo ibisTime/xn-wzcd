@@ -83,6 +83,17 @@ public class RepointDetail extends ABaseDO {
     // 结算方式
     private String settleWay;
 
+    // 手续费（收客户手续费合计）
+    private Long serviceCharge;
+
+    public Long getServiceCharge() {
+        return serviceCharge;
+    }
+
+    public void setServiceCharge(Long serviceCharge) {
+        this.serviceCharge = serviceCharge;
+    }
+
     public String getCode() {
         return code;
     }

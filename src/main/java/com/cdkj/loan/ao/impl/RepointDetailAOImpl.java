@@ -3,6 +3,7 @@ package com.cdkj.loan.ao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -90,7 +91,16 @@ public class RepointDetailAOImpl implements IRepointDetailAO {
 
     @Override
     public List<RepointDetail> queryRepointDetailList(RepointDetail condition) {
-        return repointDetailBO.queryRepointDetailList(condition);
+        List<RepointDetail> queryRepointDetailList = repointDetailBO
+            .queryRepointDetailList(condition);
+        for (RepointDetail repointDetail : queryRepointDetailList) {
+            if (StringUtils.isNotBlank(repointDetail.getBudgetCode())) {
+                BudgetOrder budgetOrder = budgetOrderBO
+                    .getBudgetOrder(repointDetail.getBudgetCode());
+                repointDetail.setServiceCharge(budgetOrder.getServiceCharge());
+            }
+        }
+        return queryRepointDetailList;
     }
 
     @Override
