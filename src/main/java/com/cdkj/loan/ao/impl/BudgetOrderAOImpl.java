@@ -2323,18 +2323,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setGuarantPrintDatetime(new Date());
         budgetOrderBO.loanContractPrint(budgetOrder);
 
-//        // 生成资料传递
-//        logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
-//            budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
-//            nextNodeCode);
-//        // 产生物流单后改变状态为物流传递中
-//        budgetOrder.setIsLogistics(EBoolean.YES.getCode());
-//        budgetOrderBO.updateIsLogistics(budgetOrder);
-//
-//        // 写日志
-//        sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
-//            EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), curNodeCode,
-//            nextNodeCode, EBoolean.YES.getCode(), req.getOperator());
+        // // 生成资料传递
+        // logisticsBO.saveLogistics(ELogisticsType.BUDGET.getCode(),
+        // budgetOrder.getCode(), budgetOrder.getSaleUserId(), curNodeCode,
+        // nextNodeCode);
+        // // 产生物流单后改变状态为物流传递中
+        // budgetOrder.setIsLogistics(EBoolean.YES.getCode());
+        // budgetOrderBO.updateIsLogistics(budgetOrder);
+        //
+        // // 写日志
+        // sysBizLogBO.saveNewAndPreEndSYSBizLog(budgetOrder.getCode(),
+        // EBizLogType.BUDGET_ORDER, budgetOrder.getCode(), curNodeCode,
+        // nextNodeCode, EBoolean.YES.getCode(), req.getOperator());
 
         return budgetOrder;
     }
@@ -2884,8 +2884,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             BigDecimal amountB = StringValidater.toBigDecimal(loanAmount);
             BigDecimal periodsB = StringValidater.toBigDecimal(loanPeriods);
             BigDecimal poundage = amountB.multiply(bankRateD.subtract(rateD));// 服务费
-            BigDecimal monthAmount = amountB.add(poundage)
-                .multiply(rateD.add(new BigDecimal(1))).divide(periodsB);// 月供
+            // BigDecimal monthAmount = (amountB.add(poundage)
+            // .multiply(rateD.add(new BigDecimal(1)))).divide(periodsB);// 月供
+            BigDecimal add = amountB.add(poundage);
+            BigDecimal add2 = rateD.add(new BigDecimal(1));
+            BigDecimal multiply = add.multiply(add2);
+            BigDecimal monthAmount = multiply.divide(periodsB, 2, 4);
+
             monthAmount = monthAmount.divide(new BigDecimal(1000), 2, 4);
             monthAmount = monthAmount.multiply(new BigDecimal(1000));
 
