@@ -6,6 +6,9 @@ import com.cdkj.loan.domain.Judge;
 public interface IJudgeDAO extends IBaseDAO<Judge> {
     String NAMESPACE = IJudgeDAO.class.getName().concat(".");
 
+    // 司法诉讼
+    public void updateJudge(Judge judge);
+
     // 诉讼跟进
     public void updateJudgeFollow(Judge data);
 
@@ -41,4 +44,5 @@ public interface IJudgeDAO extends IBaseDAO<Judge> {
 
     // 执行案件：录入查封裁定到期时间
     public void inputVerdict(Judge judge);
+
 }

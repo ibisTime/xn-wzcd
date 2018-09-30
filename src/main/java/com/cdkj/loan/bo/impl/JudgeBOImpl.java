@@ -40,21 +40,34 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
 
     @Override
     public String saveJudge(XN630560Req req) {
-        Judge data = new Judge();
-        String code = OrderNoGenerater
-            .generate(EGeneratePrefix.JUDGE.getCode());
-        data.setCode(code);
-        data.setRepayBizCode(req.getRepayBizCode());
-        data.setPlaintiff(req.getPlaintiff());
-        data.setDefendant(req.getDefendant());
+        String code = null;
+        Judge judge = queryJudgeByRepayBizCode(req.getRepayBizCode(),
+            EBoolean.NO);
+        if (judge != null) {
+            code = judge.getCode();
+            judge.setPlaintiff(req.getPlaintiff());
+            judge.setDefendant(req.getDefendant());
+            judge.setCaseStatus(ECaseStatus.RECORD.getCode());
+            judge.setCaseFee(StringValidater.toLong(req.getCaseFee()));
+            judge.setUpdater(req.getOperator());
+            judge.setUpdateDatetime(new Date());
+            judgeDAO.updateJudge(judge);
+        } else {
+            Judge data = new Judge();
+            code = OrderNoGenerater.generate(EGeneratePrefix.JUDGE.getCode());
+            data.setCode(code);
+            data.setRepayBizCode(req.getRepayBizCode());
+            data.setPlaintiff(req.getPlaintiff());
+            data.setDefendant(req.getDefendant());
 
-        data.setCaseStatus(ECaseStatus.RECORD.getCode());
-        data.setCaseFee(StringValidater.toLong(req.getCaseFee()));
+            data.setCaseStatus(ECaseStatus.RECORD.getCode());
+            data.setCaseFee(StringValidater.toLong(req.getCaseFee()));
 
-        data.setStatus(EBoolean.NO.getCode());
-        data.setUpdater(req.getOperator());
-        data.setUpdateDatetime(new Date());
-        judgeDAO.insert(data);
+            data.setStatus(EBoolean.NO.getCode());
+            data.setUpdater(req.getOperator());
+            data.setUpdateDatetime(new Date());
+            judgeDAO.insert(data);
+        }
         return code;
     }
 

@@ -145,6 +145,18 @@
 		)
 	</insert>
 	
+	<update id="update_judge" parameterType="judge">
+		UPDATE tdh_judge
+		SET
+		plaintiff = #{plaintiff}
+		,defendant = #{defendant}
+		,case_fee = #{caseFee}
+		,case_status = #{caseStatus}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE code = #{code}
+	</update>
+	
 	<update id="update_judgeFollow" parameterType="judge">
 		UPDATE tdh_judge
 		SET
