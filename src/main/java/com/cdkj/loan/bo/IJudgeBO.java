@@ -29,6 +29,8 @@ public interface IJudgeBO extends IPaginableBO<Judge> {
 
     public Judge getJudge(String code);
 
+    public Judge queryByRepayBizCode(String repayBizCode, EBoolean status);
+
     public Judge queryJudgeByRepayBizCode(String repayBizCode, EBoolean status);
 
     public Judge getJudgeByRepaybizCode(String code);

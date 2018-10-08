@@ -34,7 +34,6 @@ public class XN632341Req {
     private String insuranceBusinessPdf;
 
     // 续保说明
-    @NotBlank
     private String insuranceNote;
 
     // 说明人

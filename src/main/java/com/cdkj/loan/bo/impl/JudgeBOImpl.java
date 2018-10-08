@@ -41,8 +41,7 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
     @Override
     public String saveJudge(XN630560Req req) {
         String code = null;
-        Judge judge = queryJudgeByRepayBizCode(req.getRepayBizCode(),
-            EBoolean.NO);
+        Judge judge = queryByRepayBizCode(req.getRepayBizCode(), EBoolean.NO);
         if (judge != null) {
             code = judge.getCode();
             judge.setPlaintiff(req.getPlaintiff());
@@ -99,6 +98,14 @@ public class JudgeBOImpl extends PaginableBOImpl<Judge> implements IJudgeBO {
             }
         }
         return data;
+    }
+
+    @Override
+    public Judge queryByRepayBizCode(String repayBizCode, EBoolean status) {
+        Judge condition = new Judge();
+        condition.setRepayBizCode(repayBizCode);
+        condition.setStatus(status.getCode());
+        return judgeDAO.select(condition);
     }
 
     @Override
