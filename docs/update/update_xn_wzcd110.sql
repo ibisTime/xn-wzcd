@@ -29,6 +29,10 @@ CHANGE COLUMN `sale_price` `sale_price` VARCHAR(255) NULL DEFAULT NULL COMMENT '
 INSERT INTO `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('car_refresh', 'url', 'http://api.che300.com/service', 'admin', '2018-08-15 17:33:30', '车辆刷新url', 'CD-CWZCD000020', 'CD-CWZCD000020');
 INSERT INTO `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('car_refresh', 'token', 'ed34a9f390e806112420863423cd8dbc', 'admin', '2018-08-15 17:33:30', '车辆刷新token', 'CD-CWZCD000020', 'CD-CWZCD000020');
 
+UPDATE `tsys_config` SET `cvalue`='storage' WHERE `id`='3';
+UPDATE `tsys_config` SET `cvalue`='http://pi8arp14o.bkt.clouddn.com' WHERE `id`='4';
+UPDATE `tsys_config` SET `cvalue`='vD0zZvIefnOy4MyX2IF1AG6-qClmvFbqT-aYFnsy' WHERE `id`='2';
+UPDATE `tsys_config` SET `cvalue`='xjDbsm1LJCwQy4NxRcP3hmrOjqFmFVQHxgQl_7Mu' WHERE `id`='1';
 
 DROP TABLE IF EXISTS `tdh_city_list`;
 CREATE TABLE `tdh_city_list` (

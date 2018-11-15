@@ -259,6 +259,7 @@ public class CarAOImpl implements ICarAO {
     }
 
     @Override
+    @Transactional
     public void refreshCar(XN630428Req req) {
         SYSConfig url = sysConfigBO.getSYSConfig("car_refresh", "url");
         SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");

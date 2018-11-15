@@ -11,6 +11,16 @@ public class XN630418Req {
     @NotBlank
     private String updater;
 
+    private String cdkjToken;
+
+    public String getCdkjToken() {
+        return cdkjToken;
+    }
+
+    public void setCdkjToken(String cdkjToken) {
+        this.cdkjToken = cdkjToken;
+    }
+
     public String getBrandId() {
         return brandId;
     }

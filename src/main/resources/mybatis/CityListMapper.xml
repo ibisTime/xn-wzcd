@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.ICityListDAO">
+	<resultMap id="cityList_DB_Result" type="cityList">
+		<result column="id" property="id" />
+		<result column="city_id" property="cityId" />
+		<result column="city_name" property="cityName" />
+		<result column="prov_id" property="provId" />
+		<result column="prov_name" property="provName" />
+		<result column="updater" property="updater" />
+		<result column="update_datetime" property="updateDatetime" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="id != null and id != '' ">
+				AND t.id = #{id}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_cityList" parameterType="cityList" resultMap="cityList_DB_Result">
+		SELECT
+		t.id
+		,t.city_id
+		,t.city_name
+		,t.prov_id
+		,t.prov_name
+		,t.updater
+		,t.update_datetime
+		FROM
+		tdh_city_list t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_cityList_count" parameterType="cityList"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdh_city_list t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_cityList" parameterType="cityList">
+		INSERT INTO
+		tdh_city_list(
+		id
+		,city_id
+		,city_name
+		,prov_id
+		,prov_name
+		,updater
+		,update_datetime
+		)
+		VALUES(
+		#{id}
+		,#{cityId}
+		,#{cityName}
+		,#{provId}
+		,#{provName}
+		,#{updater}
+		,#{updateDatetime}
+		)
+	</insert>
+
+	<update id="update_cityList" parameterType="cityList">
+		UPDATE tdh_city_list
+		SET
+		city_id = #{cityId}
+		,city_name = #{cityName}
+		,prov_id = #{provId}
+		,prov_name = #{provName}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete_cityList" parameterType="cityList">
+		DELETE FROM tdh_city_list
+		WHERE id = #{id}
+	</delete>
+
+
+</mapper>

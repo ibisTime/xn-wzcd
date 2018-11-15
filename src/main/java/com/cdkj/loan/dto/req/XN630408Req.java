@@ -7,6 +7,16 @@ public class XN630408Req {
     @NotBlank
     private String updater;
 
+    private String cdkjToken;
+
+    public String getCdkjToken() {
+        return cdkjToken;
+    }
+
+    public void setCdkjToken(String cdkjToken) {
+        this.cdkjToken = cdkjToken;
+    }
+
     public String getUpdater() {
         return updater;
     }
