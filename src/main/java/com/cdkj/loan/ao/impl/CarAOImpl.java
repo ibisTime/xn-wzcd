@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -19,15 +20,21 @@ import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.aliyun.util.HttpUtils;
 import com.cdkj.loan.ao.ICarAO;
 import com.cdkj.loan.bo.ICarBO;
+import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.core.OkHttpUtils;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Car;
+import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630420Req;
 import com.cdkj.loan.dto.req.XN630422Req;
+import com.cdkj.loan.dto.req.XN630428Req;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBrandStatus;
+import com.cdkj.loan.enums.ECarProduceType;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -42,69 +49,72 @@ public class CarAOImpl implements ICarAO {
     @Autowired
     private ISYSUserBO sysUserBO;
 
+    @Autowired
+    private ISYSConfigBO sysConfigBO;
+
     @Override
     @Transactional
     public void addCar(XN630420Req req) {
-        // Car car = new Car();
-        //
-        // car.setName(req.getName());
-        // car.setSeriesCode(req.getSeriesCode());
-        // car.setSeriesName(req.getSeriesName());
-        // car.setBrandCode(req.getBrandCode());
-        // car.setBrandName(req.getBrandName());
-        //
-        // car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
-        // car.setSalePrice(StringValidater.toLong(req.getSalePrice()));
-        // car.setSfAmount(StringValidater.toLong(req.getSfAmount()));
-        // car.setSlogan(req.getSlogan());
-        // car.setAdvPic(req.getAdvPic());
-        //
-        // car.setPic(req.getPic());
-        // car.setDescription(req.getDescription());
-        // car.setStatus(EBrandStatus.TO_UP.getCode());
-        // car.setUpdater(req.getUpdater());
-        // car.setUpdateDatetime(new Date());
-        //
-        // car.setRemark(req.getRemark());
-        // carBO.saveCar(car);
+        Car car = new Car();
 
-        ArrayList<JSONArray> jsonList = generateCar();
-        for (JSONArray json : jsonList) {
-            if (null != json) {
-                for (int i = 0; i < json.size(); i++) {
-                    JSONObject jsonObject = json.getJSONObject(i);
-                    JSONArray ja = jsonObject.getJSONArray("carlist");
-                    if (null != ja) {
-                        for (int j = 0; j < ja.size(); j++) {
-                            JSONObject jo = ja.getJSONObject(j);
-                            if (null != jo) {
-                                Car car = new Car();
-                                car.setName(jo.getString("name"));
-                                car.setSeriesCode(jo.getString("parentid"));
-                                car.setSeriesName(jo.getString("fullname"));
-                                car.setSlogan(jo.getString("id"));
-                                if (StringUtils.isNotBlank(jo
-                                    .getString("price"))) {
-                                    if ("暂无".equals(jo.getString("price"))) {
-                                        car.setOriginalPrice(0L);
-                                    } else {
-                                        String[] split = jo.getString("price")
-                                            .split("万");
-                                        car.setOriginalPrice((long) (Double
-                                            .parseDouble(split[0]) * 10000));
-                                    }
-                                }
-                                car.setAdvPic(jo.getString("logo"));
-                                car.setStatus(EBrandStatus.TO_UP.getCode());
-                                car.setUpdater("USYS201800000000001");
-                                car.setUpdateDatetime(new Date());
-                                carBO.saveCar(car);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        car.setName(req.getName());
+        car.setSeriesCode(req.getSeriesCode());
+        car.setSeriesName(req.getSeriesName());
+        car.setBrandCode(req.getBrandCode());
+        car.setBrandName(req.getBrandName());
+
+        car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
+        car.setSalePrice(req.getSalePrice());
+        car.setSfAmount(StringValidater.toLong(req.getSfAmount()));
+        car.setSlogan(req.getSlogan());
+        car.setAdvPic(req.getAdvPic());
+
+        car.setPic(req.getPic());
+        car.setDescription(req.getDescription());
+        car.setStatus(EBrandStatus.TO_UP.getCode());
+        car.setUpdater(req.getUpdater());
+        car.setUpdateDatetime(new Date());
+
+        car.setRemark(req.getRemark());
+        carBO.saveCar(car);
+
+        // ArrayList<JSONArray> jsonList = generateCar();
+        // for (JSONArray json : jsonList) {
+        // if (null != json) {
+        // for (int i = 0; i < json.size(); i++) {
+        // JSONObject jsonObject = json.getJSONObject(i);
+        // JSONArray ja = jsonObject.getJSONArray("carlist");
+        // if (null != ja) {
+        // for (int j = 0; j < ja.size(); j++) {
+        // JSONObject jo = ja.getJSONObject(j);
+        // if (null != jo) {
+        // Car car = new Car();
+        // car.setName(jo.getString("name"));
+        // car.setSeriesCode(jo.getString("parentid"));
+        // car.setSeriesName(jo.getString("fullname"));
+        // car.setSlogan(jo.getString("id"));
+        // if (StringUtils.isNotBlank(jo
+        // .getString("price"))) {
+        // if ("暂无".equals(jo.getString("price"))) {
+        // car.setOriginalPrice(0L);
+        // } else {
+        // String[] split = jo.getString("price")
+        // .split("万");
+        // car.setOriginalPrice((long) (Double
+        // .parseDouble(split[0]) * 10000));
+        // }
+        // }
+        // car.setAdvPic(jo.getString("logo"));
+        // car.setStatus(EBrandStatus.TO_UP.getCode());
+        // car.setUpdater("USYS201800000000001");
+        // car.setUpdateDatetime(new Date());
+        // carBO.saveCar(car);
+        // }
+        // }
+        // }
+        // }
+        // }
+        // }
 
         // for (Object obj : json) {
         // JSONObject jo = (JSONObject) obj;
@@ -185,7 +195,7 @@ public class CarAOImpl implements ICarAO {
         car.setBrandCode(req.getBrandCode());
         car.setBrandName(req.getBrandName());
         car.setOriginalPrice(StringValidater.toLong(req.getOriginalPrice()));
-        car.setSalePrice(StringValidater.toLong(req.getSalePrice()));
+        car.setSalePrice(req.getSalePrice());
         car.setSfAmount(StringValidater.toLong(req.getSfAmount()));
         car.setSlogan(req.getSlogan());
         car.setAdvPic(req.getAdvPic());
@@ -246,6 +256,85 @@ public class CarAOImpl implements ICarAO {
             car.setUpdaterName(realName);
         }
         return queryCar;
+    }
+
+    @Override
+    public void refreshCar(XN630428Req req) {
+        SYSConfig url = sysConfigBO.getSYSConfig("car_refresh", "url");
+        SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
+        if (StringUtils.isBlank(req.getSeriesId())) {
+            Series series = new Series();
+            series.setType(ECarProduceType.IMPORT.getCode());
+            List<Series> querySeries = seriesBO.querySeries(series);
+            for (Series domain : querySeries) {
+                refresh(url, token, domain.getSeriesId(), req.getUpdater());
+            }
+        } else {
+            Series series = seriesBO.getSeriesBySeriesId(req.getSeriesId());
+            if (series == null) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "车系标识不存在！");
+            }
+            refresh(url, token, req.getSeriesId(), req.getUpdater());
+        }
+    }
+
+    private void refresh(SYSConfig url, SYSConfig token, String seriesId,
+            String updater) {
+        String json = OkHttpUtils
+            .doAccessHTTPGetJson(url.getCvalue() + "/getCarModelList"
+                    + "?token=" + token.getCvalue() + "&seriesId=" + seriesId);
+        JSONObject jsono = JSONObject.parseObject(json);
+        String status = jsono.get("status").toString();
+        if (status.equals("0")) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                jsono.get("error_msg").toString());
+        }
+
+        Car condition = new Car();
+        condition.setSeriesId(seriesId);
+        condition.setType(ECarProduceType.IMPORT.getCode());
+        List<Car> queryCar = carBO.queryCar(condition);
+        if (CollectionUtils.isNotEmpty(queryCar)) {
+            for (Car car : queryCar) {
+                carBO.removeCar(car);
+            }
+        }
+        String list = jsono.get("model_list").toString();
+        JSONArray parseArray = JSONArray.parseArray(list);
+        for (Object object : parseArray) {
+            JSONObject jsonObject = (JSONObject) object;
+            String modelId = jsonObject.getString("model_id");
+            String modelName = jsonObject.getString("model_name");
+            String modelPrice = jsonObject.getString("model_price");
+            String modelYear = jsonObject.getString("model_year");
+            String minRegYear = jsonObject.getString("min_reg_year");
+            String maxRegYear = jsonObject.getString("max_reg_year");
+            String liter = jsonObject.getString("liter");
+            String gearType = jsonObject.getString("gearType");
+            String dischargeStandard = jsonObject
+                .getString("dischargeStandard");
+            String seatNumber = jsonObject.getString("seat_number");
+            Date updateTime = jsonObject.getDate("update_time");
+
+            Car car = new Car();
+            car.setSeriesId(seriesId);
+            car.setModelId(modelId);
+            car.setType(ECarProduceType.IMPORT.getCode());
+            car.setName(modelName);
+            car.setSalePrice(modelPrice + "万");
+            car.setModelYear(modelYear);
+            car.setMinRegYear(minRegYear);
+            car.setMaxRegYear(maxRegYear);
+            car.setLiter(liter);
+            car.setGearType(gearType);
+            car.setDischargeStandard(dischargeStandard);
+            car.setSeatNumber(seatNumber);
+            car.setStatus(EBrandStatus.UP.getCode());
+            car.setUpdater(updater);
+            car.setUpdateDatetime(updateTime);
+            carBO.saveCar(car);
+        }
     }
 
 }

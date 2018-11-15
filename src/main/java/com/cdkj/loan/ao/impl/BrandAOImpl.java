@@ -5,24 +5,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.aliyun.util.HttpUtils;
 import com.cdkj.loan.ao.IBrandAO;
 import com.cdkj.loan.bo.IBrandBO;
+import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.core.OkHttpUtils;
 import com.cdkj.loan.domain.Brand;
+import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN630400Req;
 import com.cdkj.loan.dto.req.XN630402Req;
+import com.cdkj.loan.dto.req.XN630408Req;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBrandStatus;
+import com.cdkj.loan.enums.ECarProduceType;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -34,9 +43,14 @@ public class BrandAOImpl implements IBrandAO {
     @Autowired
     private ISYSUserBO sysUserBO;
 
+    @Autowired
+    private ISYSConfigBO sysConfigBO;
+
     @Override
+    @Transactional
     public void addBrand(XN630400Req req) {
         Brand brand = new Brand();
+        brand.setType(ECarProduceType.WRITE.getCode());
         brand.setLetter(req.getLetter());
         brand.setLogo(req.getLogo());
         brand.setName(req.getName());
@@ -105,6 +119,7 @@ public class BrandAOImpl implements IBrandAO {
     }
 
     @Override
+    @Transactional
     public void editBrand(XN630402Req req) {
         Brand brand = brandBO.getBrand(req.getCode());
         if (EBrandStatus.UP.getCode().equals(brand.getStatus())) {
@@ -120,6 +135,7 @@ public class BrandAOImpl implements IBrandAO {
     }
 
     @Override
+    @Transactional
     public void upBrand(String code, String updater, String remark) {
         Brand brand = brandBO.getBrand(code);
         if (EBrandStatus.UP.getCode().equals(brand.getStatus())) {
@@ -133,6 +149,7 @@ public class BrandAOImpl implements IBrandAO {
     }
 
     @Override
+    @Transactional
     public void downBrand(String code, String updater, String remark) {
         Brand brand = brandBO.getBrand(code);
         if (!EBrandStatus.UP.getCode().equals(brand.getStatus())) {
@@ -177,6 +194,48 @@ public class BrandAOImpl implements IBrandAO {
             initBrand(brand);
         }
         return queryBrand;
+    }
+
+    @Override
+    @Transactional
+    public void refreshBrand(XN630408Req req) {
+        SYSConfig url = sysConfigBO.getSYSConfig("car_refresh", "url");
+        SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
+        String json = OkHttpUtils.doAccessHTTPGetJson(url.getCvalue()
+                + "/getCarBrandList" + "?token=" + token.getCvalue());
+        if (json == null) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                "查询结果为空，请检查地址和token是否正确！");
+        }
+        Brand condition = new Brand();
+        condition.setType(ECarProduceType.IMPORT.getCode());
+        List<Brand> queryBrand = brandBO.queryBrand(condition);
+        if (CollectionUtils.isNotEmpty(queryBrand)) {
+            for (Brand brand : queryBrand) {
+                brandBO.removeBrand(brand);
+            }
+        }
+
+        JSONObject jsono = JSONObject.parseObject(json);
+        String s = jsono.get("brand_list").toString();
+        JSONArray parseArray = JSONArray.parseArray(s);
+        for (Object object : parseArray) {
+            JSONObject jsonObject = (JSONObject) object;
+            String brandId = jsonObject.getString("brand_id");
+            String brandName = jsonObject.getString("brand_name");
+            String initial = jsonObject.getString("initial");
+            Date updateTime = jsonObject.getDate("update_time");
+
+            Brand brand = new Brand();
+            brand.setBrandId(brandId);
+            brand.setType(ECarProduceType.IMPORT.getCode());
+            brand.setName(brandName);
+            brand.setLetter(initial);
+            brand.setStatus(EBrandStatus.UP.getCode());
+            brand.setUpdater(req.getUpdater());
+            brand.setUpdateDatetime(updateTime);
+            brandBO.saveBrand(brand);
+        }
     }
 
 }

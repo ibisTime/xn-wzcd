@@ -18,7 +18,7 @@ public class CarDAOImpl extends AMybatisTemplate implements ICarDAO {
 
     @Override
     public int delete(Car data) {
-        return 0;
+        return super.delete(NAMESPACE.concat("delete_car"), data);
     }
 
     @Override

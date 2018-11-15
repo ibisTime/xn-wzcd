@@ -160,10 +160,10 @@ public class SYSConfigBOImpl extends PaginableBOImpl<SYSConfig>
     }
 
     @Override
-    public SYSConfig getSYSConfig(String type, Integer key) {
+    public SYSConfig getSYSConfig(String type, String key) {
         SYSConfig condition = new SYSConfig();
         condition.setType(type);
-        condition.setCkey(String.valueOf(key));
+        condition.setCkey(key);
         return sysConfigDAO.select(condition);
     }
 

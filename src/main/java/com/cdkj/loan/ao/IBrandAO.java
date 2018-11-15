@@ -6,6 +6,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Brand;
 import com.cdkj.loan.dto.req.XN630400Req;
 import com.cdkj.loan.dto.req.XN630402Req;
+import com.cdkj.loan.dto.req.XN630408Req;
 
 public interface IBrandAO {
     String DEFAULT_ORDER_COLUMN = "code";
@@ -31,5 +32,8 @@ public interface IBrandAO {
 
     // 列表查询
     public List<Brand> queryBrandList(Brand condition);
+
+    // 品牌刷新
+    public void refreshBrand(XN630408Req req);
 
 }

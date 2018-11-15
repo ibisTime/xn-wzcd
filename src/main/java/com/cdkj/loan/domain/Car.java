@@ -6,7 +6,18 @@ import com.cdkj.loan.dao.base.ABaseDO;
 
 public class Car extends ABaseDO {
 
+    private static final long serialVersionUID = 7984810240631348278L;
+
     private String code; // 编号
+
+    // 车系标识
+    private String seriesId;
+
+    // 车型标识
+    private String modelId;
+
+    // 车型类型（1接口导入,2用户新增）
+    private String type;
 
     private String name; // 名称
 
@@ -20,7 +31,21 @@ public class Car extends ABaseDO {
 
     private Long originalPrice;// 原价
 
-    private Long salePrice;// 参考价
+    private String salePrice;// 参考价
+
+    private String modelYear;// 年款
+
+    private String minRegYear;// 最小上牌年份
+
+    private String maxRegYear;// 最大上牌年份
+
+    private String liter;// 排量
+
+    private String gearType;// 变速箱
+
+    private String dischargeStandard;// 排放标准
+
+    private String seatNumber;// 座位数
 
     private Long sfAmount; // 首付金额
 
@@ -113,11 +138,11 @@ public class Car extends ABaseDO {
         this.originalPrice = originalPrice;
     }
 
-    public Long getSalePrice() {
+    public String getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(Long salePrice) {
+    public void setSalePrice(String salePrice) {
         this.salePrice = salePrice;
     }
 
@@ -127,6 +152,86 @@ public class Car extends ABaseDO {
 
     public void setSfAmount(Long sfAmount) {
         this.sfAmount = sfAmount;
+    }
+
+    public String getSeriesId() {
+        return seriesId;
+    }
+
+    public void setSeriesId(String seriesId) {
+        this.seriesId = seriesId;
+    }
+
+    public String getModelId() {
+        return modelId;
+    }
+
+    public void setModelId(String modelId) {
+        this.modelId = modelId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getModelYear() {
+        return modelYear;
+    }
+
+    public void setModelYear(String modelYear) {
+        this.modelYear = modelYear;
+    }
+
+    public String getMinRegYear() {
+        return minRegYear;
+    }
+
+    public void setMinRegYear(String minRegYear) {
+        this.minRegYear = minRegYear;
+    }
+
+    public String getMaxRegYear() {
+        return maxRegYear;
+    }
+
+    public void setMaxRegYear(String maxRegYear) {
+        this.maxRegYear = maxRegYear;
+    }
+
+    public String getLiter() {
+        return liter;
+    }
+
+    public void setLiter(String liter) {
+        this.liter = liter;
+    }
+
+    public String getGearType() {
+        return gearType;
+    }
+
+    public void setGearType(String gearType) {
+        this.gearType = gearType;
+    }
+
+    public String getDischargeStandard() {
+        return dischargeStandard;
+    }
+
+    public void setDischargeStandard(String dischargeStandard) {
+        this.dischargeStandard = dischargeStandard;
+    }
+
+    public String getSeatNumber() {
+        return seatNumber;
+    }
+
+    public void setSeatNumber(String seatNumber) {
+        this.seatNumber = seatNumber;
     }
 
     public Integer getLocation() {

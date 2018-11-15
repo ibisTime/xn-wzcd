@@ -11,6 +11,8 @@ public interface ISeriesBO extends IPaginableBO<Series> {
 
     public Series getSeries(String code);
 
+    public void removeSeries(Series data);
+
     public int editSeries(Series data);
 
     public int upSeries(Series data);
@@ -18,4 +20,6 @@ public interface ISeriesBO extends IPaginableBO<Series> {
     public int downSeries(Series data);
 
     public List<Series> querySeries(Series condition);
+
+    public Series getSeriesBySeriesId(String seriesId);
 }

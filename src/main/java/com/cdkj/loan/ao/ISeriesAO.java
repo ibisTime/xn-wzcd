@@ -6,6 +6,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630410Req;
 import com.cdkj.loan.dto.req.XN630412Req;
+import com.cdkj.loan.dto.req.XN630418Req;
 
 public interface ISeriesAO {
 
@@ -33,4 +34,7 @@ public interface ISeriesAO {
 
     // 列表查询
     public List<Series> querySeriesList(Series condition);
+
+    // 车系刷新
+    public void refreshSeries(XN630418Req req);
 }

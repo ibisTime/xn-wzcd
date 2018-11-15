@@ -91,7 +91,7 @@ public class CarOrderAOImpl implements ICarOrderAO {
             carOrder.setUser(user);
             if (carOrder.getPeriods() != null) {
                 SYSConfig config = sysConfigBO.getSYSConfig("car_periods",
-                    carOrder.getPeriods());
+                    carOrder.getPeriods().toString());
                 carOrder.setRate(StringValidater.toDouble(config.getCvalue()));
             }
         }

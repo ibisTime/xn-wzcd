@@ -18,8 +18,7 @@ public class BrandDAOImpl extends AMybatisTemplate implements IBrandDAO {
 
     @Override
     public int delete(Brand data) {
-        // TODO Auto-generated method stub
-        return 0;
+        return super.delete(NAMESPACE.concat("delete_brand"), data);
     }
 
     @Override

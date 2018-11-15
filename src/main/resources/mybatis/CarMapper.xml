@@ -4,6 +4,9 @@
 <mapper namespace="com.cdkj.loan.dao.ICarDAO">
 	<resultMap id="car_DB_Result" type="car">
 		<result column="code" property="code" />
+		<result column="series_id" property="seriesId" />
+		<result column="model_id" property="modelId" />
+		<result column="type" property="type" />
 		<result column="name" property="name" />
 		<result column="series_code" property="seriesCode" />
 		<result column="series_name" property="seriesName" />
@@ -11,6 +14,13 @@
 		<result column="brand_name" property="brandName" />
 		<result column="original_price" property="originalPrice" />
 		<result column="sale_price" property="salePrice" />
+		<result column="model_year" property="modelYear" />
+		<result column="min_reg_year" property="minRegYear" />
+		<result column="max_reg_year" property="maxRegYear" />
+		<result column="liter" property="liter" />
+		<result column="gear_type" property="gearType" />
+		<result column="discharge_standard" property="dischargeStandard" />
+		<result column="seat_number" property="seatNumber" />
 		<result column="sf_amount" property="sfAmount" />
 		<result column="location" property="location" />
 		<result column="order_no" property="orderNo" />
@@ -31,6 +41,15 @@
 			</if>
 			<if test="name != null and name != '' ">
 				AND t.name like "%"#{name}"%"
+			</if>
+			<if test="seriesId != null and seriesId != '' ">
+				AND t.series_id = #{seriesId}
+			</if>
+			<if test="modelId != null and modelId != '' ">
+				AND t.model_id = #{modelId}
+			</if>
+			<if test="type != null and type != '' ">
+				AND t.type = #{type}
 			</if>
 			<if test="seriesCode != null and seriesCode != '' ">
 				AND t.series_code = #{seriesCode}
@@ -89,6 +108,9 @@
 	<select id="select_car" parameterType="car" resultMap="car_DB_Result">
 		SELECT
 		code
+		,series_id
+		,model_id
+		,type
 		,name
 		,series_code
 		,series_name
@@ -96,6 +118,13 @@
 		,brand_name
 		,original_price
 		,sale_price
+		,model_year
+		,min_reg_year
+		,max_reg_year
+		,liter
+		,gear_type
+		,discharge_standard
+		,seat_number
 		,sf_amount
 		,location
 		,order_no
@@ -125,6 +154,9 @@
 	<insert id="insert_car" parameterType="car">
 		INSERT INTO tht_car(
 		code
+		,series_id
+		,model_id
+		,type
 		,name
 		,series_code
 		,series_name
@@ -132,6 +164,13 @@
 		,brand_name
 		,original_price
 		,sale_price
+		,model_year
+		,min_reg_year
+		,max_reg_year
+		,liter
+		,gear_type
+		,discharge_standard
+		,seat_number
 		,sf_amount
 		,location
 		,order_no
@@ -146,6 +185,9 @@
 		)
 		VALUES(
 		#{code}
+		,#{seriesId}
+		,#{modelId}
+		,#{type}
 		,#{name}
 		,#{seriesCode}
 		,#{seriesName}
@@ -153,6 +195,13 @@
 		,#{brandName}
 		,#{originalPrice}
 		,#{salePrice}
+		,#{modelYear}
+		,#{minRegYear}
+		,#{maxRegYear}
+		,#{liter}
+		,#{gearType}
+		,#{dischargeStandard}
+		,#{seatNumber}
 		,#{sfAmount}
 		,#{location}
 		,#{orderNo}
@@ -209,5 +258,10 @@
 		,remark = #{remark}
 		WHERE code = #{code}
 	</update>
+	
+	<delete id="delete_car" parameterType="car">
+		DELETE FROM tht_car
+		WHERE code = #{code}
+	</delete>
 	
 </mapper>

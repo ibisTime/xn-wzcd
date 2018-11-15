@@ -64,4 +64,16 @@ public class BrandBOImpl extends PaginableBOImpl<Brand> implements IBrandBO {
         return brandDAO.selectList(condition);
     }
 
+    @Override
+    public void removeBrand(Brand brand) {
+        brandDAO.delete(brand);
+    }
+
+    @Override
+    public Brand getBrandByBrandId(String brandId) {
+        Brand brand = new Brand();
+        brand.setBrandId(brandId);
+        return brandDAO.select(brand);
+    }
+
 }

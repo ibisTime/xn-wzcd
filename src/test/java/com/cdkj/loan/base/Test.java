@@ -9,22 +9,22 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "overdueRecord";
+    private static String key = "cityList";
 
     // 实体名称
-    private static String keyName = "逾期记录";
+    private static String keyName = "城市列表";
 
     // 包路径
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdh_overdue_record";
+    private static String dbname = "tdh_city_list";
 
-    private static String[] DBwords = { "id", "biz_code", "customerName",
-            "sign", "overdue_datetime", "overdue_amount" };
+    private static String[] DBwords = { "id", "city_id", "city_name", "prov_id",
+            "prov_name", "updater", "update_datetime" };
 
-    private static String[] DBwordsName = { "id", "业务编号", "客户姓名", "标记", "逾期日期",
-            "逾期金额" };
+    private static String[] DBwordsName = { "id", "城市ID", "城市名称", "所属省份ID",
+            "所属省份名称", "更新人", "更新时间" };
 
     private static String[] DOwords = getDOwords();
 

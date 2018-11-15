@@ -40,6 +40,6 @@ public interface ISYSConfigBO extends IPaginableBO<SYSConfig> {
 
     public BigDecimal getBigDecimalValue(String key);
 
-    public SYSConfig getSYSConfig(String type, Integer key);
+    public SYSConfig getSYSConfig(String type, String key);
 
 }

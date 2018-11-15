@@ -18,7 +18,7 @@ public class SeriesDAOImpl extends AMybatisTemplate implements ISeriesDAO {
 
     @Override
     public int delete(Series data) {
-        return 0;
+        return super.delete(NAMESPACE.concat("delete_series"), data);
     }
 
     @Override

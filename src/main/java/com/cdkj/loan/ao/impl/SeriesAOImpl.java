@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
@@ -14,18 +16,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.aliyun.util.HttpUtils;
 import com.cdkj.loan.ao.ISeriesAO;
 import com.cdkj.loan.bo.IBrandBO;
+import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.ISeriesBO;
 import com.cdkj.loan.bo.base.Paginable;
+import com.cdkj.loan.core.OkHttpUtils;
 import com.cdkj.loan.core.StringValidater;
 import com.cdkj.loan.domain.Brand;
+import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.domain.Series;
 import com.cdkj.loan.dto.req.XN630410Req;
 import com.cdkj.loan.dto.req.XN630412Req;
+import com.cdkj.loan.dto.req.XN630418Req;
+import com.cdkj.loan.enums.EBizErrorCode;
 import com.cdkj.loan.enums.EBrandStatus;
+import com.cdkj.loan.enums.ECarProduceType;
 import com.cdkj.loan.exception.BizException;
 
 @Service
@@ -39,6 +48,9 @@ public class SeriesAOImpl implements ISeriesAO {
 
     @Autowired
     private ISYSUserBO sysUserBO;
+
+    @Autowired
+    private ISYSConfigBO sysConfigBO;
 
     @Override
     @Transactional
@@ -191,6 +203,73 @@ public class SeriesAOImpl implements ISeriesAO {
             series.setUpdaterName(realName);
         }
         return querySeries;
+    }
+
+    @Override
+    @Transactional
+    public void refreshSeries(XN630418Req req) {
+        SYSConfig url = sysConfigBO.getSYSConfig("car_refresh", "url");
+        SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
+        if (StringUtils.isBlank(req.getBrandId())) {
+            Brand brand = new Brand();
+            brand.setType(ECarProduceType.IMPORT.getCode());
+            List<Brand> queryBrand = brandBO.queryBrand(brand);
+            for (Brand domain : queryBrand) {
+                refresh(url, token, domain.getBrandId(), req.getUpdater());
+            }
+        } else {
+            Brand brand = brandBO.getBrandByBrandId(req.getBrandId());
+            if (brand == null) {
+                throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                    "品牌标识不存在！");
+            }
+            refresh(url, token, req.getBrandId(), req.getUpdater());
+        }
+    }
+
+    private void refresh(SYSConfig url, SYSConfig token, String brandId,
+            String updater) {
+        String json = OkHttpUtils
+            .doAccessHTTPGetJson(url.getCvalue() + "/getCarSeriesList"
+                    + "?token=" + token.getCvalue() + "&brandId=" + brandId);
+        JSONObject jsono = JSONObject.parseObject(json);
+        String status = jsono.get("status").toString();
+        if (status.equals("0")) {
+            throw new BizException(EBizErrorCode.DEFAULT.getCode(),
+                jsono.get("error_msg").toString());
+        }
+        Series condition = new Series();
+        condition.setBrandId(brandId);
+        condition.setType(ECarProduceType.IMPORT.getCode());
+        List<Series> querySeries = seriesBO.querySeries(condition);
+        if (CollectionUtils.isNotEmpty(querySeries)) {
+            for (Series series : querySeries) {
+                seriesBO.removeSeries(series);
+            }
+        }
+
+        String list = jsono.get("series_list").toString();
+        JSONArray parseArray = JSONArray.parseArray(list);
+        for (Object object : parseArray) {
+            JSONObject jsonObject = (JSONObject) object;
+            String seriesId = jsonObject.getString("series_id");
+            String seriesName = jsonObject.getString("series_name");
+            String makerType = jsonObject.getString("maker_type");
+            String seriesGroupName = jsonObject.getString("series_group_name");
+            Date updateTime = jsonObject.getDate("update_time");
+
+            Series series = new Series();
+            series.setBrandId(brandId);
+            series.setSeriesId(seriesId);
+            series.setType(ECarProduceType.IMPORT.getCode());
+            series.setMakerType(makerType);
+            series.setName(seriesName);
+            series.setSeriesGroupName(seriesGroupName);
+            series.setStatus(EBrandStatus.UP.getCode());
+            series.setUpdater(updater);
+            series.setUpdateDatetime(updateTime);
+            seriesBO.saveSeries(series);
+        }
     }
 
 }

@@ -6,11 +6,26 @@ import com.cdkj.loan.dao.base.ABaseDO;
 
 public class Series extends ABaseDO {
 
+    private static final long serialVersionUID = -850032377150025389L;
+
     private String code;// 编号
+
+    // 品牌标识
+    private String brandId;
+
+    // 车系标识
+    private String seriesId;
+
+    // 车系类型（1接口导入,2用户新增）
+    private String type;
+
+    private String makerType;// 制造商类型
 
     private String brandCode; // 品牌编号
 
     private String name; // 名称
+
+    private String seriesGroupName; // 系列组名
 
     private String slogan;// 广告语
 
@@ -41,6 +56,22 @@ public class Series extends ABaseDO {
 
     public void setUpdaterName(String updaterName) {
         this.updaterName = updaterName;
+    }
+
+    public String getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(String brandId) {
+        this.brandId = brandId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getCode() {
@@ -89,6 +120,30 @@ public class Series extends ABaseDO {
 
     public void setPrice(Long price) {
         this.price = price;
+    }
+
+    public String getSeriesId() {
+        return seriesId;
+    }
+
+    public void setSeriesId(String seriesId) {
+        this.seriesId = seriesId;
+    }
+
+    public String getMakerType() {
+        return makerType;
+    }
+
+    public void setMakerType(String makerType) {
+        this.makerType = makerType;
+    }
+
+    public String getSeriesGroupName() {
+        return seriesGroupName;
+    }
+
+    public void setSeriesGroupName(String seriesGroupName) {
+        this.seriesGroupName = seriesGroupName;
     }
 
     public Integer getLocation() {

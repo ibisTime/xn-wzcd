@@ -6,6 +6,7 @@ import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.Car;
 import com.cdkj.loan.dto.req.XN630420Req;
 import com.cdkj.loan.dto.req.XN630422Req;
+import com.cdkj.loan.dto.req.XN630428Req;
 
 public interface ICarAO {
     String DEFAULT_ORDER_COLUMN = "code";
@@ -31,5 +32,8 @@ public interface ICarAO {
 
     // 列表查询
     public List<Car> queryCarList(Car condition);
+
+    // 车型刷新
+    public void refreshCar(XN630428Req req);
 
 }

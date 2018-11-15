@@ -54,6 +54,11 @@ public class SeriesBOImpl extends PaginableBOImpl<Series> implements ISeriesBO {
     }
 
     @Override
+    public void removeSeries(Series data) {
+        seriesDAO.delete(data);
+    }
+
+    @Override
     public int editSeries(Series data) {
         return seriesDAO.update(data);
     }
@@ -71,6 +76,13 @@ public class SeriesBOImpl extends PaginableBOImpl<Series> implements ISeriesBO {
     @Override
     public int downSeries(Series data) {
         return seriesDAO.updateDown(data);
+    }
+
+    @Override
+    public Series getSeriesBySeriesId(String seriesId) {
+        Series series = new Series();
+        series.setSeriesId(seriesId);
+        return seriesDAO.select(series);
     }
 
 }

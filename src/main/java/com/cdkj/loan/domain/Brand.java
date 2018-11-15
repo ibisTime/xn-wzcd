@@ -14,6 +14,12 @@ public class Brand extends ABaseDO {
     // 编号
     private String code;
 
+    // 品牌标识
+    private String brandId;
+
+    // 品牌类型（1接口导入,2用户新增）
+    private String type;
+
     // 字母序号
     private String letter;
 
@@ -69,6 +75,22 @@ public class Brand extends ABaseDO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(String brandId) {
+        this.brandId = brandId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setLetter(String letter) {
