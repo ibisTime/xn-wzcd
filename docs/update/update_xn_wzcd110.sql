@@ -48,6 +48,10 @@ CREATE TABLE `tdh_city_list` (
 DROP TABLE IF EXISTS `tdh_basic_valuation`;
 CREATE TABLE `tdh_basic_valuation` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `model_id` varchar(32) DEFAULT NULL COMMENT '车型标识',
+  `reg_date` varchar(32) DEFAULT NULL COMMENT '待估车辆的上牌时间',
+  `mile` double DEFAULT NULL COMMENT '待估车辆的公里数(单位万公里)',
+  `zone` varchar(32) DEFAULT NULL COMMENT '城市标识',
   `eval_price` varchar(32) DEFAULT NULL COMMENT '评估价格',
   `low_price` varchar(32) DEFAULT NULL COMMENT '最低价',
   `good_price` varchar(32) DEFAULT NULL COMMENT '最优价',

@@ -17,6 +17,18 @@ public class BasicValuation extends ABaseDO {
     // id
     private int id;
 
+    // 车型标识
+    private String modelId;
+
+    // 待估车辆的上牌时间
+    private String regDate;
+
+    // 待估车辆的公里数(单位万公里)
+    private String mile;
+
+    // 城市标识
+    private String zone;
+
     // 评估价格
     private String evalPrice;
 
@@ -65,6 +77,38 @@ public class BasicValuation extends ABaseDO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getModelId() {
+        return modelId;
+    }
+
+    public void setModelId(String modelId) {
+        this.modelId = modelId;
+    }
+
+    public String getRegDate() {
+        return regDate;
+    }
+
+    public void setRegDate(String regDate) {
+        this.regDate = regDate;
+    }
+
+    public String getMile() {
+        return mile;
+    }
+
+    public void setMile(String mile) {
+        this.mile = mile;
+    }
+
+    public String getZone() {
+        return zone;
+    }
+
+    public void setZone(String zone) {
+        this.zone = zone;
     }
 
     public void setEvalPrice(String evalPrice) {

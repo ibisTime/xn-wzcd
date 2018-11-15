@@ -79,6 +79,10 @@ public class BasicValuationAOImpl implements IBasicValuationAO {
         String carLogoUrl = jsono.get("car_logo_url").toString();
 
         BasicValuation basicValuation = new BasicValuation();
+        basicValuation.setModelId(req.getModelId());
+        basicValuation.setRegDate(req.getRegDate());
+        basicValuation.setMile(req.getMile());
+        basicValuation.setZone(req.getZone());
         basicValuation.setEvalPrice(evalPrice);
         basicValuation.setLowPrice(lowPrice);
         basicValuation.setGoodPrice(goodPrice);

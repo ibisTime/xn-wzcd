@@ -4,6 +4,10 @@
 <mapper namespace="com.cdkj.loan.dao.IBasicValuationDAO">
 	<resultMap id="basicValuation_DB_Result" type="basicValuation">
 		<result column="id" property="id" />
+		<result column="model_id" property="modelId" />
+		<result column="reg_date" property="regDate" />
+		<result column="mile" property="mile" />
+		<result column="zone" property="zone" />
 		<result column="eval_price" property="evalPrice" />
 		<result column="low_price" property="lowPrice" />
 		<result column="good_price" property="goodPrice" />
@@ -29,6 +33,10 @@
 	<select id="select_basicValuation" parameterType="basicValuation" resultMap="basicValuation_DB_Result">
 		SELECT
 		t.id
+		,t.model_id
+		,t.reg_date
+		,t.mile
+		,t.zone
 		,t.eval_price
 		,t.low_price
 		,t.good_price
@@ -63,6 +71,10 @@
 		INSERT INTO
 		tdh_basic_valuation(
 		id
+		,model_id
+		,reg_date
+		,mile
+		,zone
 		,eval_price
 		,low_price
 		,good_price
@@ -80,6 +92,10 @@
 		)
 		VALUES(
 		#{id}
+		,#{modelId}
+		,#{regDate}
+		,#{mile}
+		,#{zone}
 		,#{evalPrice}
 		,#{lowPrice}
 		,#{goodPrice}
