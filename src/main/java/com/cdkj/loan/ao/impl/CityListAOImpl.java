@@ -53,14 +53,14 @@ public class CityListAOImpl implements ICityListAO {
     @Transactional
     public void refreshCityList(XN630440Req req) {
         SYSConfig url = sysConfigBO.getSYSConfig("car_refresh", "url");
-        SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
         CityList condition = new CityList();
         List<CityList> cityListList = queryCityListList(condition);
         for (CityList cityList : cityListList) {
             cityListBO.removeCityList(cityList);
         }
-        String json = OkHttpUtils.doAccessHTTPGetJson(
-            url.getCvalue() + "/getAllCity" + "?token=" + token.getCvalue());
+        String json = OkHttpUtils
+            .doAccessHTTPGetJson(url.getCvalue() + "/getAllCity" + "?token="
+                    + "ed34a9f390e806112420863423cd8dbc");
         JSONObject jsono = JSONObject.parseObject(json);
         String status = jsono.get("status").toString();
         if (status.equals("0")) {

@@ -268,7 +268,7 @@ public class CarAOImpl implements ICarAO {
             series.setType(ECarProduceType.IMPORT.getCode());
             List<Series> querySeries = seriesBO.querySeries(series);
             for (Series domain : querySeries) {
-                refresh(url, token, domain.getSeriesId(), req.getUpdater());
+                refresh(url, domain.getSeriesId(), req.getUpdater());
             }
         } else {
             Series series = seriesBO.getSeriesBySeriesId(req.getSeriesId());
@@ -276,15 +276,14 @@ public class CarAOImpl implements ICarAO {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "车系标识不存在！");
             }
-            refresh(url, token, req.getSeriesId(), req.getUpdater());
+            refresh(url, req.getSeriesId(), req.getUpdater());
         }
     }
 
-    private void refresh(SYSConfig url, SYSConfig token, String seriesId,
-            String updater) {
-        String json = OkHttpUtils
-            .doAccessHTTPGetJson(url.getCvalue() + "/getCarModelList"
-                    + "?token=" + token.getCvalue() + "&seriesId=" + seriesId);
+    private void refresh(SYSConfig url, String seriesId, String updater) {
+        String json = OkHttpUtils.doAccessHTTPGetJson(url.getCvalue()
+                + "/getCarModelList" + "?token="
+                + "ed34a9f390e806112420863423cd8dbc" + "&seriesId=" + seriesId);
         JSONObject jsono = JSONObject.parseObject(json);
         String status = jsono.get("status").toString();
         if (status.equals("0")) {
@@ -312,9 +311,9 @@ public class CarAOImpl implements ICarAO {
             String minRegYear = jsonObject.getString("min_reg_year");
             String maxRegYear = jsonObject.getString("max_reg_year");
             String liter = jsonObject.getString("liter");
-            String gearType = jsonObject.getString("gearType");
+            String gearType = jsonObject.getString("gear_type");
             String dischargeStandard = jsonObject
-                .getString("dischargeStandard");
+                .getString("discharge_standard");
             String seatNumber = jsonObject.getString("seat_number");
             Date updateTime = jsonObject.getDate("update_time");
 

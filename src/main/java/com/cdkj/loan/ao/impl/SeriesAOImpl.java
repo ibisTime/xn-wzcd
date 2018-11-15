@@ -209,13 +209,12 @@ public class SeriesAOImpl implements ISeriesAO {
     @Transactional
     public void refreshSeries(XN630418Req req) {
         SYSConfig url = sysConfigBO.getSYSConfig("car_refresh", "url");
-        SYSConfig token = sysConfigBO.getSYSConfig("car_refresh", "token");
         if (StringUtils.isBlank(req.getBrandId())) {
             Brand brand = new Brand();
             brand.setType(ECarProduceType.IMPORT.getCode());
             List<Brand> queryBrand = brandBO.queryBrand(brand);
             for (Brand domain : queryBrand) {
-                refresh(url, token, domain.getBrandId(), req.getUpdater());
+                refresh(url, domain.getBrandId(), req.getUpdater());
             }
         } else {
             Brand brand = brandBO.getBrandByBrandId(req.getBrandId());
@@ -223,15 +222,14 @@ public class SeriesAOImpl implements ISeriesAO {
                 throw new BizException(EBizErrorCode.DEFAULT.getCode(),
                     "品牌标识不存在！");
             }
-            refresh(url, token, req.getBrandId(), req.getUpdater());
+            refresh(url, req.getBrandId(), req.getUpdater());
         }
     }
 
-    private void refresh(SYSConfig url, SYSConfig token, String brandId,
-            String updater) {
-        String json = OkHttpUtils
-            .doAccessHTTPGetJson(url.getCvalue() + "/getCarSeriesList"
-                    + "?token=" + token.getCvalue() + "&brandId=" + brandId);
+    private void refresh(SYSConfig url, String brandId, String updater) {
+        String json = OkHttpUtils.doAccessHTTPGetJson(url.getCvalue()
+                + "/getCarSeriesList" + "?token="
+                + "ed34a9f390e806112420863423cd8dbc" + "&brandId=" + brandId);
         JSONObject jsono = JSONObject.parseObject(json);
         String status = jsono.get("status").toString();
         if (status.equals("0")) {

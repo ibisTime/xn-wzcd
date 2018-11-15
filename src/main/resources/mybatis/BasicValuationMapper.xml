@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdkj.loan.dao.IBasicValuationDAO">
+	<resultMap id="basicValuation_DB_Result" type="basicValuation">
+		<result column="id" property="id" />
+		<result column="eval_price" property="evalPrice" />
+		<result column="low_price" property="lowPrice" />
+		<result column="good_price" property="goodPrice" />
+		<result column="high_price" property="highPrice" />
+		<result column="dealer_buy_price" property="dealerBuyPrice" />
+		<result column="individual_price" property="individualPrice" />
+		<result column="dealer_price" property="dealerPrice" />
+		<result column="url" property="url" />
+		<result column="price" property="price" />
+		<result column="discharge_standard" property="dischargeStandard" />
+		<result column="title" property="title" />
+		<result column="car_logo_url" property="carLogoUrl" />
+		<result column="updater" property="updater" />
+		<result column="update_datetime" property="updateDatetime" />
+	</resultMap>
+	<sql id="where_condition">
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="id != null and id != '' ">
+				AND t.id = #{id}
+			</if>
+		</trim>
+	</sql>
+	<select id="select_basicValuation" parameterType="basicValuation" resultMap="basicValuation_DB_Result">
+		SELECT
+		t.id
+		,t.eval_price
+		,t.low_price
+		,t.good_price
+		,t.high_price
+		,t.dealer_buy_price
+		,t.individual_price
+		,t.dealer_price
+		,t.url
+		,t.price
+		,t.discharge_standard
+		,t.title
+		,t.car_logo_url
+		,t.updater
+		,t.update_datetime
+		FROM
+		tdh_basic_valuation t
+		<include refid="where_condition" />
+		<trim prefix="ORDER BY ">
+			<if test="order != null and order != '' ">
+				t.${order}
+			</if>
+		</trim>
+	</select>
+
+	<select id="select_basicValuation_count" parameterType="basicValuation"
+		resultType="java.lang.Long">
+		SELECT count(1) FROM tdh_basic_valuation t
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="insert_basicValuation" parameterType="basicValuation">
+		INSERT INTO
+		tdh_basic_valuation(
+		id
+		,eval_price
+		,low_price
+		,good_price
+		,high_price
+		,dealer_buy_price
+		,individual_price
+		,dealer_price
+		,url
+		,price
+		,discharge_standard
+		,title
+		,car_logo_url
+		,updater
+		,update_datetime
+		)
+		VALUES(
+		#{id}
+		,#{evalPrice}
+		,#{lowPrice}
+		,#{goodPrice}
+		,#{highPrice}
+		,#{dealerBuyPrice}
+		,#{individualPrice}
+		,#{dealerPrice}
+		,#{url}
+		,#{price}
+		,#{dischargeStandard}
+		,#{title}
+		,#{carLogoUrl}
+		,#{updater}
+		,#{updateDatetime}
+		)
+	</insert>
+
+	<update id="update_basicValuation" parameterType="basicValuation">
+		UPDATE tdh_basic_valuation
+		SET
+		eval_price = #{evalPrice}
+		,low_price = #{lowPrice}
+		,good_price = #{goodPrice}
+		,high_price = #{highPrice}
+		,dealer_buy_price = #{dealerBuyPrice}
+		,individual_price = #{individualPrice}
+		,dealer_price = #{dealerPrice}
+		,url = #{url}
+		,price = #{price}
+		,discharge_standard = #{dischargeStandard}
+		,title = #{title}
+		,car_logo_url = #{carLogoUrl}
+		,updater = #{updater}
+		,update_datetime = #{updateDatetime}
+		WHERE id = #{id}
+	</update>
+
+
+</mapper>

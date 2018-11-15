@@ -9,7 +9,7 @@ import com.cdkj.loan.common.DateUtil;
 
 public class Test {
     // 实体
-    private static String key = "cityList";
+    private static String key = "basicValuation";
 
     // 实体名称
     private static String keyName = "城市列表";
@@ -18,13 +18,16 @@ public class Test {
     private static String packge = "com.cdkj.loan.";
 
     // 表名
-    private static String dbname = "tdh_city_list";
+    private static String dbname = "tdh_basic_valuation";
 
-    private static String[] DBwords = { "id", "city_id", "city_name", "prov_id",
-            "prov_name", "updater", "update_datetime" };
+    private static String[] DBwords = { "id", "eval_price", "low_price",
+            "good_price", "high_price", "dealer_buy_price", "individual_price",
+            "dealer_price", "url", "price", "discharge_standard", "title",
+            "car_logo_url", "updater", "update_datetime" };
 
-    private static String[] DBwordsName = { "id", "城市ID", "城市名称", "所属省份ID",
-            "所属省份名称", "更新人", "更新时间" };
+    private static String[] DBwordsName = { "id", "评估价格", "最低价", "最优价", "最高价",
+            "车商收购价", "个人交易价", "车商零售价", "地址", "新车售价", "排放标准", "标题", "汽车标志网址",
+            "更新人", "更新时间" };
 
     private static String[] DOwords = getDOwords();
 

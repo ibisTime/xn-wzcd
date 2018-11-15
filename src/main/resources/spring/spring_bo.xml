@@ -453,5 +453,9 @@
 	<bean id="cityListBO" class="com.cdkj.loan.bo.impl.CityListBOImpl">
 		<property name="paginableDAO" ref="cityListDAOImpl"/>
 	</bean>
+	
+	<bean id="basicValuationBO" class="com.cdkj.loan.bo.impl.BasicValuationBOImpl">
+		<property name="paginableDAO" ref="basicValuationDAOImpl"/>
+	</bean>
 
 </beans>

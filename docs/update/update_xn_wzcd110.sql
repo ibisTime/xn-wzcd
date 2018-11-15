@@ -27,7 +27,6 @@ CHANGE COLUMN `sale_price` `sale_price` VARCHAR(255) NULL DEFAULT NULL COMMENT '
 
 
 INSERT INTO `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('car_refresh', 'url', 'http://api.che300.com/service', 'admin', '2018-08-15 17:33:30', '车辆刷新url', 'CD-CWZCD000020', 'CD-CWZCD000020');
-INSERT INTO `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('car_refresh', 'token', 'ed34a9f390e806112420863423cd8dbc', 'admin', '2018-08-15 17:33:30', '车辆刷新token', 'CD-CWZCD000020', 'CD-CWZCD000020');
 
 UPDATE `tsys_config` SET `cvalue`='storage' WHERE `id`='3';
 UPDATE `tsys_config` SET `cvalue`='http://pi8arp14o.bkt.clouddn.com' WHERE `id`='4';
@@ -45,3 +44,23 @@ CREATE TABLE `tdh_city_list` (
   `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='城市列表';
+
+DROP TABLE IF EXISTS `tdh_basic_valuation`;
+CREATE TABLE `tdh_basic_valuation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `eval_price` varchar(32) DEFAULT NULL COMMENT '评估价格',
+  `low_price` varchar(32) DEFAULT NULL COMMENT '最低价',
+  `good_price` varchar(32) DEFAULT NULL COMMENT '最优价',
+  `high_price` varchar(32) DEFAULT NULL COMMENT '最高价',
+  `dealer_buy_price` varchar(32) DEFAULT NULL COMMENT '车商收购价',
+  `individual_price` varchar(32) DEFAULT NULL COMMENT '个人交易价',
+  `dealer_price` varchar(32) DEFAULT NULL COMMENT '车商零售价',
+  `url` varchar(255) DEFAULT NULL COMMENT '地址',
+  `price` varchar(32) DEFAULT NULL COMMENT '新车售价',
+  `discharge_standard` varchar(32) DEFAULT NULL COMMENT '排放标准',
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `car_logo_url` varchar(255) DEFAULT NULL COMMENT '汽车标志网址',
+  `updater` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `update_datetime` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='基础估值';
