@@ -307,4 +307,9 @@ public class BudgetOrderDAOImpl extends AMybatisTemplate
         super.update(NAMESPACE.concat("update_curNodeCodeAndReasonId"), data);
     }
 
+    @Override
+    public void updateCar300Url(BudgetOrder data) {
+        super.update(NAMESPACE.concat("update_car300Url"), data);
+    }
+
 }

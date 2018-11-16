@@ -2334,4 +2334,12 @@
 		,sale_user_bonus = #{saleUserBonus}
 		WHERE code = #{code}
 	</update>
+	
+	<update id="update_car300Url" parameterType="budgetOrder">
+		UPDATE tdq_budget_order
+		SET
+		car_model = #{carModel}
+		,second_300_pdf = #{second300Pdf}
+		WHERE code = #{code}
+	</update>
 </mapper>

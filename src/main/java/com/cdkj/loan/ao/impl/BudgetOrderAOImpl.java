@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.ao.IBudgetOrderAO;
 import com.cdkj.loan.ao.ICarDealerAO;
 import com.cdkj.loan.ao.IRepointDetailAO;
@@ -89,6 +90,7 @@ import com.cdkj.loan.domain.SupplementReason;
 import com.cdkj.loan.domain.SysBonuses;
 import com.cdkj.loan.domain.TotalAdvanceFund;
 import com.cdkj.loan.domain.User;
+import com.cdkj.loan.dto.req.XN630450Req;
 import com.cdkj.loan.dto.req.XN630909Req;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632120ReqRepointDetail;
@@ -165,6 +167,8 @@ import com.cdkj.loan.enums.ETotalAdvanceFundType;
 import com.cdkj.loan.enums.EUseMoneyPurpose;
 import com.cdkj.loan.enums.EUserKind;
 import com.cdkj.loan.exception.BizException;
+import com.cdkj.loan.http.BizConnecter;
+import com.cdkj.loan.http.JsonUtils;
 
 @Service
 public class BudgetOrderAOImpl implements IBudgetOrderAO {
@@ -3748,5 +3752,18 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             .queryRepointDetailList(budgetOrder.getCode(),
                 ERepointDetailUseMoneyPurpose.PROOUT_REPOINT.getCode());
         budgetOrder.setRepointDetailList3(proOutRepointList);
+    }
+
+    @Override
+    public void basicValuation(XN630450Req req) {
+        String bizData = BizConnecter.getBizData("630450",
+            JsonUtils.object2Json(req));
+        JSONObject jsData = JSONObject.parseObject(bizData);
+        String url = jsData.get("url").toString();
+        String modelName = jsData.get("model_name").toString();
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        budgetOrder.setSecond300Pdf(url);
+        budgetOrder.setCarModel(modelName);
+        budgetOrderBO.refreshCar300Url(budgetOrder);
     }
 }

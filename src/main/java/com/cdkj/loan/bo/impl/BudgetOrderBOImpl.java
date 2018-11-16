@@ -558,4 +558,9 @@ public class BudgetOrderBOImpl extends PaginableBOImpl<BudgetOrder>
         budgetOrderDAO.updateCurNodeCodeAndReasonId(budgetOrder);
     }
 
+    @Override
+    public void refreshCar300Url(BudgetOrder budgetOrder) {
+        budgetOrderDAO.updateCar300Url(budgetOrder);
+    }
+
 }

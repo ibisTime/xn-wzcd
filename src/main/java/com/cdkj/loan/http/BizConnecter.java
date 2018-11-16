@@ -26,6 +26,8 @@ public class BizConnecter {
 
     public static final String POST_URL = "...";
 
+    public static final String CHE_URL = PropertiesUtil.Config.CHE_URL;
+
     public static <T> T getBizData(String code, String json, Class<T> clazz) {
         String data = getBizData(code, json);
         return JsonUtils.json2Bean(data, clazz);
@@ -58,6 +60,8 @@ public class BizConnecter {
         String postUrl = POST_URL;
         if (code.startsWith("804")) {
             postUrl = SMS_URL;
+        } else if (code.equals("630450")) {
+            postUrl = CHE_URL;
         }
         return postUrl;
     }

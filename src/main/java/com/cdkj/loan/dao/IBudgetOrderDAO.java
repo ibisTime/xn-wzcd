@@ -150,4 +150,7 @@ public interface IBudgetOrderDAO extends IBaseDAO<BudgetOrder> {
     // 更改补件原因id和节点
     void updateCurNodeCodeAndReasonId(BudgetOrder budgetOrder);
 
+    // 汽车估值结果
+    void updateCar300Url(BudgetOrder budgetOrder);
+
 }

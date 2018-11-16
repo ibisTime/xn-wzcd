@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.domain.BudgetOrder;
+import com.cdkj.loan.dto.req.XN630450Req;
 import com.cdkj.loan.dto.req.XN630909Req;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632141Req;
@@ -192,5 +193,8 @@ public interface IBudgetOrderAO {
 
     // 通过还款业务编号获取预算单
     public BudgetOrder getBudgetOrderByRepayBizCode(String code);
+
+    // 车辆估值
+    public void basicValuation(XN630450Req req);
 
 }

@@ -159,4 +159,7 @@ public interface IBudgetOrderBO extends IPaginableBO<BudgetOrder> {
     // 更改补件原因id和节点
     public void updateCurNodeCodeAndReasonId(BudgetOrder budgetOrder);
 
+    // 汽车估值结果
+    public void refreshCar300Url(BudgetOrder budgetOrder);
+
 }
