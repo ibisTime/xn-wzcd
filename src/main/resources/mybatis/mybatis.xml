@@ -36,9 +36,6 @@
 		<typeAlias alias="department" type="com.cdkj.loan.domain.Department" />
 
         <!-- 车贷意向  -->
-		<typeAlias alias="brand" type="com.cdkj.loan.domain.Brand" />
-		<typeAlias alias="series" type="com.cdkj.loan.domain.Series" />
-		<typeAlias alias="car" type="com.cdkj.loan.domain.Car" />
 		<typeAlias alias="carorder" type="com.cdkj.loan.domain.CarOrder" />
 		
 		<!-- 商城业务  -->
@@ -173,7 +170,5 @@
 		<typeAlias alias="performanceBond" type="com.cdkj.loan.domain.PerformanceBond" />
 		<typeAlias alias="companyClearance" type="com.cdkj.loan.domain.CompanyClearance" />
 		<typeAlias alias="overdueRecord" type="com.cdkj.loan.domain.OverdueRecord" />
-		<typeAlias alias="cityList" type="com.cdkj.loan.domain.CityList" />
-		<typeAlias alias="basicValuation" type="com.cdkj.loan.domain.BasicValuation" />
 	</typeAliases>
 </configuration>

@@ -80,21 +80,13 @@
 		<property name="paginableDAO" ref="sysConfigDAOImpl"/>
 	</bean>	
 	
-	<bean id="brandBO" class="com.cdkj.loan.bo.impl.BrandBOImpl">
-		<property name="paginableDAO" ref="brandDAOImpl" />
-	</bean>
 	<bean id="userBO" class="com.cdkj.loan.bo.impl.UserBOImpl">
 		<property name="paginableDAO" ref="userDAOImpl"/>
 	</bean>	
 	<bean id="saleUserBO" class="com.cdkj.loan.bo.impl.SaleUserBOImpl">
 		<property name="paginableDAO" ref="saleUserDAOImpl"/>
 	</bean>	
-	<bean id="carBO" class="com.cdkj.loan.bo.impl.CarBOImpl">
-		<property name="paginableDAO" ref="carDAOImpl"/>
-	</bean>	
-	<bean id="seriesBO" class="com.cdkj.loan.bo.impl.SeriesBOImpl">
-		<property name="paginableDAO" ref="seriesDAOImpl"/>
-	</bean>	
+	
 	<bean id="carOrderBO" class="com.cdkj.loan.bo.impl.CarOrderBOImpl">
 		<property name="paginableDAO" ref="carOrderDAOImpl"/>
 	</bean>	
@@ -450,12 +442,4 @@
 		<property name="paginableDAO" ref="overdueRecordDAOImpl"/>
 	</bean>
 	
-	<bean id="cityListBO" class="com.cdkj.loan.bo.impl.CityListBOImpl">
-		<property name="paginableDAO" ref="cityListDAOImpl"/>
-	</bean>
-	
-	<bean id="basicValuationBO" class="com.cdkj.loan.bo.impl.BasicValuationBOImpl">
-		<property name="paginableDAO" ref="basicValuationDAOImpl"/>
-	</bean>
-
 </beans>
