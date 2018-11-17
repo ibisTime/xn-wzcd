@@ -197,4 +197,7 @@ public interface IBudgetOrderAO {
     // 车辆估值
     public void basicValuation(XN630450Req req);
 
+    // 同盾风控
+    public void tdfk(String code);
+
 }

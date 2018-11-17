@@ -3766,4 +3766,40 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         budgetOrder.setCarModel(modelName);
         budgetOrderBO.refreshCar300Url(budgetOrder);
     }
+
+    @Override
+    @Transactional
+    public void tdfk(String code) {
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+        JSONObject jso = new JSONObject();
+        jso.put("accountMobile", budgetOrder.getMobile());
+        jso.put("accountName", budgetOrder.getCustomerName());
+        jso.put("idNumber", budgetOrder.getIdNo());
+        jso.put("cardNumber", budgetOrder.getBankCardNumber());
+        jso.put("homeAddress",
+            "" + budgetOrder.getApplyBirthAddressProvince()
+                    + budgetOrder.getApplyBirthAddressCity()
+                    + budgetOrder.getApplyBirthAddressArea()
+                    + budgetOrder.getApplyBirthAddress());
+        jso.put("systemCode", "CD-TDUN00030");
+        jso.put("companCode", "CD-TDUN00030");
+        String threeElements = BizConnecter.getBizData("798601",
+            JsonUtils.object2Json(jso));// 三要素
+        JSONObject jsonObject = JSONObject.parseObject(threeElements);
+        String bodyguardId = jsonObject.get("id").toString();
+        jso.put("bodyguardId", bodyguardId);
+        String networkTime = BizConnecter.getBizData("798602",
+            JsonUtils.object2Json(jso));// 在网时长
+        String cardNumber = BizConnecter.getBizData("798603",
+            JsonUtils.object2Json(jso));// 银行卡四要素
+        String peopleSpot = BizConnecter.getBizData("798604",
+            JsonUtils.object2Json(jso));// 自然人识别
+        String address = BizConnecter.getBizData("798605",
+            JsonUtils.object2Json(jso));// 家庭地址核验
+        String riskList = BizConnecter.getBizData("798611",
+            JsonUtils.object2Json(jso));// 风险列表
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("threeElements", threeElements);
+    }
+
 }
