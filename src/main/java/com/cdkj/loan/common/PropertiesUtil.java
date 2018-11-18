@@ -31,5 +31,7 @@ public class PropertiesUtil {
         public static String SMS_URL = props.getProperty("SMS_URL");
 
         public static String CHE_URL = props.getProperty("CHE_URL");
+
+        public static String TD_CERTI = props.getProperty("TD_CERTI");
     }
 }

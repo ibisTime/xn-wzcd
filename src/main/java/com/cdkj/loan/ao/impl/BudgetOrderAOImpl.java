@@ -3769,25 +3769,30 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public void tdfk(String code) {
-        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+    public Object tdfk(String code) {
         JSONObject jso = new JSONObject();
-        jso.put("accountMobile", budgetOrder.getMobile());
-        jso.put("accountName", budgetOrder.getCustomerName());
-        jso.put("idNumber", budgetOrder.getIdNo());
-        jso.put("cardNumber", budgetOrder.getBankCardNumber());
-        jso.put("homeAddress",
-            "" + budgetOrder.getApplyBirthAddressProvince()
-                    + budgetOrder.getApplyBirthAddressCity()
-                    + budgetOrder.getApplyBirthAddressArea()
-                    + budgetOrder.getApplyBirthAddress());
         jso.put("systemCode", "CD-TDUN00030");
-        jso.put("companCode", "CD-TDUN00030");
+        jso.put("companyCode", "CD-TDUN00030");
+        // BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
+        // jso.put("accountMobile", budgetOrder.getMobile());
+        // jso.put("accountName", budgetOrder.getCustomerName());
+        // jso.put("idNumber", budgetOrder.getIdNo());
+        // jso.put("cardNumber", budgetOrder.getBankCardNumber());
+        // jso.put("homeAddress",
+        // "" + budgetOrder.getApplyBirthAddressProvince()
+        // + budgetOrder.getApplyBirthAddressCity()
+        // + budgetOrder.getApplyBirthAddressArea()
+        // + budgetOrder.getApplyBirthAddress());
+
+        jso.put("accountMobile", "13000000000");
+        jso.put("accountName", "测试0");
+        jso.put("idNumber", "640223199801016519");
+        jso.put("cardNumber", "6000000123456789");
+        jso.put("homeAddress", "上海市徐湖区东安路562号");
         String threeElements = BizConnecter.getBizData("798601",
             JsonUtils.object2Json(jso));// 三要素
-        JSONObject jsonObject = JSONObject.parseObject(threeElements);
-        String bodyguardId = jsonObject.get("id").toString();
-        jso.put("bodyguardId", bodyguardId);
+        // String bodyguardId = jsonObject.get("id").toString();
+        // jso.put("bodyguardId", bodyguardId);
         String networkTime = BizConnecter.getBizData("798602",
             JsonUtils.object2Json(jso));// 在网时长
         String cardNumber = BizConnecter.getBizData("798603",
@@ -3796,10 +3801,82 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
             JsonUtils.object2Json(jso));// 自然人识别
         String address = BizConnecter.getBizData("798605",
             JsonUtils.object2Json(jso));// 家庭地址核验
-        String riskList = BizConnecter.getBizData("798611",
-            JsonUtils.object2Json(jso));// 风险列表
+        // String riskList = BizConnecter.getBizData("798611",
+        // JsonUtils.object2Json(jso));// 风险列表
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put("threeElements", threeElements);
+        // String mobile = null;
+        // JSONObject elements = JSONObject.parseObject(threeElements);
+        // boolean b = elements.containsKey("reason_desc");
+        // if (b == true) {
+        // mobile = elements.getString("reason_desc");
+        // } else {
+        // String result = elements.getString("result_desc");
+        // String antifraudInfoquery = JSONObject.parseObject(result)
+        // .getString("ANTIFRAUD_INFOQUERY");
+        // String mobileAndNameAndIDCheck = JSONObject
+        // .parseObject(antifraudInfoquery)
+        // .getString("mobileAndNameAndIDCheck");
+        // String threeElement = JSONObject
+        // .parseObject(mobileAndNameAndIDCheck)
+        // .getString("mobile_three_element_consistence");
+        // if (threeElement.equals("0")) {
+        // mobile = "一致";
+        // } else if (threeElement.equals("1")) {
+        // mobile = "不一致";
+        // } else {
+        // mobile = "库无记录";
+        // }
+        // }
+        // JSONObject network = JSONObject.parseObject(networkTime);
+        // String online = null;
+        // String networkResult = network.getString("result_desc");
+        // String networkInfoquery = JSONObject.parseObject(networkResult)
+        // .getString("ANTIFRAUD_INFOQUERY");
+        // String mobileDuration = JSONObject.parseObject(networkInfoquery)
+        // .getString("mobileDuration");
+        // String onlineTime = JSONObject.parseObject(mobileDuration)
+        // .getString("mobile_online_time_consistence");
+        // if (onlineTime.equals("0")) {
+        // online = JSONObject.parseObject(mobileDuration)
+        // .getString("mobile_online_time_info");
+        // } else {
+        // online = "库无记录";
+        // }
+        // JSONObject cNumber = JSONObject.parseObject(cardNumber);
+        // String card = null;
+        // String cardResult = cNumber.getString("result_desc");
+        // String cardInfoquery = JSONObject.parseObject(cardResult)
+        // .getString("ANTIFRAUD_INFOQUERY");
+        // String cardCheck = JSONObject.parseObject(cardInfoquery)
+        // .getString("CreditCardNameIdMobileCheck");
+        // String cardConsistence = JSONObject.parseObject(cardCheck)
+        // .getString("card_four_element_consistence");
+        // if (cardConsistence.equals("0")) {
+        // card = "一致";
+        // } else if (cardConsistence.equals("1")) {
+        // card = "不一致";
+        // } else {
+        // card = "库无记录";
+        // }
+        map.put("mobile", threeElements);
+        map.put("online", networkTime);
+        map.put("card", cardNumber);
+        map.put("police", peopleSpot);
+        map.put("home_address", address);
+        return map;
     }
 
+    public static void main(String[] args) {
+        String string = "{\"success\":true,\"id\":\"WF2018111817190413169161\",\"result_desc\":{\"ANTIFRAUD_INFOQUERY\":{\"mobileAndNameAndIDCheck\":{\"mobile_three_element_consistence\":\"0\"}}}}";
+        JSONObject jsonObject = JSONObject.parseObject(string);
+        String result = jsonObject.getString("result_desc");
+        String antifraudInfoquery = JSONObject.parseObject(result)
+            .getString("ANTIFRAUD_INFOQUERY");
+        String mobileAndNameAndIDCheck = JSONObject
+            .parseObject(antifraudInfoquery)
+            .getString("mobileAndNameAndIDCheck");
+        String mobile = JSONObject.parseObject(mobileAndNameAndIDCheck)
+            .getString("mobile_three_element_consistence");
+        System.out.println(mobile);
+    }
 }

@@ -28,6 +28,8 @@ public class BizConnecter {
 
     public static final String CHE_URL = PropertiesUtil.Config.CHE_URL;
 
+    public static final String TD_CERTI = PropertiesUtil.Config.TD_CERTI;
+
     public static <T> T getBizData(String code, String json, Class<T> clazz) {
         String data = getBizData(code, json);
         return JsonUtils.json2Bean(data, clazz);
@@ -62,6 +64,8 @@ public class BizConnecter {
             postUrl = SMS_URL;
         } else if (code.equals("630450")) {
             postUrl = CHE_URL;
+        } else if (code.startsWith("7986")) {
+            postUrl = TD_CERTI;
         }
         return postUrl;
     }
