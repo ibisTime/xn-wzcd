@@ -94,6 +94,7 @@ import com.cdkj.loan.dto.req.XN630450Req;
 import com.cdkj.loan.dto.req.XN630909Req;
 import com.cdkj.loan.dto.req.XN632120Req;
 import com.cdkj.loan.dto.req.XN632120ReqRepointDetail;
+import com.cdkj.loan.dto.req.XN632126Req;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632142Req;
 import com.cdkj.loan.dto.req.XN632143Req;
@@ -3769,26 +3770,126 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
 
     @Override
     @Transactional
-    public Object tdfk(String code) {
+    public Object tdfk(XN632126Req req) {
         JSONObject jso = new JSONObject();
         jso.put("systemCode", "CD-TDUN00030");
         jso.put("companyCode", "CD-TDUN00030");
-        // BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(code);
-        // jso.put("accountMobile", budgetOrder.getMobile());
-        // jso.put("accountName", budgetOrder.getCustomerName());
-        // jso.put("idNumber", budgetOrder.getIdNo());
-        // jso.put("cardNumber", budgetOrder.getBankCardNumber());
-        // jso.put("homeAddress",
+        BudgetOrder budgetOrder = budgetOrderBO.getBudgetOrder(req.getCode());
+        jso.put("accountMobile", budgetOrder.getMobile());
+        // jso.put("bodyguardMobileEncrypt",
+        // MD5Util.md5(budgetOrder.getMobile()));
+        jso.put("accountName", budgetOrder.getCustomerName());
+        // jso.put("bodyguardNameEncrypt",
+        // MD5Util.md5(budgetOrder.getCustomerName()));
+        jso.put("idNumber", budgetOrder.getIdNo());
+        // jso.put("bodyguardIdEncrypt", MD5Util.md5(budgetOrder.getIdNo()));
+        jso.put("cardNumber", budgetOrder.getCardNumber());
+        jso.put("homeAddress",
+            "" + budgetOrder.getApplyNowAddressProvince()
+                    + budgetOrder.getApplyNowAddressCity()
+                    + budgetOrder.getApplyNowAddressArea()
+                    + budgetOrder.getApplyNowAddress());
+
+        // jso.put("loanDate", budgetOrder.getBankFkDatetime());
+        // jso.put("customerChannel", req.getCustomerChannel());// 获客渠道
+        // jso.put("registeredAddress",
         // "" + budgetOrder.getApplyBirthAddressProvince()
         // + budgetOrder.getApplyBirthAddressCity()
         // + budgetOrder.getApplyBirthAddressArea()
         // + budgetOrder.getApplyBirthAddress());
+        // jso.put("applyChannel", budgetOrder.getApplyChannel());// 进件渠道
+        // jso.put("career", budgetOrder.getCareer());// 职业
+        // jso.put("workPhone", budgetOrder.getWorkPhone());// 单位座机
+        // jso.put("contact5Mobile", budgetOrder.getContact5Mobile());
+        // jso.put("contact5IdNumber", budgetOrder.getContact5IdNumber());
+        // jso.put("contact5Name", budgetOrder.getContact5Name());
+        // jso.put("contact5Relation",
+        // getRelation(budgetOrder.getContact5Relation()));
+        // jso.put("contact4Mobile", budgetOrder.getContact4Mobile());
+        // jso.put("contact4IdNumber", budgetOrder.getContact4IdNumber());
+        // jso.put("contact4Name", budgetOrder.getContact4Name());
+        // jso.put("contact4Relation",
+        // getRelation(budgetOrder.getContact4Relation()));
+        // jso.put("contact3Mobile", budgetOrder.getContact3Mobile());
+        // jso.put("contact3IdNumber", budgetOrder.getContact3IdNumber());
+        // jso.put("contact3Name", budgetOrder.getContact3Name());
+        // jso.put("contact3Relation",
+        // getRelation(budgetOrder.getContact3Relation()));
+        // jso.put("contact2Mobile", budgetOrder.getEmergencyMobile2());
+        // jso.put("contact2IdNumber", budgetOrder.getContact2IdNumber());
+        // jso.put("contact2Name", budgetOrder.getEmergencyName2());
+        // jso.put("contact2Relation", budgetOrder.getEmergencyRelation2());
+        // jso.put("contact1Mobile", budgetOrder.getEmergencyMobile1());
+        // jso.put("contact1IdNumber", budgetOrder.getContact1IdNumber());
+        // jso.put("contact1Name", budgetOrder.getEmergencyName1());
+        // jso.put("contact1Relation", budgetOrder.getEmergencyRelation1());
+        // jso.put("accountPhoneWork", budgetOrder.getApplyUserCompanyPhone());
+        // jso.put("accountAddressWork", budgetOrder.getApplyUserCompany());//
+        // 借款人单位地址
+        // jso.put("isCrossLoan", budgetOrder.getIsCrossLoan());// 是否曾跨平台借款
+        // jso.put("occupation", budgetOrder.getApplyUserDuty());//
+        // 职位（要修改，之前手写，现在传编号）
+        // jso.put("industry", budgetOrder.getIndustry());// 所属行业
+        // jso.put("diploma", budgetOrder.getDiploma());// 学历
+        // jso.put("loanTerm", budgetOrder.getLoanPeriods());
+        // jso.put("loanAmount", budgetOrder.getLoanAmount());
+        // jso.put("qqNumber", budgetOrder.getQqNumber());// 借款人QQ
+        // jso.put("deviceId", budgetOrder.getDeviceId());// 设备ID
+        //
+        // jso.put("accountPhone", budgetOrder.getAccountPhone());// 借款人座机
+        //
+        // jso.put("ipAddress", budgetOrder.getIpAddress());// ip
+        // jso.put("organizationAddress",
+        // budgetOrder.getOrganizationAddress());// 工作单位住址
+        //
+        // jso.put("organization", budgetOrder.getApplyUserCompany());
+        // jso.put("tokenId", budgetOrder.getTokenId());// TokenId
+        // jso.put("lendCompany", budgetOrder.getLendCompany());// 借款公司名称
+        // jso.put("coborrowerCompany", budgetOrder.getGhCompanyName());
+        // jso.put("coborrowerRelation", budgetOrder.getApplyUserGhrRelation());
+        // jso.put("mobileNameConsistence",
+        // budgetOrder.getMobileNameConsistence());// 手机号姓名核验结果
+        // jso.put("suretyCompanyAddress",
+        // budgetOrder.getGuarantorCompanyAddress());
+        // jso.put("suretyHomeAddress", budgetOrder.getGuarantorNowAddress());
+        // jso.put("suretyPhone", budgetOrder.getSuretyPhone());// 担保人座机
+        // jso.put("suretyMobile", budgetOrder.getGuarantor1Mobile());
+        // jso.put("suretyIdNumber", budgetOrder.getGuarantor1IdNo());
+        // jso.put("suretyName", budgetOrder.getGuarantor1Name());
+        // jso.put("coborrowerCompanyAddress",
+        // budgetOrder.getCoborrowerCompanyAddress());// 共同借款人公司地址
+        // jso.put("coborrowerHomeAddress",
+        // budgetOrder.getCoborrowerHomeAddress());// 共同借款人家庭地址
+        // jso.put("coborrowerPhone", budgetOrder.getCoborrowerPhone());//
+        // 共同借款人座机
+        // jso.put("coborrowerMobile", budgetOrder.getGhMobile());
+        // jso.put("coborrowerIdNumber", budgetOrder.getGhIdNo());
+        // jso.put("coborrowerName", budgetOrder.getGhRealName());
+        // jso.put("contactAddress", budgetOrder.getContactAddress());// 通讯地址
+        // jso.put("accountEmail", budgetOrder.getAccountEmail());// 借款人邮箱
+        // jso.put("blackBox", budgetOrder.getBlackBox());// black_box
+        // jso.put("loanTermUnit", "月");// 贷款期限单位
+        // jso.put("houseType", budgetOrder.getHouseType());
+        // jso.put("annualIncome",
+        // AmountUtil.div(budgetOrder.getApplyUserMonthIncome(), 12));
+        // jso.put("applyProvince", budgetOrder.getApplyProvince());// 进件省份
+        // jso.put("houseProperty", budgetOrder.getHouseProperty());
+        // jso.put("monthlyIncome", budgetOrder.getApplyUserMonthIncome());
+        // jso.put("workTime", budgetOrder.getWorkTime());// 工作时间
+        // jso.put("companyType", budgetOrder.getCompanyType());// 公司性质
+        // jso.put("companyAddress", budgetOrder.getCompanyAddress());// 单位地址
+        // jso.put("marriage", budgetOrder.getMarryState());
+        // jso.put("loanPurpose", budgetOrder.getLoanPurpose());// 借款用途
+        // jso.put("eventOccurTime", budgetOrder.getBankFkDatetime());
+        // jso.put("respDetailType", budgetOrder.getRespDetailType());// 归属地详情类型
 
-        jso.put("accountMobile", "13000000000");
-        jso.put("accountName", "测试0");
-        jso.put("idNumber", "640223199801016519");
-        jso.put("cardNumber", "6000000123456789");
-        jso.put("homeAddress", "上海市徐湖区东安路562号");
+        // jso.put("accountMobile", "13000000000");
+        // jso.put("accountName", "测试0");
+        // jso.put("idNumber", "640223199801016519");
+        // jso.put("cardNumber", "6000000123456789");
+        // jso.put("homeAddress", "上海市徐湖区东安路562号");
+        String wzhyWeb = BizConnecter.getBizData("798600",
+            JsonUtils.object2Json(jso));// 温州浩源网页
         String threeElements = BizConnecter.getBizData("798601",
             JsonUtils.object2Json(jso));// 三要素
         // String bodyguardId = jsonObject.get("id").toString();
@@ -3858,6 +3959,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // } else {
         // card = "库无记录";
         // }
+        map.put("WzhyWeb", wzhyWeb);
         map.put("mobile", threeElements);
         map.put("online", networkTime);
         map.put("card", cardNumber);
@@ -3866,17 +3968,4 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         return map;
     }
 
-    public static void main(String[] args) {
-        String string = "{\"success\":true,\"id\":\"WF2018111817190413169161\",\"result_desc\":{\"ANTIFRAUD_INFOQUERY\":{\"mobileAndNameAndIDCheck\":{\"mobile_three_element_consistence\":\"0\"}}}}";
-        JSONObject jsonObject = JSONObject.parseObject(string);
-        String result = jsonObject.getString("result_desc");
-        String antifraudInfoquery = JSONObject.parseObject(result)
-            .getString("ANTIFRAUD_INFOQUERY");
-        String mobileAndNameAndIDCheck = JSONObject
-            .parseObject(antifraudInfoquery)
-            .getString("mobileAndNameAndIDCheck");
-        String mobile = JSONObject.parseObject(mobileAndNameAndIDCheck)
-            .getString("mobile_three_element_consistence");
-        System.out.println(mobile);
-    }
 }

@@ -257,6 +257,7 @@
 		<result column="guarant_print_user" property="guarantPrintUser" />
 		<result column="guarant_print_datetime" property="guarantPrintDatetime" />
 		<result column="bank_card_number" property="bankCardNumber" />
+		<result column="card_number" property="cardNumber" />
 		<result column="bill_datetime" property="billDatetime" />
 		<result column="month_amount" property="monthAmount" />
 		<result column="repay_bank_date" property="repayBankDate" />
@@ -683,6 +684,7 @@
 		,t.guarant_print_user
 		,t.guarant_print_datetime
 		,t.bank_card_number
+		,t.card_number
 		,t.bill_datetime
 		,t.month_amount
 		,t.repay_bank_date
@@ -990,6 +992,7 @@
 		,t.guarant_print_user
 		,t.guarant_print_datetime
 		,t.bank_card_number
+		,t.card_number
 		,t.bill_datetime
 		,t.month_amount
 		,t.repay_bank_date
@@ -1288,6 +1291,7 @@
 		,t.guarant_print_user
 		,t.guarant_print_datetime
 		,t.bank_card_number
+		,t.card_number
 		,t.bill_datetime
 		,t.month_amount
 		,t.repay_bank_date
@@ -1666,6 +1670,7 @@
 		,rate_type = #{rateType}
 		,bank_rate = #{bankRate}
 		,bank_benchmark_rate = #{bankBenchmarkRate}
+		,card_number = #{cardNumber}
 		
 		,company_loan_cs = #{companyLoanCs}
 		,is_advance_fund = #{isAdvanceFund}

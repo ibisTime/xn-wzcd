@@ -11,6 +11,7 @@ import com.cdkj.loan.domain.BudgetOrder;
 import com.cdkj.loan.dto.req.XN630450Req;
 import com.cdkj.loan.dto.req.XN630909Req;
 import com.cdkj.loan.dto.req.XN632120Req;
+import com.cdkj.loan.dto.req.XN632126Req;
 import com.cdkj.loan.dto.req.XN632141Req;
 import com.cdkj.loan.dto.req.XN632142Req;
 import com.cdkj.loan.dto.req.XN632143Req;
@@ -198,6 +199,6 @@ public interface IBudgetOrderAO {
     public void basicValuation(XN630450Req req);
 
     // 同盾风控
-    public Object tdfk(String code);
+    public Object tdfk(XN632126Req req);
 
 }

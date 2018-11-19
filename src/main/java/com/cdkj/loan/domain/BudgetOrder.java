@@ -690,6 +690,9 @@ public class BudgetOrder extends ABaseDO {
     // 银行卡号
     private String bankCardNumber;
 
+    // 卡号（仅查询同盾使用）
+    private String cardNumber;
+
     // 对账单日
     private Integer billDatetime;
 
@@ -3116,6 +3119,14 @@ public class BudgetOrder extends ABaseDO {
 
     public void setBankCardNumber(String bankCardNumber) {
         this.bankCardNumber = bankCardNumber;
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
     public Integer getBillDatetime() {
