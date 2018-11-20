@@ -46,6 +46,9 @@ public class XN632120Req {
     // 贷款金额
     private String loanAmount;
 
+    // 卡号（仅查询同盾使用）
+    private String cardNumber;
+
     // 是否需要贷前调查
     private String isSurvey;
 
@@ -438,6 +441,14 @@ public class XN632120Req {
 
     public void setBudgetOrderCode(String budgetOrderCode) {
         this.budgetOrderCode = budgetOrderCode;
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
     public String getDealType() {

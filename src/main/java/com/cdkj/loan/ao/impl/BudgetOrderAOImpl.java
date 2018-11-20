@@ -317,7 +317,7 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         data.setLoanPeriods(StringValidater.toInteger(req.getLoanPeriods()));
         data.setInvoicePrice(StringValidater.toLong(req.getInvoicePrice()));
         data.setRateType(req.getRateType());
-
+        data.setCardNumber(req.getCardNumber());
         data.setBankRate(StringValidater.toDouble(req.getBankRate()));
         data.setBankBenchmarkRate(
             StringValidater.toDouble(req.getBankBenchmarkRate()));
@@ -3959,6 +3959,13 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         // } else {
         // card = "库无记录";
         // }
+        // Tongdun tongdun = new Tongdun();
+        // tongdun.setWzhyWeb(wzhyWeb);
+        // tongdun.setMobile(threeElements);
+        // tongdun.setOnline(networkTime);
+        // tongdun.setCard(cardNumber);
+        // tongdun.setPolice(peopleSpot);
+        // tongdun.setHome_address(address);
         map.put("WzhyWeb", wzhyWeb);
         map.put("mobile", threeElements);
         map.put("online", networkTime);
@@ -3967,5 +3974,4 @@ public class BudgetOrderAOImpl implements IBudgetOrderAO {
         map.put("home_address", address);
         return map;
     }
-
 }
