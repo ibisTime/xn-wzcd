@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.cdkj.loan.bo.base.IPaginableBO;
 import com.cdkj.loan.domain.SYSUser;
-import com.cdkj.loan.enums.EUserStatus;
+import com.cdkj.loan.enums.ESYSUserStatus;
 
 public interface ISYSUserBO extends IPaginableBO<SYSUser> {
 
-    public void refreshStatus(String userId, EUserStatus status,
+    public void refreshStatus(String userId, ESYSUserStatus status,
             String updater, String remark);
 
     public void refreshMobile(String userId, String mobile);

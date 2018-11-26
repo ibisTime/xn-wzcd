@@ -79,3 +79,10 @@ INSERT INTO `tsys_dict` (`type`, `parent_key`, `dkey`, `dvalue`, `updater`, `upd
 
 ALTER TABLE `tdq_budget_order` 
 ADD COLUMN `card_number` varchar(255) NULL COMMENT '卡号' AFTER `bank_card_number`;
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+SET SQL_SAFE_UPDATES = 0;
+UPDATE `tsys_user` SET `status`='1';
+SET SQL_SAFE_UPDATES = 1;

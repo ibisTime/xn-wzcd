@@ -23,6 +23,7 @@ import com.cdkj.loan.domain.Archive;
 import com.cdkj.loan.domain.Department;
 import com.cdkj.loan.domain.SYSRole;
 import com.cdkj.loan.domain.SYSUser;
+import com.cdkj.loan.enums.ESYSUserStatus;
 import com.cdkj.loan.enums.ESysUserType;
 import com.cdkj.loan.enums.EUser;
 import com.cdkj.loan.enums.EUserStatus;
@@ -69,7 +70,7 @@ public class SYSUserAOImpl implements ISYSUserAO {
         data.setCompanyCode(
             departmentBO.getCompanyByDepartment(data.getDepartmentCode()));
 
-        data.setStatus(EUserStatus.NORMAL.getCode());
+        data.setStatus(ESYSUserStatus.NORMAL.getCode());
 
         sysUserBO.saveUser(data);
 
@@ -173,13 +174,14 @@ public class SYSUserAOImpl implements ISYSUserAO {
         }
         String mobile = user.getMobile();
         String smsContent = "";
-        EUserStatus userStatus = null;
-        if (EUserStatus.NORMAL.getCode().equalsIgnoreCase(user.getStatus())) {
-            smsContent = "您的账号已被管理员封禁";
-            userStatus = EUserStatus.Ren_Locked;
+        ESYSUserStatus userStatus = null;
+        if (ESYSUserStatus.NORMAL.getCode()
+            .equalsIgnoreCase(user.getStatus())) {
+            // smsContent = "您的账号已被管理员封禁";
+            userStatus = ESYSUserStatus.BLOCK;
         } else {
-            smsContent = "您的账号已被管理员解封,请遵守平台相关规则";
-            userStatus = EUserStatus.NORMAL;
+            // smsContent = "您的账号已被管理员解封,请遵守平台相关规则";
+            userStatus = ESYSUserStatus.NORMAL;
         }
         sysUserBO.refreshStatus(userId, userStatus, updater, remark);
         // if (!EUserKind.Plat.getCode().equals(user.getType())
