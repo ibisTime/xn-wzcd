@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cdkj.loan.ao.ICreditAO;
 import com.cdkj.loan.bo.IBankBO;
 import com.cdkj.loan.bo.IBudgetOrderBO;
@@ -20,6 +21,7 @@ import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.INodeFlowBO;
 import com.cdkj.loan.bo.IRepointDetailBO;
 import com.cdkj.loan.bo.ISYSBizLogBO;
+import com.cdkj.loan.bo.ISYSConfigBO;
 import com.cdkj.loan.bo.ISYSUserBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.core.StringValidater;
@@ -29,6 +31,7 @@ import com.cdkj.loan.domain.Credit;
 import com.cdkj.loan.domain.CreditChangeRecord;
 import com.cdkj.loan.domain.CreditUser;
 import com.cdkj.loan.domain.Department;
+import com.cdkj.loan.domain.SYSConfig;
 import com.cdkj.loan.domain.SYSUser;
 import com.cdkj.loan.dto.req.XN632110Req;
 import com.cdkj.loan.dto.req.XN632110ReqChild;
@@ -49,6 +52,8 @@ import com.cdkj.loan.enums.ECreditUserRelation;
 import com.cdkj.loan.enums.EIDKind;
 import com.cdkj.loan.enums.ELoanRole;
 import com.cdkj.loan.exception.BizException;
+import com.cdkj.loan.http.BizConnecter;
+import com.cdkj.loan.http.JsonUtils;
 
 /**
  * 征信
@@ -79,6 +84,9 @@ public class CreditAOImpl implements ICreditAO {
 
     @Autowired
     private ISYSBizLogBO sysBizLogBO;
+
+    @Autowired
+    private ISYSConfigBO sysConfigBO;
 
     @Autowired
     private IBudgetOrderBO budgetOrderBO;
@@ -617,6 +625,40 @@ public class CreditAOImpl implements ICreditAO {
         List<CreditChangeRecord> recordList = creditChangeRecordBO
             .queryCreditChangeRecordList(condition);
         credit.setCreditChangeRecordList(recordList);
+    }
+
+    @Override
+    public String foundReasult(String code, String systemCode,
+            String companyCode) {
+        CreditUser creditUser = creditUserBO.getCreditUser(code);
+        JSONObject jso = new JSONObject();
+        jso.put("orderno", code);
+        jso.put("zoneno", "1202");
+        CreditUser applyUser = creditUserBO.getCreditUserByCreditCode(
+            creditUser.getCreditCode(), ELoanRole.APPLY_USER);
+        jso.put("mastername", applyUser.getUserName());
+        jso.put("custname", creditUser.getUserName());
+        jso.put("idtype", "000");
+        jso.put("idno", creditUser.getIdNo());
+        String relation = null;
+        if (ELoanRole.APPLY_USER.getCode().equals(creditUser.getLoanRole())) {
+            relation = "本人";
+        } else if (ELoanRole.GHR.getCode().equals(creditUser.getLoanRole())) {
+            relation = "配偶";
+        } else {
+            relation = "反担保";
+        }
+        jso.put("relation", relation);
+        SYSConfig sysConfig = sysConfigBO.getSYSConfig("qiniu", "qiniu_domain");
+        jso.put("idNoFront",
+            sysConfig.getCvalue() + "/" + creditUser.getIdNoFront());
+        jso.put("idNoReverse",
+            sysConfig.getCvalue() + "/" + creditUser.getIdNoReverse());
+        jso.put("authPdf",
+            sysConfig.getCvalue() + "/" + creditUser.getAuthPdf());
+        String bizData = BizConnecter.getBizData("798700",
+            JsonUtils.object2Json(jso));
+        return bizData;
     }
 
 }

@@ -43,4 +43,8 @@ public interface ICreditAO {
     // 征信一审
     public void firstAudit(XN632114Req req);
 
+    // 征信查询请求接口
+    public String foundReasult(String code, String systemCode,
+            String companyCode);
+
 }
