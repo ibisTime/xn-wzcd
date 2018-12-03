@@ -271,6 +271,7 @@
 		,relation=#{relation}
 		,loan_role=#{loanRole}
 		,mobile=#{mobile}
+		,birth_address=#{birthAddress}
 		,id_no=#{idNo}
 		
 		,id_no_front=#{idNoFront}

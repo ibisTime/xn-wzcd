@@ -164,6 +164,7 @@ public class CreditAOImpl implements ICreditAO {
             creditUser.setUserName(child.getUserName());
             creditUser.setLoanRole(child.getLoanRole());
             creditUser.setMobile(child.getMobile());
+            creditUser.setBirthAddress(child.getBirthAddress());
 
             CreditUser user = new CreditUser();
             user.setCreditCode(creditCode);
@@ -266,6 +267,7 @@ public class CreditAOImpl implements ICreditAO {
             data.setLoanRole(reqChild.getLoanRole());
             data.setIdNo(reqChild.getIdNo());
             data.setMobile(reqChild.getMobile());
+            data.setBirthAddress(reqChild.getBirthAddress());
             data.setIdNoFront(reqChild.getIdNoFront());
             data.setIdNoReverse(reqChild.getIdNoReverse());
             data.setAuthPdf(reqChild.getAuthPdf());

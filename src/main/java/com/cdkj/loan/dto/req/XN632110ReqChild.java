@@ -26,6 +26,9 @@ public class XN632110ReqChild {
     @NotBlank
     private String mobile;
 
+    // 户籍地
+    private String birthAddress;
+
     // 身份证号
     @NotBlank
     private String idNo;
@@ -52,6 +55,14 @@ public class XN632110ReqChild {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getBirthAddress() {
+        return birthAddress;
+    }
+
+    public void setBirthAddress(String birthAddress) {
+        this.birthAddress = birthAddress;
     }
 
     public String getRelation() {

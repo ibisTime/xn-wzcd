@@ -20,6 +20,9 @@ public class XN632112ReqChild {
     // 手机号
     private String mobile;
 
+    // 户籍地
+    private String birthAddress;
+
     // 身份证正面
     private String idNoFront;
 
@@ -117,6 +120,14 @@ public class XN632112ReqChild {
 
     public void setDkdyCount(String dkdyCount) {
         this.dkdyCount = dkdyCount;
+    }
+
+    public String getBirthAddress() {
+        return birthAddress;
+    }
+
+    public void setBirthAddress(String birthAddress) {
+        this.birthAddress = birthAddress;
     }
 
     public String getDkdyAmount() {
