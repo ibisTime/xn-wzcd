@@ -4,7 +4,7 @@ import com.cdkj.loan.ao.ICreditAO;
 import com.cdkj.loan.api.AProcessor;
 import com.cdkj.loan.common.JsonUtil;
 import com.cdkj.loan.core.ObjValidater;
-import com.cdkj.loan.dto.req.XN632109Req;
+import com.cdkj.loan.dto.req.XN632127Req;
 import com.cdkj.loan.exception.BizException;
 import com.cdkj.loan.exception.ParaException;
 import com.cdkj.loan.spring.SpringContextHolder;
@@ -15,11 +15,11 @@ import com.cdkj.loan.spring.SpringContextHolder;
  * @since: 2018年11月30日 下午4:30:48 
  * @history:
  */
-public class XN632109 extends AProcessor {
+public class XN632127 extends AProcessor {
 
     private ICreditAO creditAO = SpringContextHolder.getBean(ICreditAO.class);
 
-    private XN632109Req req = null;
+    private XN632127Req req = null;
 
     @Override
     public Object doBusiness() throws BizException {
@@ -30,7 +30,7 @@ public class XN632109 extends AProcessor {
     @Override
     public void doCheck(String inputparams, String operator)
             throws ParaException {
-        req = JsonUtil.json2Bean(inputparams, XN632109Req.class);
+        req = JsonUtil.json2Bean(inputparams, XN632127Req.class);
         ObjValidater.validateReq(req);
 
     }

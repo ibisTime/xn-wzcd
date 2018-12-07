@@ -663,4 +663,13 @@ public class CreditAOImpl implements ICreditAO {
         return bizData;
     }
 
+    @Override
+    public Object foundCreditIcbank(String code) {
+        JSONObject jso = new JSONObject();
+        jso.put("code", code);
+        String bizData = BizConnecter.getBizData("798701",
+            JsonUtils.object2Json(jso));
+        return bizData;
+    }
+
 }

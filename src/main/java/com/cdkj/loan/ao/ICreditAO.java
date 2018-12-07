@@ -47,4 +47,7 @@ public interface ICreditAO {
     public String foundReasult(String code, String systemCode,
             String companyCode);
 
+    // 银行征信详情查
+    public Object foundCreditIcbank(String code);
+
 }
