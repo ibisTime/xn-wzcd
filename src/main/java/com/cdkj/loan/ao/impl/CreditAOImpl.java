@@ -634,6 +634,8 @@ public class CreditAOImpl implements ICreditAO {
             String companyCode) {
         CreditUser creditUser = creditUserBO.getCreditUser(code);
         JSONObject jso = new JSONObject();
+        jso.put("systemCode", systemCode);
+        jso.put("companyCode", companyCode);
         jso.put("orderno", code);
         jso.put("zoneno", "1202");
         CreditUser applyUser = creditUserBO.getCreditUserByCreditCode(
