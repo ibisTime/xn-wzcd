@@ -1,0 +1,1 @@
+INSERT INTO `tsys_config` (`type`, `ckey`, `cvalue`, `updater`, `update_datetime`, `remark`, `company_code`, `system_code`) VALUES ('is_register', 'is_register', '1', 'USYS201800000000001', '2018-11-08 14:31:21', '能否注册用户', 'CD-CWZCD000020', 'CD-CWZCD000020');

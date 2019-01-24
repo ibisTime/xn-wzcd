@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public class XN630050Req {
 
     // 登录名（必填）
-    @NotBlank(message = "登录名不能为空")
+    // @NotBlank(message = "登录名不能为空")
     private String loginName;
 
     // 登录密码（选填）
@@ -25,24 +25,24 @@ public class XN630050Req {
     private String realName;
 
     // 类型（必填）
-    @NotBlank(message = "类型不能为空")
+    // @NotBlank(message = "类型不能为空")
     private String type;
 
     // 推荐人（选填）
     private String userRefree;
 
     // 角色编号
-    @NotBlank
+    // @NotBlank
     private String roleCode;
 
     // 岗位
-    @NotBlank
+    // @NotBlank
     private String postCode;
 
     // 备注（选填）
     private String remark;
 
-    @NotBlank(message = "人事档案编号不能为空")
+    // @NotBlank(message = "人事档案编号不能为空")
     private String archiveCode;
 
     public String getPostCode() {

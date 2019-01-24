@@ -69,8 +69,11 @@ public class SYSUserAOImpl implements ISYSUserAO {
         data.setDepartmentCode(departmentBO.getDepartmentByPost(postCode));
         data.setCompanyCode(
             departmentBO.getCompanyByDepartment(data.getDepartmentCode()));
-
-        data.setStatus(ESYSUserStatus.NORMAL.getCode());
+        if ("i".equals(type)) {
+            data.setStatus(EUserStatus.NORMAL.getCode());
+        } else {
+            data.setStatus(ESYSUserStatus.NORMAL.getCode());
+        }
 
         sysUserBO.saveUser(data);
 
