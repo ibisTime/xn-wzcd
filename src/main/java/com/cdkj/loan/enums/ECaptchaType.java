@@ -12,7 +12,8 @@ import com.cdkj.loan.exception.BizException;
  */
 public enum ECaptchaType {
 
-    C_REG("805041", "C端会员注册"), CHANGE_MOBILE("805061", "修改手机号");
+    C_REG("805041", "C端会员注册"), CHANGE_MOBILE("805061", "修改手机号"), B_REG("630060",
+            "B端注册");
 
     public static ECaptchaType getBizType(String code) {
         Map<String, ECaptchaType> map = getBizTypeMap();

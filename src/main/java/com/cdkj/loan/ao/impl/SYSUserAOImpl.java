@@ -15,6 +15,7 @@ import com.cdkj.loan.bo.IBizTeamBO;
 import com.cdkj.loan.bo.IDepartmentBO;
 import com.cdkj.loan.bo.ISYSRoleBO;
 import com.cdkj.loan.bo.ISYSUserBO;
+import com.cdkj.loan.bo.ISmsOutBO;
 import com.cdkj.loan.bo.base.Paginable;
 import com.cdkj.loan.common.MD5Util;
 import com.cdkj.loan.common.PwdUtil;
@@ -47,7 +48,11 @@ public class SYSUserAOImpl implements ISYSUserAO {
     @Autowired
     private IArchiveBO archiveBO;
 
+    @Autowired
+    private ISmsOutBO smsOutBO;
+
     @Override
+    @Transactional
     public String doAddUser(String type, String loginName, String loginPwd,
             String mobile, String realName, String roleCode, String postCode,
             String arvhiveCode) {
@@ -69,11 +74,46 @@ public class SYSUserAOImpl implements ISYSUserAO {
         data.setDepartmentCode(departmentBO.getDepartmentByPost(postCode));
         data.setCompanyCode(
             departmentBO.getCompanyByDepartment(data.getDepartmentCode()));
-        if ("i".equals(type)) {
-            data.setStatus(EUserStatus.NORMAL.getCode());
-        } else {
-            data.setStatus(ESYSUserStatus.NORMAL.getCode());
+        data.setStatus(ESYSUserStatus.BLOCK.getCode());
+
+        sysUserBO.saveUser(data);
+
+        if (StringUtils.isNotBlank(arvhiveCode)) {
+            Archive archive = archiveBO.getArchive(arvhiveCode);
+            archive.setUserId(userId);
+            archiveBO.refreshArchive(archive);
         }
+
+        return userId;
+    }
+
+    @Override
+    @Transactional
+    public String doAddUserIos(String type, String loginName, String loginPwd,
+            String mobile, String realName, String idNo, String smsCaptcha,
+            String roleCode, String postCode, String arvhiveCode) {
+        // 短信验证码是否正确
+        smsOutBO.checkCaptcha(mobile, smsCaptcha, "630060");
+
+        SYSUser data = new SYSUser();
+        String userId = OrderNoGenerater.generate("U");
+        data.setUserId(userId);
+        data.setType(ESysUserType.Plat.getCode());
+        data.setLoginName(loginName);
+        // 判断手机号是否存在
+        doCheckMobile(mobile);
+        data.setMobile(mobile);
+        data.setRealName(realName);
+        data.setLoginPwd(MD5Util.md5(loginPwd));
+        data.setLoginPwdStrength(PwdUtil.calculateSecurityLevel(loginPwd));
+
+        data.setCreateDatetme(new Date());
+        data.setRoleCode(roleCode);
+        data.setPostCode(postCode);
+        data.setDepartmentCode(departmentBO.getDepartmentByPost(postCode));
+        data.setCompanyCode(
+            departmentBO.getCompanyByDepartment(data.getDepartmentCode()));
+        data.setStatus(ESYSUserStatus.BLOCK.getCode());
 
         sysUserBO.saveUser(data);
 
@@ -98,8 +138,8 @@ public class SYSUserAOImpl implements ISYSUserAO {
             throw new BizException("xn805050", "登录密码错误");
         }
         SYSUser user = userList2.get(0);
-        if (!EUserStatus.NORMAL.getCode().equals(user.getStatus())) {
-            throw new BizException("xn805050", "该用户操作存在异常");
+        if (!ESYSUserStatus.NORMAL.getCode().equals(user.getStatus())) {
+            throw new BizException("xn805050", "该用户操作存在异常,请先激活");
         }
         return user.getUserId();
     }

@@ -62,6 +62,10 @@ public interface ISYSUserAO {
             String mobile, String realName, String roleCode, String postCode,
             String archiveCode);
 
+    public String doAddUserIos(String type, String loginName, String loginPwd,
+            String mobile, String realName, String idNo, String smsCaptcha,
+            String roleCode, String postCode, String archiveCode);
+
     // 设置团队
     public void doModifyTeam(String userId, String teamCode, String updater);
 
